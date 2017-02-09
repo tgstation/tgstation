@@ -581,6 +581,8 @@
 					H.AIStatus = AI_OFF
 					H.LoseTarget()
 				stopped_atoms |= M
+				var oldColor = M.color
+				M.color = "#704214"//sepia brown
 			else if(istype(A, /obj/item/projectile))
 				var/obj/item/projectile/P = A
 				P.paused = TRUE
@@ -588,13 +590,13 @@
 
 		for(var/mob/living/M in stopped_atoms)
 			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
-				unfreeze_mob(M)
+				unfreeze_mob(M,oldColor)
 				stopped_atoms -= M
 		stoplag()
 
 	//End
 	for(var/mob/living/M in stopped_atoms)
-		unfreeze_mob(M)
+		unfreeze_mob(M,oldColor)
 
 	for(var/obj/item/projectile/P in stopped_atoms)
 		P.paused = FALSE
@@ -603,12 +605,13 @@
 
 
 
-/obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
+/obj/effect/timestop/proc/unfreeze_mob(mob/living/M, var/colorToSet as text)
 	M.AdjustStunned(-10, 1, 1)
 	M.anchored = 0
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)
+	M.color = colorToSet
 
 
 /obj/effect/timestop/wizard
