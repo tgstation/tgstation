@@ -359,9 +359,9 @@
 					if(M.client)
 						living_players_connected++
 				else if((M.stat == DEAD )||(isobserver(M)))
-						observers++
-						if(M.client)
-							observers_connected++
+					observers++
+					if(M.client)
+						observers_connected++
 				else
 					other_players += M
 		dat += "<BR><b><font color='blue' size='3'>Players:|[connected_players - lobby_players] ingame|[connected_players] connected|[lobby_players] lobby|</font></b>"
