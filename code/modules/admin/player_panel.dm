@@ -338,23 +338,32 @@
 			dat += "Living crew limit: <a href='?_src_=holder;alter_midround_life_limit=1'>[config.midround_antag_life_check * 100]% of crew alive</a><BR>"
 			dat += "If limits past: <a href='?_src_=holder;toggle_noncontinuous_behavior=1'>[ticker.mode.round_ends_with_antag_death ? "End The Round" : "Continue As Extended"]</a><BR>"
 		var/connected_players = clients.len
+		var/in_game_players = 0
 		var/living_players = 0
 		var/living_connected_players = 0
 		var/living_antagonists = 0
 		var/dead_players = 0
+		var/dead_antagonists = 0
 		for(var/mob/M in mob_list)
 			if(M.ckey)
-				if(M.stat != DEAD && M.mind && !isbrain(M) && !isnewplayer(M))
+				if(isnewplayer(M))	//We don't care about lobby AFKers.
+					continue
+					//WIP:: SPECIAL PROC TO DO THIS AS THIS IS GETTING MESSY!!
+				in_game_players++
+				if(M.stat != DEAD && M.mind && !isbrain(M))	//They're alive and in a body.
 					living_players++
 					if(M.client)
 						living_connected_players++
 					if(M.mind.special_role)
 						living_antagonists++
-				else
+				else	//They're dead.
 					dead_players++
-		dat += "<BR><b>Connected players: [connected_players]."
+					if(M.mind.special_role)	//Dead antags.
+						dead_antagonists++
+		dat += "<BR>"
+		dat += "<BR><b><font color='blue'>Players: Ingame/Connected: [in_game_players] / [connected_players]</font></b>"
 		dat += "<BR><font color='green'>Living Players: [living_players]([living_players-living_connected_players] \[DC\]) ([living_antagonists] antagonists).</font>"
-		dat += "<BR><font color='red'>Dead players: [dead_players]</font></b>"
+		dat += "<BR><font color='red'>Dead players: [dead_players] (\[[dead_antagonists] antagonists\])</font></b>"
 		dat += "<BR>"
 		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
