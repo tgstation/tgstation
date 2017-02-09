@@ -18,6 +18,9 @@ insert ascii eagle on american flag background here
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
+	var/list/blacklisted_items = typecacheof(list(/obj/item/weapon/screwdriver, /obj/item/weapon/crowbar, /obj/item/weapon/wrench,
+		/obj/item/weapon/wirecutters, /obj/item/device/multitool, /obj/item/weapon/weldingtool, /obj/item/weapon/disk/nuclear,
+		/obj/item/nuke_core, /obj/item/nuke_core_container, /obj/item/organ/brain, /obj/item/weapon/reagent_containers/glass))
 
 /obj/item/weapon/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
@@ -47,6 +50,9 @@ insert ascii eagle on american flag background here
 		user << "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>"
 		return
 	else
+		if(I.type in blacklisted_items)
+			user << "<span class='warning'>You don't think the [I] would fry very well...</span>"
+			return FALSE
 		if(user.drop_item() && !frying)
 			user << "<span class='notice'>You put [I] into [src].</span>"
 			frying = I
