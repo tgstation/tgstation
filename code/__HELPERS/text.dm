@@ -48,7 +48,7 @@
 proc/sanitize_russian(var/msg, var/html = 0)
     var/rep
     if(html)
-        rep = "&#1103;"
+        rep = "&#x44F;"
     else
         rep = "&#255;"
     var/index = findtext(msg, "ÿ")
