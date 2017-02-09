@@ -16,3 +16,4 @@
 #_maps/shuttles/emergency_imfedupwiththisworld.dmm
 #_maps/shuttles/emergency_goon.dmm
 #_maps/shuttles/emergency_wabbajack.dmm
+#_maps/shuttles/emergency_bluespace_catastrophe.dmm
