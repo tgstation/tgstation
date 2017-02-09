@@ -229,8 +229,8 @@
 			var/image/I = image(icon, null, icon_state)
 			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
 			new_overlays += I
-
-	overlays = new_overlays
+	
+	copy_overlays_list(new_overlays, TRUE, TRUE)
 	view_sized = view
 
 /obj/screen/parallax_layer/layer_1

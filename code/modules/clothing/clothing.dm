@@ -159,8 +159,7 @@ var/list/damaged_clothes_icons = list()
 		add_overlay(damaged_clothes_icon, 1)
 	else
 		damaged_clothes = 0
-		overlays -= damaged_clothes_icons[index]
-		priority_overlays -= damaged_clothes_icons[index]
+		cut_overlay(damaged_clothes_icons[index], TRUE)
 
 
 //Ears: currently only used for headsets and earmuffs

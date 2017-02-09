@@ -20,7 +20,7 @@
 	if(has_buckled_mobs())
 		add_overlay(atvcover)
 	else
-		overlays -= atvcover
+		cut_overlay(atvcover)
 
 
 

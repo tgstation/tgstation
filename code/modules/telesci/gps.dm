@@ -24,13 +24,13 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
-	overlays -= "working"
+	cut_overlay("working")
 	add_overlay("emp")
 	addtimer(CALLBACK(src, .proc/reboot), 300)
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
-	overlays -= "emp"
+	cut_overlay("emp")
 	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
@@ -39,7 +39,7 @@ var/list/GPS_list = list()
 	if(emped)
 		user << "It's busted!"
 	if(tracking)
-		overlays -= "working"
+		cut_overlay("working")
 		user << "[src] is no longer tracking, or visible to other GPS devices."
 		tracking = FALSE
 	else

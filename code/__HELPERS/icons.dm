@@ -943,27 +943,6 @@ var/global/list/friendly_animal_types = list()
 		return J
 	return 0
 
-/atom/proc/cut_overlays()
-	overlays.Cut()
-	overlays += priority_overlays
-
-/atom/proc/add_overlay(image, priority = 0)
-	var/list/new_overlays = overlays.Copy()
-	new_overlays -= image
-	if(priority)
-		if(!priority_overlays)
-			priority_overlays = list()
-		priority_overlays += image
-		new_overlays += image
-	else
-		if(priority_overlays)
-			new_overlays -= priority_overlays
-			new_overlays += image
-			new_overlays += priority_overlays
-		else
-			new_overlays += image
-	overlays = new_overlays
-
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
 /proc/get_flat_human_icon(var/icon_id,var/outfit,var/datum/preferences/prefs)

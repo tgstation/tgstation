@@ -264,12 +264,11 @@
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/proc/update_magazine()
 	if(magazine)
-		src.overlays = 0
-		add_overlay("[magazine.icon_state]")
+		copy_overlays_list(list("[magazine.icon_state]"), TRUE, TRUE)
 		return
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/update_icon()
-	src.overlays = 0
+	cut_overlays()
 	update_magazine()
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 

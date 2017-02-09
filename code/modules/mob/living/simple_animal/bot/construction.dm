@@ -393,7 +393,7 @@
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.remove_fuel(0, user))
 				build_step--
-				overlays -= "hs_hole"
+				cut_overlay("hs_hole")
 				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
 
 	else if(isprox(I) && (build_step == 1))
@@ -442,13 +442,13 @@
 			qdel(src)
 
 		else if(build_step == 2)
-			overlays -= "hs_eye"
+			cut_overlay("hs_eye")
 			new /obj/item/device/assembly/prox_sensor(get_turf(src))
 			user << "<span class='notice'>You detach the proximity sensor from [src].</span>"
 			build_step--
 
 		else if(build_step == 3)
-			overlays -= "hs_arm"
+			cut_overlay("hs_arm")
 			new /obj/item/bodypart/l_arm/robot(get_turf(src))
 			user << "<span class='notice'>You remove the robot arm from [src].</span>"
 			build_step--

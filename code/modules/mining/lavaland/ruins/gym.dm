@@ -93,5 +93,5 @@
 		animate(user, pixel_y = 0, time = 3)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
-		overlays -= W
+		cut_overlay(W)
 		user << "[finishmessage]"

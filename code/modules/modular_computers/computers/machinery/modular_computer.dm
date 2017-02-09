@@ -64,7 +64,7 @@ var/list/global_modular_computers = list()
 		if(cpu.active_program)
 			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 		else
-			overlays.Add(screen_icon_state_menu)
+			add_overlay(screen_icon_state_menu)
 
 	if(cpu && cpu.obj_integrity <= cpu.integrity_failure)
 		add_overlay("bsod")

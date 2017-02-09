@@ -151,8 +151,7 @@
 		maptext = new_text
 
 /obj/machinery/status_display/proc/remove_display()
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
 	if(maptext)
 		maptext = ""
 
@@ -275,8 +274,7 @@
 
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
 	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 #undef CHARS_PER_LINE

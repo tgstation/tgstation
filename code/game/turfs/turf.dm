@@ -453,5 +453,5 @@
 
 /turf/proc/remove_decal(group)
 	LAZYINITLIST(decals)
-	overlays -= decals[group]
+	cut_overlay(decals[group])
 	decals[group] = null

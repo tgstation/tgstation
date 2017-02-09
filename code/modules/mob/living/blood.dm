@@ -236,7 +236,7 @@
 		if(drop)
 			if(drop.drips < 3)
 				drop.drips++
-				drop.overlays |= pick(drop.random_icon_states)
+				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
 				return
 			else

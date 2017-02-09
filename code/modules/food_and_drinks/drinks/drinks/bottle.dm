@@ -399,5 +399,5 @@
 			user << "<span class='danger'>The flame's spread too far on it!</span>"
 			return
 		user << "<span class='info'>You snuff out the flame on [src].</span>"
-		overlays -= fire_overlay
+		cut_overlay(fire_overlay)
 		active = 0

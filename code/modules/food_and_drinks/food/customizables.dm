@@ -117,7 +117,9 @@
 		if(INGREDIENTS_STACKPLUSTOP)
 			I.pixel_x = rand(-1,1)
 			I.pixel_y = 2 * ingredients.len - 1
-			overlays.Cut(ingredients.len)
+			our_overlays.Cut(ingredients.len)	//???
+			//force an update here just in case
+			SSoverlays.processing[src] = src
 			var/image/TOP = new(icon, "[icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
 			add_overlay(I)

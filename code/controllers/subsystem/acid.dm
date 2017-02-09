@@ -34,8 +34,7 @@ var/datum/subsystem/acid/SSacid
 
 		if(O.acid_level && O.acid_processing())
 		else
-			O.overlays -= acid_overlay
-			O.priority_overlays -= acid_overlay
+			O.cut_overlay(acid_overlay, TRUE)
 			processing -= O
 
 		if (MC_TICK_CHECK)

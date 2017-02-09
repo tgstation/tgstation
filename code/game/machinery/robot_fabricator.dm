@@ -29,7 +29,7 @@
 						qdel(O)
 
 					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
-					src.overlays -= "fab-load-metal"
+					cut_overlay("fab-load-metal")
 					updateDialog()
 		else
 			user << "\The [src] is full."

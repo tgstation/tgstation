@@ -198,7 +198,7 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(chassis)
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M as obj)
@@ -207,7 +207,7 @@
 	M.add_overlay(droid_overlay)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
-	chassis.overlays -= droid_overlay
+	chassis.cut_overlay(droid_overlay)
 	STOP_PROCESSING(SSobj, src)
 	..()
 
@@ -219,7 +219,7 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
 	if(href_list["toggle_repairs"])
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 		if(equip_ready)
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
@@ -259,7 +259,7 @@
 	else //no repair needed, we turn off
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		chassis.add_overlay(droid_overlay)
 

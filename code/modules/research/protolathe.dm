@@ -115,7 +115,7 @@ Note: Must be placed west/left of and R&D console to function.
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
 			add_overlay("protolathe_[stack_name]")
 			sleep(10)
-			overlays -= "protolathe_[stack_name]"
+			cut_overlay("protolathe_[stack_name]")
 			busy = 0
 		updateUsrDialog()
 

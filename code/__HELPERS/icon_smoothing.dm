@@ -240,29 +240,34 @@
 
 	var/list/New = list()
 
+	var/list/cached_overlays = A.our_overlays
+	var/init_len = LAZYLEN(cached_overlays)
+
 	if(A.top_left_corner != nw)
-		A.overlays -= A.top_left_corner
+		LAZYREMOVE(cached_overlays, A.top_left_corner)
 		A.top_left_corner = nw
 		New += nw
 
 	if(A.top_right_corner != ne)
-		A.overlays -= A.top_right_corner
+		LAZYREMOVE(cached_overlays, A.top_right_corner)
 		A.top_right_corner = ne
 		New += ne
 
 	if(A.bottom_right_corner != sw)
-		A.overlays -= A.bottom_right_corner
+		LAZYREMOVE(cached_overlays, A.bottom_right_corner)
 		A.bottom_right_corner = sw
 		New += sw
 
 	if(A.bottom_left_corner != se)
-		A.overlays -= A.bottom_left_corner
+		LAZYREMOVE(cached_overlays, A.bottom_left_corner)
 		A.bottom_left_corner = se
 		New += se
 
 	if(New.len)
 		A.add_overlay(New)
-
+	else if(init_len != LAZYLEN(cached_overlays))
+		SSoverlays.processing[A] = A
+		SSoverlays.can_fire = TRUE
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
@@ -312,13 +317,19 @@
 					queue_smooth(A)
 
 /atom/proc/clear_smooth_overlays()
-	overlays -= top_left_corner
+	var/list/cached_overlays = our_overlays
+	var/init_len = LAZYLEN(cached_overlays)
+	if(init_len)
+		our_overlays -= top_left_corner
+		our_overlays -= top_right_corner
+		overlays -= bottom_right_corner
+		overlays -= bottom_left_corner
+		if(cached_overlays.len != init_len)
+			SSoverlays.processing[src] = src
+			SSoverlays.can_fire = TRUE
 	top_left_corner = null
-	overlays -= top_right_corner
 	top_right_corner = null
-	overlays -= bottom_right_corner
 	bottom_right_corner = null
-	overlays -= bottom_left_corner
 	bottom_left_corner = null
 
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)

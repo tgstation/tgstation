@@ -345,7 +345,7 @@
 		if(smooth)
 			queue_smooth(src)
 
-		overlays -= crack_overlay
+		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
 		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))

@@ -47,8 +47,9 @@
 	apply_overlay(DEVIL_HANDS_LAYER)
 
 /mob/living/carbon/true_devil/remove_overlay(cache_index)
-	if(devil_overlays[cache_index])
-		overlays -= devil_overlays[cache_index]
+	var/I = devil_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
 		devil_overlays[cache_index] = null
 
 
