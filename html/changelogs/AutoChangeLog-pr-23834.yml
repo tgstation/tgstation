@@ -1,0 +1,5 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Paper planes can be unfolded again"
+  - bugfix: "Paper planes can be stamped properly"
