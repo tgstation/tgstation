@@ -93,6 +93,7 @@
 	if(istype(S) && S.deathmessage)
 		message_simple = S.deathmessage
 	. = ..()
+	message_simple = initial(message_simple)
 	if(. && isalienadult(user))
 		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
