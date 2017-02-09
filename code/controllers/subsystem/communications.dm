@@ -25,10 +25,10 @@ var/datum/subsystem/communications/SScommunications
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] Announces:")
+		minor_announce(rhtml_decode(input,1),"[user.name] Announces:")
 		silicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
 	else
-		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
+		priority_announce(rhtml_decode(input,1), null, 'sound/misc/announce.ogg', "Captain")
 		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
 	log_say("[key_name(user)] has made a priority announcement: [input]")
 	message_admins("[key_name_admin(user)] has made a priority announcement.")
