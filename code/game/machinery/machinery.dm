@@ -372,7 +372,7 @@ Class Procs:
 		playsound(loc, W.usesound, 50, 1)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, proc/unfasten_wrench_check, prev_anchored, user)))
+		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>"
 			anchored = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
