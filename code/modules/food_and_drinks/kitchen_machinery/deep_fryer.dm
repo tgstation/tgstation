@@ -18,9 +18,7 @@ insert ascii eagle on american flag background here
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
-	var/list/blacklisted_items = typecacheof(list(/obj/item/weapon/screwdriver, /obj/item/weapon/crowbar, /obj/item/weapon/wrench,
-		/obj/item/weapon/wirecutters, /obj/item/device/multitool, /obj/item/weapon/weldingtool,
-		/obj/item/nuke_core, /obj/item/nuke_core_container, /obj/item/weapon/reagent_containers/glass, /obj/item/weapon/storage/part_replacer))
+	var/list/blacklisted_items = typecacheof(list(/obj/item/weapon/screwdriver, /obj/item/weapon/crowbar, /obj/item/weapon/wrench, /obj/item/weapon/wirecutters, /obj/item/device/multitool, /obj/item/weapon/weldingtool, /obj/item/nuke_core, /obj/item/nuke_core_container, /obj/item/weapon/reagent_containers/glass, /obj/item/weapon/storage/part_replacer))
 
 /obj/item/weapon/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
