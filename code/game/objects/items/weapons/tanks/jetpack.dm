@@ -113,6 +113,12 @@
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 
+/obj/item/weapon/tank/jetpack/oxygen/security
+	name = "security jetpack (oxygen)"
+	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
+	icon_state = "jetpack-sec"
+	item_state = "jetpack-sec"
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
