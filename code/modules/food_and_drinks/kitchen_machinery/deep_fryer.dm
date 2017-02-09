@@ -52,8 +52,8 @@ insert ascii eagle on american flag background here
 	else
 		if(I.type in blacklisted_items)
 			user << "<span class='warning'>You don't think the [I] would fry very well...</span>"
-			return FALSE
-		if(user.drop_item() && !frying)
+			. = ..()
+		else if(user.drop_item() && !frying)
 			user << "<span class='notice'>You put [I] into [src].</span>"
 			frying = I
 			frying.forceMove(src)
