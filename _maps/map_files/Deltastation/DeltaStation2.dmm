@@ -118368,146 +118368,6 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
-"edc" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edd" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"ede" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edf" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edg" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edh" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edi" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edj" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edk" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edl" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edm" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edn" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edo" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edp" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edq" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edr" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"eds" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edt" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edu" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edv" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edw" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edx" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edy" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edz" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edA" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edB" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edC" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edD" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edE" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edF" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edG" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edH" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edI" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edJ" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"edK" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
 
 (1,1,1) = {"
 aaa
@@ -119152,7 +119012,7 @@ aaa
 aaa
 aaa
 aaa
-eds
+aaa
 aaa
 aaa
 aaa
@@ -120198,7 +120058,7 @@ aaa
 aaa
 aaa
 aaa
-edu
+aaa
 aaa
 aaa
 aaa
@@ -122726,7 +122586,7 @@ aaa
 aaa
 aaa
 aaa
-edp
+aaa
 aaa
 aaa
 aaa
@@ -123066,7 +122926,7 @@ aaa
 aaa
 aaa
 aaa
-edA
+aaa
 aaa
 aaa
 aaa
@@ -123616,7 +123476,7 @@ aaa
 aaa
 aaa
 aaa
-edE
+aaa
 aaa
 aaa
 aaa
@@ -126638,7 +126498,7 @@ aaa
 aaa
 aaa
 aaa
-edw
+aaa
 aaa
 aaa
 aaa
@@ -127333,7 +127193,7 @@ aaa
 aaa
 aaa
 aaa
-edn
+aaa
 aaa
 aaa
 aaa
@@ -132455,7 +132315,7 @@ aaa
 aaa
 aaa
 aaa
-edl
+aaa
 aaa
 aaa
 aaa
@@ -133110,7 +132970,7 @@ aaa
 aaa
 aaa
 aaa
-edB
+aaa
 aaa
 aaa
 aaa
@@ -133330,7 +133190,7 @@ aaa
 aaa
 aaa
 aaa
-edy
+aaa
 aaa
 aaa
 aaa
@@ -138610,7 +138470,7 @@ aaa
 aaa
 aaa
 aaa
-edi
+aaa
 aaa
 aaa
 aaa
@@ -140582,7 +140442,7 @@ aaa
 aaa
 aaa
 aaa
-edF
+aaa
 aaa
 aaa
 aaa
@@ -142189,7 +142049,7 @@ aaa
 aaa
 aaa
 aaa
-edh
+aaa
 aaa
 aaa
 aaa
@@ -145483,7 +145343,7 @@ aaa
 aaa
 aaa
 aaa
-edK
+aaa
 aaa
 aaa
 aaa
@@ -149115,7 +148975,7 @@ aaa
 aaa
 aaa
 aaa
-ede
+aaa
 aaa
 aaa
 aaa
@@ -152407,7 +152267,7 @@ aaa
 aaa
 aaa
 aaa
-edG
+aaa
 aaa
 aaa
 aaa
@@ -156827,7 +156687,7 @@ aaa
 aaa
 aaa
 aaa
-edf
+aaa
 aaa
 aaa
 aaa
@@ -158844,7 +158704,7 @@ aaa
 aaa
 aaa
 aaa
-edI
+aaa
 aaa
 aaa
 aaa
@@ -160676,7 +160536,7 @@ aaa
 aaa
 aaa
 aaa
-edd
+aaa
 aaa
 aaa
 aaa
@@ -164242,7 +164102,7 @@ aaa
 aaa
 aaa
 aaa
-edJ
+aaa
 aaa
 aaa
 aaa
@@ -165808,7 +165668,7 @@ aaa
 aaa
 aaa
 aaa
-edc
+aaa
 aaa
 aaa
 aaa
@@ -167394,7 +167254,7 @@ aaa
 aaa
 aaa
 aaa
-edj
+aaa
 aaa
 aaa
 aaa
@@ -170145,7 +170005,7 @@ aaa
 aaa
 aaa
 aaa
-edH
+aaa
 aaa
 aaa
 aaa
@@ -172256,7 +172116,7 @@ aaa
 aaa
 aaa
 aaa
-edg
+aaa
 aaa
 aaa
 aaa
@@ -173987,7 +173847,7 @@ aaa
 aaa
 aaa
 aaa
-edD
+aaa
 aaa
 aaa
 aaa
@@ -174335,7 +174195,7 @@ aaa
 aaa
 aaa
 aaa
-edk
+aaa
 aaa
 aaa
 aaa
@@ -176454,7 +176314,7 @@ aaa
 aaa
 aaa
 aaa
-edr
+aaa
 aaa
 aaa
 aaa
@@ -177173,7 +177033,7 @@ aaa
 aaa
 aaa
 aaa
-edm
+aaa
 aaa
 aaa
 aaa
@@ -179836,7 +179696,6 @@ aaa
 aaa
 aaa
 aaa
-edv
 aaa
 aaa
 aaa
@@ -179886,7 +179745,8 @@ aaa
 aaa
 aaa
 aaa
-edC
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -180796,7 +180656,6 @@ aaa
 aaa
 aaa
 aaa
-edo
 aaa
 aaa
 aaa
@@ -180890,7 +180749,8 @@ aaa
 aaa
 aaa
 aaa
-edz
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -181327,7 +181187,7 @@ aaa
 aaa
 aaa
 aaa
-edq
+aaa
 aaa
 aaa
 aaa
@@ -181868,7 +181728,7 @@ aaa
 aaa
 aaa
 aaa
-edt
+aaa
 aaa
 aaa
 aaa
@@ -182930,7 +182790,7 @@ aaa
 aaa
 aaa
 aaa
-edx
+aaa
 aaa
 aaa
 aaa

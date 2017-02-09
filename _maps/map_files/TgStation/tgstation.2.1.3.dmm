@@ -61223,118 +61223,6 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
-"cCs" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCt" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCu" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCv" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCw" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCx" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCy" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCz" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCA" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCB" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCC" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCD" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCE" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCF" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCG" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCH" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCI" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCJ" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCK" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCL" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCM" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCN" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCO" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCP" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCQ" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCR" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCS" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
-"cCT" = (
-/obj/structure/fluff/buoy,
-/turf/open/space,
-/area/space)
 
 (1,1,1) = {"
 aaa
@@ -62476,7 +62364,7 @@ aaa
 aaa
 aaa
 aaa
-cCB
+aaa
 aaa
 aaa
 aaa
@@ -64038,7 +63926,7 @@ aaa
 aaa
 aaa
 aaa
-cCC
+aaa
 aaa
 aaa
 aaa
@@ -65794,7 +65682,7 @@ aaa
 aaa
 aaa
 aaa
-cCz
+aaa
 aaa
 aaa
 aaa
@@ -67681,7 +67569,7 @@ aaa
 aaa
 aaa
 aaa
-cCH
+aaa
 aaa
 aaa
 aaa
@@ -68952,7 +68840,7 @@ aaa
 aaa
 aaa
 aaa
-cCF
+aaa
 aaa
 aaa
 aaa
@@ -69121,7 +69009,7 @@ aaa
 aaa
 aaa
 aaa
-cCy
+aaa
 aaa
 aaa
 aaa
@@ -73863,7 +73751,7 @@ aaa
 aaa
 aaa
 aaa
-cCI
+aaa
 aaa
 aaa
 aaa
@@ -74412,7 +74300,7 @@ aaa
 aaa
 aaa
 aaa
-cCO
+aaa
 aaa
 aaa
 aaa
@@ -75523,7 +75411,7 @@ aaa
 aaa
 aaa
 aaa
-cCt
+aaa
 aaa
 aaa
 aaa
@@ -81187,7 +81075,7 @@ aaa
 aaa
 aaa
 aaa
-cCv
+aaa
 aaa
 aaa
 aaa
@@ -81595,7 +81483,7 @@ aaa
 aaa
 aaa
 aaa
-cCM
+aaa
 aaa
 aaa
 aaa
@@ -83419,7 +83307,7 @@ aaa
 aaa
 aaa
 aaa
-cCS
+aaa
 aaa
 aaa
 aaa
@@ -84766,7 +84654,7 @@ aaa
 aaa
 aaa
 aaa
-cCs
+aaa
 aaa
 aaa
 aaa
@@ -87778,7 +87666,7 @@ aaa
 aaa
 aaa
 aaa
-cCP
+aaa
 aaa
 aaa
 aaa
@@ -92135,7 +92023,7 @@ aaa
 aaa
 aaa
 aaa
-cCN
+aaa
 aaa
 aaa
 aaa
@@ -93695,7 +93583,7 @@ aaa
 aaa
 aaa
 aaa
-cCR
+aaa
 aaa
 aaa
 aaa
@@ -97896,7 +97784,7 @@ aaa
 aaa
 aaa
 aaa
-cCw
+aaa
 aaa
 aaa
 aaa
@@ -100265,7 +100153,7 @@ aRG
 aSO
 aTO
 aVG
-cCq
+cCr
 aVz
 bak
 bbz
@@ -100392,7 +100280,7 @@ aaa
 aaa
 aaa
 aaa
-cCT
+aaa
 aaa
 aaa
 aaa
@@ -101741,7 +101629,7 @@ aaa
 aaa
 aaa
 aaa
-cCu
+aaa
 aaa
 aaa
 aaa
@@ -103935,7 +103823,7 @@ aaa
 aaa
 aaa
 aaa
-cCJ
+aaa
 aaa
 aaa
 aaa
@@ -106266,7 +106154,7 @@ aaa
 aaa
 aaa
 aaa
-cCL
+aaa
 aaa
 aaa
 aaa
@@ -113320,7 +113208,7 @@ aaa
 aaa
 aaa
 aaa
-cCx
+aaa
 aaa
 aaa
 aaa
@@ -113997,7 +113885,7 @@ aaa
 aaa
 aaa
 aaa
-cCQ
+aaa
 aaa
 aaa
 aaa
@@ -116424,7 +116312,7 @@ aaa
 aaa
 aaa
 aaa
-cCA
+aaa
 aaa
 aaa
 aaa
@@ -117276,7 +117164,7 @@ aaa
 aaa
 aaa
 aaa
-cCG
+aaa
 aaa
 aaa
 aaa
@@ -118009,7 +117897,7 @@ aaa
 aaa
 aaa
 aaa
-cCD
+aaa
 aaa
 aaa
 aaa
@@ -119613,7 +119501,7 @@ aaa
 aaa
 aaa
 aaa
-cCK
+aaa
 aaa
 aaa
 aaa
@@ -124454,7 +124342,7 @@ aaa
 aaa
 aaa
 aaa
-cCE
+aaa
 aaa
 aaa
 aaa
