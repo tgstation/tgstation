@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "The limb grower has been replaced with a box of surplus limbs. Visit robotics or harvest limbs from another person if you want quality."

@@ -1,4 +1,4 @@
 author: "Cyberboss"
 delete-after: True
 changes: 
-  - rscadd: "There's a new round end sound!"
+  - soundadd: "You can now knock on firedoors"

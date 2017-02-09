@@ -148,7 +148,7 @@ Frequency:
 	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			var/area/A = get_area(com.target)
-			if(A.noteleport)
+			if(!A || A.noteleport)
 				continue
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[get_area(com.target)] (Active)"] = com.target

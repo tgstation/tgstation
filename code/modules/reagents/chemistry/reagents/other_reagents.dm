@@ -214,7 +214,7 @@
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
-	
+
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
 		M.reagents.add_reagent("unholywater", (reac_volume/4))
@@ -896,6 +896,23 @@
 				H.wash_cream()
 			M.clean_blood()
 
+/datum/reagent/space_cleaner/ez_clean
+	name = "EZ Clean"
+	id = "ez_clean"
+	description = "A powerful, acidic cleaner sold by Waffle Co. Affects organic matter while leaving other objects unaffected."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(3.33)
+	M.adjustFireLoss(3.33)
+	M.adjustToxLoss(3.33)
+	..()
+
+/datum/reagent/space_cleaner/ez_clean/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	..()
+	if((method == TOUCH || method == VAPOR) && !issilicon(M))
+		M.adjustBruteLoss(1)
+		M.adjustFireLoss(1)
 
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"

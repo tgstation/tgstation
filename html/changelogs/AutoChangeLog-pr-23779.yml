@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - tweak: "Removes virology access to jobs including Medical Doctor, Geneticist and Chemist."

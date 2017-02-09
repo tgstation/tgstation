@@ -150,7 +150,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 25
 	throwforce = 0 //Just to be on the safe side
@@ -203,7 +203,6 @@
 	..()
 	if(can_drop)
 		new /obj/item/weapon/melee/synthetic_arm_blade(get_turf(user))
-	qdel(src)
 
 /***************************************\
 |***********COMBAT TENTACLES*************|

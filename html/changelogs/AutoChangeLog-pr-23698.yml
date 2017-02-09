@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Soapstones/chisel/magic markers/chalk can remove messages for free.
-Removing one of your own messages still grants a use."
-  - rscadd: "The Janitor starts with a dull soapstone for removing unwanted messages."
