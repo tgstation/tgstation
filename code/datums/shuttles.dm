@@ -64,7 +64,7 @@
 	name = "An Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = -5000
+	credit_cost = 5000
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
@@ -104,7 +104,7 @@
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
-	credit_cost = -7500
+	credit_cost = -7000
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
@@ -155,13 +155,19 @@
 	name = "Oh, Hi Daniel"
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
-	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
-	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known nanotrasen facilities and has a more open inside for larger crowds."
+	description = "The Nanotrasen Emergency Shuttle Port (NES Port for short) is a shuttle used at other less known nanotrasen facilities and has a more open inside for larger crowds."
 	credit_cost = 3000
+
+/datum/map_template/shuttle/emergency/delta
+	suffix = "delta"
+	name = "Delta Station Emergency Shuttle"
+	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
+	admin_notes = "Go big or go home."
+	credit_cost = 7500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -213,10 +219,3 @@
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
-
-/datum/map_template/shuttle/emergency/delta
-	suffix = "delta"
-	name = "Delta Station Emergency Shuttle"
-	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
-	admin_notes = "Go big or go home."
-	credit_cost = 7500
