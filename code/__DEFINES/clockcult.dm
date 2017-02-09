@@ -87,8 +87,6 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 
 #define CLOCKCULT_ESCAPE "escape"
 
-#define CLOCKCULT_SILICONS "silicons"
-
 //misc clockcult stuff
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
 
