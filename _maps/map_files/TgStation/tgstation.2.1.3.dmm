@@ -396,10 +396,7 @@
 	pixel_y = 10
 	},
 /obj/structure/table/wood,
-/obj/item/device/radio/off,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/machinery/computer/med_data/laptop,
 /turf/open/floor/carpet,
 /area/security/hos)
 "abl" = (
@@ -1193,8 +1190,12 @@
 /turf/open/floor/carpet,
 /area/security/hos)
 "acS" = (
-/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/structure/table/wood,
+/obj/item/device/taperecorder{
+	pixel_y = 0
+	},
+/obj/item/device/radio/off,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/open/floor/carpet,
 /area/security/hos)
 "acT" = (
@@ -3855,15 +3856,10 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "ahX" = (
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahY" = (
@@ -3937,12 +3933,17 @@
 /area/security/brig)
 "aie" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen,
-/obj/item/weapon/hand_labeler,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 0
+	},
+/obj/item/weapon/folder/red,
+/obj/item/weapon/pen,
+/obj/item/weapon/hand_labeler,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -100153,7 +100154,7 @@ aRG
 aSO
 aTO
 aVG
-cCr
+cCq
 aVz
 bak
 bbz
