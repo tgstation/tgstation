@@ -499,7 +499,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnel to refill machine storage.</FONT><BR><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
 		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
-		popup.set_content(dat)
+		popup.set_content(sanitize_russian(dat))
 		popup.set_title_image(human_or_robot_user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
