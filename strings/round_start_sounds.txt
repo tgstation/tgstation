@@ -1,0 +1,10 @@
+sound/ambience/title1.ogg
+sound/ambience/title2.ogg
+sound/ambience/title3.ogg
+sound/ambience/title4.ogg
+sound/misc/i_did_not_grief_them.ogg
+sound/ambience/clown.ogg
+sound/ambience/title_carmen_mirandas_ghost.ogg
+sound/ambience/title_good_ship_manatee.ogg
+sound/ambience/title_space_hero.ogg
+sound/ambience/title_spacers_home.ogg
