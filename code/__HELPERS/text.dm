@@ -48,7 +48,7 @@
 proc/sanitize_russian(var/msg, var/html = 0)
     var/rep
     if(html)
-        rep = "&#1103;"
+        rep = "&#x44F;"
     else
         rep = "&#255;"
     var/index = findtext(msg, "ÿ")
@@ -58,13 +58,11 @@ proc/sanitize_russian(var/msg, var/html = 0)
     return msg
 
 proc/russian_html2text(msg)
-    return replacetext(msg, "&#1103;", "&#255;")
+    return replacetext(msg, "&#x44F;", "&#255;")
 
 proc/russian_text2html(msg)
-	return replacetext(msg, "&#255;", "&#1103;")
+	return replacetext(msg, "&#255;", "&#x44F;")
 
-proc/russian_44f2html(msg)
-	return replacetext(msg, "&#x44F;", "&#255;")
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)

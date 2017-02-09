@@ -49,7 +49,7 @@
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M) && !M.ear_deaf)
-			M << "<b><font size = 3><font color = red>[title]</font color><BR>[sanitize_russian(message)]</font size></b><BR>"
+			M << "<b><font size = 3><font color = red>[title]</font color><BR>[sanitize_russian(message, 1)]</font size></b><BR>"
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				continue
 			if(alert)
