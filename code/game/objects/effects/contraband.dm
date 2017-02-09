@@ -104,7 +104,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
 	resistance_flags = FLAMMABLE
-	var/serial_number = 0
+	var/serial = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 	var/rolled_official = 0
 
@@ -123,15 +123,15 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 /obj/item/weapon/poster/New(turf/loc, given_serial = 0)
 	if(given_serial == 0)
 		if(!rolled_official)
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
-			resulting_poster = new(serial_number,rolled_official)
+			serial = rand(1, NUM_OF_POSTER_DESIGNS)
+			resulting_poster = new(serial,rolled_official)
 		else
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
-			resulting_poster = new(serial_number,rolled_official)
+			serial = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
+			resulting_poster = new(serial,rolled_official)
 	else
-		serial_number = given_serial
+		serial = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
-	name += " - No. [serial_number]"
+	name += " - No. [serial]"
 	..(loc)
 
 
