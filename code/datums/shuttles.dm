@@ -45,6 +45,10 @@
 	admin_notes = "No brig, no medical facilities, no air."
 	credit_cost = -7500
 
+/datum/map_template/shuttle/emergency/airless/prerequisites_met()
+	// first 5 minutes only
+	return world.time - round_start_time < CHALLENGE_TIME_LIMIT
+
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid Station Emergency Shuttle"
@@ -104,7 +108,6 @@
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
-	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
@@ -155,13 +158,12 @@
 	name = "Oh, Hi Daniel"
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
-	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
-	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known nanotrasen facilities and has a more open inside for larger crowds."
-	credit_cost = 3000
+	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
+	credit_cost = 500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
