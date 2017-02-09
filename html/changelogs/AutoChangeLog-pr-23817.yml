@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Supermatter in a closet/crate will now properly fee the singulo"
