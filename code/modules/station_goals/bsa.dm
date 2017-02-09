@@ -182,7 +182,7 @@
 	var/turf/point = get_front_turf()
 	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
 		T.ex_act(1)
-	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
+	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx,alphafade=1) //ZZZAP
 
 	message_admins("[key_name_admin(user)] has launched an artillery strike.")
 	explosion(bullseye,ex_power,ex_power*2,ex_power*4)

@@ -1721,7 +1721,7 @@
 		switch(punishment)
 			if(ADMIN_PUNISHMENT_LIGHTNING)
 				var/turf/T = get_step(get_step(H, NORTH), NORTH)
-				T.Beam(H, icon_state="lightning[rand(1,12)]", time = 5)
+				T.Beam(H, icon_state="lightning[rand(1,12)]", time = 5,alphafade=1)
 				H.adjustFireLoss(75)
 				H.electrocution_animation(40)
 				H << "<span class='userdanger'>The gods have punished you for your sins!</span>"

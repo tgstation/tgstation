@@ -938,7 +938,7 @@ var/list/wall_runes = list()
 			M.apply_damage(drained_amount, BRUTE, "chest")
 			user.adjustBruteLoss(-drained_amount)
 			M << "<span class='cultitalic'>You feel extremely weak.</span>"
-	user.Beam(T,icon_state="drainbeam",time=5)
+	user.Beam(T,icon_state="drainbeam",time=5,alphafade=1)
 	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
 	"<span class='cult'>Blood flows into you, healing your wounds and revitalizing your spirit.</span>")
 

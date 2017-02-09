@@ -14,10 +14,13 @@
 	var/origin_oldloc = null
 	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
+	var/alpha_fade = 0
+	var/last_time = 0
 
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3,alphafade=0)
 	endtime = world.time+time
+	last_time = time
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
@@ -30,6 +33,7 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
+	alpha_fade = alphafade
 
 
 /datum/beam/proc/Start()
@@ -76,7 +80,7 @@
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
-		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
+		var/obj/effect/ebeam/X = new beam_type(origin_oldloc,alpha_fade,last_time)
 		X.owner = src
 		elements |= X
 
@@ -128,9 +132,13 @@
 	owner = null
 	return ..()
 
+/obj/effect/ebeam/New(alpha_fade = 0, time_exist = 10)
+	if(alpha_fade)
+		animate(src, alpha = 0, time = time_exist*10)
+	..()
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3, alphafade=0)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,alphafade)
 	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
 	return newbeam
 
