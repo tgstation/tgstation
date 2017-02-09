@@ -1077,7 +1077,7 @@
 				var/reason = jobban_isbanned(M, job)
 				if(!reason)
 					continue //skip if it isn't jobbanned anyway
-				switch(alert("Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm","Yes","No"))
+				switch(alert("Job: '[job]' Reason: '[replacetext(reason,"&#255;","ß")]' Un-jobban?","Please Confirm","Yes","No"))
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
