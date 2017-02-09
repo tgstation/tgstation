@@ -267,7 +267,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
 					return
-				var/input = sanitize_russian(stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", ""))
+				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -284,7 +284,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
-				var/input = sanitize_russian(stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", ""))
+				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -654,7 +654,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(!SScommunications.can_announce(user, is_silicon))
 		user << "Intercomms recharging. Please stand by."
 		return
-	var/input = sanitize_russian((stripped_input(user, "Please choose a message to announce to the station crew.", "What?")), 1)
+	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
