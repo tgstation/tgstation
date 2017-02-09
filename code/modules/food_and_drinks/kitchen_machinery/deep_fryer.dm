@@ -53,7 +53,7 @@ insert ascii eagle on american flag background here
 		return
 	else if(exchange_parts(user, I))
 		return
-	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)	//where's the open maint panel icon?!
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
 		if(I.type in blacklisted_items)
