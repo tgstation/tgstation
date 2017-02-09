@@ -56,8 +56,7 @@ insert ascii eagle on american flag background here
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(I.type in blacklisted_items)
-			user << "<span class='warning'>You don't think the [I] would fry very well...</span>"
+		if(I in blacklisted_items)
 			. = ..()
 		else if(user.drop_item() && !frying)
 			user << "<span class='notice'>You put [I] into [src].</span>"
