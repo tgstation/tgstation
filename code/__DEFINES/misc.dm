@@ -409,3 +409,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define TURF_DECAL_PAINT "paint"
 #define TURF_DECAL_DAMAGE "damage"
 #define TURF_DECAL_DIRT "dirt"
+
+// Nuclear emergency challenge
+#define CHALLENGE_TELECRYSTALS 280
+#define CHALLENGE_TIME_LIMIT 3000
+#define CHALLENGE_MIN_PLAYERS 50
+#define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
+
