@@ -45,6 +45,10 @@
 	admin_notes = "No brig, no medical facilities, no air."
 	credit_cost = -7500
 
+/datum/map_template/shuttle/emergency/airless/prerequisites_met()
+	// first 5 minutes only
+	return world.time - round_start_time < CHALLENGE_TIME_LIMIT
+
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid Station Emergency Shuttle"
