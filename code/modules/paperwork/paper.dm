@@ -166,7 +166,7 @@
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
 	stamps = null
-	stamped = list()
+	LAZYCLEARLIST(stamped)
 	cut_overlays()
 	updateinfolinks()
 	update_icon()
@@ -326,9 +326,7 @@
 
 		stampoverlay.icon_state = "paper_[P.icon_state]"
 
-		if(!stamped)
-			stamped = new
-		stamped += P.icon_state
+		LAZYADD(stamped, P.icon_state)
 		add_overlay(stampoverlay)
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"

@@ -664,6 +664,7 @@
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
+	status = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
@@ -807,6 +808,7 @@
 	name = "robotic eyes"
 	icon_state = "cybernetic_eyeballs"
 	desc = "Your vision is augmented."
+	status = ORGAN_ROBOTIC
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	if(!owner)

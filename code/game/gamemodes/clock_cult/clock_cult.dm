@@ -180,7 +180,7 @@ Credit where due:
 	if(slot == "At your feet")
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
-	if(S && !qdeleted(S))
+	if(S && !QDELETED(S))
 		L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
 		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
 		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"

@@ -159,7 +159,7 @@
 				flick("autolathe_r",src)//plays glass insertion animation
 			user << "<span class='notice'>You insert [inserted] sheet[inserted>1 ? "s" : ""] to the autolathe.</span>"
 			use_power(inserted*100)
-			if(!qdeleted(O))
+			if(!QDELETED(O))
 				user.put_in_active_hand(O)
 		else
 			user << "<span class='notice'>You insert a material total of [inserted] to the autolathe.</span>"

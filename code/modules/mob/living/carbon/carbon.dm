@@ -729,7 +729,7 @@
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	var/organs_amt = 0
 	for(var/X in internal_organs)
