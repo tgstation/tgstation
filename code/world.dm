@@ -47,9 +47,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	LoadBans()
 	investigate_reset()
 
-	if(config && config.server_name != null && config.server_suffix && world.port > 0)
-		config.server_name += " #[(world.port % 1000) / 100]"
-
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
