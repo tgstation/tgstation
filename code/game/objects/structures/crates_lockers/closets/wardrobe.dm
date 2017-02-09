@@ -191,3 +191,28 @@
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	return
+
+/obj/structure/closet/wardrobe/suit
+	name = "formal clothing locker"
+	icon_door = "mixed"
+
+/obj/structure/closet/wardrobe/suit/New()
+	..()
+	new /obj/item/clothing/under/suit_jacket/charcoal(src)
+	new /obj/item/clothing/under/suit_jacket/navy(src)
+	new /obj/item/clothing/under/suit_jacket/burgundy(src)
+	new /obj/item/clothing/under/suit_jacket/checkered(src)
+	new /obj/item/clothing/under/suit_jacket/tan(src)
+	new /obj/item/clothing/under/sl_suit(src)
+	new /obj/item/clothing/under/suit_jacket(src)
+	new /obj/item/clothing/under/suit_jacket/female(src)
+	new /obj/item/clothing/under/suit_jacket/really_black(src)
+	new /obj/item/clothing/under/suit_jacket/red(src)
+	new /obj/item/clothing/under/scratch(src)
+	new /obj/item/clothing/under/assistantformal(src)
+	new /obj/item/clothing/under/lawyer/female(src)
+	new /obj/item/clothing/under/lawyer/black(src)
+	new /obj/item/clothing/under/lawyer/red(src)
+	new /obj/item/clothing/under/lawyer/bluesuit(src)
+	new /obj/item/clothing/under/lawyer/purpsuit(src)
+	new /obj/item/clothing/shoes/laceup(src)

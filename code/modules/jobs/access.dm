@@ -66,6 +66,7 @@
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_network = 67
 /var/const/access_cloning = 68 //Cloning room
+/var/const/access_energy_barrier = 69 //Spacepod energy barriers
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
