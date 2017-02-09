@@ -302,11 +302,11 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.is_sharp())
 				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
-				C.apply_damage(I.force*2, BRUTE, "chest")
+				C.apply_damage(I.force, BRUTE, "chest")
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,1)
-				C.Weaken(4)
+				C.Weaken(2)
 				return
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
