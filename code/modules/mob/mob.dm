@@ -715,10 +715,10 @@ var/next_mob_id = 0
 	if(mind)
 		return mind.grab_ghost(force = force)
 
-/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
+/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null, flashwindow)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
-		ghost.notify_cloning(message, sound, source)
+		ghost.notify_cloning(message, sound, source, flashwindow)
 		return ghost
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)

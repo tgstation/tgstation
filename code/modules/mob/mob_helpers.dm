@@ -378,12 +378,14 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
+			if(flashwindow)
+				window_flash(O.client)
 			if(source)
 				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
 				if(A)

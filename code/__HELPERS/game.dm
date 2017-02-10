@@ -420,10 +420,12 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed)
+/proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
 
 	G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+	if(flashwindow)
+		window_flash(G.client)
 	switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
 			G << "<span class='notice'>Choice registered: Yes.</span>"
@@ -441,7 +443,7 @@
 			poll_ignore[ignore_category] += G.ckey
 			G << "<span class='danger'>Choice registered: Never for this round.</span>"
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null)
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null, flashwindow = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
@@ -460,7 +462,7 @@
 			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
 				continue
 
-		showCandidatePollWindow(G, poll_time, Question, candidates, ignore_category, time_passed)
+		showCandidatePollWindow(G, poll_time, Question, candidates, ignore_category, time_passed, flashwindow)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
@@ -507,7 +509,11 @@
 		if(M && !isnewplayer(M))
 			M << thing
 
-/proc/window_flash(var/client_or_usr)
-	if (!client_or_usr)
+/proc/window_flash(client/C)
+	if(ismob(C))
+		var/mob/M = C
+		if(M.client)
+			C = M.client
+	if(!C || !C.prefs.windowflashing)
 		return
-	winset(client_or_usr, "mainwindow", "flash=5")
+	winset(C, "mainwindow", "flash=5")
