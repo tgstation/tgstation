@@ -42,7 +42,7 @@
 	name = "asteroid"
 	icon_state = "asteroid0"
 
-/turf/open/floor/holofloor/asteroid/New()
+/turf/open/floor/holofloor/asteroid/Initialize()
 	icon_state = "asteroid[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
 	..()
 
@@ -50,7 +50,7 @@
 	name = "basalt"
 	icon_state = "basalt0"
 
-/turf/open/floor/holofloor/basalt/New()
+/turf/open/floor/holofloor/basalt/Initialize()
 	icon_state = "basalt[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
 	..()
 
@@ -59,7 +59,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 
-/turf/open/floor/holofloor/space/New()
+/turf/open/floor/holofloor/space/Initialize()
 	icon_state = SPACE_ICON_STATE // so realistic
 	..()
 
@@ -68,11 +68,11 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "speedspace_ns_1"
 
-/turf/open/floor/holofloor/hyperspace/New()
+/turf/open/floor/holofloor/hyperspace/Initialize()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
 	..()
 
-/turf/open/floor/holofloor/hyperspace/ns/New()
+/turf/open/floor/holofloor/hyperspace/ns/Initialize()
 	..()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
 
@@ -86,7 +86,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
-/turf/open/floor/holofloor/carpet/New()
+/turf/open/floor/holofloor/carpet/Initialize()
 	..()
 	addtimer(CALLBACK(src, .proc/update_icon), 1)
 

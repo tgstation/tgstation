@@ -35,11 +35,11 @@
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 
-/turf/open/New()
-	..()
+/turf/open/Initialize()
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
+	..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
@@ -113,11 +113,12 @@
 
 /turf/open/proc/tile_graphic()
 	. = new /list
-	var/list/gases = air.gases
-	for(var/id in gases)
-		var/gas = gases[id]
-		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
-			. += gas[GAS_META][META_GAS_OVERLAY]
+	if(air)
+		var/list/gases = air.gases
+		for(var/id in gases)
+			var/gas = gases[id]
+			if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+				. += gas[GAS_META][META_GAS_OVERLAY]
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
