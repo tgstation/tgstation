@@ -31,7 +31,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			else if(LAZYLEN(thing.priority_overlays))			//Do these two have to be copied? We don't want assignments to them to trigger overlay updates. But, idk, bruh, BYOND. - Cyberboss
 				thing.overlays = thing.priority_overlays
 			else
-				LAZYCLEARLIST(thing.overlays)
+				thing.overlays.Cut()
+			thing.flags &= ~OVERLAY_QUEUED
 		if(MC_TICK_CHECK)
 			break
 	can_fire = processing.len > 0
