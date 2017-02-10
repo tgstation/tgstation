@@ -163,30 +163,28 @@
 				master.visible_message("<span class='warning'>[src] is satiated.</span>", "<span class='danger'>[src]'s hunger recedes...</span>")
 		if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
 			if(HIS_GRACE_PECKISH >= prev_bloodthirst)
-				master.visible_message("<span class='warning'>[src] is feeling snackish.</span>", "<span class='danger'>[src] begins to hunger.\
-				[force_bonus < 5 ? " His power grows.":""]</span>")
-				force_bonus = max(force_bonus, 5)
+				master.visible_message("<span class='warning'>[src] is feeling snackish.</span>", "<span class='danger'>[src] begins to hunger.</span>")
 			if(prev_bloodthirst > HIS_GRACE_HUNGRY)
 				master.visible_message("<span class='warning'>[src] is now only a little peckish.</span>", "<span class='danger'>[src]'s hunger recedes somewhat...</span>")
 		if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
 			if(HIS_GRACE_HUNGRY >= prev_bloodthirst)
 				master.visible_message("<span class='warning'>[src] is getting hungry.</span>", "<span class='boldannounce'>You feel a sense of hunger come over you.\
-				[force_bonus < 10 ? " His power grows.":""]</span>")
-				force_bonus = max(force_bonus, 10)
+				[force_bonus < 5 ? " His power grows.":""]</span>")
+				force_bonus = max(force_bonus, 5)
 			if(prev_bloodthirst > HIS_GRACE_FAMISHED)
 				master.visible_message("<span class='warning'>[src] is now only somewhat hungry.</span>", "<span class='boldannounce'>[src]'s hunger recedes a little...</span>")
 		if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
 			flags |= NODROP
 			if(HIS_GRACE_FAMISHED >= prev_bloodthirst)
 				master.visible_message("<span class='warning'>[src] is very hungry!</span>", "<span class='userdanger'>Spines sink into your hand. [src] must feed immediately.\
-				[force_bonus < 15 ? " His power grows.":""]</span>")
-				force_bonus = max(force_bonus, 15)
+				[force_bonus < 10 ? " His power grows.":""]</span>")
+				force_bonus = max(force_bonus, 10)
 			if(prev_bloodthirst > HIS_GRACE_STARVING)
 				master.visible_message("<span class='warning'>[src] is now only very hungry!</span>", "<span class='boldannounce'>Your bloodlust recedes.</span>")
 		if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
 			flags |= NODROP
 			if(HIS_GRACE_STARVING >= prev_bloodthirst)
 				master.visible_message("<span class='boldwarning'>[src] is starving!</span>", "<span class='userdanger'>Bloodlust overcomes you. [src] must be fed, or you will become His meal.\
-				[force_bonus < 25 ? " And still, His power grows.":""]</span>")
-				force_bonus = max(force_bonus, 25)
+				[force_bonus < 15 ? " And still, His power grows.":""]</span>")
+				force_bonus = max(force_bonus, 15)
 	force = initial(force) + force_bonus
