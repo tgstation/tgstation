@@ -143,7 +143,7 @@ var/datum/subsystem/processing/air/SSair
 			CRASH("SSair/start_processing: Invalid list_type: [list_type]")
 
 /datum/subsystem/processing/air/stop_processing(datum/D, list_type)
-	if(list_type == TRUE)	//called by base fire
+	if(list_type == TRUE)	//called by base fire to be killed, no need to remove from run_cache
 		list_type = currentpart
 	else if(currentpart == list_type)
 		run_cache -= D
