@@ -187,6 +187,8 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * All calls to topics must be checked for correctness, topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls
 
+* Never use locate(ref) of any kind in a topic call otherwise people can use it to get any item in the world and run that against the code for that item. Always limit it to a preexisting container of the valid items the item is meant to operate on
+
 * Information that players could use to metagame (that is to identify the round type and or the antags via information that would not be available to them in character) should be kept as administrator only
 
 * It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type
