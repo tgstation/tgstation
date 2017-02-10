@@ -18,7 +18,8 @@ insert ascii eagle on american flag background here
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
-	var/list/blacklisted_items
+	var/static/list/blacklisted_items = typecacheof(list(/obj/item/weapon/screwdriver, /obj/item/weapon/crowbar, /obj/item/weapon/wrench, /obj/item/weapon/wirecutters, /obj/item/device/multitool, /obj/item/weapon/weldingtool, /obj/item/weapon/reagent_containers/glass, /obj/item/weapon/storage/part_replacer))
+
 /obj/item/weapon/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
 	build_path = /obj/machinery/deepfryer
@@ -27,7 +28,6 @@ insert ascii eagle on american flag background here
 
 /obj/machinery/deepfryer/New()
 	..()
-	blacklisted_items = typecacheof(list(/obj/item/weapon/screwdriver, /obj/item/weapon/crowbar, /obj/item/weapon/wrench, /obj/item/weapon/wirecutters, /obj/item/device/multitool, /obj/item/weapon/weldingtool, /obj/item/weapon/reagent_containers/glass, /obj/item/weapon/storage/part_replacer))
 	create_reagents(50)
 	reagents.add_reagent("nutriment", 25)
 	component_parts = list()
@@ -54,7 +54,7 @@ insert ascii eagle on american flag background here
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(I in blacklisted_items)
+		if(is_type_in_typecache(I, blacklisted_items))
 			. = ..()
 		else if(user.drop_item() && !frying)
 			user << "<span class='notice'>You put [I] into [src].</span>"
