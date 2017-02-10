@@ -118,16 +118,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(isnull(argnum))
 		return
 
-	var/list/lst = list()
-
+	. = list()
+	var/arg_position = 1
 	while(argnum--)
+		var/named_arg = input("Position[arg_position++]. Leave blank for positional argument", "Named argument") as text|null
 		var/value = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 		if (!value["class"])
 			return
-		lst += value["value"]
-
-	return lst
-
+		if(named_arg)
+			.[named_arg] = value["value"]
+		else
+			. += value["value"]
 
 /client/proc/get_callproc_returnval(returnval,procname)
 	. = ""
