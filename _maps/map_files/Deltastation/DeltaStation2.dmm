@@ -78208,7 +78208,7 @@
 /turf/closed/wall,
 /area/maintenance/electrical)
 "cHL" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/visible{
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold (NORTH)";
 	icon_state = "manifold";
 	dir = 1
@@ -107878,15 +107878,6 @@
 	pixel_y = 3
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/doorButtons/access_button{
-	dir = 1;
-	idDoor = "virology_airlock_exterior";
-	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
-	pixel_x = 0;
-	pixel_y = -24;
-	req_access_txt = "39"
-	},
 /turf/open/floor/plasteel/whitegreen/corner{
 	dir = 8
 	},
@@ -108189,6 +108180,16 @@
 	locked = 1;
 	name = "Virology Exterior Airlock";
 	req_access_txt = "39"
+	},
+/obj/machinery/doorButtons/access_button{
+	name = "Virology Access Button";
+	dir = 1;
+	step_x = -13;
+	pixel_x = -10;
+	pixel_y = -2;
+	req_access_txt = "39";
+	idSelf = "virology_airlock_control";
+	idDoor = "virology_airlock_exterior"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
@@ -108660,6 +108661,12 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "dKi" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/whitegreen/corner{
 	dir = 1
 	},
@@ -109067,6 +109074,15 @@
 	locked = 1;
 	name = "Virology Interior Airlock";
 	req_access_txt = "39"
+	},
+/obj/machinery/doorButtons/access_button{
+	name = "Virology Access Button";
+	step_x = -3;
+	pixel_x = -3;
+	pixel_y = 22;
+	req_access_txt = "39";
+	idSelf = "virology_airlock_control";
+	idDoor = "virology_airlock_interior"
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
@@ -118113,8 +118129,8 @@
 	},
 /area/crew_quarters/electronic_marketing_den)
 "ecc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/plasteel/neutral,
 /area/crew_quarters/electronic_marketing_den)
 "ecd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -118148,23 +118164,29 @@
 /turf/open/floor/plasteel,
 /area/hydroponics/Abandoned_Garden)
 "ech" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_Toxins = 0
+/obj/machinery/button/door{
+	id = "Dorm2";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
 	},
-/turf/open/floor/plasteel/hydrofloor,
-/area/hydroponics/Abandoned_Garden)
+/turf/open/floor/wood,
+/area/crew_quarters/sleep)
 "eci" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
-	dir = 4
+/obj/machinery/button/door{
+	id = "Dorm4";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
 	},
-/turf/open/floor/plasteel/hydrofloor,
-/area/hydroponics/Abandoned_Garden)
+/turf/open/floor/wood,
+/area/crew_quarters/sleep)
 "ecj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/hydrofloor,
@@ -118500,102 +118522,52 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
-"ecc" = (
-/obj/structure/closet/wardrobe/green,
-/turf/open/floor/plasteel/neutral/side,
-/area/shuttle/arrival)
-"ecd" = (
-/obj/machinery/doorButtons/access_button{
+"edc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/electronic_marketing_den)
+"edd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	idDoor = "virology_airlock_interior";
+	on = 1;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics/Abandoned_Garden)
+"ede" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	tag = "icon-manifold (EAST)";
+	icon_state = "manifold";
+	dir = 4
+	},
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics/Abandoned_Garden)
+"edf" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/hardhat/cakehat,
+/turf/open/floor/plasteel/redyellow,
+/area/hydroponics/Abandoned_Garden)
+"edg" = (
+/obj/machinery/doorButtons/airlock_controller{
+	name = "Virology Access Console";
+	step_x = -18;
+	pixel_x = -8;
+	pixel_y = 24;
+	req_access_txt = "39";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
-	pixel_x = -10;
-	pixel_y = 0;
-	req_access_txt = "39"
+	idInterior = "virology_airlock_interior";
+	idExterior = "virology_airlock_exterior"
 	},
-/turf/closed/wall/r_wall,
-/area/medical/virology)
-"ece" = (
-/obj/structure/cable/white{
-	d2 = 2;
-	icon_state = "0-2";
-	tag = "icon-0-2"
-	},
-/turf/closed/wall/r_wall,
-/area/medical/virology)
-"ecf" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
-	},
-/obj/structure/cable/white{
-	tag = "icon-2-4";
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	tag = "icon-1-4";
-	icon_state = "1-4"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/machinery/doorButtons/airlock_controller{
-	idExterior = "virology_airlock_exterior";
-	idInterior = "virology_airlock_interior";
-	idSelf = "virology_airlock_control";
-	name = "Virology Access Console";
-	pixel_x = 0;
-	pixel_y = 22;
-	req_access_txt = "39"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (WEST)"
 	},
 /area/medical/virology)
-"ecg" = (
-/obj/structure/cable/white,
-/turf/closed/wall/r_wall,
-/area/medical/virology)
-"ech" = (
-/obj/machinery/button/door{
-	id = "Dorm2";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
-"eci" = (
-/obj/machinery/button/door{
-	id = "Dorm4";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
-"ecj" = (
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = -8
-	},
-/obj/structure/table/wood,
-/obj/item/clothing/head/hardhat/cakehat{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar/atrium)
 
 (1,1,1) = {"
 aaa
@@ -149776,7 +149748,7 @@ aic
 awb
 awX
 ayh
-ech
+edd
 azo
 azo
 aCw
@@ -150024,7 +149996,7 @@ alb
 amb
 anl
 aoj
-ecc
+edc
 aUJ
 ecd
 asz
@@ -150033,7 +150005,7 @@ auT
 awc
 ecf
 ecg
-eci
+ede
 ecj
 eck
 aCx
@@ -155950,7 +155922,7 @@ aBF
 aCP
 aEg
 aFC
-aGY
+aGX
 aGY
 aJA
 aLa
@@ -156213,7 +156185,7 @@ aJA
 aLb
 aMK
 aGY
-ecj
+edf
 aRH
 aGY
 aGY
@@ -165305,7 +165277,7 @@ dGR
 cKs
 cKs
 dJl
-ecd
+dJp
 dKY
 dJp
 dJp
@@ -165562,9 +165534,9 @@ dGS
 cDe
 aaa
 aaa
-ece
-ecf
-ecg
+dJp
+edg
+dJp
 aaa
 aaa
 dJp
@@ -168866,8 +168838,8 @@ cEq
 cGb
 cHs
 cvP
-cCg
 eci
+cCg
 cNS
 cxw
 cvP
