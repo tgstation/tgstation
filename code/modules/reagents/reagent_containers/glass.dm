@@ -28,6 +28,9 @@
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
+			if(isturf(M) && reagents.has_reagent("plasma"))
+				log_game("[thrownby]([thrownby.ckey]) splashed plasma at [target.x] [target.y] [target.z].")
+				message_admins("[thrownby]([thrownby.ckey]) splashed plasma at [target.x] [target.y] [target.z].")
 			reagents.reaction(M, TOUCH)
 			add_logs(user, M, "splashed", R)
 			reagents.clear_reagents()
