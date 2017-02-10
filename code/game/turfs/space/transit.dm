@@ -61,11 +61,13 @@
 /turf/open/space/transit/attackby()
 	return
 
-/turf/open/space/transit/Initialize()
+/turf/open/space/transit/New()
 	..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
+
+
 
 /turf/open/space/transit/proc/update_icon()
 	var/p = 9

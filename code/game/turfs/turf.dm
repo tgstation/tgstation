@@ -23,17 +23,14 @@
 	var/explosion_id = 0
 
 	var/list/decals
-	var/requires_activation	//add to air processing after initialize?
 
 /turf/SDQL_update(const/var_name, new_value)
 	if(var_name == "x" || var_name == "y" || var_name == "z")
 		return FALSE
 	. = ..()
 
-/turf/Initialize()
-	if(initialized)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+/turf/New()
+	..()
 
 	levelupdate()
 	if(smooth)
@@ -43,17 +40,11 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
-	if(requires_activation)
-		CalculateAdjacentTurfs()
-		SSair.add_to_active(src)
-
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy()
 	visibilityChanged()
-	initialized = FALSE
-	requires_activation = FALSE
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
