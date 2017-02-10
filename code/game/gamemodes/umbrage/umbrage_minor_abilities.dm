@@ -38,7 +38,7 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	psi_cost = 20
 	lucidity_cost = 0 //Baseline
-	blacklisted = 0
+	blacklisted = 1
 	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()

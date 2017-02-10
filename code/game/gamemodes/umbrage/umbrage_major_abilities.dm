@@ -33,7 +33,7 @@
 
 /datum/action/innate/umbrage/divulge
 	name = "Divulge"
-	desc = "Cast off your human disguise and become a proper umbrage. This takes time and renders you vulnerable during the process."
+	desc = "Cast off your human disguise and become a proper umbrage. This takes about a full minute, and you can be interrupted by performing any actions."
 	button_icon_state = "umbrage_divulge"
 	blacklisted = 1
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
@@ -80,7 +80,7 @@
 				playsound(user, 'sound/magic/divulge_02.ogg', 80, 0)
 			if(3)
 				user.visible_message("<span class='userdanger'>Sigils form along [user]'s body. \His skin blackens as \he glows a blinding purple.</span>", \
-									"<span class='velvet'>Your body begins to warp. Conscious thought vanishes as power overwhelms you.</span>")
+									"<span class='velvet'>Your body begins to warp. Sigils etch themselves upon your flesh.</span>")
 				animate(user, color = list(rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0)), time = 200) //Produces a slow skin-blackening effect
 				playsound(user, 'sound/magic/divulge_03.ogg', 90, 0)
 		if(!do_after(user, 150, target = user))
@@ -88,7 +88,7 @@
 			animate(user, color = initial(user.color), pixel_y = initial(user.pixel_y), time = 10)
 			return
 	playsound(user, 'sound/magic/divulge_ending.ogg', 100, 0)
-	user.visible_message("<span class='userdanger'>[user]--</span>", "<span class='velvet_bold'>Power consuming your mind... can't--- THINK--</span>")
+	user.visible_message("<span class='userdanger'>[user] rises into the air, crackling with power!</span>", "<span class='velvet_bold'>Your mind...! can't--- THINK--</span>")
 	animate(user, pixel_y = user.pixel_y + 5, time = 60)
 	sleep(45)
 	for(var/i in 1 to 20)
@@ -96,6 +96,7 @@
 		sleep(1.1) //Spooky flavor message spam
 	user.visible_message("<span class='userdanger'>A tremendous shockwave emanates from [user]!</span>", "<span class='velvet_large'><b>YOU ARE FREE!!</b></span>")
 	playsound(user, 'sound/magic/divulge_end.ogg', 100, 0)
+	user.fully_heal()
 	user.underwear = "Nude"
 	user.undershirt = "Nude"
 	user.socks = "Nude"
@@ -117,9 +118,7 @@
 	user.real_name = umbrage_name
 	user.name = umbrage_name
 	sleep(50)
-	user << "<span class='velvet_bold'>Your mind has expanded. All powers are now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
+	user << "<span class='velvet_bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
 	var/datum/umbrage/U = get_umbrage()
-	for(var/V in subtypesof(/datum/action/innate/umbrage))
-		var/datum/action/innate/umbrage/A = V
-		if(!initial(A.blacklisted) && !initial(A.psi_cost))
-			U.give_ability(initial(A.name))
+	U.give_ability("Psi Web")
+	U.give_ability("Devour Will")

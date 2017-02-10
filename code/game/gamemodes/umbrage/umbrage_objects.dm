@@ -48,6 +48,7 @@
 	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>")
 	playsound(L, 'sound/magic/devour_will_victim.ogg', 50, 0)
 	U.psi = U.max_psi
+	U.lucidity++
 	playsound(L, "bodyfall", 50, 1)
 	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
 	L << sound('sound/magic/devour_will_end.ogg', volume = 75)
