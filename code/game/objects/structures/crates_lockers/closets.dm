@@ -113,7 +113,7 @@
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)
-		throwing = 0
+		throwing.finalize(FALSE)
 
 /obj/structure/closet/proc/take_contents()
 	var/turf/T = get_turf(src)

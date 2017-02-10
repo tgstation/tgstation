@@ -1171,9 +1171,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted/reverse_revolver
 	name = "Reverse Revolver"
 	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
-	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Honk."
+	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
 	cost = 14
-	item = /obj/item/weapon/gun/ballistic/revolver/reverse
+	item = /obj/item/weapon/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
