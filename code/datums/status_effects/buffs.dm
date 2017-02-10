@@ -179,16 +179,19 @@
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
+	var/graces = 0
 	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
-	if(!bloodlust)
+		if(HG.awakened)
+			graces++
+	if(!graces)
 		qdel(src)
 		return
 	var/grace_heal = Floor(bloodlust * 0.08)
 	owner.adjustBruteLoss(-grace_heal)
 	owner.adjustFireLoss(-grace_heal)
-	owner.adjustToxLoss(-grace_heal)
+	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
 	owner.adjustOxyLoss(-(grace_heal * 2))
 	owner.adjustCloneLoss(-grace_heal)
 

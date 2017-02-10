@@ -13,6 +13,8 @@
 	w_class = WEIGHT_CLASS_GIGANTIC
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	force = 12
+	attack_verb = list("robusted")
+	hitsound = 'sound/weapons/smash.ogg'
 	var/awakened = 0
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
@@ -111,16 +113,13 @@
 	if(awakened)
 		return
 	awakened = TRUE
-	user.visible_message("<span class='notice'>[src] begins to vibrate...</span>", "<span class='warning'>You flick [src]'s latch up. You hope this is a good idea.</span>")
-	sleep(50)
+	user.visible_message("<span class='boldwarning'>[src] begins to rattle. He thirsts.</span>", "<span class='warning'>You flick [src]'s latch up. You hope this is a good idea.</span>")
 	name = "His Grace"
 	desc = "A bloodthirsty artefact created by a profane rite."
 	gender = MALE
-	var/turf/T = get_turf(src)
-	T.visible_message("<span class='boldwarning'>[src] begins to rattle. He thirsts.</span>")
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
-	playsound(T, 'sound/effects/pope_entry.ogg', 100)
+	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	icon_state = "green_awakened"
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
