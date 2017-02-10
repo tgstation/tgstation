@@ -108660,6 +108660,12 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "dKi" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/whitegreen/corner{
 	dir = 1
 	},
@@ -109045,6 +109051,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/doorButtons/access_button{
+	name = "Virology Access Button";
+	pixel_x = 24;
+	pixel_y = 28;
+	req_access_txt = "39";
+	idSelf = "virology_airlock_control";
+	idDoor = "virology_airlock_interior"
+	},
 /turf/open/floor/plasteel/white{
 	tag = "icon-white_warn (SOUTHEAST)";
 	icon_state = "white_warn"
@@ -109122,9 +109136,6 @@
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
@@ -118500,102 +118511,45 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
-"ecc" = (
-/obj/structure/closet/wardrobe/green,
-/turf/open/floor/plasteel/neutral/side,
-/area/shuttle/arrival)
-"ecd" = (
-/obj/machinery/doorButtons/access_button{
-	dir = 4;
-	idDoor = "virology_airlock_interior";
-	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
-	pixel_x = -10;
-	pixel_y = 0;
-	req_access_txt = "39"
-	},
+"edc" = (
 /turf/closed/wall/r_wall,
-/area/medical/virology)
-"ece" = (
-/obj/structure/cable/white{
-	d2 = 2;
-	icon_state = "0-2";
-	tag = "icon-0-2"
-	},
+/area/maintenance/fpmaint2/fore_port_maintenance)
+"edd" = (
 /turf/closed/wall/r_wall,
-/area/medical/virology)
-"ecf" = (
+/area/maintenance/fpmaint2/fore_port_maintenance)
+"ede" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-4";
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
 	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
+/obj/structure/cable/white{
+	tag = "icon-2-4";
+	icon_state = "2-4"
 	},
 /obj/machinery/doorButtons/airlock_controller{
-	idExterior = "virology_airlock_exterior";
-	idInterior = "virology_airlock_interior";
-	idSelf = "virology_airlock_control";
 	name = "Virology Access Console";
 	pixel_x = 0;
-	pixel_y = 22;
-	req_access_txt = "39"
+	pixel_x = 1;
+	pixel_y = 26;
+	req_access_txt = "39";
+	idSelf = "virology_airlock_control";
+	idInterior = "virology_airlock_interior";
+	idExterior = "virology_airlock_exterior"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (WEST)"
 	},
 /area/medical/virology)
-"ecg" = (
-/obj/structure/cable/white,
+"edf" = (
 /turf/closed/wall/r_wall,
-/area/medical/virology)
-"ech" = (
-/obj/machinery/button/door{
-	id = "Dorm2";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
-"eci" = (
-/obj/machinery/button/door{
-	id = "Dorm4";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
-"ecj" = (
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = -8
-	},
-/obj/structure/table/wood,
-/obj/item/clothing/head/hardhat/cakehat{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar/atrium)
+/area/hydroponics/Abandoned_Garden)
 
 (1,1,1) = {"
 aaa
@@ -165305,7 +165259,7 @@ dGR
 cKs
 cKs
 dJl
-ecd
+dJp
 dKY
 dJp
 dJp
@@ -165562,9 +165516,9 @@ dGS
 cDe
 aaa
 aaa
-ece
-ecf
-ecg
+dJp
+ede
+dJp
 aaa
 aaa
 dJp
