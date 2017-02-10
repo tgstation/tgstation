@@ -299,7 +299,7 @@
 	if(!gibbed)
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
-		if(deathmessage && !del_on_death)
+		if(deathmessage || !del_on_death)
 			emote("deathgasp")
 	if(del_on_death)
 		ghostize()
