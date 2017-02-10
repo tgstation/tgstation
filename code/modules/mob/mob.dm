@@ -338,6 +338,23 @@ var/next_mob_id = 0
 		else
 			M.LAssailant = usr
 
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		setDir(D)
+		spintime -= speed
+
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
 	set category = "IC"
