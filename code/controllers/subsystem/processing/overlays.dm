@@ -9,11 +9,14 @@ var/datum/subsystem/processing/overlays/SSoverlays
 
 	stat_tag = "Ov"
 	currentrun = null
+	var/list/overlay_icon_state_caches
 
 /datum/subsystem/processing/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
+	LAZYINITLIST(overlay_icon_state_caches)
 
 /datum/subsystem/processing/overlays/Recover()
+	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
 	processing = SSoverlays.processing
 
 /datum/subsystem/processing/overlays/fire()
@@ -32,6 +35,32 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		if(MC_TICK_CHECK)
 			break
 	can_fire = processing.len > 0
+
+/atom/proc/extract_overlay_appearance(image_atom_or_string)
+	if (istext(image_atom_or_string))
+		var/static/image/stringbro = new()
+		var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches 
+		var/list/cached_icon = icon_states_cache[icon]
+		if (cached_icon)
+			var/appearance/cached_appearance = cached_icon["[image_atom_or_string]"]
+			if (cached_appearance)
+				return cached_appearance
+		stringbro.icon = icon
+		stringbro.icon_state = image_atom_or_string
+		if (!cached_icon) //not using the macro to save an associated lookup
+			cached_icon = list()
+			icon_states_cache[icon] = cached_icon
+		var/appearance/cached_appearance = stringbro.appearance
+		cached_icon["[image_atom_or_string]"] = cached_appearance
+		return cached_appearance
+	else if (isimage(image_atom_or_string) || isatom(image_atom_or_string))
+		var/image/I = image_atom_or_string
+		return I.appearance
+#if (BYOND_VERSION >= 511)
+	else if (istype(image_atom_or_string, /mutable_appearance/))
+		var/mutable_appearance/MA = image_atom_or_string
+		return MA.appearance
+#endif
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
 #define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; SSoverlays.can_fire = TRUE
