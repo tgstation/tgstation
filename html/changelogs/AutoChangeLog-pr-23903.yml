@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The Luxury Shuttle grabs cash in your wallet and backpack, and
+shares approval between the entrance gates."

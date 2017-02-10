@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Added a new admin only event: Station-wide Human-level Intelligence. Like the random animal intelligence event, but affecting as many animals as there are ghosties."

@@ -45,6 +45,11 @@
 	laws_sanity_check()
 	laws.replace_random_law(law,groups)
 
+/mob/living/silicon/proc/remove_law(number)
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	laws_sanity_check()
+	laws.remove_law(number)
+
 /mob/living/silicon/proc/clear_ion_laws()
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	laws_sanity_check()

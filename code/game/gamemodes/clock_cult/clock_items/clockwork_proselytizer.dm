@@ -196,22 +196,17 @@
 		if(proselytize_values["power_cost"] > 0)
 			proselytize_values["power_cost"] *= 2
 
-	if(!can_use_power(proselytize_values["power_cost"]))
-		if(stored_power - proselytize_values["power_cost"] < 0)
-			user << "<span class='warning'>You need <b>[proselytize_values["power_cost"]]W</b> power to proselytize [target]!</span>"
-		else if(stored_power - proselytize_values["power_cost"] > max_power)
-			user << "<span class='warning'>Your [name] contains too much power to proselytize [target]!</span>"
+	var/target_type = target.type
+
+	if(!proselytize_checks(proselytize_values, target, target_type, user))
 		return FALSE
 
 	proselytize_values["operation_time"] *= speed_multiplier
 
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"])
-		var/target_type = target.type
 		user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
-		if(!do_after(user, proselytize_values["operation_time"], target = target))
-			return FALSE
-		if(repairing || !can_use_power(proselytize_values["power_cost"]) || !target || target.type != target_type) //Check again to prevent bypassing via spamclick
+		if(!do_after(user, proselytize_values["operation_time"], target = target, extra_checks = CALLBACK(src, .proc/proselytize_checks, proselytize_values, target, target_type, user, TRUE)))
 			return FALSE
 		user.visible_message("<span class='warning'>[user]'s [name] covers [target] in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
 	else
@@ -234,3 +229,64 @@
 	if(no_table_check)
 		return TRUE
 	return FALSE
+
+/obj/item/clockwork/clockwork_proselytizer/proc/proselytize_checks(list/proselytize_values, atom/target, expected_type, mob/user, silent) //checked constantly while proselytizing
+	if(!islist(proselytize_values) || !target || QDELETED(target) || !user)
+		return FALSE
+	if(repairing)
+		return FALSE
+	if(target.type != expected_type)
+		return FALSE
+	if(can_use_power(RATVAR_POWER_CHECK))
+		proselytize_values["power_cost"] = 0
+	if(!can_use_power(proselytize_values["power_cost"]))
+		if(stored_power - proselytize_values["power_cost"] < 0)
+			if(!silent)
+				user << "<span class='warning'>You need <b>[proselytize_values["power_cost"]]W</b> power to proselytize [target]!</span>"
+		else if(stored_power - proselytize_values["power_cost"] > max_power)
+			if(!silent)
+				user << "<span class='warning'>Your [name] contains too much power to proselytize [target]!</span>"
+		return FALSE
+	return TRUE
+
+//The repair check proc.
+//Is dark magic. Can probably kill you.
+/obj/item/clockwork/clockwork_proselytizer/proc/proselytizer_repair_checks(list/repair_values, atom/target, mob/user, silent) //Exists entirely to avoid an otherwise unreadable series of checks.
+	if(!islist(repair_values) || !target || QDELETED(target) || !user)
+		return FALSE
+	if(isliving(target))
+		var/mob/living/L = target
+		if(!is_servant_of_ratvar(L))
+			if(!silent)
+				user << "<span class='warning'>[L] does not serve Ratvar!</span>"
+			return FALSE
+		if(L.health >= L.maxHealth || (L.flags & GODMODE))
+			if(!silent)
+				user << "<span class='warning'>[L == user ? "You are" : "[L] is"] at maximum health!</span>"
+			return FALSE
+		repair_values["amount_to_heal"] = L.maxHealth - L.health
+	else if(isobj(target))
+		if(istype(target, /obj/structure/destructible/clockwork))
+			var/obj/structure/destructible/clockwork/C = target
+			if(!C.can_be_repaired)
+				if(!silent)
+					user << "<span class='warning'>[C] cannot be repaired!</span>"
+				return FALSE
+		var/obj/O = target
+		if(O.obj_integrity >= O.max_integrity)
+			if(!silent)
+				user << "<span class='warning'>[O] is at maximum integrity!</span>"
+			return FALSE
+		repair_values["amount_to_heal"] = O.max_integrity - O.obj_integrity
+	else
+		return FALSE
+	if(repair_values["amount_to_heal"] <= 0)
+		return FALSE
+	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], PROSELYTIZER_REPAIR_PER_TICK)
+	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
+	if(!can_use_power(RATVAR_POWER_CHECK) && !can_use_power(repair_values["power_required"]))
+		if(!silent)
+			user << "<span class='warning'>You need at least <b>[repair_values["power_required"]]W</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \
+			<b>[round(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]W</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>"
+		return FALSE
+	return TRUE
