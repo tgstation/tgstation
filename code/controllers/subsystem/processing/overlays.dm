@@ -33,6 +33,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			break
 	can_fire = processing.len > 0
 
+#define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
+#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; SSoverlays.can_fire = TRUE
 /atom/proc/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays
@@ -47,9 +49,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		cached_priority.Cut()
 		need_compile = TRUE
 
-	if(need_compile)
-		SSoverlays.processing[src] = src
-		SSoverlays.can_fire = TRUE
+	if(NOT_QUEUED_ALREADY && need_compile)
+		QUEUE_FOR_COMPILE
 
 /atom/proc/cut_overlay(image, priority)
 	if(!image)
@@ -63,9 +64,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	if(priority)
 		LAZYREMOVE(cached_priority, image)
 
-	if((init_o_len != LAZYLEN(cached_priority)) || (init_p_len != LAZYLEN(cached_overlays)))
-		SSoverlays.processing[src] = src	//something was removed, queue it for compiling
-		SSoverlays.can_fire = TRUE
+	if(NOT_QUEUED_ALREADY && ((init_o_len != LAZYLEN(cached_priority)) || (init_p_len != LAZYLEN(cached_overlays))))
+		QUEUE_FOR_COMPILE
 
 /atom/proc/add_overlay(image, priority = FALSE)
 	if(!image)
@@ -85,16 +85,16 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		cached_overlays |= image
 		need_compile = init_o_len != cached_overlays.len
 
-	if(need_compile) //have we caught more pokemon?
-		SSoverlays.processing[src] = src	//something was added, queue it for compiling
-		SSoverlays.can_fire = TRUE
+	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
+		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_everything = FALSE)
+/atom/proc/copy_overlays(atom/other, cut_everything = FALSE)	//copys our_overlays from another atom
 	if(!other)
 		return
 	copy_overlays_list(other.our_overlays, FALSE, FALSE)	//lets face it, we probably dont WANT priority overlays here (fire, x4, acid, etc..)
 
-/atom/proc/copy_overlays_list(list/other_overlays, cut_everything = FALSE, inherit = FALSE)
+/atom/proc/copy_overlays_list(list/other_overlays, cut_everything = FALSE, inherit = FALSE)	//copys other_overlays into our_overlays, cut_everything does cut_overlays(FALSE) first
+																							//inherit lets our_overlays use other_overlays directly
 	if(!LAZYLEN(other_overlays))
 		return
 	
@@ -109,7 +109,9 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		our_overlays = inherit ? other_overlays : other_overlays.Copy()
 		need_compile = TRUE
 	
-	if(need_compile)
-		SSoverlays.processing[src] = src	//something was removed, queue it for compiling
-		SSoverlays.can_fire = TRUE
+	if(NOT_QUEUED_ALREADY && need_compile)
+		QUEUE_FOR_COMPILE
+
+#undef NOT_QUEUED_ALREADY
+#undef QUEUE_FOR_COMPILE
 
