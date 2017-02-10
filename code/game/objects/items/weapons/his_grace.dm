@@ -12,7 +12,7 @@
 	icon = 'icons/obj/storage.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	origin_tech = "combat=4;engineering=4;syndicate=2"
-	force = 15
+	force = 12
 	var/awakened = 0
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED

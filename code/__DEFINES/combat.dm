@@ -137,4 +137,4 @@
 #define HIS_GRACE_CONSUME_OWNER 140 //His Grace consumes His owner at this point and becomes aggressive.
 #define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, He falls asleep and resets.
 
-#define HIS_GRACE_FORCE_BONUS 5 //How much force is gained per kill.
+#define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
