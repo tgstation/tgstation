@@ -124,3 +124,8 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
 	return 0//aliens are immune to acid.
+
+/mob/living/carbon/alien/be_trampled(trample_damage, mob/living/trampler)
+	if(isalien(trampler))
+		return FALSE
+	return ..()

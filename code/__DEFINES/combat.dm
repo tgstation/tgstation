@@ -97,6 +97,9 @@
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
 
+//the define for trample damage
+#define TRAMPLE_DAMAGE 4 //be aware that this is multiplied by mob size
+
 //Combat object defines
 
 //Embedded objects

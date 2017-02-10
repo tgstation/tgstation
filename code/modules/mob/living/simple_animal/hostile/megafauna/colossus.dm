@@ -606,7 +606,6 @@ Difficulty: Very Hard
 	harm_intent_damage = 1
 	friendly = "mends"
 	density = 0
-	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY

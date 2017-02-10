@@ -17,3 +17,8 @@
 /mob/living/silicon/robot/experience_pressure_difference(pressure_difference, direction)
 	if(!magpulse)
 		return ..()
+
+/mob/living/silicon/robot/trample(size_multiplier, trample_damage = TRAMPLE_DAMAGE)
+	if(module && !module.can_trample)
+		return FALSE
+	return TRUE

@@ -16,6 +16,7 @@
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.2"
 	pass_flags = PASSMOB
+	mob_size = MOB_SIZE_SMALL
 
 	var/blood = 1
 	var/trash = 0

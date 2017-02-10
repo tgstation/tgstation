@@ -395,7 +395,7 @@
 	else
 		return initial(pixel_y)
 
-/mob/living/carbon/proc/accident(obj/item/I)
+/mob/living/proc/accident(obj/item/I)
 	if(!I || (I.flags & (NODROP|ABSTRACT)))
 		return
 
