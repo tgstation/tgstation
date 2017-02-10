@@ -109077,7 +109077,7 @@
 	},
 /obj/machinery/doorButtons/access_button{
 	name = "Virology Access Button";
-	step_x = -3;
+	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 22;
 	req_access_txt = "39";
@@ -118552,7 +118552,7 @@
 "edg" = (
 /obj/machinery/doorButtons/airlock_controller{
 	name = "Virology Access Console";
-	step_x = -18;
+	pixel_x = -18;
 	pixel_x = -8;
 	pixel_y = 24;
 	req_access_txt = "39";
