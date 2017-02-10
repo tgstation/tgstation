@@ -119,9 +119,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 
 	. = list()
-	var/arg_position = 1
 	while(argnum--)
-		var/named_arg = input("Position[arg_position++]. Leave blank for positional argument", "Named argument") as text|null
+		var/named_arg = input("Leave blank for positional argument(it won't work if you put AFTER putting a named arg)", "Named argument") as text|null
 		var/value = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 		if (!value["class"])
 			return
