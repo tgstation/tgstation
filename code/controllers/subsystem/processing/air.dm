@@ -121,17 +121,16 @@ var/datum/subsystem/processing/air/SSair
 				active_turfs[T] = T
 				if(add_to_active_block_changes && T.excited_group)
 					T.excited_group.garbage_collect()
+				return
 			else if(T.initialized)
 				for(var/S in T.atmos_adjacent_turfs)	//this was typed as var/turf/S before, any reason for that?
 					start_processing(S, SSAIR_ACTIVETURFS)
-				added = FALSE
 			else if(map_loading)
 				if(queued_for_activation)
 					queued_for_activation[T] = T
-				added = FALSE
 			else
 				T.requires_activation = TRUE
-				added = FALSE
+			added = FALSE
 		if(SSAIR_EXCITEDGROUPS)
 			excited_groups += D
 		if(SSAIR_HIGHPRESSURE)	//and this
@@ -142,9 +141,6 @@ var/datum/subsystem/processing/air/SSair
 			active_super_conductivity += D
 		else
 			CRASH("SSair/start_processing: Invalid list_type: [list_type]")
-
-	if(added && currentpart == list_type)
-		run_cache[D] = D
 
 /datum/subsystem/processing/air/stop_processing(datum/D, list_type)
 	if(list_type == TRUE)	//called by base fire
