@@ -59,6 +59,13 @@
 	Has medical facilities."
 	credit_cost = 5000
 
+/datum/map_template/shuttle/emergency/russiafightpit
+	suffix = "russiafightpit"
+	name = "Mother Russia Bleeds"
+	description = "Dis is a high-quality shuttle. Many seats, lots of space, all equipment! Even includes entertainment! Such as lots to drink, and a fighting arena for drunk crew to have fun! If arena not fun enough, simply press button of releasing bears. Do not worry, bears trained not to break out of fighting pit. Try not to let asimov-bound babies ruin fun!"
+	admin_notes = "Includes a small variety of weapons. And bears. Only captain-access can release the bears. Bears won't smash the windows themselves, but they can escape if someone lets them."
+	credit_cost = 5000
+
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "An Asteroid With Engines Strapped To It"
