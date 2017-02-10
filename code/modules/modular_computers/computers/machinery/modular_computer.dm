@@ -105,6 +105,7 @@ var/list/global_modular_computers = list()
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/machinery/modular_computer/process()
+	..()
 	if(cpu)
 		// Keep names in sync.
 		cpu.name = src.name

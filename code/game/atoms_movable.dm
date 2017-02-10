@@ -214,7 +214,7 @@
 	if(!direction)
 		return 1
 	inertia_last_loc = loc
-	SSspacedrift.processing[src] = src
+	START_PROCESSING(SSspacedrift, src)
 	return 1
 
 /atom/movable/proc/checkpass(passflag)
@@ -299,11 +299,7 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
-	SSthrowing.processing[src] = TT
-	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
-		SSthrowing.currentrun[src] = TT
-	TT.tick()
-
+	START_PROCESSING(SSthrowing, TT)
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)

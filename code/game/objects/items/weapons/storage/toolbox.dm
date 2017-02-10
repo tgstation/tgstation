@@ -300,7 +300,7 @@
 		send_to_playing_players("<span class='boldannounce'><font size=6>HIS GRACE THIRSTS FOR BLOOD</font></span>")
 		send_to_playing_players('sound/effects/his_grace_awaken.ogg')
 		icon_state = "green_awakened"
-		START_PROCESSING(SSprocessing, src)
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/proc/drowse() //Falls asleep, spitting out all victims and resetting to zero.
 	if(!awakened)
@@ -314,7 +314,7 @@
 	victims = 0
 	warning_messages = initial(warning_messages)
 	adjust_bloodthirst(-bloodthirst)
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='boldannounce'><font size=6>HIS GRACE HAS RETURNED TO SLUMBER</font></span>")
 	send_to_playing_players('sound/effects/pope_entry.ogg')
 	for(var/mob/living/L in src)

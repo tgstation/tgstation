@@ -134,7 +134,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/visible_debug/New()
 	. = ..()
 	tagged = list()
-	SSfastprocess.processing += src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/device/gps/visible_debug/process()
 	var/turf/T = get_turf(src)
@@ -155,5 +155,5 @@ var/list/GPS_list = list()
 	if(tagged)
 		clear()
 	tagged = null
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()

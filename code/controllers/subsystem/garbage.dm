@@ -670,7 +670,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(SSfastprocess)
 	SearchVar(SSflightpacks)
 	SearchVar(SSobj)
-	SearchVar(SSprocessing)
 	SearchVar(record_id_num)
 	SearchVar(emote_list)
 	SearchVar(huds)

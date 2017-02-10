@@ -1,64 +1,39 @@
-var/datum/subsystem/spacedrift/SSspacedrift
+var/datum/subsystem/processing/spacedrift/SSspacedrift
 
-/datum/subsystem/spacedrift
+/datum/subsystem/processing/spacedrift
 	name = "Space Drift"
 	priority = 30
 	wait = 5
 	flags = SS_NO_INIT|SS_KEEP_TIMING
 
-	var/list/currentrun = list()
-	var/list/processing = list()
+	stat_tag = "SD"
+	delegate = /atom/movable/.proc/Spacedrift	
 
-/datum/subsystem/spacedrift/New()
+/datum/subsystem/processing/spacedrift/New()
 	NEW_SS_GLOBAL(SSspacedrift)
 
+/datum/subsystem/processing/spacedrift/Recover()
+	..(SSspacedrift)
 
-/datum/subsystem/spacedrift/stat_entry()
-	..("P:[processing.len]")
+/atom/movable/proc/Spacedrift()		
+	if (inertia_next_move > world.time)
+		return
 
+	if (!loc || loc != inertia_last_loc || Process_Spacemove(0))
+		inertia_dir = 0
 
-/datum/subsystem/spacedrift/fire(resumed = 0)
-	if (!resumed)
-		src.currentrun = processing.Copy()
+	if (inertia_dir)
+		inertia_last_loc = null
+		return PROCESS_KILL
 
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/old_dir = dir
+	var/old_loc = loc
+	inertia_moving = TRUE
+	step(src, inertia_dir)
+	inertia_moving = FALSE
+	inertia_next_move = world.time + inertia_move_delay
+	if (loc == old_loc)
+		inertia_dir = 0
 
-	while (currentrun.len)
-		var/atom/movable/AM = currentrun[currentrun.len]
-		currentrun.len--
-		if (!AM)
-			processing -= AM
-			if (MC_TICK_CHECK)
-				return
-			continue
-
-		if (AM.inertia_next_move > world.time)
-			if (MC_TICK_CHECK)
-				return
-			continue
-
-		if (!AM.loc || AM.loc != AM.inertia_last_loc || AM.Process_Spacemove(0))
-			AM.inertia_dir = 0
-
-		if (!AM.inertia_dir)
-			AM.inertia_last_loc = null
-			processing -= AM
-			if (MC_TICK_CHECK)
-				return
-			continue
-
-		var/old_dir = AM.dir
-		var/old_loc = AM.loc
-		AM.inertia_moving = TRUE
-		step(AM, AM.inertia_dir)
-		AM.inertia_moving = FALSE
-		AM.inertia_next_move = world.time + AM.inertia_move_delay
-		if (AM.loc == old_loc)
-			AM.inertia_dir = 0
-
-		AM.setDir(old_dir)
-		AM.inertia_last_loc = AM.loc
-		if (MC_TICK_CHECK)
-			return
-
+	setDir(old_dir)
+	inertia_last_loc = loc

@@ -170,3 +170,11 @@
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+
+#define SSAIR_PIPENETS 2	//this isn't 1 because that means something else, see SSair/stop_processing
+#define SSAIR_ATMOSMACHINERY 3
+#define SSAIR_ACTIVETURFS 4
+#define SSAIR_EXCITEDGROUPS 5
+#define SSAIR_HIGHPRESSURE 6
+#define SSAIR_HOTSPOTS 7
+#define SSAIR_SUPERCONDUCTIVITY 8

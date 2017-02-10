@@ -58,9 +58,6 @@
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 
-	if(!.)
-		STOP_PROCESSING(SSmachine, src)
-
 /obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)

@@ -27,7 +27,7 @@
 		icon_state = initial(icon_state)
 
 /obj/machinery/power/emitter/energycannon/magical/process()
-	. = ..()
+	..()
 	if(active_tables.len >= tables_required)
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\

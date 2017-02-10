@@ -365,6 +365,7 @@
 
 
 /obj/machinery/shower/process()
+	..()
 	if(on)
 		wash_turf()
 		for(var/atom/movable/G in loc)

@@ -226,6 +226,7 @@ var/bomb_set
 	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()
+	..()
 	if(timing && !exploding)
 		bomb_set = TRUE
 		if(detonation_timer < world.time)

@@ -38,14 +38,14 @@ Pipelines + Other Objects -> Pipe network
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
 	..()
 	if(process)
-		SSair.atmos_machinery += src
+		START_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 
-	SSair.atmos_machinery -= src
+	STOP_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
 
 	dropContents()
 	if(pipe_vision_img)

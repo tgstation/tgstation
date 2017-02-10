@@ -53,6 +53,7 @@
 			id_with_download += text2num(N)
 
 /obj/machinery/r_n_d/server/process()
+	..()
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(0 to T0C)
@@ -164,7 +165,6 @@
 
 /obj/machinery/r_n_d/server/centcom/process()
 	return PROCESS_KILL	//don't need process()
-
 
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"

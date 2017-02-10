@@ -108,7 +108,7 @@
 				M.rad_act(40)
 				M << "<span class='userdanger'>Your [name] feels warmer.</span>"
 			if(201 to INFINITY)
-				SSobj.processing.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 				M.rad_act(80)
 				crit_fail = 1
 				M << "<span class='userdanger'>Your [name]'s reactor overloads!</span>"

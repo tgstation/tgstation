@@ -39,6 +39,7 @@
 		reset = new reset_path(get_turf(src))
 
 /obj/item/weapon/twohanded/ctf/process()
+	..()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in player_list)
@@ -162,6 +163,7 @@
 	..()
 
 /obj/machinery/capture_the_flag/process()
+	..()
 	for(var/i in spawned_mobs)
 		if(!i)
 			spawned_mobs -= i
@@ -599,6 +601,7 @@
 	var/point_rate = 1
 
 /obj/machinery/control_point/process()
+	..()
 	if(controlling)
 		controlling.control_points += point_rate
 		if(controlling.control_points >= controlling.control_points_to_win)

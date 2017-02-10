@@ -35,11 +35,10 @@
 	var/obj/effect/statclick/statclick
 
 // Used to initialize the subsystem BEFORE the map has loaded
-/datum/subsystem/New()
+///datum/subsystem/New()
 
 //cleanup actions
 /datum/subsystem/proc/Shutdown()
-	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
 /datum/subsystem/proc/ignite(resumed = 0)

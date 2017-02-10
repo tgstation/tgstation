@@ -99,7 +99,7 @@
 /turf/air_update_turf(command = 0)
 	if(command)
 		CalculateAdjacentTurfs()
-	SSair.add_to_active(src,command)
+	ADD_TO_ACTIVE_BLOCK_CHANGES(src, command)
 
 /atom/movable/proc/move_update_air(turf/T)
     if(isturf(T))
@@ -120,4 +120,4 @@
 	G.parse_gas_string(text)
 
 	air.merge(G)
-	SSair.add_to_active(src, 0)
+	START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)

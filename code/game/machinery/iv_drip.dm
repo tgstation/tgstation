@@ -100,6 +100,7 @@
 	qdel(src)
 
 /obj/machinery/iv_drip/process()
+	..()
 	if(!attached)
 		return PROCESS_KILL
 

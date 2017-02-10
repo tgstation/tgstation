@@ -112,6 +112,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	icon_state = "offcenter"
 
 /obj/machinery/gateway/centerstation/process()
+	..()
 	if((stat & (NOPOWER)) && use_power)
 		if(active)
 			toggleoff()

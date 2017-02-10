@@ -139,6 +139,7 @@
 
 
 /obj/machinery/magnetic_module/process()
+	..()
 	if(stat & NOPOWER)
 		on = 0
 
@@ -254,6 +255,7 @@
 	rpath = null
 
 /obj/machinery/magnetic_controller/process()
+	..()
 	if(magnets.len == 0 && autolink)
 		for(var/obj/machinery/magnetic_module/M in machines)
 			if(M.freq == frequency && M.code == code)

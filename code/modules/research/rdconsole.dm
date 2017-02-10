@@ -107,11 +107,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(!id)
 		fix_noid_research_servers()
 
-/*	Instead of calling this every tick, it is only being called when needed
-/obj/machinery/computer/rdconsole/process()
-	griefProtection()
-*/
-
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
 
 	//Loading a disk into it.

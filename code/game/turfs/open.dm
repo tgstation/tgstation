@@ -91,7 +91,7 @@
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			if(!excited) //make sure we aren't already excited
 				excited = 1
-				SSair.active_turfs |= src
+				SSair.active_turfs[src] = src
 	UNSETEMPTY(atmos_adjacent_turfs)
 	if (atmos_adjacent_turfs)
 		src.atmos_adjacent_turfs = atmos_adjacent_turfs

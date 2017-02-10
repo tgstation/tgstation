@@ -1,5 +1,5 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
+	STOP_PROCESSING(SSmob, src)
 	dead_mob_list -= src
 	living_mob_list -= src
 	all_clockwork_mobs -= src
@@ -22,7 +22,7 @@
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"
-	mob_list += src
+	START_PROCESSING(SSmob, src)
 	if(stat == DEAD)
 		dead_mob_list += src
 	else

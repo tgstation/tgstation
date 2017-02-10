@@ -1,30 +1,22 @@
-var/datum/subsystem/diseases/SSdisease
+var/datum/subsystem/processing/diseases/SSdisease
 
-/datum/subsystem/diseases
+/datum/subsystem/processing/diseases
 	name = "Diseases"
 	flags = SS_KEEP_TIMING|SS_NO_INIT
+	stat_tag = "D"
 
-	var/list/currentrun = list()
-	var/list/processing = list()
-
-/datum/subsystem/diseases/New()
+/datum/subsystem/processing/diseases/New()
 	NEW_SS_GLOBAL(SSdisease)
 
-/datum/subsystem/diseases/stat_entry(msg)
-	..("P:[processing.len]")
+/datum/subsystem/processing/diseases/Recover()
+	..(SSdisease)
 
-/datum/subsystem/diseases/fire(resumed = 0)
-	if(!resumed)
-		src.currentrun = processing.Copy()
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+/datum/subsystem/processing/diseases/proc/RefreshDiseases()
+	for(var/I in processing_list)
+		var/datum/disease/advance/D = I
+		D.Refresh()
 
-	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
-		currentrun.len--
-		if(thing)
-			thing.process()
-		else
-			processing.Remove(thing)
-		if (MC_TICK_CHECK)
-			return
+/datum/subsystem/processing/diseases/proc/CureAll()
+	for(var/I in processing_list)
+		var/datum/disease/advance/D = I
+		D.cure()

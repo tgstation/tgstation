@@ -47,7 +47,7 @@
 		active_hotspot = null
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/T in atmos_adjacent_turfs)
-		SSair.add_to_active(T)
+		START_ATMOS_PROCESSING(T, SSAIR_ACTIVETURFS)
 	return ..()
 
 /////////////////GAS MIXTURE PROCS///////////////////
@@ -122,10 +122,10 @@
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
-/turf/proc/process_cell(fire_count)
-	SSair.remove_from_active(src)
+/turf/process(fire_count)
+	STOP_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
 
-/turf/open/process_cell(fire_count)
+/turf/open/process(fire_count)
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
 
@@ -177,7 +177,7 @@
 							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 			else
 				if(air.compare(enemy_tile.air)) //compare if
-					SSair.add_to_active(enemy_tile) //excite enemy
+					START_ATMOS_PROCESSING(enemy_tile, SSAIR_ACTIVETURFS) //excite enemy
 					if(our_excited_group)
 						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
@@ -215,11 +215,8 @@
 			if(consider_superconductivity(starting = 1))
 				remove = 0
 
-	if (atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2)
-		SSair.remove_from_active(src)
-	if(!our_excited_group && remove == 1)
-		SSair.remove_from_active(src)
-
+	if((atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2) || (!our_excited_group && remove == 1))
+		STOP_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
 
 /turf/open/proc/share_air(turf/open/T, fire_count, adjacent_turfs_length)
 	if(T.current_cycle < fire_count)
@@ -234,7 +231,7 @@
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
-	SSair.high_pressure_delta |= src
+	START_ATMOS_PROCESSING(src, SSAIR_HIGHPRESSURE)
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference
@@ -250,6 +247,7 @@
 /turf/open/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)
 		M.experience_pressure_difference(pressure_difference, pressure_direction)
+	pressure_difference = 0
 
 /atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
@@ -285,6 +283,14 @@
 	T.excited_group = src
 	T.recently_active = 1
 	reset_cooldowns()
+
+/datum/excited_group/process()
+	breakdown_cooldown++
+	dismantle_cooldown++
+	if(breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
+		self_breakdown()
+	else if(dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
+		dismantle()
 
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
@@ -382,7 +388,7 @@
 		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 	else //Solid but neighbor is open
 		temperature_share_open_to_solid(other)
-	SSair.add_to_active(src, 0)
+	START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
@@ -410,7 +416,7 @@
 /turf/proc/finish_superconduction(temp = temperature)
 	//Make sure still hot enough to continue conducting heat
 	if(temp < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
-		SSair.active_super_conductivity -= src
+		STOP_ATMOS_PROCESSING(src, SSAIR_SUPERCONDUCTIVITY)
 		return 0
 
 /turf/open/finish_superconduction()
@@ -423,7 +429,7 @@
 	if(!thermal_conductivity)
 		return 0
 
-	SSair.active_super_conductivity |= src
+	START_ATMOS_PROCESSING(src, SSAIR_SUPERCONDUCTIVITY)
 	return 1
 
 /turf/open/consider_superconductivity(starting)

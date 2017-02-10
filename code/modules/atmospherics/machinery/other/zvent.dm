@@ -11,10 +11,10 @@
 
 /obj/machinery/zvent/New()
 	..()
-	SSair.atmos_machinery += src
+	START_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
 
 /obj/machinery/zvent/Destroy()
-	SSair.atmos_machinery -= src
+	STOP_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
 	return ..()
 
 /obj/machinery/zvent/process_atmos()

@@ -209,9 +209,7 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	SSair.add_to_active(target, 0)
-	return
-
+	START_ATMOS_PROCESSING(target, SSAIR_ACTIVETURFS)
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()
@@ -228,7 +226,6 @@
 	..()
 	ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 	update_icon()
-
 
 /obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(ptank && damage && attack_type == PROJECTILE_ATTACK && prob(15))

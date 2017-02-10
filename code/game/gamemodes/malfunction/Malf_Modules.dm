@@ -88,6 +88,7 @@
 	. = max(0, (round((detonation_timer - world.time) / 10)))
 
 /obj/machinery/doomsday_device/process()
+	..()
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)

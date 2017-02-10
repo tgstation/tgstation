@@ -55,11 +55,9 @@
 	return ..()
 
 /obj/machinery/computer/slot_machine/process()
-	. = ..() //Sanity checks.
-	if(!.)
-		return .
-
-	money++ //SPESSH MAJICKS
+	..() 
+	if(is_operational())
+		money++ //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon()
 	if(stat & NOPOWER)

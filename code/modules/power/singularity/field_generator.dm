@@ -57,6 +57,7 @@ field_generator power level display
 
 
 /obj/machinery/field/generator/process()
+	..()
 	if(active == FG_ONLINE)
 		calc_power()
 

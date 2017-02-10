@@ -83,8 +83,9 @@
 
 
 /obj/machinery/am_shielding/process()
-	if(!processing)
-		. = PROCESS_KILL
+	//..()
+	//if(!processing)
+	. = PROCESS_KILL
 	//TODO: core functions and stability
 	//TODO: think about checking the airmix for plasma and increasing power output
 	return

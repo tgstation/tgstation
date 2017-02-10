@@ -499,16 +499,16 @@
 
 		//lighting stuff
 		T1.redraw_lighting()
-		SSair.remove_from_active(T1)
+		START_ATMOS_PROCESSING(T1, SSAIR_ACTIVETURFS)
 		T1.CalculateAdjacentTurfs()
-		SSair.add_to_active(T1,1)
+		ADD_TO_ACTIVE_BLOCK_CHANGES(T1, 1)
 
 		T0.ChangeTurf(turf_type)
 
 		T0.redraw_lighting()
-		SSair.remove_from_active(T0)
+		START_ATMOS_PROCESSING(T0, SSAIR_ACTIVETURFS)
 		T0.CalculateAdjacentTurfs()
-		SSair.add_to_active(T0,1)
+		ADD_TO_ACTIVE_BLOCK_CHANGES(T0, 1)
 
 	check_poddoors()
 	S1.last_dock_time = world.time

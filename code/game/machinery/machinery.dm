@@ -50,8 +50,7 @@ Class Procs:
 
    auto_use_power()            'game/machinery/machine.dm'
       This proc determines how power mode power is deducted by the machine.
-      'auto_use_power()' is called by the 'master_controller' game_controller every
-      tick.
+      'auto_use_power()' is called by the base of process
 
       Return Value:
          return:1 -- if object is powered
@@ -82,7 +81,9 @@ Class Procs:
       Called by machine to assign a value to the uid variable.
 
    process()                  'game/machinery/machine.dm'
-      Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list.
+      Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list. Must call the base
+	  If this is not defined the machine will be removed from processing. On that note, the base's return value should not be used if processing
+	  is to continue.
 
    process_atmos()
       Called by the 'air subsystem' once per atmos tick for each machine that is listed in its 'atmos_machines' list.
@@ -148,6 +149,8 @@ Class Procs:
 	return
 
 /obj/machinery/process()//If you dont use process or power why are you here
+	if(use_power)
+		auto_use_power() //add back the power state
 	return PROCESS_KILL
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here

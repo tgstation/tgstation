@@ -1,30 +1,29 @@
-var/datum/subsystem/objects/SSobj
+var/datum/subsystem/processing/objects/SSobj
 
 #define INITIALIZATION_INSSOBJ 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-/datum/subsystem/objects
+/datum/subsystem/processing/objects
 	name = "Objects"
 	init_order = 12
 	priority = 40
+	wait = 20
 
 	var/initialized = INITIALIZATION_INSSOBJ
 	var/old_initialized
-	var/list/processing = list()
-	var/list/currentrun = list()
 
-/datum/subsystem/objects/New()
+/datum/subsystem/processing/objects/New()
 	NEW_SS_GLOBAL(SSobj)
 
-/datum/subsystem/objects/Initialize(timeofdayl)
+/datum/subsystem/processing/objects/Initialize(timeofdayl)
 	fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	. = ..()
 
-/datum/subsystem/objects/proc/InitializeAtoms(list/objects = null)
+/datum/subsystem/processing/objects/proc/InitializeAtoms(list/objects = null)
 	if(initialized == INITIALIZATION_INSSOBJ)
 		return
 
@@ -73,38 +72,35 @@ var/datum/subsystem/objects/SSobj
 			CHECK_TICK
 		testing("Late-initialized [late_loaders.len] atoms")
 
-/datum/subsystem/objects/proc/map_loader_begin()
+/datum/subsystem/processing/objects/proc/map_loader_begin()
 	old_initialized = initialized
 	initialized = INITIALIZATION_INSSOBJ
 
-/datum/subsystem/objects/proc/map_loader_stop()
+/datum/subsystem/processing/objects/proc/map_loader_stop()
 	initialized = old_initialized
 
-/datum/subsystem/objects/stat_entry()
-	..("P:[processing.len]")
-
-
-/datum/subsystem/objects/fire(resumed = 0)
-	if (!resumed)
-		src.currentrun = processing.Copy()
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-
-	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
-		currentrun.len--
-		if(thing)
-			thing.process(wait)
-		else
-			SSobj.processing -= thing
-		if (MC_TICK_CHECK)
-			return
-
-/datum/subsystem/objects/Recover()
+/datum/subsystem/processing/objects/Recover()
 	initialized = SSobj.initialized
 	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
 		InitializeAtoms()
 	old_initialized = SSobj.old_initialized
+	..(SSobj)
 
-	if (istype(SSobj.processing))
-		processing = SSobj.processing
+/datum/subsystem/processing/objects/proc/setupGenetics()
+	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
+	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
+		avnums[i] = i
+	CHECK_TICK
+
+	for(var/A in subtypesof(/datum/mutation/human))
+		var/datum/mutation/human/B = new A()
+		if(B.dna_block == NON_SCANNABLE)
+			continue
+		B.dna_block = pick_n_take(avnums)
+		if(B.quality == POSITIVE)
+			good_mutations |= B
+		else if(B.quality == NEGATIVE)
+			bad_mutations |= B
+		else if(B.quality == MINOR_NEGATIVE)
+			not_good_mutations |= B
+		CHECK_TICK

@@ -11,10 +11,10 @@
 	other_airs = list()
 	members = list()
 	other_atmosmch = list()
-	SSair.networks += src
+	START_ATMOS_PROCESSING(src, SSAIR_PIPENETS)
 
 /datum/pipeline/Destroy()
-	SSair.networks -= src
+	STOP_ATMOS_PROCESSING(src, SSAIR_PIPENETS)
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)

@@ -1,40 +1,65 @@
 //Used to process objects. Fires once every second.
 
-var/datum/subsystem/processing/SSprocessing
 /datum/subsystem/processing
 	name = "Processing"
-	priority = 25
-	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
-	wait = 10
+	can_fire = FALSE
 
 	var/stat_tag = "P" //Used for logging
-	var/list/processing = list()
-	var/list/currentrun = list()
+	var/list/processing_list = list()	//what's processing
+	var/list/run_cache = list()	//what's left to process in the next run
+	var/delegate	//what the processing call is
 
 /datum/subsystem/processing/New()
-	NEW_SS_GLOBAL(SSprocessing)
+	if(type == /datum/subsystem/processing)
+		flags |= SS_NO_FIRE	//this SS should be derived, but MC will create it anyway
 
-/datum/subsystem/processing/stat_entry()
-	..("[stat_tag]:[processing.len]")
+/datum/subsystem/processing/stat_entry(append, forward = FALSE)
+	if(forward)
+		..(append)
+	else if(processing_list)
+		..("[stat_tag]:[processing_list.len][append]")
+	else
+		..("[stat_tag]:FIX THIS SHIT")
 
-/datum/subsystem/processing/fire(resumed = 0)
+/datum/subsystem/processing/proc/start_processing(datum/D)
+	if(D)
+		processing_list[D] = D
+		can_fire = TRUE
+
+/datum/subsystem/processing/proc/stop_processing(datum/D, killed = FALSE)
+	//no null check because we need to be able to remove them
+	processing_list -= D
+	if(!processing_list.len)
+		can_fire = FALSE
+	if(!killed && run_cache.len)
+		run_cache -= D
+
+/datum/subsystem/processing/fire(resumed = 0, arg = wait)
 	if (!resumed)
-		currentrun = processing.Copy()
+		run_cache = processing_list.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/current_run = currentrun
+	var/list/local_cache = run_cache
+	var/local_delegate = delegate
 
-	while(current_run.len)
-		var/datum/thing = current_run[current_run.len]
-		current_run.len--
-		if(thing)
-			thing.process(wait)
-		else
-			processing -= thing
-		if (MC_TICK_CHECK)
-			return
+	if(local_delegate)
+		do	//we know local_cache.len will always at least be 1 if we're here
+			var/thing = local_cache[local_cache.len]
+			local_cache.len--
+			if(!thing || call(thing, local_delegate)(arg) == PROCESS_KILL)
+				stop_processing(thing, TRUE)
+		while (local_cache.len && MC_TICK_CHECK)
+	else	//copy pasta to avoid the call()() overhead for 90% of things
+		do
+			var/datum/thing = local_cache[local_cache.len]
+			local_cache.len--
+			if(!thing || thing.process(arg) == PROCESS_KILL)
+				stop_processing(thing, TRUE)
+		while(local_cache.len && MC_TICK_CHECK)
 
-/datum/var/isprocessing = 0
-/datum/proc/process()
-	set waitfor = 0
-	STOP_PROCESSING(SSobj, src)
-	return 0
+/datum/subsystem/processing/Recover(datum/subsystem/processing/predecessor)
+	processing_list = predecessor.processing_list
+	run_cache = predecessor.run_cache
+
+/datum/proc/process(wait)
+	set waitfor = FALSE
+	return PROCESS_KILL

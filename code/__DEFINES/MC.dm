@@ -5,8 +5,13 @@
 #define MC_AVERAGE_SLOW(average, current) (0.9 * (average) + 0.1 * (current))
 #define NEW_SS_GLOBAL(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
 
-#define START_PROCESSING(Processor, Datum) if (!Datum.isprocessing) {Datum.isprocessing = 1;Processor.processing += Datum}
-#define STOP_PROCESSING(Processor, Datum) Datum.isprocessing = 0;Processor.processing -= Datum
+#define START_PROCESSING(Processor, Datum) Processor.start_processing(Datum)
+#define STOP_PROCESSING(Processor, Datum) Processor.stop_processing(Datum)
+
+#define START_ATMOS_PROCESSING(Datum, Group) SSair.start_processing(Datum, Group)
+#define STOP_ATMOS_PROCESSING(Datum, Group) SSair.stop_processing(Datum, Group)
+
+#define ADD_TO_ACTIVE_BLOCK_CHANGES(Turf, blockchanges) SSair.start_processing(Turf, SSAIR_ACTIVETURFS, blockchanges)   //snowflake third arg
 
 //SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 

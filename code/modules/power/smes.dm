@@ -264,6 +264,7 @@
 	return round(5.5*charge/capacity)
 
 /obj/machinery/power/smes/process()
+	..()
 	if(stat & BROKEN)
 		return
 

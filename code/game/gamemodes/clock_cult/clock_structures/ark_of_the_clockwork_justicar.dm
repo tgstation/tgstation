@@ -75,10 +75,10 @@
 	if(!objective_is_gateway)
 		ratvar_portal = FALSE
 	SSshuttle.registerHostileEnvironment(src)
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")

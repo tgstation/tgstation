@@ -45,7 +45,7 @@
 
 	if(requires_activation)
 		CalculateAdjacentTurfs()
-		SSair.add_to_active(src)
+		START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
@@ -190,7 +190,7 @@
 		return src
 	var/old_blueprint_data = blueprint_data
 
-	SSair.remove_from_active(src)
+	STOP_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
 
 	var/list/old_checkers = proximity_checkers
 	var/old_ex_level = explosion_level
@@ -261,7 +261,7 @@
 
 	air.temperature /= turf_count
 	air.holder = src
-	SSair.add_to_active(src)
+	START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(baseturf)
@@ -394,9 +394,9 @@
 	T0.ChangeTurf(turf_type)
 
 	T0.redraw_lighting()
-	SSair.remove_from_active(T0)
+	STOP_ATMOS_PROCESSING(T0, SSAIR_ACTIVETURFS)
 	T0.CalculateAdjacentTurfs()
-	SSair.add_to_active(T0,1)
+	ADD_TO_ACTIVE_BLOCK_CHANGES(T0, 1)
 
 /turf/proc/is_transition_turf()
 	return

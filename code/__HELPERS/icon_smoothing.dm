@@ -110,21 +110,21 @@
 	return adjacencies
 
 //do not use, use queue_smooth(atom)
-/proc/smooth_icon(atom/A)
-	if(!A || !A.smooth)
+/atom/proc/smooth_icon()
+	if(!smooth)
 		return
-	A.smooth &= ~SMOOTH_QUEUED
-	if (!A.z)
+	smooth &= ~SMOOTH_QUEUED
+	if (!z)
 		return
-	if(QDELETED(A))
+	if(QDELETED(src))
 		return
-	if((A.smooth & SMOOTH_TRUE) || (A.smooth & SMOOTH_MORE))
-		var/adjacencies = calculate_adjacencies(A)
+	if((smooth & SMOOTH_TRUE) || (smooth & SMOOTH_MORE))
+		var/adjacencies = calculate_adjacencies(src)
 
-		if(A.smooth & SMOOTH_DIAGONAL)
-			A.diagonal_smooth(adjacencies)
+		if(smooth & SMOOTH_DIAGONAL)
+			diagonal_smooth(adjacencies)
 		else
-			cardinal_smooth(A, adjacencies)
+			cardinal_smooth(src, adjacencies)
 
 /atom/proc/diagonal_smooth(adjacencies)
 	switch(adjacencies)
@@ -300,14 +300,14 @@
 		var/turf/T = V
 		if(T.smooth)
 			if(now)
-				smooth_icon(T)
+				T.smooth_icon()
 			else
 				queue_smooth(T)
 		for(var/R in T)
 			var/atom/A = R
 			if(A.smooth)
 				if(now)
-					smooth_icon(A)
+					A.smooth_icon()
 				else
 					queue_smooth(A)
 
@@ -383,8 +383,7 @@
 	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
 		return
 
-	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
+	START_PROCESSING(SSicon_smooth, A)
 	A.smooth |= SMOOTH_QUEUED
 
 

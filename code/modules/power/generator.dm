@@ -72,6 +72,7 @@
 #define GENRATE 800		// generator output coefficient from Q
 
 /obj/machinery/power/generator/process()
+	..()
 
 	if(!cold_circ || !hot_circ)
 		return

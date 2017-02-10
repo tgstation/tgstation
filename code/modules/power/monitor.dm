@@ -22,6 +22,8 @@
 	history["demand"] = list()
 
 /obj/machinery/computer/monitor/process()
+	if(!..())
+		return
 	if(!attached)
 		use_power = 1
 		search()

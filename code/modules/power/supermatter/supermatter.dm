@@ -96,6 +96,7 @@
 	qdel(src)
 
 /obj/machinery/power/supermatter_shard/process()
+	..()
 	var/turf/T = loc
 
 	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.

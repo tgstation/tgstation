@@ -125,6 +125,7 @@
 	//isn't the power recieved from the incoming light proportionnal to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
+	..()
 	if(stat & BROKEN)
 		return
 	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed

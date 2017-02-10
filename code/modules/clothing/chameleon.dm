@@ -153,14 +153,14 @@
 	return 1
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise()
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSobj, src)
 	random_look(owner)
 
 	emp_timer = world.time + EMP_RANDOMISE_TIME
 
 /datum/action/item_action/chameleon/change/process()
 	if(world.time > emp_timer)
-		STOP_PROCESSING(SSprocessing, src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	random_look(owner)
 

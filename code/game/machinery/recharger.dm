@@ -103,6 +103,7 @@
 		update_icon()
 
 /obj/machinery/recharger/process()
+	..()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 

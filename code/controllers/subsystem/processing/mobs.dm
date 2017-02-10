@@ -1,36 +1,25 @@
-var/datum/subsystem/mobs/SSmob
+var/datum/subsystem/processing/mobs/SSmob
 
-/datum/subsystem/mobs
+/datum/subsystem/processing/mobs
 	name = "Mobs"
 	init_order = 4
 	display_order = 4
 	priority = 100
-	flags = SS_KEEP_TIMING|SS_NO_INIT
+	wait = 20
+	flags = SS_NO_INIT|SS_KEEP_TIMING
 
-	var/list/currentrun = list()
+	stat_tag = "Mob"
 
-/datum/subsystem/mobs/New()
+	delegate = /mob/.proc/Life
+	processing_list = null
+
+/datum/subsystem/processing/mobs/New()
+	if(!mob_list)
+		LAZYINITLIST(processing_list)
+		mob_list = processing_list
+	else
+		processing_list = mob_list
 	NEW_SS_GLOBAL(SSmob)
 
-
-/datum/subsystem/mobs/stat_entry()
-	..("P:[mob_list.len]")
-
-
-/datum/subsystem/mobs/fire(resumed = 0)
-	var/seconds = wait * 0.1
-	if (!resumed)
-		src.currentrun = mob_list.Copy()
-
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-
-	while(currentrun.len)
-		var/mob/M = currentrun[currentrun.len]
-		currentrun.len--
-		if(M)
-			M.Life(seconds)
-		else
-			mob_list.Remove(M)
-		if (MC_TICK_CHECK)
-			return
+/datum/subsystem/processing/mobs/Recover()
+	..(SSmob)

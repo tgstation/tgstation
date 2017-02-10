@@ -200,6 +200,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		on = 0
 
 /obj/machinery/telecomms/process()
+	..()
 	update_power()
 
 	// Update the icon

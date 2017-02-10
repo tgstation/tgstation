@@ -47,7 +47,7 @@
 		if(OPERATING)
 			if(!attached)
 				return
-			START_PROCESSING(SSobj, src)
+			STOP_PROCESSING(SSobj, src)
 			anchored = 1
 
 	mode = value

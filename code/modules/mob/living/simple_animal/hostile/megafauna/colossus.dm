@@ -705,6 +705,7 @@ Difficulty: Very Hard
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()
+	..()
 	if(holder_animal)
 		if(holder_animal.stat == DEAD && !QDELETED(holder_animal))
 			dump_contents()

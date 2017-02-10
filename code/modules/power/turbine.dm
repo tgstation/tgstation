@@ -136,6 +136,7 @@
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/compressor/process()
+	..()
 	if(!turbine)
 		stat = BROKEN
 	if(stat & BROKEN || panel_open)
@@ -221,6 +222,7 @@
 		compressor.locate_machinery()
 
 /obj/machinery/power/turbine/process()
+	..()
 
 	if(!compressor)
 		stat = BROKEN
@@ -394,5 +396,6 @@
 	return
 
 /obj/machinery/computer/turbine_computer/process()
+	..()
 	src.updateDialog()
 	return

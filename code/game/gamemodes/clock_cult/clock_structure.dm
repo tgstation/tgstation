@@ -150,8 +150,7 @@
 		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>"
 
 /obj/structure/destructible/clockwork/powered/Destroy()
-	SSfastprocess.processing -= src
-	SSobj.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/structure/destructible/clockwork/powered/process()

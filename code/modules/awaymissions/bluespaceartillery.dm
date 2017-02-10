@@ -13,6 +13,7 @@
 	anchored = 1
 
 /obj/machinery/artillerycontrol/process()
+	..()
 	if(reload < reload_cooldown)
 		reload++
 

@@ -40,6 +40,7 @@
 		recharge_speed *= C.maxcharge / 10000
 
 /obj/machinery/recharge_station/process()
+	..()
 	if(!is_operational())
 		return
 

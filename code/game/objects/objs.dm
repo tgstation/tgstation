@@ -41,7 +41,10 @@
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSacid, src)
+	if(resistance_flags & ON_FIRE)
+		STOP_PROCESSING(SSfire_burning, src)
 	SStgui.close_uis(src)
 	return ..()
 

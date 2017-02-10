@@ -9,3 +9,6 @@ var/datum/subsystem/processing/flightpacks/SSflightpacks
 
 /datum/subsystem/processing/flightpacks/New()
 	NEW_SS_GLOBAL(SSflightpacks)
+
+/datum/subsystem/processing/flightpacks/Recover()
+	..(SSflightpacks)

@@ -44,6 +44,7 @@
 		..()
 
 /obj/machinery/syndicatebomb/process()
+	..()
 	if(!active)
 		STOP_PROCESSING(SSfastprocess, src)
 		detonation_timer = null

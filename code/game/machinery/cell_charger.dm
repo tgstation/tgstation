@@ -110,6 +110,7 @@
 
 
 /obj/machinery/cell_charger/process()
+	..()
 	if(!charging || !anchored || (stat & (BROKEN|NOPOWER)))
 		return
 
