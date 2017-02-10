@@ -91,20 +91,29 @@
 					return 1
 	return ..()
 
-/mob/living/carbon/throw_impact(atom/hit_atom)
+/mob/living/carbon/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
+	var/hurt = TRUE
+	if(istype(throwingdatum, /datum/thrownthing))
+		var/datum/thrownthing/D = throwingdatum
+		if(iscyborg(D.thrower))
+			var/mob/living/silicon/robot/R = D.thrower
+			if(!R.emagged)
+				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
-		Weaken(1)
-		take_bodypart_damage(10)
+		if(hurt)
+			Weaken(1)
+			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
-		victim.Weaken(1)
-		Weaken(1)
-		victim.take_bodypart_damage(10)
-		take_bodypart_damage(10)
-		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+		if(hurt)
+			victim.take_bodypart_damage(10)
+			take_bodypart_damage(10)
+			victim.Weaken(1)
+			Weaken(1)
+			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -230,23 +239,6 @@
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-
-/mob/living/carbon/proc/spin(spintime, speed)
-	set waitfor = 0
-	var/D = dir
-	while(spintime >= speed)
-		sleep(speed)
-		switch(D)
-			if(NORTH)
-				D = EAST
-			if(SOUTH)
-				D = WEST
-			if(EAST)
-				D = SOUTH
-			if(WEST)
-				D = NORTH
-		setDir(D)
-		spintime -= speed
 
 /mob/living/carbon/resist_buckle()
 	if(restrained())

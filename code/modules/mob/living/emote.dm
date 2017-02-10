@@ -452,3 +452,15 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
+
+/datum/emote/living/spin
+	key = "spin"
+	key_third_person = "spins"
+	message = "spins around dizzily!"
+
+/datum/emote/living/spin/run_emote(mob/user)
+	user.spin(20, 1)
+	if(istype(user, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = user
+		R.riding_datum.force_dismount()
+	..()
