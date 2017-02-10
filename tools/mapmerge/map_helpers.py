@@ -121,7 +121,7 @@ def merge_map(newfile, backupfile, tgm):
 
 #######################
 #write to file helpers#
-def write_dictionary_tgm(filename, dictionary, header): #write dictionary in tgm format
+def write_dictionary_tgm(filename, dictionary, header = None): #write dictionary in tgm format
     with open(filename, "w") as output:
         output.write("{}\n".format(tgm_header))
         if header:
@@ -179,7 +179,7 @@ def write_grid_coord_small(filename, grid, maxx, maxy): #thanks to YotaXP for fi
             output.write("{}\n\"}}\n".format(grid[x,maxy]))
 
 
-def write_dictionary(filename, dictionary, header): #writes a tile dictionary the same way Dreammaker does
+def write_dictionary(filename, dictionary, header = None): #writes a tile dictionary the same way Dreammaker does
     with open(filename, "w") as output:
         for key, value in dictionary.items():
             if header:
@@ -253,6 +253,9 @@ def get_map_raw_text(mapfile):
         return reading.read()
 
 def parse_map(map_raw_text): #still does not support more than one z level per file, but should parse any format
+    in_comment_line = False
+    comment_trigger = False
+
     in_quote_block = False
     in_key_block = False
     in_data_block = False
@@ -289,9 +292,26 @@ def parse_map(map_raw_text): #still does not support more than one z level per f
 
         if not in_map_block:
 
-            if char == "\n" or char == "\t":
+            if char == "\n":
+                in_comment_line = False
+                comment_trigger = False
                 continue
 
+            if in_comment_line:
+                continue
+
+            if char == "\t":
+                continue
+
+            if char == "/" and not in_quote_block:
+                if comment_trigger:
+                    in_comment_line = True
+                    continue
+                else:
+                    comment_trigger = True
+            else:
+                comment_trigger = False
+            
             if in_data_block:
 
                 if in_varedit_block:

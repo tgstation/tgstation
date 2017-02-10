@@ -84,7 +84,7 @@ var/datum/subsystem/timer/SStimer
 			if (!callBack)
 				qdel(timer)
 				bucket_resolution = null //force bucket recreation
-				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||qdeleted(timer)=[qdeleted(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
+				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
 
 			if (!timer.spent)
 				spent += timer
@@ -294,9 +294,7 @@ proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
-	if (wait <= 0)
-		callback.InvokeAsync()
-		return
+	wait = max(wait, 0)
 
 	var/hash
 
@@ -307,12 +305,17 @@ proc/addtimer(datum/callback/callback, wait, flags)
 
 		var/datum/timedevent/hash_timer = SStimer.hashes[hash]
 		if(hash_timer)
-			if (flags & TIMER_OVERRIDE)
-				qdel(hash_timer)
+			if (hash_timer.spent) //it's pending deletion, pretend it doesn't exist.
+				hash_timer.hash = null
+				SStimer.hashes -= hash
 			else
-				if (hash_timer.flags & TIMER_STOPPABLE)
-					. = hash_timer.id
-				return
+
+				if (flags & TIMER_OVERRIDE)
+					qdel(hash_timer)
+				else
+					if (hash_timer.flags & TIMER_STOPPABLE)
+						. = hash_timer.id
+					return
 
 
 	var/timeToRun = world.time + wait

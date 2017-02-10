@@ -223,7 +223,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	var/perpname = get_face_name(get_id_name(""))
-	if(perpname)
+	if(perpname && data_core)
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
 		if(R)
 			switch(R.fields["criminal"])

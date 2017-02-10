@@ -49,44 +49,54 @@
 			<ui-button action='PRG_edit'>EDIT</ui-button>
 			<ui-button action='PRG_printfile'>PRINT</ui-button>
 			</div><hr>
-			{{data.filedata}}
+			{{{data.filedata}}}
 		{{else}}
 			<h2>Available files (local):</h2>
 			<table>
-				<tr><th>File name
-				<th>File type
-				<th>File size (GQ)
-				<th>Operations
+				<tr>
+					<th>File name</th>
+					<th>File type</th>
+					<th>File size (GQ)</th>
+					<th>Operations</th>
+				</tr>
 				{{#each data.files}}
-					<tr><td>{{name}}
-					<td>.{{type}}
-					<td>{{size}}GQ
-					<td>
-						<ui-button action='PRG_openfile' params='{"name": "{{name}}"}'>VIEW</ui-button>
-						<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_deletefile' params='{"name": "{{name}}"}'>DELETE</ui-button>
-						<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_rename' params='{"name": "{{name}}"}'>RENAME</ui-button>
-						<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_clone' params='{"name": "{{name}}"}'>CLONE</ui-button>
-						{{#if data.usbconnected}}
-							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_copytousb' params='{"name": "{{name}}"}'>EXPORT</ui-button>
-						{{/if}}
+					<tr>
+						<td>{{name}}</td>
+						<td>.{{type}}</td>
+						<td>{{size}}GQ</td>
+						<td>
+							<ui-button action='PRG_openfile' params='{"name": "{{name}}"}'>VIEW</ui-button>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_deletefile' params='{"name": "{{name}}"}'>DELETE</ui-button>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_rename' params='{"name": "{{name}}"}'>RENAME</ui-button>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_clone' params='{"name": "{{name}}"}'>CLONE</ui-button>
+							{{#if data.usbconnected}}
+								<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_copytousb' params='{"name": "{{name}}"}'>EXPORT</ui-button>
+							{{/if}}
+						</td>
+					</tr>
 				{{/each}}
 			</table>
 			{{#if data.usbconnected}}
 			<h2>Available files (portable device):</h2>
 			<table>
-				<tr><th>File name
-				<th>File type
-				<th>File size (GQ)
-				<th>Operations
+				<tr>
+					<th>File name</th>
+					<th>File type</th>
+					<th>File size (GQ)</th>
+					<th>Operations</th>
+				</tr>
 				{{#each data.usbfiles}}
-					<tr><td>{{name}}
-					<td>.{{type}}
-					<td>{{size}}GQ
-					<td>
-						<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_usbdeletefile' params='{"name": "{{name}}"}'>DELETE</ui-button>
-						{{#if data.usbconnected}}
-							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_copyfromusb' params='{"name": "{{name}}"}'>IMPORT</ui-button>
-						{{/if}}
+					<tr>
+						<td>{{name}}</td>
+						<td>.{{type}}</td>
+						<td>{{size}}GQ</td>
+						<td>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_usbdeletefile' params='{"name": "{{name}}"}'>DELETE</ui-button>
+							{{#if data.usbconnected}}
+								<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_copyfromusb' params='{"name": "{{name}}"}'>IMPORT</ui-button>
+							{{/if}}
+						</td>
+					</tr>
 				{{/each}}
 			</table>
 			{{/if}}

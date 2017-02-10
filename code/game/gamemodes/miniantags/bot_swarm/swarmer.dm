@@ -40,7 +40,7 @@
 	if(crit_fail)
 		user << "Swarmer has been depowered."
 		return
-	if(qdeleted(src))
+	if(QDELETED(src))
 		user << "Swarmer has been occupied by someone else."
 		return
 	var/mob/living/simple_animal/hostile/swarmer/S = new /mob/living/simple_animal/hostile/swarmer(get_turf(loc))
@@ -196,8 +196,31 @@
 /obj/item/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	return S.Integrate(src)
 
+/obj/item/proc/IntegrateAmount() //returns the amount of resources gained when eating this item
+	if(materials[MAT_METAL] || materials[MAT_GLASS])
+		return 1
+	return 0
+
 /obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armory
 	return FALSE
+
+/obj/item/clockwork/alloy_shards/IntegrateAmount()
+	return 10
+
+/obj/item/stack/tile/brass/IntegrateAmount()
+	return 5
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large/IntegrateAmount()
+	return 4
+
+/obj/item/clockwork/alloy_shards/large/IntegrateAmount()
+	return 3
+
+/obj/item/clockwork/alloy_shards/medium/IntegrateAmount()
+	return 2
+
+/obj/item/clockwork/alloy_shards/small/IntegrateAmount()
+	return 1
 
 /turf/open/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
 	return FALSE
@@ -316,10 +339,6 @@
 	S << "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>"
 	return FALSE
 
-/obj/machinery/blackbox_recorder/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This machine has recorded large amounts of data on this structure and its inhabitants, it will be a useful resource to our masters in the future. Aborting. </span>"
-	return FALSE
-
 /obj/machinery/power/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
 	return FALSE
@@ -366,7 +385,11 @@
 	S << "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>"
 	return FALSE
 
-/obj/stucture/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>This object is multiplying existing resources. Aborting.</span>"
+	return FALSE
+
+/obj/structure/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	. = ..()
 	var/turf/here = get_turf(src)
 	for(var/A in here.contents)
@@ -377,12 +400,11 @@
 
 
 /obj/item/device/unactivated_swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	if(S.resources + 50 > S.max_resources)
-		S << "<span class='warning'>We have too many resources to reconsume this shell. Aborting.</span>"
-	else
-		..()
-		S.resources += 49 //refund the whole thing
+	..()
 	return FALSE //would logically be TRUE, but we don't want AI swarmers eating player spawn chances.
+
+/obj/item/device/unactivated_swarmer/IntegrateAmount()
+	return 50
 
 /obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S << "<span class='warning'>This object does not contain enough materials to work with.</span>"
@@ -400,13 +422,13 @@
 		return 0
 	return new fabrication_object(loc)
 
-
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(obj/item/target)
-	if(resources >= max_resources)
+	var/resource_gain = target.IntegrateAmount()
+	if(resources + resource_gain > max_resources)
 		src << "<span class='warning'>We cannot hold more materials!</span>"
 		return TRUE
-	if((target.materials[MAT_METAL]) || (target.materials[MAT_GLASS]))
-		resources++
+	if(resource_gain)
+		resources += resource_gain
 		do_attack_animation(target)
 		changeNext_move(CLICK_CD_MELEE)
 		var/obj/effect/overlay/temp/swarmer/integrate/I = new /obj/effect/overlay/temp/swarmer/integrate(get_turf(target))

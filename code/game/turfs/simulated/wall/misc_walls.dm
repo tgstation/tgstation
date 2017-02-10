@@ -8,7 +8,7 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
 
-/turf/closed/wall/mineral/cult/New()
+/turf/closed/wall/mineral/cult/Initialize()
 	new /obj/effect/overlay/temp/cult/turf(src)
 	..()
 
@@ -50,7 +50,7 @@
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
-/turf/closed/wall/clockwork/New()
+/turf/closed/wall/clockwork/Initialize()
 	..()
 	new /obj/effect/overlay/temp/ratvar/wall(src)
 	new /obj/effect/overlay/temp/ratvar/beam(src)

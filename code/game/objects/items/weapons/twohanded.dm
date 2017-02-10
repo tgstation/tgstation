@@ -136,7 +136,7 @@
 	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
 		return
-	if (qdeleted(src))
+	if (QDELETED(src))
 		return
 	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
 
@@ -169,8 +169,8 @@
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
 	if(slot_flags & slotbit)
-		var/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
-		if(!O || qdeleted(O))
+		var/datum/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		if(!O || QDELETED(O))
 			return
 		qdel(O)
 		return
@@ -700,7 +700,7 @@
 	if(source.z == ZLEVEL_STATION && get_dist(turfhit, source) < maxdist || source.z != ZLEVEL_STATION)
 		..()
 		if(do_after_mob(user, src, 5, uninterruptible = 1, progress = 0))
-			if(qdeleted(src))
+			if(QDELETED(src))
 				return
 			var/turf/landing = get_turf(src)
 			if (loc != landing)

@@ -60,6 +60,8 @@
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	flags = CAN_BE_DIRTY
 
+	var/list/firedoors
+	var/firedoors_last_closed_on = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -120,7 +122,9 @@ var/list/teleportlocs = list()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
-
+/area/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -183,6 +187,24 @@ var/list/teleportlocs = list()
 		return 1
 	return 0
 
+/area/proc/ModifyFiredoors(opening)
+	if(firedoors)
+		firedoors_last_closed_on = world.time
+		for(var/FD in firedoors)
+			var/obj/machinery/door/firedoor/D = FD
+			var/cont = !D.welded
+			if(cont && opening)	//don't open if adjacent area is on fire
+				for(var/I in D.affecting_areas)
+					var/area/A = I
+					if(A.fire)
+						cont = FALSE
+						break
+			if(cont)
+				if(D.operating)
+					D.nextstate = opening ? OPEN : CLOSED
+				else if(!(D.density ^ opening))
+					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
+
 /area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
@@ -192,12 +214,7 @@ var/list/teleportlocs = list()
 	for(var/area/RA in related)
 		if (!( RA.fire ))
 			RA.set_fire_alarm_effect()
-			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.welded)
-					if(D.operating)
-						D.nextstate = CLOSED
-					else if(!D.density)
-						INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
+			RA.ModifyFiredoors(FALSE)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -212,20 +229,15 @@ var/list/teleportlocs = list()
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
 
+	START_PROCESSING(SSobj, src)
+
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
 			RA.mouse_opacity = 0
 			RA.updateicon()
-			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.welded)
-					if(D.operating)
-						D.nextstate = OPEN
-					else if(D.density)
-						INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
-			for(var/obj/machinery/firealarm/F in RA)
-				F.update_icon()
+			RA.ModifyFiredoors(TRUE)
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)
@@ -235,6 +247,13 @@ var/list/teleportlocs = list()
 		D.cancelAlarm("Fire", src, source)
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
+
+	STOP_PROCESSING(SSobj, src)
+
+/area/process()
+	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
+		for(var/area/RA in related)
+			RA.ModifyFiredoors(FALSE)
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
@@ -441,4 +460,5 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	always_unpowered = 0
 	valid_territory = 0
+	blob_allowed = 0
 	addSorted()

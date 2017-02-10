@@ -166,7 +166,7 @@
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
 	stamps = null
-	stamped = list()
+	LAZYCLEARLIST(stamped)
 	cut_overlays()
 	updateinfolinks()
 	update_icon()
@@ -181,6 +181,7 @@
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
 	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\n", "<BR>")
 	t = replacetext(t, "\[b\]", "<B>")
 	t = replacetext(t, "\[/b\]", "</B>")
 	t = replacetext(t, "\[i\]", "<I>")
@@ -191,7 +192,7 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	t = replacetext(t, "\[tab\]", "&nbsp;")
+	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
@@ -226,6 +227,17 @@
 
 	return t
 
+/obj/item/weapon/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
+	fields = 0
+	var/laststart = 1
+	while(1)
+		var/i = findtext(info, "<span class=\"paper_field\">", laststart)
+		if(i == 0)
+			break
+		laststart = i+1
+		fields++
+	updateinfolinks()
+
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
@@ -256,7 +268,7 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  stripped_multiline_input("Enter what you want to write:", "Write")
+		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
 		if(!t)
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
@@ -314,9 +326,7 @@
 
 		stampoverlay.icon_state = "paper_[P.icon_state]"
 
-		if(!stamped)
-			stamped = new
-		stamped += P.icon_state
+		LAZYADD(stamped, P.icon_state)
 		add_overlay(stampoverlay)
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
@@ -350,6 +360,16 @@
 /obj/item/weapon/paper/extinguish()
 	..()
 	update_icon()
+
+/*
+ * Construction paper
+ */
+
+/obj/item/weapon/paper/construction
+
+/obj/item/weapon/paper/construction/New()
+	..()
+	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
 /*
  * Premade paper
@@ -393,7 +413,7 @@
 
 /obj/item/weapon/paper/mining
 	name = "paper- Smelting Operations Closed"
-	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
+	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redemption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
 
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"

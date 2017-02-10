@@ -29,7 +29,7 @@
 	baseturf = /turf/open/indestructible/necropolis
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
-/turf/open/indestructible/necropolis/New()
+/turf/open/indestructible/necropolis/Initialize()
 	..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
@@ -39,11 +39,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
-
-/turf/open/indestructible/hierophant/New()
-	..()
-	if(smooth)
-		queue_smooth(src)
 
 /turf/open/indestructible/hierophant/two
 
@@ -258,4 +253,4 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(CALLBACK(src, .proc/HandleWet), 15)
+		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)

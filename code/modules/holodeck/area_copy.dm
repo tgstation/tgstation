@@ -33,6 +33,9 @@
 		if(istype(O,/obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
+	
+	if(holoitem)
+		O.flags |= HOLOGRAM
 	return O
 
 
@@ -107,7 +110,7 @@
 			if(V == "air")
 				var/turf/open/O1 = B
 				var/turf/open/O2 = T
-				O1.air.copy_from(O2.air)
+				O1.air.copy_from(O2.return_air())
 				continue
 			B.vars[V] = T.vars[V]
 		toupdate += B
