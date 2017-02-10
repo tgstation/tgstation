@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - tweak: "Hardsuit built-in jetpacks no longer have a speed boost."
