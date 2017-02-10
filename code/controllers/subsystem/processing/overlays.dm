@@ -104,7 +104,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		return
 	if(islist(image))
 		for(var/I in image)
-			add_overlay(image)
+			add_overlay(I)
 	LAZYINITLIST(our_overlays)	//always initialized after this point
 	LAZYINITLIST(priority_overlays)
 
