@@ -1,0 +1,4 @@
+author: "CoreOverload"
+delete-after: True
+changes: 
+  - tweak: "Shuttle name is no longer displayed on \"Status\" panel. Instead, you can now examine a status screen to see it."
