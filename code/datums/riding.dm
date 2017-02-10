@@ -43,7 +43,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.view = world.view
+			buckled_mob.client.change_view(world.view)
 
 
 
@@ -298,7 +298,6 @@
 	else
 		user << "<span class='notice'>You'll need something  to guide the [ridden.name].</span>"
 
-
 ///////Humans. Yes, I said humans. No, this won't end well...//////////
 /datum/riding/human
 	keytype = null
@@ -352,3 +351,73 @@
 	user.Weaken(3)
 	user.Stun(3)
 	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
+
+/datum/riding/cyborg
+	keytype = null
+	vehicle_move_delay = 1
+
+/datum/riding/cyborg/proc/ride_check(mob/user)
+	if(user.incapacitated())
+		var/kick = TRUE
+		if(istype(ridden, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = ridden
+			if(R.module && R.module.ride_allow_incapacitated)
+				kick = FALSE
+		if(kick)
+			user << "<span class='userdanger'>You fall off of [ridden]!</span>"
+			ridden.unbuckle_mob(user)
+			return
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/carbonuser = user
+		if(!carbonuser.get_num_arms())
+			ridden.unbuckle_mob(user)
+			user << "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>"
+			return
+
+/datum/riding/cyborg/handle_vehicle_layer()
+	if(ridden.dir == SOUTH)
+		ridden.layer = ABOVE_MOB_LAYER
+	else
+		ridden.layer = OBJ_LAYER
+	if(!ridden.buckled_mobs)
+		ridden.layer = MOB_LAYER
+
+/datum/riding/cyborg/handle_vehicle_offsets()
+	if(ridden.has_buckled_mobs())
+		for(var/mob/living/M in ridden.buckled_mobs)
+			M.setDir(ridden.dir)
+			if(iscyborg(ridden))
+				var/mob/living/silicon/robot/R = ridden
+				if(istype(R.module))
+					M.pixel_x = R.module.ride_offset_x[dir2text(ridden.dir)]
+					M.pixel_y = R.module.ride_offset_y[dir2text(ridden.dir)]
+			else
+				switch(ridden.dir)
+					if(NORTH)
+						M.pixel_x = 0
+						M.pixel_y = 4
+					if(SOUTH)
+						M.pixel_x = 0
+						M.pixel_y = 4
+					if(EAST)
+						M.pixel_x = -6
+						M.pixel_y = 3
+					if(WEST)
+						M.pixel_x = 6
+						M.pixel_y = 3
+
+/datum/riding/cyborg/proc/on_vehicle_move()
+	for(var/mob/living/M in ridden.buckled_mobs)
+		ride_check(M)
+	handle_vehicle_offsets()
+	handle_vehicle_layer()
+
+/datum/riding/cyborg/proc/force_dismount()
+	for(var/mob/living/M in ridden.buckled_mobs)
+		ridden.unbuckle_mob(M)
+		var/turf/target = get_edge_target_turf(ridden, ridden.dir)
+		var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
+		M.Move(targetm)
+		M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden] by rapid spinning!</span>")
+		M.throw_at(target, 14, 5, ridden)
+		M.Weaken(3)

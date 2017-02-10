@@ -338,6 +338,23 @@ var/next_mob_id = 0
 		else
 			M.LAssailant = usr
 
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		setDir(D)
+		spintime -= speed
+
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
 	set category = "IC"
@@ -527,7 +544,6 @@ var/next_mob_id = 0
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)
-			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")

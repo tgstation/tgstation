@@ -175,7 +175,8 @@
 
 	moving = 0
 	if(mob && .)
-		mob.throwing = 0
+		if(mob.throwing)
+			mob.throwing.finalize(FALSE)
 
 	for(var/obj/O in mob)
 		O.on_mob_move(direct, src)
@@ -424,7 +425,7 @@
 /client/verb/toggle_walk_run()
 	set name = "toggle-walk-run"
 	set hidden = TRUE
-	set instant = TRUE 
+	set instant = TRUE
 	if(mob)
 		mob.toggle_move_intent()
 

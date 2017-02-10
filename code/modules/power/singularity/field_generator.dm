@@ -77,9 +77,10 @@ field_generator power level display
 	else
 		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 
-/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user)
+/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
 	if(state == FG_WELDED)
-		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		if(!silent)
+			user  << "<span class='warning'>[src] is welded to the floor!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
