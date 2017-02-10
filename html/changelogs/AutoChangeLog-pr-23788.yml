@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Killing bubblegum now unlocks a new shuttle for purchase."
