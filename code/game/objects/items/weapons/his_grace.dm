@@ -146,7 +146,9 @@
 	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
-	adjust_bloodthirst(-(bloodthirst - victims)) //Never fully sated, and His hunger will only grow.
+	prev_bloodthirst = bloodthirst
+	bloodthirst = min(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
+	update_stats()
 
 /obj/item/weapon/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
@@ -154,6 +156,9 @@
 		bloodthirst = Clamp(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
 	else
 		bloodthirst = Clamp(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
+	update_stats()
+
+/obj/item/weapon/his_grace/proc/update_stats()
 	flags &= ~NODROP
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	switch(bloodthirst)
