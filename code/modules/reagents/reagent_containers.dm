@@ -107,6 +107,9 @@
 		return
 
 	else
+		if(reagents.has_reagent("plasma") && isturf(target))
+			log_game("[thrownby]([thrownby.ckey]) splashed plasma at [target.x] [target.y] [target.z].")
+			message_admins("[thrownby]([thrownby.ckey]) splashed plasma at [target.x] [target.y] [target.z].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
