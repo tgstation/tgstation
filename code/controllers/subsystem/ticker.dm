@@ -211,8 +211,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	if(!allmins.len)
-		send2irc("Server", "Round just started with no active admins online!")
+	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
