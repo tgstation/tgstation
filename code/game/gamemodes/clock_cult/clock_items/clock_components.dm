@@ -50,8 +50,8 @@
 	desc = "A tiny pinkish gem. It catches the light oddly, almost glowing."
 	clockwork_desc = "The gem from an interdiction lens. <b>Serviceable as a substitute for a belligerent eye.</b>"
 	icon_state = "lens_gem"
-	cultist_message = "The eye flickers at you with intense hate before falling dark."
-	servant_of_ratvar_messages = list("\"Disgusting failure.\"" = TRUE, "You feel scrutinized." = FALSE, "\"Weaklings.\"" = TRUE, "\"Weaklings.\"" = TRUE)
+	cultist_message = "The gem turns black and cold for a moment before its normal glow returns."
+	servant_of_ratvar_messages = list("\"Disgusting failure.\"" = TRUE, "You feel scrutinized." = FALSE, "\"Weaklings.\"" = TRUE, "\"Pathetic defenses.\"" = TRUE)
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/clockwork/component/vanguard_cogwheel
