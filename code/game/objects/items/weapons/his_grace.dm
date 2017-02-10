@@ -92,7 +92,7 @@
 		return
 	forceMove(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
 	var/list/targets = list()
-	for(var/mob/living/L in oview(7, src))
+	for(var/mob/living/L in oview(3, src))
 		targets += L
 	var/mob/living/L = pick(targets)
 	step_to(src, L)
