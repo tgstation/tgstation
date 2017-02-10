@@ -748,6 +748,7 @@
 #include "code\game\objects\items\weapons\flamethrower.dm"
 #include "code\game\objects\items\weapons\gift.dm"
 #include "code\game\objects\items\weapons\handcuffs.dm"
+#include "code\game\objects\items\weapons\his_grace.dm"
 #include "code\game\objects\items\weapons\holosign_creator.dm"
 #include "code\game\objects\items\weapons\holy_weapons.dm"
 #include "code\game\objects\items\weapons\kitchen.dm"
