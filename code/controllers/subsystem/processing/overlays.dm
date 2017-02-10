@@ -89,6 +89,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	var/init_o_len = LAZYLEN(cached_overlays)
 	var/init_p_len = LAZYLEN(cached_priority)  //starter pokemon
 	
+	image = extract_overlay_appearance(image)
+
 	LAZYREMOVE(cached_overlays, image)
 	if(priority)
 		LAZYREMOVE(cached_priority, image)
@@ -104,6 +106,9 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		CRASH("Legacy add_overlay behaviour")
 	LAZYINITLIST(our_overlays)	//always initialized after this point
 	LAZYINITLIST(priority_overlays)
+
+	image = extract_overlay_appearance(image)
+
 	var/list/cached_overlays = our_overlays	//sanic
 	var/list/cached_priority = priority_overlays
 	var/init_o_len = cached_overlays.len
@@ -120,29 +125,29 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
 		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_everything = FALSE)	//copys our_overlays from another atom
+/atom/proc/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
 	if(!other)
+		if(cut_old)
+			cut_overlays()
 		return
-	copy_overlays_list(other.our_overlays, FALSE, FALSE)	//lets face it, we probably dont WANT priority overlays here (fire, x4, acid, etc..)
+	
+	var/cached_other = other.our_overlays
+	if(cached_other)
+		if(cut_old)
+			our_overlays = cached_other.Copy()
+		else
+			our_overlays |= cached_other
+	else if(cut_old)
+		cut_overlays()
 
-/atom/proc/copy_overlays_list(list/other_overlays, cut_everything = FALSE, inherit = FALSE)	//copys other_overlays into our_overlays, cut_everything does cut_overlays(FALSE) first
+/atom/proc/copy_overlays_list(list/other_overlays, cut_old = FALSE, inherit = FALSE)	//copys other_overlays into our_overlays, cut_everything does cut_overlays(FALSE) first
 																							//inherit lets our_overlays use other_overlays directly
-	if(!LAZYLEN(other_overlays))
-		return
-	
-	var/list/cached_overlays = our_overlays
-
-	var/need_compile = FALSE
-	var/init_len = LAZYLEN(cached_overlays)
-	if(!cut_everything && init_len)
-		cached_overlays |= other_overlays
-		need_compile = init_len != cached_overlays.len
-	else
-		our_overlays = inherit ? other_overlays : other_overlays.Copy()
-		need_compile = TRUE
-	
-	if(NOT_QUEUED_ALREADY && need_compile)
-		QUEUE_FOR_COMPILE
+//Need to deprecated this
+	if(cut_old)
+		cut_overlays()
+	if(LAZYLEN(other_overlays))
+		for(var/I in other_overlays)
+			add_overlay(I)
 
 #undef NOT_QUEUED_ALREADY
 #undef QUEUE_FOR_COMPILE
