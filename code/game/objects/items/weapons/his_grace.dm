@@ -31,8 +31,7 @@
 
 /obj/item/weapon/his_grace/attack_self(mob/living/user)
 	if(!awakened)
-		user.visible_message("<span class='notice'>[src] begins to vibrate...</span>", "<span class='warning'>You flick [src]'s latch up. You hope this is a good idea.</span>")
-		addtimer(CALLBACK(src, .proc/awaken), 50)
+		INVOKE_ASYNC(src, .proc/awaken, user)
 
 /obj/item/weapon/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
@@ -108,16 +107,19 @@
 		else
 			consume(L)
 
-/obj/item/weapon/his_grace/proc/awaken() //Good morning, Mr. Grace.
+/obj/item/weapon/his_grace/proc/awaken(mob/user) //Good morning, Mr. Grace.
 	if(awakened)
 		return
+	awakened = TRUE
+	user.visible_message("<span class='notice'>[src] begins to vibrate...</span>", "<span class='warning'>You flick [src]'s latch up. You hope this is a good idea.</span>")
+	sleep(50)
 	name = "His Grace"
 	desc = "A bloodthirsty artefact created by a profane rite."
 	gender = MALE
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='boldwarning'>[src] begins to rattle. He thirsts.</span>")
 	adjust_bloodthirst(1)
-	awakened = TRUE
+	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	playsound(T, 'sound/effects/pope_entry.ogg', 100)
 	icon_state = "green_awakened"
 
@@ -144,7 +146,7 @@
 	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
 	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
 	meal.forceMove(src)
-	force_bonus += 5
+	force_bonus += HIS_GRACE_FORCE_BONUS
 	adjust_bloodthirst(-(bloodthirst - victims)) //Never fully sated, and His hunger will only grow.
 
 /obj/item/weapon/his_grace/proc/adjust_bloodthirst(amt)

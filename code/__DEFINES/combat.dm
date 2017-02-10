@@ -137,3 +137,4 @@
 #define HIS_GRACE_CONSUME_OWNER 140 //You're dead, kiddo. The toolbox consumes its owner at this point and resets to zero.
 #define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, it falls asleep and resets to zero.
 
+#define HIS_GRACE_FORCE_BONUS 5 //How much force is gained per kill.
