@@ -24,9 +24,9 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			if(LAZYLEN(thing.priority_overlays) && LAZYLEN(thing.our_overlays))
 				thing.overlays = (thing.our_overlays | thing.priority_overlays)
 			else if(LAZYLEN(thing.our_overlays))
-				thing.overlays = thing.our_overlays.Copy()
+				thing.overlays = thing.our_overlays
 			else if(LAZYLEN(thing.priority_overlays))			//Do these two have to be copied? We don't want assignments to them to trigger overlay updates. But, idk, bruh, BYOND. - Cyberboss
-				thing.overlays = thing.priority_overlays.Copy()
+				thing.overlays = thing.priority_overlays
 			else
 				LAZYCLEARLIST(thing.overlays)
 		if(MC_TICK_CHECK)
