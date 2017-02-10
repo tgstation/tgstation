@@ -444,7 +444,14 @@ var/list/airlock_overlays = list()
 				else
 					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
-	copy_overlays_list(list(frame_overlay,filling_overlay,lights_overlay,panel_overlay,weld_overlay,sparks_overlay,damag_overlay), TRUE, TRUE)
+	cut_overlays()
+	add_overlay(frame_overlay)
+	add_overlay(filling_overlay)
+	add_overlay(lights_overlay)
+	add_overlay(panel_overlay)
+	add_overlay(weld_overlay)
+	add_overlay(sparks_overlay)
+	add_overlay(damag_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/iconkey = "[icon_state][icon_file]"

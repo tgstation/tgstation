@@ -42,7 +42,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches 
 		var/list/cached_icon = icon_states_cache[icon]
 		if (cached_icon)
-			var/appearance/cached_appearance = cached_icon["[image_atom_or_string]"]
+			var/cached_appearance = cached_icon["[image_atom_or_string]"]
 			if (cached_appearance)
 				return cached_appearance
 		stringbro.icon = icon
@@ -50,13 +50,13 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		if (!cached_icon) //not using the macro to save an associated lookup
 			cached_icon = list()
 			icon_states_cache[icon] = cached_icon
-		var/appearance/cached_appearance = stringbro.appearance
+		var/cached_appearance = stringbro.appearance
 		cached_icon["[image_atom_or_string]"] = cached_appearance
 		return cached_appearance
-	else if (isimage(image_atom_or_string) || isatom(image_atom_or_string))
+	else if (istype(image_atom_or_string, /image) || istype(image_atom_or_string, /atom))
 		var/image/I = image_atom_or_string
 		return I.appearance
-#if (BYOND_VERSION >= 511)
+#if DM_VERSION >= 511
 	else if (istype(image_atom_or_string, /mutable_appearance/))
 		var/mutable_appearance/MA = image_atom_or_string
 		return MA.appearance
@@ -102,8 +102,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	if(!image)
 		return
 	if(islist(image))
-		copy_overlays_list(image)
-		CRASH("Legacy add_overlay behaviour")
+		for(var/I in image)
+			add_overlay(image)
 	LAZYINITLIST(our_overlays)	//always initialized after this point
 	LAZYINITLIST(priority_overlays)
 
@@ -131,24 +131,16 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			cut_overlays()
 		return
 	
-	var/cached_other = other.our_overlays
+	var/list/cached_other = other.our_overlays
 	if(cached_other)
 		if(cut_old)
 			our_overlays = cached_other.Copy()
 		else
 			our_overlays |= cached_other
+		if(NOT_QUEUED_ALREADY)
+			QUEUE_FOR_COMPILE
 	else if(cut_old)
 		cut_overlays()
 
-/atom/proc/copy_overlays_list(list/other_overlays, cut_old = FALSE, inherit = FALSE)	//copys other_overlays into our_overlays, cut_everything does cut_overlays(FALSE) first
-																							//inherit lets our_overlays use other_overlays directly
-//Need to deprecated this
-	if(cut_old)
-		cut_overlays()
-	if(LAZYLEN(other_overlays))
-		for(var/I in other_overlays)
-			add_overlay(I)
-
 #undef NOT_QUEUED_ALREADY
 #undef QUEUE_FOR_COMPILE
-
