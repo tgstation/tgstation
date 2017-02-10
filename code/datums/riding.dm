@@ -416,7 +416,7 @@
 		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
 		inhand.rider = user
 		inhand.ridden = ridden
-		if(user.put_in_hands(inhand, TRUE)
+		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
 		else
 			break
