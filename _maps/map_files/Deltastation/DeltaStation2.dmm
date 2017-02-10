@@ -20993,6 +20993,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aMI" = (
@@ -24027,6 +24028,7 @@
 /area/crew_quarters/bar/atrium)
 "aRI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aRJ" = (
@@ -118548,7 +118550,7 @@
 /obj/structure/table/wood,
 /obj/item/clothing/head/hardhat/cakehat,
 /turf/open/floor/plasteel/redyellow,
-/area/hydroponics/Abandoned_Garden)
+/area/crew_quarters/bar/atrium)
 "edg" = (
 /obj/machinery/doorButtons/airlock_controller{
 	name = "Virology Access Console";
@@ -155667,7 +155669,7 @@ aEf
 aFB
 aGX
 aGY
-aGY
+aJA
 aKZ
 aMI
 aGY
@@ -156187,7 +156189,7 @@ aMK
 aGY
 edf
 aRH
-aGY
+aJA
 aGY
 aGZ
 aYv
