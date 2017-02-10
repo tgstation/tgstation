@@ -99,6 +99,9 @@ var/datum/subsystem/processing/overlays/SSoverlays
 /atom/proc/add_overlay(image, priority = FALSE)
 	if(!image)
 		return
+	if(islist(image))
+		copy_overlays_list(image)
+		CRASH("Legacy add_overlay behaviour")
 	LAZYINITLIST(our_overlays)	//always initialized after this point
 	LAZYINITLIST(priority_overlays)
 	var/list/cached_overlays = our_overlays	//sanic
