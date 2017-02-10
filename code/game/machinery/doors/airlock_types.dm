@@ -489,7 +489,7 @@
 			new/obj/item/stack/tile/brass(T, 4)
 		else
 			new/obj/item/clockwork/alloy_shards(T)
-		new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(T)
+		new/obj/item/clockwork/alloy_shards/pinion_lock(T)
 	qdel(src)
 
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
