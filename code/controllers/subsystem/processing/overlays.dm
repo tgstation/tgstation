@@ -2,7 +2,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 
 /datum/subsystem/processing/overlays
 	name = "Overlays"
-	flags = SS_TICKER|SS_NO_INIT|SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
+	flags = SS_TICKER|SS_NO_INIT|SS_FIRE_IN_LOBBY
 	wait = 1
 	priority = 500
 	can_fire = FALSE
