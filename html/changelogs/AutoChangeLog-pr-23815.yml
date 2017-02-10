@@ -1,4 +1,0 @@
-author: "CoreOverload"
-delete-after: True
-changes: 
-  - rscadd: "You can now emag the escape pods to launch them under any alert code."
