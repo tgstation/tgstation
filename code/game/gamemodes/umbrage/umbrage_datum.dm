@@ -42,7 +42,7 @@
 			return 1
 	return
 
-/datum/umbrage/proc/give_ability(ability_name, silent)
+/datum/umbrage/proc/give_ability(ability_name, silent, consume_lucidity)
 	var/datum/action/innate/umbrage/ability
 	for(var/V in subtypesof(/datum/action/innate/umbrage))
 		var/datum/action/innate/umbrage/U = V
@@ -54,6 +54,8 @@
 	ability.Grant(linked_mind.current)
 	if(!silent)
 		linked_mind.current << "<span class='velvet_italic'>You have learned the \"[ability_name]\" ability.</span>"
+	if(consume_lucidity)
+		lucidity = max(0, lucidity - initial(ability.lucidity_cost))
 	return 1
 
 /datum/umbrage/proc/take_ability(ability_name, silent)
@@ -69,3 +71,44 @@
 		linked_mind.current << "<span class='warning'>You have lost the \"[ability_name]\" ability.</span>"
 	qdel(ability)
 	return 1
+
+//Psi Web code goes below here
+
+/datum/umbrage/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = not_incapacitated_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "psi_web", "Psi Web", 900, 480, master_ui, state)
+		ui.open()
+
+/datum/umbrage/ui_data(mob/user)
+	var/list/data = list()
+
+	data["lucidity"] = lucidity
+
+	var/list/abilities = list()
+
+	for(var/path in subtypesof(/datum/action/innate/umbrage))
+		var/datum/action/innate/umbrage/ability = path
+
+		if(initial(ability.blacklisted))
+			continue
+
+		var/list/AL = list() //This is mostly copy-pasted from the cellular emporium, but it should be fine regardless
+		AL["name"] = initial(ability.name)
+		AL["desc"] = initial(ability.desc)
+		AL["psi_cost"] = initial(ability.psi_cost)
+		AL["lucidity_cost"] = initial(ability.lucidity_cost)
+		AL["owned"] = has_ability(initial(ability.name))
+		AL["can_purchase"] = (!has_ability(initial(ability.name)) && lucidity >= initial(ability.lucidity_cost))
+
+		abilities += list(AL)
+
+	data["abilities"] = abilities
+
+	return data
+
+/datum/umbrage/ui_act(action, params)
+	if(..())
+		return
+	if(action == "unlock")
+		give_ability(params["name"], 0, 1)

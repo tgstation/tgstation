@@ -5,7 +5,8 @@
 	buttontooltipstyle = "alien"
 	var/psi_cost = 0
 	var/lucidity_cost = 0 //How much lucidity the ability costs to buy; if this is 0, it isn't listed on the catalog
-	var/blacklisted = 1 //If the ability isn't available from Divulge
+	var/blacklisted = 1 //If the ability can't be gained from the psi web
+#warn Todo: refactor "blacklisted"
 
 /datum/action/innate/umbrage/Trigger() //When you're making an ability, put ..() in Activate() when you should be consuming psi
 	if(..())
@@ -23,7 +24,6 @@
 
 /datum/action/innate/umbrage/proc/get_umbrage()
 	return owner.mind.umbrage_psionics
-	return 1
 
 
 //Devour Will: After a brief charge-up, equips a dark bead.
@@ -33,7 +33,7 @@
 //	- Finally, they will be made vulnerable to Veil Mind for five ticks.
 /datum/action/innate/umbrage/devour_will
 	name = "Devour Will"
-	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out.<br><br>Costs 20 psi."
+	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out."
 	button_icon_state = "umbrage_devour_will"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	psi_cost = 20

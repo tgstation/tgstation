@@ -1,3 +1,19 @@
+/datum/action/innate/umbrage/psi_web
+	name = "Psi Web"
+	desc = "Access the Mindlink directly to unlock and upgrade your supernatural powers."
+	button_icon_state = "umbrage_psi_web"
+	check_flags = AB_CHECK_CONSCIOUS
+	blacklisted = 1
+	psi_cost = 5
+
+/datum/action/innate/umbrage/psi_web/Activate()
+	usr << "<span class='velvet_bold'>You retreat inwards and touch the Mindlink...</span>"
+	var/datum/umbrage/U = get_umbrage()
+	if(!U)
+		return
+	U.ui_interact(usr)
+	return 1
+
 /datum/action/innate/umbrage/tutorial
 	name = "Tutorial"
 	desc = "Need more information on being an umbrage? This in-game tutorial can help you with any questions."
