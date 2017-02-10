@@ -6,6 +6,7 @@
 	var/active_msg = "You charge your projectile!"
 	var/base_icon_state = "projectile"
 	var/active_icon_state = "projectile"
+	var/projectile_damage_override = -1
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -54,6 +55,11 @@
 	var/obj/item/projectile/P = new projectile_type(user.loc)
 	P.current = get_turf(user)
 	P.preparePixelProjectile(target, get_turf(target), user)
+	if(projectile_damage_override != (-1))
+		P.damage = projectile_damage_override
+		P.nodamage = TRUE
+		if(P.damage)
+			P.nodamage = FALSE
 	P.fire()
 	return TRUE
 
@@ -73,7 +79,6 @@
 	var/tesla_range = 15
 	var/tesla_power = 20000
 	var/tesla_boom = FALSE
-	var/projectile_damage = 15
 	active_msg = "You energize your hand with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 
@@ -81,9 +86,6 @@
 	var/obj/item/projectile/magic/aoe/lightning/P = new /obj/item/projectile/magic/aoe/lightning(user.loc)
 	P.current = get_turf(user)
 	P.preparePixelProjectile(target, get_turf(target), user)
-	if(!projectile_damage)
-		P.nodamage = TRUE
-	P.damage = projectile_damage
 	P.tesla_power = tesla_power
 	P.tesla_range = tesla_range
 	P.tesla_boom = tesla_boom
