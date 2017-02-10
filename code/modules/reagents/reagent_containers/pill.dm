@@ -157,17 +157,18 @@
 /obj/item/weapon/genderpill/attack(mob/M, mob/user, def_zone)
 	if(used)
 		return
-	used = 1  //anti lag
+	used = 1  //anti spam
 	if(M == user)
 		if(M.gender == FEMALE)
 			M.gender = MALE
-			newgender = pick(dude, man, boy, bro)
+			newgender = pick("dude", "man", "boy", "bro")
 		else
 			M.gender = FEMALE
-			newgender = pick(dudette, woman, girl, brodette)
-		M.regenerate_icons()
-		M.dna.generate_uni_identity()
-		M.visible_message("<span class='notice'>[user] swalows the [src] and morphs into a [newgender]!</span>")
+			newgender = pick("dudette", "woman", "girl", "brodette")
+		M.dna.update_ui_block(DNA_GENDER_BLOCK)
+		M.update_body()
+		M.update_mutations_overlay()
+		M.visible_message("<span class='notice'>[user] swallows the [src] and morphs into a [newgender]!</span>")
 		qdel(src)
 	else
 		M.visible_message("<span class='notice'>[user] attempts to feed [M] the [src] but it turns blue!  Looks like [M] wasn't ready to see from the other side.</span>")
