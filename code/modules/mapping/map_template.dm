@@ -143,3 +143,11 @@
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/proc/load_new_z_level(var/file)
+	if(!isfile(file))
+		return FALSE
+	maploader.load_map(file)
+	smooth_zlevel(world.maxz)
+	SortAreas()
+	world.log << "loaded [file] as z-level [world.maxz]"
