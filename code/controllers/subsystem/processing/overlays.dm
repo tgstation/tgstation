@@ -25,7 +25,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		processing.len--
 		if(thing)
 			if(LAZYLEN(thing.priority_overlays) && LAZYLEN(thing.our_overlays))
-				thing.overlays = (thing.our_overlays | thing.priority_overlays)
+				thing.overlays = thing.our_overlays + thing.priority_overlays
 			else if(LAZYLEN(thing.our_overlays))
 				thing.overlays = thing.our_overlays
 			else if(LAZYLEN(thing.priority_overlays))			//Do these two have to be copied? We don't want assignments to them to trigger overlay updates. But, idk, bruh, BYOND. - Cyberboss
@@ -117,10 +117,10 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	var/need_compile
 
 	if(priority)
-		cached_priority |= image  //or in the image. Can we use [image] = image?
+		cached_priority += image  //or in the image. Can we use [image] = image?
 		need_compile = init_p_len != cached_priority.len
 	else
-		cached_overlays |= image
+		cached_overlays += image
 		need_compile = init_o_len != cached_overlays.len
 
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
