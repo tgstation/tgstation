@@ -233,28 +233,22 @@
 	var/datum/map_template/shelter/template
 	var/used = FALSE
 
-/obj/item/weapon/survivalcapsule/proc/get_template()
+/obj/item/weapon/survivalcapsule/Initialize()
+	..()
 	if(template)
 		return
 	template = shelter_templates[template_id]
 	if(!template)
-		throw EXCEPTION("Shelter template ([template_id]) not found!")
 		qdel(src)
-
-/obj/item/weapon/survivalcapsule/Destroy()
-	template = null // without this, capsules would be one use. per round.
-	. = ..()
+		throw EXCEPTION("Shelter template ([template_id]) not found!")
 
 /obj/item/weapon/survivalcapsule/examine(mob/user)
 	. = ..()
-	get_template()
 	user << "This capsule has the [template.name] stored."
 	user << template.description
 
 /obj/item/weapon/survivalcapsule/attack_self()
-	// Can't grab when capsule is New() because templates aren't loaded then
-	get_template()
-	if(used == FALSE)
+	if(!used)
 		src.loc.visible_message("<span class='warning'>\The [src] begins \
 			to shake. Stand back!</span>")
 		used = TRUE
@@ -276,15 +270,19 @@
 			used = FALSE
 			return
 
-		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
+		qdel(src)
+		playsound(deploy_location, 'sound/effects/phasein.ogg', 100, 1)
 
 		var/turf/T = deploy_location
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+		
+		//postpone breathing and air because this happens with mobs around
+		SSmob.postpone(2)
+		SSair.postpone(6)
 		template.load(deploy_location, centered = TRUE)
-		new /obj/effect/particle_effect/smoke(get_turf(src))
-		qdel(src)
+		new /obj/effect/particle_effect/smoke(deploy_location)
 
 
 
