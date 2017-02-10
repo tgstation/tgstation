@@ -1,8 +1,9 @@
 //Aux base construction console
 /mob/camera/aiEye/remote/base_construction
-	visible_icon = 1
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "camera_target"
+	name = "construction holo-drone"
+	move_on_shuttle = 1 //Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "construction_drone"
 	var/area/starting_area
 
 mob/camera/aiEye/remote/base_construction/New(loc)
@@ -14,6 +15,10 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxillary_base))
 		return ..()
 	//While players are only allowed to build in the base area, but consoles starting outside the base can move into the base area to begin work.
+
+/mob/camera/aiEye/remote/base_construction/relaymove(mob/user, direct)
+	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
+	..()
 
 /obj/item/weapon/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
 	name = "internal RCD"
