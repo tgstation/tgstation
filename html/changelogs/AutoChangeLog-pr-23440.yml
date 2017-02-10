@@ -1,0 +1,5 @@
+author: "Mekhi Anderson"
+delete-after: True
+changes: 
+  - rscadd: "All mobs can now *spin!"
+  - rscadd: "Cyborgs now have handholds. This means you can ride around on them, but if you get stunned or hit, you fall off! The cyborg can also throw you off by spinning."
