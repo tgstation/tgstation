@@ -22,8 +22,9 @@
 
 
 /obj/item/weapon/implanter/attack(mob/living/M, mob/user)
-	if(!istype(M))
+	if(!istype(M) || istype(M, /mob/living/silicon) || istype(M, /mob/living/simple_animal/bot))
 		return
+
 	if(user && imp)
 		if(M != user)
 			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
