@@ -157,19 +157,23 @@
 /obj/item/weapon/genderpill/attack(mob/M, mob/user, def_zone)
 	if(used)
 		return
-	used = 1  //anti spam
+	used = 1
 	if(M == user)
-		if(M.gender == FEMALE)
-			M.gender = MALE
-			newgender = pick("dude", "man", "boy", "bro")
+		if(istype(user, /mob/living/carbon))	
+			var/mob/living/carbon/H = user
+			if(H.gender == FEMALE)
+				H.gender = MALE
+				newgender = pick("dude", "man", "boy", "bro")
+			else
+				H.gender = FEMALE
+				newgender = pick("dudette", "woman", "girl", "brodette")
+			H.dna.update_ui_block(DNA_GENDER_BLOCK)
+			H.update_body()
+			H.update_mutations_overlay()
+			H.visible_message("<span class='notice'>[user] swallows the [src] and morphs into a [newgender]!</span>")
+			qdel(src)
 		else
-			M.gender = FEMALE
-			newgender = pick("dudette", "woman", "girl", "brodette")
-		M.dna.update_ui_block(DNA_GENDER_BLOCK)
-		M.update_body()
-		M.update_mutations_overlay()
-		M.visible_message("<span class='notice'>[user] swallows the [src] and morphs into a [newgender]!</span>")
-		qdel(src)
+			user.visible_message("<span class='notice'>[user] swallows the [src] but isnt complex enough to understand gender issues!</span>")
 	else
 		M.visible_message("<span class='notice'>[user] attempts to feed [M] the [src] but it turns blue!  Looks like [M] wasn't ready to see from the other side.</span>")
 		qdel(src)
