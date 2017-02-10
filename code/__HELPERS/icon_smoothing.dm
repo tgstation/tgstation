@@ -238,36 +238,30 @@
 		else if(adjacencies & N_EAST)
 			se = "4-e"
 
-	var/list/New = list()
-
-	var/list/cached_overlays = A.our_overlays
-	var/init_len = LAZYLEN(cached_overlays)
+	var/list/New
 
 	if(A.top_left_corner != nw)
-		LAZYREMOVE(cached_overlays, A.top_left_corner)
+		A.cut_overlay(A.top_left_corner)
 		A.top_left_corner = nw
-		New += nw
+		LAZYADD(New, nw)
 
 	if(A.top_right_corner != ne)
-		LAZYREMOVE(cached_overlays, A.top_right_corner)
+		A.cut_overlay(A.top_right_corner)
 		A.top_right_corner = ne
-		New += ne
+		LAZYADD(New, ne)
 
 	if(A.bottom_right_corner != sw)
-		LAZYREMOVE(cached_overlays, A.bottom_right_corner)
+		A.cut_overlay(A.bottom_right_corner)
 		A.bottom_right_corner = sw
-		New += sw
+		LAZYADD(New, sw)
 
 	if(A.bottom_left_corner != se)
-		LAZYREMOVE(cached_overlays, A.bottom_left_corner)
+		A.cut_overlay(A.bottom_left_corner)
 		A.bottom_left_corner = se
-		New += se
+		LAZYADD(New, se)
 
-	if(New.len)
-		A.add_overlay(New)
-	else if(init_len != LAZYLEN(cached_overlays))
-		SSoverlays.processing[A] = A
-		SSoverlays.can_fire = TRUE
+	if(LAZYLEN(New))
+		A.copy_overlays_list(New)
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
