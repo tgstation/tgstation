@@ -814,3 +814,15 @@
 	if(prob(30))
 		M << "You should sit down and take a rest..."
 	..()
+
+/datum/reagent/toxin/deathsting
+	name = "Death Oil"
+	id = "deathoil"
+	description = "An extremely potent toxin that causes death unless prompt medical attention is given to the victim."
+	toxpwr = 2.5
+	metabolization_rate = 4 * REAGENTS_METABOLISM
+
+/datum/reagent/toxin/deathsting/on_mob_life(mob/living/M)
+	M.adjustOxyLoss(20, FALSE)
+	. = TRUE
+	..()
