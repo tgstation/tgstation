@@ -34,7 +34,7 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/New()
 	..()
 	create_reagents(0)
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/protolathe(null)
 	B.apply_default_parts(src)
 
@@ -110,13 +110,36 @@ Note: Must be placed west/left of and R&D console to function.
 			return 1
 		else
 			var/stack_name = stack.name
-			busy = 1
+			busy = TRUE
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
 			add_overlay("protolathe_[stack_name]")
 			sleep(10)
 			overlays -= "protolathe_[stack_name]"
-			busy = 0
+			busy = FALSE
+		updateUsrDialog()
+
+	else if(istype(O, /obj/item/weapon/ore/bluespace_crystal)) //Bluespace crystals can be either a stack or an item
+		. = 1
+		if(!is_insertion_ready(user))
+			return
+		var/bs_material = materials.get_item_material_amount(O)
+		if(!bs_material)
+			return
+
+		if(!materials.has_space(bs_material))
+			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+			return 1
+
+		materials.insert_item(O)
+		busy = TRUE
+		use_power(MINERAL_MATERIAL_AMOUNT/10)
+		user << "<span class='notice'>You add [O] to the [src.name].</span>"
+		qdel(O)
+		add_overlay("protolathe_bluespace")
+		sleep(10)
+		overlays -= "protolathe_bluespace"
+		busy = FALSE
 		updateUsrDialog()
 
 	else if(user.a_intent != INTENT_HARM)

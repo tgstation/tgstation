@@ -41,6 +41,7 @@
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 	id = "aiupload"
 	req_tech = list("programming" = 5, "engineering" = 4)
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	build_path = /obj/item/weapon/circuitboard/computer/aiupload
 	category = list("Computer Boards")
 
@@ -49,6 +50,7 @@
 	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
 	id = "borgupload"
 	req_tech = list("programming" = 5, "engineering" = 4)
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	build_path = /obj/item/weapon/circuitboard/computer/borgupload
 	category = list("Computer Boards")
 

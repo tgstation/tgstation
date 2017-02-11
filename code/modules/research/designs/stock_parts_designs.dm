@@ -62,7 +62,7 @@
 	id = "quadratic_capacitor"
 	req_tech = list("powerstorage" = 6, "engineering" = 5, "materials" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_DIAMOND = 100)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, , MAT_GOLD = 100, MAT_DIAMOND = 100)
 	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -107,7 +107,7 @@
 	id = "triphasic_scanning"
 	req_tech = list("magnets" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_DIAMOND = 60)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_DIAMOND = 30, MAT_BLUESPACE = 30)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/triphasic
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -241,7 +241,7 @@
 	id = "bluespace_matter_bin"
 	req_tech = list("materials" = 7, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 250, MAT_DIAMOND = 200)
+	materials = list(MAT_METAL = 250, MAT_DIAMOND = 100, MAT_BLUESPACE = 100)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/bluespace
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
