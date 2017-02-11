@@ -1,19 +1,29 @@
 var/datum/subsystem/processing/overlays/SSoverlays
 
 /datum/subsystem/processing/overlays
-	name = "Overlays"
-	flags = SS_TICKER|SS_NO_INIT|SS_FIRE_IN_LOBBY
+	name = "Overlay"
+	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1
 	priority = 500
+	init_order = -6
 	can_fire = FALSE
 
 	stat_tag = "Ov"
 	currentrun = null
 	var/list/overlay_icon_state_caches
+	var/initialized = FALSE
 
 /datum/subsystem/processing/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
 	LAZYINITLIST(overlay_icon_state_caches)
+
+/datum/subsystem/processing/overlays/Initialize()
+	initialized = TRUE
+	for(var/I in processing)
+		var/atom/A = I
+		A.compile_overlays()
+		CHECK_TICK
+	..()
 
 /datum/subsystem/processing/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
@@ -24,18 +34,21 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		var/atom/thing = processing[processing.len]
 		processing.len--
 		if(thing)
-			if(LAZYLEN(thing.priority_overlays) && LAZYLEN(thing.our_overlays))
-				thing.overlays = thing.our_overlays + thing.priority_overlays
-			else if(LAZYLEN(thing.our_overlays))
-				thing.overlays = thing.our_overlays
-			else if(LAZYLEN(thing.priority_overlays))			//Do these two have to be copied? We don't want assignments to them to trigger overlay updates. But, idk, bruh, BYOND. - Cyberboss
-				thing.overlays = thing.priority_overlays
-			else
-				thing.overlays.Cut()
-			thing.flags &= ~OVERLAY_QUEUED
+			thing.compile_overlays(FALSE)
 		if(MC_TICK_CHECK)
 			break
 	can_fire = processing.len > 0
+
+/atom/proc/compile_overlays()
+	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
+		overlays = our_overlays + priority_overlays
+	else if(LAZYLEN(our_overlays))
+		overlays = our_overlays
+	else if(LAZYLEN(priority_overlays))
+		overlays = priority_overlays
+	else
+		overlays.Cut()
+	flags &= ~OVERLAY_QUEUED
 
 /atom/proc/extract_overlay_appearance(image_atom_or_string)
 	if (istext(image_atom_or_string))
@@ -64,7 +77,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 #endif
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
-#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; SSoverlays.can_fire = TRUE
+#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.can_fire = TRUE; if(SSoverlays.initialized) { SSoverlays.processing += src; } else { SSoverlays.processing[src] = src; } 
 /atom/proc/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays
