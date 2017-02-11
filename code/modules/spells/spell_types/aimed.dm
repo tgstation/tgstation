@@ -55,7 +55,7 @@
 	var/obj/item/projectile/P = new projectile_type(user.loc)
 	P.current = get_turf(user)
 	P.preparePixelProjectile(target, get_turf(target), user)
-	if(projectile_damage_override != (-1))
+	if(projectile_damage_override != -1)
 		P.damage = projectile_damage_override
 		P.nodamage = TRUE
 		if(P.damage)
@@ -86,7 +86,7 @@
 	var/obj/item/projectile/magic/aoe/lightning/P = new /obj/item/projectile/magic/aoe/lightning(user.loc)
 	P.current = get_turf(user)
 	P.preparePixelProjectile(target, get_turf(target), user)
-	if(projectile_damage_override != (-1))
+	if(projectile_damage_override != -1)
 		P.damage = projectile_damage_override
 		P.nodamage = TRUE
 		if(P.damage)
