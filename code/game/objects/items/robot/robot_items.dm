@@ -99,6 +99,7 @@
 						user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
 										"<span class='warning'>You bop [M] on the head!</span>")
 						user.do_attack_animation(M, ATTACK_EFFECT_PUNCH)
+						M.apply_damage(1)
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
