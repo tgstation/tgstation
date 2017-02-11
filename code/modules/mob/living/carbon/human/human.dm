@@ -926,8 +926,8 @@
 	stop_pulling()
 
 /mob/living/carbon/human/unbuckle_mob(mob/living/M)
-	if(iscarbon(user))
+	if(iscarbon(M))
 		if(riding_datum)
-			riding_datum.unequip_buckle_inhands(user)
-			riding_datum.restore_position(user)
+			riding_datum.unequip_buckle_inhands(M)
+			riding_datum.restore_position(M)
 	. = ..(M)

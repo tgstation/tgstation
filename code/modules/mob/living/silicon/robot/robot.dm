@@ -91,7 +91,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	can_ride_typecache = typecache_of(mob/living/carbon/human)
+	can_ride_typecache = list(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()

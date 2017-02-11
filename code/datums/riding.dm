@@ -21,6 +21,12 @@
 	handle_vehicle_offsets()
 	handle_vehicle_layer()
 
+/datum/riding/proc/ride_check(mob/living/M)
+	return TRUE
+
+/datum/riding/proc/force_dismount(mob/living/M)
+	ridden.unbuckle_mob(M)
+
 //Override this to set your vehicle's various pixel offsets
 //if they differ between directions, otherwise use the
 //generic variables
@@ -301,7 +307,7 @@
 /datum/riding/human
 	keytype = null
 
-/datum/riding/human/proc/ride_check(mob/living/M)
+/datum/riding/human/ride_check(mob/living/M)
 	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
 	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
@@ -340,7 +346,7 @@
 	else
 		ridden.layer = MOB_LAYER
 
-/datum/riding/human/proc/force_dismount(mob/living/user)
+/datum/riding/human/force_dismount(mob/living/user)
 	ridden.unbuckle_mob(user)
 	user.Weaken(3)
 	user.Stun(3)
@@ -349,7 +355,7 @@
 /datum/riding/cyborg
 	keytype = null
 
-/datum/riding/cyborg/proc/ride_check(mob/user)
+/datum/riding/cyborg/ride_check(mob/user)
 	if(user.incapacitated())
 		var/kick = TRUE
 		if(istype(ridden, /mob/living/silicon/robot))
@@ -400,15 +406,14 @@
 						M.pixel_x = 6
 						M.pixel_y = 3
 
-/datum/riding/cyborg/proc/force_dismount()
-	for(var/mob/living/M in ridden.buckled_mobs)
-		ridden.unbuckle_mob(M)
-		var/turf/target = get_edge_target_turf(ridden, ridden.dir)
-		var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
-		M.Move(targetm)
-		M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden]!</span>")
-		M.throw_at(target, 14, 5, ridden)
-		M.Weaken(3)
+/datum/riding/cyborg/force_dismount(mob/living/M)
+	ridden.unbuckle_mob(M)
+	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
+	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
+	M.Move(targetm)
+	M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden]!</span>")
+	M.throw_at(target, 14, 5, ridden)
+	M.Weaken(3)
 
 /datum/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/amount_equipped = 0

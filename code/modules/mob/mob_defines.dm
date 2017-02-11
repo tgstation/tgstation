@@ -147,4 +147,4 @@
 
 	var/list/progressbars = null	//for stacking do_after bars
 	var/datum/riding/riding_datum
-	var/static/list/can_ride_typecache = list()
+	var/list/can_ride_typecache = list()

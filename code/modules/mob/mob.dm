@@ -28,6 +28,7 @@ var/next_mob_id = 0
 	else
 		living_mob_list += src
 	prepare_huds()
+	can_ride_typecache = typecacheof(can_ride_typecache)
 	..()
 
 /atom/proc/prepare_huds()
