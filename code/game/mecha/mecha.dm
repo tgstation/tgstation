@@ -25,7 +25,7 @@
 	force = 5
 	flags = HEAR
 	var/can_move = 1
-	var/mob/living/carbon/human/occupant = null
+	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
@@ -890,7 +890,6 @@
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
 	if(!(Adjacent(mmi_as_oc) && Adjacent(user)))
-		world << "Adjacent"
 		return FALSE
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "<span class='notice'>Consciousness matrix not detected!</span>"
