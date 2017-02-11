@@ -306,19 +306,13 @@
 					queue_smooth(A)
 
 /atom/proc/clear_smooth_overlays()
-	var/list/cached_overlays = our_overlays
-	var/init_len = LAZYLEN(cached_overlays)
-	if(init_len)
-		our_overlays -= top_left_corner
-		our_overlays -= top_right_corner
-		overlays -= bottom_right_corner
-		overlays -= bottom_left_corner
-		if(cached_overlays.len != init_len)
-			SSoverlays.processing[src] = src
-			SSoverlays.can_fire = TRUE
+	cut_overlay(top_left_corner)
 	top_left_corner = null
+	cut_overlay(top_right_corner)
 	top_right_corner = null
+	cut_overlay(bottom_right_corner)
 	bottom_right_corner = null
+	cut_overlay(bottom_left_corner)
 	bottom_left_corner = null
 
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
