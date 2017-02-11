@@ -418,9 +418,9 @@
 		owner << "<span class='warning'>Your marauder seems to have been destroyed!</span>"
 		return FALSE
 	var/name_part = "<span class='sevtug'>Servant [findtextEx(owner.name, owner.real_name) ? "[owner.name]" : "[owner.real_name] (as [owner.name])"]</span>"
-	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
-	owner << "[name_part]<span class='sevtug_small'>:</span> [message]"
-	linked_marauder << "[name_part]<span class='sevtug_small'>:</span> [message]"
+	message = "<span class='sevtug_small'>\"[russian_html2text(message)]\"</span>" //Processed output
+	owner << "[name_part]<span class='sevtug_small'>:</span> [russian_html2text(message)]"
+	linked_marauder << "[name_part]<span class='sevtug_small'>:</span> [russian_html2text(message)]"
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)

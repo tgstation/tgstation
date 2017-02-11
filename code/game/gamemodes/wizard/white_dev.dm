@@ -25,7 +25,7 @@
 	charge_max = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/communicate_wizard/cast(mob/living/user, message)
-	message = sanitize_russian(stripped_input(usr, "Please choose a message to tell to the servants and wizard.", "Voice of Magic", ""))
+	message = stripped_input(usr, "Please choose a message to tell to the servants and wizard.", "Voice of Magic", "")
 	if(!message)
 		return
 	sleep(10)
@@ -35,7 +35,7 @@
 		user.say(message)
 	else
 		user.whisper(message)
-	var/my_message = "<span class='purple'><b>[(ishuman(user) ? "Wizard" : "Servant")] [user]:</b> [message]</span>"
+	var/my_message = "<span class='purple'><b>[(ishuman(user) ? "Wizard" : "Servant")] [user]:</b> [russian_html2text(message)]</span>"
 	for(var/mob/M in mob_list)
 		if(is_servant_of_wizard(user, M))
 			M << my_message
@@ -43,4 +43,4 @@
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [my_message]"
 
-	log_say("[user.real_name]/[user.key] : [message]")
+	log_say("[user.real_name]/[user.key] : [russian_html2text(message)]")

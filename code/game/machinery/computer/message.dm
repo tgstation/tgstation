@@ -407,28 +407,28 @@
 								PDARec = P
 						//Sender isn't faking as someone who exists
 						if(isnull(PDARec))
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
-							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
+							src.linkedServer.send_pda_message("[customrecepient.owner]", "[russian_html2text(customsender)]","[russian_html2text(custommessage)]")
+							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[russian_html2text(customsender)]</a> ([russian_html2text(customjob)]):</b></i><br>[russian_html2text(custommessage)]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
-									H << "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
-								log_pda("[usr]/([usr.ckey]) (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
+									H << "\icon[customrecepient] <b>Message from [russian_html2text(customsender)] ([russian_html2text(customjob)]), </b>\"[russian_html2text(custommessage)]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+								log_pda("[usr]/([usr.ckey]) (PDA: [russian_html2text(customsender)]) sent \"[russian_html2text(custommessage)]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 						//Sender is faking as someone who exists
 						else
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
-							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
+							src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[russian_html2text(custommessage)]")
+							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([russian_html2text(customjob)]):</b></i><br>[russian_html2text(custommessage)]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
-									H << "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)"
-								log_pda("[usr]/([usr.ckey]) (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
+									H << "\icon[customrecepient] <b>Message from [PDARec.owner] ([russian_html2text(customjob)]), </b>\"[russian_html2text(custommessage)]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)"
+								log_pda("[usr]/([usr.ckey]) (PDA: [PDARec.owner]) sent \"[russian_html2text(custommessage)]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 						//Finally..

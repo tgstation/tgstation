@@ -230,8 +230,8 @@
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
 		return FALSE
-	clockwork_say(user, text2ratvar("Servants, hear my words. [html_decode(message)]"), TRUE)
-	titled_hierophant_message(user, message)
+	clockwork_say(user, text2ratvar("Servants, hear my words. [rhtml_decode(message,1)]"), TRUE)
+	titled_hierophant_message(user, russian_html2text(message))
 	return TRUE
 
 //Scripture Recital

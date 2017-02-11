@@ -77,7 +77,7 @@
 	if("rename" in href_list)
 		var/newname = stripped_input(usr,"New airlock name:","Name the airlock",doorname)
 		if(newname)
-			doorname = newname
+			doorname = russian_html2text(newname)
 	if("access" in href_list)
 		var/value = text2num(href_list["access"])
 		access_used ^= value

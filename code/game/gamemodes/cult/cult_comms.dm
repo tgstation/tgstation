@@ -12,7 +12,7 @@
 	return ..()
 
 /datum/action/innate/cultcomm/Activate()
-	var/input = sanitize_russian(stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", ""))
+	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
 
@@ -30,10 +30,10 @@
 	if(!user)
 		return
 	if(!ishuman(user))
-		user.say(html_decode(message))
+		user.say(rhtml_decode(message,1))
 	else
-		user.whisper(html_decode(message))
-	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+		user.whisper(rhtml_decode(message,1))
+	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [russian_html2text(message)]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << my_message
@@ -41,7 +41,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [my_message]"
 
-	log_say("[user.real_name]/[user.key] : [message]")
+	log_say("[user.real_name]/[user.key] : [russian_html2text(message)]")
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"

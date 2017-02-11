@@ -62,7 +62,7 @@
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>[id]</a>"
 		else
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>NULL</a>"
-		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[network]</a>"
+		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[russian_html2text(network)]</a>"
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
 		if(hide) dat += "<br>Shadow Link: ACTIVE</a>"
 
@@ -248,7 +248,7 @@
 
 						network = newnet
 						links = list()
-						temp = "<font color = #666633>-% New network tag assigned: \"[network]\" %-</font color>"
+						temp = "<font color = #666633>-% New network tag assigned: \"[russian_html2text(network)]\" %-</font color>"
 
 
 			if("freq")

@@ -86,7 +86,7 @@
 					user << "<span class='warning'>No input found, please hang up and try your call again!</span>"
 					return
 
-				var/list/tempnetwork = splittext(input, ",")
+				var/list/tempnetwork = splittext(russian_html2text(input), ",")
 				if(tempnetwork.len < 1)
 					user << "<span class='warning'>No network found, please hang up and try your call again!</span>"
 					return

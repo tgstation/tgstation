@@ -203,7 +203,7 @@
 				return
 
 	var/list/turfs = res
-	var/str = trim(stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
+	var/str = trim(sanitize_russian(stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN),1))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
@@ -241,7 +241,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
 	var/prevname = "[A.name]"
-	var/str = trim(stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN))
+	var/str = trim(sanitize_russian(stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN),1))
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)

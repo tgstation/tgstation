@@ -291,7 +291,7 @@
 	if (href_list["change_name"])
 		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
 		if(newname && trim(newname))
-			name = newname
+			name = russian_html2text(newname)
 		else
 			alert(occupant, "nope.avi")
 
