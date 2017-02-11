@@ -41,18 +41,19 @@ var/datum/subsystem/processing/air/SSair
 
 /datum/subsystem/processing/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "AT:[round(cost_turfs)]|"
-	msg += "EG:[round(cost_groups)]|"
-	msg += "HP:[round(cost_highpressure)]|"
-	msg += "HS:[round(cost_hotspots)]|"
-	msg += "SC:[round(cost_superconductivity)]|"
-	msg += "PN:[round(cost_pipenets)]|"
-	msg += "AM:[round(cost_atmos_machinery)]"
+	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "EG:[round(cost_groups,1)]|"
+	msg += "HP:[round(cost_highpressure,1)]|"
+	msg += "HS:[round(cost_hotspots,1)]|"
+	msg += "SC:[round(cost_superconductivity,1)]|"
+	msg += "PN:[round(cost_pipenets,1)]|"
+	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
-	msg +=  "AT:[active_turfs.len]|"
-	msg +=  "EG:[excited_groups.len]|"
-	msg +=  "HS:[hotspots.len]|"
-	msg +=  "AS:[active_super_conductivity.len]"
+	msg += "AT:[active_turfs.len]|"
+	msg += "EG:[excited_groups.len]|"
+	msg += "HS:[hotspots.len]|"
+	msg += "AS:[active_super_conductivity.len]|"
+	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	..(msg, TRUE)
 
 /datum/subsystem/processing/air/Initialize(timeofday)

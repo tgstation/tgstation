@@ -34,6 +34,10 @@
 		new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/radio/off(src)
 
+/obj/item/weapon/storage/toolbox/emergency/old
+	name = "rusty red toolbox"
+	item_state = "toolbox_red_old"
+
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
@@ -47,6 +51,10 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/device/analyzer(src)
 	new /obj/item/weapon/wirecutters(src)
+
+/obj/item/weapon/storage/toolbox/mechanical/old
+	name = "rusty blue toolbox"
+	item_state = "toolbox_blue_old"
 
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
