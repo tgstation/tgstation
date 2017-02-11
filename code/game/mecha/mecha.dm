@@ -25,7 +25,7 @@
 	force = 5
 	flags = HEAR
 	var/can_move = 1
-	var/mob/living/carbon/occupant = null
+	var/mob/living/carbon/human/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
@@ -358,8 +358,12 @@
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
-
-		if(occupant.loc != src) //something went wrong
+		var/actual_loc = occupant.loc
+		if(istype(actual_loc, /obj/item/device/mmi))
+			var/obj/item/device/mmi/M = actual_loc
+			actual_loc = M.mecha
+		if(actual_loc != src) //something went wrong
+			world << "occupant.loc"
 			occupant.clear_alert("charge")
 			occupant.clear_alert("mech damage")
 			RemoveActions(occupant, human_occupant=1)
@@ -859,57 +863,59 @@
 	else
 		return 0
 
-/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
+/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "<span class='warning'>Consciousness matrix not detected!</span>"
-		return 0
+		return FALSE
 	else if(mmi_as_oc.brainmob.stat)
 		user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
-		return 0
+		return FALSE
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
-		return 0
-	else if(dna_lock && (!mmi_as_oc.brainmob.stored_dna || dna_lock!=mmi_as_oc.brainmob.stored_dna.unique_enzymes))
+		return FALSE
+	else if(dna_lock && (!mmi_as_oc.brainmob.stored_dna || (dna_lock != mmi_as_oc.brainmob.stored_dna.unique_enzymes)))
 		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
-		return 0
+		return FALSE
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)
-			return mmi_moved_inside(mmi_as_oc,user)
+			return mmi_moved_inside(mmi_as_oc, user)
 		else
 			user << "<span class='warning'>Occupant detected!</span>"
 	else
 		user << "<span class='notice'>You stop inserting the MMI.</span>"
-	return 0
+	return FALSE
 
-/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
-	if(mmi_as_oc && user in range(1))
-		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-			user << "<span class='notice'>Consciousness matrix not detected!</span>"
-			return 0
-		else if(mmi_as_oc.brainmob.stat)
-			user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
-			return 0
-		if(!user.transferItemToLoc(mmi_as_oc, src))
-			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
-			return
-		var/mob/brainmob = mmi_as_oc.brainmob
-		occupant = brainmob
-		brainmob.forceMove(src) //should allow relaymove
-		brainmob.reset_perspective(src)
-		brainmob.canmove = 1
-		mmi_as_oc.mecha = src
-		icon_state = initial(icon_state)
-		setDir(dir_in)
-		log_message("[mmi_as_oc] moved in as pilot.")
-		if(!internal_damage)
-			occupant << sound('sound/mecha/nominal.ogg',volume=50)
-		GrantActions(brainmob)
-		return 1
-	else
-		return 0
+/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
+	if(!(Adjacent(mmi_as_oc) && Adjacent(user)))
+		world << "Adjacent"
+		return FALSE
+	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
+		user << "<span class='notice'>Consciousness matrix not detected!</span>"
+		return FALSE
+	else if(mmi_as_oc.brainmob.stat)
+		user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
+		return FALSE
+	if(!user.transferItemToLoc(mmi_as_oc, src))
+		user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
+		return FALSE
+	var/mob/brainmob = mmi_as_oc.brainmob
+	mmi_as_oc.mecha = src
+	occupant = brainmob
+	brainmob.forceMove(src) //should allow relaymove
+	brainmob.reset_perspective(src)
+	brainmob.remote_control = src
+	brainmob.update_canmove()
+	icon_state = initial(icon_state)
+	update_icon()
+	setDir(dir_in)
+	log_message("[mmi_as_oc] moved in as pilot.")
+	if(!internal_damage)
+		occupant << sound('sound/mecha/nominal.ogg',volume=50)
+	GrantActions(brainmob)
+	return TRUE
 
 /obj/mecha/container_resist(mob/living/user)
 	go_out()
