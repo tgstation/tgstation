@@ -42,7 +42,7 @@
 		..()
 
 /obj/item/weapon/his_grace/CtrlClick(mob/user) //you can't pull his grace
-	attackhand(user)
+	attack_hand(user)
 
 /obj/item/weapon/his_grace/examine(mob/user)
 	..()
