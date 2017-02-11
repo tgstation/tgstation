@@ -46,9 +46,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 		load_whitelist()
 	LoadBans()
 	investigate_reset()
-	load_mute()
-	if(config && config.server_name != null && config.server_suffix && world.port > 0)
-		config.server_name += " #[(world.port % 1000) / 100]"
 
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
