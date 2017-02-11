@@ -107,7 +107,6 @@ var/datum/subsystem/processing/air/SSair
 #undef PROCESS_ATMOS_LIST
 
 /datum/subsystem/processing/air/start_processing(datum/D, list_type, add_to_active_block_changes = TRUE)
-	var/added = TRUE
 	//most of these are safe (re: only called in one place) to just +=
 	switch(list_type)
 		if(SSAIR_PIPENETS)
@@ -121,7 +120,6 @@ var/datum/subsystem/processing/air/SSair
 				active_turfs[T] = T
 				if(add_to_active_block_changes && T.excited_group)
 					T.excited_group.garbage_collect()
-				return
 			else if(T.initialized)
 				for(var/S in T.atmos_adjacent_turfs)	//this was typed as var/turf/S before, any reason for that?
 					start_processing(S, SSAIR_ACTIVETURFS)
@@ -130,7 +128,6 @@ var/datum/subsystem/processing/air/SSair
 					queued_for_activation[T] = T
 			else
 				T.requires_activation = TRUE
-			added = FALSE
 		if(SSAIR_EXCITEDGROUPS)
 			excited_groups += D
 		if(SSAIR_HIGHPRESSURE)	//and this
