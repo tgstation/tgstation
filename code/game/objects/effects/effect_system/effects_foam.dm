@@ -46,6 +46,11 @@
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
+	switch(metal)
+		if(1)
+			new /obj/structure/foamedmetal(src.loc)
+		if(2)
+			new /obj/structure/foamedmetal/iron(src.loc)
 	animate(src, alpha = 0, time = 5)
 	QDEL_IN(src, 5)
 

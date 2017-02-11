@@ -42,6 +42,8 @@
 			oldposition = get_turf(holder)
 			animate(I, alpha = 0, time = 10)
 			QDEL_IN(I, 10)
+			spawn(10)
+				number--
 		spawn(2)
 			if(on)
 				processing = 1
