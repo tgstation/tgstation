@@ -40,7 +40,7 @@
 				atmos_machines += A
 				continue
 
-	SSobj.setup_template_objects(atoms)
+	SSobj.InitializeAtoms(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 

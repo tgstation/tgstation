@@ -1,5 +1,9 @@
 var/datum/subsystem/objects/SSobj
 
+#define INITIALIZATION_INSSOBJ 0	//New should not call Initialize
+#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
+#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
+
 /datum/var/isprocessing = 0
 /datum/proc/process()
 	set waitfor = 0
@@ -11,7 +15,8 @@ var/datum/subsystem/objects/SSobj
 	init_order = 12
 	priority = 40
 
-	var/list/atom_spawners = list()
+	var/initialized = INITIALIZATION_INSSOBJ
+	var/old_initialized
 	var/list/processing = list()
 	var/list/currentrun = list()
 
@@ -19,20 +24,37 @@ var/datum/subsystem/objects/SSobj
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize(timeofdayl)
-	trigger_atom_spawners()
+	fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
-	for(var/thing in world)
-		var/atom/A = thing
-		A.initialize()
-		CHECK_TICK
+	initialized = INITIALIZATION_INNEW_MAPLOAD
+	InitializeAtoms()
 	. = ..()
 
-/datum/subsystem/objects/proc/trigger_atom_spawners(zlevel, ignore_z=FALSE)
-	for(var/V in atom_spawners)
-		var/atom/A = V
-		if (!ignore_z && (zlevel && A.z != zlevel))
-			continue
-		A.spawn_atom_to_world()
+/datum/subsystem/objects/proc/InitializeAtoms(list/objects = null)
+	if(initialized == INITIALIZATION_INSSOBJ)
+		return
+	initialized = INITIALIZATION_INNEW_MAPLOAD
+	if(objects)
+		for(var/thing in objects)
+			var/atom/A = thing
+			A.Initialize(TRUE)
+			CHECK_TICK
+	else
+		for(var/atom/A in world)
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				var/start_tick = world.time
+				A.Initialize(TRUE)
+				if(start_tick != world.time)
+					WARNING("[A]: [A.type] slept during it's Initialize!")
+				CHECK_TICK
+	initialized = INITIALIZATION_INNEW_REGULAR
+
+/datum/subsystem/objects/proc/map_loader_begin()
+	old_initialized = initialized
+	initialized = INITIALIZATION_INSSOBJ
+
+/datum/subsystem/objects/proc/map_loader_stop()
+	initialized = old_initialized
 
 /datum/subsystem/objects/stat_entry()
 	..("P:[processing.len]")
@@ -54,15 +76,11 @@ var/datum/subsystem/objects/SSobj
 		if (MC_TICK_CHECK)
 			return
 
-
-/datum/subsystem/objects/proc/setup_template_objects(list/objects)
-	trigger_atom_spawners(0, ignore_z=TRUE)
-	for(var/A in objects)
-		var/atom/B = A
-		B.initialize()
-
 /datum/subsystem/objects/Recover()
-	if (istype(SSobj.atom_spawners))
-		atom_spawners = SSobj.atom_spawners
+	initialized = SSobj.initialized
+	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
+		InitializeAtoms()
+	old_initialized = SSobj.old_initialized
+
 	if (istype(SSobj.processing))
 		processing = SSobj.processing

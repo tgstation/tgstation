@@ -37,7 +37,7 @@
 	button_icon_state = "mech_eject"
 
 /datum/action/innate/mecha/mech_eject/Activate()
-	if(!owner || !iscarbon(owner))
+	if(!owner)
 		return
 	if(!chassis || chassis.occupant != owner)
 		return

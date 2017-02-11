@@ -35,15 +35,10 @@
 		bulb = new /obj/item/device/assembly/flash/handheld(src)
 
 /obj/machinery/flasher/Destroy()
-	remove_from_proximity_list(src, range)
 	if(bulb)
 		qdel(bulb)
 		bulb = null
-	..()
-
-/obj/machinery/flasher/Move()
-	remove_from_proximity_list(src, range)
-	..()
+	return ..()
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
@@ -125,9 +120,6 @@
 
 		if(L.flash_act(affect_silicon = 1))
 			L.Weaken(strength)
-			if(L.weakeyes)
-				L.Weaken(strength * 1.5)
-				L.visible_message("<span class='disarm'><b>[L]</b> gasps and shields their eyes!</span>")
 
 	return 1
 
@@ -191,6 +183,13 @@
 	else
 		return ..()
 
+/obj/machinery/flasher/portable/Destroy()
+	remove_from_proximity_list(src, range)
+	return ..()
+
+/obj/machinery/flasher/protable/Moved(oldloc)
+	remove_from_proximity_list(oldloc, range)
+	return ..()
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"

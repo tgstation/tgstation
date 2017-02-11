@@ -40,77 +40,40 @@
 	if(!config.sql_enabled)
 		return
 
-/proc/sql_report_death(mob/living/carbon/human/H)
+/proc/sql_report_death(mob/living/L)
 	if(!config.sql_enabled)
 		return
-	if(!H)
+	if(!L)
 		return
-	if(!H.key || !H.mind)
+	if(!L.key || !L.mind)
 		return
 
-	var/turf/T = H.loc
+	var/turf/T = get_turf(L)
 	var/area/placeofdeath = get_area(T.loc)
 	var/podname = placeofdeath.name
 
-	var/sqlname = sanitizeSQL(H.real_name)
-	var/sqlkey = sanitizeSQL(H.key)
+	var/sqlname = sanitizeSQL(L.real_name)
+	var/sqlkey = sanitizeSQL(L.key)
 	var/sqlpod = sanitizeSQL(podname)
-	var/sqlspecial = sanitizeSQL(H.mind.special_role)
-	var/sqljob = sanitizeSQL(H.mind.assigned_role)
+	var/sqlspecial = sanitizeSQL(L.mind.special_role)
+	var/sqljob = sanitizeSQL(L.mind.assigned_role)
 	var/laname
 	var/lakey
-	if(H.lastattacker)
-		laname = sanitizeSQL(H.lastattacker:real_name)
-		lakey = sanitizeSQL(H.lastattacker:key)
+	if(L.lastattacker)
+		laname = sanitizeSQL(L.lastattacker:real_name)
+		lakey = sanitizeSQL(L.lastattacker:key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	var/coord = "[H.x], [H.y], [H.z]"
-	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()])"
+	var/coord = "[L.x], [L.y], [L.z]"
+	var/map = MAP_NAME
+	var/server = "[world.address]:[world.port]"
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during death reporting. Failed to connect.")
 	else
-		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.getBruteLoss()], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()], '[coord]')")
+		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord, mapname, server) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[L.gender]', [L.getBruteLoss()], [L.getFireLoss()], [L.brainloss], [L.getOxyLoss()], '[coord]', '[map]', [server]')")
 		if(!query.Execute())
 			var/err = query.ErrorMsg()
 			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
-
-
-/proc/sql_report_cyborg_death(mob/living/silicon/robot/H)
-	if(!config.sql_enabled)
-		return
-	if(!H)
-		return
-	if(!H.key || !H.mind)
-		return
-
-	var/turf/T = H.loc
-	var/area/placeofdeath = get_area(T.loc)
-	var/podname = placeofdeath.name
-
-	var/sqlname = sanitizeSQL(H.real_name)
-	var/sqlkey = sanitizeSQL(H.key)
-	var/sqlpod = sanitizeSQL(podname)
-	var/sqlspecial = sanitizeSQL(H.mind.special_role)
-	var/sqljob = sanitizeSQL(H.mind.assigned_role)
-	var/laname
-	var/lakey
-	if(H.lastattacker)
-		laname = sanitizeSQL(H.lastattacker:real_name)
-		lakey = sanitizeSQL(H.lastattacker:key)
-	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	var/coord = "[H.x], [H.y], [H.z]"
-	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()])"
-	establish_db_connection()
-	if(!dbcon.IsConnected())
-		log_game("SQL ERROR during death reporting. Failed to connect.")
-	else
-		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.getBruteLoss()], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()], '[coord]')")
-		if(!query.Execute())
-			var/err = query.ErrorMsg()
-			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
-
-
-
 
 //This proc is used for feedback. It is executed at round end.
 /proc/sql_commit_feedback()

@@ -53,6 +53,8 @@
 	radio = null
 	qdel(countdown)
 	countdown = null
+	if(connected)
+		connected.DetachCloner(src)
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -134,7 +136,7 @@
 		if(!G)
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
-		addtimer(CALLBACK(src, .proc/horrifyingsound), 0)
+		INVOKE_ASYNC(src, .proc/horrifyingsound)
 		mess = 1
 		icon_state = "pod_g"
 		update_icon()
@@ -259,6 +261,24 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
+	if(istype(W,/obj/item/device/multitool))
+		var/obj/item/device/multitool/P = W
+		
+		if(istype(P.buffer, /obj/machinery/computer/cloning))
+			if(get_area_master(P.buffer) != get_area_master(src))
+				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
+				P.buffer = null
+				return
+			user << "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>"
+			var/obj/machinery/computer/cloning/comp = P.buffer
+			if(connected)
+				connected.DetachCloner(src)
+			comp.AttachCloner(src)
+		else
+			P.buffer = src
+			user << "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+		return
+		
 	if (W.GetID())
 		if (!check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"

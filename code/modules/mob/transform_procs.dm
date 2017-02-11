@@ -32,7 +32,7 @@
 		var/Itemlist = get_equipped_items()
 		Itemlist += held_items
 		for(var/obj/item/W in Itemlist)
-			unEquip(W)
+			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
 	notransform = 1
@@ -42,7 +42,7 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
-	PoolOrNew(/obj/effect/overlay/temp/monkeyify, get_turf(src))
+	new /obj/effect/overlay/temp/monkeyify(get_turf(src))
 	sleep(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
@@ -174,14 +174,9 @@
 		var/Itemlist = get_equipped_items()
 		Itemlist += held_items
 		for(var/obj/item/W in Itemlist)
-			unEquip(W)
+			dropItemToGround(W, TRUE)
 			if (client)
 				client.screen -= W
-			if (W)
-				W.loc = loc
-				W.dropped(src)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
 
 
 
@@ -192,7 +187,7 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	PoolOrNew(/obj/effect/overlay/temp/monkeyify/humanify, get_turf(src))
+	new /obj/effect/overlay/temp/monkeyify/humanify(get_turf(src))
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
@@ -308,7 +303,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -352,7 +347,7 @@
 		if(delete_items)
 			qdel(W)
 		else
-			unEquip(W)
+			dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -403,7 +398,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -433,7 +428,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -475,7 +470,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -504,7 +499,7 @@
 	if(notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 
 	regenerate_icons()
 	notransform = 1

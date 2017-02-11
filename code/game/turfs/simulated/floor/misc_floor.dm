@@ -15,10 +15,10 @@
 
 /turf/open/floor/bluegrid/New()
 	..()
-	nuke_tiles += src
+	SSmapping.nuke_tiles += src
 
 /turf/open/floor/bluegrid/Destroy()
-	nuke_tiles -= src
+	SSmapping.nuke_tiles -= src
 	return ..()
 
 /turf/open/floor/greengrid
@@ -69,9 +69,9 @@
 
 /turf/open/floor/clockwork/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
+	new /obj/effect/overlay/temp/ratvar/floor(src)
+	new /obj/effect/overlay/temp/ratvar/beam(src)
+	realappearence = new /obj/effect/clockwork/overlay/floor(src)
 	realappearence.linked = src
 	change_construction_value(1)
 
@@ -82,6 +82,11 @@
 		qdel(realappearence)
 		realappearence = null
 	return ..()
+
+/turf/open/floor/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
@@ -124,7 +129,7 @@
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()
-	PoolOrNew(/obj/item/stack/tile/brass, src)
+	new /obj/item/stack/tile/brass(src)
 	return ..()
 
 /turf/open/floor/clockwork/narsie_act()

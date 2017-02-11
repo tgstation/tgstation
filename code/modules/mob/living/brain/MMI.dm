@@ -37,10 +37,8 @@
 	..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-	if(config)
-		laws.set_laws_config()
 
-/obj/item/device/mmi/initialize()
+/obj/item/device/mmi/Initialize()
 	..()
 	laws.set_laws_config()
 
@@ -55,7 +53,7 @@
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
 			return
 
-		if(!user.unEquip(O))
+		if(!user.transferItemToLoc(O, src))
 			return
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key)
@@ -72,7 +70,6 @@
 			living_mob_list += brainmob
 
 		brainmob.reset_perspective()
-		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
 		name = "Man-Machine Interface: [brainmob.real_name]"

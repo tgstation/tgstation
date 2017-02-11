@@ -1,4 +1,3 @@
-//TODO: Flash range does nothing currently
 var/explosionid = 1
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
@@ -105,6 +104,13 @@ var/explosionid = 1
 			for(var/obj/structure/blob/B in T)
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
+			
+	//flash mobs
+	if(flash_range)
+		for(var/mob/living/L in viewers(flash_range, epicenter))
+			L.flash_act()
+
+	CHECK_TICK
 
 	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	for(var/turf/T in affected_turfs)
@@ -139,7 +145,7 @@ var/explosionid = 1
 
 		if(T)
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
-				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
+				new /obj/effect/hotspot(T) //Mostly for ambience!
 			if(dist > 0)
 				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 				T.explosion_id = id
@@ -156,9 +162,7 @@ var/explosionid = 1
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at(throw_at, throw_range, I.throw_speed)
 
-		if(world.tick_usage > CURRENT_TICKLIMIT)
-			stoplag()
-
+		if(TICK_CHECK)
 			var/circumference = (PI * init_dist * 2) + 8 //+8 to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
 				for(var/Unexplode in exploded_this_tick)

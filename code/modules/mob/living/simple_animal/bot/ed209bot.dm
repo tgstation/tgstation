@@ -306,13 +306,13 @@ Auto Patrol[]"},
 	target = null
 	last_found = world.time
 	frustration = 0
-	addtimer(CALLBACK(src, .proc/handle_automated_action), 0) //ensure bot quickly responds
+	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_hunt()
 	anchored = 0
 	frustration = 0
 	mode = BOT_HUNT
-	addtimer(CALLBACK(src, .proc/handle_automated_action), 0) //ensure bot quickly responds
+	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
 
 // look for a criminal in view of the bot
 
@@ -446,7 +446,7 @@ Auto Patrol[]"},
 	if(severity==2 && prob(70))
 		..(severity-1)
 	else
-		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+		new /obj/effect/overlay/temp/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
 			if(C.stat==2)

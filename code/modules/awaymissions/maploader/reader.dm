@@ -242,6 +242,8 @@ var/global/dmm_suite/preloader/_preloader = new
 	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
 		first_turf_index++
 
+	//turn off base new Initialization until the whole thing is loaded
+	SSobj.map_loader_begin()
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
@@ -259,7 +261,14 @@ var/global/dmm_suite/preloader/_preloader = new
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
 		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
-		CHECK_TICK
+
+		//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
+		if(world.tick_usage > CURRENT_TICKLIMIT)
+			SSobj.map_loader_stop()
+			stoplag()
+			SSobj.map_loader_begin()
+	//Restore initialization to the previous value
+	SSobj.map_loader_stop()
 
 ////////////////
 //Helpers procs

@@ -224,7 +224,8 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!compartment_access_check(user))
 			return
-		if(junk_check(W))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+		if(!S.junkiness)
 			if(!iscompartmentfull(user))
 				if(!user.drop_item())
 					return
@@ -243,7 +244,7 @@
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if(iscompartmentfull(user))
 				break
-			if(junk_check(S))
+			if(!S.junkiness)
 				T.remove_from_storage(S, src)
 				food_load(S)
 				loaded++
@@ -266,11 +267,6 @@
 		req_access_txt = "0"
 		return 0
 	req_access_txt = "0"
-	return 1
-
-/obj/machinery/vending/snack/proc/junk_check(obj/item/weapon/reagent_containers/food/snacks/S)
-	if(S.junkiness)
-		return 0
 	return 1
 
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
@@ -919,7 +915,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/snowman = 1,
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
-					/obj/item/clothing/under/scratch = 1)
+					/obj/item/clothing/under/scratch = 1,
+					/obj/item/clothing/under/sailor = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1, /obj/item/weapon/skub = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe

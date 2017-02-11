@@ -6,6 +6,7 @@
 	icon_keyboard = "no_keyboard"
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
+	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/stockexchange/New()
@@ -16,6 +17,12 @@
 	if (!logged_in)
 		return 0
 	return SSshuttle.points
+
+/obj/machinery/computer/stockexchange/attack_ai(mob/user)
+	return attack_hand(user)
+	
+/obj/machinery/computer/stockexchange/attack_robot(mob/user)
+	return attack_hand(user)
 
 /obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
 	if(..())
@@ -180,7 +187,7 @@ a.updated {
 	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
 	amt = min(amt, S.shareholders[logged_in])
 
-	if (!user || !(user in range(1, src)))
+	if (!user || (!(user in range(1, src)) && iscarbon(user)))
 		return
 	if (!amt)
 		return
@@ -213,7 +220,7 @@ a.updated {
 	var/price = S.current_value
 	var/canbuy = round(b / price)
 	var/amt = round(input(user, "How many shares? \n(Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
-	if (!user || !(user in range(1, src)))
+	if (!user || (!(user in range(1, src)) && iscarbon(user)))
 		return
 	if (li != logged_in)
 		return
@@ -244,7 +251,7 @@ a.updated {
 	if (..())
 		return 1
 
-	if (usr in range(1, src))
+	if (!usr || (!(usr in range(1, src)) && iscarbon(usr)))
 		usr.machine = src
 
 	if (href_list["viewhistory"])

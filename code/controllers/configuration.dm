@@ -10,6 +10,12 @@
 	var/autoadmin = 0
 	var/autoadmin_rank = "Game Admin"
 
+/datum/protected_configuration/vv_get_var(var_name)
+	return debug_variable(var_name, "SECRET", 0, src)
+
+/datum/protected_configuration/vv_edit_var(var_name, var_value)
+	return FALSE
+
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -49,6 +55,7 @@
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
+	var/tick_limit_mc_init = TICK_LIMIT_MC_INIT_DEFAULT	//SSinitialization throttling
 
 	var/hostedby = null
 	var/respawn = 1
@@ -231,6 +238,9 @@
 
 	var/list/gamemode_cache = null
 
+	var/minutetopiclimit
+	var/secondtopiclimit
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -385,6 +395,8 @@
 					var/ticklag = text2num(value)
 					if(ticklag > 0)
 						fps = 10 / ticklag
+				if("tick_limit_mc_init")
+					tick_limit_mc_init = text2num(value)
 				if("fps")
 					fps = text2num(value)
 				if("automute_on")
@@ -479,7 +491,10 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
-
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

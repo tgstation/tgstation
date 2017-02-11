@@ -36,28 +36,17 @@
 	log_game("[user.ckey] became [mob_name]")
 	create(ckey = user.ckey)
 
-/obj/effect/mob_spawn/spawn_atom_to_world()
-	//We no longer need to spawn mobs, deregister ourself
-	SSobj.atom_spawners -= src
-	if(roundstart)
+/obj/effect/mob_spawn/Initialize(mapload)
+	if(roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP)))
 		create()
 	else
 		poi_list |= src
 
 /obj/effect/mob_spawn/New()
 	..()
-	if(roundstart)
-		if(ticker && ticker.current_state > GAME_STATE_SETTING_UP)
-			// The game has already initialised, just spawn it.
-			create()
-		else
-			//Add to the atom spawners register for roundstart atom spawning
-			SSobj.atom_spawners += src
 
 	if(instant)
 		create()
-	else
-		poi_list |= src
 
 /obj/effect/mob_spawn/Destroy()
 	poi_list.Remove(src)
@@ -177,20 +166,15 @@
 		if(id_icon)
 			W.icon_state = id_icon
 		if(id_access)
-			var/datum/job/jobdatum
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
 				if(J.title == id_access)
-					jobdatum = J
+					W.access = J.get_access()
 					break
-			if(jobdatum)
-				W.access = jobdatum.get_access()
-			else
+		if(id_access_list)
+			if(!islist(W.access))
 				W.access = list()
-			if(id_access_list)
-				if(!W.access)
-					W.access = list()
-				W.access |= id_access_list
+			W.access |= id_access_list
 		if(id_job)
 			W.assignment = id_job
 		W.registered_name = H.real_name

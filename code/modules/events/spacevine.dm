@@ -146,10 +146,10 @@
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
-		qdel(src)
+		qdel(holder)
 	else
 		. = 1
-		QDEL_IN(src, 5)
+		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/I)
 	explosion(holder.loc, 0, 0, severity, 0, 0)
@@ -352,8 +352,8 @@
 		if(!master.vines.len)
 			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
-			KZ.potency = min(100, master.mutativeness * 10)
-			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 5
+			KZ.set_potency(master.mutativeness * 10)
+			KZ.set_production((master.spread_cap / initial(master.spread_cap)) * 5)
 	mutations = list()
 	SetOpacity(0)
 	if(has_buckled_mobs())
