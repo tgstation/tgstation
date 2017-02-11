@@ -570,6 +570,9 @@
 	return 10 //AI turrets shoot at everything not in their faction
 
 /obj/machinery/porta_turret/aux_base
+	name = "perimeter defense turret"
+	desc = "A plasma cutter turret calibrated to defend outposts against non-humanoid fauna."
+
 	req_access = list() //Can be disabled/enabled by any humanoid!
 	installation = null
 	lethal_projectile = /obj/item/projectile/plasma
@@ -582,6 +585,11 @@
 
 /obj/machinery/porta_turret/aux_base/setup()
 	return
+
+/obj/machinery/porta_turret/aux_base/New()
+	..()
+	cover.name = name
+	cover.desc = desc
 
 ////////////////////////
 //Turret Control Panel//
