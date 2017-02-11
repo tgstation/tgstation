@@ -56,6 +56,5 @@
 		M.key = key
 
 	if(delete_old_mob)
-		spawn(1)
-			qdel(src)
+		QDEL_IN(src, 1)
 	return M

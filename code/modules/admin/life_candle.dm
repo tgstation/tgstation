@@ -4,12 +4,15 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 
+	var/icon_state_active = "candle1_lit"
+	var/icon_state_inactive = "candle1"
+
 	anchored = TRUE
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/lit_luminosity = 2
-	var/list/datum/mind/linked_minds
+	var/list/datum/mind/linked_minds = list()
 
 	// If the body is destroyed, what do we spawn for them
 	var/mob_type = /mob/living/carbon/human
@@ -18,7 +21,7 @@
 	var/datum/outfit/outfit
 	// How long until we respawn them after their death.
 	var/respawn_time = 50
-	var/sound/respawn_sound = 'sound/magic/Staff_animation.ogg'
+	var/respawn_sound = 'sound/magic/Staff_animation.ogg'
 
 /obj/structure/life_candle/attack_hand(mob/user)
 	if(!user.mind)
@@ -41,9 +44,9 @@
 
 /obj/structure/life_candle/update_icon()
 	if(linked_minds.len)
-		icon_state = "candle1_lit"
+		icon_state = icon_state_active
 	else
-		icon_state = "candle1"
+		icon_state = icon_state_inactive
 
 /obj/structure/life_candle/examine(mob/user)
 	. = ..()
@@ -58,7 +61,7 @@
 		return
 
 	for(var/m in linked_minds)
-		var/datum/mind/mind = linked_minds
+		var/datum/mind/mind = m
 		if(!mind.current || (mind.current && mind.current.stat == DEAD))
 			addtimer(CALLBACK(src, .proc/respawn, mind), respawn_time, TIMER_UNIQUE)
 
@@ -72,12 +75,16 @@
 			body = mind.current
 	if(!body)
 		body = new mob_type(T)
-		body.mind = mind
+		var/mob/ghostie = mind.get_ghost(TRUE)
+		if(ghostie.client && ghostie.client.prefs)
+			ghostie.client.prefs.copy_to(body)
+		mind.transfer_to(body)
 	else
 		body.forceMove(T)
 		body.revive(1,1)
-	body.grab_ghost(TRUE)
+	mind.grab_ghost(TRUE)
+	body.flash_act()
 
-	if(ishuman(body) || outfit)
+	if(ishuman(body) && istype(outfit))
 		outfit.equip(body)
 	playsound(T, respawn_sound, 50, 1)
