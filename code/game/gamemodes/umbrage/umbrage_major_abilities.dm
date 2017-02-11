@@ -4,7 +4,7 @@
 	button_icon_state = "umbrage_psi_web"
 	check_flags = AB_CHECK_CONSCIOUS
 	blacklisted = 1
-	psi_cost = 5
+	psi_cost = 0
 
 /datum/action/innate/umbrage/psi_web/Activate()
 	usr << "<span class='velvet_bold'>You retreat inwards and touch the Mindlink...</span>"

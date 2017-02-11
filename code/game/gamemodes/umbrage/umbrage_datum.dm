@@ -42,7 +42,7 @@
 			return 1
 	return
 
-/datum/umbrage/proc/give_ability(ability_name, silent, consume_lucidity)
+/datum/umbrage/proc/give_ability(ability_name, silent, consume_lucidity) //Gives an ability of a certain name to the umbrage and consumes lucidity if applicable.
 	var/datum/action/innate/umbrage/ability
 	for(var/V in subtypesof(/datum/action/innate/umbrage))
 		var/datum/action/innate/umbrage/U = V
@@ -58,7 +58,7 @@
 		lucidity = max(0, lucidity - initial(ability.lucidity_cost))
 	return 1
 
-/datum/umbrage/proc/take_ability(ability_name, silent)
+/datum/umbrage/proc/take_ability(ability_name, silent) //Takes an ability of a certain name from the umbrage.
 	var/datum/action/innate/umbrage/ability
 	for(var/datum/action/innate/umbrage/U in linked_mind.current.actions)
 		if(U.name == ability_name)
@@ -71,6 +71,21 @@
 		linked_mind.current << "<span class='warning'>You have lost the \"[ability_name]\" ability.</span>"
 	qdel(ability)
 	return 1
+
+/datum/umbrage/proc/upgrade_ability(ability_name, ability_upgrade, silent) //Upgrades an ability of a certain name with a specific upgrade.
+	var/datum/action/innate/umbrage/ability
+	for(var/datum/action/innate/umbrage/U in linked_mind.current.actions)
+		if(U.name == ability_name)
+			ability = U
+			break
+	if(!ability)
+		return
+	ability.upgrade_level = ability_upgrade
+	ability.name = "[ability.name] ([ability_upgrade])"
+	if(!silent)
+		linked_mind.current << "<span class='velvet_italic'>Your [ability_name] ability has gained the [ability_upgrade] upgrade.</span>"
+	return 1
+
 
 //Psi Web code goes below here
 
@@ -110,5 +125,6 @@
 /datum/umbrage/ui_act(action, params)
 	if(..())
 		return
-	if(action == "unlock")
-		give_ability(params["name"], 0, 1)
+	switch(action)
+		if("unlock")
+			give_ability(params["name"], 0, 1)

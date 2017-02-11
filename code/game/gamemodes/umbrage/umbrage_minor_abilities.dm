@@ -6,10 +6,19 @@
 	var/psi_cost = 0
 	var/lucidity_cost = 0 //How much lucidity the ability costs to buy; if this is 0, it isn't listed on the catalog
 	var/blacklisted = 1 //If the ability can't be gained from the psi web
-#warn Todo: refactor "blacklisted"
+	var/upgrade_level //The upgrade we currently have
+	var/list/possible_upgrades = list() //Any possible upgrades
+	var/toggle //If this ability is one that's toggled on and off
 
-/datum/action/innate/umbrage/Trigger() //When you're making an ability, put ..() in Activate() when you should be consuming psi
-	if(..())
+/datum/action/innate/umbrage/Trigger()
+	var/successful_activation = 0
+	if(!IsAvailable())
+		return
+	if(!upgrade_level)
+		successful_activation = Activate()
+	else
+		successful_activation = UpgradedActivate(upgrade_level) //A different proc for upgraded uses
+	if(successful_activation)
 		var/datum/umbrage/U = get_umbrage()
 		if(U)
 			U.use_psi(psi_cost)
@@ -25,12 +34,17 @@
 /datum/action/innate/umbrage/proc/get_umbrage()
 	return owner.mind.umbrage_psionics
 
+/datum/action/innate/umbrage/proc/UpgradedActivate(upgrade_level)
+	return 1
+
 
 //Devour Will: After a brief charge-up, equips a dark bead.
 //	- The dark bead disappears after three seconds of no use.
 //	- Attacking someone using the dark bead will drain their thoughts.
 //	- This knocks them out as well as fully recharging psi.
 //	- Finally, they will be made vulnerable to Veil Mind for five ticks.
+//Upgrades:
+//  - Stealth makes producing and using the dark bead silent.
 /datum/action/innate/umbrage/devour_will
 	name = "Devour Will"
 	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out."
@@ -39,6 +53,7 @@
 	psi_cost = 20
 	lucidity_cost = 0 //Baseline
 	blacklisted = 1
+	possible_upgrades = list("Stealth")
 	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
@@ -147,7 +162,7 @@
 //Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, they will be thrown away and staggered by its force.
 /datum/action/innate/umbrage/demented_outburst
 	name = "Demented Outburst"
-	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud."
+	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Very loud."
 	button_icon_state = "umbrage_demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 80 //big boom = big cost
@@ -159,6 +174,7 @@
 	<span class='danger'>You begin harnessing every ounce of your power...</span>")
 	playsound(usr, 'sound/magic/demented_outburst_charge.ogg', 100, 0)
 	addtimer(CALLBACK(src, .proc/outburst, usr), 50)
+	return 1
 
 /datum/action/innate/umbrage/demented_outburst/proc/outburst(mob/living/user)
 	if(!user || user.stat)

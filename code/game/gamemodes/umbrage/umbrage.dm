@@ -117,7 +117,9 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	U.mind.umbrage_psionics = S
 	S.give_ability("Tutorial", 1)
 	S.give_ability("Divulge", 1)
+#warn Remove these debug abilities and put them in Divulge before the final version
 	S.give_ability("Psi Web", 1)
+	S.give_ability("Devour Will", 0)
 	return
 
 #warn Umbrages need antag datums when LeoZ finishes his rework
