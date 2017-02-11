@@ -52,7 +52,7 @@
 	new /obj/item/device/analyzer(src)
 	new /obj/item/weapon/wirecutters(src)
 
-/obj/item/weapon/storage/toolbox/mechanical
+/obj/item/weapon/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	item_state = "toolbox_blue_old"
 
