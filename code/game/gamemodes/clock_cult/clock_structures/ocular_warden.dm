@@ -32,14 +32,16 @@
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
 
-/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
 	if(anchored)
 		if(obj_integrity <= max_integrity * 0.25)
-			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+			if(!silent)
+				user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 			return FAILED_UNFASTEN
 	else
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(3, src))
-			user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
+			if(!silent)
+				user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
 			return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 

@@ -128,7 +128,7 @@
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
-	if(ismegafauna(M))
+	if(ismegafauna(M) && anchored)
 		state = 0
 		anchored = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
@@ -217,9 +217,10 @@
 	A.starting = loc
 	A.fire()
 
-/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
+/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
-		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		if(!silent)
+			user  << "<span class='warning'>[src] is welded to the floor!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 

@@ -1,11 +1,6 @@
 #define TRAVIS_MASS_MAP_BUILD
 #define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
 
-#include "birdstation.dm"
-#ifdef MAP_OVERRIDE_FILES
-	#undef MAP_OVERRIDE_FILES
-#endif
-
 #include "deltastation.dm"
 #ifdef MAP_OVERRIDE_FILES
 	#undef MAP_OVERRIDE_FILES

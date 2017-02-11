@@ -22,6 +22,7 @@
 			E.sight_flags -= SEE_MOBS
 			E.flash_protect = 2
 			user << "We adjust our eyes to protect them from bright lights."
+		user.update_sight()
 	else
 		user << "We can't adjust our eyes if we don't have any!"
 
