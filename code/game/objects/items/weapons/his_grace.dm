@@ -77,10 +77,11 @@
 	if(istype(master) && (src in master.held_items))
 		switch(bloodthirst)
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				master.visible_message("<span class='boldwarning'>[src] turns on [master]!</span>", "<span class='userdanger'>[src] turns on you!</span>")
+				master.visible_message("<span class='boldwarning'>[src] turns on [master]!</span>", "<span class='his_grace_aggressive'>[src] turns on you!</span>")
 				do_attack_animation(master, null, src)
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
+				flags &= ~NODROP
 				master.Weaken(3)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, 0)
@@ -94,15 +95,17 @@
 		return
 	forceMove(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
 	var/list/targets = list()
-	for(var/mob/living/L in oview(1, src))
+	for(var/mob/living/L in oview(2, src))
 		targets += L
+	if(!LAZYLEN(targets))
+		return
 	var/mob/living/L = pick(targets)
 	step_to(src, L)
 	if(Adjacent(L))
 		if(!L.stat)
-			L.visible_message("<span class='warning'>[src] lunges at [L]!</span>", "<span class='userdanger'>[src] lunges at you!</span>")
+			L.visible_message("<span class='warning'>[src] lunges at [L]!</span>", "<span class='his_grace_aggressive'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
-			playsound(L, 'sound/effects/splat.ogg', 50, 1)
+			playsound(L, 'sound/weapons/smash.ogg', 50, 1)
 			playsound(L, 'sound/misc/desceration-01.ogg', 50, 1)
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
@@ -113,7 +116,7 @@
 	if(awakened)
 		return
 	awakened = TRUE
-	user.visible_message("<span class='boldwarning'>[src] begins to rattle. He thirsts.</span>", "<span class='warning'>You flick [src]'s latch up. You hope this is a good idea.</span>")
+	user.visible_message("<span class='boldwarning'>[src] begins to rattle. He thirsts.</span>", "<span class='his_grace_small'>You flick [src]'s latch up. You hope this is a good idea.</span>")
 	name = "His Grace"
 	desc = "A bloodthirsty artefact created by a profane rite."
 	gender = MALE
@@ -140,14 +143,17 @@
 /obj/item/weapon/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
 	if(!meal)
 		return
-	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='userdanger'>[src] consumes you!</span>")
+	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace_aggressive'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
 	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
 	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst
-	bloodthirst = min(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
+	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER)
+		bloodthirst = min(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
+	else
+		bloodthirst = HIS_GRACE_CONSUME_OWNER
 	update_stats()
 
 /obj/item/weapon/his_grace/proc/adjust_bloodthirst(amt)
@@ -162,33 +168,33 @@
 	flags &= ~NODROP
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	switch(bloodthirst)
-		if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-			if(prev_bloodthirst > HIS_GRACE_PECKISH)
-				master.visible_message("<span class='warning'>[src] is satiated.</span>", "<span class='danger'>[src]'s hunger recedes...</span>")
-		if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-			if(HIS_GRACE_PECKISH >= prev_bloodthirst)
-				master.visible_message("<span class='warning'>[src] is feeling snackish.</span>", "<span class='danger'>[src] begins to hunger.</span>")
-			if(prev_bloodthirst > HIS_GRACE_HUNGRY)
-				master.visible_message("<span class='warning'>[src] is now only a little peckish.</span>", "<span class='danger'>[src]'s hunger recedes somewhat...</span>")
-		if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-			if(HIS_GRACE_HUNGRY >= prev_bloodthirst)
-				master.visible_message("<span class='warning'>[src] is getting hungry.</span>", "<span class='boldannounce'>You feel a sense of hunger come over you.\
-				[force_bonus < 5 ? " His power grows.":""]</span>")
-				force_bonus = max(force_bonus, 5)
-			if(prev_bloodthirst > HIS_GRACE_FAMISHED)
-				master.visible_message("<span class='warning'>[src] is now only somewhat hungry.</span>", "<span class='boldannounce'>[src]'s hunger recedes a little...</span>")
-		if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-			flags |= NODROP
-			if(HIS_GRACE_FAMISHED >= prev_bloodthirst)
-				master.visible_message("<span class='warning'>[src] is very hungry!</span>", "<span class='userdanger'>Spines sink into your hand. [src] must feed immediately.\
-				[force_bonus < 10 ? " His power grows.":""]</span>")
-				force_bonus = max(force_bonus, 10)
-			if(prev_bloodthirst > HIS_GRACE_STARVING)
-				master.visible_message("<span class='warning'>[src] is now only very hungry!</span>", "<span class='boldannounce'>Your bloodlust recedes.</span>")
 		if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
 			flags |= NODROP
-			if(HIS_GRACE_STARVING >= prev_bloodthirst)
-				master.visible_message("<span class='boldwarning'>[src] is starving!</span>", "<span class='userdanger'>Bloodlust overcomes you. [src] must be fed, or you will become His meal.\
+			if(HIS_GRACE_STARVING > prev_bloodthirst)
+				master.visible_message("<span class='boldwarning'>[src] is starving!</span>", "<span class='his_grace'>[src]'s bloodlust overcomes you. [src] must be fed, or you will become His meal.\
 				[force_bonus < 15 ? " And still, His power grows.":""]</span>")
 				force_bonus = max(force_bonus, 15)
+		if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
+			flags |= NODROP
+			if(HIS_GRACE_FAMISHED > prev_bloodthirst)
+				master.visible_message("<span class='warning'>[src] is very hungry!</span>", "<span class='his_grace'>Spines sink into your hand. [src] must feed immediately.\
+				[force_bonus < 10 ? " His power grows.":""]</span>")
+				force_bonus = max(force_bonus, 10)
+			if(prev_bloodthirst >= HIS_GRACE_STARVING)
+				master.visible_message("<span class='warning'>[src] is now only very hungry!</span>", "<span class='his_grace'>Your bloodlust recedes.</span>")
+		if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
+			if(HIS_GRACE_HUNGRY > prev_bloodthirst)
+				master.visible_message("<span class='warning'>[src] is getting hungry.</span>", "<span class='his_grace'>You feel [src]'s hunger within you.\
+				[force_bonus < 5 ? " His power grows.":""]</span>")
+				force_bonus = max(force_bonus, 5)
+			if(prev_bloodthirst >= HIS_GRACE_FAMISHED)
+				master.visible_message("<span class='warning'>[src] is now only somewhat hungry.</span>", "<span class='his_grace_small'>[src]'s hunger recedes a little...</span>")
+		if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
+			if(HIS_GRACE_PECKISH > prev_bloodthirst)
+				master.visible_message("<span class='warning'>[src] is feeling snackish.</span>", "<span class='his_grace_small'>[src] begins to hunger.</span>")
+			if(prev_bloodthirst >= HIS_GRACE_HUNGRY)
+				master.visible_message("<span class='warning'>[src] is now only a little peckish.</span>", "<span class='his_grace'>[src]'s hunger recedes somewhat...</span>")
+		if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
+			if(prev_bloodthirst >= HIS_GRACE_PECKISH)
+				master.visible_message("<span class='warning'>[src] is satiated.</span>", "<span class='his_grace'>[src]'s hunger recedes...</span>")
 	force = initial(force) + force_bonus

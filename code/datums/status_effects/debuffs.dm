@@ -28,5 +28,4 @@
 		return
 	owner.adjustBruteLoss(0.1)
 	owner.adjustFireLoss(0.1)
-	owner.adjustToxLoss(0.1, TRUE, TRUE)
-	owner.adjustOxyLoss(0.1)
+	owner.adjustToxLoss(0.2, TRUE, TRUE)

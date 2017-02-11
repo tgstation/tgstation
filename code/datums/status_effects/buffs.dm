@@ -155,7 +155,7 @@
 /datum/status_effect/his_grace
 	id = "his_grace"
 	duration = -1
-	tick_interval = 5
+	tick_interval = 4
 	alert_type = /obj/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
 
@@ -186,9 +186,10 @@
 		if(HG.awakened)
 			graces++
 	if(!graces)
+		owner.apply_status_effect(STATUS_EFFECT_HISWRATH)
 		qdel(src)
 		return
-	var/grace_heal = Floor(bloodlust * 0.08)
+	var/grace_heal = bloodlust * 0.05
 	owner.adjustBruteLoss(-grace_heal)
 	owner.adjustFireLoss(-grace_heal)
 	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
