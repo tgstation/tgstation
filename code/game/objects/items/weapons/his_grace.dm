@@ -41,6 +41,9 @@
 	else
 		..()
 
+/obj/item/weapon/his_grace/CtrlClick(mob/user) //you can't pull his grace
+	attackhand(user)
+
 /obj/item/weapon/his_grace/examine(mob/user)
 	..()
 	if(awakened)
@@ -88,12 +91,12 @@
 			else
 				master.apply_status_effect(STATUS_EFFECT_HISGRACE)
 		return
+	forceMove(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
 		return
 	if(bloodthirst >= HIS_GRACE_FALL_ASLEEP)
 		drowse()
 		return
-	forceMove(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
 	var/list/targets = list()
 	for(var/mob/living/L in oview(2, src))
 		targets += L
@@ -151,7 +154,7 @@
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst
 	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER)
-		bloodthirst = min(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
+		bloodthirst = max(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
 	update_stats()
@@ -168,6 +171,9 @@
 	flags &= ~NODROP
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	switch(bloodthirst)
+		if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
+			if(HIS_GRACE_CONSUME_OWNER > prev_bloodthirst)
+				master.visible_message("<span class='userdanger'>[src] enters a frenzy!</span>")
 		if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
 			flags |= NODROP
 			if(HIS_GRACE_STARVING > prev_bloodthirst)
