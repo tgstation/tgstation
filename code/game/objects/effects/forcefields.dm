@@ -20,6 +20,19 @@
 	desc = "You have a bad feeling about this."
 	var/timeleft = 300
 
+/obj/effect/forcefield/mime/CanPass(mob/living/user, turf/target, height=0)
+	if(isliving(user) && user.mind)
+		if(user.mind.miming)
+			return 1
+		return 0
+	return 0
+
+
 /obj/effect/forcefield/mime/New()
 	..()
 	QDEL_IN(src, timeleft)
+
+/obj/effect/forcefield/mime/advanced
+	name = "invisible blockade"
+	desc = "You're goona be here a while."
+	timeleft = 600

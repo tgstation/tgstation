@@ -1176,6 +1176,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/mimery
+	name = "Guide to Advanced Mimery Series"
+	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x3 invisble walls, and shoot bullets out of their fingers."
+	cost = 14
+	item = /obj/item/weapon/storage/box/syndie_kit/mimery
+	restricted_roles = list("Mime")
+
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
