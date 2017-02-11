@@ -92,18 +92,18 @@ var/list/total_extraction_beacons = list()
 			holder_obj.overlays -= balloon2
 			holder_obj.overlays += balloon
 			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
-			animate(holder_obj, pixel_z = 10, time = 20)
+			animate(holder_obj, pixel_z = 10, time = 20, easing = QUAD_EASING)
 			sleep(20)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 15, time = 10, easing = QUAD_EASING)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 10, time = 10, easing = QUAD_EASING)
 			sleep(10)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 15, time = 10, easing = QUAD_EASING)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 10, time = 10, easing = QUAD_EASING)
 			sleep(10)
 			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
-			animate(holder_obj, pixel_z = 1000, time = 30)
+			animate(holder_obj, pixel_z = 1000, time = 30, easing = QUAD_EASING)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetParalysis(0)
@@ -129,7 +129,7 @@ var/list/total_extraction_beacons = list()
 			holder_obj.overlays -= balloon3
 			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
-			animate(holder_obj, pixel_z = 0, time = 5)
+			animate(holder_obj, pixel_z = 0, time = 5, easing = QUAD_EASING)
 			sleep(5)
 			A.loc = holder_obj.loc
 			qdel(holder_obj)
