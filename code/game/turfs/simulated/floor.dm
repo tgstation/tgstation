@@ -32,6 +32,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/floor_tile = null //tile that this floor drops
 	var/list/broken_states
 	var/list/burnt_states
+	var/footfalls = 0 // how many people have stepped across the floor
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
@@ -183,3 +184,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
+
+/turf/open/floor/Entered(atom/movable/AM)
+	. = ..()
+	if(ismob(AM))
+		var/mob/M = AM
+		if(!(M.movement_type & FLYING))
+			footfalls++
+			if(footfalls >= FOOTFALLS_FOR_FILTH)
+				footfalls = 0
+				if(!locate(/obj/effect/decal/cleanable/dirt) in src)
+					new /obj/effect/decal/cleanable/dirt(src)

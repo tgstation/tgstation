@@ -409,3 +409,5 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define TURF_DECAL_PAINT "paint"
 #define TURF_DECAL_DAMAGE "damage"
 #define TURF_DECAL_DIRT "dirt"
+
+#define FOOTFALLS_FOR_FILTH 50
