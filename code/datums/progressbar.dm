@@ -27,7 +27,7 @@
 	var/list/bars = user.progressbars[bar.loc]
 	bars.Add(src)
 	listindex = bars.len
-	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = 5)
+	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = 5, easing = SINE_EASING)
 
 /datum/progressbar/proc/update(progress)
 	//world << "Update [progress] - [goal] - [(progress / goal)] - [((progress / goal) * 100)] - [round(((progress / goal) * 100), 5)]"
@@ -49,7 +49,7 @@
 /datum/progressbar/proc/shiftDown()
 	--listindex
 	var/tempsfsadf = bar.pixel_y - PROGRESSBAR_HEIGHT
-	animate(bar, pixel_y = tempsfsadf, time = 5)
+	animate(bar, pixel_y = tempsfsadf, time = 5, easing = SINE_EASING)
 
 /datum/progressbar/Destroy()
 	for(var/I in user.progressbars[bar.loc])

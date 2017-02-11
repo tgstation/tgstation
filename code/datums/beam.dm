@@ -126,6 +126,7 @@
 	mouse_opacity = 0
 	anchored = 1
 	var/datum/beam/owner
+	use_fade = 0
 
 
 /obj/effect/ebeam/Destroy()
