@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "[Delta] Fixes doors walls and windows being incorrectly placed due to mapmerge issues."
