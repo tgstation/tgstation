@@ -61,7 +61,7 @@ var/datum/subsystem/air/SSair
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
-	msg += "AT/ms:[round(active_turfs.len/cost,0.1)]"
+	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	..(msg)
 
 
