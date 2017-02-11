@@ -921,7 +921,8 @@
 	qdel(src)
 
 /obj/item/weapon/spellbook/oneuse/random/New()
-	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse))
+	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_one,/obj/item/weapon/spellbook/oneuse/mimery_two)
+	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
 	qdel(src)
 

@@ -1179,7 +1179,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x3 invisble walls, and shoot bullets out of their fingers."
-	cost = 14
+	cost = 15
 	item = /obj/item/weapon/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
 

@@ -61,14 +61,14 @@
 		else
 			H << "<span class='notice'>You break your vow of silence.</span>"
 
-// The spell can only be gotten from the "Advanced Mimery Kit" for Mime Traitors.
+// These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/blockade
 	name = "Invisible Blockade"
 	desc = "With more polished skills, a powerful mime can create a invisble blockade, blocking off a 3x3 area."
 	summon_type = list(/obj/effect/forcefield/mime/advanced)
 	invocation_type = "emote"
-	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
+	invocation_emote_self = "<span class='notice'>You form a blockade around yourself.</span>"
 	summon_lifespan = 600
 	charge_max = 600
 	summon_amt = 9
@@ -111,7 +111,7 @@
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
 			return
-		invocation = "<B>[usr.real_name]</B> pulls the finger gun's trigger!."
+		invocation = "<B>[usr.real_name]</B> fires [usr.p_their()] finger gun!"
 	else
 		invocation_type ="none"
 	..()
@@ -128,5 +128,5 @@
 	spell = /obj/effect/proc_holder/spell/aimed/finger_guns
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 2"
-	desc = "There's no words written..."
+	desc = "There aren't any words written..."
 	icon_state ="bookmime"
