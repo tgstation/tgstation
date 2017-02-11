@@ -527,3 +527,15 @@
 	id = "chocolate_milk"
 	description = "Milk for cool kids."
 	color = "#7D4E29"
+
+/datum/reagent/consumable/icee
+	name = "Icee"
+	id = "icee"
+	description = "Some people have an issue with this."
+	color = "#00F1FF"
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/icee/on_mob_life(mob/living/M)
+	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	. = ..(M)

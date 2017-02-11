@@ -31,11 +31,21 @@
 		var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
 		msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
 		msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
+		msg += "<font color='boldnotice'>As compensation, you got a cup of icee!</span>"
+
+		var/mob/living/carbon/human/H = C.mob
+		if(!ishuman(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human."
+			return
+
+		var/obj/item/weapon/reagent_containers/food/drinks/icee/I = new(get_turf(H))
+		if(H.put_in_hands(I))
+			H.update_inv_hands()
 
 		C << msg
 
-		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
-		log_admin("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
+		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue, and gave them a cup of icee for their losses.")
+		log_admin("[key_name(usr)] marked [C.key]'s admin help as an IC issue, and gave them a cup of icee for their losses.")
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)

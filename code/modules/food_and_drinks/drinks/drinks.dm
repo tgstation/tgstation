@@ -380,4 +380,8 @@
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
 
-
+/obj/item/weapon/reagent_containers/food/drinks/icee
+	name = "Icee"
+	desc = "A multicolored icee bottle. Hope you don't have an issue with this!"
+	icon_state = "icee"
+	list_reagents = list("icee" = 50)

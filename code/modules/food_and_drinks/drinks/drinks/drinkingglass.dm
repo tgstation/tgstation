@@ -517,6 +517,10 @@
 				icon_state = "glass_yellow"
 				name = "Eggnog"
 				desc = "For enjoying the most wonderful time of the year."
+			if("icee")
+				icon_state = "icee"
+				name = "Icee"
+				desc = "Do you have an issue with this?"
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
