@@ -1,0 +1,4 @@
+author: "Pyko"
+delete-after: True
+changes: 
+  - bugfix: "Fixed legit posters and map editing official/serial number for poster decals."
