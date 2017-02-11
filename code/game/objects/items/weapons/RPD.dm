@@ -527,7 +527,7 @@ var/global/list/RPD_recipes=list(
 	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
 	var/can_make_pipe = ((p_class == ATMOS_MODE || p_class == METER_MODE || p_class == DISPOSALS_MODE) && isturf(A))
 
-	if(!is_paintable || !is_consumable || !can_make_pipe)
+	if(!is_paintable && !is_consumable && !can_make_pipe)
 		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
