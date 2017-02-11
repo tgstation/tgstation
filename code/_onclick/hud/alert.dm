@@ -286,8 +286,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(21 to INFINITY)
 			finder.icon_state = "finder_far"
 		else
-			var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-			var/datum/preferences/P = H.client.prefs
+			var/datum/job/J = SSjob.GetJob(mob_viewer.mind.assigned_role)
+			var/datum/preferences/P = mob_viewer.client.prefs
 			var/image/meme = get_flat_human_icon(null,J.outfit,P)
 			add_overlay(meme)
 	add_overlay(finder)
