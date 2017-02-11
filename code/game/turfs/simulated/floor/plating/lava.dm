@@ -7,12 +7,6 @@
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
 	luminosity = 1
-	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
-	//if anything matching this typecache is found in the lava, we don't burn things
-
-/turf/open/floor/plating/lava/New()
-	..()
-	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/ex_act()
 	return
@@ -51,7 +45,9 @@
 
 
 /turf/open/floor/plating/lava/proc/is_safe()
-	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	//if anything matching this typecache is found in the lava, we don't burn things
+	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk))
+	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
 	return LAZYLEN(found_safeties)
 
 

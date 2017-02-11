@@ -168,7 +168,7 @@
 		O.emp_act(severity)
 	..()
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && tesla_ignore)
 		return FALSE
 	shock_damage *= siemens_coeff
@@ -190,11 +190,11 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+	if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
 		Stun(2)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
 			Stun(3)
 			Weaken(3)
 	if(override)
