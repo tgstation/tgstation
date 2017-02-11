@@ -181,14 +181,14 @@ var/total_borer_hosts_needed = 10
 	if(src && !QDELETED(src) && !QDELETED(victim))
 		var/say_string = (docile) ? "slurs" :"states"
 		if(victim)
-			victim << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
-			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
+			victim << "<span class='changeling'><i>[truename] [say_string]:</i> [russian_html2text(input)]</span>"
+			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [russian_html2text(input)]")
 			for(var/M in dead_mob_list)
 				if(isobserver(M))
-					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [input]</i>"
+					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [russian_html2text(input)]</i>"
 					var/link = FOLLOW_LINK(M, src)
 					M << "[link] [rendered]"
-		src << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
+		src << "<span class='changeling'><i>[truename] [say_string]:</i> [russian_html2text(input)]</span>"
 		victim.verbs += /mob/living/proc/borer_comm
 		talk_to_borer_action.Grant(victim)
 
@@ -206,15 +206,15 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-	B << "<span class='changeling'><i>[src] says:</i> [input]</span>"
-	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
+	B << "<span class='changeling'><i>[src] says:</i> [russian_html2text(input)]</span>"
+	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [russian_html2text(input)]")
 
 	for(var/M in dead_mob_list)
 		if(isobserver(M))
-			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [input]</i>"
+			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [russian_html2text(input)]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
-	src << "<span class='changeling'><i>[src] says:</i> [input]</span>"
+	src << "<span class='changeling'><i>[src] says:</i> [russian_html2text(input)]</span>"
 
 /mob/living/proc/trapped_mind_comm()
 	set name = "Converse with Trapped Mind"
@@ -230,15 +230,15 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-	CB << "<span class='changeling'><i>[B.truename] says:</i> [input]</span>"
-	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [input]")
+	CB << "<span class='changeling'><i>[B.truename] says:</i> [russian_html2text(input)]</span>"
+	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [russian_html2text(input)]")
 
 	for(var/M in dead_mob_list)
 		if(isobserver(M))
-			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [input]</i>"
+			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [russian_html2text(input)]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
-	src << "<span class='changeling'><i>[B.truename] says:</i> [input]</span>"
+	src << "<span class='changeling'><i>[B.truename] says:</i> [russian_html2text(input)]</span>"
 
 /mob/living/simple_animal/borer/Life()
 

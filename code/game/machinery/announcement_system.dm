@@ -126,7 +126,7 @@ var/list/announcement_systems = list()
 	contents += "Departmental Head Announcement:  <A href='?src=\ref[src];NewheadT-Topic=1'>([(newheadToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br><br>\n"
 
 	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 370, 220)
-	popup.set_content(contents)
+	popup.set_content(sanitize_russian(contents))
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
@@ -140,13 +140,13 @@ var/list/announcement_systems = list()
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
-			arrival = NewMessage
+			arrival = russian_html2text(NewMessage)
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
-			newhead = NewMessage
+			newhead = russian_html2text(NewMessage)
 
 	else if(href_list["NewheadT-Topic"])
 		newheadToggle = !newheadToggle

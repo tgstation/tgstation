@@ -44,4 +44,4 @@
 	if(!input || !IsAvailable())
 		return
 
-	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)
+	titled_hierophant_message(owner, russian_html2text(input), span_for_name, span_for_message, title)

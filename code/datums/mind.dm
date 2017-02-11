@@ -759,7 +759,7 @@
 					return
 				new_objective = new /datum/objective
 				new_objective.owner = src
-				new_objective.explanation_text = expl
+				new_objective.explanation_text = russian_html2text(expl)
 
 		if (!new_objective)
 			return

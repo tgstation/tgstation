@@ -126,14 +126,14 @@
 				gang_rank = "3rd Lieutenant"
 			else
 				gang_rank = "[gang_rank - 1]th Lieutenant"
-		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
+		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [russian_html2text(message)]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [ping]"
-		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
+		log_game("[key_name(user)] Messaged [gang.name] Gang: [russian_html2text(message)].")
 
 
 /obj/item/device/gangtool/proc/register_device(mob/user)

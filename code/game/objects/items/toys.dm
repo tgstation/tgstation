@@ -1381,7 +1381,7 @@
 	var/new_name = stripped_input(usr,"What would you like to name the dummy?","Input a name",doll_name,MAX_NAME_LEN)
 	if(!new_name)
 		return
-	doll_name = new_name
+	doll_name = russian_html2text(new_name)
 	user << "You name the dummy as \"[doll_name]\""
 	name = "[initial(name)] - [doll_name]"
 

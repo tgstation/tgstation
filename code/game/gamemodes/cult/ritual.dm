@@ -190,7 +190,7 @@ This file contains the arcane tome files.
 				var/the_keyword = stripped_input(usr, "Please enter a keyword for the rune.", "Enter Keyword", "")
 				if(!the_keyword)
 					return
-				chosen_keyword = the_keyword
+				chosen_keyword = russian_html2text(the_keyword)
 			break
 	if(!rune_to_scribe)
 		return
