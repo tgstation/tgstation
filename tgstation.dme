@@ -944,6 +944,7 @@
 #include "code\modules\admin\holder2.dm"
 #include "code\modules\admin\ipintel.dm"
 #include "code\modules\admin\IsBanned.dm"
+#include "code\modules\admin\life_candle.dm"
 #include "code\modules\admin\NewBan.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\secrets.dm"
