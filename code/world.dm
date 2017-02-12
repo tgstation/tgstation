@@ -149,11 +149,7 @@ var/last_irc_status = 0
 		if(!key_valid)
 			return "Bad Key"
 		else
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-			for(var/client/C in clients)
-				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					C << "<span class='announce'>PR: [input["announce"]]</span>"
-#undef CHAT_PULLR
+			AnnouncePR(input["announce"])
 
 	else if("crossmessage" in input)
 		if(!key_valid)
@@ -186,6 +182,24 @@ var/last_irc_status = 0
 			return "Bad Key"
 		else
 			return ircadminwho()
+
+#define PR_ANNOUNCEMENTS_PER_ROUND 3 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+/world/proc/AnnouncePR(announcement)
+	var/static/list/PRcounts = new	//PR announcement -> number of times announced this round
+	if(!(announcement in PRcounts))
+		PRcounts[announcement] = 1
+	else
+		++PRcounts[announcement]
+		if(PRcounts[announcement] > PR_ANNOUNCEMENTS_PER_ROUND)
+			return
+
+#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
+	for(var/client/C in clients)
+		if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
+			C << "<span class='announce'>PR: [announcement]</span>"
+#undef CHAT_PULLR
 
 #define WORLD_REBOOT(X) world.log << "World rebooted at [world.timeofday]"; ..(X)
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
