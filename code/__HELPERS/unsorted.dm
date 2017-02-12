@@ -1345,12 +1345,16 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 //kevinz000 if you touch this I will hunt you down
 var/vaild_HTTPSGet = FALSE
 /proc/HTTPSGet(url)
+	if(findtext(url, "\""))
+		valid_HTTPSGet = FALSE
+
 	if(!valid_HTTPSGet)
 		if(usr)
 			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
 		else
 			CRASH("Invalid HTTPSGet call on: [url]")
 	valid_HTTPSGet = FALSE
+
 	//"This has got to be the ugliest hack I have ever done"
 	//warning, here be dragons
 	/*
