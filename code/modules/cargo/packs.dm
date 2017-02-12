@@ -102,7 +102,9 @@
 					/obj/item/weapon/extinguisher,
 					/obj/item/weapon/extinguisher,
 					/obj/item/clothing/head/hardhat/red,
-					/obj/item/clothing/head/hardhat/red)
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/clothing/gloves/color/black/fire,
+					/obj/item/clothing/gloves/color/black/fire)
 	crate_name = "firefighting crate"
 
 /datum/supply_pack/emergency/atmostank
