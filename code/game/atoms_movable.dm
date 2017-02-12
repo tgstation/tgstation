@@ -30,7 +30,7 @@
 		return FALSE	//PLEASE no.
 	. = ..()
 
-/atom/movable/gravity_act(direction = null, strength = 1, throwing = FALSE)
+/atom/movable/proc/gravity_act(direction = null, strength = 1, throwing = FALSE)
 	if(!direction)
 		return FALSE
 	if(!isturf(loc))
