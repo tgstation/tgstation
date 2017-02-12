@@ -138,11 +138,14 @@ First, read the comments in this byond thread, starting here:http://www.byond.co
 
 There are two key points here:
 
-1) Defining a list in the type definition incurs a hidden proc call - init, if you must define a list at startup, do so in New() and avoid the overhead of a second call (init() and then new())
+1) Defining a list in the type definition incurs a hidden proc call - init, if you must define a list at startup, do so in New()/Initialize and avoid the overhead of a second call (init() and then new())
 
 2)Offsets list creation overhead to the point where the list is actually required (which for many objects, may be never at all). 
 
 Remember, this tradeoff makes sense in many cases but not all, you should think carefully about your implementation before deciding if this is an appropriate thing to do
+
+###Prefer `Initialize` over `New` for atoms
+Our game controller is pretty good at handling long operations and lag. But, it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`, and only use `New` if you need to pass arguments other than `loc` on construction. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/master/code/game/atoms.dm#L49
 
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.

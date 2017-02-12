@@ -179,7 +179,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(!channel_time)
 		return TRUE
 	for(var/invocation in invocations)
-		if(!check_special_requirements() || !do_after(invoker, channel_time / invocations.len, target = invoker) || !check_special_requirements())
+		if(!do_after(invoker, channel_time / invocations.len, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
 			slab.busy = null
 			return FALSE
 		if(multiple_invokers_used)
@@ -206,9 +206,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/channeled/scripture_effects()
 	for(var/i in 1 to chant_amount)
-		if(!can_recite())
-			break
-		if(!do_after(invoker, chant_interval, target = invoker))
+		if(!do_after(invoker, chant_interval, target = invoker, extra_checks = CALLBACK(src, .proc/can_recite)))
 			break
 		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
 		if(!chant_effects(i))

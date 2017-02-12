@@ -20,8 +20,8 @@
 	var/name = "Configuration"			// datum name
 
 	var/server_name = null				// server name (the name of the game window)
+	var/server_sql_name = null			// short form server name used for the DB
 	var/station_name = null				// station name (the name of the station in-game)
-	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
 	var/hub = 0
@@ -352,10 +352,10 @@
 					config.respawn = 0
 				if("servername")
 					config.server_name = value
+				if("serversqlname")
+					config.server_sql_name = 1
 				if("stationname")
 					config.station_name = value
-				if("serversuffix")
-					config.server_suffix = 1
 				if("hostedby")
 					config.hostedby = value
 				if("server")

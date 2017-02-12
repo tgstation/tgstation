@@ -16,6 +16,7 @@
 	density = 0
 	obj_integrity = 300
 	max_integrity = 300
+	resistance_flags = FIRE_PROOF
 	heat_proof = 1
 	glass = 1
 	var/nextstate = null
@@ -25,8 +26,32 @@
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 95, acid = 70)
-	CanAtmosPass = ATMOS_PASS_PROC
 	var/boltslocked = TRUE
+	var/list/affecting_areas
+
+/obj/machinery/door/firedoor/Initialize()
+	..()
+	CalculateAffectingAreas()
+
+/obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
+	remove_from_areas()
+	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
+	for(var/I in affecting_areas)
+		var/area/A = I
+		LAZYADD(A.firedoors, src)
+
+//see also turf/AfterChange for adjacency shennanigans
+
+/obj/machinery/door/firedoor/proc/remove_from_areas()
+	if(affecting_areas)
+		for(var/I in affecting_areas)
+			var/area/A = I
+			LAZYREMOVE(A.firedoors, src)
+
+/obj/machinery/door/firedoor/Destroy()
+	remove_from_areas()
+	affecting_areas.Cut()
+	return ..()
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(panel_open || operating)
@@ -44,12 +69,20 @@
 		stat |= NOPOWER
 	return
 
+/obj/machinery/door/firedoor/attack_hand(mob/user)
+	if(operating || !density)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	
+	user.visible_message("[user] bangs on \the [src].",
+						 "You bang on \the [src].")
+	playsound(loc, 'sound/effects/Glassknock.ogg', 10, FALSE, frequency = 32000)
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
 	if(operating)
 		return
-	
+
 	if(welded)
 		if(istype(C, /obj/item/weapon/wrench))
 			if(boltslocked)
@@ -160,6 +193,7 @@
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	flags = ON_BORDER
+	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))

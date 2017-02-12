@@ -10,8 +10,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
-	burnmod = 2
-	heatmod = 2
+	burnmod = 1.5
+	heatmod = 1.5
 	breathid = "tox"
 	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.

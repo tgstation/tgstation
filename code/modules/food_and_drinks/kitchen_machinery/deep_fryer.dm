@@ -18,6 +18,7 @@ insert ascii eagle on american flag background here
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
+	var/static/list/blacklisted_items = typecacheof(list(/obj/item/weapon/screwdriver, /obj/item/weapon/crowbar, /obj/item/weapon/wrench, /obj/item/weapon/wirecutters, /obj/item/device/multitool, /obj/item/weapon/weldingtool, /obj/item/weapon/reagent_containers/glass, /obj/item/weapon/storage/part_replacer))
 
 /obj/item/weapon/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
@@ -46,8 +47,16 @@ insert ascii eagle on american flag background here
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		user << "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>"
 		return
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(exchange_parts(user, I))
+		return
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
+		return
 	else
-		if(user.drop_item() && !frying)
+		if(is_type_in_typecache(I, blacklisted_items))
+			. = ..()
+		else if(user.drop_item() && !frying)
 			user << "<span class='notice'>You put [I] into [src].</span>"
 			frying = I
 			frying.forceMove(src)
