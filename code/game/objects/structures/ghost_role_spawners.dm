@@ -11,9 +11,10 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/pod
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a sentient ecosystem - an example of the mastery over life that your creators possessed. Your masters, benevolent as they were, created uncounted \
-	seed vaults and spread them across the universe to every planet they could chart. You are in one such seed vault. Your goal is to cultivate and spread life wherever it will go while waiting \
-	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a podperson. \
+		You grow weed and guns, and wait to be found so you can go to the \
+		main station and fuck people over. You don't care, you're fucking \
+		made of LEAAAAAVES.</b>"
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
@@ -30,7 +31,7 @@
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 /obj/effect/mob_spawn/human/ash_walker
-	name = "ash walker egg"
+	name = "valid lizard egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
 	mob_name = "an ash walker"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
@@ -42,12 +43,22 @@
 	death = FALSE
 	anchored = 0
 	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
-	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a valid lizard. \
+		Your tribe worships <span class='danger'>the Necropolis</span>. \
+		At least in theory, in practice you worship only yourselves and \
+		also mindless slaughter. The wastes are sacred ground, in that they \
+		are full of loot. \
+		You have seen lights in the distance... they foreshadow the arrival \
+		of people from the main station. Time to grab a spear and murder \
+		them, then go to the station and murder everyone there. If they \
+		get killed by, essentially, a tribe of spear wielding assistants \
+		then you're really just doing them a favour.\n\
+		Remember, kill anyone who wants to do things like \"roleplay\" or \
+		talks about \"peace\". You're here for only one thing..."
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>"
+	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the free antag!</b>"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -57,7 +68,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+		notify_ghosts("An valid lizard egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
@@ -69,8 +80,8 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/shadow
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are cursed. Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you \
-	did so, it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland.</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are cursed. Because \
+		THERE ARE NO EXILE SPAWNERS, STOP FUCKING ADMIN ABUSE REEEE!</b>"
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
@@ -103,7 +114,7 @@
 	density = 0
 	var/mob/living/owner = null //golem's owner if it has one
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
-	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
+	travel the stars with a single declaration: \"Fucking ghost roles just want free antag\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
 /obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
@@ -218,9 +229,7 @@
 	desc = "A small sleeper typically used to instantly restore minor wounds. This one seems broken, and its occupant is comatose."
 	mob_name = "a translocated vet"
 	flavour_text = "<font size=3><b>W</b></font><b>hat...? Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
-	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
-	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
-
+	you've now decided to violently kill anyone you come across, the end."
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
 	name = "prisoner containment sleeper"
@@ -242,10 +251,10 @@
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prisoner_transport/New()
-	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
-	"worship of a forbidden deity", "interspecies relations", "mutiny")
-	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
-	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
+	var/list/crimes = list("something, but who cares about RP")
+	flavour_text += "[pick(crimes)]. but regardless of that, it seems like \
+		you've been given FREE ANTAG AND GUNS. WOOOOOOOOOOOOOOOO. \
+		MURDER TIME!</b>"
 	..()
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
