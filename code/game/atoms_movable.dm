@@ -59,12 +59,12 @@ var/global/list/atoms_affected_by_gravity = list()
 		return FALSE
 	if(!override && !has_gravity())
 		return FALSE
-	if(!isturf(get_turf(src)))
+	if(!isturf(src.loc))	//Gravity was so strong it was pulling shards and rods out of windows!
 		return FALSE
 	if(anchored)
 		return FALSE
 	if(gravity_throwing)
-		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), 0, gravity_strength * 2)
+		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 10, gravity_strength * 2)
 		gravity_throwing = FALSE
 	else
 		for(var/i = gravity_strength, i > 0, i--)
