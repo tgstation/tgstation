@@ -949,7 +949,6 @@
 #include "code\modules\admin\IsBanned.dm"
 #include "code\modules\admin\multiaccount_show.dm"
 #include "code\modules\admin\NewBan.dm"
-#include "code\modules\admin\permamute.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\secrets.dm"
 #include "code\modules\admin\sql_message_system.dm"
