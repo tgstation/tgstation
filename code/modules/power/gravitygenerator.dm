@@ -346,10 +346,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		for(var/area/A in world)
 			if(A.z == z)
 				A.gravity_direction = FALSE
+				A.update_all_gravity()
 	else
 		for(var/area/A in world)
 			if(A.z == z)
 				A.gravity_direction = new_grav_dir
+				A.gravity_stunning = 5
+				A.gravity_throwing = 20
+				A.update_all_gravity()
 	current_grav_dir = new_grav_dir
 	update_icon()
 	update_list()

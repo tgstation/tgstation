@@ -416,6 +416,24 @@ var/list/teleportlocs = list()
 		if(ENVIRON)
 			master.used_environ += amount
 
+/area/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == "gravity_direction" || var_name == "gravity_strength" || var_name == "gravity_stunning" || var_name == "gravity_throwing" || var_name == "gravity_override")
+		update_all_gravity()
+
+/area/SDQL_update(var_name, new_value)
+	. = ..()
+	if(var_name == "gravity_direction" || var_name == "gravity_strength" || var_name == "gravity_stunning" || var_name == "gravity_throwing" || var_name == "gravity_override")
+		update_all_gravity()
+
+/area/proc/update_all_gravity()
+	for(var/atom/movable/AM in contents)
+		if(AM.is_affected_by_gravity)
+			set_gravity(AM)
+		CHECK_TICK
+	gravity_throwing = FALSE
+	gravity_stunning = FALSE
+
 /area/proc/set_gravity(var/atom/movable/AM, i = FALSE)
 	if(i > 5)
 		return FALSE

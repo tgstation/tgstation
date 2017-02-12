@@ -59,12 +59,13 @@ var/global/list/atoms_affected_by_gravity = list()
 		return FALSE
 	if(!override && !has_gravity())
 		return FALSE
-	if(!isturf(loc))
+	if(!isturf(get_turf(src)))
 		return FALSE
 	if(anchored)
 		return FALSE
 	if(gravity_throwing)
-		throw_at(get_edge_target_turf(src, gravity_direction), 0, gravity_strength * 2)
+		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), 0, gravity_strength * 2)
+		gravity_throwing = FALSE
 	else
 		for(var/i = gravity_strength, i > 0, i--)
 			Move(get_step(src, gravity_direction))
