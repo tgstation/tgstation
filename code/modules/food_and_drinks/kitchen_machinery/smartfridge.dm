@@ -399,7 +399,7 @@
 	desc = "A refrigerated storage unit for medicine storage."
 	var/list/spawn_meds = list(
 		/obj/item/weapon/reagent_containers/pill/epinephrine = 12,
-		/obj/item/weapon/reagent_containers/pill/charcoal = 1,
+		/obj/item/weapon/reagent_containers/pill/charcoal = 5,
 		/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
 
