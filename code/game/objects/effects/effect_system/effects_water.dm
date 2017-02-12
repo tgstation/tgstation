@@ -47,6 +47,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/particle_effect/steam/New()
 	..()
+	animate(src, alpha = 0, time = 20)
 	QDEL_IN(src, 20)
 
 /datum/effect_system/steam_spread

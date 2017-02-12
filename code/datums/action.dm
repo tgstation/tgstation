@@ -42,8 +42,10 @@
 				return
 		owner = M
 		M.actions += src
+		button.alpha = 0
 		if(M.client)
 			M.client.screen += button
+		animate(M, alpha = 255, time = 5)
 		M.update_action_buttons()
 	else
 		Remove(owner)

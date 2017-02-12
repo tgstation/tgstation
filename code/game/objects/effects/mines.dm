@@ -27,7 +27,7 @@
 	s.start()
 	mineEffect(victim)
 	triggered = 1
-	qdel(src)
+	destroy_effect()
 
 
 /obj/effect/mine/explosive
@@ -107,7 +107,7 @@
 	triggered = 1
 	invisibility = INVISIBILITY_ABSTRACT
 	mineEffect(victim)
-	qdel(src)
+	destroy_effect()
 
 
 /obj/effect/mine/pickup/bloodbath
@@ -143,7 +143,7 @@
 	sleep(duration)
 	victim << "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>"
 	qdel(chainsaw)
-	qdel(src)
+	destroy_effect()
 
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"

@@ -57,7 +57,9 @@
 	var/bypassing = 0
 
 /obj/effect/hotspot/New()
+	alpha = 0
 	..()
+	animate(src, alpha = 255, time = 5)
 	SSair.hotspots += src
 	perform_exposure()
 	setDir(pick(cardinal))
@@ -147,6 +149,7 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
+	animate(src, alpha = 0, time = 5)
 	SetLuminosity(0)
 	SSair.hotspots -= src
 	var/turf/open/T = loc
@@ -154,6 +157,7 @@
 		T.active_hotspot = null
 	DestroyTurf()
 	loc = null
+	QDEL_IN(src,5)
 	. = ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()

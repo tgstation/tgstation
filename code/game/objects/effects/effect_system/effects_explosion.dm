@@ -6,6 +6,7 @@
 
 /obj/effect/particle_effect/expl_particles/New()
 	..()
+	animate(src, alpha = 0, time = 15)
 	QDEL_IN(src, 15)
 
 /datum/effect_system/expl_particles
@@ -33,6 +34,7 @@
 
 /obj/effect/explosion/New()
 	..()
+	animate(src, alpha = 0, time = 10)
 	QDEL_IN(src, 10)
 
 /datum/effect_system/explosion

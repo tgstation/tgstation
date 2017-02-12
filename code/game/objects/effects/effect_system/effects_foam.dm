@@ -32,7 +32,9 @@
 
 
 /obj/effect/particle_effect/foam/New(loc)
+	alpha = 0
 	..(loc)
+	animate(src, alpha = 255, time = 5)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
@@ -49,7 +51,7 @@
 			new /obj/structure/foamedmetal(src.loc)
 		if(2)
 			new /obj/structure/foamedmetal/iron(src.loc)
-	flick("[icon_state]-disolve", src)
+	animate(src, alpha = 0, time = 5)
 	QDEL_IN(src, 5)
 
 /obj/effect/particle_effect/foam/process()

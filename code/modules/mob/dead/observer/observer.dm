@@ -57,6 +57,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
+	alpha = 0
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	if(global.cross_allowed)
@@ -110,8 +111,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	if(!fun_verbs)
 		verbs -= /mob/dead/observer/verb/boo
 		verbs -= /mob/dead/observer/verb/possess
-
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	animate(src, alpha = 255, time = 5)
+	animate(src, pixel_y = 2, time = 10, loop = -1, easing = QUAD_EASING)
 	..()
 
 /mob/dead/observer/narsie_act()

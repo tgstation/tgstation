@@ -338,7 +338,7 @@
 
 /obj/effect/overlay/temp/ratvar/volt_hit/proc/volthit()
 	if(user)
-		Beam(get_turf(user), "volt_ray", time=duration, maxdistance=8, beam_type=/obj/effect/ebeam/volt_ray)
+		Beam(get_turf(user), "volt_ray", time=duration, maxdistance=8, beam_type=/obj/effect/ebeam/volt_ray,alphafade=1)
 	var/hit_amount = 0
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)

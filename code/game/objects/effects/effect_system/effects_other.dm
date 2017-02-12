@@ -40,8 +40,9 @@
 			number++
 			I.setDir(holder.dir)
 			oldposition = get_turf(holder)
+			animate(I, alpha = 0, time = 10)
+			QDEL_IN(I, 10)
 			spawn(10)
-				qdel(I)
 				number--
 		spawn(2)
 			if(on)
@@ -78,8 +79,8 @@
 				if(fade)
 					flick(fadetype, I)
 					I.icon_state = ""
-				spawn(20)
-					qdel(I)
+				animate(I, alpha = 0, time = 20)
+				QDEL_IN(I, 20)
 			oldposition = T
 		spawn(2)
 			if(on)

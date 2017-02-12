@@ -92,7 +92,7 @@
 							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
 							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
 			reagents.trans_to(H, reagents.total_volume)
-			qdel(src)
+			destroy_effect()
 
 /obj/effect/decal/cleanable/vomit/Destroy()
 	for(var/datum/disease/D in viruses)
