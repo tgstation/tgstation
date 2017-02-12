@@ -38,6 +38,8 @@
 						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
+				else
+					user << "<span class='warning'>[src] fails to implant [M].</span>"
 
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
