@@ -43,17 +43,11 @@
 	name = "Build your own shuttle kit"
 	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
 	admin_notes = "No brig, no medical facilities, no air."
-	credit_cost = -7500
-
-/datum/map_template/shuttle/emergency/airless/prerequisites_met()
-	// first 10 minutes only
-	return world.time - round_start_time < 6000
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid Station Emergency Shuttle"
 	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
-	credit_cost = 3000
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
@@ -61,21 +55,18 @@
 	description = "Features include sentient bar staff (a Bardrone and a Barmaid), bathroom, a quality lounge for the heads, and a large gathering table."
 	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
 	Has medical facilities."
-	credit_cost = 5000
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "An Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
 	name = "Luxury Shuttle"
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
-	credit_cost = 10000
 
 
 /datum/map_template/shuttle/emergency/arena
@@ -83,18 +74,11 @@
 	name = "The Arena"
 	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
 	admin_notes = "RIP AND TEAR."
-	credit_cost = 10000
-
-/datum/map_template/shuttle/emergency/arena/prerequisites_met()
-	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
-		return TRUE
-	return FALSE
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
 	name = "Birdboat Station Emergency Shuttle"
 	description = "Though a little on the small side, this shuttle is feature complete, which is more than can be said for the pattern of station it was commissioned for."
-	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/box
 	suffix = "box"
@@ -111,7 +95,6 @@
 	Collect all the bedsheets before your neighbour does! Check if the AI is watching you with our patent pending \"Peeping Tom AI Multitool Detector\" or PEEEEEETUR for short. \
 	Have a fun ride!"
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by lavaland chasms, stationside door has been removed to prevent accidental dropping. No brig."
-	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -125,19 +108,16 @@
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta Station Emergency Shuttle"
-	credit_cost = 4000
 	description = "A fairly standard shuttle, though larger and slightly better equipped than the Box Station variant."
 
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
-	credit_cost = 1000
 	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
-	credit_cost = -1000
 	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile."
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
 
@@ -152,7 +132,6 @@
 	suffix = "pubby"
 	name = "Pubby Station Emergency Shuttle"
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
-	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
@@ -171,13 +150,11 @@
 	name = "Oh, Hi Daniel"
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
-	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
-	credit_cost = 500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -186,7 +163,6 @@
 	The only occupants were a number of dead rodents, who appeared to have clawed each other to death. \
 	Needless to say, no engineering team wanted to go near the thing, and it's only being used as an Emergency Escape Shuttle because there is literally nothing else available."
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
-	credit_cost = 15000
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
