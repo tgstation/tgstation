@@ -7,24 +7,37 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 	if(potentialRandomZlevels && potentialRandomZlevels.len)
 		world << "<span class='boldannounce'>Loading away mission...</span>"
-
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file)
-			smooth_zlevel(world.maxz)
-			world.log << "away mission loaded: [map]"
-
-		map_transition_config.Add(AWAY_MISSION_LIST)
-
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
-
+		load_new_z_level(file)
 		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
-		SortAreas() //To add recently loaded areas
+/proc/load_new_z_level(var/file)
+	if(!isfile(file))
+		return FALSE
+	maploader.load_map(file)
+	smooth_zlevel(world.maxz)
+	SortAreas()
+	world.log << "loaded [file] as z-level [world.maxz]"
+
+/proc/reset_gateway_spawns(reset = FALSE)
+	for(var/obj/machinery/gateway/G in world)
+		if(reset)
+			G.randomspawns = awaydestinations
+		else
+			G.randomspawns.Add(awaydestinations)
+
+/obj/effect/landmark/awaystart
+	name = "away mission spawn"
+	desc = "Randomly picked away mission spawn points"
+
+/obj/effect/landmark/awaystart/New()
+	awaydestinations += src
+	..()
+
+/obj/effect/landmark/awaystart/Destroy()
+	awaydestinations -= src
+	..()
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
@@ -61,13 +74,26 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	if(!z_levels || !z_levels.len)
-		z_levels = list(1)
+		WARNING("No Z levels provided - Not generating ruins")
+		return
+
+	for(var/zl in z_levels)
+		var/turf/T = locate(1, 1, zl)
+		if(!T)
+			WARNING("Z level [zl] does not exist - Not generating ruins")
+			return
+
 	var/overall_sanity = 100
-	var/ruins = potentialRuins.Copy()
+	var/list/ruins = potentialRuins.Copy()
 
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
-		var/datum/map_template/ruin/ruin = ruins[pick(ruins)]
+		var/datum/map_template/ruin/ruin = null
+		if(ruins && ruins.len)
+			ruin = ruins[pick(ruins)]
+		else
+			world.log << "Ruin loader had no ruins to pick from with [budget] left to spend."
+			break
 		// Can we afford it
 		if(ruin.cost > budget)
 			overall_sanity--
@@ -127,6 +153,8 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		var/turf/T = i
 		for(var/mob/living/simple_animal/monster in T)
 			qdel(monster)
+		for(var/obj/structure/flora/ash/plant in T)
+			qdel(plant)
 	template.load(central_turf,centered = TRUE)
 	template.loaded++
 	var/datum/map_template/ruin = template

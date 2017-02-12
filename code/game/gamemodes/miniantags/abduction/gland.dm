@@ -100,13 +100,13 @@
 /obj/item/organ/gland/pop
 	cooldown_low = 900
 	cooldown_high = 1800
-	uses = 6
+	uses = -1
 	human_only = 1
 	icon_state = "species"
 
 /obj/item/organ/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly))
+	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly,/datum/species/jelly))
 	owner.set_species(species)
 
 /obj/item/organ/gland/ventcrawling
@@ -118,7 +118,7 @@
 
 /obj/item/organ/gland/ventcrawling/activate()
 	owner << "<span class='notice'>You feel very stretchy.</span>"
-	owner.ventcrawler = 2
+	owner.ventcrawler = VENTCRAWLER_ALWAYS
 	return
 
 
@@ -159,7 +159,7 @@
 /obj/item/organ/gland/spiderman/activate()
 	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
 	owner.faction |= "spiders"
-	new /obj/effect/spider/spiderling(owner.loc)
+	new /obj/structure/spider/spiderling(owner.loc)
 
 /obj/item/organ/gland/egg
 	cooldown_low = 300
@@ -199,13 +199,13 @@
 	owner << "<span class='warning'>You feel something moving around inside you...</span>"
 	//spawn cocoon with clone greytide snpc inside
 	if(ishuman(owner))
-		var/obj/effect/cocoon/abductor/C = new (get_turf(owner))
+		var/obj/structure/spider/cocoon/abductor/C = new (get_turf(owner))
 		C.Copy(owner)
 		C.Start()
 	owner.gib()
 	return
 
-/obj/effect/cocoon/abductor
+/obj/structure/spider/cocoon/abductor
 	name = "slimy cocoon"
 	desc = "Something is moving inside."
 	icon = 'icons/effects/effects.dmi'
@@ -214,7 +214,7 @@
 	density = 1
 	var/hatch_time = 0
 
-/obj/effect/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
+/obj/structure/spider/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
 	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
 
@@ -228,11 +228,11 @@
 		if(I)
 			clone.equip_to_slot_if_possible(I,slot)
 
-/obj/effect/cocoon/abductor/proc/Start()
+/obj/structure/spider/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
 	START_PROCESSING(SSobj, src)
 
-/obj/effect/cocoon/abductor/process()
+/obj/structure/spider/cocoon/abductor/process()
 	if(world.time > hatch_time)
 		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
@@ -241,10 +241,10 @@
 		qdel(src)
 
 /obj/item/organ/gland/plasma
-	cooldown_low = 2400
-	cooldown_high = 3000
+	cooldown_low = 1200
+	cooldown_high = 1800
 	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
-	uses = 1
+	uses = -1
 
 /obj/item/organ/gland/plasma/activate()
 	owner << "<span class='warning'>You feel bloated.</span>"
@@ -253,9 +253,9 @@
 	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
 	sleep(50)
 	if(!owner) return
-	owner.visible_message("<span class='danger'>[owner] explodes in a cloud of plasma!</span>")
+	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
 	var/turf/open/T = get_turf(owner)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=300;TEMP=[T20C]")
-	owner.gib()
+		T.atmos_spawn_air("plasma=50;TEMP=[T20C]")
+	owner.vomit()
 	return

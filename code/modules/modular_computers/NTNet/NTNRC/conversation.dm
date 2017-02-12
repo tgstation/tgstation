@@ -1,6 +1,6 @@
 var/global/static/ntnrc_uid = 0
 
-/datum/ntnet_conversation/
+/datum/ntnet_conversation
 	var/id = null
 	var/title = "Untitled Conversation"
 	var/datum/computer_file/program/chatclient/operator // "Administrator" of this channel. Creator starts as channel's operator,
@@ -14,6 +14,11 @@ var/global/static/ntnrc_uid = 0
 	if(ntnet_global)
 		ntnet_global.chat_channels.Add(src)
 	..()
+
+/datum/ntnet_conversation/Destroy()
+	if(ntnet_global)
+		ntnet_global.chat_channels.Remove(src)
+	return ..()
 
 /datum/ntnet_conversation/proc/add_message(message, username)
 	message = "[worldtime2text()] [username]: [message]"

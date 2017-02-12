@@ -41,7 +41,7 @@
 	pinned_target.nullPinnedLoc()
 	nullPinnedTarget()
 	if(ishuman(user))
-		if(!user.get_active_hand())
+		if(!user.get_active_held_item())
 			user.put_in_hands(pinned_target)
 			user << "<span class='notice'>You take the target out of the stake.</span>"
 	else

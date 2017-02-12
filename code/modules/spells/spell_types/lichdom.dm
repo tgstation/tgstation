@@ -43,7 +43,7 @@
 	for(var/mob/M in targets)
 		var/list/hand_items = list()
 		if(iscarbon(M))
-			hand_items = list(M.get_active_hand(),M.get_inactive_hand())
+			hand_items = list(M.get_active_held_item(),M.get_inactive_held_item())
 
 		if(marked_item && !stat_allowed) //sanity, shouldn't happen without badminry
 			marked_item = null
@@ -55,7 +55,7 @@
 				charge_counter = charge_max
 				return
 
-			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
+			if(!marked_item || QDELETED(marked_item)) //Wait nevermind
 				M << "<span class='warning'>Your phylactery is gone!</span>"
 				return
 
@@ -72,7 +72,7 @@
 
 			var/mob/living/carbon/human/lich = new /mob/living/carbon/human(item_turf)
 
-			lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(lich), slot_shoes)
+			lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), slot_shoes)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), slot_wear_suit)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), slot_head)
@@ -80,7 +80,7 @@
 			lich.real_name = M.mind.name
 			M.mind.transfer_to(lich)
 			lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton)
-			lich << "<span class='warning'>Your bones clatter and shutter as they're pulled back into this world!</span>"
+			lich << "<span class='warning'>Your bones clatter and shutter as you are pulled back into this world!</span>"
 			charge_max += 600
 			var/mob/old_body = current_body
 			var/turf/body_turf = get_turf(old_body)
@@ -91,14 +91,15 @@
 				if(iscarbon(old_body))
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
-						C.unEquip(W)
-					for(var/obj/item/organ/I in C.internal_organs)
+						C.dropItemToGround(W)
+					for(var/X in C.internal_organs)
+						var/obj/item/organ/I = X
 						I.Remove(C)
 						I.forceMove(body_turf)
 				var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 				if(wheres_wizdo)
 					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
-					body_turf.Beam(item_turf,icon_state="lichbeam",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
+					body_turf.Beam(item_turf,icon_state="lichbeam",time=10+10*resurrections,maxdistance=INFINITY)
 				old_body.dust()
 
 		if(!marked_item) //linking item to the spell
@@ -123,15 +124,17 @@
 			charge_max = 1800 //3 minute cooldown, if you rise in sight of someone and killed again, you're probably screwed.
 			charge_counter = 1800
 			stat_allowed = 1
-			marked_item.name = "Ensouled [marked_item.name]"
-			marked_item.desc = "A terrible aura surrounds this item, its very existence is offensive to life itself..."
-			marked_item.color = "#003300"
+			marked_item.name = "ensouled [marked_item.name]"
+			marked_item.desc += "\nA terrible aura surrounds this item, its very existence is offensive to life itself..."
+			marked_item.add_atom_colour("#003300", ADMIN_COLOUR_PRIORITY)
+			poi_list |= marked_item
+
 			M << "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>"
 			M.set_species(/datum/species/skeleton)
 			current_body = M.mind.current
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.unEquip(H.wear_suit)
-				H.unEquip(H.head)
+				H.dropItemToGround(H.wear_suit)
+				H.dropItemToGround(H.head)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), slot_head)

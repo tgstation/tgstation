@@ -6,11 +6,11 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
@@ -74,10 +74,10 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			addtimer(reagents, "add_reagent", 600, FALSE, refill, trans)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 /obj/item/weapon/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot())
@@ -96,21 +96,23 @@
 	name = "pewter cup"
 	desc = "Everyone gets a trophy."
 	icon_state = "pewter_cup"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
 	materials = list(MAT_METAL=100)
 	possible_transfer_amounts = list()
 	volume = 5
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	spillable = 1
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup
 	name = "gold cup"
 	desc = "You're winner!"
 	icon_state = "golden_cup"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
@@ -121,7 +123,7 @@
 	name = "silver cup"
 	desc = "Best loser!"
 	icon_state = "silver_cup"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	throwforce = 8
 	amount_per_transfer_from_this = 15
@@ -133,7 +135,7 @@
 	name = "bronze cup"
 	desc = "At least you ranked!"
 	icon_state = "bronze_cup"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
@@ -215,6 +217,44 @@
 	else
 		icon_state = "water_cup_e"
 
+/obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
+	name = "small carton"
+	desc = "A small carton, intended for holding drinks."
+	icon_state = "juicebox"
+	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
+
+/obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change()
+	if (reagents.reagent_list.len)
+		switch(reagents.get_master_reagent_id())
+			if("orangejuice")
+				icon_state = "orangebox"
+				name = "orange juice box"
+				desc = "A great source of vitamins. Stay healthy!"
+			if("milk")
+				icon_state = "milkbox"
+				name = "carton of milk"
+				desc = "An excellent source of calcium for growing space explorers."
+			if("applejuice")
+				icon_state = "juicebox"
+				name = "apple juice box"
+				desc = "Sweet apple juice. Don't be late for school!"
+			if("grapejuice")
+				icon_state = "grapebox"
+				name = "grape juice box"
+				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
+			if("chocolate_milk")
+				icon_state = "chocolatebox"
+				name = "carton of chocolate milk"
+				desc = "Milk for cool kids!"
+			if("eggnog")
+				icon_state = "nog2"
+				name = "carton of eggnog"
+				desc = "For enjoying the most wonderful time of the year."
+	else
+		icon_state = "juicebox"
+		name = "small carton"
+		desc = "A small carton, intended for holding drinks."
+
 
 
 //////////////////////////drinkingglass and shaker//
@@ -256,6 +296,17 @@
 	volume = 30
 	spillable = 1
 
+///Lavaland bowls and bottles///
+
+/obj/item/weapon/reagent_containers/food/drinks/mushroom_bowl
+	name = "mushroom bowl"
+	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
+	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon_state = "mushroom_bowl"
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = 0
+
+
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
 
@@ -263,8 +314,8 @@
 	name = "soda can"
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
-	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_selected == "head")
-		user.visible_message("<span class='warning'>[user] crushes the can of [src] on \his forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
+	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
+		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
@@ -328,3 +379,5 @@
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
+
+

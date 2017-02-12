@@ -18,9 +18,12 @@
 		drone_overlays[cache_index] = null
 
 
-/mob/living/simple_animal/drone/proc/update_inv_hands()
+/mob/living/simple_animal/drone/update_inv_hands()
 	remove_overlay(DRONE_HANDS_LAYER)
 	var/list/hands_overlays = list()
+
+	var/obj/item/l_hand = get_item_for_held_index(1)
+	var/obj/item/r_hand = get_item_for_held_index(2)
 
 	var/y_shift = getItemPixelShiftY()
 
@@ -38,7 +41,8 @@
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
-			r_hand.screen_loc = ui_rhand
+			r_hand.plane = ABOVE_HUD_PLANE
+			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 
 	if(l_hand)
@@ -55,7 +59,8 @@
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
-			l_hand.screen_loc = ui_lhand
+			l_hand.plane = ABOVE_HUD_PLANE
+			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
 
@@ -86,16 +91,6 @@
 		drone_overlays[DRONE_HEAD_LAYER]	= head_overlay
 
 	apply_overlay(DRONE_HEAD_LAYER)
-
-
-//These procs serve as redirection so that the drone updates as expected when other things call these procs
-/mob/living/simple_animal/drone/update_inv_l_hand()
-	update_inv_hands()
-
-
-/mob/living/simple_animal/drone/update_inv_r_hand()
-	update_inv_hands()
-
 
 /mob/living/simple_animal/drone/update_inv_wear_mask()
 	update_inv_head()

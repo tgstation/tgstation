@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /*
  * GAMEMODES (by Rastaf0)
@@ -25,6 +25,7 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/required_players = 0
+	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
@@ -41,6 +42,8 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
+	var/list/datum/station_goal/station_goals = list()
+
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	world << "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>"
@@ -54,7 +57,7 @@
 		if((player.client)&&(player.ready))
 			playerC++
 	if(!Debug2)
-		if(playerC < required_players)
+		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!Debug2)
@@ -87,6 +90,7 @@
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
+	generate_station_goals()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 	return 1
@@ -135,17 +139,17 @@
 		message_admins("Convert_roundtype failed due to round length. Limit is [config.midround_antag_time_check] minutes.")
 		return null
 
-	var/list/antag_canadates = list()
+	var/list/antag_candidates = list()
 
 	for(var/mob/living/carbon/human/H in living_crew)
 		if(H.client && H.client.prefs.allow_midround_antag)
-			antag_canadates += H
+			antag_candidates += H
 
-	if(!antag_canadates)
-		message_admins("Convert_roundtype failed due to no antag canadates.")
+	if(!antag_candidates)
+		message_admins("Convert_roundtype failed due to no antag candidates.")
 		return null
 
-	antag_canadates = shuffle(antag_canadates)
+	antag_candidates = shuffle(antag_candidates)
 
 	if(config.protect_roles_from_antagonist)
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
@@ -158,7 +162,7 @@
 		if(!config.midround_antag[ticker.mode.config_tag])
 			round_converted = 0
 			return 1
-		for(var/mob/living/carbon/human/H in antag_canadates)
+		for(var/mob/living/carbon/human/H in antag_candidates)
 			replacementmode.make_antag_chance(H)
 		round_converted = 2
 		message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
@@ -278,6 +282,12 @@
 	var/datum/intercept_text/i_text = new /datum/intercept_text
 	for(var/V in possible_modes)
 		intercepttext += i_text.build(V)
+
+	if(station_goals.len)
+		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
+		for(var/datum/station_goal/G in station_goals)
+			G.on_report()
+			intercepttext += G.get_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary")
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
@@ -517,7 +527,7 @@
 	return max(0, enemy_minimum_age - C.player_age)
 
 /datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 100, M)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -530,5 +540,22 @@
 	ticker.mode.remove_cultist(newborgie, 0, 0)
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
-	ticker.mode.remove_hog_follower(newborgie, 0)
-	remove_servant_of_ratvar(newborgie.current, TRUE)
+
+/datum/game_mode/proc/generate_station_goals()
+	var/list/possible = list()
+	for(var/T in subtypesof(/datum/station_goal))
+		var/datum/station_goal/G = T
+		if(config_tag in initial(G.gamemode_blacklist))
+			continue
+		possible += T
+	var/goal_weights = 0
+	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		station_goals += new picked
+
+
+/datum/game_mode/proc/declare_station_goal_completion()
+	for(var/V in station_goals)
+		var/datum/station_goal/G = V
+		G.print_result()

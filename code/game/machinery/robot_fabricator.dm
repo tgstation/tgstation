@@ -6,7 +6,7 @@
 	anchored = 1
 	var/metal_amount = 0
 	var/operating = 0
-	var/obj/item/robot_parts/being_built = null
+	var/obj/item/being_built = null
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -90,37 +90,37 @@ Please wait until completion...</TT><BR>
 
 			switch (part_type)
 				if (1)
-					build_type = "/obj/item/robot_parts/l_arm"
+					build_type = "/obj/item/bodypart/l_arm/robot"
 					build_time = 200
 					build_cost = 10000
 
 				if (2)
-					build_type = "/obj/item/robot_parts/r_arm"
+					build_type = "/obj/item/bodypart/r_arm/robot"
 					build_time = 200
 					build_cost = 10000
 
 				if (3)
-					build_type = "/obj/item/robot_parts/l_leg"
+					build_type = "/obj/item/bodypart/l_leg/robot"
 					build_time = 200
 					build_cost = 10000
 
 				if (4)
-					build_type = "/obj/item/robot_parts/r_leg"
+					build_type = "/obj/item/bodypart/r_leg/robot"
 					build_time = 200
 					build_cost = 10000
 
 				if (5)
-					build_type = "/obj/item/robot_parts/chest"
+					build_type = "/obj/item/bodypart/chest/robot"
 					build_time = 350
 					build_cost = 40000
 
 				if (6)
-					build_type = "/obj/item/robot_parts/head"
+					build_type = "/obj/item/bodypart/head/robot"
 					build_time = 350
 					build_cost = 5000
 
 				if (7)
-					build_type = "/obj/item/robot_parts/robot_suit"
+					build_type = "/obj/item/robot_suit"
 					build_time = 600
 					build_cost = 15000
 
@@ -146,6 +146,4 @@ Please wait until completion...</TT><BR>
 						src.overlays -= "fab-active"
 		return
 
-	for (var/mob/M in viewers(1, src))
-		if (M.client && M.machine == src)
-			src.attack_hand(M)
+	updateUsrDialog()

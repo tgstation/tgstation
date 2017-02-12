@@ -19,7 +19,7 @@
 	..()
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
-	addtimer(src, "locate_stacking_machine", 7)
+	addtimer(CALLBACK(src, .proc/locate_stacking_machine), 7)
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id/prisoner))
@@ -74,14 +74,14 @@
 	switch(action)
 		if("handle_id")
 			if(inserted_id)
-				if(!usr.get_active_hand())
+				if(!usr.get_active_held_item())
 					usr.put_in_hands(inserted_id)
 					inserted_id = null
 				else
 					inserted_id.forceMove(get_turf(src))
 					inserted_id = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return

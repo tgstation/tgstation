@@ -1,5 +1,3 @@
-
-
 /mob/living/simple_animal/cockroach
 	name = "cockroach"
 	desc = "This station is just crawling with bugs."
@@ -8,6 +6,7 @@
 	health = 1
 	maxHealth = 1
 	turns_per_move = 5
+	loot = list(/obj/effect/decal/cleanable/deadcockroach)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = INFINITY
@@ -16,11 +15,15 @@
 	response_help  = "pokes"
 	response_disarm = "shoos"
 	response_harm   = "splats"
+	speak_emote = list("chitters")
 	density = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
+	verb_say = "chitters"
+	verb_ask = "chitters inquisitively"
+	verb_exclaim = "chitters loudly"
+	verb_yell = "chitters loudly"
 	var/squish_chance = 50
-	loot = list(/obj/effect/decal/cleanable/deadcockroach)
 	del_on_death = 1
 
 /mob/living/simple_animal/cockroach/death(gibbed)
@@ -32,17 +35,19 @@
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
-			if(A.mob_size > MOB_SIZE_SMALL)
+			if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
 				if(prob(squish_chance))
-					A.visible_message("<span class='notice'>\The [A] squashed \the [name].</span>", "<span class='notice'>You squashed \the [name].</span>")
-					death()
+					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
+					adjustBruteLoss(1) //kills a normal cockroach
 				else
-					visible_message("<span class='notice'>\The [name] avoids getting crushed.</span>")
+					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 	else
-		if(isobj(AM))
-			if(istype(AM,/obj/structure))
-				visible_message("<span class='notice'>As \the [AM] moved over \the [name], it was crushed.</span>")
-				death()
+		if(istype(AM,/obj/structure))
+			if(prob(squish_chance))
+				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
+				adjustBruteLoss(1)
+			else
+				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
 /mob/living/simple_animal/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return
@@ -53,4 +58,3 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	layer = ABOVE_OPEN_TURF_LAYER

@@ -259,7 +259,7 @@
 	category = CAT_MISCFOOD
 
 
-/datum/crafting_recipe/stuffedlegion
+/datum/crafting_recipe/food/stuffedlegion
 	name = "Stuffed legion"
 	time = 40
 	reqs = list(
@@ -271,7 +271,8 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
 	category = CAT_MISCFOOD
 
-/datum/crafting_recipe/lizardwine
+
+/datum/crafting_recipe/food/lizardwine
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
@@ -279,4 +280,39 @@
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
+	category = CAT_MISCFOOD
+
+
+/datum/crafting_recipe/food/powercrepe
+	name = "Powercrepe"
+	time = 40
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flatdough = 1,
+		/datum/reagent/consumable/milk = 1,
+		/datum/reagent/consumable/cherryjelly = 5,
+		/obj/item/weapon/stock_parts/cell/super =1,
+		/obj/item/weapon/melee/sabre = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/powercrepe
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/taco
+	name ="Classic Taco"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/taco
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tacoplain
+	name ="Plain Taco"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
 	category = CAT_MISCFOOD

@@ -10,15 +10,24 @@
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
 	layer = ABOVE_HUD_LAYER
-	unacidable = 1
+	plane = ABOVE_HUD_PLANE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/datum/hud/hud = null // A reference to the owner HUD, if any.
+
+/obj/screen/take_damage()
+	return
 
 /obj/screen/Destroy()
 	master = null
 	return ..()
 
+/obj/screen/examine(mob/user)
+	return
+
+/obj/screen/orbit()
+	return
 
 /obj/screen/text
 	icon = null
@@ -30,6 +39,7 @@
 
 /obj/screen/swap_hand
 	layer = HUD_LAYER
+	plane = HUD_PLANE
 	name = "swap hand"
 
 /obj/screen/swap_hand/Click()
@@ -46,25 +56,25 @@
 		M.swap_hand()
 	return 1
 
-/obj/screen/inventory/craft
+/obj/screen/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/obj/screen/inventory/craft/Click()
+/obj/screen/craft/Click()
 	var/mob/living/M = usr
 	if(isobserver(usr))
 		return
 	M.OpenCraftingMenu()
 
-/obj/screen/inventory/area_creator
+/obj/screen/area_creator
 	name = "create new area"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
 
-/obj/screen/inventory/area_creator/Click()
+/obj/screen/area_creator/Click()
 	if(usr.incapacitated())
 		return 1
 	var/area/A = get_area(usr)
@@ -78,8 +88,9 @@
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
 	layer = HUD_LAYER
+	plane = HUD_PLANE
 
-/obj/screen/inventory/Click()
+/obj/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -87,11 +98,16 @@
 
 	if(usr.incapacitated())
 		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
+
+	if(hud && hud.mymob && slot_id)
+		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
+		if(inv_item)
+			return inv_item.Click(location, control, params)
+
 	if(usr.attack_ui(slot_id))
-		usr.update_inv_l_hand(0)
-		usr.update_inv_r_hand(0)
+		usr.update_inv_hands()
 	return 1
 
 /obj/screen/inventory/update_icon()
@@ -108,13 +124,15 @@
 	var/image/active_overlay
 	var/image/handcuff_overlay
 	var/image/blocked_overlay
+	var/held_index = 0
 
 /obj/screen/inventory/hand/update_icon()
 	..()
+
 	if(!active_overlay)
 		active_overlay = image("icon"=icon, "icon_state"="hand_active")
 	if(!handcuff_overlay)
-		var/state = (slot_id == slot_r_hand) ? "markus" : "gabrielle"
+		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
 		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
 	if(!blocked_overlay)
 		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
@@ -126,19 +144,16 @@
 			var/mob/living/carbon/C = hud.mymob
 			if(C.handcuffed)
 				add_overlay(handcuff_overlay)
-			if(slot_id == slot_r_hand)
-				if(!C.has_right_hand())
-					add_overlay(blocked_overlay)
-			else if(slot_id == slot_l_hand)
-				if(!C.has_left_hand())
+
+			if(held_index)
+				if(!C.has_hand_for_held_index(held_index))
 					add_overlay(blocked_overlay)
 
-		if(slot_id == slot_l_hand && hud.mymob.hand)
-			add_overlay(active_overlay)
-		else if(slot_id == slot_r_hand && !hud.mymob.hand)
+		if(held_index == hud.mymob.active_hand_index)
 			add_overlay(active_overlay)
 
-/obj/screen/inventory/hand/Click()
+
+/obj/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -148,13 +163,12 @@
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 
-	if(ismob(usr))
-		var/mob/M = usr
-		switch(name)
-			if("right hand", "r_hand")
-				M.activate_hand("r")
-			if("left hand", "l_hand")
-				M.activate_hand("l")
+	if(hud.mymob.active_hand_index == held_index)
+		var/obj/item/I = hud.mymob.get_active_held_item()
+		if(I)
+			I.Click(location, control, params)
+	else
+		hud.mymob.swap_hand(held_index)
 	return 1
 
 /obj/screen/close
@@ -172,6 +186,7 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_drop"
 	layer = HUD_LAYER
+	plane = HUD_PLANE
 
 /obj/screen/drop/Click()
 	usr.drop_item_v()
@@ -182,25 +197,26 @@
 	screen_loc = ui_acti
 
 /obj/screen/act_intent/Click(location, control, params)
-	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
+	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
+/obj/screen/act_intent/segmented/Click(location, control, params)
+	if(usr.client.prefs.toggles & INTENT_STYLE)
 		var/_x = text2num(params2list(params)["icon-x"])
 		var/_y = text2num(params2list(params)["icon-y"])
 
 		if(_x<=16 && _y<=16)
-			usr.a_intent_change("harm")
+			usr.a_intent_change(INTENT_HARM)
 
 		else if(_x<=16 && _y>=17)
-			usr.a_intent_change("help")
+			usr.a_intent_change(INTENT_HELP)
 
 		else if(_x>=17 && _y<=16)
-			usr.a_intent_change("grab")
+			usr.a_intent_change(INTENT_GRAB)
 
 		else if(_x>=17 && _y>=17)
-			usr.a_intent_change("disarm")
-
+			usr.a_intent_change(INTENT_DISARM)
 	else
-		usr.a_intent_change("right")
+		return ..()
 
 /obj/screen/act_intent/alien
 	icon = 'icons/mob/screen_alien.dmi'
@@ -239,12 +255,10 @@
 					C << "<span class='warning'>You are not wearing an internals mask!</span>"
 					return
 
-		if(istype(C.l_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
-			C.internal = C.l_hand
-		else if(istype(C.r_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
-			C.internal = C.r_hand
+		var/obj/item/I = C.is_holding_item_of_type(/obj/item/weapon/tank)
+		if(I)
+			C << "<span class='notice'>You are now running on internals from the [I] on your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>"
+			C.internal = I
 		else if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(istype(H.s_store, /obj/item/weapon/tank))
@@ -278,16 +292,19 @@
 	icon_state = "running"
 
 /obj/screen/mov_intent/Click()
-	if(isobserver(usr))
+	toggle(usr)
+
+/obj/screen/mov_intent/proc/toggle(mob/user)
+	if(isobserver(user))
 		return
-	switch(usr.m_intent)
+	switch(user.m_intent)
 		if("run")
-			usr.m_intent = "walk"
+			user.m_intent = MOVE_INTENT_WALK
 			icon_state = "walking"
 		if("walk")
-			usr.m_intent = "run"
+			user.m_intent = MOVE_INTENT_RUN
 			icon_state = "running"
-	usr.update_icons()
+	user.update_icons()
 
 /obj/screen/pull
 	name = "stop pulling"
@@ -311,6 +328,7 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_resist"
 	layer = HUD_LAYER
+	plane = HUD_PLANE
 
 /obj/screen/resist/Click()
 	if(isliving(usr))
@@ -328,7 +346,7 @@
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	if(master)
-		var/obj/item/I = usr.get_active_hand()
+		var/obj/item/I = usr.get_active_held_item()
 		if(I)
 			master.attackby(I, usr, params)
 	return 1
@@ -352,55 +370,63 @@
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
 		return
+
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
+	var/choice
 
 	switch(icon_y)
 		if(1 to 9) //Legs
 			switch(icon_x)
 				if(10 to 15)
-					selecting = "r_leg"
+					choice = "r_leg"
 				if(17 to 22)
-					selecting = "l_leg"
+					choice = "l_leg"
 				else
 					return 1
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					selecting = "r_arm"
+					choice = "r_arm"
 				if(12 to 20)
-					selecting = "groin"
+					choice = "groin"
 				if(21 to 24)
-					selecting = "l_arm"
+					choice = "l_arm"
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					selecting = "r_arm"
+					choice = "r_arm"
 				if(12 to 20)
-					selecting = "chest"
+					choice = "chest"
 				if(21 to 24)
-					selecting = "l_arm"
+					choice = "l_arm"
 				else
 					return 1
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
-				selecting = "head"
+				choice = "head"
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							selecting = "mouth"
+							choice = "mouth"
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							selecting = "eyes"
+							choice = "eyes"
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							selecting = "eyes"
+							choice = "eyes"
 
-	if(old_selecting != selecting)
+	return set_selected_zone(choice, usr)
+
+/obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
+	if(isobserver(user))
+		return
+
+	if(choice != selecting)
+		selecting = choice
 		update_icon(usr)
 	return 1
 
@@ -427,6 +453,7 @@
 	blend_mode = BLEND_ADD
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	layer = FLASH_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/damageoverlay
 	icon = 'icons/mob/screen_full.dmi'
@@ -436,6 +463,7 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = 0
 	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/healths
 	name = "health"
@@ -478,6 +506,17 @@
 	screen_loc = ui_health
 	mouse_opacity = 0
 
+/obj/screen/healths/clock
+	icon = 'icons/mob/actions.dmi'
+	icon_state = "bg_clock"
+	screen_loc = ui_health
+	mouse_opacity = 0
+
+/obj/screen/healths/clock/gear
+	icon = 'icons/mob/clockwork_mobs.dmi'
+	icon_state = "bg_gear"
+	screen_loc = ui_internal
+
 /obj/screen/healths/revenant
 	name = "essence"
 	icon = 'icons/mob/actions.dmi'
@@ -488,3 +527,140 @@
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+
+
+
+/obj/screen/wheel
+	name = "wheel"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+	icon_state = ""
+	screen_loc = null //if you make a new wheel, remember to give it a screen_loc
+	var/list/buttons_names = list() //list of the names for each button, its length is the amount of buttons.
+	var/toggled = 0 //wheel is hidden/shown
+	var/wheel_buttons_type //the type of buttons used with this wheel.
+	var/list/buttons_list = list()
+
+/obj/screen/wheel/New()
+	..()
+	build_options()
+
+
+//we create the buttons for the wheel and place them in a square spiral fashion.
+/obj/screen/wheel/proc/build_options()
+	var/obj/screen/wheel_button/close_wheel/CW = new ()
+	buttons_list += CW //the close option
+	CW.wheel = src
+
+	var/list/offset_x_list = list()
+	var/list/offset_y_list = list()
+	var/num = 1
+	var/N = 1
+	var/M = 0
+	var/sign = -1
+	my_loop:
+		while(offset_y_list.len < buttons_names.len)
+			for(var/i=1, i<=num, i++)
+				offset_y_list += N
+				offset_x_list += M
+				if(offset_y_list.len == buttons_names.len)
+					break my_loop
+			if(N != 0)
+				N = 0
+				M = -sign
+			else
+				N = sign
+				M = 0
+				sign = -sign
+				num++
+
+	var/screenx = 8
+	var/screeny = 8
+	for(var/i = 1, i <= buttons_names.len, i++)
+		var/obj/screen/wheel_button/WB = new wheel_buttons_type()
+		WB.wheel = src
+		buttons_list += WB
+		screenx += offset_x_list[i]
+		screeny += offset_y_list[i]
+		WB.screen_loc = "[screenx], [screeny]"
+		set_button(WB, i)
+
+/obj/screen/wheel/proc/set_button(obj/screen/wheel_button/WB, button_number)
+	WB.name = buttons_names[button_number]
+	return
+
+/obj/screen/wheel/Destroy()
+	for(var/obj/screen/S in buttons_list)
+		qdel(S)
+	return ..()
+
+/obj/screen/wheel/Click()
+	if(world.time <= usr.next_move)
+		return
+	if(usr.stat)
+		return
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(toggled)
+			L.client.screen -= buttons_list
+		else
+			L.client.screen |= buttons_list
+		toggled = !toggled
+
+
+/obj/screen/wheel/talk
+	name = "talk wheel"
+	icon_state = "talk_wheel"
+	screen_loc = "11:6,2:-11"
+	wheel_buttons_type = /obj/screen/wheel_button/talk
+	buttons_names = list("help","hello","bye","stop","thanks","come","out", "yes", "no")
+	var/list/word_messages = list(list("Help!","Help me!"), list("Hello.", "Hi."), list("Bye.", "Goodbye."),\
+									list("Stop!", "Halt!"), list("Thanks.", "Thanks!", "Thank you."), \
+									list("Come.", "Follow me."), list("Out!", "Go away!", "Get out!"), \
+									list("Yes.", "Affirmative."), list("No.", "Negative"))
+
+/obj/screen/wheel/talk/set_button(obj/screen/wheel_button/WB, button_number)
+	..()
+	var/obj/screen/wheel_button/talk/T = WB //we already know what type the button is exactly.
+	T.icon_state = "talk_[T.name]"
+	T.word_messages = word_messages[button_number]
+
+
+/obj/screen/wheel_button
+	name = "default wheel button"
+	screen_loc = "8,8"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+	mouse_opacity = 2
+	var/obj/screen/wheel/wheel
+
+/obj/screen/wheel_button/Destroy()
+	wheel = null
+	return ..()
+
+/obj/screen/wheel_button/close_wheel
+	name = "close wheel"
+	icon_state = "x3"
+
+/obj/screen/wheel_button/close_wheel/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.client.screen -= wheel.buttons_list
+		wheel.toggled = !wheel.toggled
+
+
+/obj/screen/wheel_button/talk
+	name = "talk option"
+	icon_state = "talk_help"
+	var/talk_cooldown = 0
+	var/list/word_messages = list()
+
+/obj/screen/wheel_button/talk/Click(location, control,params)
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(L.stat)
+			return
+
+		if(word_messages.len && talk_cooldown < world.time)
+			talk_cooldown = world.time + 10
+			L.say(pick(word_messages))

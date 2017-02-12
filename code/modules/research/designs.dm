@@ -37,8 +37,9 @@ other types of metals and chemistry for reagents).
 	var/build_path = null				//The file path of the object that gets created
 	var/list/make_reagents = list()			//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
-	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
+	var/list/reagents_list = list()			//List of reagents. Format: "id" = amount.
 	var/maxstack = 1
+	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 
 
 ////////////////////////////////////////
@@ -46,15 +47,25 @@ other types of metals and chemistry for reagents).
 ////////////////////////////////////////
 
 /obj/item/weapon/disk/design_disk
-	name = "Component Design Disk"
+	name = "component design disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=100, MAT_GLASS=100)
-	var/datum/design/blueprint
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	var/list/blueprints = list()
+	var/max_blueprints = 1
 
 /obj/item/weapon/disk/design_disk/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
+	for(var/i in 1 to max_blueprints)
+		blueprints += null
+
+/obj/item/weapon/disk/design_disk/adv
+	name = "advanced component design disk"
+	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
+	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER = 50)
+	max_blueprints = 5
 
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
@@ -94,6 +105,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/disk/design_disk
 	category = list("Electronics")
 
+/datum/design/design_disk_adv
+	name = "Advanced Design Storage Disk"
+	desc = "Produce additional disks for storing device designs."
+	id = "design_disk_adv"
+	req_tech = list("programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
+	build_path = /obj/item/weapon/disk/design_disk/adv
+	category = list("Electronics")
+
 /datum/design/tech_disk
 	name = "Technology Data Storage Disk"
 	desc = "Produce additional disks for storing technology data."
@@ -104,6 +125,25 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/disk/tech_disk
 	category = list("Electronics")
 
+/datum/design/tech_disk_adv
+	name = "Advanced Technology Data Storage Disk"
+	desc = "Produce disks with extra storage capacity for storing technology data."
+	id = "tech_disk_adv"
+	req_tech = list("programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
+	build_path = /obj/item/weapon/disk/tech_disk/adv
+	category = list("Electronics")
+
+/datum/design/tech_disk_super_adv
+	name = "Quantum Technology Data Storage Disk"
+	desc = "Produce disks with extremely large storage capacity for storing technology data."
+	id = "tech_disk_super_adv"
+	req_tech = list("programming" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=100, MAT_GOLD=100)
+	build_path = /obj/item/weapon/disk/tech_disk/super_adv
+	category = list("Electronics")
 
 /////////////////////////////////////////
 /////////////////Mining//////////////////
@@ -329,7 +369,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/security/night
 	category = list("Equipment")
 
-datum/design/diagnostic_hud
+/datum/design/diagnostic_hud
 	name = "Diagnostic HUD"
 	desc = "A HUD used to analyze and determine faults within robotic machinery."
 	id = "dianostic_hud"
@@ -339,7 +379,7 @@ datum/design/diagnostic_hud
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
 	category = list("Equipment")
 
-datum/design/diagnostic_hud_night
+/datum/design/diagnostic_hud_night
 	name = "Night Vision Diagnostic HUD"
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "dianostic_hud_night"
@@ -464,6 +504,86 @@ datum/design/diagnostic_hud_night
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/science
+	category = list("Equipment")
+
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	id = "handdrill"
+	req_tech = list("materials" = 4, "engineering" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
+	build_path = /obj/item/weapon/screwdriver/power
+	category = list("Equipment")
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	id = "jawsoflife"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/weapon/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+	category = list("Equipment")
+
+/datum/design/alienwrench
+	name = "Alien Wrench"
+	desc = "An advanced wrench obtained through Abductor technology."
+	id = "alien_wrench"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/wrench/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienwirecutters
+	name = "Alien Wirecutters"
+	desc = "Advanced wirecutters obtained through Abductor technology."
+	id = "alien_wirecutters"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/wirecutters/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienscrewdriver
+	name = "Alien Screwdriver"
+	desc = "An advanced screwdriver obtained through Abductor technology."
+	id = "alien_screwdriver"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/screwdriver/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/aliencrowbar
+	name = "Alien Crowbar"
+	desc = "An advanced crowbar obtained through Abductor technology."
+	id = "alien_crowbar"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/crowbar/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienwelder
+	name = "Alien Welding Tool"
+	desc = "An advanced welding tool obtained through Abductor technology."
+	id = "alien_welder"
+	req_tech = list("engineering" = 5, "plasmatech" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/weldingtool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienmultitool
+	name = "Alien Multitool"
+	desc = "An advanced multitool obtained through Abductor technology."
+	id = "alien_multitool"
+	req_tech = list("engineering" = 5, "programming" = 5, "abductor" = 4)
+	build_path = /obj/item/device/multitool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 
 /datum/design/diskplantgene

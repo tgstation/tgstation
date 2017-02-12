@@ -64,7 +64,7 @@
 				return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
-				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+				say("Shuttle departing. Please stand away from the doors.")
 			if(1)
 				usr << "<span class='warning'>Invalid shuttle requested.</span>"
 			else

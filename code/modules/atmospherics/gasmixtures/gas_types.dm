@@ -51,6 +51,20 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	gas_overlay = "plasma"
 	moles_visible = MOLES_PLASMA_VISIBLE
 
+/datum/gas/water_vapor
+	id = "water_vapor"
+	specific_heat = 40
+	name = "Water Vapor"
+	gas_overlay = "water_vapor"
+	moles_visible = MOLES_PLASMA_VISIBLE
+
+/datum/gas/freon
+	id = "freon"
+	specific_heat = 2000
+	name = "Freon"
+	gas_overlay = "freon"
+	moles_visible = MOLES_PLASMA_VISIBLE
+
 /datum/gas/nitrous_oxide
 	id = "n2o"
 	specific_heat = 40
@@ -73,11 +87,11 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	specific_heat = 20
 	name = "BZ"
 
-/obj/effect/overlay/gas/
+/obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = 0
 	layer = FLY_LAYER
-	appearance_flags = RESET_COLOR|TILE_BOUND
+	appearance_flags = TILE_BOUND
 
 /obj/effect/overlay/gas/New(state)
 	. = ..()

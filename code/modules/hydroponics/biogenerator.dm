@@ -25,8 +25,26 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/biogenerator(null)
 	B.apply_default_parts(src)
 
+/obj/machinery/biogenerator/Destroy()
+	if(beaker)
+		qdel(beaker)
+		beaker = null
+	return ..()
+
+/obj/machinery/biogenerator/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/biogenerator/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		update_icon()
+		updateUsrDialog()
+
 /obj/item/weapon/circuitboard/machine/biogenerator
-	name = "circuit board (Biogenerator)"
+	name = "Biogenerator (Machine Board)"
 	build_path = /obj/machinery/biogenerator
 	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(
@@ -63,7 +81,7 @@
 	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 	if(processing)
@@ -129,9 +147,8 @@
 		if(i >= max_items)
 			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
 		else
-			user.unEquip(O)
-			O.loc = src
-			user << "<span class='info'>You put [O.name] in [src.name]</span>"
+			if(user.transferItemToLoc(O, src))
+				user << "<span class='info'>You put [O.name] in [src.name]</span>"
 		return 1 //no afterattack
 	else if (istype(O, /obj/item/weapon/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
@@ -140,7 +157,9 @@
 		processing = 1
 		var/obj/item/weapon/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
-			files.AddDesign2Known(D.blueprint)
+			for(var/B in D.blueprints)
+				if(B)
+					files.AddDesign2Known(B)
 		processing = 0
 		return 1
 	else

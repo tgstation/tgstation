@@ -19,7 +19,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bottle/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]-10")
 
@@ -233,6 +233,12 @@
 	desc = "A small bottle of atropine."
 	icon_state = "bottle12"
 	list_reagents = list("atropine" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/romerol
+	name = "romerol bottle"
+	desc = "A small bottle of Romerol. The REAL zombie powder."
+	icon_state = "bottle12"
+	list_reagents = list("romerol" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"

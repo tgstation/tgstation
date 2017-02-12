@@ -1,5 +1,9 @@
 
 /client
+		//////////////////////
+		//BLACK MAGIC THINGS//
+		//////////////////////
+	parent_type = /datum
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -51,5 +55,11 @@
 	//datum that controls the displaying and hiding of tooltips
 	var/datum/tooltip/tooltips
 
-	//Used for var edit flagging, also defined in datums (clients are not a child of datums for some reason)
-	var/var_edited = 0
+	var/lastping = 0
+	var/avgping = 0
+	var/connection_time //world.time they connected
+	var/connection_realtime //world.realtime they connected
+	var/connection_timeofday //world.timeofday they connected
+
+	var/inprefs = FALSE
+	var/list/topiclimiter

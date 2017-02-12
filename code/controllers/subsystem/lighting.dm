@@ -7,8 +7,8 @@ var/datum/subsystem/lighting/SSlighting
 	name = "Lighting"
 	init_order = 1
 	wait = 1
-	flags = SS_POST_FIRE_TIMING
-	priority = 40
+	flags = SS_TICKER
+	priority = 25
 	display_order = 5
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
@@ -69,14 +69,17 @@ var/datum/subsystem/lighting/SSlighting
 			if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
 				A.luminosity = 0
 
+	CHECK_TICK
 	for(var/thing in changed_lights)
 		var/datum/light_source/LS = thing
 		LS.check()
+		CHECK_TICK
 	changed_lights.Cut()
 
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		T.init_lighting()
+		CHECK_TICK
 	changed_turfs.Cut()
 
 	..()

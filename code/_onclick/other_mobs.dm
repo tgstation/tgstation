@@ -20,7 +20,7 @@
 	var/override = 0
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A)
+		override += HM.on_attack_hand(src, A, proximity)
 
 	if(override)
 		return
@@ -50,9 +50,8 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_ranged_attack(src, A)
 
-	var/turf/T = A
-	if(istype(T) && get_dist(src,T) <= 1)
-		src.Move_Pulled(T)
+	if(isturf(A) && get_dist(src,A) <= 1)
+		src.Move_Pulled(A)
 
 /*
 	Animals & All Unspecified
@@ -83,7 +82,7 @@
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
 	if(..())
 		return
-	if(a_intent != "harm" || !ismob(A))
+	if(a_intent != INTENT_HARM || !ismob(A))
 		return
 	if(is_muzzled())
 		return
@@ -111,7 +110,7 @@
 */
 /mob/living/carbon/alien/UnarmedAttack(atom/A)
 	A.attack_alien(src)
-/atom/proc/attack_alien(mob/user)
+/atom/proc/attack_alien(mob/living/carbon/alien/user)
 	attack_paw(user)
 	return
 /mob/living/carbon/alien/RestrainedClickOn(atom/A)
@@ -134,6 +133,68 @@
 	return
 /mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
 	return
+
+
+/*
+	Drones
+*/
+/mob/living/simple_animal/drone/UnarmedAttack(atom/A)
+	A.attack_drone(src)
+
+/atom/proc/attack_drone(mob/living/simple_animal/drone/user)
+	attack_hand(user) //defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
+
+/mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
+	return
+
+
+/*
+	True Devil
+*/
+
+/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
+	A.attack_hand(src)
+
+/*
+	Brain
+*/
+
+/mob/living/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
+	return
+
+
+/*
+	pAI
+*/
+
+/mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
+	return
+
+
+/*
+	Simple animals
+*/
+
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+	if(!dextrous)
+		return ..()
+	if(!ismob(A))
+		A.attack_hand(src)
+		update_inv_hands()
+
+
+/*
+	Hostile animals
+*/
+
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+	target = A
+	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
+		..()
+	else
+		AttackingTarget()
+
+
 
 /*
 	New Players:

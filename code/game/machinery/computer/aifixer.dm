@@ -64,41 +64,39 @@
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {"<br><A href='?src=\ref[user];mach_close=computer'>Close</A>"}
-
-	//user << browse(dat, "window=computer;size=400x500")
-	//onclose(user, "computer")
 	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 
+/obj/machinery/computer/aifixer/proc/Fix()
+	use_power(1000)
+	occupier.adjustOxyLoss(-1, 0)
+	occupier.adjustFireLoss(-1, 0)
+	occupier.adjustToxLoss(-1, 0)
+	occupier.adjustBruteLoss(-1, 0)
+	occupier.updatehealth()
+	occupier.updatehealth()
+	if(occupier.health >= 0 && occupier.stat == DEAD)
+		occupier.revive()
+	return occupier.health < 100
+
 /obj/machinery/computer/aifixer/process()
 	if(..())
-		src.updateDialog()
-		return
+		if(active)
+			active = Fix()
+		updateDialog()
+		update_icon()
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["fix"])
-		active = 1
-		while (occupier.health < 100)
-			occupier.adjustOxyLoss(-1, 0)
-			occupier.adjustFireLoss(-1, 0)
-			occupier.adjustToxLoss(-1, 0)
-			occupier.adjustBruteLoss(-1, 0)
-			occupier.updatehealth()
-			if(occupier.health >= 0 && occupier.stat == DEAD)
-				occupier.revive()
-			updateUsrDialog()
-			update_icon()
-			sleep(10)
-		active = 0
+		usr << "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>"
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		active = TRUE
 		add_fingerprint(usr)
-	updateUsrDialog()
-	update_icon()
-
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()

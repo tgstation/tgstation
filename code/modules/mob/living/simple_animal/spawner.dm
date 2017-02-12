@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 100
 	maxHealth = 100
+	gender = NEUTER
 	var/list/spawned_mobs = list()
 	var/max_mobs = 5
 	var/spawn_delay = 0
@@ -12,7 +13,7 @@
 	status_flags = 0
 	anchored = 1
 	AIStatus = AI_OFF
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	wander = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)

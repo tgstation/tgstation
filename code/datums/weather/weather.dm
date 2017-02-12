@@ -20,6 +20,7 @@
 	var/weather_duration_upper = 1500 //See above - this is the highest possible duration
 	var/weather_sound
 	var/weather_overlay
+	var/weather_color = null
 
 	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the wather is over
 	var/end_duration = 300 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
@@ -69,7 +70,7 @@
 				M << telegraph_message
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
-	addtimer(src, "start", telegraph_duration)
+	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
@@ -84,7 +85,7 @@
 			if(weather_sound)
 				M << sound(weather_sound)
 	START_PROCESSING(SSweather, src)
-	addtimer(src, "wind_down", weather_duration)
+	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
@@ -99,7 +100,7 @@
 			if(end_sound)
 				M << sound(end_sound)
 	STOP_PROCESSING(SSweather, src)
-	addtimer(src, "end", end_duration)
+	addtimer(CALLBACK(src, .proc/end), end_duration)
 
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
@@ -108,7 +109,8 @@
 	update_areas()
 
 /datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
-	if(L.z != target_z)
+	var/turf/mob_turf = get_turf(L)
+	if(mob_turf && (mob_turf.z != target_z))
 		return
 	if(immunity_type in L.weather_immunities)
 		return
@@ -125,6 +127,7 @@
 		N.layer = overlay_layer
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.invisibility = 0
+		N.color = weather_color
 		switch(stage)
 			if(STARTUP_STAGE)
 				N.icon_state = telegraph_overlay
@@ -133,6 +136,7 @@
 			if(WIND_DOWN_STAGE)
 				N.icon_state = end_overlay
 			if(END_STAGE)
+				N.color = null
 				N.icon_state = initial(N.icon_state)
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial

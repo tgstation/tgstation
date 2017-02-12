@@ -47,7 +47,7 @@
 	for(var/datum/mind/wizard in wizards)
 		if(!istype(wizard.current,/mob/living/carbon))
 			continue
-		if(istype(wizard.current,/mob/living/carbon/brain))
+		if(istype(wizard.current,/mob/living/brain))
 			continue
 		if(wizard.current.stat==DEAD)
 			continue

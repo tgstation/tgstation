@@ -179,6 +179,7 @@
 		qdel(J)
 		H.icon = HI
 		H.layer = ABOVE_HUD_LAYER
+		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 #else
 
@@ -246,7 +247,7 @@
 							else
 								colour = rgb(255,128,128)
 
-						//if(istype(AM, /obj/effect/blob))
+						//if(istype(AM, /obj/structure/blob))
 						//	colour = rgb(255,0,255)
 
 				var/area/A = T.loc
@@ -297,6 +298,7 @@
 		H.icon = I
 		qdel(I)
 		H.layer = ABOVE_HUD_LAYER
+		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 
 #endif

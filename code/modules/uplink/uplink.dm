@@ -18,10 +18,16 @@ var/global/list/uplinks = list()
 	var/datum/game_mode/gamemode = null
 	var/spent_telecrystals = 0
 	var/purchase_log = ""
+	var/list/uplink_items
 
 /obj/item/device/uplink/New()
 	..()
 	uplinks += src
+	uplink_items = get_uplink_items(gamemode)
+
+/obj/item/device/uplink/proc/set_gamemode(gamemode)
+	src.gamemode = gamemode
+	uplink_items = get_uplink_items(gamemode)
 
 /obj/item/device/uplink/Destroy()
 	uplinks -= src
@@ -63,11 +69,11 @@ var/global/list/uplinks = list()
 		ui.open()
 
 /obj/item/device/uplink/ui_data(mob/user)
+	if(!user.mind)
+		return
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
-
-	var/list/uplink_items = get_uplink_items(gamemode)
 
 	data["categories"] = list()
 	for(var/category in uplink_items)
@@ -77,6 +83,15 @@ var/global/list/uplinks = list()
 		if(category == selected_cat)
 			for(var/item in uplink_items[category])
 				var/datum/uplink_item/I = uplink_items[category][item]
+				if(I.limited_stock == 0)
+					continue
+				if(I.restricted_roles.len)
+					var/is_inaccessible = 1
+					for(var/R in I.restricted_roles)
+						if(R == user.mind.assigned_role)
+							is_inaccessible = 0
+					if(is_inaccessible)
+						continue
 				cat["items"] += list(list(
 					"name" = I.name,
 					"cost" = I.cost,
@@ -94,7 +109,6 @@ var/global/list/uplinks = list()
 		if("buy")
 			var/item = params["item"]
 
-			var/list/uplink_items = get_uplink_items(gamemode)
 			var/list/buyable_items = list()
 			for(var/category in uplink_items)
 				buyable_items += uplink_items[category]
@@ -128,10 +142,15 @@ var/global/list/uplinks = list()
 
 /obj/item/device/radio/uplink/nuclear/New()
 	..()
-	hidden_uplink.gamemode = /datum/game_mode/nuclear
+	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
 /obj/item/device/multitool/uplink/New()
 	..()
 	hidden_uplink = new(src)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE
+
+/obj/item/weapon/pen/uplink/New()
+	..()
+	hidden_uplink = new(src)
+	traitor_unlock_degrees = 360

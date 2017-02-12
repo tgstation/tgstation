@@ -7,13 +7,19 @@
 
 /datum/export/tech/get_cost(obj/O)
 	var/obj/item/weapon/disk/tech_disk/D = O
-	if(!D.stored)
-		return 0
-	var/datum/tech/tech = D.stored
-	return ..() * tech.getCost(techLevels[tech.id])
+	var/cost = 0
+	for(var/V in D.tech_stored)
+		if(!V)
+			continue
+		var/datum/tech/tech = V
+		cost += tech.getCost(techLevels[tech.id])
+	return ..() * cost
 
 /datum/export/tech/sell_object(obj/O)
 	..()
 	var/obj/item/weapon/disk/tech_disk/D = O
-	var/datum/tech/tech = D.stored
-	techLevels[tech.id] = tech.level
+	for(var/V in D.tech_stored)
+		if(!V)
+			continue
+		var/datum/tech/tech = V
+		techLevels[tech.id] = tech.level

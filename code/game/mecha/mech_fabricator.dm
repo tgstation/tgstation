@@ -42,7 +42,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mechfab
-	name = "circuit board (Exosuit Fabricator)"
+	name = "Exosuit Fabricator (Machine Board)"
 	build_path = /obj/machinery/mecha_part_fabricator
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -143,7 +143,7 @@
 	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(D.reagents.len) // No reagents storage - no reagent designs.
+	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return 0
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return 1
@@ -415,7 +415,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/deconstruction()
+/obj/machinery/mecha_part_fabricator/on_deconstruction()
 	materials.retrieve_all()
 	..()
 
@@ -444,7 +444,7 @@
 		if(!materials.has_space(material_amount))
 			user << "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>"
 			return 1
-		if(!user.unEquip(W))
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			user << "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>"
 			return 1
 
@@ -452,6 +452,8 @@
 		if(inserted)
 			user << "<span class='notice'>You insert [inserted] sheet\s into [src].</span>"
 			if(W && W.materials.len)
+				if(!QDELETED(W))
+					user.put_in_active_hand(W)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
 				sleep(10)

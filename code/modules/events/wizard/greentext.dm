@@ -1,7 +1,7 @@
 /datum/round_event_control/wizard/greentext //Gotta have it!
 	name = "Greentext"
 	weight = 4
-	typepath = /datum/round_event/wizard/greentext/
+	typepath = /datum/round_event/wizard/greentext
 	max_occurrences = 1
 	earliest_start = 0
 
@@ -22,13 +22,13 @@
 /obj/item/weapon/greentext
 	name = "greentext"
 	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "greentext"
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/quiet = FALSE
 
 /obj/item/weapon/greentext/New()
@@ -44,14 +44,14 @@
 		last_holder = user
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
-	user.color = "#00FF00"
+	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
 	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
 	if(user in color_altered_mobs)
 		user << "<span class='warning'>A sudden wave of failure washes over you...</span>"
-		user.color = "#FF0000" //ya blew it
+		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	last_holder 	= null
 	new_holder 		= null
 	STOP_PROCESSING(SSobj, src)
@@ -69,16 +69,16 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
-		burn_state = ON_FIRE
+		resistance_flags |= ON_FIRE
 		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
 		last_holder << "<span class='warning'>A sudden wave of failure washes over you...</span>"
-		last_holder.color = "#FF0000"
+		last_holder.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		last_holder = new_holder //long live the king
 
 /obj/item/weapon/greentext/Destroy(force)
-	if((burn_state != ON_FIRE) && (!force))
+	if(!(resistance_flags & ON_FIRE) && !force)
 		return QDEL_HINT_LETMELIVE
 
 	. = ..()
@@ -87,7 +87,8 @@
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"
-			M.color = initial(M.color)
+			if(M.color == "#FF0000" || M.color == "#00FF00")
+				M.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 		message += "...</span>"
 		// can't skip the mob check as it also does the decolouring
 		if(!quiet)

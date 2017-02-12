@@ -2,10 +2,15 @@
 
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
-	name = "Light-emtter"
+	name = "Light emitter"
 	anchored = 1
-	unacidable = 1
-	luminosity = 8
+	invisibility = 101
+	var/set_luminosity = 8
+	var/set_cap = 0
+
+/obj/effect/light_emitter/New()
+	..()
+	SetLuminosity(set_luminosity, set_cap)
 
 /**********************Miner Lockers**************************/
 
@@ -41,6 +46,8 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/device/radio/headset/headset_cargo/mining(src)
+	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/storage/bag/plants(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
@@ -78,7 +85,7 @@
 	force = 15
 	throwforce = 10
 	item_state = "pickaxe"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
@@ -92,7 +99,7 @@
 	force = 10
 	throwforce = 7
 	slot_flags = SLOT_BELT
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1000)
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
@@ -167,7 +174,7 @@
 	var/digspeed = 20
 	throwforce = 4
 	item_state = "shovel"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=50)
 	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -180,24 +187,22 @@
 	item_state = "spade"
 	force = 5
 	throwforce = 7
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbag"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/ore/glass))
 		user << "<span class='notice'>You fill the sandbag.</span>"
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
-		user.unEquip(src)
+		qdel(src)
 		user.put_in_hands(I)
 		qdel(W)
-		qdel(src)
-		return
 	else
 		return ..()
 
@@ -222,7 +227,7 @@
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "engineering=3;bluespace=3"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -278,44 +283,13 @@
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 		template.load(deploy_location, centered = TRUE)
-		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
+		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
+
+
 
 //Pod turfs and objects
 
-
-//Floors
-/turf/open/floor/pod
-	name = "pod floor"
-	icon_state = "podfloor"
-	icon_regular_floor = "podfloor"
-	floor_tile = /obj/item/stack/tile/pod
-
-/turf/open/floor/pod/light
-	icon_state = "podfloor_light"
-	icon_regular_floor = "podfloor_light"
-	floor_tile = /obj/item/stack/tile/pod/light
-
-/turf/open/floor/pod/dark
-	icon_state = "podfloor_dark"
-	icon_regular_floor = "podfloor_dark"
-	floor_tile = /obj/item/stack/tile/pod/dark
-
-//Walls
-/turf/closed/wall/shuttle/survival
-	name = "pod wall"
-	desc = "An easily-compressable wall used for temporary shelter."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "smooth"
-	walltype = "shuttle"
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
-
-/turf/closed/wall/shuttle/survival/nodiagonal
-	smooth = SMOOTH_MORE
-
-/turf/closed/wall/shuttle/survival/pod
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
 //Window
 /obj/structure/window/shuttle/survival_pod
@@ -382,10 +356,10 @@
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(do_after(user, 20*W.toolspeed, target = src))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return ..()
@@ -409,6 +383,7 @@
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
+	flags = NODECONSTRUCT
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
@@ -445,18 +420,20 @@
 	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 5
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
-	..()
+	if(!(flags & NODECONSTRUCT))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+	qdel(src)
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(do_after(user, 20*W.toolspeed, target = src))
 			deconstruct()
 			return ..()
 
@@ -473,12 +450,10 @@
 	air_update_turf(1)
 
 /obj/structure/fans/Destroy()
-	arbitraryatmosblockingvar = FALSE
-	air_update_turf(1)
-	return ..()
+	var/turf/T = loc
+	. = ..()
+	T.air_update_turf(1)
 
-/obj/structure/fans/CanAtmosPass(turf/T)
-	return !arbitraryatmosblockingvar
 
 //Signs
 /obj/structure/sign/mining
@@ -517,7 +492,7 @@
 interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
 	var/launch_warning = TRUE
 
-	req_access = list(access_heads)
+	req_one_access = list(access_cargo, access_construction, access_heads)
 	possible_destinations = null
 	clockwork = TRUE
 	var/obj/item/device/gps/internal/base/locator
@@ -535,8 +510,14 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			say("<span class='danger'>Launch sequence activated! Prepare for drop!</span>")
 			playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
 			launch_warning = FALSE
-		feedback_add_details("colonies_dropped") //Number of times a base has been dropped!
 	..()
+
+
+
+/obj/machinery/computer/shuttle/auxillary_base/onShuttleMove(turf/T1, rotation)
+	..()
+	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
+		feedback_add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
 
 /obj/machinery/computer/shuttle/auxillary_base/proc/set_mining_mode()
 	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.
@@ -550,20 +531,19 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	item_state = "electronic"
 	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
-	dwidth = 4 //These dimensions are to be set by the mappers for their respective maps.
-	dheight = 4
-	width = 9
-	height = 9
-	lz_dir = 1
 
 /obj/item/device/assault_pod/mining/attack_self(mob/living/user)
 	if(setting)
 		return
 	var/turf/T = get_turf(user)
+	var/obj/docking_port/mobile/auxillary_base/base_dock = locate(/obj/docking_port/mobile/auxillary_base) in SSshuttle.mobile
+	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
+		user << "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>"
+		return
 	if(!no_restrictions)
 		if(T.z != ZLEVEL_MINING)
 			user << "Wouldn't do much good dropping a mining base away from the mining area!"
@@ -585,12 +565,12 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "colony_drop(\ref[src])"
 	landing_zone.name = "Landing Zone ([T.x], [T.y])"
-	landing_zone.dwidth = dwidth
-	landing_zone.dheight = dheight
-	landing_zone.width = width
-	landing_zone.height = height
-	landing_zone.setDir(lz_dir)
-	landing_zone.turf_type = T.baseturf
+	landing_zone.dwidth = base_dock.dwidth
+	landing_zone.dheight = base_dock.dheight
+	landing_zone.width = base_dock.width
+	landing_zone.height = base_dock.height
+	landing_zone.setDir(base_dock.dir)
+	landing_zone.turf_type = T.type
 	landing_zone.area_type = A.type
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
@@ -643,7 +623,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	anti_spam_cd = 1
-	addtimer(src, "clear_cooldown", 100)
+	addtimer(CALLBACK(src, .proc/clear_cooldown), 100)
 
 	var/turf/landing_spot = get_turf(src)
 
@@ -672,14 +652,14 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			Mport.width = SM.width
 			Mport.height = SM.height
 			Mport.setDir(dir)
-			Mport.turf_type = landing_spot.baseturf
+			Mport.turf_type = landing_spot.type
 			Mport.area_type = A.type
 
 			break
 	if(!Mport)
 		user << "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>"
 		return
-	var/search_radius = max(Mport.width, Mport.height)/2
+	var/search_radius = max(Mport.width, Mport.height)*0.5
 	var/list/landing_areas = get_areas_in_range(search_radius, landing_spot)
 	for(var/area/shuttle/auxillary_base/AB in landing_areas) //You land NEAR the base, not IN it.
 		user << "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>"

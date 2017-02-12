@@ -8,7 +8,7 @@
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -18,7 +18,8 @@
 	health = 50000
 	healable = 0
 
-	harm_intent_damage = 70
+	harm_intent_damage = 10
+	obj_damage = 100
 	melee_damage_lower = 68
 	melee_damage_upper = 83
 	attacktext = "claws"
@@ -42,7 +43,6 @@
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = 1
-	status_flags = GODMODE // Cannot push also
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
@@ -207,23 +207,13 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = target
-			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
-				H.dna.species.invis_sight = SEE_INVISIBLE_NOLIGHTING
-				name = "Toggle Nightvision \[ON]"
-			else
-				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
-				name = "Toggle Nightvision \[OFF]"
-
-		else
+		if(!iscarbon(target)) //Carbons should be toggling their vision via organ, this spell is used as a power for simple mobs
 			if(target.see_invisible == SEE_INVISIBLE_LIVING)
 				target.see_invisible = SEE_INVISIBLE_NOLIGHTING
 				name = "Toggle Nightvision \[ON]"
 			else
 				target.see_invisible = SEE_INVISIBLE_LIVING
 				name = "Toggle Nightvision \[OFF]"
-
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"

@@ -29,7 +29,7 @@
 	if(target.mind.changeling)
 		user << "<span class='warning'>The victim is already a part of the hivemind!</span>"
 		return
-	if(user.grab_state <= GRAB_NECK)
+	if(user.grab_state <= GRAB_AGGRESSIVE)
 		user << "<span class='warning'>We must have a tighter grip to link with this creature!</span>"
 		return
 	return changeling.can_absorb_dna(user,target)
@@ -46,7 +46,7 @@
 				user << "<span class='notice'>We stealthily stab [target] with a minor proboscis...</span>"
 				target << "<span class='userdanger'>You experience a stabbing sensation and your ears begin to ring...</span>"
 			if(3)
-				user << "<span class='notice'>You mold the [target]'s mind like clay, they can now speak in the hivemind!</span>"
+				user << "<span class='notice'>We mold the [target]'s mind like clay, granting [target.p_them()] the ability to speak in the hivemind!</span>"
 				target << "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>"
 				for(var/mob/M in mob_list)
 					if(M.lingcheck() == 2)

@@ -41,7 +41,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(4))
 				owner << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
-					owner.take_organ_damage(1)
+					owner.take_bodypart_damage(1)
 			if(prob(4))
 				owner << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
@@ -99,7 +99,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			new_xeno.notransform = 0
 			new_xeno.invisibility = 0
 		if(gib_on_success)
-			owner.gib()
+			owner.gib(TRUE)
 		else
 			owner.adjustBruteLoss(40)
 			owner.overlays -= overlay

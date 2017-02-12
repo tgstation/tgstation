@@ -36,8 +36,7 @@
 		user << "<span class='notice'>[I] has already been refined before. It cannot be sharpened further.</span>"
 		return
 	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
-	if(!requires_sharpness)
-		I.sharpness = IS_SHARP_ACCURATE
+	I.sharpness = IS_SHARP_ACCURATE
 	I.force = Clamp(I.force + increment, 0, max)
 	I.throwforce = Clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]"

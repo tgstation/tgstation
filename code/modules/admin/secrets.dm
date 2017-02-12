@@ -389,7 +389,7 @@
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
 			for(var/obj/machinery/light/L in machines)
-				L.broken()
+				L.break_light_tube()
 
 		if("anime")
 			if(!check_rights(R_FUN))
@@ -411,7 +411,7 @@
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.unEquip(H.w_uniform)
+					H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
 				else

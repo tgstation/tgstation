@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -8,19 +8,19 @@
 	},
 /area/ruin/unpowered)
 "c" = (
-/obj/structure/divine/healingfountain/anyone,
+/obj/structure/healingfountain,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "d" = (
-/obj/structure/divine/conduit,
+/obj/structure/fluff/divine/conduit,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "e" = (
-/obj/structure/divine/sacrificealtar,
+/obj/structure/sacrificealtar,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

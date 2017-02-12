@@ -3,8 +3,8 @@
 	desc = "It can hold a few small and personal things."
 	storage_slots = 4
 	icon_state = "wallet"
-	w_class = 2
-	burn_state = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
 	can_hold = list(
 		/obj/item/stack/spacecash,
 		/obj/item/weapon/card,

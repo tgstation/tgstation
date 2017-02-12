@@ -23,7 +23,7 @@
 
 	for(var/obj/machinery/light/L in range(4, user))
 		L.on = 1
-		L.broken()
+		L.break_light_tube()
 
 	feedback_add_details("changeling_powers","RS")
 	return 1
@@ -38,7 +38,7 @@
 /obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(mob/user)
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1
-		L.broken()
+		L.break_light_tube()
 	empulse(get_turf(user), 2, 5, 1)
 	return 1
 

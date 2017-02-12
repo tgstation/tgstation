@@ -9,16 +9,19 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(..())
-		. = 1
-
+	if(..()) //not dead
 		handle_blood()
 
-		for(var/obj/item/organ/O in internal_organs)
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
 			O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+
+	if(stat != DEAD)
+		return 1
 
 ///////////////
 // BREATHING //
@@ -255,7 +258,7 @@
 				dna.temporary_mutations.Remove(mut)
 
 	if(radiation)
-
+		radiation = Clamp(radiation, 0, 100)
 		switch(radiation)
 			if(0 to 50)
 				radiation = max(radiation-1,0)
@@ -271,8 +274,6 @@
 			if(75 to 100)
 				radiation = max(radiation-3,0)
 				adjustToxLoss(3)
-			else
-				radiation = Clamp(radiation, 0, 100)
 
 /mob/living/carbon/handle_chemicals_in_body()
 	if(reagents)
@@ -384,8 +385,6 @@
 	var/body_temperature_difference = 310.15 - bodytemperature
 	switch(bodytemperature)
 		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
-			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
-				nutrition -= 2
 			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		if(260.15 to 310.15)
 			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))

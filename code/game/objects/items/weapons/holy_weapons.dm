@@ -7,42 +7,50 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/reskinned = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is killing \himself with \the [src.name]! It looks like \he's trying to get closer to god!</span>")
+	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
 	if(reskinned)
 		return
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.isholy))
 		reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
-	var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
-	var/list/display_names = list()
-	for(var/V in holy_weapons_list)
-		var/atom/A = V
-		display_names += initial(A.name)
+	var/obj/item/weapon/nullrod/holy_weapon
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
-		return
+	if(SSreligion.holy_weapon)
+		holy_weapon = new SSreligion.holy_weapon
+		M << "<span class='notice'>The null rod suddenly morphs into your religions already chosen holy weapon.</span>"
+	else
+		var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
+		var/list/display_names = list()
+		for(var/V in holy_weapons_list)
+			var/atom/A = V
+			display_names += initial(A.name)
 
-	var/index = display_names.Find(choice)
-	var/A = holy_weapons_list[index]
+		var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+		if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+			return
 
-	var/obj/item/weapon/nullrod/holy_weapon = new A
+		var/index = display_names.Find(choice)
+		var/A = holy_weapons_list[index]
 
-	feedback_set_details("chaplain_weapon","[choice]")
+		holy_weapon = new A
+
+		SSreligion.holy_weapon = holy_weapon.type
+
+		feedback_set_details("chaplain_weapon","[choice]")
+
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
-		M.unEquip(src)
-		M.put_in_active_hand(holy_weapon)
 		qdel(src)
+		M.put_in_active_hand(holy_weapon)
 
 /obj/item/weapon/nullrod/godhand
 	icon_state = "disintegrate"
@@ -50,7 +58,7 @@
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	flags = ABSTRACT | NODROP | DROPDEL
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
@@ -60,7 +68,7 @@
 	item_state = "godstaff-red"
 	name = "red holy staff"
 	desc = "It has a mysterious, protective aura."
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 5
 	slot_flags = SLOT_BACK
 	block_chance = 50
@@ -69,7 +77,7 @@
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
-		. += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+		. += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
@@ -82,7 +90,7 @@
 	item_state = "claymore"
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
 	sharpness = IS_SHARP
@@ -127,10 +135,14 @@
 
 /obj/item/weapon/nullrod/claymore/multiverse
 	name = "extradimensional blade"
-	desc = "Once the harbringer of a interdimensional war, now a dormant souvenir. Still sharp though."
+	desc = "Once the harbinger of an interdimensional war, its sharpness fluctuates wildly."
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
+
+/obj/item/weapon/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
+	force = rand(1, 30)
+	..()
 
 /obj/item/weapon/nullrod/claymore/saber
 	name = "light energy sword"
@@ -164,11 +176,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/nullrod/scythe
-	icon_state = "scythe0"
-	item_state = "scythe0"
+	icon_state = "scythe1"
+	item_state = "scythe1"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 35
 	slot_flags = SLOT_BACK
 	sharpness = IS_SHARP
@@ -208,10 +220,10 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	var/mob/dead/observer/theghost = null
 
-	if(candidates.len)
+	if(LAZYLEN(candidates))
 		theghost = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
@@ -238,9 +250,9 @@
 	icon_state = "hammeron"
 	item_state = "hammeron"
 	name = "relic war hammer"
-	desc = "This war hammer cost the chaplain fourty thousand space dollars."
+	desc = "This war hammer cost the chaplain forty thousand space dollars."
 	slot_flags = SLOT_BELT
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
 
 /obj/item/weapon/nullrod/chainsaw
@@ -248,7 +260,7 @@
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	flags = NODROP | ABSTRACT
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
@@ -293,12 +305,12 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 
 /obj/item/weapon/nullrod/carp
 	name = "carp-sie plushie"
-	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to recieve the blessing of Carp-Sie."
+	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	item_state = "carp_plushie"
@@ -309,17 +321,15 @@
 
 /obj/item/weapon/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
-		return
-	if(user.mind && (user.mind.assigned_role != "Chaplain"))
-		return
-	user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
-	user.faction |= "carp"
-	used_blessing = TRUE
+	else if(user.mind && (user.mind.isholy))
+		user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
+		user.faction |= "carp"
+		used_blessing = TRUE
 
 /obj/item/weapon/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
-	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown."
-	w_class = 4
+	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
+	w_class = WEIGHT_CLASS_BULKY
 	force = 15
 	block_chance = 40
 	slot_flags = SLOT_BACK
@@ -334,7 +344,7 @@
 	icon_state = "crysknife"
 	item_state = "crysknife"
 	name = "arrhythmic knife"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharpness = IS_SHARP
 	slot_flags = null
@@ -345,7 +355,7 @@
 /obj/item/weapon/nullrod/pitchfork
 	icon_state = "pitchfork0"
 	name = "unholy pitchfork"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	desc = "Holding this makes you look absolutely devilish."
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -361,3 +371,4 @@
 
 /obj/item/weapon/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
+

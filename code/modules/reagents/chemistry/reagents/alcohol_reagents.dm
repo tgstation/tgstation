@@ -54,7 +54,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return
 
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 
 	if(method in list(TOUCH, VAPOR, PATCH))
@@ -86,11 +86,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/M)
 	if(M.color != color)
-		M.color = color
+		M.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_delete(mob/living/M)
-	M.color = initial(M.color)
+	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
@@ -150,7 +150,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(10))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	return ..() || .
 
@@ -196,7 +196,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
 	id = "wine"
-	description = "An premium alcoholic beverage made from distilled grape juice."
+	description = "A premium alcoholic beverage made from distilled grape juice."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 35
 
@@ -217,7 +217,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
 	id = "cognac"
-	description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
+	description = "A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 	color = "#AB3C05" // rgb: 171, 60, 5
 	boozepwr = 75
 
@@ -236,14 +236,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hooch
 	name = "Hooch"
 	id = "hooch"
-	description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
+	description = "Either someone's failure at cocktail making or attempt in alcohol production. In any case, do you really want to drink that?"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 100
 
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
 	id = "ale"
-	description = "A dark alchoholic beverage made by malted barley and yeast."
+	description = "A dark alcoholic beverage made with malted barley and yeast."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 65
 
@@ -341,7 +341,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
 	id = "bravebull"
-	description = "It's just as effective as Dutch-Courage!."
+	description = "It's just as effective as Dutch-Courage!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 80
 
@@ -599,7 +599,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/andalusia
 	name = "Andalusia"
 	id = "andalusia"
-	description = "A nice, strange named drink."
+	description = "A nice, strangely named drink."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 40
 
@@ -680,8 +680,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 60
 
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/M)
-	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
-		M.heal_organ_damage(1,1, 0)
+	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	return ..() || .
 
@@ -694,8 +694,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 59 //Proof that clowns are better than mimes right here
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
-		M.heal_organ_damage(1,1)
+	if(ishuman(M) && M.job in list("Mime"))
+		M.heal_bodypart_damage(1,1)
 		. = 1
 	return ..() || .
 
@@ -725,7 +725,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
 	name = "Fetching Fizz"
 	id = "fetching_fizz"
-	description = "Whiskey sour/iron/uranium mixture resulting in highly magnetic slurry. Mild alcohol content." //Requires no alcohol to make but has alcohol anyway because ~magic~
+	description = "Whiskey sour/iron/uranium mixture resulting in a highly magnetic slurry. Mild alcohol content." //Requires no alcohol to make but has alcohol anyway because ~magic~
 	color = rgb(255, 91, 15)
 	boozepwr = 10
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
@@ -760,3 +760,126 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Unidentifiable mixture. Unmeasurably high alcohol content."
 	color = rgb(51, 19, 3) //Sickly brown
 	boozepwr = 300 //I warned you
+
+
+/datum/reagent/consumable/ethanol/atomicbomb
+	name = "Atomic Bomb"
+	id = "atomicbomb"
+	description = "Nuclear proliferation never tasted so good."
+	color = "#666300" // rgb: 102, 99, 0
+	boozepwr = 0 //custom drunk effect
+
+/datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/M)
+	M.set_drugginess(50)
+	M.confused = max(M.confused+2,0)
+	M.Dizzy(10)
+	if (!M.slurring)
+		M.slurring = 1
+	M.slurring += 3
+	switch(current_cycle)
+		if(51 to 200)
+			M.Sleeping(5, 0)
+			. = 1
+		if(201 to INFINITY)
+			M.AdjustSleeping(2, 0)
+			M.adjustToxLoss(2, 0)
+			. = 1
+	..()
+
+/datum/reagent/consumable/ethanol/gargle_blaster
+	name = "Pan-Galactic Gargle Blaster"
+	id = "gargleblaster"
+	description = "Whoah, this stuff looks volatile!"
+	color = "#664300" // rgb: 102, 67, 0
+	boozepwr = 0 //custom drunk effect
+
+/datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/M)
+	M.dizziness +=6
+	switch(current_cycle)
+		if(15 to 45)
+			if(!M.slurring)
+				M.slurring = 1
+			M.slurring += 3
+		if(45 to 55)
+			if(prob(50))
+				M.confused = max(M.confused+3,0)
+		if(55 to 200)
+			M.set_drugginess(55)
+		if(200 to INFINITY)
+			M.adjustToxLoss(2, 0)
+			. = 1
+	..()
+
+/datum/reagent/consumable/ethanol/neurotoxin
+	name = "Neurotoxin"
+	id = "neurotoxin"
+	description = "A strong neurotoxin that puts the subject into a death-like state."
+	color = "#2E2E61" // rgb: 46, 46, 97
+	boozepwr = 0 //custom drunk effect
+
+/datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
+	M.Weaken(3, 1, 0)
+	M.dizziness +=6
+	switch(current_cycle)
+		if(15 to 45)
+			if(!M.slurring)
+				M.slurring = 1
+			M.slurring += 3
+		if(45 to 55)
+			if(prob(50))
+				M.confused = max(M.confused+3,0)
+		if(55 to 200)
+			M.set_drugginess(55)
+		if(200 to INFINITY)
+			M.adjustToxLoss(2, 0)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/hippies_delight
+	name = "Hippie's Delight"
+	id = "hippiesdelight"
+	description = "You just don't get it maaaan."
+	color = "#664300" // rgb: 102, 67, 0
+	nutriment_factor = 0
+	boozepwr = 0 //custom drunk effect
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/M)
+	if (!M.slurring)
+		M.slurring = 1
+	switch(current_cycle)
+		if(1 to 5)
+			M.Dizzy(10)
+			M.set_drugginess(30)
+			if(prob(10))
+				M.emote(pick("twitch","giggle"))
+		if(5 to 10)
+			M.Jitter(20)
+			M.Dizzy(20)
+			M.set_drugginess(45)
+			if(prob(20))
+				M.emote(pick("twitch","giggle"))
+		if (10 to 200)
+			M.Jitter(40)
+			M.Dizzy(40)
+			M.set_drugginess(60)
+			if(prob(30))
+				M.emote(pick("twitch","giggle"))
+		if(200 to INFINITY)
+			M.Jitter(60)
+			M.Dizzy(60)
+			M.set_drugginess(75)
+			if(prob(40))
+				M.emote(pick("twitch","giggle"))
+			if(prob(30))
+				M.adjustToxLoss(2, 0)
+				. = 1
+	..()
+
+/datum/reagent/consumable/ethanol/eggnog
+	name = "Eggnog"
+	id = "eggnog"
+	description = "For enjoying the most wonderful time of the year."
+	color = "#fcfdc6" // rgb: 252, 253, 198
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	boozepwr = 1

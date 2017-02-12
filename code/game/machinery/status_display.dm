@@ -44,14 +44,8 @@
 	// new display
 	// register for radio system
 
-/obj/machinery/status_display/New()
-	..()
-	if(SSradio)
-		SSradio.add_object(src, frequency)
-
-/obj/machinery/status_display/initialize()
-	if(SSradio)
-		SSradio.add_object(src, frequency)
+/obj/machinery/status_display/Initialize()
+	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(SSradio)
@@ -129,6 +123,8 @@
 	switch(mode)
 		if(1,2,4,5)
 			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+	if(mode == 1 && SSshuttle.emergency)
+		user << "Current Shuttle: [SSshuttle.emergency.name]"
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -184,27 +180,20 @@
 
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
-
+	if(supply_display)
+		mode = 4
+		return
 	switch(signal.data["command"])
 		if("blank")
 			mode = 0
-
 		if("shuttle")
 			mode = 1
-
 		if("message")
 			mode = 2
 			set_message(signal.data["msg1"], signal.data["msg2"])
-
 		if("alert")
 			mode = 3
 			set_picture(signal.data["picture_state"])
-
-		if("supply")
-			if(supply_display)
-				mode = 4
-
-
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
@@ -222,6 +211,9 @@
 
 	var/emotion = "Neutral"
 
+/obj/machinery/ai_status_display/attack_ai(mob/living/silicon/ai/user)
+	if(isAI(user))
+		user.ai_statuschange()
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)

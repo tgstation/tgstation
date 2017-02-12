@@ -14,7 +14,7 @@
 	dried_type = -1
 	// Saves us from having to define each stupid grown's dried_type as itself.
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	origin_tech = "biotech=1"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
@@ -61,27 +61,21 @@
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
 		if(seed)
 			msg += seed.get_analyzer_text()
-		msg += "\n- Nutritional value: [reagents.get_reagent_amount("nutriment")]\n"
-		msg += "- Other substances: [reagents.total_volume-reagents.get_reagent_amount("nutriment")]\n"
-		msg += "*---------*</span>"
-
-		var/list/scannable_reagents = list("charcoal" = "Anti-Toxin", "morphine" = "Morphine", "amatoxin" = "Amatoxins",
-			"toxin" = "Toxins", "mushroomhallucinogen" = "Mushroom Hallucinogen", "condensedcapsaicin" = "Condensed Capsaicin",
-			"capsaicin" = "Capsaicin", "frostoil" = "Frost Oil", "gold" = "Mineral Content", "glycerol" = "Glycerol",
-			"radium" = "Highly Radioactive Material", "uranium" = "Radioactive Material")
 		var/reag_txt = ""
 		if(seed)
-			for(var/reagent_id in scannable_reagents)
-				if(reagent_id in seed.reagents_add)
-					var/amt = reagents.get_reagent_amount(reagent_id)
-					reag_txt += "\n<span class='info'>- [scannable_reagents[reagent_id]]: [amt*100/reagents.maximum_volume]%</span>"
+			for(var/reagent_id in seed.reagents_add)
+				var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+				var/amt = reagents.get_reagent_amount(reagent_id)
+				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
 
 		if(reag_txt)
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
 		user << msg
-		return
-	return
+	else
+		if(seed)
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_attackby(src, O, user)
 
 
 // Various gene procs
@@ -92,8 +86,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
-		if(seed && seed.get_gene(/datum/plant_gene/trait/squash))
-			squash(hit_atom)
+		if(seed)
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_throw_impact(src, hit_atom)
+			if(seed.get_gene(/datum/plant_gene/trait/squash))
+				squash(hit_atom)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
@@ -106,10 +103,7 @@
 		new splat_type(T)
 
 	if(trash)
-		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			new trash(T, seed)
-		else
-			new trash(T)
+		generate_trash(T)
 
 	visible_message("<span class='warning'>[src] has been squashed.</span>","<span class='italics'>You hear a smack.</span>")
 	if(seed)
@@ -159,17 +153,19 @@
 			user.AddLuminosity(-G.get_lum(seed))
 			SetLuminosity(G.get_lum(seed))
 
-
+/obj/item/weapon/reagent_containers/food/snacks/grown/generate_trash(atom/location)
+	if(trash && ispath(trash, /obj/item/weapon/grown))
+		. = new trash(location, seed)
+		trash = null
+		return
+	return ..()
 
 // For item-containing growns such as eggy or gatfruit
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob)
-	user.unEquip(src)
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
+	var/obj/item/T
 	if(trash)
-		var/obj/item/weapon/T
-		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			T = new trash(user.loc, seed)
-		else
-			T = new trash(user.loc)
+		T = generate_trash()
+	qdel(src)
+	if(trash)
 		user.put_in_hands(T)
 		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
-	qdel(src)

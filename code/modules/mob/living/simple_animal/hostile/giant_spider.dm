@@ -35,13 +35,14 @@
 	response_harm   = "hits"
 	maxHealth = 200
 	health = 200
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	faction = list("spiders")
 	var/busy = 0
 	pass_flags = PASSTABLE
 	move_to_delay = 6
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
@@ -64,7 +65,7 @@
 	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
 		return 0
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
-	if(spider_ask == "No" || !src || qdeleted(src))
+	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)
 		user << "<span class='notice'>Someone else already took this spider.</span>"
@@ -78,14 +79,14 @@
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
+	gender = FEMALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8, /obj/item/weapon/reagent_containers/food/snacks/spidereggs = 4)
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	poison_per_bite = 10
-	var/atom/cocoon_target
-	poison_type = "morphine"
+	poison_per_bite = 3
+	var/atom/movable/cocoon_target
 	var/fed = 0
 
 //hunters have the most poison and move the fastest, so they can find prey
@@ -128,7 +129,7 @@
 		if(!busy && prob(30))	//30% chance to stop wandering and do something
 			//first, check for potential food nearby to cocoon
 			for(var/mob/living/C in can_see)
-				if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider))
+				if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider) && !C.anchored)
 					cocoon_target = C
 					busy = MOVING_TO_TARGET
 					Goto(C, move_to_delay)
@@ -137,7 +138,7 @@
 					return
 
 			//second, spin a sticky spiderweb on this tile
-			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
+			var/obj/structure/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
 				Web()
 			else
@@ -182,7 +183,7 @@
 		stop_automated_movement = 1
 		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
-				new /obj/effect/spider/stickyweb(T)
+				new /obj/structure/spider/stickyweb(T)
 		busy = 0
 		stop_automated_movement = 0
 
@@ -197,24 +198,29 @@
 	if(!cocoon_target)
 		var/list/choices = list()
 		for(var/mob/living/L in view(1,src))
-			if(L == src)
+			if(L == src | L.anchored)
 				continue
 			if(Adjacent(L))
 				choices += L
 		for(var/obj/O in src.loc)
+			if(O.anchored)
+				continue
 			if(Adjacent(O))
 				choices += O
 		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
 
 	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
+		if(cocoon_target.anchored)
+			cocoon_target = null
+			return
 		busy = SPINNING_COCOON
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 		stop_automated_movement = 1
 		walk(src,0)
 		if(do_after(src, 50, target = src))
 			if(busy == SPINNING_COCOON)
-				if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
-					var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
+				if(cocoon_target && isturf(cocoon_target.loc) && get_dist(src,cocoon_target) <= 1)
+					var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
 					var/large_cocoon = 0
 					C.pixel_x = cocoon_target.pixel_x
 					C.pixel_y = cocoon_target.pixel_y
@@ -250,7 +256,7 @@
 	set category = "Spider"
 	set desc = "Lay a clutch of eggs, but you must wrap a creature for feeding first."
 
-	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
+	var/obj/structure/spider/eggcluster/E = locate() in get_turf(src)
 	if(stat == DEAD)
 		return
 	if(E)
@@ -265,7 +271,7 @@
 			if(busy == LAYING_EGGS)
 				E = locate() in get_turf(src)
 				if(!E)
-					var/obj/effect/spider/eggcluster/C = new /obj/effect/spider/eggcluster(src.loc)
+					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(src.loc)
 					if(ckey)
 						C.player_spiders = 1
 					C.poison_type = poison_type

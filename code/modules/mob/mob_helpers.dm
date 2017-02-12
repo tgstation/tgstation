@@ -1,11 +1,13 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/proc/isloyal(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(L && L.implanted)
-			return 1
+/mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	return 0
+
+/mob/living/carbon/isloyal()
+	for(var/obj/item/weapon/implant/mindshield/L in implants)
+		return 1
+
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -272,62 +274,51 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
-/mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.flags&NODROP || r_hand && !r_hand.flags&NODROP)
-		return 1
-	return 0
+var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
 
-//converts intent-strings into numbers and back
-/proc/intent_numeric(argument)
-	if(istext(argument))
-		switch(argument)
-			if("help")
-				return 0
-			if("disarm")
-				return 1
-			if("grab")
-				return 2
-			else
-				return 3
-	else
-		switch(argument)
-			if(0)
-				return "help"
-			if(1)
-				return "disarm"
-			if(2)
-				return "grab"
-			else
-				return "harm"
+/mob/proc/first_name()
+	firstname.Find(real_name)
+	return firstname.match
+
+/mob/proc/abiotic(full_body = 0)
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & NODROP))
+			return 1
+	return 0
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isalienadult(src) || isbrain(src))
-		switch(input)
-			if("help", "disarm", "grab", "harm")
-				a_intent = input
-			if("right")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 1) % 4)
-			if("left")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 3) % 4)
+	if(!possible_a_intents || !possible_a_intents.len)
+		return
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+	if(input in possible_a_intents)
+		a_intent = input
+	else
+		var/current_intent = possible_a_intents.Find(a_intent)
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
-		switch(input)
-			if("help")
-				a_intent = "help"
-			if("harm")
-				a_intent = "harm"
-			if("right","left")
-				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+		if(!current_intent)
+			// Failsafe. Just in case some badmin was playing with VV.
+			current_intent = 1
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+		if(input == INTENT_HOTKEY_RIGHT)
+			current_intent += 1
+		if(input == INTENT_HOTKEY_LEFT)
+			current_intent -= 1
+
+		// Handle looping
+		if(current_intent < 1)
+			current_intent = possible_a_intents.len
+		if(current_intent > possible_a_intents.len)
+			current_intent = 1
+
+		a_intent = possible_a_intents[current_intent]
+
+	if(hud_used && hud_used.action_intent)
+		hud_used.action_intent.icon_state = "[a_intent]"
+
 
 /proc/is_blind(A)
 	if(ismob(A))
@@ -341,7 +332,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
 			if(R.mind && R.mind.special_role)
 				if(R.laws && R.laws.zeroth && R.syndicate)
@@ -384,10 +375,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 	return 0
 
-/proc/get_both_hands(mob/living/carbon/M)
-	var/list/hands = list(M.l_hand, M.r_hand)
-	return hands
-
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
@@ -407,23 +394,28 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.target = source
 					if(!alert_overlay)
 						var/old_layer = source.layer
+						var/old_plane = source.plane
 						source.layer = FLOAT_LAYER
+						source.plane = FLOAT_PLANE
 						A.add_overlay(source)
 						source.layer = old_layer
+						source.plane = old_plane
 					else
 						alert_overlay.layer = FLOAT_LAYER
+						alert_overlay.plane = FLOAT_PLANE
 						A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == ORGAN_ROBOTIC)
+	if(affecting && affecting.status == BODYPART_ROBOTIC)
 		var/dam //changes repair text based on how much brute/burn was supplied
 		if(brute_heal > burn_heal)
 			dam = 1
 		else
 			dam = 0
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			affecting.heal_damage(brute_heal,burn_heal,1)
+			if(affecting.heal_damage(brute_heal, burn_heal, 1, 0))
+				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			return 1 //successful heal
 		else
@@ -467,3 +459,29 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		M << "There were no ghosts willing to take control."
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
+
+//toggles the talk wheel
+/mob/verb/toggle_talk_wheel()
+	set name = "talk-wheel"
+	set hidden = 1
+
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.hud_used)
+			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
+				TW.Click()
+
+/mob/proc/is_flying(mob/M = src)
+	if(M.movement_type & FLYING)
+		return 1
+	else
+		return 0
+
+mob/proc/click_random_mob()
+	var/list/nearby_mobs = list()
+	for(var/mob/living/L in range(1, src))
+		if(L!=src)
+			nearby_mobs |= L
+	if(nearby_mobs.len)
+		var/mob/living/T = pick(nearby_mobs)
+		ClickOn(T)

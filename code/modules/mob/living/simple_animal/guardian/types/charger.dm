@@ -15,7 +15,7 @@
 	var/obj/screen/alert/chargealert
 
 /mob/living/simple_animal/hostile/guardian/charger/Life()
-	..()
+	. = ..()
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
 			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)
@@ -33,12 +33,14 @@
 
 /mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
 	charging = 1
-	throw_at(targeted_atom, range, 1, src, 0)
+	throw_at(targeted_atom, range, 1, src, 0, callback = CALLBACK(src, .proc/charging_end))
+
+/mob/living/simple_animal/hostile/guardian/charger/proc/charging_end()
 	charging = 0
 
 /mob/living/simple_animal/hostile/guardian/charger/Move()
 	if(charging)
-		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
+		new /obj/effect/overlay/temp/decoy/fading(loc,src)
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/charger/snapback()
@@ -60,9 +62,7 @@
 				if(H.check_shields(90, "[name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = 1
 			if(!blocked)
-
-				L.drop_r_hand()
-				L.drop_l_hand()
+				L.drop_all_held_items()
 				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
 				L.apply_damage(20, BRUTE)
 				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)

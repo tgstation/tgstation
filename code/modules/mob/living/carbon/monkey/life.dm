@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /mob/living/carbon/monkey
 
@@ -10,34 +10,40 @@
 	if (notransform)
 		return
 
-	..()
+	if(..())
 
-	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc) && !pulledby)
-			step(src, pick(cardinal))
-		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
+		if(!client)
+			if(stat == CONSCIOUS)
+				if(!handle_combat())
+					if(prob(33) && canmove && isturf(loc) && !pulledby)
+						step(src, pick(cardinal))
+					if(prob(1))
+						emote(pick("scratch","jump","roll","tail"))
+			else
+				walk_to(src,0)
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 
 	if (radiation)
 		if (radiation > 100)
+			if(!weakened)
+				emote("collapse")
 			Weaken(10)
 			src << "<span class='danger'>You feel weak.</span>"
-			emote("collapse")
 
 		switch(radiation)
 
 			if(50 to 75)
 				if(prob(5))
+					if(!weakened)
+						emote("collapse")
 					Weaken(3)
 					src << "<span class='danger'>You feel weak.</span>"
-					emote("collapse")
 
 			if(75 to 100)
 				if(prob(1))
 					src << "<span class='danger'>You mutate!</span>"
-					randmutb(src)
+					randmutb()
 					emote("gasp")
 					domutcheck()
 		..()
@@ -81,29 +87,29 @@
 		switch(bodytemperature)
 			if(360 to 400)
 				throw_alert("temp", /obj/screen/alert/hot, 1)
-				adjustFireLoss(2)
+				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
 			if(400 to 460)
 				throw_alert("temp", /obj/screen/alert/hot, 2)
-				adjustFireLoss(3)
+				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 			if(460 to INFINITY)
 				throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(on_fire)
-					adjustFireLoss(8)
+					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 				else
-					adjustFireLoss(3)
+					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 
 	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(bodytemperature)
 				if(200 to 260)
 					throw_alert("temp", /obj/screen/alert/cold, 1)
-					adjustFireLoss(0.5)
+					apply_damage(COLD_DAMAGE_LEVEL_1, BURN)
 				if(120 to 200)
 					throw_alert("temp", /obj/screen/alert/cold, 2)
-					adjustFireLoss(1.5)
+					apply_damage(COLD_DAMAGE_LEVEL_2, BURN)
 				if(-INFINITY to 120)
 					throw_alert("temp", /obj/screen/alert/cold, 3)
-					adjustFireLoss(3)
+					apply_damage(COLD_DAMAGE_LEVEL_3, BURN)
 		else
 			clear_alert("temp")
 
@@ -140,7 +146,29 @@
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()
-	if(..())
-		return
-	bodytemperature += BODYTEMP_HEATING_MAX
-	return
+	. = ..()
+	if(on_fire)
+
+		//the fire tries to damage the exposed clothes and items
+		var/list/burning_items = list()
+		//HEAD//
+		var/obj/item/clothing/head_clothes = null
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
+		if(head)
+			head_clothes = head
+		if(head_clothes)
+			burning_items += head_clothes
+
+		if(back)
+			burning_items += back
+
+		for(var/X in burning_items)
+			var/obj/item/I = X
+			if(!(I.resistance_flags & FIRE_PROOF))
+				I.take_damage(fire_stacks, BURN, "fire", 0)
+
+		bodytemperature += BODYTEMP_HEATING_MAX
+

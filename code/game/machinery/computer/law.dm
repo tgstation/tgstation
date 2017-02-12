@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
@@ -71,7 +71,7 @@
 		user << "[src.current.name] selected for law changes."
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
-	if(!B || !isrobot(B))
+	if(!B || !iscyborg(B))
 		return 0
 	if(B.scrambledcodes || B.emagged)
 		return 0

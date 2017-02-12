@@ -33,6 +33,7 @@
 			var/message = generate_ion_law(ionMessage)
 			if(message)
 				M.add_ion_law(message)
+				log_game("ION law added to [M]: [message]")
 				M << "<br>"
 				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
 				M << "<br>"

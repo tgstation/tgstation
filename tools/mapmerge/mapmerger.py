@@ -1,7 +1,7 @@
+import map_helpers
 import sys
 import os
 import pathlib
-import map_helpers
 import shutil
 
 #main("../../_maps/")

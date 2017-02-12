@@ -10,14 +10,14 @@
 
 	hardware_flag = PROGRAM_LAPTOP
 	max_hardware_size = 2
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 	flags = HANDSLOW // No running around with open laptops in hands.
 
 	screen_on = 0 		// Starts closed
 	var/start_open = 1	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
-	var/w_class_open = 4
+	var/w_class_open = WEIGHT_CLASS_BULKY
 	var/slowdown_open = 1
 
 /obj/item/device/modular_computer/laptop/New()
@@ -55,12 +55,7 @@
 		if(!M.restrained() && !M.stat)
 			if(!isturf(loc) || !Adjacent(M))
 				return
-
-			switch(H.slot_id)
-				if(slot_r_hand)
-					M.put_in_r_hand(src)
-				if(slot_l_hand)
-					M.put_in_l_hand(src)
+			M.put_in_hand(src, H.held_index)
 
 /obj/item/device/modular_computer/laptop/attack_hand(mob/user)
 	if(screen_on && isturf(loc))

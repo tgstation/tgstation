@@ -4,7 +4,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 
-	w_class = 1	// w_class limits which devices can contain this component.
+	w_class = WEIGHT_CLASS_TINY	// w_class limits which devices can contain this component.
 	// 1: PDAs/Tablets, 2: Laptops, 3-4: Consoles only
 	var/obj/item/device/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
@@ -18,6 +18,7 @@
 	var/damage_malfunction = 20		// "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
 	var/damage_failure = 50			// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
 	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
+	var/device_type
 
 /obj/item/weapon/computer_hardware/New(var/obj/L)
 	..()
@@ -41,12 +42,12 @@
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
-		if(!damage)
+		if(obj_integrity == max_integrity)
 			user << "<span class='warning'>\The [src] doesn't seem to require repairs.</span>"
 			return 1
 		if(S.use(1))
 			user << "<span class='notice'>You patch up \the [src] with a bit of \the [I].</span>"
-			take_damage(-10)
+			obj_integrity = min(obj_integrity + 10, max_integrity)
 		return 1
 
 	if(try_insert(I, user))
@@ -81,12 +82,6 @@
 	else if(damage)
 		user << "<span class='notice'>It seems to be slightly damaged.</span>"
 
-// Damages the component. Contains necessary checks. Negative damage "heals" the component.
-/obj/item/weapon/computer_hardware/proc/take_damage(var/amount)
-	damage += round(amount) 					// We want nice rounded numbers here.
-	damage = max(0, min(damage, max_damage))		// Clamp the value.
-
-
 // Component-side compatibility check.
 /obj/item/weapon/computer_hardware/proc/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	return can_install
@@ -97,12 +92,12 @@
 
 // Called when component is removed from PC.
 /obj/item/weapon/computer_hardware/proc/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
-	try_eject()
+	try_eject(forced = 1)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
 /obj/item/weapon/computer_hardware/proc/try_insert(obj/item/I, mob/living/user = null)
 	return FALSE
 
 // Called when someone tries to eject something from it - card from card reader, etc.
-/obj/item/weapon/computer_hardware/proc/try_eject(slot=0, mob/living/user = null)
+/obj/item/weapon/computer_hardware/proc/try_eject(slot=0, mob/living/user = null, forced = 0)
 	return FALSE

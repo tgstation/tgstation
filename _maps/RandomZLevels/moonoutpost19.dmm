@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -82,7 +82,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -105,7 +105,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -177,7 +177,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -249,12 +249,8 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -462,11 +458,7 @@
 	},
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/rank/security,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/weapon/melee/baton/loaded,
@@ -536,7 +528,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -558,7 +550,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -891,11 +883,7 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid{
@@ -1007,9 +995,10 @@
 /obj/item/device/radio/off{
 	pixel_x = 2
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
+/obj/effect/turf_decal/stripes/line,
 /area/awaycontent/a4{
 	has_gravity = 1;
 	name = "Syndicate Outpost"
@@ -1028,9 +1017,11 @@
 	info = "Log 1:<br>We got our promised supply drop today. We were only meant to get it, what, a week ago? This bloody gateway keeps desyncing itself, and that means subsisting off recycled water and carb packs. No clue where the damn thing connects to on its off days, and HQ say we are 'not to touch it if it isn't linking to command.' We dumped off the assload of crates Jim filled, got our boxes of oxygen, food and drink, and closed the portal.<br><br>Log 2:<br>Damn thing is acting up again. Three days no contact this time. I thought I heard clanking noises from it yesterday. Jim is going on about the NT base or some shit. We've been over this before - They don't know we're here, that engineer was too drunk to recognise his suit, especially since I had it painted orange. He's starting to get annoying. We're safe.<br><br>Log 3:<br>Gateway synced itself up automatically today. I opened it for an instant to spy through it, got a glimpse of the inside of a transport container. Either HQ's redecorating or something, or there's more than two of these things.";
 	name = "Personal Log"
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 6;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1048,9 +1039,11 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 1;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1063,9 +1056,11 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
-	dir = 10;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1080,9 +1075,10 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
+/obj/effect/turf_decal/stripes/line,
 /area/awaycontent/a4{
 	has_gravity = 1;
 	name = "Syndicate Outpost"
@@ -1354,9 +1350,11 @@
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/device/multitool,
-/turf/open/floor/plating/warnplate{
-	dir = 9;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1372,9 +1370,11 @@
 	d2 = 4
 	},
 /obj/machinery/computer/monitor,
-/turf/open/floor/plating/warnplate{
-	dir = 5;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1407,9 +1407,11 @@
 	pixel_y = 23;
 	req_access = "150"
 	},
-/turf/open/floor/plating/warnplate{
-	dir = 9;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1417,9 +1419,11 @@
 	})
 "bV" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/warnplate{
-	dir = 5;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1446,11 +1450,13 @@
 	dir = 2;
 	id = "awaysyndie"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 4;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1556,11 +1562,13 @@
 	pixel_y = 32
 	},
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 8;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1574,11 +1582,13 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 1;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1589,11 +1599,13 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 4;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1634,9 +1646,11 @@
 	info = "Alright, listen up. If you're reading this, I'm either taking a shit or I've been recalled back to Command. Either way, you'll need to know how to restore power. We've stolen this stuff from Nanotrasen, so all the equipment is jury-rigged. We have generators that work on both plasma and uranium, about 50 sheets should power the outpost for quite a while. If the generators aren't working, which is very likely, take the power cell on the desk and put it into the APC in the hallway. That should get the place running, at least for a little while.";
 	name = "Engineering Instructions"
 	},
-/turf/open/floor/plating/warnplate{
-	dir = 8;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1662,9 +1676,11 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/plating/warnplate{
-	dir = 1;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1672,9 +1688,11 @@
 	})
 "cl" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate/corner{
-	dir = 4;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1690,9 +1708,11 @@
 	pixel_y = 0;
 	serial_number = 10
 	},
-/turf/open/floor/plating/warnplate{
-	dir = 4;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1709,11 +1729,13 @@
 	name = "Syndicate Outpost"
 	})
 "co" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 8;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1911,9 +1933,11 @@
 "cB" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate{
-	dir = 4;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1924,11 +1948,13 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 4;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1945,11 +1971,13 @@
 	})
 "cE" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 8;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1970,7 +1998,7 @@
 "cG" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -2057,9 +2085,11 @@
 "cM" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate{
-	dir = 10;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2071,9 +2101,11 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
-/turf/open/floor/plating/warnplate{
-	dir = 2;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2086,9 +2118,11 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
-/turf/open/floor/plating/warnplate{
-	dir = 2;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2096,9 +2130,11 @@
 	})
 "cP" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plating/warnplate{
-	dir = 6;
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2110,11 +2146,13 @@
 	layer = 3.1;
 	name = "mining conveyor"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 8;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2191,11 +2229,13 @@
 	})
 "cV" = (
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 8;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2236,11 +2276,14 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2327,11 +2370,13 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 4;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2352,11 +2397,14 @@
 	amount = 10
 	},
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2436,22 +2484,26 @@
 	})
 "dm" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 1;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
 	name = "Syndicate Outpost"
 	})
 "dn" = (
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 4;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2606,11 +2658,13 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 9;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2632,11 +2686,13 @@
 /obj/item/clothing/mask/gas,
 /obj/item/weapon/pickaxe/drill,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 5;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2681,11 +2737,13 @@
 	pixel_y = -32
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 10;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2706,11 +2764,13 @@
 "dD" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 6;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2911,11 +2971,7 @@
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -3117,15 +3173,13 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
-	name = "Acid-Proof biohazard containment door";
-	unacidable = 1
+	name = "Acid-Proof biohazard containment door"
 	},
 /obj/machinery/door/poddoor{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
 	layer = 2.9;
-	name = "Acid-Proof biohazard containment door";
-	unacidable = 1
+	name = "Acid-Proof biohazard containment door"
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating{
@@ -3221,9 +3275,11 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -3287,7 +3343,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3306,8 +3362,7 @@
 	id = "awayxenobio";
 	name = "Acid-Proof mounted igniter";
 	pixel_x = 0;
-	pixel_y = 25;
-	unacidable = 1
+	pixel_y = 25
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -3330,11 +3385,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -3422,9 +3473,11 @@
 	name = "xenobiology monitor";
 	network = list("MO19X")
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -3438,8 +3491,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
 /obj/structure/grille,
@@ -3520,7 +3572,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3615,9 +3667,11 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -3629,7 +3683,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3954,11 +4008,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/xenos_claw,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -3971,9 +4021,11 @@
 "fj" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
-	dir = 4;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4004,9 +4056,11 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4021,8 +4075,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -4039,7 +4092,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -4053,11 +4106,7 @@
 	icon_state = "weeds1"
 	},
 /obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4241,9 +4290,11 @@
 	pixel_x = 0
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/warning{
-	dir = 4;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4280,8 +4331,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil{
@@ -4290,9 +4340,11 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4302,14 +4354,12 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil{
@@ -4333,8 +4383,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -4348,8 +4397,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -4364,8 +4412,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -4380,8 +4427,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -4396,8 +4442,7 @@
 	dir = 8;
 	icon_state = "on";
 	name = "Acid-Proof Air Injector";
-	on = 1;
-	unacidable = 1
+	on = 1
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/engine,
@@ -4636,9 +4681,11 @@
 	pixel_x = 0;
 	pixel_y = -29
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 4;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4650,9 +4697,11 @@
 	},
 /obj/structure/closet/l3closet/scientist,
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4667,8 +4716,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/item/stack/cable_coil/cut{
 	amount = 1;
@@ -4708,11 +4756,7 @@
 "ge" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4831,9 +4875,11 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warnwhite{
-	dir = 1;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4841,18 +4887,22 @@
 	})
 "go" = (
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 1;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
 	name = "MO19 Research"
 	})
 "gp" = (
-/turf/open/floor/plasteel/warnwhite{
-	dir = 1;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4864,9 +4914,11 @@
 /obj/item/device/mmi,
 /obj/item/device/mmi,
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 1;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4889,13 +4941,14 @@
 /obj/structure/disposalpipe/trunk{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4909,14 +4962,12 @@
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
 /obj/structure/grille,
@@ -4932,8 +4983,7 @@
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -4947,8 +4997,7 @@
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 2;
 	icon_state = "pipe-c";
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -5062,7 +5111,7 @@
 "gE" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -5182,9 +5231,11 @@
 	},
 /obj/item/weapon/pen,
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -5195,8 +5246,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -5214,8 +5264,7 @@
 "gM" = (
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -5397,9 +5446,11 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -5422,14 +5473,12 @@
 /obj/structure/disposaloutlet{
 	desc = "An outlet for the pneumatic disposal system. This one has been applied with an acid-proof coating.";
 	dir = 1;
-	name = "Acid-Proof disposal outlet";
-	unacidable = 1
+	name = "Acid-Proof disposal outlet"
 	},
 /obj/structure/disposalpipe/trunk{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 1;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -5465,8 +5514,7 @@
 	id = "awayxenobio";
 	name = "Acid-Proof mounted igniter";
 	pixel_x = 0;
-	pixel_y = -25;
-	unacidable = 1
+	pixel_y = -25
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -5768,7 +5816,7 @@
 "hx" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -5810,7 +5858,7 @@
 	pixel_x = -5;
 	pixel_y = -2
 	},
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5993,13 +6041,13 @@
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
 	layer = 2.9;
-	name = "Acid-Proof biohazard containment door";
-	unacidable = 1
+	name = "Acid-Proof biohazard containment door"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaycontent/a2{
 	has_gravity = 1;
 	name = "MO19 Research"
@@ -6189,9 +6237,11 @@
 	dir = 8
 	},
 /obj/item/weapon/circuitboard/computer/teleporter,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 9;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6202,9 +6252,11 @@
 /obj/item/device/paicard{
 	pixel_x = 4
 	},
-/turf/open/floor/plasteel/warnwhite{
-	dir = 1;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6212,9 +6264,11 @@
 	})
 "id" = (
 /obj/structure/rack,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 5;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6319,7 +6373,7 @@
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
 	pixel_x = 28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -6408,9 +6462,11 @@
 	name = "MO19 Research"
 	})
 "ir" = (
-/turf/open/floor/plasteel/warnwhite{
-	dir = 8;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6440,9 +6496,11 @@
 	info = "<i>19 06 2554</i><br><br><i>I fucking knew it. There was a major breach, that idiotic force field failed and the xenomorphs rushed out and took out the scientists. I've managed to make it to my office and closed the blast doors. I can hear them trying to pry open the doors. Probably don't have long. I have no clue what has happened to the rest of the crew, for all I know they've been killed to produce more of the fucks.</i>";
 	name = "Hastily Written Note"
 	},
-/turf/open/floor/plasteel/warnwhite{
-	dir = 4;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6457,9 +6515,11 @@
 	icon_state = "shower";
 	name = "emergency shower"
 	},
-/turf/open/floor/plasteel/warnwhite{
-	dir = 9;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6467,9 +6527,11 @@
 	})
 "iv" = (
 /obj/structure/closet/firecloset,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 5;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6652,9 +6714,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnwhite{
-	dir = 10;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6662,9 +6726,11 @@
 	})
 "iL" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 2;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6676,9 +6742,11 @@
 /obj/item/device/taperecorder{
 	pixel_x = -3
 	},
-/turf/open/floor/plasteel/warnwhite{
-	dir = 6;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6692,9 +6760,11 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 10;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6703,9 +6773,11 @@
 "iO" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/warnwhite{
-	dir = 6;
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -8081,7 +8153,7 @@
 /obj/item/stack/rods,
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -8099,7 +8171,7 @@
 "kQ" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -8318,9 +8390,11 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warning/corner{
-	dir = 2;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8623,18 +8697,22 @@
 	name = "MO19 Arrivals"
 	})
 "lF" = (
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "lG" = (
-/turf/open/floor/plasteel/warning/corner{
-	dir = 2;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8643,9 +8721,11 @@
 "lH" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
-/turf/open/floor/plasteel/warning{
-	dir = 6;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8773,7 +8853,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. The skeleton is sitting upright with its legs tucked in and hands still holding onto its arms."
 	},
-/obj/item/weapon/gun/projectile/shotgun/sc_pump,
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
 	temperature = 273.15
@@ -8885,9 +8965,11 @@
 	name = "MO19 Arrivals"
 	})
 "mg" = (
-/turf/open/floor/plasteel/warning{
-	dir = 4;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9077,9 +9159,11 @@
 	})
 "mw" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
-	dir = 4;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9203,7 +9287,7 @@
 	name = "MO19 Arrivals"
 	})
 "mH" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Shuttle Cockpit"
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -9236,7 +9320,7 @@
 	name = "MO19 Arrivals"
 	})
 "mK" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -9282,9 +9366,11 @@
 	dir = 8;
 	network = list("MO19")
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 4;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9613,9 +9699,11 @@
 	})
 "no" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
-	dir = 8;
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9668,7 +9756,7 @@
 "ns" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -9737,7 +9825,7 @@
 	},
 /obj/structure/table,
 /obj/structure/bedsheetbin,
-/obj/item/clothing/tie/black,
+/obj/item/clothing/neck/tie/black,
 /obj/item/clothing/under/lawyer/blacksuit,
 /turf/open/floor/plasteel/barber{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -9826,7 +9914,7 @@
 "nD" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -9933,7 +10021,7 @@
 	name = "MO19 Arrivals"
 	})
 "nJ" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -10295,7 +10383,7 @@
 "oj" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /turf/open/floor/mineral/titanium,

@@ -1,7 +1,6 @@
 /obj/mecha/medical/New()
 	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	return
+	trackers += new /obj/item/mecha_parts/mecha_tracking(src)
 
 
 /obj/mecha/medical/mechturn(direction)

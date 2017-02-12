@@ -10,7 +10,7 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list("alien")
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	languages_spoken = ALIEN
 	languages_understood = ALIEN
 	sight = SEE_MOBS
@@ -37,34 +37,21 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
+	create_bodyparts() //initialize bodyparts
+
+	create_internal_organs()
+
+	..()
+
+/mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien
 	internal_organs += new /obj/item/organ/alien/hivenode
 	internal_organs += new /obj/item/organ/tongue/alien
-
-	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
-
-	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
+	internal_organs += new /obj/item/organ/eyes/night_vision/alien
 	..()
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
 	return -10
-
-/mob/living/carbon/alien/adjustToxLoss(amount)
-	return 0
-
-/mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
-	if(amount > 0)
-		..(amount * 2)
-	else
-		..(amount)
-	return
-
-/mob/living/carbon/alien/check_eye_prot()
-	return ..() + 2
-
-/mob/living/carbon/alien/getToxLoss()
-	return 0
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -99,35 +86,6 @@
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 	else
 		clear_alert("alien_fire")
-
-
-/mob/living/carbon/alien/ex_act(severity, target)
-	..()
-
-	switch (severity)
-		if (1)
-			gib()
-			return
-
-		if (2)
-			adjustBruteLoss(60)
-			adjustFireLoss(60)
-			adjustEarDamage(30,120)
-
-		if(3)
-			adjustBruteLoss(30)
-			if (prob(50))
-				Paralyse(1)
-			adjustEarDamage(15,60)
-
-	updatehealth()
-
-
-/mob/living/carbon/alien/handle_fire()//Aliens on fire code
-	if(..())
-		return
-	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
-	return
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
@@ -192,41 +150,6 @@ Des: Removes all infected images from the alien.
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
 #undef HEAT_DAMAGE_LEVEL_3
-
-
-/mob/living/carbon/alien/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		return
-
-	sight = SEE_MOBS
-	if(nightvision)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else
-		see_in_dark = 4
-		see_invisible = SEE_INVISIBLE_LIVING
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
-			return
-
-	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
-		sight |= E.sight_flags
-		if(E.dark_view)
-			see_in_dark = max(see_in_dark, E.dark_view)
-		if(E.see_invisible)
-			see_invisible = min(see_invisible, E.see_invisible)
-
-	if(see_override)
-		see_invisible = see_override
 
 /mob/living/carbon/alien/can_hold_items()
 	return has_fine_manipulation

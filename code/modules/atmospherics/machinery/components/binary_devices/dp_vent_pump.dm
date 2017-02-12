@@ -65,7 +65,7 @@ Acts like a normal vent, but has an input AND output.
 	..()
 
 	if(!on)
-		return 0
+		return FALSE
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
 
@@ -85,6 +85,9 @@ Acts like a normal vent, but has an input AND output.
 				var/transfer_moles = pressure_delta*environment.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+				//Removed can be null if there is no atmosphere in air1
+				if(!removed)
+					return FALSE
 
 				loc.assume_air(removed)
 				air_update_turf()
@@ -105,6 +108,9 @@ Acts like a normal vent, but has an input AND output.
 				var/transfer_moles = pressure_delta*air2.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+				//removed can be null if there is no air in the location
+				if(!removed)
+					return FALSE
 
 				air2.merge(removed)
 				air_update_turf()
@@ -112,7 +118,7 @@ Acts like a normal vent, but has an input AND output.
 				var/datum/pipeline/parent2 = PARENT2
 				parent2.update = 1
 
-	return 1
+	return TRUE
 
 	//Radio remote control
 

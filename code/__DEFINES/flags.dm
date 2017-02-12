@@ -23,7 +23,6 @@
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
-#define OPENCONTAINER	4096	// is an open container for chemistry purposes
 #define HEADBANGPROTECT		4096
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
@@ -35,6 +34,8 @@
 //turf-only flags
 #define NOJAUNT		1
 #define UNUSED_TRANSIT_TURF 2
+#define CAN_BE_DIRTY 4 //If a turf can be made dirty at roundstart. This is also used in areas.
+#define NO_DEATHRATTLE 16 // Do not notify deadchat about any deaths that occur on this turf.
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -48,32 +49,12 @@
 #define PASSMOB			16
 #define LETPASSTHROW	32
 
-//flags for species
 
-#define MUTCOLORS		1
-#define HAIR			2
-#define FACEHAIR		3
-#define EYECOLOR		4
-#define LIPS			5
-#define RESISTTEMP		6
-#define RADIMMUNE		7
-#define NOBREATH		8
-#define NOGUNS			9
-#define NOBLOOD			10
-#define NOFIRE			11
-#define VIRUSIMMUNE		12
-#define PIERCEIMMUNE	13
-#define NOTRANSSTING	14
-#define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NODISMEMBER		16
-#define NOHUNGER		17
-#define NOCRITDAMAGE	18
-#define NOZOMBIE		19
-#define EASYDISMEMBER	20
-#define EASYLIMBATTACHMENT 21
-#define TOXINLOVER		22
+//Movement Types
+#define IMMOBILE 0
+#define GROUND 1
+#define FLYING 2
 
-#define FLYING	65536
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.

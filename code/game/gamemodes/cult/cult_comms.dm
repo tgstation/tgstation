@@ -30,9 +30,9 @@
 	if(!user)
 		return
 	if(!ishuman(user))
-		user.say(message)
+		user.say(html_decode(message))
 	else
-		user.whisper(message)
+		user.whisper(html_decode(message))
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))

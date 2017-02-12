@@ -17,9 +17,10 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
+	var/fancy_open = FALSE
 
 /obj/item/weapon/storage/fancy/New()
 	..()
@@ -27,16 +28,37 @@
 		new spawn_type(src)
 
 /obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
-	var/total_contents = src.contents.len - itemremoved
-	src.icon_state = "[src.icon_type]box[total_contents]"
-	return
+	if(fancy_open)
+		var/total_contents = src.contents.len - itemremoved
+		icon_state = "[icon_type]box[total_contents]"
+	else
+		icon_state = "[icon_type]box"
 
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
-	if(contents.len == 1)
-		user << "There is one [src.icon_type] left."
-	else
-		user << "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left."
+	if(fancy_open)
+		if(contents.len == 1)
+			user << "There is one [src.icon_type] left."
+		else
+			user << "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left."
+
+/obj/item/weapon/storage/fancy/attack_self(mob/user)
+	fancy_open = !fancy_open
+	update_icon()
+
+/obj/item/weapon/storage/fancy/content_can_dump(atom/dest_object, mob/user)
+	. = ..()
+	if(.)
+		fancy_open = TRUE
+		update_icon()
+
+/obj/item/weapon/storage/fancy/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+	fancy_open = TRUE
+	return ..()
+
+/obj/item/weapon/storage/fancy/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
+	fancy_open = TRUE
+	return ..()
 
 /*
  * Donut Box
@@ -50,6 +72,7 @@
 	storage_slots = 6
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
 	spawn_type = /obj/item/weapon/reagent_containers/food/snacks/donut
+	fancy_open = TRUE
 
 /*
  * Egg Box
@@ -79,6 +102,10 @@
 	throwforce = 2
 	slot_flags = SLOT_BELT
 	spawn_type = /obj/item/candle
+	fancy_open = TRUE
+
+/obj/item/weapon/storage/fancy/candle_box/attack_self(mob_user)
+	return
 
 ////////////
 //CIG PACK//
@@ -89,7 +116,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
@@ -105,21 +132,39 @@
 		cig.desc = "\An [name] brand [cig.name]."
 	name = "\improper [name] packet"
 
+/obj/item/weapon/storage/fancy/cigarettes/AltClick(mob/user)
+	if(user.get_active_held_item())
+		return
+	for(var/obj/item/weapon/lighter/lighter in src)
+		remove_from_storage(lighter, user.loc)
+		user.put_in_active_hand(lighter)
+		break
+
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
-	cut_overlays()
-	icon_state = initial(icon_state)
-	if(!contents.len)
-		icon_state += "_empty"
+	if(fancy_open || !contents.len)
+		cut_overlays()
+		if(!contents.len)
+			icon_state = "[initial(icon_state)]_empty"
+		else
+			icon_state = initial(icon_state)
+			add_overlay("[icon_state]_open")
+			var/i = contents.len
+			for(var/C in contents)
+				if(istype(C, /obj/item/weapon/lighter/greyscale))
+					add_overlay(image(icon = src.icon, icon_state = "lighter_in", pixel_x = 1 * (i -1)))
+				else if(istype(C, /obj/item/weapon/lighter))
+					add_overlay(image(icon = src.icon, icon_state = "zippo_in", pixel_x = 1 * (i -1)))
+				else
+					add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (i -1)))
+				i--
 	else
-		add_overlay("[icon_state]_open")
-		for(var/c = contents.len, c >= 1, c--)
-			add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1)))
-	return
+		cut_overlays()
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
 	if(istype(W,/obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W,(reagents.total_volume/contents.len))
+	fancy_open = TRUE
 	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -202,7 +247,7 @@
 /obj/item/weapon/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of NanoTrasen brand rolling papers."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
 	storage_slots = 10
@@ -214,7 +259,6 @@
 	cut_overlays()
 	if(!contents.len)
 		add_overlay("[icon_state]_empty")
-	return
 
 /////////////
 //CIGAR BOX//
@@ -225,18 +269,21 @@
 	desc = "A case of premium cigars. Very expensive."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarcase"
-	w_class = 3
-	storage_slots = 7
+	w_class = WEIGHT_CLASS_NORMAL
+	storage_slots = 5
 	can_hold = list(/obj/item/clothing/mask/cigarette/cigar)
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/update_icon()
-	cut_overlays()
-	add_overlay("[icon_state]_open")
-	for(var/c = contents.len, c >= 1, c--)
-		add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1)))
-	return
+	if(fancy_open)
+		cut_overlays()
+		add_overlay("[icon_state]_open")
+		for(var/c = contents.len, c >= 1, c--)
+			add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1)))
+	else
+		cut_overlays()
+		icon_state = "cigarcase"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba
 	name = "\improper cohiba robusto cigar case"

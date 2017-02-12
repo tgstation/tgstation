@@ -13,10 +13,8 @@
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
-	..(target,thrower)
-	SplashReagents(target)
+	..()
 	smash(target,thrower,1)
-	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
 
@@ -53,7 +51,7 @@
 	if(!target)
 		return
 
-	if(user.a_intent != "harm" || !isGlass)
+	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
 
@@ -109,8 +107,8 @@
 		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
 				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
 	else
-		user.visible_message("<span class='danger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>")
+		user.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
+				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
 	add_logs(user, target, "attacked", src)
@@ -123,13 +121,6 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
-	if(src.reagents.total_volume)
-		M.visible_message("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>")
-		reagents.reaction(M, TOUCH)
-		reagents.clear_reagents()
-	return
-
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
 	name = "Broken Bottle"
@@ -140,7 +131,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
@@ -301,6 +292,12 @@
 	volume = 50
 	list_reagents = list("hcider" = 50)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/grappa
+	name = "Phillipes well-aged Grappa"
+	desc = "Bottle of Grappa."
+	icon_state = "grappabottle"
+	list_reagents = list("grappa" = 100)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice
@@ -364,7 +361,6 @@
 			if(istype(R,A))
 				firestarter = 1
 				break
-	SplashReagents(target)
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
@@ -375,10 +371,12 @@
 		active = 1
 		var/turf/bombturf = get_turf(src)
 		var/area/bombarea = get_area(bombturf)
-		message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[bombarea] (JMP)</a>.")
-		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] ([bombturf.x],[bombturf.y],[bombturf.z]).")
+		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]."
+		bombers += message
+		message_admins(message)
+		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] [COORD(bombturf)].")
 
-		user << "<span class='info'>You light \the [src] on fire.</span>"
+		user << "<span class='info'>You light [src] on fire.</span>"
 		add_overlay(fire_overlay)
 		if(!isGlass)
 			spawn(50)
@@ -400,6 +398,6 @@
 		if(!isGlass)
 			user << "<span class='danger'>The flame's spread too far on it!</span>"
 			return
-		user << "<span class='info'>You snuff out the flame on \the [src].</span>"
+		user << "<span class='info'>You snuff out the flame on [src].</span>"
 		overlays -= fire_overlay
 		active = 0

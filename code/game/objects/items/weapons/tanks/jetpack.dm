@@ -3,12 +3,13 @@
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	item_state = "jetpack"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	var/gas_type = "o2"
 	var/on = FALSE
 	var/stabilizers = FALSE
+	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/weapon/tank/jetpack/New()
@@ -20,10 +21,10 @@
 	ion_trail = new
 	ion_trail.set_up(src)
 
-/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_jetpack)
+/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_jetpack))
 		cycle(user)
-	else if(actiontype == /datum/action/item_action/jetpack_stabilization)
+	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
 			stabilizers = !stabilizers
 			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"
@@ -74,6 +75,15 @@
 
 	return 1
 
+/obj/item/weapon/tank/jetpack/suicide_act(mob/user)
+	if (istype(user,/mob/living/carbon/human/))
+		var/mob/living/carbon/human/H = user
+		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
+		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")
+		return (OXYLOSS)
+	else
+		..()
+
 /obj/item/weapon/tank/jetpack/void
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
@@ -93,15 +103,16 @@
 	item_state = "jetpack-mini"
 	volume = 40
 	throw_range = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/tank/jetpack/oxygen/captain
 	name = "\improper Captain's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
 	icon_state = "jetpack-captain"
 	item_state = "jetpack-captain"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	volume = 90
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
@@ -118,11 +129,12 @@
 	origin_tech = "materials=4;magnets=4;engineering=5"
 	icon_state = "jetpack-upgrade"
 	item_state =  "jetpack-black"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	volume = 1
 	slot_flags = null
 	gas_type = null
+	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/weapon/tank/internals/tank = null
 

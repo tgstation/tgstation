@@ -1,21 +1,3 @@
-/*Cabin areas*/
-/area/awaymission/snowforest
-	name = "Snow Forest"
-	icon_state = "away"
-	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/cabin
-	name = "Cabin"
-	icon_state = "away2"
-	requires_power = 1
-	luminosity = 0
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/snowforest/lumbermill
-	name = "Lumbermill"
-	icon_state = "away3"
 
 /obj/structure/firepit
 	name = "firepit"
@@ -25,7 +7,7 @@
 	density = 0
 	var/active = 1
 
-/obj/structure/firepit/initialize()
+/obj/structure/firepit/Initialize()
 	..()
 	toggleFirepit()
 
@@ -35,7 +17,6 @@
 		toggleFirepit()
 	else
 		..()
-
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
@@ -62,7 +43,7 @@
 		active = FALSE
 		toggleFirepit()
 
-/obj/structure/firepit/fire_act()
+/obj/structure/firepit/fire_act(exposed_temperature, exposed_volume)
 	if(!active)
 		active = TRUE
 		toggleFirepit()
@@ -97,7 +78,8 @@
 
 /*Cabin's forest*/
 /datum/mapGenerator/snowy
-	modules = list(/datum/mapGeneratorModule/snow/pineTrees, \
+	modules = list(/datum/mapGeneratorModule/bottomlayer/snow, \
+	/datum/mapGeneratorModule/snow/pineTrees, \
 	/datum/mapGeneratorModule/snow/deadTrees, \
 	/datum/mapGeneratorModule/snow/randBushes, \
 	/datum/mapGeneratorModule/snow/randIceRocks, \
@@ -107,6 +89,9 @@
 	if(istype(T,/turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
+
+/datum/mapGeneratorModule/bottomlayer/snow
+	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
 
 /datum/mapGeneratorModule/snow/pineTrees
 	spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)

@@ -1,5 +1,88 @@
 // Areas.dm
 
+
+/area
+	level = null
+	name = "Space"
+	icon = 'icons/turf/areas.dmi'
+	icon_state = "unknown"
+	layer = AREA_LAYER
+	mouse_opacity = 0
+	invisibility = INVISIBILITY_LIGHTING
+
+	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+
+	var/valid_territory = 1 // If it's a valid territory for gangs to claim
+	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
+
+	var/eject = null
+
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+	var/lightswitch = 1
+
+	var/requires_power = 1
+	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+
+	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+
+	var/power_equip = 1
+	var/power_light = 1
+	var/power_environ = 1
+	var/music = null
+	var/used_equip = 0
+	var/used_light = 0
+	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
+
+	var/has_gravity = 0
+	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+
+	var/no_air = null
+	var/area/master				// master area used for power calcluations
+	var/list/related			// the other areas of the same type as this
+
+	var/parallax_movedir = 0
+
+	var/global/global_uid = 0
+	var/uid
+	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
+									'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
+									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
+									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
+									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
+									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	flags = CAN_BE_DIRTY
+
+	var/list/firedoors
+	var/firedoors_last_closed_on = 0
+
+/*Adding a wizard area teleport list because motherfucking lag -- Urist*/
+/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
+var/list/teleportlocs = list()
+
+/proc/process_teleport_locs()
+	for(var/V in sortedAreas)
+		var/area/AR = V
+		if(istype(AR, /area/shuttle) || AR.noteleport)
+			continue
+		if(teleportlocs[AR.name])
+			continue
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && (picked.z == ZLEVEL_STATION))
+			teleportlocs[AR.name] = AR
+
+	sortTim(teleportlocs, /proc/cmp_text_dsc)
+
+// ===
+
+
 // Added to fix mech fabs 05/2013 ~Sayu
 // This is necessary due to lighting subareas.  If you were to go in assuming that things in
 // the same logical /area have the parent /area object... well, you would be mistaken.  If you
@@ -13,16 +96,7 @@
 	return contents
 
 
-// ===
-/area
-	var/global/global_uid = 0
-	var/uid
-	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
-									'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
-									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
-									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
-									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
-									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+
 
 /area/New()
 	icon_state = ""
@@ -48,7 +122,9 @@
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
-
+/area/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -111,6 +187,24 @@
 		return 1
 	return 0
 
+/area/proc/ModifyFiredoors(opening)
+	if(firedoors)
+		firedoors_last_closed_on = world.time
+		for(var/FD in firedoors)
+			var/obj/machinery/door/firedoor/D = FD
+			var/cont = !D.welded
+			if(cont && opening)	//don't open if adjacent area is on fire
+				for(var/I in D.affecting_areas)
+					var/area/A = I
+					if(A.fire)
+						cont = FALSE
+						break
+			if(cont)
+				if(D.operating)
+					D.nextstate = opening ? OPEN : CLOSED
+				else if(!(D.density ^ opening))
+					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
+
 /area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
@@ -120,12 +214,7 @@
 	for(var/area/RA in related)
 		if (!( RA.fire ))
 			RA.set_fire_alarm_effect()
-			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.welded)
-					if(D.operating)
-						D.nextstate = CLOSED
-					else if(!D.density)
-						addtimer(D, "close", 0)
+			RA.ModifyFiredoors(FALSE)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -140,20 +229,15 @@
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
 
+	START_PROCESSING(SSobj, src)
+
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
 			RA.mouse_opacity = 0
 			RA.updateicon()
-			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.welded)
-					if(D.operating)
-						D.nextstate = OPEN
-					else if(D.density)
-						addtimer(D, "open", 0)
-			for(var/obj/machinery/firealarm/F in RA)
-				F.update_icon()
+			RA.ModifyFiredoors(TRUE)
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)
@@ -163,6 +247,13 @@
 		D.cancelAlarm("Fire", src, source)
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
+
+	STOP_PROCESSING(SSobj, src)
+
+/area/process()
+	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
+		for(var/area/RA in related)
+			RA.ModifyFiredoors(FALSE)
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
@@ -185,7 +276,7 @@
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(SILICON, "cancelAlarm", 600, FALSE,"Burglar",src,trigger)
+			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -222,7 +313,7 @@
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					addtimer(D, "open", 0)
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
@@ -323,7 +414,7 @@
 
 
 /area/Entered(A)
-	if(!istype(A,/mob/living))
+	if(!isliving(A))
 		return
 
 	var/mob/living/L = A
@@ -348,11 +439,11 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/proc/has_gravity(atom/AT, turf/T)
-	if(!T)
-		T = get_turf(AT)
+/atom/proc/has_gravity(turf/T)
+	if(!T || !isturf(T))
+		T = get_turf(src)
 	var/area/A = get_area(T)
-	if(istype(T, /turf/open/space)) // Turf never has gravity
+	if(isspaceturf(T)) // Turf never has gravity
 		return 0
 	else if(A && A.has_gravity) // Areas which always has gravity
 		return 1
@@ -369,4 +460,5 @@
 	power_environ = 0
 	always_unpowered = 0
 	valid_territory = 0
+	blob_allowed = 0
 	addSorted()

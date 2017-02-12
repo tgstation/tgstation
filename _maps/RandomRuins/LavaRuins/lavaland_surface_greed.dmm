@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -15,7 +15,7 @@
 /area/ruin/powered)
 "e" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/gun/projectile/revolver/russian/soul,
+/obj/item/weapon/gun/ballistic/revolver/russian/soul,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
@@ -124,9 +124,9 @@
 "t" = (
 /obj/machinery/door/airlock/gold,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	blocks_air = 1
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
+/obj/structure/fans/tiny/invisible,
 /area/ruin/powered)
 
 (1,1,1) = {"

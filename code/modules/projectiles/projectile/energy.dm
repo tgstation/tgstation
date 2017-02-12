@@ -29,7 +29,7 @@
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(C.status_flags & CANWEAKEN)
-			addtimer(C, "do_jitter_animation", 5, FALSE, jitter)
+			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, jitter), 5)
 
 /obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -68,7 +68,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dragnetfield"
 	anchored = 1
-	unacidable = 1
 
 /obj/effect/nettingportal/New()
 	..()
@@ -143,6 +142,7 @@
 	damage = 20
 	damage_type = CLONE
 	irradiate = 10
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
@@ -161,30 +161,30 @@
 	weaken = 5
 	stutter = 5
 
+/obj/item/projectile/energy/bolt/halloween
+	name = "candy corn"
+	icon_state = "candy_corn"
+
 /obj/item/projectile/energy/bolt/large
 	damage = 20
 
-/obj/item/ammo_casing/energy/plasma
-	projectile_type = /obj/item/projectile/plasma
-	select_name = "plasma burst"
-	fire_sound = 'sound/weapons/pulse.ogg'
-
-/obj/item/ammo_casing/energy/plasma/adv
-	projectile_type = /obj/item/projectile/plasma/adv
-
-/obj/item/projectile/energy/shock_revolver
-	name = "shock bolt"
-	icon_state = "purple_laser"
+/obj/item/projectile/energy/tesla_revolver
+	name = "tesla bolt"
+	icon_state = "tesla_projectile"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
 	var/chain
 
-/obj/item/ammo_casing/energy/shock_revolver/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+/obj/item/projectile/energy/tesla_revolver/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
-	var/obj/item/projectile/hook/P = BB
-	spawn(1)
-		P.chain = P.Beam(user,icon_state="purple_lightning",icon = 'icons/effects/effects.dmi',time=1000, maxdistance = 30)
 
-/obj/item/projectile/energy/shock_revolver/on_hit(atom/target)
+/obj/item/projectile/energy/tesla_revolver/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
 		tesla_zap(src, 3, 10000)
+	qdel(src)
+
+/obj/item/projectile/energy/tesla_revolver/Destroy()
 	qdel(chain)
+	return ..()

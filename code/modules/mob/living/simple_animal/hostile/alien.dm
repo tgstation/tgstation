@@ -2,10 +2,11 @@
 	name = "alien hunter"
 	desc = "Hiss!"
 	icon = 'icons/mob/alien.dmi'
-	icon_state = "alienh_s"
-	icon_living = "alienh_s"
+	icon_state = "alienh"
+	icon_living = "alienh"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
+	gender = FEMALE
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
@@ -15,12 +16,13 @@
 	maxHealth = 125
 	health = 125
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
@@ -36,8 +38,8 @@
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
-	icon_state = "aliend_s"
-	icon_living = "aliend_s"
+	icon_state = "aliend"
+	icon_living = "aliend"
 	icon_dead = "aliend_dead"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -55,8 +57,8 @@
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
-	icon_state = "aliens_s"
-	icon_living = "aliens_s"
+	icon_state = "aliens"
+	icon_living = "aliens"
 	icon_dead = "aliens_dead"
 	health = 150
 	maxHealth = 150
@@ -71,8 +73,8 @@
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"
-	icon_state = "alienq_s"
-	icon_living = "alienq_s"
+	icon_state = "alienq"
+	icon_living = "alienq"
 	icon_dead = "alienq_dead"
 	health = 250
 	maxHealth = 250
@@ -107,7 +109,7 @@
 			LayEggs()
 
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
-	if(!isturf(loc) || istype(loc, /turf/open/space))
+	if(!isturf(loc) || isspaceturf(loc))
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
@@ -115,7 +117,7 @@
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
-	if(!isturf(loc) || istype(loc, /turf/open/space))
+	if(!isturf(loc) || isspaceturf(loc))
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
@@ -153,8 +155,9 @@
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	a_intent = "help"
+	a_intent = INTENT_HELP
 	friendly = "caresses"
+	obj_damage = 0
 	environment_smash = 0
 	gold_core_spawnable = 1
 	icon_state = "maid"

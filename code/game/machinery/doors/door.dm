@@ -8,6 +8,10 @@
 	density = 1
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
+	obj_integrity = 350
+	max_integrity = 350
+	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -25,6 +29,8 @@
 	var/locked = 0 //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
+	var/datum/effect_system/spark_spread/spark_system
+	var/damage_deflection = 10
 
 /obj/machinery/door/New()
 	..()
@@ -35,7 +41,9 @@
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
-	return
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(2, 1, src)
+
 
 
 /obj/machinery/door/Destroy()
@@ -43,20 +51,30 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	airlocks -= src
+	if(spark_system)
+		qdel(spark_system)
+		spark_system = null
 	return ..()
 
 //process()
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
-	if(operating || emagged) return
-	if(isliving(AM))
-		var/mob/living/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
-		if(!M.restrained())
-			bumpopen(M)
+	if(operating || emagged)
 		return
+	if(ismob(AM))
+		var/mob/B = AM
+		if((isdrone(B) || iscyborg(B)) && B.stat)
+			return
+		if(isliving(AM))
+			var/mob/living/M = AM
+			if(world.time - M.last_bumped <= 10)
+				return	//Can bump-open one airlock per second. This is to prevent shock spam.
+			M.last_bumped = world.time
+			if(M.restrained() && !check_access(null))
+				return
+			bumpopen(M)
+			return
 
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
@@ -65,7 +83,7 @@
 				if(world.time - mecha.occupant.last_bumped <= 10)
 					return
 				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
+			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
 				open()
 			else
 				do_animate("deny")
@@ -82,9 +100,6 @@
 		return !opacity
 	return !density
 
-/obj/machinery/door/CanAtmosPass()
-	return !density
-
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
@@ -93,7 +108,7 @@
 		user = null
 
 	if(density && !emagged)
-		if(allowed(user) || src.emergency == 1)
+		if(allowed(user))
 			open()
 		else
 			do_animate("deny")
@@ -102,28 +117,6 @@
 
 /obj/machinery/door/attack_ai(mob/user)
 	return src.attack_hand(user)
-
-
-/obj/machinery/door/attack_paw(mob/user)
-	if(user.a_intent != "harm")
-		return src.attack_hand(user)
-	else
-		attack_generic(user, 5)
-
-/obj/machinery/door/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE)
-	if(operating)
-		return
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='danger'>[user] smashes against the [src.name]!</span>", \
-				"<span class='userdanger'>You smash against the [src.name]!</span>")
-	take_damage(damage, damage_type)
-
-/obj/machinery/door/attack_slime(mob/living/simple_animal/slime/S)
-	if(!S.is_adult)
-		attack_generic(S, 0)
-	else
-		attack_generic(S, 25)
 
 /obj/machinery/door/attack_hand(mob/user)
 	return try_to_activate_door(user)
@@ -140,7 +133,7 @@
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
-	if(allowed(user) || emergency == 1)
+	if(allowed(user))
 		if(density)
 			open()
 		else
@@ -149,63 +142,65 @@
 	if(density)
 		do_animate("deny")
 
+/obj/machinery/door/allowed(mob/M)
+	if(emergency)
+		return TRUE
+	return ..()
+
 /obj/machinery/door/proc/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	return
 
-obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe))
+	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		try_to_weld(I, user)
 		return 1
-	else if(!(I.flags & NOBLUDGEON) && user.a_intent != "harm")
+	else if(!(I.flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
 		return 1
 	else
 		return ..()
 
-/obj/machinery/door/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/door/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < damage_deflection)
+		return 0
+	. = ..()
+
+/obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(. && obj_integrity > 0)
+		if(damage_amount >= 10 && prob(30))
+			spark_system.start()
+
+/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(glass)
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
-				else
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+			if(glass)
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			else if(damage_amount)
+				playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
-
-/obj/machinery/door/blob_act(obj/effect/blob/B)
-	if(prob(60))
-		qdel(src)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		open()
+		INVOKE_ASYNC(src, .proc/open)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
-			addtimer(src, "unelectrify", 300)
+			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 	..()
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0
-
-/obj/machinery/door/ex_act(severity, target)
-	if(severity == 3)
-		if(prob(80))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(2, 1, src)
-			s.start()
-		return
-	..()
 
 /obj/machinery/door/update_icon()
 	if(density)
@@ -263,7 +258,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
-					addtimer(src, "autoclose", 60)
+					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
 	operating = 1
 
@@ -310,7 +305,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 
 /obj/machinery/door/proc/autoclose()
-	if(!qdeleted(src) && !density && !operating && !locked && !welded && autoclose)
+	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)
 		close()
 
 /obj/machinery/door/proc/requiresID()
@@ -347,3 +342,8 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 /obj/machinery/door/proc/disable_lockdown()
 	if(!stat) //Opens only powered doors.
 		open() //Open everything!
+
+/obj/machinery/door/ex_act(severity, target)
+	//if it blows up a wall it should blow up a door
+	..(severity ? max(1, severity - 1) : 0, target)
+

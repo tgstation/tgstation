@@ -9,6 +9,7 @@
 	icon_state = "basic"
 	icon_living = "basic"
 	icon_dead = "basic"
+	gender = NEUTER
 	health = 15
 	maxHealth = 15
 	healable = 0

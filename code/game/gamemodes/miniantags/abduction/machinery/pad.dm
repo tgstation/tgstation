@@ -1,6 +1,6 @@
 /obj/machinery/abductor/pad
 	name = "Alien Telepad"
-	desc = "Use this to transport to and from human habitat"
+	desc = "Use this to transport to and from the humans' habitat."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "alien-pad-idle"
 	anchored = 1
@@ -16,30 +16,27 @@
 	flick("alien-pad", src)
 	for(var/mob/living/target in loc)
 		target.forceMove(teleport_target)
-		spawn(0)
-			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	flick("alien-pad", src)
-	spawn(0)
-		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+	new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(target), target.dir)
 	Warp(target)
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
-	PoolOrNew(/obj/effect/overlay/temp/teleport_abductor, place)
+	new /obj/effect/overlay/temp/teleport_abductor(place)
 	sleep(80)
 	flick("alien-pad", src)
 	target.forceMove(place)
-	anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+	new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
-	PoolOrNew(/obj/effect/overlay/temp/teleport_abductor, place)
+	new /obj/effect/overlay/temp/teleport_abductor(place)
 	sleep(80)
 	flick("alien-pad", src)
 	for(var/mob/living/target in get_turf(src))
 		target.forceMove(place)
-		spawn(0)
-			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(target), target.dir)
 
 
 /obj/effect/overlay/temp/teleport_abductor

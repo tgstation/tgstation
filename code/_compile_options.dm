@@ -3,6 +3,12 @@
 //#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
+#ifdef TESTING
+//#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
+									//Also allows for recursive reference searching of datums.
+									//Sets world.loop_checks to false and prevents find references from sleeping
+#endif
+
 #define PRELOAD_RSC	1			/*set to:
 								0 to allow using external resources or on-demand behaviour;
 								1 to use the default behaviour;
@@ -22,9 +28,9 @@
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			1024
-#define MAX_NAME_LEN			26
+#define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
-#define MAX_CHARTER_LEN			50
+#define MAX_CHARTER_LEN			80
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN				17	//youngest a character can be
@@ -48,6 +54,10 @@
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
+#endif
+
+#ifdef TRAVISTESTING
+#define TESTING
 #endif
 
 //Update this whenever you need to take advantage of more recent byond features

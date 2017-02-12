@@ -7,6 +7,8 @@
 
 */
 
+#define SYMPTOM_LIMIT 8
+
 var/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
@@ -34,7 +36,7 @@ var/list/advance_cures = 	list(
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 	// NEW VARS
-
+	var/list/properties = list()
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
 	var/processing = 0
@@ -162,8 +164,8 @@ var/list/advance_cures = 	list(
 
 /datum/disease/advance/proc/Refresh(new_name = 0)
 	//world << "[src.name] \ref[src] - REFRESH!"
-	var/list/properties = GenerateProperties()
-	AssignProperties(properties)
+	GenerateProperties()
+	AssignProperties()
 	id = null
 
 	if(!archive_diseases[GetDiseaseID()])
@@ -182,26 +184,24 @@ var/list/advance_cures = 	list(
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 0)
+	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
 
 	for(var/datum/symptom/S in symptoms)
-
 		properties["resistance"] += S.resistance
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
-
-	return properties
+	return
 
 // Assign the properties that are in the list.
-/datum/disease/advance/proc/AssignProperties(list/properties = list())
+/datum/disease/advance/proc/AssignProperties()
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2)
+			if(2,3)
 				visibility_flags = HIDDEN_SCANNER
-			if(3 to INFINITY)
+			if(4 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
@@ -252,7 +252,7 @@ var/list/advance_cures = 	list(
 
 
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
-/datum/disease/advance/proc/GenerateCure(list/properties = list())
+/datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		//world << "Res = [res]"
@@ -306,7 +306,7 @@ var/list/advance_cures = 	list(
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < 5 + rand(-1, 1))
+	if(symptoms.len < (SYMPTOM_LIMIT - 1) + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))
@@ -372,7 +372,7 @@ var/list/advance_cures = 	list(
 	if(!user)
 		return
 
-	var/i = 5
+	var/i = SYMPTOM_LIMIT
 
 	var/datum/disease/advance/D = new(0, null)
 	D.symptoms = list()
@@ -426,31 +426,15 @@ var/list/advance_cures = 	list(
 
 
 /datum/disease/advance/proc/totalStageSpeed()
-	var/total_stage_speed = 0
-	for(var/i in symptoms)
-		var/datum/symptom/S = i
-		total_stage_speed += S.stage_speed
-	return total_stage_speed
+	return properties["stage_rate"]
 
 /datum/disease/advance/proc/totalStealth()
-	var/total_stealth = 0
-	for(var/i in symptoms)
-		var/datum/symptom/S = i
-		total_stealth += S.stealth
-	return total_stealth
+	return properties["stealth"]
 
 /datum/disease/advance/proc/totalResistance()
-	var/total_resistance = 0
-	for(var/i in symptoms)
-		var/datum/symptom/S = i
-		total_resistance += S.resistance
-	return total_resistance
+	return properties["resistance"]
 
 /datum/disease/advance/proc/totalTransmittable()
-	var/total_transmittable = 0
-	for(var/i in symptoms)
-		var/datum/symptom/S = i
-		total_transmittable += S.transmittable
-	return total_transmittable
+	return properties["transmittable"]
 
 #undef RANDOM_STARTING_LEVEL

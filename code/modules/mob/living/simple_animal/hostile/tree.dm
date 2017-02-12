@@ -6,6 +6,7 @@
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
+	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "brushes"
@@ -40,7 +41,7 @@
 
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
-	if(istype(src.loc, /turf/open))
+	if(isopenturf(loc))
 		var/turf/open/T = src.loc
 		if(T.air && T.air.gases["co2"])
 			var/co2 = T.air.gases["co2"][MOLES]

@@ -32,11 +32,11 @@
 		dat += "<H3>Prisoner Implant Management</H3>"
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/Tr = null
-		for(var/obj/item/weapon/implant/chem/C in tracked_implants)
+		for(var/obj/item/weapon/implant/chem/C in tracked_chem_implants)
 			Tr = get_turf(C)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
-			if(!C.implanted)
+			if(!C.imp_in)
 				continue
 			dat += "ID: [C.imp_in.name] | Remaining Units: [C.reagents.total_volume] <BR>"
 			dat += "| Inject: "
@@ -46,17 +46,15 @@
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
 		for(var/obj/item/weapon/implant/tracking/T in tracked_implants)
-			if(!iscarbon(T.imp_in))
-				continue
-			if(!T.implanted)
+			if(!isliving(T.imp_in))
 				continue
 			Tr = get_turf(T)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
 
 			var/loc_display = "Unknown"
-			var/mob/living/carbon/M = T.imp_in
-			if(Tr.z == ZLEVEL_STATION && !istype(M.loc, /turf/open/space))
+			var/mob/living/M = T.imp_in
+			if(Tr.z == ZLEVEL_STATION && !isspaceturf(M.loc))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
 
@@ -64,9 +62,6 @@
 			dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
 			dat += "********************************<BR>"
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
-
-	//user << browse(dat, "window=computer;size=400x500")
-	//onclose(user, "computer")
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -88,12 +83,12 @@
 /obj/machinery/computer/prisoner/Topic(href, href_list)
 	if(..())
 		return
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		usr.set_machine(src)
 
 		if(href_list["id"])
 			if(href_list["id"] =="insert" && !inserted_id)
-				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
+				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_held_item()
 				if(istype(I))
 					if(!usr.drop_item())
 						return
@@ -114,17 +109,17 @@
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							inserted_id.goal = num
 		else if(href_list["inject1"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject1"])
-			if(I)
+			var/obj/item/weapon/implant/I = locate(href_list["inject1"]) in tracked_chem_implants
+			if(I && istype(I))
 				I.activate(1)
 		else if(href_list["inject5"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject5"])
-			if(I)
+			var/obj/item/weapon/implant/I = locate(href_list["inject5"]) in tracked_chem_implants
+			if(I && istype(I))
 				I.activate(5)
 
 		else if(href_list["inject10"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject10"])
-			if(I)
+			var/obj/item/weapon/implant/I = locate(href_list["inject10"]) in tracked_chem_implants
+			if(I && istype(I))
 				I.activate(10)
 
 		else if(href_list["lock"])
@@ -136,9 +131,9 @@
 		else if(href_list["warn"])
 			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
 			if(!warning) return
-			var/obj/item/weapon/implant/I = locate(href_list["warn"])
-			if((I)&&(I.imp_in))
-				var/mob/living/carbon/R = I.imp_in
+			var/obj/item/weapon/implant/I = locate(href_list["warn"]) in tracked_chem_implants
+			if(I && istype(I) && I.imp_in)
+				var/mob/living/R = I.imp_in
 				R << "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>"
 				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")
 

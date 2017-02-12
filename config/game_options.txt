@@ -141,6 +141,62 @@ MIDROUND_ANTAG BLOB
 #MIDROUND_ANTAG  RAGINMAGES
 #MIDROUND_ANTAG  MONKEY
 
+## Uncomment for overrides of the minimum / maximum number of players in a round type. 
+## If you set any of these occasionally check to see if you still need them as the modes
+## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
+## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to 
+## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
+
+#MIN_POP TRAITOR 0
+#MAX_POP TRAITOR -1
+
+#MIN_POP TRAITORCHAN 15
+#MAX_POP TRAITORCHAN -1
+
+#MIN_POP DOUBLE_AGENTS 25
+#MAX_POP DOUBLE_AGENTS -1
+
+#MIN_POP NUCLEAR 0
+#MAX_POP NUCLEAR -1
+
+#MIN_POP REVOLUTION 20
+#MAX_POP REVOLUTION -1
+
+#MIN_POP GANG 20
+#MAX_POP GANG -1
+
+#MIN_POP CULT 24
+#MAX_POP CULT -1
+
+#MIN_POP CLOCKWORK_CULT 24
+#MAX_POP CLOCKWORK_CULT -1
+
+#MIN_POP CHANGELING 15
+#MAX_POP CHANGELING -1
+
+#MIN_POP WIZARD 20
+#MAX_POP WIZARD -1
+
+#MIN_POP BLOB 25
+#MAX_POP BLOB -1
+
+#MIN_POP MONKEY 20
+#MAX_POP MONKEY -1
+
+#MIN_POP METEOR 0
+#MAX_POP METEOR -1
+
+#MIN_POP DEVIL 0
+#MAX_POP DEVIL -1
+
+#MIN_POP DEVIL_AGENTS 25
+#MAX_POP DEVIL_AGENTS -1
+
+## Setting at least one mode to be playable at 0/1 players is required.
+#MIN_POP EXTENDED 0
+#MAX_POP EXTENDED -1
+
+
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
@@ -255,8 +311,71 @@ SEC_START_BRIG
 ## This controls what the AI's laws are at the start of the round.
 ## Set to 0/commented for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
-## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
-DEFAULT_LAWS 1
+## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
+## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+DEFAULT_LAWS 0
+
+## RANDOM LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what laws are available for selection if random silicon laws are active.
+## See datums\ai_laws.dm for the full law lists
+
+## standard-ish laws. These are fairly ok to run
+RANDOM_LAWS asimov
+RANDOM_LAWS asimovpp
+RANDOM_LAWS paladin
+RANDOM_LAWS robocop
+RANDOM_LAWS corporate
+
+## Quirky laws. Shouldn't cause too much harm
+#RANDOM_LAWS hippocratic
+#RANDOM_LAWS maintain
+#RANDOM_LAWS drone
+#RANDOM_LAWS liveandletlive
+#RANDOM_LAWS peacekeeper
+#RANDOM_LAWS reporter
+
+## Bad idea laws. Probably shouldn't enable these
+#RANDOM_LAWS syndie
+#RANDOM_LAWS ninja
+#RANDOM_LAWS antimov
+#RANDOM_LAWS thermodynamic
+#RANDOM_LAWS ratvar
+
+## meme laws. Honk
+#RANDOM_LAWS buildawall
+
+## If weighted laws are selected (DEFAULT_LAWS = 3),
+## then an AI's starting laws will be determined by the weights of these values
+
+## Make sure there are no spaces between the law_id and the number.
+
+LAW_WEIGHT custom,0
+
+## standard-ish laws. These are fairly ok to run
+LAW_WEIGHT asimov,32
+LAW_WEIGHT asimovpp,12
+LAW_WEIGHT paladin,12
+LAW_WEIGHT robocop,12
+LAW_WEIGHT corporate,12
+
+## Quirky laws. Shouldn't cause too much harm
+LAW_WEIGHT hippocratic,3
+LAW_WEIGHT maintain,4
+LAW_WEIGHT drone,3
+LAW_WEIGHT liveandletlive,3
+LAW_WEIGHT peacekeeper,3
+LAW_WEIGHT reporter,4
+
+## Bad idea laws. Probably shouldn't enable these
+LAW_WEIGHT syndie,0
+LAW_WEIGHT ninja,0
+LAW_WEIGHT antimov,0
+LAW_WEIGHT thermodynamic,0
+LAW_WEIGHT ratvar,0
+LAW_WEIGHT buildawall,0
+
+##------------------------------------------------
 
 ### SILICON LAW MAX AMOUNT ###
 ## The maximum number of laws a silicon can have
@@ -355,3 +474,6 @@ BOMBCAP 20
 # spawn, while the converse is true. Alter this number to affect the amount
 # of ruins.
 LAVALAND_BUDGET 60
+
+## Space Ruin Budged
+Space_Budget 16

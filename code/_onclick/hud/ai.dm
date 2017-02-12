@@ -76,7 +76,7 @@
 	AI.ai_alerts()
 
 /obj/screen/ai/announcement
-	name = "Make Announcement"
+	name = "Make Vox Announcement"
 	icon_state = "announcement"
 
 /obj/screen/ai/announcement/Click()
@@ -133,7 +133,7 @@
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.aicamera.toggle_camera_mode()
-	else if(isrobot(usr))
+	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.aicamera.toggle_camera_mode()
 
@@ -145,7 +145,7 @@
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.aicamera.viewpictures()
-	else if(isrobot(usr))
+	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.aicamera.viewpictures()
 
@@ -160,7 +160,10 @@
 	S.sensor_mode()
 
 
-/datum/hud/ai/New(mob/owner)
+/datum/hud/ai
+	ui_style_icon = 'icons/mob/screen_ai.dmi'
+
+/datum/hud/ai/New(mob/owner, ui_style = 'icons/mob/screen_ai.dmi')
 	..()
 	var/obj/screen/using
 

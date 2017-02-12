@@ -10,6 +10,9 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 
+/turf/open/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+	return
+
 /turf/open/indestructible/sound
 	name = "squeeky floor"
 	var/sound
@@ -17,6 +20,35 @@
 /turf/open/indestructible/sound/Entered(var/mob/AM)
 	if(istype(AM))
 		playsound(src,sound,50,1)
+
+/turf/open/indestructible/necropolis
+	name = "necropolis floor"
+	desc = "It's regarding you suspiciously."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "necro1"
+	baseturf = /turf/open/indestructible/necropolis
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+/turf/open/indestructible/necropolis/Initialize()
+	..()
+	if(prob(12))
+		icon_state = "necro[rand(2,3)]"
+
+/turf/open/indestructible/necropolis/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
+/turf/open/indestructible/hierophant
+	icon = 'icons/turf/floors/hierophant_floor.dmi'
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	baseturf = /turf/open/indestructible/hierophant
+	smooth = SMOOTH_TRUE
+
+/turf/open/indestructible/hierophant/two
+
+/turf/open/indestructible/paper
+	name = "notebook floor"
+	desc = "A floor made of invulnerable notebook paper."
+	icon_state = "paperfloor"
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
@@ -26,26 +58,33 @@
 
 	//cache some vars
 	var/datum/gas_mixture/air = src.air
+	air.holder = src
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
 	for(var/direction in cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
-			atmos_adjacent_turfs -= enemy_tile
+			if (atmos_adjacent_turfs)
+				atmos_adjacent_turfs -= enemy_tile
 			continue
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
 
 		//only check this turf, if it didn't check us when it was initalized
 		if(enemy_tile.current_cycle < times_fired)
-			if(CanAtmosPass(enemy_tile))
-				atmos_adjacent_turfs |= enemy_tile
-				enemy_tile.atmos_adjacent_turfs |= src
+			if(CANATMOSPASS(src, enemy_tile))
+				LAZYINITLIST(atmos_adjacent_turfs)
+				LAZYINITLIST(enemy_tile.atmos_adjacent_turfs)
+				atmos_adjacent_turfs[enemy_tile] = TRUE
+				enemy_tile.atmos_adjacent_turfs[src] = TRUE
 			else
-				atmos_adjacent_turfs -= enemy_tile
-				enemy_tile.atmos_adjacent_turfs -= src
+				if (atmos_adjacent_turfs)
+					atmos_adjacent_turfs -= enemy_tile
+				if (enemy_tile.atmos_adjacent_turfs)
+					enemy_tile.atmos_adjacent_turfs -= src
+				UNSETEMPTY(enemy_tile.atmos_adjacent_turfs)
 				continue
 		else
-			if (!(enemy_tile in atmos_adjacent_turfs))
+			if (!atmos_adjacent_turfs || !atmos_adjacent_turfs[enemy_tile])
 				continue
 
 
@@ -56,6 +95,9 @@
 			if(!excited) //make sure we aren't already excited
 				excited = 1
 				SSair.active_turfs |= src
+	UNSETEMPTY(atmos_adjacent_turfs)
+	if (atmos_adjacent_turfs)
+		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -67,14 +109,38 @@
 	air.temperature += temp
 	air_update_turf()
 
-/turf/open/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
-	if(!forced)
-		return
-	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
+/turf/open/freon_gas_act()
+	for(var/obj/I in contents)
+		if(!I.is_frozen) //let it go
+			I.make_frozen_visual()
+	for(var/mob/living/L in contents)
+		if(L.bodytemperature >= 10)
+			L.bodytemperature -= 10
+		if(L.bodytemperature <= 50)
+			L.apply_status_effect(/datum/status_effect/freon)
+	MakeSlippery(TURF_WET_PERMAFROST, 5)
+	return 1
+
+/turf/open/water_vapor_gas_act()
+	MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+
+	for(var/mob/living/simple_animal/slime/M in src)
+		M.apply_water()
+
+	clean_blood()
+	for(var/obj/effect/O in src)
+		if(is_cleanable(O))
+			qdel(O)
+
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in src)
+	if(hotspot && !isspaceturf(src))
+		air.temperature = max(min(air.temperature-2000,air.temperature/2),0)
+		qdel(hotspot)
+	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+	if(C.movement_type & FLYING)
+		return 0
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		if(C.buckled)
@@ -84,28 +150,33 @@
 		else
 			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
-			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
-		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
+		if(!(lube&SLIDE_ICE))
+			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
+			C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+		if(!(lube&SLIDE_ICE))
+			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
-		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-
-		C.accident(C.l_hand)
-		C.accident(C.r_hand)
+		for(var/obj/item/I in C.held_items)
+			C.accident(I)
 
 		var/olddir = C.dir
-		C.Stun(s_amount)
-		C.Weaken(w_amount)
-		C.stop_pulling()
+		if(!(lube & SLIDE_ICE))
+			C.Stun(s_amount)
+			C.Weaken(w_amount)
+			C.stop_pulling()
+		else
+			C.Stun(1)
+
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
-			step(buckled_obj, olddir)
-		else if(lube&SLIDE)
-			for(var/i=1, i<5, i++)
-				spawn (i)
-					step(C, olddir)
-					C.spin(1,1)
+			lube |= SLIDE_ICE
+
+		if(lube&SLIDE)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+		else if(lube&SLIDE_ICE)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
@@ -119,7 +190,9 @@
 			wet_overlay = null
 		var/turf/open/floor/F = src
 		if(istype(F))
-			if(wet_setting == TURF_WET_ICE)
+			if(wet_setting == TURF_WET_PERMAFROST)
+				wet_overlay = image('icons/effects/water.dmi', src, "ice_floor")
+			else if(wet_setting == TURF_WET_ICE)
 				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
 			else
 				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
@@ -134,6 +207,8 @@
 	spawn(rand(0,20))
 		if(wet == TURF_WET_PERMAFROST)
 			wet = TURF_WET_ICE
+		else if(wet == TURF_WET_ICE)
+			wet = TURF_WET_WATER
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
@@ -149,30 +224,36 @@
 	if(wet_time > MAXIMUM_WET_TIME)
 		wet_time = MAXIMUM_WET_TIME
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
+		for(var/obj/O in contents)
+			if(O.is_frozen)
+				O.make_unfrozen()
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
-	switch(air.temperature)
-		if(-INFINITY to T0C)
-			if(wet != TURF_WET_ICE && wet)
-				MakeDry(TURF_WET_ICE)
-				MakeSlippery(TURF_WET_ICE)
-		if(T0C to T20C)
-			wet_time = max(0, wet_time-1)
-		if(T20C to T0C + 40)
-			wet_time = max(0, wet_time-2)
-		if(T0C + 40 to T0C + 60)
-			wet_time = max(0, wet_time-3)
-		if(T0C + 60 to T0C + 80)
-			wet_time = max(0, wet_time-5)
-		if(T0C + 80 to T0C + 100)
-			wet_time = max(0, wet_time-10)
-		if(T0C + 100 to INFINITY)
-			wet_time = 0
-
+	if(wet != TURF_WET_PERMAFROST)
+		switch(air.temperature)
+			if(-INFINITY to T0C)
+				if(wet != TURF_WET_ICE && wet)
+					MakeDry(TURF_WET_ICE)
+					MakeSlippery(TURF_WET_ICE)
+			if(T0C to T20C)
+				wet_time = max(0, wet_time-1)
+			if(T20C to T0C + 40)
+				wet_time = max(0, wet_time-2)
+			if(T0C + 40 to T0C + 60)
+				wet_time = max(0, wet_time-3)
+			if(T0C + 60 to T0C + 80)
+				wet_time = max(0, wet_time-5)
+			if(T0C + 80 to T0C + 100)
+				wet_time = max(0, wet_time-10)
+			if(T0C + 100 to INFINITY)
+				wet_time = 0
+	else if (GetTemperature() > BODYTEMP_COLD_DAMAGE_LIMIT)	//seems like a good place
+		MakeDry(TURF_WET_PERMAFROST)
+	else
+		wet_time = max(0, wet_time-5)
 	if(wet && wet < TURF_WET_ICE && !wet_time)
 		MakeDry(TURF_WET_ICE)
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(src, "HandleWet", 15)
-
+		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)

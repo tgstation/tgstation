@@ -69,8 +69,6 @@
 		updateicon()
 
 /obj/machinery/light_switch/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-	power_change()
-	..(severity)
+	if(!(stat & (BROKEN|NOPOWER)))
+		power_change()
+	..()

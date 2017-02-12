@@ -8,13 +8,22 @@
 
 	if(!mob)
 		return
+
 	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	var/raw_msg = msg
+
 	if(!msg)
 		return
+
+	msg = emoji_parse(msg)
+
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+			return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		src << "<span class='danger'>You have OOC muted.</span>"
@@ -40,14 +49,6 @@
 			src << "<B>Advertising other servers is not allowed.</B>"
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
-			return
-
-	var/raw_msg = msg
-
-	msg = emoji_parse(msg)
-
-	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
@@ -143,7 +144,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		src << "<span class='notice'>The Message of the Day has not been set.</span>"
 
 /client/proc/self_notes()
-	set name = "View Admin Notes"
+	set name = "View Admin Remarks"
 	set category = "OOC"
 	set desc = "View the notes that admins have written about you"
 
@@ -151,7 +152,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
 		return
 
-	show_note(usr, null, 1)
+	browse_messages(null, usr.ckey, null, 1)
 
 /client/proc/ignore_key(client)
 	var/client/C = client

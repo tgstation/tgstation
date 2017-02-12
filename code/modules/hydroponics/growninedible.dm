@@ -5,7 +5,7 @@
 /obj/item/weapon/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 
 /obj/item/weapon/grown/New(newloc, var/obj/item/seeds/new_seed = null)
@@ -63,6 +63,12 @@
 			loc.AddLuminosity(-G.get_lum(seed))
 	return ..()
 
+/obj/item/weapon/grown/throw_impact(atom/hit_atom)
+	if(!..()) //was it caught by a mob?
+		if(seed)
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_throw_impact(src, hit_atom)
+
 /obj/item/weapon/grown/pickup(mob/user)
 	..()
 	if(seed)
@@ -78,3 +84,6 @@
 		if(G)
 			user.AddLuminosity(-G.get_lum(seed))
 			SetLuminosity(G.get_lum(seed))
+
+/obj/item/weapon/grown/microwave_act(obj/machine/microwave/M)
+	return

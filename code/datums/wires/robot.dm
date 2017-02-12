@@ -5,7 +5,8 @@
 /datum/wires/robot/New(atom/holder)
 	wires = list(
 		WIRE_AI, WIRE_CAMERA,
-		WIRE_LAWSYNC, WIRE_LOCKDOWN
+		WIRE_LAWSYNC, WIRE_LOCKDOWN,
+		WIRE_RESET_MODULE
 	)
 	add_duds(2)
 	..()
@@ -22,6 +23,7 @@
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
 	status += "The camera light is [!isnull(R.camera) && R.camera.status ? "on" : "off"]."
 	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
+	status += "The reset module hardware light is [R.has_module() ? "on" : "off"]."
 	return status
 
 /datum/wires/robot/on_pulse(wire)
@@ -44,6 +46,9 @@
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
+		if(WIRE_RESET_MODULE)
+			if(R.has_module())
+				R.ResetModule()
 
 /datum/wires/robot/on_cut(wire, mend)
 	var/mob/living/silicon/robot/R = holder

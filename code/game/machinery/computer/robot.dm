@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 
 /obj/machinery/computer/robotics
@@ -13,10 +13,10 @@
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
 		return 0
-	if(istype(user, /mob/living/silicon/ai))
+	if(isAI(user))
 		if (R.connected_ai != user)
 			return 0
-	if(istype(user, /mob/living/silicon/robot))
+	if(iscyborg(user))
 		if (R != user)
 			return 0
 	if(R.scrambledcodes)
@@ -59,8 +59,10 @@
 			dat += " Slaved to [R.connected_ai.name] |"
 		else
 			dat += " Independent from AI |"
-		if (istype(user, /mob/living/silicon) || IsAdminGhost(user))
-			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
+		if(issilicon(user) || IsAdminGhost(user))
+			if(is_servant_of_ratvar(user) && user != R)
+				dat += "<A href='?src=\ref[src];convert=\ref[R]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
+			else if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
@@ -99,7 +101,7 @@
 
 	else if (href_list["killbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
+			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
@@ -119,7 +121,7 @@
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
+			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
@@ -135,13 +137,21 @@
 
 	else if (href_list["magbot"])
 		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-			if(istype(R) && !R.emagged && ((R.syndicate && R == usr)|| R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
+			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in silicon_mobs
+			if(istype(R) && !R.emagged && ((R.syndicate && R == usr) || R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
-				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)]. using robotic console!")
+				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 				R.SetEmagged(1)
 				if(is_special_character(R))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
+
+	else if(href_list["convert"])
+		if(issilicon(usr) && is_special_character(usr))
+			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in silicon_mobs
+			if(istype(R) && !is_servant_of_ratvar(R) && is_servant_of_ratvar(usr) && R.connected_ai == usr)
+				log_game("[key_name(usr)] converted [R.name] using robotic console!")
+				message_admins("[key_name_admin(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
+				add_servant_of_ratvar(R)
 
 	else if (href_list["killdrone"])
 		if(src.allowed(usr))

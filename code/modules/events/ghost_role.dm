@@ -1,3 +1,6 @@
+#define MAX_SPAWN_ATTEMPT 3
+
+
 /datum/round_event/ghost_role
 	// We expect 0 or more /clients (or things with .key) in this list
 	var/list/priority_candidates = list()
@@ -8,18 +11,24 @@
 /datum/round_event/ghost_role/start()
 	try_spawning()
 
-/datum/round_event/ghost_role/proc/try_spawning(sanity = 0)
+/datum/round_event/ghost_role/proc/try_spawning(sanity = 0, retry = 0)
 	// The event does not run until the spawning has been attempted
 	// to prevent us from getting gc'd halfway through
 	processing = FALSE
 
 	var/status = spawn_role()
-	if(status == WAITING_FOR_SOMETHING)
+	if((status == WAITING_FOR_SOMETHING))
+		if(retry >= MAX_SPAWN_ATTEMPT)
+			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")
+			if(control && control.occurrences > 0)	//Don't refund if it hasn't
+				control.occurrences--
+			return
+		var/waittime = 300 * (2^retry)
 		message_admins("The event will not spawn a [role_name] until certain \
-			conditions are met. Waiting 30s and then retrying.")
-		spawn(300)
+			conditions are met. Waiting [waittime/10]s and then retrying.")
+		spawn(waittime)
 			// I hope this doesn't end up running out of stack space
-			try_spawning()
+			try_spawning(0,++retry)
 		return
 
 	if(status == MAP_ERROR)
@@ -60,3 +69,4 @@
 
 	return candidates
 
+#undef MAX_SPAWN_ATTEMPT

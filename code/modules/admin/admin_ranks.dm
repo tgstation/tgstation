@@ -6,6 +6,9 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/list/adds
 	var/list/subs
 
+/datum/admin_rank/SDQL_update()
+	return FALSE	//Nice try trivialadmin!
+
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
 	name = init_name
 	switch(name)
@@ -22,6 +25,9 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		init_subs = list()
 	adds = init_adds
 	subs = init_subs
+
+/datum/admin_rank/vv_edit_var(var_name, var_value)
+	return FALSE
 
 /proc/admin_keyword_to_flag(word, previous_rights=0)
 	var/flag = 0

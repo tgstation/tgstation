@@ -1,6 +1,6 @@
 /obj/machinery/abductor/gland_dispenser
 	name = "Replacement Organ Storage"
-	desc = "A tank filled with replacement organs"
+	desc = "A tank filled with replacement organs."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
 	density = 1
@@ -14,6 +14,7 @@
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
 /obj/machinery/abductor/gland_dispenser/New()
+	..()
 	gland_types = subtypesof(/obj/item/organ/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)

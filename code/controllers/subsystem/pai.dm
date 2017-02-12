@@ -1,11 +1,14 @@
 var/datum/subsystem/pai/SSpai
+var/list/obj/item/device/paicard/pai_card_list = list()
 
 /datum/subsystem/pai
 	name = "pAI"
-	init_order = 20
-	flags = SS_NO_FIRE|SS_NO_INIT
+
+	flags = SS_NO_INIT|SS_NO_FIRE
 
 	var/list/candidates = list()
+	var/ghost_spam = FALSE
+	var/spam_delay = 100
 
 /datum/subsystem/pai/New()
 	NEW_SS_GLOBAL(SSpai)
@@ -17,6 +20,8 @@ var/datum/subsystem/pai/SSpai
 		if(card.pai)
 			return
 		if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+			if(check_ready(candidate) != candidate)
+				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
 			if(!candidate.name)
 				pai.name = pick(ninja_names)
@@ -26,7 +31,6 @@ var/datum/subsystem/pai/SSpai
 			pai.key = candidate.key
 
 			card.setPersonality(pai)
-			card.looking_for_personality = 0
 
 			ticker.mode.update_cult_icons_removed(card.pai.mind)
 			ticker.mode.update_rev_icons_removed(card.pai.mind)
@@ -73,8 +77,8 @@ var/datum/subsystem/pai/SSpai
 			if("submit")
 				if(candidate)
 					candidate.ready = 1
-					for(var/obj/item/device/paicard/p in world)
-						if(p.looking_for_personality == 1)
+					for(var/obj/item/device/paicard/p in pai_card_list)
+						if(!p.pai)
 							p.alertUpdate()
 				usr << browse(null, "window=paiRecruit")
 				return
@@ -131,17 +135,31 @@ var/datum/subsystem/pai/SSpai
 
 	M << browse(dat, "window=paiRecruit")
 
+/datum/subsystem/pai/proc/spam_again()
+	ghost_spam = FALSE
+
+/datum/subsystem/pai/proc/check_ready(var/datum/paiCandidate/C)
+	if(!C.ready)
+		return FALSE
+	for(var/mob/dead/observer/O in player_list)
+		if(O.key == C.key)
+			return C
+	return FALSE
+
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
-	requestRecruits()
+	if(!ghost_spam)
+		ghost_spam = TRUE
+		for(var/mob/dead/observer/G in player_list)
+			if(!G.key || !G.client)
+				continue
+			if(!(ROLE_PAI in G.client.prefs.be_special))
+				continue
+			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
+			G << "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>"
+		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
-		if(c.ready)
-			var/found = 0
-			for(var/mob/dead/observer/o in player_list)
-				if(o.key == c.key)
-					found = 1
-			if(found)
-				available.Add(c)
+		available.Add(check_ready(c))
 	var/dat = ""
 
 	dat += {"
@@ -176,12 +194,6 @@ var/datum/subsystem/pai/SSpai
 	dat += "</table>"
 
 	user << browse(dat, "window=findPai")
-
-/datum/subsystem/pai/proc/requestRecruits()
-	var/list/candidates = pollCandidates("Someone is requesting a pAI personality. Would you like to play as a personal AI?", ROLE_PAI, null, ROLE_PAI,300, ignore_category = POLL_IGNORE_PAI)
-	for(var/V in candidates)
-		recruitWindow(V)
-	return
 
 /datum/paiCandidate
 	var/name

@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 7
 
@@ -26,8 +26,9 @@
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
 	if(!A.remove_item_from_storage(src))
 		if(user)
-			user.remove_from_mob(A)
-		A.loc = src
+			user.transferItemToLoc(A, src)
+		else
+			A.forceMove(src)
 	A.holder = src
 	A.toggle_secure()
 	if(!a_left)

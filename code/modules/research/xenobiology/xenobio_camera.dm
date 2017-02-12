@@ -3,11 +3,16 @@
 	visible_icon = 1
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera_target"
+	var/allowed_area = null
 
+/mob/camera/aiEye/remote/xenobio/New(loc)
+	var/area/A = get_area(loc)
+	allowed_area = A.name
+	..()
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area && new_area.name == "Xenobiology Lab" || istype(new_area, /area/toxins/xenobiology ))
+	if(new_area && new_area.name == allowed_area || istype(new_area, /area/toxins/xenobiology ))
 		return ..()
 	else
 		return
@@ -16,6 +21,7 @@
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
 	networks = list("SS13")
+	circuit = /obj/item/weapon/circuitboard/computer/xenobiology
 	off_action = new/datum/action/innate/camera_off/xenobio
 	var/datum/action/innate/slime_place/slime_place_action = new
 	var/datum/action/innate/slime_pick_up/slime_up_action = new
@@ -30,8 +36,7 @@
 	icon_keyboard = "rd_key"
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
-	eyeobj = new /mob/camera/aiEye/remote/xenobio()
-	eyeobj.loc = get_turf(src)
+	eyeobj = new /mob/camera/aiEye/remote/xenobio(get_turf(src))
 	eyeobj.origin = src
 	eyeobj.visible_icon = 1
 	eyeobj.icon = 'icons/obj/abductor.dmi'
@@ -65,9 +70,20 @@
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		monkeys++
-		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>"
+		user << "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>"
 		user.drop_item()
 		qdel(O)
+		return
+	else if(istype(O, /obj/item/weapon/storage/bag))
+		var/obj/item/weapon/storage/P = O
+		var/loaded = 0
+		for(var/obj/G in P.contents)
+			if(istype(G, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+				loaded = 1
+				monkeys++
+				qdel(G)
+		if (loaded)
+			user << "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>"
 		return
 	..()
 

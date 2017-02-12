@@ -10,6 +10,7 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/idSelf
 
 /obj/machinery/doorButtons/attackby(obj/O, mob/user)
@@ -18,7 +19,8 @@
 /obj/machinery/doorButtons/proc/findObjsByTag()
 	return
 
-/obj/machinery/doorButtons/initialize()
+/obj/machinery/doorButtons/Initialize()
+	..()
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
@@ -161,7 +163,7 @@
 	A.unbolt()
 	spawn()
 		if(A && A.close())
-			if(stat & NOPOWER || lostPower || !A || qdeleted(A))
+			if(stat & NOPOWER || lostPower || !A || QDELETED(A))
 				goIdle(1)
 				return
 			A.bolt()
@@ -207,7 +209,7 @@
 	A.unbolt()
 	spawn()
 		if(A && A.open())
-			if(stat | (NOPOWER) && !lostPower && A && !qdeleted(A))
+			if(stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
 				A.bolt()
 		goIdle(1)
 

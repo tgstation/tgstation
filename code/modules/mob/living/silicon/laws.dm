@@ -40,20 +40,24 @@
 	laws_sanity_check()
 	laws.add_ion_law(law)
 
+/mob/living/silicon/proc/replace_random_law(law,groups)
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	laws_sanity_check()
+	laws.replace_random_law(law,groups)
+
+/mob/living/silicon/proc/remove_law(number)
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	laws_sanity_check()
+	laws.remove_law(number)
+
 /mob/living/silicon/proc/clear_ion_laws()
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.clear_ion_laws()
 
 /mob/living/silicon/proc/make_laws()
-	switch(config.default_laws)
-		if(0)
-			laws = new /datum/ai_laws/default/asimov()
-		if(1)
-			laws = new /datum/ai_laws/custom()
-		if(2)
-			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
-			laws = new lawtype()
+	laws = new /datum/ai_laws
+	laws.set_laws_config()
 	laws.associate(src)
 
 /mob/living/silicon/proc/clear_zeroth_law(force)

@@ -8,7 +8,6 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Optimumtact = Host
-kevinz000 = Host
 kingofkosmos = Game Master
 MrStonedOne = Game Master
 microscopics = Game Master
@@ -118,3 +117,9 @@ TechnoAlchemist = Game Master
 Aloraydrel = Game Master
 Quiltyquilty = Game Master
 SnipeDragon = Game Master
+Fjeld = Game Master
+kevinz000 = Game Master
+Tacolizard = Game Master
+TrustyGun = Game Master
+Cyberboss = Game Master
+Sweaterkittens = Game Master

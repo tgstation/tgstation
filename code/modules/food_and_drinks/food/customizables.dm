@@ -13,8 +13,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
-	w_class = 3
+	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
+	unique_rename = 1
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -36,38 +37,25 @@
 	user << "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+	if(!istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable) && istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
-		if(I.w_class > 2)
+		if(I.w_class > WEIGHT_CLASS_SMALL)
 			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
 			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+		else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
+			user << "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>"
 		else
-			if(!user.unEquip(I))
+			if(!user.transferItemToLoc(I, src))
 				return
 			if(S.trash)
-				new S.trash(get_turf(user))
-				S.trash = null  //we remove the plate before adding the ingredient
+				S.generate_trash(get_turf(user))
 			ingredients += S
-			S.loc = src
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			update_overlays(S)
 			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
 			update_name(S)
-	else if(istype(I, /obj/item/weapon/pen))
-		var/txt = stripped_input(user, "What would you like the food to be called?", "Food Naming", "", 30)
-		if(txt)
-			ingMax = ingredients.len
-			user << "<span class='notice'>You add a last touch to the dish by renaming it.</span>"
-			customname = txt
-			if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich))
-				var/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/S = src
-				if(S.finished)
-					name = "[customname] sandwich"
-					return
-			name = "[customname] [initial(name)]"
-
 	else . = ..()
 
 
@@ -97,7 +85,6 @@
 		contents += O
 	if(I && user)
 		attackby(I, user)
-	user.unEquip(BASE)
 	qdel(BASE)
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/mix_filling_color(obj/item/weapon/reagent_containers/food/snacks/S)
@@ -294,19 +281,17 @@
 
 /obj/item/weapon/reagent_containers/glass/bowl
 	name = "bowl"
-	icon_state	= "snack_bowl"
-	name = "bowl"
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	materials = list(MAT_GLASS = 500)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
-		if(I.w_class > 2)
+		if(I.w_class > WEIGHT_CLASS_SMALL)
 			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if(contents.len >= 20)
 			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"

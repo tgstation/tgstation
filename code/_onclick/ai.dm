@@ -34,6 +34,16 @@
 	if(control_disabled || stat)
 		return
 
+	var/turf/pixel_turf = get_turf_pixel(A)
+	var/turf_visible
+	if(pixel_turf)
+		turf_visible = cameranet.checkTurfVis(pixel_turf)
+		if(!turf_visible)
+			log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
+			message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
+			send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
+			return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -57,13 +67,13 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode)
+	if(aicamera.in_camera_mode && pixel_turf && turf_visible)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(A, usr)
+		aicamera.captureimage(pixel_turf, usr)
 		return
 	if(waypoint_mode)
-		set_waypoint(A)
 		waypoint_mode = 0
+		set_waypoint(A)
 		return
 
 	/*
@@ -128,7 +138,7 @@
 		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
-	return
+
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(emagged)
 		return
@@ -138,7 +148,7 @@
 	else
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
-	return
+
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(emagged)
 		return
@@ -146,7 +156,7 @@
 		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=7", list("aiDisable"="7"), 1)
-	return
+
 /obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
 	if(emagged)
 		return
@@ -154,12 +164,12 @@
 		Topic("aiEnable=11", list("aiEnable"="11"), 1) // 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=11", list("aiDisable"="11"), 1)
-	return
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	toggle_breaker()
-	add_fingerprint(usr)
+	if(can_use(usr, 1))
+		toggle_breaker()
+		add_fingerprint(usr)
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets

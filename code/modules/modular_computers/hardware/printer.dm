@@ -4,7 +4,8 @@
 	power_usage = 100
 	origin_tech = "programming=2;engineering=2"
 	icon_state = "printer"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
+	device_type = MC_PRINT
 	var/stored_paper = 20
 	var/max_paper = 30
 
@@ -33,19 +34,19 @@
 	if(paper_title)
 		P.name = paper_title
 	P.update_icon()
+	P.reload_fields()
 	stored_paper--
 	P = null
 	return TRUE
 
 /obj/item/weapon/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
 	if(istype(I, /obj/item/weapon/paper))
-		if(user && !user.unEquip(I))
-			return FALSE
-
 		if(stored_paper >= max_paper)
-			user << "<span class='warning'>You try to add \the [I] into [src], but it's paper bin is full!</span>"
+			user << "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>"
 			return FALSE
 
+		if(user && !user.temporarilyRemoveItemFromInventory(I))
+			return FALSE
 		user << "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>"
 		qdel(I)
 		stored_paper++
@@ -57,6 +58,6 @@
 	desc = "A small printer with paper recycling module."
 	power_usage = 50
 	icon_state = "printer_mini"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	stored_paper = 5
 	max_paper = 15

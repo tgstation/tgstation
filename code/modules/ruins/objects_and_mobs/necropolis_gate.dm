@@ -10,7 +10,7 @@
 	bound_width = 96
 	bound_height = 96
 	pixel_x = -32
-	burn_state = LAVA_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	luminosity = 1
 	var/boss = FALSE
 	var/is_anyone_home = FALSE

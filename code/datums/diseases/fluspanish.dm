@@ -22,7 +22,7 @@
 				affected_mob.emote("cough")
 			if(prob(1))
 				affected_mob << "<span class='danger'>You're burning in your own skin!</span>"
-				affected_mob.take_organ_damage(0,5)
+				affected_mob.take_bodypart_damage(0,5)
 
 		if(3)
 			affected_mob.bodytemperature += 20
@@ -32,5 +32,5 @@
 				affected_mob.emote("cough")
 			if(prob(5))
 				affected_mob << "<span class='danger'>You're burning in your own skin!</span>"
-				affected_mob.take_organ_damage(0,5)
+				affected_mob.take_bodypart_damage(0,5)
 	return

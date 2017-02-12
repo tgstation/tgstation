@@ -99,6 +99,9 @@ Class Procs:
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
+	obj_integrity = 200
+	max_integrity = 200
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -122,6 +125,8 @@ Class Procs:
 	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/New()
+	if (!armor)
+		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	..()
 	machines += src
 	if(!speed_process)
@@ -149,10 +154,9 @@ Class Procs:
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
-	if(use_power && stat == 0)
+	if(use_power && !stat)
 		use_power(7500/severity)
-
-		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+		new /obj/effect/overlay/temp/emp(loc)
 	..()
 
 /obj/machinery/proc/open_machine(drop = 1)
@@ -165,13 +169,11 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/L in src)
-		L.loc = T
-		L.reset_perspective(null)
-		L.update_canmove() //so the mob falls if he became unconscious inside the machine.
-		. += L
-
-	T.contents += contents
+	for(var/atom/movable/A in contents)
+		A.forceMove(T)
+		if(isliving(A))
+			var/mob/living/L = A
+			L.update_canmove()
 	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
@@ -188,10 +190,6 @@ Class Procs:
 		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
-
-/obj/machinery/blob_act(obj/effect/blob/B)
-	if(density && prob(75))
-		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
@@ -240,63 +238,20 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	if(M.damtype == BRUTE || M.damtype == BURN)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		take_damage(M.force*2, M.damtype) // multiplied by 2 so we can hit machines hard but not be overpowered against mobs.
-		return 1
-	return 0
-
-/obj/machinery/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype, 1)
-
-/obj/machinery/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
-/obj/machinery/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	add_hiddenprint(user)
-	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(20, BRUTE, 0)
-
-/obj/machinery/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper || M.obj_damage)
-		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
-		"<span class='danger'>You smash against the [src.name].</span>")
-		if(M.obj_damage)
-			take_damage(M.obj_damage, M.melee_damage_type, 1)
-		else
-			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
 
 
 /obj/machinery/attack_paw(mob/living/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>",\
-		"<span class='danger'>You smash against the [src.name] with your paws.</span>")
-		take_damage(4, BRUTE, 1)
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		take_damage(4, BRUTE, "melee", 1)
 
 
 /obj/machinery/attack_ai(mob/user)
-	if(isrobot(user))// For some reason attack_robot doesn't work
+	if(iscyborg(user))// For some reason attack_robot doesn't work
 		var/mob/living/silicon/robot/R = user
 		if(R.client && R.client.eye == R && !R.low_power_mode)// This is to stop robots from using cameras to remotely control machines; and from using machines when the borg has no power.
 			return attack_hand(user)
@@ -313,11 +268,6 @@ Class Procs:
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(prob(H.getBrainLoss()))
-			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
-			return 1
 	if(!is_interactable())
 		return 1
 	if(set_machine)
@@ -340,7 +290,7 @@ Class Procs:
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, C.usesound, 50, 1)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
@@ -348,19 +298,45 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		deconstruction()
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = loc
-		qdel(src)
+		playsound(loc, C.usesound, 50, 1)
+		deconstruct(TRUE)
+
+/obj/machinery/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		on_deconstruction()
+		if(component_parts && component_parts.len)
+			spawn_frame(disassembled)
+			for(var/obj/item/I in component_parts)
+				I.forceMove(loc)
+	qdel(src)
+
+/obj/machinery/proc/spawn_frame(disassembled)
+	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
+	. = M
+	M.anchored = anchored
+	if(!disassembled)
+		M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
+	transfer_fingerprints_to(M)
+	M.state = 2
+	M.icon_state = "box_1"
+
+/obj/machinery/obj_break(damage_flag)
+	if(!(flags & NODECONSTRUCT))
+		stat |= BROKEN
+
+/obj/machinery/contents_explosion(severity, target)
+	if(occupant)
+		occupant.ex_act(severity, target)
+
+/obj/machinery/handle_atom_del(atom/A)
+	if(A == occupant)
+		occupant = null
+		update_icon()
+		updateUsrDialog()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(loc, S.usesound, 50, 1)
 		if(!panel_open)
 			panel_open = 1
 			icon_state = icon_state_open
@@ -374,22 +350,42 @@ Class Procs:
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		setDir(turn(dir,-90))
 		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	if(istype(W) &&  !(flags & NODECONSTRUCT))
-		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, time/W.toolspeed, target = src))
-			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+/obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
+	if(!isfloorturf(loc) && !anchored)
+		user << "<span class='warning'>[src] needs to be on the floor to be secured!</span>"
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
+	if(istype(W) && !(flags & NODECONSTRUCT))
+		var/can_be_unfasten = can_be_unfasten_wrench(user)
+		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
+			return can_be_unfasten
+		if(time)
+			user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>"
+		playsound(loc, W.usesound, 50, 1)
+		var/prev_anchored = anchored
+		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
+		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
+			user << "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>"
 			anchored = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		return 1
-	return 0
+			return SUCCESSFUL_UNFASTEN
+		return FAILED_UNFASTEN
+	return CANT_UNFASTEN
+
+/obj/proc/unfasten_wrench_check(prev_anchored, mob/user) //for the do_after, this checks if unfastening conditions are still valid
+	if(anchored != prev_anchored)
+		return FALSE
+	if(can_be_unfasten_wrench(user, TRUE) != SUCCESSFUL_UNFASTEN) //if we aren't explicitly successful, cancel the fuck out
+		return FALSE
+	return TRUE
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
 	if(!istype(W))
@@ -434,15 +430,28 @@ Class Procs:
 
 /obj/machinery/examine(mob/user)
 	..()
+	if(stat & BROKEN)
+		user << "<span class='notice'>It looks broken and non functional.</span>"
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		if(resistance_flags & ON_FIRE)
+			user << "<span class='warning'>It's on fire!</span>"
+		var/healthpercent = (obj_integrity/max_integrity) * 100
+		switch(healthpercent)
+			if(50 to 99)
+				user <<  "It looks slightly damaged."
+			if(25 to 50)
+				user <<  "It appears heavily damaged."
+			if(0 to 25)
+				user <<  "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
 		display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
-/obj/machinery/proc/construction()
+/obj/machinery/proc/on_construction()
 	return
 
 //called on deconstruction before the final deletion
-/obj/machinery/proc/deconstruction()
+/obj/machinery/proc/on_deconstruction()
 	return
 
 /obj/machinery/allow_drop()
@@ -464,13 +473,11 @@ Class Procs:
 	. = 1
 
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
-	if(prob(85))
-		emp_act(2)
+	if(prob(85) && explosive)
+		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
-		ex_act(3)
-	else if(prob(90))
-		ex_act(2)
+		emp_act(2)
 	else
-		ex_act(1)
+		ex_act(2)

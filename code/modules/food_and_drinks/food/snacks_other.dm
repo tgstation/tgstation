@@ -8,7 +8,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
 	list_reagents = list("nutriment" = 15, "vitamin" = 5)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
@@ -72,6 +72,13 @@
 	list_reagents = list("nutriment" = 4)
 	filling_color = "#FFD700"
 
+/obj/item/weapon/reagent_containers/food/snacks/tatortot
+	name = "tator tot"
+	desc = "A large fried potato nugget that may or may not try to valid you."
+	icon_state = "tatortot"
+	list_reagents = list("nutriment" = 4)
+	filling_color = "FFD700"
+
 /obj/item/weapon/reagent_containers/food/snacks/soydope
 	name = "soy dope"
 	desc = "Dope from a soy."
@@ -93,7 +100,7 @@
 	name = "burned mess"
 	desc = "Someone should be demoted from cook for this."
 	icon_state = "badrecipe"
-	list_reagents = list("????" = 30)
+	list_reagents = list("bad_food" = 30)
 	filling_color = "#8B4513"
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
@@ -242,7 +249,7 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)
 	filling_color = "#FF5500"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
@@ -315,4 +322,99 @@
 	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
 	icon_state = "stuffed_legion"
 	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
-	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)
+	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/powercrepe
+	name = "Powercrepe"
+	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
+	icon_state = "powercrepe"
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 3, "iron" = 10)
+	list_reagents = list("nutriment" = 10, "vitamin" = 5, "cherryjelly" = 5)
+	force = 20
+	throwforce = 10
+	block_chance = 50
+	armour_penetration = 75
+	attack_verb = list("slapped", "slathered")
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop
+	name = "lollipop"
+	desc = "A delicious lollipop. Makes for a great Valentine's present."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "lollipop_stick"
+	list_reagents = list("nutriment" = 1, "vitamin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2)	//Honk
+	var/image/head
+	var/headcolor = rgb(0, 0, 0)
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/New()
+	..()
+	head = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
+	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
+	headcolor = C
+	if(head in overlays)
+		overlays -= head
+	head.color = C
+	add_overlay(head)
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/throw_impact(atom/A)
+	..(A)
+	throw_speed = 1
+	throwforce = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
+	var/spamchecking = TRUE
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/New()
+	..()
+	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
+	. = ..(user, slot)
+	spamchecking = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/proc/spamcheck()
+	if(spamchecking)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball
+	name = "gumball"
+	desc = "A colorful, sugary gumball."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "gumball"
+	list_reagents = list("sugar" = 5, "bicaridine" = 2, "kelotane" = 2)	//Kek
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/New()
+	..()
+	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
+	var/spamchecking = TRUE
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/New()
+	..()
+	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
+	. = ..(user, slot)
+	spamchecking = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
+	if(spamchecking)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/taco
+	name = "taco"
+	desc = "A traditional taco with meat, cheese, and lettuce."
+	icon_state = "taco"
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list("nutriment" = 4, "vitamin" = 2)
+	filling_color = "F0D830"
+
+/obj/item/weapon/reagent_containers/food/snacks/taco/plain
+	desc = "A traditional taco with meat and cheese, minus the rabbit food."
+	icon_state = "taco_plain"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)

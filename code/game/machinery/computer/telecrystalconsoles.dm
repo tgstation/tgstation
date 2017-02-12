@@ -9,6 +9,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	icon_keyboard = "tcstation_key"
 	icon_screen = "syndie"
 	clockwork = TRUE //it'd look weird, at least if ratvar ever got there
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
@@ -34,7 +35,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		user << "<span class='notice'>The [src] already has an uplink in it.</span>"
 		return
 	if(O.hidden_uplink)
-		var/obj/item/I = user.get_active_hand()
+		var/obj/item/I = user.get_active_held_item()
 		if(!user.drop_item())
 			return
 		uplinkholder = I

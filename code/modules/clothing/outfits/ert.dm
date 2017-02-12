@@ -11,9 +11,7 @@
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(CENTCOM_FREQ)
@@ -34,7 +32,7 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
-		/obj/item/weapon/gun/energy/gun=1)
+		/obj/item/weapon/gun/energy/e_gun=1)
 	l_pocket = /obj/item/weapon/switchblade
 
 /datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -67,9 +65,9 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
-		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/weapon/gun/energy/e_gun=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
-		/obj/item/weapon/gun/energy/gun/advtaser=1)
+		/obj/item/weapon/gun/energy/e_gun/advtaser=1)
 
 /datum/outfit/ert/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -103,7 +101,7 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
-		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/weapon/gun/energy/e_gun=1,\
 		/obj/item/weapon/reagent_containers/hypospray/combat=1,\
 		/obj/item/weapon/gun/medbeam=1)
 
@@ -140,7 +138,7 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
-		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/weapon/gun/energy/e_gun=1,\
 		/obj/item/weapon/rcd/loaded=1)
 
 /datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -171,7 +169,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/device/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
-	belt = /obj/item/weapon/gun/energy/gun
+	belt = /obj/item/weapon/gun/energy/e_gun
 	l_pocket = /obj/item/weapon/pen
 	back = /obj/item/weapon/storage/backpack/satchel
 	r_pocket = /obj/item/device/pda/heads

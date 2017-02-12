@@ -152,6 +152,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 
 
 
+#define PRINTER_COOLDOWN 60
 
 /*
  * Library Computer
@@ -176,7 +177,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/list/libcomp_menu
 	var/page = 1	//current page of the external archives
-	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/cooldown = 0
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
 	if(libcomp_menu)
@@ -197,7 +198,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 /obj/machinery/computer/libraryconsole/bookmanagement/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (Book Inventory Management Console)"
+		circuit.name = "Book Inventory Management Console (Machine Board)"
 		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
@@ -211,13 +212,12 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			dat += "<A href='?src=\ref[src];switchscreen=3'>3. Check out a Book</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=4'>4. Connect to External Archive</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=6'>6. Upload Scanned Title to Newscaster</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=7'>7. Print Corporate Materials</A><BR>"
 			if(src.emagged)
-				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
+				dat += "<A href='?src=\ref[src];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
-				new /obj/item/weapon/tome(src.loc)
-				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
-				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
+				print_forbidden_lore(user)
 				src.arcanecheckout = 0
 		if(1)
 			// Inventory
@@ -288,7 +288,23 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				dat += "<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>"
 				dat += "<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+		if(6)
+			dat += "<h3>Post Title to Newscaster</h3>"
+			if(!scanner)
+				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
+			else if(!scanner.cache)
+				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
+			else
+				dat += "<TT>Post [scanner.cache.name] to station newscasters?</TT>"
+				dat += "<A href='?src=\ref[src];newspost=1'>\[Post\]</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
+			dat += "<h3>NTGanda(tm) Universal Printing Module</h3>"
+			dat += "What would you like to print?<BR>"
+			dat += "<A href='?src=\ref[src];printbible=1'>\[Bible\]</A><BR>"
+			dat += "<A href='?src=\ref[src];printposter=1'>\[Poster\]</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+		if(8)
 			dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
 			dat += "Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
 			dat += "<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>"
@@ -298,6 +314,17 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
+	var/spook = pick("blood", "brass")
+	var/turf/T = get_turf(src)
+	if(spook == "blood")
+		new /obj/item/weapon/tome(T)
+	else
+		new /obj/item/clockwork/slab(T)
+
+	user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "dusty old tome" : "strange metal tablet"] sitting on the desk. You don't really remember printing it.[spook == "brass" ? " And how did it print something made of metal?" : ""]</span>"
+	user.visible_message("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/barcodescanner))
@@ -334,24 +361,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if("5")
 				screenstate = 5
 			if("6")
-				if(!bibledelay)
-
-					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
-					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
-						B.icon_state = ticker.Bible_icon_state
-						B.item_state = ticker.Bible_item_state
-						B.name = ticker.Bible_name
-						B.deity_name = ticker.Bible_deity_name
-
-					bibledelay = 1
-					spawn(60)
-						bibledelay = 0
-
-				else
-					say("Bible printer currently unavailable, please wait a moment.")
-
+				screenstate = 6
 			if("7")
 				screenstate = 7
+			if("8")
+				screenstate = 8
 	if(href_list["arccheckout"])
 		if(src.emagged)
 			src.arcanecheckout = 1
@@ -374,11 +388,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		b.duedate = world.time + (checkoutperiod * 600)
 		checkouts.Add(b)
 	if(href_list["checkin"])
-		var/datum/borrowbook/b = locate(href_list["checkin"])
-		checkouts.Remove(b)
+		var/datum/borrowbook/b = locate(href_list["checkin"]) in checkouts
+		if(b && istype(b))
+			checkouts.Remove(b)
 	if(href_list["delbook"])
-		var/obj/item/weapon/book/b = locate(href_list["delbook"])
-		inventory.Remove(b)
+		var/obj/item/weapon/book/b = locate(href_list["delbook"]) in inventory
+		if(b && istype(b))
+			inventory.Remove(b)
 	if(href_list["setauthor"])
 		var/newauthor = copytext(sanitize(input("Enter the author's name: ") as text|null),1,MAX_MESSAGE_LEN)
 		if(newauthor)
@@ -407,22 +423,36 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 						else
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
+	if(href_list["newspost"])
+		if(!news_network)
+			alert("No news network found on station. Aborting.")
+		var/channelexists = 0
+		for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+			if(FC.channel_name == "Nanotrasen Book Club")
+				channelexists = 1
+				break
+		if(!channelexists)
+			news_network.CreateFeedChannel("Nanotrasen Book Club", "Library", null)
+		news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
+		alert("Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
-		var/orderid = input("Enter your order:") as num|null
-		if(orderid)
-			if(isnum(orderid) && IsInteger(orderid))
-				href_list["targetid"] = orderid
+		if(cooldown > world.time)
+			say("Printer unavailable. Please allow a short time before attempting to print.")
+		else
+			var/orderid = input("Enter your order:") as num|null
+			if(orderid)
+				if(isnum(orderid) && IsInteger(orderid))
+					href_list["targetid"] = num2text(orderid)
+
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
-		if(bibledelay)
+		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			bibledelay = 1
-			spawn(60)
-				bibledelay = 0
+			cooldown = world.time + PRINTER_COOLDOWN
 			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
 			query.Execute()
 
@@ -430,17 +460,33 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				var/author = query.item[2]
 				var/title = query.item[3]
 				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(src.loc)
+				var/obj/item/weapon/book/B = new(get_turf(src))
 				B.name = "Book: [title]"
 				B.title = title
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,8)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+	if(href_list["printbible"])
+		if(cooldown < world.time)
+			var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
+			if(SSreligion.Bible_icon_state && SSreligion.Bible_item_state)
+				B.icon_state = SSreligion.Bible_icon_state
+				B.item_state = SSreligion.Bible_item_state
+				B.name = SSreligion.Bible_name
+				B.deity_name = SSreligion.Bible_deity_name
+			cooldown = world.time + PRINTER_COOLDOWN
+		else
+			say("Printer currently unavailable, please wait a moment.")
+	if(href_list["printposter"])
+		if(cooldown < world.time)
+			new /obj/item/weapon/poster/legit(src.loc)
+			cooldown = world.time + PRINTER_COOLDOWN
+		else
+			say("Printer currently unavailable, please wait a moment.")
+	add_fingerprint(usr)
+	updateUsrDialog()
 
 /*
  * Library Scanner
@@ -473,8 +519,6 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
-	//user << browse(dat, "window=scanner")
-	//onclose(user, "scanner")
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

@@ -12,17 +12,14 @@
 	var/open = 1
 	var/capacity = 4
 
-/obj/structure/guncase/New()
+/obj/structure/guncase/Initialize(mapload)
 	..()
-	update_icon()
-
-/obj/structure/guncase/initialize()
-	..()
-	for(var/obj/item/I in loc.contents)
-		if(istype(I, gun_category))
-			I.loc = src
-		if(contents.len >= capacity)
-			break
+	if(mapload)
+		for(var/obj/item/I in loc.contents)
+			if(istype(I, gun_category))
+				I.loc = src
+			if(contents.len >= capacity)
+				break
 	update_icon()
 
 /obj/structure/guncase/update_icon()
@@ -35,7 +32,7 @@
 		add_overlay("[icon_state]_door")
 
 /obj/structure/guncase/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, gun_category))
 		if(contents.len < capacity && open)
@@ -46,14 +43,14 @@
 			update_icon()
 			return
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		open = !open
 		update_icon()
 	else
 		return ..()
 
 /obj/structure/guncase/attack_hand(mob/user)
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(contents.len && open)
 		ShowWindow(user)
@@ -76,25 +73,33 @@
 
 /obj/structure/guncase/Topic(href, href_list)
 	if(href_list["retrieve"])
-		var/obj/item/O = locate(href_list["retrieve"])
+		var/obj/item/O = locate(href_list["retrieve"]) in contents
+		if(!O || !istype(O))
+			return
 		if(!usr.canUseTopic(src))
 			return
 		if(ishuman(usr))
-			if(!usr.get_active_hand())
-				usr.put_in_hands(O)
-			else
-				O.loc = get_turf(src)
+			if(!usr.put_in_hands(O))
+				O.forceMove(get_turf(src))
 			update_icon()
+
+/obj/structure/guncase/handle_atom_del(atom/A)
+	update_icon()
+
+/obj/structure/guncase/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity++, target)
+		CHECK_TICK
 
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"
 	desc = "A locker that holds shotguns."
 	case_type = "shotgun"
-	gun_category = /obj/item/weapon/gun/projectile/shotgun
+	gun_category = /obj/item/weapon/gun/ballistic/shotgun
 
 /obj/structure/guncase/ecase
 	name = "energy gun locker"
 	desc = "A locker that holds energy guns."
 	icon_state = "ecase"
 	case_type = "egun"
-	gun_category = /obj/item/weapon/gun/energy/gun
+	gun_category = /obj/item/weapon/gun/energy/e_gun

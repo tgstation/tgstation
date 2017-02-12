@@ -29,6 +29,8 @@
 
 /datum/computer_file/program/computerconfig/ui_data(mob/user)
 	movable = computer
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = movable.all_components[MC_HDD]
+	var/obj/item/weapon/computer_hardware/battery/battery_module = movable.all_components[MC_CELL]
 	if(!istype(movable))
 		movable = null
 
@@ -38,20 +40,20 @@
 
 	var/list/data = get_header_data()
 
-	data["disk_size"] = movable.hard_drive.max_capacity
-	data["disk_used"] = movable.hard_drive.used_capacity
+	data["disk_size"] = hard_drive.max_capacity
+	data["disk_used"] = hard_drive.used_capacity
 	data["power_usage"] = movable.last_power_usage
-	data["battery_exists"] = movable.battery_module ? 1 : 0
-	if(movable.battery_module && movable.battery_module.battery)
-		data["battery_rating"] = movable.battery_module.battery.maxcharge
-		data["battery_percent"] = round(movable.battery_module.battery.percent())
+	data["battery_exists"] = battery_module ? 1 : 0
+	if(battery_module && battery_module.battery)
+		data["battery_rating"] = battery_module.battery.maxcharge
+		data["battery_percent"] = round(battery_module.battery.percent())
 
-	if(movable.battery_module && movable.battery_module.battery)
-		data["battery"] = list("max" = movable.battery_module.battery.maxcharge, "charge" = round(movable.battery_module.battery.charge))
+	if(battery_module && battery_module.battery)
+		data["battery"] = list("max" = battery_module.battery.maxcharge, "charge" = round(battery_module.battery.charge))
 
 	var/list/all_entries[0]
 	for(var/I in movable.all_components)
-		var/obj/item/weapon/computer_hardware/H = I
+		var/obj/item/weapon/computer_hardware/H = movable.all_components[I]
 		all_entries.Add(list(list(
 		"name" = H.name,
 		"desc" = H.desc,

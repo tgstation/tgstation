@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /obj/machinery/power/emitter
 	name = "Emitter"
@@ -33,9 +33,10 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
 	B.apply_default_parts(src)
 	RefreshParts()
+	wires = new /datum/wires/emitter(src)
 
 /obj/item/weapon/circuitboard/machine/emitter
-	name = "circuit board (Emitter)"
+	name = "Emitter (Machine Board)"
 	build_path = /obj/machinery/power/emitter
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
@@ -81,7 +82,7 @@
 	else
 		rotate()
 
-/obj/machinery/power/emitter/initialize()
+/obj/machinery/power/emitter/Initialize()
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
@@ -127,7 +128,7 @@
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
-	if(ismegafauna(M))
+	if(ismegafauna(M) && anchored)
 		state = 0
 		anchored = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
@@ -153,8 +154,7 @@
 		src.active = 0
 		update_icon()
 		return
-	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
-
+	if(src.active == 1)
 		if(!active_power_usage || avail(active_power_usage))
 			add_load(active_power_usage)
 			if(!powered)
@@ -167,98 +167,105 @@
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
-				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
+		if(!check_delay())
+			return FALSE
+		fire_beam()
 
-		src.last_shot = world.time
-		if(src.shot_number < 3)
-			src.fire_delay = 2
-			src.shot_number ++
+/obj/machinery/power/emitter/proc/check_delay()
+	if((src.last_shot + src.fire_delay) <= world.time)
+		return TRUE
+	return FALSE
+
+/obj/machinery/power/emitter/proc/fire_beam_pulse()
+	if(!check_delay())
+		return FALSE
+	if(state != 2)
+		return FALSE
+	if(avail(active_power_usage))
+		add_load(active_power_usage)
+		fire_beam()
+
+/obj/machinery/power/emitter/proc/fire_beam()
+	src.last_shot = world.time
+	if(src.shot_number < 3)
+		src.fire_delay = 20
+		src.shot_number ++
+	else
+		src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+		src.shot_number = 0
+	var/obj/item/projectile/A = new projectile_type(src.loc)
+	A.setDir(src.dir)
+	playsound(src.loc, projectile_sound, 25, 1)
+	if(prob(35))
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+	switch(dir)
+		if(NORTH)
+			A.yo = 20
+			A.xo = 0
+		if(EAST)
+			A.yo = 0
+			A.xo = 20
+		if(WEST)
+			A.yo = 0
+			A.xo = -20
+		else // Any other
+			A.yo = -20
+			A.xo = 0
+	A.starting = loc
+	A.fire()
+
+/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
+	if(state == EM_WELDED)
+		if(!silent)
+			user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			state = EM_SECURED
 		else
-			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
-			src.shot_number = 0
-
-		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
-
-		A.setDir(src.dir)
-		playsound(src.loc, projectile_sound, 25, 1)
-
-		if(prob(35))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()
-
-		switch(dir)
-			if(NORTH)
-				A.yo = 20
-				A.xo = 0
-			if(EAST)
-				A.yo = 0
-				A.xo = 20
-			if(WEST)
-				A.yo = 0
-				A.xo = -20
-			else // Any other
-				A.yo = -20
-				A.xo = 0
-		A.starting = loc
-		A.fire()
-
+			state = EM_UNSECURED
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "<span class='warning'>Turn off \the [src] first!</span>"
+			user << "<span class='warning'>Turn \the [src] off first!</span>"
 			return
-		switch(state)
-			if(0)
-				if(isinspace()) return
-				state = 1
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
-					"<span class='italics'>You hear a ratchet</span>")
-				src.anchored = 1
-			if(1)
-				state = 0
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
-				src.anchored = 0
-			if(2)
-				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
+		default_unfasten_wrench(user, W, 0)
 		return
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
-			user << "Turn off \the [src] first."
+			user << "Turn \the [src] off first."
 			return
 		switch(state)
-			if(0)
+			if(EM_UNSECURED)
 				user << "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>"
-			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
+			if(EM_SECURED)
+				if(WT.remove_fuel(0,user))
+					playsound(loc, WT.usesound, 50, 1)
+					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
-						state = 2
+					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
+						state = EM_WELDED
 						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
 						connect_to_network()
-			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
+			if(EM_WELDED)
+				if(WT.remove_fuel(0,user))
+					playsound(loc, WT.usesound, 50, 1)
+					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
-						state = 1
+					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
+						state = EM_SECURED
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 						disconnect_from_network()
 		return
@@ -275,6 +282,10 @@
 				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
+		return
+
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
 		return
 
 	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))

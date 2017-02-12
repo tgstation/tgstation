@@ -102,6 +102,23 @@
  /**
   * private
   *
+  * Close *ALL* UIs
+  *
+  * return int The number of UIs closed.
+ **/
+/datum/subsystem/tgui/proc/close_all_uis()
+	var/close_count = 0
+	for(var/src_object_key in open_uis)
+		for(var/ui_key in open_uis[src_object_key])
+			for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
+				if(ui && ui.src_object && ui.user && ui.src_object.ui_host()) // Check the UI is valid.
+					ui.close() // Close the UI.
+					close_count++ // Count each UI we close.
+	return close_count
+
+ /**
+  * private
+  *
   * Update all UIs belonging to a user.
   *
   * required user mob The mob who opened/is using the UI.
@@ -182,8 +199,15 @@
 	processing_uis.Remove(ui) // Remove it from the list of processing UIs.
 	if(ui.user)	// If the user exists, remove it from them too.
 		ui.user.open_uis.Remove(ui)
-	var/list/uis = open_uis[src_object_key][ui.ui_key] // Remove it from the list of open UIs.
+	var/Ukey = ui.ui_key
+	var/list/uis = open_uis[src_object_key][Ukey] // Remove it from the list of open UIs.
 	uis.Remove(ui)
+	if(!uis.len)
+		var/list/uiobj = open_uis[src_object_key]
+		uiobj.Remove(Ukey)
+		if(!uiobj.len)
+			open_uis.Remove(src_object_key)
+
 	return 1 // Let the caller know we did it.
 
  /**

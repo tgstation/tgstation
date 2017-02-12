@@ -25,23 +25,25 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/smartfridge
-	name = "circuit board (Smartfridge)"
+	name = "Smartfridge (Machine Board)"
 	build_path = /obj/machinery/smartfridge
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
+	var/static/list/fridges = list(/obj/machinery/smartfridge = "plant produce",
+							/obj/machinery/smartfridge/food = "food",
+							/obj/machinery/smartfridge/drinks = "drinks",
+							/obj/machinery/smartfridge/extract = "slimes",
+							/obj/machinery/smartfridge/chemistry = "chems",
+							/obj/machinery/smartfridge/chemistry/virology = "viruses",
+							/obj/machinery/smartfridge/disks = "disks")
 
 /obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
 	if(new_type)
 		build_path = new_type
+	..()
 
 /obj/item/weapon/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		var/list/fridges = list(/obj/machinery/smartfridge = "default",
-								/obj/machinery/smartfridge/drinks = "drinks",
-								/obj/machinery/smartfridge/extract = "slimes",
-								/obj/machinery/smartfridge/chemistry = "chems",
-								/obj/machinery/smartfridge/chemistry/virology = "viruses")
-
 		var/position = fridges.Find(build_path, fridges)
 		position = (position == fridges.len) ? 1 : (position + 1)
 		build_path = fridges[position]
@@ -49,13 +51,9 @@
 	else
 		return ..()
 
-/obj/machinery/smartfridge/construction()
-	for(var/datum/A in contents)
-		qdel(A)
-
-/obj/machinery/smartfridge/deconstruction()
-	for(var/atom/movable/A in contents)
-		A.loc = loc
+/obj/item/weapon/circuitboard/machine/smartfridge/examine/(mob/user)
+	..()
+	user << "<span class='info'>[src] is set to [fridges[build_path]]. You can use a screwdriver to reconfigure it.</span>"
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -95,47 +93,47 @@
 		updateUsrDialog()
 		return
 
-	if(stat)
-		return 0
+	if(!stat)
 
-	if(contents.len >= max_n_of_items)
-		user << "<span class='warning'>\The [src] is full!</span>"
-		return 0
+		if(contents.len >= max_n_of_items)
+			user << "<span class='warning'>\The [src] is full!</span>"
+			return FALSE
 
-	if(accept_check(O))
-		load(O)
-		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
-		updateUsrDialog()
-		return 1
+		if(accept_check(O))
+			load(O)
+			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
+			updateUsrDialog()
+			return TRUE
 
-	if(istype(O, /obj/item/weapon/storage/bag))
-		var/obj/item/weapon/storage/P = O
-		var/loaded = 0
-		for(var/obj/G in P.contents)
-			if(contents.len >= max_n_of_items)
-				break
-			if(accept_check(G))
-				load(G)
-				loaded++
-		updateUsrDialog()
+		if(istype(O, /obj/item/weapon/storage/bag))
+			var/obj/item/weapon/storage/P = O
+			var/loaded = 0
+			for(var/obj/G in P.contents)
+				if(contents.len >= max_n_of_items)
+					break
+				if(accept_check(G))
+					load(G)
+					loaded++
+			updateUsrDialog()
 
-		if(loaded)
-			if(contents.len >= max_n_of_items)
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-								 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+			if(loaded)
+				if(contents.len >= max_n_of_items)
+					user.visible_message("[user] loads \the [src] with \the [O].", \
+									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+				else
+					user.visible_message("[user] loads \the [src] with \the [O].", \
+										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+				if(O.contents.len > 0)
+					user << "<span class='warning'>Some items are refused.</span>"
+				return TRUE
 			else
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-									 "<span class='notice'>You load \the [src] with \the [O].</span>")
-			if(O.contents.len > 0)
-				user << "<span class='warning'>Some items are refused.</span>"
-		else
-			user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
-			return 0
+				user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
+				return FALSE
 
-	else if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
-		return 0
+		return FALSE
 	else
 		return ..()
 
@@ -143,26 +141,26 @@
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/) || istype(O,/obj/item/weapon/grown/))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/proc/load(obj/item/O)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		if(!M.unEquip(O))
+		if(!M.transferItemToLoc(O, src))
 			usr << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
-	else if(istype(O.loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = O.loc
-		S.remove_from_storage(O,src)
-
-	O.loc = src
+	else
+		if(istype(O.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = O.loc
+			S.remove_from_storage(O,src)
+		O.forceMove(src)
 
 /obj/machinery/smartfridge/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
-	return 0
+	return FALSE
 
 /obj/machinery/smartfridge/attack_hand(mob/user)
 	user.set_machine(src)
@@ -174,7 +172,7 @@
 
 /obj/machinery/smartfridge/interact(mob/user)
 	if(stat)
-		return 0
+		return FALSE
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
@@ -238,6 +236,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
+	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack_on"
 	use_power = 1
@@ -245,7 +244,25 @@
 	active_power_usage = 200
 	icon_on = "drying_rack_on"
 	icon_off = "drying_rack"
-	var/drying = 0
+	var/drying = FALSE
+
+/obj/machinery/smartfridge/drying_rack/New()
+	..()
+	if(component_parts && component_parts.len)
+		component_parts.Cut()
+	component_parts = null
+
+/obj/machinery/smartfridge/drying_rack/on_deconstruction()
+	new /obj/item/stack/sheet/mineral/wood(loc, 10)
+	..()
+
+/obj/machinery/smartfridge/drying_rack/RefreshParts()
+/obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
+/obj/machinery/smartfridge/drying_rack/exchange_parts()
+/obj/machinery/smartfridge/drying_rack/spawn_frame()
+
+/obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 1)
+	..()
 
 /obj/machinery/smartfridge/drying_rack/interact(mob/user)
 	var/dat = ..()
@@ -258,15 +275,16 @@
 /obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
 	..()
 	if(href_list["dry"])
-		toggle_drying()
-	src.updateUsrDialog()
+		toggle_drying(FALSE)
+	updateUsrDialog()
+	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-		toggle_drying(1)
+		toggle_drying(TRUE)
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
@@ -275,7 +293,7 @@
 
 /obj/machinery/smartfridge/drying_rack/update_icon()
 	..()
-	overlays = 0
+	cut_overlays()
 	if(drying)
 		add_overlay("drying_rack_drying")
 	if(contents.len)
@@ -291,30 +309,37 @@
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
-			return 1
-	return 0
+			return TRUE
+	if(istype(O,/obj/item/stack/sheet/wetleather/))
+		return TRUE
+	return FALSE
 
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
 	if(drying || forceoff)
-		drying = 0
+		drying = FALSE
 		use_power = 1
 	else
-		drying = 1
+		drying = TRUE
 		use_power = 2
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
-			S.color = "#ad7257"
-			S.dry = 1
+			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
+			S.dry = TRUE
 			S.loc = get_turf(src)
 		else
 			var/dried = S.dried_type
 			new dried(src.loc)
 			qdel(S)
-		return 1
-	return 0
+		return TRUE
+	for(var/obj/item/stack/sheet/wetleather/WL in contents)
+		var/obj/item/stack/sheet/leather/L = new(loc)
+		L.amount = WL.amount
+		qdel(WL)
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
 	..()
@@ -330,10 +355,20 @@
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(!istype(O,/obj/item/weapon/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
-		return 1
+		return TRUE
 
+// ----------------------------
+//  Food smartfridge
+// ----------------------------
+/obj/machinery/smartfridge/food
+	desc = "A refrigerated storage unit for food."
+
+/obj/machinery/smartfridge/food/accept_check(obj/item/O)
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
+		return TRUE
+	return FALSE
 
 // -------------------------------------
 // Xenobiology Slime-Extract Smartfridge
@@ -344,10 +379,10 @@
 
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
-		return 1
+		return TRUE
 	if(istype(O,/obj/item/device/slime_scanner))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/extract/New()
 	..()
@@ -383,18 +418,18 @@
 		if(O.contents.len)
 			for(var/obj/item/I in O)
 				if(!accept_check(I))
-					return 0
-			return 1
-		return 0
+					return FALSE
+			return TRUE
+		return FALSE
 	if(!istype(O,/obj/item/weapon/reagent_containers))
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/pill)) // empty pill prank ok
-		return 1
+		return TRUE
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/syringe) || istype(O,/obj/item/weapon/reagent_containers/glass/bottle) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker) || istype(O,/obj/item/weapon/reagent_containers/spray))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // ----------------------------
 // Virology Medical Smartfridge
@@ -409,3 +444,16 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/plasma = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+
+// ----------------------------
+// Disk """fridge"""
+// ----------------------------
+/obj/machinery/smartfridge/disks
+	name = "disk compartmentalizer"
+	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
+
+/obj/machinery/smartfridge/disks/accept_check(obj/item/O)
+	if(istype(O,/obj/item/weapon/disk/))
+		return TRUE
+	else
+		return FALSE

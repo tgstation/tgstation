@@ -4,6 +4,7 @@
 /mob/living/simple_animal/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
+	gender = NEUTER
 	luminosity = 3
 	stop_automated_movement = 1
 	wander = 0
@@ -21,7 +22,7 @@
 	verb_yell = "alarms"
 	bubble_icon = "machine"
 
-	faction = list("neutral", "silicon")
+	faction = list("neutral", "silicon" , "turret")
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
@@ -192,7 +193,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustHealth(amount)
+/mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	. = ..()
@@ -225,7 +226,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		interact(H)
 	else
 		return ..()
@@ -270,7 +271,7 @@
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				user << "<span class='warning'>[src] does not need a repair!</span>"
 				return
@@ -301,7 +302,7 @@
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+	new /obj/effect/overlay/temp/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
@@ -858,13 +859,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 				src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 				bot_name = name
 				name = paicard.pai.name
-				faction = user.faction
+				faction = user.faction.Copy()
 				add_logs(user, paicard.pai, "uploaded to [bot_name],")
 				return 1
 			else
 				user << "<span class='warning'>[card] is inactive.</span>"
 		else
-			user << "<span class='warning'>The personality slot is locked.</span>"	
+			user << "<span class='warning'>The personality slot is locked.</span>"
 	else
 		user << "<span class='warning'>[src] is not compatible with [card]</span>"
 

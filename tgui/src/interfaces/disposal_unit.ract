@@ -1,0 +1,34 @@
+<ui-display>
+	<ui-section label='State'>
+		{{#if data.mode == 0}}
+			<span class='bad'>Off</span>
+		{{else}}
+			{{#if data.mode == -1}}
+				<span class='bad'>Power Disabled</span>
+
+			{{else}}
+				{{#if data.mode == 1}}
+					<span class='average'>Pressurizing</span>
+				{{else}}
+					<span class='good'>Ready</span>
+				{{/if}}
+			{{/if}}
+		{{/if}}
+	</ui-section>
+	<ui-section label='Pressure'>
+		<ui-bar min='0' max='100' value='{{data.per}}' state='good'>{{data.per}}%</ui-bar>
+	</ui-section>
+    <ui-section label='Handle'>
+        <ui-button 
+			icon='{{data.flush ? "toggle-on" : "toggle-off" }}' 
+			state='{{data.isai || data.mode == -1 ? 'disabled' : null}}' 
+			action='{{data.flush ? "handle-0" : "handle-1" }}'>
+				{{data.flush ? "Disengage" : "Engage" }}</ui-button>
+    </ui-section>
+	<ui-section label='Eject'>
+		<ui-button icon='sign-out' state='{{data.isai  ? 'disabled' : null}}' action='eject'>Eject Contents</ui-button><br/>
+	</ui-section>
+	<ui-section label='Power'>
+		<ui-button icon='power-off' state='{{data.mode == -1 ? 'disabled' : null}}' action='{{data.mode ? "pump-0" : "pump-1" }}' style='{{data.mode ? "selected" : null }}'></ui-button><br/>
+	</ui-section>
+</ui-display>

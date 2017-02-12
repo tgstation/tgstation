@@ -3,46 +3,32 @@
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
 
-	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
+	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
 
 	if(!check_rights(R_VAREDIT))
 		return
 
 	if(A && A.type)
-		if(typesof(A.type))
-			switch(input("Strict object type detection?") as null|anything in list("Strictly this type","This type and subtypes", "Cancel"))
-				if("Strictly this type")
-					method = 0
-				if("This type and subtypes")
-					method = 1
-				if("Cancel")
-					return
-				if(null)
-					return
+		method = vv_subtype_prompt(A.type)
 
 	src.massmodify_variables(A, var_name, method)
 	feedback_add_details("admin_verb","MEV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
+/client/proc/massmodify_variables(datum/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))
 		return
-
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
-			return
-
-	var/list/names = list()
-	for (var/V in O.vars)
-		names += V
-
-	names = sortList(names)
+	if(!istype(O))
+		return
 
 	var/variable = ""
-
 	if(!var_name)
-		variable = input("Which var?","Var") as null|anything in names
+		var/list/names = list()
+		for (var/V in O.vars)
+			names += V
+
+		names = sortList(names)
+
+		variable = input("Which var?", "Var") as null|anything in names
 	else
 		variable = var_name
 
@@ -50,10 +36,9 @@
 		return
 	var/default
 	var/var_value = O.vars[variable]
-	var/dir
 
 	if(variable in VVckey_edit)
-		usr << "It's forbidden to mass-modify ckeys. I'll crash everyone's client you dummy."
+		src << "It's forbidden to mass-modify ckeys. It'll crash everyone's client you dummy."
 		return
 	if(variable in VVlocked)
 		if(!check_rights(R_DEBUG))
@@ -61,478 +46,221 @@
 	if(variable in VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return
+	if(variable in VVpixelmovement)
+		if(!check_rights(R_DEBUG))
+			return
+		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
+		if (prompt != "Continue")
+			return
 
-	if(isnull(var_value))
-		usr << "Unable to determine variable type."
+	default = vv_get_class(var_value)
 
-	else if(isnum(var_value))
-		usr << "Variable appears to be <b>NUM</b>."
-		default = "num"
-		setDir(1)
-
-	else if(istext(var_value))
-		usr << "Variable appears to be <b>TEXT</b>."
-		default = "text"
-
-	else if(isloc(var_value))
-		usr << "Variable appears to be <b>REFERENCE</b>."
-		default = "reference"
-
-	else if(isicon(var_value))
-		usr << "Variable appears to be <b>ICON</b>."
-		var_value = "\icon[var_value]"
-		default = "icon"
-
-	else if(istype(var_value,/atom) || istype(var_value,/datum))
-		usr << "Variable appears to be <b>TYPE</b>."
-		default = "type"
-
-	else if(istype(var_value,/list))
-		usr << "Variable appears to be <b>LIST</b>."
-		default = "list"
-
-	else if(istype(var_value,/client))
-		usr << "Variable appears to be <b>CLIENT</b>."
-		default = "cancel"
-
+	if(isnull(default))
+		src << "Unable to determine variable type."
 	else
-		usr << "Variable appears to be <b>FILE</b>."
-		default = "file"
+		src << "Variable appears to be <b>[uppertext(default)]</b>."
 
-	usr << "Variable contains: [var_value]"
-	if(dir)
-		switch(var_value)
-			if(1)
-				setDir("NORTH")
-			if(2)
-				setDir("SOUTH")
-			if(4)
-				setDir("EAST")
-			if(8)
-				setDir("WEST")
-			if(5)
-				setDir("NORTHEAST")
-			if(6)
-				setDir("SOUTHEAST")
-			if(9)
-				setDir("NORTHWEST")
-			if(10)
-				setDir("SOUTHWEST")
-			else
-				setDir(null)
-		if(dir)
-			usr << "If a direction, direction is: [dir]"
+	src << "Variable contains: [var_value]"
 
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","icon","file","edit referenced object","restore to default")
+	if(default == VV_NUM)
+		var/dir_text = ""
+		if(dir < 0 && dir < 16)
+			if(dir & 1)
+				dir_text += "NORTH"
+			if(dir & 2)
+				dir_text += "SOUTH"
+			if(dir & 4)
+				dir_text += "EAST"
+			if(dir & 8)
+				dir_text += "WEST"
 
-	if(!class)
+		if(dir_text)
+			src << "If a direction, direction is: [dir_text]"
+
+	var/value = vv_get_value(default_class = default)
+	var/new_value = value["value"]
+	var/class = value["class"]
+
+	if(!class || !new_value == null && class != VV_NULL)
 		return
 
-	var/original_name
+	if (class == VV_MESSAGE)
+		class = VV_TEXT
 
-	if (!istype(O, /atom))
-		original_name = "\ref[O] ([O])"
-	else
-		original_name = O:name
+	if (value["type"])
+		class = VV_NEW_TYPE
+
+	var/original_name = "[O]"
+
+	var/rejected = 0
+	var/accepted = 0
 
 	switch(class)
-
-		if("restore to default")
-			O.vars[variable] = initial(O.vars[variable])
-			if(method)
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-			else
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if (M.type == O.type)
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-		if("edit referenced object")
-			return .(O.vars[variable])
-
-		if("text")
-			var/new_value = input("Enter new text:","Text",O.vars[variable]) as message|null
-			if(new_value == null) return
-
-			var/process_vars = 0
-			var/unique = 0
-			if(findtext(new_value,"\["))
-				process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
-				if(process_vars == "Yes")
-					process_vars = 1
-					unique = alert(usr,"Process vars unique to each instance, or same for all?","Variable Association","Unique","Same")
-					if(unique == "Unique")
-						unique = 1
-					else
-						unique = 0
+		if(VV_RESTORE_DEFAULT)
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
+			for(var/thing in items)
+				if (!thing)
+					continue
+				var/datum/D = thing
+				if (D.vv_edit_var(variable, initial(D.vars[variable])) != FALSE)
+					accepted++
 				else
-					process_vars = 0
+					rejected++
+				CHECK_TICK
 
+		if(VV_TEXT)
+			var/list/varsvars = vv_parse_text(O, new_value)
 			var/pre_processing = new_value
-			var/list/varsvars = list()
-
-			if(process_vars)
-				varsvars = string2listofvars(new_value, O)
-				if(varsvars.len)
+			var/unique
+			if (varsvars && varsvars.len)
+				unique = alert(usr, "Process vars unique to each instance, or same for all?", "Variable Association", "Unique", "Same")
+				if(unique == "Unique")
+					unique = TRUE
+				else
+					unique = FALSE
 					for(var/V in varsvars)
 						new_value = replacetext(new_value,"\[[V]]","[O.vars[V]]")
 
-			O.vars[variable] = new_value
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
+			for(var/thing in items)
+				if (!thing)
+					continue
+				var/datum/D = thing
+				if(unique)
+					new_value = pre_processing
+					for(var/V in varsvars)
+						new_value = replacetext(new_value,"\[[V]]","[D.vars[V]]")
 
-			//Convert the string vars for anything that's not O
-			if(method)
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
-							new_value = pre_processing //reset new_value, ready to convert it uniquely for the next iteration
-
-							if(process_vars)
-								if(unique)
-									for(var/V in varsvars)
-										new_value = replacetext(new_value,"\[[V]]","[M.vars[V]]")
-								else
-									new_value = O.vars[variable] //We already processed the non-unique form for O, reuse it
-
-							M.vars[variable] = new_value
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if ( istype(A , O.type) )
-							new_value = pre_processing
-
-							if(process_vars)
-								if(unique)
-									for(var/V in varsvars)
-										new_value = replacetext(new_value,"\[[V]]","[A.vars[V]]")
-								else
-									new_value = O.vars[variable]
-
-							A.vars[variable] = new_value
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if ( istype(A , O.type) )
-							new_value = pre_processing
-
-							if(process_vars)
-								if(unique)
-									for(var/V in varsvars)
-										new_value = replacetext(new_value,"\[[V]]","[A.vars[V]]")
-								else
-									new_value = O.vars[variable]
-
-							A.vars[variable] = new_value
-						CHECK_TICK
-			else
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if (M.type == O.type)
-							new_value = pre_processing
-
-							if(process_vars)
-								if(unique)
-									for(var/V in varsvars)
-										new_value = replacetext(new_value,"\[[V]]","[M.vars[V]]")
-								else
-									new_value = O.vars[variable]
-
-							M.vars[variable] = new_value
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if (A.type == O.type)
-							new_value = pre_processing
-
-							if(process_vars)
-								if(unique)
-									for(var/V in varsvars)
-										new_value = replacetext(new_value,"\[[V]]","[A.vars[V]]")
-								else
-									new_value = O.vars[variable]
-
-							A.vars[variable] = new_value
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if (A.type == O.type)
-							new_value = pre_processing
-
-							if(process_vars)
-								if(unique)
-									for(var/V in varsvars)
-										new_value = replacetext(new_value,"\[[V]]","[A.vars[V]]")
-								else
-									new_value = O.vars[variable]
-
-							A.vars[variable] = new_value
-						CHECK_TICK
-
-		if("num")
-			var/new_value = input("Enter new number:","Num",\
-					O.vars[variable]) as num|null
-			if(new_value == null) return
-
-			if(variable=="luminosity")
-				O.SetLuminosity(new_value)
-			else
-				O.vars[variable] = new_value
-
-			if(method)
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
-							if(variable=="luminosity")
-								M.SetLuminosity(new_value)
-							else
-								M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if ( istype(A , O.type) )
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
-							else
-								A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if ( istype(A , O.type) )
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
-							else
-								A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-			else
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if (M.type == O.type)
-							if(variable=="luminosity")
-								M.SetLuminosity(new_value)
-							else
-								M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if (A.type == O.type)
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
-							else
-								A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if (A.type == O.type)
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
-							else
-								A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-		if("type")
-			var/new_value
-			new_value = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
-			if(new_value == null) return
-			O.vars[variable] = new_value
-			if(method)
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-			else
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if (M.type == O.type)
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-		if("file")
-			var/new_value = input("Pick file:","File",O.vars[variable]) as null|file
-			if(new_value == null) return
-			O.vars[variable] = new_value
-
-			if(method)
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O.type, /obj))
-					for(var/obj/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O.type, /turf))
-					for(var/turf/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-			else
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if (M.type == O.type)
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-		if("icon")
-			var/new_value = input("Pick icon:","Icon",O.vars[variable]) as null|icon
-			if(new_value == null) return
-			O.vars[variable] = new_value
-			if(method)
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-			else
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if (M.type == O.type)
-							M.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-						CHECK_TICK
-
-	if(method)
-		if(istype(O,/mob))
-			for(var/mob/M in mob_list)
-				if(istype(M,O.type))
-					M.on_varedit(variable)
+				if (D.vv_edit_var(variable, new_value) != FALSE)
+					accepted++
+				else
+					rejected++
 				CHECK_TICK
 
-		else if(istype(O,/obj))
-			for(var/obj/A in world)
-				if(istype(A,O.type))
-					A.on_varedit(variable)
+		if (VV_NEW_TYPE)
+			var/many = alert(src, "Create only one [value["type"]] and assign each or a new one for each thing", "How Many", "One", "Many", "Cancel")
+			if (many == "Cancel")
+				return
+			if (many == "Many")
+				many = TRUE
+			else
+				many = FALSE
+
+			var/type = value["type"]
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
+			for(var/thing in items)
+				if (!thing)
+					continue
+				var/datum/D = thing
+				if(many && !new_value)
+					new_value = new type()
+
+				if (D.vv_edit_var(variable, new_value) != FALSE)
+					accepted++
+				else
+					rejected++
+				new_value = null
 				CHECK_TICK
 
-		else if(istype(O,/turf))
-			for(var/turf/A in block(locate(1,1,1),locate(world.maxx,world.maxy,world.maxz)))
-				if(istype(A,O.type))
-					A.on_varedit(variable)
+		else
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
+			for(var/thing in items)
+				if (!thing)
+					continue
+				var/datum/D = thing
+				if (D.vv_edit_var(variable, new_value) != FALSE)
+					accepted++
+				else
+					rejected++
 				CHECK_TICK
+
+
+	var/count = rejected+accepted
+	if (!count)
+		src << "No objects found"
+		return
+	if (!accepted)
+		src << "Every object rejected your edit"
+		return
+	if (rejected)
+		src << "[rejected] out of [count] objects rejected your edit"
+
+	world.log << "### MassVarEdit by [src]: [O.type] (A/R [accepted]/[rejected]) [variable]=[html_encode("[O.vars[variable]]")]([list2params(value)])"
+	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
+	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
+
+
+/proc/get_all_of_type(var/T, subtypes = TRUE)
+	var/list/typecache = list()
+	typecache[T] = 1
+	if (subtypes)
+		typecache = typecacheof(typecache)
+	. = list()
+	if (ispath(T, /mob))
+		for(var/mob/thing in mob_list)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /obj/machinery/door))
+		for(var/obj/machinery/door/thing in airlocks)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /obj/machinery))
+		for(var/obj/machinery/thing in machines)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /obj))
+		for(var/obj/thing in world)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /atom/movable))
+		for(var/atom/movable/thing in world)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /turf))
+		for(var/turf/thing in world)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /atom))
+		for(var/atom/thing in world)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /client))
+		for(var/client/thing in clients)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /datum))
+		for(var/datum/thing)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
 
 	else
-		if(istype(O, /mob))
-			for(var/mob/M in mob_list)
-				if(M.type == O.type)
-					M.on_varedit(variable)
-				CHECK_TICK
+		for(var/datum/thing in world)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
 
-		else if(istype(O, /obj))
-			for(var/obj/A in world)
-				if(A.type == O.type)
-					A.on_varedit(variable)
-				CHECK_TICK
-
-		else if(istype(O, /turf))
-			for(var/turf/A in world)
-				if(A.type == O.type)
-					A.on_varedit(variable)
-				CHECK_TICK
-
-	world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
-	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")

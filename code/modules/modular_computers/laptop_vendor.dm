@@ -50,9 +50,11 @@
 /obj/machinery/lapvend/proc/fabricate_and_recalc_price(fabricate = 0)
 	total_price = 0
 	if(devtype == 1) 		// Laptop, generally cheaper to make it accessible for most station roles
+		var/obj/item/weapon/computer_hardware/battery/battery_module = null
 		if(fabricate)
 			fabricated_laptop = new /obj/item/device/modular_computer/laptop/buildable(src)
 			fabricated_laptop.install_component(new /obj/item/weapon/computer_hardware/battery)
+			battery_module = fabricated_laptop.all_components[MC_CELL]
 		total_price = 99
 		switch(dev_cpu)
 			if(1)
@@ -65,14 +67,14 @@
 		switch(dev_battery)
 			if(1) // Basic(750C)
 				if(fabricate)
-					fabricated_laptop.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
 			if(2) // Upgraded(1100C)
 				if(fabricate)
-					fabricated_laptop.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/advanced)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/advanced)
 				total_price += 199
 			if(3) // Advanced(1500C)
 				if(fabricate)
-					fabricated_laptop.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/super)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/super)
 				total_price += 499
 		switch(dev_disk)
 			if(1) // Basic(128GQ)
@@ -110,22 +112,24 @@
 
 		return total_price
 	else if(devtype == 2) 	// Tablet, more expensive, not everyone could probably afford this.
+		var/obj/item/weapon/computer_hardware/battery/battery_module = null
 		if(fabricate)
 			fabricated_tablet = new(src)
 			fabricated_tablet.install_component(new /obj/item/weapon/computer_hardware/battery)
 			fabricated_tablet.install_component(new /obj/item/weapon/computer_hardware/processor_unit/small)
+			battery_module = fabricated_tablet.all_components[MC_CELL]
 		total_price = 199
 		switch(dev_battery)
 			if(1) // Basic(300C)
 				if(fabricate)
-					fabricated_tablet.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/nano)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/nano)
 			if(2) // Upgraded(500C)
 				if(fabricate)
-					fabricated_tablet.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/micro)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/micro)
 				total_price += 199
 			if(3) // Advanced(750C)
 				if(fabricate)
-					fabricated_tablet.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
 				total_price += 499
 		switch(dev_disk)
 			if(1) // Basic(32GQ)
@@ -177,6 +181,9 @@
 			return 1
 		if("clean_order")
 			reset_order()
+			return 1
+		if("purchase")
+			try_purchase()
 			return 1
 	if((state != 1) && devtype) // Following IFs should only be usable when in the Select Loadout mode
 		return 0
@@ -233,44 +240,27 @@
 		ui.set_autoupdate(state = 1)
 
 
-obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I,/obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/c = I
 
 		if(!user.drop_item(c))
 			return
 		credits += c.value
+		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into the [src].</span>")
 		qdel(c)
 		return
 
-
-	var/obj/item/weapon/card/id/D = I.GetID()
-	// Awaiting payment state
-	if(state == 2 && D)
-		if(process_payment(D,I))
-			fabricate_and_recalc_price(1)
-			if((devtype == 1) && fabricated_laptop)
-				fabricated_laptop.forceMove(src.loc)
-				fabricated_laptop = null
-			else if((devtype == 2) && fabricated_tablet)
-				fabricated_tablet.forceMove(src.loc)
-				fabricated_tablet = null
-			say("Enjoy your new product!")
-			state = 3
-			return 1
-		return 0
 	return ..()
 
 
 // Simplified payment processing, returns 1 on success.
-/obj/machinery/lapvend/proc/process_payment(obj/item/weapon/card/id/I, obj/item/ID_container, obj/item/stack/spacecash)
+/obj/machinery/lapvend/proc/process_payment()
 	if(total_price > credits)
 		say("Insufficient credits.")
 		return 0
 	else
 		return 1
-
-	visible_message("<span class='info'>\The [usr] swipes \the [I] through \the [src].</span>")
 
 /obj/machinery/lapvend/ui_data(mob/user)
 
@@ -287,5 +277,24 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 		data["hw_cpu"] = dev_cpu
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price
+		data["credits"] = credits
 
 	return data
+
+
+/obj/machinery/lapvend/proc/try_purchase()
+	// Awaiting payment state
+	if(state == 2)
+		if(process_payment())
+			fabricate_and_recalc_price(1)
+			if((devtype == 1) && fabricated_laptop)
+				fabricated_laptop.forceMove(src.loc)
+				fabricated_laptop = null
+			else if((devtype == 2) && fabricated_tablet)
+				fabricated_tablet.forceMove(src.loc)
+				fabricated_tablet = null
+			credits -= total_price
+			say("Enjoy your new product!")
+			state = 3
+			return 1
+		return 0

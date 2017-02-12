@@ -31,6 +31,7 @@
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 		var/turf/B = L
+		atoms += B
 		for(var/A in B)
 			atoms += A
 			if(istype(A,/obj/structure/cable))
@@ -40,9 +41,10 @@
 				atmos_machines += A
 				continue
 
-	SSobj.setup_template_objects(atoms)
+	SSobj.InitializeAtoms(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+	SSair.end_map_load()
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
@@ -54,8 +56,10 @@
 	if(T.y+height > world.maxy)
 		return
 
+	SSair.begin_map_load()
 	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
 	if(!bounds)
+		SSair.end_map_load()
 		return 0
 
 	//initialize things that are normally initialized after map load
@@ -94,8 +98,8 @@
 
 /proc/preloadRuinTemplates()
 	// Still supporting bans by filename
-	var/list/banned = generateMapList("config/lavaRuinBlacklist.txt")
-	banned += generateMapList("config/spaceRuinBlacklist.txt")
+	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
+	banned += generateMapList("config/spaceruinblacklist.txt")
 
 	for(var/item in subtypesof(/datum/map_template/ruin))
 		var/datum/map_template/ruin/ruin_type = item
@@ -117,12 +121,16 @@
 
 
 /proc/preloadShuttleTemplates()
+	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
+
 	for(var/item in subtypesof(/datum/map_template/shuttle))
 		var/datum/map_template/shuttle/shuttle_type = item
 		if(!(initial(shuttle_type.suffix)))
 			continue
 
 		var/datum/map_template/shuttle/S = new shuttle_type()
+		if(unbuyable.Find(S.mappath))
+			S.can_be_bought = FALSE
 
 		shuttle_templates[S.shuttle_id] = S
 		map_templates[S.shuttle_id] = S

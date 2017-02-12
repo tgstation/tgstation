@@ -1,9 +1,11 @@
 /obj/item/weapon/melee/baton/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
+	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "teleprod_nocell"
 	item_state = "teleprod"
 	origin_tech = "combat=2;bluespace=4;materials=3"
+	slot_flags = null
 
 /obj/item/weapon/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
@@ -28,13 +30,11 @@
 	if(istype(I, /obj/item/weapon/ore/bluespace_crystal))
 		if(!bcell)
 			var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
-			if(!remove_item_from_storage(user))
-				user.unEquip(src)
-			user.unEquip(I)
+			remove_item_from_storage(user)
+			qdel(src)
+			qdel(I)
 			user.put_in_hands(S)
 			user << "<span class='notice'>You place the bluespace crystal firmly into the igniter.</span>"
-			qdel(I)
-			qdel(src)
 		else
 			user.visible_message("<span class='warning'>You can't put the crystal onto the stunprod while it has a power cell installed!</span>")
 	else

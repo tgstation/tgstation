@@ -5,7 +5,7 @@
 	var/temperature_archived
 
 	//list of open turfs adjacent to us
-	var/list/atmos_adjacent_turfs = list()
+	var/list/atmos_adjacent_turfs
 	//bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = 0
 
@@ -33,13 +33,13 @@
 	var/atmos_cooldown  = 0
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
-	var/list/atmos_overlay_types = list() //gas IDs of current active gas overlays
+	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 
-/turf/open/New()
-	..()
+/turf/open/Initialize()
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
+	..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
@@ -98,22 +98,27 @@
 /turf/open/proc/update_visuals()
 	var/list/new_overlay_types = tile_graphic()
 
-	for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
-		overlays -= overlay
-		atmos_overlay_types -= overlay
+	if (atmos_overlay_types)
+		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
+			overlays -= overlay
 
-	for(var/overlay in new_overlay_types-atmos_overlay_types) //doesn't add overlays that already exist
-		add_overlay(overlay)
+	if (new_overlay_types.len)
+		if (atmos_overlay_types)
+			add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
+		else
+			add_overlay(new_overlay_types)
 
+	UNSETEMPTY(new_overlay_types)
 	atmos_overlay_types = new_overlay_types
 
 /turf/open/proc/tile_graphic()
 	. = new /list
-	var/list/gases = air.gases
-	for(var/id in gases)
-		var/gas = gases[id]
-		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
-			. += gas[GAS_META][META_GAS_OVERLAY]
+	if(air)
+		var/list/gases = air.gases
+		for(var/id in gases)
+			var/gas = gases[id]
+			if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+				. += gas[GAS_META][META_GAS_OVERLAY]
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
@@ -130,7 +135,7 @@
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
-	var/adjacent_turfs_length = adjacent_turfs.len
+	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
 	atmos_cooldown++
 	if (planetary_atmos)
 		adjacent_turfs_length++
@@ -174,7 +179,7 @@
 				if(air.compare(enemy_tile.air)) //compare if
 					SSair.add_to_active(enemy_tile) //excite enemy
 					if(our_excited_group)
-						excited_group.add_turf(enemy_tile) //add enemy to group
+						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
 						var/datum/excited_group/EG = new //generate new group
 						EG.add_turf(src)
@@ -288,14 +293,14 @@
 			var/turf/open/T = t
 			T.excited_group = src
 			turf_list += T
-			reset_cooldowns()
+		reset_cooldowns()
 	else
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = E
 			E.turf_list += T
-			E.reset_cooldowns()
+		E.reset_cooldowns()
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0

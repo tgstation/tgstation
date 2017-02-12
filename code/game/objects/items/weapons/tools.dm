@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /* Tools!
  * Note: Multitools are /obj/item/device
@@ -23,28 +23,62 @@
 	slot_flags = SLOT_BELT
 	force = 5
 	throwforce = 7
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
+	usesound = 'sound/items/Ratchet.ogg'
 	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/weapon/wrench/cyborg
 	name = "automatic wrench"
 	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
-	icon = 'icons/obj/items_cyborg.dmi'
-	toolspeed = 2
+	toolspeed = 0.5
 
 /obj/item/weapon/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
 	icon_state = "wrench_brass"
-	toolspeed = 2
+	toolspeed = 0.5
+
+/obj/item/weapon/wrench/abductor
+	name = "alien wrench"
+	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "wrench"
+	usesound = 'sound/effects/EMPulse.ogg'
+	toolspeed = 0.1
+	origin_tech = "materials=5;engineering=5;abductor=3"
+
+/obj/item/weapon/wrench/power
+	name = "Hand Drill"
+	desc ="A simple powered drill with a bolt bit"
+	icon_state = "drill_bolt"
+	item_state = "drill"
+	usesound = 'sound/items/drill_use.ogg'
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	throwforce = 8
+	attack_verb = list("drilled", "screwed", "jabbed")
+	toolspeed = 0.25
+
+/obj/item/weapon/wrench/power/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/wirecutters/power/s_drill = new /obj/item/weapon/screwdriver/power
+	user << "<span class='notice'>You attach the screw driver bit to [src].</span>"
+	qdel(src)
+	user.put_in_active_hand(s_drill)
+
+/obj/item/weapon/wrench/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!")
+	return (BRUTELOSS)
 
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
@@ -53,10 +87,10 @@
 	force = 2 //MEDICAL
 	throwforce = 4
 	origin_tech = "materials=1;engineering=1;biotech=3"
-	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
+	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
 
 /obj/item/weapon/wrench/medical/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take \his soul. It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	// TODO Make them glow with the power of the M E D I C A L W R E N C H
 	// during their ascension
 
@@ -71,7 +105,7 @@
 		return
 
 	for(var/obj/item/W in user)
-		user.unEquip(W)
+		user.dropItemToGround(W)
 
 	var/obj/item/weapon/wrench/medical/W = new /obj/item/weapon/wrench/medical(loc)
 	W.add_fingerprint(user)
@@ -95,18 +129,19 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	usesound = 'sound/items/Screwdriver.ogg'
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
@@ -133,14 +168,48 @@
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
 	icon_state = "screwdriver_brass"
-	toolspeed = 2
+	toolspeed = 0.5
+
+/obj/item/weapon/screwdriver/abductor
+	name = "alien screwdriver"
+	desc = "An ultrasonic screwdriver."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "screwdriver"
+	usesound = 'sound/items/PSHOOM.ogg'
+	toolspeed = 0.1
+
+/obj/item/weapon/screwdriver/power
+	name = "Hand Drill"
+	desc = "A simple hand drill with a screwdriver bit attached."
+	icon_state = "drill_screw"
+	item_state = "drill"
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	throwforce = 8
+	throw_speed = 2
+	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
+	attack_verb = list("drilled", "screwed", "jabbed","whacked")
+	hitsound = 'sound/items/drill_hit.ogg'
+	usesound = 'sound/items/drill_use.ogg'
+	toolspeed = 0.25
+
+/obj/item/weapon/screwdriver/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return(BRUTELOSS)
+
+/obj/item/weapon/screwdriver/power/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/wrench/power/b_drill = new /obj/item/weapon/wrench/power
+	user << "<span class='notice'>You attach the bolt driver bit to [src].</span>"
+	qdel(src)
+	user.put_in_active_hand(b_drill)
 
 /obj/item/weapon/screwdriver/cyborg
 	name = "powered screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver_cyborg"
-	toolspeed = 2
+	usesound = 'sound/items/drill_use.ogg'
+	toolspeed = 0.5
 
 /*
  * Wirecutters
@@ -155,12 +224,13 @@
 	force = 6
 	throw_speed = 3
 	throw_range = 7
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=80)
-	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
+	usesound = 'sound/items/Wirecutter.ogg'
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/wirecutters/New(loc, var/param_color = null)
 	..()
@@ -182,23 +252,56 @@
 		..()
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
+	user.visible_message("<span class='suicide'>[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(loc, usesound, 50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/weapon/wirecutters/brass
 	name = "brass wirecutters"
 	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
 	icon_state = "cutters_brass"
-	toolspeed = 2
+	toolspeed = 0.5
+
+/obj/item/weapon/wirecutters/abductor
+	name = "alien wirecutters"
+	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "cutters"
+	toolspeed = 0.1
+	origin_tech = "materials=5;engineering=4;abductor=3"
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
 	desc = "This cuts wires."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "cutters_cyborg"
-	toolspeed = 2
+	toolspeed = 0.5
 
+/obj/item/weapon/wirecutters/power
+	name = "Jaws of Life"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
+	icon_state = "jaws_cutter"
+	item_state = "jawsoflife"
+	origin_tech = "materials=2;engineering=2"
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	usesound = 'sound/items/jaws_cut.ogg'
+	toolspeed = 0.25
+
+/obj/item/weapon/wirecutters/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
+	playsound(loc, 'sound/items/jaws_cut.ogg', 50, 1, -1)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		var/obj/item/bodypart/BP = C.get_bodypart("head")
+		if(BP)
+			BP.drop_limb()
+			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+	return (BRUTELOSS)
+
+/obj/item/weapon/wirecutters/power/attack_self(mob/user)
+	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
+	var/obj/item/weapon/crowbar/power/pryjaws = new /obj/item/weapon/crowbar/power
+	user << "<span class='notice'>You attach the pry jaws to [src].</span>"
+	qdel(src)
+	user.put_in_active_hand(pryjaws)
 /*
  * Welding Tool
  */
@@ -213,10 +316,14 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
+	usesound = 'sound/items/Welder.ogg'
+	var/acti_sound = 'sound/items/WelderActivate.ogg'
+	var/deac_sound = 'sound/items/WelderDeactivate.ogg'
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
-
+	w_class = WEIGHT_CLASS_SMALL
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1;plasmatech=1"
@@ -244,6 +351,7 @@
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
+
 
 /obj/item/weapon/weldingtool/update_icon()
 	if(change_icons)
@@ -279,7 +387,7 @@
 
 
 /obj/item/weapon/weldingtool/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] welds \his every orifice closed! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 
@@ -298,9 +406,9 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
+	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.remove_fuel(1))
-			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(loc, usesound, 50, 1)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
@@ -347,7 +455,7 @@
 		reagents.remove_reagent("welding_fuel", amount)
 		check_fuel()
 		if(M)
-			M.flash_eyes(light_intensity)
+			M.flash_act(light_intensity)
 		return TRUE
 	else
 		if(M)
@@ -363,14 +471,13 @@
 		//mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_r_hand(0)
-			M.update_inv_l_hand(0)
+			M.update_inv_hands(0)
 
 		return 0
 	return 1
 
 //Switches the welder on
-obj/item/weapon/weldingtool/proc/switched_on(mob/user)
+/obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 	if(!status)
 		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
 		return
@@ -378,6 +485,7 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 	if(welding)
 		if(get_fuel() >= 1)
 			user << "<span class='notice'>You switch [src] on.</span>"
+			playsound(loc, acti_sound, 50, 1)
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
@@ -388,10 +496,11 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 			switched_off(user)
 	else
 		user << "<span class='notice'>You switch [src] off.</span>"
+		playsound(loc, deac_sound, 50, 1)
 		switched_off(user)
 
 //Switches the welder off
-obj/item/weapon/weldingtool/proc/switched_off(mob/user)
+/obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	welding = 0
 	if(user == loc) //If player is holding the welder
 		user.AddLuminosity(-light_intensity)
@@ -449,8 +558,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
 			if(!remove_item_from_storage(F))
-				user.unEquip(src)
-				loc = F
+				user.transferItemToLoc(src, F, TRUE)
 			F.weldtool = src
 			add_fingerprint(user)
 			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
@@ -460,8 +568,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 
 /obj/item/weapon/weldingtool/ignition_effect(atom/A, mob/user)
 	if(welding && remove_fuel(1, user))
-		. = "<span class='notice'>[user] casually lights [A] with [src], \
-			what a badass.</span>"
+		. = "<span class='notice'>[user] casually lights [A] with [src], what a badass.</span>"
 	else
 		. = ""
 
@@ -476,9 +583,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 /obj/item/weapon/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "indwelder"
-	toolspeed = 2
+	toolspeed = 0.5
 
 /obj/item/weapon/weldingtool/largetank/flamethrower_screwdriver()
 	return
@@ -489,13 +594,27 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
 	max_fuel = 10
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	change_icons = 0
 
 /obj/item/weapon/weldingtool/mini/flamethrower_screwdriver()
 	return
 
+/obj/item/weapon/weldingtool/abductor
+	name = "alien welding tool"
+	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "welder"
+	toolspeed = 0.1
+	light_intensity = 0
+	change_icons = 0
+	origin_tech = "plasmatech=5;engineering=5;abductor=3"
+
+/obj/item/weapon/weldingtool/abductor/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent("welding_fuel", 1)
+	..()
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
@@ -518,7 +637,8 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	change_icons = 0
 	can_off_process = 1
 	light_intensity = 1
-	toolspeed = 2
+	toolspeed = 0.5
+	var/nextrefueltick = 0
 
 /obj/item/weapon/weldingtool/experimental/brass
 	name = "brass welding tool"
@@ -527,20 +647,11 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	item_state = "brasswelder"
 
 
-//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-//i don't think this is actually used, yaaaaay -Pete
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	if(!welding && !last_gen)
-		last_gen = 1
-		reagents.add_reagent("welding_fuel",1)
-		spawn(10)
-			last_gen = 0
-
 /obj/item/weapon/weldingtool/experimental/process()
 	..()
-	if(reagents.total_volume < max_fuel)
-		fuel_gen()
-
+	if(get_fuel() < max_fuel && nextrefueltick < world.time)
+		nextrefueltick = world.time + 10
+		reagents.add_reagent("welding_fuel", 1)
 
 
 /*
@@ -552,18 +663,20 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
+	usesound = 'sound/items/Crowbar.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
 	throwforce = 7
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50)
 	origin_tech = "engineering=1;combat=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -575,23 +688,55 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	name = "brass crowbar"
 	desc = "A brass crowbar. It feels faintly warm to the touch."
 	icon_state = "crowbar_brass"
-	toolspeed = 2
+	toolspeed = 0.5
+
+/obj/item/weapon/crowbar/abductor
+	name = "alien crowbar"
+	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
+	icon = 'icons/obj/abductor.dmi'
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	icon_state = "crowbar"
+	toolspeed = 0.1
+	origin_tech = "combat=4;engineering=4;abductor=3"
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
 	force = 12
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
 	item_state = "crowbar"
-	toolspeed = 2
+	toolspeed = 0.5
 
 /obj/item/weapon/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
-	icon = 'icons/obj/items_cyborg.dmi'
+	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
-	toolspeed = 2
+	toolspeed = 0.5
+
+/obj/item/weapon/crowbar/power
+	name = "Jaws of Life"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
+	icon_state = "jaws_pry"
+	item_state = "jawsoflife"
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	origin_tech = "materials=2;engineering=2"
+	usesound = 'sound/items/jaws_pry.ogg'
+	force = 15
+	toolspeed = 0.25
+
+/obj/item/weapon/crowbar/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(loc, 'sound/items/jaws_pry.ogg', 50, 1, -1)
+	return (BRUTELOSS)
+
+/obj/item/weapon/crowbar/power/attack_self(mob/user)
+	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
+	var/obj/item/weapon/wirecutters/power/cutjaws = new /obj/item/weapon/wirecutters/power
+	user << "<span class='notice'>You attach the cutting jaws to [src].</span>"
+	qdel(src)
+	user.put_in_active_hand(cutjaws)

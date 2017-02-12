@@ -16,7 +16,7 @@
 	if(active)
 		user << "<span class='notice'>Our muscles tense and strengthen.</span>"
 	else
-		user.status_flags -= GOTTAGOFAST
+		user.status_flags &= ~GOTTAGOFAST
 		user << "<span class='notice'>Our muscles relax.</span>"
 		if(stacks >= 10)
 			user << "<span class='danger'>We collapse in exhaustion.</span>"
@@ -29,11 +29,11 @@
 			active = !active
 			user << "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>"
 			user.Weaken(2)
-			user.status_flags -= GOTTAGOFAST
+			user.status_flags &= ~GOTTAGOFAST
 			break
 
 		stacks++
-		//user.take_organ_damage(stacks * 0.03, 0)
+		//user.take_bodypart_damage(stacks * 0.03, 0)
 		user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
 		if(stacks == 11) //Warning message that the stacks are getting too high

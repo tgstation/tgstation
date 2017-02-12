@@ -90,7 +90,7 @@
 /datum/stock/proc/frc(amt)
 	var/shares = available_shares + outside_shareholders * average_shares
 	var/fr = amt / 100 / shares * fluctuational_coefficient * fluctuation_rate * max(-(current_trend / 100), 1)
-	if (fr < 0 && speculation < 0 || fr > 0 && speculation > 0)
+	if ((fr < 0 && speculation < 0) || (fr > 0 && speculation > 0))
 		fr *= max(abs(speculation) / 5, 1)
 	else
 		fr /= max(abs(speculation) / 5, 1)
@@ -139,8 +139,11 @@
 			speculation += rand(-400, 0) / 1000 * speculation
 			if (prob(1) && prob(5)) // pop that bubble
 				speculation += rand(-4000, 0) / 1000 * speculation
-
-	current_value += (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	var/fucking_stock_spikes = current_value + 500
+	var/piece_of_shit_fuck = current_value - 500
+	var/i_hate_this_code = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	if(i_hate_this_code < fucking_stock_spikes || i_hate_this_code > piece_of_shit_fuck)
+		current_value += i_hate_this_code
 	if (current_value < 5)
 		current_value = 5
 

@@ -45,15 +45,16 @@
 		return
 	timed_explosion()
 
-/obj/item/weapon/implant/explosive/implant(mob/source)
-	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
-	if(imp_e && imp_e != src)
-		imp_e.heavy += heavy
-		imp_e.medium += medium
-		imp_e.weak += weak
-		imp_e.delay += delay
-		qdel(src)
-		return 1
+/obj/item/weapon/implant/explosive/implant(mob/living/target)
+	for(var/X in target.implants)
+		if(istype(X, type))
+			var/obj/item/weapon/implant/explosive/imp_e = X
+			imp_e.heavy += heavy
+			imp_e.medium += medium
+			imp_e.weak += weak
+			imp_e.delay += delay
+			qdel(src)
+			return 1
 
 	return ..()
 
@@ -85,17 +86,20 @@
 	heavy = 4
 	delay = 70
 
-/obj/item/weapon/implant/explosive/macro/implant(mob/source)
-	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
-	if(imp_e && imp_e != src)
-		return 0
-	imp_e = locate(/obj/item/weapon/implant/explosive) in source
-	if(imp_e && imp_e != src)
-		heavy += imp_e.heavy
-		medium += imp_e.medium
-		weak += imp_e.weak
-		delay += imp_e.delay
-		qdel(imp_e)
+/obj/item/weapon/implant/explosive/macro/implant(mob/living/target)
+	for(var/X in target.implants)
+		if(istype(X, type))
+			return 0
+
+	for(var/Y in target.implants)
+		if(istype(Y, /obj/item/weapon/implant/explosive))
+			var/obj/item/weapon/implant/explosive/imp_e = Y
+			heavy += imp_e.heavy
+			medium += imp_e.medium
+			weak += imp_e.weak
+			delay += imp_e.delay
+			qdel(imp_e)
+			break
 
 	return ..()
 

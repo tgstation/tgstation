@@ -33,13 +33,16 @@
 			else //no need to update
 				return 0
 	else
-		alert = PoolOrNew(type)
+		alert = new type()
 
 	if(new_master)
 		var/old_layer = new_master.layer
+		var/old_plane = new_master.plane
 		new_master.layer = FLOAT_LAYER
+		new_master.plane = FLOAT_PLANE
 		alert.overlays += new_master
 		new_master.layer = old_layer
+		new_master.plane = old_plane
 		alert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		alert.master = new_master
 	else
@@ -53,11 +56,13 @@
 	animate(alert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
 	if(alert.timeout)
-		spawn(alert.timeout)
-			if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
-				clear_alert(category)
+		addtimer(CALLBACK(src, .proc/alert_timeout, alert, category), alert.timeout)
 		alert.timeout = world.time + alert.timeout - world.tick_lag
 	return alert
+
+/mob/proc/alert_timeout(obj/screen/alert/alert, category)
+	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
+		clear_alert(category)
 
 // Proc to clear an existing alert.
 /mob/proc/clear_alert(category)
@@ -244,12 +249,96 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/clockwork
 	alerttooltipstyle = "clockcult"
 
-/obj/screen/alert/clockwork/nocache
-	name = "No Tinkerer's Cache"
-	desc = "In order to share components and unlock higher tier \
-		scripture, a tinkerer's cache must be constructed somewhere \
-		in the world. Try to place it somewhere accessible, yet hidden."
-	icon_state = "nocache"
+/obj/screen/alert/clockwork/scripture_reqs
+	name = "Next Tier Requirements"
+	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
+	icon_state = "no-servants-caches"
+	var/static/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
+
+/obj/screen/alert/clockwork/scripture_reqs/New()
+	..()
+	START_PROCESSING(SSprocessing, src)
+	process()
+
+/obj/screen/alert/clockwork/scripture_reqs/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/screen/alert/clockwork/scripture_reqs/process()
+	if(clockwork_gateway_activated)
+		qdel(src)
+		return
+	var/current_state
+	scripture_states = scripture_unlock_check()
+	for(var/i in scripture_states)
+		if(!scripture_states[i])
+			current_state = i
+			break
+	icon_state = "no"
+	if(!current_state)
+		name = "Current Objective"
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+			var/area/gate_area = get_area(G)
+			desc = "<b>Protect the Ark at [gate_area.map_name]!</b>"
+			return
+		desc = "<b>All tiers of Scripture are unlocked.<br>\
+		Acquire components and summon the Ark.</b>"
+	else
+		name = "Next Tier Requirements"
+		var/validservants = 0
+		var/unconverted_ais_exist = FALSE
+		for(var/mob/living/L in living_mob_list)
+			if(is_servant_of_ratvar(L) && (ishuman(L) || issilicon(L)))
+				validservants++
+			else if(isAI(L))
+				unconverted_ais_exist++
+		var/req_servants = 0
+		var/req_caches = 0
+		var/req_cv = 0
+		var/req_ai = FALSE
+		desc = "Requirements for <b>[current_state] Scripture:</b>"
+		switch(current_state) //get our requirements based on the tier
+			if(SCRIPTURE_SCRIPT)
+				req_servants = SCRIPT_SERVANT_REQ
+				req_caches = SCRIPT_CACHE_REQ
+			if(SCRIPTURE_APPLICATION)
+				req_servants = APPLICATION_SERVANT_REQ
+				req_caches = APPLICATION_CACHE_REQ
+				req_cv = APPLICATION_CV_REQ
+			if(SCRIPTURE_REVENANT)
+				req_servants = REVENANT_SERVANT_REQ
+				req_caches = REVENANT_CACHE_REQ
+				req_cv = REVENANT_CV_REQ
+			if(SCRIPTURE_JUDGEMENT)
+				req_servants = JUDGEMENT_SERVANT_REQ
+				req_caches = JUDGEMENT_CACHE_REQ
+				req_cv = JUDGEMENT_CV_REQ
+				req_ai = TRUE
+		desc += "<br><b>[validservants]/[req_servants]</b> Servants"
+		if(validservants < req_servants)
+			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
+		else
+			desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+		desc += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
+		if(clockwork_caches < req_caches)
+			icon_state += "-caches"
+		else
+			desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+		if(req_cv) //cv only shows up if the tier requires it
+			desc += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
+			if(clockwork_construction_value < req_cv)
+				icon_state += "-cv"
+			else
+				desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+		if(req_ai) //same for ai
+			if(unconverted_ais_exist)
+				if(unconverted_ais_exist > 1)
+					desc += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
+				else
+					desc += "<br><b>An unconverted AI exists!</b>"
+				icon_state += "-ai"
+			else
+				desc += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
 
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
@@ -262,7 +351,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	else
 		var/servants = 0
 		var/validservants = 0
-		var/unconverted_ai_exists = FALSE
+		var/unconverted_ais_exist = FALSE
 		var/list/scripture_states = scripture_unlock_check()
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
@@ -270,7 +359,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				if(ishuman(L) || issilicon(L))
 					validservants++
 			else if(isAI(L))
-				unconverted_ai_exists = TRUE
+				unconverted_ais_exist++
 		if(servants > 1)
 			if(validservants > 1)
 				desc = "<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>"
@@ -284,23 +373,26 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
-		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.ratvar_portal)
 				desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
 			else
 				desc += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
-		if(unconverted_ai_exists)
-			desc += "<b>An unconverted AI exists!</b><br>"
+		if(unconverted_ais_exist)
+			if(unconverted_ais_exist > 1)
+				desc += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
+			else
+				desc += "<b>An unconverted AI exists!</b><br>"
 		if(scripture_states[SCRIPTURE_REVENANT])
 			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
 			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
 			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
-				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
+				desc += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
+				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
 			else
 				desc += "Generals available: <b>NONE</b><br>"
 		else
@@ -446,6 +538,7 @@ so as to remain in compliance with the most up-to-date laws."
 	if(isliving(usr))
 		var/mob/living/L = usr
 		return L.resist()
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
@@ -493,8 +586,8 @@ so as to remain in compliance with the most up-to-date laws."
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	..()
+	. = ..()
 	severity = 0
 	master = null
 	screen_loc = ""
-	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!
+

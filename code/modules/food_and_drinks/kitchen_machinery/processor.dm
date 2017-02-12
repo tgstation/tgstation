@@ -3,7 +3,7 @@
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "processor"
+	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
@@ -21,12 +21,29 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/processor
-	name = "circuit board (Food Processor)"
+	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
 	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/machine/processor
+	name = "Food Processor (Machine Board)"
+	build_path = /obj/machinery/processor
+
+/obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(build_path == /obj/machinery/processor)
+			name = "Slime Processor (Machine Board)"
+			build_path = /obj/machinery/processor/slime
+			user << "<span class='notice'>Name protocols successfully updated.</span>"
+		else
+			name = "Food Processor (Machine Board)"
+			build_path = /obj/machinery/processor
+			user << "<span class='notice'>Defaulting name protocols.</span>"
+	else
+		return ..()
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -73,13 +90,21 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
+/datum/food_processor_process/bacon
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet
+	output = /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
+
+/datum/food_processor_process/potatowedges
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+	output = /obj/item/weapon/reagent_containers/food/snacks/fries
+
 /datum/food_processor_process/sweetpotato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet
 	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
 
 /datum/food_processor_process/potato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
-	output = /obj/item/weapon/reagent_containers/food/snacks/fries
+	output = /obj/item/weapon/reagent_containers/food/snacks/tatortot
 
 /datum/food_processor_process/carrot
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
@@ -131,9 +156,10 @@
 				"<span class='notice'>You jump out from the processor!</span>", \
 				"<span class='italics'>You hear chimpering.</span>")
 		return
-	var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
+	var/obj/bucket = new /obj/item/weapon/reagent_containers/glass/bucket(loc)
+
 	var/datum/reagent/blood/B = new()
-	B.holder = bucket_of_blood
+	B.holder = bucket
 	B.volume = 70
 	//set reagent data
 	B.data["donor"] = O
@@ -146,9 +172,9 @@
 
 	if(O.resistances&&O.resistances.len)
 		B.data["resistances"] = O.resistances.Copy()
-	bucket_of_blood.reagents.reagent_list += B
-	bucket_of_blood.reagents.update_total()
-	bucket_of_blood.on_reagent_change()
+	bucket.reagents.reagent_list += B
+	bucket.reagents.update_total()
+	bucket.on_reagent_change()
 	//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
 	..()
 
@@ -167,7 +193,7 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
-	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
+	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
 
 	if(exchange_parts(user, O))
@@ -185,12 +211,12 @@
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
-			"You put the [O] into [src].")
+			"You put [O] into [src].")
 		user.drop_item()
 		O.loc = src
 		return 1
 	else
-		if(user.a_intent != "harm")
+		if(user.a_intent != INTENT_HARM)
 			user << "<span class='warning'>That probably won't blend!</span>"
 			return 1
 		else
@@ -202,6 +228,15 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
+	if(user.a_intent == INTENT_GRAB && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
+		if(user.grab_state < GRAB_AGGRESSIVE)
+			user << "<span class='warning'>You need a better grip to do that!</span>"
+			return
+		var/mob/living/pushed_mob = user.pulling
+		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
+		pushed_mob.forceMove(src)
+		user.stop_pulling()
+		return
 	if(src.contents.len == 0)
 		user << "<span class='warning'>The processor is empty!</span>"
 		return 1
@@ -215,7 +250,7 @@
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
+			log_admin("DEBUG: [O] in processor hasnt got a suitable recipe. How did it get in there? Please report it immediatly!!!")
 			continue
 		total_time += P.time
 	var/offset = prob(50) ? -2 : 2
@@ -229,7 +264,7 @@
 		P.process_food(src.loc, O, src)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	src.processing = 0
-	src.visible_message("\the [src] finishes processing.")
+	src.visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
@@ -249,3 +284,15 @@
 		M.loc = src.loc
 	return
 
+/obj/machinery/processor/slime
+	name = "Slime processor"
+	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
+
+/obj/machinery/processor/slime/New()
+	..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/slime(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/processor/slime
+	name = "Slime Processor (Machine Board)"
+	build_path = /obj/machinery/processor/slime

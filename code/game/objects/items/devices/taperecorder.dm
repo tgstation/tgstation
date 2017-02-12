@@ -3,7 +3,7 @@
 	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = HEAR
 	slot_flags = SLOT_BELT
 	languages_spoken = ALL //this is a translator, after all.
@@ -22,6 +22,7 @@
 /obj/item/device/taperecorder/New()
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
+	..()
 
 
 /obj/item/device/taperecorder/examine(mob/user)
@@ -31,9 +32,8 @@
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I,src))
 			return
-		I.loc = src
 		mytape = I
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		update_icon()
@@ -47,14 +47,14 @@
 		mytape = null
 		update_icon()
 
-/obj/item/device/taperecorder/fire_act()
+/obj/item/device/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.ruin() //Fires destroy the tape
-	return()
+	..()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
 		if(mytape)
-			if(user.l_hand != src && user.r_hand != src)
+			if(!user.is_holding(src))
 				..()
 				return
 			eject(user)
@@ -238,7 +238,7 @@
 	desc = "A magnetic tape that can hold up to ten minutes of content."
 	icon_state = "tape_white"
 	item_state = "analyzer"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1
 	throwforce = 0
@@ -248,8 +248,9 @@
 	var/list/timestamp = list()
 	var/ruined = 0
 
-/obj/item/device/tape/fire_act()
+/obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
+	..()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
@@ -271,13 +272,19 @@
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120/I.toolspeed, target = src))
-			user << "<span class='notice'>You wound the tape back in.</span>"
-			fix()
-
+	if(ruined)
+		var/delay = -1
+		if (istype(I, /obj/item/weapon/screwdriver))
+			delay = 120*I.toolspeed
+		else if(istype(I, /obj/item/weapon/pen))
+			delay = 120*1.5
+		if (delay != -1)
+			user << "<span class='notice'>You start winding the tape back in...</span>"
+			if(do_after(user, delay, target = src))
+				user << "<span class='notice'>You wound the tape back in.</span>"
+				fix()
 
 //Random colour tapes
 /obj/item/device/tape/random/New()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
+	..()

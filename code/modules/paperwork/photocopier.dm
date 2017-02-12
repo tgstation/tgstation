@@ -18,6 +18,9 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
+	obj_integrity = 300
+	max_integrity = 300
+	integrity_failure = 100
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
@@ -49,7 +52,7 @@
 				dat += "Printing in <a href='byond://?src=\ref[src];colortoggle=1'>[greytoggle]</a><BR><BR>"
 	else if(toner)
 		dat += "Please insert paper to copy.<BR><BR>"
-	if(istype(user,/mob/living/silicon/ai))
+	if(isAI(user))
 		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
 	dat += "Current toner level: [toner]"
 	if(!toner)
@@ -195,7 +198,8 @@
 			copies++
 			updateUsrDialog()
 	else if(href_list["aipic"])
-		if(!istype(usr,/mob/living/silicon/ai)) return
+		if(!isAI(usr))
+			return
 		if(toner >= 5 && !busy)
 			var/list/nametemp = list()
 			var/find
@@ -250,8 +254,9 @@
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
-				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
-				burn_state = ON_FIRE
+				user << "<span class='warning'>[src] smokes, smelling of brimstone!</span>"
+				resistance_flags |= FLAMMABLE
+				fire_act()
 			else
 				if(!user.drop_item())
 					return
@@ -293,38 +298,18 @@
 		if(isinspace())
 			user << "<span class='warning'>There's nothing to fasten [src] to!</span>"
 			return
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, O.usesound, 50, 1)
 		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
-		if(do_after(user, 20/O.toolspeed, target = src))
-			if(qdeleted(src))
+		if(do_after(user, 20*O.toolspeed, target = src))
+			if(QDELETED(src))
 				return
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
 	else
 		return ..()
 
-/obj/machinery/photocopier/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				qdel(src)
-			else
-				if(toner > 0)
-					new /obj/effect/decal/cleanable/oil(get_turf(src))
-					toner = 0
-		else
-			if(prob(50))
-				if(toner > 0)
-					new /obj/effect/decal/cleanable/oil(get_turf(src))
-					toner = 0
-
-
-/obj/machinery/photocopier/blob_act(obj/effect/blob/B)
-	if(prob(50))
-		qdel(src)
-	else
+/obj/machinery/photocopier/obj_break(damage_flag)
+	if(!(flags & NODECONSTRUCT))
 		if(toner > 0)
 			new /obj/effect/decal/cleanable/oil(get_turf(src))
 			toner = 0
@@ -340,7 +325,7 @@
 		user.visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>", "<span class='notice'>You start putting [target] onto the photocopier...</span>")
 
 	if(do_after(user, 20, target = src))
-		if(!target || qdeleted(target) || qdeleted(src) || !Adjacent(target)) //check if the photocopier/target still exists.
+		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
 		if(target == user)
@@ -369,7 +354,7 @@
 		ass = null
 		updateUsrDialog()
 		return 0
-	else if(istype(ass,/mob/living/carbon/human))
+	else if(ishuman(ass))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
 			return 1
 		else
@@ -378,7 +363,7 @@
 		return 1
 
 /obj/machinery/photocopier/proc/copier_blocked()
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(loc.density)
 		return 1

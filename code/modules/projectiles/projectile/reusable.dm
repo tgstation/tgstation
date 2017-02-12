@@ -1,8 +1,9 @@
 /obj/item/projectile/bullet/reusable
 	name = "reusable bullet"
 	desc = "How do you even reuse a bullet?"
-	var/ammo_type = /obj/item/ammo_casing/caseless/
+	var/ammo_type = /obj/item/ammo_casing/caseless
 	var/dropped = 0
+	impact_effect_type = null
 
 /obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -14,7 +15,8 @@
 
 /obj/item/projectile/bullet/reusable/proc/handle_drop()
 	if(!dropped)
-		new ammo_type(src.loc)
+		var/turf/T = get_turf(src)
+		new ammo_type(T)
 		dropped = 1
 
 /obj/item/projectile/bullet/reusable/magspear
@@ -31,27 +33,30 @@
 	damage_type = OXY
 	nodamage = 1
 	icon = 'icons/obj/guns/toy.dmi'
-	icon_state = "foamdart"
+	icon_state = "foamdart_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	range = 10
+	var/modified = 0
 	var/obj/item/weapon/pen/pen = null
 
 /obj/item/projectile/bullet/reusable/foam_dart/handle_drop()
 	if(dropped)
 		return
+	var/turf/T = get_turf(src)
 	dropped = 1
-	var/obj/item/ammo_casing/caseless/foam_dart/newdart = new ammo_type(src.loc)
-	var/obj/item/ammo_casing/caseless/foam_dart/old_dart = ammo_casing
-	newdart.modified = old_dart.modified
+	var/obj/item/ammo_casing/caseless/foam_dart/newcasing = new ammo_type(T)
+	newcasing.modified = modified
+	var/obj/item/projectile/bullet/reusable/foam_dart/newdart = newcasing.BB
+	newdart.modified = modified
+	newdart.damage = damage
+	newdart.nodamage = nodamage
+	newdart.damage_type = damage_type
 	if(pen)
-		var/obj/item/projectile/bullet/reusable/foam_dart/newdart_FD = newdart.BB
-		newdart_FD.pen = pen
-		pen.loc = newdart_FD
+		newdart.pen = pen
+		pen.forceMove(newdart)
 		pen = null
-	newdart.BB.damage = damage
-	newdart.BB.nodamage = nodamage
-	newdart.BB.damage_type = damage_type
 	newdart.update_icon()
+
 
 /obj/item/projectile/bullet/reusable/foam_dart/Destroy()
 	pen = null
@@ -59,6 +64,14 @@
 
 /obj/item/projectile/bullet/reusable/foam_dart/riot
 	name = "riot foam dart"
-	icon_state = "foamdart_riot"
+	icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	stamina = 25
+
+/obj/item/projectile/bullet/reusable/arrow
+	name = "arrow"
+	icon_state = "arrow"
+	ammo_type = /obj/item/ammo_casing/caseless/arrow
+	range = 10
+	damage = 25
+	damage_type = BRUTE

@@ -46,3 +46,9 @@
 
 /mob/living/carbon/alien/handle_changeling()
 	return
+
+/mob/living/carbon/alien/handle_fire()//Aliens on fire code
+	if(..())
+		return
+	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
+	return

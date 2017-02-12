@@ -14,11 +14,11 @@
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
-		var/list/hand_items = list(L.get_active_hand(),L.get_inactive_hand())
+		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/charged_item = null
 		var/burnt_out = 0
 
-		if(L.pulling && (istype(L.pulling, /mob/living)))
+		if(L.pulling && isliving(L.pulling))
 			var/mob/living/M =	L.pulling
 			if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
 				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
@@ -58,6 +58,7 @@
 				if(istype(item,/obj/item/weapon/gun/magic/wand) && I.max_charges != 0)
 					var/obj/item/weapon/gun/magic/W = item
 					W.icon_state = initial(W.icon_state)
+				I.recharge_newshot()
 				charged_item = I
 				break
 			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
@@ -83,6 +84,9 @@
 								C.maxcharge = 1
 								burnt_out = 1
 						C.charge = C.maxcharge
+						if(istype(C.loc,/obj/item/weapon/gun))
+							var/obj/item/weapon/gun/G = C.loc
+							G.process_chamber()
 						item.update_icon()
 						charged_item = item
 						break

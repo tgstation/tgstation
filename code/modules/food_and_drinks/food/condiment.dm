@@ -10,7 +10,7 @@
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change() to change names, descs and sprites.
@@ -124,8 +124,14 @@
 	list_reagents = list("sodiumchloride" = 20)
 	possible_states = list()
 
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker/on_reagent_change()
+	if(reagents.reagent_list.len == 0)
+		icon_state = "emptyshaker"
+	else
+		icon_state = "saltshakersmall"
+
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/newname = "[name]"
 	name = "[user.name]"
 	user.name = newname
@@ -134,14 +140,17 @@
 	return (TOXLOSS)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
-	if(!proximity || !isturf(target))
+	if(!proximity)
 		return
-	if(!reagents.has_reagent("sodiumchloride", 2))
-		user << "<span class='warning'>You don't have enough salt to make a pile!</span>"
+	if(isturf(target))
+		if(!reagents.has_reagent("sodiumchloride", 2))
+			user << "<span class='warning'>You don't have enough salt to make a pile!</span>"
+			return
+		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
+		reagents.remove_reagent("sodiumchloride", 2)
+		new/obj/effect/decal/cleanable/salt(target)
 		return
-	user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
-	reagents.remove_reagent("sodiumchloride", 2)
-	new/obj/effect/decal/cleanable/salt(target)
+	..()
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -152,6 +161,12 @@
 	volume = 20
 	list_reagents = list("blackpepper" = 20)
 	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/peppermill/on_reagent_change()
+	if(reagents.reagent_list.len == 0)
+		icon_state = "emptyshaker"
+	else
+		icon_state = "peppermillsmall"
 
 /obj/item/weapon/reagent_containers/food/condiment/milk
 	name = "space milk"

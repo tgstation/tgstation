@@ -4,24 +4,32 @@
 	opacity = 0
 	density = 0
 	layer = SIGN_LAYER
+	obj_integrity = 100
+	max_integrity = 100
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	var/buildable_sign = 1 //unwrenchable and modifiable
 
 /obj/structure/sign/basic
 	name = "blank sign"
 	desc = "How can signs be real if our eyes aren't real?"
 	icon_state = "backing"
 
-/obj/structure/sign/ex_act(severity, target)
-	qdel(src)
-
-/obj/structure/sign/blob_act(obj/effect/blob/B)
-	qdel(src)
+/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 80, 1)
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(istype(O, /obj/item/weapon/wrench) && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		if(!do_after(user, 30/O.toolspeed, target = src))
+		playsound(src, O.usesound, 50, 1)
+		if(!do_after(user, 30*O.toolspeed, target = src))
 			return
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
@@ -30,7 +38,7 @@
 		SB.icon_state = icon_state
 		SB.sign_path = type
 		qdel(src)
-	else if(istype(O, /obj/item/weapon/pen))
+	else if(istype(O, /obj/item/weapon/pen) && buildable_sign)
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
@@ -86,15 +94,15 @@
 	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	w_class = 3
-	burn_state = FLAMMABLE
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FLAMMABLE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-							 "<span class='notice'>You attach a blank sign to [T].</span>")
+							 "<span class='notice'>You attach the sign to [T].</span>")
 		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
 		new sign_path(T)
 		user.drop_item()
@@ -105,6 +113,8 @@
 /obj/structure/sign/map
 	name = "station map"
 	desc = "A framed picture of the station."
+	obj_integrity = 500
+	max_integrity = 500
 
 /obj/structure/sign/map/left
 	icon_state = "map-left"
@@ -228,7 +238,7 @@
 
 /obj/structure/sign/xenobio
 	name = "\improper XENOBIOLOGY"
-	desc = "A sign labelling an area as a place where xenobiological entites are researched."
+	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
 
 /obj/structure/sign/directions/science
@@ -255,5 +265,3 @@
 	name = "escape arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
-
-

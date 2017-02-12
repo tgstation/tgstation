@@ -8,6 +8,7 @@
 	use_power = 1
 	idle_power_usage = 40
 	interact_offline = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
@@ -84,9 +85,16 @@
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/blob_act(obj/effect/blob/B)
-	if(prob(50))
-		qdel(src)
+/obj/machinery/chem_dispenser/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		cut_overlays()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -153,7 +161,7 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
-				beaker.loc = loc
+				beaker.forceMove(loc)
 				beaker = null
 				cut_overlays()
 				. = TRUE
@@ -162,7 +170,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		var/obj/item/weapon/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
@@ -180,7 +188,7 @@
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
 		add_overlay(icon_beaker)
-	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
+	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
 		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
 		return ..()
@@ -243,7 +251,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/chem_dispenser
-	name = "circuit board (Portable Chem Dispenser)"
+	name = "Portable Chem Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/constructable
 	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
 	req_components = list(
@@ -273,7 +281,6 @@
 	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/constructable/attackby(obj/item/I, mob/user, params)
-	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
 		return
 
@@ -284,7 +291,7 @@
 		return
 	return ..()
 
-/obj/machinery/chem_dispenser/constructable/deconstruction()
+/obj/machinery/chem_dispenser/constructable/on_deconstruction()
 	if(beaker)
 		beaker.loc = loc
 		beaker = null

@@ -9,12 +9,12 @@
 	icon_state = "gavelhammer"
 	force = 5
 	throwforce = 6
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("bashed", "battered", "judged", "whacked")
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/gavelhammer/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] has sentenced \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -25,13 +25,13 @@
 	icon_state = "gavelblock"
 	force = 2
 	throwforce = 2
-	w_class = 1
-	burn_state = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/gavelblock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/gavelhammer))
 		playsound(loc, 'sound/items/gavel.ogg', 100, 1)
-		user.visible_message("<span class='warning'>[user] strikes \the [src] with \the [I].</span>")
+		user.visible_message("<span class='warning'>[user] strikes [src] with [I].</span>")
 		user.changeNext_move(CLICK_CD_MELEE)
 	else
 		return ..()

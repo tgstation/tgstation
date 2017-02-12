@@ -6,9 +6,11 @@
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
+
 	var/stunforce = 7
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
@@ -16,7 +18,7 @@
 	var/throw_hit_chance = 35
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
@@ -26,7 +28,8 @@
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	..()
-	if(status && prob(throw_hit_chance))
+	//Only mob/living types have stun handling
+	if(status && prob(throw_hit_chance) && isliving(hit_atom))
 		baton_stun(hit_atom)
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
@@ -36,14 +39,14 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
+		//Note this value returned is significant, as it will determine
+		//if a stun is applied or not
 		. = bcell.use(chrgdeductamt)
-		if(bcell.charge >= hitcost) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
-			return
-	if(status)
-		status = 0
-		update_icon()
-		playsound(loc, "sparks", 75, 1, -1)
-	return 0
+		if(status && bcell.charge < hitcost)
+			//we're below minimum, turn off
+			status = 0
+			update_icon()
+			playsound(loc, "sparks", 75, 1, -1)
 
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -70,9 +73,8 @@
 			if(C.maxcharge < hitcost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
@@ -110,25 +112,27 @@
 		deductcharge(hitcost)
 		return
 
-	if(isrobot(M))
+	if(iscyborg(M))
 		..()
 		return
-	if(!isliving(M))
-		return
 
-	var/mob/living/L = M
 
-	if(user.a_intent != "harm")
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		if(check_martial_counter(L, user))
+			return
+
+	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_stun(L, user))
-				user.do_attack_animation(L)
+			if(baton_stun(M, user))
+				user.do_attack_animation(M)
 				return
 		else
-			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_stun(L, user)
+			baton_stun(M, user)
 		..()
 
 
@@ -138,7 +142,7 @@
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
-	if(isrobot(loc))
+	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(hitcost))
 			return 0
@@ -175,12 +179,13 @@
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
+	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
 	stunforce = 5
-	hitcost = 2500
+	hitcost = 2000
 	throw_hit_chance = 10
-	slot_flags = null
+	slot_flags = SLOT_BACK
 	var/obj/item/device/assembly/igniter/sparkler = 0
 
 /obj/item/weapon/melee/baton/cattleprod/New()

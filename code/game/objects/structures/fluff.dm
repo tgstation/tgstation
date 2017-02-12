@@ -13,7 +13,7 @@
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(user, I.usesound, 50, 1)
 		if(!do_after(user, 50, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
@@ -71,7 +71,7 @@
 	icon_state = "drake_statue_falling"
 
 
-/obj/structure/fluff/bus/
+/obj/structure/fluff/bus
 	name = "bus"
 	desc = "GO TO SCHOOL. READ A BOOK."
 	icon = 'icons/obj/bus.dmi'
@@ -120,3 +120,43 @@
 	name = "dense stack of papers"
 	desc = "A stack of various papers, childish scribbles scattered across each page."
 	icon_state = "paperstack"
+
+
+/obj/structure/fluff/divine
+	name = "Miracle"
+	icon = 'icons/obj/hand_of_god_structures.dmi'
+	anchored = 1
+	density = 1
+
+/obj/structure/fluff/divine/nexus
+	name = "nexus"
+	desc = "It anchors a deity to this world. It radiates an unusual aura. It looks well protected from explosive shock."
+	icon_state = "nexus"
+
+/obj/structure/fluff/divine/conduit
+	name = "conduit"
+	desc = "It allows a deity to extend their reach.  Their powers are just as potent near a conduit as a nexus."
+	icon_state = "conduit"
+
+/obj/structure/fluff/divine/convertaltar
+	name = "conversion altar"
+	desc = "An altar dedicated to a deity."
+	icon_state = "convertaltar"
+	density = 0
+	can_buckle = 1
+
+/obj/structure/fluff/divine/powerpylon
+	name = "power pylon"
+	desc = "A pylon which increases the deity's rate it can influence the world."
+	icon_state = "powerpylon"
+	can_buckle = 1
+
+/obj/structure/fluff/divine/defensepylon
+	name = "defense pylon"
+	desc = "A pylon which is blessed to withstand many blows, and fire strong bolts at nonbelievers. A god can toggle it."
+	icon_state = "defensepylon"
+
+/obj/structure/fluff/divine/shrine
+	name = "shrine"
+	desc = "A shrine dedicated to a deity."
+	icon_state = "shrine"

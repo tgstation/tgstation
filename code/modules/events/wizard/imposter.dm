@@ -1,7 +1,7 @@
 /datum/round_event_control/wizard/imposter //Mirror Mania
 	name = "Imposter Wizard"
 	weight = 1
-	typepath = /datum/round_event/wizard/imposter/
+	typepath = /datum/round_event/wizard/imposter
 	max_occurrences = 1
 	earliest_start = 0
 
@@ -16,7 +16,7 @@
 			return //Sad Trombone
 		var/client/C = pick(candidates)
 
-		PoolOrNew(/obj/effect/particle_effect/smoke, W.loc)
+		new /obj/effect/particle_effect/smoke(W.loc)
 
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
 		W.dna.transfer_identity(I, transfer_SE=1)

@@ -8,22 +8,27 @@ var/global/datum/getrev/revdata = new()
 
 /datum/getrev/New()
 	var/head_file = return_file_text(".git/logs/HEAD")
-	var/regex/head_log = new("(\\w{40}) (\\w{40}).+> (\\d{10}).+\n\\Z")
+	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
+		var/list/tmp = file2list("..\\prtestjob.lk")
+		for(var/I in tmp)
+			if(I)
+				testmerge |= I
+	var/testlen = max(testmerge.len - 1, 0)
+	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\n*\\Z)")
 	head_log.Find(head_file)
 	parentcommit = head_log.group[1]
-	commit = head_log.group[2]
-	var/unix_time = text2num(head_log.group[3])
-	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
-		testmerge = file2list("..\\prtestjob.lk")
-	date = unix2date(unix_time)
+	date = unix2date(text2num(head_log.group[2]))
+	commit = head_log.group[4]
 	world.log << "Running /tg/ revision:"
 	world.log << "[date]"
-	world.log << commit
 	if(testmerge.len)
+		world.log << commit
 		for(var/line in testmerge)
 			if(line)
 				world.log << "Test merge active of PR #[line]"
 		world.log << "Based off master commit [parentcommit]"
+	else
+		world.log << parentcommit
 	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
 
 /client/verb/showrevinfo()
@@ -31,7 +36,7 @@ var/global/datum/getrev/revdata = new()
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
-	if(revdata.commit)
+	if(revdata.parentcommit)
 		src << "<b>Server revision compiled on:</b> [revdata.date]"
 		if(revdata.testmerge.len)
 			for(var/line in revdata.testmerge)
@@ -39,7 +44,7 @@ var/global/datum/getrev/revdata = new()
 					src << "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
 			src << "Based off master commit <a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 		else
-			src << "<a href='[config.githuburl]/commit/[revdata.commit]'>[revdata.commit]</a>"
+			src << "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 	else
 		src << "Revision unknown"
 	src << "<b>Current Infomational Settings:</b>"
@@ -50,12 +55,33 @@ var/global/datum/getrev/revdata = new()
 	src << "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes"
 	src << "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes"
 	if(config.show_game_type_odds)
-		src <<"<b>Game Mode Odds:</b>"
+		if(ticker.current_state == GAME_STATE_PLAYING)
+			src <<"<b>Game Mode Odds for current round:</b>"
+			var/prob_sum = 0
+			var/list/probs = list()
+			var/list/modes = config.gamemode_cache
+			for(var/mode in modes)
+				var/datum/game_mode/M = mode
+				var/ctag = initial(M.config_tag)
+				if(!(ctag in config.probabilities))
+					continue
+				if((config.min_pop[ctag] && (config.min_pop[ctag] > ticker.totalPlayersReady)) || (initial(M.required_players) > ticker.totalPlayersReady))
+					continue
+				if(config.max_pop[ctag] && (config.max_pop[ctag] < ticker.totalPlayersReady))
+					continue
+				probs[ctag] = 1
+				prob_sum += config.probabilities[ctag]
+			for(var/ctag in probs)
+				if(config.probabilities[ctag] > 0)
+					var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
+					src << "[ctag] [percentage]%"
+		
+		src <<"<b>All Game Mode Odds:</b>"
 		var/sum = 0
-		for(var/i=1,i<=config.probabilities.len,i++)
-			sum += config.probabilities[config.probabilities[i]]
-		for(var/i=1,i<=config.probabilities.len,i++)
-			if(config.probabilities[config.probabilities[i]] > 0)
-				var/percentage = round(config.probabilities[config.probabilities[i]] / sum * 100, 0.1)
-				src << "[config.probabilities[i]] [percentage]%"
+		for(var/ctag in config.probabilities)
+			sum += config.probabilities[ctag]
+		for(var/ctag in config.probabilities)
+			if(config.probabilities[ctag] > 0)
+				var/percentage = round(config.probabilities[ctag] / sum * 100, 0.1)
+				src << "[ctag] [percentage]%"
 	return

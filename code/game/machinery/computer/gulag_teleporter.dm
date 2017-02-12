@@ -4,7 +4,7 @@
 	desc = "Used to send criminals to the Labor Camp"
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(access_security)
+	req_access = list(access_armory)
 	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
 	var/obj/item/weapon/card/id/prisoner/id = null
@@ -15,7 +15,7 @@
 
 /obj/machinery/computer/gulag_teleporter_computer/New()
 	..()
-	addtimer(src, "scan_machinery", 5)
+	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
@@ -91,14 +91,14 @@
 			beacon = findbeacon()
 		if("handle_id")
 			if(id)
-				if(!usr.get_active_hand())
+				if(!usr.get_active_held_item())
 					usr.put_in_hands(id)
 					id = null
 				else
 					id.forceMove(get_turf(src))
 					id = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return
@@ -124,7 +124,7 @@
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(src, "teleport", 5, FALSE, usr)
+			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()
@@ -148,7 +148,7 @@
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Weaken(2) // small travel dizziness
 	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"
-	PoolOrNew(/obj/effect/particle_effect/sparks, prisoner.loc)
+	new /obj/effect/particle_effect/sparks(prisoner.loc)
 	playsound(src.loc, "sparks", 50, 1)
 	if(teleporter.locked)
 		teleporter.locked = FALSE

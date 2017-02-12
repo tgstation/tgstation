@@ -40,5 +40,12 @@ var/cmp_field = "name"
 /proc/cmp_subsystem_priority(datum/subsystem/a, datum/subsystem/b)
 	return a.priority - b.priority
 
+/proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
+	return a.timeToRun - b.timeToRun
+
 /proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
 	return B.priority - A.priority
+
+/proc/cmp_clockscripture_priority(datum/clockwork_scripture/A, datum/clockwork_scripture/B)
+	return initial(A.sort_priority) - initial(B.sort_priority)
+

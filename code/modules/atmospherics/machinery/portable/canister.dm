@@ -17,9 +17,13 @@
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
 
-	var/health = 100
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
+	var/starter_temp
 
 	var/update = 0
 	var/static/list/label2types = list(
@@ -30,6 +34,8 @@
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
+		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
+		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
 
@@ -38,39 +44,60 @@
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	gas_type = "n2"
+
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	gas_type = "o2"
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	gas_type = "co2"
+
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	gas_type = "plasma"
+
 /obj/machinery/portable_atmospherics/canister/agent_b
 	name = "agent b canister"
 	desc = "Oxygen Agent B. You're not quite sure what it does."
 	gas_type = "agent_b"
+
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
 	gas_type = "bz"
+
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	gas_type = "n2o"
+
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
+
+/obj/machinery/portable_atmospherics/canister/freon
+	name = "freon canister"
+	desc = "Freon. Great for the atmosphere!"
+	icon_state = "freon"
+	gas_type = "freon"
+	starter_temp = 120
+
+/obj/machinery/portable_atmospherics/canister/water_vapor
+	name = "water vapor canister"
+	desc = "Water Vapor. We get it, you vape."
+	icon_state = "water_vapor"
+	gas_type = "water_vapor"
+	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
@@ -78,7 +105,6 @@
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
-
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
@@ -94,8 +120,11 @@
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
 		air_contents.add_gas(gas_type)
+		if(starter_temp)
+			air_contents.temperature = starter_temp
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-
+		if(starter_temp)
+			air_contents.temperature = starter_temp
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.add_gases("o2","n2")
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
@@ -155,40 +184,56 @@
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		take_damage(5, BRUTE, 0)
+		take_damage(5, BURN, 0)
 
-/obj/machinery/portable_atmospherics/canister/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+
+/obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
+			canister_break()
+		if(disassembled)
+			new /obj/item/stack/sheet/metal (loc, 10)
 		else
-			return
-	if(stat & BROKEN)
+			new /obj/item/stack/sheet/metal (loc, 5)
+	qdel(src)
+
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
+	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(stat & BROKEN)
+			if(!WT.remove_fuel(0, user))
+				return
+			playsound(loc, WT.usesound, 40, 1)
+			user << "<span class='notice'>You begin cutting [src] apart...</span>"
+			if(do_after(user, 30, target = src))
+				deconstruct(TRUE)
+		else
+			user << "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>"
+		return 1
+	else
+		return ..()
+
+/obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
+	if((stat & BROKEN) || (flags & NODECONSTRUCT))
 		return
-	health = max( health - damage, 0)
-	if(!health)
-		disconnect()
-		var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
-		var/turf/T = get_turf(src)
-		T.assume_air(expelled_gas)
-		air_update_turf()
+	canister_break()
 
-		stat |= BROKEN
-		density = 0
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-		update_icon()
-		investigate_log("was destroyed.", "atmos")
+/obj/machinery/portable_atmospherics/canister/proc/canister_break()
+	disconnect()
+	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
+	var/turf/T = get_turf(src)
+	T.assume_air(expelled_gas)
+	air_update_turf()
 
-		if(holding)
-			holding.loc = T
-			holding = null
+	stat |= BROKEN
+	density = 0
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	update_icon()
+	investigate_log("was destroyed.", "atmos")
+
+	if(holding)
+		holding.forceMove(T)
+		holding = null
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
@@ -208,39 +253,6 @@
 	if(!holding)
 		air_update_turf() // Update the environment if needed.
 	update_icon()
-
-/obj/machinery/portable_atmospherics/canister/blob_act(obj/effect/blob/B)
-	take_damage(100, BRUTE, 0)
-
-/obj/machinery/portable_atmospherics/canister/burn()
-	take_damage(health, BURN, 1)
-	..()
-
-/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage / 2, P.damage_type, 0)
-
-/obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			if((stat & BROKEN) || prob(30))
-				qdel(src)
-			else
-				take_damage(100, BRUTE, 0)
-		if(2)
-			if(stat & BROKEN)
-				qdel(src)
-			else
-				take_damage(rand(40, 110), BRUTE, 0)
-		if(3)
-			take_damage(rand(15, 40), BRUTE, 0)
-
-/obj/machinery/portable_atmospherics/canister/attacked_by(obj/item/I, mob/user)
-	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
-	investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
-	add_fingerprint(user)
-	take_damage(I.force, I.damtype, 1)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
@@ -276,6 +288,9 @@
 				var/newtype = label2types[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
+					if(connected_port)
+						replacement.connected_port = connected_port
+						replacement.connected_port.connected_device = replacement
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")
@@ -308,9 +323,22 @@
 					var/plasma = air_contents.gases["plasma"]
 					var/n2o = air_contents.gases["n2o"]
 					var/bz = air_contents.gases["bz"]
-					if(n2o || plasma || bz)
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""][(n2o || plasma) && bz ? " & " : ""][bz ? "BZ" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-						log_admin("[key_name(usr)] opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""][(n2o || plasma) && bz ? " & " : ""][bz ? "BZ" : ""] at [x], [y], [z]")
+					var/freon = air_contents.gases["freon"]
+					if(n2o || plasma || bz || freon)
+						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains the following: (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains the following at [x], [y], [z]:")
+						if(plasma)
+							log_admin("Plasma")
+							message_admins("Plasma")
+						if(n2o)
+							log_admin("N2O")
+							message_admins("N2O")
+						if(bz)
+							log_admin("BZ Gas")
+							message_admins("BZ Gas")
+						if(freon)
+							log_admin("Freon")
+							message_admins("Freon")
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, "atmos")

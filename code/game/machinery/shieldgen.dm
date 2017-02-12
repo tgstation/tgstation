@@ -1,110 +1,99 @@
-/obj/machinery/shield
-		name = "emergency energy shield"
-		desc = "An energy shield used to contain hull breaches."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "shield-old"
-		density = 1
-		opacity = 0
-		anchored = 1
-		unacidable = 1
-		var/const/max_health = 200
-		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
+/obj/structure/emergency_shield
+	name = "emergency energy shield"
+	desc = "An energy shield used to contain hull breaches."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield-old"
+	density = 1
+	opacity = 0
+	anchored = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	max_integrity = 200
+	obj_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/machinery/shield/New()
+/obj/structure/emergency_shield/New()
 	src.setDir(pick(1,2,3,4))
 	..()
 	air_update_turf(1)
 
-/obj/machinery/shield/Destroy()
+/obj/structure/emergency_shield/Destroy()
 	opacity = 0
 	density = 0
 	air_update_turf(1)
 	return ..()
 
-/obj/machinery/shield/Move()
+/obj/structure/emergency_shield/Move()
 	var/turf/T = loc
 	..()
 	move_update_air(T)
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height)
+/obj/structure/emergency_shield/CanPass(atom/movable/mover, turf/target, height)
 	if(!height) return 0
 	else return ..()
 
-/obj/machinery/shield/CanAtmosPass(turf/T)
-	return !density
-
-/obj/machinery/shield/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type)
-
-/obj/machinery/shield/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			take_damage(rand(180,260), BRUTE, 0)
-		if(2)
-			take_damage(rand(150,230), BRUTE, 0)
-		if(3)
-			take_damage(rand(80,150), BRUTE, 0)
-
-/obj/machinery/shield/emp_act(severity)
+/obj/structure/emergency_shield/emp_act(severity)
 	switch(severity)
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(50, BRUTE, 0)
+			take_damage(50, BRUTE, "energy", 0)
 
-/obj/machinery/shield/blob_act(obj/effect/blob/B)
-	qdel(src)
-
-
-/obj/machinery/shield/hitby(AM as mob|obj)
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		var/obj/O = AM
-		tforce = O.throwforce
-	..()
-	take_damage(tforce)
-
-/obj/machinery/shield/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
-		else
-			return
-	opacity = 1
-	spawn(20)
-		opacity = 0
-	health -= damage
-	if(health <= 0)
-		qdel(src)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+
+/obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(.) //damage was dealt
+		opacity = 1
+		spawn(20)
+			opacity = 0
+
+/obj/structure/emergency_shield/sanguine
+	name = "sanguine barrier"
+	desc = "A potent shield summoned by cultists to defend their rites."
+	icon_state = "shield-red"
+	obj_integrity = 60
+	max_integrity = 60
+
+/obj/structure/emergency_shield/sanguine/emp_act(severity)
+	return
+
+/obj/structure/emergency_shield/invoker
+	name = "Invoker's Shield"
+	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
+	color = "#FF0000"
+	obj_integrity = 20
+	max_integrity = 20
+	mouse_opacity = 0
+
+/obj/structure/emergency_shield/invoker/emp_act(severity)
+	return
 
 /obj/machinery/shieldgen
-		name = "anti-breach shielding projector"
-		desc = "Used to seal minor hull breaches."
-		icon = 'icons/obj/objects.dmi'
-		icon_state = "shieldoff"
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
-		req_access = list(access_engine)
-		var/const/max_health = 100
-		var/health = max_health
-		var/active = 0
-		var/list/deployed_shields = list()
-		var/locked = 0
-		var/shield_range = 4
+	name = "anti-breach shielding projector"
+	desc = "Used to seal minor hull breaches."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	density = 1
+	opacity = 0
+	anchored = 0
+	pressure_resistance = 2*ONE_ATMOSPHERE
+	req_access = list(access_engine)
+	max_integrity = 100
+	obj_integrity = 100
+	var/active = 0
+	var/list/deployed_shields = list()
+	var/locked = 0
+	var/shield_range = 4
 
 /obj/machinery/shieldgen/Destroy()
-	for(var/obj/machinery/shield/shield_tile in deployed_shields)
-		qdel(shield_tile)
-	deployed_shields = null
+	for(var/obj/structure/emergency_shield/ES in deployed_shields)
+		qdel(ES)
+	deployed_shields = list()
 	return ..()
 
 
@@ -116,9 +105,9 @@
 	update_icon()
 
 	for(var/turf/target_tile in range(shield_range, src))
-		if (istype(target_tile,/turf/open/space) && !(locate(/obj/machinery/shield) in target_tile))
+		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
 			if(!(stat & BROKEN) || prob(33))
-				deployed_shields += new /obj/machinery/shield(target_tile)
+				deployed_shields += new /obj/structure/emergency_shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
 	if(!active)
@@ -127,8 +116,8 @@
 	active = 0
 	update_icon()
 
-	for(var/obj/machinery/shield/shield_tile in deployed_shields)
-		qdel(shield_tile)
+	for(var/obj/structure/emergency_shield/ES in deployed_shields)
+		qdel(ES)
 	deployed_shields.Cut()
 
 /obj/machinery/shieldgen/process()
@@ -137,45 +126,12 @@
 			qdel(pick(deployed_shields))
 
 
-/obj/machinery/shieldgen/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		else
-			return
-	health = max(health - damage, 0)
-	if(health <= 0 && !(stat && BROKEN))
-		stat |= BROKEN
-		update_icon()
-
-/obj/machinery/shieldgen/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(33))
-				qdel(src)
-			else
-				take_damage(rand(80,120), BRUTE, 0)
-		if(3)
-			take_damage(rand(40,80), BRUTE, 0)
-
-/obj/machinery/shieldgen/emp_act(severity)
-	switch(severity)
-		if(1)
-			health = 0
+/obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat && BROKEN))
 			stat |= BROKEN
 			locked = pick(0,1)
 			update_icon()
-		if(2)
-			take_damage(rand(80,120), BRUTE, 0)
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
 	if(locked)
@@ -202,7 +158,7 @@
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
 			user << "<span class='notice'>You open the panel and expose the wiring.</span>"
@@ -218,7 +174,7 @@
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
-			health = max_health
+			obj_integrity = max_integrity
 			stat &= ~BROKEN
 			user << "<span class='notice'>You repair \the [src].</span>"
 			update_icon()
@@ -228,11 +184,11 @@
 			user << "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>"
 			return
 		if(!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You secure \the [src] to the floor!</span>"
 			anchored = 1
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You unsecure \the [src] from the floor!</span>"
 			if(active)
 				user << "<span class='notice'>\The [src] shuts off!</span>"
@@ -252,7 +208,7 @@
 /obj/machinery/shieldgen/emag_act()
 	if(!(stat & BROKEN))
 		stat |= BROKEN
-		health = 0
+		obj_integrity = 0
 		update_icon()
 
 /obj/machinery/shieldgen/update_icon()
@@ -261,27 +217,36 @@
 	else
 		icon_state = (stat & BROKEN) ? "shieldoffbr":"shieldoff"
 
-////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
+
+
+
+
+
+
+
+
 #define maxstoredpower 500
 /obj/machinery/shieldwallgen
-		name = "shield generator"
-		desc = "A shield generator."
-		icon = 'icons/obj/stationobjs.dmi'
-		icon_state = "Shield_Gen"
-		anchored = 0
-		density = 1
-		req_access = list(access_teleporter)
-		flags = CONDUCT
-		use_power = 0
-		var/active = 0
-		var/power = 0
-		var/steps = 0
-		var/last_check = 0
-		var/check_delay = 10
-		var/recalc = 0
-		var/locked = 1
-		var/obj/structure/cable/attached		// the attached cable
-		var/storedpower = 0
+	name = "shield wall generator"
+	desc = "A shield generator."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "Shield_Gen"
+	anchored = 0
+	density = 1
+	req_access = list(access_teleporter)
+	flags = CONDUCT
+	use_power = 0
+	obj_integrity = 300
+	max_integrity = 300
+	var/active = 0
+	var/power = 0
+	var/steps = 0
+	var/last_check = 0
+	var/check_delay = 10
+	var/recalc = 0
+	var/locked = 1
+	var/obj/structure/cable/attached		// the attached cable
+	var/storedpower = 0
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -313,7 +278,7 @@
 	if(!anchored)
 		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
-	if(locked && !istype(user, /mob/living/silicon))
+	if(locked && !issilicon(user))
 		user << "<span class='warning'>The controls are locked!</span>"
 		return 1
 	if(power != 1)
@@ -340,10 +305,8 @@
 	power()
 	if(power)
 		storedpower -= 50 //this way it can survive longer and survive at all
-	if(storedpower >= maxstoredpower)
-		storedpower = maxstoredpower
-	if(storedpower <= 0)
-		storedpower = 0
+	storedpower = Clamp(storedpower, 0, maxstoredpower)
+
 
 	if(active == 1)
 		if(!anchored)
@@ -417,13 +380,13 @@
 			return
 
 		else if(!anchored && !isinspace()) //Can't fasten this thing in space
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			user << "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>"
 			anchored = 1
 			return
 
 		else //You can unfasten it tough, if you somehow manage to fasten it.
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			user << "<span class='notice'>You undo the external reinforcing bolts.</span>"
 			anchored = 0
 			return
@@ -464,29 +427,25 @@
 	cleanup(8)
 	return ..()
 
-/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/P)
-	. = ..()
-	storedpower -= P.damage
-
 
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
-		name = "shield"
-		desc = "An energy shield."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "shieldwall"
-		anchored = 1
-		density = 1
-		unacidable = 1
-		luminosity = 3
-		var/needs_power = 0
-		var/active = 1
-		var/delay = 5
-		var/last_active
-		var/mob/U
-		var/obj/machinery/shieldwallgen/gen_primary
-		var/obj/machinery/shieldwallgen/gen_secondary
+	name = "shield wall"
+	desc = "An energy shield."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldwall"
+	anchored = 1
+	density = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	luminosity = 3
+	var/needs_power = 0
+	var/active = 1
+	var/delay = 5
+	var/last_active
+	var/mob/U
+	var/obj/machinery/shieldwallgen/gen_primary
+	var/obj/machinery/shieldwallgen/gen_secondary
 
 /obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
 	..()
@@ -517,43 +476,42 @@
 		else
 			gen_secondary.storedpower -=10
 
+/obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BURN)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+		if(BRUTE)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
 
-/obj/machinery/shieldwall/bullet_act(obj/item/projectile/P)
+//the shield wall is immune to damage but it drains the stored power of the generators.
+/obj/machinery/shieldwall/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
+	if(damage_type == BRUTE || damage_type == BURN)
+		drain_power(damage_amount)
+
+/obj/machinery/shieldwall/proc/drain_power(drain_amount)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		if(prob(50))
 			G = gen_primary
 		else
 			G = gen_secondary
-		G.storedpower -= P.damage
+		G.storedpower -= drain_amount
+
+/obj/machinery/shieldwall/bullet_act(obj/item/projectile/P)
+	. = ..()
+	drain_power(P.damage)
 
 
 /obj/machinery/shieldwall/ex_act(severity, target)
 	if(needs_power)
-		var/obj/machinery/shieldwallgen/G
+		var/drain_amount = 20
 		switch(severity)
-			if(1) //big boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
-				G.storedpower -= 200
-
-			if(2) //medium boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
-				G.storedpower -= 50
-
-			if(3) //lil boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
-				G.storedpower -= 20
-	return
+			if(1)
+				drain_amount = 200
+			if(2)
+				drain_amount = 50
+		drain_power(drain_amount)
 
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
