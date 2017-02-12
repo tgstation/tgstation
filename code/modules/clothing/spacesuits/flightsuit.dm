@@ -265,32 +265,15 @@
 			momentum_decay()
 			var/atom/movable/pull = wearer.pulling
 			for(var/i in 1 to momentum_speed)
+				var/turf/oldturf = get_turf(wearer)
 				if(momentum_speed_x >= i)
-					var/turf/T = get_step(get_turf(wearer), drift_dir_x)
-					if(pull && (pull in T.contents))
-						var/o = 0
-						switch(drift_dir_x)
-							if(EAST)
-								o = WEST
-							if(WEST)
-								o = EAST
-						if(o)
-							pull.forceMove(get_step(get_turf(wearer), o))
-							wearer.pulling = pull
 					step(wearer, drift_dir_x)
 				if(momentum_speed_y >= i)
-					var/turf/T = get_step(get_turf(wearer), drift_dir_y)
-					if(pull && (pull in T.contents))
-						var/o = 0
-						switch(drift_dir_y)
-							if(SOUTH)
-								o = NORTH
-							if(NORTH)
-								o = SOUTH
-						if(o)
-							pull.forceMove(get_step(get_turf(wearer), o))
-							wearer.pulling = pull
 					step(wearer, drift_dir_y)
+				if(pull)
+					if(oldturf)
+						pull.forceMove(oldturf)
+						wearer.pulling = pull
 				sleep(1)
 
 //Make the wearer lose some momentum.
@@ -578,7 +561,9 @@
 		var/turf/oldturf = get_turf(wearer)
 		var/atom/movable/pull = wearer.pulling
 		wearer.forceMove(get_turf(A))
-		wearer.pulling = pull
+		if(pull)
+			pull.forceMove(oldturf)
+			wearer.pulling = pull
 	return pass
 
 
