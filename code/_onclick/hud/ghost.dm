@@ -76,13 +76,12 @@
 
 /datum/hud/ghost/show_hud()
 	var/mob/dead/observer/G = mymob
-	mymob.client.screen = list()
+	mymob.client.screen = list(lighting_backdrop)
 	for(var/thing in plane_masters)
 		mymob.client.screen += plane_masters[thing]
 	create_parallax()
 	if(G.client.prefs.ghost_hud)
 		mymob.client.screen += static_inventory
-
 
 /mob/dead/observer/create_mob_hud()
 	if(client && !hud_used)

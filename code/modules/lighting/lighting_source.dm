@@ -86,13 +86,13 @@
 /datum/light_source/proc/update(var/atom/new_top_atom)
 	// This top atom is different.
 	if (new_top_atom && new_top_atom != top_atom)
-		if(top_atom != source_atom) // Remove ourselves from the light sources of that top atom.
+		if(top_atom != source_atom && top_atom.light_sources) // Remove ourselves from the light sources of that top atom.
 			top_atom.light_sources -= src
 
 		top_atom = new_top_atom
 
 		if (top_atom != source_atom)
-			LAZYADD(src, top_atom.light_sources) // Add ourselves to the light sources of our new top atom.
+			LAZYADD(top_atom.light_sources, src) // Add ourselves to the light sources of our new top atom.
 
 	EFFECT_UPDATE
 

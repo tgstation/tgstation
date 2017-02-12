@@ -36,7 +36,7 @@
 	icon_state = "reeee"
 	screen_loc = "SOUTH,WEST"
 	plane = LIGHTING_PLANE
-	layer = BACKGROUND_LAYER
+	layer = BACKGROUND_LAYER+1
 	blend_mode = BLEND_OVERLAY
 
 /obj/screen/lighting_backdrop/New(loc, new_size)
