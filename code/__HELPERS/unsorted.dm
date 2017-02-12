@@ -1343,7 +1343,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 //Set this to TRUE before calling
 //This prevents RCEs from badmins
 //kevinz000 if you touch this I will hunt you down
-var/vaild_HTTPSGet = FALSE
+var/valid_HTTPSGet = FALSE
 /proc/HTTPSGet(url)
 	if(findtext(url, "\""))
 		valid_HTTPSGet = FALSE
