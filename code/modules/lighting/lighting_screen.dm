@@ -55,7 +55,8 @@
 
 	else
 		// Straight number.
-		x = y = new_size * 2 + 1
+		x = new_size * 2 + 1
+		y = x
 
 	var/matrix/M = matrix()
 	M.Scale(x, y)
