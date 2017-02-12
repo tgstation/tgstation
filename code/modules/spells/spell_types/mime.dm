@@ -21,7 +21,6 @@
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
 			return
-		newVars = list("owner" = usr)
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of [usr.p_them()]."
 	else
 		invocation_type ="none"
@@ -66,22 +65,30 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/blockade
 	name = "Invisible Blockade"
-	desc = "With more polished skills, a powerful mime can create a invisble blockade, blocking off a 3x3 area."
+	desc = "With more polished skills, a powerful mime can create a invisble blockade, blocking off a 3x1 area."
 	summon_type = list(/obj/effect/forcefield/mime/advanced)
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You form a blockade around yourself.</span>"
 	summon_lifespan = 600
 	charge_max = 600
-	summon_amt = 9
-	summon_ignore_prev_spawn_points = 1
-	range = 1
+	summon_amt = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/blockade/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
 			return
-		newVars = list("owner" = usr)
+		var/newturf
+		if(usr.dir == NORTH || usr.dir == SOUTH)
+			newturf = get_step(usr, WEST)
+			for(var/i=0,i<3,i++)
+				new /obj/effect/forcefield/mime/advanced(get_turf(newturf))
+				newturf = get_step(newturf, EAST)
+		else
+			newturf = get_step(usr, NORTH)
+			for(var/i=0,i<3,i++)
+				new /obj/effect/forcefield/mime/advanced(get_turf(newturf))
+				newturf = get_step(newturf, SOUTH)
 		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
 	else
 		invocation_type ="none"
