@@ -82,6 +82,8 @@
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
+	light_color = LIGHT_COLOR_CYAN
+
 /obj/machinery/computer/atmos_control/Initialize()
 	..()
 	set_frequency(frequency)

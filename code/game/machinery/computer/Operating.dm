@@ -7,6 +7,8 @@
 	var/mob/living/carbon/human/patient = null
 	var/obj/structure/table/optable/table = null
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/operating/Initialize()
 	find_table()
 

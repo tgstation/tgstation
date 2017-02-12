@@ -38,6 +38,8 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)

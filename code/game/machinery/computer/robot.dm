@@ -10,6 +10,8 @@
 	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
 
+	light_color = LIGHT_COLOR_PINK
+
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
 		return 0

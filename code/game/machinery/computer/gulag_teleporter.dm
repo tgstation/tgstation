@@ -13,6 +13,8 @@
 	var/mob/living/carbon/human/prisoner = null
 	var/datum/data/record/temporary_record = null
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/gulag_teleporter_computer/New()
 	..()
 	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
@@ -155,10 +157,3 @@
 	teleporter.toggle_open()
 	id = null
 	temporary_record = null
-
-
-
-
-
-
-

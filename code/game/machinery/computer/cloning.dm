@@ -18,6 +18,8 @@
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/cloning/Initialize()
 	..()
 	updatemodules(TRUE)
@@ -63,7 +65,7 @@
 
 	for(var/datum/data/record/R in records)
 		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
-			
+
 		if(!pod)
 			return
 
@@ -125,7 +127,7 @@
 			src.updateUsrDialog()
 	else if(istype(W,/obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
-		
+
 		if(istype(P.buffer, /obj/machinery/clonepod))
 			if(get_area_master(P.buffer) != get_area_master(src))
 				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
@@ -159,7 +161,7 @@
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
-	
+
 	if(scanner && HasEfficientPod() && scanner.scan_level > 2)
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"

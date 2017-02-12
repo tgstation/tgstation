@@ -9,6 +9,8 @@
 	var/mapping = 0//For the overview file, interesting bit of code.
 	var/list/watchers = list() //who's using the console, associated with the camera they're on.
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/security/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
 		user.unset_machine()
