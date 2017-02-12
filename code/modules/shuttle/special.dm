@@ -255,3 +255,19 @@
 		mover << "You don't have enough money to enter the main shuttle. You'll have to fly coach."
 		return 0
 
+/mob/living/simple_animal/hostile/bear/fightpit
+	name = "fight pit bear"
+	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
+	environment_smash = 0
+
+/obj/effect/decal/hammerandsickle
+	name = "hammer and sickle"
+	desc = "Communism powerful force."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "communist"
+	layer = ABOVE_OPEN_TURF_LAYER
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
+	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.
