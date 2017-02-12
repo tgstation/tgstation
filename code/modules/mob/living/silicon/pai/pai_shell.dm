@@ -99,3 +99,7 @@
 	else
 		SetLuminosity(0)
 		src << "<span class='notice'>You disable your integrated light.</span>"
+
+/mob/living/silicon/pai/movement_delay()
+	. = ..()
+	. += -0.5 //REEEEEEEE
