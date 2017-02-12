@@ -1370,7 +1370,14 @@ var/valid_HTTPSGet = FALSE
 			\______(_______;;; __;;;
 		*/
 	var/temp_file = "HTTPSGetOutput.txt"
-	var/command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
+	var/command 
+	if(world.system_type == MS_WINDOWS)
+		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
+	else if(world.system_type == UNIX)
+		command = "wget -O [temp_file] [url]"
+	else
+		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
+
 	world.log << "HTTPSGet: [url]"
 	var/result = shell(command)
 	if(result != 0)
