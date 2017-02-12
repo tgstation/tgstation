@@ -1,5 +1,0 @@
-author: "Jordie0608"
-delete-after: True
-changes: 
-  - rscadd: "Admins can now filter watchlist entries to only users who are connected."
-  - tweak: "Messages no longer delete themselves when sent."

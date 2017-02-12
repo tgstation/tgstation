@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 02-02-2017 02:51 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -19613,6 +19612,7 @@
 	c_tag = "Auxillary Mining Base";
 	dir = 1
 	},
+/obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aHc" = (
@@ -25567,11 +25567,11 @@
 	},
 /area/mining_construction)
 "aRF" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
+/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -91830,9 +91830,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/structure/mining_shuttle_beacon{
-	dir = 2
-	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for the Auxillary Mining Base.";
 	dir = 1;
@@ -91841,6 +91838,7 @@
 	pixel_x = 0;
 	pixel_y = -28
 	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/yellow/side,
 /area/mining_construction)
 "cYL" = (

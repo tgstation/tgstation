@@ -1,3 +1,5 @@
+#define STATION_RENAME_TIME_LIMIT 3000
+
 /obj/item/station_charter
 	name = "station charter"
 	icon = 'icons/obj/wizard.dmi'
@@ -33,7 +35,7 @@
 	if(used)
 		user << "This charter has already been used to name the station."
 		return
-	if(!ignores_timeout && (world.time-round_start_time > CHALLENGE_TIME_LIMIT)) //5 minutes
+	if(!ignores_timeout && (world.time-round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
 		user << "The crew has already settled into the shift. \
 			It probably wouldn't be good to rename the station right now."
 		return
@@ -93,3 +95,5 @@
 
 	if(!unlimited_uses)
 		used = TRUE
+
+#undef STATION_RENAME_TIME_LIMIT

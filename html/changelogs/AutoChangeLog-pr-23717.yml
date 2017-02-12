@@ -1,6 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "Soapstone messages can now be rated! Attack the message with your hand to rate it positive or negative. Anyone can see the rating, and you cannot rate a message more than once, even across rounds."
-  - rscdel: "Soapstones no longer have a write time."
-  - tweak: "Soapstones now have a fixed vocabulary to write messages with."

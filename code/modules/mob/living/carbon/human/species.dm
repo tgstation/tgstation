@@ -863,7 +863,7 @@
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
 		if(!istype(J) && istype(C))
 			J = C.jetpack
-		if(istype(J) && J.allow_thrust(0.01, H))	//Prevents stacking
+		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
 			. -= 2
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
