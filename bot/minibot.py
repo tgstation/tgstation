@@ -4,6 +4,7 @@
 # See LICENSE-bot_folder.txt for the license of the files in this folder.
 from config import *
 import collections
+import json
 import time
 import pickle
 import socket
@@ -17,6 +18,28 @@ global irc
 
 def print_err(msg):
 	logging.error(msg)
+
+
+def parse_sender(v):
+	end = v.find('!')
+	return v[1:end]
+
+
+def load_memos():
+	try:
+		f = open('memos.json', 'r')
+		memos = json.load(f)
+	except FileNotFoundError:
+		memos = dict()
+		for channel in channels:
+			memos[channel] = dict()
+	return memos
+
+
+def flush_memos(memos):
+	f = open('memos.json', 'w')
+	json.dump(memos, f)
+	f.close()
 
 
 def setup_irc_socket():
@@ -77,6 +100,7 @@ def nudge_handler():
 
 def irc_handler():
 	global irc
+	memos = load_memos()
 	while 1:
 		try:
 			buf = irc.recv(1024).decode("UTF-8").split("\n")
@@ -106,6 +130,32 @@ def irc_handler():
 						else:
 							time.sleep(60)
 							irc = setup_irc_socket()
+					elif l[1] == "JOIN":
+						sender = parse_sender(l[0])
+						channel = l[2][1:].strip()
+						if channel in channels:
+							if sender in memos[channel] and len(memos[channel][sender]):
+								message = "{0}: You have {1} unread memos in {2}. Send any message to read them.".format(sender, len(memos[channel][sender]), channel)
+								irc.send(bytes("PRIVMSG {0} :{1}\r\n".format(channel, message), "UTF-8"))
+					elif l[1] == "PRIVMSG":
+						sender = parse_sender(l[0])
+						channel = l[2]
+						if channel in channels:
+							if sender in memos[channel] and len(memos[channel][sender]):
+								message = "{0}: {1}".format(sender, memos[channel][sender].pop(0))
+								if not len(memos[channel][sender]):
+									memos[channel].pop(sender)
+								irc.send(bytes("PRIVMSG {0} :{1}\r\n".format(channel, message), "UTF-8"))
+								flush_memos(memos)
+							if len(l) > 5 and nick in l[3] and "tell" in l[4]:
+								target = l[5]
+								memomsg = "<{0}> {1}".format(sender, ' '.join(l[6:]).strip())
+								if target not in memos[channel]:
+									memos[channel][target] = list()
+								memos[channel][target].append(memomsg)
+								message = "{0}: Memo sent to {1}.".format(sender, target)
+								irc.send(bytes("PRIVMSG {0} :{1}\r\n".format(channel, message), "UTF-8"))
+								flush_memos(memos)
 		except:
 			print_err("Lost connection to IRC server.")
 			irc = setup_irc_socket()
