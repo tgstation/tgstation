@@ -30,6 +30,10 @@
 		return FALSE	//PLEASE no.
 	. = ..()
 
+/atom/movable/gravity_act(direction = null, strength = 1, throwing = FALSE)
+	if(!direction)
+		return FALSE
+
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
 	var/atom/oldloc = loc

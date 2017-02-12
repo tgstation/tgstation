@@ -30,6 +30,9 @@ var/next_mob_id = 0
 	prepare_huds()
 	..()
 
+/mob/gravity_act(direction = null, strength = 1, throwing = FALSE)
+	return FALSE
+
 /atom/proc/prepare_huds()
 	hud_list = list()
 	for(var/hud in hud_possible)
