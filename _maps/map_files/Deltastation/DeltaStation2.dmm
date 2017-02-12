@@ -47865,9 +47865,6 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "bHb" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
@@ -47878,14 +47875,13 @@
 	},
 /area/security/brig)
 "bHc" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (SOUTHWEST)";
 	icon_state = "intact";
 	dir = 10
 	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -52217,10 +52213,9 @@
 	},
 /area/hallway/primary/starboard)
 "bOO" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
