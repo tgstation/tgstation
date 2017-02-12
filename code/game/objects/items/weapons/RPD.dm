@@ -571,7 +571,7 @@ var/global/list/RPD_recipes=list(
 				new /obj/item/pipe_meter(A)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
-			if(!is_anchored_dense_turf(A))
+			if(is_anchored_dense_turf(A))
 				user << "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>"
 				return
 			user << "<span class='notice'>You start building a disposals pipe...</span>"
