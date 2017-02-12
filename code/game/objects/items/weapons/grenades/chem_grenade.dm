@@ -17,6 +17,7 @@
 	var/assemblyattacher
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
+	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
@@ -70,10 +71,9 @@
 			return
 		else
 			if(I.reagents.total_volume)
-				if(!user.unEquip(I))
+				if(!user.transferItemToLoc(I, src))
 					return
 				user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-				I.loc = src
 				beakers += I
 			else
 				user << "<span class='warning'>[I] is empty!</span>"
@@ -83,12 +83,11 @@
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		nadeassembly = A
 		A.master = src
-		A.loc = src
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
@@ -164,8 +163,13 @@
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
-	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale))
+	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale) && !no_splash)
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		if(beakers.len)
+			for(var/obj/O in beakers)
+				O.loc = get_turf(src)
+			beakers = list()
+		stage_change(EMPTY)
 		return
 
 	if(nadeassembly)
@@ -206,11 +210,16 @@
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			//If there is still a core (sometimes it's used up)
-			//and there are reagents left, behave normally
+			//and there are reagents left, behave normally,
+			//otherwise drop it on the ground for timed reactions like gold.
 
-			if(S && S.reagents && S.reagents.total_volume)
-				S.reagents.trans_to(src,S.reagents.total_volume)
-			return
+			if(S)
+				if(S.reagents && S.reagents.total_volume)
+					for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+						S.reagents.trans_to(G, S.reagents.total_volume)
+				else
+					S.forceMove(get_turf(src))
+					no_splash = TRUE
 	..()
 
 	//I tried to just put it in the allowed_containers list but
@@ -218,10 +227,9 @@
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return
 		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-		I.loc = src
 		beakers += I
 	else
 		return ..()
@@ -371,6 +379,25 @@
 
 	beakers += B1
 	beakers += B2
+
+
+/obj/item/weapon/grenade/chem_grenade/ez_clean
+	name = "cleaner grenade"
+	desc = "Waffle Co.-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/ez_clean/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent("fluorosurfactant", 40)
+	B2.reagents.add_reagent("water", 40)
+	B2.reagents.add_reagent("ez_clean", 60) //ensures a  t h i c c  distribution
+
+	beakers += B1
+	beakers += B2
+
 
 
 /obj/item/weapon/grenade/chem_grenade/teargas

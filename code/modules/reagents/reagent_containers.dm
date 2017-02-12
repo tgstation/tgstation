@@ -71,7 +71,7 @@
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		..()
 
 /obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
@@ -81,12 +81,15 @@
 
 /obj/item/weapon/reagent_containers/throw_impact(atom/target)
 	. = ..()
+	SplashReagents(target, TRUE)
 
+/obj/item/weapon/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
 		return
 
 	if(ismob(target) && target.reagents)
-		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+		if(thrown)
+			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
@@ -99,14 +102,14 @@
 			add_logs(thrownby, M, "splashed", R)
 		reagents.reaction(target, TOUCH)
 
-	else if((target.CanPass(src, get_turf(src))) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
+	else if((target.CanPass(src, get_turf(src))) && thrown && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		return
 
 	else
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
-		if(qdeleted(src))
+		if(QDELETED(src))
 			return
 
 	reagents.clear_reagents()

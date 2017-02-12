@@ -89,7 +89,6 @@
 			var/datum/antagonist/D = i
 			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
-	leave_all_huds()									//leave all the huds in the old body, so it won't get huds if somebody else enters it
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 	if(iscarbon(new_character))
@@ -1113,7 +1112,7 @@
 					special_role = null
 					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-					RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
+					RemoveSpell(/obj/effect/proc_holder/spell/aimed/fireball/hellish)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
@@ -1238,7 +1237,7 @@
 		switch(href_list["common"])
 			if("undress")
 				for(var/obj/item/W in current)
-					current.unEquip(W, 1) //The 1 forces all items to drop, since this is an admin undress.
+					current.dropItemToGround(W, TRUE) //The 1 forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
 				memory = null//Remove any memory they may have had.
@@ -1496,7 +1495,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		addtimer(CALLBACK(S, /obj/effect/proc_holder/spell.proc/start_recharge), 0)
+		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)

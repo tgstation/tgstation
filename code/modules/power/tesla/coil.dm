@@ -5,13 +5,22 @@
 	icon_state = "coil0"
 	anchored = 0
 	density = 1
+
+	// Executing a traitor caught releasing tesla was never this fun!
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	buckle_requires_restraints = TRUE
+
 	var/power_loss = 2
 	var/input_power_multiplier = 1
+	var/zap_cooldown = 100
+	var/last_zap = 0
 
 /obj/machinery/power/tesla_coil/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/tesla_coil(null)
 	B.apply_default_parts(src)
+	wires = new /datum/wires/tesla_coil(src)
 
 /obj/item/weapon/circuitboard/machine/tesla_coil
 	name = "Tesla Coil (Machine Board)"
@@ -21,8 +30,10 @@
 
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
+	zap_cooldown = 100
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		power_multiplier += C.rating
+		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
 
 /obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
@@ -50,7 +61,16 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
+		return
+
 	return ..()
+
+/obj/machinery/power/tesla_coil/attack_hand(mob/user)
+	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
+		return
+	..()
 
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	if(anchored && !panel_open)
@@ -66,13 +86,30 @@
 	else
 		..()
 
+/obj/machinery/power/tesla_coil/proc/zap()
+	if((last_zap + zap_cooldown) > world.time)
+		return FALSE
+	last_zap = world.time
+	var/coeff = (20 - ((input_power_multiplier - 1) * 3))
+	coeff = max(coeff, 10)
+	var/shock_coeff = (4 - (input_power_multiplier - 2))
+	shock_coeff = max(shock_coeff, 2)
+	var/power = (powernet.avail/coeff)
+	add_load(power)
+	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+	tesla_zap(src, 10, power/shock_coeff)
+
 /obj/machinery/power/grounding_rod
-	name = "Grounding Rod"
+	name = "grounding rod"
 	desc = "Keep an area from being fried from Edison's Bane."
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = 0
 	density = 1
+
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	buckle_requires_restraints = TRUE
 
 /obj/machinery/power/grounding_rod/New()
 	..()
@@ -107,6 +144,11 @@
 		return
 
 	return ..()
+
+/obj/machinery/power/grounding_rod/attack_hand(mob/user)
+	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
+		return
+	..()
 
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	if(anchored && !panel_open)

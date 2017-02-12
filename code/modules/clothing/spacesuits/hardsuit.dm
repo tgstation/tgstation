@@ -103,9 +103,8 @@
 			user << "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>"
 			return
 
-		if(user.unEquip(I))
+		if(user.transferItemToLoc(I, src))
 			jetpack = I
-			I.loc = src
 			user << "<span class='notice'>You successfully install the jetpack into [src].</span>"
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
@@ -608,7 +607,7 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
     . = list()
     if(!isinhands)
-        . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
+        . += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF

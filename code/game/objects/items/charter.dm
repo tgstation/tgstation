@@ -1,3 +1,5 @@
+#define STATION_RENAME_TIME_LIMIT 3000
+
 /obj/item/station_charter
 	name = "station charter"
 	icon = 'icons/obj/wizard.dmi'
@@ -33,7 +35,7 @@
 	if(used)
 		user << "This charter has already been used to name the station."
 		return
-	if(!ignores_timeout && (world.time-round_start_time > CHALLENGE_TIME_LIMIT)) //5 minutes
+	if(!ignores_timeout && (world.time-round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
 		user << "The crew has already settled into the shift. \
 			It probably wouldn't be good to rename the station right now."
 		return
@@ -59,7 +61,7 @@
 
 	user << "Your name has been sent to your employers for approval."
 	// Autoapproves after a certain time
-	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user), approval_time)
+	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user), approval_time, TIMER_STOPPABLE)
 	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>"
 
 /obj/item/station_charter/proc/reject_proposed(user)
@@ -93,3 +95,5 @@
 
 	if(!unlimited_uses)
 		used = TRUE
+
+#undef STATION_RENAME_TIME_LIMIT

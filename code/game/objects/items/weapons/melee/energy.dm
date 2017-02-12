@@ -5,6 +5,7 @@
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_SMALL
+	sharpness = IS_SHARP
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	heat = 3500
 	obj_integrity = 200
@@ -192,8 +193,6 @@
 		if(hacked || other_esword.hacked)
 			newSaber.hacked = TRUE
 			newSaber.item_color = "rainbow"
-		user.unEquip(W)
-		user.unEquip(src)
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newSaber)

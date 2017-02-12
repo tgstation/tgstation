@@ -9,13 +9,15 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+#ifdef GC_FAILURE_HARD_LOOKUP
+	loop_checks = FALSE
+#endif
 
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
-	check_for_cleanbot_bug()
+	world.log << "World loaded at [world.timeofday]"
 	map_ready = 1
-	world.log << "Map is ready."
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
@@ -45,9 +47,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	LoadBans()
 	investigate_reset()
 
-	if(config && config.server_name != null && config.server_suffix && world.port > 0)
-		config.server_name += " #[(world.port % 1000) / 100]"
-
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
@@ -59,9 +58,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	data_core = new /datum/datacore()
 
-	spawn(10)
-		Master.Setup()
-
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 	process_teleport_locs()			//Sets up the wizard teleport locations
 
@@ -71,8 +67,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	map_name = "Unknown"
 	#endif
 
-
-	return
+	Master.Setup(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 var/last_irc_status = 0
@@ -101,7 +96,8 @@ var/last_irc_status = 0
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
 		var/list/adm = get_admin_counts()
-		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
+		var/list/allmins = adm["total"]
+		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
 		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
@@ -121,7 +117,9 @@ var/last_irc_status = 0
 		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
-		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
+		var/list/presentmins = adm["present"]
+		var/list/afkmins = adm["afk"]
+		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
 		if(ticker)
 			s["gamestate"] = ticker.current_state
@@ -133,7 +131,7 @@ var/last_irc_status = 0
 			// Key-authed callers may know the truth behind the "secret"
 
 		s["security_level"] = get_security_level()
-		s["round_duration"] = round(world.time/10)
+		s["round_duration"] = round((world.time-round_start_time)/10)
 		// Amount of world's ticks in seconds, useful for calculating round duration
 
 		if(SSshuttle && SSshuttle.emergency)
@@ -186,14 +184,14 @@ var/last_irc_status = 0
 		else
 			return ircadminwho()
 
-
+#define WORLD_REBOOT(X) world.log << "World rebooted at [world.timeofday]"; ..(X)
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
-		return ..(1)
+		WORLD_REBOOT(1)
 	var/delay
 	if(time)
 		delay = time
@@ -202,7 +200,7 @@ var/last_irc_status = 0
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
-	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	world << "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>"
 	var/round_end_sound_sent = FALSE
 	if(ticker.round_end_sound)
 		round_end_sound_sent = TRUE
@@ -212,8 +210,6 @@ var/last_irc_status = 0
 				continue
 			C.Export("##action=load_rsc", ticker.round_end_sound)
 	sleep(delay)
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return
@@ -225,9 +221,13 @@ var/last_irc_status = 0
 				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
 				Reboot("Map change timed out", time = 10)
 		return
+	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
+	WORLD_REBOOT(0)
+#undef WORLD_REBOOT
+
+/world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 #ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
@@ -236,28 +236,39 @@ var/last_irc_status = 0
 		if(count > 10)
 			log << "#[count]\t[index]"
 #endif
-	var/soundwait = 0
-	if (ticker.round_end_sound && !round_end_sound_sent)
-		soundwait = 10
-		for(var/thing in clients)
-			var/client/C = thing
-			if (!C)
-				continue
-			C.Export("##action=load_rsc", ticker.round_end_sound)
-	spawn(soundwait/2)
-		if(ticker && ticker.round_end_sound)
-			world << sound(ticker.round_end_sound)
-		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
-	sleep(soundwait)
+	if(blackbox)
+		blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns
+	RoundEndSound(round_end_sound_sent)
+	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
+	world << "<span class='boldannounce'>Rebooting world. Loading next map...</span>"
 	for(var/thing in clients)
 		var/client/C = thing
-		if (!C)
-			continue
-		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-	..(0)
+
+/world/proc/RoundEndSound(round_end_sound_sent)
+	set waitfor = FALSE
+	var/round_end_sound
+	if(!ticker && ticker.round_end_sound)
+		round_end_sound = ticker.round_end_sound
+		if (!round_end_sound_sent)
+			for(var/thing in clients)
+				var/client/C = thing
+				if (!C)
+					continue
+				C.Export("##action=load_rsc", round_end_sound)
+	else
+		round_end_sound = pick(\
+		'sound/roundend/newroundsexy.ogg',
+		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/bangindonk.ogg',
+		'sound/roundend/leavingtg.ogg',
+		'sound/roundend/its_only_game.ogg',
+		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/disappointed.ogg'\
+		)
+	world << sound(round_end_sound)
 
 var/inerror = 0
 /world/Error(var/exception/e)
@@ -293,6 +304,10 @@ var/inerror = 0
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+	join_motd += "<br>"
+	for(var/line in revdata.testmerge)
+		if(line)
+			join_motd += "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a><br>"
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()

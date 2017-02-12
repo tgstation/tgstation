@@ -3,8 +3,8 @@
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 600
-	max_integrity = 600
+	obj_integrity = 500
+	max_integrity = 500
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
@@ -23,7 +23,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/New()
 	..()
-	addtimer(CALLBACK(src, .proc/spawn_animation), 0)
+	INVOKE_ASYNC(src, .proc/spawn_animation)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
@@ -59,7 +59,7 @@
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
-		if(!is_blocked_turf(OT))
+		if(!is_blocked_turf(OT, TRUE))
 			open_turfs |= OT
 	if(open_turfs.len)
 		for(var/mob/living/L in T)
@@ -74,8 +74,6 @@
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 	if(!objective_is_gateway)
 		ratvar_portal = FALSE
-		hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \
-		and will instead simply proselytize and convert everything and everyone on the station.</span>", TRUE)
 	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSprocessing, src)
 
@@ -113,7 +111,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
-		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
+		glow = new /obj/effect/clockwork/overlay/gateway_glow(get_turf(src))
 		glow.linked = src
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
@@ -156,15 +154,22 @@
 				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!obj_integrity)
 		return 0
-	for(var/t in RANGE_TURFS(1, loc))
-		if(iswallturf(t))
-			var/turf/closed/wall/W = t
-			W.dismantle_wall()
-		else if(t && (isclosedturf(t) || !is_blocked_turf(t)))
-			var/turf/T = t
-			T.ChangeTurf(/turf/open/floor/clockwork)
+	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
+	for(var/t in RANGE_TURFS(convert_dist, loc))
+		var/turf/T = t
+		if(!T)
+			continue
+		if(get_dist(T, src) < 2)
+			if(iswallturf(T))
+				var/turf/closed/wall/W = T
+				W.dismantle_wall()
+			else if(t && (isclosedturf(T) || !is_blocked_turf(T)))
+				T.ChangeTurf(/turf/open/floor/clockwork)
+		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
+		if(dist < convert_dist)
+			T.ratvar_act(FALSE, TRUE, 3)
 	for(var/obj/O in orange(1, src))
-		if(!istype(O, /obj/effect) && O.density)
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
@@ -203,13 +208,14 @@
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
-				clockwork_gateway_activated = TRUE
 				if(ratvar_portal)
 					sleep(3)
+					clockwork_gateway_activated = TRUE
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
-					addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0), 0) //call the shuttle immediately
+					INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0) //call the shuttle immediately
 					sleep(3)
+					clockwork_gateway_activated = TRUE
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>")
@@ -227,13 +233,8 @@
 							dist = FALSE
 						T.ratvar_act(dist)
 						CHECK_TICK
-					for(var/mob/living/silicon/robot/R in silicon_mobs)
-						if(R && R.stat != DEAD && !is_servant_of_ratvar(R))
-							add_servant_of_ratvar(R)
-					for(var/i in ai_list)
-						var/mob/living/silicon/ai/A = i
-						if(A && A.stat != DEAD && !is_servant_of_ratvar(A))
-							add_servant_of_ratvar(A)
+					for(var/mob/living/L in living_mob_list)
+						L.ratvar_act()
 					for(var/I in all_clockwork_mobs)
 						var/mob/M = I
 						if(M.stat == CONSCIOUS)

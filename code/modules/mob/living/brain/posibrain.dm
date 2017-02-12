@@ -73,7 +73,7 @@ var/global/posibrain_notif_cooldown = 0
 		return
 
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
-	if(posi_ask == "No" || qdeleted(src))
+	if(posi_ask == "No" || QDELETED(src))
 		return
 	transfer_personality(user)
 
@@ -98,7 +98,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		candidate << "This brain has already been taken! Please try your possesion again later!"
+		candidate << "This brain has already been taken! Please try your possession again later!"
 		return FALSE
 	notified = 0
 	if(candidate.mind && !isobserver(candidate))

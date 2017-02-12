@@ -180,7 +180,7 @@ This file contains the arcane tome files.
 	if(!possible_runes.len)
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
-	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
+	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -195,7 +195,8 @@ This file contains the arcane tome files.
 	if(!rune_to_scribe)
 		return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
-	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
+	A = get_area(src)
+	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(ticker.mode.name == "cult")
@@ -203,26 +204,27 @@ This file contains the arcane tome files.
 			if(!("eldergod" in cult_mode.cult_objectives))
 				user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 				return
-			else if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
+			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
 				user << "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>"
 				return
-			else if(!cult_mode.eldergod)
+			if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
-			var/locname = initial(A.name)
-			if(loc.z && loc.z != ZLEVEL_STATION)
-				user << "<span class='warning'>The Geometer is not interested \
-					in lesser locations; the station is the prize!</span>"
+			if((loc.z && loc.z != ZLEVEL_STATION) || !A.blob_allowed)
+				user << "<span class='warning'>The Geometer is not interested in lesser locations; the station is the prize!</span>"
 				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")
 				user << "<span class='cult'>You decide to prepare further before scribing the rune.</span>"
 				return
-			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
+			Turf = get_turf(user)
+			A = get_area(src)
+			if(!check_rune_turf(Turf, user) || (loc.z && loc.z != ZLEVEL_STATION)|| !A.blob_allowed)
+				return
+			priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/B in spiral_range_turfs(1, user, 1))
-				var/turf/T = B
-				var/obj/structure/emergency_shield/sanguine/N = new(T)
-				shields |= N
+				var/obj/structure/emergency_shield/sanguine/N = new(B)
+				shields += N
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
@@ -233,7 +235,7 @@ This file contains the arcane tome files.
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
 			var/obj/structure/emergency_shield/sanguine/S = V
-			if(S && !qdeleted(S))
+			if(S && !QDELETED(S))
 				qdel(S)
 		return
 	if(!check_rune_turf(Turf, user))
@@ -242,7 +244,7 @@ This file contains the arcane tome files.
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
 		var/obj/structure/emergency_shield/S = V
-		if(S && !qdeleted(S))
+		if(S && !QDELETED(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"

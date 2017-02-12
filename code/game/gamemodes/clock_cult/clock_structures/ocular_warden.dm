@@ -8,7 +8,7 @@
 	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
-	layer = HIGH_OBJ_LAYER
+	layer = WALL_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -32,14 +32,16 @@
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
 
-/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
 	if(anchored)
 		if(obj_integrity <= max_integrity * 0.25)
-			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+			if(!silent)
+				user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 			return FAILED_UNFASTEN
 	else
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(3, src))
-			user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
+			if(!silent)
+				user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
 			return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
@@ -70,6 +72,10 @@
 							R.unreveal_time += 2
 						else
 							R.reveal(10)
+					if(prob(50))
+						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',50,1)
+					else
+						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',50,1)
 					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
@@ -78,12 +84,13 @@
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
-			PoolOrNew(/obj/effect/overlay/temp/ratvar/ocular_warden, get_turf(target))
+			new /obj/effect/overlay/temp/ratvar/ocular_warden(get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
 			target = pick(validtargets)
+			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,1)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
 				var/mob/living/L = target

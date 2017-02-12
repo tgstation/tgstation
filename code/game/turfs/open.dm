@@ -29,21 +29,19 @@
 	baseturf = /turf/open/indestructible/necropolis
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
-/turf/open/indestructible/necropolis/New()
+/turf/open/indestructible/necropolis/Initialize()
 	..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
+
+/turf/open/indestructible/necropolis/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
-
-/turf/open/indestructible/hierophant/New()
-	..()
-	if(smooth)
-		queue_smooth(src)
 
 /turf/open/indestructible/hierophant/two
 
@@ -141,7 +139,7 @@
 	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
-	if((C.movement_type & FLYING) || C.slipping)
+	if(C.movement_type & FLYING)
 		return 0
 	if(has_gravity(src))
 		var/obj/buckled_obj
@@ -173,20 +171,12 @@
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
-			step(buckled_obj, olddir)
-		else if(lube&SLIDE)
-			C.slipping = TRUE
-			for(var/i=1, i<5, i++)
-				spawn (i)
-					if(i == 4)
-						C.slipping = FALSE
-					step(C, olddir)
-					C.spin(1,1)
+			lube |= SLIDE_ICE
+
+		if(lube&SLIDE)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
 		else if(lube&SLIDE_ICE)
-			C.slipping = TRUE
-			spawn(1)
-				C.slipping = FALSE
-				step(C, olddir)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
@@ -266,4 +256,4 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(CALLBACK(src, .proc/HandleWet), 15)
+		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)

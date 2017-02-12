@@ -34,14 +34,12 @@
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 
-/obj/structure/closet/New()
-	..()
-	update_icon()
 
-/obj/structure/closet/initialize()
+/obj/structure/closet/Initialize(mapload)
 	..()
-	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
+	update_icon()
 
 /obj/structure/closet/Destroy()
 	dump_contents()
@@ -115,7 +113,7 @@
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)
-		throwing = 0
+		throwing.finalize(FALSE)
 
 /obj/structure/closet/proc/take_contents()
 	var/turf/T = get_turf(src)
@@ -440,3 +438,7 @@
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
 		CHECK_TICK
+
+/obj/structure/closet/singularity_act()
+	dump_contents()
+	..()

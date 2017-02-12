@@ -51,6 +51,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
+	resistance_flags = FIRE_PROOF
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -169,7 +170,10 @@
 	terminal.setDir(tdir)
 	terminal.master = src
 
-/obj/machinery/power/apc/initialize()
+/obj/machinery/power/apc/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
@@ -842,7 +846,7 @@
 		return
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600)
+	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
 
 	var/obj/screen/alert/hackingapc/A
 	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
@@ -1198,8 +1202,9 @@
 		spawn(0)
 			for(var/area/A in area.related)
 				for(var/obj/machinery/light/L in A)
-					L.on = 1
+					L.on = TRUE
 					L.break_light_tube()
+					L.on = FALSE
 					stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)

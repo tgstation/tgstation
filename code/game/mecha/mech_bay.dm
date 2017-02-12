@@ -111,11 +111,11 @@
 
 /obj/machinery/computer/mech_bay_power_console/ui_data(mob/user)
 	var/list/data = list()
-	if(recharge_port && !qdeleted(recharge_port))
+	if(recharge_port && !QDELETED(recharge_port))
 		data["recharge_port"] = list("mech" = null)
-		if(recharge_port.recharging_mech && !qdeleted(recharge_port.recharging_mech))
+		if(recharge_port.recharging_mech && !QDELETED(recharge_port.recharging_mech))
 			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "max_integrity" = recharge_port.recharging_mech.max_integrity, "cell" = null)
-			if(recharge_port.recharging_mech.cell && !qdeleted(recharge_port.recharging_mech.cell))
+			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
 				data["recharge_port"]["mech"]["cell"] = list(
 				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
 				"charge" = recharge_port.recharging_mech.cell.charge,
@@ -147,5 +147,6 @@
 		return
 	add_overlay("recharge_comp_on")
 
-/obj/machinery/computer/mech_bay_power_console/initialize()
+/obj/machinery/computer/mech_bay_power_console/Initialize()
+	..()
 	reconnect()

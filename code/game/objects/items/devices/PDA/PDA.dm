@@ -338,6 +338,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
+				if(istype(id, /obj/item/weapon/card/id/syndicate))
+					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
@@ -661,7 +663,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			M << "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
-	if(!P || qdeleted(P) || P.toff)
+	if(!P || QDELETED(P) || P.toff)
 		return null
 
 	var/obj/machinery/message_server/useMS = null
@@ -674,7 +676,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/datum/signal/signal = src.telecomms_process()
 
-	if(!P || qdeleted(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
+	if(!P || QDELETED(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
 		return null
 
 	var/useTC = 0
@@ -759,10 +761,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				I = C
 
 	if(I && I.registered_name)
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return 0
 		var/obj/old_id = id
-		I.forceMove(src)
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
@@ -772,10 +773,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
 		cartridge = C
-		cartridge.loc = src
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
@@ -801,9 +801,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
-		C.loc = src
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		update_icon()
@@ -812,9 +811,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(inserted_item)
 			user << "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>"
 		else
-			if(!user.unEquip(C))
+			if(!user.transferItemToLoc(C, src))
 				return
-			C.forceMove(src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 			inserted_item = C
 			update_icon()

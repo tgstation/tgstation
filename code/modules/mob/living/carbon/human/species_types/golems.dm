@@ -236,7 +236,7 @@
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
 	for(var/obj/item/W in H)
-		H.unEquip(W)
+		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
 		new /obj/item/weapon/ore/glass(get_turf(H))
 	qdel(H)
@@ -266,7 +266,7 @@
 	playsound(H, "shatter", 70, 1)
 	H.visible_message("<span class='danger'>[H] shatters!</span>")
 	for(var/obj/item/W in H)
-		H.unEquip(W)
+		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
 		new /obj/item/weapon/shard(get_turf(H))
 	qdel(H)
@@ -308,7 +308,7 @@
 
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
-	PoolOrNew(/obj/effect/particle_effect/sparks, get_turf(H))
+	new /obj/effect/particle_effect/sparks(get_turf(H))
 	playsound(get_turf(H), "sparks", 50, 1)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg')
 	last_teleport = world.time

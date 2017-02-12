@@ -11,7 +11,7 @@
 
 /datum/round_event/ghost_role/blob
 	announceWhen	= 12
-	role_name = "blob_overmind"
+	role_name = "blob overmind"
 	var/new_rate = 2
 
 /datum/round_event/ghost_role/blob/New(my_processing = TRUE, set_point_rate)
@@ -33,6 +33,6 @@
 	var/obj/structure/blob/core/BC = new/obj/structure/blob/core(pick(blobstart), new_blob.client, new_rate)
 	BC.overmind.blob_points = min(20 + player_list.len, BC.overmind.max_blob_points)
 	spawned_mobs += BC.overmind
-	message_admins("[BC.overmind.key] has been made into a blob overmind by an event.")
-	log_game("[BC.overmind.key] was spawned as a blob overmind by an event.")
+	message_admins("[key_name_admin(BC.overmind)] has been made into a blob overmind by an event.")
+	log_game("[key_name(BC.overmind)] was spawned as a blob overmind by an event.")
 	return SUCCESSFUL_SPAWN

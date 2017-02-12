@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "You can now properly apply items to clothing with pockets, such as slime speed potions on clown shoes."

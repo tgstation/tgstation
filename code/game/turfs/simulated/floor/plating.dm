@@ -13,7 +13,7 @@
 	icon_state = "plating"
 	intact = 0
 
-/turf/open/floor/plating/New()
+/turf/open/floor/plating/Initialize()
 	if (!broken_states)
 		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	if (!burnt_states)

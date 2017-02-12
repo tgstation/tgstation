@@ -136,6 +136,8 @@
 	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
 		return
+	if (QDELETED(src))
+		return
 	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
 
 ///////////Two hand required objects///////////////
@@ -167,6 +169,10 @@
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
 	if(slot_flags & slotbit)
+		var/datum/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		if(!O || QDELETED(O))
+			return
+		qdel(O)
 		return
 	if(slot == slot_hands)
 		wield(user)
@@ -176,13 +182,13 @@
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
-		user.unEquip(src)
+		user.dropItemToGround(src)
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(show_message)
 		user << "<span class='notice'>You drop [src].</span>"
 	..(user, FALSE)
-	user.unEquip(src)
+	user.dropItemToGround(src)
 
 /*
  * Fireaxe
@@ -280,7 +286,7 @@
 		impale(user)
 		return
 	if((wielded) && prob(50))
-		addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
+		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
@@ -348,7 +354,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
+	INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"
@@ -437,7 +443,6 @@
 		explosive = G
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
-		return
 	update_icon()
 
 // CHAINSAW
@@ -695,7 +700,7 @@
 	if(source.z == ZLEVEL_STATION && get_dist(turfhit, source) < maxdist || source.z != ZLEVEL_STATION)
 		..()
 		if(do_after_mob(user, src, 5, uninterruptible = 1, progress = 0))
-			if(qdeleted(src))
+			if(QDELETED(src))
 				return
 			var/turf/landing = get_turf(src)
 			if (loc != landing)

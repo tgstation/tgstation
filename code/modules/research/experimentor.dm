@@ -237,7 +237,7 @@
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!</span>")
 			for(var/mob/living/m in oview(1, src))
-				m.apply_damage(15,"brute",pick("head","chest","groin"))
+				m.apply_damage(15, BRUTE, pick("head","chest","groin"))
 				investigate_log("Experimentor dealt minor brute to [m].", "experimentor")
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
@@ -344,7 +344,7 @@
 			if(MT)
 				visible_message("<span class='danger'>[src] dangerously overheats, launching a flaming fuel orb!</span>")
 				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", "experimentor")
-				var/obj/item/projectile/magic/fireball/FB = new /obj/item/projectile/magic/fireball(start)
+				var/obj/item/projectile/magic/aoe/fireball/FB = new /obj/item/projectile/magic/aoe/fireball(start)
 				FB.original = MT
 				FB.current = start
 				FB.yo = MT.y - start.y
@@ -373,7 +373,7 @@
 			visible_message("<span class='warning'>[src] malfunctions, activating its emergency coolant systems!</span>")
 			throwSmoke(src.loc)
 			for(var/mob/living/m in oview(1, src))
-				m.apply_damage(5,"burn",pick("head","chest","groin"))
+				m.apply_damage(5, BURN, pick("head","chest","groin"))
 				investigate_log("Experimentor has dealt minor burn damage to [m]", "experimentor")
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -485,7 +485,7 @@
 			visible_message("<span class='warning'>Experimentor draws the life essence of those nearby!</span>")
 			for(var/mob/living/m in view(4,src))
 				m << "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>"
-				m.apply_damage(50,"brute","chest")
+				m.apply_damage(50, BRUTE, "chest")
 				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", "experimentor")
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='warning'>[src] encounters a run-time error!</span>")

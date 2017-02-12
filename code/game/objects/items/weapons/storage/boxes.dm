@@ -574,12 +574,17 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
-	return
 
 /obj/item/weapon/storage/box/hug/medical/New()
 	..()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
+/obj/item/weapon/storage/box/hug/survival/New()
+	..()
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
 /obj/item/ammo_casing/shotgun/rubbershot

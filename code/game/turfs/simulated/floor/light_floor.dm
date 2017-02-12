@@ -12,7 +12,7 @@
 	var/can_modify_colour = TRUE
 
 
-/turf/open/floor/light/New()
+/turf/open/floor/light/Initialize()
 	..()
 	update_icon()
 
@@ -40,7 +40,7 @@
 
 /turf/open/floor/light/ChangeTurf(turf/T)
 	SetLuminosity(0)
-	..()
+	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
 	if(!can_modify_colour)

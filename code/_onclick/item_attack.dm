@@ -3,6 +3,9 @@
 /obj/item/proc/attack_self(mob/user)
 	return
 
+/obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
+	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
+
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	return

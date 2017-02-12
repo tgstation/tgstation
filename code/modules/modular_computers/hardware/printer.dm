@@ -34,19 +34,19 @@
 	if(paper_title)
 		P.name = paper_title
 	P.update_icon()
+	P.reload_fields()
 	stored_paper--
 	P = null
 	return TRUE
 
 /obj/item/weapon/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
 	if(istype(I, /obj/item/weapon/paper))
-		if(user && !user.unEquip(I))
-			return FALSE
-
 		if(stored_paper >= max_paper)
 			user << "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>"
 			return FALSE
 
+		if(user && !user.temporarilyRemoveItemFromInventory(I))
+			return FALSE
 		user << "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>"
 		qdel(I)
 		stored_paper++

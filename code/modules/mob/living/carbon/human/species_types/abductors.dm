@@ -1,7 +1,6 @@
 /datum/species/abductor
 	name = "Abductor"
 	id = "abductor"
-	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
 	species_traits = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)

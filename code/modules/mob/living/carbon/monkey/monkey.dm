@@ -29,17 +29,14 @@
 	//initialize limbs
 	create_bodyparts()
 
-	if(good_mutations.len) //genetic mutations have been set up.
-		initialize() //initialize monkey dna
-
 	create_internal_organs()
 
 	..()
 
-/mob/living/carbon/monkey/initialize()
+/mob/living/carbon/monkey/Initialize()
+	..()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
-
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix
@@ -47,6 +44,7 @@
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
+	internal_organs += new /obj/item/organ/eyes
 	..()
 
 /mob/living/carbon/monkey/movement_delay()
@@ -152,3 +150,13 @@
 
 /mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
 	return 1
+
+/mob/living/carbon/monkey/angry
+	aggressive = TRUE
+
+/mob/living/carbon/monkey/angry/Initialize()
+	..()
+	if(prob(10))
+		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
+		equip_to_slot_or_del(helmet,slot_head)
+		helmet.attack_self(src) // todo encapsulate toggle

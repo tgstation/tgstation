@@ -1,6 +1,6 @@
 
 /mob/living/silicon/robot/gib_animation()
-	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-r"))
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-r")
 
 /mob/living/silicon/robot/dust()
 	if(mmi)
@@ -11,7 +11,7 @@
 	new /obj/effect/decal/remains/robot(loc)
 
 /mob/living/silicon/robot/dust_animation()
-	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-r"))
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-r")
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)
@@ -30,4 +30,6 @@
 
 	update_icons()
 
-	sql_report_cyborg_death(src)
+	unbuckle_all_mobs(TRUE)
+
+	sql_report_death(src)

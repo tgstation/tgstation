@@ -5,12 +5,11 @@ var/hsboxspawn = 1
 /mob
 	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
-	if(master_mode == "sandbox")
-		sandbox = new/datum/hSB
-		sandbox.owner = src.ckey
-		if(src.client.holder)
-			sandbox.admin = 1
-		verbs += new/mob/proc/sandbox_panel
+	sandbox = new/datum/hSB
+	sandbox.owner = src.ckey
+	if(src.client.holder)
+		sandbox.admin = 1
+	verbs += new/mob/proc/sandbox_panel
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
 	if(sandbox)
@@ -29,7 +28,7 @@ var/hsboxspawn = 1
 	var/global/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
-		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
+		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/projectile,
 		/obj/item/borg/sight,/obj/item/borg/stun,/obj/item/weapon/robot_module)
 
 /datum/hSB/proc/update()

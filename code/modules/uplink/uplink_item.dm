@@ -76,7 +76,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	var/list/include_modes = list() // Game modes to allow this item in.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
+	var/list/restricted_roles = list() //If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
+	var/purchase_log_vis = TRUE // Visible in the purchase log?
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -101,7 +103,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		for(var/obj/item/I in B)
 			U.purchase_log += "<big>\icon[I]</big>"
 	else
-		U.purchase_log += "<big>\icon[A]</big>"
+		if(purchase_log_vis)
+			U.purchase_log += "<big>\icon[A]</big>"
 
 	if(limited_stock > 0)
 		limited_stock -= 1
@@ -615,6 +618,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
+/datum/uplink_item/stealthy_weapons/poison_pen
+	name = "Poison Pen"
+	desc = "Cutting edge of deadly writing implements technology, this gadget will infuse any piece of paper with delayed contact poison."
+	item = /obj/item/weapon/pen/poison
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. \
@@ -629,6 +639,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/chemical
 	cost = 6
 	surplus = 50
+
+/datum/uplink_item/stealthy_weapons/romerol_kit
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. On death, these nodules take control of the dead body, causing limited revivification, along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/romerol
+	cost = 25
+	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -696,6 +714,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/chameleon/nuke
 	cost = 6
@@ -709,7 +728,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/clothing/shoes/chameleon
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 25
+	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
@@ -1036,6 +1055,22 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/stack/telecrystal
 	cost = 1
 	surplus = 0
+	cant_discount = TRUE
+	// Don't add telecrystals to the purchase_log since
+	// it's just used to buy more items (including itself!)
+	purchase_log_vis = FALSE
+
+/datum/uplink_item/device_tools/telecrystal/five
+	name = "5 Raw Telecrystals"
+	desc = "Five telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
+	item = /obj/item/stack/telecrystal/five
+	cost = 5
+
+/datum/uplink_item/device_tools/telecrystal/twenty
+	name = "20 Raw Telecrystals"
+	desc = "Twenty telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
+	item = /obj/item/stack/telecrystal/twenty
+	cost = 20
 
 // Implants
 /datum/uplink_item/implants
@@ -1050,10 +1085,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
-	desc = "An implant injected into the body, and later activated at the user's will. It will open a separate uplink \
-			with 10 telecrystals. Undetectable, and excellent for escaping confinement."
+	desc = "An implant injected into the body, and later activated at the user's will. Has no telecrystals, must be charged by the use of physical telecrystals. Undetectable (except via surgery), and excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	cost = 14
+	cost = 4
+	// An empty uplink is kinda useless.
 	surplus = 0
 
 /datum/uplink_item/implants/adrenal
@@ -1097,42 +1132,75 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(findtext(item, /obj/item/organ/cyberimp))
+		if(istype(item, /obj/item/organ/cyberimp))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
 
+
 /datum/uplink_item/cyber_implants/thermals
-	name = "Thermal Vision Implant"
-	desc = "These cybernetic eyes will give you thermal vision. They must be implanted via surgery."
-	item = /obj/item/organ/cyberimp/eyes/thermals
+	name = "Thermal eyes"
+	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autoimplanter."
+	item = /obj/item/organ/eyes/robotic/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. They must be implanted via surgery."
-	item = /obj/item/organ/cyberimp/eyes/xray
+	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autoimplanter."
+	item = /obj/item/organ/eyes/robotic/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
-	desc = "This implant will help you get back up on your feet faster after being stunned. \
-			It must be implanted via surgery."
+	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autoimplanter."
 	item = /obj/item/organ/cyberimp/brain/anti_stun
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
-	desc = "This implant will attempt to revive you if you lose consciousness. It must be implanted via surgery."
+	desc = "This implant will attempt to revive you if you lose consciousness. Comes with an autoimplanter."
 	item = /obj/item/organ/cyberimp/chest/reviver
 	cost = 8
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
-	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. \
-			They must be implanted via surgery."
-	item = /obj/item/weapon/storage/box/cyber_implants
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autoimplanter."
+	item = /obj/item/weapon/storage/box/cyber_implants/bundle
 	cost = 40
+	cant_discount = TRUE
+
+// Role-specific items
+/datum/uplink_item/role_restricted
+	category = "Role-Restricted"
+	exclude_modes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
+/datum/uplink_item/role_restricted/reverse_revolver
+	name = "Reverse Revolver"
+	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
+	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
+	cost = 14
+	item = /obj/item/weapon/storage/box/hug/reverse_revolver
+	restricted_roles = list("Clown")
+
+/datum/uplink_item/role_restricted/ez_clean_bundle
+	name = "EZ Clean Grenade Bundle"
+	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
+	item = /obj/item/weapon/storage/box/syndie_kit/ez_clean
+	cost = 6
+	surplus = 20
+	restricted_roles = list("Janitor")
+
+/datum/uplink_item/role_restricted/his_grace
+	name = "His Grace"
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, it will thirst for blood and must be used to kill in order to sate that thirst. \
+	His Grace grants benefits to its wielder, with a more intense hunger equaling more benefits, but be wary: if it gets too hungry, it will kill you and destroy your body. \
+	If you leave His Grace alone for some time, it will eventually return to its inactive state. \
+	To activate His Grace, place five assorted organs inside of it and use it in your hand."
+	item = /obj/item/weapon/storage/toolbox/artistic/his_grace
+	cost = 20
+	restricted_roles = list("Chaplain")
+	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
 // Pointless
 /datum/uplink_item/badass

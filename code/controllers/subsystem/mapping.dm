@@ -2,9 +2,12 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping
 	name = "Mapping"
-	init_order = 100000
+	init_order = 13
 	flags = SS_NO_FIRE
 	display_order = 50
+
+	var/list/nuke_tiles = list()
+	var/list/nuke_threats = list()
 
 
 /datum/subsystem/mapping/New()
@@ -39,6 +42,29 @@ var/datum/subsystem/mapping/SSmapping
 	// Set up Z-level transistions.
 	setup_map_transitions()
 	..()
+
+/* Nuke threats, for making the blue tiles on the station go RED
+   Used by the AI doomsday and the self destruct nuke.
+*/
+
+/datum/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
+	nuke_threats[nuke] = TRUE
+	check_nuke_threats()
+
+/datum/subsystem/mapping/proc/remove_nuke_threat(datum/nuke)
+	nuke_threats -= nuke
+	check_nuke_threats()
+
+/datum/subsystem/mapping/proc/check_nuke_threats()
+	for(var/datum/d in nuke_threats)
+		if(!istype(d) || QDELETED(d))
+			nuke_threats -= d
+
+	var/threats = nuke_threats.len
+
+	for(var/N in nuke_tiles)
+		var/turf/open/floor/T = N
+		T.icon_state = (threats ? "rcircuitanim" : T.icon_regular_floor)
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT

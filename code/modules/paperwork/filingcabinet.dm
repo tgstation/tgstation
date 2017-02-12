@@ -31,10 +31,12 @@
 	icon_state = "tallcabinet"
 
 
-/obj/structure/filingcabinet/initialize()
-	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
-			I.loc = src
+/obj/structure/filingcabinet/Initialize(mapload)
+	..()
+	if(mapload)
+		for(var/obj/item/I in loc)
+			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
+				I.loc = src
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -54,10 +56,10 @@
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
+		user << "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>"
 		playsound(loc, P.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
-			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
+			user << "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
 	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"

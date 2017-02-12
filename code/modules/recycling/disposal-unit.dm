@@ -61,14 +61,18 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
-/obj/machinery/disposal/initialize()
-	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
-	var/atom/L = loc
-	var/datum/gas_mixture/env = new
-	env.copy_from(L.return_air())
-	var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
-	air_contents.merge(removed)
-	trunk_check()
+/obj/machinery/disposal/Initialize(mapload)
+	. = mapload	//late-initialize, we need turfs to have air
+	if(initialized)	//will only be run on late mapload initialization
+		//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
+		var/atom/L = loc
+		var/datum/gas_mixture/env = new
+		env.copy_from(L.return_air())
+		var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
+		air_contents.merge(removed)
+		trunk_check()
+	else
+		..()
 
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -193,7 +197,7 @@
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		last_sound = world.time
 	sleep(5)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	var/obj/structure/disposalholder/H = new()
 	newHolderDestination(H)
@@ -393,7 +397,7 @@
 	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
-		addtimer(CALLBACK(src, .proc/flush), 0)
+		INVOKE_ASYNC(src, .proc/flush)
 
 	if(stat & NOPOWER) // won't charge if no power
 		return

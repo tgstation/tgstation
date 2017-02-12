@@ -2,7 +2,7 @@
 	layer = OBJ_LAYER
 	var/last_move = null
 	var/anchored = 0
-	var/throwing = 0
+	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
@@ -20,10 +20,15 @@
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
+	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
 	appearance_flags = TILE_BOUND
+	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-
+/atom/movable/SDQL_update(const/var_name, new_value)
+	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
+		return FALSE	//PLEASE no.
+	. = ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -109,8 +114,6 @@
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
-	if(reagents)
-		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null
@@ -127,31 +130,39 @@
 /atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
 	if((A && yes))
 		if(throwing)
-			throwing = 0
-			throw_impact(A)
+			throwing.hit_atom(A)
 			. = 1
-			if(!A || qdeleted(A))
+			if(!A || QDELETED(A))
 				return
 		A.Bumped(src)
-
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
+
 		var/atom/oldloc = loc
-		if(oldloc)
-			oldloc.Exited(src, destination)
-		loc = destination
-		destination.Entered(src, oldloc)
+		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
-		if(old_area != destarea)
-			destarea.Entered(src)
+
+		if(oldloc && !same_loc)
+			oldloc.Exited(src, destination)
+			if(old_area)
+				old_area.Exited(src, destination)
+
+		loc = destination
+
+		if(!same_loc)
+			destination.Entered(src, oldloc)
+			if(destarea && old_area != destarea)
+				destarea.Entered(src, oldloc)
+
 		for(var/atom/movable/AM in destination)
 			if(AM == src)
 				continue
 			AM.Crossed(src)
+
 		Moved(oldloc, 0)
 		return 1
 	return 0
@@ -209,7 +220,7 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/throw_impact(atom/hit_atom)
+/atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
@@ -284,12 +295,12 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
-	throwing = 1
+	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	if (SSthrowing.paused && length(SSthrowing.currentrun))
+	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 
@@ -398,3 +409,12 @@
 	. = ..()
 	. -= "Jump to"
 	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
+
+/atom/movable/proc/ex_check(ex_id)
+	if(!ex_id)
+		return TRUE
+	LAZYINITLIST(acted_explosions)
+	if(ex_id in acted_explosions)
+		return FALSE
+	acted_explosions += ex_id
+	return TRUE

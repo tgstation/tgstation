@@ -43,7 +43,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*2)
+			try_use_power(MIN_CLOCKCULT_POWER*4)
 			visible_message("<span class='warning'>[src] shuts down with a horrible grinding noise!</span>")
 			playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, 1)
 		else
@@ -92,7 +92,7 @@
 				for(var/mob/living/L in living_mob_list)
 					if(is_servant_of_ratvar(L))
 						servants++
-				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user)) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
+				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
 					return
 				if(!component_id_to_produce)
 					user << "<span class='warning'>You decide not to select a component and activate the daemon.</span>"
@@ -126,7 +126,7 @@
 		SetLuminosity(0)
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/proc/get_component_cost(id)
-	return max(MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER * (1 + round(clockwork_component_cache[id] * 0.2)))
+	return max(MIN_CLOCKCULT_POWER*2, (MIN_CLOCKCULT_POWER*2) * (1 + round(clockwork_component_cache[id] * 0.2)))
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/process()
 	var/servants = 0
@@ -160,6 +160,6 @@
 		if(component_to_generate)
 			generate_cache_component(component_to_generate, src)
 			production_time = world.time + (production_cooldown * get_efficiency_mod(TRUE)) //go on cooldown
-			visible_message("<span class='warning'>[src] hums as it produces a [get_component_name(component_to_generate)].</span>")
+			visible_message("<span class='warning'>[src] hums as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>")
 		else
 			forced_disable(FALSE) //we shouldn't actually ever get here, as we should cancel out way before this

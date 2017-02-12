@@ -27,18 +27,14 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/weapon/twohanded/ctf/New()
-	..()
-	if(!reset)
-		reset = new reset_path(get_turf(src))
-
 /obj/item/weapon/twohanded/ctf/Destroy()
 	if(reset)
 		qdel(reset)
 		reset = null
 	. = ..()
 
-/obj/item/weapon/twohanded/ctf/initialize()
+/obj/item/weapon/twohanded/ctf/Initialize()
+	..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
@@ -59,13 +55,14 @@
 		user << "You can't move your own flag!"
 		return
 	if(loc == user)
-		if(!user.unEquip(src))
+		if(!user.dropItemToGround(src))
 			return
 	anchored = FALSE
 	pickup(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
+	user.anchored = TRUE
 	for(var/mob/M in player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
@@ -74,6 +71,7 @@
 
 /obj/item/weapon/twohanded/ctf/dropped(mob/user)
 	..()
+	user.anchored = FALSE
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in player_list)
@@ -195,7 +193,7 @@
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		return
-	if(ticker.current_state != GAME_STATE_PLAYING)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
@@ -223,7 +221,7 @@
 	spawn_team_member(new_team_member)
 
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
-	if(isliving(body) && body.z == src.z)
+	if(isliving(body) && (team in body.faction))
 		var/turf/T = get_turf(body)
 		new /obj/effect/ctf/ammo(T)
 		recently_dead_ckeys += body.ckey
@@ -251,8 +249,7 @@
 	if(istype(I, /obj/item/weapon/twohanded/ctf))
 		var/obj/item/weapon/twohanded/ctf/flag = I
 		if(flag.team != src.team)
-			user.unEquip(flag)
-			flag.loc = get_turf(flag.reset)
+			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
 			for(var/mob/M in player_list)
 				var/area/mob_area = get_area(M)
@@ -268,7 +265,7 @@
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
 			for(var/obj/item/weapon/twohanded/ctf/W in M)
-				M.unEquip(W)
+				M.dropItemToGround(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in machines)
 		control.icon_state = "dominator"
@@ -362,7 +359,6 @@
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
-	flags = NODROP | DROPDEL
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
@@ -502,6 +498,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
+	anchored = TRUE
 	alpha = 255
 
 /obj/structure/trap/examine(mob/user)
@@ -565,7 +562,6 @@
 			var/outfit = CTF.ctf_gear
 			var/datum/outfit/O = new outfit
 			for(var/obj/item/weapon/gun/G in M)
-				M.unEquip(G)
 				qdel(G)
 			O.equip(M)
 			M << "<span class='notice'>Ammunition reloaded!</span>"
@@ -584,7 +580,7 @@
 		CTF.dead_barricades += src
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		new /obj/structure/barricade/security/ctf(get_turf(src))
 		qdel(src)
 

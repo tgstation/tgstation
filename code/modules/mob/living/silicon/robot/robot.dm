@@ -89,7 +89,9 @@
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
 
-
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	var/datum/riding/cyborg/riding_datum = null
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -213,7 +215,7 @@
 		changed_name = custom_name
 	if(changed_name == "" && client)
 		changed_name = client.prefs.custom_names["cyborg"]
-	if(changed_name == "")
+	if(!changed_name)
 		changed_name = get_standard_name()
 
 	real_name = changed_name
@@ -360,7 +362,7 @@
 			return
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
-				user << "<span class='notice'>You start fixing youself...</span>"
+				user << "<span class='notice'>You start fixing yourself...</span>"
 				if(!do_after(user, 50, target = src))
 					return
 
@@ -378,7 +380,7 @@
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0)
 			if(src == user)
-				user << "<span class='notice'>You start fixing youself...</span>"
+				user << "<span class='notice'>You start fixing yourself...</span>"
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
@@ -489,7 +491,7 @@
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			user << "<span class='warning'>You must access the borgs internals!</span>"
+			user << "<span class='warning'>You must access the borg's internals!</span>"
 		else if(!src.module && U.require_module)
 			user << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
 		else if(U.locked)
@@ -526,7 +528,7 @@
 	if(stat == DEAD)
 		return //won't work if dead
 	if(locked)
-		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
+		switch(alert("You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = 0
 				update_icons()
@@ -674,7 +676,7 @@
 /mob/living/silicon/robot/proc/ResetSecurityCodes()
 	set category = "Robot Commands"
 	set name = "Reset Identity Codes"
-	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and permenantly severs you from your AI and the robotics console and will deactivate your camera system."
+	set desc = "Scrambles your security and identification codes and resets your current buffers. Unlocks you and permanently severs you from your AI and the robotics console and will deactivate your camera system."
 
 	var/mob/living/silicon/robot/R = src
 
@@ -995,3 +997,90 @@
 	hat = new_hat
 	new_hat.forceMove(src)
 	update_icons()
+
+/mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
+	. = ..()
+	if(!(M in buckled_mobs))
+		buckle_mob(M)
+
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+	if(!riding_datum)
+		riding_datum = new /datum/riding/cyborg
+		riding_datum.ridden = src
+	if(buckled_mobs)
+		if(buckled_mobs.len >= max_buckled_mobs)
+			return
+		if(M in buckled_mobs)
+			return
+	if(stat)
+		return
+	if(incapacitated())
+		return
+	if(M.restrained())
+		return
+	if(iscyborg(M))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		return
+	if(isbot(M))
+		M.visible_message("<span class='boldwarning'>No. Just... no.</span>")
+		return
+	if(module)
+		if(!module.allow_riding)
+			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
+			return
+	if(iscarbon(M))
+		if(!equip_buckle_inhands(M))	//MAKE SURE THIS IS LAST!
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+			return
+	. = ..(M, force, check_loc)
+	riding_datum.handle_vehicle_offsets()
+
+/mob/living/silicon/robot/unbuckle_mob(mob/user)
+	if(iscarbon(user))
+		unequip_buckle_inhands(user)
+	. = ..(user)
+	riding_datum.restore_position(user)
+
+/mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
+	for(var/obj/item/cyborgride_offhand/O in user.contents)
+		if(O.ridden != src)
+			CRASH("RIDING OFFHAND ON WRONG MOB")
+			continue
+		if(O.selfdeleting)
+			continue
+		else
+			qdel(O)
+	return TRUE
+
+/mob/living/silicon/robot/proc/equip_buckle_inhands(mob/living/carbon/user)
+	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user)
+	inhand.rider = user
+	inhand.ridden = src
+	return user.put_in_hands(inhand, TRUE)
+
+/obj/item/cyborgride_offhand
+	name = "offhand"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/mob/living/carbon/rider
+	var/mob/living/silicon/robot/ridden
+	var/selfdeleting = FALSE
+
+/obj/item/cyborgride_offhand/dropped()
+	selfdeleting = TRUE
+	. = ..()
+
+/obj/item/cyborgride_offhand/equipped()
+	if(loc != rider)
+		selfdeleting = TRUE
+		qdel(src)
+	. = ..()
+
+/obj/item/cyborgride_offhand/Destroy()
+	if(selfdeleting)
+		if(rider in ridden.buckled_mobs)
+			ridden.unbuckle_mob(rider)
+	. = ..()

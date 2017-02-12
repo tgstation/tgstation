@@ -19,9 +19,21 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/explosion_level = 0	//for preventing explosion dodging
+	var/explosion_id = 0
 
-/turf/New()
-	..()
+	var/list/decals
+	var/requires_activation	//add to air processing after initialize?
+
+/turf/SDQL_update(const/var_name, new_value)
+	if(var_name == "x" || var_name == "y" || var_name == "z")
+		return FALSE
+	. = ..()
+
+/turf/Initialize()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 
 	levelupdate()
 	if(smooth)
@@ -31,11 +43,17 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	if(requires_activation)
+		CalculateAdjacentTurfs()
+		SSair.add_to_active(src)
+
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy()
 	visibilityChanged()
+	initialized = FALSE
+	requires_activation = FALSE
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -111,6 +129,9 @@
 		var/atom/B = A
 		B.HasProximity(AM)
 
+	if(explosion_level && AM.ex_check(explosion_id))
+		AM.ex_act(explosion_level)
+
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//slipping
@@ -172,11 +193,15 @@
 	SSair.remove_from_active(src)
 
 	var/list/old_checkers = proximity_checkers
+	var/old_ex_level = explosion_level
+	var/old_ex_id = explosion_id
 
 	Destroy()	//❄
 	var/turf/W = new path(src)
-	W.proximity_checkers = old_checkers
 
+	W.proximity_checkers = old_checkers
+	W.explosion_level = old_ex_level
+	W.explosion_id = old_ex_id
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
@@ -190,6 +215,13 @@
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
 			C.deconstruct()
+
+	//update firedoor adjacency
+	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
+	for(var/I in turfs_to_check)
+		var/turf/T = I
+		for(var/obj/machinery/door/firedoor/FD in T)
+			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
 
@@ -234,10 +266,6 @@
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(baseturf)
 	new /obj/structure/lattice(locate(x, y, z))
-
-/turf/proc/ReplaceWithCatwalk()
-	ChangeTurf(baseturf)
-	new /obj/structure/lattice/catwalk(locate(x, y, z))
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
 	for(var/mob/living/M in src)
@@ -318,13 +346,19 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(A.level >= affecting_level)
+			if(istype(A,/atom/movable))
+				var/atom/movable/AM = A
+				if(!AM.ex_check(explosion_id))
+					continue
 			A.ex_act(severity, target)
 			CHECK_TICK
 
-/turf/ratvar_act(force)
-	. = (prob(40) || force)
+/turf/ratvar_act(force, ignore_mobs, probability = 40)
+	. = (prob(probability) || force)
 	for(var/I in src)
 		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
 		if(ismob(A) || .)
 			A.ratvar_act()
 
@@ -417,3 +451,16 @@
 		return
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
+
+
+/turf/proc/add_decal(decal,group)
+	LAZYINITLIST(decals)
+	if(!decals[group])
+		decals[group] = list()
+	decals[group] += decal
+	add_overlay(decals[group])
+
+/turf/proc/remove_decal(group)
+	LAZYINITLIST(decals)
+	overlays -= decals[group]
+	decals[group] = null

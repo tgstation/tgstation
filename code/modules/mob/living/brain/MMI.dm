@@ -35,11 +35,12 @@
 
 /obj/item/device/mmi/New()
 	..()
-	laws.set_laws_config()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 
-
+/obj/item/device/mmi/Initialize()
+	..()
+	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -52,7 +53,7 @@
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
 			return
 
-		if(!user.unEquip(O))
+		if(!user.transferItemToLoc(O, src))
 			return
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key)
@@ -69,7 +70,6 @@
 			living_mob_list += brainmob
 
 		brainmob.reset_perspective()
-		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
@@ -155,7 +155,7 @@
 	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
-	if(!brainmob)
+	if(!brainmob || iscyborg(loc))
 		return
 	else
 		switch(severity)

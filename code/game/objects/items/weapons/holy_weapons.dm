@@ -49,9 +49,8 @@
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
-		M.unEquip(src)
-		M.put_in_active_hand(holy_weapon)
 		qdel(src)
+		M.put_in_active_hand(holy_weapon)
 
 /obj/item/weapon/nullrod/godhand
 	icon_state = "disintegrate"
@@ -78,7 +77,7 @@
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
-		. += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+		. += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
