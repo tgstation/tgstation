@@ -38,6 +38,8 @@
 	var/turf_visible
 	if(pixel_turf)
 		turf_visible = cameranet.checkTurfVis(pixel_turf)
+		if(istype(loc, /obj/item/device/aicard) && (pixel_turf in view(client.view, loc)))
+			turf_visible = TRUE
 		if(!turf_visible)
 			log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
 			message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
