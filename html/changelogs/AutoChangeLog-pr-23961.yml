@@ -1,0 +1,4 @@
+author: "Sweaterkittens"
+delete-after: True
+changes: 
+  - tweak: "Plasmamen burn damage multiplier reduced to 1.5x from 2x"
