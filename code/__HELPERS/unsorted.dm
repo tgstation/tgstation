@@ -1336,3 +1336,37 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
 				return FALSE
 	return TRUE
+
+//WHATEVER YOU USE THIS FOR MUST BE SANITIZED TO SHIT, IT USES SHELL
+//It also sleeps
+/proc/HTTPSGet(url)
+	//"This has got to be the ugliest hack I have ever done"
+	//warning, here be dragons
+	/*
+						|  @___oo
+				/\  /\   / (__,,,,|
+				) /^\) ^\/ _)
+				)   /^\/   _)
+				)   _ /  / _)
+			/\  )/\/ ||  | )_)
+		<  >      |(,,) )__)
+			||      /    \)___)\
+			| \____(      )___) )___
+			\______(_______;;; __;;;
+		*/
+	var/temp_file = "HTTPSGetOutput.txt"
+	var/command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
+	world.log << "HTTPSGet: [url]"
+	var/result = shell(command)
+	if(result != 0)
+		world.log << "Download failed: shell exited with code: [result]"
+		return
+
+	var/f = file(temp_file)
+	if(!f)
+		world.log << "Download failed: Temp file not found"
+		return
+
+	. = file2text(f)
+	f = null
+	fdel(temp_file)

@@ -40,39 +40,16 @@ var/global/datum/getrev/revdata = new()
 		world.log << "PR details download failed: Invalid github repo id: [config.githubrepoid]"
 		return
 	for(var/line in testmerge)
-		//"This has got to be the ugliest hack I have ever done"
-		//warning, here be dragons
-		/*
-			                |  @___oo
-			      /\  /\   / (__,,,,|
-			     ) /^\) ^\/ _)
-			     )   /^\/   _)
-			     )   _ /  / _)
-			 /\  )/\/ ||  | )_)
-			<  >      |(,,) )__)
-			 ||      /    \)___)\
-			 | \____(      )___) )___
-			  \______(_______;;; __;;;
-			*/
 		if(!isnum(text2num(line)))
 			world.log << "PR details download failed: Invalid PR number: [line]"
 			return
+
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
-		var/temp_file = "prcheck[line].json"
-		var/command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
-		world.log << "Running command: [command]"
-		var/result = shell(command)
-		if(result != 0)
-			world.log << "PR details download failed: shell exited with code: [result]"
+		var/json = HTTPSGet(url)
+		if(!json)
 			return
 
-		var/f = file(temp_file)
-		if(!f)
-			world.log << "PR details download failed: Temp file not found"
-			return
-		testmerge[line] = json_decode(file2text(f))
-		f = null
-		fdel(temp_file)
+		testmerge[line] = json_decode(json)
 
 		if(!testmerge[line])
 			world.log << "PR details download failed: null details returned"
