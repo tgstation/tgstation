@@ -363,7 +363,6 @@
 			var/obj/item/device/mmi/M = actual_loc
 			actual_loc = M.mecha
 		if(actual_loc != src) //something went wrong
-			world << "occupant.loc"
 			occupant.clear_alert("charge")
 			occupant.clear_alert("mech damage")
 			RemoveActions(occupant, human_occupant=1)
