@@ -416,8 +416,23 @@ var/list/teleportlocs = list()
 		if(ENVIRON)
 			master.used_environ += amount
 
+/area/proc/set_gravity(var/atom/movable/AM, i = FALSE)
+	if(i > 5)
+		return FALSE
+	AM.gravity_direction = gravity_direction
+	AM.gravity_strength = gravity_strength
+	AM.gravity_stunning = gravity_stunning
+	AM.gravity_throwing = gravity_throwing
+	AM.gravity_override = gravity_overriding
+	if(AM.contents.len)
+		for(var/atom/movable/M in AM.contents)
+			set_gravity(M, ++i)
 
 /area/Entered(A)
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		set_gravity(AM)
+
 	if(!isliving(A))
 		return
 

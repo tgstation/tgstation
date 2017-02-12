@@ -5,9 +5,12 @@ var/datum/subsystem/gravity/SSgravity
 	priority = 75
 	wait = 1
 	init_order = -100
-	can_fire = FALSE
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
 
+	var/list/atoms_pending_calculation = list()
+	var/calculation_cost = 0
+	var/recalculating = FALSE
+	var/recalculation_cost = 0
 	var/list/areas = list()
 	var/list/currentrun = list()
 	var/list/processing = list()
@@ -19,34 +22,44 @@ var/datum/subsystem/gravity/SSgravity
 	for(var/area/A in world)
 		areas += A
 
-/datum/subsystem/gravity/proc/calculate_area(var/area/A)
-	var/str = A.gravity_strength
-	var/dir = A.gravity_direction
-	var/trw = A.gravity_throwing
-	var/stun = A.gravity_stunning
-	var/ovr = A.gravity_overriding
-	for(var/atom/movable/AM in A)
-		processing += AM
-		processing[AM] = list()
-		processing[AM]["strength"] = str
-		processing[AM]["throwing"] = trw
-		processing[AM]["stun"] = stun
-		processing[AM]["direction"] = dir
-		processing[AM]["override"] = ovr
-	A.gravity_stunning = FALSE
-	A.gravity_throwing = FALSE
+/datum/subsystem/gravity/proc/calculate_atom(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	if(!T)
+		T = get_turf(AM.loc)
+		if(!T)
+			return FALSE
+	var/area/A = T.loc
+	processing += AM
+	processing[AM] = list()
+	processing[AM]["strength"] = A.gravity_strength
+	processing[AM]["direction"] = A.gravity_direction
+	processing[AM]["throwing"] = A.gravity_throwing
+	processing[AM]["stun"] = A.gravity_stunning
+	processing[AM]["override"] = A.gravity_overriding
+
+/datum/subsystem/gravity/proc/calculate_all_atoms(resumed = FALSE)
+	if(!resumed)
+		recalculating = TRUE
+		processing = list()
+		atoms_pending_calculation = atoms_affected_by_gravity.Copy()
+		calculation_cost = world.timeofday
+	while(atoms_pending_calculation.len)
+		calculate_atom(atoms_pending_calculation[atoms_pending_calculation.len])
+		if(MC_TICK_CHECK)
+			return -1
+	for(var/area/A in world)
+		A.gravity_stunning = FALSE
+		A.gravity_throwing = FALSE
+	recalculation_cost = world.timeofday - calculation_cost
+	recalculating = FALSE
+	world << "<span class='danger'>Recalculation took [recalculation_cost] deciseconds!</span>"
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
 	if(!resumed)
-		var/calculation_cost = world.time
-		processing = list()
-		for(var/area/A in areas)
-			calculate_area(A)
-		currentrun = processing.Copy()
-		calculation_cost = (world.time - calculation_cost)
-		world << "<span class='danger'>DEBUG: Calculation of all areas took [calculation_cost] ticks!</span>"
-	var/list/current_run = src.currentrun
-/*	while(current_run.len)
-		var/atom/movable/A = currentrun[current_run.len]
-		A.gravity_act(direction = current_run[A]["direction"], strength = current_run[A]["strength"], throwing = current_run[A]["throwing"], stun = current_run[A]["stun"], override = current_run[A]["override"])
-Whole host of problems. */
+		currentrun = atoms_affected_by_gravity.Copy()
+	while(currentrun.len)
+		var/atom/movable/AM = currentrun[currentrun.len]
+		AM.gravity_act()
+		currentrun.len--
+		if(MC_TICK_CHECK)
+			return

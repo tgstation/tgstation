@@ -1,5 +1,8 @@
+var/global/list/atoms_affected_by_gravity = list()
+
 /atom/movable
 	layer = OBJ_LAYER
+	var/is_affected_by_gravity = TRUE	//Requires a re-Initialize() to change.
 	var/last_move = null
 	var/anchored = 0
 	var/throwing = 0
@@ -24,14 +27,35 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	var/gravity_direction = FALSE
+	var/gravity_strength = 1
+	var/gravity_stunning = 0
+	var/gravity_throwing = 0
+	var/gravity_override = FALSE
 
 /atom/movable/SDQL_update(const/var_name, new_value)
 	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
 		return FALSE	//PLEASE no.
 	. = ..()
 
-/atom/movable/proc/gravity_act(direction = null, strength = 1, throwing = 0, stun = 0, override = FALSE)
-	if(!direction)
+/atom/movable/Initialize()
+	if(is_affected_by_gravity)
+		atoms_affected_by_gravity += src
+		var/turf/T = get_turf(src)
+		if(T && !isturf(T))
+			T = get_turf(T)
+		if(isturf(T))
+			var/area/A = T.loc
+			if(A && istype(A, /area))
+				gravity_direction = A.gravity_direction
+				gravity_strength = A.gravity_strength
+				gravity_stunning = A.gravity_stunning
+				gravity_throwing = A.gravity_throwing
+				gravity_override = A.gravity_overriding
+	. = ..()
+
+/atom/movable/proc/gravity_act()
+	if(!gravity_direction)
 		return FALSE
 	if(!override && !has_gravity())
 		return FALSE
@@ -39,13 +63,11 @@
 		return FALSE
 	if(anchored)
 		return FALSE
-	if(throwing)
-		throw_at(get_edge_target_turf(src, direction), 0, strength * 2)
+	if(gravity_throwing)
+		throw_at(get_edge_target_turf(src, gravity_direction), 0, gravity_strength * 2)
 	else
-		for(var/i = strength, i > 0, i++)
-			Move(get_step(src, direction))
-	for(var/atom/movable/M in contents)
-		M.gravity_act(direction, strength, throwing)
+		for(var/i = gravity_strength, i > 0, i--)
+			Move(get_step(src, gravity_direction))
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
