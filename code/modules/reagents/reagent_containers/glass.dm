@@ -28,10 +28,10 @@
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
-			if(isturf(target) && reagent_list.len && thrownby)
-				add_logs(thrownby, M, "splashed [english_list(reagent_list)]", "at [target][COORD(target)]")
-				log_game("[key_name(thrownby)] splashed [english_list(reagent_list)] at [COORD(target)].")
-				message_admins("[admin_key_name(thrownby)] splashed [english_list(reagent_list)] at [ADMIN_COORDJMP(target)].")
+			if(isturf(target) && reagents.reagent_list.len && thrownby)
+				add_logs(thrownby, target, "splashed [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
+				log_game("[key_name(thrownby)] splashed [english_list(reagents.reagent_list)] at [COORD(target)].")
+				message_admins("[admin_key_name(thrownby)] splashed [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
 			reagents.reaction(M, TOUCH)
 			add_logs(user, M, "splashed", R)
 			reagents.clear_reagents()
