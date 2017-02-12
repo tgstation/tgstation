@@ -21,6 +21,7 @@
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
 			return
+		newVars = list("owner" = usr)
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of [usr.p_them()]."
 	else
 		invocation_type ="none"
@@ -80,6 +81,7 @@
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
 			return
+		newVars = list("owner" = usr)
 		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
 	else
 		invocation_type ="none"

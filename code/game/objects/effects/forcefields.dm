@@ -19,10 +19,11 @@
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
 	var/timeleft = 300
+	var/owner
 
 /obj/effect/forcefield/mime/CanPass(mob/living/user, turf/target, height=0)
 	if(isliving(user) && user.mind)
-		if(user.mind.miming)
+		if(user.mind.miming && user == owner)
 			return 1
 		return 0
 	return 0
