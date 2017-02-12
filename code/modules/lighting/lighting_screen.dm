@@ -36,7 +36,7 @@
 	icon_state = "reeee"
 	screen_loc = "SOUTH,WEST"
 	plane = LIGHTING_PLANE
-	layer = -1
+	layer = BACKGROUND_LAYER
 	blend_mode = BLEND_OVERLAY
 
 /obj/screen/lighting_backdrop/New(loc, new_size)
@@ -47,12 +47,14 @@
 	var/x = 0
 	var/y = 0
 	if (istext(new_size))
+		// 15x15 format.
 		var/regex/re = regex("(\\d+)x(\\d+)")
 		re.Find(new_size)
 		x = text2num(re.group[1])
 		y = text2num(re.group[2])
 
 	else
+		// Straight number.
 		x = y = new_size * 2 + 1
 
 	var/matrix/M = matrix()
