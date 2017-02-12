@@ -33,6 +33,18 @@
 /atom/movable/gravity_act(direction = null, strength = 1, throwing = FALSE)
 	if(!direction)
 		return FALSE
+	if(!isturf(loc))
+		return FALSE
+	if(anchored)
+		return FALSE
+	if(throwing)
+		throw_at(get_edge_target_turf(src, direction), 50, strength * 2)
+	else
+		for(var/i = strength, i > 0, i++)
+			Move(get_step(src, direction))
+	for(var/atom/movable/M in contents)
+		M.gravity_act(direction, strength, throwing)
+
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0

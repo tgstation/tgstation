@@ -14,7 +14,7 @@ var/datum/subsystem/gravity/SSgravity
 	var/gravity_direction = FALSE	//FALSE for normal, and cardinals.
 	var/gravity_strength = 1
 	var/calculation_timer = 0
-	var/calculation_interval = 2400
+	var/calculation_interval = 100
 	var/throwing = FALSE
 	var/recalculation_tick_cost = 0
 	var/gravstun = TRUE
@@ -41,7 +41,7 @@ var/datum/subsystem/gravity/SSgravity
 	throw_everything()
 
 /datum/subsystem/gravity/proc/stun_all_mobs()
-	for(var/mob/living/carbon/C in mob_list)
+	for(var/mob/living/carbon/C in processing)
 		if(C.z == 1)
 			C.Weaken(gravstun_amount)
 
@@ -49,7 +49,7 @@ var/datum/subsystem/gravity/SSgravity
 	processing = list()
 	var/before = world.time
 	for(var/atom/movable/A in world)
-		if(!A.anchored && A.z == 1)
+		if(A.z == 1)
 			processing += A
 		CHECK_TICK
 	currentrun = processing.Copy()
@@ -78,7 +78,6 @@ var/datum/subsystem/gravity/SSgravity
 		currentrun.len--
 		if(A)
 			if(A.anchored)
-				processing -= A
 				continue
 			if(!throwing)
 				for(var/i = 0, i < gravity_strength, i++)
