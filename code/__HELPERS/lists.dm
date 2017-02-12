@@ -246,7 +246,7 @@
 	for(var/i=1, i<L.len, ++i)
 		L.Swap(i,rand(i,L.len))
 
-	return L
+	. = L
 
 //same, but returns nothing and acts on list in place
 /proc/shuffle_inplace(list/L)
