@@ -95,5 +95,5 @@
 		else if(burnt_out)
 			L << "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>"
 		else
-			playsound(get_turf(L), "sound/magic/Charge.ogg", 50, 1)
+			playsound(get_turf(L), 'sound/magic/Charge.ogg', 50, 1)
 			L << "<span class='notice'>[charged_item] suddenly feels very warm!</span>"

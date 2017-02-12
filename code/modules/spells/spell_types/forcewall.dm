@@ -6,7 +6,7 @@
 	clothes_req = 0
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "shout"
-	sound =  "sound/magic/ForceWall.ogg"
+	sound = 'sound/magic/ForceWall.ogg'
 	action_icon_state = "shield"
 	range = -1
 	include_user = 1

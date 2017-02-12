@@ -5,8 +5,8 @@
 
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
-	var/sound1 = "sound/weapons/ZapBang.ogg"
-	var/sound2 = "sound/weapons/ZapBang.ogg"
+	var/sound1 = 'sound/weapons/ZapBang.ogg'
+	var/sound2 = 'sound/weapons/ZapBang.ogg'
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
 	var/thearea = before_cast(targets)

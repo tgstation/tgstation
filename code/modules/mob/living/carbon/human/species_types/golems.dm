@@ -98,7 +98,7 @@
 	meat = /obj/item/weapon/ore/iron
 	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching."
 	attack_verb = "smash"
-	attack_sound = "sound/effects/meteorimpact.ogg" //hits pretty hard
+	attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
 
 //Immune to ash storms
 /datum/species/golem/titanium
@@ -231,7 +231,7 @@
 	burnmod = 3 //melts easily
 	brutemod = 0.25
 	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
-	attack_sound = "sound/effects/shovel_dig.ogg"
+	attack_sound = 'sound/effects/shovel_dig.ogg'
 
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
@@ -244,7 +244,7 @@
 /datum/species/golem/sand/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
 		if(P.flag == "bullet" || P.flag == "bomb")
-			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
+			playsound(H, 'sound/effects/shovel_dig.ogg', 70, 1)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
 			return 2
@@ -260,7 +260,7 @@
 	brutemod = 3 //very fragile
 	burnmod = 0.25
 	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
-	attack_sound = "sound/effects/Glassbr2.ogg"
+	attack_sound = 'sound/effects/Glassbr2.ogg'
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, "shatter", 70, 1)
@@ -300,7 +300,7 @@
 	meat = /obj/item/weapon/ore/bluespace_crystal
 	info_text = "As a <span class='danger'>Bluespace Golem</span>, are spatially unstable: you will teleport when hit, and you can teleport manually at a long distance."
 	attack_verb = "bluespace punch"
-	attack_sound = "sound/effects/phasein.ogg"
+	attack_sound = 'sound/effects/phasein.ogg'
 
 	var/datum/action/innate/unstable_teleport/unstable_teleport
 	var/teleport_cooldown = 100
@@ -393,7 +393,7 @@
 	meat = /obj/item/weapon/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them. Your skin also emits bananas when damaged."
 	attack_verb = "honk"
-	attack_sound = "sound/items/AirHorn2.ogg"
+	attack_sound = 'sound/items/AirHorn2.ogg'
 
 	var/last_honk = 0
 	var/honkooldown = 0

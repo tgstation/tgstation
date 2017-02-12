@@ -103,10 +103,10 @@
 			if(!L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.loc = L.loc
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
-				playsound(get_turf(L),"sound/magic/SummonItems_generic.ogg",50,1)
+				playsound(get_turf(L), 'sound/magic/SummonItems_generic.ogg', 50, 1)
 			else
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
-				playsound(get_turf(L),"sound/magic/SummonItems_generic.ogg",50,1)
+				playsound(get_turf(L), 'sound/magic/SummonItems_generic.ogg', 50, 1)
 
 
 		if(message)

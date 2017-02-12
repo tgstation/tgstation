@@ -58,4 +58,4 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
-	sound = "sound/magic/FleshToStone.ogg"
+	sound = 'sound/magic/FleshToStone.ogg'

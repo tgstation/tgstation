@@ -7,7 +7,7 @@
 	var/list/effects
 	var/ready = TRUE
 	centcom_cancast = FALSE
-	sound = "sound/effects/magic.ogg"
+	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300
 	level_max = 0
 

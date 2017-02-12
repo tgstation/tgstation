@@ -388,7 +388,7 @@ var/highlander_claymores = 0
 	throw_speed = 0
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
-	hitsound = "sound/weapons/chainsawhit.ogg"
+	hitsound = 'sound/weapons/chainsawhit.ogg'
 
 /obj/item/weapon/mounted_chainsaw/dropped()
 	..()

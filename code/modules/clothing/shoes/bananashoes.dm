@@ -15,7 +15,7 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	if(on)
 		if(footstep > 1)//honks when its on
-			playsound(src, "sound/items/bikehorn.ogg", 75, 1)
+			playsound(src, 'sound/items/bikehorn.ogg', 75, 1)
 			footstep = 0
 		else
 			footstep++

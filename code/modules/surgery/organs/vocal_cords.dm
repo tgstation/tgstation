@@ -507,7 +507,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	//HONK
 	else if((findtext(message, honk_words)))
 		next_command = world.time + cooldown_meme
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(owner), "sound/items/bikehorn.ogg", 300, 1), 25)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(owner), 'sound/items/bikehorn.ogg', 300, 1), 25)
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
 				C.slip(0,7 * power_multiplier)
