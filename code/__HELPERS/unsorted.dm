@@ -1340,6 +1340,16 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	see_in_dark = 1e6
 	anchored = 1
 
+/mob/dview/Destroy(force=0)
+	stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+
+	if (!force)
+		return QDEL_HINT_LETMELIVE
+
+	world.log << "EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS"
+	global.dview_mob = new
+	return QDEL_HINT_QUEUE
+
 
 #define FOR_DVIEW(type, range, center, invis_flags) \
 	dview_mob.loc = center;           \
