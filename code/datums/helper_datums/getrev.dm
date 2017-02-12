@@ -59,7 +59,7 @@ var/global/datum/getrev/revdata = new()
 			return
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
 		var/temp_file = "prcheck[line].json"
-		var/command = "powershell -Command \"curl -O [temp_file] [url]\""
+		var/command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
 		world.log << "Running command: [command]"
 		var/result = shell(command)
 		if(result != 0)
