@@ -163,6 +163,10 @@ var/datum/subsystem/vote/SSvote
 			var/ckey = ckey(initiator_key)
 			if((admin_datums[ckey]) || (ckey in deadmins))
 				admin = TRUE
+				if(admin_datums[ckey])
+					var/datum/admins/A = admin_datums[ckey]
+					if(A.fakekey)
+						initiator_key = "Administrator"
 
 			if(next_allowed_time > world.time && !admin)
 				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
