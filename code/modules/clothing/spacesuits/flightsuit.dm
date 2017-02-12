@@ -276,6 +276,7 @@
 								o = EAST
 						if(o)
 							pull.forceMove(get_step(get_turf(wearer), o))
+							wearer.pulling = pull
 					step(wearer, drift_dir_x)
 				if(momentum_speed_y >= i)
 					var/turf/T = get_step(get_turf(wearer), drift_dir_y)
@@ -288,6 +289,7 @@
 								o = SOUTH
 						if(o)
 							pull.forceMove(get_step(get_turf(wearer), o))
+							wearer.pulling = pull
 					step(wearer, drift_dir_y)
 				sleep(1)
 
