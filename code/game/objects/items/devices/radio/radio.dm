@@ -17,7 +17,6 @@
 	var/broadcasting = 0
 	var/listening = 1
 	var/translate_binary = 0
-	var/translate_hive = 0
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
@@ -58,7 +57,6 @@
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
 	translate_binary = 0
-	translate_hive = 0
 	syndie = 0
 	centcom = 0
 
@@ -71,9 +69,6 @@
 
 		if(keyslot.translate_binary)
 			translate_binary = 1
-
-		if(keyslot.translate_hive)
-			translate_hive = 1
 
 		if(keyslot.syndie)
 			syndie = 1

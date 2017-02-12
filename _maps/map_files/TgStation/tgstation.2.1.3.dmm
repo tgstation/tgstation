@@ -29348,14 +29348,14 @@
 	name = "Privacy Shutters Control";
 	pixel_x = 6;
 	pixel_y = 25;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/button/door{
 	id = "hopqueue";
 	name = "Queue Shutters Control";
 	pixel_x = -4;
 	pixel_y = 25;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -4;
@@ -100153,7 +100153,7 @@ aRG
 aSO
 aTO
 aVG
-cCr
+cCq
 aVz
 bak
 bbz
