@@ -30,7 +30,7 @@ var/next_mob_id = 0
 	prepare_huds()
 	..()
 
-/mob/gravity_act(direction = null, strength = 1, throwing = FALSE)
+/mob/gravity_act(direction = null, strength = 1, throwing = FALSE, stun = 0, override = FALSE)
 	return FALSE
 
 /atom/proc/prepare_huds()

@@ -27,6 +27,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	use_power = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
+	var/current_grav_dir = FALSE
+	var/new_grav_dir = FALSE
 
 /obj/machinery/gravity_generator/throw_at()
 	return FALSE
@@ -136,6 +138,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	investigate_log("was destroyed!", "gravity")
 	on = 0
 	update_list()
+	for(var/area/A in world)
+		if(A.z == z)
+			A.gravity_direction = FALSE
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
 		qdel(O)
@@ -260,7 +265,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		dat += "<br><span class='boldnotice'><A href='?src=\ref[src];set_dir=1'>NORTH</A> <A href='?src=\ref[src];set_dir=2'>SOUTH</A>"
 		dat += " <A href='?src=\ref[src];set_dir=4'>EAST</A> <A href='?src=\ref[src];set_dir=8'>WEST</A></span>"
 		dat += "<br><span class='userdanger'><A href='?src=\ref[src];set_dir=0'>RESET DIRECTION</A></span>"
-		if(grav_dir != SSgravity.gravity_direction)
+		if(grav_dir != new_grav_dir)
 			dat += "<br><span class='userdanger'>DIRECTION CHANGE PENDING POWER CYCLE!</span>"
 
 	var/datum/browser/popup = new(user, "gravgen", name)
@@ -285,10 +290,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		set_gravity_direction(href_list["set_dir"])
 
 /obj/machinery/gravity_generator/main/proc/fix_gravity_direction()
-	grav_dir = FALSE
+	new_grav_dir = FALSE
 
 /obj/machinery/gravity_generator/main/proc/set_gravity_direction(set_dir)
-	grav_dir = set_dir
+	new_grav_dir = set_dir
 
 // Power and Icon States
 
@@ -338,9 +343,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
 			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 	if(!on)
-		SSgravity.set_gravity_direction(FALSE)
+		for(var/area/A in world)
+			if(A.z == z)
+				A.gravity_direction = FALSE
 	else
-		SSgravity.set_gravity_direction(grav_dir)
+		for(var/area/A in world)
+			if(A.z == z)
+				A.gravity_direction = new_grav_dir
+	current_grav_dir = new_grav_dir
 	update_icon()
 	update_list()
 	src.updateUsrDialog()

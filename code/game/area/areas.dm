@@ -41,6 +41,11 @@
 	var/static_environ
 
 	var/has_gravity = 0
+	var/gravity_overriding = FALSE	//Still directionally move things despite not having gravity.
+	var/gravity_direction = FALSE	//False/cardinals
+	var/gravity_strength = 1
+	var/gravity_throwing = 0
+	var/gravity_stunning = 0
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -118,6 +123,8 @@ var/list/teleportlocs = list()
 	..()
 
 	power_change()		// all machines set to current power level, also updates icon
+	if(SSgravity)
+		SSgravity.areas += src
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
