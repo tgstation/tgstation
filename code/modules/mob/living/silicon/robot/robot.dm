@@ -1018,7 +1018,7 @@
 		return
 	if(M.restrained())
 		return
-	if(!is_type_in_typecache(can_ride_typecache))
+	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
 		return
 	if(module)

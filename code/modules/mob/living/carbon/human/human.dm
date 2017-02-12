@@ -904,10 +904,10 @@
 	. = ..()
 
 /mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, yes = FALSE)
-	if(!is_type_in_typecache(can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
-		return
 	if(!yes)
+		return
+	if(!is_type_in_typecache(M, can_ride_typecache))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/human
