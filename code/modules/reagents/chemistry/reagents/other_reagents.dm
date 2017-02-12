@@ -816,7 +816,7 @@
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		do_teleport(M, get_turf(M), (reac_volume / 10), asoundin = 'sound/effects/phasein.ogg')
+		do_teleport(M, get_turf(M), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg') //4 tiles per crystal
 	..()
 
 /datum/reagent/bluespace/on_mob_life(mob/living/M)
