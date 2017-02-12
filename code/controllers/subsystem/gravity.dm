@@ -46,6 +46,7 @@ var/datum/subsystem/gravity/SSgravity
 		calculation_cost = (world.time - calculation_cost)
 		world << "<span class='danger'>DEBUG: Calculation of all areas took [calculation_cost] ticks!</span>"
 	var/list/current_run = src.currentrun
-	while(current_run.len)
+/*	while(current_run.len)
 		var/atom/movable/A = currentrun[current_run.len]
 		A.gravity_act(direction = current_run[A]["direction"], strength = current_run[A]["strength"], throwing = current_run[A]["throwing"], stun = current_run[A]["stun"], override = current_run[A]["override"])
+Whole host of problems. */
