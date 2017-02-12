@@ -108,9 +108,9 @@
 
 	else
 		if(isturf(target) && reagent_list.len && thrownby)
-			add_logs(thrownby, M, "splashed [english_list(reagent_list)]", "at [target][COORD(target)]")
-			log_game("[key_name(thrownby)] splashed [english_list(reagent_list)] at [COORD(target)].")
-			message_admins("[admin_key_name(thrownby)] splashed [english_list(reagent_list)] at [ADMIN_COORDJMP(target)].")
+			add_logs(thrownby, M, "splashed (thrown) [english_list(reagent_list)]", "at [target][COORD(target)]")
+			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagent_list)] at [COORD(target)].")
+			message_admins("[admin_key_name(thrownby)] splashed (thrown) [english_list(reagent_list)] at [ADMIN_COORDJMP(target)].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
