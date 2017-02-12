@@ -6,11 +6,11 @@
 /datum/clockwork_scripture/invoke_inathneq
 	descname = "Area Invulnerability"
 	name = "Invoke Inath-neq, the Resonant Cogwheel"
-	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all servants in range for fifteen seconds."
+	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all Servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
 	channel_time = 100
 	consumed_components = list(VANGUARD_COGWHEEL = 6, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
-	usage_tip = "Those affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
+	usage_tip = "Servants affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 2
@@ -124,7 +124,7 @@
 		return FALSE
 	if(!slab.no_cost && ratvar_awakens)
 		invoker << "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
-		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
+		<span class='warning'>There is no need for Nezbere's assistance while Ratvar is risen!</span>"
 		return FALSE
 	return TRUE
 
@@ -165,8 +165,8 @@
 /datum/clockwork_scripture/invoke_nzcrentr
 	descname = "Area Lightning Blast"
 	name = "Invoke Nzcrentr, the Eternal Thunderbolt"
-	desc = "Taps the limitless power of Nzcrentr, one of Ratvar's four generals. The immense energy Nzcrentr wields will allow you to imbue a tiny fraction of it into your body. After several \
-	seconds, anyone near you will be struck by a devastating lightning bolt."
+	desc = "Taps the limitless power of Nzcrentr, one of Ratvar's four generals. Nzcrentr will grant you a tiny fraction of its boundless power. After several seconds, all non-Servants near you \
+	will be struck by devastating lightning bolts."
 	invocations = list("I call upon you, Amperage!!", "Let your energy flow through me!!", "Let your boundless power shatter stars!!")
 	channel_time = 100
 	consumed_components = list(BELLIGERENT_EYE = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 6)
@@ -187,7 +187,7 @@
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	hierophant_message("<span class='nzcrentr_large'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope [invoker.p_they()] [invoker.p_do()] not shatter under it!")]\"</span>", FALSE, invoker)
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
-	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n \
+	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n\
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	sleep(2)
@@ -197,7 +197,7 @@
 	sleep(88)
 	if(invoker)
 		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [invoker]'s body!</span>", \
-		"<span class='nzcrentr'>\"[text2ratvar("I told you you wouldn't be able to handle it.")]\"</span>\n \
+		"<span class='nzcrentr'>\"[text2ratvar("I told you you wouldn't be able to handle it.")]\"</span>\n\
 		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		if(invoker.stat == CONSCIOUS)

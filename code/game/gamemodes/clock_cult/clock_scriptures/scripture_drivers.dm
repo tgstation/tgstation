@@ -253,14 +253,15 @@
 /datum/clockwork_scripture/create_object/tinkerers_cache
 	descname = "Necessary Structure, Shares Components"
 	name = "Tinkerer's Cache"
-	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
+	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
+	Striking a cache with a slab will transfer that slab's components to the global cache."
 	invocations = list("Constructing...", "...a cache!")
 	channel_time = 50
 	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	object_path = /obj/structure/destructible/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches very efficient."
+	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
@@ -299,17 +300,17 @@
 /datum/clockwork_scripture/create_object/sigil_of_transgression
 	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
-	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
-	invocations = list("Divinity, dazzle...", "...those who tresspass here!")
+	desc = "Wards a tile with a sigil, which will stun the next non-Servant to cross it."
+	invocations = list("Divinity, smite...", "...those who tresspass here!")
 	channel_time = 50
 	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
-	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-servant to cross it will be immobilized.</span>"
+	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be stunned.</span>"
 	usage_tip = "The sigil, while fairly powerful in its stun, does not induce muteness in its victim."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transgression, which will stun the first non-Servant to cross it."
+	quickbind_desc = "Creates a Sigil of Transgression, which will stun the next non-Servant to cross it."

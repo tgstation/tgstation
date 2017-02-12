@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/ocular_warden
 	name = "ocular warden"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
-	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
+	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
 	obj_integrity = 25
@@ -39,7 +39,7 @@
 				user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 			return FAILED_UNFASTEN
 	else
-		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(3, src))
+		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
 			if(!silent)
 				user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
 			return FAILED_UNFASTEN

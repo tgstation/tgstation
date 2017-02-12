@@ -27,7 +27,7 @@
 	name = "Nezbere, the Brass Eidolon"
 	desc = "A towering colossus clad in nigh-impenetrable brass armor. Its gaze is stern yet benevolent, even upon you."
 	clockwork_desc = "One of Ratvar's four generals. Nezbere is responsible for the design, testing, and creation of everything in Ratvar's domain, and his loyalty to Ratvar knows no bounds. \
-	It is said that Ratvar once asked him to destroy the plans for a weapon Nezbere had made that could have harmed him and Nezbere responded by not only destroying the plans, \
+	It is said that Ratvar once asked him to destroy the plans for a weapon Nezbere had made that could have harmed him, and Nezbere responded by not only destroying the plans, \
 	but by taking his own life so that the device could never be replicated. Nezbere's zealotry is unmatched."
 	icon = 'icons/effects/340x428.dmi'
 	icon_state = "nezbere"
@@ -47,7 +47,7 @@
 
 /obj/effect/clockwork/general_marker/nzcrentr
 	name = "Nzcrentr, the Eternal Thunderbolt"
-	desc = "A terrifying spiked construct crackling with limitless energy."
+	desc = "A terrifying spiked construct crackling with perpetual lightning."
 	clockwork_desc = "One of Ratvar's four generals. Before becoming one of Ratvar's generals, Nzcrentr sook out any and all sentient life to slaughter it for sport. \
 	Nzcrentr was coerced by Ratvar into entering a shell constructed by Nezbere, ostensibly made to grant Nzcrentr more power. In reality, the shell was made to trap and control it. \
 	Nzcrentr now serves loyally, though even one of Nezbere's finest creations was not enough to totally eliminate its will."
