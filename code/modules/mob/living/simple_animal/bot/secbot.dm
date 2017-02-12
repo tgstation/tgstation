@@ -147,6 +147,9 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HARM)
 		retaliate(H)
+	if(H.a_intent == INTENT_DISARM)
+		retaliate(H)
+
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/weapon/W, mob/user, params)
