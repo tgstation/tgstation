@@ -1350,6 +1350,7 @@
 #include "code\modules\library\soapstone.dm"
 #include "code\modules\lighting\lighting_system.dm"
 #include "code\modules\mining\abandoned_crates.dm"
+#include "code\modules\mining\aux_base_camera.dm"
 #include "code\modules\mining\equipment.dm"
 #include "code\modules\mining\fulton.dm"
 #include "code\modules\mining\machine_input_output_plates.dm"

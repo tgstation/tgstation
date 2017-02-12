@@ -273,9 +273,6 @@
 		if(keyslot2.translate_binary)
 			src.translate_binary = 1
 
-		if(keyslot2.translate_hive)
-			src.translate_hive = 1
-
 		if(keyslot2.syndie)
 			src.syndie = 1
 

@@ -581,6 +581,12 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
+/obj/item/weapon/storage/box/hug/survival/New()
+	..()
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
 /obj/item/ammo_casing/shotgun/rubbershot
 
 /obj/item/weapon/storage/box/rubbershot
