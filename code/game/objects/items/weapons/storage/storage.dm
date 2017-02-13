@@ -45,7 +45,7 @@
 			show_to(M)
 			return
 
-		if(!M.restrained() && !M.stat && !M.weakened)
+		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 

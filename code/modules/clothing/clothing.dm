@@ -46,7 +46,7 @@
 	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return
 
-	if(!M.restrained() && !M.stat && !M.weakened && loc == M && istype(over_object, /obj/screen/inventory/hand))
+	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		if(!M.temporarilyRemoveItemFromInventory(src))
 			return
