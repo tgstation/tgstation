@@ -96,7 +96,9 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		if (istext(overlays[i]))
 			overlays[i] = iconstate2appearance(overlays[i])
 		else
+			var/image/I = overlays[i]
 			appearance_bro.appearance = overlays[i]
+			appearance_bro.dir = I.dir
 			overlays[i] = appearance_bro.appearance
 
 	var/list/cached_overlays = our_overlays	//sanic
@@ -123,6 +125,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			overlays[i] = iconstate2appearance(overlays[i])
 		else
 			appearance_bro.appearance = overlays[i]
+			appearance_bro.dir = I.dir
 			overlays[i] = appearance_bro.appearance
 
 	LAZYINITLIST(our_overlays)	//always initialized after this point
