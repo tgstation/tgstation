@@ -42437,6 +42437,7 @@
 "btr" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	layer = 2.7;
 	name = "HoochMaster Deluxe";
 	pixel_x = -4
 	},
@@ -54920,6 +54921,7 @@
 /area/maintenance/starboard)
 "bOZ" = (
 /obj/machinery/chem_master/condimaster{
+	layer = 2.7;
 	name = "CondiMaster Neo";
 	pixel_x = -4
 	},
@@ -58102,6 +58104,7 @@
 "bUl" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
+	layer = 2.7;
 	name = "BrewMaster 2199";
 	pixel_x = -4
 	},
@@ -68695,6 +68698,7 @@
 	})
 "cmb" = (
 /obj/machinery/chem_master/condimaster{
+	layer = 2.7;
 	name = "CondiMaster Neo";
 	pixel_x = -4
 	},
@@ -93934,6 +93938,7 @@
 /area/toxins/xenobiology)
 "dcM" = (
 /obj/machinery/chem_master{
+	layer = 2.7;
 	pixel_x = -2;
 	pixel_y = 1
 	},
