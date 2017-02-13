@@ -176,7 +176,7 @@
 /datum/clockwork_scripture/create_object/sigil_of_transmission
 	descname = "Structure Battery"
 	name = "Sigil of Transmission"
-	desc = "Places a sigil that stores power to power clockwork structures."
+	desc = "Places a sigil that stores energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
 	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
