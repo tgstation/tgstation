@@ -98,7 +98,7 @@ Difficulty: Hard
 			INVOKE_ASYNC(src, .proc/charge)
 		else
 			if(prob(70) || warped)
-				INVOKE_ASYNC(src, .proc/triple_charge)
+				INVOKE_ASYNC(src, .proc/charge, 2)
 			else
 				INVOKE_ASYNC(src, .proc/warp_charge)
 
@@ -147,12 +147,7 @@ Difficulty: Hard
 	blood_warp()
 	charge()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
-	charge()
-	charge()
-	charge()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(bonus_charges)
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
@@ -162,14 +157,18 @@ Difficulty: Hard
 	walk(src, 0)
 	setDir(get_dir(src, T))
 	var/obj/effect/overlay/temp/decoy/D = new /obj/effect/overlay/temp/decoy(loc,src)
-	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 5)
-	sleep(5)
-	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end))
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end()
+	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+	sleep(3)
+	throw_at(T, get_dist(src, T), 0.5, src, 0, callback = CALLBACK(src, .charge_end, bonus_charges))
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end(bonus_charges)
 	charging = 0
 	try_bloodattack()
 	if(target)
-		Goto(target, move_to_delay, minimum_distance)
+		if(bonus_charges)
+			charge(bonus_charges--)
+		else
+			Goto(target, move_to_delay, minimum_distance)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
@@ -318,8 +317,8 @@ Difficulty: Hard
 	DA.color = "#FF0000"
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
-	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 5)
-	sleep(5)
+	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 3)
+	sleep(3)
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
