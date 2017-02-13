@@ -384,7 +384,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
-			if(source)
+			if(source && O.client.prefs.ghost_hud)
 				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
 				if(A)
 					if(O.client.prefs && O.client.prefs.UI_style)
