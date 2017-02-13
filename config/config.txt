@@ -310,3 +310,12 @@ SECOND_TOPIC_LIMIT 10
 
 MINUTE_TOPIC_LIMIT 100
 
+##Error handling related options
+## The "cooldown" time for each occurence of an unique error
+#ERROR_COOLDOWN 600
+## How many occurences before the next will silence them
+#ERROR_LIMIT 90
+## How long an unique error will be silenced for
+#ERROR_SILENCE_TIME 6000
+##How long to wait between messaging admins about occurences of an unique error
+#ERROR_MSG_DELAY 50

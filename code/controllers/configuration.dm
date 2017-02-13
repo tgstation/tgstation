@@ -241,6 +241,11 @@
 	var/minutetopiclimit
 	var/secondtopiclimit
 
+	var/error_cooldown = 600 // The "cooldown" time for each occurrence of a unique error
+	var/error_limit = 50 // How many occurrences before the next will silence them
+	var/error_silence_time = 6000 // How long a unique error will be silenced for
+	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -495,6 +500,14 @@
 					config.minutetopiclimit = text2num(value)
 				if("second_topic_limit")
 					config.secondtopiclimit = text2num(value)
+				if("error_cooldown")
+					error_cooldown = text2num(value)
+				if("error_limit")
+					error_limit = text2num(value)
+				if("error_silence_time")
+					error_silence_time = text2num(value)
+				if("error_msg_delay")
+					error_msg_delay = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
