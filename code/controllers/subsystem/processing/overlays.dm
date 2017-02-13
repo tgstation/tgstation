@@ -87,6 +87,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		QUEUE_FOR_COMPILE
 
 /atom/proc/cut_overlay(list/overlays, priority)
+	var/static/image/appearance_bro = new()
 	if(!overlays)
 		return
 
