@@ -296,7 +296,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/req_caches = 0
 		var/req_cv = 0
 		var/req_ai = FALSE
-		desc = "Requirements for <b>[current_state] Scripture:</b>"
+		var/list/textlist = list("Requirements for <b>[current_state] Scripture:</b>")
 		switch(current_state) //get our requirements based on the tier
 			if(SCRIPTURE_SCRIPT)
 				req_servants = SCRIPT_SERVANT_REQ
@@ -314,31 +314,32 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				req_caches = JUDGEMENT_CACHE_REQ
 				req_cv = JUDGEMENT_CV_REQ
 				req_ai = TRUE
-		desc += "<br><b>[validservants]/[req_servants]</b> Servants"
+		textlist += "<br><b>[validservants]/[req_servants]</b> Servants"
 		if(validservants < req_servants)
 			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
 		else
-			desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		desc += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
+			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+		textlist += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
 		if(clockwork_caches < req_caches)
 			icon_state += "-caches"
 		else
-			desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
 		if(req_cv) //cv only shows up if the tier requires it
-			desc += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
+			textlist += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
 			if(clockwork_construction_value < req_cv)
 				icon_state += "-cv"
 			else
-				desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+				textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
 		if(req_ai) //same for ai
 			if(unconverted_ais_exist)
 				if(unconverted_ais_exist > 1)
-					desc += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
+					textlist += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 				else
-					desc += "<br><b>An unconverted AI exists!</b>"
+					textlist += "<br><b>An unconverted AI exists!</b>"
 				icon_state += "-ai"
 			else
-				desc += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
+				textlist += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
+		desc = textlist.Join()
 
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
@@ -353,6 +354,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/validservants = 0
 		var/unconverted_ais_exist = FALSE
 		var/list/scripture_states = scripture_unlock_check()
+		var/list/textlist = list()
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
@@ -362,44 +364,52 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				unconverted_ais_exist++
 		if(servants > 1)
 			if(validservants > 1)
-				desc = "<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>"
+				textlist = list("<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>")
 			else
-				desc = "<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>"
+				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
 		else
-			desc = "<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>"
-		desc += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
+			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
+		textlist += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
 		<b>[clockwork_construction_value]</b> Construction Value.<br>"
 		if(clockwork_daemons)
-			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
+			textlist += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
-			desc += "No Tinkerer's Daemons.<br>"
+			textlist += "No Tinkerer's Daemons.<br>"
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 			var/area/gate_area = get_area(G)
-			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
-			if(G.ratvar_portal)
-				desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
+			if(G.still_needs_components())
+				textlist += "Ark Components required: "
+				for(var/i in G.required_components)
+					if(G.required_components[i])
+						textlist += "<b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
+				textlist += "<br>"
 			else
-				desc += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
+				if(G.ratvar_portal)
+					textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+				else
+					textlist += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)
-				desc += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
+				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 			else
-				desc += "<b>An unconverted AI exists!</b><br>"
+				textlist += "<b>An unconverted AI exists!</b><br>"
 		if(scripture_states[SCRIPTURE_REVENANT])
 			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
 			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
 			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				desc += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
+				textlist += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
 				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
 			else
-				desc += "Generals available: <b>NONE</b><br>"
+				textlist += "Generals available: <b>NONE</b><br>"
 		else
-			desc += "Generals available: <b>NONE</b><br>"
+			textlist += "Generals available: <b>NONE</b><br>"
 		for(var/i in scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				desc += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+				textlist += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		desc = textlist.Join()
 	..()
 
 //GUARDIANS
