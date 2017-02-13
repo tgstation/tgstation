@@ -296,6 +296,7 @@ There is no strict process when it comes to merging pull requests, pull requests
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
 * Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments and in those cases existing longer lines must not be split up)
+* Code involving the petting, patting, or any derivative or similar feature to or of petting or patting of a /mob/living/carbon subtype.
 
 ##A word on git
 Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.
