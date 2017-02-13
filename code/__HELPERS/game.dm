@@ -509,11 +509,11 @@
 		if(M && !isnewplayer(M))
 			M << thing
 
-/proc/window_flash(client/C)
+/proc/window_flash(client/C, ignorepref = FALSE)
 	if(ismob(C))
 		var/mob/M = C
 		if(M.client)
 			C = M.client
-	if(!C || !C.prefs.windowflashing)
+	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
