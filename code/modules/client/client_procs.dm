@@ -195,11 +195,11 @@ var/next_external_rsc = 0
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
-
+	
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
-
+	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	if (byond_version < config.client_error_version)		//Out of date client.
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
 		src << config.client_error_message
