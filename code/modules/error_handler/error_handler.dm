@@ -80,7 +80,7 @@ var/global/total_runtimes_skipped = 0
 	. = ..(E)
 
 	if(silencing)
-		desclines += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
+		split += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
 
 	if(error_cache)
 		error_cache.log_error(E, split)
