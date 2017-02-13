@@ -1,0 +1,5 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - rscadd: "Window Flashing is now a preference"
+  - rscadd: "Your game window will flash when alerted as a ghost. This includes being revived by defibs/cloning and events such as borers, swarmers, revenant, etc."
