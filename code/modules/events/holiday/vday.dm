@@ -122,7 +122,9 @@
 	               "Put on your explorer's suit because I'm taking you to LOVEaland.",
 	               "I must be the CMO, 'cause I saw you on my CUTE sensors.",
 	               "You're the vomit to my flyperson.",
-	               "You must be liquid dark matter, because you're pulling me closer."
+	               "You must be liquid dark matter, because you're pulling me closer.",
+	               "Not even sorium can drive me away from you.",
+	               "Wanna make like a borg and do some heavy petting?"
 	                )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
@@ -175,5 +177,6 @@
                 "A heart-shaped candy that reads: FACEHUGGER",
                 "A heart-shaped candy that reads: DOMINATOR",
                 "A heart-shaped candy that reads: GET TESLA'D",
-                "A heart-shaped candy that reads: COCK CULT")
+                "A heart-shaped candy that reads: COCK CULT",
+                "A heart-shaped candy that reads: PET ME")
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")
