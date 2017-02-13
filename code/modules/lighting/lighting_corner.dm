@@ -104,12 +104,18 @@
 	if (mx > 1)
 		. = 1 / mx
 
+	#if LIGHTING_SOFT_THRESHOLD != 0
 	else if (mx < LIGHTING_SOFT_THRESHOLD)
 		. = 0 // 0 means soft lighting.
 
 	cache_r  = lum_r * . || LIGHTING_SOFT_THRESHOLD
 	cache_g  = lum_g * . || LIGHTING_SOFT_THRESHOLD
 	cache_b  = lum_b * . || LIGHTING_SOFT_THRESHOLD
+	#else
+	cache_r  = lum_r * .
+	cache_g  = lum_g * .
+	cache_b  = lum_b * .
+	#endif
 	cache_mx = mx
 
 	for (var/TT in masters)

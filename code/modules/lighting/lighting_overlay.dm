@@ -85,7 +85,13 @@
 		ca.cache_r, ca.cache_g, ca.cache_b, 0,
 		0, 0, 0, 1
 	)
+	#if LIGHTING_SOFT_THRESHOLD != 0
 	luminosity = max > LIGHTING_SOFT_THRESHOLD
+	#else
+	// Because of floating points™️, it won't even be a flat 0.
+	// This number is mostly arbitrary.
+	luminosity = max > 1e-6
+	#endif
 
 // Variety of overrides so the overlays don't get affected by weird things.
 
