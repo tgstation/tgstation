@@ -126,14 +126,14 @@
 	..()
 
 
-/obj/item/weapon/spellbook/oneuse/mimery_one
+/obj/item/weapon/spellbook/oneuse/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/blockade
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 1"
 	desc = "When you turn the pages, it won't make a sound!"
 	icon_state ="bookmime"
 
-/obj/item/weapon/spellbook/oneuse/mimery_two
+/obj/item/weapon/spellbook/oneuse/mimery_guns
 	spell = /obj/effect/proc_holder/spell/aimed/finger_guns
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 2"
