@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "[Delta] Fixes double windoor on chemistry windows."

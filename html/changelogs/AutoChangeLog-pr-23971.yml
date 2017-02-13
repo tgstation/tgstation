@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - imageadd: "Updated the back and belt sprites for airtanks to match the new sprites."
