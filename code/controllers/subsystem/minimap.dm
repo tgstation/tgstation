@@ -45,7 +45,7 @@ var/datum/subsystem/minimap/SSminimap
 	for(var/z in z_levels)
 		if(!fexists(file(map_path(z,backup))))	//Let's make sure we have a file for this map
 			if(backup)
-				world.log << "Failed to find backup file for map [MAP_NAME] on zlevel [z]."
+				log_world("Failed to find backup file for map [MAP_NAME] on zlevel [z].")
 			return FALSE
 	return TRUE
 

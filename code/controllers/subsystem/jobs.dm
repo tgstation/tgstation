@@ -374,10 +374,10 @@ var/datum/subsystem/job/SSjob
 			S = sloc
 			break
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-			world.log << "Couldn't find a round start spawn point for [rank]"
+			log_world("Couldn't find a round start spawn point for [rank]")
 			S = pick(latejoin)
 		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
-			world.log << "Couldn't find a round start latejoin spawn point."
+			log_world("Couldn't find a round start latejoin spawn point.")
 			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 				if(!T.density)
 					var/clear = 1

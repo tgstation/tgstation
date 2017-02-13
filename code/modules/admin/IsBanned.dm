@@ -62,7 +62,7 @@
 		var/ckeytext = ckey(key)
 
 		if(!establish_db_connection())
-			world.log << "Ban database connection failure. Key [ckeytext] not checked"
+			log_world("Ban database connection failure. Key [ckeytext] not checked")
 			diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 

@@ -16,7 +16,7 @@
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
-	world.log << "World loaded at [world.timeofday]"
+	log_world("World loaded at [world.timeofday]")
 	map_ready = 1
 
 #if (PRELOAD_RSC == 0)
@@ -51,9 +51,9 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	if(config.sql_enabled)
 		if(!setup_database_connection())
-			world.log << "Your server failed to establish a connection with the database."
+			log_world("Your server failed to establish a connection with the database.")
 		else
-			world.log << "Database connection established."
+			log_world("Database connection established.")
 
 
 	data_core = new /datum/datacore()
@@ -184,7 +184,7 @@ var/last_irc_status = 0
 		else
 			return ircadminwho()
 
-#define WORLD_REBOOT(X) world.log << "World rebooted at [world.timeofday]"; ..(X)
+#define WORLD_REBOOT(X) log_world("World rebooted at [world.timeofday]"); ..(X)
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
@@ -377,7 +377,7 @@ var/failed_db_connections = 0
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.
 		if(config.sql_enabled)
-			world.log << "SQL error: " + dbcon.ErrorMsg()
+			log_world("SQL error: " + dbcon.ErrorMsg())
 
 	return .
 

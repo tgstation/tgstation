@@ -5,7 +5,7 @@
 	var/DBQuery/query = dbcon.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
 
 	if(!query.Execute())
-		world.log << "SQL ERROR doing datediff. Error : \[[query.ErrorMsg()]\]\n"
+		log_world("SQL ERROR doing datediff. Error : \[[query.ErrorMsg()]\]\n")
 		return FALSE
 
 	if(query.NextRow())
@@ -24,7 +24,7 @@
 /client/proc/findJoinDate()
 	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
 	if(!http)
-		world.log << "Failed to connect to byond age check for [src.ckey]"
+		log_world("Failed to connect to byond age check for [src.ckey]")
 		return FALSE
 
 	var/F = file2text(http["CONTENT"])

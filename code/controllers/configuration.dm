@@ -42,6 +42,7 @@
 	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
+	var/log_runtimes = FALSE			// log runtimes into a file
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -464,10 +465,11 @@
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
 				if("log_runtimes")
+					log_runtimes = TRUE
 					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
-					if (world.log != newlog)
+					if(runtime_diary != newlog)
 						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
-						world.log = newlog
+						runtime_diary = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
 				if("allow_webclient")

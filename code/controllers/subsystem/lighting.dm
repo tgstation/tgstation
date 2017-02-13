@@ -116,4 +116,4 @@ var/datum/subsystem/lighting/SSlighting
 					varval1 = "/list([length(varval1)])"
 					varval2 = "/list([length(varval2)])"
 				msg += "\t [varname] = [varval1] -> [varval2]\n"
-	world.log << msg
+	log_world(msg)
