@@ -19,7 +19,7 @@
 /obj/item/weapon/storage/toolbox/New()
 	..()
 	if(!old)
-		if(prob(100))
+		if(prob(10))
 			hinges = "double_hinge"
 		else if(prob(1))
 			hinges = "triple_hinge"
