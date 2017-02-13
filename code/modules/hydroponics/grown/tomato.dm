@@ -113,29 +113,32 @@
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
-	var/awakening = 0
+	var/awakening = FALSE
 	filling_color = "#FF0000"
 	origin_tech = "biotech=4;combat=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
-		user << "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>"
+		user << "<span class='warning'>The tomato is twitching and shaking, preventing you from [M == user ? "eating it":"feeding it to [M]"].</span>"
 		return
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
-	if(awakening || isspaceturf(user.loc))
+	if(awakening)
 		return
-	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
-	awakening = 1
-
-	spawn(30)
-		if(!QDELETED(src))
-			var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
+	user.visible_message("<span class='warning'>[user] starts petting [src] and whispering to it.</span>", "<span class='notice'>You begin to awaken [src]...</span>")
+	awakening = TRUE
+	if(do_after(user, 15, target = src))
+		user.visible_message("<span class='warning'>[src] starts to shake violently!</span>")
+		sleep(30)
+		if(src && !QDELETED(src))
+			var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src))
 			K.maxHealth += round(seed.endurance / 3)
 			K.melee_damage_lower += round(seed.potency / 10)
 			K.melee_damage_upper += round(seed.potency / 10)
 			K.move_to_delay -= round(seed.production / 50)
 			K.health = K.maxHealth
-			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
+			K.visible_message("<span class='warning'>[K] growls as it suddenly awakens.</span>")
 			qdel(src)
+	else
+		awakening = FALSE
