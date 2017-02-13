@@ -1,6 +1,6 @@
 //The base for clockwork mobs
 /mob/living/simple_animal/hostile/clockwork
-	faction = list("ratvar")
+	faction = list("neutral", "ratvar")
 	gender = NEUTER
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1

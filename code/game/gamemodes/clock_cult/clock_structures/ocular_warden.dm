@@ -114,9 +114,20 @@
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
-		else if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !(L.buckled && (L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))) && \
-		!(L.disabilities & BLIND) && !L.null_rod_check())
-			. += L
+			continue
+		if(is_servant_of_ratvar(L) || (L.disabilities & BLIND) || L.null_rod_check())
+			continue
+		if(L.stat || L.restrained() || L.buckled || L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
+			continue
+		if(ishostile(L))
+			var/mob/living/simple_animal/hostile/H = L
+			if(ismegafauna(H) || (!H.mind && H.AIStatus == AI_OFF))
+				continue
+			if(("ratvar" in H.faction) || ("neutral" in H.faction))
+				continue
+		else if(!L.mind)
+			continue
+		. += L
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
