@@ -84,6 +84,8 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(drill_damage, BRUTE, "chest")
+		if(target.stat == DEAD)
+			target.gib()
 	else if(target.stat == DEAD && target.butcher_results)
 		target.harvest(chassis) // Butcher the mob with our drill.
 	else
