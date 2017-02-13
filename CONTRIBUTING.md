@@ -21,6 +21,11 @@ There is an open list of approachable issues for [your inspiration here](https:/
 
 You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We are just here to have fun and help so do not expect professional support please.
 
+###Reference Policy
+You may not add any feature to the code that is taken from another series or franchise in full part. Subtle references are allowed in descriptions and code comments. Some features may violate this policy under the grandfather clause such as the SORD and Aliens.
+
+No feature may directly reference a currently active player.
+
 ##Meet the Team
 
 **Project Leads**
