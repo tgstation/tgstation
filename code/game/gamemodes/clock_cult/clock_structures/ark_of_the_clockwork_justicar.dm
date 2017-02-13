@@ -162,6 +162,10 @@
 				user << "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>"
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
+	if(!first_sound_played || prob(7))
+		for(var/M in player_list)
+			if(M && !isnewplayer(M))
+				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!obj_integrity)
 		return 0
 	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
@@ -191,10 +195,6 @@
 				clockwork_component_cache[i]--
 		if(still_needs_components())
 			return
-	if(!progress_in_seconds || prob(7))
-		for(var/M in player_list)
-			if(M && !isnewplayer(M))
-				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	for(var/obj/O in orange(1, src))
 		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
