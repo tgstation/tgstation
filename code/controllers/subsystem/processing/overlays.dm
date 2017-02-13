@@ -70,11 +70,6 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	else if (istype(image_atom_or_string, /image) || istype(image_atom_or_string, /atom))
 		var/image/I = image_atom_or_string
 		return I.appearance
-#if DM_VERSION >= 511
-	else if (istype(image_atom_or_string, /mutable_appearance/))
-		var/mutable_appearance/MA = image_atom_or_string
-		return MA.appearance
-#endif
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
 #define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.can_fire = TRUE; if(SSoverlays.initialized) { SSoverlays.processing += src; } else { SSoverlays.processing[src] = src; } 
@@ -95,33 +90,40 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	if(NOT_QUEUED_ALREADY && need_compile)
 		QUEUE_FOR_COMPILE
 
-/atom/proc/cut_overlay(image, priority)
-	if(!image)
+/atom/proc/cut_overlay(list/overlays, priority)
+	if(!overlays)
 		return
+
+	if (!islist(overlays))
+		overlays = list(overlays)
+	for (var/i in 1 to length(overlays))
+		if (!istype(overlays[i], /appearance/))
+			overlays[i] = extract_overlay_appearance(overlays[i])
+
 	var/list/cached_overlays = our_overlays	//sanic
 	var/list/cached_priority = priority_overlays
 	var/init_o_len = LAZYLEN(cached_overlays)
 	var/init_p_len = LAZYLEN(cached_priority)  //starter pokemon
-	
-	image = extract_overlay_appearance(image)
 
-	LAZYREMOVE(cached_overlays, image)
+	LAZYREMOVE(cached_overlays, overlays)
 	if(priority)
-		LAZYREMOVE(cached_priority, image)
+		LAZYREMOVE(cached_priority, overlays)
 
 	if(NOT_QUEUED_ALREADY && ((init_o_len != LAZYLEN(cached_priority)) || (init_p_len != LAZYLEN(cached_overlays))))
 		QUEUE_FOR_COMPILE
 
-/atom/proc/add_overlay(image, priority = FALSE)
-	if(!image)
+/atom/proc/add_overlay(list/overlays, priority = FALSE)
+	if(!overlays)
 		return
-	if(islist(image))
-		for(var/I in image)
-			add_overlay(I)
+
+	if (!islist(overlays))
+		overlays = list(overlays)
+	for (var/i in 1 to length(overlays))
+		if (!istype(overlays[i], /appearance/))
+			overlays[i] = extract_overlay_appearance(overlays[i])
+
 	LAZYINITLIST(our_overlays)	//always initialized after this point
 	LAZYINITLIST(priority_overlays)
-
-	image = extract_overlay_appearance(image)
 
 	var/list/cached_overlays = our_overlays	//sanic
 	var/list/cached_priority = priority_overlays
@@ -130,10 +132,10 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	var/need_compile
 
 	if(priority)
-		cached_priority += image  //or in the image. Can we use [image] = image?
+		cached_priority += overlays  //or in the image. Can we use [image] = image?
 		need_compile = init_p_len != cached_priority.len
 	else
-		cached_overlays += image
+		cached_overlays += overlays
 		need_compile = init_o_len != cached_overlays.len
 
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
