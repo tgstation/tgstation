@@ -792,6 +792,7 @@
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
 		night_vision = TRUE
+	owner.update_sight()
 
 /obj/item/organ/eyes/night_vision/alien
 	name = "alien eyes"
