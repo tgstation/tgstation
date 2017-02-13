@@ -13,6 +13,18 @@
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	var/image/hinges = "single_hinge"
+	var/old = 0
+
+/obj/item/weapon/storage/toolbox/New()
+	..()
+	if(!old)
+		if(prob(100))
+			hinges = "double_hinge"
+		else if(prob(1))
+			hinges = "triple_hinge"
+	add_overlay(image('icons/obj/storage.dmi', "[hinges]"))
+
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -35,6 +47,7 @@
 	new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/toolbox/emergency/old
+	old = 1
 	name = "rusty red toolbox"
 	item_state = "toolbox_red_old"
 
@@ -53,6 +66,7 @@
 	new /obj/item/weapon/wirecutters(src)
 
 /obj/item/weapon/storage/toolbox/mechanical/old
+	old = 1
 	name = "rusty blue toolbox"
 	item_state = "toolbox_blue_old"
 
