@@ -24,6 +24,7 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	var/floating = FALSE
 
 /atom/movable/SDQL_update(const/var_name, new_value)
 	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
@@ -418,3 +419,15 @@
 		return FALSE
 	acted_explosions += ex_id
 	return TRUE
+
+/atom/movable/proc/float(on)
+	if(throwing)
+		return
+	if(on && !floating)
+		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		sleep(10)
+		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
+		floating = TRUE
+	else if (!on && floating)
+		animate(src, pixel_y = initial(pixel_y), time = 10)
+		floating = FALSE

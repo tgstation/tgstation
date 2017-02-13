@@ -220,10 +220,10 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	var/mob/dead/observer/theghost = null
 
-	if(candidates.len)
+	if(LAZYLEN(candidates))
 		theghost = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name

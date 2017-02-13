@@ -11,7 +11,8 @@
 	max_integrity = 150
 	obj_integrity = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
+	debris = list(/obj/item/clockwork/alloy_shards/small = 4, \
+	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
 	var/hierophant_cost = MIN_CLOCKCULT_POWER //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway

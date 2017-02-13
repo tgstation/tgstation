@@ -131,7 +131,7 @@ function handle_pr($payload) {
 	}
 	
 	$msg = 'Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
-	sendtoallservers('?announce='.urlencode($msg));
+	sendtoallservers('?announce='.urlencode($msg), $payload);
 
 }
 
@@ -278,14 +278,15 @@ function checkchangelog($payload, $merge = false) {
 	echo file_get_contents($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, false, stream_context_create($scontext));
 }
 
-function sendtoallservers($str) {
+function sendtoallservers($str, $payload = null) {
 	global $servers;
+	
 	foreach ($servers as $serverid => $server) {
 		if (isset($server['comskey']))
-			$rtn = export($server['address'], $server['port'], $str.'&key='.$server['comskey']);
-		else 
-			$rtn = export($server['address'], $server['port'], $str);
-	
+			$str .= '&key='.urlencode($server['comskey']);
+		if (!empty($payload))
+			$str .= '&payload='.urlencode(json_encode($payload));
+		$rtn = export($server['address'], $server['port'], $str);
 		echo "Server Number $serverid replied: $rtn\n";
 	}
 }

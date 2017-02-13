@@ -18,6 +18,7 @@
 	if(!magpulse)
 		return ..()
 
-/mob/living/silicon/robot/Move()
+/mob/living/silicon/robot/Moved()
 	. = ..()
-	riding_datum.on_vehicle_move()
+	if(riding_datum)
+		riding_datum.on_vehicle_move()
