@@ -109,6 +109,7 @@ var/datum/subsystem/processing/air/SSair
 
 /datum/subsystem/processing/air/start_processing(datum/D, list_type, add_to_active_block_changes = TRUE)
 	if(D.processors && (list_type in D.processors[src]))
+		return
 
 	//most of these are safe (re: only called in one place) to just +=
 	switch(list_type)
