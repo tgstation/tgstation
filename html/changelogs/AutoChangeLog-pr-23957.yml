@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Added Nuka Cola as a premium item in Robust Softdrinks"
