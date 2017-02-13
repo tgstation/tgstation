@@ -262,7 +262,7 @@ PANIC_SERVER_NAME [Put the name here]
 #AGGRESSIVE_CHANGELOG
 
 ## Uncomment to have the game log runtimes to the log folder. (Note: this disables normal output in dd/ds, so it should be left off for testing.
-#LOG_RUNTIMES
+LOG_RUNTIMES
 
 ## Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
 AUTOCONVERT_NOTES

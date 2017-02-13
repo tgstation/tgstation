@@ -224,7 +224,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/var/gc_destroyed //Time when this object was destroyed.
 
 #ifdef TESTING
-/datum/var/running_find_references 
+/datum/var/running_find_references
 /datum/var/last_find_references = 0
 
 /datum/verb/find_refs()
@@ -333,7 +333,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				else
 					DoSearchVar(variable, "[Xname]: [varname]")
 #endif
-	else if(islist(X)) 
+	else if(islist(X))
 		if(src in X)
 			testing("Found [src.type] \ref[src] in list [Xname].")
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -347,7 +347,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
 	SearchVar(last_irc_status)
-	SearchVar(inerror)
 	SearchVar(failed_db_connections)
 	SearchVar(nextmap)
 	SearchVar(mapchanging)

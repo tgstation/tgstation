@@ -66,34 +66,23 @@ var/global/total_runtimes_skipped = 0
 		locinfo = atom_loc_line(usr)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
-	// The proceeding mess will almost definitely break if error messages are ever changed
-	var/list/splitlines = splittext(E.desc, "\n")
-	var/list/desclines = list()
-	if(LAZYLEN(splitlines) > ERROR_USEFUL_LEN) // If there aren't at least three lines, there's no info
-		for(var/line in splitlines)
-			if(LAZYLEN(line) < 3 || findtext(line, "source file:") || findtext(line, "usr.loc:"))
-				continue
-			if(findtext(line, "usr:"))
-				if(usrinfo)
-					desclines.Add(usrinfo)
-					usrinfo = null
-				continue // Our usr info is better, replace it
 
-			if(copytext(line, 1, 3) != "  ")
-				desclines += ("  " + line) // Pad any unpadded lines, so they look pretty
-			else
-				desclines += line
-	if(usrinfo) //If this info isn't null, it hasn't been added yet
-		desclines.Add(usrinfo)
+	E.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][E.name]"
+
+	//this is done this way rather then replace text to pave the way for processing the runtime reports more thoroughly
+	//	(and because runtimes end with a newline, and we don't want to basically print an empty time stamp)
+	var/list/split = splittext(E.desc, "\n")
+	for (var/i in 1 to split.len)
+		if (split[i] != "")
+			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
+	E.desc = jointext(split, "\n")
+
+	. = ..(E)
+
 	if(silencing)
 		desclines += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
 
-	//Now to actually output the error info
-	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
-	for(var/line in desclines)
-		world.log << line
-
 	if(error_cache)
-		error_cache.log_error(E, desclines)
+		error_cache.log_error(E, split)
 
 #endif
