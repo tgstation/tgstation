@@ -138,10 +138,6 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
-	if(!speed_process)
-		STOP_PROCESSING(SSmachine, src)
-	else
-		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
 	return ..()
 

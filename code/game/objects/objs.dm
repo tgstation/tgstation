@@ -40,11 +40,6 @@
 			T.add_blueprints_preround(src)
 
 /obj/Destroy()
-	if(!istype(src, /obj/machinery))
-		STOP_PROCESSING(SSobj, src)
-	STOP_PROCESSING(SSacid, src)
-	if(resistance_flags & ON_FIRE)
-		STOP_PROCESSING(SSfire_burning, src)
 	SStgui.close_uis(src)
 	return ..()
 
