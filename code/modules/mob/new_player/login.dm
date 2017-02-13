@@ -27,7 +27,4 @@
 		loc = pick(watch_locations)
 */
 	new_player_panel()
-
-	spawn(40)
-		if(client)
-			client.playtitlemusic()
+	client.playtitlemusic()
