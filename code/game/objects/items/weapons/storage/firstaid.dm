@@ -60,10 +60,10 @@
 	..()
 	if(empty) return
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 4)
 		new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/storage/pill_bottle/charcoal(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
