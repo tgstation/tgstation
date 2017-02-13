@@ -124,8 +124,7 @@
 	               "You're the vomit to my flyperson.",
 	               "You must be liquid dark matter, because you're pulling me closer.",
 	               "Not even sorium can drive me away from you.",
-	               "Wanna make like a borg and do some heavy petting?"
-	                )
+	               "Wanna make like a borg and do some heavy petting?" )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
 	..()
