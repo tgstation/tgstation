@@ -485,6 +485,7 @@
 	icon_state = "rack_parts"
 	flags = CONDUCT
 	materials = list(MAT_METAL=2000)
+	var/building = FALSE
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -494,6 +495,9 @@
 		. = ..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
+	if(building)
+		return
+	building = TRUE
 	user << "<span class='notice'>You start constructing a rack...</span>"
 	if(do_after(user, 50, target = src, progress=TRUE))
 		if(!user.drop_item())
@@ -503,3 +507,4 @@
 			</span>", "<span class='notice'>You assemble \a [R].</span>")
 		R.add_fingerprint(user)
 		qdel(src)
+	building = FALSE
