@@ -184,7 +184,7 @@ var/last_irc_status = 0
 		else
 			return ircadminwho()
 
-#define WORLD_REBOOT(X) world.log << "World rebooted at [world.timeofday]"; ..(X)
+#define WORLD_REBOOT(X) world.log << "World rebooted at [world.timeofday]"; ..(X); return
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
