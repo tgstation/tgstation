@@ -138,13 +138,13 @@
 		var/mob/M = usr
 		if(!istype(over_object, /obj/screen) || !Adjacent(M))
 			return ..()
-		if(!M.restrained() && !M.stat && istype(over_object, /obj/screen/inventory/hand))
+		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
 			if(!M.temporarilyRemoveItemFromInventory(src))
 				return
 			if(!M.put_in_hand(src,H.held_index))
 				qdel(src)
-				return
+				CRASH("Failed to move [src] to a mob's hand")
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))

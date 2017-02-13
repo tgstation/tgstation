@@ -331,7 +331,7 @@
 		if (istype(usr.loc,/obj/mecha))
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			playsound(loc, "rustle", 50, 1, -5)
 
 
@@ -341,7 +341,7 @@
 					return
 				if(!M.put_in_hand(src, H.held_index))
 					qdel(src)
-					return //fuck these things
+					CRASH("Failed to move [src] to a mob's hand")
 
 			add_fingerprint(usr)
 

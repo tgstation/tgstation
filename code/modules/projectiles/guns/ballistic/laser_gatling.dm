@@ -63,7 +63,7 @@
 		if(!over_object)
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
@@ -71,6 +71,7 @@
 					return
 				if(!M.put_in_hand(src, H.held_index))
 					qdel(src)
+					CRASH("Failed to move [src] to a mob's hand")
 
 
 /obj/item/weapon/minigunpack/update_icon()
