@@ -67,10 +67,13 @@
 				mind.changeling.purchasedpowers+=S
 			S.on_purchase(src)
 
-	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
-	if(ishuman(C))
-		var/datum/changelingprofile/prof = mind.changeling.add_new_profile(C, src)
+	var/mob/living/carbon/human/H = src	//only carbons have dna now, so we have to typecaste
+	if(istype(H))
+		var/datum/changelingprofile/prof = mind.changeling.add_new_profile(H, src)
 		mind.changeling.first_prof = prof
+		. = 1	//this isn't critical so we won't fail too badly
+		CHECK_DNA_AND_SPECIES(H)
+		H.dna.species.species_traits |= NOZOMBIE
 	return 1
 
 /datum/changeling/proc/reset()
