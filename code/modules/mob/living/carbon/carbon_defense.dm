@@ -213,7 +213,7 @@
 		else if(check_zone(M.zone_selected) == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
-			if(dna && da.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (dna.features["tail_human"] != "None")))
+			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (dna.features["tail_human"] != "None")))
 				emote("wag") //lewd
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
