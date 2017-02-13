@@ -194,6 +194,7 @@
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
+	linked.linked = null
 	return ..()
 
 /obj/machinery/computer/holodeck/emp_act(severity)
