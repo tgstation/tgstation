@@ -19,17 +19,20 @@
 		..("[stat_tag]:FIX THIS SHIT")
 
 /datum/subsystem/processing/proc/start_processing(datum/D)
-	if(D)
-		processing_list[D] = D
+	if(D && !(src in D.processors))
+		processing_list += D
 		can_fire = TRUE
+		return TRUE
+	return FALSE
 
 /datum/subsystem/processing/proc/stop_processing(datum/D, killed = FALSE)
-	//no null check because we need to be able to remove them
 	processing_list -= D
 	if(!processing_list.len)
 		can_fire = FALSE
 	if(!killed && run_cache.len)
 		run_cache -= D
+	if(D)
+		LAZYREMOVE(D.processors)
 
 /datum/subsystem/processing/fire(resumed = 0, arg = wait)
 	if (!resumed)
@@ -56,6 +59,14 @@
 /datum/subsystem/processing/Recover(datum/subsystem/processing/predecessor)
 	processing_list = predecessor.processing_list
 	run_cache = predecessor.run_cache
+
+/datum/var/processors
+
+/datum/Destroy()
+	. = ..()
+	for(var/I in processors)
+		var/datum/subsystem/processing/SS = I
+		SS.stop_processing(src)
 
 /datum/proc/process(wait)
 	set waitfor = FALSE
