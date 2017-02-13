@@ -156,7 +156,7 @@
 	return !held_items[hand_index]
 
 /mob/proc/put_in_hand(obj/item/I, hand_index)
-	if(!can_put_in_hand(hand_index))
+	if(can_put_in_hand(hand_index))
 		I.forceMove(src)
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
