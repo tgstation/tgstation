@@ -11,8 +11,8 @@
 	max_integrity = 80
 	obj_integrity = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
-	/obj/item/clockwork/alloy_shards/small = 3, \
+	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
+	/obj/item/clockwork/alloy_shards/small = 2, \
 	/obj/item/clockwork/component/geis_capacitor/antennae = 1)
 	var/mania_cost = 150
 	var/convert_cost = 150

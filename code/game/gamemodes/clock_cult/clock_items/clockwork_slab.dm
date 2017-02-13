@@ -304,8 +304,8 @@
 		for(var/mob/living/M in living_mob_list)
 			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 				servants++
-		if(servants > 5)
-			servants -= 5
+		if(servants > SCRIPT_SERVANT_REQ)
+			servants -= SCRIPT_SERVANT_REQ
 			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
 		var/production_text_addon = ""
 		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
