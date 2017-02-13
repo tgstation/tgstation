@@ -38164,7 +38164,7 @@
 /area/medical/medbay)
 "bxK" = (
 /obj/structure/closet/secure_closet/CMO,
-/obj/item/weapon/valentine,
+/obj/item/weapon/metafriend,
 /turf/open/floor/plasteel/cmo,
 /area/medical/cmo{
 	name = "Chief Medical Office"
