@@ -146,11 +146,15 @@ var/datum/subsystem/processing/air/SSair
 	D.processors[src] += list_type
 
 /datum/subsystem/processing/air/stop_processing(datum/D, list_type)
+	if(!(src in D.processors))
+		return
+
 	if(list_type == TRUE)	//called by base fire to be killed, no need to remove from run_cache
 		list_type = currentpart
 	else if(currentpart == list_type)
 		run_cache -= D
 
+	var/list/atmos_processors = D.processors[src]
 	switch(list_type)
 		if(SSAIR_PIPENETS)
 			networks -= D
@@ -174,15 +178,15 @@ var/datum/subsystem/processing/air/SSair
 		if(null)
 			//called by datum/Destroy
 			//recursion, ew...
-			for(var/I in D.processors[src])
+			for(var/I in atmos_processors)
 				stop_processing(D, I)
 			return
 		else
 			CRASH("SSair/stop_processing: Invalid list_type: [list_type]")
 
-	LAZYREMOVE(D.processors[src], list_type)
-	if(!D.processors.len)
-		D.processors = null
+	atmos_processors -= list_type
+	if(!atmos_processors.len)
+		LAZYREMOVE(D.processors, src)
 
 /datum/subsystem/processing/air/proc/begin_map_load()
 	LAZYINITLIST(queued_for_activation)
