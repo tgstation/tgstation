@@ -135,7 +135,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (SS.flag & SS_ABSTRACT)
 			subsystems -= SS
 			continue
-		if !(SS.flags & SS_NO_INIT)
+		if (!(SS.flags & SS_NO_INIT))
 			continue
 		SS.Initialize(world.timeofday)
 		CHECK_TICK
