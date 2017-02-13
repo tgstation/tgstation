@@ -242,7 +242,6 @@ var/list/ai_list = list()
 	if(statpanel("Status"))
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
-			stat(null, "Station Time: [worldtime2text()]")
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
 			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
