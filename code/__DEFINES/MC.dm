@@ -49,6 +49,10 @@
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128
 
+//Susbsystem isn't real and is meant to be derived.
+// Prevents it from ever being created
+#define SS_ABSTRACT 256
+
 //SUBSYSTEM STATES
 #define SS_IDLE 0		//aint doing shit.
 #define SS_QUEUED 1		//queued to run

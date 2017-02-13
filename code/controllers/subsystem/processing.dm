@@ -3,15 +3,12 @@
 /datum/subsystem/processing
 	name = "Processing"
 	can_fire = FALSE
+	flags = SS_ABSTRACT
 
 	var/stat_tag = "P" //Used for logging
 	var/list/processing_list = list()	//what's processing
 	var/list/run_cache = list()	//what's left to process in the next run
 	var/delegate	//what the processing call is
-
-/datum/subsystem/processing/New()
-	if(type == /datum/subsystem/processing)
-		flags |= SS_NO_FIRE	//this SS should be derived, but MC will create it anyway
 
 /datum/subsystem/processing/stat_entry(append, forward = FALSE)
 	if(forward)
