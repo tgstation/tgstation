@@ -218,7 +218,7 @@ effective or pretty fucking useless.
 	var/turf/T = get_turf(src)
 	if(on)
 		var/lumcount = T.get_lumcount()
-		if(lumcount > 3)
+		if(lumcount > 0.3)
 			charge = max(0,charge - 25)//Quick decrease in light
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
