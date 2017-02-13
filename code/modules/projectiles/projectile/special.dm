@@ -316,7 +316,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored || A in thrown_things)
+		if(A == src|| (firer && A == src.firer) || A.anchored || A in thrown_items)
 			continue
 		A.throw_at(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
 		thrown_things += A
