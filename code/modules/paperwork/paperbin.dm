@@ -56,11 +56,7 @@
 
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!remove_item_from_storage(M))
-			M.temporarilyRemoveItemFromInventory(src, TRUE)
-		if(!M.put_in_hand(src, H.held_index))
-			qdel(src)
-			return
+		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 	add_fingerprint(M)
 

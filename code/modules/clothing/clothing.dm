@@ -48,12 +48,8 @@
 
 	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!M.temporarilyRemoveItemFromInventory(src))
-			return
-		if(!M.put_in_hand(src, H.held_index))
-			qdel(src)	//better than having it in the void
-			CRASH("Failed to move [src] to a mob's hand")
-		add_fingerprint(usr)
+		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
+			add_fingerprint(usr)
 
 /obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(pockets)

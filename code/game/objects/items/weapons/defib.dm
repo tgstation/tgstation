@@ -95,12 +95,7 @@
 		var/mob/M = src.loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!M.temporarilyRemoveItemFromInventory(src))
-				return
-			if(!M.put_in_hand(src, H.held_index))
-				qdel(src)	//wewie
-				CRASH("Failed to move [src] to a mob's hand")
-
+			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
