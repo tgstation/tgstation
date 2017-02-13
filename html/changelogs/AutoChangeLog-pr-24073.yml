@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Alt-click stack duplication"
