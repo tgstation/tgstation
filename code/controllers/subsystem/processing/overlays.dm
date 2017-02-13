@@ -125,6 +125,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		if (istext(overlays[i]))
 			overlays[i] = iconstate2appearance(overlays[i])
 		else
+			var/image/I = overlays[i]
 			appearance_bro.appearance = overlays[i]
 			appearance_bro.dir = I.dir
 			overlays[i] = appearance_bro.appearance
