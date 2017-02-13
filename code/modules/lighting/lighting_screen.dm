@@ -32,8 +32,7 @@
 
 
 /obj/screen/lighting_backdrop
-	icon = 'WHITE_THING.dmi'
-	icon_state = "reeee"
+	icon = 'icons/effects/lighting_backdrop.png'
 	screen_loc = "SOUTH,WEST"
 	plane = LIGHTING_PLANE
 	layer = BACKGROUND_LAYER+1
