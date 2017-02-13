@@ -354,7 +354,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/validservants = 0
 		var/unconverted_ais_exist = FALSE
 		var/list/scripture_states = scripture_unlock_check()
-		var/list/textlist = list()
+		var/list/textlist
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
