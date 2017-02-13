@@ -24,7 +24,7 @@
 	initialized = TRUE
 
 	if(requires_activation)
-		START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
+		SSair.start_processing(src, SSAIR_ACTIVETURFS)
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)

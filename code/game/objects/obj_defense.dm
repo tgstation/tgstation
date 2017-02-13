@@ -180,7 +180,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	STOP_PROCESSING(SSacid, src)
+	SSacid.stop_processing(src)
 	deconstruct(FALSE)
 
 //// FIRE
@@ -207,14 +207,14 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 //called when the obj is destroyed by fire
 /obj/proc/burn()
 	if(resistance_flags & ON_FIRE)
-		STOP_PROCESSING(SSfire_burning, src)
+		SSfire_burning.stop_processing(src)
 	deconstruct(FALSE)
 
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
 		overlays -= fire_overlay
-		STOP_PROCESSING(SSfire_burning, src)
+		SSfire_burning.stop_processing(src)
 
 /obj/proc/tesla_act(var/power)
 	being_shocked = 1

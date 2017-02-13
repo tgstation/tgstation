@@ -82,7 +82,7 @@
 	..()
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
-	START_PROCESSING(SSfastprocess, src)
+	SSfastprocess.start_processing(src)
 	pai_list += src
 	make_laws()
 	canmove = 0

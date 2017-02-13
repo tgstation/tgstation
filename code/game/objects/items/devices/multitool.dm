@@ -37,11 +37,7 @@
 
 /obj/item/device/multitool/ai_detect/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/device/multitool/ai_detect/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/item/device/multitool/ai_detect/process()
 	if(track_cooldown > world.time)

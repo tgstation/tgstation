@@ -123,7 +123,7 @@
 /////////////////////////////SIMULATION///////////////////////////////////
 
 /turf/process(fire_count)
-	STOP_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
+	return PROCESS_KILL
 
 /turf/open/process(fire_count)
 	if(archived_cycle < fire_count) //archive self if not already done

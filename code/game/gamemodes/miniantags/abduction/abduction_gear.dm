@@ -99,12 +99,12 @@
 		M.SetStunned(0)
 		M.SetWeakened(0)
 		combat_cooldown = 0
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown==initial(combat_cooldown))
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/device/abductor/proc/AbductorCheck(user)
 	if(isabductor(user))

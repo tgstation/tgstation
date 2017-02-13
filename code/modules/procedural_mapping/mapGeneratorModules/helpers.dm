@@ -11,11 +11,11 @@
 		return
 	var/list/map = mother.map
 	for(var/turf/T in map)
-		START_ATMOS_PROCESSING(T, SSAIR_ACTIVETURFS)
+		SSair.start_processing(T, SSAIR_ACTIVETURFS)
 	for(var/turf/open/T in map)
 		if(T.air)
 			T.air.copy_from_turf(T)
-		START_ATMOS_PROCESSING(T, SSAIR_ACTIVETURFS)
+		SSair.start_processing(T, SSAIR_ACTIVETURFS)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete
 	spawnableAtoms = list()

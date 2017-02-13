@@ -99,7 +99,7 @@
 /turf/air_update_turf(command = 0)
 	if(command)
 		CalculateAdjacentTurfs()
-	ADD_TO_ACTIVE_BLOCK_CHANGES(src, command)
+	SSair.start_processing(src, SSAIR_ACTIVETURFS, command)
 
 /atom/movable/proc/move_update_air(turf/T)
     if(isturf(T))

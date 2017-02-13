@@ -501,7 +501,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/claymore/highlander))
@@ -575,7 +575,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 			[ADMIN_COORDJMP(diskturf)].")
 		log_game("[src] has been !!force deleted!! in [COORD(diskturf)].")
 		poi_list -= src
-		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 	var/turf/targetturf = relocate()

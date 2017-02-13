@@ -178,7 +178,7 @@
 	ui.user.open_uis |= ui
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	uis |= ui
-	START_PROCESSING(src, ui)
+	start_processing(ui)
 
  /**
   * private
@@ -196,7 +196,7 @@
 	else if(isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
 		return 0 // It wasn't open.
 
-	STOP_PROCESSING(src, ui) // Remove it from the list of processing UIs.
+	stop_processing(ui) // Remove it from the list of processing UIs.
 	if(ui.user)	// If the user exists, remove it from them too.
 		ui.user.open_uis.Remove(ui)
 	var/Ukey = ui.ui_key

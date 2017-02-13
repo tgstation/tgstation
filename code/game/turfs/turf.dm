@@ -45,7 +45,7 @@
 
 	if(requires_activation)
 		CalculateAdjacentTurfs()
-		START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
+		SSair.start_processing(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()

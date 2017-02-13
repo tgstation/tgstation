@@ -13,12 +13,12 @@
 	var/drop_z = 1
 
 /turf/open/chasm/Entered(atom/movable/AM)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	drop_stuff(AM)
 
 /turf/open/chasm/process()
 	if(!drop_stuff())
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /turf/open/chasm/proc/drop_stuff(AM)
 	. = 0

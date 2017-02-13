@@ -76,7 +76,6 @@
 	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	change_construction_value(-1)
 	if(realappearence)
 		qdel(realappearence)
@@ -90,11 +89,11 @@
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /turf/open/floor/clockwork/process()
 	if(!healservants())
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /turf/open/floor/clockwork/proc/healservants()
 	for(var/mob/living/L in src)

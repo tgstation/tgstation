@@ -16,15 +16,15 @@
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	if(burn_stuff(AM))
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /turf/open/floor/plating/lava/hitby(atom/movable/AM)
 	if(burn_stuff(AM))
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /turf/open/floor/plating/lava/singularity_act()
 	return

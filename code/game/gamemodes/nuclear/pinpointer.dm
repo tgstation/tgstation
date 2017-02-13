@@ -24,20 +24,16 @@
 	..()
 	pinpointer_list += src
 
-/obj/item/weapon/pinpointer/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
-
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
 	active = !active
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
 	icon_state = "pin[active ? "onnull" : "off"]"
 	if(active)
-		START_PROCESSING(SSfastprocess, src)
+		SSfastprocess.start_processing(src)
 	else
 		target = null //Restarting the pinpointer forces a target reset
-		STOP_PROCESSING(SSfastprocess, src)
+		SSfastprocess.stop_processing(src)
 
 /obj/item/weapon/pinpointer/attackby(obj/item/I, mob/living/user, params)
 	if(mode != TRACK_ATOM)
@@ -71,8 +67,7 @@
 
 /obj/item/weapon/pinpointer/process()
 	if(!active)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+		return PROCESS_KILL
 	scan_for_target()
 	point_to_target()
 	my_god_jc_a_bomb()

@@ -35,7 +35,7 @@
 	update_ammo_types()
 	recharge_newshot(1)
 	if(selfcharge)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	update_icon()
 
 /obj/item/weapon/gun/energy/proc/update_ammo_types()
@@ -52,7 +52,6 @@
 	if(power_supply)
 		qdel(power_supply)
 		power_supply = null
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/gun/energy/process()
@@ -172,9 +171,9 @@
 	switch(var_name)
 		if("selfcharge")
 			if(var_value)
-				START_PROCESSING(SSobj, src)
+				SSobj.start_processing(src)
 			else
-				STOP_PROCESSING(SSobj, src)
+				SSobj.stop_processing(src)
 	. = ..()
 
 

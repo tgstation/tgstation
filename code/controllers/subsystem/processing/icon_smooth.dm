@@ -26,6 +26,7 @@ var/datum/subsystem/processing/icon_smooth/SSicon_smooth
 		if(!A || A.z <= 2)
 			continue
 		A.smooth_icon()
+		A.processors -= src
 		CHECK_TICK
 	..()
 

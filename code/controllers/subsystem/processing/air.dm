@@ -197,7 +197,7 @@ var/datum/subsystem/processing/air/SSair
 /datum/subsystem/processing/air/proc/end_map_load()
 	map_loading = FALSE
 	for(var/T in queued_for_activation)
-		START_ATMOS_PROCESSING(T, SSAIR_ACTIVETURFS)
+		start_processing(T, SSAIR_ACTIVETURFS)
 	queued_for_activation.Cut()
 
 /datum/subsystem/processing/air/proc/setup_allturfs()

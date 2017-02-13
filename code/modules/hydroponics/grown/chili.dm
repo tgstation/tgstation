@@ -80,7 +80,7 @@
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && src.loc == held_mob)

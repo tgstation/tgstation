@@ -264,10 +264,6 @@
 	..()
 	item_color = pick("red", "blue", "green", "purple")
 
-/obj/item/weapon/twohanded/dualsaber/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
 		icon_state = "dualsaber[item_color][wielded]"
@@ -322,20 +318,20 @@
 		sharpness = IS_SHARP
 		w_class = w_class_on
 		hitsound = 'sound/weapons/blade1.ogg'
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
 	..()
 	hitsound = "swing_hit"
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 
 /obj/item/weapon/twohanded/dualsaber/process()
 	if(wielded)
 		open_flame()
 	else
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)

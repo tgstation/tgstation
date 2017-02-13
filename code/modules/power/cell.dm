@@ -21,23 +21,19 @@
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	charge = maxcharge
 	if(ratingdesc)
 		desc += " This one has a power rating of [maxcharge], and you should not swallow it."
 	updateicon()
 
-/obj/item/weapon/stock_parts/cell/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
 /obj/item/weapon/stock_parts/cell/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("self_recharge")
 			if(var_value)
-				START_PROCESSING(SSobj, src)
+				SSobj.stop_processing(src)
 			else
-				STOP_PROCESSING(SSobj, src)
+				SSobj.start_processing(src)
 	. = ..()
 
 /obj/item/weapon/stock_parts/cell/process()

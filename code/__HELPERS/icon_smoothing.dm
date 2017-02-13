@@ -38,7 +38,6 @@
 #define SMOOTH_MORE		2	//smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
 #define SMOOTH_DIAGONAL	4	//if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER	8	//atom will smooth with the borders of the map
-#define SMOOTH_QUEUED	16	//atom is currently queued to smooth.
 
 #define NULLTURF_BORDER 123456789
 
@@ -109,11 +108,11 @@
 
 	return adjacencies
 
-//do not use, use queue_smooth(atom)
+//do not use, use SSicon_smooth.start_processing(atom)
 /atom/proc/smooth_icon()
+	. = PROCESS_KILL	//we've run, we're done
 	if(!smooth)
 		return
-	smooth &= ~SMOOTH_QUEUED
 	if (!z)
 		return
 	if(QDELETED(src))
@@ -302,14 +301,14 @@
 			if(now)
 				T.smooth_icon()
 			else
-				queue_smooth(T)
+				SSicon_smooth.start_processing(T)
 		for(var/R in T)
 			var/atom/A = R
 			if(A.smooth)
 				if(now)
 					A.smooth_icon()
 				else
-					queue_smooth(A)
+					SSicon_smooth.start_processing(A)
 
 /atom/proc/clear_smooth_overlays()
 	overlays -= top_left_corner
@@ -376,16 +375,7 @@
 	for(var/V in orange(1,A))
 		var/atom/T = V
 		if(T.smooth)
-			queue_smooth(T)
-
-//SSicon_smooth
-/proc/queue_smooth(atom/A)
-	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
-		return
-
-	START_PROCESSING(SSicon_smooth, A)
-	A.smooth |= SMOOTH_QUEUED
-
+			SSicon_smooth.start_processing(T)
 
 //Example smooth wall
 /turf/closed/wall/smooth

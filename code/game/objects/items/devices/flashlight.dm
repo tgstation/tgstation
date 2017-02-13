@@ -200,7 +200,7 @@
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
 	if(fuel && on)
@@ -241,7 +241,7 @@
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /obj/item/device/flashlight/flare/is_hot()
 	return on * heat
@@ -284,12 +284,8 @@
 
 
 /obj/item/device/flashlight/emp/New()
-		..()
-		START_PROCESSING(SSobj, src)
-
-/obj/item/device/flashlight/emp/Destroy()
-		STOP_PROCESSING(SSobj, src)
-		return ..()
+	..()
+	SSobj.start_processing(src)
 
 /obj/item/device/flashlight/emp/process()
 		charge_tick++

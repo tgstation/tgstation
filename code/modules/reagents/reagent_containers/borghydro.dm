@@ -36,13 +36,7 @@ Borg Hypospray
 	for(var/R in reagent_ids)
 		add_reagent(R)
 
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/weapon/reagent_containers/borghypo/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
+	SSobj.start_processing(src)
 
 /obj/item/weapon/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
 	charge_tick++

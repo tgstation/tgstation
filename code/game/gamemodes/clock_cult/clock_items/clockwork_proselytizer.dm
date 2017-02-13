@@ -90,11 +90,7 @@
 
 /obj/item/clockwork/clockwork_proselytizer/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clockwork/clockwork_proselytizer/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/item/clockwork/clockwork_proselytizer/process()
 	if(!charge_rate)

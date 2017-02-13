@@ -18,11 +18,7 @@
 
 /obj/item/device/geiger_counter/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/device/geiger_counter/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/item/device/geiger_counter/process()
 	if(emagged)

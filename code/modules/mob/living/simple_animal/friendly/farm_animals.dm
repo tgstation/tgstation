@@ -288,10 +288,9 @@ var/global/chicken_count = 0
 		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
-			STOP_PROCESSING(SSobj, src)
 			qdel(src)
 	else
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 
 /obj/item/udder

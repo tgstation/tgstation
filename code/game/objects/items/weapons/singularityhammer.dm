@@ -17,11 +17,7 @@
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/twohanded/singularityhammer/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/item/weapon/twohanded/singularityhammer/process()
 	if(charged < 5)
