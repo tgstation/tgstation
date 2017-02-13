@@ -132,7 +132,6 @@
 			A.requires_power = initial(A.requires_power)
 			A.languages_spoken |= HUMAN
 			A.cut_overlays()
-			A.remove_atom_colour(ADMIN_COLOUR_PRIORITY, list("#B18B25", "#92661A", "#6D370F", rgb(0,0,0)))
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
