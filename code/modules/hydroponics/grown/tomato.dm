@@ -126,9 +126,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
 	if(awakening)
 		return
-	user.visible_message("<span class='warning'>[user] starts petting [src] and whispering to it.</span>", "<span class='notice'>You begin to awaken [src]...</span>")
+	user << "<span class='notice'>You begin to awaken [src]...</span>"
 	awakening = TRUE
-	if(do_after(user, 15, target = src))
+	if(do_after(user, 10, target = src))
 		user.visible_message("<span class='warning'>[src] starts to shake violently!</span>")
 		sleep(30)
 		if(src && !QDELETED(src))
