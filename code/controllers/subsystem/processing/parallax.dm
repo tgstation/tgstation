@@ -19,7 +19,8 @@ var/datum/subsystem/processing/parallax/SSparallax
 /datum/subsystem/processing/parallax/Recover()
 	//noop
 
-/datum/subsystem/processing/parallax/stop_processing()
+/datum/subsystem/processing/parallax/stop_processing(datum/D)
+	LAZYREMOVE(D.processors, src)
 	//noop
 
 /client/proc/parallax()

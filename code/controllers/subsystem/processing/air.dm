@@ -108,6 +108,8 @@ var/datum/subsystem/processing/air/SSair
 #undef PROCESS_ATMOS_LIST
 
 /datum/subsystem/processing/air/start_processing(datum/D, list_type, add_to_active_block_changes = TRUE)
+	if(D.processors && (list_type in D.processors[src]))
+
 	//most of these are safe (re: only called in one place) to just +=
 	switch(list_type)
 		if(SSAIR_PIPENETS)
@@ -139,6 +141,9 @@ var/datum/subsystem/processing/air/SSair
 			active_super_conductivity += D
 		else
 			CRASH("SSair/start_processing: Invalid list_type: [list_type]")
+	
+	LAZYINITLIST(D.processors[src])
+	D.processors[src] += list_type
 
 /datum/subsystem/processing/air/stop_processing(datum/D, list_type)
 	if(list_type == TRUE)	//called by base fire to be killed, no need to remove from run_cache
@@ -166,8 +171,18 @@ var/datum/subsystem/processing/air/SSair
 			hotspots -= D
 		if(SSAIR_SUPERCONDUCTIVITY)
 			active_super_conductivity -= D
+		if(null)
+			//called by datum/Destroy
+			//recursion, ew...
+			for(var/I in D.processors[src])
+				stop_processing(D, I)
+			return
 		else
 			CRASH("SSair/stop_processing: Invalid list_type: [list_type]")
+
+	LAZYREMOVE(D.processors[src], list_type)
+	if(!D.processors.len)
+		D.processors = null
 
 /datum/subsystem/processing/air/proc/begin_map_load()
 	LAZYINITLIST(queued_for_activation)

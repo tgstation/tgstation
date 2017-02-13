@@ -32,7 +32,7 @@
 	if(!killed && run_cache.len)
 		run_cache -= D
 	if(D)
-		LAZYREMOVE(D.processors)
+		LAZYREMOVE(D.processors, src)
 
 /datum/subsystem/processing/fire(resumed = 0, arg = wait)
 	if (!resumed)
