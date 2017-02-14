@@ -302,7 +302,7 @@
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 3)
 	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
-	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
+	observer_message = "<span class='warning'>A brass obelisk appears hanging in midair!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
 	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks receive double duration and uses."
