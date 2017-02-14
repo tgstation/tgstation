@@ -17,7 +17,11 @@
 
 /obj/item/weapon/minigunpack/New()
 	gun = new(src)
-	SSobj.start_processing(src)
+	START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/weapon/minigunpack/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/minigunpack/process()
@@ -59,14 +63,11 @@
 		if(!over_object)
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.temporarilyRemoveItemFromInventory(src))
-					return
-				if(!M.put_in_hand(src, H.held_index))
-					qdel(src)
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 
 /obj/item/weapon/minigunpack/update_icon()

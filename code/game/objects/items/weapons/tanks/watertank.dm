@@ -85,10 +85,7 @@
 	var/mob/M = src.loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!M.temporarilyRemoveItemFromInventory(src))
-			return
-		M.put_in_hand(src, H.held_index)
-
+		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
@@ -407,13 +404,13 @@
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
 	on = 1
-	SSobj.start_processing(src)
+	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns on.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
 	on = 0
-	SSobj.stop_processing(src)
+	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns off.</span>"
 

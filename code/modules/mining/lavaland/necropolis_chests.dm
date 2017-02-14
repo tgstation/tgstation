@@ -331,17 +331,13 @@
 		if (istype(usr.loc,/obj/mecha))
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			playsound(loc, "rustle", 50, 1, -5)
 
 
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.temporarilyRemoveItemFromInventory(src))
-					return
-				if(!M.put_in_hand(src, H.held_index))
-					qdel(src)
-					return //fuck these things
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 			add_fingerprint(usr)
 
@@ -489,13 +485,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.start_processing(src)
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 

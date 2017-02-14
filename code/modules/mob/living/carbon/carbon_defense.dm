@@ -305,5 +305,3 @@
 			hit_clothes = head
 		if(hit_clothes)
 			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
-
-//(-(-_(-_-)_-)-)

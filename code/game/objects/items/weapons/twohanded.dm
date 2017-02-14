@@ -264,6 +264,10 @@
 	..()
 	item_color = pick("red", "blue", "green", "purple")
 
+/obj/item/weapon/twohanded/dualsaber/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
 		icon_state = "dualsaber[item_color][wielded]"
@@ -318,20 +322,20 @@
 		sharpness = IS_SHARP
 		w_class = w_class_on
 		hitsound = 'sound/weapons/blade1.ogg'
-		SSobj.start_processing(src)
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
 	..()
 	hitsound = "swing_hit"
-	SSobj.stop_processing(src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/process()
 	if(wielded)
 		open_flame()
 	else
-		return PROCESS_KILL
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)
@@ -492,7 +496,7 @@
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
-		playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 		return 1
 	return 0
 
@@ -609,7 +613,7 @@
 		if(prob(final_block_chance))
 			if(attack_type == PROJECTILE_ATTACK)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				return 1
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
