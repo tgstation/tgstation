@@ -1,8 +1,9 @@
-//Used to process objects. Fires once every second.
+//for subsystems that do some sort of processing on datums
 
 /datum/subsystem/processing
 	name = "Processing"
 	can_fire = FALSE
+
 	flags = SS_ABSTRACT
 
 	var/stat_tag = "P" //Used for logging
@@ -27,7 +28,7 @@
 
 /datum/subsystem/processing/proc/stop_processing(datum/D, killed = FALSE)
 	processing_list -= D
-	if(!processing_list.len)
+	if(!processing_list.len && !(flags & SS_TICKER))
 		can_fire = FALSE
 	if(!killed && run_cache.len)
 		run_cache -= D
