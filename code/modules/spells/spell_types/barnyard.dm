@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	name = "Curse of the Barnyard"
-	desc = "This spell dooms the fate of any unlucky soul to the speech and facial attributes of a barnyard animal"
+	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	school = "transmutation"
 	charge_type = "recharge"
 	charge_max	= 150
@@ -40,7 +40,7 @@
 	var/obj/item/clothing/mask/magichead = new choice
 	magichead.flags |=NODROP
 	magichead.flags_inv = null
-	target.visible_message("<span class='danger'>[target]'s face lights up in fire, and after the event a barnyard animal's head takes it's place!</span>", \
+	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
 	if(!target.dropItemToGround(target.wear_mask))
 		qdel(target.wear_mask)

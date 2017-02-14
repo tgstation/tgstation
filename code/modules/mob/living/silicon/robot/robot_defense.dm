@@ -121,7 +121,7 @@
 			ai_is_antag = (connected_ai.mind.special_role == "traitor")
 	if(ai_is_antag)
 		src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
-		connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>"
+		connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>"
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
 		return
 
