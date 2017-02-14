@@ -32,49 +32,39 @@
 	var/gravity_throwing = 0
 	var/gravity_override = FALSE
 	var/gravity_ignore_anchored = FALSE
-	var/current_gravity_area = null
+	var/gravity_ignores_turfcheck = FALSE
+	var/area/current_gravity_area = null
 
 /atom/movable/vv_edit_var(var_name, var_value)
-	if(var_name == "is_affected_by_gravity")
-		if(!set_affected_by_gravity(var_value, FALSE))
-			return FALSE
 	. = ..()
+	if(var_name == "is_affected_by_gravity")
+		sync_gravity()
 
 /atom/movable/SDQL_update(const/var_name, new_value)
 	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
 		return FALSE	//PLEASE no.
-	if(var_name == "is_affected_by_gravity")
-		if(!set_affected_by_gravity(new_value, FALSE))
-			return FALSE
 	. = ..()
+	if(var_name == "is_affected_by_gravity")
+		sync_gravity()
 
-/atom/movable/proc/set_affected_by_gravity(yes, checkvar = TRUE)
-	var/turf/T = loc
-	var/area/A
-	if(isturf(T))
-		A = T.loc
-	if(!istype(A, /area))
-		return FALSE
-	if(yes)
-		if(!is_affected_by_gravity || !checkvar)
-			is_affected_by_gravity = TRUE
-			A.set_gravity(src)
+/atom/movable/proc/sync_gravity()
+	var/area/A = get_area(src)
+	if(A != current_gravity_area)
+		current_gravity_area.update_gravity(src, FALSE)
+		current_gravity_area = A
+	if(isturf(loc) || gravity_ignores_turfcheck)
+		A.update_gravity(src, is_affected_by_gravity)
 	else
-		if(is_affected_by_gravity || !checkvar)
-			is_affected_by_gravity = FALSE
-			A.unset_gravity(src)
+		A.update_gravity(src, FALSE)	//We're not on a turf and we don't need to be included in processing.
 
 /atom/movable/Initialize()
-	if(is_affected_by_gravity)
-		if(isturf(loc))
-			var/turf/T = loc
-			var/area/A = T.loc
-			if(istype(A, /area))
-				A.set_gravity(src)
+	sync_gravity()
 	. = ..()
 
-/atom/movable/proc/gravity_act()
+/atom/movable/proc/gravity_act(moving = TRUE)
 	if(!isturf(src.loc))	//Gravity was so strong it was pulling shards and rods out of windows!
+		if(!gravity_ignores_turfcheck)	//We don't need to process.
+			sync_gravity()
 		return FALSE
 	if(anchored)
 		return FALSE
@@ -84,6 +74,8 @@
 		return FALSE
 	if(!override && !has_gravity())
 		return FALSE
+	if(!moving)
+		return TRUE
 	if(gravity_throwing)
 		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 20, gravity_strength * 2)
 		gravity_throwing = FALSE
@@ -181,9 +173,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
-	if(istype(current_gravity_area, /area))
-		var/area/A = current_gravity_area
-		A.unset_gravity(src)
+	sync_gravity()
 
 
 // Previously known as HasEntered()
@@ -230,6 +220,7 @@
 			AM.Crossed(src)
 
 		Moved(oldloc, 0)
+		sync_gravity()
 		return 1
 	return 0
 

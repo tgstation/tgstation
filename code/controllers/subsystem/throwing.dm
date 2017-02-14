@@ -127,6 +127,7 @@ var/datum/subsystem/throwing/SSthrowing
 		thrownthing.newtonian_move(init_dir)
 	if (callback)
 		callback.Invoke()
+	thrownthing.sync_gravity()
 
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))

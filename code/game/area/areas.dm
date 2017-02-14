@@ -132,6 +132,8 @@ var/list/teleportlocs = list()
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(SSgravity)
+		SSgravity.areas -= src
 	return ..()
 
 /area/proc/poweralert(state, obj/source)
@@ -430,36 +432,35 @@ var/list/teleportlocs = list()
 
 /area/proc/update_all_gravity()
 	for(var/atom/movable/AM in contents)
-		if(AM.is_affected_by_gravity)
-			set_gravity(AM)
+		update_gravity(AM, AM.is_affected_by_gravity)
 		CHECK_TICK
 	gravity_throwing = FALSE
 	gravity_stunning = FALSE
 
-/area/proc/set_gravity(var/atom/movable/AM, i = FALSE)
-	AM.gravity_direction = gravity_direction
-	AM.gravity_strength = gravity_strength
-	AM.gravity_stunning = gravity_stunning
-	AM.gravity_throwing = gravity_throwing
-	AM.gravity_override = gravity_overriding
-	AM.current_gravity_area = src
-	contents_affected_by_gravity[AM] = AM
-
-/area/proc/unset_gravity(var/atom/movable/AM)
-	AM.gravity_direction = initial(AM.gravity_direction)
-	AM.gravity_strength = initial(AM.gravity_strength)
-	AM.gravity_stunning = FALSE
-	AM.gravity_throwing = FALSE
-	AM.gravity_override = initial(AM.gravity_override)
-	AM.current_gravity_area = null
-	if(contents_affected_by_gravity[AM])
-		contents_affected_by_gravity -= AM
+/area/proc/update_gravity(atom/movable/AM, yes)
+	if(yes)
+		AM.gravity_direction = gravity_direction
+		AM.gravity_strength = gravity_strength
+		AM.gravity_stunning = gravity_stunning
+		AM.gravity_throwing = gravity_throwing
+		AM.gravity_override = gravity_overriding
+		AM.current_gravity_area = src
+		contents_affected_by_gravity[AM] = AM
+	else
+		AM.gravity_direction = initial(AM.gravity_direction)
+		AM.gravity_strength = initial(AM.gravity_strength)
+		AM.gravity_stunning = FALSE
+		AM.gravity_throwing = FALSE
+		AM.gravity_override = initial(AM.gravity_override)
+		AM.current_gravity_area = null
+		if(contents_affected_by_gravity[AM])
+			contents_affected_by_gravity -= AM
 
 /area/Entered(A)
 	if(istype(A, /atom/movable))
 		var/atom/movable/AM = A
 		if(AM.is_affected_by_gravity)
-			set_gravity(AM)
+			update_gravity(AM, TRUE)
 
 	if(!isliving(A))
 		return
@@ -492,7 +493,7 @@ var/list/teleportlocs = list()
 	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	else if(A && A.has_gravity) // Areas which always has gravity
+	else if(A && (A.has_gravity || A.gravity_generator)) // Areas which always has gravity
 		return 1
 	else
 		// There's a gravity generator on our z level
@@ -512,4 +513,4 @@ var/list/teleportlocs = list()
 
 /area/Exited(atom/movable/AM, newloc)
 	. = ..(AM, newloc)
-	unset_gravity(AM)
+	update_gravity(AM, FALSE)

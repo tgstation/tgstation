@@ -20,18 +20,18 @@ var/datum/subsystem/gravity/SSgravity
 	. = ..()
 
 /datum/subsystem/gravity/proc/recalculate_atoms()
-	. = list()
+	currentrun = list()
 	var/tempcost = world.timeofday
 	for(var/area/A in areas)
 		if(!A.has_gravity && !A.gravity_generator && !A.gravity_overriding)
 			continue
 		for(var/atom/movable/AM in A.contents_affected_by_gravity)
-			. += AM
+			currentrun += AM
 	recalculation_cost = world.timeofday - tempcost
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
 	if(!resumed)
-		currentrun = recalculate_atoms()
+		recalculate_atoms()
 	while(currentrun.len)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		if(AM)
