@@ -179,6 +179,7 @@
 #include "code\controllers\subsystem\processing\flightpacks.dm"
 #include "code\controllers\subsystem\processing\icon_smooth.dm"
 #include "code\controllers\subsystem\processing\machines.dm"
+#include "code\controllers\subsystem\processing\mediumprocess.dm"
 #include "code\controllers\subsystem\processing\mobs.dm"
 #include "code\controllers\subsystem\processing\objects.dm"
 #include "code\controllers\subsystem\processing\orbit.dm"
