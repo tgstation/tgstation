@@ -1,8 +1,7 @@
-var/global/list/atoms_affected_by_gravity = list()
 
 /atom/movable
 	layer = OBJ_LAYER
-	var/is_affected_by_gravity = TRUE	//Requires a re-Initialize() to change.
+	var/is_affected_by_gravity = FALSE	//Set to FALSE if this item should never be moved by gravity no matter what. Don't varedit before it has initialized!
 	var/last_move = null
 	var/anchored = 0
 	var/throwing = 0
@@ -32,39 +31,61 @@ var/global/list/atoms_affected_by_gravity = list()
 	var/gravity_stunning = 0
 	var/gravity_throwing = 0
 	var/gravity_override = FALSE
+	var/gravity_ignore_anchored = FALSE
+	var/current_gravity_area = null
+
+/atom/movable/vv_edit_var(var_name, var_value)
+	if(var_name == "is_affected_by_gravity")
+		if(!set_affected_by_gravity(var_value, FALSE))
+			return FALSE
+	. = ..()
 
 /atom/movable/SDQL_update(const/var_name, new_value)
 	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
 		return FALSE	//PLEASE no.
+	if(var_name == "is_affected_by_gravity")
+		if(!set_affected_by_gravity(new_value, FALSE))
+			return FALSE
 	. = ..()
+
+/atom/movable/proc/set_affected_by_gravity(yes, checkvar = TRUE)
+	var/turf/T = loc
+	var/area/A
+	if(isturf(T))
+		A = T.loc
+	if(!istype(A, /area))
+		return FALSE
+	if(yes)
+		if(!is_affected_by_gravity || !checkvar)
+			is_affected_by_gravity = TRUE
+			A.set_gravity(src)
+	else
+		if(is_affected_by_gravity || !checkvar)
+			is_affected_by_gravity = FALSE
+			A.unset_gravity(src)
 
 /atom/movable/Initialize()
 	if(is_affected_by_gravity)
-		atoms_affected_by_gravity += src
-		var/turf/T = get_turf(src)
-		if(T && !isturf(T))
-			T = get_turf(T)
-		if(isturf(T))
+		if(isturf(loc))
+			var/turf/T = loc
 			var/area/A = T.loc
-			if(A && istype(A, /area))
-				gravity_direction = A.gravity_direction
-				gravity_strength = A.gravity_strength
-				gravity_stunning = A.gravity_stunning
-				gravity_throwing = A.gravity_throwing
-				gravity_override = A.gravity_overriding
+			if(istype(A, /area))
+				A.set_gravity(src)
 	. = ..()
 
 /atom/movable/proc/gravity_act()
-	if(!gravity_direction)
-		return FALSE
-	if(!override && !has_gravity())
-		return FALSE
 	if(!isturf(src.loc))	//Gravity was so strong it was pulling shards and rods out of windows!
 		return FALSE
 	if(anchored)
 		return FALSE
+	if(!gravity_direction)
+		return FALSE
+	if(istype(get_step(src, gravity_direction), /turf/closed))
+		return FALSE
+	if(!override && !has_gravity())
+		return FALSE
 	if(gravity_throwing)
-		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 10, gravity_strength * 2)
+		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 20, gravity_strength * 2)
 		gravity_throwing = FALSE
 	else
 		for(var/i = gravity_strength, i > 0, i--)
@@ -160,6 +181,9 @@ var/global/list/atoms_affected_by_gravity = list()
 	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
+	if(istype(current_gravity_area, /area))
+		var/area/A = current_gravity_area
+		A.unset_gravity(src)
 
 
 // Previously known as HasEntered()

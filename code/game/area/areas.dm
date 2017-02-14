@@ -40,7 +40,9 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = 0
+	var/has_gravity = 0				//Has gravity innately/no matter what. Ignores gravity generator gravity direction.
+	var/list/contents_affected_by_gravity = list()
+	var/gravity_generator = FALSE	//Does it have gravity from a gravgen on the zlevel?
 	var/gravity_overriding = FALSE	//Still directionally move things despite not having gravity.
 	var/gravity_direction = FALSE	//False/cardinals
 	var/gravity_strength = 1
@@ -435,21 +437,29 @@ var/list/teleportlocs = list()
 	gravity_stunning = FALSE
 
 /area/proc/set_gravity(var/atom/movable/AM, i = FALSE)
-	if(i > 5)
-		return FALSE
 	AM.gravity_direction = gravity_direction
 	AM.gravity_strength = gravity_strength
 	AM.gravity_stunning = gravity_stunning
 	AM.gravity_throwing = gravity_throwing
 	AM.gravity_override = gravity_overriding
-	if(AM.contents.len)
-		for(var/atom/movable/M in AM.contents)
-			set_gravity(M, ++i)
+	AM.current_gravity_area = src
+	contents_affected_by_gravity[AM] = AM
+
+/area/proc/unset_gravity(var/atom/movable/AM)
+	AM.gravity_direction = initial(AM.gravity_direction)
+	AM.gravity_strength = initial(AM.gravity_strength)
+	AM.gravity_stunning = FALSE
+	AM.gravity_throwing = FALSE
+	AM.gravity_override = initial(AM.gravity_override)
+	AM.current_gravity_area = null
+	if(contents_affected_by_gravity[AM])
+		contents_affected_by_gravity -= AM
 
 /area/Entered(A)
 	if(istype(A, /atom/movable))
 		var/atom/movable/AM = A
-		set_gravity(AM)
+		if(AM.is_affected_by_gravity)
+			set_gravity(AM)
 
 	if(!isliving(A))
 		return
@@ -499,3 +509,7 @@ var/list/teleportlocs = list()
 	valid_territory = 0
 	blob_allowed = 0
 	addSorted()
+
+/area/Exited(atom/movable/AM, newloc)
+	. = ..(AM, newloc)
+	unset_gravity(AM)

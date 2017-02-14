@@ -8,6 +8,7 @@
 	var/climbable = FALSE
 	var/mob/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
+	is_affected_by_gravity = TRUE
 
 /obj/structure/New()
 	if (!armor)

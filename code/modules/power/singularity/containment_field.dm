@@ -13,6 +13,7 @@
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
+	is_affected_by_gravity = FALSE	//Definitely not.
 
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src

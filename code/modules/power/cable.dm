@@ -36,6 +36,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
+	is_affected_by_gravity = FALSE
 
 /obj/structure/cable/yellow
 	cable_color = "yellow"

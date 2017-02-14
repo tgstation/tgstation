@@ -29,6 +29,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/sprite_number = 0
 	var/current_grav_dir = FALSE
 	var/new_grav_dir = FALSE
+	is_affected_by_gravity = FALSE
 
 /obj/machinery/gravity_generator/throw_at()
 	return FALSE
