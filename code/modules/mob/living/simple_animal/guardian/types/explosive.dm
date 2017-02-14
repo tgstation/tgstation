@@ -8,44 +8,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
-	var/bomb_cooldown = 0
-
-/mob/living/simple_animal/hostile/guardian/bomb/Stat()
-	..()
-	if(statpanel("Status"))
-		if(bomb_cooldown >= world.time)
-			stat(null, "Bomb Cooldown Remaining: [max(round((bomb_cooldown - world.time)*0.1, 0.1), 0)] seconds")
-
-/mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
-	if(..())
-		if(prob(40))
-			if(isliving(target))
-				var/mob/living/M = target
-				if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
-					new /obj/effect/overlay/temp/guardian/phase/out(get_turf(M))
-					do_teleport(M, M, 10)
-					for(var/mob/living/L in range(1, M))
-						if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
-							continue
-						if(L != src && L != summoner)
-							L.apply_damage(15, BRUTE)
-					new /obj/effect/overlay/temp/explosion(get_turf(M))
-
-/mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
-	if(!istype(A))
-		return
-	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
-		return
-	if(isobj(A))
-		if(bomb_cooldown <= world.time && !stat)
-			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
-			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
-			bomb_cooldown = world.time + 200
-			B.spawner = src
-			B.disguise(A)
-		else
-			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
+	abilities = list(/datum/guardian_abilities/bomb)
 
 /obj/guardian_bomb
 	name = "bomb"
