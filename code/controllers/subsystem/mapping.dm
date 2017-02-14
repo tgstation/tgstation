@@ -72,8 +72,7 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/proc/loadWorld()
 	var/dmm_suite/loader = new
-	loader.load_map(file("_maps/map_files/TgStation/tgstation.2.1.3.dmm"), no_afterchange = TRUE)
-	loader.load_map(file("_maps/map_files/generic/z2.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/TgStation/tgstation.2.1.3.dmm"), 0, 0, 1, no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z3.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z4.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/lavaland.dmm"), no_afterchange = TRUE)

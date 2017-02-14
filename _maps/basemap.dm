@@ -1,4 +1,5 @@
-//#include "map_files\basemap.dmm"
+#include "map_files/generic/z1.dmm"
+#include "map_files/generic/z2.dmm"
 
 #define TITLESCREEN "title"
 #define MINETYPE "lavaland"
