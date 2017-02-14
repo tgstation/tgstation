@@ -29857,7 +29857,7 @@
 	pixel_x = -24;
 	pixel_y = -24
 	},
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
@@ -37488,8 +37488,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "biK" = (
-/obj/structure/chair/office/dark,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "biL" = (
@@ -37533,8 +37535,10 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold (NORTH)";
+	icon_state = "manifold";
+	dir = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
@@ -37543,7 +37547,9 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -39132,6 +39138,7 @@
 	name = "Mass Driver Room";
 	req_access_txt = "27"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -39152,16 +39159,14 @@
 	name = "Mass Driver";
 	req_access_txt = "22"
 	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	external_pressure_bound = 140;
-	on = 1;
-	pressure_checks = 0
+	dir = 1;
+	on = 1
+	},
+/obj/machinery/airalarm{
+	icon_state = "alarm0";
+	dir = 8;
+	pixel_x = 25
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -39175,12 +39180,7 @@
 /turf/closed/wall,
 /area/chapel/main)
 "blF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	external_pressure_bound = 140;
-	on = 1;
-	pressure_checks = 0
-	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "blG" = (
@@ -39203,9 +39203,6 @@
 	id = "chapelgun";
 	pixel_x = 24;
 	pixel_y = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -76910,9 +76907,9 @@ bgH
 bht
 bii
 biO
-blB
-blE
-blH
+bfu
+bfu
+bfu
 bfu
 aaa
 aaa

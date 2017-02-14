@@ -176,13 +176,13 @@
 /datum/clockwork_scripture/create_object/sigil_of_transmission
 	descname = "Structure Battery"
 	name = "Sigil of Transmission"
-	desc = "Scribes a sigil beneath the invoker which stores power to power clockwork structures."
+	desc = "Places a sigil that stores energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
 	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
-	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures adjecent to it.</span>"
+	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it.</span>"
 	usage_tip = "Cyborgs can charge from this sigil by remaining over it for 5 seconds."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
@@ -194,7 +194,7 @@
 
 //Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils of transmission.
 /datum/clockwork_scripture/create_object/interdiction_lens
-	descname = "Structure, Disables Machinery"
+	descname = "Structure, Area Sabotage, Power Generator"
 	name = "Interdiction Lens"
 	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
 	invocations = list("May this totem...", "...shroud the false suns!")
@@ -216,14 +216,14 @@
 
 //Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures and consume power or replicant alloy.
 /datum/clockwork_scripture/create_object/mending_motor
-	descname = "Structure, Repairs Other Structures"
+	descname = "Powered Structure, Repairs Other Structures"
 	name = "Mending Motor"
-	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires power to function."
+	desc = "Creates a mechanized prism that will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures."
 	invocations = list("May this prism...", "...mend our dents and scratches!")
 	channel_time = 80
 	consumed_components = list(VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/mending_motor
-	creator_message = "<span class='brass'>You form a mending motor, which will consume power to mend constructs and structures.</span>"
+	creator_message = "<span class='brass'>You form a mending motor, which will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
@@ -238,9 +238,9 @@
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
-	descname = "Structure, Area Denial"
+	descname = "Powered Structure, Area Denial"
 	name = "Mania Motor"
-	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-servant humans. It will also try to convert humans directly adjecent to the motor."
+	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-Servant humans. It will also try to convert humans directly adjecent to the motor."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
 	consumed_components = list(GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
@@ -249,7 +249,7 @@
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "Eligible human servants next to the motor will be converted at an additional power cost. It will also cure hallucinations and brain damage in nearby servants."
+	usage_tip = "Eligible non-Servant humans next to the motor will be converted at an additional power cost. It will also cure hallucinations and brain damage in nearby Servants."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = GEIS_CAPACITOR
@@ -260,9 +260,10 @@
 
 //Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
 /datum/clockwork_scripture/create_object/tinkerers_daemon
-	descname = "Structure, Component Generator"
+	descname = "Powered Structure, Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by servants by a ratio of 5:1, and there is at least one existing cache."
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by Servants by a ratio of 5:1, \
+	and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
 	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 3)
@@ -294,9 +295,9 @@
 
 //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.
 /datum/clockwork_scripture/create_object/clockwork_obelisk
-	descname = "Structure, Teleportation Hub"
+	descname = "Powered Structure, Teleportation Hub"
 	name = "Clockwork Obelisk"
-	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
+	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living Servant or clockwork obelisk."
 	invocations = list("May this obelisk...", "...take us to all places!")
 	channel_time = 80
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 3)

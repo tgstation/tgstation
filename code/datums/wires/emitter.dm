@@ -9,5 +9,5 @@
 
 /datum/wires/emitter/on_pulse(wire)
 	var/obj/machinery/power/emitter/E = holder
-	E.fire_beam()
+	E.fire_beam_pulse()
 	..()

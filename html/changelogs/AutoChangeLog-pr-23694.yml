@@ -1,9 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "ADMINS: SDQL2 has been given some new features!"
-  - bugfix: "SDQL2 now gives you an exception on runtime instead of flooding server runtime logs."
-  - rscadd: "SDQL2 now supports usr, which makes that variable reference to whatever mob you are in, src, which targets the object it is being called on itself, and marked, which targets the datum marked by the admin calling it. Also, it supports hex references (the hex number at the top of a VV panel) in {}s, so you can target nearly anything! Also, global procs are supported by global.[procname](args), for CALL queries."
-  - bugfix: "SDQL2 can no longer edit /datum/admins or /datum/admin_rank, and is protected from changing x/y/z of a turf and anything that would cause broken movement for movable atoms."
-  - rscadd: "SDQL2 can now get list input with [arg1, arg2]!"
-  - experiment: "Do '\"<string>\"' to put strings inside of SDQL2 or it won't work."

@@ -274,8 +274,9 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+	if(tesla_shock && tesla_ignore)
+		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
 			adjustFireLoss(shock_damage)
@@ -323,13 +324,16 @@
 
 
 /mob/living/ratvar_act()
-	if(stat != DEAD && !is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
-		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
-		adjustFireLoss(35)
-		if(src)
-			adjust_fire_stacks(1)
-			IgniteMob()
-		return FALSE
+	if(stat != DEAD && !is_servant_of_ratvar(src))
+		for(var/obj/item/weapon/implant/mindshield/M in implants)
+			qdel(M)
+		if(!add_servant_of_ratvar(src))
+			src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+			adjustFireLoss(35)
+			if(src)
+				adjust_fire_stacks(1)
+				IgniteMob()
+			return FALSE
 	return TRUE
 
 

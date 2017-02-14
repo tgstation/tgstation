@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/ocular_warden
 	name = "ocular warden"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
-	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
+	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
 	obj_integrity = 25
@@ -32,14 +32,16 @@
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
 
-/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
 	if(anchored)
 		if(obj_integrity <= max_integrity * 0.25)
-			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+			if(!silent)
+				user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 			return FAILED_UNFASTEN
 	else
-		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(3, src))
-			user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
+		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
+			if(!silent)
+				user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
 			return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 

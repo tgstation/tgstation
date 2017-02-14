@@ -684,6 +684,41 @@
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
+/datum/reagent/toxin/skewium
+	name = "Skewium"
+	id = "skewium"
+	description = "A strange, dull coloured liquid that appears to warp back and forth inside its container. Causes any consumer to experience a visual phenomena similar to said warping."
+	reagent_state = LIQUID
+	color = "#ADBDCD"
+	metabolization_rate = 0.8 * REAGENTS_METABOLISM
+	toxpwr = 0.25
+
+/datum/reagent/toxin/skewium/on_mob_life(mob/living/M)
+	if(M.hud_used)
+		if(current_cycle >= 5 && current_cycle % 3 == 0)
+			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+			var/matrix/skew = matrix()
+			var/intensity = 8
+			skew.set_skew(rand(-intensity,intensity), rand(-intensity,intensity))
+			var/matrix/newmatrix = skew
+
+			if(prob(33)) // 1/3rd of the time, let's make it stack with the previous matrix! Mwhahahaha!
+				var/obj/screen/plane_master/PM = M.hud_used.plane_masters["[GAME_PLANE]"]
+				newmatrix = skew * PM.transform
+
+			for(var/whole_screen in screens)
+				animate(whole_screen, transform = newmatrix, time = 5, easing = QUAD_EASING, loop = -1)
+				animate(transform = -newmatrix, time = 5, easing = QUAD_EASING)
+	return ..()
+
+/datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
+	if(M && M.hud_used)
+		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		for(var/whole_screen in screens)
+			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
+	..()
+
+
 /datum/reagent/toxin/anacea
 	name = "Anacea"
 	id = "anacea"
@@ -778,4 +813,24 @@
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		M << "You should sit down and take a rest..."
+	..()
+
+/datum/reagent/toxin/delayed
+	name = "Toxin Microcapsules"
+	id = "delayed_toxin"
+	description = "Causes heavy toxin damage after a brief time of inactivity."
+	reagent_state = LIQUID
+	metabolization_rate = 0 //stays in the system until active.
+	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
+	toxpwr = 0
+	var/actual_toxpwr = 5
+	var/delay = 30
+
+/datum/reagent/toxin/delayed/on_mob_life(mob/living/M)
+	if(current_cycle > delay)
+		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
+		M.adjustToxLoss(actual_toxpwr*REM, 0)
+		if(prob(10))
+			M.Weaken(1, 0)
+		. = 1
 	..()

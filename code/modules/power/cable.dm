@@ -736,6 +736,10 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	pixel_y = rand(-2,2)
 	update_icon()
 
+/obj/item/stack/cable_coil/red
+	item_color = "red"
+	icon_state = "coil_red"
+
 /obj/item/stack/cable_coil/yellow
 	item_color = "yellow"
 	icon_state = "coil_yellow"

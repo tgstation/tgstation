@@ -1,6 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "[Delta] Active turfs down from 300+"
-  - bugfix: "[Delta] Janitor closet isn't 2.7K anymore"
-  - bugfix: "[Delta] Various pipe fixes"
