@@ -1571,12 +1571,12 @@
 					/obj/item/seeds/ambrosia/deus,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
-	
+
 /datum/supply_pack/medical/randomised/contraband/organs
 	name = "Organ Crate"
 	contraband = TRUE
 	cost = 3000
-	num_contained = 3
+	var/num_contained = 3
 	contains = list(/obj/item/organ/appendix,
 					/obj/item/organ/eyes,
 					/obj/item/organ/tongue,
