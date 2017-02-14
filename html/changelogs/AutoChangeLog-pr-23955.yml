@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Added an admin only tool, the life candle. Touch the candle, and
-when you die, you'll respawn shortly afterwards. Touch it again to stop.
-Used for testing, thunderdome brawls and good old fashioned memery."

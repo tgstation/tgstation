@@ -75,7 +75,7 @@
 		. = file(mappath)
 
 	if(!.)
-		world.log << "The file of [src] appears to be empty/non-existent."
+		log_world("The file of [src] appears to be empty/non-existent.")
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
