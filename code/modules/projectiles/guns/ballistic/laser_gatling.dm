@@ -15,10 +15,10 @@
 	var/overheat_max = 40
 	var/heat_diffusion = 1
 
-/obj/item/weapon/minigunpack/New()
+/obj/item/weapon/minigunpack/Initialize()
 	gun = new(src)
 	START_PROCESSING(SSobj, src)
-	..()
+	. = ..()
 
 /obj/item/weapon/minigunpack/Destroy()
 	STOP_PROCESSING(SSobj, src)
