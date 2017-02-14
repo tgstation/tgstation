@@ -1,0 +1,4 @@
+author: "RandomMarine"
+delete-after: True
+changes: 
+  - tweak: "Pre-made charcoal pills now contain 10 units instead of 50. The amount of pills inside of toxin first aid kits and the smartfridge have been increased to compensate. Keep in mind that each ten unit pill recovers 100 points of toxin damage and purges 50 units of other reagents."

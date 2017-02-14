@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "A Law Removal module can be build in RnD. It can remove a specified core or freeform law."
-  - tweak: "When stating laws, silicons won't skip a number when hiding laws. (example: 1. Law 1; 2. Law 2; 3. Law 4 if you choose not to state Law 3)"

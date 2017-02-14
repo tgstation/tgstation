@@ -9,24 +9,27 @@ var/global/datum/getrev/revdata = new()
 /datum/getrev/New()
 	var/head_file = return_file_text(".git/logs/HEAD")
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
-		testmerge = file2list("..\\prtestjob.lk")
+		var/list/tmp = file2list("..\\prtestjob.lk")
+		for(var/I in tmp)
+			if(I)
+				testmerge |= I
 	var/testlen = max(testmerge.len - 1, 0)
 	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\n*\\Z)")
 	head_log.Find(head_file)
 	parentcommit = head_log.group[1]
 	date = unix2date(text2num(head_log.group[2]))
 	commit = head_log.group[4]
-	world.log << "Running /tg/ revision:"
-	world.log << "[date]"
+	log_world("Running /tg/ revision:")
+	log_world("[date]")
 	if(testmerge.len)
-		world.log << commit
+		log_world(commit)
 		for(var/line in testmerge)
 			if(line)
-				world.log << "Test merge active of PR #[line]"
-		world.log << "Based off master commit [parentcommit]"
+				log_world("Test merge active of PR #[line]")
+		log_world("Based off master commit [parentcommit]")
 	else
-		world.log << parentcommit
-	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
+		log_world(parentcommit)
+	log_world("Current map - [MAP_NAME]") //can't think of anywhere better to put it
 
 /client/verb/showrevinfo()
 	set category = "OOC"
@@ -72,7 +75,7 @@ var/global/datum/getrev/revdata = new()
 				if(config.probabilities[ctag] > 0)
 					var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
 					src << "[ctag] [percentage]%"
-		
+
 		src <<"<b>All Game Mode Odds:</b>"
 		var/sum = 0
 		for(var/ctag in config.probabilities)

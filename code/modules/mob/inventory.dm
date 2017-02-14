@@ -156,7 +156,7 @@
 		return FALSE
 	var/obj/item/curr = held_items[hand_index]
 	if(!curr)
-		I.loc = src
+		I.forceMove(src)
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
 		I.plane = ABOVE_HUD_PLANE

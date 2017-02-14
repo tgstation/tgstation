@@ -36,10 +36,9 @@
 	flags = NONE
 	var/ore_type = /obj/item/weapon/ore/glass
 
-/turf/open/floor/grass/New()
+/turf/open/floor/grass/Initialize()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/shovel) && params)
@@ -76,7 +75,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	slowdown = 0
 
-/turf/open/floor/grass/snow/basalt/New()
+/turf/open/floor/grass/snow/basalt/Initialize()
 	..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
@@ -96,10 +95,9 @@
 	canSmoothWith = null
 	flags = NONE
 
-/turf/open/floor/carpet/New()
+/turf/open/floor/carpet/Initialize()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 /turf/open/floor/carpet/update_icon()
 	if(!..())
@@ -131,6 +129,6 @@
 	broken_states = list("damaged")
 	plane = PLANE_SPACE
 
-/turf/open/floor/fakespace/New()
+/turf/open/floor/fakespace/Initialize()
 	..()
 	icon_state = "[rand(0,25)]"
