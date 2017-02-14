@@ -422,6 +422,30 @@
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
 	category = list("initial", "Security")
+	
+/datum/design/buckshot_shell
+	name = "Buckshot shell"
+	id = "buckshot_shell"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/buckshot
+	category = list("initial", "Security")
+	
+/datum/design/handcuffs
+	name = "Handcuffs"
+	id = "handcuffs"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/weapon/restraints/handcuffs
+	category = list("initial", "Security")
+	
+/datum/design/shotgun_slug
+	name = "Shotgun slug"
+	id = "shotgun_slug"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun
+	category = list("initial", "Security")
 
 /datum/design/c38
 	name = "Speed loader (.38)"
@@ -606,31 +630,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 70, MAT_GLASS = 60)
 	build_path = /obj/item/weapon/weldingtool/largetank
-	category = list("hacked", "Tools")
-
-/datum/design/handcuffs
-	name = "Handcuffs"
-	id = "handcuffs"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 500)
-	build_path = /obj/item/weapon/restraints/handcuffs
-	category = list("hacked", "Security")
-
-/datum/design/shotgun_slug
-	name = "Shotgun slug"
-	id = "shotgun_slug"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/ammo_casing/shotgun
-	category = list("hacked", "Security")
-
-/datum/design/buckshot_shell
-	name = "Buckshot shell"
-	id = "buckshot_shell"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/ammo_casing/shotgun/buckshot
-	category = list("hacked", "Security")
+	category = list("initial", "Tools")
 
 /datum/design/shotgun_dart
 	name = "Shotgun dart"
