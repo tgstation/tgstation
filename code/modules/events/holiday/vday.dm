@@ -86,7 +86,7 @@
 	               "You're hotter than a plasma fire in toxins.",
 	               "Are you a rogue atmos tech? Because you're taking my breath away.",
 	               "Could I have all access... to your heart?",
-	               "Call me the CMO, because I'm here to inspect your johnson.",
+	               "Call me the doctor, because I'm here to inspect your johnson.",
 	               "I'm not a changeling, but you make my proboscis extend.",
 	               "I just can't get EI NATH of you.",
 	               "You must be a nuke op, because you make my heart explode.",
@@ -116,7 +116,15 @@
 	               "Roses are red, text is green, I love you more than cleanbots clean.",
 	               "If you were a carp I'd fi-lay you.",
 	               "I'm a nuke op, and my pinpointer leads to your heart.",
-	               "Wanna slay my megafauna?" )
+	               "Wanna slay my megafauna?",
+	               "I'm a clockwork cultist. Or zl inyragvar.",
+	               "If you were a disposal bin I'd ride you all day.",
+	               "Put on your explorer's suit because I'm taking you to LOVEaland.",
+	               "I must be the CMO, 'cause I saw you on my CUTE sensors.",
+	               "You're the vomit to my flyperson.",
+	               "You must be liquid dark matter, because you're pulling me closer.",
+	               "Not even sorium can drive me away from you.",
+	               "Wanna make like a borg and do some heavy petting?" )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -167,5 +175,7 @@
                 "A heart-shaped candy that reads: VALIDTINES",
                 "A heart-shaped candy that reads: FACEHUGGER",
                 "A heart-shaped candy that reads: DOMINATOR",
-                "A heart-shaped candy that reads: GET TESLA'D")
+                "A heart-shaped candy that reads: GET TESLA'D",
+                "A heart-shaped candy that reads: COCK CULT",
+                "A heart-shaped candy that reads: PET ME")
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")
