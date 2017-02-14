@@ -106,6 +106,7 @@
 	requires_power = 0
 	has_gravity = 1
 	flags = NO_DEATHRATTLE
+	singuloproof = TRUE	//Don't need to ruin the ghost's fun.
 
 /area/ctf/control_room
 	name = "Control Room A"
