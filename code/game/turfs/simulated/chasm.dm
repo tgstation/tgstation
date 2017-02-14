@@ -69,7 +69,7 @@
 			L.adjustBruteLoss(30)
 
 
-/turf/open/chasm/straight_down/Initialize()
+/turf/open/chasm/straight_down/New()
 	..()
 	drop_x = x
 	drop_y = y

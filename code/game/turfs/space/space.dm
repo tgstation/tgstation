@@ -15,16 +15,15 @@
 	var/global/datum/gas_mixture/space/space_gas = new
 	plane = PLANE_SPACE
 
-/turf/open/space/Initialize()
+/turf/open/space/New()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
-	
-	if(initialized)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
 
-	if(requires_activation)
-		SSair.add_to_active(src)
+/turf/open/space/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)

@@ -12,7 +12,7 @@
 	var/can_modify_colour = TRUE
 
 
-/turf/open/floor/light/Initialize()
+/turf/open/floor/light/New()
 	..()
 	update_icon()
 

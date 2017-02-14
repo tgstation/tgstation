@@ -106,7 +106,7 @@
 	icon_state = "plating"
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
-/turf/open/floor/engine/cult/Initialize()
+/turf/open/floor/engine/cult/New()
 	..()
 	new /obj/effect/overlay/temp/cult/turf/floor(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
