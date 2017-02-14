@@ -994,7 +994,14 @@
 
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
+	if(check_zone(user.zone_selected) == "head" && (target.a_intent == INTENT_HELP))
+		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
+			"<span class='notice'> You slap [target] in the face! </span>",\
+		"You hear a slap.")
+		target.endTailWag()
+		return FALSE
+	else if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
 		return 0
 	if(attacker_style && attacker_style.disarm_act(user,target))
