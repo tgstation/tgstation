@@ -104,7 +104,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 					msg += "\t [varname] = [D]([D.type])\n"
 				else
 					msg += "\t [varname] = [varval]\n"
-	world.log << msg
+	log_world(msg)
 	if (istype(Master.subsystems))
 		subsystems = Master.subsystems
 		StartProcessing(10)
@@ -139,7 +139,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
-	world.log << "Initializations complete."
+	log_world("Initializations complete.")
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
@@ -267,7 +267,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			subsystems_to_check = tickersubsystems
 		if (CheckQueue(subsystems_to_check) <= 0)
 			if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
-				world.log << "MC: SoftReset() failed, crashing"
+				log_world("MC: SoftReset() failed, crashing")
 				return
 			if (!error_level)
 				iteration++
@@ -279,7 +279,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (queue_head)
 			if (RunQueue() <= 0)
 				if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
-					world.log << "MC: SoftReset() failed, crashing"
+					log_world("MC: SoftReset() failed, crashing")
 					return
 				if (!error_level)
 					iteration++
@@ -451,9 +451,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 //	called if any mc's queue procs runtime or exit improperly.
 /datum/controller/master/proc/SoftReset(list/ticker_SS, list/normal_SS, list/lobby_SS)
 	. = 0
-	world.log << "MC: SoftReset called, resetting MC queue state."
+	log_world("MC: SoftReset called, resetting MC queue state.")
 	if (!istype(subsystems) || !istype(ticker_SS) || !istype(normal_SS) || !istype(lobby_SS))
-		world.log << "MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[normal_SS]' '[lobby_SS]' Crashing!"
+		log_world("MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[normal_SS]' '[lobby_SS]' Crashing!")
 		return
 	var/subsystemstocheck = subsystems + ticker_SS + normal_SS + lobby_SS
 
@@ -465,26 +465,26 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			ticker_SS -= list(SS)
 			normal_SS -= list(SS)
 			lobby_SS -= list(SS)
-			world.log << "MC: SoftReset: Found bad entry in subsystem list, '[SS]'"
+			log_world("MC: SoftReset: Found bad entry in subsystem list, '[SS]'")
 			continue
 		if (SS.queue_next && !istype(SS.queue_next))
-			world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_next = '[SS.queue_next]'"
+			log_world("MC: SoftReset: Found bad data in subsystem queue, queue_next = '[SS.queue_next]'")
 		SS.queue_next = null
 		if (SS.queue_prev && !istype(SS.queue_prev))
-			world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_prev = '[SS.queue_prev]'"
+			log_world("MC: SoftReset: Found bad data in subsystem queue, queue_prev = '[SS.queue_prev]'")
 		SS.queue_prev = null
 		SS.queued_priority = 0
 		SS.queued_time = 0
 		SS.state = SS_IDLE
 	if (queue_head && !istype(queue_head))
-		world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_head = '[queue_head]'"
+		log_world("MC: SoftReset: Found bad data in subsystem queue, queue_head = '[queue_head]'")
 	queue_head = null
 	if (queue_tail && !istype(queue_tail))
-		world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_tail = '[queue_tail]'"
+		log_world("MC: SoftReset: Found bad data in subsystem queue, queue_tail = '[queue_tail]'")
 	queue_tail = null
 	queue_priority_count = 0
 	queue_priority_count_bg = 0
-	world.log << "MC: SoftReset: Finished."
+	log_world("MC: SoftReset: Finished.")
 	. = 1
 
 
@@ -493,6 +493,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
-
-	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (TickDrift:[round(Master.tickdrift)]) (Iteration:[Master.iteration])"))
+	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))")
+	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration])"))
 

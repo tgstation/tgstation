@@ -8,8 +8,8 @@
 	inactive_icon = "mania_motor_inactive"
 	unanchored_icon = "mania_motor_unwrenched"
 	construction_value = 20
-	max_integrity = 80
-	obj_integrity = 80
+	max_integrity = 100
+	obj_integrity = 100
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
 	/obj/item/clockwork/alloy_shards/small = 2, \
@@ -62,30 +62,7 @@
 	var/turf/T = get_turf(src)
 	var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 	var/efficiency = get_efficiency_mod()
-	for(var/mob/living/carbon/human/H in view(1, src))
-		if(is_servant_of_ratvar(H) || H.null_rod_check() || H.stat == DEAD)
-			continue
-		if(!H.Adjacent(src))
-			H << "<span class='sevtug'>\"[text2ratvar(pick(close_messages))]\"</span>"
-			continue
-		if(try_use_power(convert_cost))
-			H.playsound_local(T, hum, 80, 1)
-			if(!H.stat)
-				if(H.getBrainLoss() < 100)
-					H.adjustBrainLoss(30 * efficiency)
-					H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
-				else
-					H.Paralyse(3)
-			else if(is_eligible_servant(H))
-				H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
-				add_servant_of_ratvar(H)
-				H.Paralyse(5)
-			else
-				H << "<span class='sevtug'>\"[text2ratvar(pick(convert_messages))]\"</span>"
-		else
-			visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
-			playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
-	for(var/mob/living/carbon/human/H in range(10, src))
+	for(var/mob/living/carbon/human/H in viewers(7, src))
 		if(is_servant_of_ratvar(H)) //heals servants of braindamage, hallucination, druggy, dizziness, and confusion
 			var/brainloss = H.getBrainLoss()
 			if(brainloss)
@@ -98,14 +75,34 @@
 				H.dizziness = 0
 			if(H.confused)
 				H.confused = 0
-		else if(!H.null_rod_check() && H.stat == CONSCIOUS)
+		else if(!H.null_rod_check() && H.stat != DEAD)
 			var/distance = 0 + get_dist(T, get_turf(H))
 			var/falloff_distance = min((110) - distance * 10, 80)
 			var/sound_distance = falloff_distance * 0.5
 			var/targetbrainloss = H.getBrainLoss()
-			if(distance >= 4 && prob(falloff_distance * 0.5))
+			if(distance > 3 && prob(falloff_distance * 0.5))
 				H << "<span class='sevtug_small'>\"[text2ratvar(pick(mania_messages))]\"</span>"
-			H.playsound_local(T, hum, sound_distance, 1)
+			if(distance <= 1)
+				if(!H.Adjacent(src))
+					H << "<span class='sevtug'>\"[text2ratvar(pick(close_messages))]\"</span>"
+					H.playsound_local(T, hum, sound_distance, 1)
+				else if(!try_use_power(convert_cost))
+					visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
+					playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
+				else
+					H.playsound_local(T, hum, 80, 1)
+					if(!H.stat)
+						if(H.getBrainLoss() < 100)
+							H.adjustBrainLoss(20 * efficiency)
+							H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
+						else
+							H.Paralyse(3)
+					else if(is_eligible_servant(H))
+						H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
+						add_servant_of_ratvar(H)
+						H.Paralyse(5)
+			else
+				H.playsound_local(T, hum, sound_distance, 1)
 			switch(distance)
 				if(0 to 3)
 					if(prob(falloff_distance * 0.5))
@@ -113,31 +110,31 @@
 							H << "<span class='sevtug_small'>\"[text2ratvar(pick(mania_messages))]\"</span>"
 						else
 							H << "<span class='sevtug'>\"[text2ratvar(pick(compel_messages))]\"</span>"
-					if(targetbrainloss <= 50)
-						H.adjustBrainLoss((50 * efficiency) - targetbrainloss) //got too close had brain eaten
-					H.adjust_drugginess(Clamp(7 * efficiency, 0, 100 - H.druggy))
-					H.hallucination = min(H.hallucination + (7 * efficiency), 100)
-					H.dizziness = min(H.dizziness + (3 * efficiency), 45)
-					H.confused = min(H.confused + (3 * efficiency), 45)
-				if(4 to 5)
-					if(targetbrainloss <= 50)
-						H.adjustBrainLoss(1 * efficiency)
-					H.adjust_drugginess(Clamp(5 * efficiency, 0, 80 - H.druggy))
-					H.hallucination = min(H.hallucination + (5 * efficiency), 80)
-					H.dizziness = min(H.dizziness + (2 * efficiency), 30)
-					H.confused = min(H.confused + (2 * efficiency), 30)
-				if(6 to 7)
-					if(targetbrainloss <= 30)
-						H.adjustBrainLoss(1 * efficiency)
-					H.adjust_drugginess(Clamp(2 * efficiency, 0, 60 - H.druggy))
-					H.hallucination = min(H.hallucination + (2 * efficiency), 60)
-					H.dizziness = min(H.dizziness + (2 * efficiency), 15)
-					H.confused = min(H.confused + (2 * efficiency), 15)
-				if(8 to 9)
+					if(targetbrainloss <= 40)
+						H.adjustBrainLoss(3 * efficiency)
+					H.adjust_drugginess(Clamp(7 * efficiency, 0, 50 - H.druggy))
+					H.hallucination = min(H.hallucination + (7 * efficiency), 50)
+					H.dizziness = min(H.dizziness + (3 * efficiency), 20)
+					H.confused = min(H.confused + (3 * efficiency), 20)
+				if(3 to 5)
+					if(targetbrainloss <= 20)
+						H.adjustBrainLoss(2 * efficiency)
+					H.adjust_drugginess(Clamp(5 * efficiency, 0, 25 - H.druggy))
+					H.hallucination = min(H.hallucination + (5 * efficiency), 25)
+					H.dizziness = min(H.dizziness + (2 * efficiency), 10)
+					H.confused = min(H.confused + (2 * efficiency), 10)
+				if(5 to 6)
 					if(targetbrainloss <= 10)
 						H.adjustBrainLoss(1 * efficiency)
-					H.adjust_drugginess(Clamp(2 * efficiency, 0, 40 - H.druggy))
-					H.hallucination = min(H.hallucination + (2 * efficiency), 40)
-				if(10 to INFINITY)
 					H.adjust_drugginess(Clamp(2 * efficiency, 0, 20 - H.druggy))
 					H.hallucination = min(H.hallucination + (2 * efficiency), 20)
+					H.dizziness = min(H.dizziness + (2 * efficiency), 5)
+					H.confused = min(H.confused + (2 * efficiency), 5)
+				if(6 to 7)
+					if(targetbrainloss <= 5)
+						H.adjustBrainLoss(1 * efficiency)
+					H.adjust_drugginess(Clamp(2 * efficiency, 0, 10 - H.druggy))
+					H.hallucination = min(H.hallucination + (2 * efficiency), 10)
+				if(7 to INFINITY)
+					H.adjust_drugginess(Clamp(2 * efficiency, 0, 5 - H.druggy))
+					H.hallucination = min(H.hallucination + (2 * efficiency), 5)

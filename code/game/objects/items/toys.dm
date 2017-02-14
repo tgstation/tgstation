@@ -766,12 +766,8 @@
 
 		else if(istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!remove_item_from_storage(M))
-				M.temporarilyRemoveItemFromInventory(src, TRUE)
-			if(!M.put_in_hand(src, H.held_index))
-				qdel(src)
-				return
-			usr << "<span class='notice'>You pick up the deck.</span>"
+			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
+				usr << "<span class='notice'>You pick up the deck.</span>"
 
 	else
 		usr << "<span class='warning'>You can't reach it from here!</span>"

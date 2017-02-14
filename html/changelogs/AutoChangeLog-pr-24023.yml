@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Mania Motors are overall less effective and only affect people who can see the motor."
+  - tweak: "Mania Motors have slightly more health; 100, from 80."

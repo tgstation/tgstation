@@ -1,16 +1,18 @@
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/warning(msg)
-	world.log << "## WARNING: [msg]"
+	msg = "## WARNING: [msg]"
+	log_world(msg)
 
 //not an error or a warning, but worth to mention on the world log, just in case.
 #define NOTICE(MSG) notice(MSG)
 /proc/notice(msg)
-	world.log << "## NOTICE: [msg]"
+	msg = "## NOTICE: [msg]"
+	log_world(msg)
 
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
-#define testing(msg) world.log << "## TESTING: [msg]"; world << "## TESTING: [msg]"
+#define testing(msg) log_world("## TESTING: [msg]"); world << "## TESTING: [msg]"
 #else
 #define testing(msg)
 #endif
@@ -80,3 +82,30 @@
 /proc/log_chat(text)
 	if (config.log_pda)
 		diary << "\[[time_stamp()]]CHAT: [text]"
+
+//This replaces world.log so it displays both in DD and the file
+/proc/log_world(text)
+	if(config && config.log_runtimes)
+		world.log = runtime_diary
+		world.log << text
+	world.log = null
+	world.log << text
+
+// Helper procs for building detailed log lines
+
+/proc/datum_info_line(datum/D)
+	if(!istype(D))
+		return
+	if(!istype(D, /mob))
+		return "[D] ([D.type])"
+	var/mob/M = D
+	return "[M] ([M.ckey]) ([M.type])"
+
+/proc/atom_loc_line(atom/A)
+	if(!istype(A))
+		return
+	var/turf/T = get_turf(A)
+	if(istype(T))
+		return "[A.loc] [COORD(T)] ([A.loc.type])"
+	else if(A.loc)
+		return "[A.loc] (0, 0, 0) ([A.loc.type])"
