@@ -153,7 +153,7 @@
 	return 1
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise()
-	SSobj.start_processing(src)
+	SSmediumprocess.start_processing(src)
 	random_look(owner)
 
 	emp_timer = world.time + EMP_RANDOMISE_TIME

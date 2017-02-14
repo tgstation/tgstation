@@ -75,7 +75,7 @@
 	if(!objective_is_gateway)
 		ratvar_portal = FALSE
 	SSshuttle.registerHostileEnvironment(src)
-	SSobj.start_processing(src)
+	SSmediumprocess.start_processing(src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	if(!purpose_fulfilled)
