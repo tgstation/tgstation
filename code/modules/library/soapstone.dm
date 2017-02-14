@@ -222,7 +222,7 @@
 
 /obj/structure/chisel_message/examine(mob/user)
 	..()
-	user << "<span class='warning'>[hidden_message]</span>"
+	user << "<span class='warning'>[russian_html2text(hidden_message)]</span>"
 
 /obj/structure/chisel_message/Destroy()
 	if(persists)
