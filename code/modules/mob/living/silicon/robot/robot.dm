@@ -302,7 +302,6 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
-		stat("Station Time:", worldtime2text())
 		if(module)
 			for(var/datum/robot_energy_storage/st in module.storages)
 				stat("[st.name]:", "[st.energy]/[st.max_energy]")
