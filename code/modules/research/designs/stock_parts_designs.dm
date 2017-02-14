@@ -18,7 +18,7 @@
 	id = "bs_rped"
 	req_tech = list("engineering" = 4, "bluespace" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500) //hardcore
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500, MAT_URANIUM = 4500, MAT_PLASMA = 4500) //hardcore
 	build_path = /obj/item/weapon/storage/part_replacer/bluespace
 	category = list("Stock Parts")
 
@@ -130,7 +130,7 @@
 	id = "nano_mani"
 	req_tech = list("materials" = 3, "programming" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 150)
+	materials = list(MAT_METAL = 200, MAT_GOLD = 500)
 	build_path = /obj/item/weapon/stock_parts/manipulator/nano
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -141,7 +141,7 @@
 	id = "pico_mani"
 	req_tech = list("materials" = 5, "programming" = 4, "engineering" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 400, MAT_GOLD = 750, MAT_SILVER = 250)
 	build_path = /obj/item/weapon/stock_parts/manipulator/pico
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -152,7 +152,7 @@
 	id = "femto_mani"
 	req_tech = list("materials" = 7, "programming" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_DIAMOND = 30, MAT_TITANIUM = 30)
+	materials = list(MAT_METAL = 500, MAT_DIAMOND = 250, MAT_SILVER = 500, MAT_PLASMA = 250) //uses bluespace technology!
 	build_path = /obj/item/weapon/stock_parts/manipulator/femto
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -175,7 +175,7 @@
 	id = "high_micro_laser"
 	req_tech = list("magnets" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
+	materials = list(MAT_METAL = 150, MAT_GLASS = 100, GOLD = 300)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/high
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -186,7 +186,7 @@
 	id = "ultra_micro_laser"
 	req_tech = list("magnets" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 150, MAT_URANIUM = 60)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 300, MAT_URANIUM = 250, MAT_GOLD = 300)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/ultra
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -197,7 +197,7 @@
 	id = "quadultra_micro_laser"
 	req_tech = list("magnets" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_URANIUM = 100, MAT_DIAMOND = 60)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 400, MAT_URANIUM = 150, MAT_DIAMOND = 250, MAT_PLASMA = 250, MAT_GOLD = 400)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/quadultra
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -219,7 +219,7 @@
 	id = "adv_matter_bin"
 	req_tech = list("materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 150)
+	materials = list(MAT_METAL = 150, MAT_TITANIUM = 300, MAT_SILVER = 400)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/adv
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -230,7 +230,7 @@
 	id = "super_matter_bin"
 	req_tech = list("materials" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 200, MAT_GOLD = 250, MAT_TITANIUM = 300)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/super
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -241,7 +241,7 @@
 	id = "bluespace_matter_bin"
 	req_tech = list("materials" = 7, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 250, MAT_DIAMOND = 200)
+	materials = list(MAT_METAL = 250, MAT_DIAMOND = 250, MAT_PLASMA = 250, MAT_GOLD = 500)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/bluespace
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
