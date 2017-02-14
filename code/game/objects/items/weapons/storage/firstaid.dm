@@ -60,10 +60,10 @@
 	..()
 	if(empty) return
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 4)
 		new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/storage/pill_bottle/charcoal(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
@@ -138,21 +138,14 @@
 		var/mob/M = usr
 		if(!istype(over_object, /obj/screen) || !Adjacent(M))
 			return ..()
-		if(!M.restrained() && !M.stat && istype(over_object, /obj/screen/inventory/hand))
+		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!M.temporarilyRemoveItemFromInventory(src))
-				return
-			if(!M.put_in_hand(src,H.held_index))
-				qdel(src)
-				return
-			src.add_fingerprint(usr)
-			return
+			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
+				add_fingerprint(usr)
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
 			src.show_to(usr)
-			return
-	return
 
 /obj/item/weapon/storage/box/silver_sulf
 	name = "box of silver sulfadiazine patches"

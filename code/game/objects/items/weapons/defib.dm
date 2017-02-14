@@ -93,13 +93,9 @@
 /obj/item/weapon/defibrillator/MouseDrop(obj/over_object)
 	if(ismob(src.loc))
 		var/mob/M = src.loc
-		if(istype(over_object, /obj/screen/inventory/hand))
+		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!M.temporarilyRemoveItemFromInventory(src))
-				return
-			if(!M.put_in_hand(src, H.held_index))
-				qdel(src)	//wewie
-
+			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)

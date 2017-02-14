@@ -1,0 +1,7 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Fixed unequipping items while stunned"
+  - bugfix: "Fixed various things deleting when unequipped"
+  - bugfix: "Fixed tablet ID slots deleting cards"
+  - bugfix: "Fixed water mister nozzle getting stuck in hands"
