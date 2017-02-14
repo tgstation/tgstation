@@ -108,6 +108,7 @@
 
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
+		M.Weaken(1)
 		return 1
 
 	else if(issilicon(M))
