@@ -225,7 +225,7 @@ var/list/teleportlocs = list()
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
 
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
@@ -244,7 +244,7 @@ var/list/teleportlocs = list()
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
 
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 
 /area/process()
 	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
