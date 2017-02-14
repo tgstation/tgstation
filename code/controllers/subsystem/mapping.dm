@@ -16,6 +16,7 @@ var/datum/subsystem/mapping/SSmapping
 
 
 /datum/subsystem/mapping/Initialize(timeofday)
+	loadWorld()
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
@@ -68,3 +69,17 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
+
+/datum/subsystem/mapping/proc/loadWorld()
+	var/dmm_suite/loader = new
+	loader.load_map(file("_maps/map_files/TgStation/tgstation.2.1.3.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z2.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z3.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z4.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/lavaland.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z6.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z7.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z8.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z9.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z10.dmm"), no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/z11.dmm"), no_afterchange = TRUE)

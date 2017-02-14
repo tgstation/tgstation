@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
@@ -906,6 +906,7 @@
 #include "code\game\objects\structures\transit_tubes\transit_tube.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_construction.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_pod.dm"
+#include "code\game\turfs\basic.dm"
 #include "code\game\turfs\closed.dm"
 #include "code\game\turfs\open.dm"
 #include "code\game\turfs\turf.dm"

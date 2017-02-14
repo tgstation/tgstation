@@ -1,6 +1,6 @@
 /world
 	mob = /mob/new_player
-	turf = /turf/open/space
+	turf = /turf/basic
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
