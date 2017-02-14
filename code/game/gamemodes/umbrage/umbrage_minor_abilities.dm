@@ -6,18 +6,12 @@
 	var/psi_cost = 0
 	var/lucidity_cost = 0 //How much lucidity the ability costs to buy; if this is 0, it isn't listed on the catalog
 	var/blacklisted = 1 //If the ability can't be gained from the psi web
-	var/upgrade_level //The upgrade we currently have
-	var/list/possible_upgrades = list() //Any possible upgrades
-	var/toggle //If this ability is one that's toggled on and off
 
 /datum/action/innate/umbrage/Trigger()
 	var/successful_activation = 0
 	if(!IsAvailable())
 		return
-	if(!upgrade_level)
-		successful_activation = Activate()
-	else
-		successful_activation = UpgradedActivate(upgrade_level) //A different proc for upgraded uses
+	successful_activation = Activate()
 	if(successful_activation)
 		var/datum/umbrage/U = get_umbrage()
 		if(U)
@@ -34,17 +28,12 @@
 /datum/action/innate/umbrage/proc/get_umbrage()
 	return owner.mind.umbrage_psionics
 
-/datum/action/innate/umbrage/proc/UpgradedActivate(upgrade_level)
-	return 1
-
 
 //Devour Will: After a brief charge-up, equips a dark bead.
 //	- The dark bead disappears after three seconds of no use.
 //	- Attacking someone using the dark bead will drain their thoughts.
 //	- This knocks them out as well as fully recharging psi.
 //	- Finally, they will be made vulnerable to Veil Mind for five ticks.
-//Upgrades:
-//  - Stealth makes producing and using the dark bead silent.
 /datum/action/innate/umbrage/devour_will
 	name = "Devour Will"
 	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out."
@@ -53,26 +42,46 @@
 	psi_cost = 20
 	lucidity_cost = 0 //Baseline
 	blacklisted = 1
-	possible_upgrades = list("Stealth")
 	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
-	if(!usr.get_empty_held_indexes())
+	if(!usr || !usr.get_empty_held_indexes())
 		return
 	return ..()
 
 /datum/action/innate/umbrage/devour_will/Activate()
 	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class='velvet_bold'>pwga...</span><br>\
 	<span class='notice'>You begin forming a dark bead...</span>")
-	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 0)
+	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	if(!do_after(usr, 10, target = usr))
 		return
 	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class='velvet_bold'>...iejz</span><br>\
 	<span class='notice'>You form a dark bead in your hand.</span>")
-	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 0)
+	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
 	var/obj/item/weapon/dark_bead/B = new
 	usr.put_in_hands(B)
 	B.linked_ability = src
+	return 1
+
+
+//Simulacrum: Creates an illusionary copy of the umbrage that moves continually in the direction that they're facing.
+// - The illusion lasts for ten seconds and cannot be attacked.
+// - If someone examines the illusion, they will be able to tell that it's false.
+/datum/action/innate/umbrage/simulacrum
+	name = "Simulacrum"
+	desc = "Creates an illusion that closely resembles you. The illusion will run forward for ten seconds."
+	button_icon_state = "umbrage_simulacrum"
+	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	psi_cost = 30
+	lucidity_cost = 1
+	blacklisted = 0
+
+/datum/action/innate/umbrage/simulacrum/Activate()
+	usr.visible_message("<span class='warning'>[usr] suddenly splits into two!</span>", "<span class='velvet_bold'>zayaera</span><br>\
+	<span class='notice'>You create an illusion of yourself.</span>")
+	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
+	var/obj/effect/simulacrum/simulacrum = new(get_turf(usr))
+	simulacrum.mimic(usr)
 	return 1
 
 
@@ -88,14 +97,14 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/pass/IsAvailable()
-	if(!usr.get_empty_held_indexes())
+	if(!usr || !usr.get_empty_held_indexes())
 		return
 	return ..()
 
 /datum/action/innate/umbrage/pass/Activate()
 	usr.visible_message("<span class='warning'>[usr]'s arm contorts into tentacles!</span>", "<span class='velvet_bold'>ikna</span><br>\
 	<span class='notice'>You transform your arm into umbral tendrils.</span>")
-	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 0)
+	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	var/obj/item/weapon/umbral_tendrils/T = new
 	usr.put_in_hands(T)
 	T.linked_umbrage = get_umbrage()
@@ -134,7 +143,7 @@
 		return
 	usr.visible_message("<span class='boldwarning'>[usr] lets out a chilling cry!</span>", "<span class='velvet_bold'>...wjz oanra</span><br>\
 	<span class='notice'>You veil the minds of everyone nearby.</span>")
-	playsound(usr, 'sound/magic/veil_mind_scream.ogg', 100, 0)
+	playsound(usr, 'sound/magic/veil_mind_scream.ogg', 100, 1)
 	for(var/mob/living/L in view(3, usr))
 		if(L == usr)
 			continue
@@ -165,7 +174,7 @@
 	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Very loud."
 	button_icon_state = "umbrage_demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
-	psi_cost = 80 //big boom = big cost
+	psi_cost = 60 //big boom = big cost
 	lucidity_cost = 2
 	blacklisted = 0
 

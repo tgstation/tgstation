@@ -72,23 +72,8 @@
 	qdel(ability)
 	return 1
 
-/datum/umbrage/proc/upgrade_ability(ability_name, ability_upgrade, silent) //Upgrades an ability of a certain name with a specific upgrade.
-	var/datum/action/innate/umbrage/ability
-	for(var/datum/action/innate/umbrage/U in linked_mind.current.actions)
-		if(U.name == ability_name)
-			ability = U
-			break
-	if(!ability)
-		return
-	ability.upgrade_level = ability_upgrade
-	ability.name = "[ability.name] ([ability_upgrade])"
-	if(!silent)
-		linked_mind.current << "<span class='velvet_italic'>Your [ability_name] ability has gained the [ability_upgrade] upgrade.</span>"
-	return 1
-
 
 //Psi Web code goes below here
-
 /datum/umbrage/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = not_incapacitated_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

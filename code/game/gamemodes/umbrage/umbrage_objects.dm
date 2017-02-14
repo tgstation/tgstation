@@ -30,8 +30,9 @@
 		if(M == L)
 			user << "<span class='warning'>[L] must be given time to recover from their last draining.</span>"
 			return
+	animate(src, alpha = alpha, time = 0) //Stop the fading animation
 	eating = 1
-	user.visible_message("<span class='warning'>[user] grasps [L] and leans in close...</span>", "<span class='velvet_bold'>cera qo...</span><br>\
+	user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class='velvet_bold'>cera qo...</span><br>\
 	<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
 	L << "<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>"
 	L.Stun(3)
@@ -42,25 +43,23 @@
 		L.Weaken(3)
 		qdel(src)
 		return
-	user.visible_message("<span class='warning'>[user] rips something out of [L]'s face!</span>", "<span class='velvet_bold'>...aranupdejc</span><br>\
+	user.visible_message("<span class='warning'>[user] gently lowers [L] to the ground...</span>", "<span class='velvet_bold'>...aranupdejc</span><br>\
 	<span class='boldnotice'>You devour [L]'s will. Your psi has been fully restored.\n\
 	Additionally, you have gained one lucidity. Use it to purchase and upgrade abilities.</span><br>\
 	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>")
 	playsound(L, 'sound/magic/devour_will_victim.ogg', 50, 0)
 	U.psi = U.max_psi
 	U.lucidity++
-	playsound(L, "bodyfall", 50, 1)
 	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
 	L << sound('sound/magic/devour_will_end.ogg', volume = 75)
 	linked_ability.victims += L
 	L.Paralyse(30)
-	L.silent += 40
 	L.stuttering += 40
 	L.confused += 40
 	L.reagents.add_reagent("zombiepowder", 2) //Brief window of vulnerability to veiling
 	qdel(src)
 	#warn Change this dark bead recovery timer - 2 minutes, maybe?
-	spawn(10)
+	spawn(30) //I don't like to use a spawn here, but because of how it works I have to
 		if(linked_ability && L)
 			linked_ability.victims -= L
 			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
@@ -121,3 +120,34 @@
 /obj/structure/fluff/psionic_vortex/New()
 	..()
 	QDEL_IN(src, 520)
+
+
+//Simulacrum: Created from Simulacrum. Runs in a straight line until destroyed.
+/obj/effect/simulacrum
+	name = "an illusion!"
+	desc = "What are you hiding?!"
+	icon_state = "static"
+	density = 0
+
+/obj/effect/simulacrum/New()
+	..()
+	START_PROCESSING(SSfastprocess, src)
+	QDEL_IN(src, 100)
+
+/obj/effect/simulacrum/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/effect/simulacrum/process()
+	var/turf/T = get_step(src, dir)
+	Move(T)
+
+/obj/effect/simulacrum/proc/mimic(mob/living/L)
+	if(!L)
+		return
+	name = L.name
+	desc = "A lifelike illusion of [L]."
+	icon = L.icon
+	icon_state = L.icon_state
+	overlays = L.overlays
+	setDir(L.dir)
