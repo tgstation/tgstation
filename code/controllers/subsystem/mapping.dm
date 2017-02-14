@@ -82,3 +82,4 @@ var/datum/subsystem/mapping/SSmapping
 	loader.load_map(file("_maps/map_files/generic/z9.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z10.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z11.dmm"), no_afterchange = TRUE)
+	SortAreas()
