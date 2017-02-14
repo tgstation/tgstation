@@ -74,7 +74,7 @@
 		var/turf/T = get_turf(src)
 		var/area/A = T.loc
 		var/singulod = FALSE
-		if(istype(A, /area/area))
+		if(istype(A, /area/arena))
 			user << "<span class='userdanger'>The bag of holding detonates from having its bluespace fields inhibited by the local area!</span>"
 			explosion(T, 2, 4, 8, 16)
 			. = ..()
