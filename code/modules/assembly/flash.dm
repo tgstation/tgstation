@@ -90,7 +90,7 @@
 		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
-			M.Stun(1)
+			M.Weaken(1)
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			user << "<span class='danger'>You blind [M] with the flash!</span>"
 			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
@@ -108,7 +108,6 @@
 
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
-		M.Weaken(1)
 		return 1
 
 	else if(issilicon(M))
