@@ -76,7 +76,6 @@
 
 /datum/hud/ghost/show_hud()
 	var/mob/dead/observer/G = mymob
-	mymob.client.screen = list(lighting_backdrop)
 	for(var/thing in plane_masters)
 		mymob.client.screen += plane_masters[thing]
 	create_parallax()

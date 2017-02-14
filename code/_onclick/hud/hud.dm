@@ -52,7 +52,6 @@
 	var/obj/screen/internals
 
 	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
-	var/obj/screen/lighting_backdrop/lighting_backdrop
 
 /datum/hud/New(mob/owner , ui_style = 'icons/mob/screen_midnight.dmi')
 	mymob = owner
@@ -67,11 +66,6 @@
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
-
-	var/size = world.view
-	if (owner.client)
-		size = owner.client.view
-	lighting_backdrop = new(size)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -136,8 +130,6 @@
 		screenoverlays.Cut()
 	mymob = null
 
-	qdel(lighting_backdrop)
-	lighting_backdrop = null
 	return ..()
 
 /mob/proc/create_mob_hud()
@@ -212,7 +204,6 @@
 	for(var/thing in plane_masters)
 		screenmob.client.screen += plane_masters[thing]
 
-	screenmob.client.screen += lighting_backdrop
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	mymob.update_action_buttons(1)

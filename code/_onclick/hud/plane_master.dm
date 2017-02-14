@@ -24,3 +24,8 @@
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = 0
+
+// HAHAHA FUCK YOU MRPERSON
+/obj/screen/plane_master/lighting/New()
+	..()
+	overlays.Cut()
