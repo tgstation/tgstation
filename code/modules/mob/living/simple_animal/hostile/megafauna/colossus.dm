@@ -716,7 +716,7 @@ Difficulty: Very Hard
 	..()
 	if(isanimal(loc))
 		holder_animal = loc
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/structure/closet/stasis/Entered(atom/A)
 	if(isliving(A) && holder_animal)
@@ -730,7 +730,7 @@ Difficulty: Very Hard
 		holder_animal.verbs -= /mob/living/verb/pulled
 
 /obj/structure/closet/stasis/dump_contents(var/kill = 1)
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	for(var/mob/living/L in src)
 		L.disabilities &= ~MUTE
 		L.status_flags &= ~GODMODE

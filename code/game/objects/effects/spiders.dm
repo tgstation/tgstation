@@ -60,7 +60,7 @@
 /obj/structure/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
 	pixel_y = rand(3,-3)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	. = ..()
 
 /obj/structure/spider/eggcluster/process()
@@ -95,7 +95,7 @@
 /obj/structure/spider/spiderling/New()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	. = ..()
 
 /obj/structure/spider/spiderling/hunter

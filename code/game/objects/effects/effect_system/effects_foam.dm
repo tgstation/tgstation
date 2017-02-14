@@ -34,16 +34,11 @@
 /obj/effect/particle_effect/foam/New(loc)
 	..(loc)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
-	START_PROCESSING(SSfastprocess, src)
+	SSfast_process.start_processing(src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
-/obj/effect/particle_effect/foam/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
-
-
 /obj/effect/particle_effect/foam/proc/kill_foam()
-	STOP_PROCESSING(SSfastprocess, src)
+	SSfastprocess.stop_processing(src)
 	switch(metal)
 		if(1)
 			new /obj/structure/foamedmetal(src.loc)

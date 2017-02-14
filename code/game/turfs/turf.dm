@@ -37,7 +37,7 @@
 
 	levelupdate()
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
@@ -190,8 +190,6 @@
 		return src
 	var/old_blueprint_data = blueprint_data
 
-	STOP_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
-
 	var/list/old_checkers = proximity_checkers
 	var/old_ex_level = explosion_level
 	var/old_ex_id = explosion_id
@@ -261,7 +259,7 @@
 
 	air.temperature /= turf_count
 	air.holder = src
-	START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
+	SSair.start_processing(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(baseturf)
@@ -394,9 +392,9 @@
 	T0.ChangeTurf(turf_type)
 
 	T0.redraw_lighting()
-	STOP_ATMOS_PROCESSING(T0, SSAIR_ACTIVETURFS)
+	SSair.stop_processing(T0, SSAIR_ACTIVETURFS)
 	T0.CalculateAdjacentTurfs()
-	ADD_TO_ACTIVE_BLOCK_CHANGES(T0, 1)
+	SSair.start_processing(T0, SSAIR_ACTIVETURFS, TRUE)
 
 /turf/proc/is_transition_turf()
 	return

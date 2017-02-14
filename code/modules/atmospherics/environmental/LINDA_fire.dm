@@ -58,7 +58,7 @@
 
 /obj/effect/hotspot/New()
 	..()
-	START_ATMOS_PROCESSING(src, SSAIR_HOTSPOTS)
+	SSair.start_processing(src, SSAIR_HOTSPOTS)
 	perform_exposure()
 	setDir(pick(cardinal))
 	air_update_turf()
@@ -148,7 +148,6 @@
 
 /obj/effect/hotspot/Destroy()
 	SetLuminosity(0)
-	STOP_ATMOS_PROCESSING(src, SSAIR_HOTSPOTS)
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null

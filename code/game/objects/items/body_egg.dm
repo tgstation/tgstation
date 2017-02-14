@@ -18,12 +18,12 @@
 /obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
 	..()
 	owner.status_flags |= XENO_HOST
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
 
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	if(owner)
 		owner.status_flags &= ~(XENO_HOST)
 		owner.med_hud_set_status()

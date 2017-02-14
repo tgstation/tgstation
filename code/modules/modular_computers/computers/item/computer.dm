@@ -47,7 +47,7 @@
 
 
 /obj/item/device/modular_computer/New()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	update_icon()
 	if(!physical)
 		physical = src
@@ -58,7 +58,6 @@
 
 /obj/item/device/modular_computer/Destroy()
 	kill_program(forced = TRUE)
-	STOP_PROCESSING(SSobj, src)
 	for(var/H in all_components)
 		var/obj/item/weapon/computer_hardware/CH = all_components[H]
 		if(CH.holder == src)

@@ -149,10 +149,6 @@
 		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
 		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>"
 
-/obj/structure/destructible/clockwork/powered/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
-
 /obj/structure/destructible/clockwork/powered/process()
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
@@ -176,15 +172,15 @@
 	if(active)
 		icon_state = active_icon
 		if(fast_process)
-			START_PROCESSING(SSfastprocess, src)
+			SSfastprocess.start_processing(src)
 		else
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 	else
 		icon_state = inactive_icon
 		if(fast_process)
-			STOP_PROCESSING(SSfastprocess, src)
+			SSfastprocess.stop_processing(src)
 		else
-			STOP_PROCESSING(SSobj, src)
+			SSobj.stop_processing(src)
 	return TRUE
 
 /obj/structure/destructible/clockwork/powered/proc/forced_disable(bad_effects)

@@ -343,7 +343,7 @@
 		ratio = Ceiling(ratio*4) * 25
 
 		if(smooth)
-			queue_smooth(src)
+			QUEUE_SMOOTH(src)
 
 		overlays -= crack_overlay
 		if(ratio > 75)

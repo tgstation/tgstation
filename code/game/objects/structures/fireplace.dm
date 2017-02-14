@@ -18,11 +18,7 @@
 
 /obj/structure/fireplace/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/fireplace/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	SSobj.start_processing(src)
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)

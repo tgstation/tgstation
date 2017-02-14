@@ -47,7 +47,7 @@
 		active_hotspot = null
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/T in atmos_adjacent_turfs)
-		START_ATMOS_PROCESSING(T, SSAIR_ACTIVETURFS)
+		SSair.start_processing(T, SSAIR_ACTIVETURFS)
 	return ..()
 
 /////////////////GAS MIXTURE PROCS///////////////////
@@ -177,7 +177,7 @@
 							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 			else
 				if(air.compare(enemy_tile.air)) //compare if
-					START_ATMOS_PROCESSING(enemy_tile, SSAIR_ACTIVETURFS) //excite enemy
+					SSair.start_processing(enemy_tile, SSAIR_ACTIVETURFS) //excite enemy
 					if(our_excited_group)
 						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
@@ -216,7 +216,7 @@
 				remove = 0
 
 	if((atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2) || (!our_excited_group && remove == 1))
-		STOP_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
+		SSair.stop_processing(src, SSAIR_ACTIVETURFS)
 
 /turf/open/proc/share_air(turf/open/T, fire_count, adjacent_turfs_length)
 	if(T.current_cycle < fire_count)
@@ -231,7 +231,7 @@
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
-	START_ATMOS_PROCESSING(src, SSAIR_HIGHPRESSURE)
+	SSair.start_processing(src, SSAIR_HIGHPRESSURE)
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference
@@ -388,7 +388,7 @@
 		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 	else //Solid but neighbor is open
 		temperature_share_open_to_solid(other)
-	START_ATMOS_PROCESSING(src, SSAIR_ACTIVETURFS)
+	SSair.start_processing(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
@@ -416,7 +416,7 @@
 /turf/proc/finish_superconduction(temp = temperature)
 	//Make sure still hot enough to continue conducting heat
 	if(temp < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
-		STOP_ATMOS_PROCESSING(src, SSAIR_SUPERCONDUCTIVITY)
+		SSair.stop_processing(src, SSAIR_SUPERCONDUCTIVITY)
 		return 0
 
 /turf/open/finish_superconduction()
@@ -429,7 +429,7 @@
 	if(!thermal_conductivity)
 		return 0
 
-	START_ATMOS_PROCESSING(src, SSAIR_SUPERCONDUCTIVITY)
+	SSair.start_processing(src, SSAIR_SUPERCONDUCTIVITY)
 	return 1
 
 /turf/open/consider_superconductivity(starting)

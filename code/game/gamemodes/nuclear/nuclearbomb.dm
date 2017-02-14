@@ -47,7 +47,7 @@ var/bomb_set
 	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
-	STOP_PROCESSING(SSobj, core)
+	SSobj.stop_processing(core)
 	update_icon()
 	poi_list |= src
 	previous_level = get_security_level()
@@ -135,7 +135,7 @@ var/bomb_set
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
-					START_PROCESSING(SSobj, core)
+					SSobj.start_processing(core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -158,7 +158,7 @@ var/bomb_set
 						if(M.use(20))
 							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
 							deconstruction_state = NUKESTATE_PANEL_REMOVED
-							STOP_PROCESSING(SSobj, core)
+							SSobj.stop_processing(core)
 							update_icon()
 						else
 							user << "<span class='warning'>You need more metal to do that!</span>"

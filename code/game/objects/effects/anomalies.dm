@@ -20,7 +20,7 @@
 /obj/effect/anomaly/New()
 	..()
 	poi_list |= src
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	impact_area = get_area(src)
 
 	SetLuminosity(initial(luminosity))
@@ -47,7 +47,6 @@
 
 /obj/effect/anomaly/Destroy()
 	poi_list.Remove(src)
-	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
 	return ..()
 

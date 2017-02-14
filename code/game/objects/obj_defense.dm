@@ -154,7 +154,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	if(!(resistance_flags & UNACIDABLE) && acid_volume)
 
 		if(!acid_level)
-			START_PROCESSING(SSacid, src)
+			SSacid.start_processing(src)
 			add_overlay(acid_overlay, 1)
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
@@ -194,7 +194,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 		take_damage(Clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
-		START_PROCESSING(SSfire_burning, src)
+		SSfire_burning.start_processing(src)
 		add_overlay(fire_overlay)
 		return 1
 

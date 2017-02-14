@@ -131,9 +131,9 @@ Class Procs:
 	..()
 	machines += src
 	if(!speed_process)
-		START_PROCESSING(SSmachine, src)
+		SSmachine.start_processing(src)
 	else
-		START_PROCESSING(SSfastprocess, src)
+		SSfastprocess.start_processing(src)
 	power_change()
 
 /obj/machinery/Destroy()

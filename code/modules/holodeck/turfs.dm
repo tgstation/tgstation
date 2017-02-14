@@ -94,7 +94,7 @@
 	if(!..())
 		return 0
 	if(intact)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 
 /turf/open/floor/holofloor/snow
 	name = "snow"

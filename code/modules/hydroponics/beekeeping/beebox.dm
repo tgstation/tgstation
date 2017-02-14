@@ -39,11 +39,9 @@
 
 /obj/structure/beebox/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
+	SSobj.start_processing(src)
 
 /obj/structure/beebox/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	bees.Cut()
 	bees = null
 	honeycombs.Cut()

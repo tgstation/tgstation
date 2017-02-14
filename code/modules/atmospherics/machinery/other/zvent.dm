@@ -11,11 +11,7 @@
 
 /obj/machinery/zvent/New()
 	..()
-	START_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
-
-/obj/machinery/zvent/Destroy()
-	STOP_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
-	return ..()
+	SSair.start_processing(src, SSAIR_ATMOSMACHINERY)
 
 /obj/machinery/zvent/process_atmos()
 

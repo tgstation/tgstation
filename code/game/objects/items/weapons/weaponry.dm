@@ -77,11 +77,10 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/claymore/highlander/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	highlander_claymores++
 
 /obj/item/weapon/claymore/highlander/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	highlander_claymores--
 	if(nuke_disk)
 		nuke_disk.forceMove(get_turf(src))

@@ -39,6 +39,8 @@
 #define SMOOTH_DIAGONAL	4	//if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER	8	//atom will smooth with the borders of the map
 
+#define QUEUE_SMOOTH(X) SSicon_smooth.start_processing(X)
+
 #define NULLTURF_BORDER 123456789
 
 #define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
@@ -301,14 +303,14 @@
 			if(now)
 				T.smooth_icon()
 			else
-				SSicon_smooth.start_processing(T)
+				QUEUE_SMOOTH(T)
 		for(var/R in T)
 			var/atom/A = R
 			if(A.smooth)
 				if(now)
 					A.smooth_icon()
 				else
-					SSicon_smooth.start_processing(A)
+					QUEUE_SMOOTH(A)
 
 /atom/proc/clear_smooth_overlays()
 	overlays -= top_left_corner
@@ -375,7 +377,7 @@
 	for(var/V in orange(1,A))
 		var/atom/T = V
 		if(T.smooth)
-			SSicon_smooth.start_processing(T)
+			QUEUE_SMOOTH(T)
 
 //Example smooth wall
 /turf/closed/wall/smooth

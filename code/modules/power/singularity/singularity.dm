@@ -34,7 +34,7 @@
 
 	src.energy = starting_energy
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -43,7 +43,6 @@
 	return
 
 /obj/singularity/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	return ..()
 

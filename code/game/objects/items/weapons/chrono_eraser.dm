@@ -160,6 +160,7 @@
 	var/RPpos = null
 
 /obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/weapon/gun/energy/chrono_gun/G)
+	..()
 	if(target && isliving(target) && G)
 		target.loc = src
 		src.captured = target
@@ -176,7 +177,7 @@
 		update_icon()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))

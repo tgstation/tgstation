@@ -106,7 +106,7 @@
 /obj/item/device/flightpack/New()
 	ion_trail = new
 	ion_trail.set_up(src)
-	START_PROCESSING(SSflightpacks, src)
+	SSflightpacks.start_processing(src)
 	..()
 	update_parts()
 
@@ -157,7 +157,6 @@
 	qdel(part_cap)
 	qdel(part_laser)
 	qdel(part_bin)
-	STOP_PROCESSING(SSflightpacks, src)
 	part_manip = null
 	part_scan = null
 	part_cap = null

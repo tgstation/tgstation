@@ -67,7 +67,6 @@
 	if(countdown)
 		qdel(countdown)
 		countdown = null
-	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
 	for(var/A in ai_list)
@@ -80,7 +79,7 @@
 	detonation_timer = world.time + default_timer
 	timing = TRUE
 	countdown.start()
-	START_PROCESSING(SSfastprocess, src)
+	SSfastprocess.start_processing(src)
 	SSshuttle.registerHostileEnvironment(src)
 	SSmapping.add_nuke_threat(src) //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
@@ -95,8 +94,7 @@
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
 	if(!timing)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+		return PROCESS_KILL
 	var/sec_left = seconds_remaining()
 	if(sec_left <= 0)
 		timing = FALSE

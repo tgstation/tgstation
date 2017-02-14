@@ -23,11 +23,7 @@
 
 /obj/structure/transit_tube/station/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/transit_tube/station/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
 	return 1

@@ -257,12 +257,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork/scripture_reqs/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	process()
-
-/obj/screen/alert/clockwork/scripture_reqs/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/screen/alert/clockwork/scripture_reqs/process()
 	if(clockwork_gateway_activated)

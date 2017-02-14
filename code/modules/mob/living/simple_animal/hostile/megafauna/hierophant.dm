@@ -455,7 +455,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/wall/New(loc, new_caster)
 	..()
 	queue_smooth_neighbors(src)
-	queue_smooth(src)
+	QUEUE_SMOOTH(src)
 
 /obj/effect/overlay/temp/hierophant/wall/Destroy()
 	queue_smooth_neighbors(src)

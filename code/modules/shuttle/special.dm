@@ -67,11 +67,7 @@
 
 /obj/structure/table/abductor/wabbajack/New()
 	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/table/abductor/wabbajack/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	SSobj.start_processing(src)
 
 /obj/structure/table/abductor/wabbajack/process()
 	var/area = orange(4, src)

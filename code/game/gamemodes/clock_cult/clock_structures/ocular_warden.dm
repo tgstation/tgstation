@@ -19,11 +19,7 @@
 
 /obj/structure/destructible/clockwork/ocular_warden/New()
 	..()
-	START_PROCESSING(SSfastprocess, src)
-
-/obj/structure/destructible/clockwork/ocular_warden/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
+	SSfastprocess.start_processing(src)
 
 /obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
 	..()

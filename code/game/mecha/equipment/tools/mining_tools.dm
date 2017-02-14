@@ -112,7 +112,8 @@
 	var/scanning = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
-	START_PROCESSING(SSobj, src)
+	..()
+	SSobj.start_processing(src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
 	..()
@@ -128,7 +129,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
-		STOP_PROCESSING(SSobj, src)
+		. = PROCESS_KILL
 		qdel(src)
 	if(scanning)
 		return

@@ -21,7 +21,7 @@
 var/next_mob_id = 0
 /mob/New()
 	tag = "mob_[next_mob_id++]"
-	START_PROCESSING(SSmob, src)
+	SSmob.start_processing(src)
 	if(stat == DEAD)
 		dead_mob_list += src
 	else

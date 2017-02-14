@@ -241,7 +241,7 @@
 	else
 		smooth = SMOOTH_TRUE
 		queue_smooth_neighbors(src)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 		icon_state = "r_wall"
 
 /turf/closed/wall/r_wall/singularity_pull(S, current_size)

@@ -45,7 +45,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -54,7 +54,7 @@
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	last_holder 	= null
 	new_holder 		= null
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	..()
 
 /obj/item/weapon/greentext/process()

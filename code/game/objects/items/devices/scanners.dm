@@ -25,7 +25,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
@@ -34,8 +34,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		STOP_PROCESSING(SSobj, src)
-		return null
+		return PROCESS_KILL
 	scan()
 
 /obj/item/device/t_scanner/proc/scan()

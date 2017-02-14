@@ -17,11 +17,7 @@
 
 /obj/item/weapon/minigunpack/New()
 	gun = new(src)
-	START_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/minigunpack/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	..()
 
 /obj/item/weapon/minigunpack/process()

@@ -36,10 +36,10 @@
 	update_icon()
 	float(linked_minds.len)
 	if(linked_minds.len)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 		SetLuminosity(lit_luminosity)
 	else
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 		SetLuminosity(0)
 
 /obj/structure/life_candle/update_icon()
@@ -57,8 +57,7 @@
 
 /obj/structure/life_candle/process()
 	if(!linked_minds.len)
-		STOP_PROCESSING(SSobj, src)
-		return
+		return PROCESS_KILL
 
 	for(var/m in linked_minds)
 		var/datum/mind/mind = m

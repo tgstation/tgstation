@@ -47,7 +47,7 @@
 		if(show_message)
 			usr.visible_message(show_message)
 		SetLuminosity(CANDLE_LUMINOSITY)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 		update_icon()
 
 

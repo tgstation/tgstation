@@ -54,14 +54,12 @@
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
 
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
-
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src

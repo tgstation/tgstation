@@ -47,11 +47,11 @@
 
 /obj/machinery/air_sensor/Initialize()
 	..()
-	START_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
+	SSmaching.stop_processing(src)
+	SSair.start_processing(src, SSAIR_ATMOSMACHINERY)
 	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
-	STOP_ATMOS_PROCESSING(src, SSAIR_ATMOSMACHINERY)
 	if(SSradio)
 		SSradio.remove_object(src, frequency)
 	return ..()

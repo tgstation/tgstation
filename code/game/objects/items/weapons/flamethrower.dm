@@ -35,8 +35,7 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		STOP_PROCESSING(SSobj, src)
-		return null
+		return PROCESS_KILL
 	var/turf/location = loc
 	if(istype(location, /mob/))
 		var/mob/M = location
@@ -148,7 +147,7 @@
 			return
 		lit = !lit
 		if(lit)
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 			if(!warned_admins)
 				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
 				warned_admins = 1
@@ -209,7 +208,7 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	START_ATMOS_PROCESSING(target, SSAIR_ACTIVETURFS)
+	SSair.start_processing(target, SSAIR_ACTIVETURFS)
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()

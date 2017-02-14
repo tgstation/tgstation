@@ -579,7 +579,7 @@
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
 		if(recharge_rate)
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 		if(current_charges <= 0)
 			owner.visible_message("[owner]'s shield overloads!")
 			shield_state = "broken"
@@ -587,18 +587,13 @@
 		return 1
 	return 0
 
-
-/obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	if(world.time > recharge_cooldown && current_charges < max_charges)
 		current_charges = Clamp((current_charges + recharge_rate), 0, max_charges)
 		playsound(loc, 'sound/magic/Charge.ogg', 50, 1)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
-			STOP_PROCESSING(SSobj, src)
+			. = PROCESS_KILL
 		shield_state = "[shield_on]"
 		if(ishuman(loc))
 			var/mob/living/carbon/human/C = loc

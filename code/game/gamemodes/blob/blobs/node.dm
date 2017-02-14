@@ -12,7 +12,7 @@
 
 /obj/structure/blob/node/New(loc)
 	blob_nodes += src
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	..()
 
 /obj/structure/blob/node/scannerreport()
@@ -30,7 +30,6 @@
 
 /obj/structure/blob/node/Destroy()
 	blob_nodes -= src
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/blob/node/Life()

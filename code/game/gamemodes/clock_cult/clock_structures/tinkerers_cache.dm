@@ -15,7 +15,7 @@
 
 /obj/structure/destructible/clockwork/cache/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	clockwork_caches++
 	update_slab_info()
 	SetLuminosity(2,1)
@@ -23,7 +23,6 @@
 /obj/structure/destructible/clockwork/cache/Destroy()
 	clockwork_caches--
 	update_slab_info()
-	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)
 		linkedwall.linkedcache = null
 		linkedwall = null

@@ -13,7 +13,7 @@
 	if(cooldown == initial(cooldown))
 		home.Retrieve(imp_in,1)
 		cooldown = 0
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
 		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
 
@@ -21,7 +21,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			STOP_PROCESSING(SSobj, src)
+			return PROCESS_KILL
 
 /obj/item/weapon/implant/abductor/implant(mob/living/target, mob/user)
 	if(..())

@@ -119,7 +119,7 @@
 	cut_overlays()
 	operating = 0
 	stat |= BROKEN
-	STOP_PROCESSING(SSmachine, src)
+	SSmachine.stop_processing(src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -129,7 +129,6 @@
 	qdel(spark_system)
 	qdel(countdown)
 	countdown = null
-	STOP_PROCESSING(SSmachine, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -178,7 +177,7 @@
 		countdown.start()
 
 		SetLuminosity(3)
-		START_PROCESSING(SSmachine, src)
+		SSmachine.start_processing(src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in ticker.mode.gangs)

@@ -73,7 +73,7 @@
 
 	//resmooth if need be.
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 
 	//rotate the pixel offsets too.
 	if (pixel_x || pixel_y)
