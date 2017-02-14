@@ -994,7 +994,7 @@
 
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-		if((user.zone_selected) == "mouth" && (((target.a_intent == INTENT_HELP) && (!target.get_active_held_item())) || (target.restrained())))
+	if((user.zone_selected) == "mouth" && (((target.a_intent == INTENT_HELP) && (!target.get_active_held_item())) || (target.restrained())))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
 			"<span class='notice'> You slap [target] in the face! </span>",\
