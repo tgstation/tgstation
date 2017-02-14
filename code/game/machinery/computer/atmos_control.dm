@@ -47,7 +47,6 @@
 
 /obj/machinery/air_sensor/Initialize()
 	..()
-	SSmaching.stop_processing(src)
 	SSair.start_processing(src, SSAIR_ATMOSMACHINERY)
 	set_frequency(frequency)
 

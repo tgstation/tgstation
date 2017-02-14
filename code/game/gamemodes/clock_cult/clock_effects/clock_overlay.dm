@@ -29,7 +29,7 @@
 /obj/effect/clockwork/overlay/wall/New()
 	..()
 	queue_smooth_neighbors(src)
-	addtimer(CALLBACK(SSicon_smooth, /datum/subsystem/processing/icon_smoothing/.proc/start_processing, src), 1)
+	addtimer(CALLBACK(SSicon_smooth, /datum/subsystem/processing/icon_smooth/.proc/start_processing, src), 1)
 
 /obj/effect/clockwork/overlay/wall/Destroy()
 	queue_smooth_neighbors(src)

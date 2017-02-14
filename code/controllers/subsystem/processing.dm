@@ -60,7 +60,7 @@
 	processing_list = predecessor.processing_list
 	run_cache = predecessor.run_cache
 
-/datum/var/processors
+/datum/var/list/processors
 
 /datum/Destroy()
 	. = ..()

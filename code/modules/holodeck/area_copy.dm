@@ -118,7 +118,7 @@
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)
 			T1.CalculateAdjacentTurfs()
-			ADD_TO_ACTIVE_BLOCK_CHANGES(T1, 1)
+			SSair.start_processing(T1, SSAIR_ACTIVETURFS, TRUE)
 
 
 	return copiedobjs
