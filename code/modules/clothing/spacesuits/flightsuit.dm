@@ -100,6 +100,7 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
+	var/atom/movable/dragging_through = FALSE
 
 
 //Start/Stop processing the item to use momentum and flight mechanics.
@@ -225,7 +226,10 @@
 /obj/item/device/flightpack/proc/wearer_movement(dir)
 	if(!flight)
 		return
+	if(wearer.pulling)
+		dragging_through = wearer.pulling
 	var/momentum_increment = momentum_gain
+	var/turf/old = get_turf(wearer)
 	if(boost)
 		momentum_increment = boost_power
 	if(brake)
@@ -241,11 +245,16 @@
 			adjust_momentum(momentum_increment, 0)
 		if(WEST)
 			adjust_momentum(-momentum_increment, 0)
+	if(dragging_through && old)
+		dragging_through.forceMove(old)
+		wearer.pulling = dragging_through
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
 	if(!flight)
 		return FALSE
+	if(wearer.pulling)
+		dragging_through = wearer.pulling
 	var/drift_dir_x = 0
 	var/drift_dir_y = 0
 	if(momentum_x > 0)
@@ -263,17 +272,15 @@
 			if(!wearer.canmove)
 				losecontrol()
 			momentum_decay()
-			var/atom/movable/pull = wearer.pulling
 			for(var/i in 1 to momentum_speed)
 				var/turf/oldturf = get_turf(wearer)
 				if(momentum_speed_x >= i)
 					step(wearer, drift_dir_x)
 				if(momentum_speed_y >= i)
 					step(wearer, drift_dir_y)
-				if(pull)
-					if(oldturf)
-						pull.forceMove(oldturf)
-						wearer.pulling = pull
+				if(dragging_through && oldturf)
+					dragging_through.forceMove(oldturf)
+					wearer.pulling = dragging_through
 				sleep(1)
 
 //Make the wearer lose some momentum.
@@ -535,7 +542,6 @@
 	wearer.forceMove(get_turf(door))
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
-
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
 	target.hitby(wearer)
 	target.take_damage(60, BRUTE, "melee", 1)
@@ -558,12 +564,7 @@
 		spawn()
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
-		var/turf/oldturf = get_turf(wearer)
-		var/atom/movable/pull = wearer.pulling
 		wearer.forceMove(get_turf(A))
-		if(pull)
-			pull.forceMove(oldturf)
-			wearer.pulling = pull
 	return pass
 
 
