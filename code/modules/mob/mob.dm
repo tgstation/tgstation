@@ -669,6 +669,9 @@ to_chat(usr, t
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
 			canmove = 0
+	if(!lying && lying_prev)
+		if(client)
+			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 	return canmove
 
