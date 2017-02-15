@@ -410,16 +410,12 @@
 	G.name = "[master]'s mythical toolbox of three powers"
 	qdel(src)
 
-
-
-
-
-
 /obj/item/weapon/storage/toolbox/artistic/his_grace/gold
 	name = "mythical toolbox of three powers"
 	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
 	icon_state = "gold"
 	item_state = "toolbox_gold"
+	hinges = "triple_hinge"
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/gold/process()
 	. = ..()
