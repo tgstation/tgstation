@@ -214,5 +214,5 @@
 //when we enter dmm_suite.load_map
 /datum/subsystem/proc/StartLoadingMap()
 
-//when we exit dmm_suit.load_map
+//when we exit dmm_suite.load_map
 /datum/subsystem/proc/StopLoadingMap()
