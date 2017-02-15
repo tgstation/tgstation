@@ -199,9 +199,12 @@
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	var/awakened = 0
+	var/ascended = 0
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/victims = 0
+	var/victims_needed = 20 //amount of victims needed to ascend
 	var/list/warning_messages = list("peckish", "hungry", "famished", "starving", "consume") //Messages that have NOT been shown
+
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/Destroy()
 	for(var/mob/living/L in src)
@@ -295,7 +298,7 @@
 					playsound(L, 'sound/effects/splat.ogg', 50, 1)
 					playsound(L, 'sound/misc/desceration-01.ogg', 50, 1)
 					L.adjustBruteLoss(force)
-					return //Only one at a tome
+					return //Only one at a time
 				else
 					consume(L)
 					return
@@ -325,7 +328,7 @@
 		START_PROCESSING(SSprocessing, src)
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/proc/drowse() //Falls asleep, spitting out all victims and resetting to zero.
-	if(!awakened)
+	if(!awakened || ascended)
 		return
 	visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still... but it still lurks in its sleep.</span>")
 	name = initial(name)
@@ -355,6 +358,8 @@
 	meal.forceMove(src)
 	adjust_bloodthirst(-(bloodthirst - victims)) //Never fully sated, and it starts off higher as it eats
 	victims++
+	if(victims >= victims_needed)
+		ascend()
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/proc/change_phases()
 	switch(bloodthirst)
@@ -392,3 +397,30 @@
 				spawn(400)
 					if(src)
 						warning_messages += "starving"
+
+/obj/item/weapon/storage/toolbox/artistic/his_grace/proc/ascend()
+	var/obj/item/weapon/storage/toolbox/artistic/his_grace/gold/G = new
+	master.visible_message("<span class='boldwarning'>[src] trembles and quakes!</span>", "<span class='userdanger'>[src] is achieving higher being!</span>")
+	if(ishuman(loc))
+		var/mob/living/carbon/human/master = loc
+		master.put_in_hands(G)
+	else
+		var/turf/T = get_turf(src)
+		G.loc = T
+	G.name = "[master]'s mythical toolbox of three powers"
+	qdel(src)
+
+
+
+
+
+
+/obj/item/weapon/storage/toolbox/artistic/his_grace/gold
+	name = "mythical toolbox of three powers"
+	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
+	icon_state = "gold"
+	item_state = "toolbox_gold"
+
+/obj/item/weapon/storage/toolbox/artistic/his_grace/gold/process()
+	. = ..()
+	force = force + 10
