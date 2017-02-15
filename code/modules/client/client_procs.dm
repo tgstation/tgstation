@@ -95,6 +95,8 @@
 			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
+		if("chat")
+			return chatOutput.Topic(href, href_list)
 
 	..()	//redirect to hsrc.Topic()
 
@@ -144,6 +146,7 @@ var/next_external_rsc = 0
 
 
 /client/New(TopicData)
+	chatOutput = new(src)
 	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
@@ -195,6 +198,7 @@ var/next_external_rsc = 0
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
+	chatOutput.start()
 
 	connection_time = world.time
 	connection_realtime = world.realtime
