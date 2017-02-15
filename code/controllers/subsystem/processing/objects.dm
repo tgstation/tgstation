@@ -6,7 +6,7 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects
 	name = "Objects"
-	init_order = 12
+	init_order = 11
 	priority = 40
 
 	var/initialized = INITIALIZATION_INSSOBJ
