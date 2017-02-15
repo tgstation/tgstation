@@ -9,11 +9,10 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
-
-var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
 	log_world("World loaded at [world.timeofday]")
@@ -71,7 +70,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	Master.Setup(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
-var/last_irc_status = 0
 
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
@@ -79,6 +77,8 @@ var/last_irc_status = 0
 
 	var/list/input = params2list(T)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
+
+	var/static/last_irc_status = 0
 
 	if("ping" in input)
 		var/x = 1
@@ -214,12 +214,12 @@ var/last_irc_status = 0
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return
-	if(mapchanging)
+	if(SSmapping.mapchanging)
 		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
-		rebootingpendingmapchange = 1
+		SSmapping.rebootingpendingmapchange = 1
 		spawn(1200)
-			if(mapchanging)
-				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
+			if(SSmapping.mapchanging)
+				SSmapping.mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
 				Reboot("Map change timed out", time = 10)
 		return
 	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
@@ -391,7 +391,7 @@ var/failed_db_connections = 0
 #undef FAILED_DB_CONNECTION_CUTOFF
 
 
-/proc/maprotate()
+/world/proc/maprotate()
 	if (!SERVERTOOLS)
 		return
 	var/players = clients.len
@@ -437,27 +437,24 @@ var/failed_db_connections = 0
 	if (. == 0)
 		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
 
-var/datum/votablemap/nextmap
-var/mapchanging = 0
-var/rebootingpendingmapchange = 0
-/proc/changemap(var/datum/votablemap/VM)
+/world/proc/changemap(var/datum/votablemap/VM)
 	if (!SERVERTOOLS)
 		return
 	if (!istype(VM))
 		return
-	mapchanging = 1
+	SSmapping.mapchanging = 1
 	log_game("Changing map to [VM.name]([VM.friendlyname])")
 	var/file = file("setnewmap.bat")
 	file << "\nset MAPROTATE=[VM.name]\n"
 	. = shell("..\\bin\\maprotate.bat")
-	mapchanging = 0
+	SSmapping.mapchanging = 0
 	switch (.)
 		if (null)
 			message_admins("Failed to change map: Could not run map rotator")
 			log_game("Failed to change map: Could not run map rotator")
 		if (0)
 			log_game("Changed to map [VM.friendlyname]")
-			nextmap = VM
+			SSmapping.nextmap = VM
 		//1x: file errors
 		if (11)
 			message_admins("Failed to change map: File error: Map rotator script couldn't find file listing new map")
@@ -480,5 +477,5 @@ var/rebootingpendingmapchange = 0
 		else
 			message_admins("Failed to change map: Unknown error: Error code #[.]")
 			log_game("Failed to change map: Unknown error: Error code #[.]")
-	if(rebootingpendingmapchange)
+	if(SSmapping.rebootingpendingmapchange)
 		world.Reboot("Map change finished", time = 10)

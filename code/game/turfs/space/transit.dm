@@ -30,8 +30,8 @@
 
 	var/list/possible_transtitons = list()
 	var/k = 1
-	for(var/a in map_transition_config)
-		if(map_transition_config[a] == CROSSLINKED) // Only pick z-levels connected to station space
+	for(var/a in SSmapping.map_transition_config)
+		if(SSmapping.map_transition_config[a] == CROSSLINKED) // Only pick z-levels connected to station space
 			possible_transtitons += k
 		k++
 	var/_z = pick(possible_transtitons)

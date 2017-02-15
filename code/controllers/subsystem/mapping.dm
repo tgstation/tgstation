@@ -9,13 +9,16 @@ var/datum/subsystem/mapping/SSmapping
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
+	var/list/map_transition_config
+	var/datum/votablemap/nextmap
+	var/mapchanging = FALSE
+	var/rebootingpendingmapchange = FALSE
 
 /datum/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
-	return ..()
-
 
 /datum/subsystem/mapping/Initialize(timeofday)
+	map_transition_config = MAP_TRANSITION_CONFIG
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
@@ -68,3 +71,4 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
+	map_transition_config = SSmapping.map_transition_config
