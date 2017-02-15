@@ -87,7 +87,7 @@
 				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
-				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
+				/obj/item/clothing/head/that{throwforce = 1;} = 1,
 				/obj/item/clothing/head/ushanka = 1,
 				/obj/item/clothing/head/welding = 1,
 				/obj/item/clothing/mask/gas = 15,
