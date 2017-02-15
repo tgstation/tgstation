@@ -75,8 +75,8 @@
 	data["templates_tabs"] = list()
 	data["selected"] = list()
 
-	for(var/shuttle_id in shuttle_templates)
-		var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+	for(var/shuttle_id in SSmapping.shuttle_templates)
+		var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 
 		if(!templates[S.port_id])
 			data["templates_tabs"] += S.port_id
@@ -130,7 +130,7 @@
 
 	// Preload some common parameters
 	var/shuttle_id = params["shuttle_id"]
-	var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+	var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 
 	switch(action)
 		if("select_template")

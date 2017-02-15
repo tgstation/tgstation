@@ -1,6 +1,6 @@
 
 
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -66,7 +66,7 @@
 	icon_state = "syndballoon"
 	invisibility = 0
 
-/obj/effect/ruin_loader/proc/Load(list/potentialRuins = space_ruins_templates, datum/map_template/template = null)
+/obj/effect/ruin_loader/proc/Load(list/potentialRuins, datum/map_template/template)
 	var/list/possible_ruins = list()
 	for(var/A in potentialRuins)
 		var/datum/map_template/T = potentialRuins[A]

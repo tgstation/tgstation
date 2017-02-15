@@ -3,16 +3,14 @@
 	var/width = 0
 	var/height = 0
 	var/mappath = null
-	var/mapfile = null
 	var/loaded = 0 // Times loaded this round
+	var/static/dmm_suite/maploader = new
 
-/datum/map_template/New(path = null, map = null, rename = null)
+/datum/map_template/New(path = null, rename = null)
 	if(path)
 		mappath = path
 	if(mappath)
 		preload_size(mappath)
-	if(map)
-		mapfile = map
 	if(rename)
 		name = rename
 
@@ -23,7 +21,7 @@
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/proc/initTemplateBounds(var/list/bounds)
+/datum/map_template/proc/initTemplateBounds(var/list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -38,12 +36,25 @@
 				continue
 			if(istype(A,/obj/machinery/atmospherics))
 				atmos_machines += A
-				continue
 
 	SSobj.InitializeAtoms(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
-	SSair.end_map_load()
+
+/datum/map_template/proc/load_new_z()
+	var/x = round(world.maxx/2)
+	var/y = round(world.maxy/2)
+
+	var/list/bounds = maploader.load_map(get_file(), x, y)
+	if(!bounds)
+		return FALSE
+
+	smooth_zlevel(world.maxz)
+	SortAreas()
+
+	//initialize things that are normally initialized after map load
+	initTemplateBounds(bounds)
+	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
@@ -55,26 +66,22 @@
 	if(T.y+height > world.maxy)
 		return
 
-	SSair.begin_map_load()
 	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
 	if(!bounds)
-		SSair.end_map_load()
-		return 0
+		return
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
-	return 1
+	return TRUE
 
 /datum/map_template/proc/get_file()
-	if(mapfile)
-		. = mapfile
-	else if(mappath)
+	if(mappath)
 		. = file(mappath)
 
 	if(!.)
-		world.log << "The file of [src] appears to be empty/non-existent."
+		world.log << "The file of [src] ([mappath]) appears to be empty/non-existent."
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
@@ -85,69 +92,8 @@
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
 
-/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
-	var/list/filelist = flist(path)
-	for(var/map in filelist)
-		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
-		map_templates[T.name] = T
-
-	preloadRuinTemplates()
-	preloadShuttleTemplates()
-	preloadShelterTemplates()
-
-/proc/preloadRuinTemplates()
-	// Still supporting bans by filename
-	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
-	banned += generateMapList("config/spaceruinblacklist.txt")
-
-	for(var/item in subtypesof(/datum/map_template/ruin))
-		var/datum/map_template/ruin/ruin_type = item
-		// screen out the abstract subtypes
-		if(!initial(ruin_type.id))
-			continue
-		var/datum/map_template/ruin/R = new ruin_type()
-
-		if(banned.Find(R.mappath))
-			continue
-
-		map_templates[R.name] = R
-		ruins_templates[R.name] = R
-
-		if(istype(R, /datum/map_template/ruin/lavaland))
-			lava_ruins_templates[R.name] = R
-		else if(istype(R, /datum/map_template/ruin/space))
-			space_ruins_templates[R.name] = R
-
-
-/proc/preloadShuttleTemplates()
-	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
-
-	for(var/item in subtypesof(/datum/map_template/shuttle))
-		var/datum/map_template/shuttle/shuttle_type = item
-		if(!(initial(shuttle_type.suffix)))
-			continue
-
-		var/datum/map_template/shuttle/S = new shuttle_type()
-		if(unbuyable.Find(S.mappath))
-			S.can_be_bought = FALSE
-
-		shuttle_templates[S.shuttle_id] = S
-		map_templates[S.shuttle_id] = S
-
-/proc/preloadShelterTemplates()
-	for(var/item in subtypesof(/datum/map_template/shelter))
-		var/datum/map_template/shelter/shelter_type = item
-		if(!(initial(shelter_type.mappath)))
-			continue
-		var/datum/map_template/shelter/S = new shelter_type()
-
-		shelter_templates[S.shelter_id] = S
-		map_templates[S.shelter_id] = S
-
-/proc/load_new_z_level(var/file)
-	if(!isfile(file))
-		return FALSE
-	maploader.load_map(file)
-	smooth_zlevel(world.maxz)
-	SortAreas()
-	world.log << "loaded [file] as z-level [world.maxz]"
+//for your ever biggening badminnery kevinz000
+//❤ - Cyberboss
+/proc/load_new_z_level(var/file, var/name)
+	var/datum/map_template/template = new(file, name)
+	template.load_new_z()
