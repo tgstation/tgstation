@@ -46647,10 +46647,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bAL" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bAM" = (
@@ -47562,11 +47559,11 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bCt" = (
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	color = "purple";
 	dir = 1
 	},
-/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bCu" = (
@@ -90399,7 +90396,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxillary_base{
+/obj/machinery/computer/shuttle/auxillary_base{
 	pixel_y = 0
 	},
 /turf/closed/wall,
@@ -94443,17 +94440,12 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "ddF" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 3;
-	height = 5;
-	id = "mining_public_disabled";
-	name = "public mining dock";
-	width = 7
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	color = "purple";
+	dir = 5
 	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/turf/open/floor/plasteel,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -106382,7 +106374,7 @@ cWg
 cVL
 cVL
 cVL
-ddF
+cWJ
 cWM
 cXR
 cYG
@@ -137502,7 +137494,7 @@ bvv
 bxi
 bzc
 bAL
-bCs
+ddF
 bDX
 bFR
 bHx

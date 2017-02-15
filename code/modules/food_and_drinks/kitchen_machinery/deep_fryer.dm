@@ -18,7 +18,15 @@ insert ascii eagle on american flag background here
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
-	var/static/list/blacklisted_items = typecacheof(list(/obj/item/weapon/screwdriver, /obj/item/weapon/crowbar, /obj/item/weapon/wrench, /obj/item/weapon/wirecutters, /obj/item/device/multitool, /obj/item/weapon/weldingtool, /obj/item/weapon/reagent_containers/glass, /obj/item/weapon/storage/part_replacer))
+	var/static/list/blacklisted_items = typecacheof(list(
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/wrench,
+		/obj/item/weapon/wirecutters,
+		/obj/item/device/multitool,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/storage/part_replacer))
 
 /obj/item/weapon/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
@@ -69,7 +77,7 @@ insert ascii eagle on american flag background here
 	if(frying)
 		cook_time++
 		if(cook_time == 30)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			visible_message("[src] dings!")
 		else if (cook_time == 60)
 			visible_message("[src] emits an acrid smell!")
@@ -87,6 +95,7 @@ insert ascii eagle on american flag background here
 			S.overlays = frying.overlays
 			S.icon_state = frying.icon_state
 			S.desc = frying.desc
+			S.w_class = frying.w_class
 			reagents.trans_to(S, 2*(cook_time/15))
 			switch(cook_time)
 				if(0 to 15)
