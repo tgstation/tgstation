@@ -359,7 +359,7 @@
 				if("servername")
 					config.server_name = value
 				if("serversqlname")
-					config.server_sql_name = 1
+					config.server_sql_name = value
 				if("stationname")
 					config.station_name = value
 				if("hostedby")
