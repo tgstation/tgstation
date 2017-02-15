@@ -226,10 +226,7 @@
 /obj/item/device/flightpack/proc/wearer_movement(dir)
 	if(!flight)
 		return
-	if(wearer.pulling)
-		dragging_through = wearer.pulling
 	var/momentum_increment = momentum_gain
-	var/turf/old = get_turf(wearer)
 	if(boost)
 		momentum_increment = boost_power
 	if(brake)
@@ -245,9 +242,6 @@
 			adjust_momentum(momentum_increment, 0)
 		if(WEST)
 			adjust_momentum(-momentum_increment, 0)
-	if(dragging_through && old)
-		dragging_through.forceMove(old)
-		wearer.pulling = dragging_through
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
@@ -255,6 +249,8 @@
 		return FALSE
 	if(wearer.pulling)
 		dragging_through = wearer.pulling
+	else if(dragging_through)
+		dragging_through = null
 	var/drift_dir_x = 0
 	var/drift_dir_y = 0
 	if(momentum_x > 0)
