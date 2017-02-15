@@ -378,7 +378,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						Console.SetLuminosity(2)
 
 				if(radio_freq)
-					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq)
+					Radio.talk_into(src,"[alert]: <i>[russian_html2text(message)]</i>",radio_freq)
 
 				switch(priority)
 					if(2)
