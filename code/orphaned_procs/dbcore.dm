@@ -73,6 +73,7 @@ DBConnection/proc/Connect()
 	. = IsConnected()
 	if (!. && config.sql_enabled)
 		log_world("SQL error: " + ErrorMsg())
+		++failed_connections
 
 DBConnection/proc/doConnect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
 	if(!config.sql_enabled)
