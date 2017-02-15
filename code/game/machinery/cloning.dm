@@ -38,7 +38,7 @@
 
 	// The "brine" is the reagents that are automatically added in small
 	// amounts to the occupant.
-	var/list/brine_types = list("salbutamol", "bicaridine", "corazone")
+	var/static/list/brine_types = list("salbutamol", "bicaridine", "corazone")
 
 /obj/machinery/clonepod/New()
 	..()
@@ -403,7 +403,7 @@
 	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	// In addition to being cellularly damaged and having barely any
 	// brain function, they also have no limbs or internal organs.
-	var/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+	var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
 	for(var/zone in zones)
 		var/obj/item/bodypart/BP = H.get_bodypart(zone)
 		BP.drop_limb()

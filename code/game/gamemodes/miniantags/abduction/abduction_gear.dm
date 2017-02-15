@@ -604,21 +604,21 @@ Congratulations! You are now trained for xenobiology research!"}
 	can_buckle = 1
 	buckle_lying = 1
 
-	var/list/injected_reagents = list("corazone")
+	var/static/list/injected_reagents = list("corazone")
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()
-	if(ishuman(AM))
+	if(iscarbon(AM))
 		START_PROCESSING(SSobj, src)
 		AM << "<span class='danger'>You feel a series of tiny pricks!</span>"
 
 /obj/structure/table/optable/abductor/process()
 	. = PROCESS_KILL
-	for(var/mob/living/carbon/human/H in get_turf(src))
+	for(var/mob/living/carbon/C in get_turf(src))
 		. = TRUE
 		for(var/chemical in injected_reagents)
-			if(H.reagents.get_reagent_amount(chemical) < 1)
-				H.reagents.add_reagent(chemical, 1)
+			if(C.reagents.get_reagent_amount(chemical) < 1)
+				C.reagents.add_reagent(chemical, 1)
 
 /obj/structure/table/optable/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
