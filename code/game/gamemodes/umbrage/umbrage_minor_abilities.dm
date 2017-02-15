@@ -64,27 +64,6 @@
 	return 1
 
 
-//Simulacrum: Creates an illusionary copy of the umbrage that moves continually in the direction that they're facing.
-// - The illusion lasts for ten seconds and cannot be attacked.
-// - If someone examines the illusion, they will be able to tell that it's false.
-/datum/action/innate/umbrage/simulacrum
-	name = "Simulacrum"
-	desc = "Creates an illusion that closely resembles you. The illusion will run forward for ten seconds."
-	button_icon_state = "umbrage_simulacrum"
-	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
-	psi_cost = 30
-	lucidity_cost = 1
-	blacklisted = 0
-
-/datum/action/innate/umbrage/simulacrum/Activate()
-	usr.visible_message("<span class='warning'>[usr] suddenly splits into two!</span>", "<span class='velvet_bold'>zayaera</span><br>\
-	<span class='notice'>You create an illusion of yourself.</span>")
-	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
-	var/obj/effect/simulacrum/simulacrum = new(get_turf(usr))
-	simulacrum.mimic(usr)
-	return 1
-
-
 //Pass: Equips umbral tendrils.
 // - The tendrils' uses are many and varied, including mobility, offense, and more.
 /datum/action/innate/umbrage/pass
@@ -213,3 +192,88 @@
 				L.Weaken(3)
 				L.soundbang_act(1, 3, 5, 0)
 	return 1
+
+
+//Simulacrum: Creates an illusionary copy of the umbrage that moves continually in the direction that they're facing.
+// - The illusion lasts for ten seconds and cannot be attacked.
+// - If someone examines the illusion, they will be able to tell that it's false.
+/datum/action/innate/umbrage/simulacrum
+	name = "Simulacrum"
+	desc = "Creates an illusion that closely resembles you. The illusion will run forward for ten seconds."
+	button_icon_state = "umbrage_simulacrum"
+	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	psi_cost = 30
+	lucidity_cost = 1
+	blacklisted = 0
+
+/datum/action/innate/umbrage/simulacrum/Activate()
+	usr.visible_message("<span class='warning'>[usr] suddenly splits into two!</span>", "<span class='velvet_bold'>zayaera</span><br>\
+	<span class='notice'>You create an illusion of yourself.</span>")
+	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
+	var/obj/effect/simulacrum/simulacrum = new(get_turf(usr))
+	simulacrum.mimic(usr)
+	return 1
+
+
+//Tagalong: Melds with a conscious mob's shadow, allowing the umbrage to freely accompany them anywhere they go.
+// - Only usable in targets not in full darkness.
+// - If the target enters a fully dark area, the umbrage will be stunned and ejected.
+/datum/action/innate/umbrage/tagalong
+	name = "Tagalong"
+	desc = "Melds with a target's shadow, allowing you to accompany them into lit areas. Only works on targets not in darkness."
+	button_icon_state = "umbrage_tagalong"
+	check_flags = AB_CHECK_CONSCIOUS
+	psi_cost = 50
+	lucidity_cost = 2
+	blacklisted = 0
+	var/mob/living/tagging_along
+
+/datum/action/innate/umbrage/tagalong/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/datum/action/innate/umbrage/tagalong/process()
+	if(!tagging_along)
+		return STOP_PROCESSING(SSprocessing, src)
+	var/turf/T = get_turf(tagging_along)
+	if(T.get_lumcount() < 2)
+		owner.forceMove(get_turf(tagging_along))
+		owner.visible_message("<span class='warning'>[owner] suddenly manifests from the dark!</span>", "<span class='warning'>You are forcibly ejected from [tagging_along]'s shadow!</span>")
+		owner.Weaken(2)
+		STOP_PROCESSING(SSprocessing, src)
+		tagging_along = null
+		return
+
+/datum/action/innate/umbrage/tagalong/Activate()
+	if(tagging_along)
+		usr.visible_message("<span class='warning'>[tagging_along]'s shadow suddenly breaks away from their body!</span>", "<span class='notice'>You break away from [tagging_along].</span>")
+		usr.forceMove(get_turf(tagging_along))
+		tagging_along = null
+		STOP_PROCESSING(SSprocessing, src)
+		spawn(1)
+			psi_cost = initial(psi_cost)
+		return 1
+	else
+		var/list/targets = list()
+		var/mob/living/target
+		for(var/mob/living/L in view(7, usr))
+			var/turf/T = get_turf(L)
+			if(L == usr || T.get_lumcount() <= 2)
+				continue
+			targets += L
+		if(!targets.len)
+			usr << "<span class='warning'>There are no nearby targets in lit areas!</span>"
+			return
+		if(targets.len == 1)
+			target = targets[1] //To prevent the prompt from appearing with just one person
+		else
+			target = input(usr, "Select a target to tag along with.", name) as null|anything in targets
+			if(!target)
+				return
+		usr << "<span class='velvet_bold'>iahz</span><br><span class='notice'>You meld with [target]'s shadow.</span>"
+		usr.forceMove(target)
+		tagging_along = target
+		START_PROCESSING(SSprocessing, src)
+		spawn(1)
+			psi_cost = 0 //For ejecting
+		return 1

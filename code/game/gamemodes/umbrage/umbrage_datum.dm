@@ -1,3 +1,5 @@
+//Handles everything related to psi and lucidity. Also holds upgrades, for cloning and such.
+#warn Todo: Make the umbrage datum hold abilities
 /datum/umbrage
 	var/datum/mind/linked_mind
 	var/psi = 100 //Our psi, used for abilities.

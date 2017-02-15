@@ -25,16 +25,17 @@
 /datum/species/umbrage/spec_life(mob/living/carbon/human/H)
 	var/turf/T = get_turf(H)
 	var/lumcount = T.get_lumcount()
-	if(lumcount > 3) //If it's light, we die very quickly
-		H << "<span class='userdanger'>The light burns you!</span>"
-		H << sound('sound/weapons/sear.ogg', volume = 75) //Spam text and a sound to aggressively say "hey, you're dying"
-		H.adjustFireLoss(UMBRAGE_LIGHT_BURN)
-	if(lumcount < 4) //But if it's dark, we heal, albeit slowly
-		H.adjustBruteLoss(UMBRAGE_DARK_HEAL)
-		H.adjustFireLoss(UMBRAGE_DARK_HEAL)
-		H.adjustToxLoss(UMBRAGE_DARK_HEAL)
-		H.adjustOxyLoss(UMBRAGE_DARK_HEAL)
-		H.adjustCloneLoss(UMBRAGE_DARK_HEAL)
+	if(H.loc == T)
+		if(lumcount > 3) //If it's light, we die very quickly
+			H << "<span class='userdanger'>The light burns you!</span>"
+			H << sound('sound/weapons/sear.ogg', volume = 75) //Spam text and a sound to aggressively say "hey, you're dying"
+			H.adjustFireLoss(UMBRAGE_LIGHT_BURN)
+		if(lumcount < 4) //But if it's dark, we heal, albeit slowly
+			H.adjustBruteLoss(UMBRAGE_DARK_HEAL)
+			H.adjustFireLoss(UMBRAGE_DARK_HEAL)
+			H.adjustToxLoss(UMBRAGE_DARK_HEAL)
+			H.adjustOxyLoss(UMBRAGE_DARK_HEAL)
+			H.adjustCloneLoss(UMBRAGE_DARK_HEAL)
 
 
 
