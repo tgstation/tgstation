@@ -25,7 +25,7 @@
 
 /obj/structure/window/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/New(Loc,re=0)
 	..()
@@ -140,15 +140,15 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
-					user << "<span class='notice'>You repair [src].</span>"
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
-			user << "<span class='warning'>[src] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
 
@@ -188,7 +188,7 @@
 
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 			playsound(loc, I.usesound, 75, 1)
-			user << "<span class='notice'> You begin to disassemble [src]...</span>"
+			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 			if(do_after(user, 40*I.toolspeed, target = src))
 				if(QDELETED(src))
 					return
@@ -197,7 +197,7 @@
 				G.add_fingerprint(user)
 
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "<span class='notice'>You successfully disassemble [src].</span>"
+				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
 	return ..()
@@ -257,13 +257,13 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 90)
 
 	if(!valid_window_location(loc, target_dir))
-		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
 	setDir(target_dir)
@@ -282,13 +282,13 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 270)
 
 	if(!valid_window_location(loc, target_dir))
-		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
 	setDir(target_dir)
@@ -300,7 +300,7 @@
 /obj/structure/window/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return

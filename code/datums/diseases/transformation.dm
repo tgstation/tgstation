@@ -98,10 +98,10 @@
 	switch(stage)
 		if(2)
 			if(prob(2))
-				affected_mob << "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>"
+				to_chat(affected_mob, "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>")
 		if(3)
 			if(prob(4))
-				affected_mob << "<span class='danger'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.confused += 10
 		if(4)
 			if(prob(3))
@@ -137,7 +137,7 @@
 			if (prob(8))
 				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
 			if (prob(4))
-				affected_mob << "<span class='danger'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Paralyse(2)
 		if(4)
 			if (prob(20))
@@ -166,7 +166,7 @@
 	switch(stage)
 		if(3)
 			if (prob(4))
-				affected_mob << "<span class='danger'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Paralyse(2)
 		if(4)
 			if (prob(20))

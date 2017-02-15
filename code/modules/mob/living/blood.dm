@@ -10,7 +10,7 @@
 		spawn(amount)
 			bleedsuppress = 0
 			if(stat != DEAD && bleed_rate)
-				src << "<span class='warning'>The blood soaks through your bandage.</span>"
+				to_chat(src, "<span class='warning'>The blood soaks through your bandage.</span>")
 
 
 /mob/living/carbon/monkey/handle_blood()
@@ -36,20 +36,20 @@
 		switch(blood_volume)
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
-					src << "<span class='warning'>You feel [pick("dizzy","woozy","faint")].</span>"
+					to_chat(src, "<span class='warning'>You feel [pick("dizzy","woozy","faint")].</span>")
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 				if(prob(5))
 					blur_eyes(6)
 					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel very [word].</span>"
+					to_chat(src, "<span class='warning'>You feel very [word].</span>")
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				adjustOxyLoss(5)
 				if(prob(15))
 					Paralyse(rand(1,3))
 					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel extremely [word].</span>"
+					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(0 to BLOOD_VOLUME_SURVIVE)
 				death()
 

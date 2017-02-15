@@ -12,7 +12,7 @@
 
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
-#define testing(msg) log_world("## TESTING: [msg]"); world << "## TESTING: [msg]"
+#define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
 #else
 #define testing(msg)
 #endif
@@ -86,8 +86,7 @@
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)
 	if(config && config.log_runtimes)
-		world.log = runtime_diary
-		world.log << text
+		runtime_diary << text
 	world.log = null
 	world.log << text
 

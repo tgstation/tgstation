@@ -195,11 +195,11 @@
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
-				M << "<span class='warning'>You don't feel so good...</span>"
+				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getFireLoss())
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your burns healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
 			M.emote("scream")
 	..()
 
@@ -243,11 +243,11 @@
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
-				M << "<span class='warning'>You don't feel so good...</span>"
+				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getBruteLoss())
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your bruises healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
 	..()
 
@@ -308,7 +308,7 @@
 			M.Stun(4)
 			M.Weaken(4)
 			if(show_message)
-				M << "<span class='warning'>Your stomach agonizingly cramps!</span>"
+				to_chat(M, "<span class='warning'>Your stomach agonizingly cramps!</span>")
 		else
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
@@ -317,7 +317,7 @@
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 
 			if(show_message)
-				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
+				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>") //It's a painkiller, after all
 	..()
 
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
@@ -341,7 +341,7 @@
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 	..()
 
 /datum/reagent/medicine/charcoal
@@ -574,7 +574,7 @@
 	M.status_flags |= IGNORESLOWDOWN
 	switch(current_cycle)
 		if(11)
-			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
+			to_chat(M, "<span class='warning'>You start to feel tired...</span>") //Warning when the victim is starting to pass out
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
@@ -644,13 +644,13 @@
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
 	if(M.disabilities & BLIND)
 		if(prob(20))
-			M << "<span class='warning'>Your vision slowly returns...</span>"
+			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind()
 			M.cure_nearsighted()
 			M.blur_eyes(35)
 
 	else if(M.disabilities & NEARSIGHT)
-		M << "<span class='warning'>The blackness in your peripheral vision fades.</span>"
+		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted()
 		M.blur_eyes(10)
 

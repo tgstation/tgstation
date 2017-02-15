@@ -31,7 +31,7 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = Clamp(obj_integrity + 20, 0, max_integrity)
@@ -132,7 +132,7 @@
 		if(HORIZONTAL)
 			mode = SINGLE
 
-	user << "[src] is now in [mode] mode."
+	to_chat(user, "[src] is now in [mode] mode.")
 
 /obj/item/weapon/grenade/barrier/prime()
 	new /obj/structure/barricade/security(get_turf(src.loc))

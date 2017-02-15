@@ -63,7 +63,7 @@
 	establish_db_connection()
 
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	if(!adm_ckey || !new_rank)
@@ -91,14 +91,14 @@
 		insert_query.Execute()
 		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
 		log_query.Execute()
-		usr << "<span class='adminnotice'>New admin added.</span>"
+		to_chat(usr, "<span class='adminnotice'>New admin added.</span>")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
 			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET rank = '[new_rank]' WHERE id = [admin_id]")
 			insert_query.Execute()
 			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
 			log_query.Execute()
-			usr << "<span class='adminnnotice'>Admin rank changed.</span>"
+			to_chat(usr, "<span class='adminnnotice'>Admin rank changed.</span>")
 
 
 /datum/admins/proc/log_admin_permission_modification(adm_ckey, new_permission)
@@ -111,7 +111,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))

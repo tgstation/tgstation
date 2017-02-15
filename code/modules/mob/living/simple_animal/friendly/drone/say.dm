@@ -24,12 +24,12 @@
 			if(factions && factions.len)
 				var/list/friendly = factions&M.faction
 				if(friendly.len)
-					M << msg
+					to_chat(M, msg)
 			else
-				M << msg
+				to_chat(M, msg)
 		if(dead_can_hear && (M in dead_mob_list))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [msg]"
+			to_chat(M, "[link] [msg]")
 
 
 //Wrapper for drones to handle factions

@@ -266,7 +266,7 @@ Class Procs:
 	if((user.lying || user.stat) && !IsAdminGhost(user))
 		return 1
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	if(!is_interactable())
 		return 1
@@ -340,11 +340,11 @@ Class Procs:
 		if(!panel_open)
 			panel_open = 1
 			icon_state = icon_state_open
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
 			panel_open = 0
 			icon_state = icon_state_closed
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
+			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
 		return 1
 	return 0
 
@@ -352,13 +352,13 @@ Class Procs:
 	if(panel_open && istype(W))
 		playsound(loc, W.usesound, 50, 1)
 		setDir(turn(dir,-90))
-		user << "<span class='notice'>You rotate [src].</span>"
+		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
 	return 0
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 	if(!isfloorturf(loc) && !anchored)
-		user << "<span class='warning'>[src] needs to be on the floor to be secured!</span>"
+		to_chat(user, "<span class='warning'>[src] needs to be on the floor to be secured!</span>")
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
@@ -368,12 +368,12 @@ Class Procs:
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
 		if(time)
-			user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>"
+			to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>")
 		playsound(loc, W.usesound, 50, 1)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
-			user << "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>"
+			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			anchored = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return SUCCESSFUL_UNFASTEN
@@ -412,7 +412,7 @@ Class Procs:
 							component_parts -= A
 							component_parts += B
 							B.loc = null
-							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
@@ -424,25 +424,25 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/display_parts(mob/user)
-	user << "<span class='notice'>Following parts detected in the machine:</span>"
+	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 	for(var/obj/item/C in component_parts)
-		user << "<span class='notice'>\icon[C] [C.name]</span>"
+		to_chat(user, "<span class='notice'>[bicon(C)] [C.name]</span>")
 
 /obj/machinery/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		user << "<span class='notice'>It looks broken and non functional.</span>"
+		to_chat(user, "<span class='notice'>It looks broken and non functional.</span>")
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			user << "<span class='warning'>It's on fire!</span>"
+			to_chat(user, "<span class='warning'>It's on fire!</span>")
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				user <<  "It looks slightly damaged."
+				to_chat(user, "It looks slightly damaged.")
 			if(25 to 50)
-				user <<  "It appears heavily damaged."
+				to_chat(user, "It appears heavily damaged.")
 			if(0 to 25)
-				user <<  "<span class='warning'>It's falling apart!</span>"
+				to_chat(user, "<span class='warning'>It's falling apart!</span>")
 	if(user.research_scanner && component_parts)
 		display_parts(user)
 

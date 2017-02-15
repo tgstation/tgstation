@@ -173,8 +173,8 @@
 		damage = emp_weak_damage
 	if(emp_damage <= (emp_disable_threshold * 1.5))
 		emp_damage += damage
-	wearer << "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>"
-	wearer << "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>"
+	to_chat(wearer, "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>")
+	to_chat(wearer, "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>")
 
 //action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
@@ -781,13 +781,13 @@
 
 /obj/item/device/flightpack/proc/usermessage(message, urgency = 0)
 	if(urgency == 0)
-		wearer << "\icon[src]|<span class='boldnotice'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='boldnotice'>[message]</span>")
 	if(urgency == 1)
-		wearer << "\icon[src]|<span class='warning'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='warning'>[message]</span>")
 	if(urgency == 2)
-		wearer << "\icon[src]|<span class='boldwarning'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='boldwarning'>[message]</span>")
 	if(urgency == 3)
-		wearer << "\icon[src]|<span class='userdanger'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='userdanger'>[message]</span>")
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
 	if(ishuman(user) && !ishuman(src.loc))
@@ -934,17 +934,17 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/usermessage(message, urgency = 0)
 	if(!urgency)
-		user << "\icon[src]<span class='notice'>|[message]</span>"
+		to_chat(user, "[bicon(src)]<span class='notice'>|[message]</span>")
 	else if(urgency == 1)
-		user << "\icon[src]<span class='warning'>|[message]</span>"
+		to_chat(user, "[bicon(src)]<span class='warning'>|[message]</span>")
 	else if(urgency == 2)
-		user << "\icon[src]<span class='userdanger'>|[message]</span>"
+		to_chat(user, "[bicon(src)]<span class='userdanger'>|[message]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/examine(mob/user)
 	..()
-	user << "<span class='boldnotice'>SUIT: [locked ? "LOCKED" : "UNLOCKED"]</span>"
-	user << "<span class='boldnotice'>FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]</span>"
-	user << "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>"
+	to_chat(user, "<span class='boldnotice'>SUIT: [locked ? "LOCKED" : "UNLOCKED"]</span>")
+	to_chat(user, "<span class='boldnotice'>FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]</span>")
+	to_chat(user, "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
@@ -1273,12 +1273,12 @@
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)
 		user.client.change_view(world.view)
-		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
+		to_chat(user, "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>")
 		zoom = FALSE
 		return FALSE
 	else
 		user.client.change_view(zoom_range)
-		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
+		to_chat(user, "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>")
 		zoom = TRUE
 		return TRUE
 

@@ -196,7 +196,7 @@
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/attack_self(mob/living/user)
 	if(!awakened)
-		user << "<span class='notice'>[src] begins to vibrate...</span>"
+		to_chat(user, "<span class='notice'>[src] begins to vibrate...</span>")
 		addtimer(CALLBACK(src, .proc/awaken), 50)
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/attack(mob/living/M, mob/user)
@@ -209,20 +209,20 @@
 	..()
 	if(awakened)
 		if(victims)
-			user << "You hear the distant murmuring of [victims] victims to [src]."
+			to_chat(user, "You hear the distant murmuring of [victims] victims to [src].")
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				user << "<span class='danger'>[src] isn't very hungry. Not yet.</span>"
+				to_chat(user, "<span class='danger'>[src] isn't very hungry. Not yet.</span>")
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				user << "<span class='danger'>[src] would like a snack.</span>"
+				to_chat(user, "<span class='danger'>[src] would like a snack.</span>")
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				user << "<span class='warning'>[src] is quite hungry now...</span>"
+				to_chat(user, "<span class='warning'>[src] is quite hungry now...</span>")
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				user << "<span class='boldannounce'>[src] is openly salivating at the sight of you. Be careful.</span>"
+				to_chat(user, "<span class='boldannounce'>[src] is openly salivating at the sight of you. Be careful.</span>")
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				user << "<span class='boldwarning'>You walk a fine line. [src] is very close to devouring you.</span>"
+				to_chat(user, "<span class='boldwarning'>You walk a fine line. [src] is very close to devouring you.</span>")
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				user << "<span class='boldwarning'>[src] is shaking violently and staring directly at you.</span>"
+				to_chat(user, "<span class='boldwarning'>[src] is shaking violently and staring directly at you.</span>")
 
 /obj/item/weapon/storage/toolbox/artistic/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of the box after they revive
 	user.forceMove(get_turf(src))

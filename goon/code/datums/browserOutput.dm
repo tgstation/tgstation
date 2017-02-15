@@ -30,17 +30,17 @@ For the main html chat area
 	. = ..()
 
 	owner = C
-	// world.log << "chatOutput: New()"
+	// to_chat(world.log, "chatOutput: New()")
 
 /datum/chatOutput/proc/start()
 	//Check for existing chat
 	if(!owner)
-		return 0
+		return FALSE
 
 	if(!winexists(owner, "browseroutput")) // Oh goddamnit.
 		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
 		broken = TRUE
-		return 0
+		return FALSE
 
 	if(winget(owner, "browseroutput", "is-disabled") == "false") //Already setup
 		doneLoading()
@@ -48,14 +48,14 @@ For the main html chat area
 	else //Not setup
 		load()
 
-	return 1
+	return TRUE
 
 /datum/chatOutput/proc/load()
 	set waitfor = FALSE
 	if(!owner)
 		return
 
-	// world.log << "chatOutput: load()"
+	// to_chat(world.log, "chatOutput: load()")
 
 	for(var/attempts in 1 to 5)
 		for(var/asset in global.chatResources) // No asset cache, just get this fucking shit SENT.
@@ -67,11 +67,11 @@ For the main html chat area
 		if(!owner || loaded)
 			break
 
-	// world.log << "chatOutput: load() completed"
+	// to_chat(world.log, "chatOutput: load() completed")
 
-/datum/chatOutput/Topic(var/href, var/list/href_list)
+/datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
-		return 1
+		return TRUE
 
 	// Build arguments.
 	// Arguments are in the form "param[paramname]=thing"
@@ -147,7 +147,7 @@ For the main html chat area
 		if (connData && islist(connData) && connData.len > 0 && connData["connData"])
 			src.connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
-			for (var/i = src.connectionHistory.len; i >= 1; i--)
+			for(var/i in connectionHistory.len to 1 step -1)
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
 					return
@@ -161,7 +161,7 @@ For the main html chat area
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				log_admin("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
-	cookieSent = 1
+	cookieSent = TRUE
 
 //Called by js client every 60 seconds
 /datum/chatOutput/proc/ping()
@@ -171,10 +171,11 @@ For the main html chat area
 /datum/chatOutput/proc/debug(error)
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
+#ifdef TESTING
 /client/verb/debug_chat()
 	set hidden = 1
 	chatOutput.ehjax_send(data = list("firebug" = 1))
-
+#endif
 //Global chat procs
 
 /var/list/bicon_cache = list()
@@ -182,16 +183,15 @@ For the main html chat area
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(var/icon/icon, var/iconKey = "misc")
+/proc/icon2base64(icon/icon, iconKey = "misc")
 	if (!isicon(icon))
-		return 0
-
+		return FALSE
 	iconCache[iconKey] << icon
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/bicon(var/obj)
+/proc/bicon(obj)
 	if (!obj)
 		return
 
@@ -220,7 +220,7 @@ For the main html chat area
 	bicon(obj)
 
 //Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_bicon(var/obj)
+/proc/costly_bicon(obj)
 	if (!obj)
 		return
 
@@ -231,6 +231,8 @@ For the main html chat area
 	return bicon(I)
 
 /proc/to_chat(target, message)
+	if(isnull(target))
+		return
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || istype(target, /client) || istype(target, /datum/log) || target == world))
@@ -251,19 +253,12 @@ For the main html chat area
 			message = replacetext(message, "\proper", "")
 
 		//Grab us a client if possible
-		var/client/C
-		if (istype(target, /client))
-			C = target
-		else if (istype(target, /mob))
-			C = target:client
-		else if (istype(target, /datum/mind) && target:current)
-			C = target:current:client
+		var/client/C = grab_client(target)
 
 		if (C && C.chatOutput)
-			if(C.chatOutput.broken) // Either a secret repo fuck up or a player who hasn't updated his skin file.
-				C << message
-				return
-
+			if(C.chatOutput.broken) // A player who hasn't updated his skin file.
+				to_chat(C, message)
+				return 1
 			if(!C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
 				//Client sucks at loading things, put their messages in a queue
 				C.chatOutput.messageQueue.Add(message)
@@ -278,6 +273,18 @@ For the main html chat area
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		target << output(url_encode(url_encode(message)), "browseroutput:output")
+
+/proc/grab_client(target)
+	if(istype(target, /client))
+		return target
+	else if(istype(target, /mob))
+		var/mob/M = target
+		if(M.client)
+			return M.client
+	else if(istype(target, /datum/mind))
+		var/datum/mind/M = target
+		if(M.current && M.current.client)
+			return M.current.client
 
 /datum/log	//exists purely to capture to_chat() output
 	var/log = ""

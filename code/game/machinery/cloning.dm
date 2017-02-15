@@ -94,11 +94,11 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>"
+	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	user << "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
+	to_chat(user, "The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
 
 
 //Clonepod
@@ -106,9 +106,9 @@
 /obj/machinery/clonepod/examine(mob/user)
 	..()
 	if(mess)
-		user << "It's filled with blood and viscera. You swear you can see it moving..."
+		to_chat(user, "It's filled with blood and viscera. You swear you can see it moving...")
 	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
-		user << "Current clone cycle is [round(get_completion())]% complete."
+		to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -179,14 +179,9 @@
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
 		H.ckey = ckey
-		H << "<span class='notice'><b>Consciousness slowly creeps over you \
-			as your body regenerates.</b><br><i>So this is what cloning \
-			feels like?</i></span>"
+		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 	else if(grab_ghost_when == CLONER_MATURE_CLONE)
-		clonemind.current << "<span class='notice'>Your body is \
-			beginning to regenerate in a cloning pod. You will \
-			become conscious when it is complete.</span>"
-
+		to_chat(clonemind.current, "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
 	if(H)
 		H.faction |= factions
 
@@ -263,41 +258,41 @@
 
 	if(istype(W,/obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
-		
+
 		if(istype(P.buffer, /obj/machinery/computer/cloning))
 			if(get_area_master(P.buffer) != get_area_master(src))
-				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
+				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
 				P.buffer = null
 				return
-			user << "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>"
+			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/computer/cloning/comp = P.buffer
 			if(connected)
 				connected.DetachCloner(src)
 			comp.AttachCloner(src)
 		else
 			P.buffer = src
-			user << "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
 		return
-		
+
 	if (W.GetID())
 		if (!check_access(W))
-			user << "<span class='danger'>Access Denied.</span>"
+			to_chat(user, "<span class='danger'>Access Denied.</span>")
 			return
 		if (!locked || !occupant)
 			return
 		if (occupant.health < -20 && occupant.stat != DEAD)
-			user << "<span class='danger'>Access Refused. Patient status still unstable.</span>"
+			to_chat(user, "<span class='danger'>Access Refused. Patient status still unstable.</span>")
 			return
 		else
 			locked = FALSE
-			user << "System unlocked."
+			to_chat(user, "System unlocked.")
 	else
 		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(occupant))
 		return
-	user << "<span class='notice'>You force an emergency ejection.</span>"
+	to_chat(user, "<span class='notice'>You force an emergency ejection.</span>")
 	locked = FALSE
 	go_out()
 
@@ -342,8 +337,7 @@
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
-		occupant << "<span class='notice'><b>There is a bright flash!</b><br>\
-			<i>You feel like a new being.</i></span>"
+		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		occupant.flash_act()
 
 	var/turf/T = get_turf(src)
@@ -364,9 +358,9 @@
 			clonemind.transfer_to(occupant)
 		occupant.grab_ghost() // We really just want to make you suffer.
 		flash_color(occupant, flash_color="#960000", flash_time=100)
-		occupant << "<span class='warning'><b>Agony blazes across your \
+		to_chat(occupant, "<span class='warning'><b>Agony blazes across your \
 			consciousness as your body is torn apart.</b><br>\
-			<i>Is this what dying is like? Yes it is.</i></span>"
+			<i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
 		QDEL_IN(occupant, 40)

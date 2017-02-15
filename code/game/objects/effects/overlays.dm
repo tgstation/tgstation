@@ -357,7 +357,7 @@
 		if(M.occupant)
 			if(is_servant_of_ratvar(M.occupant))
 				continue
-			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
+			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		M.visible_message("<span class='warning'>[M] is struck by a [name]!</span>")
 		M.take_damage(damage, BURN, 0, 0)
 		hit_amount++

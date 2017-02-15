@@ -69,7 +69,7 @@
 
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
 	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
-		user << "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>"
+		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind
 		return
 	..()
@@ -198,7 +198,7 @@
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/ore/glass))
-		user << "<span class='notice'>You fill the sandbag.</span>"
+		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		qdel(src)
 		user.put_in_hands(I)
@@ -248,9 +248,9 @@
 /obj/item/weapon/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	user << "This capsule has the [template.name] stored."
-	user << template.description
-
+	to_chat(user, "This capsule has the [template.name] stored.")
+to_chat(user, template.description
+)
 /obj/item/weapon/survivalcapsule/attack_self()
 	// Can't grab when capsule is New() because templates aren't loaded then
 	get_template()
@@ -504,7 +504,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/machinery/computer/shuttle/auxillary_base/Topic(href, href_list)
 	if(href_list["move"])
 		if(z != ZLEVEL_STATION && shuttleId == "colony_drop")
-			usr << "<span class='warning'>You can't move the base again!</span>"
+			to_chat(usr, "<span class='warning'>You can't move the base again!</span>")
 			return 0
 		if(launch_warning)
 			say("<span class='danger'>Launch sequence activated! Prepare for drop!</span>")
@@ -542,19 +542,19 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/turf/T = get_turf(user)
 	var/obj/docking_port/mobile/auxillary_base/base_dock = locate(/obj/docking_port/mobile/auxillary_base) in SSshuttle.mobile
 	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
-		user << "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>"
+		to_chat(user, "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>")
 		return
 	if(!no_restrictions)
 		if(T.z != ZLEVEL_MINING)
-			user << "Wouldn't do much good dropping a mining base away from the mining area!"
+			to_chat(user, "Wouldn't do much good dropping a mining base away from the mining area!")
 			return
 		var/colony_radius = max(width, height)*0.5
 		var/list/area_counter = get_areas_in_range(colony_radius, T)
 		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
-			user << "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one."
+			to_chat(user, "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one.")
 			return
 
-	user << "<span class='notice'>You begin setting the landing zone parameters...</span>"
+	to_chat(user, "<span class='notice'>You begin setting the landing zone parameters...</span>")
 	setting = TRUE
 	if(!do_after(user, 50, target = user)) //You get a few seconds to cancel if you do not want to drop there.
 		setting = FALSE
@@ -579,7 +579,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 //Serves as a nice mechanic to people get ready for the launch.
 	minor_announce("Auxiliary base landing zone coordinates locked in for [get_area(user)]. Launch command now available!")
-	user << "<span class='notice'>Landing zone set.</span>"
+	to_chat(user, "<span class='notice'>Landing zone set.</span>")
 
 	qdel(src)
 
@@ -615,11 +615,11 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
 	if(anchored)
-		user << "<span class='warning'>Landing zone already set.</span>"
+		to_chat(user, "<span class='warning'>Landing zone already set.</span>")
 		return
 
 	if(anti_spam_cd)
-		user << "<span class='warning'>[src] is currently recalibrating. Please wait.</span>"
+		to_chat(user, "<span class='warning'>[src] is currently recalibrating. Please wait.</span>")
 		return
 
 	anti_spam_cd = 1
@@ -628,11 +628,11 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/turf/landing_spot = get_turf(src)
 
 	if(landing_spot.z != ZLEVEL_MINING)
-		user << "<span class='warning'>This device is only to be used in a mining zone.</span>"
+		to_chat(user, "<span class='warning'>This device is only to be used in a mining zone.</span>")
 		return
 	var/obj/machinery/computer/shuttle/auxillary_base/aux_base_console = locate(/obj/machinery/computer/shuttle/auxillary_base) in machines
 	if(!aux_base_console || get_dist(landing_spot, aux_base_console) > console_range)
-		user << "<span class='warning'>The auxillary base's console must be within [console_range] meters in order to interface.</span>"
+		to_chat(user, "<span class='warning'>The auxillary base's console must be within [console_range] meters in order to interface.</span>")
 		return //Needs to be near the base to serve as its dock and configure it to control the mining shuttle.
 
 //Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
@@ -657,12 +657,12 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 			break
 	if(!Mport)
-		user << "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>"
+		to_chat(user, "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>")
 		return
 	var/search_radius = max(Mport.width, Mport.height)*0.5
 	var/list/landing_areas = get_areas_in_range(search_radius, landing_spot)
 	for(var/area/shuttle/auxillary_base/AB in landing_areas) //You land NEAR the base, not IN it.
-		user << "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>"
+		to_chat(user, "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>")
 		SSshuttle.stationary.Remove(Mport)
 		qdel(Mport)
 		return
@@ -674,19 +674,19 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		mining_shuttle = MS
 
 	if(!mining_shuttle) //Not having a mining shuttle is a map issue
-		user << "<span class='warning'>No mining shuttle signal detected. Please contact Nanotrasen Support.</span>"
+		to_chat(user, "<span class='warning'>No mining shuttle signal detected. Please contact Nanotrasen Support.</span>")
 		SSshuttle.stationary.Remove(Mport)
 		qdel(Mport)
 		return
 
 	if(!mining_shuttle.canDock(Mport))
-		user << "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>"
+		to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>")
 		SSshuttle.stationary.Remove(Mport)
 		qdel(Mport)
 		return
 
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
-	user << "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>"
+	to_chat(user, "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>")
 	anchored = 1 //Locks in place to mark the landing zone.
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 

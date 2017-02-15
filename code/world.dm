@@ -149,7 +149,7 @@ var/last_irc_status = 0
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
 			for(var/client/C in clients)
 				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					C << "<span class='announce'>PR: [input["announce"]]</span>"
+					to_chat(C, "<span class='announce'>PR: [input["announce"]]</span>")
 #undef CHAT_PULLR
 
 	else if("crossmessage" in input)
@@ -190,7 +190,7 @@ var/last_irc_status = 0
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
+		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
 		WORLD_REBOOT(1)
 	var/delay
 	if(time)
@@ -198,9 +198,9 @@ var/last_irc_status = 0
 	else
 		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
-		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
+		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
-	world << "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>"
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 	var/round_end_sound_sent = FALSE
 	if(ticker.round_end_sound)
 		round_end_sound_sent = TRUE
@@ -211,10 +211,10 @@ var/last_irc_status = 0
 			C.Export("##action=load_rsc", ticker.round_end_sound)
 	sleep(delay)
 	if(ticker.delay_end)
-		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
 	if(mapchanging)
-		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
+		to_chat(world, "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>")
 		rebootingpendingmapchange = 1
 		spawn(1200)
 			if(mapchanging)
@@ -241,7 +241,7 @@ var/last_irc_status = 0
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndSound(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	world << "<span class='boldannounce'>Rebooting world. Loading next map...</span>"
+	to_chat(world, "<span class='boldannounce'>Rebooting world. Loading next map...</span>")
 	for(var/thing in clients)
 		var/client/C = thing
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
@@ -438,7 +438,7 @@ var/failed_db_connections = 0
 	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
 	. = changemap(VM)
 	if (. == 0)
-		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
+		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>")
 
 var/datum/votablemap/nextmap
 var/mapchanging = 0

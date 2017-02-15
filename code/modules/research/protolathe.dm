@@ -98,7 +98,7 @@ Note: Must be placed west/left of and R&D console to function.
 			return
 
 		if(!materials.has_space(sheet_material))
-			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+			to_chat(user, "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>")
 			return 1
 
 		var/obj/item/stack/sheet/stack = O
@@ -112,7 +112,7 @@ Note: Must be placed west/left of and R&D console to function.
 			var/stack_name = stack.name
 			busy = 1
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
-			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
+			to_chat(user, "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>")
 			add_overlay("protolathe_[stack_name]")
 			sleep(10)
 			overlays -= "protolathe_[stack_name]"
@@ -120,7 +120,7 @@ Note: Must be placed west/left of and R&D console to function.
 		updateUsrDialog()
 
 	else if(user.a_intent != INTENT_HARM)
-		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
+		to_chat(user, "<span class='warning'>You cannot insert this item into the [name]!</span>")
 		return 1
 	else
 		return 0

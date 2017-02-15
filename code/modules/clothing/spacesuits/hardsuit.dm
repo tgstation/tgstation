@@ -58,7 +58,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
-		wearer.show_message("\icon[src]<b><span class='robot'>[msg]</span></b>", 1)
+		wearer.show_message("[bicon(src)]<b><span class='robot'>[msg]</span></b>", 1)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	..()
@@ -97,28 +97,28 @@
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank/jetpack/suit))
 		if(jetpack)
-			user << "<span class='warning'>[src] already has a jetpack installed.</span>"
+			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
 			return
 		if(src == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
-			user << "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>"
+			to_chat(user, "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>")
 			return
 
 		if(user.transferItemToLoc(I, src))
 			jetpack = I
-			user << "<span class='notice'>You successfully install the jetpack into [src].</span>"
+			to_chat(user, "<span class='notice'>You successfully install the jetpack into [src].</span>")
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!jetpack)
-			user << "<span class='warning'>[src] has no jetpack installed.</span>"
+			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
 		if(src == user.get_item_by_slot(slot_wear_suit))
-			user << "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>"
+			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
 		jetpack.turn_off()
 		jetpack.loc = get_turf(src)
 		jetpack = null
-		user << "<span class='notice'>You successfully remove the jetpack from [src].</span>"
+		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
@@ -254,11 +254,11 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		to_chat(user, "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>") //To prevent some lighting anomalities.
 		return
 	on = !on
 	if(on || force)
-		user << "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>"
+		to_chat(user, "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>")
 		name = initial(name)
 		desc = initial(desc)
 		user.AddLuminosity(brightness_on)
@@ -267,7 +267,7 @@
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
-		user << "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>"
+		to_chat(user, "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>")
 		name += " (combat)"
 		desc = alt_desc
 		user.AddLuminosity(-brightness_on)

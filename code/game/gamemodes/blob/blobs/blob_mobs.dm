@@ -68,10 +68,10 @@
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
-			M << rendered
+			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			to_chat(M, "[link] [rendered]")
 
 ////////////////
 // BLOB SPORE //

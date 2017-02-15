@@ -398,7 +398,7 @@ var/time_last_changed_position = 0
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && issilicon(usr)) && (!modify))
-				usr << "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>"
+				to_chat(usr, "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>")
 		if ("logout")
 			region_access = null
 			head_subordinates = null
@@ -433,7 +433,7 @@ var/time_last_changed_position = 0
 							jobdatum = J
 							break
 					if(!jobdatum)
-						usr << "<span class='error'>No log exists for this job.</span>"
+						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
 						return
 
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
@@ -445,7 +445,7 @@ var/time_last_changed_position = 0
 				modify.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			else
-				usr << "<span class='error'>You are not authorized to demote this position.</span>"
+				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
@@ -456,7 +456,7 @@ var/time_last_changed_position = 0
 						modify.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					else
-						usr << "<span class='error'>Invalid name entered.</span>"
+						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
 						return
 		if ("mode")
 			mode = text2num(href_list["mode_target"])

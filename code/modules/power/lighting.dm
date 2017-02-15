@@ -51,11 +51,11 @@
 	..()
 	switch(src.stage)
 		if(1)
-			user << "It's an empty frame."
+			to_chat(user, "It's an empty frame.")
 		if(2)
-			user << "It's wired."
+			to_chat(user, "It's wired.")
 		if(3)
-			user << "The casing is closed."
+			to_chat(user, "The casing is closed.")
 
 /obj/structure/light_construct/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)
@@ -63,7 +63,7 @@
 		if(1)
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, W.usesound, 75, 1)
-				usr << "<span class='notice'>You begin deconstructing [src]...</span>"
+				to_chat(usr, "<span class='notice'>You begin deconstructing [src]...</span>")
 				if (!do_after(usr, 30*W.toolspeed, target = src))
 					return
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
@@ -85,11 +85,11 @@
 					user.visible_message("[user.name] adds wires to [src].", \
 						"<span class='notice'>You add wires to [src].</span>")
 				else
-					user << "<span class='warning'>You need one length of cable to wire [src]!</span>"
+					to_chat(user, "<span class='warning'>You need one length of cable to wire [src]!</span>")
 				return
 		if(2)
 			if(istype(W, /obj/item/weapon/wrench))
-				usr << "<span class='warning'>You have to remove the wires first!</span>"
+				to_chat(usr, "<span class='warning'>You have to remove the wires first!</span>")
 				return
 
 			if(istype(W, /obj/item/weapon/wirecutters))
@@ -281,13 +281,13 @@
 	..()
 	switch(status)
 		if(LIGHT_OK)
-			user << "It is turned [on? "on" : "off"]."
+			to_chat(user, "It is turned [on? "on" : "off"].")
 		if(LIGHT_EMPTY)
-			user << "The [fitting] has been removed."
+			to_chat(user, "The [fitting] has been removed.")
 		if(LIGHT_BURNED)
-			user << "The [fitting] is burnt out."
+			to_chat(user, "The [fitting] is burnt out.")
 		if(LIGHT_BROKEN)
-			user << "The [fitting] has been smashed."
+			to_chat(user, "The [fitting] has been smashed.")
 
 
 
@@ -303,7 +303,7 @@
 	// attempt to insert light
 	else if(istype(W, /obj/item/weapon/light))
 		if(status == LIGHT_OK)
-			user << "<span class='warning'>There is a [fitting] already inserted!</span>"
+			to_chat(user, "<span class='warning'>There is a [fitting] already inserted!</span>")
 		else
 			src.add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
@@ -314,9 +314,9 @@
 				src.add_fingerprint(user)
 				if(status != LIGHT_EMPTY)
 					drop_light_tube(user)
-					user << "<span class='notice'>You replace [L].</span>"
+					to_chat(user, "<span class='notice'>You replace [L].</span>")
 				else
-					user << "<span class='notice'>You insert [L].</span>"
+					to_chat(user, "<span class='notice'>You insert [L].</span>")
 				status = L.status
 				switchcount = L.switchcount
 				rigged = L.rigged
@@ -329,7 +329,7 @@
 				if(on && rigged)
 					explode()
 			else
-				user << "<span class='warning'>This type of light requires a [fitting]!</span>"
+				to_chat(user, "<span class='warning'>This type of light requires a [fitting]!</span>")
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
@@ -339,7 +339,7 @@
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
 			deconstruct()
 		else
-			user << "<span class='userdanger'>You stick \the [W] into the light socket!</span>"
+			to_chat(user, "<span class='userdanger'>You stick \the [W] into the light socket!</span>")
 			if(has_power() && (W.flags & CONDUCT))
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, src)
@@ -439,7 +439,7 @@
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
-		user << "There is no [fitting] in this light."
+		to_chat(user, "There is no [fitting] in this light.")
 		return
 
 	// make it burn hands if not wearing fire-insulated gloves
@@ -457,18 +457,18 @@
 			prot = 1
 
 		if(prot > 0)
-			user << "<span class='notice'>You remove the light [fitting].</span>"
+			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
-			user << "<span class='notice'>You telekinetically remove the light [fitting].</span>"
+			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
 		else
-			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
+			to_chat(user, "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>")
 
 			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 				H.update_damage_overlays()
 			return				// if burned, don't remove the light
 	else
-		user << "<span class='notice'>You remove the light [fitting].</span>"
+		to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 	// create a light tube/bulb item and put it in the user's hand
 	drop_light_tube(user)
 
@@ -494,10 +494,10 @@
 
 /obj/machinery/light/attack_tk(mob/user)
 	if(status == LIGHT_EMPTY)
-		user << "There is no [fitting] in this light."
+		to_chat(user, "There is no [fitting] in this light.")
 		return
 
-	user << "<span class='notice'>You telekinetically remove the light [fitting].</span>"
+	to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
 	// create a light tube/bulb item and put it in the user's hand
 	drop_light_tube()
 
@@ -617,7 +617,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 
-		user << "<span class='notice'>You inject the solution into \the [src].</span>"
+		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
 		if(S.reagents.has_reagent("plasma", 5))
 

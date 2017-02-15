@@ -7,13 +7,13 @@
 	..()
 
 	if(join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
+		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if(admin_notice)
-		src << "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>"
+		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>")
 
 	if(config.soft_popcap && living_player_count() >= config.soft_popcap)
-		src << "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>"
+		to_chat(src, "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>")
 
 	sight |= SEE_TURFS
 

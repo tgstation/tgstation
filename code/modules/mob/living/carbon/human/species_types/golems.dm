@@ -32,7 +32,7 @@
 	var/datum/species/golem/golem_type = pick(golem_types)
 	var/mob/living/carbon/human/H = C
 	H.set_species(golem_type)
-	H << "[initial(golem_type.info_text)]"
+	to_chat(H, "[initial(golem_type.info_text)]")
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"

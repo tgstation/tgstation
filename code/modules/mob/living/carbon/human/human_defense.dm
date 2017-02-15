@@ -462,7 +462,7 @@
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
 			if(stat == CONSCIOUS)
-				src << "<span class='notice'>You feel your heart beating again!</span>"
+				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
@@ -473,7 +473,7 @@
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
 			if(!informed)
-				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
+				to_chat(src, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
 				informed = 1
 			switch(severity)
 				if(1)
@@ -507,7 +507,7 @@
 				update_inv_neck()
 				update_inv_head()
 			else
-				src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>")
 		else
 			. = get_bodypart("head")
 			if(.)
@@ -528,7 +528,7 @@
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
-				src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>")
 		else
 			. = get_bodypart("chest")
 			if(.)
@@ -560,7 +560,7 @@
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
-				src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>")
 		else
 			. = get_bodypart("r_arm")
 			if(.)
@@ -586,7 +586,7 @@
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
-				src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>")
 		else
 			. = get_bodypart("r_leg")
 			if(.)
@@ -675,21 +675,21 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status]."
+				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>"
+					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
-				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
+				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
 
 			if(bleed_rate)
-				src << "<span class='danger'>You are bleeding!</span>"
+				to_chat(src, "<span class='danger'>You are bleeding!</span>")
 			if(staminaloss)
 				if(staminaloss > 30)
-					src << "<span class='info'>You're completely exhausted.</span>"
+					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
 				else
-					src << "<span class='info'>You feel fatigued.</span>"
+					to_chat(src, "<span class='info'>You feel fatigued.</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)

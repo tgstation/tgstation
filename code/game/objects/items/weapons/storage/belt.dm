@@ -473,7 +473,7 @@
 /obj/item/weapon/storage/belt/sabre/examine(mob/user)
 	..()
 	if(contents.len)
-		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
 	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
@@ -485,7 +485,7 @@
 		user.put_in_hands(I)
 		update_icon()
 	else
-		user << "[src] is empty."
+		to_chat(user, "[src] is empty.")
 
 /obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "sheath"

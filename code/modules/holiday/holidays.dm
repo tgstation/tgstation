@@ -413,5 +413,5 @@
 				begin_day += 31
 				begin_month-- //begins in march, ends in april
 
-//	world << "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]"
+//	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()

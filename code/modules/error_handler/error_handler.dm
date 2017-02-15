@@ -53,7 +53,7 @@ var/global/total_runtimes_skipped = 0
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
-				world.log << "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line]."
+				to_chat(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
 				error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
@@ -90,7 +90,7 @@ var/global/total_runtimes_skipped = 0
 	if(error_cache)
 		error_cache.log_error(E, desclines)
 
-	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	to_chat(world.log, "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]")
 	for(var/line in desclines)
 		world.log << line
 

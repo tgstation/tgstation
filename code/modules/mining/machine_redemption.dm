@@ -207,7 +207,7 @@
 					inserted_id.mining_points += points
 					points = 0
 				else
-					usr << "<span class='warning'>Required access not found.</span>"
+					to_chat(usr, "<span class='warning'>Required access not found.</span>")
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 			if(istype(I))
@@ -215,7 +215,7 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else usr << "<span class='warning'>No valid ID.</span>"
+			else to_chat(usr, "<span class='warning'>No valid ID.</span>")
 	if(href_list["release"])
 		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
@@ -229,7 +229,7 @@
 			if(inp.amount < 1)
 				stack_list -= text2path(href_list["release"])
 		else
-			usr << "<span class='warning'>Required access not found.</span>"
+			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
 		var/alloytype1 = text2path(href_list["alloytype1"])
 		var/alloytype2 = text2path(href_list["alloytype2"])
@@ -247,7 +247,7 @@
 				stack2.amount -= alloyout.amount
 				unload_mineral(alloyout)
 		else
-			usr << "<span class='warning'>Required access not found.</span>"
+			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 	updateUsrDialog()
 	return
 

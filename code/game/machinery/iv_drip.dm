@@ -65,7 +65,7 @@
 		return
 
 	if(!target.has_dna())
-		usr << "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>"
+		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
@@ -75,20 +75,20 @@
 			START_PROCESSING(SSmachine, src)
 			update_icon()
 		else
-			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"
+			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(beaker))
-			user << "<span class='warning'>There is already a reagent container loaded!</span>"
+			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		W.loc = src
 		beaker = W
-		user << "<span class='notice'>You attach \the [W] to \the [src].</span>"
+		to_chat(user, "<span class='notice'>You attach \the [W] to \the [src].</span>")
 		update_icon()
 		return
 	else
@@ -104,7 +104,7 @@
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		attached << "<span class='userdanger'>The IV drip needle is ripped out of you!</span>"
+		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
 		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
 		attached = null
 		update_icon()
@@ -158,7 +158,7 @@
 	set src in view(1)
 
 	if(!isliving(usr))
-		usr << "<span class='warning'>You can't do that!</span>"
+		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
 
 	if(usr.stat)
@@ -175,14 +175,14 @@
 	set src in view(1)
 
 	if(!isliving(usr))
-		usr << "<span class='warning'>You can't do that!</span>"
+		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
 
 	if(usr.stat)
 		return
 
 	mode = !mode
-	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
 
 /obj/machinery/iv_drip/examine()
@@ -190,14 +190,14 @@
 	..()
 	if (!(usr in view(2)) && usr!=loc) return
 
-	usr << "The IV drip is [mode ? "injecting" : "taking blood"]."
+	to_chat(usr, "The IV drip is [mode ? "injecting" : "taking blood"].")
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			usr << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+			to_chat(usr, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
 		else
-			usr << "<span class='notice'>Attached is an empty [beaker].</span>"
+			to_chat(usr, "<span class='notice'>Attached is an empty [beaker].</span>")
 	else
-		usr << "<span class='notice'>No chemicals are attached.</span>"
+		to_chat(usr, "<span class='notice'>No chemicals are attached.</span>")
 
-	usr << "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+	to_chat(usr, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")

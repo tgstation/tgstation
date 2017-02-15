@@ -11,8 +11,7 @@
 	always_keep = TRUE
 
 /obj/effect/proc_holder/changeling/regenerate/sting_action(mob/living/user)
-	user << "<span class='notice'>You feel an itching, both inside and \
-		outside as your tissues knit and reknit.</span>"
+	to_chat(user, "<span class='notice'>You feel an itching, both inside and outside as your tissues knit and reknit.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/list/missing = C.get_missing_limbs()

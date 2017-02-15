@@ -99,7 +99,7 @@
 	if(!secured || !on || next_activate > world.time)
 		return FALSE
 	pulse(0)
-	audible_message("\icon[src] *beep* *beep*", null, 3)
+	audible_message("[bicon(src)] *beep* *beep*", null, 3)
 	next_activate =  world.time + 30
 
 /obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
@@ -145,7 +145,7 @@
 /obj/item/device/assembly/infra/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return

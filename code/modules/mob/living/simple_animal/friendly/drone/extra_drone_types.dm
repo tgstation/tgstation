@@ -36,7 +36,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
-	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
+	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>") //Inform the evil lil guy
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
@@ -160,7 +160,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>You fiddle around with [src] to no avail.</span>"
+		to_chat(user, "<span class='warning'>You fiddle around with [src] to no avail.</span>")
 	else
 		..()
 

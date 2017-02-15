@@ -31,7 +31,7 @@
 
 	// asset_cache
 	if(href_list["asset_cache_confirm_arrival"])
-		//src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
+		//to_chat(//src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
@@ -54,7 +54,7 @@
 				msg += " Administrators have been informed."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
 				message_admins("[key_name_admin(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
-			src << "<span class='danger'>[msg]</span>"
+			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
 	if (!holder && config.secondtopiclimit)
@@ -66,12 +66,12 @@
 			topiclimiter[SECOND_COUNT] = 0
 		topiclimiter[SECOND_COUNT] += 1
 		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
-			src << "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>"
+			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+		to_chat(href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -102,7 +102,7 @@
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
-		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
 		return 0
 	return 1
 
@@ -110,11 +110,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+			to_chat(src, "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
+			to_chat(src, "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message = message
@@ -124,13 +124,13 @@
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
-		src << "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>"
+		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
 /*	//Don't need this at the moment. But it's here if it's needed later.
 	//Helps prevent multiple files being uploaded at once. Or right after eachother.
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
-		src << "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
+		to_chat(src, "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>")
 		return 0
 	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
@@ -177,7 +177,7 @@ var/next_external_rsc = 0
 					autorank = R
 					break
 			if(!autorank)
-				world << "Autoadmin rank not found"
+				to_chat(world, "Autoadmin rank not found")
 			else
 				var/datum/admins/D = new(autorank, ckey)
 				admin_datums[ckey] = D
@@ -205,30 +205,30 @@ var/next_external_rsc = 0
 	connection_timeofday = world.timeofday
 
 	if (byond_version < config.client_error_version)		//Out of date client.
-		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
+		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
 		src << config.client_error_message
-		src << "Your version: [byond_version]"
-		src << "Required version: [config.client_error_version] or later"
-		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
+		to_chat(src, "Your version: [byond_version]")
+		to_chat(src, "Required version: [config.client_error_version] or later")
+		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 		if (holder)
-			src << "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade"
+			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
 			qdel(src)
 			return 0
 	else if (byond_version < config.client_warn_version)	//We have words for this client.
-		src << "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>"
+		to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
 		src << config.client_warn_message
-		src << "Your version: [byond_version]"
-		src << "Required version to remove this message: [config.client_warn_version] or later"
-		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
+		to_chat(src, "Your version: [byond_version]")
+		to_chat(src, "Required version to remove this message: [config.client_warn_version] or later")
+		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
 	if (connection == "web" && !holder)
 		if (!config.allowwebclient)
-			src << "Web client is disabled"
+			to_chat(src, "Web client is disabled")
 			qdel(src)
 			return 0
 		if (config.webclientmembersonly && !IsByondMember())
-			src << "Sorry, but the web client is restricted to byond members only."
+			to_chat(src, "Sorry, but the web client is restricted to byond members only.")
 			qdel(src)
 			return 0
 
@@ -238,10 +238,13 @@ var/next_external_rsc = 0
 
 	if(holder)
 		add_admin_verbs()
-		src << get_message_output("memo")
+		if(!src)
+			log_world("??????")
+		var/msg = get_message_output("memo")
+		to_chat(src, msg)
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
-			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
+			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
 	add_verbs_from_config()
 	set_client_age_from_db()
@@ -250,9 +253,9 @@ var/next_external_rsc = 0
 		if (config.panic_bunker && !holder && !(ckey in deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			src << "Sorry but the server is currently not accepting connections from never before seen players."
+			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
 			if(config.allow_panic_bunker_bounce && tdata != "redirect")
-				src << "<span class='notice'>Sending you to [config.panic_server_name].</span>"
+				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name].</span>")
 				winset(src, null, "command=.options")
 				src << link("[config.panic_address]?redirect")
 			qdel(src)
@@ -283,7 +286,7 @@ var/next_external_rsc = 0
 	screen += void
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-		src << "<span class='info'>You have unread updates in the changelog.</span>"
+		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		if(config.aggressive_changelog)
 			changelog()
 		else
@@ -298,7 +301,7 @@ var/next_external_rsc = 0
 		convert_notes_sql(ckey)
 	src << get_message_output("message", ckey)
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
-		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
+		to_chat(src, "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
 
 	//This is down here because of the browse() calls in tooltip/New()
@@ -418,8 +421,8 @@ var/next_external_rsc = 0
 		if (oldcid != computer_id) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
 
-			src << "<span class='userdanger'>Connection Error:</span>"
-			src << "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>"
+			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
+			to_chat(src, "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>")
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
@@ -464,7 +467,7 @@ var/next_external_rsc = 0
 	var/url = winget(src, null, "url")
 	//special javascript to make them reconnect under a new window.
 	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	src << "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>"
+	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
 
 /client/proc/note_randomizer_user()
 	var/const/adminckey = "CID-Error"

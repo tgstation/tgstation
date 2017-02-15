@@ -450,7 +450,7 @@
 			gear_text = "<span class='brass'>The cogwheel is <i>unscrewed</i>, but is still <b>wrenched</b> to the brass.</span>"
 		if(GEAR_LOOSE)
 			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
-	user << gear_text
+	to_chat(user, gear_text)
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())
@@ -513,11 +513,11 @@
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
 			construction_state = GEAR_SECURE
 		else if(construction_state == GEAR_LOOSE)
-			user << "<span class='warning'>The gear isn't secure enough to fasten!</span>"
+			to_chat(user, "<span class='warning'>The gear isn't secure enough to fasten!</span>")
 		return 1
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(construction_state == GEAR_SECURE)
-			user << "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't get a solid grip!</span>"
+			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't get a solid grip!</span>")
 			return 0
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
@@ -538,7 +538,7 @@
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(construction_state == GEAR_SECURE || construction_state == GEAR_UNFASTENED)
-			user << "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>"
+			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>")
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")

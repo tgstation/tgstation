@@ -178,7 +178,7 @@ Difficulty: Medium
 		J.hotspot_expose(700,50,1)
 		for(var/mob/living/L in J.contents - hit_things)
 			L.adjustFireLoss(20)
-			L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			hit_things += L
 		previousturf = J
 		sleep(1)
@@ -247,7 +247,7 @@ Difficulty: Medium
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>"
+		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")
 		return
 	swoop_attack(1, A)
 

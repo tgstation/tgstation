@@ -31,7 +31,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
-	user << "This is a [generation]\th generation [name]!"
+	to_chat(user, "This is a [generation]\th generation [name]!")
 
 /obj/structure/glowshroom/New()
 	..()

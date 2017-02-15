@@ -51,9 +51,8 @@ var/next_mob_id = 0
 		var/gas = environment.gases[id]
 		if(gas[MOLES])
 			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
-
-	usr << t
-
+to_chat(usr, t
+)
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	if(!client)
@@ -80,9 +79,9 @@ var/next_mob_id = 0
 	// voice muffling
 	if(stat == UNCONSCIOUS)
 		if(type & 2) //audio
-			src << "<I>... You can almost hear something ...</I>"
+			to_chat(src, "<I>... You can almost hear something ...</I>")
 	else
-		src << msg
+		to_chat(src, msg)
 
 // Show a message to all player mobs who sees this atom
 // Show a message to the src mob (if the src is a mob)
@@ -196,7 +195,7 @@ var/next_mob_id = 0
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "<span class='warning'>You are unable to equip that!</span>" //Only print if qdel_on_fail is false
+				to_chat(src, "<span class='warning'>You are unable to equip that!</span>") //Only print if qdel_on_fail is false
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
@@ -267,7 +266,7 @@ var/next_mob_id = 0
 	set category = "IC"
 
 	if(is_blind(src))
-		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	face_atom(A)
@@ -408,7 +407,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "You don't have a mind datum for some reason, so you can't look at your notes, if you had any."
+		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -420,7 +419,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "You don't have a mind datum for some reason, so you can't add a note to it."
+		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -429,12 +428,12 @@ var/next_mob_id = 0
 	if (!( abandon_allowed ))
 		return
 	if ((stat != 2 || !( ticker )))
-		usr << "<span class='boldnotice'>You must be dead to use this!</span>"
+		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "<span class='boldnotice'>Please roleplay correctly!</span>"
+	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")

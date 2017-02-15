@@ -24,16 +24,16 @@
 	set category = null
 
 	if(!src.holder)
-		src << "<font color='red'>Only Admins may use this command.</font>"
+		to_chat(src, "<font color='red'>Only Admins may use this command.</font>")
 		return
 
 	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
 	if(!istype(target,/client))
-		src << "<font color='red'>Error: giveruntimelog(): Client not found.</font>"
+		to_chat(src, "<font color='red'>Error: giveruntimelog(): Client not found.</font>")
 		return
 
 	target.verbs |= /client/proc/getruntimelog
-	target << "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>"
+	to_chat(target, "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>")
 	return
 
 
@@ -53,7 +53,7 @@
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	src << ftp( file(path) )
-	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
+	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
 
@@ -73,7 +73,7 @@
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	src << ftp( file(path) )
-	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
+	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
 
@@ -88,7 +88,7 @@
 	if(fexists("[diary]"))
 		src << ftp(diary)
 	else
-		src << "<font color='red'>Server log not found, try using .getserverlog.</font>"
+		to_chat(src, "<font color='red'>Server log not found, try using .getserverlog.</font>")
 		return
 	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -102,7 +102,7 @@
 	if(fexists("[diaryofmeanpeople]"))
 		src << ftp(diaryofmeanpeople)
 	else
-		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
+		to_chat(src, "<font color='red'>Server attack log not found, try using .getserverlog.</font>")
 		return
 	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

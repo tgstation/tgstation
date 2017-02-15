@@ -314,13 +314,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!client)
 		return
 	if(!(mind && mind.current))
-		src << "<span class='warning'>You have no body.</span>"
+		to_chat(src, "<span class='warning'>You have no body.</span>")
 		return
 	if(!can_reenter_corpse)
-		src << "<span class='warning'>You cannot re-enter your body.</span>"
+		to_chat(src, "<span class='warning'>You cannot re-enter your body.</span>")
 		return
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
-		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
+		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
 	client.view = world.view
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
@@ -331,7 +331,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(flashwindow)
 		window_flash(client)
 	if(message)
-		src << "<span class='ghostalert'>[message]</span>"
+		to_chat(src, "<span class='ghostalert'>[message]</span>")
 		if(source)
 			var/obj/screen/alert/A = throw_alert("\ref[source]_notify_cloning", /obj/screen/alert/notify_cloning)
 			if(A)
@@ -345,7 +345,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.add_overlay(source)
 				source.layer = old_layer
 				source.plane = old_plane
-	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
+	to_chat(src, "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>")
 	if(sound)
 		src << sound(sound)
 
@@ -354,7 +354,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Teleport"
 	set desc= "Teleport to a location"
 	if(!isobserver(usr))
-		usr << "Not when you're not dead!"
+		to_chat(usr, "Not when you're not dead!")
 		return
 	var/A
 	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
@@ -367,7 +367,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 
 	if(!L || !L.len)
-		usr << "No area available."
+		to_chat(usr, "No area available.")
 
 	usr.loc = pick(L)
 	update_parallax_contents()
@@ -393,7 +393,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
 	if(orbiting && orbiting.orbiting != target)
-		src << "<span class='notice'>Now orbiting [target].</span>"
+		to_chat(src, "<span class='notice'>Now orbiting [target].</span>")
 
 	var/rot_seg
 
@@ -446,7 +446,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.loc = T
 				A.update_parallax_contents()
 			else
-				A << "This mob is not located in the game world."
+				to_chat(A, "This mob is not located in the game world.")
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Ghost"
@@ -488,11 +488,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/memory()
 	set hidden = 1
-	src << "<span class='danger'>You are dead! You have no mind to store memory!</span>"
+	to_chat(src, "<span class='danger'>You are dead! You have no mind to store memory!</span>")
 
 /mob/dead/observer/add_memory()
 	set hidden = 1
-	src << "<span class='danger'>You are dead! You have no mind to store memory!</span>"
+	to_chat(src, "<span class='danger'>You are dead! You have no mind to store memory!</span>")
 
 /mob/dead/observer/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"
@@ -500,7 +500,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
 	updateghostsight()
-	usr << "You [(ghostvision?"now":"no longer")] have ghost vision."
+	to_chat(usr, "You [(ghostvision?"now":"no longer")] have ghost vision.")
 
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
@@ -581,14 +581,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 
 	if(ismegafauna(target))
-		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
+		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return 0
 
 	if(can_reenter_corpse || (mind && mind.current))
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
 	if(target.key)
-		src << "<span class='warning'>Someone has taken this body while you were choosing!</span>"
+		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
 		return 0
 
 	target.key = key
@@ -602,11 +602,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
 	if (client && global.cross_allowed)
-		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+		to_chat(src, "<span class='notice'>Sending you to [global.cross_address].</span>")
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 		client << link(global.cross_address)
 	else
-		src << "<span class='error'>There is no other server configured!</span>"
+		to_chat(src, "<span class='error'>There is no other server configured!</span>")
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -668,11 +668,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(data_huds_on) //remove old huds
 		remove_data_huds()
-		src << "<span class='notice'>Data HUDs disabled.</span>"
+		to_chat(src, "<span class='notice'>Data HUDs disabled.</span>")
 		data_huds_on = 0
 	else
 		show_data_huds()
-		src << "<span class='notice'>Data HUDs enabled.</span>"
+		to_chat(src, "<span class='notice'>Data HUDs enabled.</span>")
 		data_huds_on = 1
 
 /mob/dead/observer/verb/restore_ghost_apperance()
@@ -781,4 +781,4 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(SSpai)
 			SSpai.recruitWindow(src)
 	else
-		usr << "Can't become a pAI candidate while not dead!"
+		to_chat(usr, "Can't become a pAI candidate while not dead!")

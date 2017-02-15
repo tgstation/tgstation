@@ -415,7 +415,7 @@
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
 				else
-					H << "You're not kawaii enough for this."
+					to_chat(H, "You're not kawaii enough for this.")
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
@@ -451,7 +451,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","RET")
 			for(var/mob/living/carbon/human/H in player_list)
-				H << "<span class='boldannounce'>You suddenly feel stupid.</span>"
+				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
 				H.setBrainLoss(60)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 

@@ -193,6 +193,6 @@ var/global/max_secret_rooms = 6
 				new garbage(T)
 				areapoints -= 5
 				emptyturfs -= T
-			//world.log << "The [theme] themed [T.loc] has been created!"
+			//to_chat(//world.log, "The [theme] themed [T.loc] has been created!")
 
 	return 1

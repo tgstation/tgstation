@@ -48,7 +48,7 @@
 			add_overlay(stampoverlay)
 
 /obj/item/weapon/paperplane/attack_self(mob/user)
-	user << "<span class='notice'>You unfold [src].</span>"
+	to_chat(user, "<span class='notice'>You unfold [src].</span>")
 	var/internal_paper_tmp = internalPaper
 	internalPaper = null
 	qdel(src)
@@ -57,7 +57,7 @@
 /obj/item/weapon/paperplane/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		user << "<span class='notice'>You should unfold [src] before changing it.</span>"
+		to_chat(user, "<span class='notice'>You should unfold [src] before changing it.</span>")
 		return
 
 	else if(istype(P, /obj/item/weapon/stamp)) 	//we don't randomize stamps on a paperplane
@@ -102,9 +102,9 @@
 	if ( istype(user) )
 		if( (!in_range(src, user)) || user.stat || user.restrained() )
 			return
-		user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
+		to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
 		user.temporarilyRemoveItemFromInventory(src)
 		I = new /obj/item/weapon/paperplane(user, src)
 		user.put_in_hands(I)
 	else
-		user << "<span class='notice'> You lack the dexterity to fold \the [src]. </span>"
+		to_chat(user, "<span class='notice'> You lack the dexterity to fold \the [src]. </span>")

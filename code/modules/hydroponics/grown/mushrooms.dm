@@ -172,7 +172,7 @@
 	M.move_to_delay -= round(seed.production / 50)
 	M.health = M.maxHealth
 	qdel(src)
-	user << "<span class='notice'>You plant the walking mushroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
 
 
 // Chanterelle
@@ -241,7 +241,7 @@
 	planted.max_integrity = seed.endurance
 	planted.yield = seed.yield
 	planted.potency = seed.potency
-	user << "<span class='notice'>You plant [src].</span>"
+	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	qdel(src)
 
 

@@ -65,15 +65,15 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] <b>[src]</b>!\n"
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))
 			if(I.blood_DNA)
-				msg += "<span class='warning'>It is holding \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+				msg += "<span class='warning'>It is holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
-				msg += "It is holding \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+				msg += "It is holding [bicon(I)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
 	if(!client && stat != DEAD)
@@ -87,9 +87,9 @@
 	else if(health < (maxHealth/2))
 		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
-	user << msg
+to_chat(user, msg
 
-
+)
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
 
@@ -152,7 +152,7 @@
 		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 		S.mind.objectives += newobjective
 		S << S.playstyle_string
-		S << "<B>Objective #[1]</B>: [newobjective.explanation_text]"
+		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
 		return
 	else
 		return ..()

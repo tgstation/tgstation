@@ -108,7 +108,7 @@ var/datum/subsystem/vote/SSvote
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
 	remove_action_buttons()
-	world << "\n<font color='purple'>[text]</font>"
+	to_chat(world, "\n<font color='purple'>[text]</font>")
 	return .
 
 /datum/subsystem/vote/proc/result()
@@ -135,7 +135,7 @@ var/datum/subsystem/vote/SSvote
 		if(!active_admins)
 			world.Reboot("Restart vote successful.", "end_error", "restart vote")
 		else
-			world << "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>"
+			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 
 	return .
@@ -156,7 +156,7 @@ var/datum/subsystem/vote/SSvote
 		if(started_time)
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(mode)
-				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
+				to_chat(usr, "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
 				return 0
 
 			var/admin = FALSE
@@ -165,7 +165,7 @@ var/datum/subsystem/vote/SSvote
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
-				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
+				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>")
 				return 0
 
 		reset()
@@ -192,7 +192,7 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 		for(var/c in clients)
 			var/client/C = c

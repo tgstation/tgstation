@@ -47,7 +47,7 @@
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>You fiddle around with [src], to no avail.</span>"
+		to_chat(user, "<span class='warning'>You fiddle around with [src], to no avail.</span>")
 		return 0
 	..()
 
@@ -56,32 +56,32 @@
 		..()
 		return
 	if(is_servant_of_ratvar(target))
-		user << "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>"
+		to_chat(user, "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>")
 		return
 	var/mob/living/carbon/human/H = target
 	var/obj/item/bodypart/head/HE = H.get_bodypart("head")
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 	if(!HE)
-		user << "<span class='warning'>[H] has no head, and thus no mind!</span>"
+		to_chat(user, "<span class='warning'>[H] has no head, and thus no mind!</span>")
 		return
 	if(H.stat == CONSCIOUS)
-		user << "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>"
+		to_chat(user, "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>")
 		return
 	if(H.head)
 		var/obj/item/I = H.head
 		if(I.flags_inv & HIDEHAIR)
-			user << "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>"
+			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>")
 			return
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask
 		if(I.flags_inv & HIDEHAIR)
-			user << "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>"
+			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>")
 			return
 	if(!B)
-		user << "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>"
+		to_chat(user, "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>")
 		return
 	if(!H.key)
-		user << "<span class='warning'>[H] has no mind to claim!</span>"
+		to_chat(user, "<span class='warning'>[H] has no mind to claim!</span>")
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)

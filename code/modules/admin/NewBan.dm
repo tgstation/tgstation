@@ -210,17 +210,17 @@ var/savefile/Banlist
 			Banlist.cd = "/base"
 			Banlist.dir.Add("trash[i]trashid[i]")
 			Banlist.cd = "/base/trash[i]trashid[i]"
-			Banlist["key"] << "trash[i]"
+			to_chat(Banlist["key"], "trash[i]")
 		else
 			Banlist.cd = "/base"
 			Banlist.dir.Add("[last]trashid[i]")
 			Banlist.cd = "/base/[last]trashid[i]"
 			Banlist["key"] << last
-		Banlist["id"] << "trashid[i]"
-		Banlist["reason"] << "Trashban[i]."
+		to_chat(Banlist["id"], "trashid[i]")
+		to_chat(Banlist["reason"], "Trashban[i].")
 		Banlist["temp"] << a
 		Banlist["minutes"] << CMinutes + rand(1,2000)
-		Banlist["bannedby"] << "trashmin"
+		to_chat(Banlist["bannedby"], "trashmin")
 		last = "trash[i]"
 
 	Banlist.cd = "/base"

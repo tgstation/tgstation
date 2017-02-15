@@ -22,7 +22,7 @@
 		var/obj/item/O = new item_path(user.loc)
 		user.put_in_hands(O)
 	if(spawn_msg)
-		user << spawn_msg
+		to_chat(user, spawn_msg)
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return gang && (gang.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
@@ -92,7 +92,7 @@
 
 /datum/gang_item/function/outfit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(gang && gang.gang_outfit(user, gangtool))
-		user << "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>"
+		to_chat(user, "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>")
 		if(gangtool)
 			gangtool.outfits -= 1
 
@@ -200,7 +200,7 @@
 		var/obj/item/O = new item_path(user.loc, gang) //we need to override this whole proc for this one argument
 		user.put_in_hands(O)
 	if(spawn_msg)
-		user << spawn_msg
+		to_chat(user, spawn_msg)
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
@@ -235,7 +235,7 @@
 	if(gang && isboss(user, gang))
 		item_type = /obj/item/device/gangtool/spare/lt
 		if(gang.bosses.len < 3)
-			user << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
+			to_chat(user, "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>")
 	else
 		item_type = /obj/item/device/gangtool/spare
 	var/obj/item/device/gangtool/spare/tool = new item_type(user.loc)
@@ -277,16 +277,16 @@
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
 	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
-		user << "<span class='warning'>You can only use this on the station!</span>"
+		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
 		return FALSE
 
 	for(var/obj/obj in usrturf)
 		if(obj.density)
-			user << "<span class='warning'>There's not enough room here!</span>"
+			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))
-		user << "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>"
+		to_chat(user, "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
 		return FALSE
 	return ..()
 

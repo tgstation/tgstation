@@ -15,7 +15,7 @@
 	if(istype(C, /obj/item/weapon/screwdriver))
 		if(broken || burnt)
 			return
-		user << "<span class='danger'>You unscrew the planks.</span>"
+		to_chat(user, "<span class='danger'>You unscrew the planks.</span>")
 		new floor_tile(src)
 		make_plating()
 		playsound(src, C.usesound, 80, 1)

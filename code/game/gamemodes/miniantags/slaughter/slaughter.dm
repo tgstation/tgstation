@@ -92,7 +92,7 @@
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
-			user <<"<span class='warning'>...and you don't feel any different.</span>"
+			to_chat(user, "<span class='warning'>...and you don't feel any different.</span>")
 			qdel(src)
 			return
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
@@ -178,8 +178,7 @@
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
 			playsound(T, feast_sound, 50, 1, -1)
-			M << "<span class='clown'>You leave [src]'s warm embrace, \
-				and feel ready to take on the world.</span>"
+			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
 
 /mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
 	if(consumed_mobs)

@@ -100,13 +100,13 @@
 
 		if(species)
 			if(O.use(10))
-				user << "You finish up the golem shell with ten sheets of [O]."
+				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
 				new shell_type(get_turf(src), species, has_owner, user)
 				qdel(src)
 			else
-				user << "You need at least ten sheets to finish a golem."
+				to_chat(user, "You need at least ten sheets to finish a golem.")
 		else
-			user << "You can't build a golem out of this kind of material."
+			to_chat(user, "You can't build a golem out of this kind of material.")
 
 //made with xenobiology, the golem obeys its creator
 /obj/item/golem_shell/artificial

@@ -51,7 +51,7 @@
 			if(petrified_mob)
 				S.mind.transfer_to(petrified_mob)
 				petrified_mob.Weaken(5)
-				petrified_mob << "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>"
+				to_chat(petrified_mob, "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>")
 		qdel(S)
 
 	for(var/obj/O in src)

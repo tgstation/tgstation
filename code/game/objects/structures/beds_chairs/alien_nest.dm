@@ -40,7 +40,7 @@
 					"<span class='italics'>You hear squelching...</span>")
 				if(!do_after(M, 1200, target = src))
 					if(M && M.buckled)
-						M << "<span class='warning'>You fail to unbuckle yourself!</span>"
+						to_chat(M, "<span class='warning'>You fail to unbuckle yourself!</span>")
 					return
 				if(!M.buckled)
 					return

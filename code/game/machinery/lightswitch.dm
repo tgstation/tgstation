@@ -38,7 +38,7 @@
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
-	user << "It is [on? "on" : "off"]."
+	to_chat(user, "It is [on? "on" : "off"].")
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)

@@ -67,7 +67,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [ridden.name].</span>"
+		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive \the [ridden.name].</span>")
 
 /datum/riding/proc/Process_Spacemove(direction)
 	if(ridden.has_gravity())
@@ -262,7 +262,7 @@
 	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
 	else
-		user << "Boats don't go on land!"
+		to_chat(user, "Boats don't go on land!")
 		return 0
 
 /datum/riding/boat/dragon
@@ -296,7 +296,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		user << "<span class='notice'>You'll need something  to guide the [ridden.name].</span>"
+		to_chat(user, "<span class='notice'>You'll need something  to guide the [ridden.name].</span>")
 
 //CYBORGS. NO, THEY ARE NOT ANIMALS.
 /datum/riding/cyborg
@@ -311,14 +311,14 @@
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
 		if(kick)
-			user << "<span class='userdanger'>You fall off of [ridden]!</span>"
+			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
 			ridden.unbuckle_mob(user)
 			return
 	if(istype(user, /mob/living/carbon))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			ridden.unbuckle_mob(user)
-			user << "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>"
+			to_chat(user, "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>")
 			return
 
 /datum/riding/cyborg/handle_vehicle_layer()

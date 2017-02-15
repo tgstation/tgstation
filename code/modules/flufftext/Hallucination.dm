@@ -200,10 +200,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
 		sleep(10)
 		var/xeno_name = xeno.name
-		target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
+		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
 		sleep(10)
 		qdel(xeno)
-		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
+		to_chat(target, "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>")
 	qdel(src)
 
 /obj/effect/hallucination/simple/clown
@@ -393,7 +393,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				O << "<span class='danger'>[my_target] stumbles around.</span>"
+				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
 
 /obj/effect/fake_attacker/New(loc,var/mob/living/carbon/T)
 	..()
@@ -417,9 +417,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	else if(src.dir == WEST)
 		del src.currentimage
 		src.currentimage = new /image(left,src)
-	my_target << currentimage
+to_chat(my_target, currentimage
 
-
+)
 /obj/effect/fake_attacker/proc/attack_loop()
 	while(1)
 		sleep(rand(5,10))
@@ -461,7 +461,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	target << I
+	to_chat(target, I)
 	QDEL_IN(O, 300)
 
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
@@ -544,7 +544,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		"<span class='warning'>You feel faint.</span>", \
 		"<span class='noticealien'>You hear a strange, alien voice in your head...</span>[pick("Hiss","Ssss")]", \
 		"<span class='notice'>You can see...everything!</span>")
-	target << chosen
+	to_chat(target, chosen)
 	qdel(src)
 
 /mob/living/carbon/proc/hallucinate(hal_type) // Todo -> proc / defines
@@ -571,7 +571,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			new /obj/effect/hallucination/message(src.loc,src)
 		if("sounds")
 			//Strange audio
-			//src << "Strange Audio"
+			//to_chat(//src, "Strange Audio")
 			switch(rand(1,18))
 				if(1) src << 'sound/machines/airlock.ogg'
 				if(2)
@@ -604,10 +604,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 					src << pick(creepyasssounds)
 				if(13)
-					src << "<span class='warning'>You feel a tiny prick!</span>"
+					to_chat(src, "<span class='warning'>You feel a tiny prick!</span>")
 				if(14)
-					src << "<h1 class='alert'>Priority Announcement</h1>"
-					src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
+					to_chat(src, "<h1 class='alert'>Priority Announcement</h1>")
+					to_chat(src, "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
 					src << sound('sound/AI/shuttledock.ogg')
 				if(15)
 					src << 'sound/items/Welder.ogg'
@@ -619,13 +619,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					src << 'sound/weapons/saberoff.ogg'
 		if("hudscrew")
 			//Screwy HUD
-			//src << "Screwy HUD"
+			//to_chat(//src, "Screwy HUD")
 			hal_screwyhud = pick(1,2,3,3,4,4)
 			spawn(rand(100,250))
 				hal_screwyhud = 0
 		if("items")
 			//Strange items
-			//src << "Traitor Items"
+			//to_chat(//src, "Traitor Items")
 			if(!halitem)
 				halitem = new
 				var/obj/item/l_hand = get_item_for_held_index(1)
@@ -675,7 +675,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					QDEL_IN(halitem, rand(100, 250))
 		if("dangerflash")
 			//Flashes of danger
-			//src << "Danger Flash"
+			//to_chat(//src, "Danger Flash")
 			if(!halimage)
 				var/list/possible_points = list()
 				for(var/turf/open/floor/F in view(src,world.view))
@@ -685,13 +685,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 					switch(rand(1,3))
 						if(1)
-							//src << "Space"
+							//to_chat(//src, "Space")
 							halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
 						if(2)
-							//src << "Fire"
+							//to_chat(//src, "Fire")
 							halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
 						if(3)
-							//src << "C4"
+							//to_chat(//src, "C4")
 							halimage = image('icons/obj/grenade.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 

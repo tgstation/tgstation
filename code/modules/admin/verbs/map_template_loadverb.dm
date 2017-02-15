@@ -21,7 +21,7 @@
 		if(template.load(T, centered = TRUE))
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has placed a map template ([template.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a></span>")
 		else
-			usr << "Failed to place map"
+			to_chat(usr, "Failed to place map")
 	usr.client.images -= preview
 
 /client/proc/map_template_upload()
@@ -32,13 +32,13 @@
 	if(!map)
 		return
 	if(copytext("[map]",-4) != ".dmm")
-		usr << "Bad map file: [map]"
+		to_chat(usr, "Bad map file: [map]")
 		return
 
 	var/datum/map_template/M = new(map=map, rename="[map]")
 	if(M.preload_size(map))
-		usr << "Map template '[map]' ready to place ([M.width]x[M.height])"
+		to_chat(usr, "Map template '[map]' ready to place ([M.width]x[M.height])")
 		map_templates[M.name] = M
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has uploaded a map template ([map])</span>")
 	else
-		usr << "Map template '[map]' failed to load properly"
+		to_chat(usr, "Map template '[map]' failed to load properly")

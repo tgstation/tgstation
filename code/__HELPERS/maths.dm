@@ -139,7 +139,7 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 		var/size_factor = ((-cos(inputToDegrees) +1) /2) //returns a value from 0 to 1
 
 		return size_factor + scaling_modifier //scale mod of 0 results in a number from 0 to 1. A scale modifier of +0.5 returns 0.5 to 1.5
-		//world<< "Transform multiplier of [src] is [size_factor + scaling_modifer]"
+		//to_chat(world, "Transform multiplier of [src] is [size_factor + scaling_modifer]")
 
 
 

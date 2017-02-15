@@ -21,7 +21,7 @@
 		return
 
 	if(!connected)
-		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
+		to_chat(viewers(null, null), "Cannot locate mass driver connector. Cancelling firing sequence!")
 		return
 
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
@@ -134,7 +134,7 @@
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "<span class='notice'>Access denied.</span>"
+		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return
 	else
 		..()

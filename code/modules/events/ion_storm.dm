@@ -34,9 +34,9 @@
 			if(message)
 				M.add_ion_law(message)
 				log_game("ION law added to [M]: [message]")
-				M << "<br>"
-				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
-				M << "<br>"
+				to_chat(M, "<br>")
+				to_chat(M, "<span class='danger'>[message] ...LAWS UPDATED</span>")
+				to_chat(M, "<br>")
 
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
