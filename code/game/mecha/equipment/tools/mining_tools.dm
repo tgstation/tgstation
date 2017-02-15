@@ -81,9 +81,9 @@
 	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \
 						"<span class='userdanger'>[chassis] drills [target] with [src].</span>")
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-	 if(target.stat == DEAD)
-	 	if(target.butcher_results)
-			target.harvest(chassis) // Butcher the mob with our drill.
+	if(target.stat == DEAD)
+		if(target.butcher_results)
+			target.harvest(chassis)//Butcher the mob with our drill.
 		else
 			target.gib()
 	else
