@@ -21,14 +21,14 @@
 			return say_dead(message)
 
 		var/mob/living/simple_animal/borer/B = loc
-		src << "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>"
-		B.victim << "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>"
+		src << "<i><span class='alien'>You whisper silently, \"[russian_html2text(message)]\"</span></i>"
+		B.victim << "<i><span class='alien'>The captive mind of [src] whispers, \"[russian_html2text(message)]\"</span></i>"
 
 		for (var/mob/M in player_list)
 			if(isnewplayer(M))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
-				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>"
+				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [russian_html2text(message)]</i>"
 
 /mob/living/captive_brain/emote(var/message)
 	return
@@ -299,9 +299,9 @@ var/total_borer_hosts_needed = 10
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
-			borer << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
+			borer << "<span class='borer'>Cortical Link: [truename] sings, \"[russian_html2text(message)]\""
 		for(var/mob/dead in dead_mob_list)
-			dead << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
+			dead << "<span class='borer'>Cortical Link: [truename] sings, \"[russian_html2text(message)]\""
 		return
 	if(!victim)
 		src << "<span class='warning'>You cannot speak without a host!</span>"
