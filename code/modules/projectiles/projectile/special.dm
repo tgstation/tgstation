@@ -234,6 +234,12 @@
 	damage = 10
 	range = 6
 
+/obj/item/projectile/plasma/turret
+	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
+	name = "plasma beam"
+	damage = 6
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
 
 /obj/item/projectile/gravityrepulse
 	name = "repulsion bolt"
