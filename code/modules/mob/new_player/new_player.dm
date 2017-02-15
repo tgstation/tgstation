@@ -40,9 +40,7 @@
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
-		establish_db_connection()
-
-		if(dbcon.IsConnected())
+		if (dbcon.Connect())
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
