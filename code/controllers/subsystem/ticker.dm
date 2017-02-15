@@ -75,7 +75,7 @@ var/datum/subsystem/ticker/ticker
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
 			for(var/client/C in clients)
-				window_flash(C) //let them know lobby has opened up.
+				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -210,8 +210,8 @@ var/datum/subsystem/ticker/ticker
 			qdel(S)
 
 	var/list/adm = get_admin_counts()
-	if(!adm["present"])
-		send2irc("Server", "Round just started with no active admins online!")
+	var/list/allmins = adm["present"]
+	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
@@ -327,7 +327,7 @@ var/datum/subsystem/ticker/ticker
 			bombloc = bomb.z
 		else if(!station_missed)
 			bombloc = ZLEVEL_STATION
-		
+
 		if(mode)
 			mode.explosion_in_progress = 0
 			world << "<B>The station was destoyed by the nuclear blast!</B>"
@@ -550,7 +550,7 @@ var/datum/subsystem/ticker/ticker
 		for(var/path in SSgarbage.didntgc)
 			dellog += "Path : [path] \n"
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-		world.log << dellog
+		log_world(dellog)
 
 	CHECK_TICK
 

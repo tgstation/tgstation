@@ -98,6 +98,21 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/blood/random(src)
 
+/obj/structure/closet/crate/freezer/surplus_limbs
+	name = "surplus prosthetic limbs"
+	desc = "A crate containing an assortment of cheap prosthetic limbs."
+
+/obj/structure/closet/crate/freezer/surplus_limbs/New()
+	. = ..()
+	new /obj/item/bodypart/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/r_leg/robot/surplus(src)
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"

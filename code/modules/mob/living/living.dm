@@ -606,7 +606,7 @@
 	if(!override)
 		float(!has_gravity)
 
-/mob/living/proc/float(on)
+/mob/living/float(on)
 	if(throwing)
 		return
 	var/fixed = 0

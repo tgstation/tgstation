@@ -498,9 +498,9 @@ var/list/teleport_runes = list()
 	sleep(40)
 	if(src)
 		color = "#FF0000"
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 	if(cult_mode)
 		cult_mode.eldergod = 0
+	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))

@@ -35,6 +35,8 @@
 	var/turf/target_turf = get_turf(src)
 	for(var/i in 1 to t_range-1)
 		var/turf/new_turf = get_step(target_turf, direction)
+		if(!new_turf)
+			break
 		target_turf = new_turf
 		if(new_turf.density)
 			break

@@ -33,10 +33,7 @@
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar-Sie"
 
-	msg = "<span class='adminnotice'>\icon[cross] \
-		<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>\
-		[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> \
-		[msg]</span>"
+	msg = "<span class='adminnotice'>\icon[cross]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)] [ADMIN_SMITE(src)]:</b> [msg]</span>"
 
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
