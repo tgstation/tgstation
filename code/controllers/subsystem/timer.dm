@@ -208,8 +208,7 @@ var/datum/subsystem/timer/SStimer
 		SStimer.timer_id_dict["timerid[id]"] = src
 
 	if (callBack.object != GLOBAL_PROC)
-		LAZYINITLIST(callBack.object.active_timers)
-		callBack.object.active_timers += src
+		LAZYADD(callBack.object.active_timers, src)
 
 	if (flags & TIMER_CLIENT_TIME)
 		SStimer.clienttime_timers += src

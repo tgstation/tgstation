@@ -76,6 +76,7 @@
 	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
 	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
 	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
+	var/githubrepoid
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
@@ -358,7 +359,7 @@
 				if("servername")
 					config.server_name = value
 				if("serversqlname")
-					config.server_sql_name = 1
+					config.server_sql_name = value
 				if("stationname")
 					config.station_name = value
 				if("hostedby")
@@ -375,6 +376,8 @@
 					config.rulesurl = value
 				if("githuburl")
 					config.githuburl = value
+				if("githubrepoid")
+					config.githubrepoid = value
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")

@@ -36,7 +36,7 @@ AI MODULES
 	if(laws.len)
 		user << "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B>"
 		for(var/law in laws)
-			user << "\"[law]\""
+			user << "\"[russian_html2text(law)]\""
 
 //The proc other things should be calling
 /obj/item/weapon/aiModule/proc/install(datum/ai_laws/law_datum, mob/user)
@@ -68,9 +68,9 @@ AI MODULES
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
 	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
-	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
+	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [russian_html2text(law2log)]" : ""]")
 	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]).[law2log ? " The law specified [law2log]" : ""]")
-	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
+	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [russian_html2text(law2log)]" : ""]")
 
 //The proc that actually changes the silicon's laws.
 /obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
@@ -244,7 +244,7 @@ AI MODULES
 			return
 		newpos = 15
 	lawpos = min(newpos, 50)
-	var/targName = sanitize_russian(stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN),1)
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
 	if(!targName)
 		return
 	laws[1] = targName
@@ -454,7 +454,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(mob/user)
-	var/targName = sanitize_russian(stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1]),1)
+	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
 	if(!targName)
 		return
 	laws[1] = targName
@@ -463,7 +463,6 @@ AI MODULES
 /obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
 	return laws[1]
-
 
 /******************** Hacked AI Module ******************/
 

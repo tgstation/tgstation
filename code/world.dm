@@ -39,6 +39,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	load_configuration()
+	revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
@@ -185,7 +186,7 @@ var/last_irc_status = 0
 		else
 			return ircadminwho()
 
-#define WORLD_REBOOT(X) log_world("World rebooted at [world.timeofday]"); ..(X)
+#define WORLD_REBOOT(X) log_world("World rebooted at [world.timeofday]"); ..(X); return;
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
@@ -284,11 +285,7 @@ var/last_irc_status = 0
 	F << the_mode
 
 /world/proc/load_motd()
-	join_motd = file2text("config/motd.txt")
-	join_motd += "<br>"
-	for(var/line in revdata.testmerge)
-		if(line)
-			join_motd += "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a><br>"
+	join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()
