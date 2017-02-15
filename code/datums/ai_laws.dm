@@ -355,20 +355,20 @@
 	for (var/index = 1, index <= ion.len, index++)
 		var/law = ion[index]
 		var/num = ionnum()
-		who << "[num]. [law]"
+		who << "[num]. [russian_html2text(law)]"
 
 	var/number = 1
 	for (var/index = 1, index <= inherent.len, index++)
 		var/law = inherent[index]
 
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			who << "[number]. [russian_html2text(law)]"
 			number++
 
 	for (var/index = 1, index <= supplied.len, index++)
 		var/law = supplied[index]
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			who << "[number]. [russian_html2text(law)]"
 			number++
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
