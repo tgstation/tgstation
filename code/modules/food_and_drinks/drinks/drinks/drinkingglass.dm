@@ -637,16 +637,21 @@
 		desc = "A shot glass - the universal symbol for bad decisions."
 		return
 
-// for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/New()
 	..()
 	on_reagent_change()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/soda
+	name = "Soda Water"
 	list_reagents = list("sodawater" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
+	name = "Space Cola"
 	list_reagents = list("cola" = 50)
+	
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
+	name = "Nuka Cola"
+	list_reagents = list("nuka_cola" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs

@@ -45,7 +45,7 @@
 			show_to(M)
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 
@@ -54,14 +54,9 @@
 
 			playsound(loc, "rustle", 50, 1, -5)
 
-
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.temporarilyRemoveItemFromInventory(src))
-					return
-				if(!M.put_in_hand(src,H.held_index))
-					qdel(src)
-					return
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 			add_fingerprint(usr)
 

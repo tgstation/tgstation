@@ -10,11 +10,11 @@
 	construction_value = 20
 	max_integrity = 125
 	obj_integrity = 125
-	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/small = 5, \
+	break_message = "<span class='warning'>The prism falls to the ground with a heavy thud!</span>"
+	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/large = 1, \
-	/obj/item/clockwork/component/vanguard_cogwheel = 1)
+	/obj/item/clockwork/component/vanguard_cogwheel/onyx_prism = 1)
 	var/heal_attempts = 4
 	var/heal_cost = MIN_CLOCKCULT_POWER*2
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)

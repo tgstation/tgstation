@@ -44,12 +44,14 @@
 	if((!clockcult_user || !is_servant_of_ratvar(src)) && cell && cell.charge)
 		. = min(cell.charge, 250)
 		cell.use(.)
-		src << "<span class='userdanger'>ERROR: Power loss detected!</span>"
+		if(prob(20))
+			src << "<span class='userdanger'>ERROR: Power loss detected!</span>"
 		spark_system.start()
 
 /obj/mecha/power_drain(clockcult_user)
 	if((!clockcult_user || !occupant || occupant && !is_servant_of_ratvar(occupant)) && cell && cell.charge)
 		. = min(cell.charge, 250)
 		cell.use(.)
-		occupant_message("<span class='userdanger'>Power loss detected!</span>")
+		if(prob(20))
+			occupant_message("<span class='userdanger'>Power loss detected!</span>")
 		spark_system.start()

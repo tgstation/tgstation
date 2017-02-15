@@ -29,6 +29,18 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
+	var/contact_poison // Reagent ID to transfer on contact
+	var/contact_poison_volume = 0
+
+
+/obj/item/weapon/paper/pickup(user)
+	if(contact_poison && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/clothing/gloves/G = H.gloves
+		if(!istype(G) || G.transfer_prints)
+			H.reagents.add_reagent(contact_poison,contact_poison_volume)
+			contact_poison = null
+	..()
 
 
 /obj/item/weapon/paper/New()
@@ -289,7 +301,7 @@
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
-
+			i.on_write(src,usr)
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
 			update_icon()
 
