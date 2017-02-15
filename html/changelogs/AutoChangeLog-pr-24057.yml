@@ -1,6 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - tweak: "Station time is now always visible in the status tab."
-  - tweak: "Both server time and station time now displays seconds so you can actively see how game time (ByondTime[tm]) is progressing along side real time."
-  - rscadd: "Added a time dilation tracker, this allows you to better understand how time will progress in game. It shows the time dilation percent for the last minute as well as some rolling averages."
