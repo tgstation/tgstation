@@ -836,7 +836,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(pipenetwarnings)
 	SearchVar(the_gateway)
 	SearchVar(potentialRandomZlevels)
-	SearchVar(maploader)
 	SearchVar(use_preloader)
 	SearchVar(_preloader)
 	SearchVar(swapmaps_iconcache)
