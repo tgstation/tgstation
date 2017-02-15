@@ -61231,13 +61231,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_public_disabled";
-	name = "public mining dock";
-	width = 7
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
