@@ -536,6 +536,9 @@
 	spawn()
 		door.Open()
 	wearer.forceMove(get_turf(door))
+	if(dragging_through)
+		dragging_through.forceMove(get_turf(door))
+		wearer.pulling = dragging_through
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
@@ -561,6 +564,9 @@
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
 		wearer.forceMove(get_turf(A))
+		if(dragging_through)
+			dragging_through.forceMove(get_turf(A))
+			wearer.pulling = dragging_through
 	return pass
 
 
