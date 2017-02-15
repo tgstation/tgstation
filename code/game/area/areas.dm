@@ -97,7 +97,7 @@ var/list/teleportlocs = list()
 
 
 
-/area/New()
+/area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
