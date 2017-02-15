@@ -347,7 +347,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
 	SearchVar(last_irc_status)
-	SearchVar(failed_db_connections)
 	SearchVar(nextmap)
 	SearchVar(mapchanging)
 	SearchVar(rebootingpendingmapchange)
