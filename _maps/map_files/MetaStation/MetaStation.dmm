@@ -90396,9 +90396,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/shuttle/auxillary_base{
-	pixel_y = 0
-	},
+/obj/machinery/computer/auxillary_base,
 /turf/closed/wall,
 /area/shuttle/auxillary_base)
 "cWh" = (
@@ -94446,6 +94444,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
+"ddG" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 3;
+	height = 5;
+	id = "mining_public_disabled";
+	name = "public mining dock";
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -106374,7 +106384,7 @@ cWg
 cVL
 cVL
 cVL
-cWJ
+ddG
 cWM
 cXR
 cYG
