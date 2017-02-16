@@ -180,7 +180,7 @@
 	var/stuncost = 1000
 	var/energy = 3000
 	var/maxenergy = 3000
-	var/rechargeamt = 200
+	var/rechargeamt = 100
 	var/stunamount = 5
 	hitsound = 'sound/weapons/shockhit.ogg'
 
