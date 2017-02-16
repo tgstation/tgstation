@@ -266,7 +266,7 @@ var/last_irc_status = 0
 
 	for(var/thing in clients)
 		var/obj/screen/splash/S = new(thing, FALSE)
-		S.Fade(TRUE,FALSE)
+		S.Fade(FALSE,FALSE)
 
 	world << sound(round_end_sound)
 

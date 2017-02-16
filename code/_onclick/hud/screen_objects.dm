@@ -667,24 +667,24 @@
 
 /obj/screen/splash
 	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible)
-	..()
+/obj/screen/splash/New(client/C, visible, use_previous_map_title)
 	holder = C
 	holder.screen += src
 	if(!visible)
 		alpha = 0
-	var/titlescreen = TITLESCREEN
-	if(titlescreen)
-		icon_state = titlescreen
+	if(use_previous_map_title && SSmapping.previous_map_config)
+		icon_state = SSmapping.previous_map_config.titlescreen_icon_state
+	else
+		icon_state = SSmapping.config.titlescreen_icon_state
+	..()
 
-/obj/screen/splash/proc/Fade(in, qdel_after = TRUE)
-	if(!in)
+/obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
+	if(out)
 		animate(src, alpha = 0, time = 30)
 	else
 		alpha = 0
