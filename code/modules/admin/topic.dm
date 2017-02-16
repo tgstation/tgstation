@@ -2246,3 +2246,14 @@
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
 		ticker.mode.station_goals += G
 		modify_goals()
+
+	else if(href_list["viewruntime"])
+		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
+		if(!istype(error_viewer))
+			usr << "<span class='warning'>That runtime viewer no longer exists.</span>"
+			return
+
+		if(href_list["viewruntime_backto"])
+			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
+		else
+			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])

@@ -5,7 +5,6 @@
 	//icon = "ICON FILENAME"
 	//icon_state = "NAME OF ICON"
 	requires_power = 0
-	music = "music/music.ogg"
 
 /area/hell/trial1
 	name = "Hell Trial1"

@@ -54,6 +54,7 @@
 /obj/item/device/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!is_servant_of_ratvar(user) || !ishuman(target) || used || (brainmob && brainmob.key))
 		..()
+		return
 	if(is_servant_of_ratvar(target))
 		user << "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>"
 		return

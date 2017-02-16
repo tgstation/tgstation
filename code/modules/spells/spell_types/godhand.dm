@@ -42,7 +42,7 @@
 	name = "\improper disintegrating touch"
 	desc = "This hand of mine glows with an awesome power!"
 	catchphrase = "EI NATH!!"
-	on_use_sound = "sound/magic/Disintegrate.ogg"
+	on_use_sound = 'sound/magic/Disintegrate.ogg'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
 
@@ -60,7 +60,7 @@
 	name = "\improper petrifying touch"
 	desc = "That's the bottom line, because flesh to stone said so!"
 	catchphrase = "STAUN EI!!"
-	on_use_sound = "sound/magic/FleshToStone.ogg"
+	on_use_sound = 'sound/magic/FleshToStone.ogg'
 	icon_state = "fleshtostone"
 	item_state = "fleshtostone"
 
