@@ -673,14 +673,18 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, fadeout, qdel_after = TRUE)
+/obj/screen/splash/New(client/C, visible)
 	..()
 	holder = C
 	holder.screen += src
+	if(!visible)
+		alpha = 0
 	var/titlescreen = TITLESCREEN
 	if(titlescreen)
 		icon_state = titlescreen
-	if(fadeout)
+
+/obj/screen/splash/proc/Fade(in, qdel_after = TRUE)
+	if(!in)
 		animate(src, alpha = 0, time = 30)
 	else
 		alpha = 0
