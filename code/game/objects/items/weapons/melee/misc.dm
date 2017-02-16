@@ -178,8 +178,8 @@
 		The downside is, its power mechanism takes the space of a button-lock, so it can not be used when completely discharged, and always stuns when active."
 	icon_state = "telebaton-energy_0"
 	var/stuncost = 1000
-	var/energy = 4000
-	var/maxenergy = 4000
+	var/energy = 3000
+	var/maxenergy = 3000
 	var/rechargeamt = 200
 	var/stunamount = 5
 	hitsound = 'sound/weapons/shockhit.ogg'
