@@ -81,7 +81,7 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 	previous_map_config = SSmapping.previous_map_config
-	config = SSmapping.map_config
+	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
 #define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
