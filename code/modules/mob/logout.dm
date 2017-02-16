@@ -27,6 +27,9 @@
 
 
 				send2irc("Server", "[cheesy_message]")
+	
+	if(client)
+		qdel(client)
 	..()
 
 	if(isobj(loc))

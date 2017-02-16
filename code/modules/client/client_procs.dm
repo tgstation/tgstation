@@ -306,7 +306,8 @@ var/next_external_rsc = 0
 //DISCONNECT//
 //////////////
 
-/client/Del()
+//called by mob/Logout
+/client/Destroy()
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -317,9 +318,6 @@ var/next_external_rsc = 0
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	return ..()
-
-/client/Destroy()
-	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db()
 	if (IsGuestKey(src.key))
