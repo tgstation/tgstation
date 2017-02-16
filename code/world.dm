@@ -71,14 +71,13 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	Master.Setup(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
-var/last_irc_status = 0
-
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
 		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
+	var/static/last_irc_status = 0
 
 	if("ping" in input)
 		var/x = 1
