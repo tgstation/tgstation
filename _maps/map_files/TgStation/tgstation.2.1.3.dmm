@@ -396,7 +396,9 @@
 	pixel_y = 10
 	},
 /obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/med_data/laptop{
+	density = 0
+	},
 /turf/open/floor/carpet,
 /area/security/hos)
 "abl" = (
