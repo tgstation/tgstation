@@ -684,8 +684,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(wire_colors)
 	SearchVar(wire_color_directory)
 	SearchVar(wire_name_directory)
-	SearchVar(possiblethemes)
-	SearchVar(max_secret_rooms)
 	SearchVar(blood_splatter_icons)
 	SearchVar(all_radios)
 	SearchVar(radiochannels)

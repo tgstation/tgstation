@@ -299,7 +299,6 @@
 #include "code\datums\wires\vending.dm"
 #include "code\datums\wires\wires.dm"
 #include "code\game\alternate_appearance.dm"
-#include "code\game\asteroid.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
 #include "code\game\communications.dm"
