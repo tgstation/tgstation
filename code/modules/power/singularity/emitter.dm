@@ -91,7 +91,7 @@
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -113,13 +113,13 @@
 				user << "<span class='notice'>You turn off \the [src].</span>"
 				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
-				investigate_log("turned <font color='red'>off</font> by [key_name(user)]","singulo")
+				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]","singulo")
 			else
 				src.active = 1
 				user << "<span class='notice'>You turn on \the [src].</span>"
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
-				investigate_log("turned <font color='green'>on</font> by [key_name(user)]","singulo")
+				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]","singulo")
 			update_icon()
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -128,7 +128,7 @@
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
-	if(ismegafauna(M))
+	if(ismegafauna(M) && anchored)
 		state = 0
 		anchored = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
@@ -160,12 +160,12 @@
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font>","singulo")
+				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]","singulo")
 		else
 			if(powered)
 				powered = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
 		if(!check_delay())
@@ -217,9 +217,10 @@
 	A.starting = loc
 	A.fire()
 
-/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
+/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
-		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		if(!silent)
+			user  << "<span class='warning'>[src] is welded to the floor!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 

@@ -73,7 +73,7 @@
 	if(alert)
 		var/area/alarmed = get_area(src)
 		alarmed.burglaralert(src)
-		playsound(src, "sound/effects/alert.ogg", 50, 1)
+		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
 /*
 

@@ -13,7 +13,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
-	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)
+	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/global/list/possible_true_names = list("Servant", "Warden", "Serf", "Page", "Usher", "Knave", "Vassal", "Escort")
 	var/mob/living/host //The mob that the marauder is living inside of

@@ -9,8 +9,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/repair_amount = 4 //how much a proselytizer can repair each cycle
-	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
+	var/can_be_repaired = TRUE //if a proselytizer can repair it
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
@@ -72,9 +71,10 @@
 		. *= min(max_integrity/max(obj_integrity, 1), 4)
 	. = round(., 0.01)
 
-/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user, silent)
 	if(anchored && obj_integrity <= round(max_integrity * 0.25, 1))
-		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+		if(!silent)
+			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -158,9 +158,10 @@
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
-/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
-		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
+		if(!silent)
+			user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 

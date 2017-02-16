@@ -306,7 +306,6 @@
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,1)
-				C.Weaken(2)
 				return
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
@@ -354,7 +353,6 @@
 
 					if(INTENT_HARM)
 						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
-						C.Weaken(3)
 						C.throw_at(get_step_towards(H,C), 8, 2, callback=CALLBACK(src, .proc/tentacle_stab, H, C))
 						return 1
 			else

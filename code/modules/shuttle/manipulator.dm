@@ -264,8 +264,7 @@
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
-					world.log << "Map warning: Shuttle Template [S.mappath] \
-						has multiple mobile docking ports."
+					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
 				else if(!M.timid)
 					// The shuttle template we loaded isn't "timid" which means
 					// it's already registered with the shuttles subsystem.
@@ -277,11 +276,9 @@
 				else
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
-				world.log << "Map warning: Shuttle Template [S.mappath] has a \
-					stationary docking port."
+				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
 	if(!found)
-		var/msg = "load_template(): Shuttle Template [S.mappath] has no \
-			mobile docking port. Aborting import."
+		var/msg = "load_template(): Shuttle Template [S.mappath] has no	mobile docking port. Aborting import."
 		for(var/T in affected)
 			var/turf/T0 = T
 			T0.empty()
