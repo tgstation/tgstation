@@ -18,7 +18,7 @@
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 	
-	if(client && SSmapping.previous_map_config && world.time < 10)
+	if(client && SSmapping.previous_map_config && ticker.state == GAME_STATE_STARTUP)
 		testing("Found oldie")
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
