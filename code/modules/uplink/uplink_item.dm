@@ -1202,6 +1202,23 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/commservice
+	category = "Communications/Services"
+
+/datum/uplink_item/commservice/bootleg_announcer
+	name = "Bootleg Announcer"
+	desc = "Using a stolen encryption key, this device can fake a communication from Central Command. It only works once, and it's unlikely that Central will back up the story if asked about it. That is, if anyone bothers."
+	cost = 5
+	item = /obj/item/announcer
+
+/datum/uplink_item/commservice/intel_disrupter
+	name = "Intel Disruption Device"
+	desc = "This device can disrupt the normal intelligence report that is sent that normally informs the station of people like you. Use it to disrupt the report, and watch as members of the station commit suicide in despair. Not very useful after the intercept has already been recieved. Refundable if unused."
+	cost = 10
+	item = /obj/item/announcer/fake_extended
+	surplus = 0
+	refundable = TRUE
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
