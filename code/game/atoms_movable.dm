@@ -34,6 +34,7 @@
 	var/gravity_ignore_anchored = FALSE
 	var/gravity_ignores_turfcheck = FALSE
 	var/area/current_gravity_area = null
+	var/floating = FALSE
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	. = ..()
