@@ -110,7 +110,7 @@ var/datum/subsystem/mapping/SSmapping
 		var/vote = c.prefs.preferred_map
 		if (!vote)
 			if (global.config.defaultmap)
-				mapvotes[global.config.defaultmap.name] += 1
+				mapvotes[global.config.defaultmap.map_name] += 1
 			continue
 		mapvotes[vote] += 1
 
@@ -121,17 +121,17 @@ var/datum/subsystem/mapping/SSmapping
 		if (!(map in global.config.maplist))
 			mapvotes.Remove(map)
 			continue
-		var/datum/votablemap/VM = global.config.maplist[map]
+		var/datum/map_config/VM = global.config.maplist[map]
 		if (!VM)
 			mapvotes.Remove(map)
 			continue
 		if (VM.voteweight <= 0)
 			mapvotes.Remove(map)
 			continue
-		if (VM.minusers > 0 && players < VM.minusers)
+		if (VM.config_min_users > 0 && players < VM.config_min_users)
 			mapvotes.Remove(map)
 			continue
-		if (VM.maxusers > 0 && players > VM.maxusers)
+		if (VM.config_max_users > 0 && players > VM.config_max_users)
 			mapvotes.Remove(map)
 			continue
 
@@ -140,19 +140,17 @@ var/datum/subsystem/mapping/SSmapping
 	var/pickedmap = pickweight(mapvotes)
 	if (!pickedmap)
 		return
-	var/datum/votablemap/VM = global.config.maplist[pickedmap]
-	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
+	var/datum/map_config/VM = global.config.maplist[pickedmap]
+	message_admins("Randomly rotating map to [VM.map_name]")
 	. = changemap(VM)
 	if (.)
-		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
+		world << "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>"
 
-/datum/subsystem/mapping/proc/changemap(var/datum/votablemap/VM)	
-	next_map_config = new("_maps/[VM.name].json")
-	if(next_map_config.defaulted)
-		message_admins("Failed to load map json for [VM.name]([VM.friendlyname])! Using default as backup!")
-		return FALSE
-
-	if(!next_map_config.MakeNextMap())
+/datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)	
+	if(!VM.MakeNextMap())
 		next_map_config = new(default_to_box = TRUE)
-		message_admins("Failed to set new map with next_map.json for [VM.name]([VM.friendlyname])! Using default as backup!")
-		return FALSE
+		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
+		return
+
+	next_map_config = VM
+	return TRUE

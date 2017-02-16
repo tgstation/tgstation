@@ -24,7 +24,11 @@
                                     EMPTY_AREA_6 = CROSSLINKED,
                                     EMPTY_AREA_7 = CROSSLINKED,
                                     EMPTY_AREA_8 = CROSSLINKED)
-    var/defaulted = TRUE
+    var/defaulted = TRUE    //if New failed
+
+    var/config_max_users = 0
+    var/config_min_users = 0
+    var/voteweight = 1
 
 /datum/map_config/New(filename = "next_map.json", default_to_box)
     if(default_to_box)
