@@ -214,7 +214,7 @@
 	name = "Mulligan"
 	id = "mulligan"
 	results = list("mulligan" = 1)
-	required_reagents = list("humanmutationtoxin" = 1, "mutagen" = 1)
+	required_reagents = list("stablemutationtoxin" = 1, "mutagen" = 1)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////

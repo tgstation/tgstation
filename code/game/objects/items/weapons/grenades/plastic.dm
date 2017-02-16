@@ -128,7 +128,7 @@
 /obj/item/weapon/grenade/plastic/c4/prime()
 	var/turf/location
 	if(target)
-		if(!qdeleted(target))
+		if(!QDELETED(target))
 			location = get_turf(target)
 			target.overlays -= image_overlay
 			target.priority_overlays -= image_overlay
@@ -156,7 +156,7 @@
 /obj/item/weapon/grenade/plastic/x4/prime()
 	var/turf/location
 	if(target)
-		if(!qdeleted(target))
+		if(!QDELETED(target))
 			location = get_turf(target)
 			target.overlays -= image_overlay
 			target.priority_overlays -= image_overlay

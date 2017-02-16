@@ -685,7 +685,7 @@
 			return
 		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
 			return
-		if(!O || qdeleted(O))
+		if(!O || QDELETED(O))
 			return
 		if(!Adjacent(user))
 			return

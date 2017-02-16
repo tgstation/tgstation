@@ -1,4 +1,0 @@
-author: "Lexorion"
-delete-after: True
-changes: 
-  - tweak: "Laser projectiles have a new sprite! They also have a new effect when they hit a wall."

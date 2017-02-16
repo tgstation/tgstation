@@ -147,3 +147,10 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/weapon/reagent_containers/food/snacks/deepfryholder
+	name = "Deep Fried Foods Holder Obj"
+	desc = "If you can see this description the code for the deep fryer fucked up."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = ""
+	bitesize = 2

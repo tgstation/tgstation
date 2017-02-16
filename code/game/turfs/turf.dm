@@ -21,11 +21,19 @@
 
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
-	
-	var/list/decals
 
-/turf/New()
-	..()
+	var/list/decals
+	var/requires_activation	//add to air processing after initialize?
+
+/turf/SDQL_update(const/var_name, new_value)
+	if(var_name == "x" || var_name == "y" || var_name == "z")
+		return FALSE
+	. = ..()
+
+/turf/Initialize()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 
 	levelupdate()
 	if(smooth)
@@ -35,11 +43,17 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	if(requires_activation)
+		CalculateAdjacentTurfs()
+		SSair.add_to_active(src)
+
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy()
 	visibilityChanged()
+	initialized = FALSE
+	requires_activation = FALSE
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -189,7 +203,6 @@
 	W.explosion_level = old_ex_level
 	W.explosion_id = old_ex_id
 
-
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data
@@ -202,6 +215,13 @@
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
 			C.deconstruct()
+
+	//update firedoor adjacency
+	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
+	for(var/I in turfs_to_check)
+		var/turf/T = I
+		for(var/obj/machinery/door/firedoor/FD in T)
+			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
 

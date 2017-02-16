@@ -38,6 +38,13 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
+	var/allowed_projectile_types = list(/obj/item/projectile/magic/change, /obj/item/projectile/magic/animate, /obj/item/projectile/magic/resurrection,
+	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
+	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage)
+
+/obj/item/weapon/gun/magic/staff/chaos/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
+	chambered.projectile_type = pick(allowed_projectile_types)
+	. = ..(target, user, message, params, zone_override, bonus_spread)
 
 /obj/item/weapon/gun/magic/staff/door
 	name = "staff of door creation"

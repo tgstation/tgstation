@@ -141,6 +141,7 @@ var/list/global_modular_computers = list()
 /obj/machinery/modular_computer/ex_act(severity)
 	if(cpu)
 		cpu.ex_act(severity)
+	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
 /obj/machinery/modular_computer/emp_act(severity)

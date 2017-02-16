@@ -159,11 +159,10 @@
 
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
 	if(L.isloyal())
-		var/mob/living/carbon/C = L
 		delete_on_finish = TRUE
-		C.visible_message("<span class='warning'>[C] visibly trembles!</span>", \
+		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
 		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")
-		for(var/obj/item/weapon/implant/mindshield/M in C.implants)
+		for(var/obj/item/weapon/implant/mindshield/M in L.implants)
 			qdel(M)
 
 

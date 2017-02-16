@@ -216,3 +216,42 @@
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
 	if(ID && (access_cent_bar in ID.access))
 		return TRUE
+
+//Luxury Shuttle Blockers
+
+/obj/effect/forcefield/luxury_shuttle
+	var/threshhold = 500
+	var/static/list/approved_passengers = list()
+
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
+	if(mover in approved_passengers)
+		return 1
+
+	if(!isliving(mover)) //No stowaways
+		return 0
+
+	var/total_cash = 0
+	var/list/counted_money = list()
+
+	for(var/obj/item/weapon/coin/C in mover.GetAllContents())
+		total_cash += C.value
+		counted_money += C
+		if(total_cash >= threshhold)
+			break
+	for(var/obj/item/stack/spacecash/S in mover.GetAllContents())
+		total_cash += S.value * S.amount
+		counted_money += S
+		if(total_cash >= threshhold)
+			break
+
+	if(total_cash >= threshhold)
+		for(var/obj/I in counted_money)
+			qdel(I)
+
+		mover << "Thank you for your payment! Please enjoy your flight."
+		approved_passengers += mover
+		return 1
+	else
+		mover << "You don't have enough money to enter the main shuttle. You'll have to fly coach."
+		return 0
+

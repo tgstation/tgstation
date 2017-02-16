@@ -2,7 +2,7 @@
 
 /datum/status_effect/shadow_mend
 	id = "shadow_mend"
-	duration = 3
+	duration = 30
 	alert_type = /obj/screen/alert/status_effect/shadow_mend
 
 /obj/screen/alert/status_effect/shadow_mend
@@ -26,8 +26,8 @@
 
 /datum/status_effect/void_price
 	id = "void_price"
-	duration = 30
-	tick_interval = 3
+	duration = 300
+	tick_interval = 30
 	alert_type = /obj/screen/alert/status_effect/void_price
 
 /obj/screen/alert/status_effect/void_price
@@ -40,11 +40,12 @@
 	owner.adjustBruteLoss(3)
 
 
-
 /datum/status_effect/vanguard_shield
 	id = "vanguard"
-	duration = 20
+	duration = 200
+	tick_interval = 0 //tick as fast as possible
 	alert_type = /obj/screen/alert/status_effect/vanguard
+	var/datum/progressbar/progbar
 
 /obj/screen/alert/status_effect/vanguard
 	name = "Vanguard"
@@ -60,10 +61,21 @@
 		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."
 	..()
 
+/datum/status_effect/vanguard_shield/Destroy()
+	qdel(progbar)
+	progbar = null
+	return ..()
+
 /datum/status_effect/vanguard_shield/on_apply()
 	add_logs(owner, null, "gained Vanguard stun immunity")
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	progbar = new(owner, duration, owner)
+	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
+	progbar.update(duration - world.time)
+
+/datum/status_effect/vanguard_shield/tick()
+	progbar.update(duration - world.time)
 
 /datum/status_effect/vanguard_shield/on_remove()
 	var/vanguard = owner.stun_absorption["vanguard"]
@@ -85,14 +97,15 @@
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
 				stuns_blocked *= 2
 				owner.Paralyse(stuns_blocked)
+		else
+			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
-		add_logs(owner, null, "lost Vanguard stun immunity[stuns_blocked ? "and been stunned for [stuns_blocked]":""]")
-
+		add_logs(owner, null, "lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]")
 
 
 /datum/status_effect/inathneqs_endowment
 	id = "inathneqs_endowment"
-	duration = 15
+	duration = 150
 	alert_type = /obj/screen/alert/status_effect/inathneqs_endowment
 
 /obj/screen/alert/status_effect/inathneqs_endowment
@@ -119,9 +132,10 @@
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
 
+
 /datum/status_effect/cyborg_power_regen
 	id = "power_regen"
-	duration = 10
+	duration = 100
 	alert_type = /obj/screen/alert/status_effect/power_regen
 	var/power_to_give = 0 //how much power is gained each tick
 

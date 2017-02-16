@@ -147,7 +147,7 @@ var/total_borer_hosts_needed = 10
 	if(stat != CONSCIOUS)
 		return
 	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_borer == "No" || !src || qdeleted(src))
+	if(be_borer == "No" || !src || QDELETED(src))
 		return
 	if(key)
 		return
@@ -178,7 +178,7 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-	if(src && !qdeleted(src) && !qdeleted(victim))
+	if(src && !QDELETED(src) && !QDELETED(victim))
 		var/say_string = (docile) ? "slurs" :"states"
 		if(victim)
 			victim << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
@@ -512,7 +512,7 @@ var/total_borer_hosts_needed = 10
 	addtimer(CALLBACK(src, .proc/release_host), 100)
 
 /mob/living/simple_animal/borer/proc/release_host()
-	if(!victim || !src || qdeleted(victim) || qdeleted(src))
+	if(!victim || !src || QDELETED(victim) || QDELETED(src))
 		return
 	if(!leaving)
 		return
@@ -627,7 +627,7 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
-	if(qdeleted(src) || qdeleted(victim))
+	if(QDELETED(src) || QDELETED(victim))
 		return
 
 	bonding = TRUE
@@ -798,7 +798,7 @@ var/total_borer_hosts_needed = 10
 	if(!candidate || !candidate.mob)
 		return
 
-	if(!qdeleted(candidate) || !qdeleted(candidate.mob))
+	if(!QDELETED(candidate) || !QDELETED(candidate.mob))
 		var/datum/mind/M = create_borer_mind(candidate.ckey)
 		M.transfer_to(src)
 

@@ -73,7 +73,10 @@
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
+			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
+			A.languages_spoken &= ~HUMAN
+			A.add_atom_colour(list("#B18B25", "#92661A", "#6D370F", rgb(0,0,0)), ADMIN_COLOUR_PRIORITY)
 			if(!A.lacks_power())
 				A.ai_restore_power()
 			if(A.eyeobj)
@@ -122,7 +125,10 @@
 		var/mob/living/silicon/S = owner
 		if(isAI(S))
 			var/mob/living/silicon/ai/A = S
+			A.can_be_carded = initial(A.can_be_carded)
 			A.requires_power = initial(A.requires_power)
+			A.languages_spoken |= HUMAN
+			A.remove_atom_colour(ADMIN_COLOUR_PRIORITY, list("#B18B25", "#92661A", "#6D370F", rgb(0,0,0)))
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()

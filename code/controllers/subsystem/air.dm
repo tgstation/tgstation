@@ -39,28 +39,34 @@ var/datum/subsystem/air/SSair
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
 
+	var/map_loading = TRUE
+	var/list/queued_for_activation
 
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "AT:[round(cost_turfs)]|"
-	msg += "EG:[round(cost_groups)]|"
-	msg += "HP:[round(cost_highpressure)]|"
-	msg += "HS:[round(cost_hotspots)]|"
-	msg += "SC:[round(cost_superconductivity)]|"
-	msg += "PN:[round(cost_pipenets)]|"
-	msg += "AM:[round(cost_atmos_machinery)]"
+	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "EG:[round(cost_groups,1)]|"
+	msg += "HP:[round(cost_highpressure,1)]|"
+	msg += "HS:[round(cost_hotspots,1)]|"
+	msg += "SC:[round(cost_superconductivity,1)]|"
+	msg += "PN:[round(cost_pipenets,1)]|"
+	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
-	msg +=  "AT:[active_turfs.len]|"
-	msg +=  "EG:[excited_groups.len]|"
-	msg +=  "HS:[hotspots.len]|"
-	msg +=  "AS:[active_super_conductivity.len]"
+	msg += "AT:[active_turfs.len]|"
+	msg += "EG:[excited_groups.len]|"
+	msg += "HS:[hotspots.len]|"
+	msg += "PN:[networks.len]|"
+	msg += "HP:[high_pressure_delta.len]|"
+	msg += "AS:[active_super_conductivity.len]|"
+	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	..(msg)
 
 
 /datum/subsystem/air/Initialize(timeofday)
+	map_loading = FALSE
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -244,7 +250,6 @@ var/datum/subsystem/air/SSair
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
-
 /datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		T.excited = 1
@@ -253,10 +258,25 @@ var/datum/subsystem/air/SSair
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else
+	else if(T.initialized)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
+	else if(map_loading)
+		if(queued_for_activation)
+			queued_for_activation[T] = T
+		return
+	else
+		T.requires_activation = TRUE
 
+/datum/subsystem/air/proc/begin_map_load()
+	LAZYINITLIST(queued_for_activation)
+	map_loading = TRUE
+
+/datum/subsystem/air/proc/end_map_load()
+	map_loading = FALSE
+	for(var/T in queued_for_activation)
+		add_to_active(T)
+	queued_for_activation.Cut()
 
 /datum/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))

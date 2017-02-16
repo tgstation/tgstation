@@ -274,7 +274,7 @@ var/list/airlock_overlays = list()
 			var/cont = 1
 			while (cont)
 				sleep(10)
-				if(qdeleted(src))
+				if(QDELETED(src))
 					return
 				cont = 0
 				if(secondsMainPowerLost>0)
@@ -1404,7 +1404,7 @@ var/list/airlock_overlays = list()
 		operating = 1
 		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
-		if(qdeleted(src))
+		if(QDELETED(src))
 			return
 		operating = 0
 		if(!open())

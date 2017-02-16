@@ -22,9 +22,6 @@
 /datum/job/rd/config_check()
 	return 0
 
-/datum/job/chaplain/config_check()
-	return 0
-
 /datum/job/warden/config_check()
 	return 0
 

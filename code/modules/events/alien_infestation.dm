@@ -37,7 +37,7 @@
 /datum/round_event/ghost_role/alien_infestation/spawn_role()
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
-		if(qdeleted(temp_vent))
+		if(QDELETED(temp_vent))
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1

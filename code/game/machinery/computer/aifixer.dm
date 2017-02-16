@@ -71,17 +71,16 @@
 	return
 
 /obj/machinery/computer/aifixer/proc/Fix()
-	. = use_power(1000)
-	if(.)
-		occupier.adjustOxyLoss(-1, 0)
-		occupier.adjustFireLoss(-1, 0)
-		occupier.adjustToxLoss(-1, 0)
-		occupier.adjustBruteLoss(-1, 0)
-		occupier.updatehealth()
-		occupier.updatehealth()
-		if(occupier.health >= 0 && occupier.stat == DEAD)
-			occupier.revive()
-		. = occupier.health < 100
+	use_power(1000)
+	occupier.adjustOxyLoss(-1, 0)
+	occupier.adjustFireLoss(-1, 0)
+	occupier.adjustToxLoss(-1, 0)
+	occupier.adjustBruteLoss(-1, 0)
+	occupier.updatehealth()
+	occupier.updatehealth()
+	if(occupier.health >= 0 && occupier.stat == DEAD)
+		occupier.revive()
+	return occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()
 	if(..())

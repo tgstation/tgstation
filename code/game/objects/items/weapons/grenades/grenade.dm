@@ -19,7 +19,7 @@
 /obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		qdel(src)
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)

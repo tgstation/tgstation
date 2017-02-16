@@ -91,20 +91,29 @@
 					return 1
 	return ..()
 
-/mob/living/carbon/throw_impact(atom/hit_atom)
+/mob/living/carbon/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
+	var/hurt = TRUE
+	if(istype(throwingdatum, /datum/thrownthing))
+		var/datum/thrownthing/D = throwingdatum
+		if(iscyborg(D.thrower))
+			var/mob/living/silicon/robot/R = D.thrower
+			if(!R.emagged)
+				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
-		Weaken(1)
-		take_bodypart_damage(10)
+		if(hurt)
+			Weaken(1)
+			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
-		victim.Weaken(1)
-		Weaken(1)
-		victim.take_bodypart_damage(10)
-		take_bodypart_damage(10)
-		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+		if(hurt)
+			victim.take_bodypart_damage(10)
+			take_bodypart_damage(10)
+			victim.Weaken(1)
+			Weaken(1)
+			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -230,23 +239,6 @@
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-
-/mob/living/carbon/proc/spin(spintime, speed)
-	set waitfor = 0
-	var/D = dir
-	while(spintime >= speed)
-		sleep(speed)
-		switch(D)
-			if(NORTH)
-				D = EAST
-			if(SOUTH)
-				D = WEST
-			if(EAST)
-				D = SOUTH
-			if(WEST)
-				D = NORTH
-		setDir(D)
-		spintime -= speed
 
 /mob/living/carbon/resist_buckle()
 	if(restrained())
@@ -529,21 +521,34 @@
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
 
-	see_invisible = initial(see_invisible)
-	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(!E)
+		update_tint()
+	else
+		see_invisible = E.see_invisible
+		see_in_dark = E.see_in_dark
+		sight |= E.sight_flags
 
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
-		sight |= E.sight_flags
-		if(E.dark_view)
-			see_in_dark = max(see_in_dark,E.dark_view)
-		if(E.see_invisible)
-			see_invisible = min(see_invisible, E.see_invisible)
+	if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		sight |= G.vision_flags
+		see_in_dark = max(G.darkness_view, see_in_dark)
+		if(G.invis_override)
+			see_invisible = G.invis_override
+		else
+			see_invisible = min(G.invis_view, see_invisible)
+	if(dna)
+		for(var/X in dna.mutations)
+			var/datum/mutation/M = X
+			if(M.name == XRAY)
+				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+				see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
@@ -568,6 +573,13 @@
 		. += HT.tint
 	if(wear_mask)
 		. += wear_mask.tint
+
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(E)
+		. += E.tint
+
+	else
+		. += INFINITY
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -709,7 +721,7 @@
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	var/organs_amt = 0
 	for(var/X in internal_organs)

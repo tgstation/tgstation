@@ -168,8 +168,10 @@
 // Used by Paper and PhotoCopier (and PaperBin once a year).
 // Used by PDA's Notekeeper.
 // Used by NewsCaster and NewsPaper.
+// Used by Modular Computers
 #define PEN_FONT "Verdana"
 #define CRAYON_FONT "Comic Sans MS"
+#define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
 
 #define RESIZE_DEFAULT_SIZE 1

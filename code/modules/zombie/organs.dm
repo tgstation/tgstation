@@ -5,11 +5,11 @@
 	slot = "zombie_infection"
 	origin_tech = "biotech=5"
 	var/datum/species/old_species
-	var/living_transformation_time = 5
+	var/living_transformation_time = 3
 	var/converts_living = FALSE
 
-	var/revive_time_min = 600
-	var/revive_time_max = 1200
+	var/revive_time_min = 450
+	var/revive_time_max = 700
 	var/timer_id
 
 /obj/item/organ/zombie_infection/New(loc)
@@ -49,7 +49,10 @@
 		return
 	if(owner.stat != DEAD && !converts_living)
 		return
-
+	if(!iszombie(owner))
+		owner << "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
+		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
+		not even death can stop, you will rise again!</span>"
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)

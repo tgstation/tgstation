@@ -258,10 +258,11 @@
 
 /obj/effect/overlay/temp/ratvar/door
 	icon_state = "ratvardoorglow"
-	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+	layer = CLOSED_DOOR_LAYER //above closed doors
 
 /obj/effect/overlay/temp/ratvar/door/window
 	icon_state = "ratvarwindoorglow"
+	layer = ABOVE_WINDOW_LAYER
 
 /obj/effect/overlay/temp/ratvar/beam
 	icon_state = "ratvarbeamglow"
@@ -295,7 +296,10 @@
 
 /obj/effect/overlay/temp/ratvar/window
 	icon_state = "ratvarwindowglow"
-	layer = ABOVE_WINDOW_LAYER
+	layer = ABOVE_OBJ_LAYER
+
+/obj/effect/overlay/temp/ratvar/window/single
+	icon_state = "ratvarwindowglow_s"
 
 /obj/effect/overlay/temp/ratvar/gear
 	icon_state = "ratvargearglow"
@@ -307,9 +311,6 @@
 
 /obj/effect/overlay/temp/ratvar/grille/broken
 	icon_state = "ratvarbrokengrilleglow"
-
-/obj/effect/overlay/temp/ratvar/window/single
-	icon_state = "ratvarwindowglow_s"
 
 /obj/effect/overlay/temp/ratvar/volt_hit
 	name = "volt blast"

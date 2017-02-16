@@ -84,8 +84,6 @@ Credit where due:
 
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
-	var/required_escapees = 0 //How many servants need to escape, if applicable
-	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
 	var/clockwork_objective = CLOCKCULT_GATEWAY //The objective that the servants must fulfill
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
@@ -141,20 +139,12 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
 	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
-	var/silicons_possible = FALSE
-	for(var/mob/living/silicon/ai/S in living_mob_list)
-		silicons_possible = TRUE
-	if(silicons_possible)
-		possible_objectives += CLOCKCULT_SILICONS
 	clockwork_objective = pick(possible_objectives)
 	switch(clockwork_objective)
 		if(CLOCKCULT_ESCAPE)
-			required_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
-			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
+			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and proselytize the entire station."
 		if(CLOCKCULT_GATEWAY)
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
-		if(CLOCKCULT_SILICONS)
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked."
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
@@ -180,7 +170,7 @@ Credit where due:
 	if(slot == "At your feet")
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
-	if(S && !qdeleted(S))
+	if(S && !QDELETED(S))
 		L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
 		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
 		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
@@ -199,27 +189,8 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	switch(clockwork_objective)
 		if(CLOCKCULT_ESCAPE)
-			var/surviving_servants = 0
-			for(var/datum/mind/M in servants_of_ratvar)
-				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
-					surviving_servants++
-			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()].<br><i><b>[surviving_servants]</b> managed to escape!</i>"
-			if(surviving_servants >= required_escapees)
-				ticker.news_report = CULT_ESCAPE
-				return TRUE
-		if(CLOCKCULT_SILICONS)
-			var/total_silicons = 0
-			var/valid_silicons = 0
-			for(var/mob/living/silicon/S in mob_list) //Only check robots and AIs
-				if(isAI(S) || iscyborg(S))
-					total_silicons++
-					if(is_servant_of_ratvar(S) || S.stat == DEAD)
-						valid_silicons++
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked.<br>\
-			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!"
-			var/list/scripture_states = scripture_unlock_check()
-			if(valid_silicons >= total_silicons && scripture_states[SCRIPTURE_APPLICATION])
-				ticker.news_report = CLOCK_SILICONS
+			if(clockwork_gateway_activated)
+				ticker.news_report = CLOCK_PROSELYTIZATION
 				return TRUE
 		if(CLOCKCULT_GATEWAY)
 			if(ratvar_awakens)
@@ -241,18 +212,16 @@ Credit where due:
 			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
 		else
 			var/half_victory = FALSE
-			if(clockwork_objective == CLOCKCULT_GATEWAY)
-				var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
-				if(G)
-					half_victory = TRUE
+			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+			if(G)
+				half_victory = TRUE
 			if(half_victory)
-				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway was successfully constructed!</b></span>"
+				text += "<span class='large_brass'><b>The crew escaped before [clockwork_objective == CLOCKCULT_GATEWAY ? "Ratvar could rise":"the station could be proselytized"], but the gateway \
+				was successfully constructed!</b></span>"
 				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
-		if(clockwork_gateway_activated && clockwork_objective != CLOCKCULT_GATEWAY)
-			ticker.news_report = CLOCK_PROSELYTIZATION
 		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]"
 		text += "<br>Ratvar's servants had <b>[clockwork_caches]</b> Tinkerer's Caches."
 		text += "<br><b>Construction Value(CV)</b> was: <b>[clockwork_construction_value]</b>"

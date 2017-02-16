@@ -25,8 +25,9 @@
 	var/facial_hair_color = "000"
 	var/facial_hair_style = "Shaved"
 	//Eye Colouring
-	var/eyes = "eyes"
-	var/eye_color = ""
+
+	var/obj/item/organ/eyes/eyes = null
+
 	var/lip_style = null
 	var/lip_color = "white"
 
@@ -61,8 +62,6 @@
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"
-		eyes = "eyes"
-		eye_color = ""
 		lip_style = null
 
 	else if(!animal_origin)
@@ -106,14 +105,6 @@
 		else
 			lip_style = null
 			lip_color = "white"
-		// eyes
-		if(EYECOLOR in S.species_traits)
-			eyes = S.eyes
-			eye_color = H.eye_color
-		else
-			eyes = "eyes"
-			eye_color = ""
-
 	..()
 
 /obj/item/bodypart/head/update_icon_dropped()
@@ -167,9 +158,12 @@
 			standing += lips
 
 		// eyes
-		if(eye_color)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]", "layer" = -BODY_LAYER, "dir"=SOUTH)
-			img_eyes.color = "#" + eye_color
+		if(!eyes)
+			standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER, "dir"=SOUTH)
+
+		else if(eyes.eye_color)
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER, "dir"=SOUTH)
+			img_eyes.color = "#" + eyes.eye_color
 			standing += img_eyes
 
 	return standing

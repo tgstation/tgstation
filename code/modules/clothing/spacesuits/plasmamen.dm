@@ -39,10 +39,43 @@
 	name = "plasma envirosuit helmet"
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
 	icon_state = "plasmaman-helm"
-	item_color = "plasma" //needed for the helmet lighting
 	item_state = "plasmaman-helm"
 	strip_delay = 80
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0, fire = 100, acid = 75)
 	resistance_flags = FIRE_PROOF
+	var/brightness_on = 4 //luminosity when the light is on
+	var/on = 0
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 
+/obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
+	on = !on
+	icon_state = "[initial(icon_state)][on ? "-light":""]"
+	item_state = icon_state
+	user.update_inv_head() //So the mob overlay updates
+
+	if(on)
+		turn_on(user)
+	else
+		turn_off(user)
+	for(var/X in actions)
+		var/datum/action/A=X
+		A.UpdateButtonIcon()
+
+/obj/item/clothing/head/helmet/space/plasmaman/pickup(mob/user)
+	..()
+	if(on)
+		user.AddLuminosity(brightness_on)
+		SetLuminosity(0)
+
+/obj/item/clothing/head/helmet/space/plasmaman/dropped(mob/user)
+	..()
+	if(on)
+		user.AddLuminosity(-brightness_on)
+		SetLuminosity(brightness_on)
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/turn_on/(mob/user)
+		user.AddLuminosity(brightness_on)
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/turn_off/(mob/user)
+		user.AddLuminosity(-brightness_on)
 

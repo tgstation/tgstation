@@ -20,7 +20,7 @@ var/bomb_set
 	density = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	var/timer_set = 60
+	var/timer_set = 90
 	var/default_timer_set = 90
 	var/minimum_timer_set = 90
 	var/maximum_timer_set = 3600

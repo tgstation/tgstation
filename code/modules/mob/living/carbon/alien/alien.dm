@@ -41,13 +41,13 @@
 
 	create_internal_organs()
 
-	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
 /mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien
 	internal_organs += new /obj/item/organ/alien/hivenode
 	internal_organs += new /obj/item/organ/tongue/alien
+	internal_organs += new /obj/item/organ/eyes/night_vision/alien
 	..()
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
@@ -150,41 +150,6 @@ Des: Removes all infected images from the alien.
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
 #undef HEAT_DAMAGE_LEVEL_3
-
-
-/mob/living/carbon/alien/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		return
-
-	sight = SEE_MOBS
-	if(nightvision)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else
-		see_in_dark = 4
-		see_invisible = SEE_INVISIBLE_LIVING
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
-			return
-
-	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
-		sight |= E.sight_flags
-		if(E.dark_view)
-			see_in_dark = max(see_in_dark, E.dark_view)
-		if(E.see_invisible)
-			see_invisible = min(see_invisible, E.see_invisible)
-
-	if(see_override)
-		see_invisible = see_override
 
 /mob/living/carbon/alien/can_hold_items()
 	return has_fine_manipulation

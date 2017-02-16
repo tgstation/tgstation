@@ -141,7 +141,7 @@
 
 /obj/singularity_act()
 	ex_act(1)
-	if(src && !qdeleted(src))
+	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
 

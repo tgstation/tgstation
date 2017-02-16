@@ -1272,12 +1272,12 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)
-		user.client.view = world.view
+		user.client.change_view(world.view)
 		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
 		zoom = FALSE
 		return FALSE
 	else
-		user.client.view = zoom_range
+		user.client.change_view(zoom_range)
 		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
 		zoom = TRUE
 		return TRUE

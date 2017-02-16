@@ -327,6 +327,16 @@
 	category = CAT_MISC
 
 
+/datum/crafting_recipe/flashlight_eyes
+	name = "Flashlight Eyes"
+	result = /obj/item/organ/eyes/robotic/flashlight
+	time = 10
+	reqs = list(
+		/obj/item/device/flashlight = 2,
+		/obj/item/weapon/restraints/handcuffs/cable = 1
+	)
+	category = CAT_MISC
+
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"
 	result = /obj/item/weapon/bombcore/chemical

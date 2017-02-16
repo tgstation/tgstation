@@ -104,9 +104,9 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
 	resistance_flags = FLAMMABLE
-	var/serial_number = 0
+	var/serial = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
-	var/official = 0
+	var/rolled_official = 0
 
 
 /obj/item/weapon/poster/contraband
@@ -118,20 +118,20 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	name = "motivational poster"
 	icon_state = "rolled_legit"
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
-	official = 1
+	rolled_official = 1
 
 /obj/item/weapon/poster/New(turf/loc, given_serial = 0)
 	if(given_serial == 0)
-		if(!official)
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
-			resulting_poster = new(serial_number,official)
+		if(!rolled_official)
+			serial = rand(1, NUM_OF_POSTER_DESIGNS)
+			resulting_poster = new(serial,rolled_official)
 		else
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
-			resulting_poster = new(serial_number,official)
+			serial = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
+			resulting_poster = new(serial,rolled_official)
 	else
-		serial_number = given_serial
+		serial = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
-	name += " - No. [serial_number]"
+	name += " - No. [serial]"
 	..(loc)
 
 
@@ -182,8 +182,10 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	var/placespeed = 37 // don't change this, otherwise the animation will not sync to the progress bar
 
 /obj/structure/sign/poster/New(serial,rolled_official)
-	serial_number = serial
-	official = rolled_official
+	if (!serial_number)
+		serial_number = serial
+	if(!official)
+		official = rolled_official
 	if(serial_number == loc)
 		if(!official)
 			serial_number = rand(1, NUM_OF_POSTER_DESIGNS)	//This is for the mappers that want individual posters without having to use rolled posters.
@@ -259,12 +261,12 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	var/temp_loc = get_turf(user)
 	flick("poster_being_set",D)
 	D.loc = src
-	D.official = P.official
+	D.official = P.rolled_official
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 
 	if(do_after(user,D.placespeed,target=src))
-		if(!D || qdeleted(D))
+		if(!D || QDELETED(D))
 			return
 
 		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there

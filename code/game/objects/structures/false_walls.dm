@@ -51,7 +51,7 @@
 	if(density)
 		do_the_flick()
 		sleep(5)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			density = 0
 			SetOpacity(0)
 			update_icon()
@@ -63,7 +63,7 @@
 		do_the_flick()
 		density = 1
 		sleep(5)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			SetOpacity(1)
 			update_icon()
 	air_update_turf(1)

@@ -1,7 +1,6 @@
 /obj/structure/frame/computer
 	name = "computer frame"
 	icon_state = "0"
-	anchored = 0
 	state = 0
 
 /obj/structure/frame/computer/attackby(obj/item/P, mob/user, params)

@@ -121,7 +121,7 @@ def merge_map(newfile, backupfile, tgm):
 
 #######################
 #write to file helpers#
-def write_dictionary_tgm(filename, dictionary, header): #write dictionary in tgm format
+def write_dictionary_tgm(filename, dictionary, header = None): #write dictionary in tgm format
     with open(filename, "w") as output:
         output.write("{}\n".format(tgm_header))
         if header:
@@ -179,7 +179,7 @@ def write_grid_coord_small(filename, grid, maxx, maxy): #thanks to YotaXP for fi
             output.write("{}\n\"}}\n".format(grid[x,maxy]))
 
 
-def write_dictionary(filename, dictionary, header): #writes a tile dictionary the same way Dreammaker does
+def write_dictionary(filename, dictionary, header = None): #writes a tile dictionary the same way Dreammaker does
     with open(filename, "w") as output:
         for key, value in dictionary.items():
             if header:

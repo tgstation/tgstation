@@ -218,7 +218,7 @@ var/global/list/crematoriums = new/list()
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			locked = 0
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people

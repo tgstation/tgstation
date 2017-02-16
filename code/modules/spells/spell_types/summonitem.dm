@@ -43,7 +43,7 @@
 			name = "Instant Summons"
 			marked_item = 		null
 
-		else if(marked_item && qdeleted(marked_item)) //the item was destroyed at some point
+		else if(marked_item && QDELETED(marked_item)) //the item was destroyed at some point
 			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
 			name = "Instant Summons"
 			marked_item = 		null

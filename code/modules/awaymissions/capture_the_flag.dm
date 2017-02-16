@@ -193,7 +193,7 @@
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		return
-	if(ticker.current_state != GAME_STATE_PLAYING)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
@@ -580,7 +580,7 @@
 		CTF.dead_barricades += src
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		new /obj/structure/barricade/security/ctf(get_turf(src))
 		qdel(src)
 

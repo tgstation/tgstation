@@ -46,8 +46,11 @@
 	if(stored_card && stored_card2)
 		user << "<span class='warning'>You try to insert \the [I] into \the [src], but its slots are occupied.</span>"
 		return FALSE
-	if(user && !user.transferItemToLoc(I, src))
-		return FALSE
+	if(user)
+		if(!user.transferItemToLoc(I, src))
+			return FALSE
+	else
+		I.forceMove(src)
 
 	if(!stored_card)
 		stored_card = I

@@ -574,7 +574,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
-	return
 
 /obj/item/weapon/storage/box/hug/medical/New()
 	..()

@@ -527,7 +527,7 @@
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)
 		usr = null
-		remove_from_storage(A, loc)
+		remove_from_storage(A, null)
 
 /obj/item/weapon/storage/contents_explosion(severity, target)
 	for(var/atom/A in contents)

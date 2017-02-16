@@ -252,7 +252,7 @@
 		else
 			user << "You begin to replace the bulb."
 			if(do_after(user, 20, target = src))
-				if(flash.crit_fail || !flash || qdeleted(flash))
+				if(flash.crit_fail || !flash || QDELETED(flash))
 					return
 				crit_fail = FALSE
 				times_used = 0

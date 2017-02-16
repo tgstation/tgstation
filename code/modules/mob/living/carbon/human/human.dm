@@ -47,6 +47,8 @@
 			internal_organs += new /obj/item/organ/lungs()
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
+
+	internal_organs += new dna.species.mutanteyes()
 	internal_organs += new /obj/item/organ/brain
 	..()
 
@@ -763,17 +765,6 @@
 		var/datum/data/record/R = find_record("name", oldname, L)
 		if(R)
 			R.fields["name"] = newname
-
-/mob/living/carbon/human/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD)
-		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		return
-
-	dna.species.update_sight(src)
 
 /mob/living/carbon/human/get_total_tint()
 	. = ..()

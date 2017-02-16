@@ -74,8 +74,6 @@
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 	if(!objective_is_gateway)
 		ratvar_portal = FALSE
-		hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \
-		and will instead simply proselytize and convert everything and everyone on the station.</span>", TRUE)
 	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSprocessing, src)
 
@@ -210,13 +208,14 @@
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
-				clockwork_gateway_activated = TRUE
 				if(ratvar_portal)
 					sleep(3)
+					clockwork_gateway_activated = TRUE
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
 					INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0) //call the shuttle immediately
 					sleep(3)
+					clockwork_gateway_activated = TRUE
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>")
@@ -234,13 +233,8 @@
 							dist = FALSE
 						T.ratvar_act(dist)
 						CHECK_TICK
-					for(var/mob/living/silicon/robot/R in silicon_mobs)
-						if(R && R.stat != DEAD && !is_servant_of_ratvar(R))
-							add_servant_of_ratvar(R)
-					for(var/i in ai_list)
-						var/mob/living/silicon/ai/A = i
-						if(A && A.stat != DEAD && !is_servant_of_ratvar(A))
-							add_servant_of_ratvar(A)
+					for(var/mob/living/L in living_mob_list)
+						L.ratvar_act()
 					for(var/I in all_clockwork_mobs)
 						var/mob/M = I
 						if(M.stat == CONSCIOUS)

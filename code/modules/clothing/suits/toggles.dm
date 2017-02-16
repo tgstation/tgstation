@@ -11,9 +11,9 @@
 	..()
 
 /obj/item/clothing/suit/hooded/Destroy()
+	. = ..()
 	qdel(hood)
 	hood = null
-	return ..()
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)

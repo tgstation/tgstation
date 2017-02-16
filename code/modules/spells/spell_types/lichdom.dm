@@ -55,7 +55,7 @@
 				charge_counter = charge_max
 				return
 
-			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
+			if(!marked_item || QDELETED(marked_item)) //Wait nevermind
 				M << "<span class='warning'>Your phylactery is gone!</span>"
 				return
 

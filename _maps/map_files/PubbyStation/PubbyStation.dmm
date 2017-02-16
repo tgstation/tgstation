@@ -39521,7 +39521,7 @@
 	},
 /area/medical/medbay)
 "bAd" = (
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32

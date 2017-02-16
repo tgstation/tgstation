@@ -29348,14 +29348,14 @@
 	name = "Privacy Shutters Control";
 	pixel_x = 6;
 	pixel_y = 25;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/button/door{
 	id = "hopqueue";
 	name = "Queue Shutters Control";
 	pixel_x = -4;
 	pixel_y = 25;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -4;
@@ -38749,7 +38749,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -61215,6 +61215,14 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
+"cCq" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCr" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -99888,7 +99896,7 @@ aRB
 aSL
 aTN
 aVD
-aVz
+cCq
 cAg
 bak
 bbz
@@ -100145,7 +100153,7 @@ aRG
 aSO
 aTO
 aVG
-aVz
+cCq
 aVz
 bak
 bbz

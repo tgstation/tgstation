@@ -97,11 +97,11 @@
 		addtimer(CALLBACK(src, .proc/explode), timer * 10)
 
 /obj/item/weapon/c4/proc/explode()
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	var/turf/location
 	if(target)
-		if(!qdeleted(target))
+		if(!QDELETED(target))
 			location = get_turf(target)
 			target.overlays -= image_overlay
 			target.priority_overlays -= image_overlay
