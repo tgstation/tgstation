@@ -61,34 +61,28 @@
 		else
 			H << "<span class='notice'>You break your vow of silence.</span>"
 
-// These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.
+// These spells can only be gotten from the "Guide for Advanced Mimery series+" for Mime Traitors.
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/blockade
+/obj/effect/proc_holder/spell/targeted/forcewall/mime
 	name = "Invisible Blockade"
 	desc = "With more polished skills, a powerful mime can create a invisble blockade, blocking off a 3x1 area."
-	summon_type = list(/obj/effect/forcefield/mime/advanced)
+	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = "emote"
-	invocation_emote_self = "<span class='notice'>You form a blockade around yourself.</span>"
-	summon_lifespan = 600
+	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
 	charge_max = 600
-	summon_amt = 0
+	sound =  null
+	clothes_req = 0
+	range = -1
+	include_user = 1
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/blockade/Click()
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
+
+/obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
 			return
-		var/newturf
-		if(usr.dir == NORTH || usr.dir == SOUTH)
-			newturf = get_step(usr, WEST)
-			for(var/i=0,i<3,i++)
-				new /obj/effect/forcefield/mime/advanced(get_turf(newturf))
-				newturf = get_step(newturf, EAST)
-		else
-			newturf = get_step(usr, NORTH)
-			for(var/i=0,i<3,i++)
-				new /obj/effect/forcefield/mime/advanced(get_turf(newturf))
-				newturf = get_step(newturf, SOUTH)
 		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
 	else
 		invocation_type ="none"
@@ -127,7 +121,7 @@
 
 
 /obj/item/weapon/spellbook/oneuse/mimery_blockade
-	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/blockade
+	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 1"
 	desc = "When you turn the pages, it won't make a sound!"
