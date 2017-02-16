@@ -137,7 +137,7 @@
             return EMPTY_AREA_8
 
 /datum/map_config/proc/GetFullMapPath(mp = map_path, mf = map_file)
-    return "_maps/[map_path]/[map_file]"
+    return "_maps/[mp]/[mf]"
 
 /datum/map_config/proc/MakeNextMap()
     return config_filename == "next_map.json" || fcopy(config_filename, "next_map.json")
