@@ -413,7 +413,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	has_id = 1
 	id_job = "Private Security Force"
-	id_access = "Security Officer"
+	id_access = "Special Ops Officer"
 
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
@@ -423,6 +423,16 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/nanotrasensoldier/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "Private Security Officer"
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	faction = "nanotrasenprivate"
+	flavour_text = "You are a Nanotrasen Private Security Officer!"
 
 /////////////////Spooky Undead//////////////////////
 
