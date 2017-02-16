@@ -2427,65 +2427,65 @@
 /turf/open/floor/plating,
 /area/ctf)
 "gH" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "gI" = (
-/turf/open/floor/plasteel/darkblue/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel/darkblue/corner,
 /area/ctf)
 "gJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /area/ctf)
 "gK" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "gL" = (
-/turf/open/floor/plasteel/darkblue/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/darkblue/corner,
 /area/ctf)
 "gM" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "gN" = (
 /obj/machinery/power/emitter/energycannon,
 /turf/open/floor/plating,
 /area/ctf)
 "gO" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "gP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /area/ctf)
 "gQ" = (
@@ -2501,39 +2501,39 @@
 	},
 /area/ctf)
 "gS" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	icon_plating = "warnplate"
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/ctf)
 "gT" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "gU" = (
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plating,
 /area/ctf)
 "gV" = (
 /turf/open/floor/plating,
 /area/ctf)
 "gW" = (
-/turf/open/floor/plating{
-	luminosity = 2
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plating{
+	luminosity = 2
+	},
 /area/ctf)
 "gX" = (
-/turf/open/floor/plasteel/darkblue/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/darkblue/corner,
 /area/ctf)
 "gY" = (
 /turf/open/floor/plasteel/darkblue/corner{
@@ -2545,39 +2545,39 @@
 /turf/open/floor/plasteel/darkblue/corner,
 /area/ctf)
 "ha" = (
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plating,
 /area/ctf)
 "hb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /area/ctf)
 "hc" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (NORTH)";
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/ctf)
 "hd" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/ctf)
 "he" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "hf" = (
 /obj/machinery/power/emitter/energycannon{
@@ -2592,22 +2592,22 @@
 /turf/open/floor/plasteel/blue,
 /area/ctf)
 "hh" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "hi" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "hj" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "hk" = (
 /turf/open/floor/plasteel/darkred,
@@ -2620,39 +2620,39 @@
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership)
 "hn" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "ho" = (
 /turf/open/floor/plasteel/circuit,
 /area/ctf)
 "hp" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "hq" = (
 /turf/open/floor/plating/asteroid/snow/atmosphere,
 /area/syndicate_mothership)
 "hr" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "hs" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "ht" = (
-/turf/open/floor/plasteel/circuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel/circuit,
 /area/ctf)
 "hu" = (
 /obj/structure/barricade/security/ctf,
@@ -2663,71 +2663,71 @@
 /turf/open/floor/plasteel/red,
 /area/ctf)
 "hw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTHWEST)";
 	dir = 9
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /area/ctf)
 "hx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
+/area/ctf)
+"hy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/area/ctf)
-"hy" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTHEAST)";
 	dir = 5
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /area/ctf)
 "hz" = (
-/turf/open/floor/plasteel/circuit/gcircuit/off,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ctf)
 "hA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHWEST)";
 	dir = 9
 	},
+/area/ctf)
+"hB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/area/ctf)
-"hB" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTH)";
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /area/ctf)
 "hC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
 	dir = 5
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
 /area/ctf)
 "hD" = (
-/turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/darkblue/side{
+	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2735,11 +2735,11 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ctf)
 "hF" = (
-/turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (EAST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/darkred/side{
+	tag = "icon-darkred (EAST)";
 	dir = 4
 	},
 /area/ctf)
@@ -2770,126 +2770,126 @@
 /turf/open/space,
 /area/space)
 "hN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (SOUTHWEST)";
 	dir = 10
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /area/ctf)
 "hO" = (
-/turf/open/floor/plasteel/darkblue/side,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/darkblue/side,
 /area/ctf)
 "hP" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (SOUTHEAST)";
 	dir = 6
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/ctf)
 "hQ" = (
-/turf/open/floor/plasteel/circuit/gcircuit/off,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ctf)
 "hR" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHWEST)";
 	dir = 10
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/ctf)
 "hS" = (
-/turf/open/floor/plasteel/darkred/side,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/darkred/side,
 /area/ctf)
 "hT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHEAST)";
 	dir = 6
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
 /area/ctf)
 "hU" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "hV" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "hW" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "hX" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "hY" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "hZ" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "ia" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "ib" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "ic" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "id" = (
-/turf/open/floor/plasteel/darkred/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/darkred/corner,
 /area/ctf)
 "ie" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
 	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/ctf)
 "if" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
 	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/ctf)
 "ig" = (
@@ -2902,12 +2902,12 @@
 	},
 /area/ctf)
 "ii" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
 	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/ctf)
 "ij" = (
@@ -2923,41 +2923,41 @@
 	},
 /area/ctf)
 "il" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /area/ctf)
 "im" = (
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel/black,
 /area/ctf)
 "in" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (EAST)";
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/ctf)
 "io" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/ctf)
 "ip" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
 	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
 	},
 /area/ctf)
 "iq" = (
@@ -2996,16 +2996,16 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iy" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/crowbar/red,
 /obj/item/weapon/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iz" = (
 /obj/structure/grille,
@@ -3026,8 +3026,8 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iB" = (
 /obj/structure/table/reinforced,
@@ -3035,8 +3035,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iC" = (
 /obj/item/weapon/storage/box/emps{
@@ -3053,21 +3053,21 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iD" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/restraints/handcuffs/cable/zipties,
 /obj/item/device/assembly/flash/handheld,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iE" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/fancy/donut_box,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iF" = (
 /turf/open/floor/plasteel/vault{
@@ -3090,10 +3090,10 @@
 /obj/item/weapon/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/weapon/crowbar/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iJ" = (
 /obj/structure/closet/secure_closet/security,
@@ -3101,10 +3101,10 @@
 /obj/item/weapon/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/weapon/crowbar/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iK" = (
 /turf/closed/indestructible/riveted,
@@ -3123,16 +3123,16 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iO" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iP" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iQ" = (
 /obj/machinery/status_display{
@@ -3145,8 +3145,8 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/supply)
 "iR" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "iS" = (
 /turf/open/floor/plasteel/loadingarea{
@@ -3172,16 +3172,16 @@
 	},
 /area/centcom/supply)
 "iV" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iW" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iX" = (
 /obj/structure/closet/secure_closet/security,
@@ -3189,10 +3189,10 @@
 /obj/item/weapon/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/weapon/crowbar/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iY" = (
 /obj/structure/closet/secure_closet/security,
@@ -3200,10 +3200,10 @@
 /obj/item/weapon/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/weapon/crowbar/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "iZ" = (
 /obj/structure/grille,
@@ -3225,10 +3225,10 @@
 	opacity = 1;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jd" = (
 /obj/structure/grille,
@@ -3248,10 +3248,10 @@
 	id = "QMLoad2";
 	movedir = 2
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jf" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -3272,25 +3272,25 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "ji" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jj" = (
 /obj/machinery/vending/security,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jk" = (
 /obj/structure/extinguisher_cabinet{
@@ -3298,10 +3298,10 @@
 	pixel_x = 24;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jl" = (
 /obj/machinery/door/poddoor{
@@ -3316,11 +3316,11 @@
 	id = "QMLoad2";
 	movedir = 8
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_end (WEST)"
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_end (WEST)"
 	},
 /area/centcom/supply)
 "jm" = (
@@ -3330,11 +3330,11 @@
 	id = "QMLoad2";
 	movedir = 8
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jn" = (
@@ -3350,11 +3350,11 @@
 	id = "QMLoad2";
 	movedir = 8
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jo" = (
@@ -3363,70 +3363,70 @@
 	id = "QMLoad2";
 	movedir = 2
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/end,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jp" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jq" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jr" = (
 /obj/item/stack/packageWrap,
 /obj/item/weapon/hand_labeler,
 /obj/structure/table,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "js" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Shuttle";
 	req_access_txt = "106"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jt" = (
 /obj/structure/fans/tiny,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "ju" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/filingcabinet/filingcabinet,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jw" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jx" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jy" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jz" = (
 /obj/machinery/button/door{
@@ -3445,8 +3445,8 @@
 	pixel_y = 5
 	},
 /obj/machinery/computer/cargo,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jA" = (
 /obj/machinery/airalarm{
@@ -3454,10 +3454,10 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jB" = (
 /turf/open/floor/plasteel/vault{
@@ -3472,10 +3472,10 @@
 	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jD" = (
 /obj/docking_port/stationary{
@@ -3498,18 +3498,18 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/supply)
 "jG" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jH" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jI" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jJ" = (
 /obj/machinery/door/poddoor{
@@ -3523,11 +3523,11 @@
 	dir = 8;
 	id = "QMLoad"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_end (WEST)"
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_end (WEST)"
 	},
 /area/centcom/supply)
 "jK" = (
@@ -3536,11 +3536,11 @@
 	dir = 8;
 	id = "QMLoad"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jL" = (
@@ -3555,11 +3555,11 @@
 	dir = 8;
 	id = "QMLoad"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jM" = (
@@ -3567,23 +3567,23 @@
 	dir = 8;
 	id = "QMLoad"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_end (NORTH)"
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_end (NORTH)"
+	},
 /area/centcom/supply)
 "jN" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jO" = (
 /obj/structure/closet/wardrobe/cargotech,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jP" = (
 /obj/machinery/conveyor{
@@ -3591,10 +3591,10 @@
 	id = "QMLoad";
 	movedir = 2
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jQ" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -3613,42 +3613,42 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jS" = (
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jT" = (
 /obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jU" = (
 /obj/machinery/computer/security,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jV" = (
 /obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jW" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "jX" = (
 /obj/docking_port/stationary{
@@ -3799,17 +3799,17 @@
 /area/centcom/supply)
 "ko" = (
 /obj/structure/filingcabinet/medical,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kp" = (
 /obj/structure/filingcabinet/security,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kq" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -3834,27 +3834,27 @@
 	},
 /area/centcom/control)
 "ku" = (
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plating,
 /area/syndicate_mothership)
 "kv" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/handcuffs,
 /obj/item/weapon/crowbar/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kw" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kx" = (
 /obj/item/weapon/clipboard,
@@ -3986,35 +3986,35 @@
 	},
 /area/centcom/control)
 "kN" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kO" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kP" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench,
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kQ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/ballistic/automatic/wt550,
 /obj/item/device/flashlight/seclite,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kR" = (
 /obj/structure/table/wood,
@@ -4035,11 +4035,11 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "kU" = (
@@ -4123,11 +4123,11 @@
 	opacity = 1;
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "lc" = (
@@ -4135,11 +4135,11 @@
 	name = "Centcom Supply";
 	req_access_txt = "106"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "ld" = (
@@ -4152,8 +4152,8 @@
 /area/centcom/control)
 "le" = (
 /obj/machinery/door/poddoor/shutters,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "lf" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -4170,10 +4170,10 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/pen/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "lh" = (
 /obj/structure/table/reinforced,
@@ -4181,10 +4181,10 @@
 /obj/item/weapon/crowbar/red,
 /obj/item/weapon/crowbar/power,
 /obj/item/weapon/storage/belt/security/full,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "li" = (
 /obj/structure/chair/comfy/brown{
@@ -4244,17 +4244,17 @@
 /area/centcom/supply)
 "lq" = (
 /obj/machinery/computer/shuttle/labor,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "lr" = (
 /obj/machinery/computer/shuttle/mining,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "ls" = (
 /obj/machinery/light{
@@ -4346,10 +4346,10 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "lC" = (
 /obj/structure/table/wood,
@@ -4405,10 +4405,10 @@
 /area/centcom/supply)
 "lM" = (
 /obj/machinery/computer/cargo,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "lN" = (
 /obj/structure/chair/office/dark{
@@ -4501,11 +4501,11 @@
 /area/centcom/control)
 "lX" = (
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "lY" = (
@@ -4519,10 +4519,10 @@
 	pixel_x = -24;
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "lZ" = (
 /obj/structure/table/reinforced,
@@ -4534,10 +4534,10 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "ma" = (
 /obj/machinery/light{
@@ -4629,10 +4629,10 @@
 /area/centcom/ferry)
 "ml" = (
 /obj/machinery/computer/security/mining,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "mm" = (
 /turf/open/floor/plasteel/brown{
@@ -4650,12 +4650,12 @@
 	opacity = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "mp" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "mq" = (
 /turf/open/floor/plasteel/neutral,
@@ -4781,17 +4781,17 @@
 	pixel_y = -32
 	},
 /obj/machinery/computer/cargo,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "mH" = (
 /obj/machinery/computer/security/mining,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "mI" = (
 /obj/machinery/light,
@@ -4844,8 +4844,8 @@
 	id = "XCCsecdepartment";
 	name = "XCC Security Checkpoint Shutters"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "mO" = (
 /obj/structure/chair/office/dark,
@@ -4908,8 +4908,8 @@
 /area/centcom/control)
 "mX" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "mY" = (
 /turf/open/floor/plasteel/red/side{
@@ -4918,24 +4918,24 @@
 /area/centcom/control)
 "mZ" = (
 /obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "na" = (
 /obj/machinery/computer/security,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "nb" = (
 /obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "nc" = (
 /obj/machinery/vending/snack,
@@ -5105,31 +5105,31 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "nu" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/packageWrap,
 /obj/item/weapon/hand_labeler,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "nv" = (
 /obj/machinery/photocopier,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "nw" = (
 /obj/machinery/computer/cargo,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "nx" = (
 /obj/structure/table,
@@ -5144,8 +5144,8 @@
 /obj/item/weapon/paper/pamphlet/ccaInfo,
 /obj/item/weapon/paper/pamphlet/ccaInfo,
 /obj/item/weapon/paper/pamphlet/ccaInfo,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "nz" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -5276,10 +5276,10 @@
 "nP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/stockexchange,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "nQ" = (
 /turf/open/floor/plasteel/brown{
@@ -5290,15 +5290,15 @@
 /area/centcom/supply)
 "nR" = (
 /obj/machinery/computer/security/mining,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "nS" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "nT" = (
 /obj/structure/table/wood,
@@ -5416,10 +5416,10 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/stamp/qm,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "og" = (
 /obj/structure/chair/office/dark{
@@ -5451,8 +5451,8 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "oj" = (
 /obj/structure/chair/comfy/black{
@@ -5583,10 +5583,10 @@
 	pixel_y = 6
 	},
 /obj/item/device/gps/mining,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "ow" = (
 /obj/structure/table/reinforced,
@@ -5597,8 +5597,8 @@
 	},
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "ox" = (
 /obj/structure/table/wood,
@@ -5820,10 +5820,10 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "oX" = (
 /obj/structure/table/reinforced,
@@ -5833,10 +5833,10 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/stamp,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "oY" = (
 /obj/machinery/firealarm{
@@ -5983,11 +5983,11 @@
 	req_access_txt = "109"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "pt" = (
@@ -6000,11 +6000,11 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "pv" = (
@@ -6013,11 +6013,11 @@
 	opacity = 1;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "pw" = (
@@ -6105,17 +6105,17 @@
 /area/centcom/ferry)
 "pH" = (
 /obj/machinery/computer/shuttle/labor,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pI" = (
 /obj/machinery/computer/shuttle/mining,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pJ" = (
 /obj/machinery/light{
@@ -6151,8 +6151,8 @@
 /obj/item/weapon/weldingtool/experimental,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pN" = (
 /obj/structure/table/reinforced,
@@ -6175,8 +6175,8 @@
 	},
 /obj/item/stack/cable_coil/white,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pO" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -6240,8 +6240,8 @@
 	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pW" = (
 /obj/machinery/power/apc{
@@ -6280,8 +6280,8 @@
 	tag = "icon-0-8";
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pX" = (
 /obj/structure/table/reinforced,
@@ -6291,8 +6291,8 @@
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/shoes/combat/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pY" = (
 /obj/structure/table/reinforced,
@@ -6301,8 +6301,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pZ" = (
 /obj/structure/table/reinforced,
@@ -6313,8 +6313,8 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "qa" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -6337,8 +6337,8 @@
 	id = "XCCsec3";
 	name = "XCC Checkpoint 3 Shutters"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "qd" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -6475,17 +6475,17 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "qt" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "qu" = (
 /obj/machinery/computer/shuttle/white_ship,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "qv" = (
 /obj/structure/chair/office/dark{
@@ -6610,10 +6610,10 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "qI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
@@ -6693,10 +6693,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "qM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6734,84 +6734,87 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qR" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qS" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0
+	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qT" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qU" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qV" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qW" = (
 /obj/structure/table,
 /obj/item/toy/foamblade,
 /obj/item/toy/gun,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qX" = (
 /obj/structure/table,
 /obj/item/toy/katana,
 /obj/item/toy/carpplushie,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qY" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "qZ" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "ra" = (
 /obj/machinery/door/poddoor/shuttledock,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "rb" = (
 /obj/structure/showcase{
@@ -6882,10 +6885,10 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "rk" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "rl" = (
 /turf/open/space,
@@ -6915,17 +6918,17 @@
 	},
 /area/shuttle/assault_pod)
 "rp" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "rq" = (
 /obj/machinery/computer/shuttle/ferry,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rr" = (
 /turf/open/floor/plasteel/green/side{
@@ -6956,10 +6959,10 @@
 	name = "Centcom Supply";
 	req_access_txt = "106"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rx" = (
 /turf/open/floor/plasteel/vault{
@@ -7044,10 +7047,10 @@
 	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rG" = (
 /obj/machinery/computer/monitor,
@@ -7064,10 +7067,10 @@
 	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rH" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
@@ -7083,10 +7086,10 @@
 	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rI" = (
 /obj/item/weapon/storage/box/handcuffs,
@@ -7099,10 +7102,10 @@
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rJ" = (
 /obj/item/weapon/gun/energy/pulse/carbine/loyalpin,
@@ -7112,10 +7115,10 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rK" = (
 /obj/item/weapon/storage/box/emps{
@@ -7131,10 +7134,10 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rL" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -7151,10 +7154,10 @@
 /area/centcom/control)
 "rN" = (
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "rO" = (
 /turf/open/floor/plasteel/neutral/side{
@@ -7193,10 +7196,10 @@
 	icon_state = "plant-21";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "rU" = (
 /turf/open/floor/plasteel/yellowsiding{
@@ -7204,10 +7207,10 @@
 	},
 /area/centcom/evac)
 "rV" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "rW" = (
 /obj/machinery/door/firedoor,
@@ -7216,10 +7219,10 @@
 	opacity = 1;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "rX" = (
 /turf/closed/indestructible/fakeglass{
@@ -7243,10 +7246,10 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership)
 "sa" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "sb" = (
 /obj/structure/chair{
@@ -7264,10 +7267,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "se" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "sf" = (
 /obj/item/weapon/clipboard,
@@ -7304,17 +7307,17 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "si" = (
 /obj/machinery/computer/communications,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sj" = (
 /obj/machinery/light,
@@ -7384,6 +7387,9 @@
 /area/centcom/control)
 "sr" = (
 /obj/structure/chair/office/dark,
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0
+	},
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/control)
 "ss" = (
@@ -7419,10 +7425,10 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "sv" = (
 /turf/open/floor/plasteel/neutral,
@@ -7501,11 +7507,11 @@
 	opacity = 1;
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "sH" = (
@@ -7514,17 +7520,17 @@
 /obj/item/weapon/crowbar/power,
 /obj/item/weapon/wrench,
 /obj/item/weapon/hand_labeler,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sI" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sJ" = (
 /obj/structure/bookcase/random,
@@ -7645,8 +7651,8 @@
 	req_access_txt = "109"
 	},
 /obj/machinery/door/window,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "sW" = (
 /turf/open/floor/plasteel/blue/corner,
@@ -7779,23 +7785,23 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tp" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tq" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tr" = (
 /obj/machinery/firealarm{
@@ -7807,10 +7813,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ts" = (
 /obj/machinery/door/airlock/centcom{
@@ -7818,11 +7824,11 @@
 	opacity = 1;
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "tt" = (
@@ -7830,10 +7836,10 @@
 	id = "XCCsec1";
 	name = "XCC Checkpoint 1 Shutters"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "tu" = (
 /obj/machinery/light{
@@ -7928,10 +7934,10 @@
 	id = "XCCcustoms2";
 	name = "XCC Customs 2 Shutters"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "tD" = (
 /obj/structure/table,
@@ -7949,8 +7955,8 @@
 	},
 /area/centcom/control)
 "tF" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "tG" = (
 /obj/structure/table,
@@ -7965,10 +7971,10 @@
 	id = "XCCcustoms1";
 	name = "XCC Customs 1 Shutters"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "tI" = (
 /turf/open/floor/plasteel/neutral/side{
@@ -8064,19 +8070,19 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tX" = (
 /turf/open/floor/plasteel/neutral,
 /area/centcom/ferry)
 "tY" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tZ" = (
 /obj/machinery/door/firedoor,
@@ -8085,10 +8091,10 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ua" = (
 /obj/machinery/door/poddoor/shutters{
@@ -8107,32 +8113,32 @@
 	pixel_y = 24;
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uc" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ud" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ue" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uf" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ug" = (
 /obj/machinery/door/airlock/centcom{
@@ -8140,10 +8146,10 @@
 	opacity = 1;
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "uh" = (
 /obj/structure/table/reinforced,
@@ -8188,10 +8194,10 @@
 	},
 /area/centcom/control)
 "un" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "uo" = (
 /turf/open/floor/plasteel/blue/side{
@@ -8299,34 +8305,34 @@
 	name = "Ferry Airlock";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uB" = (
 /obj/structure/fans/tiny,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uC" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uD" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uE" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uF" = (
 /obj/structure/grille,
@@ -8346,8 +8352,8 @@
 	icon_state = "plant-21";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uH" = (
 /turf/open/floor/plasteel/green/side{
@@ -8402,10 +8408,10 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "uQ" = (
 /turf/open/floor/plasteel/neutral/side{
@@ -8464,10 +8470,10 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "vc" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "vd" = (
 /obj/machinery/door/airlock/centcom{
@@ -8485,16 +8491,16 @@
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
 "ve" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "vf" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vg" = (
 /obj/machinery/button/door{
@@ -8502,10 +8508,10 @@
 	name = "CC Shutter 1 Control";
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vh" = (
 /turf/open/floor/plasteel/green/corner{
@@ -8565,10 +8571,10 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "vq" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "vr" = (
 /obj/structure/grille,
@@ -8578,14 +8584,14 @@
 /area/centcom/ferry)
 "vs" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vt" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vu" = (
 /obj/structure/chair{
@@ -8597,10 +8603,10 @@
 /obj/structure/sign/securearea{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vv" = (
 /obj/machinery/door/airlock/centcom{
@@ -8608,11 +8614,11 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "vw" = (
@@ -8815,18 +8821,18 @@
 /obj/structure/sign/directions/engineering{
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vX" = (
 /obj/structure/closet/secure_closet/ertEngi,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vY" = (
 /obj/structure/table/reinforced,
@@ -8835,8 +8841,8 @@
 /obj/structure/noticeboard{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vZ" = (
 /obj/structure/table/reinforced,
@@ -8849,8 +8855,8 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wa" = (
 /obj/structure/rack,
@@ -8862,10 +8868,10 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wb" = (
 /obj/structure/closet/secure_closet/ertCom,
@@ -8877,18 +8883,18 @@
 	pixel_y = 24;
 	tag = "icon-direction_bridge"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wc" = (
 /obj/machinery/door/airlock/glass_medical{
 	name = "Infirmary"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "wd" = (
@@ -8936,20 +8942,20 @@
 /area/wizard_station)
 "wk" = (
 /obj/structure/closet/syndicate/personal,
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/black,
 /area/syndicate_mothership)
 "wl" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/ionrifle{
 	pin = /obj/item/device/firing_pin
 	},
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/black,
 /area/syndicate_mothership)
 "wm" = (
 /obj/structure/table/wood,
@@ -9128,8 +9134,8 @@
 /area/centcom/ferry)
 "wK" = (
 /obj/machinery/door/poddoor/ert,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wL" = (
 /turf/open/floor/plasteel/vault{
@@ -9141,18 +9147,18 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/radio,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wN" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wO" = (
 /obj/structure/extinguisher_cabinet{
@@ -9285,19 +9291,19 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/folder/yellow,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xk" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/zipties,
 /obj/item/weapon/crowbar/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xl" = (
 /obj/machinery/power/apc{
@@ -9319,43 +9325,47 @@
 /turf/open/floor/plasteel/cmo,
 /area/centcom/control)
 "xo" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xp" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xq" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xr" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xs" = (
 /obj/structure/table,
 /obj/item/toy/sword,
 /obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xt" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xu" = (
 /obj/structure/chair/wood/wings{
@@ -9430,19 +9440,19 @@
 "xE" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/lockbox/loyalty,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xF" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/tank/internals/emergency_oxygen/engi,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xG" = (
 /obj/machinery/newscaster/security_unit{
@@ -9457,8 +9467,8 @@
 	id = "XCCsec3";
 	name = "CC Main Access Shutters"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "xI" = (
 /obj/item/weapon/defibrillator/loaded,
@@ -9506,10 +9516,10 @@
 	icon_state = "sleeper-open";
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "xL" = (
 /obj/machinery/light,
@@ -9519,20 +9529,20 @@
 	pixel_y = -32;
 	tag = "icon-nboard00 (NORTH)"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "xM" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "xN" = (
 /obj/item/weapon/storage/firstaid/fire,
@@ -9568,8 +9578,8 @@
 	name = "Centcom Customs";
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xQ" = (
 /obj/structure/table/reinforced,
@@ -9579,8 +9589,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xR" = (
 /obj/structure/table/reinforced,
@@ -9592,8 +9602,8 @@
 	name = "Centcom Customs";
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "xS" = (
 /obj/machinery/door/airlock{
@@ -9804,10 +9814,10 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "yp" = (
 /obj/structure/closet/secure_closet/ertMed,
@@ -9818,10 +9828,10 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "yq" = (
 /obj/structure/table/reinforced,
@@ -9830,10 +9840,10 @@
 /obj/structure/sign/bluecross_2{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "yr" = (
 /obj/structure/table/reinforced,
@@ -9842,18 +9852,18 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ys" = (
 /obj/structure/closet/secure_closet/ertSec,
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn (NORTHWEST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn (NORTHWEST)"
 	},
 /area/centcom/ferry)
 "yt" = (
@@ -9862,10 +9872,10 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "yu" = (
 /obj/structure/table/reinforced,
@@ -10053,10 +10063,10 @@
 /area/centcom/evac)
 "yN" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "yO" = (
 /turf/open/floor/plasteel/darkred/side{
@@ -10072,8 +10082,8 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "yQ" = (
 /obj/structure/table/reinforced,
@@ -10082,8 +10092,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "yR" = (
 /turf/open/floor/plasteel/darkblue/side{
@@ -10102,20 +10112,13 @@
 	},
 /area/centcom/evac)
 "yU" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/turf/open/floor/plasteel/vault{
-	dir = 8
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0
 	},
+/turf/open/floor/plasteel/darkred/side,
 /area/centcom/evac)
 "yV" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/device/taperecorder,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/darkred/side,
 /area/centcom/evac)
 "yW" = (
 /obj/item/weapon/storage/box/ids{
@@ -10190,8 +10193,8 @@
 	req_access_txt = "109";
 	base_state = "rightsecure"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "zd" = (
 /obj/structure/table/reinforced,
@@ -10206,8 +10209,8 @@
 	req_access_txt = "109";
 	base_state = "rightsecure"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "ze" = (
 /obj/structure/chair/office/dark{
@@ -10230,17 +10233,17 @@
 "zg" = (
 /obj/item/clothing/suit/wizrobe/black,
 /obj/item/clothing/head/wizard/black,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zh" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zi" = (
 /obj/item/cardboard_cutout,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zj" = (
 /obj/structure/table/wood,
@@ -10337,13 +10340,13 @@
 /area/centcom/control)
 "zu" = (
 /obj/item/weapon/cautery/alien,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zv" = (
 /obj/item/weapon/coin/antagtoken,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zw" = (
 /obj/structure/bed,
@@ -10360,22 +10363,22 @@
 	opacity = 1;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "zz" = (
 /obj/structure/closet/cardboard,
 /obj/item/weapon/banhammer,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zA" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zB" = (
 /obj/vehicle/scooter/skateboard{
@@ -10383,8 +10386,8 @@
 	icon_state = "skateboard";
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/wizard_station)
 "zC" = (
 /obj/structure/dresser,
@@ -10421,22 +10424,22 @@
 /area/tdome/tdomeobserve)
 "zI" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "zJ" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "zK" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "zL" = (
 /obj/item/weapon/clipboard,
@@ -10478,8 +10481,8 @@
 	},
 /area/tdome/tdomeobserve)
 "zQ" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "zR" = (
 /obj/structure/chair,
@@ -10499,11 +10502,11 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "zU" = (
@@ -10579,8 +10582,8 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/paper/pamphlet/ccaInfo,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Ag" = (
 /turf/open/floor/plasteel/neutral,
@@ -10761,8 +10764,8 @@
 	name = "Thunderdoom Booth";
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "AI" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -10795,14 +10798,7 @@
 	},
 /area/tdome/tdomeobserve)
 "AN" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHWEST)";
-	icon_state = "whitegreen";
-	dir = 9
-	},
+/turf/open/space,
 /area/tdome/tdomeobserve)
 "AO" = (
 /turf/open/floor/plasteel/whitegreen/side{
@@ -10810,14 +10806,8 @@
 	},
 /area/tdome/tdomeobserve)
 "AP" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHEAST)";
-	icon_state = "whitegreen";
-	dir = 5
-	},
+/obj/machinery/door/poddoor/shutters,
+/turf/open/space,
 /area/tdome/tdomeobserve)
 "AQ" = (
 /obj/structure/table,
@@ -10884,10 +10874,10 @@
 	opacity = 1;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Bb" = (
 /turf/open/floor/plasteel/neutral/side{
@@ -11116,11 +11106,11 @@
 /area/tdome/tdomeobserve)
 "BK" = (
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "BL" = (
@@ -11133,11 +11123,11 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "BN" = (
@@ -11236,8 +11226,8 @@
 /area/tdome/tdomeobserve)
 "BW" = (
 /obj/machinery/processor,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/end,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "BX" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
@@ -11600,8 +11590,8 @@
 /turf/open/floor/plasteel,
 /area/centcom/holding)
 "CM" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/holding)
 "CN" = (
 /obj/structure/grille,
@@ -11722,8 +11712,8 @@
 	pixel_x = -8
 	},
 /obj/item/weapon/reagent_containers/food/drinks/britcup,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "CZ" = (
 /turf/open/floor/plasteel/vault,
@@ -11767,8 +11757,8 @@
 "Dd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "De" = (
 /obj/structure/table/wood,
@@ -11798,11 +11788,11 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "Dh" = (
@@ -11823,8 +11813,8 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/storage/bag/tray,
 /obj/item/weapon/kitchen/fork,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Dj" = (
 /turf/open/floor/plasteel/redyellow,
@@ -11867,8 +11857,8 @@
 	pixel_y = -32;
 	tag = "icon-nboard00 (NORTH)"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Dp" = (
 /obj/machinery/computer/security/telescreen{
@@ -12016,24 +12006,24 @@
 	opacity = 1;
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/arena)
 "DG" = (
 /obj/machinery/igniter,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "DH" = (
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "DI" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "DJ" = (
 /turf/closed/indestructible/riveted,
@@ -12052,11 +12042,11 @@
 	opacity = 1;
 	req_access_txt = "102"
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeadmin)
 "DM" = (
@@ -12067,10 +12057,10 @@
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/weapon/melee/baton/loaded,
 /obj/item/weapon/melee/energy/sword/saber/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "DN" = (
 /obj/machinery/door/poddoor{
@@ -12085,28 +12075,28 @@
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "DP" = (
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "DQ" = (
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "DR" = (
 /obj/machinery/door/poddoor{
@@ -12123,8 +12113,8 @@
 	},
 /area/tdome/arena)
 "DT" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "DU" = (
 /turf/open/floor/plasteel/neutral/side{
@@ -12158,28 +12148,28 @@
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ea" = (
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Eb" = (
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ec" = (
 /obj/machinery/door/poddoor{
@@ -12199,10 +12189,10 @@
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/weapon/melee/baton/loaded,
 /obj/item/weapon/melee/energy/sword/saber/green,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ee" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -12221,21 +12211,21 @@
 /area/tdome/tdomeadmin)
 "Eg" = (
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeadmin)
 "Eh" = (
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ei" = (
 /obj/machinery/recharger{
@@ -12244,8 +12234,8 @@
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ej" = (
 /obj/effect/landmark{
@@ -12257,10 +12247,10 @@
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "El" = (
 /turf/open/floor/plasteel/red/corner{
@@ -12276,10 +12266,10 @@
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Eo" = (
 /obj/machinery/recharger{
@@ -12288,8 +12278,8 @@
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ep" = (
 /obj/effect/landmark{
@@ -12301,10 +12291,10 @@
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Er" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -12316,16 +12306,16 @@
 	},
 /area/tdome/tdomeadmin)
 "Es" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "Et" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "Eu" = (
 /obj/machinery/camera{
@@ -12381,16 +12371,16 @@
 /turf/open/floor/plating/asteroid,
 /area/tdome/tdomeadmin)
 "EB" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "EC" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "ED" = (
 /obj/machinery/camera{
@@ -12412,51 +12402,51 @@
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EH" = (
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EI" = (
 /obj/effect/landmark{
 	name = "tdome2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EJ" = (
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EK" = (
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EL" = (
 /obj/effect/landmark{
 	name = "tdome1"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EM" = (
 /obj/machinery/door/poddoor{
@@ -12486,10 +12476,10 @@
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
 /obj/item/weapon/gun/energy/laser,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EQ" = (
 /turf/closed/indestructible/fakeglass{
@@ -12516,10 +12506,10 @@
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
 /obj/item/weapon/gun/energy/laser,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "EU" = (
 /obj/item/device/radio{
@@ -12581,10 +12571,10 @@
 /area/shuttle/escape)
 "Fb" = (
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "Fc" = (
 /turf/open/floor/plasteel/vault{
@@ -12642,10 +12632,10 @@
 	opacity = 1;
 	req_access_txt = "102"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "Fl" = (
 /turf/open/floor/plasteel/vault,
@@ -12654,8 +12644,8 @@
 /obj/machinery/door/airlock/external{
 	name = "Backup Emergency Escape Shuttle"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "Fn" = (
 /obj/machinery/door/airlock/titanium,
@@ -13501,8 +13491,8 @@
 	},
 /area/centcom/control)
 "HV" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "HW" = (
 /turf/open/floor/plasteel,
@@ -13549,15 +13539,1321 @@
 /obj/effect/turf_decal/delivery,
 /area/centcom/evac)
 "Ih" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "Ii" = (
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
 /area/centcom/evac)
+"Ij" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Ik" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Il" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Im" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"In" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Io" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Ip" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Iq" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Ir" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Is" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"It" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Iu" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Iv" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Iw" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Ix" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Iy" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Iz" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"IA" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IB" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IC" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"ID" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IE" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IF" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"IG" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad2";
+	movedir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IH" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"II" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IJ" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IK" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IL" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IM" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"IN" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "supply dock loading door"
+	},
+/turf/open/floor/plating,
+/area/centcom/supply)
+"IO" = (
+/obj/machinery/door/poddoor{
+	density = 1;
+	icon_state = "closed";
+	id = "QMLoaddoor2";
+	name = "Supply Dock Loading Door";
+	opacity = 1
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2";
+	movedir = 8
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_end (WEST)"
+	},
+/area/centcom/supply)
+"IP" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2";
+	movedir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/supply)
+"IQ" = (
+/obj/machinery/door/poddoor{
+	density = 1;
+	icon_state = "closed";
+	id = "QMLoaddoor2";
+	name = "Supply Dock Loading Door";
+	opacity = 1
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2";
+	movedir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/supply)
+"IR" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad2";
+	movedir = 2
+	},
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IT" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IU" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IV" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IW" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IX" = (
+/obj/item/stack/packageWrap,
+/obj/item/weapon/hand_labeler,
+/obj/structure/table,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"IY" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"IZ" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Ja" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jb" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jc" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jd" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Je" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating,
+/area/centcom/supply)
+"Jf" = (
+/obj/machinery/door/airlock/external{
+	name = "Supply Shuttle";
+	req_access_txt = "106"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jg" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jh" = (
+/obj/machinery/door/airlock/external{
+	name = "Supply Shuttle";
+	req_access_txt = "106"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Ji" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/filingcabinet,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jk" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Jl" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jm" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jn" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jo" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jp" = (
+/obj/machinery/button/door{
+	dir = 2;
+	id = "QMLoaddoor2";
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/obj/machinery/button/door{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Jq" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Jr" = (
+/obj/machinery/button/door{
+	id = "QMLoaddoor";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = -27;
+	pixel_y = -5
+	},
+/obj/machinery/button/door{
+	dir = 2;
+	id = "QMLoaddoor2";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = -27;
+	pixel_y = 5
+	},
+/obj/machinery/computer/cargo,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Js" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jt" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Ju" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jv" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jw" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/filingcabinet,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Jy" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Jz" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JA" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JB" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JC" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JD" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JE" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating,
+/area/centcom/supply)
+"JF" = (
+/obj/machinery/door/airlock/external{
+	name = "Supply Shuttle";
+	req_access_txt = "106"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JG" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JH" = (
+/obj/machinery/door/airlock/external{
+	name = "Supply Shuttle";
+	req_access_txt = "106"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JJ" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"JK" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JL" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JM" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JN" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JO" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"JP" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "supply dock loading door"
+	},
+/turf/open/floor/plating,
+/area/centcom/supply)
+"JQ" = (
+/obj/machinery/door/poddoor{
+	density = 1;
+	icon_state = "closed";
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door";
+	opacity = 1
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_end (WEST)"
+	},
+/area/centcom/supply)
+"JR" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/supply)
+"JS" = (
+/obj/machinery/door/poddoor{
+	density = 1;
+	icon_state = "closed";
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door";
+	opacity = 1
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/supply)
+"JT" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_end (NORTH)"
+	},
+/area/centcom/supply)
+"JU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JV" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JW" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JX" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JY" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"JZ" = (
+/obj/structure/closet/wardrobe/cargotech,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Ka" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Kb" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Kc" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Kd" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Ke" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Kf" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Kg" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Kh" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad";
+	movedir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Ki" = (
+/obj/structure/closet/secure_closet/quartermaster,
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Kj" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Kk" = (
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
+/area/centcom/supply)
+"Kl" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Km" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Kn" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/supply)
+"Ko" = (
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
+/area/centcom/supply)
+"Kp" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Kq" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad";
+	movedir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Kr" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Ks" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Kt" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Ku" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Kv" = (
+/obj/structure/closet/wardrobe/cargotech,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"Kw" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Kx" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"Ky" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"Kz" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"KA" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"KB" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"KC" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/supply)
+"KD" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad";
+	movedir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"KE" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_l"
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"KF" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"KG" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"KH" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"KI" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r"
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/supply)
+"KJ" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"KK" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/centcom/supply)
+"KL" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Warehouse";
+	opacity = 1;
+	req_access_txt = "109"
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/supply)
+"KM" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Warehouse";
+	opacity = 1;
+	req_access_txt = "109"
+	},
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom Warehouse"
+	},
+/area/centcom/supply)
+"KN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"KO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"KP" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"KQ" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"KR" = (
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0;
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/centcom/evac)
+"KS" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"KT" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"KU" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"KV" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "asteroid8";
+	name = "sand"
+	},
+/area/centcom/evac)
+"KW" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"KX" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"KY" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"KZ" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"La" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Lb" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Lc" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Ld" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"Le" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Lf" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Lg" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Lh" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"Li" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"Lj" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"Lk" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Ll" = (
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
+/area/centcom/ferry)
+"Lm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Ln" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lo" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lp" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lq" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lr" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Ls" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lt" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lu" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lv" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"Lw" = (
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0;
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/centcom/ferry)
+"Lx" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/centcom/ferry)
+"Ly" = (
+/turf/open/floor/plasteel/darkred/side,
+/area/centcom/evac)
+"Lz" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "asteroid8";
+	name = "sand"
+	},
+/area/centcom/evac)
+"LA" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LB" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LC" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LD" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LE" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LF" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LG" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LH" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LI" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LJ" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LK" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LL" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 4;
+	vision_range = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"LN" = (
+/obj/effect/turf_decal/bot,
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0;
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"LO" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Security";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/control)
+"LP" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/weapon/storage/fancy/donut_box,
+/obj/effect/turf_decal/bot,
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 2;
+	icon_state = "leftsecure";
+	name = "Centcom Stand";
+	req_access_txt = "109";
+	tag = "icon-leftsecure (NORTH)"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"LQ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/weapon/folder/red,
+/obj/item/weapon/pen/red,
+/obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"LR" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/bot,
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 2;
+	icon_state = "leftsecure";
+	name = "Centcom Stand";
+	req_access_txt = "109";
+	tag = "icon-leftsecure (NORTH)"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"LS" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"LT" = (
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
+/area/centcom/ferry)
+"LU" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LV" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LW" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LX" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LY" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LZ" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Ma" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Mb" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Mc" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Md" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"Me" = (
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0;
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/centcom/ferry)
+"Mf" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/centcom/ferry)
+"Mg" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/ferry)
+"Mh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mj" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Ml" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mm" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mn" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mo" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mp" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"Mq" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mr" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Ms" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mt" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"Mu" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mv" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mw" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mx" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Shuttle Control Office";
+	opacity = 1;
+	req_access_txt = "109"
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/ferry)
+"My" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"Mz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"MA" = (
+/turf/open/space,
+/area/tdome/tdomeobserve)
+"MB" = (
+/obj/machinery/door/poddoor/shutters,
+/turf/open/space,
+/area/tdome/tdomeobserve)
+"MC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"MD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"ME" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/centcom/ferry)
+"MF" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
+"MG" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
+"MH" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/ferry)
+"MI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"MJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"MK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: BLAST DOORS";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-doors"
+	},
+/turf/open/floor/plating,
+/area/tdome/tdomeobserve)
+"ML" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: BLAST DOORS";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-doors"
+	},
+/turf/open/floor/plating,
+/area/tdome/tdomeobserve)
+"MM" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
+"MN" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
+"MO" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
+"MP" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"MQ" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"MR" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"MS" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"MT" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
 
 (1,1,1) = {"
 aa
@@ -45098,9 +46394,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+Lk
+LA
+LS
 aa
 aa
 aa
@@ -45354,11 +46650,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+KW
+Ll
+LB
+LT
+Mm
 aa
 aa
 aa
@@ -45611,11 +46907,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+KX
+Lm
+LC
+LU
+Mn
 aa
 aa
 aa
@@ -45868,11 +47164,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+KY
+Ln
+LD
+LV
+Mo
 aa
 aa
 aa
@@ -46125,11 +47421,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+KZ
+Lo
+LE
+LW
+Mp
 aa
 aa
 aa
@@ -46382,11 +47678,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+La
+Lp
+LF
+LX
+Mq
 aa
 aa
 aa
@@ -46639,11 +47935,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Lb
+Lq
+LG
+LY
+Mr
 aa
 aa
 aa
@@ -46896,11 +48192,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Lc
+Lr
+LH
+LZ
+Ms
 aa
 aa
 aa
@@ -47153,11 +48449,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Ld
+Ls
+LI
+Ma
+Mt
 aa
 aa
 aa
@@ -47410,11 +48706,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Le
+Lt
+LJ
+Mb
+Mu
 aa
 aa
 aa
@@ -47667,17 +48963,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Lf
+Lu
+LK
+Mc
+Mv
+nf
+nf
+mU
+mV
+nf
+nf
 aa
 aa
 aa
@@ -47924,17 +49220,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Lg
+Lv
+LL
+Md
+Mw
+nf
+pF
+MC
+MD
+sf
+nf
 aa
 aa
 aa
@@ -48180,18 +49476,18 @@ aa
 aa
 aa
 aa
+lJ
 aa
+nf
+uA
+nf
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lJ
+pG
+qv
+rr
+MH
+lJ
 aa
 aa
 aa
@@ -48437,18 +49733,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lJ
+tn
+nf
+uB
+nf
+vr
+lJ
+My
+qw
+rs
+MI
+nf
 aa
 aa
 aa
@@ -48694,18 +49990,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lJ
+to
+nf
+uA
+nf
+to
+lJ
+Mz
+qx
+rt
+MJ
+nf
 aa
 aa
 aa
@@ -48951,18 +50247,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mV
+tp
+tW
+LM
+tW
+vs
+lJ
+pJ
+qy
+ru
+sj
+mV
 aa
 aa
 aa
@@ -49208,18 +50504,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+nf
+tq
+Lw
+LN
+Me
+vt
+Mx
+qA
+qy
+ru
+qA
+nf
 aa
 aa
 aa
@@ -49465,18 +50761,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lJ
+tr
+tY
+uE
+tY
+vu
+lJ
+qA
+qz
+rv
+qA
+lJ
 aa
 aa
 aa
@@ -49724,22 +51020,22 @@ nf
 nf
 lJ
 lJ
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Lx
+uF
+Mf
+lJ
+lJ
+lJ
+lJ
+ME
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
 aa
 aa
 aa
@@ -49996,7 +51292,7 @@ aa
 aa
 aa
 aa
-aa
+lJ
 aa
 aa
 aa
@@ -50253,7 +51549,7 @@ aa
 aa
 aa
 aa
-aa
+lJ
 aa
 aa
 aa
@@ -50510,7 +51806,7 @@ aa
 aa
 aa
 aa
-aa
+lJ
 aa
 aa
 aa
@@ -50767,7 +52063,7 @@ aa
 aa
 aa
 aa
-aa
+lJ
 aa
 aa
 aa
@@ -50952,17 +52248,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Ij
+Ir
+Iz
+IH
+IY
+Jk
+Jy
+JJ
+Ka
+Kj
+Kw
 aa
 aa
 aa
@@ -51024,7 +52320,7 @@ aa
 aa
 aa
 aa
-aa
+lJ
 aa
 aa
 aa
@@ -51209,18 +52505,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Ik
+Is
+IA
+II
+IZ
+Jl
+Jz
+JK
+Kb
+Kk
+Kx
+KE
 aa
 aa
 aa
@@ -51281,7 +52577,7 @@ aa
 aa
 aa
 aa
-aa
+lJ
 aa
 aa
 aa
@@ -51466,18 +52762,18 @@ ge
 ge
 ge
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Il
+It
+IB
+IJ
+Ja
+Jm
+JA
+JL
+Kc
+Kl
+Ky
+KF
 aa
 aa
 aa
@@ -51723,18 +53019,18 @@ gl
 gA
 ge
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Im
+Iu
+IC
+IK
+Jb
+Jn
+JB
+JM
+Kd
+Km
+Kz
+KG
 aa
 aa
 aa
@@ -51980,18 +53276,18 @@ gm
 gB
 ge
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+In
+Iv
+ID
+IL
+Jc
+Jo
+JC
+JN
+Ke
+Kn
+KA
+KH
 aa
 aa
 aa
@@ -52237,18 +53533,18 @@ gm
 gB
 ge
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Io
+Iw
+IE
+IM
+Jd
+Jp
+JD
+JO
+Kf
+Ko
+KB
+KI
 aa
 aa
 aa
@@ -52494,17 +53790,17 @@ gm
 gB
 ge
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Ip
+Ix
+IF
+IN
+Je
+Jq
+JE
+JP
+Kg
+Kp
+KC
 aa
 aa
 aa
@@ -52753,13 +54049,13 @@ ge
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iZ
+IO
+Jf
+iZ
+JF
+JQ
+iZ
 aa
 aa
 aa
@@ -53010,13 +54306,13 @@ ge
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+jd
+IP
+Jg
+iZ
+JG
+JR
+jd
 aa
 aa
 aa
@@ -53264,20 +54560,20 @@ gn
 gn
 gC
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iK
+iQ
+iZ
+iZ
+IQ
+Jh
+iZ
+JH
+JS
+iZ
+iZ
+iZ
+iZ
+iQ
 iK
 iQ
 iZ
@@ -53521,20 +54817,20 @@ go
 go
 ge
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iK
+Iq
+Iy
+IG
+IR
+iS
+Jr
+jE
+JT
+Kh
+Kq
+KD
+KJ
+KK
 iK
 iR
 iR
@@ -53778,20 +55074,20 @@ gl
 gl
 gA
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iK
+iS
+iS
+jf
+IS
+Ji
+Js
+JI
+JU
+jQ
+jY
+jY
+jE
+jE
 iK
 iS
 iS
@@ -54035,20 +55331,20 @@ gm
 gm
 gB
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iK
+iT
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+kJ
 iK
 iT
 ja
@@ -54292,21 +55588,21 @@ gq
 gq
 gB
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 iL
+iT
+ja
+jg
+IT
+ja
+Jt
+ja
+JV
+ja
+Kr
+kn
+ja
+kJ
+KL
 iT
 ja
 jg
@@ -54549,21 +55845,21 @@ gq
 gm
 gB
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-iL
+iK
+iT
+ja
+jg
+IU
+ja
+Ju
+ja
+JW
+ja
+Ks
+kn
+ja
+kJ
+iK
 iT
 ja
 jg
@@ -54806,20 +56102,20 @@ gn
 gn
 gC
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iK
+iT
+ja
+jg
+IV
+ja
+Jv
+ja
+JX
+ja
+Kt
+kn
+ja
+kJ
 iK
 iT
 ja
@@ -55063,21 +56359,21 @@ go
 go
 ge
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-iL
+iK
+iT
+ja
+jg
+IW
+ja
+Jw
+ja
+JY
+ja
+Ku
+kn
+ja
+kK
+iK
 iT
 ja
 jg
@@ -55320,21 +56616,21 @@ gl
 gl
 gA
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 iL
+iT
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+ja
+kJ
+KM
 iT
 ja
 ja
@@ -55577,20 +56873,20 @@ gq
 gm
 gB
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iK
+iU
+jb
+jb
+IX
+Jj
+Jx
+jb
+JZ
+Ki
+Kv
+jb
+jb
+kL
 iK
 iU
 jb
@@ -55834,20 +57130,20 @@ gq
 gq
 gB
 ge
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+iK
+iK
+iQ
+iK
+iK
+iK
+iK
+jF
+iK
+iK
+iK
+iK
+iQ
+iK
 iK
 iK
 iQ
@@ -61037,16 +62333,16 @@ it
 aa
 aa
 aa
-zH
+MA
 AN
-Bh
-Br
-zH
-BS
-BS
-BS
-BS
-BS
+AN
+AN
+AN
+AN
+AN
+AN
+AN
+AN
 zH
 AX
 BF
@@ -61291,20 +62587,20 @@ iz
 it
 lB
 it
-aa
-aa
-aa
+lJ
+lJ
+lJ
 zH
-AO
-AU
-Bs
-BJ
-Bs
-Bs
-Bs
-Bs
-Bs
-Dg
+Ac
+MF
+MK
+MM
+Ac
+zH
+zH
+AN
+AN
+MT
 Bf
 Bb
 BK
@@ -61547,20 +62843,20 @@ iH
 jB
 jB
 iH
-kM
-aa
-aa
-aa
-zH
+LO
+Mg
+lJ
+lJ
+MB
 AP
-Bi
-Bt
+AP
+AP
+AP
+AP
+AP
 zH
-Cl
-Cw
-CK
-CT
-Df
+AN
+AN
 zH
 Ds
 DD
@@ -61805,19 +63101,19 @@ qk
 qk
 qQ
 qk
-aa
-aa
-aa
+qQ
+qk
+qk
+zH
+Ac
+MG
+ML
+MN
+Ac
 zH
 zH
 zH
-zH
-zH
-zH
-zH
-zH
-zH
-zH
+MO
 zH
 zN
 zN
@@ -62047,11 +63343,11 @@ qR
 rT
 su
 su
-su
+KN
 un
 uP
 un
-su
+KO
 su
 su
 rT
@@ -62062,19 +63358,19 @@ qk
 yJ
 yS
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qR
+rT
+su
+su
+un
+un
+uP
+un
+un
+su
+su
+rT
+xo
 zH
 Al
 Am
@@ -62319,19 +63615,19 @@ ql
 yK
 yC
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Mh
+rU
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+wW
+MP
 zH
 zH
 zH
@@ -62576,20 +63872,20 @@ qk
 yJ
 yS
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qT
+rU
+sv
+sW
+tI
+sv
+sv
+sv
+sv
+sv
+sv
+wW
+xq
+qk
 aa
 aa
 aa
@@ -62833,20 +64129,20 @@ qk
 qk
 qQ
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qT
+rU
+sv
+sX
+tJ
+tI
+sv
+sv
+sv
+sv
+sv
+wW
+xq
+qk
 aa
 aa
 aa
@@ -63090,20 +64386,20 @@ yB
 yL
 yT
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qT
+rU
+sv
+sX
+tK
+tJ
+tI
+sv
+sv
+sv
+sv
+wW
+xq
+qk
 aa
 aa
 aa
@@ -63340,27 +64636,27 @@ tL
 vF
 sv
 wW
-xp
+KP
 xP
 xZ
 yC
 yC
-yS
+Ly
+LP
+Mi
+rU
+sv
+sW
+tL
+tL
+tL
+tL
+tL
+vF
+sv
+wW
+MQ
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -63599,25 +64895,25 @@ sv
 wW
 xr
 xQ
-xZ
+KR
 yC
 yC
 yU
+LQ
+Mj
+rU
+sv
+sY
+tK
+tK
+tK
+vm
+tM
+wd
+sv
+wW
+xr
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -63854,27 +65150,27 @@ vF
 sZ
 sv
 wW
-xp
+KQ
 xR
 xZ
 yC
 yC
 yV
+LR
+Mk
+rU
+sv
+sZ
+sY
+tK
+tK
+tK
+vF
+sZ
+sv
+wW
+MR
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -64118,20 +65414,20 @@ yD
 yM
 yW
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qT
+rU
+sv
+sW
+tL
+uo
+tK
+tK
+tK
+vF
+sv
+wW
+xq
+qk
 aa
 aa
 aa
@@ -64375,20 +65671,20 @@ qk
 qk
 qk
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qT
+rU
+sv
+sY
+tM
+tM
+tM
+tM
+tM
+wd
+sv
+wW
+xq
+qk
 aa
 aa
 aa
@@ -64628,24 +65924,24 @@ wW
 xq
 qm
 xW
+KS
+Lh
+xW
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qT
+rU
+sv
+sv
+sv
+sv
+uQ
+vn
+tK
+we
+sv
+wW
+xq
+qk
 aa
 aa
 aa
@@ -64885,24 +66181,24 @@ wW
 xs
 ql
 xX
+KT
+Li
+xX
+ql
+qX
+rU
+sv
+sv
+sv
+sv
+sv
+uQ
+vn
+we
+sv
+wW
+xs
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -65142,24 +66438,24 @@ wW
 xt
 qk
 xW
+KU
+Lj
+xW
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qY
+rU
+sv
+sv
+sv
+sv
+sv
+sv
+uQ
+wd
+sv
+wW
+xt
+qk
 aa
 aa
 aa
@@ -65400,23 +66696,23 @@ xp
 qk
 qk
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qk
+qk
+qk
+Ml
+rU
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+wW
+MS
+qk
 aa
 aa
 aa
@@ -65656,24 +66952,24 @@ rV
 Ih
 ql
 yb
+KV
+yb
+Lz
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qZ
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+Ih
+qk
 aa
 aa
 aa
@@ -65899,38 +67195,38 @@ it
 it
 qk
 HV
-HW
-HX
-HY
-HZ
-Ia
-Ib
-Ic
-Id
-Ie
-If
-Ig
-Ii
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
 qk
 qk
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qk
+qk
+qk
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+qk
 aa
 aa
 aa
@@ -66171,23 +67467,23 @@ ra
 qk
 qk
 qk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+qk
+qk
+qk
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+qk
 aa
 aa
 aa
