@@ -45,6 +45,10 @@
 	admin_notes = "No brig, no medical facilities, no air."
 	credit_cost = -7500
 
+/datum/map_template/shuttle/emergency/airless/prerequisites_met()
+	// first 10 minutes only
+	return world.time - round_start_time < 6000
+
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid Station Emergency Shuttle"
@@ -117,7 +121,6 @@
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
-	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"

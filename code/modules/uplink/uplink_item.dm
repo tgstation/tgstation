@@ -618,6 +618,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
+/datum/uplink_item/stealthy_weapons/poison_pen
+	name = "Poison Pen"
+	desc = "Cutting edge of deadly writing implements technology, this gadget will infuse any piece of paper with delayed contact poison."
+	item = /obj/item/weapon/pen/poison
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. \
