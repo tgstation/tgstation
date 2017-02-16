@@ -1,0 +1,10 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "His Grace no longer globally announces when He is awakened or falls to sleep."
+  - rscdel: "His Grace is not a toolbox, even if He looks like one."
+  - experiment: "His Grace no longer requires organs to awaken."
+  - tweak: "His Grace now gains 4 force for each victim consumed, always provides stun immunity, and will, generally, take longer to consume His owner."
+  - experiment: "His Grace must be destroyed to free the bodies within Him."
+  - experiment: "Dropping His Grace while He is awake will cause you to suffer His Wrath until you hold Him again."
+  - rscadd: "His Grace becomes highly aggressive after consuming His owner, and will hunt His own prey."
