@@ -172,6 +172,86 @@
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
 
+/obj/item/weapon/melee/classic_baton/telescopic/energy
+	name = "telescopic energy baton"
+	desc = "An advanced melee weapon that self-generates energy through ambiant electromagnetic fields. While this is extremely slow and weak, it is enough to charge the device to output an incapacitating shock when used. \
+		The downside is, its power mechanism takes the space of a button-lock, so it can not be used when completely discharged, and always stuns when active."
+	icon_state = "telebaton-energy_0"
+	var/stuncost = 1000
+	var/energy = 4000
+	var/maxenergy = 4000
+	var/rechargeamt = 200
+	var/stunamount = 5
+	hitsound = 'sound/weapons/shockhit.ogg'
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/New()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/process()
+	energy = Clamp(energy + rechargeamt, 0, maxenergy)
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/attack_self(mob/user)
+	if(energy < stuncost)
+		user << "<span class='warning'>The [src] does not have enough energy to extend!</span>"
+		return FALSE
+	on = !on
+	if(on)
+		extend(user)
+	else
+		retract(user)
+	add_fingerprint(user)
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/proc/extend(mob/living/user = null)
+	if(user)
+		user << "<span class ='warning'>You extend and charge the baton.</span>"
+	icon_state = "telebaton-energy_1"
+	item_state = "telebaton-energy"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	attack_verb = list("smacked", "struck", "cracked", "beaten")
+	playsound(src.loc, 'sound/weapons/ebatonextend.ogg', 50, 1)
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/proc/retract(mob/living/user = null)
+	if(user)
+		user << "<span class ='notice'>You collapse the baton.</span>"
+	icon_state = "telebaton-energy_0"
+	item_state = null
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	attack_verb = list("hit", "poked")
+	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/attack(mob/target, mob/living/user)
+	if(!on)
+		return ..()
+	if(energy > stuncost)
+		energy -= stuncost
+	add_fingerprint(user)
+	if((CLUMSY in user.disabilities) && prob(50))
+		user << "<span class ='danger'>You club yourself over the head.</span>"
+		user.Weaken(3 * force)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, "head")
+		else
+			user.take_bodypart_damage(2*force)
+		return
+	if(iscyborg(target))
+		..()
+		return
+	if(!isliving(target))
+		return
+	stunattack(target, user)
+	if(energy < stuncost)
+		retract()
+	. = ..()
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/proc/stunattack(mob/target, mob/living/user)
+	target.Weaken(stunamount)
+	user.visible_message("<span class='danger'>[user] stuns [target] with [src]!</span>")
+
 /obj/item/weapon/melee/supermatter_sword
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
