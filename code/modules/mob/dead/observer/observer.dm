@@ -675,6 +675,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='notice'>Data HUDs enabled.</span>"
 		data_huds_on = 1
 
+/mob/dead/observer/verb/toggle_view_range()
+	set name = "Change View Range"
+	set desc = "Changes how large the field of view the server sends you; \
+		higher values can lag your client, be cautious."
+	set category = "Ghost"
+
+	var/list/values = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
+	if(client.view == world.view)
+		client.view = input("Select view range:", "Change View Range", 7) in values
+	else
+		client.view = world.view
+
 /mob/dead/observer/verb/restore_ghost_apperance()
 	set name = "Restore Ghost Character"
 	set desc = "Sets your deadchat name and ghost appearance to your \
