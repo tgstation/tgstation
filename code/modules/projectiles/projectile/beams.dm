@@ -59,6 +59,12 @@
 	eyeblur = 0
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
 
+/obj/item/projectile/beam/disabler/heavy
+	name = "heavy disabler beam"
+	icon_state = "omnilaser"	//NEEDS OTHER SPRITE
+	damage = 60
+	//I want to add another visual effect later, just putting it as a note here as this is WIP.
+
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"

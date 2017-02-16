@@ -118,6 +118,12 @@
 	e_cost = 50
 	fire_sound = 'sound/weapons/taser2.ogg'
 
+/obj/item/ammo_casing/energy/disabler/cannon
+	projectile_type = /obj/item/projectile/beam/disabler/heavy
+	select_name = "disable"
+	e_cost = 200
+	fire_sound = 'sound/weapons/taser2.ogg'	//SOUND WIP
+
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
 	select_name = "plasma burst"
