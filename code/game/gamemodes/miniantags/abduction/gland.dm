@@ -216,7 +216,7 @@
 
 /obj/structure/spider/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
-	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
+	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features, H.voiceprint)
 
 	//There's no define for this / get all items ?
 	var/list/slots = list(slot_back,slot_w_uniform,slot_wear_suit,\

@@ -54,7 +54,7 @@ var/next_mob_id = 0
 
 	usr << t
 
-/mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt_msg, alt_type, list/subjects)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2), list of subjects in message or alternative message
 
 	if(!client)
 		return
@@ -82,6 +82,7 @@ var/next_mob_id = 0
 		if(type & 2) //audio
 			src << "<I>... You can almost hear something ...</I>"
 	else
+		msg = parse_identity_subjects(msg, subjects)
 		src << msg
 
 // Show a message to all player mobs who sees this atom
@@ -92,8 +93,9 @@ var/next_mob_id = 0
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
+// subjects (optional) subjects in the message ordered according to the indexes in the message
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob, list/subjects) 
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
@@ -121,7 +123,7 @@ var/next_mob_id = 0
 						msg = blind_message
 					else
 						continue
-		M.show_message(msg,1,blind_message,2)
+		M.show_message(msg,1,blind_message,2,subjects)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob

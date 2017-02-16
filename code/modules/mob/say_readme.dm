@@ -65,7 +65,7 @@ global procs
 
 		IMPORTANT NOTE: If radio_freq is not null, the code will assume that the speaker is virtual! (more info on this in the Radios section below)
 
-	send_speech(message, range, source, bubble_type, spans)
+	send_speech(message, range, source, bubble_type, spans, voiceprint)
 		This proc composes a list of hearers (things with the HEAR flag + dead people) and calls Hear() on them.
 		Message treatment or composition of output are not done by this proc, these are handled by the rest of
 		say() and the hearer respectively.
@@ -88,11 +88,9 @@ global procs
 	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 		Composes the message mobs see on their screen when they hear something.
 
-	compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-		Composes the href tags used by the AI for tracking. Returns "" for all mobs except AIs.
-
-	compose_job(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-		Composes the job and the end tag for tracking hrefs. Returns "" for all mobs except AIs.
+	compose_namepart(atom/movable/speaker, namepart)
+		Called by compose_message, returns namepart with special tags added to it.
+		Normally returns namepart unchanged, but can be overridden.
 
 	hivecheck()
 		Returns 1 if the mob can hear and talk in the alien hivemind.

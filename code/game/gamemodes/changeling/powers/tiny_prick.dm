@@ -102,6 +102,7 @@
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)
 			C.real_name = NewDNA.real_name
+			C.voiceprint = NewDNA.voiceprint
 			NewDNA.transfer_identity(C, transfer_SE=1)
 			C.updateappearance(mutcolor_update=1)
 			C.domutcheck()

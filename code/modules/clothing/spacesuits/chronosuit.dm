@@ -37,6 +37,7 @@
 	var/cooldowntime = 50 //deciseconds
 	var/teleporting = 0
 	var/phase_timer_id
+	identity_name = "Timeline Eradication Agent"
 
 /obj/item/clothing/suit/space/chronos/New()
 	..()

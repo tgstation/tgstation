@@ -11,6 +11,7 @@
 /proc/randomize_human(mob/living/carbon/human/H)
 	H.gender = pick(MALE, FEMALE)
 	H.real_name = random_unique_name(H.gender)
+	H.voiceprint = generate_voiceprint()
 	H.name = H.real_name
 	H.underwear = random_underwear(H.gender)
 	H.skin_tone = random_skin_tone()

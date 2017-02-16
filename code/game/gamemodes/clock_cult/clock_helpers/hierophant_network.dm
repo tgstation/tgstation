@@ -17,7 +17,7 @@
 /proc/titled_hierophant_message(mob/user, message, name_span = "heavy_brass", message_span = "brass", user_title = "Servant")
 	if(!user || !message)
 		return FALSE
-	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: \
+	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][user.real_name]: \
 	</span><span class='[message_span]'>\"[message]\"</span>"
 	hierophant_message(parsed_message, FALSE, user)
 	return TRUE

@@ -7,11 +7,11 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
+	var/displayed_name = user.get_interact_name(src)
+
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[displayed_name]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-
 	//uniform
 	if(w_uniform && !(slot_w_uniform in obscured))
 		//Ties
@@ -243,7 +243,7 @@
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
 				msg += "[t_He] [t_is][stun_absorption[i]["examine_message"]]\n"
 
-	if(drunkenness && !skipface && !appears_dead) //Drunkenness
+	if(drunkenness && can_see_face() && !appears_dead) //Drunkenness
 		switch(drunkenness)
 			if(11 to 21)
 				msg += "[t_He] [t_is] slightly flushed.\n"

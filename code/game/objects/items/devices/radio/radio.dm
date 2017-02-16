@@ -132,9 +132,8 @@
 	data["useCommand"] = use_command
 	data["subspace"] = subspace_transmission
 	data["subspaceSwitchable"] = subspace_switchable
-	data["headset"] = istype(src, /obj/item/device/radio/headset)
 
-	return data
+	. = data
 
 /obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
 	if(..())
@@ -243,8 +242,8 @@
 	// ||-- The mob's name identity --||
 	var/real_name = M.name // mob's real name
 	var/mobkey = "none" // player key associated with mob
-	var/voicemask = 0 // the speaker is wearing a voice mask
 	var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
+	var/voice_print = M.get_voiceprint()
 	if(ismob(M))
 		var/mob/speaker = M
 		real_name = speaker.real_name
@@ -259,8 +258,6 @@
 	if(ishuman(M))
 		var/datum/data/record/findjob = find_record("name", voice, data_core.general)
 
-		if(voice != real_name)
-			voicemask = 1
 		if(findjob)
 			jobname = findjob.fields["rank"]
 		else
@@ -303,7 +300,7 @@
 			"name" = voice,			// the mob's voice name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
-			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
+			"voiceprint" = voice_print, // the mob's voiceprint
 
 			"compression" = 0,		// uncompressed radio signal
 			"message" = message, 	// the actual sent message
@@ -322,10 +319,10 @@
 			"verb_yell" = M.verb_yell
 			)
 		signal.frequency = freqnum // Quick frequency set
-		Broadcast_Message(M, voicemask,
+		Broadcast_Message(M,
 				  src, message, voice, jobname, real_name,
 				  5, signal.data["compression"], list(position.z, 0), freq, spans,
-				  verb_say, verb_ask, verb_exclaim, verb_yell)
+				  verb_say, verb_ask, verb_exclaim, verb_yell, voice_print)
 		return
 
 	/* ###### Radio headsets can only broadcast through subspace ###### */
@@ -344,7 +341,7 @@
 			"name" = voice,			// the mob's voice name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
-			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
+			"voiceprint" = voice_print, // the mob's voiceprint
 
 			// We store things that would otherwise be kept in the actual mob
 			// so that they can be logged even AFTER the mob is deleted or something
@@ -398,7 +395,7 @@
 		"name" = voice,			// the mob's voice name
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
-		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
+		"voiceprint" = voice_print, //the mob's voiceprint
 
 		"compression" = 0,		// uncompressed radio signal
 		"message" = message, 	// the actual sent message
@@ -429,17 +426,17 @@
 
 		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 		// Send a mundane broadcast with limited targets:
-		Broadcast_Message(M, voicemask,
+		Broadcast_Message(M,
 						  src, message, voice, jobname, real_name,
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
 						  verb_say, verb_ask, verb_exclaim, verb_yell)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
 	if(radio_freq)
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message, , spans)
+			talk_into(speaker, raw_message, , spans, voice_print)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

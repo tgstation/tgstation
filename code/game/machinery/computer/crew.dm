@@ -31,62 +31,64 @@ var/global/datum/crewmonitor/crewmonitor = new
 	var/list/jobs
 	var/list/interfaces
 	var/list/data
+	var/list/tracking
 
 /datum/crewmonitor/New()
 	. = ..()
 
-	var/list/jobs = new/list()
-	jobs["Captain"] = 00
-	jobs["Head of Personnel"] = 50
-	jobs["Head of Security"] = 10
-	jobs["Warden"] = 11
-	jobs["Security Officer"] = 12
-	jobs["Detective"] = 13
-	jobs["Chief Medical Officer"] = 20
-	jobs["Chemist"] = 21
-	jobs["Geneticist"] = 22
-	jobs["Virologist"] = 23
-	jobs["Medical Doctor"] = 24
-	jobs["Research Director"] = 30
-	jobs["Scientist"] = 31
-	jobs["Roboticist"] = 32
-	jobs["Chief Engineer"] = 40
-	jobs["Station Engineer"] = 41
-	jobs["Atmospheric Technician"] = 42
-	jobs["Quartermaster"] = 51
-	jobs["Shaft Miner"] = 52
-	jobs["Cargo Technician"] = 53
-	jobs["Bartender"] = 61
-	jobs["Cook"] = 62
-	jobs["Botanist"] = 63
-	jobs["Librarian"] = 64
-	jobs["Chaplain"] = 65
-	jobs["Clown"] = 66
-	jobs["Mime"] = 67
-	jobs["Janitor"] = 68
-	jobs["Lawyer"] = 69
-	jobs["Admiral"] = 200
-	jobs["Centcom Commander"] = 210
-	jobs["Custodian"] = 211
-	jobs["Medical Officer"] = 212
-	jobs["Research Officer"] = 213
-	jobs["Emergency Response Team Commander"] = 220
-	jobs["Security Response Officer"] = 221
-	jobs["Engineer Response Officer"] = 222
-	jobs["Medical Response Officer"] = 223
-	jobs["Assistant"] = 999 //Unknowns/custom jobs should appear after civilians, and before assistants
+	var/list/_jobs = list()
+	_jobs["Captain"] = 00
+	_jobs["Head of Personnel"] = 50
+	_jobs["Head of Security"] = 10
+	_jobs["Warden"] = 11
+	_jobs["Security Officer"] = 12
+	_jobs["Detective"] = 13
+	_jobs["Chief Medical Officer"] = 20
+	_jobs["Chemist"] = 21
+	_jobs["Geneticist"] = 22
+	_jobs["Virologist"] = 23
+	_jobs["Medical Doctor"] = 24
+	_jobs["Research Director"] = 30
+	_jobs["Scientist"] = 31
+	_jobs["Roboticist"] = 32
+	_jobs["Chief Engineer"] = 40
+	_jobs["Station Engineer"] = 41
+	_jobs["Atmospheric Technician"] = 42
+	_jobs["Quartermaster"] = 51
+	_jobs["Shaft Miner"] = 52
+	_jobs["Cargo Technician"] = 53
+	_jobs["Bartender"] = 61
+	_jobs["Cook"] = 62
+	_jobs["Botanist"] = 63
+	_jobs["Librarian"] = 64
+	_jobs["Chaplain"] = 65
+	_jobs["Clown"] = 66
+	_jobs["Mime"] = 67
+	_jobs["Janitor"] = 68
+	_jobs["Lawyer"] = 69
+	_jobs["Admiral"] = 200
+	_jobs["Centcom Commander"] = 210
+	_jobs["Custodian"] = 211
+	_jobs["Medical Officer"] = 212
+	_jobs["Research Officer"] = 213
+	_jobs["Emergency Response Team Commander"] = 220
+	_jobs["Security Response Officer"] = 221
+	_jobs["Engineer Response Officer"] = 222
+	_jobs["Medical Response Officer"] = 223
+	_jobs["Assistant"] = 999 //Unknowns/custom jobs should appear after civilians, and before assistants
 
-	src.jobs = jobs
-	src.interfaces = list()
-	src.data = list()
+	jobs = _jobs
+	interfaces = list()
+	data = list()
+	tracking = list()
 	register_asset("crewmonitor.js",'crew.js')
 	register_asset("crewmonitor.css",'crew.css')
 
 /datum/crewmonitor/Destroy()
-	if (src.interfaces)
+	if (interfaces)
 		for (var/datum/html_interface/hi in interfaces)
 			qdel(hi)
-		src.interfaces = null
+		interfaces = null
 
 	return ..()
 
@@ -95,28 +97,28 @@ var/global/datum/crewmonitor/crewmonitor = new
 		sendResources(mob.client)
 	if (!z) z = mob.z
 
-	if (z > 0 && src.interfaces)
+	if (z > 0 && interfaces)
 		var/datum/html_interface/hi
 
-		if (!src.interfaces["[z]"])
-			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
+		if (!interfaces["[z]"])
+			interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
 
-			hi = src.interfaces["[z]"]
+			hi = interfaces["[z]"]
 
 			hi.updateContent("content", "<div id=\"minimap\"><a href=\"javascript:zoomIn();\" class=\"zoom in\">+</a><a href=\"javascript:zoomOut();\" class=\"zoom\">-</a></div><div id=\"textbased\"></div>")
 
-			src.update(z, TRUE)
+			update(z, TRUE)
 		else
-			hi = src.interfaces["[z]"]
-			src.update(z,TRUE)
+			hi = interfaces["[z]"]
+			update(z,TRUE)
 
 		// Debugging purposes
 		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
 		mob << browse_rsc(file("code/game/machinery/computer/crew.css"), "crew.css")
 
-		hi = src.interfaces["[z]"]
+		hi = interfaces["[z]"]
 		hi.show(mob)
-		src.updateFor(mob, hi, z)
+		updateFor(mob, hi, z)
 
 /datum/crewmonitor/proc/updateFor(hclient_or_mob, datum/html_interface/hi, z)
 	// This check will succeed if updateFor is called after showing to the player, but will fail
@@ -129,11 +131,12 @@ var/global/datum/crewmonitor/crewmonitor = new
 	hi.callJavaScript("onAfterUpdate", null, hclient_or_mob)
 
 /datum/crewmonitor/proc/update(z, ignore_unused = FALSE)
-	if (src.interfaces["[z]"])
-		var/datum/html_interface/hi = src.interfaces["[z]"]
+	if (interfaces["[z]"])
+		var/datum/html_interface/hi = interfaces["[z]"]
 
 		if (ignore_unused || hi.isUsed())
 			var/list/results = list()
+			var/list/_tracking = list()
 			var/obj/item/clothing/under/U
 			var/obj/item/weapon/card/id/I
 			var/turf/pos
@@ -148,6 +151,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 			var/pos_x
 			var/pos_y
 			var/life_status
+			var/tracking_pos
 
 			for(var/mob/living/carbon/human/H in mob_list)
 				// Check if their z-level is correct and if they are wearing a uniform.
@@ -194,21 +198,25 @@ var/global/datum/crewmonitor/crewmonitor = new
 							area = format_text(player_area.name)
 							pos_x = pos.x
 							pos_y = pos.y
+							tracking_pos = ++_tracking.len
+							_tracking[tracking_pos] = H
 						else
 							area = null
 							pos_x = null
 							pos_y = null
+							tracking_pos = null
 
-						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.can_track(null))
+						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.can_track(null), tracking_pos)
 
-			src.data = results
-			src.updateFor(null, hi, z) // updates for everyone
+			data = results
+			tracking = _tracking
+			updateFor(null, hi, z) // updates for everyone
 
 /datum/crewmonitor/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	var/z = ""
 
-	for (z in src.interfaces)
-		if (src.interfaces[z] == hi) break
+	for (z in interfaces)
+		if (interfaces[z] == hi) break
 
 	if(hclient.client.mob && IsAdminGhost(hclient.client.mob))
 		return TRUE
@@ -229,7 +237,10 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 			switch (href_list["action"])
 				if ("select_person")
-					AI.ai_camera_track(href_list["name"])
+					var/tracking_pos = text2num(href_list["trackingpos"])
+					var/mob/target = tracking[tracking_pos]
+					if(target)
+						AI.ai_actual_track(target)
 
 				if ("select_position")
 					var/x = text2num(href_list["x"])
@@ -249,13 +260,13 @@ var/global/datum/crewmonitor/crewmonitor = new
 								AI.switchCamera(C)
 
 /mob/living/carbon/human/Move()
-	if (src.w_uniform)
-		var/old_z = src.z
+	if (w_uniform)
+		var/old_z = z
 
 		. = ..()
 
-		if (old_z != src.z) crewmonitor.queueUpdate(old_z)
-		crewmonitor.queueUpdate(src.z)
+		if (old_z != z) crewmonitor.queueUpdate(old_z)
+		crewmonitor.queueUpdate(z)
 	else
 		return ..()
 

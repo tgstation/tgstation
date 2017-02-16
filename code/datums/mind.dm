@@ -42,13 +42,17 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	var/datum/job/assigned_job
-
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 
 	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
+
+	var/list/voiceprints = list() // remembering other people's voices
+	var/list/faceprints = list() // remembering other people's faces
+	var/list/identity_cache = list()
+	var/datum/identity_manager/idman
+	var/update_idman = FALSE //if set to TRUE, idman will update next tick, and automatically reset this to FALSE
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
@@ -68,6 +72,7 @@
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
+	idman = new(src)
 
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)

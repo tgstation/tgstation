@@ -360,7 +360,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			return
 
 		var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
-		var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
+		var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src.real_name]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
 		summoner << my_message
 		var/list/guardians = summoner.hasparasites()
@@ -381,13 +381,13 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return
 
 	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
-	var/my_message = "<span class='holoparasitebold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
+	var/my_message = "<span class='holoparasitebold'><i>[src.real_name]:</i> [preliminary_message]</span>" //add source, color source with default grey...
 
 	src << my_message
 	var/list/guardians = hasparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
-		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
+		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src.real_name]:</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
 	for(var/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
 		M << "[link] [my_message]"

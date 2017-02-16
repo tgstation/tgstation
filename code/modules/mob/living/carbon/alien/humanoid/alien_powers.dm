@@ -93,10 +93,10 @@ Doesn't work on other aliens/AI.*/
 			var/follow_link_user = FOLLOW_LINK(ded, user)
 			var/follow_link_whispee = FOLLOW_LINK(ded, M)
 			ded << "[follow_link_user] \
-				<span class='name'>[user]</span> \
+				<span class='name'>[user.real_name]</span> \
 				<span class='alertalien'>Alien Whisper --> </span> \
 				[follow_link_whispee] \
-				<span class='name'>[M]</span> \
+				<span class='name'>[M.real_name]</span> \
 				<span class='noticealien'>[msg]</span>"
 	else
 		return 0

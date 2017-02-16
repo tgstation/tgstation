@@ -39,6 +39,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
+	identity_name = "Head of Security"
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
@@ -59,6 +60,7 @@
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	identity_name = "Warden"
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
@@ -84,6 +86,7 @@
 	armor = list(melee = 50, bullet = 40, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 100, acid = 90)
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
+	identity_name = "Captain"
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
@@ -103,6 +106,7 @@
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 80
 	put_on_delay = 60
+	identity_name = "Riot Officer"
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
@@ -112,6 +116,7 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	identity_name = "Bone Guy"
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
@@ -146,6 +151,7 @@
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton)
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	identity_name = "Detective"
 
 
 //Reactive armor
@@ -345,6 +351,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 90, acid = 90)
+	identity_name = "Centcom Official"
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -358,6 +365,7 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 90, acid = 90)
+	identity_name = "Heavily Armored Person"
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -385,6 +393,7 @@
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	item_state = "knight_green"
+	identity_name = "Knight"
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -403,3 +412,4 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+	identity_name = "Templar"

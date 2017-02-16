@@ -374,7 +374,6 @@ var/list/ai_list = list()
 	if(href_list["show_paper"])
 		if(last_paper_seen)
 			src << browse(last_paper_seen, "window=show_paper")
-	//Carn: holopad requests
 	if(href_list["jumptoholopad"])
 		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"])
 		if(stat == CONSCIOUS)
@@ -383,22 +382,34 @@ var/list/ai_list = list()
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
 	if(href_list["track"])
-		var/string = href_list["track"]
-		trackable_mobs()
-		var/list/trackeable = list()
-		trackeable += track.humans + track.others
-		var/list/target = list()
-		for(var/I in trackeable)
-			var/mob/M = trackeable[I]
-			if(M.name == string)
-				target += M
-		if(name == string)
-			target += src
-		if(target.len)
-			ai_actual_track(pick(target))
+		var/record_id = href_list["track"]
+		var/datum/data/record/G
+		if(record_id)
+			G = find_record("id", record_id, data_core.general)
+		var/list/targets
+		if(G)
+			targets = mobs_from_record(G)
 		else
-			src << "Target is not on or near any active cameras on the station."
-		return
+			src << "<span class='notice'>Unable to locate specified record.</span>"
+		if(targets && targets.len)
+			ai_actual_track(pick(targets))
+		else
+			var/x = text2num(href_list["X"])
+			var/y = text2num(href_list["Y"])
+			var/z = text2num(href_list["Z"])
+			if(src.eyeobj && x && y && z)
+				var/coordstracking = ai_coords_track(x, y, z) >= 2
+				if(!coordstracking && G)
+					src << "<span class='notice'>Facial recognition failed for target.</span>"
+	if(href_list["trackfromcoords"])
+		var/x = text2num(href_list["X"])
+		var/y = text2num(href_list["Y"])
+		var/z = text2num(href_list["Z"])
+		if(src.eyeobj && x && y && z)
+			if(!ai_coords_track(x, y, z))
+				src << "<span class='notice'>Specified coordinates are not visible on camera.</span>"
+	if(href_list["notrace"])
+		src << "<span class='notice'>Unable to acquire trace.</span>"
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
 		if(call_bot_cooldown > world.time)
 			src << "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>"
@@ -818,9 +829,9 @@ var/list/ai_list = list()
 		return
 	return 1
 
-/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
-	var/name_used = speaker.GetVoice()
+/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
+	raw_message = lang_treat(speaker, message_langs, raw_message, spans, message_mode)
+	var/name_used = voice_print ? get_voiceprint_name(speaker, voice_print) : speaker.GetVoice()
 	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 	show_message(rendered, 2)
 

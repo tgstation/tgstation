@@ -279,6 +279,7 @@ var/global/list/multiverse = list()
 	ticker.mode.add_gangster(M.mind, user.mind.gang_datum, FALSE)
 	M.real_name = user.real_name
 	M.name = user.real_name
+	M.voiceprint = user.voiceprint
 	M.faction = list("[user.real_name]")
 	if(prob(50))
 		var/list/all_species = list()

@@ -89,6 +89,7 @@
 	strip_delay = 70
 	put_on_delay = 70
 	resistance_flags = 0
+	identity_name = "Bomb Disposal Unit"
 
 
 /obj/item/clothing/head/bomb_hood/security
@@ -100,6 +101,7 @@
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
+	identity_name = "Bomb Disposal Officer"
 
 /*
  * Radiation protection

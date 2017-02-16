@@ -425,7 +425,7 @@ function getColor(ijob)
 	else								{ return "#C38312"; } // other / unknown
 }
 
-function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, in_range)
+function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, in_range, tracking_pos)
 {
 	try							{ ijob = parseInt(ijob); }
 	catch (ex)					{ ijob = 0; }
@@ -542,7 +542,7 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 			e.preventDefault();
 			e.stopPropagation();
 
-			window.location.href = "byond://?src=" + hSrc + "&action=select_person&name=" + encodeURIComponent(name);
+			window.location.href = "byond://?src=" + hSrc + "&action=select_person&trackingpos=" + tracking_pos;
 		}
 
 		trElem.on("mouseover", function()
