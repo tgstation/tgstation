@@ -90,7 +90,7 @@ var/global/total_runtimes_skipped = 0
 	if(error_cache)
 		error_cache.log_error(E, desclines)
 
-	to_chat(world.log, "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]")
+	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
 	for(var/line in desclines)
 		world.log << line
 

@@ -98,6 +98,10 @@
 		if("chat")
 			return chatOutput.Topic(href, href_list)
 
+	switch(href_list["action"])
+		if("openLink")
+			src << link(href_list["link"])
+
 	..()	//redirect to hsrc.Topic()
 
 /client/proc/is_content_unlocked()

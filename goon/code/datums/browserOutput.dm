@@ -15,7 +15,7 @@ For the main html chat area
 )
 
 //Precaching a bunch of shit
-/var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons for the browser output
+var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons for the browser output
 
 //On client, created on login
 /datum/chatOutput
