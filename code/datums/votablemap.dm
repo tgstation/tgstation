@@ -1,3 +1,5 @@
+//TODO: MERGE THIS WITH MAP_CONFIG
+
 /datum/votablemap
 	var/name = ""
 	var/friendlyname = ""

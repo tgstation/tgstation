@@ -541,7 +541,7 @@ var/next_mob_id = 0
 			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
 		stat(null, "Map: [SSmapping.config ? SSmapping.config.map_name : "Loading"]")
 		var/datum/map_config/cached = SSmapping.next_map_config
-		if(cached && istype(nextmap))
+		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		stat(null, "Station Time: [worldtime2text()]")

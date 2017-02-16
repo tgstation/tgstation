@@ -101,3 +101,58 @@ var/datum/subsystem/mapping/SSmapping
 	SortAreas()
 	INIT_ANNOUNCE("Done loading map!") //can't think of anywhere better to put it
 #undef INIT_ANNOUNCE
+
+/datum/subsystem/mapping/proc/maprotate()
+	var/players = clients.len
+	var/list/mapvotes = list()
+	//count votes
+	for (var/client/c in clients)
+		var/vote = c.prefs.preferred_map
+		if (!vote)
+			if (global.config.defaultmap)
+				mapvotes[global.config.defaultmap.name] += 1
+			continue
+		mapvotes[vote] += 1
+
+	//filter votes
+	for (var/map in mapvotes)
+		if (!map)
+			mapvotes.Remove(map)
+		if (!(map in global.config.maplist))
+			mapvotes.Remove(map)
+			continue
+		var/datum/votablemap/VM = global.config.maplist[map]
+		if (!VM)
+			mapvotes.Remove(map)
+			continue
+		if (VM.voteweight <= 0)
+			mapvotes.Remove(map)
+			continue
+		if (VM.minusers > 0 && players < VM.minusers)
+			mapvotes.Remove(map)
+			continue
+		if (VM.maxusers > 0 && players > VM.maxusers)
+			mapvotes.Remove(map)
+			continue
+
+		mapvotes[map] = mapvotes[map]*VM.voteweight
+
+	var/pickedmap = pickweight(mapvotes)
+	if (!pickedmap)
+		return
+	var/datum/votablemap/VM = global.config.maplist[pickedmap]
+	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
+	. = changemap(VM)
+	if (.)
+		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
+
+/datum/subsystem/mapping/proc/changemap(var/datum/votablemap/VM)	
+	next_map_config = new("_maps/[VM.name].json")
+	if(next_map_config.defaulted)
+		message_admins("Failed to load map json for [VM.name]([VM.friendlyname])! Using default as backup!")
+		return FALSE
+
+	if(!next_map_config.MakeNextMap())
+		next_map_config = new(default_to_box = TRUE)
+		message_admins("Failed to set new map with next_map.json for [VM.name]([VM.friendlyname])! Using default as backup!")
+		return FALSE
