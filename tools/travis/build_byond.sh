@@ -10,6 +10,6 @@ if [ "$BUILD_TOOLS" = false ]; then
 	if [ "$BUILD_TESTING" = true ]; then
 		tools/travis/dm.sh -DTRAVISBUILDING -M${DM_MAPFILE} tgstation.dme
 	else
-		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -Mbasemap tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING tgstation.dme
 	fi;
 fi;
