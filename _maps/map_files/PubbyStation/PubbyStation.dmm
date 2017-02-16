@@ -20503,7 +20503,7 @@
 	name = "security camera";
 	pixel_x = 6;
 	pixel_y = -7;
-	step_x = 0
+	pixel_x = 0
 	},
 /turf/open/floor/grass,
 /area/hallway/secondary/exit{
