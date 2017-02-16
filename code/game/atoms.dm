@@ -228,7 +228,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	user << "\icon[src] That's [f_name]"
+	user << "\icon[src] That's [russian_html2text(f_name)]"
 
 	if(desc)
 		user << desc
