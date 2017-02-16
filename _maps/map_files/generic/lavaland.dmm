@@ -2821,12 +2821,6 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/riveted,
 /area/space)
-"fQ" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/turf/closed/indestructible/riveted{
-	desc = "You feel a deep connection with this out of place wall..."
-	},
-/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -4586,7 +4580,7 @@ bA
 ab
 dq
 ab
-fQ
+af
 af
 af
 af
