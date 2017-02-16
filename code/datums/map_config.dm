@@ -78,18 +78,23 @@
     CHECK_EXISTS("minetype")
     CHECK_EXISTS("titlescreen_icon_state")
 
-    if(!(json["transition_config"] in icon_states('icons/misc/fullscreen.dmi')))
-        log_world("Invalid icon state for splash screen: [json["transition_config"]]!")
+    if(!(json["titlescreen_icon_state"] in icon_states('icons/misc/fullscreen.dmi')))
+        log_world("Invalid icon state for splash screen: [json["titlescreen_icon_state"]]!")
+        return
 
-    if(!islist(json["transition_config"]))
-        log_world("transition_config is not a list!")
+    if(json["transition_config"])
+        if(!islist(json["transition_config"]))
+            log_world("transition_config is not a list!") 
+            return
 
-    var/list/jtcl = json["transition_config"]
-    for(var/I in jtcl)
-        if(isnull(TransitionStringToEnum(I)))
-            log_world("Invalid transition_config option: [I]!")
-        if(isnull(TransitionStringToEnum(jtcl[I])))
-            log_world("Invalid transition_config option: [I]!")
+        var/list/jtcl = json["transition_config"]
+        for(var/I in jtcl)
+            if(isnull(TransitionStringToEnum(I)))
+                log_world("Invalid transition_config option: [I]!")
+            if(isnull(TransitionStringToEnum(jtcl[I])))
+                log_world("Invalid transition_config option: [I]!")
+    else
+        json["transition_config"] = initial(transition_config)  //default in not there
 
     var/path = GetFullMapPath(json["map_path"], json["map_file"])
     if(!fexists(path))
