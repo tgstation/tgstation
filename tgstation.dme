@@ -13,7 +13,6 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\__MAP_DEFINES.dm"
 #include "_maps\basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
@@ -38,6 +37,7 @@
 #include "code\__DEFINES\layers.dm"
 #include "code\__DEFINES\lighting.dm"
 #include "code\__DEFINES\machines.dm"
+#include "code\__DEFINES\maps.dm"
 #include "code\__DEFINES\math.dm"
 #include "code\__DEFINES\MC.dm"
 #include "code\__DEFINES\misc.dm"
