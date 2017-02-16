@@ -21,6 +21,7 @@
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
+	var/ascend_bonus = 15
 	var/list/warning_messages = list("peckish", "hungry", "famished", "starving", "consume") //Messages that have NOT been shown
 
 /obj/item/weapon/his_grace/New()
@@ -74,6 +75,8 @@
 	if(!bloodthirst)
 		drowse()
 		return
+	if(ascended && awakened)
+		force_bonus = force_bonus + ascend_bonus
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
 		adjust_bloodthirst(1 + Floor(LAZYLEN(contents) * 0.5)) //Maybe adjust this?
 	else
@@ -160,7 +163,7 @@
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
 	update_stats()
-	if(src.contents.len >= victims_needed)
+	if(LAZYLEN(contents) >= victims_needed)
 		ascend()
 
 /obj/item/weapon/his_grace/proc/adjust_bloodthirst(amt)
@@ -210,24 +213,10 @@
 	force = initial(force) + force_bonus
 
 /obj/item/weapon/his_grace/proc/ascend()
-	var/obj/item/weapon/his_grace/gold/G = new
-
+	var/mob/living/carbon/human/master = loc
 	master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>Your God is Watchng</span>")
-	if(ishuman(loc))
-		var/mob/living/carbon/human/master = loc
-		master.put_in_hands(G)
-	else
-		var/turf/T = get_turf(src)
-		G.loc = T
-	G.name = "[master]'s mythical toolbox of three powers"
-	qdel(src)
-
-/obj/item/weapon/his_grace/gold
-	name = "mythical toolbox of three powers"
+	name = "[master]'s mythical toolbox of three powers"
 	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
 	icon_state = "gold"
 	item_state = "toolbox_gold"
-
-/obj/item/weapon/his_grace/gold/process()
-	. = ..()
-	force_bonus = force_bonus + 10
+	ascended = 1
