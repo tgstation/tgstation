@@ -75,7 +75,6 @@ REMOVE_[SETTER/GETTER]:
 			if(##propobject.vars[variable] == null)										\
 			{																			\
 				##propobject.vars[variable] = list();									\
-				world << "[variable] is now list";										\
 			}																			\
 		}																				\
 	}																					\
