@@ -13,7 +13,7 @@ var/datum/subsystem/minimap/SSminimap
 	NEW_SS_GLOBAL(SSminimap)
 
 /datum/subsystem/minimap/Initialize(timeofday)
-	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
+	var/hash = md5(SSmapping.config.GetFullMapPath())
 	if(config.generate_minimaps)
 		if(hash == trim(file2text(hash_path())))
 			for(var/z in z_levels)	//We have these files cached, let's register them
@@ -45,22 +45,22 @@ var/datum/subsystem/minimap/SSminimap
 	for(var/z in z_levels)
 		if(!fexists(file(map_path(z,backup))))	//Let's make sure we have a file for this map
 			if(backup)
-				log_world("Failed to find backup file for map [MAP_NAME] on zlevel [z].")
+				log_world("Failed to find backup file for map [SSmapping.config.map_name] on zlevel [z].")
 			return FALSE
 	return TRUE
 
 
 /datum/subsystem/minimap/proc/hash_path(backup)
 	if(backup)
-		return "icons/minimaps/[MAP_NAME].md5"
+		return "icons/minimaps/[SSmapping.config.map_name].md5"
 	else
-		return "data/minimaps/[MAP_NAME].md5"
+		return "data/minimaps/[SSmapping.config.map_name].md5"
 
 /datum/subsystem/minimap/proc/map_path(z,backup)
 	if(backup)
-		return "icons/minimaps/[MAP_NAME]_[z].png"
+		return "icons/minimaps/[SSmapping.config.map_name]_[z].png"
 	else
-		return "data/minimaps/[MAP_NAME]_[z].png"
+		return "data/minimaps/[SSmapping.config.map_name]_[z].png"
 
 /datum/subsystem/minimap/proc/send(client/client)
 	for(var/z in z_levels)

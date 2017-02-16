@@ -9,6 +9,8 @@ var/datum/subsystem/mapping/SSmapping
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
+	var/datum/map_config/config
+	var/datum/map_config/next_map_config
 
 /datum/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
@@ -16,15 +18,18 @@ var/datum/subsystem/mapping/SSmapping
 
 
 /datum/subsystem/mapping/Initialize(timeofday)
+	config = new
+	if(config.defaulted)
+		world << "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>"
 	loadWorld()
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate mining.
 
-	var/mining_type = MINETYPE
+	var/mining_type = config.minetype
 	if (mining_type == "lavaland")
-		seedRuins(list(5), config.lavaland_budget, /area/lavaland/surface/outdoors, lava_ruins_templates)
+		seedRuins(list(5), global.config.lavaland_budget, /area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()
 	else
 		make_mining_asteroid_secrets()
@@ -38,7 +43,7 @@ var/datum/subsystem/mapping/SSmapping
 			else
 				space_zlevels += i
 
-	seedRuins(space_zlevels, config.space_budget, /area/space, space_ruins_templates)
+	seedRuins(space_zlevels, global.config.space_budget, /area/space, space_ruins_templates)
 
 	// Set up Z-level transistions.
 	setup_map_transitions()
@@ -70,12 +75,18 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 
+#define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
 /datum/subsystem/mapping/proc/loadWorld()
 	var/dmm_suite/loader = new
-	loader.load_map(file("_maps/map_files/TgStation/tgstation.2.1.3.dmm"), 0, 0, 1, no_afterchange = TRUE)
+	//TODO: FUCKING ERROR CHECKING YOU SCRUB
+	INIT_ANNOUNCE("Loading Map '[config.map_name]'...")
+	loader.load_map(file(config.GetFullMapPath()), 0, 0, 1, no_afterchange = TRUE)
+	INIT_ANNOUNCE("Loaded station!")
 	loader.load_map(file("_maps/map_files/generic/z3.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z4.dmm"), no_afterchange = TRUE)
+	INIT_ANNOUNCE("Loading mining level...")
 	loader.load_map(file("_maps/map_files/generic/lavaland.dmm"), no_afterchange = TRUE)
+	INIT_ANNOUNCE("Loaded mining level!")
 	loader.load_map(file("_maps/map_files/generic/z6.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z7.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z8.dmm"), no_afterchange = TRUE)
@@ -83,3 +94,5 @@ var/datum/subsystem/mapping/SSmapping
 	loader.load_map(file("_maps/map_files/generic/z10.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z11.dmm"), no_afterchange = TRUE)
 	SortAreas()
+	INIT_ANNOUNCE("Done loading map!") //can't think of anywhere better to put it
+#undef INIT_ANNOUNCE

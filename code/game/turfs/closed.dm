@@ -32,12 +32,7 @@
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
-	var/titlescreen = TITLESCREEN
-
-/turf/closed/indestructible/splashscreen/Initialize()
-	..()
-	if(titlescreen)
-		icon_state = titlescreen
+	//var/titlescreen = TITLESCREEN // BIG FUCKING TODO: FIX THIS ONCE #24152 IS MERGED
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'

@@ -200,6 +200,7 @@
 #include "code\datums\forced_movement.dm"
 #include "code\datums\gas_overrides.dm"
 #include "code\datums\hud.dm"
+#include "code\datums\map_config.dm"
 #include "code\datums\martial.dm"
 #include "code\datums\material_container.dm"
 #include "code\datums\mind.dm"

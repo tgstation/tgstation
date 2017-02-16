@@ -13,8 +13,6 @@
 	loop_checks = FALSE
 #endif
 
-var/list/map_transition_config = MAP_TRANSITION_CONFIG
-
 /world/New()
 	log_world("World loaded at [world.timeofday]")
 	map_ready = 1

@@ -271,7 +271,7 @@ var/datum/feedback/blackbox = new()
 		lakey = sanitizeSQL(L.lastattacker:key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 	var/coord = "[L.x], [L.y], [L.z]"
-	var/map = MAP_NAME
+	var/map = SSmapping.config ? SSmapping.config.map_name : "Not loaded"
 	var/server = "[world.internet_address]:[world.port]"
 	establish_db_connection()
 	if(!dbcon.IsConnected())
