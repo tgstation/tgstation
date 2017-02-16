@@ -94,12 +94,7 @@ var/datum/subsystem/mapping/SSmapping
 	loader.load_map(file("_maps/map_files/generic/z3.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z4.dmm"), no_afterchange = TRUE)
 	INIT_ANNOUNCE("Loading [config.minetype]...")
-	var/mine_file
-	if(config.minetype == "lavaland")
-		mine_file = file("_maps/map_files/generic/lavaland.dmm")
-	else
-		mine_file = file("_maps/map_files/generic/z5.dmm")
-	loader.load_map(mine_file, no_afterchange = TRUE)
+	loader.load_map(file("_maps/map_files/generic/[config.minetype].dmm"), no_afterchange = TRUE)
 	INIT_ANNOUNCE("Loaded mining level!")
 	loader.load_map(file("_maps/map_files/generic/z6.dmm"), no_afterchange = TRUE)
 	loader.load_map(file("_maps/map_files/generic/z7.dmm"), no_afterchange = TRUE)
