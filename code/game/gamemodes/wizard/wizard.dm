@@ -166,7 +166,7 @@
 
 	for(var/datum/mind/wizard in wizards)
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
-			return ..()
+			return 1
 
 	if(SSevent.wizardmode) //If summon events was active, turn it off
 		SSevent.toggleWizardmode()
