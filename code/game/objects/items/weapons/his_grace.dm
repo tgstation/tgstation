@@ -15,7 +15,9 @@
 	force = 12
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	var/ascended = 0
 	var/awakened = 0
+	var/victims_needed = 20 //how many victims needed to ascend
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
@@ -121,7 +123,7 @@
 	awakened = TRUE
 	user.visible_message("<span class='boldwarning'>[src] begins to rattle. He thirsts.</span>", "<span class='his_grace'>You flick [src]'s latch up. You hope this is a good idea.</span>")
 	name = "His Grace"
-	desc = "A bloodthirsty artefact created by a profane rite."
+	desc = "A bloodthirsty artifact created by a profane rite."
 	gender = MALE
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
@@ -129,7 +131,7 @@
 	icon_state = "green_awakened"
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
-	if(!awakened)
+	if(!awakened || ascended)
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping closed.</span>")
@@ -158,6 +160,8 @@
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
 	update_stats()
+	if(src.contents.len >= victims_needed)
+		ascend()
 
 /obj/item/weapon/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
@@ -204,3 +208,26 @@
 			if(prev_bloodthirst >= HIS_GRACE_PECKISH)
 				master.visible_message("<span class='warning'>[src] is satiated.</span>", "<span class='his_grace big'>[src]'s hunger recedes...</span>")
 	force = initial(force) + force_bonus
+
+/obj/item/weapon/his_grace/proc/ascend()
+	var/obj/item/weapon/his_grace/gold/G = new
+
+	master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>Your God is Watchng</span>")
+	if(ishuman(loc))
+		var/mob/living/carbon/human/master = loc
+		master.put_in_hands(G)
+	else
+		var/turf/T = get_turf(src)
+		G.loc = T
+	G.name = "[master]'s mythical toolbox of three powers"
+	qdel(src)
+
+/obj/item/weapon/his_grace/gold
+	name = "mythical toolbox of three powers"
+	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
+	icon_state = "gold"
+	item_state = "toolbox_gold"
+
+/obj/item/weapon/his_grace/gold/process()
+	. = ..()
+	force_bonus = force_bonus + 10
