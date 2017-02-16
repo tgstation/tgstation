@@ -100,6 +100,7 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
+	var/atom/movable/dragging_through = FALSE
 
 
 //Start/Stop processing the item to use momentum and flight mechanics.
@@ -246,6 +247,10 @@
 /obj/item/device/flightpack/proc/momentum_drift()
 	if(!flight)
 		return FALSE
+	if(wearer.pulling)
+		dragging_through = wearer.pulling
+	else if(dragging_through)
+		dragging_through = null
 	var/drift_dir_x = 0
 	var/drift_dir_y = 0
 	if(momentum_x > 0)
@@ -264,10 +269,14 @@
 				losecontrol()
 			momentum_decay()
 			for(var/i in 1 to momentum_speed)
+				var/turf/oldturf = get_turf(wearer)
 				if(momentum_speed_x >= i)
 					step(wearer, drift_dir_x)
 				if(momentum_speed_y >= i)
 					step(wearer, drift_dir_y)
+				if(dragging_through && oldturf)
+					dragging_through.forceMove(oldturf)
+					wearer.pulling = dragging_through
 				sleep(1)
 
 //Make the wearer lose some momentum.
@@ -469,6 +478,7 @@
 			return FALSE
 		if(L.buckled)
 			wearer.visible_message("<span class='warning'>[wearer] reflexively flies over [L]!</span>")
+			wearer.forceMove(get_turf(L))
 			crashing = FALSE
 			return FALSE
 		suit.user.forceMove(get_turf(unmovablevictim))
@@ -526,8 +536,10 @@
 	spawn()
 		door.Open()
 	wearer.forceMove(get_turf(door))
+	if(dragging_through)
+		dragging_through.forceMove(get_turf(door))
+		wearer.pulling = dragging_through
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
-
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
 	target.hitby(wearer)
@@ -552,6 +564,9 @@
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
 		wearer.forceMove(get_turf(A))
+		if(dragging_through)
+			dragging_through.forceMove(get_turf(A))
+			wearer.pulling = dragging_through
 	return pass
 
 

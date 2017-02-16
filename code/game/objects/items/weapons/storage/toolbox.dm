@@ -165,7 +165,7 @@
 	item_state = "artistic_toolbox"
 	max_combined_w_class = 20
 	storage_slots = 10
-	w_class = 5 //Holds more than a regular toolbox!
+	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 
 /obj/item/weapon/storage/toolbox/artistic/New()
 	..()
@@ -179,6 +179,7 @@
 	new/obj/item/stack/cable_coil/orange(src)
 	new/obj/item/stack/cable_coil/cyan(src)
 	new/obj/item/stack/cable_coil/white(src)
+<<<<<<< HEAD
 
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
 #define HIS_GRACE_PECKISH 30 //Slightly hungry. Slightly increased damage and nothing else.
@@ -420,3 +421,5 @@
 /obj/item/weapon/storage/toolbox/artistic/his_grace/gold/process()
 	. = ..()
 	force = force + 10
+=======
+>>>>>>> 45084ec202addcc961fce7dd1800e56b1718fd12
