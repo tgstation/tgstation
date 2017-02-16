@@ -269,10 +269,6 @@ var/last_irc_status = 0
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg'\
 		)
-	
-	var/titlescreen = TITLESCREEN
-	if(!titlescreen)
-		titlescreen = "title"
 
 	for(var/thing in clients)
 		new /obj/screen/splash(thing, FALSE, FALSE)
