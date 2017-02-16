@@ -409,7 +409,7 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
-			if (SERVERTOOLS && config.maprotation)
+			if (config.maprotation)
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"

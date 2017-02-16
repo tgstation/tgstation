@@ -287,7 +287,7 @@ var/last_irc_status = 0
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation && SERVERTOOLS)
+	if (config.maprotation)
 		config.loadmaplist("config/maps.txt")
 
 	// apply some settings from config..
