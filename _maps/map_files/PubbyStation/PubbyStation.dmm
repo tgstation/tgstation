@@ -30334,7 +30334,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/computer/shuttle/auxillary_base{
+/obj/machinery/computer/auxillary_base{
 	density = 0;
 	pixel_x = 32;
 	pixel_y = 0
