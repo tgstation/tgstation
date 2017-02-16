@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The changeling power \"Anatomic Panacea\" now causes the changeling
+to vomit out zombie infections, along with headslugs and xeno
+infections, as before."
