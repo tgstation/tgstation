@@ -30,9 +30,11 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
 	layer = FLY_LAYER
-	//var/titlescreen = TITLESCREEN // BIG FUCKING TODO: FIX THIS ONCE #24152 IS MERGED
+
+/turf/closed/indestructible/splashscreen/New()
+	..()
+	icon_state = SSmapping.config.titlescreen_icon_state
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'

@@ -9,16 +9,22 @@ var/datum/subsystem/mapping/SSmapping
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
+	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
 /datum/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
+	if(!previous_map_config)
+		previous_map_config = new("previous_map.json")
+		if(previous_map_config.defaulted)
+			previous_map_config = null
+	if(!config)
+		config = new
 	return ..()
 
 
 /datum/subsystem/mapping/Initialize(timeofday)
-	config = new
 	if(config.defaulted)
 		world << "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>"
 	loadWorld()
@@ -74,6 +80,9 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
+	previous_map_config = SSmapping.previous_map_config
+	config = SSmapping.map_config
+	next_map_config = SSmapping.next_map_config
 
 #define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
 /datum/subsystem/mapping/proc/loadWorld()
@@ -154,3 +163,7 @@ var/datum/subsystem/mapping/SSmapping
 
 	next_map_config = VM
 	return TRUE
+
+/datum/subsystem/mapping/Shutdown()
+	if(config)
+		config.MakePreviousMap()
