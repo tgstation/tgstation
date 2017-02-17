@@ -1,4 +1,4 @@
-﻿namespace UnstandardnessTestForDM
+namespace UnstandardnessTestForDM
 {
     partial class Form1
     {

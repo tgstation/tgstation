@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "midi2piano", "midi2piano\midi2piano.csproj", "{68C84B61-F710-491C-BEE8-5E362C167897}"
