@@ -52,7 +52,7 @@
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 // nice try
 	refined_type = null
-s
+
 // Polycrystals, aka stacks
 
 /obj/item/stack/sheet/bluespace_crystal
