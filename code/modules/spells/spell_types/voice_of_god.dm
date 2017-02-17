@@ -21,6 +21,8 @@
 	perform(user=user)
 /obj/effect/proc_holder/spell/voice_of_god/perform(list/targets, recharge = 1, mob/user = usr)
 	command = input(user, "Speak with the Voice of God", "Command")
+	if(QDELETED(src) || QDELETED(user))
+		return
 	if(!command)
 		revert_cast(user)
 		return

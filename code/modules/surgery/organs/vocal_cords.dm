@@ -104,6 +104,8 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 			owner << "<span class='notice'>You must wait [(cords.next_command - world.time)/10] seconds before Speaking again.</span>"
 		return
 	var/command = input(owner, "Speak with the Voice of God", "Command")
+	if(QDELETED(src) || QDELETED(owner))
+		return
 	if(!command)
 		return
 	owner.say(".x[command]")
