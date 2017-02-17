@@ -256,7 +256,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense/New()
 	..()
-	finder = new('icons/mob/screen_alert.dmi', "finder_center")
+	finder = new('icons/mob/screen_alert.dmi', "no_sacrifice")
 	add_overlay(finder)
 	START_PROCESSING(SSprocessing, src)
 	process()
@@ -268,7 +268,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
     return ..()
 
 /obj/screen/alert/bloodsense/process()
-	if(!blood_target)
+	if (!sac_target)
+		return
+	if(!blood_target && !sac_complete)
+		cut_overlays()
+		finder.icon_state = "no_sacrifice"
+		desc = "Nar-Sie demands that [sac_target] be sacrificed before the summoning can begin."
+		add_overlay(finder)
+		return
+	if(!blood_target && sac_complete)
+		cut_overlays()
+		finder.icon_state = "sacrifice"
+		desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
+		add_overlay(finder)
 		return
 	var/turf/Q = get_turf(blood_target)
 	var/turf/A = get_turf(mob_viewer)
@@ -280,19 +292,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	cut_overlays()
 	switch(Qdist)
 		if(2 to 7)
-			finder.icon_state = "finder_near"
+			finder.icon_state = "finder_far"
 		if(8 to 20)
 			finder.icon_state = "finder_med"
 		if(21 to INFINITY)
 			finder.icon_state = "finder_far"
 		else
-			var/datum/job/J = SSjob.GetJob(mob_viewer.mind.assigned_role)
-			var/datum/preferences/P = mob_viewer.client.prefs
-			var/image/meme = get_flat_human_icon(null,J.outfit,P)
-			add_overlay(meme)
+			finder.icon_state = "finder_center"
 	add_overlay(finder)
-
-
 
 // CLOCKCULT
 /obj/screen/alert/clockwork
