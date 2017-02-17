@@ -9,3 +9,9 @@
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
+	
+/datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "milk")
+		H.heal_bodypart_damage(1,0, 0)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1

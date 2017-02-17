@@ -68,3 +68,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		randname += " [lastname]"
 
 	return randname
+	
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plasma" || chem.id == "milk")
+		H.heal_bodypart_damage(1,0, 0)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
