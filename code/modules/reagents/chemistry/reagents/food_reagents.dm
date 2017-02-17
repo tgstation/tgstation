@@ -27,34 +27,55 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
+	var/brute_heal = 1
+	var/burn_heal = 0
+	var/blood_gain = 0.4
+
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
 		. = 1
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume += 0.4
+			C.blood_volume += blood_gain
 	..()
 
-/datum/reagent/consumable/vitamin
+
+/datum/reagent/nutriment/on_merge(list/newdata, newamount)
+	if(!islist(newdata) || !newdata.len)
+		return
+
+	//add the new taste data
+	for(var/taste in newdata)
+		if(taste in data)
+			data[taste] += newdata[taste]
+		else
+			data[taste] = newdata[taste]
+
+	//cull all tastes below 10% of total
+	var/totalFlavor = 0
+	for(var/taste in data)
+		totalFlavor += data[taste]
+	if(!totalFlavor)
+		return
+	for(var/taste in data)
+		if(data[taste]/totalFlavor < 0.1)
+			data -= taste
+
+/datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
-	reagent_state = SOLID
-	color = "#664330" // rgb: 102, 67, 48
 
-/datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
-	if(prob(50))
-		M.heal_bodypart_damage(1,1, 0)
-		. = 1
+	brute_heal = 1
+	burn_heal = 1
+	blood_gain = 0.5
+
+/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/M)
 	if(M.satiety < 600)
 		M.satiety += 30
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume += 0.5
-	..()
+	. = ..()
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"

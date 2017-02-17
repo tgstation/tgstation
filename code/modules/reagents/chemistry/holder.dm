@@ -518,14 +518,13 @@ var/const/INJECT = 5 //injection
 	chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
 
 	for(var/A in cached_reagents)
-
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			R.volume += amount
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change()
-			R.on_merge(data)
+			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
 			return TRUE
@@ -685,6 +684,57 @@ var/const/INJECT = 5 //injection
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
 
+/datum/reagents/proc/generate_taste_message(mob/living/carbon/taster)
+	var/minimum_percent = 15
+
+	// TODO different species have different taste sensitivity?
+	/*
+	if(ishuman(taster))
+		var/mob/living/carbon/human/H = taster
+		minimum_percent = round(15/ (H.isSynthetic() ? TASTE_DULL : H.species.taste_sensitivity))
+	*/
+
+	var/list/out = list()
+	var/list/tastes = list() //descriptor = strength
+	if(minimum_percent <= 100)
+		for(var/datum/reagent/R in reagent_list)
+			if(!R.taste_mult)
+				continue
+			if(istype(R, /datum/reagent/nutriment))
+				var/list/taste_data = R.data
+				for(var/taste in taste_data)
+					if(taste in tastes)
+						tastes[taste] += taste_data[taste]
+					else
+						tastes[taste] = taste_data[taste]
+			else
+				var/taste_desc = R.taste_description
+				var/taste_amount = get_reagent_amount(R.id) * R.taste_mult
+				if(R.taste_description in tastes)
+					tastes[taste_desc] += taste_amount
+				else
+					tastes[taste_desc] = taste_amount
+
+		//deal with percentages
+		// TODO it would be great if we could sort these from strong to weak
+		var/total_taste = 0
+		for(var/taste_desc in tastes)
+			total_taste += tastes[taste_desc]
+		for(var/taste_desc in tastes)
+			var/percent = tastes[taste_desc]/total_taste * 100
+			if(percent < minimum_percent)
+				continue
+			var/intensity_desc = "a hint of"
+			if(percent > minimum_percent * 2 || percent == 100)
+				intensity_desc = ""
+			else if(percent > minimum_percent * 3)
+				intensity_desc = "the strong flavor of"
+			if(intensity_desc != "")
+				out += "[intensity_desc] [taste_desc]"
+			else
+				out += "[taste_desc]"
+
+	return english_list(out, "something indescribable")
 
 ///////////////////////////////////////////////////////////////////////////////////
 
