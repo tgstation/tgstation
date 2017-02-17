@@ -118,16 +118,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(isnull(argnum))
 		return
 
-	var/list/lst = list()
-
+	. = list()
+	var/list/named_args = list()
 	while(argnum--)
+		var/named_arg = input("Leave blank for positional argument. Positional arguments will be considered as if they were added first.", "Named argument") as text|null
 		var/value = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 		if (!value["class"])
 			return
-		lst += value["value"]
-
-	return lst
-
+		if(named_arg)
+			named_args[named_arg] = value["value"]
+		else
+			. += value["value"]
+	if(LAZYLEN(named_args))
+		. += named_args
 
 /client/proc/get_callproc_returnval(returnval,procname)
 	. = ""
@@ -680,12 +683,15 @@ var/list/TYPES_SHORTCUTS = list(
 	set desc = "Displays a list of things that have failed to GC this round"
 
 	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
-
 	for(var/path in SSgarbage.didntgc)
 		dat += "[path] - [SSgarbage.didntgc[path]] times<BR>"
 
 	dat += "<B>List of paths that did not return a qdel hint in Destroy()</B><BR><BR>"
 	for(var/path in SSgarbage.noqdelhint)
+		dat += "[path]<BR>"
+
+	dat += "<B>List of paths that slept in Destroy()</B><BR><BR>"
+	for(var/path in SSgarbage.sleptDestroy)
 		dat += "[path]<BR>"
 
 	usr << browse(dat, "window=dellog")
@@ -756,3 +762,13 @@ var/list/TYPES_SHORTCUTS = list(
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
 	feedback_add_details("admin_verb","TMH") // If...
 	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
+
+/client/proc/view_runtimes()
+	set category = "Debug"
+	set name = "View Runtimes"
+	set desc = "Open the runtime Viewer"
+
+	if(!holder)
+		return
+
+	error_cache.show_to(src)

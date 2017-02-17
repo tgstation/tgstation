@@ -208,6 +208,19 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
+	if(istype(O, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/T = O
+		var/loaded = 0
+		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+			var/datum/food_processor_process/P = select_recipe(S)
+			if(P)
+				T.remove_from_storage(S, src)
+				loaded++
+
+		if(loaded)
+			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
+		return
+		
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \

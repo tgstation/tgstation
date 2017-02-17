@@ -459,10 +459,13 @@
 	message = "spins around dizzily!"
 
 /datum/emote/living/spin/run_emote(mob/user)
-	user.spin(20, 1)
-	if(istype(user, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = user
+  user.spin(20, 1)
+  if(istype(user, /mob/living/silicon/robot))
+    var/mob/living/silicon/robot/R = user
 		if(R.buckled_mobs)
 			for(var/mob/M in R.buckled_mobs)
-				R.riding_datum.force_dismount()
+        if(R.riding_datum)
+          R.riding_datum.force_dismount()
+        else
+          R.unbuckle_all_mobs()
 	..()
