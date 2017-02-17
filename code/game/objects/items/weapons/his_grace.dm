@@ -130,7 +130,7 @@
 	gender = MALE
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
-	playsound(user, 'sound/effects/his_grace_awaken.ogg', 100)
+	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	icon_state = "green_awakened"
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
