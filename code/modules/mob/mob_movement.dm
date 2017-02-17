@@ -133,6 +133,7 @@
 		var/mob/living/L = mob
 		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
+			move_delay = mob.movement_delay() + world.time
 			return 0
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
