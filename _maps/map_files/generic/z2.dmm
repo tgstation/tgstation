@@ -7140,8 +7140,9 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rL" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 4
 	},
 /turf/open/floor/plasteel/green/corner{
 	dir = 1
@@ -7171,9 +7172,9 @@
 	},
 /area/centcom/control)
 "rQ" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 8
 	},
 /turf/open/floor/plasteel/green/corner{
 	dir = 4
@@ -9169,9 +9170,9 @@
 	},
 /area/centcom/ferry)
 "wP" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
@@ -9188,8 +9189,9 @@
 /turf/open/floor/plasteel/green/corner,
 /area/centcom/control)
 "wS" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
+/mob/living/simple_animal/hostile/retaliate/peacekeeper/ranged{
+	canmove = 0;
+	dir = 8
 	},
 /turf/open/floor/plasteel/blue/corner,
 /area/centcom/control)
@@ -10173,6 +10175,10 @@
 /area/centcom/control)
 "zb" = (
 /obj/structure/chair/office/dark{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0;
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -14274,6 +14280,20 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "KO" = (
+/obj/structure/chair/office/dark,
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0
+	},
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"KP" = (
+/obj/structure/chair/office/dark,
+/mob/living/simple_animal/hostile/retaliate/peacekeeper{
+	canmove = 0
+	},
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"KQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -14283,15 +14303,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"KP" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
-"KQ" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
 "KR" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"KS" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"KT" = (
 /mob/living/simple_animal/hostile/retaliate/peacekeeper{
 	canmove = 0;
 	dir = 1
@@ -14300,20 +14320,20 @@
 	dir = 1
 	},
 /area/centcom/evac)
-"KS" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/open/floor/grass,
-/area/centcom/evac)
-"KT" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/grass,
-/area/centcom/evac)
 "KU" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
 /area/centcom/evac)
 "KV" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"KW" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"KX" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plasteel{
 	dir = 6;
@@ -14321,92 +14341,92 @@
 	name = "sand"
 	},
 /area/centcom/evac)
-"KW" = (
+"KY" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
-"KX" = (
-/turf/closed/wall/mineral/titanium,
-/area/centcom/ferry)
-"KY" = (
-/turf/closed/wall/mineral/titanium,
-/area/centcom/ferry)
 "KZ" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
+/turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "La" = (
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Lb" = (
-/turf/closed/wall/mineral/titanium,
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/centcom/ferry)
 "Lc" = (
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Ld" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
+/turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Le" = (
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Lf" = (
-/turf/closed/wall/mineral/titanium,
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/centcom/ferry)
 "Lg" = (
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Lh" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Li" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Lj" = (
+/obj/structure/closet/secure_closet/security{
+	req_access_txt = "101"
+	},
+/obj/item/weapon/storage/belt/security/full,
+/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/weapon/crowbar/red,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/evac)
+"Lk" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
 /area/centcom/evac)
-"Li" = (
+"Ll" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/grass,
 /area/centcom/evac)
-"Lj" = (
+"Lm" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
 /area/centcom/evac)
-"Lk" = (
+"Ln" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
-"Ll" = (
+"Lo" = (
 /turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/ferry)
-"Lm" = (
+"Lp" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
-"Ln" = (
-/obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
-"Lo" = (
-/obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
-"Lp" = (
-/obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
 "Lq" = (
-/obj/structure/chair,
+/obj/machinery/computer/shuttle/ferry/request,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "Lr" = (
@@ -14426,26 +14446,38 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "Lv" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lw" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Lx" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Ly" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/centcom/ferry)
-"Lw" = (
+"Lz" = (
 /mob/living/simple_animal/hostile/retaliate/peacekeeper{
 	canmove = 0;
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/centcom/ferry)
-"Lx" = (
+"LA" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
 /area/centcom/ferry)
-"Ly" = (
+"LB" = (
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/evac)
-"Lz" = (
+"LC" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plasteel{
 	dir = 6;
@@ -14453,17 +14485,8 @@
 	name = "sand"
 	},
 /area/centcom/evac)
-"LA" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
-"LB" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
-"LC" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
 "LD" = (
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "LE" = (
@@ -14488,10 +14511,19 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "LL" = (
-/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "LM" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LN" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LO" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"LP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -14502,7 +14534,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
-"LN" = (
+"LQ" = (
 /obj/effect/turf_decal/bot,
 /mob/living/simple_animal/hostile/retaliate/peacekeeper{
 	canmove = 0;
@@ -14510,7 +14542,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
-"LO" = (
+"LR" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Security";
 	opacity = 1;
@@ -14518,7 +14550,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
-"LP" = (
+"LS" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/storage/fancy/donut_box,
@@ -14533,7 +14565,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"LQ" = (
+"LT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/folder/red,
@@ -14542,7 +14574,7 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"LR" = (
+"LU" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/bot,
@@ -14556,41 +14588,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"LS" = (
+"LV" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
-"LT" = (
+"LW" = (
 /turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/ferry)
-"LU" = (
-/obj/structure/closet/crate,
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
-"LV" = (
-/obj/structure/closet/crate,
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
-"LW" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/ferry)
 "LX" = (
-/obj/structure/chair{
-	dir = 1
-	},
+/obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "LY" = (
-/obj/structure/chair{
-	dir = 1
-	},
+/obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "LZ" = (
@@ -14618,46 +14632,46 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ferry)
 "Md" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Me" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Mf" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/ferry)
+"Mg" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/centcom/ferry)
-"Me" = (
+"Mh" = (
 /mob/living/simple_animal/hostile/retaliate/peacekeeper{
 	canmove = 0;
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/centcom/ferry)
-"Mf" = (
+"Mi" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
 /area/centcom/ferry)
-"Mg" = (
+"Mj" = (
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
-"Mh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/centcom/evac)
-"Mi" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/centcom/evac)
-"Mj" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/evac)
 "Mk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -14671,24 +14685,32 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "Mm" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mp" = (
+/obj/machinery/door/poddoor,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Mq" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium,
-/area/centcom/ferry)
-"Mn" = (
-/turf/closed/wall/mineral/titanium,
-/area/centcom/ferry)
-"Mo" = (
-/turf/closed/wall/mineral/titanium,
-/area/centcom/ferry)
-"Mp" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/centcom/ferry)
-"Mq" = (
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Mr" = (
@@ -14698,8 +14720,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Mt" = (
-/obj/structure/grille,
 /obj/structure/window/shuttle,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "Mu" = (
@@ -14712,6 +14734,24 @@
 /turf/closed/wall/mineral/titanium,
 /area/centcom/ferry)
 "Mx" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"My" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"Mz" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"MA" = (
+/turf/closed/wall/mineral/titanium,
+/area/centcom/ferry)
+"MB" = (
+/obj/machinery/door/poddoor,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"MC" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
 	opacity = 1;
@@ -14721,70 +14761,35 @@
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
-"My" = (
+"MD" = (
+/obj/machinery/door/poddoor,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"ME" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
-"Mz" = (
+"MF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
-"MA" = (
+"MG" = (
 /turf/open/space,
 /area/tdome/tdomeobserve)
-"MB" = (
+"MH" = (
 /obj/machinery/door/poddoor/shutters,
 /turf/open/space,
 /area/tdome/tdomeobserve)
-"MC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/structure/frame/computer,
-/turf/open/floor/plasteel,
-/area/centcom/ferry)
-"MD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/structure/frame/computer,
-/turf/open/floor/plasteel,
-/area/centcom/ferry)
-"ME" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Centcom"
-	},
-/area/centcom/ferry)
-"MF" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Centcom"
-	},
-/area/tdome/tdomeobserve)
-"MG" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Centcom"
-	},
-/area/tdome/tdomeobserve)
-"MH" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/centcom/ferry)
 "MI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/structure/frame/computer,
+/obj/machinery/door/poddoor,
 /turf/open/floor/plasteel,
-/area/centcom/ferry)
+/area/centcom/evac)
 "MJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -14793,36 +14798,21 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "MK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/sign/directions/engineering{
-	desc = "A sign that shows there are doors here. There are doors everywhere!";
-	icon_state = "doors";
-	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
-	tag = "icon-doors"
-	},
-/turf/open/floor/plating,
-/area/tdome/tdomeobserve)
+/obj/machinery/door/poddoor,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "ML" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/sign/directions/engineering{
-	desc = "A sign that shows there are doors here. There are doors everywhere!";
-	icon_state = "doors";
-	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
-	tag = "icon-doors"
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
-/turf/open/floor/plating,
-/area/tdome/tdomeobserve)
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "MM" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
-/area/tdome/tdomeobserve)
+/area/centcom/ferry)
 "MN" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
@@ -14834,42 +14824,70 @@
 	},
 /area/tdome/tdomeobserve)
 "MP" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
-"MQ" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
-"MR" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
-"MS" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
-"MT" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Centcom"
-	},
-/area/tdome/tdomeobserve)
-"MU" = (
 /obj/machinery/door/poddoor,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"MQ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/ferry)
+"MR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"MS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"MT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: BLAST DOORS";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-doors"
+	},
+/turf/open/floor/plating,
+/area/tdome/tdomeobserve)
+"MU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: BLAST DOORS";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-doors"
+	},
+/turf/open/floor/plating,
+/area/tdome/tdomeobserve)
 "MV" = (
 /obj/machinery/door/poddoor,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "MW" = (
-/obj/machinery/door/poddoor,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
 "MX" = (
-/obj/machinery/door/poddoor,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
 "MY" = (
 /obj/machinery/door/poddoor,
 /turf/open/floor/plasteel,
@@ -14891,21 +14909,35 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "Nd" = (
-/obj/machinery/door/poddoor,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
 "Ne" = (
-/obj/machinery/door/poddoor,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "Nf" = (
-/obj/machinery/door/poddoor,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "Ng" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Nh" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"Ni" = (
 /obj/machinery/door/poddoor,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"Nj" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/tdome/tdomeobserve)
 
 (1,1,1) = {"
 aa
@@ -46446,9 +46478,9 @@ aa
 aa
 aa
 aa
-KW
-LA
-KW
+Ln
+LD
+LV
 aa
 aa
 aa
@@ -46702,11 +46734,11 @@ aa
 aa
 aa
 aa
-KW
-Ll
-LB
-Ll
-KW
+KY
+Lo
+LE
+LW
+Mq
 aa
 aa
 aa
@@ -46959,11 +46991,11 @@ aa
 aa
 aa
 aa
-KX
-Lm
-LB
-LU
-KX
+KZ
+Lp
+LF
+LX
+Mr
 aa
 aa
 aa
@@ -47216,11 +47248,11 @@ aa
 aa
 aa
 aa
-KX
-Ln
-LB
-LU
-KX
+La
+Lq
+LG
+LY
+Ms
 aa
 aa
 aa
@@ -47473,11 +47505,11 @@ aa
 aa
 aa
 aa
-KZ
-Lo
-LB
-LW
-KZ
+Lb
+Lr
+LH
+LZ
+Mt
 aa
 aa
 aa
@@ -47730,11 +47762,11 @@ aa
 aa
 aa
 aa
-KX
-Lo
-LB
-LW
-KX
+Lc
+Ls
+LI
+Ma
+Mu
 aa
 aa
 aa
@@ -47987,11 +48019,11 @@ aa
 aa
 aa
 aa
-KX
-Lo
-LB
-LW
-KX
+Ld
+Lt
+LJ
+Mb
+Mv
 aa
 aa
 aa
@@ -48244,11 +48276,11 @@ aa
 aa
 aa
 aa
-KX
-Lo
-LB
-LW
-KX
+Le
+Lu
+LK
+Mc
+Mw
 aa
 aa
 aa
@@ -48501,11 +48533,11 @@ aa
 aa
 aa
 aa
-Ld
-Lo
-LB
-LW
-Ld
+Lf
+Lv
+LL
+Md
+Mx
 aa
 aa
 aa
@@ -48758,11 +48790,11 @@ aa
 aa
 aa
 aa
-KX
-Lo
-LB
-LW
-KX
+Lg
+Lw
+LM
+Me
+My
 aa
 aa
 aa
@@ -49015,11 +49047,11 @@ aa
 aa
 aa
 aa
-KX
-Lo
-LB
-LW
-KX
+Lh
+Lx
+LN
+Mf
+Mz
 nf
 nf
 mU
@@ -49272,15 +49304,15 @@ aa
 aa
 aa
 aa
-KX
-KZ
-LA
-KZ
-KX
+Li
+Ly
+LO
+Mg
+MA
 nf
 pF
-MC
-Mz
+MJ
+ML
 sf
 nf
 aa
@@ -49538,7 +49570,7 @@ lJ
 pG
 qv
 rr
-MH
+MQ
 lJ
 aa
 aa
@@ -49792,10 +49824,10 @@ uB
 nf
 vr
 lJ
-My
+ME
 qw
 rs
-MI
+MR
 nf
 aa
 aa
@@ -50049,10 +50081,10 @@ uA
 nf
 to
 lJ
-Mz
+MF
 qx
 rt
-MC
+MS
 nf
 aa
 aa
@@ -50302,7 +50334,7 @@ aa
 mV
 tp
 tW
-LM
+LP
 tW
 vs
 lJ
@@ -50558,11 +50590,11 @@ aa
 aa
 nf
 tq
-Lw
-LN
-Lw
+Lz
+LQ
+Mh
 vt
-Mx
+MC
 qA
 qy
 ru
@@ -51072,14 +51104,14 @@ nf
 nf
 lJ
 lJ
-Lx
+LA
 uF
-Lx
+Mi
 lJ
 lJ
 lJ
 lJ
-Lx
+MM
 lJ
 lJ
 lJ
@@ -52301,16 +52333,16 @@ aa
 aa
 aa
 Ij
-Ij
-Ij
-Ij
-Ij
-Ij
-Ij
-Ij
-Ij
-Ij
-Ij
+Ir
+Iz
+IH
+IY
+Jk
+Jy
+JJ
+Ka
+Kj
+Kw
 aa
 aa
 aa
@@ -52557,17 +52589,17 @@ aa
 aa
 aa
 aa
-Ij
+Ik
 Is
-Is
-Is
-Is
-Is
-Is
-Is
-Is
+IA
+II
+IZ
+Jl
+Jz
+JK
+Kb
 Kk
-Ij
+Kx
 KE
 aa
 aa
@@ -52814,16 +52846,16 @@ ge
 ge
 ge
 aa
-Ij
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Is
+Il
+It
+IB
+IJ
+Ja
+Jm
+JA
+JL
+Kc
+Kl
 Ky
 KF
 aa
@@ -53071,18 +53103,18 @@ gl
 gA
 ge
 aa
-Ij
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Ky
-KF
+Im
+Iu
+IC
+IK
+Jb
+Jn
+JB
+JM
+Kd
+Km
+Kz
+KG
 aa
 aa
 aa
@@ -53328,18 +53360,18 @@ gm
 gB
 ge
 aa
-Ij
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Is
-Ky
-KF
+In
+Iv
+ID
+IL
+Jc
+Jo
+JC
+JN
+Ke
+Kn
+KA
+KH
 aa
 aa
 aa
@@ -53585,17 +53617,17 @@ gm
 gB
 ge
 aa
-Ij
-Is
-Is
-Is
-Is
+Io
+Iw
+IE
+IM
+Jd
 Jp
-Is
-Is
-Is
-Kk
-Ij
+JD
+JO
+Kf
+Ko
+KB
 KI
 aa
 aa
@@ -53842,17 +53874,17 @@ gm
 gB
 ge
 aa
-Ij
-Ij
-Ij
+Ip
+Ix
+IF
 IN
 Je
-Ij
-Je
+Jq
+JE
 JP
-Ij
-Ij
-Ij
+Kg
+Kp
+KC
 aa
 aa
 aa
@@ -54105,7 +54137,7 @@ iZ
 IO
 Jf
 iZ
-Jf
+JF
 JQ
 iZ
 aa
@@ -54116,11 +54148,11 @@ aa
 aa
 aa
 iZ
-IO
-Jf
+jl
+js
 iZ
-Jf
-JQ
+js
+jJ
 iZ
 aa
 aa
@@ -54362,7 +54394,7 @@ jd
 IP
 Jg
 iZ
-Jg
+JG
 JR
 jd
 aa
@@ -54373,11 +54405,11 @@ aa
 aa
 aa
 jd
-IP
-Jg
+jm
+jt
 iZ
-Jg
-JR
+jt
+jK
 jd
 aa
 aa
@@ -54617,9 +54649,9 @@ iQ
 iZ
 iZ
 IQ
-Jf
+Jh
 iZ
-Jf
+JH
 JS
 iZ
 iZ
@@ -54630,11 +54662,11 @@ iK
 iQ
 iZ
 iZ
-IQ
-Jf
+jn
+js
 iZ
-Jf
-JS
+js
+jL
 iZ
 iZ
 iZ
@@ -54871,7 +54903,7 @@ ge
 ge
 iK
 Iq
-Iq
+Iy
 IG
 IR
 iS
@@ -54879,24 +54911,24 @@ Jr
 jE
 JT
 Kh
-Kh
-Kh
-Iq
-Iq
+Kq
+KD
+KJ
+KK
 iK
-Iq
-Iq
-IG
-IR
+iR
+iR
+je
+jo
 iS
-Jr
+jz
 jE
-JT
-Kh
-Kh
-Kh
-Iq
-Iq
+jM
+jP
+jP
+jP
+iR
+iR
 iZ
 lq
 iT
@@ -55132,8 +55164,8 @@ iS
 jf
 IS
 Ji
-Ji
-Ji
+Js
+JI
 JU
 jQ
 jY
@@ -55144,11 +55176,11 @@ iK
 iS
 iS
 jf
-IS
-Ji
-Ji
-Ji
-JU
+jp
+ju
+ju
+ju
+jN
 jQ
 jY
 jY
@@ -55644,13 +55676,13 @@ iL
 iT
 ja
 jg
-Iq
+IT
 ja
-Iq
+Jt
 ja
-Iq
+JV
 ja
-Iq
+Kr
 kn
 ja
 kJ
@@ -55658,13 +55690,13 @@ KL
 iT
 ja
 jg
-Iq
+iR
 ja
-Iq
+iR
 ja
-Iq
+iR
 ja
-Iq
+iR
 kn
 ja
 kJ
@@ -55903,11 +55935,11 @@ ja
 jg
 IU
 ja
-IU
+Ju
 ja
-IU
+JW
 ja
-IU
+Ks
 kn
 ja
 kJ
@@ -55915,13 +55947,13 @@ iK
 iT
 ja
 jg
-IU
+jq
 ja
-IU
+jq
 ja
-IU
+jq
 ja
-IU
+jq
 kn
 ja
 kJ
@@ -56158,13 +56190,13 @@ iK
 iT
 ja
 jg
-IU
+IV
 ja
-IU
+Jv
 ja
-IU
+JX
 ja
-IU
+Kt
 kn
 ja
 kJ
@@ -56172,13 +56204,13 @@ iK
 iT
 ja
 jg
-IU
+jq
 ja
-IU
+jq
 ja
-IU
+jq
 ja
-IU
+jq
 kn
 ja
 kJ
@@ -56415,13 +56447,13 @@ iK
 iT
 ja
 jg
-IU
+IW
 ja
-IU
+Jw
 ja
-IU
+JY
 ja
-IU
+Ku
 kn
 ja
 kK
@@ -56429,13 +56461,13 @@ iK
 iT
 ja
 jg
-IU
+jq
 ja
-IU
+jq
 ja
-IU
+jq
 ja
-IU
+jq
 kn
 ja
 kK
@@ -56931,11 +56963,11 @@ jb
 jb
 IX
 Jj
-Jj
+Jx
 jb
 JZ
 Ki
-JZ
+Kv
 jb
 jb
 kL
@@ -56943,13 +56975,13 @@ iK
 iU
 jb
 jb
-IX
-Jj
-Jj
+jr
+jv
+jv
 jb
-JZ
-Ki
-JZ
+jO
+jR
+jO
 jb
 jb
 kL
@@ -58001,7 +58033,7 @@ iz
 tx
 uh
 ks
-mO
+KO
 vz
 ir
 mq
@@ -58515,7 +58547,7 @@ iz
 tz
 uj
 ks
-mO
+KP
 vA
 ir
 mq
@@ -62385,16 +62417,16 @@ it
 aa
 aa
 aa
-MA
-MA
-MA
-MA
-MA
-MA
-MA
-MA
-MA
-MA
+MG
+AN
+AN
+AN
+AN
+AN
+AN
+AN
+AN
+AN
 zH
 AX
 BF
@@ -62644,15 +62676,15 @@ lJ
 lJ
 zH
 Ac
-MF
-MK
-MF
+MN
+MT
+MW
 Ac
 zH
 zH
-MA
-MA
-MF
+AN
+AN
+Nj
 Bf
 Bb
 BK
@@ -62895,20 +62927,20 @@ iH
 jB
 jB
 iH
-LO
-Mg
+LR
+Mj
 lJ
 lJ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
+MH
+AP
+AP
+AP
+AP
+AP
+AP
 zH
-MA
-MA
+AN
+AN
 zH
 Ds
 DD
@@ -63158,14 +63190,14 @@ qk
 qk
 zH
 Ac
-MF
-MK
-MF
+MO
+MU
+MX
 Ac
 zH
 zH
 zH
-MF
+Nd
 zH
 zN
 zN
@@ -63399,7 +63431,7 @@ KN
 un
 uP
 un
-KN
+KQ
 su
 su
 rT
@@ -63667,7 +63699,7 @@ ql
 yK
 yC
 qk
-Mh
+Mk
 rU
 sv
 sv
@@ -63679,7 +63711,7 @@ sv
 sv
 sv
 wW
-KP
+Ne
 zH
 zH
 zH
@@ -63921,7 +63953,7 @@ xq
 qm
 xX
 qk
-yJ
+Lj
 yS
 qk
 qT
@@ -64688,14 +64720,14 @@ tL
 vF
 sv
 wW
-KP
+KR
 xP
 xZ
 yC
 yC
-Ly
-LP
-Mh
+LB
+LS
+Ml
 rU
 sv
 sW
@@ -64707,7 +64739,7 @@ tL
 vF
 sv
 wW
-KP
+Nf
 qk
 aa
 aa
@@ -64947,12 +64979,12 @@ sv
 wW
 xr
 xQ
-KR
+KT
 yC
 yC
 yU
-LQ
-Mj
+LT
+Mm
 rU
 sv
 sY
@@ -65202,14 +65234,14 @@ vF
 sZ
 sv
 wW
-KP
+KS
 xR
 xZ
 yC
 yC
-Ly
-LR
-Mh
+yV
+LU
+Mn
 rU
 sv
 sZ
@@ -65221,7 +65253,7 @@ vF
 sZ
 sv
 wW
-KP
+Ng
 qk
 aa
 aa
@@ -65976,8 +66008,8 @@ wW
 xq
 qm
 xW
-KS
-Lh
+KU
+Lk
 xW
 qk
 qT
@@ -66233,8 +66265,8 @@ wW
 xs
 ql
 xX
-KT
-Li
+KV
+Ll
 xX
 ql
 qX
@@ -66490,8 +66522,8 @@ wW
 xt
 qk
 xW
-KS
-KS
+KW
+Lm
 xW
 qk
 qY
@@ -66751,7 +66783,7 @@ qk
 qk
 qk
 qk
-Mh
+Mo
 rU
 sv
 sv
@@ -66763,7 +66795,7 @@ sv
 sv
 sv
 wW
-KP
+Nh
 qk
 aa
 aa
@@ -67004,9 +67036,9 @@ rV
 Ih
 ql
 yb
-KV
+KX
 yb
-Lz
+LC
 qk
 qZ
 rV
@@ -67522,19 +67554,19 @@ qk
 qk
 qk
 qk
-MU
+Mp
+MB
+MD
+MI
+MK
+MP
 MV
-MW
-MX
 MY
 MZ
 Na
 Nb
 Nc
-Nd
-Ne
-Nf
-Ng
+Ni
 qk
 aa
 aa
