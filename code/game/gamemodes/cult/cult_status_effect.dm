@@ -1,7 +1,7 @@
 /datum/status_effect/cult_buff
 	id = "cult_buff"
 	duration = -1
-	tick_interval = 10
+	tick_interval = 50
 	alert_type = /obj/screen/alert/status_effect/cult_buff
   
 /obj/screen/alert/status_effect/cult_buff
