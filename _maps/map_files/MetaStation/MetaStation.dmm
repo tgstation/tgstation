@@ -20179,6 +20179,7 @@
 	icon_state = "2-4";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aIe" = (
@@ -21708,6 +21709,7 @@
 	icon_state = "2-8";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aKK" = (
@@ -92984,6 +92986,7 @@
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbh" = (
@@ -93003,6 +93006,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbj" = (
@@ -137719,7 +137723,7 @@ ayY
 aaf
 aBQ
 aaf
-aIb
+anS
 aCZ
 aCZ
 aCZ
@@ -137729,7 +137733,7 @@ aCZ
 aCZ
 aCZ
 aCZ
-aIb
+anS
 aaf
 cXz
 aaf
@@ -141060,17 +141064,17 @@ axY
 axY
 aaa
 cmq
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 cXd
 aaa
 axY
