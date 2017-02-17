@@ -400,15 +400,20 @@
 	set waitfor = FALSE
 	var/list/yes_voters = new
 	var/list/cult_total = new
+	if(world.time<1800)
+		usr << "It would be premature to select a leader while everyone is still settling in, try again in [(2400-world.time)/10] seconds"
+		return
 	for(var/mob/M in mob_list)
 		spawn(0)
 		if(iscultist(M))
 			M << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 			M.verbs -= /mob/living/proc/cult_master
+			M << "<span class='cultlarge'>[usr] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>"
+			spawn(200)
 			switch(askuser(M,"[usr] seeks to lead your cult, do you support  them?","Please answer in 20 seconds!","Yes","No","Abstain", StealFocus=0, Timeout=200))
 				if(1)
 					M << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>200)
+					if((world.time-time_passed)>400)
 						M << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
 						M << 'sound/machines/buzz-sigh.ogg'
 					else
@@ -419,21 +424,23 @@
 					cult_total += M
 				if(3)
 					M << "<span class='danger'>Choice registered: Abstain.</span>"
-	sleep(200)
+	sleep(400)
 	if(yes_voters.len > (cult_total.len/2))
 		var/datum/action/innate/cultmast/FinalReckoning= new()
 		var/datum/action/innate/cultmark/Mark= new()
 		FinalReckoning.Grant(usr)
 		Mark.Grant(usr)
 		usr.mind.special_role = "Cult Master"
+		cult_mastered = 1
 		for(var/mob/M in mob_list)
 			if(iscultist(M))
-				M << "[usr] has the cult's support and is now their master. Follow the master's orders to the best of your ability!"
+				M << "<span class='cultlarge'>[usr] has the cult's support and is now their master. Follow their orders to the best of your ability!"
 		return 1
 	else
 		for(var/mob/M in mob_list)
 			if(iscultist(M))
-				M << "[usr] could not win the cult's support and shall continue to serve as an acolyte"
+				M << "<span class='cultlarge'>[usr] could not win the cult's support and shall continue to serve as an acolyte. A new vote may be called shortly."
+				sleep(450)
 				M.verbs += /mob/living/proc/cult_master
 		return 0
 
