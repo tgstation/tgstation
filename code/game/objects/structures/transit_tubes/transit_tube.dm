@@ -23,6 +23,7 @@
 		setDir(newdirection)
 	init_tube_dirs()
 	generate_tube_overlays()
+	is_affected_by_gravity = !anchored
 
 /obj/structure/transit_tube/Destroy()
 	for(var/obj/structure/transit_tube_pod/P in loc)

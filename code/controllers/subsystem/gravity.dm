@@ -3,7 +3,7 @@ var/datum/subsystem/gravity/SSgravity
 /datum/subsystem/gravity
 	name = "Gravity"
 	priority = 75
-	wait = 1
+	wait = 2
 	init_order = -100
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
 
@@ -25,8 +25,12 @@ var/datum/subsystem/gravity/SSgravity
 	for(var/area/A in areas)
 		if(!A.has_gravity && !A.gravity_generator && !A.gravity_overriding)
 			continue
+		if(!A.gravity_direction)
+			continue
 		for(var/atom/movable/AM in A.contents_affected_by_gravity)
 			currentrun += AM
+	for(var/atom/movable/AM in atoms_forced_gravity_processing)
+		currentrun += AM
 	recalculation_cost = world.timeofday - tempcost
 
 /datum/subsystem/gravity/fire(resumed = FALSE)

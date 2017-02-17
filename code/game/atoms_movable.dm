@@ -1,4 +1,6 @@
 
+var/global/list/atoms_forced_gravity_processing = list()
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/is_affected_by_gravity = FALSE	//Set to FALSE if this item should never be moved by gravity no matter what. Don't varedit before it has initialized!
@@ -31,8 +33,10 @@
 	var/gravity_stunning = 0
 	var/gravity_throwing = 0
 	var/gravity_override = FALSE
-	var/gravity_ignore_anchored = FALSE
+	var/gravity_ignores_anchored = FALSE
 	var/gravity_ignores_turfcheck = FALSE
+	var/gravity_ignores_area = FALSE
+	var/force_gravity_processing = FALSE
 	var/area/current_gravity_area = null
 	var/floating = FALSE
 
@@ -40,9 +44,11 @@
 	. = ..()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
-
-	var/floating = FALSE
-
+	if(var_name == "force_gravity_processing")
+		if(var_value)
+			atoms_forced_gravity_processing += src
+		else
+			atoms_forced_gravity_processing -= src
 
 /atom/movable/SDQL_update(const/var_name, new_value)
 	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
@@ -50,11 +56,25 @@
 	. = ..()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
+	if(var_name == "force_gravity_processing")
+		if(new_value)
+			atoms_forced_gravity_processing += src
+		else
+			atoms_forced_gravity_processing -= src
+
+/atom/movable/proc/manual_gravity_process()
+	sync_gravity()
+	gravity_act()
 
 /atom/movable/proc/sync_gravity()
+	if(gravity_ignores_area)
+		return FALSE
 	var/area/A = get_area(src)
+	if(!A)
+		return FALSE
 	if(A != current_gravity_area)
-		current_gravity_area.update_gravity(src, FALSE)
+		if(current_gravity_area)
+			current_gravity_area.update_gravity(src, FALSE)
 		current_gravity_area = A
 	if(isturf(loc) || gravity_ignores_turfcheck)
 		A.update_gravity(src, is_affected_by_gravity)
@@ -63,6 +83,8 @@
 
 /atom/movable/Initialize()
 	sync_gravity()
+	if(force_gravity_processing)
+		atoms_forced_gravity_processing += src
 	. = ..()
 
 /atom/movable/proc/gravity_act(moving = TRUE)
@@ -70,7 +92,7 @@
 		if(!gravity_ignores_turfcheck)	//We don't need to process.
 			sync_gravity()
 		return FALSE
-	if(anchored)
+	if(anchored && !gravity_ignores_anchored)
 		return FALSE
 	if(!gravity_direction)
 		return FALSE

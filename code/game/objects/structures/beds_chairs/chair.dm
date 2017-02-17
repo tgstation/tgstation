@@ -13,7 +13,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-	gravity_ignore_anchored = TRUE
+	gravity_ignores_anchored = TRUE
 	layer = OBJ_LAYER
 
 /obj/structure/chair/deconstruct()

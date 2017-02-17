@@ -317,7 +317,7 @@
 /obj/structure/piano/New()
 	..()
 	song = new("piano", src)
-
+	is_affected_by_gravity = !anchored
 	if(prob(50))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
@@ -373,5 +373,6 @@
 					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
+		is_affected_by_gravity = !anchored
 	else
 		return ..()

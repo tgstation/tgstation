@@ -10,6 +10,7 @@
 	integrity_failure = 50
 	var/obj/item/weapon/extinguisher/stored_extinguisher
 	var/opened = 0
+	is_affected_by_gravity = FALSE
 
 /obj/structure/extinguisher_cabinet/New(loc, ndir, building)
 	..()

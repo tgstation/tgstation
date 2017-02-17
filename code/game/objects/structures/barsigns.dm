@@ -15,13 +15,10 @@
 	var/state = 0
 	var/prev_sign = ""
 	var/panel_open = 0
-
-
-
+	is_affected_by_gravity = FALSE
 
 /obj/structure/sign/barsign/New()
 	..()
-
 
 //filling the barsigns list
 	for(var/bartype in subtypesof(/datum/barsign))
@@ -29,11 +26,8 @@
 		if(!signinfo.hidden)
 			barsigns += signinfo
 
-
 //randomly assigning a sign
 	set_sign(pick(barsigns))
-
-
 
 /obj/structure/sign/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
