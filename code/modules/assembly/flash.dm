@@ -90,7 +90,7 @@
 		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
-			M.Stun(1)
+			M.Weaken(rand(4,6))
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			user << "<span class='danger'>You blind [M] with the flash!</span>"
 			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
@@ -114,7 +114,7 @@
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(6)
+		M.Weaken(rand(4,6))
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")

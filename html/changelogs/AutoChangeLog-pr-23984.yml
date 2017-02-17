@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Bluespace Crystals are now a material that can be inserted in Protolathes and Circuit Printers. Some items now require Bluespace Mesh."
-  - rscadd: "Bluespace Crystal can now be ground in a reagent grinder to gain bluespace dust. It has no uses, but it teleports people if splashed on them, and if ingested it will occasionally cause teleportation."
