@@ -89,8 +89,8 @@
 /obj/item/weapon/claymore/highlander/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		loc.layer = 5 //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED
-		H.bleedsuppress = 1 //AND WE WON'T BLEED OUT LIKE COWARDS
+		loc.layer = FLY_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED
+		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!admin_spawned)
 			qdel(src)
