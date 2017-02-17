@@ -1,9 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Engraved messages now have a UI, which any player, living or dead
-can access. See when the message was engraved, and upvote or downvote
-accordingly."
-  - rscadd: "Admins have additional options with the UI, seeing the player ckey,
-original character name, and the ability to outright delete messages at
-the press of a button."

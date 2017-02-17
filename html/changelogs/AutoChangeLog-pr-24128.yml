@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - tweak: "The round start timer will count down during subsystem initialization"
