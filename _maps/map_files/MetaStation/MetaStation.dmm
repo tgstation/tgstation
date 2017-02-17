@@ -46647,10 +46647,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bAL" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bAM" = (
@@ -47562,11 +47559,11 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bCt" = (
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	color = "purple";
 	dir = 1
 	},
-/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bCu" = (
@@ -94442,6 +94439,13 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"ddF" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	color = "purple";
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -137490,7 +137494,7 @@ bvv
 bxi
 bzc
 bAL
-bCs
+ddF
 bDX
 bFR
 bHx

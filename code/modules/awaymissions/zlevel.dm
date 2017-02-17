@@ -18,7 +18,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	maploader.load_map(file)
 	smooth_zlevel(world.maxz)
 	SortAreas()
-	world.log << "loaded [file] as z-level [world.maxz]"
+	log_world("loaded [file] as z-level [world.maxz]")
 
 /proc/reset_gateway_spawns(reset = FALSE)
 	for(var/obj/machinery/gateway/G in world)
@@ -92,7 +92,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		if(ruins && ruins.len)
 			ruin = ruins[pick(ruins)]
 		else
-			world.log << "Ruin loader had no ruins to pick from with [budget] left to spend."
+			log_world("Ruin loader had no ruins to pick from with [budget] left to spend.")
 			break
 		// Can we afford it
 		if(ruin.cost > budget)
@@ -119,7 +119,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 			if(!valid)
 				continue
 
-			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
+			log_world("Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])")
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)
@@ -129,7 +129,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 			break
 
 	if(!overall_sanity)
-		world.log << "Ruin loader gave up with [budget] left to spend."
+		log_world("Ruin loader gave up with [budget] left to spend.")
 
 
 /obj/effect/ruin_loader

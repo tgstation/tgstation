@@ -299,7 +299,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Station Time: [worldtime2text()]")
 		if(ticker && ticker.mode)
 			for(var/datum/gang/G in ticker.mode.gangs)
 				if(G.is_dominating)
@@ -328,7 +327,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
-/mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
+/mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
+	if(flashwindow)
+		window_flash(client)
 	if(message)
 		src << "<span class='ghostalert'>[message]</span>"
 		if(source)

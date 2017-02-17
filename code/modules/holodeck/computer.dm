@@ -54,9 +54,9 @@
 	// the following is necessary for power reasons
 	var/area/AS = get_area(src)
 	if(istype(AS,/area/holodeck))
-		world.log << "### MAPPING ERROR"
-		world.log << "Holodeck computer cannot be in a holodeck."
-		world.log << "This would cause circular power dependency."
+		log_world("### MAPPING ERROR")
+		log_world("Holodeck computer cannot be in a holodeck.")
+		log_world("This would cause circular power dependency.")
 		qdel(src)  // todo handle constructed computers
 		return	//l-lewd...
 	else
@@ -194,6 +194,7 @@
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
+	linked.linked = null
 	return ..()
 
 /obj/machinery/computer/holodeck/emp_act(severity)
