@@ -31,8 +31,12 @@
 
 /mob/living/sync_gravity()
 	. = ..()
-	gravity_turn = dir2angle(gravity_direction)
-	transform = turn(transform, gravity_turn)
+	if(gravity_direction)
+		gravity_turn = dir2angle(gravity_direction)
+		animate(transform = turn(matrix(), gravity_turn), time = 2)
+		current_gravturn = gravity_turn
+	else
+		animate(transform = turn(matrix(), -current_gravturn), time = 2)
 
 /mob/living/Destroy()
 	if(ranged_ability)

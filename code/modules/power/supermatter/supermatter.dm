@@ -68,6 +68,7 @@
 	var/takes_damage = 1
 	var/produces_gas = 1
 	var/obj/effect/countdown/supermatter/countdown
+	is_affected_by_gravity = FALSE	//While this might be hilarious this wouldn't be balanced at all.
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()

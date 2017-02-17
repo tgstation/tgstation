@@ -75,3 +75,4 @@
 
 	var/list/implants = null
 	var/tesla_ignore = FALSE
+	var/current_gravturn

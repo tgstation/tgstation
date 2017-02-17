@@ -38,6 +38,8 @@
 	range = 10
 	var/modified = 0
 	var/obj/item/weapon/pen/pen = null
+	is_affected_by_gravity = TRUE
+	gravity_ignores_anchored = TRUE
 
 /obj/item/projectile/bullet/reusable/foam_dart/handle_drop()
 	if(dropped)

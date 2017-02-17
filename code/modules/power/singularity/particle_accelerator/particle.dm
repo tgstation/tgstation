@@ -8,6 +8,7 @@
 	var/movement_range = 10
 	var/energy = 10
 	var/speed = 1
+	is_affected_by_gravity = FALSE
 
 /obj/effect/accelerated_particle/weak
 	movement_range = 8
