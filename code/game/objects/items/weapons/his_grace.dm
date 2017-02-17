@@ -41,7 +41,7 @@
 /obj/item/weapon/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
 		consume(M)
-		if(LAZYLEN(contents) >= victims_needed)
+		if(LAZYLEN(contents) >= victims_needed && !ascended)
 			ascend()
 	else
 		..()
@@ -85,7 +85,7 @@
 	if(istype(master) && (src in master.held_items))
 		switch(bloodthirst)
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				master.visible_message("<span class='boldwarning'>[src] turns on [master]!</span>", "<span class='his_grace big bold>[src] turns on you!</span>")
+				master.visible_message("<span class='boldwarning'>[src] turns on [master]!</span>", "<span class='his_grace big bold'>[src] turns on you!</span>")
 				do_attack_animation(master, null, src)
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
