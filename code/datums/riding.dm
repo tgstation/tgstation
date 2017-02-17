@@ -450,7 +450,7 @@
 	flags = ABSTRACT | DROPDEL | NOBLUDGEON
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
-	var/mob/living/silicon/robot/ridden
+	var/mob/living/ridden
 	var/selfdeleting = FALSE
 
 /obj/item/riding_offhand/dropped()
