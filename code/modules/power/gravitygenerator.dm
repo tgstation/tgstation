@@ -69,7 +69,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 /obj/machinery/gravity_generator/part/Destroy()
 	if(main_part)
 		qdel(main_part)
-		return QDEL_HINT_LETMELIVE
 	set_broken()
 	return ..()
 
@@ -137,7 +136,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
-		qdel(O)
+		if(!QDESTROYING(O))
+			qdel(O)
 	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()

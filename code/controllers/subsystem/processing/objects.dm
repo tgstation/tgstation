@@ -6,7 +6,7 @@ var/datum/subsystem/processing/objects/SSobj
 
 /datum/subsystem/processing/objects
 	name = "Objects"
-	init_order = 12
+	init_order = 11
 	priority = 40
 	wait = 20
 
