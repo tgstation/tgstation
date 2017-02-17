@@ -27,3 +27,8 @@ Last space-z level = empty
 #define EMPTY_AREA_7 "Empty Area 7"
 #define EMPTY_AREA_8 "Empty Area 8"
 #define AWAY_MISSION "Away Mission"
+
+//for modifying jobs
+#define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
+#define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
+#define MAP_REMOVE_JOB(jobpath) /datum/job/jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
