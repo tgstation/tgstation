@@ -34,6 +34,8 @@
 	else
 		user.whisper(html_decode(message))
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+	if (user.mind.special_role == "Cult Master")
+		my_message = "<span class='cultlarge'><b>["Master"] [user]: [message]</b></span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << my_message
@@ -62,19 +64,20 @@
 	to use the -create talisman- rune (with ordinary paper on top) to get more talismans. Talismans are EXTREMELY powerful, therefore creating more talismans in a HIDDEN location should be one of your TOP PRIORITIES.<br><br>"
 
 	text += "<font color='red'><b>V. GROW THE CULT</b></font><br>There are certain basic strategies that all cultists should master. STUN talismans are the foundation of a successful cult. If you intend to convert the stunned person \
-	you should use cuffs or a talisman of shackling on them and remove their headset before they recover (this must be done quickly). Some targets like security or hardsuit users cannot have their headsets removed quickly, you can use \
-	your tome as a powerful melee weapon to beat them unconscious or an additional stun or EMP talisman to keep them quiet. Anyone with a loyalty implant cannot be converted and should be sacrificed, sacrifice victims will their soul \
-	behind in a shard, these shards can be used on construct shells to make powerful servants for the cult. Your construct minions can invoke many runes, but cannot create their own.<br><br>"
+	you should use cuffs or a talisman of shackling on them and remove their headset before they recover (it takes about 10 seconds to recover). If you intend to sacrifice the victim, striking them quickly and repeatedly with your tome \
+	will knock them out before they can recover. Sacrificed victims will their soul behind in a shard, these shards can be used on construct shells to make powerful servants for the cult. Remember you need TWO cultists standing near a \
+	conversion rune to convert someone. Your construct minions cannot trigger most runes, but they will count as cultists in helping you trigger more powerful runes like conversion or blood boil.<br><br>"
 
 	text += "<font color='red'><b>VI. VICTORY</b></font><br>You have two ultimate goals as a cultist, sacrifice your target, and summon Nar-Sie. Sacrificing the target involves killing that individual and then placing \
 	their corpse on a sacrifice rune and triggering that rune with THREE cultists. Do NOT lose the target's corpse! Only once the target is sacrificed can Nar-Sie be summoned. Summoning Nar-Sie will take nearly one minute \
-	just to draw the massive rune needed. Do not create the rune until your cult is ready to bring the Dark One into this world!<br><br>"
+	just to draw the massive rune needed. Do not create the rune until your cult is ready, the crew will receive the NAME and LOCATION of anyone who attempts to create the Nar-Sie rune. Once the Nar-Sie rune is drawn \
+	you must gathered 9 cultists (or constructs) over the rune and then click it to bring the Dark One into this world!<br><br>"
 
 	var/datum/browser/popup = new(usr, "mind", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
 	return 1
-	
+
 /mob/living/proc/cult_master()
 	set category = "Cultist"
 	set name = "Assert Leadership"
@@ -110,6 +113,7 @@
 							new /obj/effect/overlay/temp/dir_setting/cult/phase(mobloc, M.dir)
 							playsound(mobloc, "sparks", 100, 1)
 						if (4)
+							new /obj/effect/overlay/temp/cult/spray (mobloc)
 							playsound(mobloc, 'sound/magic/lightningbolt.ogg', 100, 1)
 							mobloc = get_turf(owner)
 							M.forceMove(mobloc)
@@ -123,10 +127,19 @@
     desc = "Marks a target for the cult"
     check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
     var/obj/effect/proc_holder/cultmark/CM
+    var/time = 0
 
 /datum/action/innate/cultmark/New()
     CM = new()
     ..()
+
+/datum/action/innate/cultmark/IsAvailable()
+	if(owner.mind.special_role != "Cult Master")
+		return 0
+	if((world.time - time)<900)
+		owner << "<span class='cultlarge'><b>You need to wait [(900-(world.time-time))/10] seconds before you can mark another target!</b></span>"
+		return 0
+	return ..()
 
 /datum/action/innate/cultmark/Destroy()
     qdel(CM)
@@ -135,13 +148,14 @@
 
 /datum/action/innate/cultmark/Activate()
     CM.toggle(owner) //the important bit
+    time = world.time
     return TRUE
 
 /obj/effect/proc_holder/cultmark
     active = FALSE
     ranged_mousepointer = 'icons/effects/cult_target.dmi'
 
-/obj/effect/proc_holder/cultmark/proc/toggle(mob/user) //the important bit
+/obj/effect/proc_holder/cultmark/proc/toggle(mob/user) 
     if(active)
         remove_ranged_ability("You cease the marking ritual...")
     else
@@ -161,8 +175,8 @@
 		for(var/mob/M in mob_list)
 			if(iscultist(M))
 				M << "<span class='cultlarge'><b>["Master"] [caller] has marked [blood_target] as the cult's highest priority, get there immediately!</b></span>"
-		remove_ranged_ability(caller, "The marking rite is complete! Your mark will last for 2 minutes or until a new mark is added")
-		spawn(120)
+		remove_ranged_ability(caller, "The marking rite is complete! It will last for one minute.")
+		spawn(600)
 			blood_target = null
 			for(var/mob/M in mob_list)
 				if(iscultist(M))
