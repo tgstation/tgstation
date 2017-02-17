@@ -48,11 +48,11 @@
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	origin_tech = "bluespace=3;plasmatech=4"
-	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT / 2)
+	materials = list(MAT_BLUESPACE=(MINERAL_MATERIAL_AMOUNT / 2))
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 // nice try
 	refined_type = null
-
+s
 // Polycrystals, aka stacks
 
 /obj/item/stack/sheet/bluespace_crystal
