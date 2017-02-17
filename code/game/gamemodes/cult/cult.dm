@@ -161,6 +161,7 @@
 	if(cult_mind.current.gain_antag_datum(/datum/antagonist/cultist))
 		if(stun)
 			cult_mind.current.Paralyse(5)
+		cult_mind.current.apply_status_effect(STATUS_EFFECT_CULT_BUFF)
 		return 1
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
@@ -172,6 +173,7 @@
 		cult_datum.on_remove()
 		if(stun)
 			cult_mind.current.Paralyse(5)
+		cult_mind.current.remove_status_effect(STATUS_EFFECT_CULT_BUFF)
 		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
