@@ -18,6 +18,8 @@
 
 #define STATUS_EFFECT_HISGRACE /datum/status_effect/his_grace //His Grace.
 
+#define STATUS_EFFECT_CULT_BUFF /datum/status_effect/cult_buff //Persistant blood regeneration for Blood Cultists
+
 /////////////
 // DEBUFFS //
 /////////////
