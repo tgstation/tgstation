@@ -16,8 +16,12 @@
 
 #define STATUS_EFFECT_POWERREGEN /datum/status_effect/cyborg_power_regen //Regenerates power on a given cyborg over time
 
+#define STATUS_EFFECT_HISGRACE /datum/status_effect/his_grace //His Grace.
+
 /////////////
 // DEBUFFS //
 /////////////
 
 #define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
+
+#define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.
