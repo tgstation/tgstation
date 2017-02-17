@@ -135,14 +135,15 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
-		var/used_components = 0
+		var/used_components = FALSE
 		var/used_all = TRUE
 		for(var/i in S.stored_components)
 			if(required_components[i])
 				var/to_use = min(S.stored_components[i], required_components[i])
 				required_components[i] -= to_use
 				S.stored_components[i] -= to_use
-				used_components += to_use
+				if(to_use)
+					used_components = TRUE
 				if(S.stored_components[i])
 					used_all = FALSE
 		if(used_components)
@@ -222,11 +223,16 @@
 			first_sound_played = TRUE
 		make_glow()
 		glow.icon_state = "clockwork_gateway_components"
+		var/used_components = FALSE
 		for(var/i in required_components)
 			if(required_components[i])
 				var/to_use = min(clockwork_component_cache[i], required_components[i])
 				required_components[i] -= to_use
 				clockwork_component_cache[i] -= to_use
+				if(to_use)
+					used_components = TRUE
+		if(used_components)
+			update_slab_info()
 		if(still_needs_components())
 			return
 	for(var/obj/O in orange(1, src))
