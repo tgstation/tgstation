@@ -1783,6 +1783,20 @@
 		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
+
+	else if(href_list["spoof_message"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/obj/item/announcer/announcer = locate(href_list["spoof_message"])
+		var/response = href_list["response"]
+		switch(response)
+			if(SPOOFER_ACCEPT)
+				announcer.accept_message(usr)
+			if(SPOOFER_REJECT)
+				announcer.reject_message()
+			if(SPOOFER_DESTROY)
+				announcer.pop()
+
 	else if(href_list["jumpto"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return

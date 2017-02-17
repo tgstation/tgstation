@@ -468,8 +468,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	if(create_command_report(usr))
-		feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?") as message|null
+	if(!input)
+		return
+
+	var/stealth_level = alert(usr, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
+
+	create_command_report(usr, input, stealth_level == "No" ? TRUE : FALSE)
+	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_change_command_name()
 	set category = "Special Verbs"

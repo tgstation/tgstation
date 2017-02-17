@@ -1211,14 +1211,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 5
 	item = /obj/item/announcer
 
-/datum/uplink_item/commservice/intel_disrupter
-	name = "Intel Disruption Device"
-	desc = "This device can disrupt the normal intelligence report that is sent that normally informs the station of people like you. Use it to disrupt the report, and watch as members of the station commit suicide in despair. Not very useful after the intercept has already been recieved. Refundable if unused."
-	cost = 10
-	item = /obj/item/announcer/fake_extended
-	surplus = 0
-	refundable = TRUE
-
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

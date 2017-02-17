@@ -412,3 +412,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
+#define SPOOFER_ACCEPT "accept"
+#define SPOOFER_REJECT "reject"
+#define SPOOFER_DESTROY "destroy device"
