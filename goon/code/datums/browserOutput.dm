@@ -61,13 +61,13 @@ var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons fo
 		for(var/asset in global.chatResources) // No asset cache, just get this fucking shit SENT.
 			owner << browse_rsc(file(asset))
 
-		log_world("Sending main chat window to client [owner.ckey]")
+		//log_world("Sending main chat window to client [owner.ckey]")
 		owner << browse(file("goon/browserassets/html/browserOutput.html"), "window=browseroutput")
 		sleep(20)
 		if(!owner || loaded)
 			break
 
-	// to_chat(world.log, "chatOutput: load() completed")
+	// log_world("chatOutput: [owner.ckey] load() completed")
 
 /datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
@@ -122,7 +122,7 @@ var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons fo
 		ehjax_send(data = owner.is_afk(29) ? "softPang" : "pang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
 		sleep(30)
 
-/datum/chatOutput/proc/ehjax_send(var/client/C = owner, var/window = "browseroutput", var/data)
+/datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")

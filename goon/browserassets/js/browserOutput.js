@@ -271,7 +271,7 @@ function output(message, flag) {
 		entry.setAttribute('data-filter', filteredOut);
 	}
 
-	entry.innerHTML = message;
+	entry.innerHTML = message.trim();
 	$messages[0].appendChild(entry);
 
 	//Actually do the snap
