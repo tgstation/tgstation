@@ -109,7 +109,7 @@
 		message = "<span class='brass'>You dispel the power of [visor].</span>"
 		remove_ranged_ability(message)
 	else
-		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judical marker!</b></span>"
+		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judicial marker!</b></span>"
 		add_ranged_ability(user, message)
 
 /obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/caller, params, atom/target)

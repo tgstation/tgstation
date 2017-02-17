@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "The Ark of the Clockwork Justicar now only costs 3 of each component to summon, but must consume an additional 7 of each component before it will activate and start counting down."
+  - rscadd: "The presence of the Ark will be immediately announced, though the location will still only be announced after it has been active and counting down for 2 minutes."
+  - tweak: "The Ark also requires an additional invoker to invoke."

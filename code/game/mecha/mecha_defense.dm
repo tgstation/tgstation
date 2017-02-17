@@ -152,7 +152,7 @@
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
-			to_chat(user, "[src]-[W] interface initialized successfuly")
+			to_chat(user, "[src]-[W] interface initialized successfuly.")
 		else
 			to_chat(user, "[src]-[W] interface initialization failed.")
 		return

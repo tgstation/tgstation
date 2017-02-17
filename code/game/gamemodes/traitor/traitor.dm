@@ -115,6 +115,7 @@
 					var/datum/objective/maroon/yandere_two = new
 					yandere_two.owner = traitor
 					yandere_two.target = yandere_one.target
+					yandere_two.update_explanation_text() // normally called in find_target()
 					traitor.objectives += yandere_two
 					objective_count++
 

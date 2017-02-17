@@ -37,16 +37,10 @@
 	create(ckey = user.ckey)
 
 /obj/effect/mob_spawn/Initialize(mapload)
-	if(roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP)))
+	if(instant || (roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
 		poi_list |= src
-
-/obj/effect/mob_spawn/New()
-	..()
-
-	if(instant)
-		create()
 
 /obj/effect/mob_spawn/Destroy()
 	poi_list.Remove(src)

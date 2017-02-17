@@ -461,5 +461,6 @@
 	user.spin(20, 1)
 	if(istype(user, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = user
-		R.riding_datum.force_dismount()
+		if(R.riding_datum)
+			R.riding_datum.force_dismount()
 	..()

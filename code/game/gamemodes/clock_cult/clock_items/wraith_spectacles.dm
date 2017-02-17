@@ -77,7 +77,7 @@
 	if(slot != slot_glasses || up)
 		return
 	if(user.disabilities & BLIND)
-		to_chat(user, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>") //Ratvar with the sick burns yo
+		to_chat(user, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>") //Ratvar with the sick burns yo
 		return
 	if(blind_cultist(user)) //Cultists instantly go blind
 		return

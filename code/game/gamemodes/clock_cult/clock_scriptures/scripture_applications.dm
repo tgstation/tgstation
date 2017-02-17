@@ -162,7 +162,7 @@
 	channel_time = 80
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 2)
 	object_path = /obj/structure/destructible/clockwork/shell/fragment
-	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptable.</span>"
+	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_APPLICATION
@@ -303,10 +303,10 @@
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 3)
 	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
-	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
+	observer_message = "<span class='warning'>A brass obelisk appears hanging in midair!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
+	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks receive double duration and uses."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE

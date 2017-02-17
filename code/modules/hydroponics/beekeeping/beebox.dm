@@ -25,7 +25,7 @@
 
 /obj/structure/beebox
 	name = "apiary"
-	desc = "Dr Miles Manners is just your average Wasp themed super hero by day, but by night he becomes DR BEES!"
+	desc = "Dr Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR BEES!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "beebox"
 	anchored = 1
@@ -150,7 +150,7 @@
 				return
 			honey_frames += HF
 		else
-			to_chat(user, "<span class='warning'>There's no room for anymore frames in the apiary!</span>")
+			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
 
 	if(istype(I, /obj/item/weapon/wrench))
 		if(default_unfasten_wrench(user, I, time = 20))
@@ -184,7 +184,7 @@
 				to_chat(user, "<span class='warning'>This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!</span>")
 
 		else
-			to_chat(user, "<span class='warning'>The queen bee disappeared! bees disappearing has been in the news lately...</span>")
+			to_chat(user, "<span class='warning'>The queen bee disappeared! Disappearing bees have been in the news lately...</span>")
 
 		qdel(qb)
 
@@ -204,7 +204,7 @@
 		if(bees)
 			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
 	else
-		var/option = alert(user, "What Action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
+		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
 		if(!Adjacent(user))
 			return
 		switch(option)
