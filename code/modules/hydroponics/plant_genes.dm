@@ -208,7 +208,9 @@
 	if(iscarbon(target))
 		var/obj/item/seeds/seed = G.seed
 		var/mob/living/carbon/M = target
-
+		G.var/slips = 0
+		G.var/max_slips = seed.potency * 0.05
+		
 		var/stun_len = seed.potency * rate * 0.8
 		if(istype(G) && ispath(G.trash, /obj/item/weapon/grown))
 			return
@@ -222,6 +224,10 @@
 		if(M.slip(stun, weaken, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_slip(G, M)
+		
+		G.slips + 1
+		if(G.slips >= G.maxslips)
+			qdel(G)
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
