@@ -41,6 +41,8 @@
 /obj/item/weapon/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
 		consume(M)
+		if(LAZYLEN(contents) >= victims_needed)
+			ascend()
 	else
 		..()
 
@@ -75,8 +77,6 @@
 	if(!bloodthirst)
 		drowse()
 		return
-	if(ascended && awakened)
-		force_bonus = force_bonus + ascend_bonus
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
 		adjust_bloodthirst(1 + Floor(LAZYLEN(contents) * 0.5)) //Maybe adjust this?
 	else
@@ -130,7 +130,7 @@
 	gender = MALE
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
-	playsound(user, 'sound/effects/pope_entry.ogg', 100)
+	playsound(user, 'sound/effects/his_grace_awaken.ogg', 100)
 	icon_state = "green_awakened"
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
@@ -163,8 +163,6 @@
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
 	update_stats()
-	if(LAZYLEN(contents) >= victims_needed)
-		ascend()
 
 /obj/item/weapon/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
@@ -214,9 +212,12 @@
 
 /obj/item/weapon/his_grace/proc/ascend()
 	var/mob/living/carbon/human/master = loc
-	master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>Your God is Watchng</span>")
-	name = "[master]'s mythical toolbox of three powers"
+	force_bonus += ascend_bonus
 	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
 	icon_state = "gold"
 	item_state = "toolbox_gold"
 	ascended = 1
+	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)
+	if(istype(master))
+		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>Your God is Watchng</span>")
+		name = "[master]'s mythical toolbox of three powers"
