@@ -52,6 +52,16 @@
 	CalculateAdjacentTurfs()
 
 /turf/Destroy(force)
+	. = QDEL_HINT_IWILLGC
+	if(force)
+		..()
+		//this will completely wipe turf state
+		var/turf/basic/B = new /turf/basic(src)
+		for(var/A in B.contents)
+			qdel(A)
+		for(var/I in B.vars)
+			B.vars[I] = null
+		return
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
@@ -60,7 +70,6 @@
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
-	return QDEL_HINT_IWILLGC
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
