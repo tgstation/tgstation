@@ -134,7 +134,7 @@
 	icon_state = "green_awakened"
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
-	if(!awakened || ascended)
+	if(!awakened && ascended)
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping closed.</span>")
@@ -219,5 +219,5 @@
 	ascended = 1
 	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)
 	if(istype(master))
-		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>Your God is Watchng</span>")
+		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>Your God is watching</span>")
 		name = "[master]'s mythical toolbox of three powers"
