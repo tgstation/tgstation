@@ -300,7 +300,8 @@ var/next_external_rsc = 0
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
-
+	
+	winset(usr, null, "reset=true")
 
 //////////////
 //DISCONNECT//
