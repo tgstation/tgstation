@@ -188,7 +188,7 @@
 	var/hit_combo = 5
 	var/current_combo = 0
 	var/hit_combo_clickdelay = 3
-	var/unlock_ticks = 3
+	var/unlock_ticks = 2
 	var/unlock_tick = 0
 	var/hit_combo_interrupt_pull = TRUE
 	var/normal_clickdelay = 20
@@ -218,8 +218,6 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/classic_baton/telescopic/energy/proc/extend(mob/living/user = null)
-	if(user)
-		user << "<span class ='warning'>You extend and charge the baton.</span>"
 	icon_state = "telebaton-energy_1"
 	item_state = "telebaton-energy"
 	w_class = WEIGHT_CLASS_BULKY
@@ -227,18 +225,19 @@
 	attack_verb = list("smacked", "struck", "knocks over", "whacks")
 	playsound(src.loc, 'sound/weapons/ebatonextend.ogg', 50, 1)
 	on = TRUE
+	if(user)
+		user << "<span class ='warning'>You extend and charge the baton.</span>"
 
 /obj/item/weapon/melee/classic_baton/telescopic/energy/proc/retract(mob/living/user = null)
-	if(user)
-		user << "<span class ='notice'>You collapse the baton.</span>"
 	icon_state = "telebaton-energy_0"
 	item_state = null
-	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	force = 0
 	attack_verb = list("hit", "poked")
 	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 	on = FALSE
+	if(user)
+		user << "<span class ='notice'>You collapse the baton.</span>"
 
 /obj/item/weapon/melee/classic_baton/telescopic/energy/attack(mob/living/target, mob/living/user)
 	if(!on)
@@ -283,6 +282,7 @@
 			if(!affecting)
 				affecting = target.bodyparts[1]
 			target.apply_damage(final_damage, damtype, affecting)
+			user.do_attack_animation(target)
 		user.visible_message("<span class='danger'>[user] [attackverb] [target] with the [src]!</span>")
 		locked = null
 		current_combo = 0
@@ -295,9 +295,11 @@
 			var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 			if(!affecting)
 				affecting = target.bodyparts[1]
+			user.do_attack_animation(target)
 			target.apply_damage(initial_damage, damtype, affecting)
 		user.visible_message("<span class='danger'>[user] [pick(attack_verb)] [target] with [src]!</span>")
 		playsound(user.loc, 'sound/effects/woodhit.ogg', 50, 1)
+	add_logs(user, target, "[attackverb]", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 /obj/item/weapon/melee/supermatter_sword
 	name = "supermatter sword"
