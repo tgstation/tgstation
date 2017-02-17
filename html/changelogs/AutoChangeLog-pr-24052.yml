@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - experiment: "The game will now force hardware rendering on for all clients."

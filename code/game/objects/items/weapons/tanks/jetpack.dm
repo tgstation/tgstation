@@ -9,6 +9,7 @@
 	var/gas_type = "o2"
 	var/on = FALSE
 	var/stabilizers = FALSE
+	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/weapon/tank/jetpack/New()
@@ -113,6 +114,12 @@
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 
+/obj/item/weapon/tank/jetpack/oxygen/security
+	name = "security jetpack (oxygen)"
+	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
+	icon_state = "jetpack-sec"
+	item_state = "jetpack-sec"
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
@@ -126,13 +133,14 @@
 	name = "hardsuit jetpack upgrade"
 	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
 	origin_tech = "materials=4;magnets=4;engineering=5"
-	icon_state = "jetpack-upgrade"
-	item_state =  "jetpack-black"
+	icon_state = "jetpack-mining"
+	item_state = "jetpack-black"
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	volume = 1
 	slot_flags = null
 	gas_type = null
+	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/weapon/tank/internals/tank = null
 

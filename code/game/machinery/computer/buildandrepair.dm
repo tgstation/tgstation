@@ -175,7 +175,10 @@
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
 	origin_tech = "programming=3;bio=3"
-
+/obj/item/weapon/circuitboard/computer/base_construction
+	name = "circuit board (Aux Mining Base Construction Console)"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction
+	origin_tech = "programming=3;engineering=3"
 /obj/item/weapon/circuitboard/computer/aiupload
 	name = "AI Upload (Computer Board)"
 	build_path = /obj/machinery/computer/upload/ai

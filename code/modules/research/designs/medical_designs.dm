@@ -51,7 +51,7 @@
 	id = "bluespacebeaker"
 	req_tech = list("bluespace" = 6, "materials" = 5, "plasmatech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
+	materials = list(MAT_GLASS = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 250, MAT_BLUESPACE = 250)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = list("Medical Designs")
 
@@ -71,7 +71,7 @@
 	id = "bluespacesyringe"
 	req_tech = list("bluespace" = 5, "materials" = 4, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 4000, MAT_PLASMA = 2000, MAT_DIAMOND = 2000)
+	materials = list(MAT_GLASS = 2000, MAT_PLASMA = 1000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 500)
 	build_path = /obj/item/weapon/reagent_containers/syringe/bluespace
 	category = list("Medical Designs")
 
@@ -81,7 +81,7 @@
 	id = "noreactsyringe"
 	req_tech = list("materials" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 4000, MAT_GOLD = 1000)
+	materials = list(MAT_GLASS = 2000, MAT_GOLD = 1000)
 	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
 	category = list("Medical Designs")
 
@@ -91,7 +91,7 @@
 	id = "piercesyringe"
 	req_tech = list("materials" = 7, "combat" = 3, "engineering" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
+	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 1000)
 	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
 	category = list("Medical Designs")
 
@@ -101,7 +101,7 @@
 	id = "bluespacebodybag"
 	req_tech = list("bluespace" = 5, "materials" = 4, "plasmatech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500)
+	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500, MAT_BLUESPACE = 500)
 	build_path = /obj/item/bodybag/bluespace
 	category = list("Medical Designs")
 
@@ -241,7 +241,7 @@
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 7, "magnets" = 5,"plasmatech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
 	build_path = /obj/item/organ/eyes/robotic/xray
 	category = list("Misc", "Medical Designs")
 

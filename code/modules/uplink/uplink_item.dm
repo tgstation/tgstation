@@ -618,6 +618,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
+/datum/uplink_item/stealthy_weapons/poison_pen
+	name = "Poison Pen"
+	desc = "Cutting edge of deadly writing implements technology, this gadget will infuse any piece of paper with delayed contact poison."
+	item = /obj/item/weapon/pen/poison
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. \
@@ -1186,11 +1193,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
-	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, it will thirst for blood and must be used to kill in order to sate that thirst. \
-	His Grace grants benefits to its wielder, with a more intense hunger equaling more benefits, but be wary: if it gets too hungry, it will kill you and destroy your body. \
-	If you leave His Grace alone for some time, it will eventually return to its inactive state. \
-	To activate His Grace, place five assorted organs inside of it and use it in your hand."
-	item = /obj/item/weapon/storage/toolbox/artistic/his_grace
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
+	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
+	However, if left alone for long enough, He will fall back to slumber. \
+	To activate His Grace, simply unlatch Him."
+	item = /obj/item/weapon/his_grace
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain

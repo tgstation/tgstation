@@ -115,7 +115,7 @@
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
-		window_flash(X)
+		window_flash(X, ignorepref = TRUE)
 		X << msg
 
 
