@@ -1,0 +1,4 @@
+author: "WJohn"
+delete-after: True
+changes: 
+  - imageadd: "Improved blueshift sprites, courtesy of Nienhaus."
