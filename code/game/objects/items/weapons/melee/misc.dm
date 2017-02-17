@@ -191,7 +191,7 @@
 	var/unlock_ticks = 3
 	var/unlock_tick = 0
 	var/hit_combo_interrupt_pull = TRUE
-	var/normal_clickdelay = 14
+	var/normal_clickdelay = 20
 	var/mob/living/locked = null
 	hitsound = 'sound/weapons/shockhit.ogg'
 
