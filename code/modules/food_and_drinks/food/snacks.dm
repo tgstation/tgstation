@@ -18,8 +18,18 @@
 	var/junkiness = 0  //for junk food. used to lower human satiety.
 	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
+	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
+
+/obj/item/weapon/reagent_containers/food/snacks/New()
+	..()
+	if(islist(tastes) && tastes.len)
+		var/static/list/flavoured_reagents = list("nutriment", "vitamin")
+		for(var/rid in flavoured_reagents)
+			var/datum/reagent/R = reagents.has_reagent(rid)
+			if(istype(R))
+				R.data = tastes
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
@@ -147,7 +157,7 @@
 //Called when you finish tablecrafting a snack.
 /obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)
 	..()
-	reagents.reagent_list.Cut()
+	reagents.clear_reagents()
 	for(var/obj/item/weapon/reagent_containers/RC in contents)
 		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
 	if(istype(R))
@@ -161,7 +171,10 @@
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
-			reagents.add_reagent(r_id, amount)
+			var/list/data
+			if(r_id == "nutriment" || r_id == "vitamin")
+				data = tastes
+			reagents.add_reagent(r_id, amount, data)
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?

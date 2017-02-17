@@ -700,17 +700,18 @@ var/const/INJECT = 5 //injection
 		for(var/datum/reagent/R in reagent_list)
 			if(!R.taste_mult)
 				continue
-			if(istype(R, /datum/reagent/nutriment))
+			if(istype(R, /datum/reagent/consumable/nutriment))
 				var/list/taste_data = R.data
 				for(var/taste in taste_data)
+					var/amount = taste_data[taste] * R.taste_mult
 					if(taste in tastes)
-						tastes[taste] += taste_data[taste]
+						tastes[taste] += amount
 					else
-						tastes[taste] = taste_data[taste]
+						tastes[taste] = amount
 			else
 				var/taste_desc = R.taste_description
 				var/taste_amount = get_reagent_amount(R.id) * R.taste_mult
-				if(R.taste_description in tastes)
+				if(taste_desc in tastes)
 					tastes[taste_desc] += taste_amount
 				else
 					tastes[taste_desc] = taste_amount

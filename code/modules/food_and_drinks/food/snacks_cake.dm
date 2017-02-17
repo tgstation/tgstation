@@ -35,6 +35,7 @@
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 3, "oculine" = 5, "vitamin" = 10)
 	list_reagents = list("nutriment" = 20, "oculine" = 10, "vitamin" = 5)
+	tastes = list("cake" = 10, "sweetness" = 10, "carrot" = 15)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/carrot
 	name = "carrot cake slice"
