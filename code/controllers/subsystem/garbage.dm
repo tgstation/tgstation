@@ -179,6 +179,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_IWILLGC)
+				D.gc_destroyed = GC_SELF_COLLECTING_GARBAGE
 				return
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				if(!force)
@@ -210,6 +211,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				SSgarbage.QueueForQueuing(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
+	else if(D.gc_destroyed == GC_SELF_COLLECTING_GARBAGE)
+		CRASH("[D.type] has been qdel'd again after returning QDEL_HINT_IWILLGC")
 
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
