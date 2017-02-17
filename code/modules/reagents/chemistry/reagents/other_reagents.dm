@@ -1229,7 +1229,8 @@
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = "plasma"
+	taste_description = "bitterness"
+	taste_mult = 1.5
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/M)
 	if(iscarbon(M))
@@ -1433,13 +1434,15 @@
 	name = "virus plasma"
 	id = "plasmavirusfood"
 	color = "#A69DA9" // rgb: 166,157,169
-	taste_description = "plasma"
+	taste_description = "bitterness"
+	taste_mult = 1.5
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
-	taste_description = "plasma"
+	taste_description = "bitterness"
+	taste_mult = 1.5
 
 /datum/reagent/uranium/uraniumvirusfood
 	name = "decaying uranium gel"
