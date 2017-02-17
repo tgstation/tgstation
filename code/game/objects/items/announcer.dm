@@ -1,6 +1,7 @@
 /obj/item/announcer
 	name = "bootleg announcer"
 	desc = "Fake an announcement from Centcom! Note that it's unlikely they will back up your story if asked."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	item_state = "walkietalkie"
 	w_class = WEIGHT_CLASS_TINY
@@ -49,11 +50,11 @@
 	qdel(src)
 
 /proc/create_command_report(mob/user)
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/input = input(user, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
 	if(!input)
 		return
 
-	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
+	var/confirm = alert(user, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
 	if(confirm == "Yes")
 		priority_announce(input, null, 'sound/AI/commandreport.ogg')
 	else
