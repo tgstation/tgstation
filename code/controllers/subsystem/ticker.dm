@@ -1,3 +1,5 @@
+#define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
+
 var/round_start_time = 0
 
 var/datum/subsystem/ticker/ticker
@@ -55,10 +57,11 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
-
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 15, 'sound/ambience/title1.ogg' =15, 'sound/ambience/title3.ogg' =14, 'sound/ambience/title4.ogg' =14, 'sound/misc/i_did_not_grief_them.ogg' =14, 'sound/ambience/clown.ogg' = 9)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
+	else
+		var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
 
 /datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
