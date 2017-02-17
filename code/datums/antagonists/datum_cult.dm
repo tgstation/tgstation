@@ -29,14 +29,10 @@
 /datum/antagonist/cultist/apply_innate_effects()
 	owner.faction |= "cult"
 	owner.verbs += /mob/living/proc/cult_help
-	owner.verbs += /mob/living/proc/cult_master
+	if(cult_mastered == 0)
+		owner.verbs += /mob/living/proc/cult_master
 	communion.Grant(owner)
 	owner.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
-	var/list/test = list()
-	for(var/mob/M in mob_list)
-		if (M.mind.special_role == "Cult Master")
-			test += M
-	owner << "<span class='userdanger'>There are [test.len] cult masters!</span>"
 	..()
 
 /datum/antagonist/cultist/remove_innate_effects()
