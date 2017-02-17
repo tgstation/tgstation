@@ -6,7 +6,7 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	init_order = 0
+	init_order = 13
 
 	priority = 200
 	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
@@ -41,7 +41,8 @@ var/datum/subsystem/ticker/ticker
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?
 
-	var/timeLeft = 1200						//pregame timer
+	var/timeLeft						//pregame timer
+	var/start_at
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
@@ -69,19 +70,19 @@ var/datum/subsystem/ticker/ticker
 	if(!syndicate_code_response)
 		syndicate_code_response	= generate_code_phrase()
 	..()
+	start_at = world.time + (config.lobby_countdown * 10)
+	world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
+	world << "Please set up your character and select \"Ready\". The game will start in about [config.lobby_countdown] seconds."
+	current_state = GAME_STATE_PREGAME
+	for(var/client/C in clients)
+		window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 
 /datum/subsystem/ticker/fire()
 	switch(current_state)
-		if(GAME_STATE_STARTUP)
-			timeLeft = config.lobby_countdown * 10
-			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
-			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
-			current_state = GAME_STATE_PREGAME
-			for(var/client/C in clients)
-				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
+			if(isnull(timeLeft))
+				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
 			totalPlayersReady = 0
 			for(var/mob/new_player/player in player_list)
@@ -716,3 +717,15 @@ var/datum/subsystem/ticker/ticker
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
+
+/datum/subsystem/ticker/proc/GetTimeLeft()
+	if(isnull(ticker.timeLeft))
+		return max(0, start_at - world.time)
+	return timeLeft
+
+/datum/subsystem/ticker/proc/SetTimeLeft(newtime)
+	if(newtime >= 0 && isnull(timeLeft))	//remember, negative means delayed
+		start_at = world.time + newtime
+	else
+		timeLeft = newtime
+		
