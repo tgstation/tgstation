@@ -15,7 +15,7 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
