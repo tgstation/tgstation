@@ -158,7 +158,8 @@
 			if(reinf && (state == 2 || state == 1))
 				to_chat(user, (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>"))
 			else if(reinf && state == 0)
-				to_chat(user, (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>"))			else if(!reinf)
+				to_chat(user, (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>"))
+			else if(!reinf)
 				to_chat(user, (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>"))
 
 			if(do_after(user, 30*I.toolspeed, target = src))
