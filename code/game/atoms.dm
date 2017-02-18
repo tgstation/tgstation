@@ -30,6 +30,16 @@
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
+	//atom color stuff
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
+	//lighting stuff
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
+
+	if(luminosity)
+		light = new(src)
 
 	var/do_initialize = SSobj.initialized
 	if(do_initialize > INITIALIZATION_INSSOBJ)
@@ -50,17 +60,6 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
-
-	//atom color stuff
-	if(color)
-		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-
-	//lighting stuff
-	if(opacity && isturf(loc))
-		loc.UpdateAffectingLights()
-
-	if(luminosity)
-		light = new(src)
 
 /atom/Destroy()
 	if(alternate_appearances)
