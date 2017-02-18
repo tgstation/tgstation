@@ -175,7 +175,7 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-datum/design/mech_tesla
+/datum/design/mech_tesla
 	name = "Exosuit Weapon (MKI Tesla Cannon)"
 	desc = "Allows for the construction of MKI Tesla Cannon."
 	id = "mech_tesla"
