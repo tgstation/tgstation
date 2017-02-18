@@ -7,7 +7,7 @@
 	message_admins("[key_name_admin(usr)] is forcing a random map rotation.")
 	log_admin("[key_name(usr)] is forcing a random map rotation.")
 	ticker.maprotatechecked = 1
-	maprotate()
+	world.maprotate()
 
 /client/proc/adminchangemap()
 	set category = "Server"
@@ -40,5 +40,5 @@
 	var/datum/votablemap/VM = maprotatechoices[chosenmap]
 	message_admins("[key_name_admin(usr)] is changing the map to [VM.name]([VM.friendlyname])")
 	log_admin("[key_name(usr)] is changing the map to [VM.name]([VM.friendlyname])")
-	if (changemap(VM) == 0)
+	if (world.changemap(VM) == 0)
 		message_admins("[key_name_admin(usr)] has changed the map to [VM.name]([VM.friendlyname])")
