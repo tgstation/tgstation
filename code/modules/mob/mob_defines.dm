@@ -147,3 +147,5 @@
 
 	var/list/progressbars = null	//for stacking do_after bars
 	var/gravity_turn = 0
+	var/datum/riding/riding_datum
+	var/list/can_ride_typecache = list()

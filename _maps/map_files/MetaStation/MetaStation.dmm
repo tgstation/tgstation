@@ -20179,6 +20179,7 @@
 	icon_state = "2-4";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aIe" = (
@@ -21708,6 +21709,7 @@
 	icon_state = "2-8";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aKK" = (
@@ -90396,9 +90398,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/shuttle/auxillary_base{
-	pixel_y = 0
-	},
+/obj/machinery/computer/auxillary_base,
 /turf/closed/wall,
 /area/shuttle/auxillary_base)
 "cWh" = (
@@ -92984,6 +92984,7 @@
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbh" = (
@@ -93003,6 +93004,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbj" = (
@@ -94446,6 +94448,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
+"ddG" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/docking_port/stationary/public_mining_dock,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -106374,7 +106381,7 @@ cWg
 cVL
 cVL
 cVL
-cWJ
+ddG
 cWM
 cXR
 cYG
@@ -137719,7 +137726,7 @@ ayY
 aaf
 aBQ
 aaf
-aIb
+anS
 aCZ
 aCZ
 aCZ
@@ -137729,7 +137736,7 @@ aCZ
 aCZ
 aCZ
 aCZ
-aIb
+anS
 aaf
 cXz
 aaf
@@ -141060,17 +141067,17 @@ axY
 axY
 aaa
 cmq
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 cXd
 aaa
 axY
