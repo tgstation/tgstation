@@ -286,7 +286,14 @@
 				W.front_id = id
 				id.loc = worn
 				worn.update_icon()
-	new /datum/round_event/ion_storm(0, -1, "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law.")
+	var/datum/round_event/ion_storm/ion = new ()
+	ion.botEmagChance = 0
+	ion.announceEvent = -1
+	ion.ionMessage = "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law."
+	ion.replaceLawsetChance = 0
+	ion.removeRandomLawChance = 0
+	ion.removeDontImproveChance = 0
+
 	return ..()
 
 /obj/item/weapon/paper/contract/infernal/magic/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)

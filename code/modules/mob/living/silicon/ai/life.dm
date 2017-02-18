@@ -149,8 +149,6 @@
 				theAPC.ui_interact(src, state = conscious_state)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
-				src << "Here are your current laws:"
-				show_laws()
 		sleep(50)
 		theAPC = null
 
