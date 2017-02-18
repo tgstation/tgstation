@@ -829,7 +829,7 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	spawn(5)
 		if(playstyle_string)
-			src << playstyle_string
+			to_chat(src, playstyle_string)
 
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"

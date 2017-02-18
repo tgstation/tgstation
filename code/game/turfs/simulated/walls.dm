@@ -114,7 +114,7 @@
 		dismantle_wall(1)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		user << text("<span class='notice'>You punch the wall.</span>")
+		to_chat(user, "<span class='notice'>You punch the wall.</span>")
 	return 1
 
 /turf/closed/wall/attack_hand(mob/user)

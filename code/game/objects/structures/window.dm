@@ -156,34 +156,39 @@
 		if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(loc, I.usesound, 75, 1)
 			if(reinf && (state == 2 || state == 1))
-				user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>")
+				to_chat(user, (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>"))
 			else if(reinf && state == 0)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
-			else if(!reinf)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
+				to_chat(user, (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>"))			else if(!reinf)
+				to_chat(user, (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>"))
 
 			if(do_after(user, 30*I.toolspeed, target = src))
 				if(reinf && (state == 1 || state == 2))
 					//If state was unfastened, fasten it, else do the reverse
 					state = (state == 1 ? 2 : 1)
-					user << (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>")
+					to_chat(user, (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>"))
 				else if(reinf && state == 0)
 					anchored = !anchored
 					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
+					to_chat(user, (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>"))
 				else if(!reinf)
 					anchored = !anchored
 					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
+					to_chat(user, (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>"))
 			return
 
 		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
-			user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
+			var/msg = "<span class='notice'>You begin to lever the window into the frame...</span>"
+			if(state)
+				msg = "<span class='notice'>You begin to lever the window out of the frame...</span>"
+			to_chat(user, msg)
 			playsound(loc, I.usesound, 75, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
 				//If state was out of frame, put into frame, else do the reverse
 				state = (state == 0 ? 1 : 0)
-				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
+				var/msg = "<span class='notice'>You pry the window out of the frame.</span>"
+				if(state == 1)
+					msg = "<span class='notice'>You pry the window into the frame.</span>"
+				to_chat(user, msg)
 			return
 
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)

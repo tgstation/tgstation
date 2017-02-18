@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Flightsuits actually fly over people"
-  - bugfix: "Flightsuits don't interrupt pulls when you pass through doors"

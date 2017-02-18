@@ -48,7 +48,7 @@
 		id_tag = num2text(uid)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	A.air_vent_names -= id_tag
 	A.air_vent_info -= id_tag
 
@@ -165,7 +165,7 @@
 		"sigtype" = "status"
 	)
 
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	if(!A.air_vent_names[id_tag])
 		name = "\improper [A.name] vent pump #[A.air_vent_names.len + 1]"
 		A.air_vent_names[id_tag] = name

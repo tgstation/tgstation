@@ -207,7 +207,7 @@ var/next_external_rsc = 0
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
-
+	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	if (byond_version < config.client_error_version)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
 		to_chat(src, config.client_error_message)
@@ -296,7 +296,7 @@ var/next_external_rsc = 0
 
 	if(ckey in clientmessages)
 		for(var/message in clientmessages[ckey])
-			src << message
+			to_chat(src, message)
 		clientmessages.Remove(ckey)
 
 	if(config && config.autoconvert_notes)

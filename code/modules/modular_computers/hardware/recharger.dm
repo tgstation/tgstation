@@ -39,11 +39,11 @@
 
 	else
 		var/area/A = get_area(src)
-		if(!A || !isarea(A) || !A.master)
+		if(!istype(A))
 			return 0
 
-		if(A.master.powered(EQUIP))
-			A.master.use_power(amount, EQUIP)
+		if(A.powered(EQUIP))
+			A.use_power(amount, EQUIP)
 			return 1
 	return 0
 

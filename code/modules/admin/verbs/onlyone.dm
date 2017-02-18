@@ -70,8 +70,8 @@ var/highlander = FALSE
 	antiwelder.icon_state = "bloodhand_right"
 	put_in_hands(antiwelder)
 
-	src << "<span class='boldannounce'>Your [H1.name] cries out for blood. Join in the slaughter, lest you be claimed yourself...\n\
-	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>"
+	to_chat(src, "<span class='boldannounce'>Your [H1.name] cries out for blood. Join in the slaughter, lest you be claimed yourself...")
+	to_chat(src, "Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 /proc/only_me()
 	if(!ticker || !ticker.mode)

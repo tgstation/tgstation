@@ -286,7 +286,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		else if(isturf(target))
 			location = target
 		if(isliving(target) && message)
-			target << text("[message]")
+			to_chat(target, message)
 		if(sparks_spread)
 			var/datum/effect_system/spark_spread/sparks = new
 			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is

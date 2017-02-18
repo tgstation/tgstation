@@ -138,13 +138,13 @@
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(still_needs_components())
-			user << "<span class='big'><b>Components required until activation:</b></span>"
+			to_chat(user, "<span class='big'><b>Components required until activation:</b></span>")
 			for(var/i in required_components)
 				if(required_components[i])
 					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span>")
 					to_chat(user, "<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
-			user << "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>"
+			to_chat(user, "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>")
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
 					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")

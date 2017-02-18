@@ -73,7 +73,7 @@
 
 /obj/item/device/lightreplacer/examine(mob/user)
 	..()
-	user << status_string()
+	to_chat(user, status_string())
 
 /obj/item/device/lightreplacer/attackby(obj/item/W, mob/user, params)
 
@@ -152,7 +152,7 @@
 		Emag()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
-	user << status_string()
+	to_chat(user, status_string())
 
 /obj/item/device/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"

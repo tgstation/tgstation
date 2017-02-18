@@ -787,7 +787,7 @@ var/list/airlock_overlays = list()
 				if(5)
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
+						to_chat(usr, "Can't un-electrify the airlock - The electrification wire is cut.")
 					else if(src.secondsElectrified==-1)
 						src.secondsElectrified = 0
 					else if(src.secondsElectrified>0)
@@ -796,26 +796,26 @@ var/list/airlock_overlays = list()
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
 					if(wires.is_cut(WIRE_SAFETY))
-						usr << text("Control to door sensors is disabled.")
+						to_chat(usr, "Control to door sensors is disabled.")
 					else if (src.safe)
 						safe = 0
 					else
-						usr << text("Firmware reports safeties already overriden.")
+						to_chat(usr, "Firmware reports safeties already overriden.")
 
 				if(9)
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
-						usr << text("Control to door timing circuitry has been severed.")
+						to_chat(usr, "Control to door timing circuitry has been severed.")
 					else if (src.normalspeed)
 						normalspeed = 0
 					else
-						usr << text("Door timing circuitry already accelerated.")
+						to_chat(usr, "Door timing circuitry already accelerated.")
 				if(7)
 					//close door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!")
+						to_chat(usr, "The airlock has been welded shut!")
 					else if(src.locked)
-						usr << text("The door bolts are down!")
+						to_chat(usr, "The door bolts are down!")
 					else if(!src.density)
 						close()
 					else
@@ -824,12 +824,12 @@ var/list/airlock_overlays = list()
 				if(10)
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
-						usr << text("Control to door bolt lights has been severed.</a>")
+						to_chat(usr, "Control to door bolt lights has been severed.</a>")
 					else if (src.lights)
 						lights = 0
 						update_icon()
 					else
-						usr << text("Door bolt lights are already disabled!")
+						to_chat(usr, "Door bolt lights are already disabled!")
 
 				if(11)
 					// Emergency access
@@ -837,7 +837,7 @@ var/list/airlock_overlays = list()
 						emergency = 0
 						update_icon()
 					else
-						usr << text("Emergency access is already disabled!")
+						to_chat(usr, "Emergency access is already disabled!")
 
 
 		else if(href_list["aiEnable"])
@@ -854,23 +854,23 @@ var/list/airlock_overlays = list()
 				if(4)
 					//raise door bolts
 					if(wires.is_cut(WIRE_BOLTS))
-						usr << text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
+						to_chat(usr, "The door bolt drop wire is cut - you can't raise the door bolts.<br><br>")
 					else if(!src.locked)
-						usr << text("The door bolts are already up.<br>\n")
+						to_chat(usr, "The door bolts are already up.<br><br>")
 					else
 						if(src.hasPower())
 							unbolt()
 						else
-							usr << text("Cannot raise door bolts due to power failure.<br>\n")
+							to_chat(usr, "Cannot raise door bolts due to power failure.<br>\n")
 
 				if(5)
 					//electrify door for 30 seconds
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("The electrification wire has been cut.<br>\n")
+						to_chat(usr, "The electrification wire has been cut.<br>\n")
 					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n")
+						to_chat(usr, "The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n")
 					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
@@ -885,11 +885,11 @@ var/list/airlock_overlays = list()
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("The electrification wire has been cut.<br>\n")
+						to_chat(usr, "The electrification wire has been cut.<br>\n")
 					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified.<br>\n")
+						to_chat(usr, "The door is already indefinitely electrified.<br>\n")
 					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
@@ -898,29 +898,29 @@ var/list/airlock_overlays = list()
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
 					if(wires.is_cut(WIRE_SAFETY))
-						usr << text("Control to door sensors is disabled.")
+						to_chat(usr, "Control to door sensors is disabled.")
 					else if (!src.safe)
 						safe = 1
 						src.updateUsrDialog()
 					else
-						usr << text("Firmware reports safeties already in place.")
+						to_chat(usr, "Firmware reports safeties already in place.")
 
 				if(9)
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
-						usr << text("Control to door timing circuitry has been severed.")
+						to_chat(usr, "Control to door timing circuitry has been severed.")
 					else if (!src.normalspeed)
 						normalspeed = 1
 						src.updateUsrDialog()
 					else
-						usr << text("Door timing circuitry currently operating normally.")
+						to_chat(usr, "Door timing circuitry currently operating normally.")
 
 				if(7)
 					//open door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!")
+						to_chat(usr, "The airlock has been welded shut!")
 					else if(src.locked)
-						usr << text("The door bolts are down!")
+						to_chat(usr, "The door bolts are down!")
 					else if(src.density)
 						open()
 					else
@@ -928,20 +928,20 @@ var/list/airlock_overlays = list()
 				if(10)
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
-						usr << text("Control to door bolt lights has been severed.</a>")
+						to_chat(usr, "Control to door bolt lights has been severed.</a>")
 					else if (!src.lights)
 						lights = 1
 						update_icon()
 						src.updateUsrDialog()
 					else
-						usr << text("Door bolt lights are already enabled!")
+						to_chat(usr, "Door bolt lights are already enabled!")
 				if(11)
 					// Emergency access
 					if (!src.emergency)
 						emergency = 1
 						update_icon()
 					else
-						usr << text("Emergency access is already enabled!")
+						to_chat(usr, "Emergency access is already enabled!")
 
 	add_fingerprint(usr)
 	if(!nowindow)

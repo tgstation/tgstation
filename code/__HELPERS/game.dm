@@ -17,12 +17,6 @@
 	var/area/Y = get_area(X)
 	return Y.name
 
-/proc/get_area_master(O)
-	var/area/A = get_area(O)
-	if(A && A.master)
-		A = A.master
-	return A
-
 /proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
@@ -81,13 +75,13 @@
 	return heard
 
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
-	var/area/our_area = get_area_master(the_area)
+	var/area/our_area = get_area(the_area)
 	for(var/C in living_mob_list)
 		if(!istype(C, check_type))
 			continue
 		if(C == must_be_alone)
 			continue
-		if(our_area == get_area_master(C))
+		if(our_area == get_area(C))
 			return 0
 	return 1
 

@@ -98,7 +98,7 @@
 				C.setDir(src.dir)
 
 				C.network = tempnetwork
-				var/area/A = get_area_master(src)
+				var/area/A = get_area(src)
 				C.c_tag = "[A.name] ([rand(1, 999)])"
 
 

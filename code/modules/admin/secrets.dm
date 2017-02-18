@@ -596,4 +596,4 @@
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)
-			world << text("<B>A secret has been activated by []!</B>", usr.key)
+			to_chat(world, "<B>A secret has been activated by [usr.key]!</B>")

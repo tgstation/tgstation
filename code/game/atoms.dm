@@ -41,7 +41,7 @@
 	if(luminosity)
 		light = new(src)
 
-	var/do_initialize = SSobj.initialized
+	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSOBJ)
 		Initialize(do_initialize == INITIALIZATION_INNEW_MAPLOAD)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc

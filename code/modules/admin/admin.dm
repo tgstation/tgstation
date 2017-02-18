@@ -709,7 +709,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(istype(M) && M.mind && M.mind.devilinfo)
-		usr << ticker.mode.printdevilinfo(M.mind)
+		to_chat(usr, ticker.mode.printdevilinfo(M.mind))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
 

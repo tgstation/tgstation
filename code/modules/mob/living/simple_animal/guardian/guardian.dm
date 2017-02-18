@@ -122,7 +122,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	to_chat(src, "<span class='holoparasite'>You are <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>, bound to serve [summoner.real_name].</span>")
 	to_chat(src, "<span class='holoparasite'>You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there.</span>")
 	to_chat(src, "<span class='holoparasite'>While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself.</span>")
-	src << playstyle_string
+	to_chat(src, playstyle_string)
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	. = ..()
@@ -349,7 +349,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	set name = "Check Guardian Type"
 	set category = "Guardian"
 	set desc = "Check what type you are."
-	src << playstyle_string
+	to_chat(src, playstyle_string)
 
 //COMMUNICATION
 

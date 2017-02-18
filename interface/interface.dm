@@ -58,7 +58,7 @@
 			if(line)
 				if(first)
 					first = FALSE
-					message += ". The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:"	
+					message += ". The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:"
 				message += " <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
 		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
@@ -138,7 +138,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t3 = grab-intent
 \t4 = harm-intent
 \tNumpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
-\tAlt(HOLD) = Alter movement intent 
+\tAlt(HOLD) = Alter movement intent
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -172,8 +172,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+Numpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 
 /mob/living/silicon/robot/hotkey_help()
 	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
@@ -224,8 +224,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGDN = activate held object
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 
 // Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
 // Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)

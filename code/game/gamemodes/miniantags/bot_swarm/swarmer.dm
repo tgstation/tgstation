@@ -115,7 +115,7 @@
 
 /mob/living/simple_animal/hostile/swarmer/Login()
 	..()
-	src << login_text_dump
+	to_chat(src, login_text_dump)
 
 /mob/living/simple_animal/hostile/swarmer/New()
 	..()
@@ -463,13 +463,10 @@
 		return
 
 	if(z != ZLEVEL_STATION && z != ZLEVEL_LAVALAND)
-		src << "<span class='warning'>Our bluespace transceiver cannot \
-			locate a viable bluespace link, our teleportation abilities \
-			are useless in this area.</span>"
+		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>")
 		return
 
-	src << "<span class='info'>Attempting to remove this being from \
-		our presence.</span>"
+	to_chat(src, "<span class='info'>Attempting to remove this being from our presence.</span>")
 
 	if(!do_mob(src, target, 30))
 		return

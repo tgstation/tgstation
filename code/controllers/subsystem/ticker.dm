@@ -71,8 +71,8 @@ var/datum/subsystem/ticker/ticker
 		syndicate_code_response	= generate_code_phrase()
 	..()
 	start_at = world.time + (config.lobby_countdown * 10)
-	world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
-	world << "Please set up your character and select \"Ready\". The game will start in about [config.lobby_countdown] seconds."
+	to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+	to_chat(world, "Please set up your character and select \"Ready\". The game will start in about [config.lobby_countdown] seconds.")
 	current_state = GAME_STATE_PREGAME
 	for(var/client/C in clients)
 		window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.

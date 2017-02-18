@@ -521,13 +521,15 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				person = H
 		people += H
 	if(person) //Basic talk
-		target << target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans())
+		var/msg = target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans())
+		to_chat(target, msg)
 	else // Radio talk
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		target << target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans())
+		var/msg = target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans())
+		to_chat(target, msg)
 	qdel(src)
 
 /obj/effect/hallucination/message

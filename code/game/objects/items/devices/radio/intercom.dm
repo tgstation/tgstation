@@ -56,7 +56,7 @@
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
 
-		var/area/A = get_area_master(src)
+		var/area/A = get_area(src)
 		if(!A || emped)
 			on = 0
 		else

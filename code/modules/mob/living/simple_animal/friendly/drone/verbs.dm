@@ -10,7 +10,7 @@
 	set name = "Check Laws"
 
 	to_chat(src, "<b>Drone Laws</b>")
-	src << laws
+	to_chat(src, laws)
 
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
