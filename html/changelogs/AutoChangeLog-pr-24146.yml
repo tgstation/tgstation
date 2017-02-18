@@ -1,9 +1,0 @@
-author: "Gun Hog"
-delete-after: True
-changes: 
-  - rscadd: "The Aux Base console now controls turrets made by the construction console."
-  - rscadd: "The Aux Base may now be dropped at a random location if miners fail to use the landing remote."
-  - rscadd: "The mining shuttle may now dock at the Aux Base's spot once the base is dropped."
-  - tweak: "Removed access levels on the mining shuttle so it can be used at the public dock."
-  - tweak: "The Aux Base's turrets now fire through glass. Reminder that the turrets need to be installed outside the base for full damage."
-  - rscadd: "Added a base construction console to Delta Station."
