@@ -42,7 +42,8 @@ var/list/admin_verbs_debug_mapping = list(
 	/client/proc/print_pointers,
 	/client/proc/cmd_show_at_list,
 	/client/proc/cmd_show_at_list,
-	/client/proc/manipulate_organs
+	/client/proc/manipulate_organs,
+	/client/proc/emergency_gravity_reset
 )
 
 /obj/effect/debugging/mapfix_marker
@@ -176,6 +177,14 @@ var/list/admin_verbs_debug_mapping = list(
 	verbs.Remove(/client/proc/disable_debug_verbs, admin_verbs_debug_mapping)
 	verbs += /client/proc/enable_debug_verbs
 	feedback_add_details("admin_verb", "mDVD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/emergency_gravity_reset()
+	set category = "Debug"
+	set name = "Reset all gravity in world"
+	feedback_add_details("admin_verb", "EGR")
+	var/yes = input("Are you absolutely sure? This will cycle through ALL turfs and areas and cause huge amounts of lag!", "WARNING") as null|anything in list("YES I KNOW WHAT I'M DOING", "NO STOP THIS MADNESS")
+	if(yes == "YES I KNOW WHAT I'M DOING")
+		reset_world_gravity()
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"

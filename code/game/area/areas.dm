@@ -460,7 +460,7 @@ var/list/teleportlocs = list()
 			contents_affected_by_gravity -= AM
 
 /area/Entered(A)
-	if(istype(A, /atom/movable))
+	if(istype(A, /atom/movable) && !legacy_gravity)
 		var/atom/movable/AM = A
 		if(AM.is_affected_by_gravity)
 			update_gravity(AM, TRUE)
@@ -496,9 +496,9 @@ var/list/teleportlocs = list()
 	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	else if(A && (A.has_gravity || A.gravity_generator)) // Areas which always has gravity
+	else if(A && (A.has_gravity || A.gravity_generator))
 		return 1
-	else
+	if(legacy_gravity)
 		// There's a gravity generator on our z level
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
@@ -514,6 +514,45 @@ var/list/teleportlocs = list()
 	blob_allowed = 0
 	addSorted()
 
+/proc/reset_world_gravity()
+	reset_all_turf_gravity()
+	reset_all_area_gravity()
+
+/proc/reset_all_turf_gravity()
+	for(var/turf/open/T in world)
+		T.turf_gravity_overrides_area = FALSE
+		T.turf_gravity_strength = FALSE
+		T.turf_gravity_direction = FALSE
+		T.turf_gravity_throwing = FALSE
+		T.turf_gravity_stunning = FALSE
+		T.turf_gravity_override = FALSE
+		for(var/atom/movable/AM in T.atoms_with_forced_gravity)
+			T.reset_forced_gravity_atom(AM)
+			CHECK_TICK
+		CHECK_TICK
+
+/proc/reset_all_area_gravity()
+	for(var/area/A in world)
+		A.gravity_generator = FALSE
+		A.gravity_overriding = FALSE
+		A.has_gravity = initial(A.has_gravity)
+		CHECK_TICK
+	resync_gravgen_areas()
+
+/proc/resync_gravgen_areas()
+	for(var/area/A in world)
+		A.gravity_generator = FALSE
+		CHECK_TICK
+	for(var/obj/machinery/gravity_generator/main/GG in gravity_generators)
+		if(GG.on)
+			for(var/area/A in world)
+				if(A.z == GG.z)
+					A.gravity_generator = TRUE
+					A.gravity_direction = GG.current_grav_dir
+				CHECK_TICK
+		CHECK_TICK
+
 /area/Exited(atom/movable/AM, newloc)
 	. = ..(AM, newloc)
-	update_gravity(AM, FALSE)
+	if(!legacy_gravity)
+		update_gravity(AM, FALSE)

@@ -1,4 +1,5 @@
 var/datum/subsystem/gravity/SSgravity
+var/global/legacy_gravity = FALSE
 
 /datum/subsystem/gravity
 	name = "Gravity"
@@ -43,6 +44,9 @@ var/datum/subsystem/gravity/SSgravity
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
 	if(!resumed)
+		if(legacy_gravity)
+			can_fire = FALSE
+			return FALSE
 		purging = FALSE
 		purge_tick++
 		recalculate_atoms()

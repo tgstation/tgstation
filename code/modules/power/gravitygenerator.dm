@@ -27,8 +27,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	use_power = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
-	var/current_grav_dir = FALSE
-	var/new_grav_dir = FALSE
 	is_affected_by_gravity = FALSE
 
 /obj/machinery/gravity_generator/throw_at()
@@ -104,7 +102,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	..()
 	setup_parts()
 	middle.add_overlay("activated")
-	update_list()
+	if(legacy_gravity)
+		update_list()
+	else
+		resync_gravgen_areas()
 
 //
 // Generator an admin can spawn
@@ -133,6 +134,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/current_overlay = null
 	var/broken_state = 0
 	var/grav_dir = FALSE
+	var/current_grav_dir = FALSE
+	var/new_grav_dir = FALSE
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
@@ -343,21 +346,11 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			alert = 1
 			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
 			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-	if(!on)
-		for(var/area/A in world)
-			if(A.z == z)
-				A.gravity_direction = FALSE
-				A.update_all_gravity()
-	else
-		for(var/area/A in world)
-			if(A.z == z)
-				A.gravity_direction = new_grav_dir
-				A.gravity_stunning = 5
-				A.gravity_throwing = 20
-				A.update_all_gravity()
 	current_grav_dir = new_grav_dir
 	update_icon()
-	update_list()
+	if(legacy_gravity)
+		update_list()
+	resync_gravgen_areas()
 	src.updateUsrDialog()
 	if(alert)
 		shake_everyone()

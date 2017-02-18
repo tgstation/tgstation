@@ -68,6 +68,8 @@ var/global/list/atoms_forced_gravity_processing = list()
 	gravity_act()
 
 /atom/movable/proc/sync_gravity()
+	if(legacy_gravity)
+		return FALSE
 	if(gravity_ignores_area)
 		return FALSE
 	var/area/A = get_area(src)
