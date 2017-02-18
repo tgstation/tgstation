@@ -154,6 +154,13 @@
 	SSobj.processing -= src
 	return ..()
 
+/obj/structure/destructible/clockwork/powered/ratvar_act()
+	..()
+	if(nezbere_invoked)
+		needs_power = FALSE
+	else
+		needs_power = initial(needs_power)
+
 /obj/structure/destructible/clockwork/powered/process()
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define

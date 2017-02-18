@@ -12,7 +12,8 @@ var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = 
 var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
 var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
-var/global/ratvar_awakens = 0 //If Ratvar has been summoned; not a boolean, for proper handling of multiple ratvars
+var/global/ratvar_awakens = 0 //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
+var/global/nezbere_invoked = 0 //If Nezbere has been invoked; not a boolean, for proper handling of multiple Nezberes
 var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
 var/global/list/all_scripture = list() //a list containing scripture instances; not used to track existing scripture
 
