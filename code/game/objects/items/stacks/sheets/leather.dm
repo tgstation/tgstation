@@ -155,6 +155,19 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
+/obj/item/stack/sheet/animalhide/goliath_hide_chunk
+	name = "goliath hide chunks"
+	desc = "Pieces of a goliath's rocky hide. Too small to use in reiforcement, but remarkably flexible."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_hide_chunk"
+	singular_name = "hide chunk"
+	flags = NOBLUDGEON
+	w_class = WEIGHT_CLASS_SMALL
+	layer = MOB_LAYER
+
+/obj/item/stack/sheet/animalhide/goliath_hide_chunk/three
+	amount = 3
+
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
 	desc = "The strong, scaled hide of an ash drake."

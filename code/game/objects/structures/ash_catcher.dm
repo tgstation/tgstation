@@ -8,10 +8,10 @@
 //If the catchers are too heavy and collect too much ash, they will collapse and allow ash storms through.
 /obj/structure/ash_catcher
 	name = "ash catcher"
-	desc = "A sheet of goliath's hide stretched over four metal rods."
+	desc = "A sheet of goliath's hide stretched over four prongs."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "ash_catcher_intact"
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = ABOVE_MOB_LAYER
 	obj_integrity = 50
 	max_integrity = 50
 	anchored = TRUE
@@ -19,6 +19,16 @@
 	opacity = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/ash_caught = 0 //How much ash we're holding
+
+/obj/structure/ash_catcher/Crossed(atom/movable/A)
+	if(isliving(A))
+		alpha = 127 //Dynamic alpha when crossed!
+	..()
+
+/obj/structure/ash_catcher/Uncrossed(atom/movable/A)
+	if(isliving(A))
+		alpha = initial(alpha)
+	..()
 
 /obj/structure/ash_catcher/examine(mob/user)
 	..()
@@ -34,8 +44,9 @@
 
 /obj/structure/ash_catcher/process()
 	handle_ash()
-	for(var/datum/weather/ash_storm/A in SSweather.processing) //Yes, even emberfall!
-		adjust_ash(1)
+	if(istype(loc, /turf/open/floor/plating/asteroid))
+		for(var/datum/weather/ash_storm/A in SSweather.processing) //Yes, even emberfall!
+			adjust_ash(1)
 
 /obj/structure/ash_catcher/proc/adjust_ash(amt) //Adds or removes ash from catcher.
 	ash_caught = min(max(0, ash_caught + amt), ASH_CATCHER_COLLAPSE)
@@ -61,13 +72,13 @@
 
 /obj/structure/ash_catcher/attack_hand(mob/living/user)
 	if(user.a_intent == "help")
-		user.visible_message("<span class='notice'>[user] starts clearing the ash out of [src]...</span>", "<span class='notice'>You start clearing [src]'s caught ash...</span>")
+		user.visible_message("<span class='notice'>[user] starts clearing the ash out of [src]...</span>", "<span class='notice'>You start clearing out [src]...</span>")
 		playsound(user, 'sound/effects/shovel_dig.ogg', 50, 1)
 		if(!do_after(user, 50, target = src))
 			return
 		user.visible_message("<span class='notice'>[user] clears out [src]!</span>", "<span class='notice'>You clear out the ash.</span>")
 		playsound(user, 'sound/effects/shovel_dig.ogg', 50, 1)
-		adjust_ash(ash_caught)
+		adjust_ash(-ash_caught)
 		handle_ash()
 		return 1
 	else if(user.a_intent == "disarm")
@@ -95,13 +106,13 @@
 	throw_speed = 1
 
 /obj/item/ash_catcher/attack_self(mob/living/user)
-	var/turf/open/floor/plating/asteroid/basalt/lava_land_surface/L = get_turf(user)
+	var/turf/open/floor/plating/asteroid/L = get_turf(user)
 	if(!istype(L))
 		user << "<span class='warning'>You can't set up [src] here!</span>"
 		return
 	user.visible_message("<span class='notice'>[user] starts setting up [src]...</span>", "<span class='notice'>You start driving the spikes into the earth...</span>")
 	playsound(user, 'sound/effects/break_stone.ogg', 50, 1)
-	if(!do_after(user, 75, target = user))
+	if(!do_after(user, 40, target = user))
 		return
 	user.visible_message("<span class='notice'>[user] sets up [src]!</span>", "<span class='notice'>You set up [src]!</span>")
 	playsound(user, 'sound/items/Deconstruct.ogg', 50, 1)
