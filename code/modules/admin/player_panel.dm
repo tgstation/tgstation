@@ -346,6 +346,7 @@
 		var/living_players = 0
 		var/living_players_connected = 0
 		var/living_players_antagonist = 0
+		var/brains = 0
 		var/other_players = 0
 		for(var/mob/M in mob_list)
 			if(M.ckey)
@@ -362,11 +363,13 @@
 					observers++
 					if(M.client)
 						observers_connected++
+				else if(isbrain(M))
+					brains++
 				else
 					other_players++
 		dat += "<BR><b><font color='blue' size='3'>Players:|[connected_players - lobby_players] ingame|[connected_players] connected|[lobby_players] lobby|</font></b>"
 		dat += "<BR><b><font color='green'>Living Players:|[living_players_connected] active|[living_players - living_players_connected] disconnected|[living_players_antagonist] antagonists|</font></b>"
-		dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|</font></b>"
+		dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 		if(other_players)
 			dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
 		dat += "<BR>"

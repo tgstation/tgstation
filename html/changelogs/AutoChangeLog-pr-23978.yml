@@ -1,0 +1,6 @@
+author: "TrustyGun"
+delete-after: True
+changes: 
+  - rscadd: "Traitor mimes can now learn two new spells for 15 tc."
+  - rscadd: "The first, Invisible Blockade, creates a 3x1 invisible wall."
+  - rscadd: "The second, Finger Guns, allows them to shoot bullets out of their fingers."

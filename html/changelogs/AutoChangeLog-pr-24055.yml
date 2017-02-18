@@ -1,5 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - bugfix: "[Delta] Fixes space cleaner being empty in brig medbay"
-  - bugfix: "[Delta] Fixes some areas that are not radiation proof"

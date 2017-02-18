@@ -720,7 +720,7 @@
 	icon_state = "1-4"
 	},
 /mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "Powered by tears and swet of laborer.";
+	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
 /turf/open/floor/plasteel{
@@ -1297,11 +1297,11 @@
 	id = "mining_internal"
 	},
 /obj/structure/plasticflaps,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "cG" = (
@@ -1309,12 +1309,12 @@
 	dir = 8;
 	id = "mining_internal"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating{
 	tag = "icon-warnplate (NORTH)";
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/mine/production)
 "cH" = (
@@ -1333,12 +1333,12 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	tag = "icon-warnplatecorner (EAST)";
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
 	},
 /area/mine/production)
 "cJ" = (
@@ -2151,10 +2151,10 @@
 	frequency = 1439;
 	pixel_y = 23
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/obj/effect/turf_decal/bot,
 /area/mine/production)
 "eu" = (
 /obj/structure/extinguisher_cabinet{
@@ -2173,16 +2173,16 @@
 /area/mine/production)
 "ev" = (
 /obj/structure/ore_box,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/obj/effect/turf_decal/bot,
 /area/mine/production)
 "ew" = (
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/obj/effect/turf_decal/bot,
 /area/mine/production)
 "ex" = (
 /obj/structure/cable{
@@ -2318,10 +2318,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "eM" = (
 /obj/structure/cable{
@@ -2451,10 +2451,10 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/obj/effect/turf_decal/bot,
 /area/mine/production)
 "eX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -2488,11 +2488,11 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "fa" = (
@@ -2572,12 +2572,12 @@
 	dir = 2;
 	id = "mining_internal"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plating{
 	tag = "icon-warnplate (WEST)";
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /area/mine/production)
 "fj" = (
@@ -2678,11 +2678,11 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "fv" = (
@@ -2765,10 +2765,10 @@
 	},
 /area/mine/laborcamp)
 "fF" = (
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/obj/effect/turf_decal/delivery,
 /area/mine/laborcamp)
 "fG" = (
 /obj/machinery/mineral/processing_unit{
@@ -12288,7 +12288,7 @@ fK
 fK
 fK
 dq
-fP
+dq
 fL
 fK
 dq

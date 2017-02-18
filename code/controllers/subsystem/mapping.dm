@@ -2,7 +2,7 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping
 	name = "Mapping"
-	init_order = 13
+	init_order = 12
 	flags = SS_NO_FIRE
 	display_order = 50
 
@@ -25,8 +25,6 @@ var/datum/subsystem/mapping/SSmapping
 	if (mining_type == "lavaland")
 		seedRuins(list(5), config.lavaland_budget, /area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()
-	else
-		make_mining_asteroid_secrets()
 
 	// deep space ruins
 	var/space_zlevels = list()
