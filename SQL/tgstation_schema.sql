@@ -135,6 +135,8 @@ CREATE TABLE `death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` text NOT NULL COMMENT 'Place of death',
   `coord` text NOT NULL COMMENT 'X, Y, Z POD',
+  `mapname` text NOT NULL,
+  `server` text NOT NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` text NOT NULL,
   `special` text NOT NULL,
@@ -147,6 +149,7 @@ CREATE TABLE `death` (
   `brainloss` int(11) NOT NULL,
   `fireloss` int(11) NOT NULL,
   `oxyloss` int(11) NOT NULL,
+  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -311,69 +314,38 @@ CREATE TABLE `poll_vote` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `watch`
+-- Table structure for table `ipintel`
 --
-
-DROP TABLE IF EXISTS `watch`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `watch` (
-  `ckey` varchar(32) NOT NULL,
-  `reason` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `adminckey` varchar(32) NOT NULL,
-  `last_editor` varchar(32),
-  `edits` text,
-  PRIMARY KEY (`ckey`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `memo`
---
-
-DROP TABLE IF EXISTS `memo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `memo` (
-  `ckey` varchar(32) NOT NULL,
-  `memotext` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `last_editor` varchar(32),
-  `edits` text,
-  PRIMARY KEY (`ckey`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `notes`
---
-
-DROP TABLE IF EXISTS `notes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ckey` varchar(32) NOT NULL,
-  `notetext` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `adminckey` varchar(32) NOT NULL,
-  `last_editor` varchar(32),
-  `edits` text,
-  `server` varchar(50) NOT NULL,
-  `secret` tinyint(1) NOT NULL DEFAULT  '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 DROP TABLE IF EXISTS `ipintel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE  `ipintel` (
+CREATE TABLE `ipintel` (
 `ip` INT UNSIGNED NOT NULL ,
 `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ,
 `intel` REAL NOT NULL DEFAULT  '0',
 PRIMARY KEY (  `ip` )
 ) ENGINE = INNODB;
 /*!40101 SET character_set_client = @saved_cs_client */;
--- Dump completed on 2013-03-24 18:02:35
+
+--
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT ,
+  `type` varchar(32) NOT NULL ,
+  `targetckey` varchar(32) NOT NULL ,
+  `adminckey` varchar(32) NOT NULL ,
+  `text` text NOT NULL ,
+  `timestamp` datetime NOT NULL ,
+  `server` varchar(32) NULL ,
+  `secret` tinyint(1) NULL DEFAULT 1 ,
+  `lasteditor` varchar(32) NULL ,
+  `edits` text NULL ,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;

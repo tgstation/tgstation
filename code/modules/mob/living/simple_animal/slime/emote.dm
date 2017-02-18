@@ -23,7 +23,8 @@
 	message = "vibrates!"
 
 /datum/emote/slime/mood
-	var/mood
+	key = "moodnone"
+	var/mood = null
 
 /datum/emote/slime/mood/run_emote(mob/user, params)
 	. = ..()
@@ -31,30 +32,26 @@
 	S.mood = mood
 	S.regenerate_icons()
 
-/datum/emote/slime/mood/noface
-	key = "noface"
-	mood = null
-
-/datum/emote/slime/mood/smile
-	key = "smile"
-	key_third_person = "smiles"
+/datum/emote/slime/mood/sneaky
+	key = "moodsneaky"
 	mood = "mischevous"
 
-/datum/emote/slime/mood/kiss
-	key = ":3"
+/datum/emote/slime/mood/smile
+	key = "moodsmile"
+	mood = ":3"
+
+/datum/emote/slime/mood/cat
+	key = "moodcat"
 	mood = ":33"
 
 /datum/emote/slime/mood/pout
-	key = "pout"
-	key_third_person = "pouts"
+	key = "moodpout"
 	mood = "pout"
 
-/datum/emote/slime/mood/frown
-	key = "frown"
-	key_third_person = "frowns"
+/datum/emote/slime/mood/sad
+	key = "moodsad"
 	mood = "sad"
 
-/datum/emote/slime/mood/scowl
-	key = "scowl"
-	key_third_person = "scowls"
+/datum/emote/slime/mood/angry
+	key = "moodangry"
 	mood = "angry"

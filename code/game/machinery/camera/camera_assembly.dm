@@ -31,6 +31,12 @@
 	if(building)
 		setDir(ndir)
 
+/obj/structure/camera_assembly/Destroy()
+	for(var/I in upgrades)
+		qdel(I)
+	upgrades.Cut()
+	return ..()
+
 /obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
 		if(1)
@@ -92,7 +98,7 @@
 				C.setDir(src.dir)
 
 				C.network = tempnetwork
-				var/area/A = get_area_master(src)
+				var/area/A = get_area(src)
 				C.c_tag = "[A.name] ([rand(1, 999)])"
 
 

@@ -237,7 +237,10 @@
 		areaInstance = null
 	. = ..()
 
-/obj/docking_port/mobile/initialize()
+/obj/docking_port/mobile/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -342,6 +345,8 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
+	if(SSshuttle.lockdown && z == ZLEVEL_STATION)	//emp went off, no escape
+		return
 	previous = null
 //		if(!destination)
 //			return
@@ -391,7 +396,7 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
+		ripples += new /obj/effect/overlay/temp/ripple(t)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -694,4 +699,13 @@
 		else
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+
+
+// attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
+/obj/docking_port/mobile/proc/getControlConsole()
+	for(var/obj/machinery/computer/shuttle/S in areaInstance)
+		if(S.shuttleId == id)
+			return S
+	return null
+
 #undef DOCKING_PORT_HIGHLIGHT

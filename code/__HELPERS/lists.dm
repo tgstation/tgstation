@@ -67,6 +67,24 @@
 		return 0
 	return L[A.type]
 
+//Checks for a string in a list
+/proc/is_string_in_list(string, list/L)
+	if(!L || !L.len || !string)
+		return
+	for(var/V in L)
+		if(string == V)
+			return 1
+	return
+
+//Removes a string from a list
+/proc/remove_strings_from_list(string, list/L)
+	if(!L || !L.len || !string)
+		return
+	for(var/V in L)
+		if(V == string)
+			L -= V //No return here so that it removes all strings of that type
+	return
+
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
@@ -76,9 +94,13 @@
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
-/proc/typecacheof(path, ignore_root_path)
+/proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
-		var/list/types = ignore_root_path ? subtypesof(path) : typesof(path)
+		var/list/types = list()
+		if(only_root_path)
+			types = list(path)
+		else
+			types = ignore_root_path ? subtypesof(path) : typesof(path)
 		var/list/L = list()
 		for(var/T in types)
 			L[T] = TRUE
@@ -92,8 +114,11 @@
 					L[T] = TRUE
 		else
 			for(var/P in pathlist)
-				for(var/T in typesof(P))
-					L[T] = TRUE
+				if(only_root_path)
+					L[P] = TRUE
+				else
+					for(var/T in typesof(P))
+						L[T] = TRUE
 		return L
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
@@ -405,6 +430,18 @@
 		if(islist(.[i]))
 			.[i] = .(.[i])
 
+//takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
+//use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
+/proc/avoid_assoc_duplicate_keys(input_key, list/used_key_list)
+	if(!input_key || !istype(used_key_list))
+		return
+	if(used_key_list[input_key])
+		used_key_list[input_key]++
+		input_key = "[input_key] ([used_key_list[input_key]])"
+	else
+		used_key_list[input_key] = 1
+	return input_key
+
 #if DM_VERSION > 512
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
@@ -428,3 +465,4 @@
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
 #define LAZYLEN(L) length(L)
+#define LAZYCLEARLIST(L) if(L) L.Cut()

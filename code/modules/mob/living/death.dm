@@ -49,7 +49,7 @@
 	timeofdeath = world.time
 	tod = worldtime2text()
 	var/turf/T = get_turf(src)
-	if(mind && mind.name && mind.active && (T.z != ZLEVEL_CENTCOM))
+	if(mind && mind.name && mind.active && (!(T.flags & NO_DEATHRATTLE)))
 		var/area/A = get_area(T)
 		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[A.name]</b>.</span>"
 		deadchat_broadcast(rendered, follow_target = src, message_type=DEADCHAT_DEATHRATTLE)
@@ -72,4 +72,12 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+
+	for(var/s in ownedSoullinks)
+		var/datum/soullink/S = s
+		S.ownerDies(gibbed)
+	for(var/s in sharedSoullinks)
+		var/datum/soullink/S = s
+		S.sharerDies(gibbed)
+
 	return TRUE

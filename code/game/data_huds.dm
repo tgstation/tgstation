@@ -45,7 +45,7 @@
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
-	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD)
+	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -223,7 +223,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	var/perpname = get_face_name(get_id_name(""))
-	if(perpname)
+	if(perpname && data_core)
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
 		if(R)
 			switch(R.fields["criminal"])
@@ -325,6 +325,19 @@
 	holder.icon_state = null
 	if(internal_damage)
 		holder.icon_state = "hudwarn"
+
+/obj/mecha/proc/diag_hud_set_mechtracking() //Shows tracking beacons on the mech
+	var/image/holder = hud_list[DIAG_TRACK_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	var/new_icon_state //This var exists so that the holder's icon state is set only once in the event of multiple mech beacons.
+	for(var/obj/item/mecha_parts/mecha_tracking/T in trackers)
+		if(T.ai_beacon) //Beacon with AI uplink
+			new_icon_state = "hudtrackingai"
+			break //Immediately terminate upon finding an AI beacon to ensure it is always shown over the normal one, as mechs can have several trackers.
+		else
+			new_icon_state = "hudtracking"
+	holder.icon_state = new_icon_state
 
 /*~~~~~~~~~
 	Bots!

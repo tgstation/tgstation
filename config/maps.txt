@@ -25,11 +25,6 @@ map metastation
 	#voteweight 0.5
 endmap
 
-map birdstation
-	friendlyname Bird Boat Station
-	maxplayers 35
-endmap
-
 map pubbystation
 	friendlyname Pubby Station
 endmap

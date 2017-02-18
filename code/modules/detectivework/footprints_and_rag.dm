@@ -12,7 +12,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
-	flags = OPENCONTAINER | NOBLUDGEON
+	flags = NOBLUDGEON
+	container_type = OPENCONTAINER
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5

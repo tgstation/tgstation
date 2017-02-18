@@ -8,31 +8,31 @@
 		. *= 2
 
 /datum/export/organ/alien/brain
-	cost = 2000
+	cost = 5000
 	unit_name = "alien brain"
 	export_types = list(/obj/item/organ/brain/alien)
 
 /datum/export/organ/alien/acid
-	cost = 1500
+	cost = 5000
 	unit_name = "alien acid gland"
 	export_types = list(/obj/item/organ/alien/acid)
 
 /datum/export/organ/alien/hivenode
-	cost = 2000
+	cost = 5000
 	unit_name = "alien hive node"
 	export_types = list(/obj/item/organ/alien/hivenode)
 
 /datum/export/organ/alien/neurotoxin
-	cost = 2000
+	cost = 5000
 	unit_name = "alien neurotoxin gland"
 	export_types = list(/obj/item/organ/alien/neurotoxin)
 
 /datum/export/organ/alien/resinspinner
-	cost = 1000
+	cost = 5000
 	unit_name = "alien resin spinner"
 
 /datum/export/organ/alien/plasmavessel
-	cost = 1000
+	cost = 5000
 	unit_name = "alien plasma vessel"
 	export_types = list(/obj/item/organ/alien/plasmavessel)
 

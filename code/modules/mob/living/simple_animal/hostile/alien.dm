@@ -2,8 +2,8 @@
 	name = "alien hunter"
 	desc = "Hiss!"
 	icon = 'icons/mob/alien.dmi'
-	icon_state = "alienh_s"
-	icon_living = "alienh_s"
+	icon_state = "alienh"
+	icon_living = "alienh"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
@@ -38,8 +38,8 @@
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
-	icon_state = "aliend_s"
-	icon_living = "aliend_s"
+	icon_state = "aliend"
+	icon_living = "aliend"
 	icon_dead = "aliend_dead"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -57,8 +57,8 @@
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
-	icon_state = "aliens_s"
-	icon_living = "aliens_s"
+	icon_state = "aliens"
+	icon_living = "aliens"
 	icon_dead = "aliens_dead"
 	health = 150
 	maxHealth = 150
@@ -73,8 +73,8 @@
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"
-	icon_state = "alienq_s"
-	icon_living = "alienq_s"
+	icon_state = "alienq"
+	icon_living = "alienq"
 	icon_dead = "alienq_dead"
 	health = 250
 	maxHealth = 250

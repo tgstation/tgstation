@@ -129,72 +129,9 @@
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	if(!dna || !dna.species.handle_fire(src))
-		..()
-	if(on_fire)
-
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = list()
-		//HEAD//
-		var/obj/item/clothing/head_clothes = null
-		if(glasses)
-			head_clothes = glasses
-		if(wear_mask)
-			head_clothes = wear_mask
-		if(wear_neck)
-			head_clothes = wear_neck
-		if(head)
-			head_clothes = head
-		if(head_clothes)
-			burning_items += head_clothes
-		else if(ears)
-			burning_items += ears
-
-		//CHEST//
-		var/obj/item/clothing/chest_clothes = null
-		if(w_uniform)
-			chest_clothes = w_uniform
-		if(wear_suit)
-			chest_clothes = wear_suit
-
-		if(chest_clothes)
-			burning_items += chest_clothes
-
-		//ARMS & HANDS//
-		var/obj/item/clothing/arm_clothes = null
-		if(gloves)
-			arm_clothes = gloves
-		if(w_uniform && ((w_uniform.body_parts_covered & HANDS) || (w_uniform.body_parts_covered & ARMS)))
-			arm_clothes = w_uniform
-		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
-			arm_clothes = wear_suit
-		if(arm_clothes)
-			burning_items += arm_clothes
-
-		//LEGS & FEET//
-		var/obj/item/clothing/leg_clothes = null
-		if(shoes)
-			leg_clothes = shoes
-		if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (w_uniform.body_parts_covered & LEGS)))
-			leg_clothes = w_uniform
-		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
-			leg_clothes = wear_suit
-		if(leg_clothes)
-			burning_items += leg_clothes
-
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			if(!(I.resistance_flags & FIRE_PROOF))
-				I.take_damage(fire_stacks, BURN, "fire", 0)
-
-		var/thermal_protection = get_thermal_protection()
-
-		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-			return
-		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			bodytemperature += 11
-		else
-			bodytemperature += (BODYTEMP_HEATING_MAX + (fire_stacks * 12))
+	..()
+	if(dna)
+		dna.species.handle_fire(src)
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures

@@ -45,7 +45,7 @@
 			show_to(M)
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 
@@ -54,12 +54,9 @@
 
 			playsound(loc, "rustle", 50, 1, -5)
 
-
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.unEquip(src))
-					return
-				M.put_in_hand(src,H.held_index)
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 			add_fingerprint(usr)
 
@@ -303,13 +300,14 @@
 	if(!istype(W))
 		return 0
 	if(usr)
-		if(!usr.unEquip(W))
+		if(!usr.transferItemToLoc(W, src))
 			return 0
+	else
+		W.forceMove(src)
 	if(silent)
 		prevent_warning = 1
 	if(W.pulledby)
 		W.pulledby.stop_pulling()
-	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
 		if(usr.client && usr.s_active != src)
@@ -359,7 +357,7 @@
 		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.plane = initial(W.plane)
-	W.loc = new_location
+	W.forceMove(new_location)
 
 	for(var/mob/M in can_see_contents())
 		orient2hud(M)
@@ -392,7 +390,7 @@
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
-		return
+		return 0
 
 	handle_item_insertion(W, 0 , user)
 
@@ -524,7 +522,7 @@
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)
 		usr = null
-		remove_from_storage(A, loc)
+		remove_from_storage(A, null)
 
 /obj/item/weapon/storage/contents_explosion(severity, target)
 	for(var/atom/A in contents)

@@ -1,3 +1,38 @@
+30 January 2017, by Lzimann
+
+Modified table 'death', adding the columns 'mapname' and 'server'.
+
+ALTER TABLE `death` ADD COLUMN `mapname` TEXT NOT NULL AFTER `coord`, ADD COLUMN `server` TEXT NOT NULL AFTER `mapname`
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
+25 January 2017, by Jordie0608
+
+Created table 'messages' to supersede the 'notes', 'memos', and 'watchlist' tables; they must be collated into this new table
+
+To create this new table run the following command:
+
+CREATE  TABLE `feedback`.`messages` (`id` INT(11) NOT NULL AUTO_INCREMENT , `type` VARCHAR(32) NOT NULL , `targetckey` VARCHAR(32) NOT NULL , `adminckey` VARCHAR(32) NOT NULL , `text` TEXT NOT NULL , `timestamp` DATETIME NOT NULL , `server` VARCHAR(32) NULL , `secret` TINYINT(1) NULL DEFAULT 1 , `lasteditor` VARCHAR(32) NULL , `edits` TEXT NULL , PRIMARY KEY (`id`) )
+
+To copy the contents of the 'notes', 'memos', and 'watchlist' tables to this new table run the following commands:
+
+INSERT INTO `feedback`.`messages`
+(`id`,`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`server`,`secret`,`lasteditor`,`edits`) SELECT `id`, "note", `ckey`, `adminckey`, `notetext`, `timestamp`, `server`, `secret`, `last_editor`, `edits` FROM `feedback`.`notes`
+
+INSERT INTO `feedback`.`messages`
+(`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`lasteditor`,`edits`) SELECT "memo", `ckey`, `ckey`, `memotext`, `timestamp`, `last_editor`, `edits` FROM `feedback`.`memo`
+
+INSERT INTO `feedback`.`messages`
+(`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`lasteditor`,`edits`) SELECT "watchlist entry", `ckey`, `adminckey`, `reason`, `timestamp`, `last_editor`, `edits` FROM `feedback`.`watch`
+
+It's not necessary to delete the 'notes', 'memos', and 'watchlist' tables but they will no longer be used.
+
+Remember to add a prefix to the table names if you use them
+
+----------------------------------------------------
+
 1 September 2016, by Jordie0608
 
 Modified table 'notes', adding column 'secret'.

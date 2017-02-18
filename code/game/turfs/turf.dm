@@ -19,9 +19,22 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/explosion_level = 0	//for preventing explosion dodging
+	var/explosion_id = 0
 
-/turf/New()
-	..()
+	var/list/decals
+	var/requires_activation	//add to air processing after initialize?
+	var/changing_turf = FALSE
+
+/turf/SDQL_update(const/var_name, new_value)
+	if(var_name == "x" || var_name == "y" || var_name == "z")
+		return FALSE
+	. = ..()
+
+/turf/Initialize()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 
 	levelupdate()
 	if(smooth)
@@ -31,13 +44,23 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	if(requires_activation)
+		CalculateAdjacentTurfs()
+		SSair.add_to_active(src)
+
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
-/turf/Destroy()
+/turf/Destroy(force)
+	if(!changing_turf)
+		stack_trace("Incorrect turf deletion")
+	changing_turf = FALSE
+	SSair.remove_from_active(src)
 	visibilityChanged()
+	initialized = FALSE
+	requires_activation = FALSE
 	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return QDEL_HINT_IWILLGC
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -111,6 +134,9 @@
 		var/atom/B = A
 		B.HasProximity(AM)
 
+	if(explosion_level && AM.ex_check(explosion_id))
+		AM.ex_act(explosion_level)
+
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//slipping
@@ -157,26 +183,24 @@
 	if(L)
 		qdel(L)
 
+//wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
+/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+	return ChangeTurf(path, defer_change, ignore_air)
+
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE,ignore_air = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	if(!path)
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-	var/old_blueprint_data = blueprint_data
 
-	SSair.remove_from_active(src)
-
-	var/list/old_checkers = proximity_checkers
-
-	Destroy()	//❄
+	changing_turf = TRUE
+	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
-	W.proximity_checkers = old_checkers
-	
-	
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
-	W.blueprint_data = old_blueprint_data
+
 	return W
 
 /turf/proc/AfterChange(ignore_air = FALSE) //called after a turf has been replaced in ChangeTurf()
@@ -186,6 +210,13 @@
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
 			C.deconstruct()
+
+	//update firedoor adjacency
+	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
+	for(var/I in turfs_to_check)
+		var/turf/T = I
+		for(var/obj/machinery/door/firedoor/FD in T)
+			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
 
@@ -230,10 +261,6 @@
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(baseturf)
 	new /obj/structure/lattice(locate(x, y, z))
-
-/turf/proc/ReplaceWithCatwalk()
-	ChangeTurf(baseturf)
-	new /obj/structure/lattice/catwalk(locate(x, y, z))
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
 	for(var/mob/living/M in src)
@@ -314,13 +341,19 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(A.level >= affecting_level)
+			if(istype(A,/atom/movable))
+				var/atom/movable/AM = A
+				if(!AM.ex_check(explosion_id))
+					continue
 			A.ex_act(severity, target)
 			CHECK_TICK
 
-/turf/ratvar_act(force)
-	. = (prob(40) || force)
+/turf/ratvar_act(force, ignore_mobs, probability = 40)
+	. = (prob(probability) || force)
 	for(var/I in src)
 		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
 		if(ismob(A) || .)
 			A.ratvar_act()
 
@@ -413,3 +446,16 @@
 		return
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
+
+
+/turf/proc/add_decal(decal,group)
+	LAZYINITLIST(decals)
+	if(!decals[group])
+		decals[group] = list()
+	decals[group] += decal
+	add_overlay(decals[group])
+
+/turf/proc/remove_decal(group)
+	LAZYINITLIST(decals)
+	overlays -= decals[group]
+	decals[group] = null

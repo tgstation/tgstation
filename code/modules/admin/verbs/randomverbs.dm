@@ -10,7 +10,7 @@
 		return
 
 	for(var/obj/item/W in M)
-		if(!M.unEquip(W))
+		if(!M.dropItemToGround(W))
 			qdel(W)
 			M.regenerate_icons()
 
@@ -58,7 +58,7 @@
 		return
 	world << "[msg]"
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins("<span class='adminnotice'><b> GlobalNarrate: [key_name_admin(usr)] :</b> [msg]<BR></span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] Sent a global narrate</span>")
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_direct_narrate(mob/M)
@@ -508,7 +508,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		qdel(O)
+		if(isturf(O))
+			var/turf/T = O
+			T.ChangeTurf(T.baseturf)
+		else
+			qdel(O)
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
@@ -1010,7 +1014,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		return
 
 	for(var/mob/living/carbon/human/H in mob_list)
-		new /obj/item/organ/body_egg/zombie_infection(H)
+		new /obj/item/organ/zombie_infection(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
@@ -1027,7 +1031,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/body_egg/zombie_infection/I in zombie_infection_list)
+	for(var/obj/item/organ/zombie_infection/I in zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")

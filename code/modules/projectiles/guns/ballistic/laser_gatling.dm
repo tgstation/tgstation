@@ -46,13 +46,13 @@
 
 /obj/item/weapon/minigunpack/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
-		user.unEquip(gun,1)
+		user.dropItemToGround(gun, TRUE)
 	else
 		..()
 
 /obj/item/weapon/minigunpack/dropped(mob/user)
 	if(armed)
-		user.unEquip(gun,1)
+		user.dropItemToGround(gun, TRUE)
 
 /obj/item/weapon/minigunpack/MouseDrop(atom/over_object)
 	if(armed)
@@ -63,13 +63,11 @@
 		if(!over_object)
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.unEquip(src))
-					return
-				M.put_in_hand(src, H.held_index)
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 
 /obj/item/weapon/minigunpack/update_icon()

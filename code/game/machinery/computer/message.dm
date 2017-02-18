@@ -49,17 +49,17 @@
 			// Will help make emagging the console not so easy to get away with.
 			MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
 			var/time = 100 * length(src.linkedServer.decryptkey)
-			addtimer(src, "UnmagConsole", time)
+			addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 			message = rebootmsg
 		else
 			user << "<span class='notice'>A no server error appears on the screen.</span>"
 
-/obj/machinery/computer/message_monitor/initialize()
+/obj/machinery/computer/message_monitor/Initialize()
+	..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
-	return
 
 /obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
 	if(..())

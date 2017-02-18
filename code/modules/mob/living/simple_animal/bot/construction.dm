@@ -16,14 +16,13 @@
 /obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
-		if(!user.unEquip(W))
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		qdel(W)
 		var/turf/T = get_turf(loc)
 		var/mob/living/simple_animal/bot/cleanbot/A = new /mob/living/simple_animal/bot/cleanbot(T)
 		A.name = created_name
 		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
-		user.unEquip(src, 1)
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
@@ -61,7 +60,7 @@
 	switch(build_step)
 		if(0,1)
 			if(istype(W, /obj/item/bodypart/l_leg/robot) || istype(W, /obj/item/bodypart/r_leg/robot))
-				if(!user.unEquip(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				qdel(W)
 				build_step++
@@ -81,7 +80,7 @@
 			else if(istype(W, /obj/item/clothing/suit/bluetag))
 				newcolor = "b"
 			if(newcolor || istype(W, /obj/item/clothing/suit/armor/vest))
-				if(!user.unEquip(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				lasercolor = newcolor
 				qdel(W)
@@ -112,7 +111,7 @@
 					if(!istype(W, /obj/item/clothing/head/helmet))
 						return
 
-			if(!user.unEquip(W))
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			qdel(W)
 			build_step++
@@ -123,7 +122,7 @@
 
 		if(5)
 			if(isprox(W))
-				if(!user.unEquip(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				qdel(W)
 				build_step++
@@ -163,7 +162,7 @@
 					newname = "taser ED-209 assembly"
 				else
 					return
-			if(!user.unEquip(W))
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			name = newname
 			build_step++
@@ -175,24 +174,21 @@
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(loc, W.usesound, 100, 1)
-				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
-				sleep(40)
-				if(get_turf(user) == T)
+				if(do_after(user, 40*W.toolspeed, 0, src, 1))
 					build_step++
 					name = "armed [name]"
 					user << "<span class='notice'>Taser gun attached.</span>"
 
 		if(9)
 			if(istype(W, /obj/item/weapon/stock_parts/cell))
-				if(!user.unEquip(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				build_step++
 				user << "<span class='notice'>You complete the ED-209.</span>"
 				var/turf/T = get_turf(src)
 				new /mob/living/simple_animal/bot/ed209(T,created_name,lasercolor)
 				qdel(W)
-				user.unEquip(src, 1)
 				qdel(src)
 
 //Floorbot assemblies
@@ -233,7 +229,6 @@
 		var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 		user.put_in_hands(B)
 		user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
-		user.unEquip(src, 1)
 		qdel(src)
 	else
 		user << "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>"
@@ -247,7 +242,6 @@
 		B.created_name = created_name
 		user.put_in_hands(B)
 		user << "<span class='notice'>You add the sensor to the toolbox and tiles.</span>"
-		user.unEquip(src, 1)
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
@@ -267,7 +261,6 @@
 		var/mob/living/simple_animal/bot/floorbot/A = new /mob/living/simple_animal/bot/floorbot(T)
 		A.name = created_name
 		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly. Boop beep!</span>"
-		user.unEquip(src, 1)
 		qdel(src)
 	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
@@ -318,7 +311,6 @@
 	qdel(S)
 	user.put_in_hands(A)
 	user << "<span class='notice'>You add the robot arm to the first aid kit.</span>"
-	user.unEquip(src, 1)
 	qdel(src)
 
 
@@ -335,7 +327,7 @@
 		switch(build_step)
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
-					if(!user.unEquip(W))
+					if(!user.temporarilyRemoveItemFromInventory(W))
 						return
 					qdel(W)
 					build_step++
@@ -345,7 +337,7 @@
 
 			if(1)
 				if(isprox(W))
-					if(!user.unEquip(W))
+					if(!user.temporarilyRemoveItemFromInventory(W))
 						return
 					qdel(W)
 					build_step++
@@ -354,7 +346,6 @@
 					var/mob/living/simple_animal/bot/medbot/S = new /mob/living/simple_animal/bot/medbot(T)
 					S.skin = skin
 					S.name = created_name
-					user.unEquip(src, 1)
 					qdel(src)
 
 //Secbot Assembly
@@ -385,7 +376,6 @@
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
 		user << "<span class='notice'>You add the signaler to the helmet.</span>"
-		user.unEquip(src, 1)
 		qdel(src)
 	else
 		return
@@ -407,7 +397,7 @@
 				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
 
 	else if(isprox(I) && (build_step == 1))
-		if(!user.unEquip(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
@@ -416,7 +406,7 @@
 		qdel(I)
 
 	else if(((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot))) && (build_step == 2))
-		if(!user.unEquip(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
@@ -425,13 +415,14 @@
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
-		if(!user.unEquip(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
 		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
 		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot
 		S.loc = get_turf(src)
 		S.name = created_name
+		S.baton_type = I.type
 		qdel(I)
 		qdel(src)
 

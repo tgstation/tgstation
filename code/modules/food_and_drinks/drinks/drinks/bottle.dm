@@ -13,10 +13,8 @@
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
-	..(target,thrower)
-	SplashReagents(target)
+	..()
 	smash(target,thrower,1)
-	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
 
@@ -121,13 +119,6 @@
 	//Finally, smash the bottle. This kills (del) the bottle.
 	src.smash(target, user)
 
-	return
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
-	if(src.reagents.total_volume)
-		M.visible_message("<span class='danger'>The contents of [src] splashes all over [M]!</span>")
-		reagents.reaction(M, TOUCH)
-		reagents.clear_reagents()
 	return
 
 //Keeping this here for now, I'll ask if I should keep it here.
@@ -370,7 +361,6 @@
 			if(istype(R,A))
 				firestarter = 1
 				break
-	SplashReagents(target)
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))

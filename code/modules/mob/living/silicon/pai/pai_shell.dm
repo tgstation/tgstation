@@ -17,7 +17,7 @@
 		return FALSE
 
 	emittersemicd = TRUE
-	addtimer(src, "emittercool", emittercd)
+	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/device/pda))
@@ -26,11 +26,10 @@
 		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
 	if(istype(card.loc, /mob/living))
 		var/mob/living/L = card.loc
-		if(!L.unEquip(card))
+		if(!L.temporarilyRemoveItemFromInventory(card))
 			src << "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>"
 			return FALSE
-	var/turf/T = get_turf(card)
-	forceMove(T)
+	forceMove(get_turf(card))
 	card.forceMove(src)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
@@ -46,9 +45,9 @@
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
 	emittersemicd = TRUE
 	if(!force)
-		addtimer(src, "emittercool", emittercd)
+		addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	else
-		addtimer(src, "emittercool", emitteroverloadcd)
+		addtimer(CALLBACK(src, .proc/emittercool), emitteroverloadcd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
@@ -100,3 +99,7 @@
 	else
 		SetLuminosity(0)
 		src << "<span class='notice'>You disable your integrated light.</span>"
+
+/mob/living/silicon/pai/movement_delay()
+	. = ..()
+	. += 1 //A bit slower than humans, so they're easier to smash

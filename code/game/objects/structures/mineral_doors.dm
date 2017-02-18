@@ -97,7 +97,7 @@
 	isSwitchingStates = 0
 
 	if(close_delay != -1)
-		addtimer(src, "Close", close_delay)
+		addtimer(CALLBACK(src, .proc/Close), close_delay)
 
 /obj/structure/mineral_door/proc/Close()
 	if(isSwitchingStates || state != 1)

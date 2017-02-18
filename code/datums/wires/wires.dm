@@ -1,3 +1,5 @@
+#define MAXIMUM_EMP_WIRES 3
+
 var/list/wire_colors = list(
 	"blue",
 	"brown",
@@ -156,6 +158,17 @@ var/list/wire_name_directory = list()
 		S.loc = holder.loc
 		return S
 
+/datum/wires/proc/emp_pulse()
+	var/list/possible_wires = shuffle(wires)
+	var/remaining_pulses = MAXIMUM_EMP_WIRES
+
+	for(var/wire in possible_wires)
+		if(prob(33))
+			pulse(wire)
+		remaining_pulses--
+		if(remaining_pulses >= 0)
+			break
+
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
 	return TRUE
@@ -245,3 +258,5 @@ var/list/wire_name_directory = list()
 						. = TRUE
 					else
 						L << "<span class='warning'>You need an attachable assembly!</span>"
+
+#undef MAXIMUM_EMP_WIRES

@@ -23,7 +23,6 @@
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
-#define OPENCONTAINER	4096	// is an open container for chemistry purposes
 #define HEADBANGPROTECT		4096
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
@@ -36,6 +35,7 @@
 #define NOJAUNT		1
 #define UNUSED_TRANSIT_TURF 2
 #define CAN_BE_DIRTY 4 //If a turf can be made dirty at roundstart. This is also used in areas.
+#define NO_DEATHRATTLE 16 // Do not notify deadchat about any deaths that occur on this turf.
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

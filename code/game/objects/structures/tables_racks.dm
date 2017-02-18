@@ -187,7 +187,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(src, "throw_check", 5, TIMER_NORMAL, AM)
+		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
 	else
 		check_break(AM)
 
@@ -342,7 +342,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
@@ -444,6 +444,8 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
+	if(user.weakened || user.resting || user.lying || user.get_num_legs() < 2)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -483,6 +485,7 @@
 	icon_state = "rack_parts"
 	flags = CONDUCT
 	materials = list(MAT_METAL=2000)
+	var/building = FALSE
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -492,6 +495,9 @@
 		. = ..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
+	if(building)
+		return
+	building = TRUE
 	user << "<span class='notice'>You start constructing a rack...</span>"
 	if(do_after(user, 50, target = src, progress=TRUE))
 		if(!user.drop_item())
@@ -501,3 +507,4 @@
 			</span>", "<span class='notice'>You assemble \a [R].</span>")
 		R.add_fingerprint(user)
 		qdel(src)
+	building = FALSE

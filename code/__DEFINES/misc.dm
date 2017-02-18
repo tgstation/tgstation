@@ -168,8 +168,10 @@
 // Used by Paper and PhotoCopier (and PaperBin once a year).
 // Used by PDA's Notekeeper.
 // Used by NewsCaster and NewsPaper.
+// Used by Modular Computers
 #define PEN_FONT "Verdana"
 #define CRAYON_FONT "Comic Sans MS"
+#define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
 
 #define RESIZE_DEFAULT_SIZE 1
@@ -275,6 +277,10 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 
 #define GHOST_OTHERS_DEFAULT_OPTION			GHOST_OTHERS_THEIR_SETTING
 
+#define GHOST_MAX_VIEW_RANGE_DEFAULT 10
+#define GHOST_MAX_VIEW_RANGE_MEMBER 14
+
+
 var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
 
 //Color Defines
@@ -340,7 +346,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 //debug printing macros
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
-#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) log_world("DEBUG: [msg]")
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
@@ -399,3 +405,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
+
+#define TURF_DECAL_PAINT "paint"
+#define TURF_DECAL_DAMAGE "damage"
+#define TURF_DECAL_DIRT "dirt"
+
+//Error handler defines
+#define ERROR_USEFUL_LEN 2

@@ -15,15 +15,16 @@
 	var/global/datum/gas_mixture/space/space_gas = new
 	plane = PLANE_SPACE
 
-/turf/open/space/New()
+/turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 
-/turf/open/space/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
+	if(requires_activation)
+		SSair.add_to_active(src)
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
@@ -32,9 +33,6 @@
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
-
-/turf/open/space/ChangeTurf(path)
-	. = ..()
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -73,15 +71,14 @@
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>You begin constructing catwalk...</span>"
+				user << "<span class='notice'>You construct a catwalk.</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				qdel(L)
-				ReplaceWithCatwalk()
+				new/obj/structure/lattice/catwalk(src)
 			else
 				user << "<span class='warning'>You need two rods to build a catwalk!</span>"
 			return
 		if(R.use(1))
-			user << "<span class='notice'>Constructing support lattice...</span>"
+			user << "<span class='notice'>You construct a lattice.</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else

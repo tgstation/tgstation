@@ -242,7 +242,7 @@
 
 /obj/item/seeds/proc/set_production(adjustamt)
 	if(yield != -1)
-		production = Clamp(adjustamt, 2, 10)
+		production = Clamp(adjustamt, 1, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
@@ -255,13 +255,13 @@
 			C.value = potency
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
-	weed_rate = Clamp(adjustamt, 0, 100)
+	weed_rate = Clamp(adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
 /obj/item/seeds/proc/set_weed_chance(adjustamt)
-	weed_chance = Clamp(adjustamt, 0, 100)
+	weed_chance = Clamp(adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
@@ -290,6 +290,12 @@
 	text += "- Weed Vulnerability: [weed_chance]\n"
 	if(rarity)
 		text += "- Species Discovery Value: [rarity]\n"
+	var/all_traits = ""
+	for(var/datum/plant_gene/trait/traits in genes)
+		if(istype(traits, /datum/plant_gene/trait/plant_type))
+			continue
+		all_traits += " [traits.get_name()]"
+	text += "- Plant Traits:[all_traits]\n"
 
 	text += "*---------*"
 

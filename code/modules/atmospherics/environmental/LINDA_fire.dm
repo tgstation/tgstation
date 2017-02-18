@@ -33,7 +33,7 @@
 		if(oxy < 0.5 || tox < 0.5)
 			return 0
 
-		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
+		active_hotspot = new /obj/effect/hotspot(src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
@@ -149,14 +149,12 @@
 /obj/effect/hotspot/Destroy()
 	SetLuminosity(0)
 	SSair.hotspots -= src
-	if(isturf(loc))
-		var/turf/open/T = loc
-		if(T.active_hotspot == src)
-			T.active_hotspot = null
+	var/turf/open/T = loc
+	if(istype(T) && T.active_hotspot == src)
+		T.active_hotspot = null
 	DestroyTurf()
 	loc = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))

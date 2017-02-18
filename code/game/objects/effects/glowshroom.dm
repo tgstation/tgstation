@@ -52,7 +52,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "[base_icon_state]f"
 
-	addtimer(src, "Spread", delay)
+	addtimer(CALLBACK(src, .proc/Spread), delay)
 
 /obj/structure/glowshroom/proc/Spread()
 	for(var/i = 1 to yield)

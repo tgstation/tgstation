@@ -454,7 +454,7 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
-		if(RG.flags & OPENCONTAINER)
+		if(RG.container_type & OPENCONTAINER)
 			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
 			return 1
@@ -481,7 +481,7 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
+		user << "<span class='notice'>You place [O] under a stream of water...</span>"
 		user.drop_item()
 		M.loc = get_turf(src)
 		M.Expand()

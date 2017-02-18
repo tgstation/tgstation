@@ -16,7 +16,6 @@
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
-		lying_prev = lying	//so we don't try to animate until there's been another change.
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)
@@ -89,7 +88,9 @@
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
 	if(on_fire)
-		overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+		var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+		new_fire_overlay.appearance_flags = RESET_COLOR
+		overlays_standing[FIRE_LAYER] = new_fire_overlay
 
 	apply_overlay(FIRE_LAYER)
 

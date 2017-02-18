@@ -12,7 +12,6 @@
 	max_integrity = 50
 
 	var/obj/item/weapon/paper/internalPaper
-	var/list/stamped = list()
 
 /obj/item/weapon/paperplane/New(loc, obj/item/weapon/paper/newPaper)
 	..()
@@ -20,12 +19,17 @@
 	pixel_x = rand(-9, 9)
 	if(newPaper)
 		internalPaper = newPaper
-		src.flags = newPaper.flags
-		stamped = internalPaper.stamped
+		flags = newPaper.flags
 		newPaper.forceMove(src)
 	else
 		internalPaper = new /obj/item/weapon/paper(src)
 	update_icon()
+
+/obj/item/weapon/paperplane/Destroy()
+	if(internalPaper)
+		qdel(internalPaper)
+		internalPaper = null
+	return ..()
 
 /obj/item/weapon/paperplane/suicide_act(mob/user)
 	user.Stun(10)
@@ -37,19 +41,18 @@
 
 /obj/item/weapon/paperplane/update_icon()
 	cut_overlays()
-	if(!stamped)
-		stamped = new
-	else if(stamped)
+	var/list/stamped = internalPaper.stamped
+	if(stamped)
 		for(var/S in stamped)
-			var/obj/item/weapon/stamp/stamp = S
-			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi', "paperplane_[initial(stamp.icon_state)]")
+			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi', "paperplane_[stamped]")
 			add_overlay(stampoverlay)
 
 /obj/item/weapon/paperplane/attack_self(mob/user)
 	user << "<span class='notice'>You unfold [src].</span>"
-	user.unEquip(src)
-	user.put_in_hands(internalPaper)
+	var/internal_paper_tmp = internalPaper
+	internalPaper = null
 	qdel(src)
+	user.put_in_hands(internal_paper_tmp)
 
 /obj/item/weapon/paperplane/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
@@ -58,29 +61,21 @@
 		return
 
 	else if(istype(P, /obj/item/weapon/stamp)) 	//we don't randomize stamps on a paperplane
-
-		if (!stamped)
-			stamped = new
-
-		stamped += P.type
-		internalPaper.stamps += "<img src=large_[P.icon_state].png>" //stamps the paper inside!
-		internalPaper.stamped = stamped
-		internalPaper.attackby(P) //spoofed attack to update internal paper.
-		user << "<span class='notice'>You stamp [src] with your rubber stamp.</span>"
+		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
 		update_icon()
 
 	else if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 				"<span class='userdanger'>You miss the [src] and accidentally light yourself on fire!</span>")
-			user.unEquip(P)
+			user.dropItemToGround(P)
 			user.adjust_fire_stacks(1)
 			user.IgniteMob()
 			return
 
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
-		user.unEquip(src)
+		user.dropItemToGround(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
 
@@ -108,8 +103,8 @@
 		if( (!in_range(src, user)) || user.stat || user.restrained() )
 			return
 		user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
-		user.unEquip(src)
-		I = new /obj/item/weapon/paperplane(loc, src)
+		user.temporarilyRemoveItemFromInventory(src)
+		I = new /obj/item/weapon/paperplane(user, src)
 		user.put_in_hands(I)
 	else
 		user << "<span class='notice'> You lack the dexterity to fold \the [src]. </span>"

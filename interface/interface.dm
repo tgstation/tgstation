@@ -138,6 +138,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t3 = grab-intent
 \t4 = harm-intent
 \tNumpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
+\tAlt(HOLD) = Alter movement intent 
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -160,6 +161,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+2 = disarm-intent
 \tCtrl+3 = grab-intent
 \tCtrl+4 = harm-intent
+\tCtrl+'+/-' OR
+\tShift+Mousewheel = Ghost zoom in/out
 \tDEL = pull
 \tINS = cycle-intents-right
 \tHOME = drop

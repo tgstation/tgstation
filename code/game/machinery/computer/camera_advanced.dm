@@ -47,7 +47,7 @@
 	if(!eyeobj)
 		CreateEye()
 
-	if(!eyeobj.initialized)
+	if(!eyeobj.eye_initialized)
 		var/camera_location
 		for(var/obj/machinery/camera/C in cameranet.cameras)
 			if(!C.can_use())
@@ -56,7 +56,7 @@
 				camera_location = get_turf(C)
 				break
 		if(camera_location)
-			eyeobj.initialized = 1
+			eyeobj.eye_initialized = 1
 			give_eye_control(L)
 			eyeobj.setLoc(camera_location)
 		else
@@ -82,7 +82,7 @@
 	var/acceleration = 1
 	var/mob/living/carbon/human/eye_user = null
 	var/obj/machinery/computer/camera_advanced/origin
-	var/initialized = 0
+	var/eye_initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
 

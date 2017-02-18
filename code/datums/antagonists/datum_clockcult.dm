@@ -40,7 +40,7 @@
 		ticker.mode.servants_of_ratvar += owner.mind
 		ticker.mode.update_servant_icons_added(owner.mind)
 		if(jobban_isbanned(owner, ROLE_SERVANT_OF_RATVAR))
-			addtimer(ticker.mode, "replace_jobbaned_player", 0, TIMER_NORMAL, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
+			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
 	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has been converted to the cult of Ratvar!</font>"
@@ -73,7 +73,13 @@
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
+			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
+			A.languages_spoken &= ~HUMAN
+			var/list/AI_frame = list(image('icons/mob/clockwork_mobs.dmi', A, "aiframe")) //make the AI's cool frame
+			for(var/d in cardinal)
+				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
+			A.add_overlay(AI_frame)
 			if(!A.lacks_power())
 				A.ai_restore_power()
 			if(A.eyeobj)
@@ -122,7 +128,10 @@
 		var/mob/living/silicon/S = owner
 		if(isAI(S))
 			var/mob/living/silicon/ai/A = S
+			A.can_be_carded = initial(A.can_be_carded)
 			A.requires_power = initial(A.requires_power)
+			A.languages_spoken |= HUMAN
+			A.cut_overlays()
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()

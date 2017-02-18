@@ -99,7 +99,7 @@
 		L.visible_message("<span class='revennotice'>A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious.</span>",
 			"<span class='revendanger'>[desc]</span>")
 		// Don't let them sit suround unconscious forever
-		addtimer(src, "sleeper_dreams", 100, TIMER_NORMAL, L)
+		addtimer(CALLBACK(src, .proc/sleeper_dreams, L), 100)
 
 	// Existing sleepers
 	for(var/i in found)
@@ -216,3 +216,58 @@
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
 	if(ID && (access_cent_bar in ID.access))
 		return TRUE
+
+//Luxury Shuttle Blockers
+
+/obj/effect/forcefield/luxury_shuttle
+	var/threshhold = 500
+	var/static/list/approved_passengers = list()
+
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
+	if(mover in approved_passengers)
+		return 1
+
+	if(!isliving(mover)) //No stowaways
+		return 0
+
+	var/total_cash = 0
+	var/list/counted_money = list()
+
+	for(var/obj/item/weapon/coin/C in mover.GetAllContents())
+		total_cash += C.value
+		counted_money += C
+		if(total_cash >= threshhold)
+			break
+	for(var/obj/item/stack/spacecash/S in mover.GetAllContents())
+		total_cash += S.value * S.amount
+		counted_money += S
+		if(total_cash >= threshhold)
+			break
+
+	if(total_cash >= threshhold)
+		for(var/obj/I in counted_money)
+			qdel(I)
+
+		mover << "Thank you for your payment! Please enjoy your flight."
+		approved_passengers += mover
+		return 1
+	else
+		mover << "You don't have enough money to enter the main shuttle. You'll have to fly coach."
+		return 0
+
+/mob/living/simple_animal/hostile/bear/fightpit
+	name = "fight pit bear"
+	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
+	environment_smash = 0
+
+/obj/effect/decal/hammerandsickle
+	name = "hammer and sickle"
+	desc = "Communism powerful force."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "communist"
+	layer = ABOVE_OPEN_TURF_LAYER
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
+	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.

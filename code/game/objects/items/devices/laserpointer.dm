@@ -41,9 +41,8 @@
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			diode = W
 			user << "<span class='notice'>You install a [diode.name] in [src].</span>"
 		else
@@ -100,8 +99,6 @@
 			//20% chance to actually hit the eyes
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
-				if(C.weakeyes)
-					C.Stun(1)
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
 
@@ -130,10 +127,6 @@
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
-	var/list/showto = list()
-	for(var/mob/M in viewers(7,targloc))
-		if(M.client)
-			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
 	var/list/click_params = params2list(params)
 	if(click_params)
@@ -159,7 +152,7 @@
 			user << "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>"
 			recharge_locked = 1
 
-	flick_overlay(I, showto, 10)
+	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
 
 /obj/item/device/laser_pointer/process()

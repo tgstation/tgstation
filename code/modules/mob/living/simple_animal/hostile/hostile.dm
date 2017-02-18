@@ -108,7 +108,7 @@
 		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 		. += Mobs
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
 
 		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
 			if(can_see(targets_from, HM, vision_range))
@@ -202,6 +202,12 @@
 			if(P.stat & BROKEN) //Or turrets that are already broken
 				return 0
 			return 1
+
+		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
+			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
+			if(OW.target != src)
+				return FALSE
+			return TRUE
 
 
 	if(isobj(the_target))
@@ -327,12 +333,10 @@
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)
-		spawn(1)
-			Shoot(A)
-		spawn(4)
-			Shoot(A)
-		spawn(6)
-			Shoot(A)
+		var/datum/callback/cb = CALLBACK(A, .proc/Shoot)
+		addtimer(cb, 1)
+		addtimer(cb, 4)
+		addtimer(cb, 6)
 	else
 		Shoot(A)
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -421,7 +425,7 @@
 /mob/living/simple_animal/hostile/proc/GainPatience()
 	if(lose_patience_timeout)
 		LosePatience()
-		lose_patience_timer_id = addtimer(src, "LoseTarget", lose_patience_timeout)
+		lose_patience_timer_id = addtimer(CALLBACK(src, .proc/LoseTarget), lose_patience_timeout, TIMER_STOPPABLE)
 
 
 /mob/living/simple_animal/hostile/proc/LosePatience()
@@ -432,7 +436,7 @@
 /mob/living/simple_animal/hostile/proc/LoseSearchObjects()
 	search_objects = 0
 	deltimer(search_objects_timer_id)
-	search_objects_timer_id = addtimer(src, "RegainSearchObjects", search_objects_regain_time)
+	search_objects_timer_id = addtimer(CALLBACK(src, .proc/RegainSearchObjects), search_objects_regain_time, TIMER_STOPPABLE)
 
 
 /mob/living/simple_animal/hostile/proc/RegainSearchObjects(value)

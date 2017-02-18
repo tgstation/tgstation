@@ -59,7 +59,7 @@
 		if(!I.can_be_package_wrapped())
 			return
 		if(user.is_holding(I))
-			if(!user.unEquip(I))
+			if(!user.dropItemToGround(I))
 				return
 		else if(!isturf(I.loc))
 			return
@@ -71,6 +71,7 @@
 				user.put_in_hands(P)
 			I.forceMove(P)
 			var/size = round(I.w_class)
+			P.name = "[weightclass2text(size)] parcel"
 			P.w_class = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"

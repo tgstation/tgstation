@@ -79,7 +79,8 @@
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
 				A.secondsElectrified = 30
-				A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+				if(usr)
+					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 				add_logs(usr, A, "electrified")
 				spawn(10)
 					if(A)

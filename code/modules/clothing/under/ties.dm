@@ -50,10 +50,10 @@
 	U.cut_overlays()
 	U.hastie = null
 
-/obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U)
+/obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U)
+/obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 /*
 /obj/item/clothing/tie/blue
@@ -389,21 +389,19 @@
 	if(!..())
 		return 0
 	if(isliving(U.loc))
-		on_uniform_equip(U)
+		on_uniform_equip(U, user)
 
 /obj/item/clothing/tie/lawyers_badge/detach(obj/item/clothing/under/U, user)
 	..()
 	if(isliving(U.loc))
-		on_uniform_dropped(U)
+		on_uniform_dropped(U, user)
 
-/obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U)
-	if(!isliving(U.loc))
-		return
-	var/mob/living/L = U.loc
-	L.bubble_icon = "lawyer"
+/obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L)
+		L.bubble_icon = "lawyer"
 
-/obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U)
-	if(!isliving(U.loc))
-		return
-	var/mob/living/L = U.loc
-	L.bubble_icon = initial(L.bubble_icon)
+/obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L)
+		L.bubble_icon = initial(L.bubble_icon)

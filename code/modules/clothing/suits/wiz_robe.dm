@@ -146,7 +146,7 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/paper
-	name = "papier-mâché robe"
+	name = "papier-mache robe" // no non-latin characters!
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
 	item_state = "wizrobe"
@@ -226,4 +226,3 @@
 	W.current_charges += 8
 	user <<"<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>"
 	qdel(src)
-

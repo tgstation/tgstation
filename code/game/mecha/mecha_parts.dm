@@ -114,7 +114,7 @@
 
 /obj/item/mecha_parts/part/gygax_head
 	name = "\improper Gygax head"
-	desc = "A Gygax head. Houses advanced surveilance and targeting sensors."
+	desc = "A Gygax head. Houses advanced surveillance and targeting sensors."
 	icon_state = "gygax_head"
 	origin_tech = "programming=2;materials=4;magnets=3;engineering=3"
 
@@ -167,7 +167,7 @@
 
 /obj/item/mecha_parts/part/durand_head
 	name = "\improper Durand head"
-	desc = "A Durand head. Houses advanced surveilance and targeting sensors."
+	desc = "A Durand head. Houses advanced surveillance and targeting sensors."
 	icon_state = "durand_head"
 	origin_tech = "programming=2;materials=3;magnets=3;engineering=3"
 
@@ -243,12 +243,12 @@
 
 /obj/item/mecha_parts/part/honker_left_leg
 	name = "\improper H.O.N.K left leg"
-	desc = "A H.O.N.K left leg. The foot appears just large enough to fully accomodate a clown shoe."
+	desc = "A H.O.N.K left leg. The foot appears just large enough to fully accommodate a clown shoe."
 	icon_state = "honker_l_leg"
 
 /obj/item/mecha_parts/part/honker_right_leg
 	name = "\improper H.O.N.K right leg"
-	desc = "A H.O.N.K right leg. The foot appears just large enough to fully accomodate a clown shoe."
+	desc = "A H.O.N.K right leg. The foot appears just large enough to fully accommodate a clown shoe."
 	icon_state = "honker_r_leg"
 
 
@@ -322,81 +322,81 @@
 	origin_tech = "programming=2"
 
 /obj/item/weapon/circuitboard/mecha/ripley/peripherals
-	name = "circuit board (Ripley Peripherals Control module)"
+	name = "Ripley Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/ripley/main
-	name = "circuit board (Ripley Central Control module)"
+	name = "Ripley Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/gygax
 	origin_tech = "programming=4;combat=3;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/gygax/peripherals
-	name = "circuit board (Gygax Peripherals Control module)"
+	name = "Gygax Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/gygax/targeting
-	name = "circuit board (Gygax Weapon Control and Targeting module)"
+	name = "Gygax Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 	origin_tech = "programming=4;combat=4"
 
 /obj/item/weapon/circuitboard/mecha/gygax/main
-	name = "circuit board (Gygax Central Control module)"
+	name = "Gygax Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/durand
 	origin_tech = "programming=4;combat=3;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/durand/peripherals
-	name = "circuit board (Durand Peripherals Control module)"
+	name = "Durand Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/durand/targeting
-	name = "circuit board (Durand Weapon Control and Targeting module)"
+	name = "Durand Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 	origin_tech = "programming=4;combat=4;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/durand/main
-	name = "circuit board (Durand Central Control module)"
+	name = "Durand Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/honker
 	origin_tech = "programming=3;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/honker/peripherals
-	name = "circuit board (H.O.N.K Peripherals Control module)"
+	name = "H.O.N.K Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/honker/targeting
-	name = "circuit board (H.O.N.K Weapon Control and Targeting module)"
+	name = "H.O.N.K Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/honker/main
-	name = "circuit board (H.O.N.K Central Control module)"
+	name = "H.O.N.K Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/odysseus
 	origin_tech = "programming=3;biotech=3"
 
 /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
-	name = "circuit board (Odysseus Peripherals Control module)"
+	name = "Odysseus Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/odysseus/main
-	name = "circuit board (Odysseus Central Control module)"
+	name = "Odysseus Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/phazon
 	origin_tech = "programming=5;plasmatech=4"
 
 /obj/item/weapon/circuitboard/mecha/phazon/peripherals
-	name = "circuit board (Phazon Peripherals Control module)"
+	name = "Phazon Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/phazon/targeting
-	name = "circuit board (Phazon Weapon Control and Targeting module)"
+	name = "Phazon Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/phazon/main
-	name = "circuit board (Phazon Central Control module)"
+	name = "Phazon Central Control module (Exosuit Board)"

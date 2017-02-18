@@ -234,6 +234,12 @@
 	icon_state = "bottle12"
 	list_reagents = list("atropine" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/romerol
+	name = "romerol bottle"
+	desc = "A small bottle of Romerol. The REAL zombie powder."
+	icon_state = "bottle12"
+	list_reagents = list("romerol" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."

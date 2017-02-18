@@ -10,7 +10,7 @@
 "j" = (/turf/open/floor/plating/asteroid,/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
 "k" = (/turf/open/floor/plating,/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
 "l" = (/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
-"m" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/effect/mob_spawn/human/clown{brute_damage = 120; oxy_damage = 75},/obj/item/weapon/paper{info = "Extraction was successful! The disguise was perfect, the clowns never knew what hit 'em! Once I get back to base with the bananium samples I'll be rich, I tell you! RICH!"},/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
+"m" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/effect/mob_spawn/human/clown{brute_damage = 120;oxy_damage = 75},/obj/item/weapon/paper{info = "Extraction was successful! The disguise was perfect, the clowns never knew what hit 'em! Once I get back to base with the bananium samples I'll be rich, I tell you! RICH!"},/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
 "n" = (/obj/structure/chair{dir = 1},/obj/item/weapon/storage/pod{pixel_x = -26},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
 "o" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/mineral/titanium/overspace,/area/ruin/unpowered)
 "p" = (/obj/machinery/door/airlock/titanium{name = "Escape Pod Airlock"},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)

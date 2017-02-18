@@ -47,6 +47,11 @@
 #define EM_SECURED 1
 #define EM_WELDED 2
 
+//Construction defines for the pinion airlock
+#define GEAR_SECURE 1
+#define GEAR_UNFASTENED 2
+#define GEAR_LOOSE 3
+
 //other construction-related things
 
 //windows affected by nar-sie turn this color.
@@ -63,6 +68,7 @@
 #define MAT_DIAMOND		"$diamond"
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
+#define MAT_BLUESPACE	"$bluespace"
 #define MAT_BANANIUM	"$bananium"
 #define MAT_TITANIUM	"$titanium"
 #define MAT_BIOMASS		"$biomass"

@@ -141,7 +141,7 @@
 	recent_queen_death = 1
 	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
 	spawn(2400) //four minutes
-		if(qdeleted(src)) //In case the node is deleted
+		if(QDELETED(src)) //In case the node is deleted
 			return
 		recent_queen_death = 0
 		if(!owner) //In case the xeno is butchered or subjected to surgery after death.

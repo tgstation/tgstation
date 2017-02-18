@@ -22,14 +22,13 @@
 		var/obj/item/stack/sheet/glass/G = new (user.loc)
 		G.add_fingerprint(user)
 		if(amount <= 0)
-			user.unEquip(src, 1)
 			qdel(src)
 
 	else if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		if (M.use(1))
 			use(1)
-			var/obj/item/L = PoolOrNew(/obj/item/stack/tile/light, user.loc)
+			var/obj/item/L = new /obj/item/stack/tile/light(user.loc)
 			user << "<span class='notice'>You make a light tile.</span>"
 			L.add_fingerprint(user)
 		else

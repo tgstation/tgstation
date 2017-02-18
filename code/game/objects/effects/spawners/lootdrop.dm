@@ -87,7 +87,7 @@
 				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
-				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
+				/obj/item/clothing/head/that{throwforce = 1;} = 1,
 				/obj/item/clothing/head/ushanka = 1,
 				/obj/item/clothing/head/welding = 1,
 				/obj/item/clothing/mask/gas = 15,
@@ -157,11 +157,12 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
+				/obj/item/weapon/storage/toolbox/artistic = 2,
 				"" = 3
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner
-	name = "lootcrate spawner"
+	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = 0
 
 	loot = list(

@@ -11,8 +11,8 @@
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	var/minimum_timer = 60
-	var/timer_set = 60
+	var/minimum_timer = 90
+	var/timer_set = 90
 	var/maximum_timer = 60000
 
 	var/can_unanchor = TRUE
@@ -34,7 +34,7 @@
 	. = (payload in src) && (active || ignore_active) && !defused
 	if(.)
 		payload.detonate()
-		
+
 /obj/machinery/syndicatebomb/obj_break()
 	if(!try_detonate())
 		..()
@@ -419,7 +419,7 @@
 		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
-		addtimer(src, "detonate", 10)
+		addtimer(CALLBACK(src, .proc/detonate), 10)
 
 	// If it's not a time release bomb, do normal explosion
 

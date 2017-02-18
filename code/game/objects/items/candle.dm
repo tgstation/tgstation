@@ -58,9 +58,6 @@
 		wax--
 	if(!wax)
 		new/obj/item/trash/candle(src.loc)
-		if(istype(src.loc, /mob))
-			var/mob/M = src.loc
-			M.unEquip(src, 1) //src is being deleted anyway
 		qdel(src)
 	update_icon()
 	open_flame()

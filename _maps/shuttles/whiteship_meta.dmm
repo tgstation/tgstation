@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -236,7 +236,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/shuttle/abandoned)
 "az" = (
 /obj/structure/closet/crate{
@@ -253,7 +254,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/shuttle/abandoned)
 "aA" = (
 /obj/item/weapon/storage/box/lights/mixed,
@@ -275,7 +277,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/shuttle/abandoned)
 "aB" = (
 /obj/structure/closet/crate{
@@ -301,7 +304,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/shuttle/abandoned)
 "aC" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -427,7 +431,10 @@
 /obj/machinery/door/airlock/titanium{
 	name = "cargo bay"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -437,7 +444,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -446,7 +456,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -457,7 +470,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -578,7 +594,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/shuttle/abandoned)
 "bb" = (
 /obj/structure/closet/emcloset,
@@ -586,7 +603,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/shuttle/abandoned)
 "bc" = (
 /obj/structure/closet/firecloset/full,
@@ -594,7 +612,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/shuttle/abandoned)
 "bd" = (
 /obj/machinery/door/airlock/titanium{
@@ -676,7 +695,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery{
 	dir = 1
 	},
 /area/shuttle/abandoned)

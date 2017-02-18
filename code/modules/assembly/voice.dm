@@ -51,7 +51,7 @@
 	. = 0
 	switch(mode)
 		if(1)
-			if(findtextEx(raw_message, recorded))
+			if(findtext(raw_message, recorded))
 				. = 1
 		if(2)
 			if(raw_message == recorded)

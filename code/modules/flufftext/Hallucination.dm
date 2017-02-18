@@ -249,7 +249,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = 1
 		target.SetSleeping(20)
-		addtimer(src, "wake_and_restore", rand(50, 100))
+		addtimer(CALLBACK(src, .proc/wake_and_restore), rand(50, 100))
 
 /obj/effect/hallucination/battle
 
@@ -306,7 +306,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")
 			if("skeleton")//Skeletons
-				A = image('icons/mob/human.dmi',H,"skeleton_s")
+				A = image('icons/mob/human.dmi',H,"skeleton")
 			if("demon")//Demon
 				A = image('icons/mob/mob.dmi',H,"daemon")
 			if("custom")
@@ -400,7 +400,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target = T
 	QDEL_IN(src, 300)
 	step_away(src,my_target,2)
-	addtimer(src, "attack_loop", 0)
+	INVOKE_ASYNC(src, .proc/attack_loop)
 
 
 /obj/effect/fake_attacker/proc/updateimage()
@@ -715,13 +715,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					var/turf/open/floor/target = pick(possible_points)
 					switch(rand(1,4))
 						if(1)
-							var/image/body = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
+							var/image/body = image('icons/mob/human.dmi',target,"husk",TURF_LAYER)
 							var/matrix/M = matrix()
 							M.Turn(90)
 							body.transform = M
 							halbody = body
 						if(2,3)
-							halbody = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
+							halbody = image('icons/mob/human.dmi',target,"husk",TURF_LAYER)
 						if(4)
 							halbody = image('icons/mob/alien.dmi',target,"alienother",TURF_LAYER)
 

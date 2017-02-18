@@ -97,6 +97,7 @@ var/datum/subsystem/events/SSevent
 				continue
 			if (E.alertadmins)
 				message_admins("Random Event triggering: [E.name] ([E.typepath])")
+				deadchat_broadcast("<span class='deadsay'><b>[E.name]</b> has just been randomly triggered!</span>") //STOP ASSUMING IT'S BADMINS!
 			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
 

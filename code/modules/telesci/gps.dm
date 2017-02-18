@@ -26,7 +26,7 @@ var/list/GPS_list = list()
 	emped = TRUE
 	overlays -= "working"
 	add_overlay("emp")
-	addtimer(src, "reboot", 300)
+	addtimer(CALLBACK(src, .proc/reboot), 300)
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE

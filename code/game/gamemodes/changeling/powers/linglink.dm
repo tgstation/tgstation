@@ -29,7 +29,7 @@
 	if(target.mind.changeling)
 		user << "<span class='warning'>The victim is already a part of the hivemind!</span>"
 		return
-	if(user.grab_state <= GRAB_NECK)
+	if(user.grab_state <= GRAB_AGGRESSIVE)
 		user << "<span class='warning'>We must have a tighter grip to link with this creature!</span>"
 		return
 	return changeling.can_absorb_dna(user,target)

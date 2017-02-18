@@ -120,6 +120,14 @@
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
+var/list/static/global/pointed_types = typecacheof(list(
+	/obj/item/weapon/pen,
+	/obj/item/weapon/screwdriver,
+	/obj/item/weapon/reagent_containers/syringe,
+	/obj/item/weapon/kitchen/fork))
+
+#define is_pointed(W) (is_type_in_typecache(W, pointed_types))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/device/assembly))
 

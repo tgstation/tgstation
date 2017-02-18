@@ -109,9 +109,8 @@
 		if(ink)
 			user << "<span class='notice'>[src] already contains \a [ink].</span>"
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.loc = src
 		user << "<span class='notice'>You install [W] into [src].</span>"
 		ink = W
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)

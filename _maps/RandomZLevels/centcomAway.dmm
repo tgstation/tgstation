@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -342,7 +342,8 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "bc" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -397,7 +398,8 @@
 	id = "XCCHangar1";
 	name = "XCC Main Hangar"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/hangar)
 "bm" = (
 /turf/open/floor/plasteel/vault{
@@ -996,18 +998,21 @@
 /area/awaymission/centcomAway/hangar)
 "dn" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/centcomAway/hangar)
 "do" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/centcomAway/hangar)
 "dp" = (
 /obj/structure/closet/crate/large,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1040,7 +1045,8 @@
 /area/awaymission/centcomAway/hangar)
 "dv" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1079,7 +1085,8 @@
 /area/awaymission/centcomAway/hangar)
 "dB" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1140,18 +1147,21 @@
 /area/awaymission/centcomAway/hangar)
 "dM" = (
 /obj/structure/closet/crate/large,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/centcomAway/hangar)
 "dN" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/awaymission/centcomAway/hangar)
 "dO" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1484,7 +1494,8 @@
 /area/awaymission/centcomAway/hangar)
 "eS" = (
 /obj/machinery/telecomms/relay/preset/ruskie,
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "eT" = (
 /obj/machinery/door/airlock/engineering{
@@ -1830,12 +1841,14 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "fV" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/general)
 "fW" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/centcomAway/general)
@@ -1945,13 +1958,15 @@
 	},
 /area/awaymission/centcomAway/hangar)
 "gn" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/centcomAway/hangar)
 "go" = (
 /obj/structure/table,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/centcomAway/hangar)
@@ -2435,7 +2450,8 @@
 	pixel_y = 7;
 	req_access_txt = "2"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -2449,7 +2465,8 @@
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -2620,7 +2637,8 @@
 	id = "XCCsec3";
 	name = "XCC Main Access Shutters"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "iu" = (
 /obj/structure/flora/ausbushes,
@@ -2667,10 +2685,12 @@
 	id = "XCCMechs";
 	name = "XCC Mech Bay"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/hangar)
 "iz" = (
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/awaymission/centcomAway/hangar)
 "iA" = (
 /obj/machinery/mass_driver{
@@ -2678,7 +2698,8 @@
 	id = "XCCMechs";
 	name = "gravpult"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/awaymission/centcomAway/hangar)
 "iB" = (
 /turf/open/floor/plasteel/loadingarea{
@@ -3093,7 +3114,8 @@
 	id = "XCCFerry";
 	name = "XCC Ferry Hangar"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/hangar)
 "jM" = (
 /obj/structure/chair,
@@ -3131,14 +3153,16 @@
 	id = "XCCsec1";
 	name = "XCC Checkpoint 1 Shutters"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "jS" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "XCCsec2";
 	name = "XCC Checkpoint 2 Shutters"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "jT" = (
 /obj/structure/grille,
@@ -3231,7 +3255,8 @@
 	pixel_y = 7;
 	req_access_txt = "2"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -3252,7 +3277,10 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "kj" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
+	dir = 6
+	},
+/obj/effect/turf_decal/delivery{
 	dir = 6
 	},
 /area/awaymission/centcomAway/general)
@@ -3724,7 +3752,8 @@
 	id = "XCCtdomemelee";
 	name = "XCC Thunderdome Melee"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/thunderdome)
 "lB" = (
 /obj/item/weapon/reagent_containers/glass/rag,
@@ -3778,7 +3807,8 @@
 	id = "XCCtdome";
 	name = "XCC Thunderdome"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/thunderdome)
 "lK" = (
 /obj/machinery/igniter,
@@ -3895,7 +3925,8 @@
 	id = "XCCtdomeguns";
 	name = "XCC Thunderdome Guns"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/thunderdome)
 "mc" = (
 /obj/item/weapon/soap/nanotrasen,
@@ -4085,42 +4116,49 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/centcomAway/cafe)
 "mE" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/centcomAway/cafe)
 "mF" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/centcomAway/cafe)
 "mG" = (
 /obj/machinery/shieldgen,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/centcomAway/cafe)
 "mH" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/cafe)
 "mI" = (
 /obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/centcomAway/cafe)
 "mJ" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/centcomAway/cafe)
 "mK" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/awaymission/centcomAway/cafe)

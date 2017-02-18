@@ -7,9 +7,9 @@
 	item_state = "glasses"
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
-	invis_view = SEE_INVISIBLE_NOLIGHTING
-	darkness_view = 3
+	flags_cover = GLASSESCOVERSEYES
+	visor_flags_inv = HIDEEYES
+	visor_vars_to_toggle = NONE //we don't actually toggle anything we just set it
 	tint = 3 //this'll get reset, but it won't handle vision updates properly otherwise
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
@@ -33,7 +33,7 @@
 		var/mob/living/carbon/human/H = loc
 		if(src == H.glasses && !up)
 			if(H.disabilities & BLIND)
-				H << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>"
+				H << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>"
 				return
 			if(blind_cultist(H))
 				return
@@ -59,13 +59,15 @@
 /obj/item/clothing/glasses/wraith_spectacles/proc/set_vision_vars(update_vision)
 	invis_view = SEE_INVISIBLE_LIVING
 	tint = 0
+	vision_flags = NONE
+	darkness_view = 2
 	if(!up)
 		if(is_servant_of_ratvar(loc))
 			invis_view = SEE_INVISIBLE_NOLIGHTING
 			vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
+			darkness_view = 3
 		else
 			tint = 3
-			vision_flags = NONE
 	if(update_vision && iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.head_update(src, forced = 1)
@@ -75,7 +77,7 @@
 	if(slot != slot_glasses || up)
 		return
 	if(user.disabilities & BLIND)
-		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
+		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>" //Ratvar with the sick burns yo
 		return
 	if(blind_cultist(user)) //Cultists instantly go blind
 		return

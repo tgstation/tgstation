@@ -283,27 +283,20 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
-	var/list/names = list()
-	var/list/pois = list()
 	var/list/namecounts = list()
-
+	var/list/pois = list()
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
 			if(!isbot(M) && !istype(M, /mob/camera/))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
+		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
+
+		if(M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if (M.stat == 2)
-			if(istype(M, /mob/dead/observer/))
+		if(M.stat == DEAD)
+			if(isobserver(M))
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
@@ -313,14 +306,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		for(var/atom/A in poi_list)
 			if(!A || !A.loc)
 				continue
-			var/name = A.name
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			pois[name] = A
+			pois[avoid_assoc_duplicate_keys(A.name, namecounts)] = A
 
 	return pois
 //Orders mobs by type then by name
@@ -769,32 +755,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loc = loc.loc
 	return null
 
-//Quick type checks for some tools
-var/global/list/common_tools = list(
-/obj/item/stack/cable_coil,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wirecutters,
-/obj/item/device/multitool,
-/obj/item/weapon/crowbar)
-
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/is_pointed(obj/item/W)
-	if(istype(W, /obj/item/weapon/pen))
-		return 1
-	if(istype(W, /obj/item/weapon/screwdriver))
-		return 1
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		return 1
-	if(istype(W, /obj/item/weapon/kitchen/fork))
-		return 1
-	else
-		return 0
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
@@ -956,7 +916,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 /proc/IsValidSrc(datum/D)
 	if(istype(D))
-		return !qdeleted(D)
+		return !QDELETED(D)
 	return 0
 
 
@@ -1196,16 +1156,14 @@ B --><-- A
 		C.proximity_checkers[A] = TRUE
 	return L
 
-/proc/remove_from_proximity_list(atom/A, range)
-	var/turf/T = get_turf(A)
+/proc/remove_from_proximity_list(atom/A, range, oldloc = null)
+	var/turf/T = get_turf(oldloc ? oldloc : A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
 		if (!C.proximity_checkers)
 			continue
 		C.proximity_checkers.Remove(A)
-		UNSETEMPTY(C.proximity_checkers)
-
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
@@ -1221,7 +1179,6 @@ B --><-- A
 		if (!D.proximity_checkers)
 			continue
 		D.proximity_checkers.Remove(checker)
-		UNSETEMPTY(D.proximity_checkers)
 	for(var/E in O)
 		var/turf/F = E
 		LAZYINITLIST(F.proximity_checkers)
@@ -1299,16 +1256,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
-	. = round(1*DELTA_CALC)
-	sleep(world.tick_lag)
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += round(2*DELTA_CALC)
-		sleep(world.tick_lag*2*DELTA_CALC)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += round(4*DELTA_CALC)
-			sleep(world.tick_lag*4*DELTA_CALC)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
+	. = 0
+	var/i = 1
+	do
+		. += round(i*DELTA_CALC)
+		sleep(i*world.tick_lag*DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
@@ -1326,31 +1281,12 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		return
 
 	C.color = flash_color
-	spawn(0)
-		animate(C, color = initial(C.color), time = flash_time)
+	animate(C, color = initial(C.color), time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
-#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, TIMER_NORMAL, item)
-
-/proc/check_for_cleanbot_bug()
-	var/static/admins_warned //bet you didn't know you could do this!
-	var/icon/Icon_test = icon('icons/BadAss.dmi')
-	if(!istype(Icon_test))
-		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			spawn(25)
-				message_admins(msg)
-		stack_trace(msg)
-	var/sound/Sound_test = sound('sound/misc/null.ogg')
-	if(!istype(Sound_test))
-		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			spawn(25)
-				message_admins(msg)
-		stack_trace(msg)
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_NULL(item) qdel(item); item = null
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1367,3 +1303,93 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
+
+/proc/weightclass2text(var/w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			. = "tiny"
+		if(WEIGHT_CLASS_SMALL)
+			. = "small"
+		if(WEIGHT_CLASS_NORMAL)
+			. = "normal-sized"
+		if(WEIGHT_CLASS_BULKY)
+			. = "bulky"
+		if(WEIGHT_CLASS_HUGE)
+			. = "huge"
+		if(WEIGHT_CLASS_GIGANTIC)
+			. = "gigantic"
+		else
+			. = ""
+
+//can a window be here, or is there a window blocking it?
+/proc/valid_window_location(turf/T, dir_to_check)
+	if(!T)
+		return FALSE
+	for(var/obj/O in T)
+		if(istype(O, /obj/machinery/door/window) && (O.dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR))
+			return FALSE
+		if(istype(O, /obj/structure/windoor_assembly))
+			var/obj/structure/windoor_assembly/W = O
+			if(W.ini_dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+		if(istype(O, /obj/structure/window))
+			var/obj/structure/window/W = O
+			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+	return TRUE
+
+//WHATEVER YOU USE THIS FOR MUST BE SANITIZED TO SHIT, IT USES SHELL
+//It also sleeps
+
+//Set this to TRUE before calling
+//This prevents RCEs from badmins
+//kevinz000 if you touch this I will hunt you down
+var/valid_HTTPSGet = FALSE
+/proc/HTTPSGet(url)
+	if(findtext(url, "\""))
+		valid_HTTPSGet = FALSE
+
+	if(!valid_HTTPSGet)
+		if(usr)
+			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
+		else
+			CRASH("Invalid HTTPSGet call on: [url]")
+	valid_HTTPSGet = FALSE
+
+	//"This has got to be the ugliest hack I have ever done"
+	//warning, here be dragons
+	/*
+						|  @___oo
+				/\  /\   / (__,,,,|
+				) /^\) ^\/ _)
+				)   /^\/   _)
+				)   _ /  / _)
+			/\  )/\/ ||  | )_)
+		<  >      |(,,) )__)
+			||      /    \)___)\
+			| \____(      )___) )___
+			\______(_______;;; __;;;
+		*/
+	var/temp_file = "HTTPSGetOutput.txt"
+	var/command 
+	if(world.system_type == MS_WINDOWS)
+		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
+	else if(world.system_type == UNIX)
+		command = "wget -O [temp_file] [url]"
+	else
+		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
+
+	world.log << "HTTPSGet: [url]"
+	var/result = shell(command)
+	if(result != 0)
+		world.log << "Download failed: shell exited with code: [result]"
+		return
+
+	var/f = file(temp_file)
+	if(!f)
+		world.log << "Download failed: Temp file not found"
+		return
+
+	. = file2text(f)
+	f = null
+	fdel(temp_file)

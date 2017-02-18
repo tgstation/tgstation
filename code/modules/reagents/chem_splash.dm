@@ -46,25 +46,30 @@
 					turflist.Remove(T)
 					turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
 			for(var/turf/T in turflist)
-				if(accessible[T]) continue
+				if(accessible[T])
+					continue
 				for(var/thing in T.GetAtmosAdjacentTurfs(alldir = TRUE))
 					var/turf/NT = thing
-					if(!(NT in accessible)) continue
-					if(!(get_dir(T,NT) in cardinal)) continue
+					if(!(NT in accessible))
+						continue
+					if(!(get_dir(T,NT) in cardinal))
+						continue
 					accessible[T] = 1
 					break
 		var/list/reactable = accessible
 		for(var/turf/T in accessible)
 			for(var/atom/A in T.GetAllContents())
-				if(!(A in viewable)) continue
+				if(!(A in viewable))
+					continue
 				reactable |= A
 			if(extra_heat >= 300)
 				T.hotspot_expose(extra_heat*2, 5)
 		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
 			return
-		var/fraction = 0.5/accessible.len // In a 100u mix. A small grenade spreads ~1.5u units per affected tile. A large grenade spreads ~0.75u, and a bomb spreads ~0.4u
 		for(var/thing in reactable)
 			var/atom/A = thing
+			var/distance = max(1,get_dist(A, epicenter))
+			var/fraction = 0.5/(2 ** distance) //50/25/12/6... for a 200u splash, 25/12/6/3... for a 100u, 12/6/3/1 for a 50u
 			splash_holder.reaction(A, TOUCH, fraction)
 
 	qdel(splash_holder)

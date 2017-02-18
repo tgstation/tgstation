@@ -45,124 +45,37 @@
 			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 
 		var/isboss = (user.mind == gang.bosses[1])
-		var/points = gang.points
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "Gang Influence: <B>[points]</B><br>"
-		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
+		dat += "Gang Influence: <B>[gang.points]</B><br>"
+		dat += "Time until Influence grows: <B>[(gang.points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
-		dat += "<B>Gangtool Functions:</B><br>"
 
-		dat += "<a href='?src=\ref[src];choice=ping'>Send Message to Gang</a><br>"
-		if(outfits > 0)
-			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
-		else
-			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
-		if(isboss)
-			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 
-		dat += "<br>"
-		dat += "<B>Purchase Weapons:</B><br>"
+		for(var/cat in gang.item_category_list)
+			dat += "<b>[cat]</b><br>"
+			for(var/V in gang.item_category_list[cat])
+				var/datum/gang_item/G = V
+				if(!G.can_see(user, gang, src))
+					continue
 
-		/////////////////
-		// NORMAL GANG //
-		/////////////////
+				var/cost = G.get_cost_display(user, gang, src)
+				if(cost)
+					dat += cost + " "
 
-		if(gang.fighting_style == "normal")
-			dat += "(10 Influence) "
-			if(points >= 10)
-				dat += "<a href='?src=\ref[src];purchase=switchblade'>Switchblade</a><br>"
-			else
-				dat += "Switchblade<br>"
-
-			dat += "(25 Influence) "
-			if(points >= 25)
-				dat += "<a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
-			else
-				dat += "10mm Pistol<br>"
-
-			dat += "&nbsp;&#8627;(10 Influence) "
-			if(points >= 10)
-				dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
-			else
-				dat += "10mm Ammo<br>"
-
-			dat += "(60 Influence) "
-			if(points >= 60)
-				dat += "<a href='?src=\ref[src];purchase=uzi'>Uzi SMG</a><br>"
-			else
-				dat += "Uzi SMG<br>"
-
-			dat += "&nbsp;&#8627;(40 Influence) "
-			if(points >= 40)
-				dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
-			else
-				dat += "Uzi Ammo<br>"
-
-			dat += "(1 Influence) "
-			if(points >=1)
-				dat += "<a href='?src=\ref[src];purchase=necklace'>Dope Necklace</a><br>"
-			else
-				dat += "Dope Necklace<br>"
-
+				var/toAdd = G.get_name_display(user, gang, src)
+				if(G.can_buy(user, gang, src))
+					toAdd = "<a href='?src=\ref[src];purchase=[G.id]'>[toAdd]</a>"
+				dat += toAdd
+				var/extra = G.get_extra_info(user, gang, src)
+				if(extra)
+					dat += "<br><i>[extra]</i>"
+				dat += "<br>"
 			dat += "<br>"
 
-		////////////////////////
-		// STANDARD EQUIPMENT //
-		////////////////////////
-
-		dat += "<B>Purchase Equipment:</B><br>"
-
-		dat += "(5 Influence) "
-		if(points >= 5)
-			dat += "<a href='?src=\ref[src];purchase=spraycan'>Territory Spraycan</a><br>"
-		else
-			dat += "Territory Spraycan<br>"
-
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=C4'>C4 Explosive</a><br>"
-		else
-			dat += "C4 Explosive<br>"
-
-		dat += "(15 Influence) "
-		if(points >= 15)
-			dat += "<a href='?src=\ref[src];purchase=implant'>Implant Breaker</a><br>"
-		else
-			dat += "Implant Breaker<br>"
-
-		if(free_pen)
-			dat += "(GET ONE FREE) "
-		else
-			dat += "(50 Influence) "
-		if((points >= 50)||free_pen)
-			dat += "<a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
-		else
-			dat += "Recruitment Pen<br>"
-
-		var/gangtooltext = "Spare Gangtool"
-		if(isboss && gang.bosses.len < 3)
-			gangtooltext = "Promote a Gangster"
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=gangtool'>[gangtooltext]</a><br>"
-		else
-			dat += "[gangtooltext]<br>"
-
-		if(!gang.dom_attempts)
-			dat += "(Out of stock) Station Dominator<br>"
-		else
-			dat += "(30 Influence) "
-			if(points >= 30)
-				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
-			else
-				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(determine_domination_time(gang)/60,0.1)] minutes)</i><br>"
-
-	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.2", 340, 625)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.4", 340, 625)
 	popup.set_content(dat)
 	popup.open()
 
@@ -181,126 +94,10 @@
 		return
 
 	if(href_list["purchase"])
-		var/pointcost
-		var/item_type
-		switch(href_list["purchase"])
-			if("spraycan")
-				if(gang.points >= 5)
-					item_type = /obj/item/toy/crayon/spraycan/gang
-					pointcost = 5
-			if("switchblade")
-				if(gang.points >= 10)
-					item_type = /obj/item/weapon/switchblade
-					pointcost = 10
-			if("necklace")
-				if(gang.points >=1)
-					item_type = /obj/item/clothing/neck/necklace/dope
-					pointcost = 1
-			if("pistol")
-				if(gang.points >= 25)
-					item_type = /obj/item/weapon/gun/ballistic/automatic/pistol
-					pointcost = 25
-			if("10mmammo")
-				if(gang.points >= 10)
-					item_type = /obj/item/ammo_box/magazine/m10mm
-					pointcost = 10
-			if("uzi")
-				if(gang.points >= 60)
-					item_type = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
-					pointcost = 60
-			if("9mmammo")
-				if(gang.points >= 40)
-					item_type = /obj/item/ammo_box/magazine/uzim9mm
-					pointcost = 40
-			if("scroll")
-				if(gang.points >= 30)
-					item_type = /obj/item/weapon/sleeping_carp_scroll
-					usr << "<span class='notice'>Anyone who reads the <b>sleeping carp scroll</b> will learn secrets of the sleeping carp martial arts style.</span>"
-					pointcost = 30
-			if("wrestlingbelt")
-				if(gang.points >= 20)
-					item_type = /obj/item/weapon/storage/belt/champion/wrestling
-					usr << "<span class='notice'>Anyone wearing the <b>wresting belt</b> will know how to be effective with wrestling.</span>"
-					pointcost = 20
-			if("bostaff")
-				if(gang.points >= 10)
-					item_type = /obj/item/weapon/twohanded/bostaff
-					pointcost = 10
-			if("C4")
-				if(gang.points >= 10)
-					item_type = /obj/item/weapon/grenade/plastic/c4
-					pointcost = 10
-			if("pen")
-				if((gang.points >= 50) || free_pen)
-					item_type = /obj/item/weapon/pen/gang
-					usr << "<span class='notice'>More <b>recruitment pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
-					if(free_pen)
-						free_pen = 0
-					else
-						pointcost = 50
-			if("implant")
-				if(gang.points >= 15)
-					item_type = /obj/item/weapon/implanter/gang
-					usr << "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
-					pointcost = 15
-			if("gangtool")
-				if(gang.points >= 10)
-					if(usr.mind == gang.bosses[1])
-						item_type = /obj/item/device/gangtool/spare/lt
-						if(gang.bosses.len < 3)
-							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
-					else
-						item_type = /obj/item/device/gangtool/spare
-					pointcost = 10
-			if("dominator")
-				if(!gang.dom_attempts)
-					return
+		var/datum/gang_item/G = gang.item_list[href_list["purchase"]]
+		if(G && G.can_buy(usr, gang, src))
+			G.purchase(usr, gang, src, FALSE)
 
-				var/area/usrarea = get_area(usr.loc)
-				var/usrturf = get_turf(usr.loc)
-				if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
-					usr << "<span class='warning'>You can only use this on the station!</span>"
-					return
-
-				for(var/obj/obj in usrturf)
-					if(obj.density)
-						usr << "<span class='warning'>There's not enough room here!</span>"
-						return
-
-				if(usrarea.type in gang.territory|gang.territory_new)
-					if(gang.points >= 30)
-						item_type = /obj/machinery/dominator
-						usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
-						pointcost = 30
-				else
-					usr << "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>"
-					return
-
-		if(item_type)
-			gang.points -= pointcost
-			if(ispath(item_type))
-				var/obj/purchased = new item_type(get_turf(usr),gang)
-				var/mob/living/carbon/human/H = usr
-				H.put_in_hands(purchased)
-				if(pointcost)
-					gang.message_gangtools("A [href_list["purchase"]] was purchased by [usr.real_name] for [pointcost] Influence.")
-			log_game("A [href_list["purchase"]] was purchased by [key_name(usr)] ([gang.name] Gang) for [pointcost] Influence.")
-
-		else
-			usr << "<span class='warning'>Not enough influence.</span>"
-
-	else if(href_list["choice"])
-		switch(href_list["choice"])
-			if("recall")
-				if(usr.mind == gang.bosses[1])
-					recall(usr)
-			if("outfit")
-				if(outfits > 0)
-					if(gang.gang_outfit(usr,src))
-						usr << "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>"
-						outfits -= 1
-			if("ping")
-				ping_gang(usr)
 	attack_self(usr)
 
 

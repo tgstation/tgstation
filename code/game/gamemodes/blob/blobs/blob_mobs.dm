@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
-			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
+			var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
@@ -133,7 +133,7 @@
 	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
-	icon_state = "zombie_s"
+	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays
@@ -240,15 +240,11 @@
 		if(damagesources)
 			for(var/i in 1 to damagesources)
 				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
-			var/list/viewing = list()
-			for(var/mob/M in viewers(src))
-				if(M.client)
-					viewing += M.client
 			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 			I.appearance_flags = RESET_COLOR
 			if(overmind)
 				I.color = overmind.blob_reagent_datum.complementary_color
-			flick_overlay(I, viewing, 8)
+			flick_overlay_view(I, src, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

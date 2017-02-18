@@ -26,7 +26,7 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/recycler
-	name = "circuit board (Recycler)"
+	name = "Recycler (Machine Board)"
 	build_path = /obj/machinery/recycler
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -152,7 +152,7 @@ var/const/SAFETY_COOLDOWN = 100
 	safety_mode = TRUE
 	update_icon()
 	L.loc = src.loc
-	addtimer(src, "reboot", SAFETY_COOLDOWN)
+	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
@@ -183,7 +183,7 @@ var/const/SAFETY_COOLDOWN = 100
 	// Remove and recycle the equipped items
 	if(eat_victim_items)
 		for(var/obj/item/I in L.get_equipped_items())
-			if(L.unEquip(I))
+			if(L.dropItemToGround(I))
 				eat(I, sound=FALSE)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.

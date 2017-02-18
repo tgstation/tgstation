@@ -34,21 +34,22 @@
 	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if(istype(AM, mag_type))
-			if(magazine)
-				user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
-				magazine.dropped()
-				magazine.forceMove(get_turf(src.loc))
-				magazine.update_icon()
-				magazine = null
+			var/obj/item/ammo_box/magazine/oldmag = magazine
+			if(user.transferItemToLoc(AM, src))
+				magazine = AM
+				if(oldmag)
+					user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
+					oldmag.dropped()
+					oldmag.forceMove(get_turf(src.loc))
+					oldmag.update_icon()
+				else
+					user << "<span class='notice'>You insert the magazine into \the [src].</span>"
+				chamber_round()
+				A.update_icon()
+				update_icon()
+				return 1
 			else
-				user << "<span class='notice'>You insert the magazine into \the [src].</span>"
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			chamber_round()
-			A.update_icon()
-			update_icon()
-			return 1
+				user << "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>"
 
 /obj/item/weapon/gun/ballistic/automatic/ui_action_click()
 	burst_select()

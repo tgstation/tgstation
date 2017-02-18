@@ -36,7 +36,7 @@
 	flick("carp_swell", src)
 	//Wait for animation to end
 	sleep(6)
-	if(!src || qdeleted(src))//we got toasted while animating
+	if(!src || QDELETED(src))//we got toasted while animating
 		return
 	//Make space carp
 	var/mob/living/M = new mobtype(get_turf(src))

@@ -51,7 +51,7 @@
 	var/A
 
 	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in teleportlocs
-	if(!src || qdeleted(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
 	var/area/thearea = teleportlocs[A]
 
@@ -67,9 +67,6 @@
 	if(!L.len)
 		user << "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 		return
-
-	if(user && user.buckled)
-		user.buckled.unbuckle_mob(user, force=1)
 
 	user.forceMove(pick(L))
 

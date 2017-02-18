@@ -43,12 +43,12 @@
 			Reset()
 			Draw()
 		sleep(sleep_time)
-
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 
 /datum/beam/proc/End()
-	finished = 1
+	finished = TRUE
 
 
 /datum/beam/proc/Reset()
@@ -131,7 +131,6 @@
 
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)
-	spawn(0)
-		newbeam.Start()
+	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
 	return newbeam
 

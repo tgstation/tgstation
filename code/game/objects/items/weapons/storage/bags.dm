@@ -194,7 +194,7 @@
 			break
 
 	if(!inserted || !S.amount)
-		usr.unEquip(S)
+		usr.dropItemToGround(S)
 		if (usr.client && usr.s_active != src)
 			usr.client.screen -= S
 		S.dropped(usr)

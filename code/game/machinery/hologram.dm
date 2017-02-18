@@ -171,7 +171,7 @@ var/list/holopads = list()
 						var/area/holo_area = get_area(src)
 						var/area/eye_area = get_area(master.eyeobj)
 
-						if(eye_area in holo_area.master.related)
+						if(eye_area in holo_area.related)
 							return TRUE
 
 			clear_holo(master)//If not, we want to get rid of the hologram.
@@ -241,7 +241,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 /obj/item/weapon/circuitboard/machine/holopad
-	name = "circuit board (AI Holopad)"
+	name = "AI Holopad (Machine Board)"
 	build_path = /obj/machinery/holopad
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)

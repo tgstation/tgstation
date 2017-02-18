@@ -20,9 +20,8 @@
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)
-			if(!user.unEquip(I))
+			if(!user.transferItemToLoc(I, src))
 				return
-			I.loc = src
 			grenades += I
 			user << "<span class='notice'>You put the grenade in the grenade launcher.</span>"
 			user << "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>"
@@ -50,4 +49,4 @@
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-	addtimer(F, "prime", 15)
+	addtimer(CALLBACK(F, /obj/item/weapon/grenade.proc/prime), 15)

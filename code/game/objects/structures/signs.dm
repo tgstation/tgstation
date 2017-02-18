@@ -102,7 +102,7 @@
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-							 "<span class='notice'>You attach a blank sign to [T].</span>")
+							 "<span class='notice'>You attach the sign to [T].</span>")
 		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
 		new sign_path(T)
 		user.drop_item()

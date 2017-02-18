@@ -231,8 +231,8 @@
 	toggle_action.Grant(R)
 	return 1
 
-/obj/item/borg/uprgade/selfrepair/dropped()
-	addtimer(src, "check_dropped", 1)
+/obj/item/borg/upgrade/selfrepair/dropped()
+	addtimer(CALLBACK(src, .proc/check_dropped), 1)
 
 /obj/item/borg/upgrade/selfrepair/proc/check_dropped()
 	if(loc != cyborg)
