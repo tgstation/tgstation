@@ -8,8 +8,9 @@
 /obj/effect/particle_effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
-	anchored = 1
+	anchored = FALSE	//Sparks are affected by wind...
 	luminosity = 1
+	is_affected_by_gravity = TRUE
 
 /obj/effect/particle_effect/sparks/New()
 	..()

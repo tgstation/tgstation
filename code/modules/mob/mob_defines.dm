@@ -146,3 +146,4 @@
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
+	var/gravity_turn = 0

@@ -40,7 +40,14 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = 0
+	var/has_gravity = 0				//Has gravity innately/no matter what. Ignores gravity generator gravity direction.
+	var/list/contents_affected_by_gravity = list()
+	var/gravity_generator = FALSE	//Does it have gravity from a gravgen on the zlevel?
+	var/gravity_overriding = FALSE	//Still directionally move things despite not having gravity.
+	var/gravity_direction = FALSE	//False/cardinals
+	var/gravity_strength = 1
+	var/gravity_throwing = 0
+	var/gravity_stunning = 0
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -117,11 +124,15 @@ var/list/teleportlocs = list()
 	..()
 
 	power_change()		// all machines set to current power level, also updates icon
+	if(SSgravity)
+		SSgravity.areas += src
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(SSgravity)
+		SSgravity.areas -= src
 	return ..()
 
 /area/proc/poweralert(state, obj/source)
@@ -409,8 +420,48 @@ var/list/teleportlocs = list()
 		if(ENVIRON)
 			used_environ += amount
 
+/area/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == "gravity_direction" || var_name == "gravity_strength" || var_name == "gravity_stunning" || var_name == "gravity_throwing" || var_name == "gravity_override")
+		update_all_gravity()
+
+/area/SDQL_update(var_name, new_value)
+	. = ..()
+	if(var_name == "gravity_direction" || var_name == "gravity_strength" || var_name == "gravity_stunning" || var_name == "gravity_throwing" || var_name == "gravity_override")
+		update_all_gravity()
+
+/area/proc/update_all_gravity()
+	for(var/atom/movable/AM in contents)
+		update_gravity(AM, AM.is_affected_by_gravity)
+		CHECK_TICK
+	gravity_throwing = FALSE
+	gravity_stunning = FALSE
+
+/area/proc/update_gravity(atom/movable/AM, yes)
+	if(yes)
+		AM.gravity_direction = gravity_direction
+		AM.gravity_strength = gravity_strength
+		AM.gravity_stunning = gravity_stunning
+		AM.gravity_throwing = gravity_throwing
+		AM.gravity_override = gravity_overriding
+		AM.current_gravity_area = src
+		contents_affected_by_gravity[AM] = AM
+	else
+		AM.gravity_direction = initial(AM.gravity_direction)
+		AM.gravity_strength = initial(AM.gravity_strength)
+		AM.gravity_stunning = FALSE
+		AM.gravity_throwing = FALSE
+		AM.gravity_override = initial(AM.gravity_override)
+		AM.current_gravity_area = null
+		if(contents_affected_by_gravity[AM])
+			contents_affected_by_gravity -= AM
 
 /area/Entered(A)
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		if(AM.is_affected_by_gravity)
+			update_gravity(AM, TRUE)
+
 	if(!isliving(A))
 		return
 
@@ -442,7 +493,7 @@ var/list/teleportlocs = list()
 	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	else if(A && A.has_gravity) // Areas which always has gravity
+	else if(A && (A.has_gravity || A.gravity_generator)) // Areas which always has gravity
 		return 1
 	else
 		// There's a gravity generator on our z level
@@ -459,3 +510,7 @@ var/list/teleportlocs = list()
 	valid_territory = 0
 	blob_allowed = 0
 	addSorted()
+
+/area/Exited(atom/movable/AM, newloc)
+	. = ..(AM, newloc)
+	update_gravity(AM, FALSE)

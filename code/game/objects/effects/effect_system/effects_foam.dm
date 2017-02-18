@@ -5,7 +5,7 @@
 	name = "foam"
 	icon_state = "foam"
 	opacity = 0
-	anchored = 1
+	anchored = FALSE	//It's a corporeal effect!
 	density = 0
 	layer = WALL_OBJ_LAYER
 	mouse_opacity = 0
@@ -18,6 +18,7 @@
 	/turf/open/space/transit,
 	/turf/open/chasm,
 	/turf/open/floor/plating/lava))
+	is_affected_by_gravity = TRUE
 
 
 /obj/effect/particle_effect/foam/metal

@@ -26,6 +26,14 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
+/mob/living/gravity_act()
+	. = ..(moving = FALSE)	//We handle movement here.
+
+/mob/living/sync_gravity()
+	. = ..()
+	gravity_turn = dir2angle(gravity_direction)
+	transform = turn(transform, gravity_turn)
+
 /mob/living/Destroy()
 	if(ranged_ability)
 		ranged_ability.remove_ranged_ability(src)

@@ -26,6 +26,7 @@
 	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
 	var/coredirs = 0
 	var/dirs = 0
+	is_affected_by_gravity = FALSE
 
 
 /obj/machinery/am_shielding/New(loc)

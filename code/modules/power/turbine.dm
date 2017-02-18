@@ -40,6 +40,7 @@
 	var/capacity = 1e6
 	var/comp_id = 0
 	var/efficiency
+	is_affected_by_gravity = FALSE
 
 
 /obj/machinery/power/turbine
@@ -56,6 +57,7 @@
 	var/turf/outturf
 	var/lastgen
 	var/productivity = 1
+	is_affected_by_gravity = FALSE
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
@@ -65,6 +67,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
+	is_affected_by_gravity = FALSE
 
 // the inlet stage of the gas turbine electricity generator
 

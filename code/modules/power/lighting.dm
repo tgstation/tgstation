@@ -36,6 +36,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
+	is_affected_by_gravity = FALSE
 
 	var/stage = 1
 	var/fixture_type = "tube"
