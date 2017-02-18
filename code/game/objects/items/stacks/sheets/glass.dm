@@ -197,15 +197,16 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 			if(!istype(O))
 				return
 			var/feetCover = (H.wear_suit && H.wear_suit.body_parts_covered & FEET) || (H.w_uniform && H.w_uniform.body_parts_covered & FEET)
-			if(!H.shoes && !feetCover)
-				H.apply_damage(5, BRUTE, picked_def_zone)
-				if(cooldown < world.time - 10) //cooldown to avoid message spam.
-					if(!H.incapacitated())
-						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
-								"<span class='userdanger'>You step in the broken glass!</span>")
-					else
-						H.visible_message("<span class='danger'>[H] slides on the broken glass!</span>", \
-								"<span class='userdanger'>You slide on the broken glass!</span>")
+			if(H.shoes || feetCover || H.movement_type & FLYING || H.buckled)
+				return
+			H.apply_damage(5, BRUTE, picked_def_zone)
+			if(cooldown < world.time - 10) //cooldown to avoid message spam.
+				if(!H.incapacitated())
+					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
+							"<span class='userdanger'>You step in the broken glass!</span>")
+				else
+					H.visible_message("<span class='danger'>[H] slides on the broken glass!</span>", \
+							"<span class='userdanger'>You slide on the broken glass!</span>")
 
-					cooldown = world.time
-				H.Weaken(3)
+				cooldown = world.time
+			H.Weaken(3)

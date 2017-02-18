@@ -38,7 +38,7 @@
 			if(istype(A,/obj/machinery/atmospherics))
 				atmos_machines += A
 
-	SSobj.InitializeAtoms(atoms)
+	SSatoms.InitializeAtoms(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 

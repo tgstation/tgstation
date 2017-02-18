@@ -141,7 +141,7 @@ other types of metals and chemistry for reagents).
 	id = "tech_disk_super_adv"
 	req_tech = list("programming" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=100, MAT_GOLD=100)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=100, MAT_GOLD=100, MAT_BLUESPACE = 100)
 	build_path = /obj/item/weapon/disk/tech_disk/super_adv
 	category = list("Electronics")
 
@@ -290,7 +290,7 @@ other types of metals and chemistry for reagents).
 	id = "bag_holding"
 	req_tech = list("bluespace" = 7, "materials" = 5, "engineering" = 5, "plasmatech" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
+	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250, MAT_BLUESPACE = 2000)
 	build_path = /obj/item/weapon/storage/backpack/holding
 	category = list("Bluespace Designs")
 
@@ -480,7 +480,7 @@ other types of metals and chemistry for reagents).
 	name = "Night Vision Goggles"
 	desc = "Goggles that let you see through darkness unhindered."
 	id = "night_visision_goggles"
-	req_tech = list("materials" = 4, "magnets" = 5, "plasmatech" = 5, "engineering" = 5)
+	req_tech = list("materials" = 4, "magnets" = 5, "plasmatech" = 4, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
 	build_path = /obj/item/clothing/glasses/night

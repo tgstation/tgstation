@@ -155,7 +155,7 @@
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday)
 	var/time = (world.timeofday - start_timeofday) / 10
-	var/msg = "Initialized [name] subsystem within [time] seconds!"
+	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world << "<span class='boldannounce'>[msg]</span>"
 	log_world(msg)
 	return time

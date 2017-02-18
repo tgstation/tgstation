@@ -170,6 +170,8 @@
 	var/realdate
 	var/map
 	var/persists = TRUE
+	var/list/like_keys = list()
+	var/list/dislike_keys = list()
 
 /obj/structure/chisel_message/New(newloc)
 	..()
@@ -206,13 +208,20 @@
 	var/turf/T = get_turf(src)
 	data["x"] = T.x
 	data["y"] = T.y
-	return data
+	data["like_keys"] = like_keys
+	data["dislike_keys"] = dislike_keys
 
 /obj/structure/chisel_message/proc/unpack(list/data)
 	hidden_message = data["hidden_message"]
 	creator_name = data["creator_name"]
 	creator_key = data["creator_key"]
 	realdate = data["realdate"]
+	like_keys = data["like_keys"]
+	if(!like_keys)
+		like_keys = list()
+	dislike_keys = data["dislike_keys"]
+	if(!dislike_keys)
+		dislike_keys = list()
 
 	var/x = data["x"]
 	var/y = data["y"]
@@ -229,3 +238,64 @@
 		SSpersistence.SaveChiselMessage(src)
 	SSpersistence.chisel_messages -= src
 	. = ..()
+
+/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
+
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "engraved_message", name, 600, 300, master_ui, state)
+		ui.open()
+
+/obj/structure/chisel_message/ui_data(mob/user)
+	var/list/data = list()
+
+	data["hidden_message"] = hidden_message
+	data["realdate"] = SQLtime(realdate)
+	data["num_likes"] = like_keys.len
+	data["num_dislikes"] = dislike_keys.len
+	data["is_creator"] = user.ckey == creator_key
+	data["has_liked"] = (user.ckey in like_keys)
+	data["has_disliked"] = (user.ckey in dislike_keys)
+
+	if(check_rights_for(user.client, R_ADMIN))
+		data["admin_mode"] = TRUE
+		data["creator_key"] = creator_key
+		data["creator_name"] = creator_name
+
+	return data
+
+/obj/structure/chisel_message/ui_act(action, params, datum/tgui/ui)
+	var/mob/user = usr
+	var/is_admin = check_rights_for(user.client, R_ADMIN)
+	var/is_creator = user.ckey == creator_key
+	var/has_liked = (user.ckey in like_keys)
+	var/has_disliked = (user.ckey in dislike_keys)
+
+	switch(action)
+		if("like")
+			if(is_creator)
+				return
+			if(has_disliked)
+				dislike_keys -= user.ckey
+			like_keys |= user.ckey
+			. = TRUE
+		if("dislike")
+			if(is_creator)
+				return
+			if(has_liked)
+				like_keys -= user.ckey
+			dislike_keys |= user.ckey
+			. = TRUE
+		if("neutral")
+			if(is_creator)
+				return
+			dislike_keys -= user.ckey
+			like_keys -= user.ckey
+			. = TRUE
+		if("delete")
+			if(!is_admin)
+				return
+			var/confirm = alert(user, "Confirm deletion of engraved message?", "Confirm Deletion", "Yes", "No")
+			if(confirm == "Yes")
+				persists = FALSE
+				qdel(src)
