@@ -545,7 +545,9 @@ var/list/teleportlocs = list()
 	for(var/obj/machinery/gravity_generator/main/GG in gravity_generators)
 		if(GG.on)
 			for(var/area/A in world)
+				world << "DEBUG: [A] AT Z [A.z]
 				if(A.z == GG.z)
+					world << "<span class='userdanger'>DEBUG: [A] AT Z [Z] WITH GRAVGEN AT Z [GG.z] TURNING ON!</span>"
 					A.gravity_generator = TRUE
 					A.gravity_direction = GG.current_grav_dir
 				CHECK_TICK
