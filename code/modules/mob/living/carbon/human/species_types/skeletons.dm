@@ -13,5 +13,4 @@
 /datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "milk")
 		H.heal_bodypart_damage(1,0, 0)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+		return 0
