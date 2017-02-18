@@ -13,9 +13,9 @@
 */
 
 /area/holodeck/powered(var/chan)
-	if(!master.requires_power)
+	if(!requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(always_unpowered)
 		return 0
 	if(!linked)
 		return 0

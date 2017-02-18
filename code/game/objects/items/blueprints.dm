@@ -146,9 +146,7 @@
 /obj/item/areaeditor/proc/get_area()
 	var/turf/T = get_turf(usr)
 	var/area/A = T.loc
-	A = A.master
 	return A
-
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
 	if(A.outdoors)

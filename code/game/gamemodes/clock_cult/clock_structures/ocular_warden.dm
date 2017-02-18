@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/ocular_warden
 	name = "ocular warden"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
-	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
+	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
 	obj_integrity = 25
@@ -39,7 +39,7 @@
 				user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 			return FAILED_UNFASTEN
 	else
-		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(3, src))
+		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
 			if(!silent)
 				user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
 			return FAILED_UNFASTEN
@@ -114,9 +114,20 @@
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
-		else if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !(L.buckled && (L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))) && \
-		!(L.disabilities & BLIND) && !L.null_rod_check())
-			. += L
+			continue
+		if(is_servant_of_ratvar(L) || (L.disabilities & BLIND) || L.null_rod_check())
+			continue
+		if(L.stat || L.restrained() || L.buckled || L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
+			continue
+		if(ishostile(L))
+			var/mob/living/simple_animal/hostile/H = L
+			if(ismegafauna(H) || (!H.mind && H.AIStatus == AI_OFF))
+				continue
+			if(("ratvar" in H.faction) || ("neutral" in H.faction))
+				continue
+		else if(!L.mind)
+			continue
+		. += L
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))

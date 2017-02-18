@@ -171,7 +171,7 @@ var/list/holopads = list()
 						var/area/holo_area = get_area(src)
 						var/area/eye_area = get_area(master.eyeobj)
 
-						if(eye_area in holo_area.master.related)
+						if(eye_area in holo_area.related)
 							return TRUE
 
 			clear_holo(master)//If not, we want to get rid of the hologram.

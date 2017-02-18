@@ -115,6 +115,7 @@
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "materials" = 6, "plasmatech" = 5)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
 	category = list("Exosuit Modules")
@@ -123,6 +124,7 @@
 	name = "\"Phazon\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "bluespace" = 5, "plasmatech" = 5)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
 	category = list("Exosuit Modules")
@@ -131,6 +133,7 @@
 	name = "\"Phazon\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
 	id = "phazon_targ"
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "magnets" = 5, "plasmatech" = 5)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/targeting
 	category = list("Exosuit Modules")

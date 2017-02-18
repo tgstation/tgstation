@@ -24,6 +24,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
+	var/list/sleptDestroy = list()	//Same as above but these are paths that slept during their Destroy call
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 	// all types that did not respect qdel(A, force=TRUE) and returned one
@@ -168,7 +169,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		del(D)
 	else if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
+		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
+		if(world.time != start_time)
+			SSgarbage.sleptDestroy["[D.type]"]++
 		if(!D)
 			return
 		switch(hint)
@@ -224,7 +228,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/var/gc_destroyed //Time when this object was destroyed.
 
 #ifdef TESTING
-/datum/var/running_find_references 
+/datum/var/running_find_references
 /datum/var/last_find_references = 0
 
 /datum/verb/find_refs()
@@ -333,7 +337,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				else
 					DoSearchVar(variable, "[Xname]: [varname]")
 #endif
-	else if(islist(X)) 
+	else if(islist(X))
 		if(src in X)
 			testing("Found [src.type] \ref[src] in list [Xname].")
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -346,8 +350,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
-	SearchVar(last_irc_status)
-	SearchVar(inerror)
 	SearchVar(failed_db_connections)
 	SearchVar(nextmap)
 	SearchVar(mapchanging)
@@ -685,8 +687,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(wire_colors)
 	SearchVar(wire_color_directory)
 	SearchVar(wire_name_directory)
-	SearchVar(possiblethemes)
-	SearchVar(max_secret_rooms)
 	SearchVar(blood_splatter_icons)
 	SearchVar(all_radios)
 	SearchVar(radiochannels)

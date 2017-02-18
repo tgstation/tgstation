@@ -1,6 +1,6 @@
 //Returns the world time in english
 /proc/worldtime2text()
-	return gameTimestamp("hh:mm")
+	return gameTimestamp("hh:mm:ss")
 
 /proc/time_stamp(format = "hh:mm:ss")
 	return time2text(world.timeofday, format)
@@ -21,8 +21,10 @@
 			//return 1
 
 //returns timestamp in a sql and ISO 8601 friendly format
-/proc/SQLtime()
-	return time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
+/proc/SQLtime(timevar)
+	if(!timevar)
+		timevar = world.realtime
+	return time2text(timevar, "YYYY-MM-DD hh:mm:ss")
 
 
 /var/midnight_rollovers = 0

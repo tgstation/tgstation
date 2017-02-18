@@ -105,7 +105,7 @@
 	density = TRUE
 	speed = 1
 	ventcrawler = VENTCRAWLER_NONE
-	faction = list("ratvar")
+	faction = list("neutral", "ratvar")
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"

@@ -116,3 +116,4 @@ var/list/lighting_update_overlays  = list() // List of lighting overlays queued 
 #undef STAGE_SOURCES
 #undef STAGE_CORNERS
 #undef STAGE_OVERLAYS
+

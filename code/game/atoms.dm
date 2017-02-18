@@ -34,7 +34,7 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	var/do_initialize = SSobj.initialized
+	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSOBJ)
 		Initialize(do_initialize == INITIALIZATION_INNEW_MAPLOAD)
 

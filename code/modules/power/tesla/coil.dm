@@ -92,12 +92,10 @@
 	last_zap = world.time
 	var/coeff = (20 - ((input_power_multiplier - 1) * 3))
 	coeff = max(coeff, 10)
-	var/shock_coeff = (4 - (input_power_multiplier - 2))
-	shock_coeff = max(shock_coeff, 2)
-	var/power = (powernet.avail/coeff)
+	var/power = (powernet.avail/2)
 	add_load(power)
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
-	tesla_zap(src, 10, power/shock_coeff)
+	tesla_zap(src, 10, power/(coeff/2))
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
