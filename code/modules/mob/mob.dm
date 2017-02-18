@@ -251,7 +251,7 @@ var/next_mob_id = 0
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
-		if(client.eye != src)
+		if(client.eye && client.eye != src)
 			var/atom/AT = client.eye
 			AT.get_remote_view_fullscreens(src)
 		else
