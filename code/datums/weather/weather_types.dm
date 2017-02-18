@@ -99,6 +99,9 @@
 		var/thermal_protection = H.get_thermal_protection()
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 			return
+	var/obj/structure/ash_catcher/A = locate() in get_turf(L)
+	if(A)
+		return
 	L.adjustFireLoss(4)
 
 /datum/weather/ash_storm/emberfall //Emberfall: An ash storm passes by, resulting in harmless embers falling like snow. 10% to happen in place of an ash storm.

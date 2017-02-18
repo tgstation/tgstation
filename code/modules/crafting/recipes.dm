@@ -400,6 +400,19 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/ash_catcher
+	name = "Ash Catcher"
+	result = /obj/item/ash_catcher
+	time = 50
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1,
+				/obj/item/stack/rods = 4)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/ash_catcher/alternate //For primitive lavaland roles i.e. ash walkers
+	name = "Ash Catcher (Bone)"
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1,
+				/obj/item/stack/sheet/bone = 4)
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden bike horn"
 	result = /obj/item/weapon/bikehorn/golden
