@@ -311,7 +311,8 @@ atom/proc/animate_atom_living(var/mob/living/owner = null)
 				S.atom_colours = P.atom_colours.Copy()
 				if(L.mind)
 					L.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
+					if(owner)
+						S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>"
 				P.loc = S
 				return
 		else
