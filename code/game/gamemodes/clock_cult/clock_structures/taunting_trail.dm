@@ -38,11 +38,6 @@
 	playsound(src, 'sound/items/Welder.ogg', 50, 1)
 
 /obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover, /obj/item/projectile))
-		var/obj/item/projectile/P = mover
-		if(P.nodamage || !P.damage || P.damage_type == STAMINA)
-			take_damage(max_integrity)
-			return FALSE
 	return TRUE
 
 /obj/structure/destructible/clockwork/taunting_trail/Crossed(atom/movable/AM)
