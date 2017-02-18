@@ -48,7 +48,7 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 
 #define MAX_COMPONENTS_BEFORE_RAND (10*LOWER_PROB_PER_COMPONENT) //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
 
-#define GLOBAL_CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
+#define GLOBAL_CLOCKWORK_GENERAL_COOLDOWN 3000 //how long globally-affecting clockwork generals go on cooldown after use, defaults to 5 minutes
 
 #define CLOCKWORK_GENERAL_COOLDOWN 2000 //how long clockwork generals go on cooldown after use, defaults to 3 minutes 20 seconds
 
