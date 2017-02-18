@@ -172,6 +172,135 @@
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
 
+/obj/item/weapon/melee/classic_baton/telescopic/energy
+	name = "telescopic energy baton"
+	desc = "An advanced melee weapon that self-generates energy through ambiant electromagnetic fields. While this is extremely slow and weak, it is enough to charge the device to output an incapacitating shock when used. \
+		The downside is, its power mechanism takes the space of a button-lock, so it can not be used when completely discharged, and always stuns when active."
+	icon_state = "telebaton-energy_0"
+	var/hitcost = 100
+	var/energy = 1500
+	var/maxenergy = 1500
+	var/rechargeamt = 100
+	var/initial_stunamt = 1
+	var/initial_damage = 2
+	var/final_stunamt = 5
+	var/final_damage = 2
+	var/hit_combo = 5
+	var/current_combo = 0
+	var/hit_combo_clickdelay = 3
+	var/unlock_ticks = 2
+	var/unlock_tick = 0
+	var/hit_combo_interrupt_pull = TRUE
+	var/normal_clickdelay = 20
+	var/mob/living/locked = null
+	hitsound = 'sound/weapons/shockhit.ogg'
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/New()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/process()
+	energy = Clamp(energy + rechargeamt, 0, maxenergy)
+	if(locked)
+		unlock_tick++
+		if(unlock_tick == unlock_ticks)
+			current_combo = 0
+			locked = null
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/attack_self(mob/user)
+	if(energy < hitcost)
+		user << "<span class='warning'>The [src] does not have enough energy to extend!</span>"
+		return FALSE
+	if(on)
+		retract(user)
+	else
+		extend(user)
+	add_fingerprint(user)
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/proc/extend(mob/living/user = null)
+	icon_state = "telebaton-energy_1"
+	item_state = "telebaton-energy"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	attack_verb = list("smacked", "struck", "knocks over", "whacks")
+	playsound(src.loc, 'sound/weapons/ebatonextend.ogg', 50, 1)
+	on = TRUE
+	if(user)
+		user << "<span class ='warning'>You extend and charge the baton.</span>"
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/proc/retract(mob/living/user = null)
+	icon_state = "telebaton-energy_0"
+	item_state = null
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	attack_verb = list("hit", "poked")
+	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+	on = FALSE
+	if(user)
+		user << "<span class ='notice'>You collapse the baton.</span>"
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/attack(mob/living/target, mob/living/user)
+	if(!on)
+		return ..()
+	add_fingerprint(user)
+	if((CLUMSY in user.disabilities) && prob(50))
+		user << "<span class ='danger'>You club yourself over the head as you simply are too clumsy to be using this advanced weapon.</span>"
+		user.Weaken(3 * force)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, "head")
+		else
+			user.take_bodypart_damage(2*force)
+		return
+	if(iscyborg(target))	//No ninjaing cyborgs.
+		return ..()
+	if(!iscarbon(target))	//No point stunning things that can't be stunned.
+		return ..()
+	if(!locked)
+		locked = target
+	else if(locked != target)
+		locked = target
+		baton_hit(target, user, user.a_intent)
+		user.changeNext_move(normal_clickdelay)
+		return
+	user.changeNext_move(hit_combo_clickdelay)
+	baton_hit(target, user, user.a_intent)
+	energy -= hitcost
+	if(energy < hitcost)
+		retract()
+
+/obj/item/weapon/melee/classic_baton/telescopic/energy/proc/baton_hit(mob/living/carbon/target, mob/living/user, intent)
+	current_combo++
+	if(hit_combo_interrupt_pull && (user.pulling == target))
+		user.stop_pulling()
+	var/attackverb = "stuns"
+	if(current_combo >= hit_combo)
+		target.Weaken(final_stunamt)
+		if(intent == INTENT_HARM)
+			attackverb = "beats"
+			var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+			if(!affecting)
+				affecting = target.bodyparts[1]
+			target.apply_damage(final_damage, damtype, affecting)
+			user.do_attack_animation(target)
+		user.visible_message("<span class='danger'>[user] [attackverb] [target] with the [src]!</span>")
+		locked = null
+		current_combo = 0
+		user.changeNext_move(normal_clickdelay)
+		playsound(user.loc, 'sound/weapons/shockhit.ogg', 50, 1)
+	else
+		target.Weaken(initial_stunamt)
+		if(intent == INTENT_HARM)
+			attackverb = "beats"
+			var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+			if(!affecting)
+				affecting = target.bodyparts[1]
+			user.do_attack_animation(target)
+			target.apply_damage(initial_damage, damtype, affecting)
+		user.visible_message("<span class='danger'>[user] [pick(attack_verb)] [target] with [src]!</span>")
+		playsound(user.loc, 'sound/effects/woodhit.ogg', 50, 1)
+	add_logs(user, target, "[attackverb]", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+
 /obj/item/weapon/melee/supermatter_sword
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
