@@ -294,7 +294,7 @@
 	target.animate_atom_living(firer)
 	..()
 
-atom/proc/animate_atom_living(var/mob/living/owner = null)
+/atom/proc/animate_atom_living(var/mob/living/owner = null)
 	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
