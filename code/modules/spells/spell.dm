@@ -22,7 +22,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
 	if(ranged_clickcd_override >= 0)
-		ranged_ability_user.next_click = world.time + ranged_clickcd_override)
+		ranged_ability_user.next_click = world.time + ranged_clickcd_override
 	else
 		ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
 	ranged_ability_user.face_atom(A)
