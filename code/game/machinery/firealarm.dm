@@ -26,6 +26,7 @@
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	resistance_flags = FIRE_PROOF
+	var/failed_last_reset = FALSE
 
 
 /obj/machinery/firealarm/New(loc, dir, building)
@@ -87,9 +88,18 @@
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(!emagged && detecting && !stat && (temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
+	if(!safe_environment(air))
 		alarm()
 	..()
+
+/obj/machinery/firealarm/proc/safe_environment(datum/gas_mixture/air = null)
+	if(!air)
+		var/turf/open/T = loc
+		if(istype(T))
+			air = T.air
+		else
+			return TRUE	//firealarm in wall
+	return !(!emagged && detecting && !stat && (air.temperature > T0C + 200 || air.temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
 
 /obj/machinery/firealarm/proc/alarm()
 	if(!is_operational())
@@ -105,7 +115,9 @@
 	if(!is_operational())
 		return
 	var/area/A = get_area(src)
-	A.firereset(src)
+	failed_last_reset = !A.firereset(src)
+	if(failed_last_reset)
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 25, 0)
 
 /obj/machinery/firealarm/proc/reset_in(time)
 	addtimer(CALLBACK(src, .proc/reset), time)

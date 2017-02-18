@@ -231,12 +231,18 @@ var/list/teleportlocs = list()
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
+		for(var/obj/machinery/firealarm/F in RA)
+			if(!F.safe_environment())
+				return FALSE
+	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
 			RA.mouse_opacity = 0
 			RA.updateicon()
 			RA.ModifyFiredoors(TRUE)
-
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
+				F.failed_last_reset = FALSE
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)
 	for (var/obj/machinery/computer/station_alert/a in machines)
@@ -247,6 +253,7 @@ var/list/teleportlocs = list()
 		p.cancelAlarm("Fire", src, source)
 
 	STOP_PROCESSING(SSobj, src)
+	return TRUE
 
 /area/process()
 	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
