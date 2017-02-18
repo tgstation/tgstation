@@ -382,7 +382,7 @@
 		return FALSE
 	if(isliving(owner))
 		var/mob/living/L = owner
-		if(!L.can_speak_vocal())
+		if(!L.can_speak_vocal() || L.stat)
 			return FALSE
 	return ..()
 
@@ -424,5 +424,5 @@
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder][linked_marauder.get_alt_name()]</span><span class='sevtug_small'>):</span> [message]"
+			M << "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder] ([linked_marauder.true_name])</span><span class='sevtug_small'>):</span> [message]"
 	return TRUE
