@@ -9,7 +9,6 @@
 	var/list/projectile_var_overrides = list()
 	var/projectile_amount = 1	//Projectiles per cast.
 	var/current_amount = 1	//How many projectiles left.
-	var/clickdelay_override = -1
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -52,10 +51,6 @@
 		return FALSE
 	fire_projectile(user, target)
 	user.newtonian_move(get_dir(U, T))
-	if(clickdelay_override >= 0)
-		user.changeNext_move(clickdelay_override)
-	else
-		user.changeNext_move(CLICK_CD_RANGE)
 	current_amount--
 	if(current_amount <= 0)
 		remove_ranged_ability() //Auto-disable the ability once you run out of bullets.
