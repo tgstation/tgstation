@@ -186,7 +186,7 @@
 			if(do_after(user, 40*I.toolspeed, target = src))
 				//If state was out of frame, put into frame, else do the reverse
 				state = (state == 0 ? 1 : 0)
-				var/msg = "<span class='notice'>You pry the window out of the frame.</span>"
+				msg = "<span class='notice'>You pry the window out of the frame.</span>"
 				if(state == 1)
 					msg = "<span class='notice'>You pry the window into the frame.</span>"
 				to_chat(user, msg)
