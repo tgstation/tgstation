@@ -98,7 +98,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
-/obj/item/New()
+/obj/item/Initialize()
 	if (!materials)
 		materials = list()
 	..()
