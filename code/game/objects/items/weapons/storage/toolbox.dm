@@ -162,7 +162,7 @@
 	item_state = "artistic_toolbox"
 	max_combined_w_class = 20
 	storage_slots = 10
-	w_class = 5 //Holds more than a regular toolbox!
+	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 
 /obj/item/weapon/storage/toolbox/artistic/New()
 	..()
