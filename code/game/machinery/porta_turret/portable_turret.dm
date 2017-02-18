@@ -636,11 +636,7 @@
 				break
 
 	if(!control_area)
-		var/area/CA = get_area(src)
-		if(CA.master && CA.master != CA)
-			control_area = CA.master
-		else
-			control_area = CA
+		control_area = get_area(src)
 
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T

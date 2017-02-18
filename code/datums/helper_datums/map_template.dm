@@ -41,7 +41,7 @@
 				atmos_machines += A
 				continue
 
-	SSobj.InitializeAtoms(atoms)
+	SSatoms.InitializeAtoms(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 	SSair.end_map_load()
@@ -75,7 +75,7 @@
 		. = file(mappath)
 
 	if(!.)
-		world.log << "The file of [src] appears to be empty/non-existent."
+		log_world("The file of [src] appears to be empty/non-existent.")
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T

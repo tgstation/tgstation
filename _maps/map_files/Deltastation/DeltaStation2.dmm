@@ -10196,8 +10196,14 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/orange,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (SOUTHEAST)";
 	icon_state = "intact";
@@ -32365,7 +32371,16 @@
 	},
 /obj/item/clothing/gloves/color/latex,
 /obj/item/device/healthanalyzer,
-/obj/item/weapon/reagent_containers/spray,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = 0;
+	pixel_x = 5;
+	pixel_y = -1
+	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 8
 	},
@@ -34092,9 +34107,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
+/area/maintenance/starboard/fore_starboard_maintenance)
 "bjL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -34112,9 +34125,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
+/area/maintenance/starboard/fore_starboard_maintenance)
 "bjM" = (
 /obj/structure/cable/white{
 	tag = "icon-0-4";
@@ -34882,9 +34893,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
+/area/maintenance/starboard/fore_starboard_maintenance)
 "blg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -34899,9 +34908,7 @@
 	icon_state = "brown";
 	dir = 8
 	},
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
+/area/maintenance/starboard/fore_starboard_maintenance)
 "blh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -34916,9 +34923,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
+/area/maintenance/starboard/fore_starboard_maintenance)
 "bli" = (
 /turf/open/floor/plating,
 /area/quartermaster/miningdock{
@@ -34929,9 +34934,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
+/area/maintenance/starboard/fore_starboard_maintenance)
 "blk" = (
 /obj/structure/cable/white,
 /obj/structure/grille,
@@ -46640,7 +46643,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central)
+/area/maintenance/starboard)
 "bER" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -46650,7 +46653,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/hallway/primary/central)
+/area/maintenance/starboard)
 "bES" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -46658,7 +46661,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central)
+/area/maintenance/starboard)
 "bET" = (
 /obj/structure/cable/white{
 	tag = "icon-2-8";
@@ -46670,7 +46673,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/maintenance/starboard)
 "bEU" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -46690,7 +46693,7 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	tag = "icon-neutral (NORTHEAST)"
 	},
-/area/hallway/primary/central)
+/area/maintenance/starboard)
 "bEW" = (
 /obj/structure/table/wood,
 /obj/item/weapon/clipboard,
@@ -47697,7 +47700,7 @@
 	tag = "icon-plating_warn_side (EAST)";
 	icon_state = "plating_warn_side"
 	},
-/area/hallway/primary/central)
+/area/maintenance/starboard)
 "bGN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -47705,7 +47708,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central)
+/area/maintenance/starboard)
 "bGO" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Detective's Office Maintenance";
@@ -47865,9 +47868,6 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "bHb" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
@@ -47878,14 +47878,13 @@
 	},
 /area/security/brig)
 "bHc" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (SOUTHWEST)";
 	icon_state = "intact";
 	dir = 10
 	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -52217,10 +52216,9 @@
 	},
 /area/hallway/primary/starboard)
 "bOO" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -83411,7 +83409,11 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -87265,7 +87267,11 @@
 "cXU" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/white,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -88558,7 +88564,11 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/folder/white,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/medical/medbay{
@@ -112859,7 +112869,11 @@
 /obj/item/weapon/book/manual/wiki/infections,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
 /obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -118571,6 +118585,14 @@
 	tag = "icon-plasteel_warn_side (WEST)"
 	},
 /area/medical/virology)
+"edh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (NORTH)";
+	icon_state = "brown";
+	dir = 1
+	},
+/area/maintenance/starboard/fore_starboard_maintenance)
 
 (1,1,1) = {"
 aaa
@@ -162625,9 +162647,9 @@ bcU
 bes
 bgg
 bid
-aXb
+aeX
 blf
-aXb
+aeX
 boZ
 boZ
 brQ
@@ -162637,9 +162659,9 @@ bvW
 bxR
 boZ
 boZ
-boZ
+cmX
 bEQ
-boZ
+cmX
 bIG
 bIG
 bIG
@@ -162884,7 +162906,7 @@ bgh
 bie
 bjK
 blg
-aXb
+aeX
 aaa
 aaf
 aaa
@@ -162894,9 +162916,9 @@ bvX
 aaa
 aaf
 aaa
-boZ
+cmX
 bER
-boZ
+cmX
 bIH
 bKL
 bML
@@ -163141,7 +163163,7 @@ bgi
 bif
 bjL
 blh
-aXb
+aeX
 aaa
 bqw
 bqw
@@ -163151,9 +163173,9 @@ bqw
 bqw
 bqw
 aaa
-boZ
+cmX
 bES
-boZ
+cmX
 bII
 bKM
 bMM
@@ -163396,9 +163418,9 @@ bcW
 bev
 bgj
 big
-aXb
-bbO
-aXb
+aeX
+afn
+aeX
 aaf
 bqw
 brR
@@ -163408,7 +163430,7 @@ btj
 bxS
 bqw
 aaf
-boZ
+cmX
 bET
 bGM
 bIJ
@@ -163653,9 +163675,9 @@ bcX
 bew
 bgk
 aXb
-aXb
-bli
-aXb
+aeX
+amC
+aeX
 aaa
 bqw
 brS
@@ -163665,9 +163687,9 @@ bti
 bxT
 bqw
 aaa
-boZ
+cmX
 bER
-boZ
+cmX
 bIK
 bKO
 bMO
@@ -163910,9 +163932,9 @@ bcX
 bex
 bgj
 bih
-aXb
-bar
-aXb
+aeX
+edh
+aeX
 aaa
 bqw
 brT
@@ -163922,9 +163944,9 @@ bvY
 bxU
 bqw
 aaa
-boZ
-bEU
-boZ
+cmX
+coB
+cmX
 bIL
 bKP
 bMP
@@ -164167,9 +164189,9 @@ bcY
 bbF
 bgl
 bii
-aXb
+aeX
 blj
-aXb
+aeX
 aaa
 bqw
 brU
@@ -164179,9 +164201,9 @@ bti
 bxV
 bqw
 aaa
-boZ
-bEU
-boZ
+cmX
+coB
+cmX
 bIG
 bIG
 bIG
@@ -164424,9 +164446,9 @@ bbF
 bbF
 bgm
 bij
-aXb
-aXb
-aXb
+aeX
+aeX
+aeX
 aaf
 bqw
 brV
@@ -164436,7 +164458,7 @@ btj
 brR
 bqw
 aaf
-boZ
+cmX
 bEV
 bGN
 bIM

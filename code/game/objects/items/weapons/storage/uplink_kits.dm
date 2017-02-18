@@ -310,3 +310,8 @@
 /obj/item/weapon/storage/box/hug/reverse_revolver/New()
 	..()
 	new /obj/item/weapon/gun/ballistic/revolver/reverse(src)
+
+/obj/item/weapon/storage/box/syndie_kit/mimery/New()
+	..()
+	new /obj/item/weapon/spellbook/oneuse/mimery_blockade(src)
+	new /obj/item/weapon/spellbook/oneuse/mimery_guns(src)
