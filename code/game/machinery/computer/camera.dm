@@ -156,6 +156,8 @@
 	circuit = null
 	clockwork = TRUE //it'd look very weird
 
+	light_power = 0
+
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
