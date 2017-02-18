@@ -28,8 +28,9 @@
 		var/static/list/flavoured_reagents = list("nutriment", "vitamin")
 		for(var/rid in flavoured_reagents)
 			var/datum/reagent/R = reagents.has_reagent(rid)
+			var/list/new_data = tastes
 			if(istype(R))
-				R.data = tastes
+				R.data = new_data
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
@@ -168,12 +169,15 @@
 						continue contents_loop
 				qdel(A)
 	feedback_add_details("food_made","[type]")
+	world << "[src]"
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
+			world << r_id
 			var/amount = bonus_reagents[r_id]
 			var/list/data
 			if(r_id == "nutriment" || r_id == "vitamin")
 				data = tastes
+				world << "IMPORTING TASTE DATA"
 			reagents.add_reagent(r_id, amount, data)
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
