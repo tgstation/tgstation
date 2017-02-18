@@ -115,15 +115,15 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	if(LAZYLEN(turrets))
 		if(href_list["turrets_power"])
-			for(var/PDT in turrets)
-				var/obj/machinery/porta_turret/aux_base/T = PDT
+			for(var/obj/machinery/porta_turret/aux_base/T in turrets)
 				if(href_list["turrets_power"] == "on")
 					T.on = TRUE
 				else
 					T.on = FALSE
 		if(href_list["single_turret_power"])
 			var/obj/machinery/porta_turret/aux_base/T = locate(href_list["single_turret_power"]) in turrets
-			T.on = !T.on
+			if(istype(T))
+				T.on = !T.on
 
 	updateUsrDialog()
 
