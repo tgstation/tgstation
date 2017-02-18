@@ -232,15 +232,31 @@
 		momentum_increment = 0
 	if(!gravity && !pressure)
 		momentum_increment -= 10
-	switch(dir)
+	momentum_in_direction(momentum_increment, dir)
+
+/obj/item/device/flightpack/proc/momentum_in_direction(amount, direction)
+	switch(direction)
 		if(NORTH)
-			adjust_momentum(0, momentum_increment)
+			adjust_momentum(0, amount)
 		if(SOUTH)
-			adjust_momentum(0, -momentum_increment)
+			adjust_momentum(0, -amount)
 		if(EAST)
-			adjust_momentum(momentum_increment, 0)
+			adjust_momentum(amount, 0)
 		if(WEST)
-			adjust_momentum(-momentum_increment, 0)
+			adjust_momentum(-amount, 0)
+
+/obj/item/device/flightpack/gravity_act(direction = null, strength = 1, throwing = FALSE, stun = 0, override = FALSE)
+	if(!direction)
+		return FALSE
+	if(istype(get_step(wearer, direction), /turf/closed))
+		return FALSE
+	if(throwing)
+		if((strength * 7 >= stabilizer_decay_amount) || !stabilizer)
+			wearer.visible_message("<span class='danger'>[wearer] is jerked towards the new \"ground\" as their flightpack fails to mitigate the gravitational shock.</span")
+			wearer.throw_at(get_edge_target_turf(wearer, direction), ((strength * 20) - (stabilizer_decay_amount * 2)), 1)
+			momentum_in_direction(80, direction)
+	else if(!stabilizer || (strength * 3 > stabilizer_decay_amount))
+		momentum_in_direction(max(0, ((strength * 20) - (stabilizer_decay_amount * 4))), direction)
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()

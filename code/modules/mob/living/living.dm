@@ -17,7 +17,6 @@
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
-
 /mob/living/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -26,17 +25,33 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-/mob/living/gravity_act()
+/mob/living/gravity_act(moving = TRUE)
 	. = ..(moving = FALSE)	//We handle movement here.
+	if(!gravity_direction)	//Downwards/upwards gravity with strengths might be a thing later but for now it does nothing.
+		return FALSE
+	if(istype(get_step(src, gravity_direction), /turf/closed))
+		return FALSE
+	if(!isturf(loc))	//We're not on a turf to be pulled.
+		return FALSE
+	if(movement_type & FLYING)
+		return FALSE	//Flying mob, resists gravitational pull.
+	if(!has_gravity() && !gravity_override)
+		return FALSE
+	if(gravity_throwing)
+		throw_at(get_edge_target_turf(src, gravity_direction), gravity_strength * 20, gravity_strength)
+	else
+		step(src, gravity_direction)
 
 /mob/living/sync_gravity()
 	. = ..()
+	/*var/matrix/turnmatrix = matrix(transform)	//Not working, someone help me on this, this is supposed to turn the mob so it's standing like gravity is in that direction but it isn't working.
 	if(gravity_direction)
 		gravity_turn = dir2angle(gravity_direction)
-		animate(transform = turn(matrix(), gravity_turn), time = 2)
+		turnmatrix.TurnTo(current_gravturn, gravity_turn)
 		current_gravturn = gravity_turn
 	else
-		animate(transform = turn(matrix(), -current_gravturn), time = 2)
+		turnmatrix.TurnTo(current_gravturn, 0)
+	animate(src, transform = turnmatrix, time = 20)*/
 
 /mob/living/Destroy()
 	if(ranged_ability)

@@ -37,6 +37,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 	var/gravity_ignores_turfcheck = FALSE
 	var/gravity_ignores_area = FALSE
 	var/force_gravity_processing = FALSE
+	var/turf/open/forced_gravity_by_turf = null
 	var/area/current_gravity_area = null
 	var/floating = FALSE
 
@@ -72,16 +73,28 @@ var/global/list/atoms_forced_gravity_processing = list()
 	var/area/A = get_area(src)
 	if(!A)
 		return FALSE
-	if(A != current_gravity_area)
-		if(current_gravity_area)
-			current_gravity_area.update_gravity(src, FALSE)
-		current_gravity_area = A
+	if(current_gravity_area && (A != current_gravity_area))
+		stack_trace("[src] DID NOT UNREGISTER FROM [current_gravity_area] AND REGISTER TO [A] AFTER CHANGING AREAS!")
+		current_gravity_area.update_gravity(src, FALSE)
+		A.update_gravity(src, TRUE)
 	if(isturf(loc) || gravity_ignores_turfcheck)
-		A.update_gravity(src, is_affected_by_gravity)
+		if(forced_gravity_by_turf)
+			var/turf/T = loc
+			if(T != forced_gravity_by_turf)
+				stack_trace("[src] DID NOT UNREGISTER FROM [forced_gravity_by_turf] (TURF WITH MANUAL GRAVITY OVERRIDES)!")
+				forced_gravity_by_turf.reset_forced_gravity_atom(src)
+		else
+			A.update_gravity(src, is_affected_by_gravity)
 	else
+		if(forced_gravity_by_turf)
+			forced_gravity_by_turf.reset_forced_gravity_atom(src)
 		A.update_gravity(src, FALSE)	//We're not on a turf and we don't need to be included in processing.
 
 /atom/movable/Initialize()
+	var/turf/open/T = get_turf(src)
+	if(istype(T, /turf/open))
+		if(T.turf_gravity_overrides_area)
+			T.force_gravity_on_atom(src)
 	sync_gravity()
 	if(force_gravity_processing)
 		atoms_forced_gravity_processing += src
@@ -107,7 +120,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 		gravity_throwing = FALSE
 	else
 		for(var/i = gravity_strength, i > 0, i--)
-			Move(get_step(src, gravity_direction))
+			Move(get_step(src, gravity_direction), gravity_direction)
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -187,6 +200,8 @@ var/global/list/atoms_forced_gravity_processing = list()
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+	if(isturf(loc) && forced_gravity_by_turf && (loc != forced_gravity_by_turf))
+		forced_gravity_by_turf.reset_forced_gravity_atom(src)
 	return 1
 
 /atom/movable/Destroy()

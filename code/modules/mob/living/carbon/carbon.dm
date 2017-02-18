@@ -21,6 +21,15 @@
 		qdel(dna)
 	return ..()
 
+/mob/living/carbon/gravity_act()
+	if(gravity_stunning)
+		Weaken(gravity_stunning)
+	var/obj/item/device/flightpack/FP = get_flightpack()
+	if(FP && istype(FP) && FP.flight)
+		FP.gravity_act(gravity_direction, gravity_strength, gravity_throwing, gravity_stunning, gravity_override)
+		return FALSE
+	. = ..()
+
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))

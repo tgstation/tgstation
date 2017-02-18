@@ -137,32 +137,6 @@
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
-/turf/open/Entered(atom/movable/AM)
-	..()
-	//slipping
-	if (istype(AM,/mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		if(M.movement_type & FLYING)
-			return
-		switch(wet)
-			if(TURF_WET_WATER)
-				if(!M.slip(0, 3, null, NO_SLIP_WHEN_WALKING))
-					M.inertia_dir = 0
-			if(TURF_WET_LUBE)
-				if(M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP)))
-					M.confused = max(M.confused, 8)
-			if(TURF_WET_ICE)
-				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
-			if(TURF_WET_PERMAFROST)
-				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
-			if(TURF_WET_SLIDE)
-				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
-	//melting
-	if(isobj(AM) && air && air.temperature > T0C)
-		var/obj/O = AM
-		if(O.is_frozen)
-			O.make_unfrozen()
-
 /turf/proc/is_plasteel_floor()
 	return 0
 
