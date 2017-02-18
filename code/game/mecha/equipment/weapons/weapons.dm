@@ -106,8 +106,8 @@
 	desc = "A weapon for combat exosuits. Fires bolts of electricity similar to the experimental tesla engine"
 	icon_state = "mecha_ion"
 	origin_tech = "materials=4;combat=5;magnets=4"
-	energy_drain = 840
-	projectile = /obj/item/projectile/energy/tesla_revolver
+	energy_drain = 500
+	projectile = /obj/item/projectile/energy/tesla_cannon
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 
 
