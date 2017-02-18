@@ -468,7 +468,7 @@ function toggleWasd(state) {
 * MAKE MACRO DICTIONARY
 *
 ******************************************/
-
+/*
 // Callback for winget.
 function wingetMacros(macros) {
 	var idRegex = /.*?\.(?!(?:CRTL|ALT|SHIFT)\+)(.*?)(?:\+REP)?\.command/; // Do NOT match macros which need crtl, alt or shift to be held down (saves a ton of headache because I don't give enough of a fuck).
@@ -481,7 +481,7 @@ function wingetMacros(macros) {
 		opts.macros[macroID] = macros[key];
 	}
 }
-
+*/
 /*****************************************
 *
 * DOM READY
@@ -921,13 +921,6 @@ $(function() {
 		opts.messageCount = 0;
 	});
 
-	// Tell BYOND to give us a macro list.
-	// I don't know why but for some retarded reason,
-	// You need to activate hotkeymode before you can winget the macros in it.
-	runByond('byond://winset?id=mainwindow&macro=hotkeymode')
-	runByond('byond://winset?id=mainwindow&macro=macro')
-
-	runByond('byond://winget?callback=wingetMacros&id=hotkeymode.*&property=command');
 
 	/*****************************************
 	*

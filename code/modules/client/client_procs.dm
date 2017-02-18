@@ -71,7 +71,7 @@
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
-		to_chat(href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -111,19 +111,19 @@
 	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
+	if(config.automute_on && !holder && last_message == message)
+		last_message_count++
+		if(last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src, mute_type, 1)
-			return 1
+			return TRUE
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
 			to_chat(src, "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>")
-			return 0
+			return FALSE
 	else
 		last_message = message
-		src.last_message_count = 0
-		return 0
+		last_message_count = 0
+		return FALSE
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
@@ -210,7 +210,7 @@ var/next_external_rsc = 0
 
 	if (byond_version < config.client_error_version)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
-		src << config.client_error_message
+		to_chat(src, config.client_error_message)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [config.client_error_version] or later")
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
@@ -221,7 +221,7 @@ var/next_external_rsc = 0
 			return 0
 	else if (byond_version < config.client_warn_version)	//We have words for this client.
 		to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
-		src << config.client_warn_message
+		to_chat(src, config.client_warn_message)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version to remove this message: [config.client_warn_version] or later")
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
@@ -242,8 +242,6 @@ var/next_external_rsc = 0
 
 	if(holder)
 		add_admin_verbs()
-		if(!src)
-			log_world("??????")
 		var/msg = get_message_output("memo")
 		to_chat(src, msg)
 		adminGreet()
@@ -311,7 +309,6 @@ var/next_external_rsc = 0
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
-
 
 //////////////
 //DISCONNECT//

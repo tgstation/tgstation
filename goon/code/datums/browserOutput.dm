@@ -111,7 +111,7 @@ var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons fo
 		to_chat(owner, message)
 
 	messageQueue = null
-	src.sendClientData()
+	sendClientData()
 
 	pingLoop()
 

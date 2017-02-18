@@ -18,6 +18,5 @@
 		if (shunted == 0 && !src.client)
 			msg += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
 	msg += "*---------*</span>"
-to_chat(user, msg
-)
+	to_chat(user, msg)
 	..()
