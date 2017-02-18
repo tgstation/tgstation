@@ -15,7 +15,7 @@
 	force = 12
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
-	var/ascended = 0
+	var/ascended = FALSE
 	var/awakened = 0
 	var/victims_needed = 20 //how many victims needed to ascend
 	var/bloodthirst = HIS_GRACE_SATIATED
@@ -216,7 +216,7 @@
 	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
 	icon_state = "gold"
 	item_state = "toolbox_gold"
-	ascended = 1
+	ascended = TRUE
 	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)
 	if(istype(master))
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>God will be watching.</span>")
