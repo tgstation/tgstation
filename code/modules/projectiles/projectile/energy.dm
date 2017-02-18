@@ -203,7 +203,7 @@
 
 /obj/item/projectile/energy/tesla_cannon/on_hit(atom/target)
 	. = ..()
-	tesla_zap(src, 3, 10000, stun_mobs = FALSE)
+	tesla_zap(src, 3, 10000, explosive = FALSE, stun_mobs = FALSE)
 	qdel(src)
 
 /obj/item/projectile/energy/tesla_cannon/Destroy()
