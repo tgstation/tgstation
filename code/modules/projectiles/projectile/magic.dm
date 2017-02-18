@@ -291,15 +291,19 @@
 	nodamage = 1
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+	animate_atom_living(target, firer)
 	..()
+
+/proc/animate_atom_living(var/atom/target, var/mob/living/owner = null)
 	if((istype(target, /obj/item) || istype(target, /obj/structure)) && !is_type_in_list(target, protected_objects))
 		if(istype(target, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = target
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, firer)
+				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, owner)
 				S.name = "statue of [L.name]"
-				S.faction = list("\ref[firer]")
+				if(owner)
+					S.faction = list("\ref[owner]")
 				S.icon = P.icon
 				S.icon_state = P.icon_state
 				S.overlays = P.overlays
@@ -309,19 +313,19 @@
 					L.mind.transfer_to(S)
 					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
 				P.loc = S
-				qdel(src)
 				return
 		else
 			var/obj/O = target
 			if(istype(O, /obj/item/weapon/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, owner)
 
 	else if(istype(target, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
 		var/mob/living/simple_animal/hostile/mimic/copy/C = target
-		C.ChangeOwner(firer)
+		if(owner)
+			C.ChangeOwner(owner)
 
 /obj/item/projectile/magic/spellblade
 	name = "blade energy"
