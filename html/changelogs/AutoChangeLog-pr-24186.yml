@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "[Meta] Fixes top left grounding rod from being destroyed by the Tesla engine."
