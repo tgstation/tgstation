@@ -395,8 +395,7 @@
 	S.attach(splat_location)
 	S.set_up(G.reagents, smoke_amount, splat_location, 0)
 	S.start()
-	if(G)
-		G.reagents.clear_reagents()
+	G.reagents.clear_reagents()
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"
