@@ -1,4 +1,0 @@
-author: "Scoop"
-delete-after: True
-changes: 
-  - tweak: "Condimasters now correctly drop their items in front of their sprite."
