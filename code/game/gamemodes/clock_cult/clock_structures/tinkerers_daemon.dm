@@ -28,7 +28,7 @@
 	clockwork_daemons--
 	return ..()
 
-/obj/structure/destructible/clockwork/powered/ratvar_act()
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/ratvar_act()
 	..()
 	if(nezbere_invoked)
 		production_time = 0
