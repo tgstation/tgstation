@@ -55061,6 +55061,10 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"chs" = (
+/mob/living/simple_animal/pet/fox/Renault,
+/turf/open/floor/carpet,
+/area/crew_quarters/captain)
 
 (1,1,1) = {"
 aaa
@@ -82656,7 +82660,7 @@ azk
 aAt
 aBv
 awV
-awV
+chs
 auO
 ayI
 aFp

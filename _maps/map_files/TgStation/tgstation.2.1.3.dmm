@@ -24962,6 +24962,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/mob/living/simple_animal/pet/fox/Renault,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "ben" = (
