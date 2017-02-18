@@ -303,18 +303,13 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 
 /world/proc/update_status()
-	var/s = ""
+	var/s = "<span style='font-size:65%'>"
 
 	if (config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
+	s += " <b>[station_name()]</b> ";
+	s += " (<a href='[config.wikiurl]'>Wiki</a>) "
 
 	var/list/features = list()
 
@@ -350,8 +345,11 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	if (features)
 		s += ": [jointext(features, ", ")]"
-
+	s += "</span>"
 	status = s
+
+/proc/get_status()
+	return html_encode(world.status)
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
