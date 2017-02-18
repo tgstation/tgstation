@@ -219,5 +219,5 @@
 	ascended = 1
 	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)
 	if(istype(master))
-		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>Your God is watching</span>")
+		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>God will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
