@@ -360,7 +360,7 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	origin_tech = "materials=2;biotech=2"
 
 var/global/list/datum/stack_recipe/plastic_recipes = list(
-	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1))
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"
