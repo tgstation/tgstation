@@ -91,7 +91,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	var/datum/riding/cyborg/riding_datum = null
+	can_ride_typecache = list(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -1006,6 +1006,9 @@
 		buckle_mob(M)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+	if(!is_type_in_typecache(M, can_ride_typecache))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg
 		riding_datum.ridden = src
@@ -1020,69 +1023,18 @@
 		return
 	if(M.restrained())
 		return
-	if(iscyborg(M))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
-		return
-	if(isbot(M))
-		M.visible_message("<span class='boldwarning'>No. Just... no.</span>")
-		return
 	if(module)
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
-	if(iscarbon(M))
-		if(!equip_buckle_inhands(M))	//MAKE SURE THIS IS LAST!
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
-			return
+	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		return
 	. = ..(M, force, check_loc)
-	riding_datum.handle_vehicle_offsets()
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
 	if(iscarbon(user))
-		unequip_buckle_inhands(user)
+		if(riding_datum)
+			riding_datum.unequip_buckle_inhands(user)
+			riding_datum.restore_position(user)
 	. = ..(user)
-	riding_datum.restore_position(user)
-
-/mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
-	for(var/obj/item/cyborgride_offhand/O in user.contents)
-		if(O.ridden != src)
-			CRASH("RIDING OFFHAND ON WRONG MOB")
-			continue
-		if(O.selfdeleting)
-			continue
-		else
-			qdel(O)
-	return TRUE
-
-/mob/living/silicon/robot/proc/equip_buckle_inhands(mob/living/carbon/user)
-	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user)
-	inhand.rider = user
-	inhand.ridden = src
-	return user.put_in_hands(inhand, TRUE)
-
-/obj/item/cyborgride_offhand
-	name = "offhand"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "offhand"
-	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | DROPDEL | NOBLUDGEON
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/mob/living/carbon/rider
-	var/mob/living/silicon/robot/ridden
-	var/selfdeleting = FALSE
-
-/obj/item/cyborgride_offhand/dropped()
-	selfdeleting = TRUE
-	. = ..()
-
-/obj/item/cyborgride_offhand/equipped()
-	if(loc != rider)
-		selfdeleting = TRUE
-		qdel(src)
-	. = ..()
-
-/obj/item/cyborgride_offhand/Destroy()
-	if(selfdeleting)
-		if(rider in ridden.buckled_mobs)
-			ridden.unbuckle_mob(rider)
-	. = ..()
