@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - imageadd: "New round end animation. Inspired by @Iamgoofball"

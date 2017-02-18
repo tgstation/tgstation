@@ -24,6 +24,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
+	var/list/sleptDestroy = list()	//Same as above but these are paths that slept during their Destroy call
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 	// all types that did not respect qdel(A, force=TRUE) and returned one
@@ -168,7 +169,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		del(D)
 	else if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
+		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
+		if(world.time != start_time)
+			SSgarbage.sleptDestroy["[D.type]"]++
 		if(!D)
 			return
 		switch(hint)
@@ -346,7 +350,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
-	SearchVar(last_irc_status)
 	SearchVar(failed_db_connections)
 	SearchVar(nextmap)
 	SearchVar(mapchanging)
@@ -684,8 +687,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(wire_colors)
 	SearchVar(wire_color_directory)
 	SearchVar(wire_name_directory)
-	SearchVar(possiblethemes)
-	SearchVar(max_secret_rooms)
 	SearchVar(blood_splatter_icons)
 	SearchVar(all_radios)
 	SearchVar(radiochannels)

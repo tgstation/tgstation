@@ -1,0 +1,5 @@
+author: "rock"
+delete-after: True
+changes: 
+  - soundadd: "you can now harmlessly slap somebody by aiming for the mouth on disarm intent."
+  - soundadd: "you can only slap somebody who is unarmed on help intent, restrained, or ready to slap you."

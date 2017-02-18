@@ -683,12 +683,15 @@ var/list/TYPES_SHORTCUTS = list(
 	set desc = "Displays a list of things that have failed to GC this round"
 
 	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
-
 	for(var/path in SSgarbage.didntgc)
 		dat += "[path] - [SSgarbage.didntgc[path]] times<BR>"
 
 	dat += "<B>List of paths that did not return a qdel hint in Destroy()</B><BR><BR>"
 	for(var/path in SSgarbage.noqdelhint)
+		dat += "[path]<BR>"
+
+	dat += "<B>List of paths that slept in Destroy()</B><BR><BR>"
+	for(var/path in SSgarbage.sleptDestroy)
 		dat += "[path]<BR>"
 
 	usr << browse(dat, "window=dellog")
