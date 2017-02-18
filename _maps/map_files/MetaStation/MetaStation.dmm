@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 02-02-2017 02:51 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -19613,6 +19612,7 @@
 	c_tag = "Auxillary Mining Base";
 	dir = 1
 	},
+/obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aHc" = (
@@ -20179,6 +20179,7 @@
 	icon_state = "2-4";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aIe" = (
@@ -21708,6 +21709,7 @@
 	icon_state = "2-8";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aKK" = (
@@ -25567,11 +25569,11 @@
 	},
 /area/mining_construction)
 "aRF" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
+/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -46647,10 +46649,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bAL" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bAM" = (
@@ -47562,11 +47561,11 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bCt" = (
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	color = "purple";
 	dir = 1
 	},
-/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bCu" = (
@@ -90399,9 +90398,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/shuttle/auxillary_base{
-	pixel_y = 0
-	},
+/obj/machinery/computer/auxillary_base,
 /turf/closed/wall,
 /area/shuttle/auxillary_base)
 "cWh" = (
@@ -91830,9 +91827,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/structure/mining_shuttle_beacon{
-	dir = 2
-	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for the Auxillary Mining Base.";
 	dir = 1;
@@ -91841,6 +91835,7 @@
 	pixel_x = 0;
 	pixel_y = -28
 	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/yellow/side,
 /area/mining_construction)
 "cYL" = (
@@ -92989,6 +92984,7 @@
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbh" = (
@@ -93008,6 +93004,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbj" = (
@@ -94444,6 +94441,18 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"ddF" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	color = "purple";
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
+"ddG" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/docking_port/stationary/public_mining_dock,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -106372,7 +106381,7 @@ cWg
 cVL
 cVL
 cVL
-cWJ
+ddG
 cWM
 cXR
 cYG
@@ -137492,7 +137501,7 @@ bvv
 bxi
 bzc
 bAL
-bCs
+ddF
 bDX
 bFR
 bHx
@@ -137717,7 +137726,7 @@ ayY
 aaf
 aBQ
 aaf
-aIb
+anS
 aCZ
 aCZ
 aCZ
@@ -137727,7 +137736,7 @@ aCZ
 aCZ
 aCZ
 aCZ
-aIb
+anS
 aaf
 cXz
 aaf
@@ -141058,17 +141067,17 @@ axY
 axY
 aaa
 cmq
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 cXd
 aaa
 axY

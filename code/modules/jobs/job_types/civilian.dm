@@ -35,11 +35,14 @@ Clown
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1
 		)
 
+	implants = list(/obj/item/weapon/implant/sad_trombone)
+
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
 
-	implants = list(/obj/item/weapon/implant/sad_trombone)
+	box = /obj/item/weapon/storage/box/hug/survival
+
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

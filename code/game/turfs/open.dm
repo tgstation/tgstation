@@ -34,6 +34,9 @@
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
+/turf/open/indestructible/necropolis/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

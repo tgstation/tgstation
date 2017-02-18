@@ -36,7 +36,7 @@ var/list/chem_t4_reagents = list(
 		add_overlay(I)
 
 /obj/item/seeds/sample/get_analyzer_text()
-	return " The DNA of this sample is damaged beyond recovery, it can't support life on it's own.\n*---------*"
+	return " The DNA of this sample is damaged beyond recovery, it can't support life on its own.\n*---------*"
 
 /obj/item/seeds/sample/alienweed
 	name = "alien weed sample"

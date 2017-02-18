@@ -16,7 +16,7 @@
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
-	world.log << "World loaded at [world.timeofday]"
+	log_world("World loaded at [world.timeofday]")
 	map_ready = 1
 
 #if (PRELOAD_RSC == 0)
@@ -39,6 +39,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	load_configuration()
+	revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
@@ -47,16 +48,13 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	LoadBans()
 	investigate_reset()
 
-	if(config && config.server_name != null && config.server_suffix && world.port > 0)
-		config.server_name += " #[(world.port % 1000) / 100]"
-
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
 		if(!setup_database_connection())
-			world.log << "Your server failed to establish a connection with the database."
+			log_world("Your server failed to establish a connection with the database.")
 		else
-			world.log << "Database connection established."
+			log_world("Database connection established.")
 
 
 	data_core = new /datum/datacore()
@@ -73,14 +71,13 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	Master.Setup(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
-var/last_irc_status = 0
-
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
 		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
+	var/static/last_irc_status = 0
 
 	if("ping" in input)
 		var/x = 1
@@ -187,7 +184,7 @@ var/last_irc_status = 0
 		else
 			return ircadminwho()
 
-#define WORLD_REBOOT(X) world.log << "World rebooted at [world.timeofday]"; ..(X)
+#define WORLD_REBOOT(X) log_world("World rebooted at [world.timeofday]"); ..(X); return;
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
@@ -242,7 +239,7 @@ var/last_irc_status = 0
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns
-	RoundEndSound(round_end_sound_sent)
+	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 	world << "<span class='boldannounce'>Rebooting world. Loading next map...</span>"
 	for(var/thing in clients)
@@ -250,7 +247,7 @@ var/last_irc_status = 0
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 
-/world/proc/RoundEndSound(round_end_sound_sent)
+/world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
 	var/round_end_sound
 	if(!ticker && ticker.round_end_sound)
@@ -271,27 +268,11 @@ var/last_irc_status = 0
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg'\
 		)
+
+	for(var/thing in clients)
+		new /obj/screen/splash(thing, FALSE, FALSE)
+
 	world << sound(round_end_sound)
-
-var/inerror = 0
-/world/Error(var/exception/e)
-	//runtime while processing runtimes
-	if (inerror)
-		inerror = 0
-		return ..(e)
-	inerror = 1
-	//newline at start is because of the "runtime error" byond prints that can't be timestamped.
-	e.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][e.name]"
-
-	//this is done this way rather then replace text to pave the way for processing the runtime reports more thoroughly
-	//	(and because runtimes end with a newline, and we don't want to basically print an empty time stamp)
-	var/list/split = splittext(e.desc, "\n")
-	for (var/i in 1 to split.len)
-		if (split[i] != "")
-			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
-	e.desc = jointext(split, "\n")
-	inerror = 0
-	return ..(e)
 
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
@@ -306,11 +287,7 @@ var/inerror = 0
 	F << the_mode
 
 /world/proc/load_motd()
-	join_motd = file2text("config/motd.txt")
-	join_motd += "<br>"
-	for(var/line in revdata.testmerge)
-		if(line)
-			join_motd += "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a><br>"
+	join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()
@@ -400,7 +377,7 @@ var/failed_db_connections = 0
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.
 		if(config.sql_enabled)
-			world.log << "SQL error: " + dbcon.ErrorMsg()
+			log_world("SQL error: " + dbcon.ErrorMsg())
 
 	return .
 
