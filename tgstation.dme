@@ -1360,6 +1360,7 @@
 #include "code\modules\lighting\lighting_source.dm"
 #include "code\modules\lighting\lighting_turf.dm"
 #include "code\modules\mining\abandoned_crates.dm"
+#include "code\modules\mining\aux_base.dm"
 #include "code\modules\mining\aux_base_camera.dm"
 #include "code\modules\mining\equipment.dm"
 #include "code\modules\mining\fulton.dm"
