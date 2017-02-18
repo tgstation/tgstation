@@ -38,3 +38,5 @@ Game Master		= +EVERYTHING
 Host			= +EVERYTHING
 
 Coder			= +DEBUG +VAREDIT +SERVER +SPAWN
+
+ShitCoder 		=
