@@ -25,38 +25,3 @@
 	else
 		invocation_type ="none"
 	..()
-
-
-/obj/effect/proc_holder/spell/targeted/mime/speak
-	name = "Speech"
-	desc = "Make or break a vow of silence."
-	school = "mime"
-	panel = "Mime"
-	clothes_req = 0
-	human_req = 1
-	charge_max = 3000
-	range = -1
-	include_user = 1
-
-	action_icon_state = "mime"
-	action_background_icon_state = "bg_mime"
-
-/obj/effect/proc_holder/spell/targeted/mime/speak/Click()
-	if(!usr)
-		return
-	if(!ishuman(usr))
-		return
-	var/mob/living/carbon/human/H = usr
-	if(H.mind.miming)
-		still_recharging_msg = "<span class='warning'>You can't break your vow of silence that fast!</span>"
-	else
-		still_recharging_msg = "<span class='warning'>You'll have to wait before you can give your vow of silence again!</span>"
-	..()
-
-/obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets,mob/user = usr)
-	for(var/mob/living/carbon/human/H in targets)
-		H.mind.miming=!H.mind.miming
-		if(H.mind.miming)
-			H << "<span class='notice'>You make a vow of silence.</span>"
-		else
-			H << "<span class='notice'>You break your vow of silence.</span>"
