@@ -75,10 +75,7 @@
 		stat("Map:", MAP_NAME)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			var/time_remaining = ticker.GetTimeLeft()
-			if(time_remaining >= 0)
-				time_remaining /= 10
-			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
+			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[ticker.totalPlayers]")
 			if(client.holder)
