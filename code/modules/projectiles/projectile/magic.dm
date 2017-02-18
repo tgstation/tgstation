@@ -291,16 +291,16 @@
 	nodamage = 1
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
-	animate_atom_living(target, firer)
+	target.animate_atom_living(firer)
 	..()
 
-/proc/animate_atom_living(var/atom/target, var/mob/living/owner = null)
-	if((istype(target, /obj/item) || istype(target, /obj/structure)) && !is_type_in_list(target, protected_objects))
-		if(istype(target, /obj/structure/statue/petrified))
-			var/obj/structure/statue/petrified/P = target
+atom/proc/animate_atom_living(var/mob/living/owner = null)
+	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
+		if(istype(src, /obj/structure/statue/petrified))
+			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, owner)
+				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
 					S.faction = list("\ref[owner]")
@@ -315,15 +315,15 @@
 				P.loc = S
 				return
 		else
-			var/obj/O = target
+			var/obj/O = src
 			if(istype(O, /obj/item/weapon/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
 
-	else if(istype(target, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = target
+		var/mob/living/simple_animal/hostile/mimic/copy/C = src
 		if(owner)
 			C.ChangeOwner(owner)
 
