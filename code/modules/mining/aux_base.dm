@@ -1,11 +1,13 @@
 ///Mining Base////
 
+#define BAD_ZLEVEL	1
+#define BAD_AREA	2
+#define ZONE_SET	3
+
 /area/shuttle/auxillary_base
 	name = "Auxillary Base"
 	luminosity = 0 //Lighting gets lost when it lands anyway
-	#define BAD_ZLEVEL	1
-	#define BAD_AREA	2
-	#define ZONE_SET	3
+
 
 /obj/machinery/computer/auxillary_base
 	name = "auxillary base management console"
@@ -31,7 +33,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/machinery/computer/auxillary_base/attack_hand(mob/user)
 	if(..(user))
 		return
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
@@ -120,7 +122,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 				else
 					T.on = FALSE
 		if(href_list["single_turret_power"])
-			var/obj/machinery/porta_turret/aux_base/T = locate(href_list["single_turret_power"])
+			var/obj/machinery/porta_turret/aux_base/T = locate(href_list["single_turret_power"]) in turrets
 			T.on = !T.on
 
 	updateUsrDialog()
@@ -335,4 +337,8 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 	anti_spam_cd = 0
 
 /obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
-	return (attack_hand(user)) //So borgies can help
+	return attack_hand(user) //So borgies can help
+
+#undef BAD_ZLEVEL
+#undef BAD_AREA
+#undef ZONE_SET
