@@ -63,7 +63,7 @@ var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons fo
 
 		//log_world("Sending main chat window to client [owner.ckey]")
 		owner << browse(file("goon/browserassets/html/browserOutput.html"), "window=browseroutput")
-		sleep(20)
+		sleep(14 + (chatResources.len * 7))
 		if(!owner || loaded)
 			break
 
