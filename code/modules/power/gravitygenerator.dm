@@ -304,7 +304,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	new_grav_dir = FALSE
 
 /obj/machinery/gravity_generator/main/proc/set_gravity_direction(set_dir)
-	new_grav_dir = set_dir
+	if(!isnum(set_dir))
+		new_grav_dir = text2num(set_dir)
+	else
+		new_grav_dir = set_dir
 
 // Power and Icon States
 
