@@ -41,12 +41,12 @@
 	if(m_intent == MOVE_INTENT_WALK)
 		if(ismovableatom(get_spacemove_backup()))
 			return FALSE
-		if(prob(20))
+		if(prob(10))
 			src << "<span class='warning'>You slip and lose your grip!</span>"
-		else if(prob(7))
+		else if(prob(5))
 			src << "<span class='warning'>You slip and completely lose your footing!</span>"
 			temp_throw = TRUE
-			if(prob(50))
+			if(prob(25))
 				src << "<span class='warning'>You fall!</span>"
 				Weaken(1)
 		else
