@@ -108,8 +108,12 @@ var/datum/subsystem/processing/air/SSair
 #undef PROCESS_ATMOS_LIST
 
 /datum/subsystem/processing/air/start_processing(datum/D, list_type, add_to_active_block_changes = TRUE)
-	if(D.processors && (list_type in D.processors[src]))
-		return
+	var/has_processors = D.processors
+	var/has_air_processor
+	if(has_processors)
+		has_air_processor = src in has_processors
+		if(list_type in has_processors[src])
+			return
 
 	//most of these are safe (re: only called in one place) to just +=
 	switch(list_type)
@@ -142,9 +146,13 @@ var/datum/subsystem/processing/air/SSair
 			active_super_conductivity += D
 		else
 			CRASH("SSair/start_processing: Invalid list_type: [list_type]")
-	
-	LAZYINITLIST(D.processors[src])
-	D.processors[src] += list_type
+
+	if(!has_processors)
+		D.processors = list(src = list(list_type))
+	else if(has_air_processor)
+		D.processors[src] += list_type
+	else
+		D.processors[src] = list(list_type)
 
 /datum/subsystem/processing/air/stop_processing(datum/D, list_type)
 	if(!(src in D.processors))
