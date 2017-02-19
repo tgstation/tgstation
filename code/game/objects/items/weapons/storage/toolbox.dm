@@ -14,7 +14,7 @@
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/image/hinges = "single_hinge"
-	var/old = 0
+	var/old = FALSE
 
 /obj/item/weapon/storage/toolbox/New()
 	..()
@@ -48,6 +48,7 @@
 /obj/item/weapon/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
 	item_state = "toolbox_red_old"
+	old = TRUE
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -66,6 +67,7 @@
 /obj/item/weapon/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	item_state = "toolbox_blue_old"
+	old = TRUE
 
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
