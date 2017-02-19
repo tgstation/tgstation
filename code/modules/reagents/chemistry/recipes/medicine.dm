@@ -124,7 +124,7 @@
 	name = "Ephedrine"
 	id = "ephedrine"
 	results = list("ephedrine" = 4)
-	required_reagents = list("sugar" = 1, "oil" = 1, "hydrogen" = 1, "diethylamine" = 1)
+	required_reagents = list("morphine" = 1, "oil" = 1, "hydrogen" = 1, "diethylamine" = 1)
 	mix_message = "The solution fizzes and gives off toxic fumes."
 
 /datum/chemical_reaction/diphenhydramine
