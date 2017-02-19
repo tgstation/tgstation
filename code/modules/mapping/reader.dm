@@ -26,6 +26,12 @@ var/global/dmm_suite/preloader/_preloader = new
  *
  */
 /dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num)
+	//How I wish for RAII
+	Master.StartLoadingMap()
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly)
+	Master.StopLoadingMap()
+
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)

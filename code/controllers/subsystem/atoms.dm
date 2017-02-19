@@ -6,7 +6,7 @@ var/datum/subsystem/atoms/SSatoms
 
 /datum/subsystem/atoms
 	name = "Atoms"
-	init_order = 12
+	init_order = 11
 	flags = SS_NO_FIRE
 
 	var/initialized = INITIALIZATION_INSSOBJ
