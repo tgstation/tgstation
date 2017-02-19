@@ -28,20 +28,24 @@
 
 /proc/update_slab_info(obj/item/clockwork/slab/set_slab)
 	generate_all_scripture()
+	var/needs_update = FALSE //if everything needs an update, for whatever reason
 	for(var/s in all_scripture)
-		var/datum/clockwork_scripture/S = s
-		S.creation_update()
-	if(!set_slab)
+		var/datum/clockwork_scripture/S = all_scripture[s]
+		if(S.creation_update())
+			needs_update = TRUE
+	if(!set_slab || needs_update)
 		for(var/obj/item/clockwork/slab/S in all_clockwork_objects)
 			SStgui.update_uis(S)
+			S.update_quickbind()
 	else
 		SStgui.update_uis(set_slab)
+		set_slab.update_quickbind()
 
 /proc/generate_all_scripture()
 	if(!all_scripture.len)
 		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 			var/datum/clockwork_scripture/S = new V
-			all_scripture += S
+			all_scripture[S.type] = S
 
 //changes construction value
 /proc/change_construction_value(amount)
