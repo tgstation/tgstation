@@ -14995,26 +14995,11 @@
 	id = "holdingflash";
 	pixel_x = 25
 	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
