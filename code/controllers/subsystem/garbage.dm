@@ -351,7 +351,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
-	SearchVar(failed_db_connections)
 	SearchVar(nextmap)
 	SearchVar(mapchanging)
 	SearchVar(rebootingpendingmapchange)
@@ -558,12 +557,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(ruin_landmarks)
 	SearchVar(awaydestinations)
 	SearchVar(sortedAreas)
-	SearchVar(map_templates)
-	SearchVar(ruins_templates)
-	SearchVar(space_ruins_templates)
-	SearchVar(lava_ruins_templates)
-	SearchVar(shuttle_templates)
-	SearchVar(shelter_templates)
 	SearchVar(transit_markers)
 	SearchVar(clients)
 	SearchVar(admins)
@@ -844,7 +837,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(pipenetwarnings)
 	SearchVar(the_gateway)
 	SearchVar(potentialRandomZlevels)
-	SearchVar(maploader)
 	SearchVar(use_preloader)
 	SearchVar(_preloader)
 	SearchVar(swapmaps_iconcache)

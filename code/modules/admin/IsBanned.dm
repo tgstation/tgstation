@@ -61,7 +61,7 @@
 
 		var/ckeytext = ckey(key)
 
-		if(!establish_db_connection())
+		if(!dbcon.Connect())
 			log_world("Ban database connection failure. Key [ckeytext] not checked")
 			diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return

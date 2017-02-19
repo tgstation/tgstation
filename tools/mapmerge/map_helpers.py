@@ -102,7 +102,7 @@ def merge_map(newfile, backupfile, tgm):
 
     header = False
     #step two: clean the dictionary if it has too many unused keys
-    if len(unused_keys) > min(300, (len(old_dict) * 0.5)):
+    if len(unused_keys) > min(1600, (len(old_dict) * 0.5)):
         print("NOTICE: Trimming the dictionary.")
         trimmed_dict_map = trim_dictionary({"dictionary": old_dict, "grid": merged_grid})
         old_dict = trimmed_dict_map["dictionary"]

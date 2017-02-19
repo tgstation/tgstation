@@ -1,6 +1,6 @@
 //The gateway to Reebe, from which Ratvar emerges.
 /obj/structure/destructible/clockwork/massive/celestial_gateway
-	name = "Gateway to the Celestial Derelict"
+	name = "gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
 	obj_integrity = 500
@@ -102,7 +102,7 @@
 		if(!disassembled)
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
-			visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
+			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
 			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
@@ -119,6 +119,40 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
 	var/damage = max((obj_integrity * 0.70) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/attackby(obj/item/I, mob/living/user, params) //add components directly to the ark
+	if(!is_servant_of_ratvar(user) || !still_needs_components())
+		return ..()
+	if(istype(I, /obj/item/clockwork/component))
+		var/obj/item/clockwork/component/C = I
+		if(required_components[C.component_id])
+			required_components[C.component_id]--
+			user << "<span class='notice'>You add [C] to [src].</span>"
+			user.drop_item()
+			qdel(C)
+		else
+			user << "<span class='notice'>[src] has enough [get_component_name(C.component_id)][C.component_id != REPLICANT_ALLOY ? "s":""].</span>"
+		return 1
+	else if(istype(I, /obj/item/clockwork/slab))
+		var/obj/item/clockwork/slab/S = I
+		var/used_components = FALSE
+		var/used_all = TRUE
+		for(var/i in S.stored_components)
+			if(required_components[i])
+				var/to_use = min(S.stored_components[i], required_components[i])
+				required_components[i] -= to_use
+				S.stored_components[i] -= to_use
+				if(to_use)
+					used_components = TRUE
+				if(S.stored_components[i])
+					used_all = FALSE
+		if(used_components)
+			update_slab_info(S)
+			user.visible_message("<span class='notice'>[user][used_all ? "":" partially"] empties [S] into [src].</span>", \
+			"<span class='notice'>You offload [used_all ? "all":"some"] of your slab's components into [src].</span>")
+		return 1
+	else
+		return ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/still_needs_components()
 	for(var/i in required_components)
@@ -189,10 +223,16 @@
 			first_sound_played = TRUE
 		make_glow()
 		glow.icon_state = "clockwork_gateway_components"
+		var/used_components = FALSE
 		for(var/i in required_components)
-			if(required_components[i] && clockwork_component_cache[i])
-				required_components[i]--
-				clockwork_component_cache[i]--
+			if(required_components[i])
+				var/to_use = min(clockwork_component_cache[i], required_components[i])
+				required_components[i] -= to_use
+				clockwork_component_cache[i] -= to_use
+				if(to_use)
+					used_components = TRUE
+		if(used_components)
+			update_slab_info()
 		if(still_needs_components())
 			return
 	for(var/obj/O in orange(1, src))
