@@ -112,7 +112,7 @@ var/datum/subsystem/processing/air/SSair
 	var/has_air_processor
 	if(has_processors)
 		has_air_processor = src in has_processors
-		if(list_type in has_processors[src])
+		if(has_air_processor && (list_type in has_processors[src]))
 			return
 
 	//most of these are safe (re: only called in one place) to just +=
@@ -148,8 +148,8 @@ var/datum/subsystem/processing/air/SSair
 			CRASH("SSair/start_processing: Invalid list_type: [list_type]")
 
 	if(!has_processors)
-		D.processors = list(src = list(list_type))
-	else if(has_air_processor)
+		D.processors = list()
+	if(has_air_processor)
 		D.processors[src] += list_type
 	else
 		D.processors[src] = list(list_type)
