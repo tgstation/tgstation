@@ -26,7 +26,7 @@
 	var/initialized = FALSE
 
 
-/atom/New()
+/atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -35,15 +35,16 @@
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 	//lighting stuff
-	if(opacity && isturf(loc))
-		loc.UpdateAffectingLights()
+	if(opacity && isturf(src.loc))
+		src.loc.UpdateAffectingLights()
 
 	if(luminosity)
 		light = new(src)
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSOBJ)
-		Initialize(do_initialize == INITIALIZATION_INNEW_MAPLOAD)
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		Initialize(arglist(args))
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 //Called after New if the map is being loaded. mapload = TRUE
@@ -52,11 +53,12 @@
 //Derivatives must not sleep
 //Returning TRUE while mapload is TRUE will cause the object to be initialized again with mapload = FALSE when everything else is done
 //(Useful for things that requires turfs to have air). This base may only be called once, however
+//Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
 // /turf/open/space/Initialize
-/atom/proc/Initialize(mapload)
+/atom/proc/Initialize(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
