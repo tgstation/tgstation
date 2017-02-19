@@ -33,6 +33,11 @@
 		attached_spell.attached_hand = null
 	qdel(src)
 
+/obj/item/weapon/melee/touch_attack/Destroy()
+	if(attached_spell)
+		attached_spell.attached_hand = null
+	return ..()
+
 /obj/item/weapon/melee/touch_attack/disintegrate
 	name = "\improper disintegrating touch"
 	desc = "This hand of mine glows with an awesome power!"
