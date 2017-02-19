@@ -51,7 +51,7 @@
 		processed_message = "<span class='velvet'><b>\[Mindlink\] [real_name]:</b> \"[message]\"</span>"
 	else
 		return 0 //How are you doing this in the first place?
-	src << "<span class=velvet bold>saa'teo</span>"
+	src << "<span class='velvet bold'>saa'teo</span>"
 	listclearnulls(ticker.mode.umbrages_and_veils)
 	for(var/V in ticker.mode.umbrages_and_veils)
 		var/datum/mind/M = V

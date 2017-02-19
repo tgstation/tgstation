@@ -32,7 +32,7 @@
 			return
 	animate(src, alpha = alpha, time = 0) //Stop the fading animation
 	eating = 1
-	user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class=velvet bold>cera qo...</span><br>\
+	user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class='velvet bold'>cera qo...</span><br>\
 	<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
 	L << "<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>"
 	L.Stun(3)
@@ -43,7 +43,7 @@
 		L.Weaken(3)
 		qdel(src)
 		return
-	user.visible_message("<span class='warning'>[user] gently lowers [L] to the ground...</span>", "<span class=velvet bold>...aranupdejc</span><br>\
+	user.visible_message("<span class='warning'>[user] gently lowers [L] to the ground...</span>", "<span class='velvet bold'>...aranupdejc</span><br>\
 	<span class='boldnotice'>You devour [L]'s will. Your psi has been fully restored.\n\
 	Additionally, you have gained one lucidity. Use it to purchase and upgrade abilities.</span><br>\
 	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>")

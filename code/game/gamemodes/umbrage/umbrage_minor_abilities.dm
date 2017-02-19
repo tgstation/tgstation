@@ -50,12 +50,12 @@
 	return ..()
 
 /datum/action/innate/umbrage/devour_will/Activate()
-	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class='velvet bold'>pwga...</span><br>\
+	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class=''velvet bold''>pwga...</span><br>\
 	<span class='notice'>You begin forming a dark bead...</span>")
 	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	if(!do_after(usr, 10, target = usr))
 		return
-	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class='velvet bold'>...iejz</span><br>\
+	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class=''velvet bold''>...iejz</span><br>\
 	<span class='notice'>You form a dark bead in your hand.</span>")
 	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
 	var/obj/item/weapon/dark_bead/B = new
@@ -81,7 +81,7 @@
 	return ..()
 
 /datum/action/innate/umbrage/pass/Activate()
-	usr.visible_message("<span class='warning'>[usr]'s arm contorts into tentacles!</span>", "<span class='velvet bold'>ikna</span><br>\
+	usr.visible_message("<span class='warning'>[usr]'s arm contorts into tentacles!</span>", "<span class=''velvet bold''>ikna</span><br>\
 	<span class='notice'>You transform your arm into umbral tendrils.</span>")
 	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	var/obj/item/weapon/umbral_tendrils/T = new
@@ -92,7 +92,7 @@
 
 
 /datum/action/innate/umbrage/pass/Deactivate()
-	usr.visible_message("<span class='warning'>[usr]'s tentacles contort into an arm!</span>", "<span class='velvet bold'>haoo</span><br>\
+	usr.visible_message("<span class='warning'>[usr]'s tentacles contort into an arm!</span>", "<span class=''velvet bold''>haoo</span><br>\
 	<span class='notice'>You reform your arm.</span>")
 	for(var/obj/item/weapon/umbral_tendrils/T in usr)
 		qdel(T)
@@ -115,12 +115,12 @@
 	if(!H.can_speak_vocal())
 		H << "<span class='warning'>You can't speak!</span>"
 		return
-	usr.visible_message("<span class='warning'>[usr]'s sigils flare as they inhale...</span>", "<span class=velvet bold>dawn kqn okjc...</span><br>\
+	usr.visible_message("<span class='warning'>[usr]'s sigils flare as they inhale...</span>", "<span class='velvet bold'>dawn kqn okjc...</span><br>\
 	<span class='notice'>You take a deep breath...</span>")
 	playsound(usr, 'sound/magic/veil_mind_gasp.ogg', 25, 1)
 	if(!do_after(usr, 10, target = usr))
 		return
-	usr.visible_message("<span class='boldwarning'>[usr] lets out a chilling cry!</span>", "<span class=velvet bold>...wjz oanra</span><br>\
+	usr.visible_message("<span class='boldwarning'>[usr] lets out a chilling cry!</span>", "<span class='velvet bold'>...wjz oanra</span><br>\
 	<span class='notice'>You veil the minds of everyone nearby.</span>")
 	playsound(usr, 'sound/magic/veil_mind_scream.ogg', 100, 1)
 	for(var/mob/living/L in view(3, usr))
@@ -158,7 +158,7 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/demented_outburst/Activate()
-	usr.visible_message("<span class='warning'>[usr] begins to growl!</span>", "<span class=velvet bold>cap...</span><br>\
+	usr.visible_message("<span class='warning'>[usr] begins to growl!</span>", "<span class='velvet bold'>cap...</span><br>\
 	<span class='danger'>You begin harnessing every ounce of your power...</span>")
 	playsound(usr, 'sound/magic/demented_outburst_charge.ogg', 100, 0)
 	addtimer(CALLBACK(src, .proc/outburst, usr), 50)
@@ -167,7 +167,7 @@
 /datum/action/innate/umbrage/demented_outburst/proc/outburst(mob/living/user)
 	if(!user || user.stat)
 		return
-	user.visible_message("<span class='boldwarning'>[user] lets out a deafening scream!</span>", "<span class='velvet bold italics'>WSWU!</span><br>\
+	user.visible_message("<span class='boldwarning'>[user] lets out a deafening scream!</span>", "<span class=''velvet bold' italics'>WSWU!</span><br>\
 	<span class='danger'>You let out a deafening outburst!</span>")
 	playsound(user, 'sound/magic/demented_outburst_scream.ogg', 150, 0)
 	var/list/thrown_atoms = list()
@@ -207,7 +207,7 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/simulacrum/Activate()
-	usr.visible_message("<span class='warning'>[usr] suddenly splits into two!</span>", "<span class=velvet bold>zayaera</span><br>\
+	usr.visible_message("<span class='warning'>[usr] suddenly splits into two!</span>", "<span class='velvet bold'>zayaera</span><br>\
 	<span class='notice'>You create an illusion of yourself.</span>")
 	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
 	var/obj/effect/simulacrum/simulacrum = new(get_turf(usr))
@@ -270,7 +270,7 @@
 			target = input(usr, "Select a target to tag along with.", name) as null|anything in targets
 			if(!target)
 				return
-		usr << "<span class=velvet bold>iahz</span><br><span class='notice'>You meld with [target]'s shadow.</span>"
+		usr << "<span class='velvet bold'>iahz</span><br><span class='notice'>You meld with [target]'s shadow.</span>"
 		usr.forceMove(target)
 		tagging_along = target
 		START_PROCESSING(SSprocessing, src)
