@@ -133,9 +133,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
-	var/grav_dir = FALSE
 	var/current_grav_dir = FALSE
 	var/new_grav_dir = FALSE
+	var/cardinal_unlock = FALSE
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
@@ -176,10 +176,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		part.main_part = src
 		parts += part
 		part.update_icon()
-
-/obj/machinery/gravity_generator/main/emag_act()
-	emagged = TRUE
-
 /obj/machinery/gravity_generator/main/proc/connected_parts()
 	return parts.len == 8
 
@@ -270,14 +266,15 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		dat += "Unpowered."
 
 	dat += "<br>Gravity Charge: [charge_count]%</div>"
-	if(emagged)
-		dat += "<br><span class='userdanger'>SYSTEM OVERRIDDEN: <A href='?src=\ref[src];reset_emagged=1'>RESET?</A></span>"
+	if(cardinal_unlock)
+	//	dat += "<br><span class='userdanger'>SYSTEM OVERRIDDEN: <A href='?src=\ref[src];reset_emagged=1'>RESET?</A></span>" Right now, admin vareditable only.
 		dat += "<br><span class='danger'>SET GRAVITATIONAL DIRECTION: [grav_dir]</span>"
 		dat += "<br><span class='boldnotice'><A href='?src=\ref[src];set_dir=1'>NORTH</A> <A href='?src=\ref[src];set_dir=2'>SOUTH</A>"
 		dat += " <A href='?src=\ref[src];set_dir=4'>EAST</A> <A href='?src=\ref[src];set_dir=8'>WEST</A></span>"
+	if(current_gravity_direction)
 		dat += "<br><span class='userdanger'><A href='?src=\ref[src];set_dir=0'>RESET DIRECTION</A></span>"
-		if(grav_dir != new_grav_dir)
-			dat += "<br><span class='userdanger'>DIRECTION CHANGE PENDING POWER CYCLE!</span>"
+	if(grav_dir != new_grav_dir)
+		dat += "<br><span class='userdanger'>DIRECTION CHANGE PENDING POWER CYCLE!</span>"
 
 	var/datum/browser/popup = new(user, "gravgen", name)
 	popup.set_content(dat)
@@ -294,9 +291,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()
 		src.updateUsrDialog()
-	if(href_list["reset_emagged"])
-		emagged = FALSE
-		fix_gravity_direction()
+	//if(href_list["reset_emagged"])
+	//	emagged = FALSE
+	//	fix_gravity_direction()
 	if(href_list["set_dir"])
 		set_gravity_direction(href_list["set_dir"])
 
