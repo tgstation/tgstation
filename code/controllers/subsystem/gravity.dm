@@ -53,7 +53,7 @@ var/global/legacy_gravity = FALSE
 		if(purge_tick >= purge_interval)
 			purging_atoms = list()
 			purging = TRUE
-			purge_tick = FALSE
+			purge_tick = 0
 	while(currentrun.len)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		if(AM)
