@@ -133,31 +133,13 @@
 	hierophant_message("<span class='nezbere_large'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
 	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
-	for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
-		W.damage_per_tick = 5
-		W.sight_range = 5
-	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require power
-		P.charge_rate = 1250
-	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
-		M.needs_power = FALSE
-		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
-			var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-			D.production_time = 0
-			D.production_cooldown *= 0.5
+	nezbere_invoked++
+	for(var/obj/O in all_clockwork_objects)
+		O.ratvar_act()
 	spawn(600)
-		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
-			if(W.damage_per_tick == 5)
-				W.damage_per_tick = initial(W.damage_per_tick)
-			if(W.sight_range == 5)
-				W.sight_range = initial(W.sight_range)
-		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			if(P.charge_rate == 1250)
-				P.charge_rate = initial(P.charge_rate)
-		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
-			M.needs_power = initial(M.needs_power)
-			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
-				var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-				D.production_cooldown = initial(D.production_cooldown)
+		nezbere_invoked--
+		for(var/obj/O in all_clockwork_objects)
+			O.ratvar_act()
 	return TRUE
 
 
