@@ -108,7 +108,7 @@ var/datum/subsystem/processing/air/SSair
 #undef PROCESS_ATMOS_LIST
 
 /datum/subsystem/processing/air/start_processing(datum/D, list_type, add_to_active_block_changes = TRUE)
-	var/has_processors = D.processors
+	var/list/has_processors = D.processors
 	var/has_air_processor
 	if(has_processors)
 		has_air_processor = src in has_processors
