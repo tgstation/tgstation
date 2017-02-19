@@ -137,7 +137,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
-	var/list/possible_types = list("Assault", "Medical")
 
 /obj/item/weapon/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -189,12 +188,13 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 
+/obj/item/weapon/antag_spawner/nuke_ops/borg_tele/assault
+	name = "syndicate assault cyborg teleporter"
+	borg_to_spawn = "Assault"
 
-/obj/item/weapon/antag_spawner/nuke_ops/borg_tele/attack_self(mob/user)
-	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
-	if(!borg_to_spawn)
-		return
-	..()
+/obj/item/weapon/antag_spawner/nuke_ops/borg_tele/medical
+	name = "syndicate medical teleporter"
+	borg_to_spawn = "Medical"
 
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T)
 	var/mob/living/silicon/robot/R
