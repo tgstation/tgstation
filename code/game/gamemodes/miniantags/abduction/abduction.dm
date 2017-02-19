@@ -359,6 +359,8 @@
 
 /datum/objective/abductee/paint
 	explanation_text = "The station is hideous. You must color it all"
+
+/datum/objective/abductee/paint/New()
 	var/color = pick(list("red", "blue", "green", "yellow", "orange", "purple", "black", "in rainbows"))
 	explanation_text+= "[color]!"
 
@@ -478,7 +480,7 @@
 	explanation_text = "The clown is not funny. You can do better! Make the crew laugh!"
 
 /datum/objective/abductee/party
-	explanation_text = "You're throwing a huge rager. The whole crew needs to come... OR ELSE!"
+	explanation_text = "You're throwing a huge rager. Make it as awesome as possible so the whole crew comes... OR ELSE!"
 
 /datum/objective/abductee/pets
 	explanation_text = "All the pets around here suck. You need to make them cooler. Replace them with exotic beasts!"
