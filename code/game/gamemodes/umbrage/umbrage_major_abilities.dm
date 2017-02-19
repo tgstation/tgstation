@@ -115,75 +115,11 @@
 	for(var/mob/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
 		M << "[link] [processed_message]"
-	Remove(user) //Take the action away
 	user.real_name = umbrage_name
 	user.name = umbrage_name
 	user << "<span class='velvet bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
 	var/datum/umbrage/U = get_umbrage()
 	U.give_ability("Psi Web")
 	U.give_ability("Devour Will")
-
-//Using the psi of everyone you've drained, ascends into a progenitor and extinguishes the stars.
-/datum/action/innate/umbrage/sacrament
-	name = "Sacrament"
-	desc = "Ascend beyond your material form into a progenitor. This cannot be reversed."
-	button_icon_state = "umbrage_sacrament"
-	blacklisted = 1
-	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
-
-/datum/action/innate/umbrage/sacrament/IsAvailable()
-	if(active)
-		return
-	return ..()
-
-/datum/action/innate/umbrage/sacrament/Activate()
-	if(alert(usr, "Are you sure? Once you have ascended, you cannot return!", name, "Yes", "No") == "No")
-		return
-	usr << "<span class='warning'>If this attempt fails, you may not try again for another minute.</span>"
-	active = 1
-	spawn(600) //1-minute cooldown on all attempts, regardless of success or failure
-		active = 0
-	var/mob/living/carbon/human/user = usr
-	user.visible_message("<span class='warning'>[user] slowly rises into the air...</span>", "<span class='velvet'>You rise into the air, preparing for your ascendance...</span>")
-	animate(user, pixel_y = user.pixel_y + 5, time = 30)
-	if(!do_after(user, 30, target = user))
-		animate(user, pixel_y = initial(user.pixel_y), time = 0)
-		return
-	var/image/alert_overlay = image('icons/mob/actions.dmi', "umbrage_sacrament")
-	notify_ghosts("Umbrage [user.real_name] has begun ascending at [get_area(user)]! ", source = user, ghost_sound = 'sound/magic/devour_will_victim.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
-	send_to_playing_players("<span class='warning'>The lights begin to dim... and it begins to feel very, very cold.</span>")
-	for(var/stage in 1 to 3)
-		switch(stage)
-			if(1)
-				user.visible_message("<span class='userdanger'>Energy crackles. Light bends. [user] raises their arms skyward as violet energy pulses from the walls and pools on the ground.</span>", \
-									"<span class='velvet'>The ancient sacrament begins. You begin speaking the ancient words as energy pours from the space around you...</span>\n\
-									<span class='velvet bold'>heba ckao. zwng bhkso. iejzo bwhh ej znkrao. pdaen hqyezepu behho ia wjz pdaen xkzeao sehh oanra wo iu raooaho.</span>")
-				playsound(user, 'sound/magic/divulge_03.ogg', 70, 0)
-			if(2)
-				user.visible_message("<span class='userdanger'>A surge travels from [user]. The energy beneath them rises, pours into their sigils as they glow.</span>", \
-									"<span class='velvet'>You feel the minds of those you have touched, leech their will. One by one, their sparks of life dims.</span>\n\
-									<span class='velvet bold'>pdau nawyd bkn qo. xac bkn qo. zk ukq dawn pdaen ywhh? kxheca pdai. <i>KXHECA PDAI.</i></span>")
-				playsound(user, 'sound/magic/sacrament_01.ogg', 80, 0)
-				var/datum/umbrage/U = get_umbrage()
-				if(U)
-					for(var/datum/mind/M in U.drained_minds)
-						if(!M.current || M.current.stat)
-							continue
-						var/mob/living/L = M.current
-						L.visible_message("<span class='warning'>[L] suddenly falls prone, gazing dully upwards...</span>", "<span class='userdanger'>Something appears in your vision. Then you faint.</span>")
-						L.setDir(SOUTH)
-						L.Paralyse(10)
-			if(3)
-				user.visible_message("<span class='userdanger'>[user]'s sigils begin to twist and grow. Their arms gently slope downward and... no. no this isnt real</span>", \
-									"<span class='velvet'>You feel the umbral essence of your home infuse your false body. You begin to morph into something unspeakable.</span>\n\
-									<pan class=''velvet bold' italics'>PWGA PDAEN HECDP. ZARKQN EP. YKJOQIA EP WJZ OWRKN EPO CKKAU PWOPA EJ UKQN SKNPDU BHAOD.</span>")
-				playsound(user, 'sound/magic/sacrament_02.ogg', 90, 0)
-		if(!do_after(user, 150, target = user))
-			user.visible_message("<span class='warning'>[user] falls to the ground!</span>", "<span class='userdanger'>Your transformation was interrupted!</span>")
-			animate(user, color = initial(user.color), pixel_y = initial(user.pixel_y), time = 10)
-			return
-	send_to_playing_players("<span class='velvet_progenitor'>NO NO NO NO YOUR HEAD OH YOUR HEAD IT HURTS IT <i>HUUUUUURTS---</i></span>")
-	send_to_playing_players('sound/magic/sacrament_ending.ogg')
-	sleep(40)
-	send_to_playing_players("<span class='velvet_progenitor'>ZK UKQ DAWN IU OKJC? PWGA PDA CEBP. PWGA EP! PWGA EP!!!</span>")
-	send_to_playing_players('sound/magic/demented_outburst_scream.ogg')
+	Remove(user) //Take the action away
+	qdel(src)

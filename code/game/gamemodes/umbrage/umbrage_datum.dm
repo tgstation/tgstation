@@ -57,7 +57,7 @@
 		return
 	ability.Grant(linked_mind.current)
 	if(!silent)
-		linked_mind.current << "<span class='velvet_italic'>You have learned the \"[ability_name]\" ability.</span>"
+		linked_mind.current << "<span class='velvet italic'>You have learned the \"[ability_name]\" ability.</span>"
 	if(consume_lucidity)
 		lucidity = max(0, lucidity - initial(ability.lucidity_cost))
 	return 1
