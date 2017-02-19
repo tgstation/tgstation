@@ -42,20 +42,21 @@
 	var/list/local_cache = run_cache
 	var/local_delegate = delegate
 
-	if(local_delegate)
-		do	//we know local_cache.len will always at least be 1 if we're here
-			var/thing = local_cache[local_cache.len]
-			local_cache.len--
-			if(!thing || call(thing, local_delegate)(arg) == PROCESS_KILL)
-				stop_processing(thing, TRUE)
-		while (local_cache.len && MC_TICK_CHECK)
-	else	//copy pasta to avoid the call()() overhead for 90% of things
-		do
-			var/datum/thing = local_cache[local_cache.len]
-			local_cache.len--
-			if(!thing || thing.process(arg) == PROCESS_KILL)
-				stop_processing(thing, TRUE)
-		while(local_cache.len && MC_TICK_CHECK)
+	if(local_cache.len)
+		if(local_delegate)
+			do	//we know local_cache.len will always at least be 1 if we're here
+				var/thing = local_cache[local_cache.len]
+				local_cache.len--
+				if(!thing || call(thing, local_delegate)(arg) == PROCESS_KILL)
+					stop_processing(thing, TRUE)
+			while (local_cache.len && MC_TICK_CHECK)
+		else	//copy pasta to avoid the call()() overhead for 90% of things
+			do
+				var/datum/thing = local_cache[local_cache.len]
+				local_cache.len--
+				if(!thing || thing.process(arg) == PROCESS_KILL)
+					stop_processing(thing, TRUE)
+			while(local_cache.len && MC_TICK_CHECK)
 
 /datum/subsystem/processing/Recover(datum/subsystem/processing/predecessor)
 	for(var/I in predecessor.processing_list)
