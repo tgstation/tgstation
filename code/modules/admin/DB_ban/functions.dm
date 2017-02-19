@@ -6,8 +6,7 @@
 	if(!check_rights(R_BAN))
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 
@@ -183,8 +182,7 @@
 	if(job)
 		sql += " AND job = '[job]'"
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 
 	var/ban_id
@@ -280,8 +278,7 @@
 
 	var/sql = "SELECT ckey FROM [format_table_name("ban")] WHERE id = [id]"
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 
 	var/ban_number = 0 //failsafe
@@ -333,8 +330,7 @@
 	if(!check_rights(R_BAN))
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 

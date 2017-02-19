@@ -236,6 +236,8 @@ var/list/teleportlocs = list()
 			RA.mouse_opacity = 0
 			RA.updateicon()
 			RA.ModifyFiredoors(TRUE)
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)

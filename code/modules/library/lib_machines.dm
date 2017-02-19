@@ -43,8 +43,7 @@
 			dat += "<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>"
 			dat += "<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"
 		if(1)
-			establish_db_connection()
-			if(!dbcon.IsConnected())
+			if (!dbcon.Connect())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else if(!SQLquery)
 				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
@@ -135,8 +134,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 /proc/load_library_db_to_cache()
 	if(cachedbooks)
 		return
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 	cachedbooks = list()
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
@@ -408,8 +406,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if(scanner.cache)
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
-					establish_db_connection()
-					if(!dbcon.IsConnected())
+					if (!dbcon.Connect())
 						alert("Connection to Archive has been severed. Aborting.")
 					else
 
@@ -446,8 +443,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if (!dbcon.Connect())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
