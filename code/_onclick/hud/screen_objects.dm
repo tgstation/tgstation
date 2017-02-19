@@ -21,6 +21,7 @@
 
 /obj/screen/Destroy()
 	master = null
+	hud = null
 	return ..()
 
 /obj/screen/examine(mob/user)
@@ -664,3 +665,30 @@
 		if(word_messages.len && talk_cooldown < world.time)
 			talk_cooldown = world.time + 10
 			L.say(pick(word_messages))
+
+/obj/screen/splash
+	icon = 'icons/misc/fullscreen.dmi'
+	icon_state = "title"
+	screen_loc = "1,1"
+	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
+	var/client/holder
+
+/obj/screen/splash/New(client/C, fadeout, qdel_after = TRUE)
+	..()
+	holder = C
+	holder.screen += src
+	var/titlescreen = TITLESCREEN
+	if(titlescreen)
+		icon_state = titlescreen
+	if(fadeout)
+		animate(src, alpha = 0, time = 30)
+	else
+		alpha = 0
+		animate(src, alpha = 255, time = 30)
+	if(qdel_after)
+		QDEL_IN(src, 30)
+
+/obj/screen/splash/Destroy()
+	holder.screen -= src
+	return ..()

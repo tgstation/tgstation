@@ -6,7 +6,10 @@
 	var/active_msg = "You charge your projectile!"
 	var/base_icon_state = "projectile"
 	var/active_icon_state = "projectile"
-	var/projectile_damage_override = -1
+	var/list/projectile_var_overrides = list()
+	var/projectile_amount = 1	//Projectiles per cast.
+	var/current_amount = 1	//How many projectiles left.
+	var/clickdelay_override = -1
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -22,6 +25,7 @@
 		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>"
+		current_amount = projectile_amount
 		add_ranged_ability(user, msg, TRUE)
 
 /obj/effect/proc_holder/spell/aimed/update_icon()
@@ -48,18 +52,22 @@
 		return FALSE
 	fire_projectile(user, target)
 	user.newtonian_move(get_dir(U, T))
-	remove_ranged_ability() //Auto-disable the ability once successfully performed
+	if(clickdelay_override >= 0)
+		user.changeNext_move(clickdelay_override)
+	else
+		user.changeNext_move(CLICK_CD_RANGE)
+	current_amount--
+	if(current_amount <= 0)
+		remove_ranged_ability() //Auto-disable the ability once you run out of bullets.
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
 	var/obj/item/projectile/P = new projectile_type(user.loc)
 	P.current = get_turf(user)
 	P.preparePixelProjectile(target, get_turf(target), user)
-	if(projectile_damage_override != -1)
-		P.damage = projectile_damage_override
-		P.nodamage = TRUE
-		if(P.damage)
-			P.nodamage = FALSE
+	for(var/V in projectile_var_overrides)
+		if(P.vars[V])
+			P.vars[V] = projectile_var_overrides[V]
 	P.fire()
 	return TRUE
 
@@ -76,26 +84,10 @@
 	base_icon_state = "lightning"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
-	var/tesla_range = 15
-	var/tesla_power = 20000
-	var/tesla_boom = FALSE
+	projectile_var_overrides = list("tesla_range" = 15, "tesla_power" = 20000, "tesla_boom" = FALSE)
 	active_msg = "You energize your hand with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
-
-/obj/effect/proc_holder/spell/aimed/lightningbolt/fire_projectile(mob/living/user, atom/target)
-	var/obj/item/projectile/magic/aoe/lightning/P = new /obj/item/projectile/magic/aoe/lightning(user.loc)
-	P.current = get_turf(user)
-	P.preparePixelProjectile(target, get_turf(target), user)
-	if(projectile_damage_override != -1)
-		P.damage = projectile_damage_override
-		P.nodamage = TRUE
-		if(P.damage)
-			P.nodamage = FALSE
-	P.tesla_power = tesla_power
-	P.tesla_range = tesla_range
-	P.tesla_boom = tesla_boom
-	P.fire()
-	return TRUE
+	projectile_type = /obj/item/projectile/magic/aoe/lightning
 
 /obj/effect/proc_holder/spell/aimed/fireball
 	name = "Fireball"

@@ -55,7 +55,8 @@
 				//End bloody footprints
 
 				S.step_action()
-
+	if(buckled_mobs && buckled_mobs.len && riding_datum)
+		riding_datum.on_vehicle_move()
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(..())

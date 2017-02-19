@@ -8921,7 +8921,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/shuttle/auxillary_base{
+/obj/machinery/computer/auxillary_base{
 	pixel_y = 0
 	},
 /turf/closed/wall,
@@ -39899,7 +39899,7 @@
 "bJc" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
+	req_access_txt = "0"
 	},
 /obj/docking_port/mobile{
 	dir = 8;
@@ -61227,6 +61227,15 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+"cCt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -72376,7 +72385,7 @@ aqN
 asD
 asD
 asD
-asD
+cCt
 asD
 asD
 asD
