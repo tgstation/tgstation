@@ -263,13 +263,18 @@
 	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
+	var/static/prev_cost = 0
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
 	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
-	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-	for(var/i in consumed_components)
-		if(i != REPLICANT_ALLOY)
-			consumed_components[i] += cache_cost_increase
+	if(cache_cost_increase != prev_cost)
+		prev_cost = cache_cost_increase
+		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
+		for(var/i in consumed_components)
+			if(i != REPLICANT_ALLOY)
+				consumed_components[i] += cache_cost_increase
+		return TRUE
+	return FALSE
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
