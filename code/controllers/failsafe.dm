@@ -53,23 +53,23 @@ var/datum/controller/failsafe/Failsafe
 						if(4,5)
 							--defcon
 						if(3)
-							admins << "<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks."
+							to_chat(admins, "<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks.")
 							--defcon
 						if(2)
-							admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>"
+							to_chat(admins, "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>")
 							--defcon
 						if(1)
 
-							admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [(5-defcon) * processing_interval] ticks. Killing and restarting...</span>"
+							to_chat(admins, "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [(5-defcon) * processing_interval] ticks. Killing and restarting...</span>")
 							--defcon
 							var/rtn = Recreate_MC()
 							if(rtn > 0)
 								defcon = 4
 								master_iteration = 0
-								admins << "<span class='adminnotice'>MC restarted successfully</span>"
+								to_chat(admins, "<span class='adminnotice'>MC restarted successfully</span>")
 							else if(rtn < 0)
 								log_game("FailSafe: Could not restart MC, runtime encountered. Entering defcon 0")
-								admins << "<span class='boldannounce'>ERROR: DEFCON [defcon_pretty()]. Could not restart MC, runtime encountered. I will silently keep retrying.</span>"
+								to_chat(admins, "<span class='boldannounce'>ERROR: DEFCON [defcon_pretty()]. Could not restart MC, runtime encountered. I will silently keep retrying.</span>")
 							//if the return number was 0, it just means the mc was restarted too recently, and it just needs some time before we try again
 							//no need to handle that specially when defcon 0 can handle it
 						if(0) //DEFCON 0! (mc failed to restart)
@@ -77,7 +77,7 @@ var/datum/controller/failsafe/Failsafe
 							if(rtn > 0)
 								defcon = 4
 								master_iteration = 0
-								admins << "<span class='adminnotice'>MC restarted successfully</span>"
+								to_chat(admins, "<span class='adminnotice'>MC restarted successfully</span>")
 				else
 					defcon = min(defcon + 1,5)
 					master_iteration = Master.iteration

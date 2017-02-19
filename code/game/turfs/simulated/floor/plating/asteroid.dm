@@ -53,15 +53,15 @@
 			return
 
 		if (dug)
-			user << "<span class='warning'>This area has already been dug!</span>"
+			to_chat(user, "<span class='warning'>This area has already been dug!</span>")
 			return
 
-		user << "<span class='notice'>You start digging...</span>"
+		to_chat(user, "<span class='notice'>You start digging...</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 
 		if(do_after(user, digging_speed, target = src))
 			if(istype(src, /turf/open/floor/plating/asteroid))
-				user << "<span class='notice'>You dig a hole.</span>"
+				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				gets_dug()
 				feedback_add_details("pick_used_mining","[W.type]")
 

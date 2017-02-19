@@ -26,7 +26,7 @@
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	src << playstyle_string
+	to_chat(src, playstyle_string)
 
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span class='brass'>*---------*\nThis is [bicon(src)] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
@@ -48,4 +48,4 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)

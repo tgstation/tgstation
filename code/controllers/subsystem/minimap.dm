@@ -25,18 +25,18 @@ var/datum/subsystem/minimap/SSminimap
 		fdel(hash_path())
 		text2file(hash, hash_path())
 	else
-		world << "<span class='boldannounce'>Minimap generation disabled. Loading from cache...</span>"
+		to_chat(world, "<span class='boldannounce'>Minimap generation disabled. Loading from cache...</span>")
 		var/fileloc = 0
 		if(check_files(0))	//Let's first check if we have maps cached in the data folder. NOTE: This will override the backup files even if this map is older.
 			if(hash != trim(file2text(hash_path())))
-				world << "<span class='boldannounce'>Loaded cached minimap is outdated. There may be minor discrepancies in layout.</span>"	//Disclaimer against players saying map is wrong.
+				to_chat(world, "<span class='boldannounce'>Loaded cached minimap is outdated. There may be minor discrepancies in layout.</span>")	//Disclaimer against players saying map is wrong.
 			fileloc = 0
 		else
 			if(!check_files(1))
-				world << "<span class='boldannounce'>Failed to load backup minimap file. Aborting.</span>"	//We couldn't find something. Bail to prevent issues with null files
+				to_chat(world, "<span class='boldannounce'>Failed to load backup minimap file. Aborting.</span>")	//We couldn't find something. Bail to prevent issues with null files
 				return
 			fileloc = 1	//No map image cached with the current map, and we have a backup. Let's fall back to it.
-			world << "<span class='boldannounce'>No cached minimaps detected. Backup files loaded.</span>"
+			to_chat(world, "<span class='boldannounce'>No cached minimaps detected. Backup files loaded.</span>")
 		for(var/z in z_levels)
 			register_asset("minimap_[z].png", fcopy_rsc(map_path(z,fileloc)))
 	..()

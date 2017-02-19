@@ -32,7 +32,7 @@
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
-	imp_in << "<span class='notice'>You activate your [name].</span>"
+	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
 	var/turf/boomturf = get_turf(imp_in)
 	var/area/A = get_area(boomturf)
 	message_admins("[key_name_admin(imp_in)]<A HREF='?_src_=holder;adminmoreinfo=\ref[imp_in]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[imp_in]'>FLW</A>) has activated their [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>[A.name] (JMP)</a>.")

@@ -36,7 +36,7 @@
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	if(current_user)
-		user << "The console is already in use!"
+		to_chat(user, "The console is already in use!")
 		return
 	if(!iscarbon(user))
 		return

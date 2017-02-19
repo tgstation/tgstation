@@ -53,12 +53,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 
 	if(targetselected && !hascall(target,procname))
-		usr << "<font color='red'>Error: callproc(): type [target.type] has no proc named [procname].</font>"
+		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no proc named [procname].</font>")
 		return
 	else
 		var/procpath = text2path(procname)
 		if (!procpath)
-			usr << "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>"
+			to_chat(usr, "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>")
 			return
 	var/list/lst = get_callproc_args()
 	if(!lst)
@@ -66,7 +66,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(targetselected)
 		if(!target)
-			usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
+			to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
 			return
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -78,7 +78,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
-		usr << .
+		to_chat(usr, .)
 	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
@@ -93,14 +93,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!procname)
 		return
 	if(!hascall(A,procname))
-		usr << "<font color='red'>Error: callproc_datum(): type [A.type] has no proc named [procname].</font>"
+		to_chat(usr, "<font color='red'>Error: callproc_datum(): type [A.type] has no proc named [procname].</font>")
 		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
 	if(!A || !IsValidSrc(A))
-		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
+		to_chat(usr, "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>")
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 	message_admins("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -109,9 +109,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
 	if(.)
-		usr << .
-
-
+		to_chat(usr, .)
 
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
@@ -173,8 +171,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/id in env_gases)
 		if(id in hardcoded_gases || env_gases[id][MOLES])
 			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
-
-	usr << t
+to_chat(usr, t)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in mob_list)
@@ -507,33 +504,33 @@ var/list/TYPES_SHORTCUTS = list(
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	world << "<b>AREAS WITHOUT AN APC:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
 	for(var/areatype in areas_without_APC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT AN AIR ALARM:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
 	for(var/areatype in areas_without_air_alarm)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
 	for(var/areatype in areas_without_RC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY LIGHTS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
 	for(var/areatype in areas_without_light)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A LIGHT SWITCH:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
 	for(var/areatype in areas_without_LS)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY INTERCOMS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
 	for(var/areatype in areas_without_intercom)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY CAMERAS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
 	for(var/areatype in areas_without_camera)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
@@ -734,8 +731,8 @@ var/list/TYPES_SHORTCUTS = list(
 	if(istype(landmark))
 		var/datum/map_template/ruin/template = landmark.ruin_template
 		usr.forceMove(get_turf(landmark))
-		usr << "<span class='name'>[template.name]</span>"
-		usr << "<span class='italics'>[template.description]</span>"
+		to_chat(usr, "<span class='name'>[template.name]</span>")
+		to_chat(usr, "<span class='italics'>[template.description]</span>")
 
 /client/proc/clear_dynamic_transit()
 	set category = "Debug"

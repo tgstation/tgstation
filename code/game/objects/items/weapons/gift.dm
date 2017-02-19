@@ -27,7 +27,7 @@
 
 /obj/item/weapon/a_gift/attack_self(mob/M)
 	if(M && M.mind && M.mind.special_role == "Santa")
-		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
+		to_chat(M, "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>")
 		return
 
 	var/gift_type_list = list(/obj/item/weapon/sord,

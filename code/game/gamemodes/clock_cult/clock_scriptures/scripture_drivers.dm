@@ -28,9 +28,9 @@
 			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
 			if(C.m_intent != MOVE_INTENT_WALK)
 				if(!iscultist(C))
-					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
+					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
 				else //Cultists take extra burn damage
-					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"
+					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
 				C.toggle_move_intent()
@@ -75,7 +75,7 @@
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
-		invoker << "<span class='warning'>You are already shielded by a Vanguard!</span>"
+		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
 

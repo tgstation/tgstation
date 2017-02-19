@@ -51,18 +51,18 @@
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
+		to_chat(user, "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>")
 		if(!iscyborg(user))
-			user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
+			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>")
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
 	if(attack_cooldown > world.time)
-		user << "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		to_chat(user, "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
 		return
 	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
-			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+			to_chat(user, "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
@@ -86,7 +86,7 @@
 		else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 			var/mob/living/M = target
 			if(M.stat != DEAD)
-				M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
+				to_chat(M, "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>")
 				M.adjustFireLoss(15)
 		else
 			target.adjustFireLoss(3)
@@ -101,7 +101,7 @@
 		if(target)
 			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
 			target.Stun(2)
-			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
+			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
@@ -112,7 +112,7 @@
 					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				else
 					user.visible_message("<span class='warning'>[user] kicks [target] off of [src]!</span>", "<span class='warning'>You kick [target] off of [src]!</span>")
-					target << "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>"
+					to_chat(target, "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>")
 					target.emote("scream")
 					step(target, get_dir(user, target))
 					T = get_turf(target)
@@ -123,7 +123,7 @@
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
 				user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				if(target.stat == CONSCIOUS)
-					target << "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>"
+					to_chat(target, "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>")
 					target.emote("scream")
 				flash_color(target, flash_color="#911414", flash_time=4)
 

@@ -53,7 +53,7 @@
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
-				user << T.examine_line
+				to_chat(user, T.examine_line)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
@@ -71,13 +71,11 @@
 		if(reag_txt)
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
-		user << msg
+		to_chat(user, msg)
 	else
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_attackby(src, O, user)
-
-
 // Various gene procs
 /obj/item/weapon/reagent_containers/food/snacks/grown/attack_self(mob/user)
 	if(seed && seed.get_gene(/datum/plant_gene/trait/squash))
@@ -168,4 +166,4 @@
 	qdel(src)
 	if(trash)
 		user.put_in_hands(T)
-		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
+		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")

@@ -343,7 +343,7 @@ var/list/test_times = list("December" = 1323522004, "August" = 1123522004, "Janu
 						   "New Years" = 1009836000, "New Years 2" = 1041372000, "New Years 3" = 1104530400,
 						   "July Month End" = 744161003, "July Month End 12" = 1343777003, "End July" = 1091311200)
 for(var/t in test_times)
-	world.log << "TEST: [t] is [unix2date(test_times[t])]"
+	to_chat(world.log, "TEST: [t] is [unix2date(test_times[t])]")
 */
 
 /proc/isLeap(y)

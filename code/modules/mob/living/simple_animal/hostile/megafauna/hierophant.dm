@@ -593,7 +593,7 @@ Difficulty: Hard
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
 		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
-		L << "<span class='userdanger'>You're struck by a [name]!</span>"
+		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor)
@@ -605,7 +605,7 @@ Difficulty: Hard
 		if(M.occupant)
 			if(friendly_fire_check && caster && caster.faction_check(M.occupant))
 				continue
-			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
+			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
 		M.take_damage(damage, BURN, 0, 0)
 
@@ -627,13 +627,13 @@ Difficulty: Hard
 		if(H.timer > world.time)
 			return
 		if(H.beacon == src)
-			user << "<span class='notice'>You start removing your hierophant beacon...</span>"
+			to_chat(user, "<span class='notice'>You start removing your hierophant beacon...</span>")
 			H.timer = world.time + 51
 			INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
 				playsound(src,'sound/magic/Blind.ogg', 200, 1, -4)
 				new /obj/effect/overlay/temp/hierophant/telegraph/teleport(get_turf(src), user)
-				user << "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>"
+				to_chat(user, "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>")
 				H.beacon = null
 				user.update_action_buttons_icon()
 				qdel(src)
@@ -641,7 +641,7 @@ Difficulty: Hard
 				H.timer = world.time
 				INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 		else
-			user << "<span class='hierophant_warning'>You touch the beacon with the club, but nothing happens.</span>"
+			to_chat(user, "<span class='hierophant_warning'>You touch the beacon with the club, but nothing happens.</span>")
 	else
 		return ..()
 

@@ -19,7 +19,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
+			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of [usr.p_them()]."
 	else
@@ -57,9 +57,9 @@
 	for(var/mob/living/carbon/human/H in targets)
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)
-			H << "<span class='notice'>You make a vow of silence.</span>"
+			to_chat(H, "<span class='notice'>You make a vow of silence.</span>")
 		else
-			H << "<span class='notice'>You break your vow of silence.</span>"
+			to_chat(H, "<span class='notice'>You break your vow of silence.</span>")
 
 // These spells can only be gotten from the "Guide for Advanced Mimery series+" for Mime Traitors.
 
@@ -81,7 +81,7 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
+			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
 	else
@@ -112,7 +112,7 @@
 /obj/effect/proc_holder/spell/aimed/finger_guns/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
+			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> fires [usr.p_their()] finger gun!"
 	else

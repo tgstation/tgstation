@@ -26,7 +26,7 @@
 			return
 		O.loc = src
 		scan = O
-		user << "<span class='notice'>You insert [O].</span>"
+		to_chat(user, "<span class='notice'>You insert [O].</span>")
 	else
 		return ..()
 

@@ -100,7 +100,7 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	user << "A digital display on it reads \"[seconds_remaining()]\"."
+	to_chat(user, "A digital display on it reads \"[seconds_remaining()]\".")
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -115,25 +115,25 @@
 	if(istype(I, /obj/item/weapon/wrench) && can_unanchor)
 		if(!anchored)
 			if(!isturf(loc) || isspaceturf(loc))
-				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
+				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
 			else
-				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
+				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
 				playsound(loc, I.usesound, 50, 1)
 				anchored = 1
 				if(active)
-					user << "<span class='notice'>The bolts lock in place.</span>"
+					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
-				user << "<span class='notice'>You wrench the bomb from the floor.</span>"
+				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
 				playsound(loc, I.usesound, 50, 1)
 				anchored = 0
 			else
-				user << "<span class='warning'>The bolts are locked down!</span>"
+				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
 		update_icon()
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
+		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 
 	else if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
@@ -141,24 +141,24 @@
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(open_panel && wires.is_all_cut())
 			if(payload)
-				user << "<span class='notice'>You carefully pry out [payload].</span>"
+				to_chat(user, "<span class='notice'>You carefully pry out [payload].</span>")
 				payload.loc = user.loc
 				payload = null
 			else
-				user << "<span class='warning'>There isn't anything in here to remove!</span>"
+				to_chat(user, "<span class='warning'>There isn't anything in here to remove!</span>")
 		else if (open_panel)
-			user << "<span class='warning'>The wires connecting the shell to the explosives are holding it down!</span>"
+			to_chat(user, "<span class='warning'>The wires connecting the shell to the explosives are holding it down!</span>")
 		else
-			user << "<span class='warning'>The cover is screwed on, it won't pry off!</span>"
+			to_chat(user, "<span class='warning'>The cover is screwed on, it won't pry off!</span>")
 	else if(istype(I, /obj/item/weapon/bombcore))
 		if(!payload)
 			if(!user.drop_item())
 				return
 			payload = I
-			user << "<span class='notice'>You place [payload] into [src].</span>"
+			to_chat(user, "<span class='notice'>You place [payload] into [src].</span>")
 			payload.loc = src
 		else
-			user << "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>"
+			to_chat(user, "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>")
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
@@ -166,22 +166,22 @@
 		if(!WT.isOn())
 			return
 		if(WT.get_fuel() < 5) //uses up 5 fuel.
-			user << "<span class='warning'>You need more fuel to complete this task!</span>"
+			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
 			return
 
 		playsound(loc, WT.usesound, 50, 1)
-		user << "<span class='notice'>You start to cut the [src] apart...</span>"
+		to_chat(user, "<span class='notice'>You start to cut the [src] apart...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
 				return
-			user << "<span class='notice'>You cut the [src] apart.</span>"
+			to_chat(user, "<span class='notice'>You cut the [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
 		var/old_integ = obj_integrity
 		. = ..()
 		if((old_integ > obj_integrity) && active && !defused && (payload in src))
-			user << "<span class='warning'>That seems like a really bad idea...</span>"
+			to_chat(user, "<span class='warning'>That seems like a really bad idea...</span>")
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	interact(user)
@@ -195,7 +195,7 @@
 		if(!active)
 			settings(user)
 		else if(anchored)
-			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
+			to_chat(user, "<span class='warning'>The bomb is bolted to the floor!</span>")
 
 /obj/machinery/syndicatebomb/proc/activate()
 	active = TRUE
@@ -209,14 +209,14 @@
 	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer_set = Clamp(new_timer, minimum_timer, maximum_timer)
-		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer_set] seconds.</span>")
+		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
-				src.loc.visible_message("<span class='warning'>\icon[src] Device error: User intervention required.</span>")
+				src.loc.visible_message("<span class='warning'>[bicon(src)] Device error: User intervention required.</span>")
 			return
 		else
-			src.loc.visible_message("<span class='danger'>\icon[src] [timer_set] seconds until detonation, please clear the area.</span>")
+			src.loc.visible_message("<span class='danger'>[bicon(src)] [timer_set] seconds until detonation, please clear the area.</span>")
 			activate()
 			update_icon()
 			add_fingerprint(user)
@@ -323,7 +323,7 @@
 	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
-		holder.loc.visible_message("<span class='danger'>\icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...</span>")
+		holder.loc.visible_message("<span class='danger'>[bicon(holder)] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...</span>")
 		reset()
 	else
 		qdel(src)
@@ -333,7 +333,7 @@
 	if(istype(holder))
 		attempts++
 		defusals++
-		holder.loc.visible_message("<span class='notice'>\icon[holder] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds...</span>")
+		holder.loc.visible_message("<span class='notice'>[bicon(holder)] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds...</span>")
 		sleep(50)	//Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
 		if(istype(holder))
 			reset()
@@ -462,10 +462,10 @@
 			if(!user.drop_item())
 				return
 			beakers += I
-			user << "<span class='notice'>You load [src] with [I].</span>"
+			to_chat(user, "<span class='notice'>You load [src] with [I].</span>")
 			I.loc = src
 		else
-			user << "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>"
+			to_chat(user, "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>")
 			return
 	..()
 
@@ -534,7 +534,7 @@
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		user << "<span class='notice'>[existant] found, [detonated] triggered.</span>"
+		to_chat(user, "<span class='notice'>[existant] found, [detonated] triggered.</span>")
 		if(detonated)
 			var/turf/T = get_turf(src)
 			var/area/A = get_area(T)

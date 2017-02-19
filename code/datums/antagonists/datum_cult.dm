@@ -43,7 +43,7 @@
 		if(ticker && ticker.mode)
 			ticker.mode.cult -= owner.mind
 			ticker.mode.update_cult_icons_removed(owner.mind)
-	owner << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
+	to_chat(owner, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>")
 	owner.attack_log += "\[[time_stamp()]\] <font color=#960000>Has renounced the cult of Nar'Sie!</font>"
 	if(!silent_update)
 		owner.visible_message("<span class='big'>[owner] looks like [owner.p_they()] just reverted to their old faith!</span>")

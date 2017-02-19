@@ -81,12 +81,12 @@
 	set name = "Adminhelp"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>"
+		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
@@ -116,17 +116,17 @@
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		window_flash(X, ignorepref = TRUE)
-		X << msg
+		to_chat(X, msg)
 
 
-	//show it to the person adminhelping too
-	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
+	//show it to the person adminhelping too)
+	to_chat(src, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>")
 
 	//send it to irc if nobody is on and tell us how many were on
 	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
 	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
-		src << "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>"
+		to_chat(src, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

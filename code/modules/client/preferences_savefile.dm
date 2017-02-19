@@ -270,7 +270,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
-		S["features["mcolor"]"]	<< "#FFF"
+		to_chat(S["features["mcolor"]"], "#FFF")
 
 	//Character
 	S["OOC_Notes"]			>> metadata

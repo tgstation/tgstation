@@ -28,7 +28,7 @@ var/datum/subsystem/job/SSjob
 	occupations = list()
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)
-		world << "<span class='boldannounce'>Error setting up jobs, no job datums found</span>"
+		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
 		return 0
 
 	for(var/J in all_jobs)
@@ -399,13 +399,13 @@ var/datum/subsystem/job/SSjob
 		if(ismob(new_mob))
 			H = new_mob
 
-	H << "<b>You are the [rank].</b>"
-	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
-	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
+	to_chat(H, "<b>You are the [rank].</b>")
+	to_chat(H, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
+	to_chat(H, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
 	if(job.req_admin_notify)
-		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 	if(config.minimal_access_threshold)
-		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
+		to_chat(H, "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
 		job.after_spawn(H)
@@ -488,7 +488,7 @@ var/datum/subsystem/job/SSjob
 		return
 	if(PopcapReached())
 		Debug("Popcap overflow Check observer located, Player: [player]")
-	player << "<b>You have failed to qualify for any job you desired.</b>"
+	to_chat(player, "<b>You have failed to qualify for any job you desired.</b>")
 	unassigned -= player
 	player.ready = 0
 

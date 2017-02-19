@@ -6,11 +6,11 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		return
 
 	if(potentialRandomZlevels && potentialRandomZlevels.len)
-		world << "<span class='boldannounce'>Loading away mission...</span>"
+		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		load_new_z_level(file)
-		world << "<span class='boldannounce'>Away mission loaded.</span>"
+		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
 
 /proc/load_new_z_level(var/file)
 	if(!isfile(file))

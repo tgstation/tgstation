@@ -182,12 +182,12 @@
 /obj/machinery/computer/holodeck/emag_act(mob/user as mob)
 	if(!emagged)
 		if(!emag_programs.len)
-			user << "[src] does not seem to have a card swipe port.  It must be an inferior model."
+			to_chat(user, "[src] does not seem to have a card swipe port.  It must be an inferior model.")
 			return
 		playsound(loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>"
-		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
+		to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
+		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 		log_game("[key_name(user)] emagged the Holodeck Control Console")
 		updateUsrDialog()
 		nerf(!emagged)

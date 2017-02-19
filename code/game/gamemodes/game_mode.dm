@@ -46,8 +46,8 @@
 
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
-	world << "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>"
-	world << "<b>[announce_text]</b>"
+	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
+	to_chat(world, "<b>[announce_text]</b>")
 
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
@@ -479,7 +479,7 @@
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
-			M << msg
+			to_chat(M, msg)
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
@@ -531,7 +531,7 @@
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
-		M << "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"
+		to_chat(M, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
 		M.ghostize(0)
 		M.key = theghost.key

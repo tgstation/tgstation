@@ -5,7 +5,7 @@ var/highlander = FALSE
 		return
 	highlander = TRUE
 
-	world << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
+	to_chat(world, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 	world << sound('sound/misc/highlander.ogg')
 
 	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
@@ -70,8 +70,8 @@ var/highlander = FALSE
 	antiwelder.icon_state = "bloodhand_right"
 	put_in_hands(antiwelder)
 
-	src << "<span class='boldannounce'>Your [H1.name] cries out for blood. Join in the slaughter, lest you be claimed yourself...\n\
-	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>"
+	to_chat(src, "<span class='boldannounce'>Your [H1.name] cries out for blood. Join in the slaughter, lest you be claimed yourself...")
+	to_chat(src, "Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 /proc/only_me()
 	if(!ticker || !ticker.mode)
@@ -89,7 +89,7 @@ var/highlander = FALSE
 		hijack_objective.owner = H.mind
 		H.mind.objectives += hijack_objective
 
-		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
+		to_chat(H, "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>")
 		H.mind.announce_objectives()
 
 		var/datum/gang/multiverse/G = new(src, "[H.real_name]")

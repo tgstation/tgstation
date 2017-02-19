@@ -70,7 +70,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 /datum/game_mode/blob/proc/show_message(message)
 	for(var/datum/mind/blob in blob_overminds)
-		blob.current << message
+		to_chat(blob.current, message)
 
 /datum/game_mode/blob/post_setup()
 

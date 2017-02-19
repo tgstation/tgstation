@@ -168,10 +168,9 @@
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "some <B>[initial(S.name)]</B> \icon[S]\n"
-
-	user << .
-
+			. += "some <B>[initial(S.name)]</B> [bicon(S)]\n"
+to_chat(user, .
+)
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
 		return

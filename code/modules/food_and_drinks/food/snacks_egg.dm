@@ -30,10 +30,10 @@
 		var/clr = C.item_color
 
 		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
-			usr << "<span class='notice'>[src] refuses to take on this colour!</span>"
+			to_chat(usr, "<span class='notice'>[src] refuses to take on this colour!</span>")
 			return
 
-		usr << "<span class='notice'>You colour [src] [clr].</span>"
+		to_chat(usr, "<span class='notice'>You colour [src] [clr].</span>")
 		icon_state = "egg-[clr]"
 		item_color = clr
 	else
@@ -102,7 +102,7 @@
 	if(istype(W,/obj/item/weapon/kitchen/fork))
 		var/obj/item/weapon/kitchen/fork/F = W
 		if(F.forkload)
-			user << "<span class='warning'>You already have omelette on your fork!</span>"
+			to_chat(user, "<span class='warning'>You already have omelette on your fork!</span>")
 		else
 			F.icon_state = "forkloaded"
 			user.visible_message("[user] takes a piece of omelette with their fork!", \

@@ -22,7 +22,7 @@
 	if(!iscarbon(user)) //Look ma, no hands
 		return
 	if(user.lying || user.handcuffed)
-		user << "<span class='warning'>You can't reach out!</span>"
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	..()
 
@@ -68,7 +68,7 @@
 	if(!proximity || target == user || !isliving(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
 		return
 	if(user.lying || user.handcuffed)
-		user << "<span class='warning'>You can't reach out!</span>"
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	var/mob/living/M = target
 	M.Stun(2)

@@ -155,7 +155,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
 			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
-			G << "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>"
+			to_chat(G, "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)

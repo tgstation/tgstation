@@ -138,7 +138,7 @@
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
 	if(power_supply)
-		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
+		to_chat(user, "<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>")
 
 /obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
@@ -146,12 +146,12 @@
 		S.use(1)
 		power_supply.give(1000)
 		recharge_newshot(1)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
 		recharge_newshot(1)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else
 		..()
 

@@ -43,9 +43,9 @@
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
 	if(remaining_uses != -1)
-		user << "It has [remaining_uses] uses left."
+		to_chat(user, "It has [remaining_uses] uses left.")
 	else
-		user << "It looks like it can be used an unlimited number of times."
+		to_chat(user, "It looks like it can be used an unlimited number of times.")
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	var/turf/T = get_turf(target)
@@ -61,11 +61,11 @@
 
 	if(!remaining_uses && !already_message)
 		// The dull chisel is dull.
-		user << "<span class='warning'>[src] is [w_dull].</span>"
+		to_chat(user, "<span class='warning'>[src] is [w_dull].</span>")
 		return
 
 	if(!good_chisel_message_location(T))
-		user << "<span class='warning'>It's not appropriate to [w_engrave] on [T].</span>"
+		to_chat(user, "<span class='warning'>It's not appropriate to [w_engrave] on [T].</span>")
 		return
 
 	if(already_message)
@@ -85,18 +85,18 @@
 
 	var/message = stripped_input(user, "What would you like to [w_engrave]?", "[name] Message")
 	if(!message)
-		user << "You decide not to [w_engrave] anything."
+		to_chat(user, "You decide not to [w_engrave] anything.")
 		return
 
 	if(!target.Adjacent(user) && locate(/obj/structure/chisel_message) in T)
-		user << "You decide not to [w_engrave] anything."
+		to_chat(user, "You decide not to [w_engrave] anything.")
 		return
 
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 	user.visible_message("<span class='notice'>[user] starts [w_engraving] a message into [T].</span>", "You start [w_engraving] a message into [T].", "<span class='italics'>You hear a [w_chipping] sound.</span>")
 	if(can_use() && do_after(user, tool_speed, target=T) && can_use())
 		if(!locate(/obj/structure/chisel_message in T))
-			user << "You [w_engrave] a message into [T]."
+			to_chat(user, "You [w_engrave] a message into [T].")
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
@@ -231,7 +231,7 @@
 
 /obj/structure/chisel_message/examine(mob/user)
 	..()
-	user << "<span class='warning'>[hidden_message]</span>"
+	to_chat(user, "<span class='warning'>[hidden_message]</span>")
 
 /obj/structure/chisel_message/Destroy()
 	if(persists)

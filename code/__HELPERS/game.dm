@@ -422,20 +422,20 @@
 		window_flash(G.client)
 	switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
-			G << "<span class='notice'>Choice registered: Yes.</span>"
+			to_chat(G, "<span class='notice'>Choice registered: Yes.</span>")
 			if((world.time-time_passed)>poll_time)
-				G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+				to_chat(G, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
 				G << 'sound/machines/buzz-sigh.ogg'
 			else
 				candidates += G
 		if(2)
-			G << "<span class='danger'>Choice registered: No.</span>"
+			to_chat(G, "<span class='danger'>Choice registered: No.</span>")
 		if(3)
 			var/list/L = poll_ignore[ignore_category]
 			if(!L)
 				poll_ignore[ignore_category] = list()
 			poll_ignore[ignore_category] += G.ckey
-			G << "<span class='danger'>Choice registered: Never for this round.</span>"
+			to_chat(G, "<span class='danger'>Choice registered: Never for this round.</span>")
 
 /proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null, flashwindow = TRUE)
 	var/list/mob/dead/observer/candidates = list()
@@ -501,7 +501,7 @@
 /proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
 	for(var/M in player_list)
 		if(M && !isnewplayer(M))
-			M << thing
+			to_chat(M, thing)
 
 /proc/window_flash(client/C, ignorepref = FALSE)
 	if(ismob(C))
