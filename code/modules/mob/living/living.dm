@@ -37,7 +37,18 @@
 		return FALSE	//Flying mob, resists gravitational pull.
 	if(!has_gravity() && !gravity_override)
 		return FALSE
-	if(gravity_throwing)
+	var/temp_throw = FALSE
+	if(m_intent == MOVE_INTENT_WALK)
+		if(ismovableatom(get_spacemove_backup()))
+			return FALSE
+		if(prob(10))
+			src << "<span class='warning'>You slip and lose your grip!</span>"
+		else if(prob(2))
+			src << "<span class='warning'>You slip and completely lose your footing!</span>"
+			temp_throw = TRUE
+		else
+			return FALSE
+	if((gravity_throwing || temp_throw) && !throwing)
 		throw_at(get_edge_target_turf(src, gravity_direction), gravity_strength * 20, gravity_strength)
 	else
 		step(src, gravity_direction)

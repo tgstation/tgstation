@@ -117,7 +117,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 		return FALSE
 	if(!moving)
 		return TRUE
-	if(gravity_throwing)
+	if(gravity_throwing && !throwing)
 		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 20, gravity_strength * 2)
 		gravity_throwing = FALSE
 	else

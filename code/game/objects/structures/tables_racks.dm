@@ -74,7 +74,7 @@
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.checkpass(PASSTABLE)||mover.gravity_direction))
 		return 1
 	if(mover.throwing)
 		return 1
@@ -409,7 +409,7 @@
 	if(height==0) return 1
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.checkpass(PASSTABLE)||mover.gravity_direction))
 		return 1
 	else
 		return 0
