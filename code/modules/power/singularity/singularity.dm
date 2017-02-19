@@ -1,4 +1,4 @@
-
+var/singulo_list[0]
 
 /obj/singularity
 	name = "gravitational singularity"
@@ -36,6 +36,7 @@
 	..()
 	START_PROCESSING(SSobj, src)
 	poi_list |= src
+	singulo_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
@@ -44,6 +45,7 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	singulo_list.Remove(src)
 	poi_list.Remove(src)
 	return ..()
 
