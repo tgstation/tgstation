@@ -38,7 +38,7 @@ mob/dead/InCone(mob/center = usr, dir = NORTH)
 	return
 
 mob/living/InCone(mob/center = usr, dir = NORTH)
-	if(get_dist(center, src) == 0 || src == center) return 0 
+	if(get_dist(center, src) == 0 || src == center) return 0
 	//for(var/obj/item/weapon/grab/G in center)//TG doesn't have the grab item. But if you're porting it and you do then uncomment this.
 	//	if(src == G.affecting) return 0
 	var/d = get_dir(center, src)
@@ -75,7 +75,7 @@ mob/living/update_vision_cone()
 		src.fov.dir = src.dir
 		if(fov.alpha != 0)
 			var/mob/living/M
-			for(M in cone_three(src, get_opposite_dir(src.dir), view(10, src)))
+			for(M in cone(src, get_opposite_dir(src.dir), view(10, src)))
 				I = image("split", M)
 				I.override = 1
 				src.client.images += I
@@ -86,7 +86,7 @@ mob/living/update_vision_cone()
 
 			//Optional items can be made invisible too. Comment this part out if you wish to items to be invisible.
 			//var/obj/item/O
-			//for(O in cone_three(src, get_opposite_dir(src.dir), oview(src)))
+			//for(O in cone(src, get_opposite_dir(src.dir), oview(src)))
 			//	I = image("split", O)
 			//	I.override = 1
 			//	src.client.images += I
