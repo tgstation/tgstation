@@ -553,6 +553,9 @@ var/list/teleportlocs = list()
 					A.gravity_direction = GG.current_grav_dir
 				CHECK_TICK
 		CHECK_TICK
+	for(var/area/A in world)
+		A.update_all_gravity()
+		CHECK_TICK
 
 /area/Exited(atom/movable/AM, newloc)
 	. = ..(AM, newloc)
