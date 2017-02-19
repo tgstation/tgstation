@@ -65,6 +65,7 @@
 		current_gravturn = gravity_turn
 	else
 		turnmatrix.TurnTo(current_gravturn, 0)
+		current_gravturn = 0
 	animate(src, transform = turnmatrix, time = 20)*/
 
 /mob/living/Destroy()
