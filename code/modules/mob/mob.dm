@@ -948,5 +948,6 @@ var/next_mob_id = 0
 	. = ..()
 
 /mob/post_buckle_mob(mob/living/M)
-	riding_datum.handle_vehicle_offsets()
-	riding_datum.handle_vehicle_layer()
+	if(riding_datum)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.handle_vehicle_layer()
