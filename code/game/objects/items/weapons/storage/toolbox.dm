@@ -16,7 +16,7 @@
 	var/hinges = "single_hinge"
 	var/old = FALSE
 
-/obj/item/weapon/storage/toolbox/New()
+/obj/item/weapon/storage/toolbox/Initialize()
 	..()
 	if(!old)
 		if(prob(10))
@@ -27,7 +27,7 @@
 
 /obj/item/weapon/storage/toolbox/update_icon()
 	..()
-	cut_overlays(image('icons/obj/storage.dmi', "[hinges]"))
+	cut_overlays()
 	add_overlay(image('icons/obj/storage.dmi', "[hinges]"))
 
 
