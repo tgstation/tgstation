@@ -361,8 +361,15 @@
 	explanation_text = "The station is hideous. You must color it all"
 
 /datum/objective/abductee/paint/New()
-	var/color = pick(list("red", "blue", "green", "yellow", "orange", "purple", "black", "in rainbows"))
+	var/color = pick(list("red", "blue", "green", "yellow", "orange", "purple", "black", "in rainbows", "in blood"))
 	explanation_text+= "[color]!"
+
+/datum/objective/abductee/speech
+	explanation_text = "Your brain is broken... you can only communicate in"
+
+/datum/objective/abductee/speech/New()
+	var/style = pick(list("pantomime", "rhyme", "extended metaphors", "riddles", "extremely literal terms", "sound effects"))
+	explanation_text+= " [style]."
 
 /datum/objective/abductee/capture
 	explanation_text = "Capture"
@@ -414,17 +421,11 @@
 /datum/objective/abductee/nowalls
 	explanation_text = "The crew must get to know one another better. Break down the walls inside the station!"
 
-/datum/objective/abductee/wall
-	explanation_text = "There are too many new crew members coming to this station. You must build a wall!"
-
 /datum/objective/abductee/nations
 	explanation_text = "Ensure your department prospers over all else."
 
 /datum/objective/abductee/abductception
 	explanation_text = "You have been changed forever. Find the ones that did this to you and give them a taste of their own medicine."
-
-/datum/objective/abductee/ghosts
-	explanation_text = "Conduct a seance with the spirits of the afterlife."
 
 /datum/objective/abductee/summon
 	explanation_text = "The elder gods hunger. Gather a cult and conduct a ritual to summon one."
@@ -438,7 +439,7 @@
 /datum/objective/abductee/calling/New()
 	var/mob/dead/D = pick(dead_mob_list)
 	if(D)
-		explanation_text = "You know that [D] has perished. Call them from the spirit realm."
+		explanation_text = "You know that [D] has perished. Hold a seance to call them from the spirit realm."
 
 /datum/objective/abductee/social_experiment
 	explanation_text = "This is a secret social experiment conducted by Nanotrasen. Convince the crew that this is the truth."
