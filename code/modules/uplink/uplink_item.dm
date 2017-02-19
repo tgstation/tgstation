@@ -1208,6 +1208,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+/datum/uplink_item/role_restricted/ancient_jumpsuit
+	name = "Ancient Jumpsuit"
+	desc = "A uh, jumpsuit recovered from a station overcome by the grey tide. yeah."
+	item = /obj/item/clothing/under/color/grey/glorf
+	cost = 20
+	restricted_roles = list("Assistant")
 
 // Pointless
 /datum/uplink_item/badass
