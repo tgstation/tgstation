@@ -50,6 +50,8 @@
 	playsound(L, 'sound/magic/devour_will_victim.ogg', 50, 0)
 	U.psi = U.max_psi
 	U.lucidity++
+	U.lucidity_drained++
+	U.drained_minds += L.mind
 	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
 	L << sound('sound/magic/devour_will_end.ogg', volume = 75)
 	linked_ability.victims += L

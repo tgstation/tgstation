@@ -8,6 +8,8 @@
 	var/psi_used_since_last_cycle //How much psi we've used in the last five seconds.
 	var/cycle_progress = 0 //When this reaches 5, it will reset to 0 and regenerate up to 20 spent psi.
 	var/lucidity = 3 //Lucidiy is used to buy abilities. We gain one each time we drain someone.
+	var/lucidity_drained = 3 //How much lucidity we've taken overall.
+	var/list/drained_minds = list() //Minds eaten with Devour Will.
 
 /datum/umbrage/New()
 	..()

@@ -71,7 +71,7 @@ h1.alert, h2.alert		{color: #000000;}
 .velvet_italic			{color: #21007F; font-style:italic;}
 .velvet_emphasis		{color: #21007F; font-weight:bold; font-style:italic;}
 .velvet_large			{color: #21007F; font-size:3;}
-.velvet_progenitor		{color: #21007F; font-weight:bold; font-size:15;}
+.velvet_progenitor		{color: #21007F; font-weight:bold; font-size:6;}
 .cult					{color: #960000;}
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
