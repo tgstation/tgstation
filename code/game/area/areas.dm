@@ -43,6 +43,7 @@
 	var/has_gravity = 0				//Has gravity innately/no matter what. Ignores gravity generator gravity direction.
 	var/list/contents_affected_by_gravity = list()
 	var/gravity_generator = FALSE	//Does it have gravity from a gravgen on the zlevel?
+	var/ignores_gravgens = FALSE
 	var/gravity_overriding = FALSE	//Still directionally move things despite not having gravity.
 	var/gravity_direction = FALSE	//False/cardinals
 	var/gravity_strength = 1
@@ -545,9 +546,9 @@ var/list/teleportlocs = list()
 	for(var/obj/machinery/gravity_generator/main/GG in gravgens)
 		if(GG.on)
 			for(var/area/A in world)
-				world << "DEBUG: [A] AT Z [A.z]"
 				if(A.z == GG.z)
-					world << "<span class='userdanger'>DEBUG: [A] AT Z [A.z] WITH GRAVGEN AT Z [GG.z] TURNING ON!</span>"
+					if(A.ignores_gravgens)
+						continue
 					A.gravity_generator = TRUE
 					A.gravity_direction = GG.current_grav_dir
 				CHECK_TICK

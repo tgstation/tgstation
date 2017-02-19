@@ -45,6 +45,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
+	ignores_gravgens = TRUE
 
 /area/space/nearstation
 	icon_state = "space_near"
