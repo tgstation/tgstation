@@ -188,7 +188,12 @@
 					return
 		if(pulling == AM)
 			stop_pulling()
+		var/current_dir
+		if(isliving(AM))
+			current_dir = AM.dir
 		step(AM, t)
+		if(current_dir)
+			AM.dir = current_dir
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
