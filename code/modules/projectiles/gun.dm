@@ -59,6 +59,12 @@
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/datum/action/toggle_scope_zoom/azoom
 
+/obj/item/weapon/gun/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type != PROJECTILE_ATTACK)
+		if(owner.dropItemToGround(src))
+			throw_at(pick(oview(7,get_turf(owner))),1,1)
+			owner.visible_message("<span class='warning'>[src] is knocked flying from [owner]s hands!</span>")
+	return 0
 
 /obj/item/weapon/gun/New()
 	..()
