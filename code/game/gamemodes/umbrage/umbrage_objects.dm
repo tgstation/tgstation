@@ -21,7 +21,7 @@
 /obj/item/weapon/dark_bead/attack(mob/living/carbon/L, mob/living/user)
 	if(!is_umbrage(user.mind) || eating || L == user) //no eating urself ;)))))))
 		return
-	var/datum/umbrage/U = linked_ability.get_umbrage()
+	var/datum/umbrage/U = linked_ability.linked_umbrage
 	if(!L.health)
 		user << "<span class='warning'>[L] is too weak to drain.</span>"
 		return
@@ -91,6 +91,7 @@
 	anchored = 1
 	opacity = 0
 	density = 1
+	luminosity = 1
 	mouse_opacity = 2
 
 /obj/structure/psionic_barrier/New()

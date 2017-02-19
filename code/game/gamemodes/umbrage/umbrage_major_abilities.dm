@@ -1,5 +1,6 @@
 /datum/action/innate/umbrage/psi_web
 	name = "Psi Web"
+	id = "psi_web"
 	desc = "Access the Mindlink directly to unlock and upgrade your supernatural powers."
 	button_icon_state = "umbrage_psi_web"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -8,14 +9,14 @@
 
 /datum/action/innate/umbrage/psi_web/Activate()
 	usr << "<span class='velvet bold'>You retreat inwards and touch the Mindlink...</span>"
-	var/datum/umbrage/U = get_umbrage()
-	if(!U)
+	if(!linked_umbrage)
 		return
-	U.ui_interact(usr)
+	linked_umbrage.ui_interact(usr)
 	return 1
 
 /datum/action/innate/umbrage/tutorial
 	name = "Tutorial"
+	id = "howto"
 	desc = "Need more information on being an umbrage? This in-game tutorial can help you with any questions."
 	button_icon_state = "umbrage_tutorial"
 	check_flags = 0
@@ -34,6 +35,7 @@
 //Removes the disguised umbrage's disguise and turns them into the umbrage proper, with full abilities.
 /datum/action/innate/umbrage/divulge
 	name = "Divulge"
+	id = "divulge"
 	desc = "Cast off your human disguise and become a proper umbrage. This takes about a full minute, and you can be interrupted by performing any actions."
 	button_icon_state = "umbrage_divulge"
 	blacklisted = 1
@@ -118,8 +120,6 @@
 	user.real_name = umbrage_name
 	user.name = umbrage_name
 	user << "<span class='velvet bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
-	var/datum/umbrage/U = get_umbrage()
-	U.give_ability("Psi Web")
-	U.give_ability("Devour Will")
+	linked_umbrage.give_ability("psi_web")
+	linked_umbrage.give_ability("devour_will")
 	Remove(user) //Take the action away
-	qdel(src)

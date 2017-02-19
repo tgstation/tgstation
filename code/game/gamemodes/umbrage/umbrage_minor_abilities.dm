@@ -1,11 +1,13 @@
 /datum/action/innate/umbrage
 	name = "umbrage ability"
+	var/id //The ability's ID, for giving, taking and such
 	desc = "This probably shouldn't exist."
 	background_icon_state = "bg_alien"
 	buttontooltipstyle = "alien"
 	var/psi_cost = 0
 	var/lucidity_cost = 0 //How much lucidity the ability costs to buy; if this is 0, it isn't listed on the catalog
 	var/blacklisted = 1 //If the ability can't be gained from the psi web
+	var/datum/umbrage/linked_umbrage //Our linked umbrage datum
 
 /datum/action/innate/umbrage/Trigger()
 	var/successful_activation = 0
@@ -13,20 +15,17 @@
 		return
 	successful_activation = Activate()
 	if(successful_activation)
-		var/datum/umbrage/U = get_umbrage()
+		var/datum/umbrage/U = linked_umbrage
 		if(U)
 			U.use_psi(psi_cost)
 
 /datum/action/innate/umbrage/IsAvailable()
-	var/datum/umbrage/U = get_umbrage()
+	var/datum/umbrage/U = linked_umbrage
 	if(!U)
 		return
 	if(U.psi < psi_cost)
 		return
 	return ..()
-
-/datum/action/innate/umbrage/proc/get_umbrage()
-	return owner.mind.umbrage_psionics
 
 
 //Devour Will: After a brief charge-up, equips a dark bead.
@@ -36,6 +35,7 @@
 //	- Finally, they will be made vulnerable to Veil Mind for five ticks.
 /datum/action/innate/umbrage/devour_will
 	name = "Devour Will"
+	id = "devour_will"
 	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out."
 	button_icon_state = "umbrage_devour_will"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
@@ -50,12 +50,12 @@
 	return ..()
 
 /datum/action/innate/umbrage/devour_will/Activate()
-	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class=''velvet bold''>pwga...</span><br>\
+	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class='velvet bold'>pwga...</span><br>\
 	<span class='notice'>You begin forming a dark bead...</span>")
 	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	if(!do_after(usr, 10, target = usr))
 		return
-	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class=''velvet bold''>...iejz</span><br>\
+	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class='velvet bold'>...iejz</span><br>\
 	<span class='notice'>You form a dark bead in your hand.</span>")
 	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
 	var/obj/item/weapon/dark_bead/B = new
@@ -68,6 +68,7 @@
 // - The tendrils' uses are many and varied, including mobility, offense, and more.
 /datum/action/innate/umbrage/pass
 	name = "Pass"
+	id = "pass"
 	desc = "Twists an active arm into tendrils with many uses."
 	button_icon_state = "umbrage_pass"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
@@ -81,18 +82,18 @@
 	return ..()
 
 /datum/action/innate/umbrage/pass/Activate()
-	usr.visible_message("<span class='warning'>[usr]'s arm contorts into tentacles!</span>", "<span class=''velvet bold''>ikna</span><br>\
+	usr.visible_message("<span class='warning'>[usr]'s arm contorts into tentacles!</span>", "<span class='velvet bold'>ikna</span><br>\
 	<span class='notice'>You transform your arm into umbral tendrils.</span>")
 	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	var/obj/item/weapon/umbral_tendrils/T = new
 	usr.put_in_hands(T)
-	T.linked_umbrage = get_umbrage()
+	T.linked_umbrage = linked_umbrage
 	active = 1
 	return 1
 
 
 /datum/action/innate/umbrage/pass/Deactivate()
-	usr.visible_message("<span class='warning'>[usr]'s tentacles contort into an arm!</span>", "<span class=''velvet bold''>haoo</span><br>\
+	usr.visible_message("<span class='warning'>[usr]'s tentacles contort into an arm!</span>", "<span class='velvet bold'>haoo</span><br>\
 	<span class='notice'>You reform your arm.</span>")
 	for(var/obj/item/weapon/umbral_tendrils/T in usr)
 		qdel(T)
@@ -103,6 +104,7 @@
 //Veil Mind: Converts all eligible targets nearby into veils. Targets become eligible for a short time when drained by Devour Will.
 /datum/action/innate/umbrage/veil_mind
 	name = "Veil Mind"
+	id = "veil_mind"
 	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will."
 	button_icon_state = "umbrage_veil_mind"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
@@ -150,6 +152,7 @@
 //Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, they will be thrown away and staggered by its force.
 /datum/action/innate/umbrage/demented_outburst
 	name = "Demented Outburst"
+	id = "demented_outburst"
 	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Very loud."
 	button_icon_state = "umbrage_demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -167,7 +170,7 @@
 /datum/action/innate/umbrage/demented_outburst/proc/outburst(mob/living/user)
 	if(!user || user.stat)
 		return
-	user.visible_message("<span class='boldwarning'>[user] lets out a deafening scream!</span>", "<span class=''velvet bold' italics'>WSWU!</span><br>\
+	user.visible_message("<span class='boldwarning'>[user] lets out a deafening scream!</span>", "<span class='velvet bold' italics'>WSWU!</span><br>\
 	<span class='danger'>You let out a deafening outburst!</span>")
 	playsound(user, 'sound/magic/demented_outburst_scream.ogg', 150, 0)
 	var/list/thrown_atoms = list()
@@ -199,6 +202,7 @@
 // - If someone examines the illusion, they will be able to tell that it's false.
 /datum/action/innate/umbrage/simulacrum
 	name = "Simulacrum"
+	id = "simulacrum"
 	desc = "Creates an illusion that closely resembles you. The illusion will run forward for ten seconds."
 	button_icon_state = "umbrage_simulacrum"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
@@ -220,6 +224,7 @@
 // - If the target enters a fully dark area, the umbrage will be stunned and ejected.
 /datum/action/innate/umbrage/tagalong
 	name = "Tagalong"
+	id = "tagalong"
 	desc = "Melds with a target's shadow, allowing you to accompany them into lit areas. Only works on targets not in darkness."
 	button_icon_state = "umbrage_tagalong"
 	check_flags = AB_CHECK_CONSCIOUS

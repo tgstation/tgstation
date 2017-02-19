@@ -1,7 +1,7 @@
-//Handles everything related to psi and lucidity. Also holds upgrades, for cloning and such.
-#warn Todo: Make the umbrage datum hold abilities
+//Handles everything related to psi and lucidity.
 /datum/umbrage
 	var/datum/mind/linked_mind
+	var/mob/living/linked_body
 	var/psi = 100 //Our psi, used for abilities.
 	var/max_psi = 100
 	var/psi_regeneration = 20 //The limit for psi regenerated during the cycle.
@@ -9,6 +9,8 @@
 	var/cycle_progress = 0 //When this reaches 5, it will reset to 0 and regenerate up to 20 spent psi.
 	var/lucidity = 3 //Lucidiy is used to buy abilities. We gain one each time we drain someone.
 	var/lucidity_drained = 3 //How much lucidity we've taken overall.
+	var/list/linked_abilities = list() //Abilities that we have
+	var/list/linked_ability_types = list() //Used for cloning and gaining new bodies
 	var/list/drained_minds = list() //Minds eaten with Devour Will.
 
 /datum/umbrage/New()
@@ -20,10 +22,19 @@
 	if(cycle_progress >= 5)
 		regenerate_psi()
 		cycle_progress = 0
+	if(linked_mind && linked_body != linked_body && linked_body.stat != DEAD)
+		link_to_new_body(linked_body)
 
 /datum/umbrage/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
+
+/datum/umbrage/proc/link_to_new_body(mob/living/new_host) //Give all our old abilities to a new body, in case we're cloned or such
+	linked_body = new_host
+	for(var/taip in linked_ability_types)
+		var/datum/action/innate/umbrage/U = taip
+		give_ability(initial(U.id), 1)
+	return 1
 
 /datum/umbrage/proc/use_psi(used_psi)
 	cycle_progress = 0 //Reset regenerating psi when we use more
@@ -40,39 +51,44 @@
 	psi_used_since_last_cycle = 0
 	return 1
 
-/datum/umbrage/proc/has_ability(ability_name)
-	for(var/datum/action/innate/umbrage/U in linked_mind.current.actions)
-		if(U.name == ability_name)
+/datum/umbrage/proc/has_ability(id)
+	for(var/datum/action/innate/umbrage/U in linked_abilities)
+		if(U.id == id)
 			return 1
 	return
 
-/datum/umbrage/proc/give_ability(ability_name, silent, consume_lucidity) //Gives an ability of a certain name to the umbrage and consumes lucidity if applicable.
+/datum/umbrage/proc/give_ability(id, silent, consume_lucidity) //Gives an ability of a certain name to the umbrage and consumes lucidity if applicable.
 	var/datum/action/innate/umbrage/ability
 	for(var/V in subtypesof(/datum/action/innate/umbrage))
 		var/datum/action/innate/umbrage/U = V
-		if(initial(U.name) == ability_name)
+		if(initial(U.id) == id)
 			ability = new U
 			break
 	if(!ability)
 		return
-	ability.Grant(linked_mind.current)
+	ability.linked_umbrage = src
+	ability.Grant(linked_body)
+	linked_abilities += ability
+	linked_ability_types += ability.type
 	if(!silent)
-		linked_mind.current << "<span class='velvet italic'>You have learned the \"[ability_name]\" ability.</span>"
+		linked_body << "<span class='velvet italic'>You have learned the \"[ability.name]\" ability.</span>"
 	if(consume_lucidity)
 		lucidity = max(0, lucidity - initial(ability.lucidity_cost))
 	return 1
 
-/datum/umbrage/proc/take_ability(ability_name, silent) //Takes an ability of a certain name from the umbrage.
+/datum/umbrage/proc/take_ability(id, silent) //Takes an ability of a certain name from the umbrage.
 	var/datum/action/innate/umbrage/ability
-	for(var/datum/action/innate/umbrage/U in linked_mind.current.actions)
-		if(U.name == ability_name)
+	for(var/datum/action/innate/umbrage/U in linked_abilities)
+		if(U.id == id)
 			ability = U
 			break
 	if(!ability)
 		return
-	ability.Remove(linked_mind.current)
+	ability.Remove(linked_body)
+	linked_abilities -= ability
+	linked_ability_types -= ability.type
 	if(!silent)
-		linked_mind.current << "<span class='warning'>You have lost the \"[ability_name]\" ability.</span>"
+		linked_body << "<span class='warning'>You have lost the \"[ability.name]\" ability.</span>"
 	qdel(ability)
 	return 1
 
@@ -99,11 +115,12 @@
 
 		var/list/AL = list() //This is mostly copy-pasted from the cellular emporium, but it should be fine regardless
 		AL["name"] = initial(ability.name)
+		AL["id"] = initial(ability.id)
 		AL["desc"] = initial(ability.desc)
 		AL["psi_cost"] = initial(ability.psi_cost)
 		AL["lucidity_cost"] = initial(ability.lucidity_cost)
-		AL["owned"] = has_ability(initial(ability.name))
-		AL["can_purchase"] = (!has_ability(initial(ability.name)) && lucidity >= initial(ability.lucidity_cost))
+		AL["owned"] = has_ability(initial(ability.id))
+		AL["can_purchase"] = (!has_ability(initial(ability.id)) && lucidity >= initial(ability.lucidity_cost))
 
 		abilities += list(AL)
 
@@ -116,4 +133,4 @@
 		return
 	switch(action)
 		if("unlock")
-			give_ability(params["name"], 0, 1)
+			give_ability(params["id"], 0, 1)

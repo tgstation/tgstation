@@ -115,8 +115,9 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	var/datum/umbrage/S = new
 	S.linked_mind = U.mind
 	U.mind.umbrage_psionics = S
-	S.give_ability("Tutorial", 1)
-	S.give_ability("Divulge", 1)
+	S.link_to_new_body(U)
+	S.give_ability("howto", 1)
+	S.give_ability("divulge", 1)
 	return
 
 #warn Umbrages need antag datums when LeoZ finishes his rework

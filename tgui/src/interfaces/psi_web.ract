@@ -12,7 +12,7 @@
     <ui-button
       state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
       action='unlock'
-      params='{"name": "{{name}}"}'>
+      params='{"id": "{{id}}"}'>
       {{owned ? "Unlocked" : "Unlock"}}
     </ui-button>
   </ui-section>
