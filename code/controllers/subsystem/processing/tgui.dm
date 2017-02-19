@@ -3,9 +3,8 @@ var/datum/subsystem/processing/tgui/SStgui
 /datum/subsystem/processing/tgui
 	name = "tgui"
 	wait = 9
-	init_order = 16
 	display_order = 6
-	flags = SS_FIRE_IN_LOBBY
+	flags = SS_FIRE_IN_LOBBY | SS_NO_INIT
 	priority = 110
 
 	stat_tag = "TG"
@@ -16,11 +15,8 @@ var/datum/subsystem/processing/tgui/SStgui
 /datum/subsystem/processing/tgui/New()
 	NEW_SS_GLOBAL(SStgui)
 	LAZYINITLIST(open_uis)
-
-/datum/subsystem/processing/tgui/Initialize()
 	if(!basehtml)
 		basehtml = file2text('tgui/tgui.html') // Read the HTML from disk.
-	..()
 
 /datum/subsystem/processing/tgui/Shutdown()
 	close_all_uis()
