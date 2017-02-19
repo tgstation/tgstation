@@ -438,6 +438,11 @@
 	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
+	for(var/mob/M in view(src))
+		M.update_vision_cone()
+
+	update_vision_cone()
+
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
 	if(isopenturf(loc) && !is_flying())

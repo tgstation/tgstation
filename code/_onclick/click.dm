@@ -354,6 +354,7 @@
 			setDir(EAST)
 		else
 			setDir(WEST)
+	update_vision_cone()
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'

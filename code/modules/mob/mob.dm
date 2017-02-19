@@ -664,6 +664,7 @@ var/next_mob_id = 0
 	else
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
+	update_vision_cone()
 	update_transform()
 	update_action_buttons_icon(status_only=TRUE)
 	if(isliving(src))
@@ -686,6 +687,7 @@ var/next_mob_id = 0
 		return 0
 	setDir(EAST)
 	client.move_delay += movement_delay()
+	update_vision_cone()
 	return 1
 
 
@@ -695,6 +697,7 @@ var/next_mob_id = 0
 		return 0
 	setDir(WEST)
 	client.move_delay += movement_delay()
+	update_vision_cone()
 	return 1
 
 
@@ -704,6 +707,7 @@ var/next_mob_id = 0
 		return 0
 	setDir(NORTH)
 	client.move_delay += movement_delay()
+	update_vision_cone()
 	return 1
 
 
@@ -713,6 +717,7 @@ var/next_mob_id = 0
 		return 0
 	setDir(SOUTH)
 	client.move_delay += movement_delay()
+	update_vision_cone()
 	return 1
 
 

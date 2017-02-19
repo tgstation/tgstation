@@ -302,6 +302,15 @@
 	pull_icon.screen_loc = ui_pull_resist
 	static_inventory += pull_icon
 
+	mymob.fov = new /obj/screen()//I won't lie I have no fucking clue how TG's UI works.
+	mymob.fov.icon = 'icons/mob/vision_cone.dmi'
+	mymob.fov.icon_state = "combat"
+	mymob.fov.name = " "
+	mymob.fov.screen_loc = "1,1"
+	mymob.fov.mouse_opacity = 0
+	mymob.fov.layer = 17
+	static_inventory += mymob.fov
+
 	lingchemdisplay = new /obj/screen/ling/chems()
 	infodisplay += lingchemdisplay
 
