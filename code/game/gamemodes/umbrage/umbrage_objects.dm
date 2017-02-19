@@ -13,10 +13,12 @@
 /obj/item/weapon/dark_bead/New()
 	..()
 	animate(src, alpha = 30, time = 30)
-	spawn(30)
-		if(!eating)
-			loc << "<span class='warning'>You were too slow! [src] faded away.</span>"
-			qdel(src)
+	QDEL_IN(src, 30)
+
+/obj/item/weapon/dark_bead/Destroy()
+	if(isliving(loc) && !eating)
+		loc << "<span class='warning'>You were too slow! [src] faded away...</span>"
+	return ..()
 
 /obj/item/weapon/dark_bead/attack(mob/living/carbon/L, mob/living/user)
 	if(!is_umbrage(user.mind) || eating || L == user) //no eating urself ;)))))))
