@@ -148,7 +148,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		if("buyshuttle")
 			if(authenticated==2)
-				var/list/shuttles = flatten_list(shuttle_templates)
+				var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
@@ -521,8 +521,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		if(STATE_PURCHASE)
 			dat += "Budget: [SSshuttle.points] Credits.<BR>"
-			for(var/shuttle_id in shuttle_templates)
-				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+			for(var/shuttle_id in SSmapping.shuttle_templates)
+				var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 				if(S.can_be_bought && S.credit_cost < INFINITY)
 					dat += "[S.name] | [S.credit_cost] Credits<BR>"
 					dat += "[S.description]<BR>"

@@ -40,9 +40,7 @@
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
-		establish_db_connection()
-
-		if(dbcon.IsConnected())
+		if (dbcon.Connect())
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
@@ -75,7 +73,10 @@
 		stat("Map:", MAP_NAME)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+			var/time_remaining = ticker.GetTimeLeft()
+			if(time_remaining >= 0)
+				time_remaining /= 10
+			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
 
 			stat("Players:", "[ticker.totalPlayers]")
 			if(client.holder)

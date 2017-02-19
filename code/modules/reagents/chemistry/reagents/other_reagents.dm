@@ -807,6 +807,26 @@
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent("uranium", reac_volume)
 
+/datum/reagent/bluespace
+	name = "Bluespace Dust"
+	id = "bluespace"
+	description = "A dust composed of microscopic bluespace crystals, with minor space-warping properties."
+	reagent_state = SOLID
+	color = "#0000CC"
+
+/datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		do_teleport(M, get_turf(M), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg') //4 tiles per crystal
+	..()
+
+/datum/reagent/bluespace/on_mob_life(mob/living/M)
+	if(current_cycle > 10 && prob(15))
+		M << "<span class='warning'>You feel unstable...</span>"
+		M.Jitter(2)
+		current_cycle = 1
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/do_teleport, M, get_turf(M), 5, asoundin = 'sound/effects/phasein.ogg'), 30)
+	..()
+
 /datum/reagent/aluminium
 	name = "Aluminium"
 	id = "aluminium"

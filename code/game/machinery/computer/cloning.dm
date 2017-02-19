@@ -127,7 +127,7 @@
 		var/obj/item/device/multitool/P = W
 		
 		if(istype(P.buffer, /obj/machinery/clonepod))
-			if(get_area_master(P.buffer) != get_area_master(src))
+			if(get_area(P.buffer) != get_area(src))
 				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
 				P.buffer = null
 				return

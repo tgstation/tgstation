@@ -33,7 +33,7 @@
 		var/mob/living/carbon/human/H = loc
 		if(src == H.glasses && !up)
 			if(H.disabilities & BLIND)
-				H << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>"
+				H << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>"
 				return
 			if(blind_cultist(H))
 				return
@@ -77,7 +77,7 @@
 	if(slot != slot_glasses || up)
 		return
 	if(user.disabilities & BLIND)
-		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
+		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>" //Ratvar with the sick burns yo
 		return
 	if(blind_cultist(user)) //Cultists instantly go blind
 		return

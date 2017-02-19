@@ -64,3 +64,6 @@
 #define TIMER_CLIENT_TIME	0x4
 //Timer can be stopped using deltimer()
 #define TIMER_STOPPABLE		0x8
+//To be used with TIMER_UNIQUE
+//prevents distinguishing identical timers with the wait variable
+#define TIMER_NO_HASH_WAIT  0x10
