@@ -15,6 +15,7 @@
 	max_integrity = 250
 	integrity_failure = 100
 	anchored = 1
+	is_affected_by_gravity = TRUE
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"

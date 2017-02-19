@@ -56,6 +56,7 @@
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	is_affected_by_gravity = TRUE
 
 /obj/machinery/vending/New()
 	..()
