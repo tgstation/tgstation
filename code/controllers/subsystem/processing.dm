@@ -58,7 +58,11 @@
 		while(local_cache.len && MC_TICK_CHECK)
 
 /datum/subsystem/processing/Recover(datum/subsystem/processing/predecessor)
-	processing_list = predecessor.processing_list
+	for(var/I in predecessor.processing_list)
+		var/datum/D = I
+		D.processors -= predecessor
+		D.processors += src
+	processing_list = predecessor.processing_list		
 	run_cache = predecessor.run_cache
 
 /datum/var/list/processors
