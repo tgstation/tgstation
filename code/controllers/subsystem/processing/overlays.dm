@@ -6,7 +6,6 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	wait = 1
 	priority = 500
 	init_order = -6
-	can_fire = FALSE
 
 	stat_tag = "Ov"
 	currentrun = null
@@ -37,7 +36,6 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			thing.compile_overlays(FALSE)
 		if(MC_TICK_CHECK)
 			break
-	can_fire = processing.len > 0
 
 /atom/proc/compile_overlays()
 	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
