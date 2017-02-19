@@ -266,14 +266,17 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		dat += "Unpowered."
 
 	dat += "<br>Gravity Charge: [charge_count]%</div>"
+	if(!current_grav_dir)
+		dat += "<br><span class='boldnotice'>ALL SYSTEMS NOMINAL!</span>"
+	else
+		dat += "<br><span class='danger'>CURRENT GRAVITATIONAL DIRECTION: [dir2text(current_grav_dir)]</span>"
 	if(cardinal_unlock)
 	//	dat += "<br><span class='userdanger'>SYSTEM OVERRIDDEN: <A href='?src=\ref[src];reset_emagged=1'>RESET?</A></span>" Right now, admin vareditable only.
-		dat += "<br><span class='danger'>SET GRAVITATIONAL DIRECTION: [grav_dir]</span>"
+		dat += "<br><span class='danger'>SET GRAVITATIONAL DIRECTION: [new_grav_dir]</span>"
 		dat += "<br><span class='boldnotice'><A href='?src=\ref[src];set_dir=1'>NORTH</A> <A href='?src=\ref[src];set_dir=2'>SOUTH</A>"
 		dat += " <A href='?src=\ref[src];set_dir=4'>EAST</A> <A href='?src=\ref[src];set_dir=8'>WEST</A></span>"
-	if(current_gravity_direction)
-		dat += "<br><span class='userdanger'><A href='?src=\ref[src];set_dir=0'>RESET DIRECTION</A></span>"
-	if(grav_dir != new_grav_dir)
+		dat += "<br><span class='userdanger'><A href='?src=\ref[src];set_dir=0'>DEFAULT: DOWN</A></span>"
+	if(current_grav_dir != new_grav_dir)
 		dat += "<br><span class='userdanger'>DIRECTION CHANGE PENDING POWER CYCLE!</span>"
 
 	var/datum/browser/popup = new(user, "gravgen", name)
