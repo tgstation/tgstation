@@ -354,8 +354,13 @@
 	explanation_text = "Steal all"
 
 /datum/objective/abductee/steal/New()
-	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
+	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap", "weapons", "computers", "organs"))
 	explanation_text+=" [target]."
+
+/datum/objective/abductee/paint
+	explanation_text = "The station is hideous. You must color it all"
+	var/color = pick(list("red", "blue", "green", "yellow", "orange", "purple", "black", "in rainbows"))
+	explanation_text+= "[color]!"
 
 /datum/objective/abductee/capture
 	explanation_text = "Capture"
@@ -396,16 +401,19 @@
 	explanation_text = "Start a collection of corpses. Don't kill people to get these corpses."
 
 /datum/objective/abductee/floors
-	explanation_text = "Replace all the floor tiles with carpeting, wooden boards, or grass."
+	explanation_text = "Replace all the floor tiles with carpeting, grass or bling."
 
 /datum/objective/abductee/POWERUNLIMITED
 	explanation_text = "Flood the station's powernet with as much electricity as you can."
 
 /datum/objective/abductee/pristine
-	explanation_text = "Ensure the station is in absolutely pristine condition."
+	explanation_text = "The CEO of Nanotrasen is coming! Ensure the station is in absolutely pristine condition."
 
-/datum/objective/abductee/window
-	explanation_text = "Replace all normal windows with reinforced windows."
+/datum/objective/abductee/nowalls
+	explanation_text = "The crew must get to know one another better. Break down the walls inside the station!"
+
+/datum/objective/abductee/wall
+	explanation_text = "There are too many new crew members coming to this station. You must build a wall!"
 
 /datum/objective/abductee/nations
 	explanation_text = "Ensure your department prospers over all else."
@@ -417,13 +425,10 @@
 	explanation_text = "Conduct a seance with the spirits of the afterlife."
 
 /datum/objective/abductee/summon
-	explanation_text = "Conduct a ritual to summon an elder god."
+	explanation_text = "The elder gods hunger. Gather a cult and conduct a ritual to summon one."
 
 /datum/objective/abductee/machine
 	explanation_text = "You are secretly an android. Interface with as many machines as you can to boost your own power."
-
-/datum/objective/abductee/prevent
-	explanation_text = "You have been enlightened. This knowledge must not escape. Ensure nobody else can become enlightened."
 
 /datum/objective/abductee/calling
 	explanation_text = "Call forth a spirit from the other side."
@@ -443,7 +448,7 @@
 	explanation_text = "Nanotrasen is abusing the animals! Save as many as you can!"
 
 /datum/objective/abductee/defect
-	explanation_text = "Defect from your employer."
+	explanation_text = "Fuck the system! Defect from the station and start an independent colony in space, Lavaland or the derelict. Recruit crewmates if you can."
 
 /datum/objective/abductee/promote
 	explanation_text = "Climb the corporate ladder all the way to the top!"
@@ -459,16 +464,30 @@
 
 /datum/objective/abductee/engine
 	explanation_text = "Go have a good conversation with the Singularity/Tesla/Supermatter crystal. Bonus points if it responds."
-	
+
 /datum/objective/abductee/teamredisbetterthangreen
-	explanation_text = "Tell the AI (or a borg/pAI/drone if there is no AI) some corny technology jokes until it cries for help."
-	
-/datum/objective/abductee/time
-	explanation_text = "Go bug a bronze worshipper to give you a clock."
-		
+	explanation_text = "Tell the AI or other silicons some corny technology jokes until it cries for help."
+
 /datum/objective/abductee/licky
 	explanation_text = "You must lick anything that you find interesting."
-	
+
 /datum/objective/abductee/music
 	explanation_text = "Start playing music, you're the best musician ever. If anyone hates it, beat them on the head with your instrument!"
-	
+
+/datum/objective/abductee/clown
+	explanation_text = "The clown is not funny. You can do better! Make the crew laugh!"
+
+/datum/objective/abductee/party
+	explanation_text = "You're throwing a huge rager. The whole crew needs to come... OR ELSE!"
+
+/datum/objective/abductee/pets
+	explanation_text = "All the pets around here suck. You need to make them cooler. Replace them with exotic beasts!"
+
+/datum/objective/abductee/conspiracy
+	explanation_text = "The leaders of this station are hiding a grand conspiracy. Only you can learn what it is, and expose it to the people!"
+
+/datum/objective/abductee/stalker
+	explanation_text = "The Syndicate has hired you to compile dossiers on all important members of the crew. Make sure they don't know you're doing it."
+
+/datum/objective/abductee/narrator
+	explanation_text = "You're the narrator of this tale. Follow around the protagonists to tell their story."
