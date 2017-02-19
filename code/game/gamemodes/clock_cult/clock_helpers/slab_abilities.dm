@@ -5,6 +5,10 @@
 	var/finished = FALSE
 	var/in_progress = FALSE
 
+/obj/effect/proc_holder/slab/Destroy()
+	slab = null
+	return ..()
+
 /obj/effect/proc_holder/slab/remove_ranged_ability(msg)
 	..()
 	finished = TRUE
