@@ -7,7 +7,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = null
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0
@@ -29,11 +29,6 @@
 /obj/item/weapon/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
 	user.say(catchphrase)
 	playsound(get_turf(user), on_use_sound,50,1)
-	if(attached_spell)
-		attached_spell.attached_hand = null
-	qdel(src)
-
-/obj/item/weapon/melee/touch_attack/dropped()
 	if(attached_spell)
 		attached_spell.attached_hand = null
 	qdel(src)
