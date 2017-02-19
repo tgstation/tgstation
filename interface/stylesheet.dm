@@ -11,6 +11,7 @@ em						{font-style: normal;	font-weight: bold;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover
 	{color: #638500;}
 
+.bold					{					font-weight: bold;}
 .italics				{					font-style: italic;}
 
 .prefix					{					font-weight: bold;}
@@ -67,10 +68,6 @@ h1.alert, h2.alert		{color: #000000;}
 .green					{color: #03ff39;}
 .shadowling				{color: #3b2769;}
 .velvet					{color: #21007F;}
-.velvet_bold			{color: #21007F; font-weight:bold;}
-.velvet_italic			{color: #21007F; font-style:italic;}
-.velvet_emphasis		{color: #21007F; font-weight:bold; font-style:italic;}
-.velvet_large			{color: #21007F; font-size:3;}
 .velvet_progenitor		{color: #21007F; font-weight:bold; font-size:6;}
 .cult					{color: #960000;}
 .cultitalic				{color: #960000;	font-style: italic;}

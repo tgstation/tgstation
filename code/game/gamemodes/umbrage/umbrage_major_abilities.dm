@@ -7,7 +7,7 @@
 	psi_cost = 0
 
 /datum/action/innate/umbrage/psi_web/Activate()
-	usr << "<span class='velvet_bold'>You retreat inwards and touch the Mindlink...</span>"
+	usr << "<span class=velvet bold>You retreat inwards and touch the Mindlink...</span>"
 	var/datum/umbrage/U = get_umbrage()
 	if(!U)
 		return
@@ -59,7 +59,7 @@
 	notify_ghosts("Umbrage [user.real_name] has begun Divulging at [get_area(user)]! ", source = user, ghost_sound = 'sound/magic/devour_will_victim.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
 	user.visible_message("<span class='warning'>A vortex of violet energies surrounds [user]!</span>", "<span class='velvet'>Your barrier will keep you shielded... to a degree.</span>")
 	user.visible_message("<span class='danger'>[user] slowly rises into the air, their belongings falling away, and begins to shimmer...</span>", \
-						"<span class='velvet_large'><b>You begin the removal of your human disguise. You will be completely vulnerable during this time.</b></span>")
+						"<span class='velvet big'><b>You begin the removal of your human disguise. You will be completely vulnerable during this time.</b></span>")
 	for(var/obj/item/I in user)
 		user.unEquip(I)
 	for(var/turf/T in orange(1, user))
@@ -89,13 +89,13 @@
 			animate(user, color = initial(user.color), pixel_y = initial(user.pixel_y), time = 10)
 			return
 	playsound(user, 'sound/magic/divulge_ending.ogg', 100, 0)
-	user.visible_message("<span class='userdanger'>[user] rises into the air, crackling with power!</span>", "<span class='velvet_bold'>Your mind...! can't--- THINK--</span>")
+	user.visible_message("<span class='userdanger'>[user] rises into the air, crackling with power!</span>", "<span class=velvet bold>Your mind...! can't--- THINK--</span>")
 	animate(user, pixel_y = user.pixel_y + 5, time = 60)
 	sleep(45)
 	for(var/i in 1 to 20)
-		user << "<span class='velvet_bold'>[pick("I- I- I-", "Mind-", "Sigils-", "Can't think-", "<i>POWER-</i>", "W-EE--EEE-", "<i>TAKE-</i>", "M-M-MOOORE-")]</span>"
+		user << "<span class=velvet bold>[pick("I- I- I-", "Mind-", "Sigils-", "Can't think-", "<i>POWER-</i>", "W-EE--EEE-", "<i>TAKE-</i>", "M-M-MOOORE-")]</span>"
 		sleep(1.1) //Spooky flavor message spam
-	user.visible_message("<span class='userdanger'>A tremendous shockwave emanates from [user]!</span>", "<span class='velvet_large'><b>YOU ARE FREE!!</b></span>")
+	user.visible_message("<span class='userdanger'>A tremendous shockwave emanates from [user]!</span>", "<span class='velvet big'><b>YOU ARE FREE!!</b></span>")
 	playsound(user, 'sound/magic/divulge_end.ogg', 100, 0)
 	user.fully_heal()
 	user.underwear = "Nude"
@@ -118,7 +118,7 @@
 	Remove(user) //Take the action away
 	user.real_name = umbrage_name
 	user.name = umbrage_name
-	user << "<span class='velvet_bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
+	user << "<span class=velvet bold>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
 	var/datum/umbrage/U = get_umbrage()
 	U.give_ability("Psi Web")
 	U.give_ability("Devour Will")
@@ -157,12 +157,12 @@
 			if(1)
 				user.visible_message("<span class='userdanger'>Energy crackles. Light bends. [user] raises their arms skyward as violet energy pulses from the walls and pools on the ground.</span>", \
 									"<span class='velvet'>The ancient sacrament begins. You begin speaking the ancient words as energy pours from the space around you...</span>\n\
-									<span class='velvet_bold'>heba ckao. zwng bhkso. iejzo bwhh ej znkrao. pdaen hqyezepu behho ia wjz pdaen xkzeao sehh oanra wo iu raooaho.</span>")
+									<span class=velvet bold>heba ckao. zwng bhkso. iejzo bwhh ej znkrao. pdaen hqyezepu behho ia wjz pdaen xkzeao sehh oanra wo iu raooaho.</span>")
 				playsound(user, 'sound/magic/divulge_03.ogg', 70, 0)
 			if(2)
 				user.visible_message("<span class='userdanger'>A surge travels from [user]. The energy beneath them rises, pours into their sigils as they glow.</span>", \
 									"<span class='velvet'>You feel the minds of those you have touched, leech their will. One by one, their sparks of life dims.</span>\n\
-									<span class='velvet_bold'>pdau nawyd bkn qo. xac bkn qo. zk ukq dawn pdaen ywhh? kxheca pdai. <i>KXHECA PDAI.</i></span>")
+									<span class=velvet bold>pdau nawyd bkn qo. xac bkn qo. zk ukq dawn pdaen ywhh? kxheca pdai. <i>KXHECA PDAI.</i></span>")
 				playsound(user, 'sound/magic/sacrament_01.ogg', 80, 0)
 				var/datum/umbrage/U = get_umbrage()
 				if(U)
@@ -176,7 +176,7 @@
 			if(3)
 				user.visible_message("<span class='userdanger'>[user]'s sigils begin to twist and grow. Their arms gently slope downward and... no. no this isnt real</span>", \
 									"<span class='velvet'>You feel the umbral essence of your home infuse your false body. You begin to morph into something unspeakable.</span>\n\
-									<pan class='velvet_emphasis'>PWGA PDAEN HECDP. ZARKQN EP. YKJOQIA EP WJZ OWRKN EPO CKKAU PWOPA EJ UKQN SKNPDU BHAOD.</span>")
+									<pan class='velvet bold italics'>PWGA PDAEN HECDP. ZARKQN EP. YKJOQIA EP WJZ OWRKN EPO CKKAU PWOPA EJ UKQN SKNPDU BHAOD.</span>")
 				playsound(user, 'sound/magic/sacrament_02.ogg', 90, 0)
 		if(!do_after(user, 150, target = user))
 			user.visible_message("<span class='warning'>[user] falls to the ground!</span>", "<span class='userdanger'>Your transformation was interrupted!</span>")

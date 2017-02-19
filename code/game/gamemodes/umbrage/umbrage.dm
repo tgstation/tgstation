@@ -90,7 +90,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 /datum/game_mode/proc/greet_umbrage(mob/living/U) //Announcement and direction to the tutorial
 	if(!U)
 		return
-	U << "<span class='velvet_large'><b>You are an umbrage!</b></span>"
+	U << "<span class='velvet big'><b>You are an umbrage!</b></span>"
 	U << "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>"
 	U << "<i>Look for the info button in the top left of your screen if you need help.</i>"
 	return 1
@@ -98,7 +98,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 /datum/game_mode/proc/greet_veil(mob/living/V)
 	if(!V)
 		return
-	V << "<span class='velvet_large'><b>ukq wna ieja jks</b></span>" //"you are mine now"
+	V << "<span class='velvet big'><b>ukq wna ieja jks</b></span>" //"you are mine now"
 	V << "<b>Your mind goes numb. Your thoughts go blank. You feel utterly empty. \n\
 	A mind brushes against your own. You dream.\n\
 	Of a vast, empty Void in the deep of space.\n\
