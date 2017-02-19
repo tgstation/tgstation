@@ -93,6 +93,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 
 	if (!islist(overlays))
 		overlays = list(overlays)
+	else
+		listclearnulls(overlays)
 	for (var/i in 1 to length(overlays))
 		if (istext(overlays[i]))
 			overlays[i] = iconstate2appearance(overlays[i])
@@ -121,6 +123,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 
 	if (!islist(overlays))
 		overlays = list(overlays)
+	else
+		listclearnulls(overlays)
 	for (var/i in 1 to length(overlays))
 		if (istext(overlays[i]))
 			overlays[i] = iconstate2appearance(overlays[i])

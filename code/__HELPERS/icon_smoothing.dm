@@ -238,25 +238,30 @@
 		else if(adjacencies & N_EAST)
 			se = "4-e"
 
+	var/list/New
+
 	if(A.top_left_corner != nw)
 		A.cut_overlay(A.top_left_corner)
 		A.top_left_corner = nw
-		A.add_overlay(nw)
+		LAZYADD(New, nw)
 
 	if(A.top_right_corner != ne)
 		A.cut_overlay(A.top_right_corner)
 		A.top_right_corner = ne
-		A.add_overlay(ne)
+		LAZYADD(New, ne)
 
 	if(A.bottom_right_corner != sw)
 		A.cut_overlay(A.bottom_right_corner)
 		A.bottom_right_corner = sw
-		A.add_overlay(sw)
+		LAZYADD(New, sw)
 
 	if(A.bottom_left_corner != se)
 		A.cut_overlay(A.bottom_left_corner)
 		A.bottom_left_corner = se
-		A.add_overlay(se)
+		LAZYADD(New, se)
+	
+	if(New)
+		A.add_overlay(New)
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)

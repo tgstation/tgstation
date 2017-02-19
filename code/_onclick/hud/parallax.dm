@@ -222,13 +222,15 @@
 		view = world.view
 
 	var/count = Ceiling(view/(480/world.icon_size))+1
+	var/list/new_overlays = new
 	for(var/x in -count to count)
 		for(var/y in -count to count)
 			if(x == 0 && y == 0)
 				continue
 			var/image/I = image(icon, null, icon_state)
 			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
-			add_overlay(I)
+			new_overlays += I
+	add_overlay(new_overlays)
 	view_sized = view
 
 /obj/screen/parallax_layer/layer_1
