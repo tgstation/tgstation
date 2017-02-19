@@ -362,13 +362,13 @@
 
 /datum/objective/abductee/paint/New()
 	var/color = pick(list("red", "blue", "green", "yellow", "orange", "purple", "black", "in rainbows", "in blood"))
-	explanation_text+= "[color]!"
+	explanation_text+= " [color]!"
 
 /datum/objective/abductee/speech
 	explanation_text = "Your brain is broken... you can only communicate in"
 
 /datum/objective/abductee/speech/New()
-	var/style = pick(list("pantomime", "rhyme", "extended metaphors", "riddles", "extremely literal terms", "sound effects"))
+	var/style = pick(list("pantomime", "rhyme", "haiku", "extended metaphors", "riddles", "extremely literal terms", "sound effects", "military jargon"))
 	explanation_text+= " [style]."
 
 /datum/objective/abductee/capture
@@ -410,7 +410,7 @@
 	explanation_text = "Start a collection of corpses. Don't kill people to get these corpses."
 
 /datum/objective/abductee/floors
-	explanation_text = "Replace all the floor tiles with carpeting, grass or bling."
+	explanation_text = "Replace all the floor tiles with wood, carpeting, grass or bling."
 
 /datum/objective/abductee/POWERUNLIMITED
 	explanation_text = "Flood the station's powernet with as much electricity as you can."
@@ -431,7 +431,7 @@
 	explanation_text = "The elder gods hunger. Gather a cult and conduct a ritual to summon one."
 
 /datum/objective/abductee/machine
-	explanation_text = "You are secretly an android. Interface with as many machines as you can to boost your own power."
+	explanation_text = "You are secretly an android. Interface with as many machines as you can to boost your own power so the AI may acknowledge you at last."
 
 /datum/objective/abductee/calling
 	explanation_text = "Call forth a spirit from the other side."
@@ -466,19 +466,13 @@
 	explanation_text = "You are pregnant and soon due. Find a safe place to deliver your baby."
 
 /datum/objective/abductee/engine
-	explanation_text = "Go have a good conversation with the Singularity/Tesla/Supermatter crystal. Bonus points if it responds."
-
-/datum/objective/abductee/teamredisbetterthangreen
-	explanation_text = "Tell the AI or other silicons some corny technology jokes until it cries for help."
-
-/datum/objective/abductee/licky
-	explanation_text = "You must lick anything that you find interesting."
+	explanation_text = "Go have a good conversation with the singularity/tesla/supermatter crystal. Bonus points if it responds."
 
 /datum/objective/abductee/music
-	explanation_text = "Start playing music, you're the best musician ever. If anyone hates it, beat them on the head with your instrument!"
+	explanation_text = "You burn with passion for music. Share your vision. If anyone hates it, beat them on the head with your instrument!"
 
 /datum/objective/abductee/clown
-	explanation_text = "The clown is not funny. You can do better! Make the crew laugh!"
+	explanation_text = "The clown is not funny. You can do better! Steal his audience and make the crew laugh!"
 
 /datum/objective/abductee/party
 	explanation_text = "You're throwing a huge rager. Make it as awesome as possible so the whole crew comes... OR ELSE!"
@@ -487,10 +481,16 @@
 	explanation_text = "All the pets around here suck. You need to make them cooler. Replace them with exotic beasts!"
 
 /datum/objective/abductee/conspiracy
-	explanation_text = "The leaders of this station are hiding a grand conspiracy. Only you can learn what it is, and expose it to the people!"
+	explanation_text = "The leaders of this station are hiding a grand, evil conspiracy. Only you can learn what it is, and expose it to the people!"
 
 /datum/objective/abductee/stalker
-	explanation_text = "The Syndicate has hired you to compile dossiers on all important members of the crew. Make sure they don't know you're doing it."
+	explanation_text = "The Syndicate has hired you to compile dossiers on all important members of the crew. Be sure they don't know you're doing it."
 
 /datum/objective/abductee/narrator
 	explanation_text = "You're the narrator of this tale. Follow around the protagonists to tell their story."
+
+/datum/objective/abductee/lurve
+	explanation_text = "You are doomed to feel woefully incomplete forever... until you find your true love on this station. They're waiting for you!"
+
+/datum/objective/abductee/sixthsense
+	explanation_text = "You died back there and went to heaven... or is it hell? No one here seems to know they're dead. Convince them, and maybe you can escape this limbo."
