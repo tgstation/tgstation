@@ -34,7 +34,7 @@
 	. = list()
 	if(!isnum(amount) || amount<1)
 		return
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		if(fail_loud || prob(5))
 			var/obj/item/weapon/paper/P = new(location)
 			P.info = "There once was a book from Nantucket<br>But the database failed us, so f*$! it.<br>I tried to be good to you<br>Now this is an I.O.U<br>If you're feeling entitled, well, stuff it!<br><br><font color='gray'>~</font>"

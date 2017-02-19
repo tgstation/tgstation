@@ -51,7 +51,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
-		if(!setup_database_connection())
+		if(!dbcon.Connect())
 			log_world("Your server failed to establish a connection with the database.")
 		else
 			log_world("Database connection established.")
@@ -353,47 +353,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-#define FAILED_DB_CONNECTION_CUTOFF 5
-var/failed_db_connections = 0
-
-/proc/setup_database_connection()
-
-	if(failed_db_connections >= FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
-		return 0
-
-	if(!dbcon)
-		dbcon = new()
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-	. = dbcon.IsConnected()
-	if ( . )
-		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
-	else
-		failed_db_connections++		//If it failed, increase the failed connections counter.
-		if(config.sql_enabled)
-			log_world("SQL error: " + dbcon.ErrorMsg())
-
-	return .
-
-//This proc ensures that the connection to the feedback database (global variable dbcon) is established
-/proc/establish_db_connection()
-	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
-		return 0
-
-	if(!dbcon || !dbcon.IsConnected())
-		return setup_database_connection()
-	else
-		return 1
-
-#undef FAILED_DB_CONNECTION_CUTOFF
-
 
 /proc/maprotate()
 	if (!SERVERTOOLS)

@@ -22,7 +22,7 @@
 <tr class='title'>
 <th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
 <th style='width:125px;'>RANK</th>
-<th style='width:100%;'>PERMISSIONS</th>
+<th style='width:375px;'>PERMISSIONS</th>
 
 </tr>
 "}
@@ -59,10 +59,8 @@
 	if (!check_rights(R_PERMISSIONS))
 		return
 
-	establish_db_connection()
-
-	if(!dbcon.IsConnected())
-		usr << "<span class='warning'>Failed to establish database connection</span>"
+	if(!dbcon.Connect())
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 
 	if(!adm_ckey || !new_rank)
@@ -103,9 +101,8 @@
 	if(!usr.client)					return
 	if(!check_rights(R_PERMISSIONS))	return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
-		usr << "<span class='warning'>Failed to establish database connection</span>"
+	if(!dbcon.Connect())
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))

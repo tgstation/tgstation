@@ -36,7 +36,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 
 /obj/machinery/computer/camera_advanced/base_construction
 	name = "base contruction console"
-	desc = "An industrial computer integrated with a camera-assisted rapid construction device."
+	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("SS13")
 	var/obj/item/weapon/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	circuit = /obj/item/weapon/circuitboard/computer/base_construction
@@ -49,7 +49,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	var/fans_remaining = 0 //Number of fans in stock.
 	var/datum/action/innate/aux_base/install_turret/turret_action = new //Action for spawning turrets
 	var/turret_stock = 0 //Turrets in stock
-	var/obj/machinery/computer/shuttle/auxillary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
+	var/obj/machinery/computer/auxillary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
 
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
@@ -69,7 +69,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 
 	var/spawn_spot
 	if(!found_aux_console)
-		found_aux_console = locate(/obj/machinery/computer/shuttle/auxillary_base) in machines
+		found_aux_console = locate(/obj/machinery/computer/auxillary_base) in machines
 
 		if(found_aux_console)
 			spawn_spot = found_aux_console
@@ -86,6 +86,10 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 		RCD.attackby(W, user, params) //If trying to feed the console more materials, pass it along to the RCD.
 	else
 		return ..()
+
+/obj/machinery/computer/camera_advanced/base_construction/Destroy()
+	qdel(RCD)
+	return ..()
 
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
 	off_action.target = user
@@ -265,7 +269,10 @@ datum/action/innate/aux_base/install_turret/Activate()
 		owner << "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>"
 		return
 
-	new /obj/machinery/porta_turret/aux_base(turret_turf)
+	var/obj/machinery/porta_turret/aux_base/T = new /obj/machinery/porta_turret/aux_base(turret_turf)
+	if(B.found_aux_console)
+		B.found_aux_console.turrets += T //Add new turret to the console's control
+
 	B.turret_stock--
 	owner << "<span class='notice'>Turret installation complete!</span>"
 	playsound(turret_turf, 'sound/items/drill_use.ogg', 65, 1)
