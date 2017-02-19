@@ -230,7 +230,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			V.Weaken(3 * power_multiplier)
+			L.Weaken(3 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
