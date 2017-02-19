@@ -85,13 +85,14 @@
 
 /obj/item/clockwork/slab/New()
 	..()
-	update_quickbind()
+	update_slab_info(src)
 	SSobj.start_processing(src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
 
 /obj/item/clockwork/slab/Destroy()
 	if(slab_ability && slab_ability.ranged_ability_user)
 		slab_ability.remove_ranged_ability()
+	slab_ability = null
 	return ..()
 
 /obj/item/clockwork/slab/ratvar_act()
@@ -409,7 +410,7 @@
 
 	data["scripture"] = list()
 	for(var/s in all_scripture)
-		var/datum/clockwork_scripture/S = s
+		var/datum/clockwork_scripture/S = all_scripture[s]
 		if(S.tier == selected_scripture)
 			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
@@ -497,10 +498,17 @@
 				continue
 			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
 			Q.scripture_index = i
-			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-			Q.name = "[initial(quickbind_slot.name)] ([Q.scripture_index])"
-			Q.desc = initial(quickbind_slot.quickbind_desc)
-			Q.button_icon_state = initial(quickbind_slot.name)
+			var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[i]]
+			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
+			var/list/temp_desc = list()
+			for(var/c in quickbind_slot.consumed_components)
+				if(quickbind_slot.consumed_components[c])
+					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_acronym(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
+			if(LAZYLEN(temp_desc))
+				temp_desc += "<br>"
+			temp_desc += "[quickbind_slot.quickbind_desc]"
+			Q.desc = temp_desc.Join()
+			Q.button_icon_state = quickbind_slot.name
 			Q.UpdateButtonIcon()
 			if(isliving(loc))
 				Q.Grant(loc)

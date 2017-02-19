@@ -189,12 +189,12 @@ var/datum/subsystem/processing/air/SSair
 	if(!atmos_processors.len)
 		LAZYREMOVE(D.processors, src)
 
-/datum/subsystem/processing/air/proc/begin_map_load()
+/datum/subsystem/processing/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)
 	map_loading = TRUE
  
  
-/datum/subsystem/processing/air/proc/end_map_load()
+/datum/subsystem/processing/air/StopLoadingMap()
 	map_loading = FALSE
 	for(var/T in queued_for_activation)
 		start_processing(T, SSAIR_ACTIVETURFS)

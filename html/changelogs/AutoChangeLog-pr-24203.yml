@@ -1,0 +1,4 @@
+author: "grimreaperx15"
+delete-after: True
+changes: 
+  - tweak: "Blood Cult Pylons will now rapidly regenerate any nearby cultists blood, in addition to the normal healing they do."
