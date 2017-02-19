@@ -68,6 +68,7 @@
 	for(var/I in processors)
 		var/datum/subsystem/processing/SS = I
 		SS.stop_processing(src)
+	LAZYCLEARLIST(processors)
 
 /datum/proc/process(wait)
 	set waitfor = FALSE
