@@ -75,5 +75,5 @@
 
 	var/list/implants = null
 	var/tesla_ignore = FALSE
-	var/current_gravturn
+	var/current_gravturn = 0
 	is_affected_by_gravity = TRUE
