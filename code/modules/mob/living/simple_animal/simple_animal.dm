@@ -84,7 +84,6 @@
 
 	//domestication
 	var/tame = 0
-	var/datum/riding/riding_datum = null
 
 /mob/living/simple_animal/New()
 	..()

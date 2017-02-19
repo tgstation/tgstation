@@ -6,8 +6,8 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects
 	name = "Objects"
-	init_order = 11
 	priority = 40
+	flags = SS_NO_INIT
 
 	var/initialized = INITIALIZATION_INSSOBJ
 	var/old_initialized
@@ -16,73 +16,8 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
-
-/datum/subsystem/objects/Initialize(timeofdayl)
-	fire_overlay.appearance_flags = RESET_COLOR
-	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
-	initialized = INITIALIZATION_INNEW_MAPLOAD
-	InitializeAtoms()
-	. = ..()
-
-/datum/subsystem/objects/proc/InitializeAtoms(list/objects = null)
-	if(initialized == INITIALIZATION_INSSOBJ)
-		return
-
-	var/list/late_loaders
-
-	initialized = INITIALIZATION_INNEW_MAPLOAD
-
-	if(objects)
-		for(var/I in objects)
-			var/atom/A = I
-			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
-				var/start_tick = world.time
-				if(A.Initialize(TRUE))
-					LAZYADD(late_loaders, A)
-				if(start_tick != world.time)
-					WARNING("[A]: [A.type] slept during it's Initialize!")
-				CHECK_TICK
-		testing("Initialized [objects.len] atoms")
-	else
-		#ifdef TESTING
-		var/count = 0
-		#endif
-		for(var/atom/A in world)
-			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
-				var/start_tick = world.time
-				if(A.Initialize(TRUE))
-					LAZYADD(late_loaders, A)
-				#ifdef TESTING
-				else
-					++count
-				#endif TESTING
-				if(start_tick != world.time)
-					WARNING("[A]: [A.type] slept during it's Initialize!")
-				CHECK_TICK
-		testing("Roundstart initialized [count] atoms")
-
-	initialized = INITIALIZATION_INNEW_REGULAR
-
-	if(late_loaders)
-		for(var/I in late_loaders)
-			var/atom/A = I
-			var/start_tick = world.time
-			A.Initialize(FALSE)
-			if(start_tick != world.time)
-				WARNING("[A]: [A.type] slept during it's Initialize!")
-			CHECK_TICK
-		testing("Late-initialized [late_loaders.len] atoms")
-
-/datum/subsystem/objects/proc/map_loader_begin()
-	old_initialized = initialized
-	initialized = INITIALIZATION_INSSOBJ
-
-/datum/subsystem/objects/proc/map_loader_stop()
-	initialized = old_initialized
-
 /datum/subsystem/objects/stat_entry()
 	..("P:[processing.len]")
-
 
 /datum/subsystem/objects/fire(resumed = 0)
 	if (!resumed)
@@ -101,10 +36,4 @@ var/datum/subsystem/objects/SSobj
 			return
 
 /datum/subsystem/objects/Recover()
-	initialized = SSobj.initialized
-	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
-		InitializeAtoms()
-	old_initialized = SSobj.old_initialized
-
-	if (istype(SSobj.processing))
-		processing = SSobj.processing
+	processing = SSobj.processing

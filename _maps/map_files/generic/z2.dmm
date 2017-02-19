@@ -4231,7 +4231,7 @@
 	},
 /area/centcom/supply)
 "lp" = (
-/obj/machinery/computer/shuttle/auxillary_base{
+/obj/machinery/computer/auxillary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -6093,7 +6093,7 @@
 	},
 /area/centcom/ferry)
 "pG" = (
-/obj/machinery/computer/shuttle/auxillary_base{
+/obj/machinery/computer/auxillary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
