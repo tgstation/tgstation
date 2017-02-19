@@ -164,6 +164,8 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
 							M.adjustHealth(-1)
+				if(ishuman(L) && L.blood_volume < BLOOD_VOLUME_NORMAL)
+					L.blood_volume += 1.0
 			CHECK_TICK
 	if(last_corrupt <= world.time)
 		var/list/validturfs = list()

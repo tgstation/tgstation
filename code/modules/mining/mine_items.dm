@@ -236,7 +236,7 @@
 /obj/item/weapon/survivalcapsule/proc/get_template()
 	if(template)
 		return
-	template = shelter_templates[template_id]
+	template = SSmapping.shelter_templates[template_id]
 	if(!template)
 		throw EXCEPTION("Shelter template ([template_id]) not found!")
 		qdel(src)

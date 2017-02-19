@@ -121,11 +121,14 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(alldirs))
-		H.hair_style = "Bald"
-		H.update_hair()
+		H.status_flags |= DISFIGURED
 		H.bleed_rate = 5
-		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
+		H.gib_animation()
+		sleep(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
+		H.spawn_gibs()
+		H.spill_organs()
+		H.spread_bodyparts()
 
 	return (BRUTELOSS)
 

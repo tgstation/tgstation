@@ -30332,24 +30332,17 @@
 	icon_state = "manifold";
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
 "bcW" = (
-/obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
 "bcX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
@@ -164199,7 +164192,7 @@ aNg
 aYO
 bar
 bbF
-bcY
+bcX
 bbF
 bgl
 bii
