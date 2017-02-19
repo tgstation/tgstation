@@ -13,7 +13,7 @@
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
-	var/image/hinges = "single_hinge"
+	var/hinges = "single_hinge"
 	var/old = FALSE
 
 /obj/item/weapon/storage/toolbox/New()
@@ -23,7 +23,13 @@
 			hinges = "double_hinge"
 		else if(prob(1))
 			hinges = "triple_hinge"
+	update_icon()
+
+/obj/item/weapon/storage/toolbox/update_icon()
+	..()
+	cut_overlays(image('icons/obj/storage.dmi', "[hinges]"))
 	add_overlay(image('icons/obj/storage.dmi', "[hinges]"))
+
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
