@@ -65,7 +65,7 @@
 		if(linked_ability && L)
 			linked_ability.victims -= L
 			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
-	return 1
+	return TRUE
 
 
 

@@ -34,27 +34,27 @@
 	for(var/taip in linked_ability_types)
 		var/datum/action/innate/umbrage/U = taip
 		give_ability(initial(U.id), 1)
-	return 1
+	return TRUE
 
 /datum/umbrage/proc/use_psi(used_psi)
 	cycle_progress = 0 //Reset regenerating psi when we use more
 	psi = max(0, min(psi - used_psi, max_psi))
 	psi_used_since_last_cycle += used_psi
-	return 1
+	return TRUE
 
 /datum/umbrage/proc/regenerate_psi()
 	var/psi_to_regen
 	if(psi >= max_psi) //No need to regenerate anything, so let's get out
-		return 1
+		return TRUE
 	psi_to_regen = min(psi_used_since_last_cycle, psi_regeneration) //Never go above our regen rate
 	psi = min(psi + psi_to_regen, max_psi)
 	psi_used_since_last_cycle = 0
-	return 1
+	return TRUE
 
 /datum/umbrage/proc/has_ability(id)
 	for(var/datum/action/innate/umbrage/U in linked_abilities)
 		if(U.id == id)
-			return 1
+			return TRUE
 	return
 
 /datum/umbrage/proc/give_ability(id, silent, consume_lucidity) //Gives an ability of a certain name to the umbrage and consumes lucidity if applicable.
@@ -74,7 +74,7 @@
 		linked_body << "<span class='velvet italic'>You have learned the \"[ability.name]\" ability.</span>"
 	if(consume_lucidity)
 		lucidity = max(0, lucidity - initial(ability.lucidity_cost))
-	return 1
+	return TRUE
 
 /datum/umbrage/proc/take_ability(id, silent) //Takes an ability of a certain name from the umbrage.
 	var/datum/action/innate/umbrage/ability
@@ -90,7 +90,7 @@
 	if(!silent)
 		linked_body << "<span class='warning'>You have lost the \"[ability.name]\" ability.</span>"
 	qdel(ability)
-	return 1
+	return TRUE
 
 
 //Psi Web code goes below here

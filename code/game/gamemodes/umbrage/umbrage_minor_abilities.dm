@@ -45,23 +45,25 @@
 	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
-	if(!usr || !usr.get_empty_held_indexes())
+	var/mob/living/user = usr
+	if(!user || !user.get_empty_held_indexes())
 		return
 	return ..()
 
 /datum/action/innate/umbrage/devour_will/Activate()
-	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class='velvet bold'>pwga...</span><br>\
-	<span class='notice'>You begin forming a dark bead...</span>")
-	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
-	if(!do_after(usr, 10, target = usr))
+	var/mob/living/user = usr
+	user.visible_message("<span class='warning'>[user]'s hand begins to shimmer...</span>", "<span class='velvet bold'>pwga...</span><br>\
+	<span user='notice'>You begin forming a dark bead...</span>")
+	playsound(user, 'sound/magic/devour_will_begin.ogg', 50, 1)
+	if(!do_after(user, 10, target = user))
 		return
-	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class='velvet bold'>...iejz</span><br>\
+	user.visible_message("<span class='warning'>A glowing black orb appears in [user]'s hand!</span>", "<span class='velvet bold'>...iejz</span><br>\
 	<span class='notice'>You form a dark bead in your hand.</span>")
-	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
+	playsound(user, 'sound/magic/devour_will_form.ogg', 50, 1)
 	var/obj/item/weapon/dark_bead/B = new
-	usr.put_in_hands(B)
+	user.put_in_hands(B)
 	B.linked_ability = src
-	return 1
+	return TRUE
 
 
 //Pass: Equips umbral tendrils.
@@ -77,28 +79,31 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/pass/IsAvailable()
-	if(!usr || !usr.get_empty_held_indexes())
+	var/mob/living/user = usr
+	if(!user || !user.get_empty_held_indexes())
 		return
 	return ..()
 
 /datum/action/innate/umbrage/pass/Activate()
-	usr.visible_message("<span class='warning'>[usr]'s arm contorts into tentacles!</span>", "<span class='velvet bold'>ikna</span><br>\
+	var/mob/living/user = usr
+	user.visible_message("<span class='warning'>[user]'s arm contorts into tentacles!</span>", "<span class='velvet bold'>ikna</span><br>\
 	<span class='notice'>You transform your arm into umbral tendrils.</span>")
-	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 1)
+	playsound(user, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	var/obj/item/weapon/umbral_tendrils/T = new
-	usr.put_in_hands(T)
+	user.put_in_hands(T)
 	T.linked_umbrage = linked_umbrage
 	active = 1
-	return 1
+	return TRUE
 
 
 /datum/action/innate/umbrage/pass/Deactivate()
-	usr.visible_message("<span class='warning'>[usr]'s tentacles contort into an arm!</span>", "<span class='velvet bold'>haoo</span><br>\
+	var/mob/living/user = usr
+	user.visible_message("<span class='warning'>[user]'s tentacles contort into an arm!</span>", "<span class='velvet bold'>haoo</span><br>\
 	<span class='notice'>You reform your arm.</span>")
-	for(var/obj/item/weapon/umbral_tendrils/T in usr)
+	for(var/obj/item/weapon/umbral_tendrils/T in user)
 		qdel(T)
 	active = 0
-	return 1
+	return TRUE
 
 
 //Veil Mind: Converts all eligible targets nearby into veils. Targets become eligible for a short time when drained by Devour Will.
@@ -117,16 +122,16 @@
 	if(!H.can_speak_vocal())
 		H << "<span class='warning'>You can't speak!</span>"
 		return
-	usr.visible_message("<span class='warning'>[usr]'s sigils flare as they inhale...</span>", "<span class='velvet bold'>dawn kqn okjc...</span><br>\
+	user.visible_message("<span class='warning'>[user]'s sigils flare as they inhale...</span>", "<span class='velvet bold'>dawn kqn okjc...</span><br>\
 	<span class='notice'>You take a deep breath...</span>")
-	playsound(usr, 'sound/magic/veil_mind_gasp.ogg', 25, 1)
-	if(!do_after(usr, 10, target = usr))
+	playsound(user, 'sound/magic/veil_mind_gasp.ogg', 25, 1)
+	if(!do_after(user, 10, target = user))
 		return
-	usr.visible_message("<span class='boldwarning'>[usr] lets out a chilling cry!</span>", "<span class='velvet bold'>...wjz oanra</span><br>\
+	user.visible_message("<span class='boldwarning'>[user] lets out a chilling cry!</span>", "<span class='velvet bold'>...wjz oanra</span><br>\
 	<span class='notice'>You veil the minds of everyone nearby.</span>")
-	playsound(usr, 'sound/magic/veil_mind_scream.ogg', 100, 1)
-	for(var/mob/living/L in view(3, usr))
-		if(L == usr)
+	playsound(user, 'sound/magic/veil_mind_scream.ogg', 100, 1)
+	for(var/mob/living/L in view(3, user))
+		if(L == user)
 			continue
 		if(issilicon(L))
 			L << "<span class='userdanger'>$@!) ERR: RECEPTOR OVERLOAD ^!</</span>"
@@ -141,12 +146,12 @@
 			else
 				if(L.status_flags & FAKEDEATH)
 					if(ticker.mode.antag_veil(L))
-						usr << "<span class='velvet'><b>[L.real_name]</b> has become a veil!</span>"
+						user << "<span class='velvet'><b>[L.real_name]</b> has become a veil!</span>"
 				else
 					L << "<span class='boldwarning'>...and it scrambles your thoughts!</span>"
 					L.dir = pick(cardinal)
 					L.confused += 2
-	return 1
+	return TRUE
 
 
 //Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, they will be thrown away and staggered by its force.
@@ -161,13 +166,15 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/demented_outburst/Activate()
-	usr.visible_message("<span class='warning'>[usr] begins to growl!</span>", "<span class='velvet bold'>cap...</span><br>\
+	var/mob/living/user = usr
+	user.visible_message("<span class='warning'>[user] begins to growl!</span>", "<span class='velvet bold'>cap...</span><br>\
 	<span class='danger'>You begin harnessing every ounce of your power...</span>")
-	playsound(usr, 'sound/magic/demented_outburst_charge.ogg', 100, 0)
-	addtimer(CALLBACK(src, .proc/outburst, usr), 50)
-	return 1
+	playsound(user, 'sound/magic/demented_outburst_charge.ogg', 100, 0)
+	addtimer(CALLBACK(src, .proc/outburst, user), 50)
+	return TRUE
 
 /datum/action/innate/umbrage/demented_outburst/proc/outburst(mob/living/user)
+	var/mob/living/user = usr
 	if(!user || user.stat)
 		return
 	user.visible_message("<span class='boldwarning'>[user] lets out a deafening scream!</span>", "<span class='velvet bold' italics'>WSWU!</span><br>\
@@ -194,7 +201,7 @@
 				L.visible_message("<span class='warning'>The blast knocks [L] off their feet!</span>", "<span class='userdanger'>The force bowls you over!</span>")
 				L.Weaken(3)
 				L.soundbang_act(1, 3, 5, 0)
-	return 1
+	return TRUE
 
 
 //Simulacrum: Creates an illusionary copy of the umbrage that moves continually in the direction that they're facing.
@@ -211,12 +218,13 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/simulacrum/Activate()
-	usr.visible_message("<span class='warning'>[usr] suddenly splits into two!</span>", "<span class='velvet bold'>zayaera</span><br>\
+	var/mob/living/user = usr
+	user.visible_message("<span class='warning'>[user] suddenly splits into two!</span>", "<span class='velvet bold'>zayaera</span><br>\
 	<span class='notice'>You create an illusion of yourself.</span>")
-	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 1)
-	var/obj/effect/simulacrum/simulacrum = new(get_turf(usr))
-	simulacrum.mimic(usr)
-	return 1
+	playsound(user, 'sound/magic/devour_will_form.ogg', 50, 1)
+	var/obj/effect/simulacrum/simulacrum = new(get_turf(user))
+	simulacrum.mimic(user)
+	return TRUE
 
 
 //Tagalong: Melds with a conscious mob's shadow, allowing the umbrage to freely accompany them anywhere they go.
@@ -247,38 +255,39 @@
 		owner.Weaken(2)
 		STOP_PROCESSING(SSprocessing, src)
 		tagging_along = null
-		return
+		return TRUE
 
 /datum/action/innate/umbrage/tagalong/Activate()
+	var/mob/living/user = usr
 	if(tagging_along)
-		usr.visible_message("<span class='warning'>[tagging_along]'s shadow suddenly breaks away from their body!</span>", "<span class='notice'>You break away from [tagging_along].</span>")
-		usr.forceMove(get_turf(tagging_along))
+		user.visible_message("<span class='warning'>[tagging_along]'s shadow suddenly breaks away from their body!</span>", "<span class='notice'>You break away from [tagging_along].</span>")
+		user.forceMove(get_turf(tagging_along))
 		tagging_along = null
 		STOP_PROCESSING(SSprocessing, src)
 		spawn(1)
 			psi_cost = initial(psi_cost)
-		return 1
+		return TRUE
 	else
 		var/list/targets = list()
 		var/mob/living/target
-		for(var/mob/living/L in view(7, usr))
+		for(var/mob/living/L in view(7, user))
 			var/turf/T = get_turf(L)
-			if(L == usr || T.get_lumcount() <= 2)
+			if(L == user || T.get_lumcount() <= 2)
 				continue
 			targets += L
 		if(!targets.len)
-			usr << "<span class='warning'>There are no nearby targets in lit areas!</span>"
+			user << "<span class='warning'>There are no nearby targets in lit areas!</span>"
 			return
 		if(targets.len == 1)
 			target = targets[1] //To prevent the prompt from appearing with just one person
 		else
-			target = input(usr, "Select a target to tag along with.", name) as null|anything in targets
+			target = input(user, "Select a target to tag along with.", name) as null|anything in targets
 			if(!target)
 				return
-		usr << "<span class='velvet bold'>iahz</span><br><span class='notice'>You meld with [target]'s shadow.</span>"
-		usr.forceMove(target)
+		user << "<span class='velvet bold'>iahz</span><br><span class='notice'>You meld with [target]'s shadow.</span>"
+		user.forceMove(target)
 		tagging_along = target
 		START_PROCESSING(SSprocessing, src)
 		spawn(1)
 			psi_cost = 0 //For ejecting
-		return 1
+		return TRUE

@@ -12,7 +12,7 @@
 	if(!linked_umbrage)
 		return
 	linked_umbrage.ui_interact(usr)
-	return 1
+	return TRUE
 
 /datum/action/innate/umbrage/tutorial
 	name = "Tutorial"

@@ -67,7 +67,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 	var/starting_umbrages = Clamp(round(num_players() / 10), 1, 3) //At least 1 umbrage, but no more than 3
-	for(var/i = starting_umbrages, i > 0, i--)
+	for(var/i in 1 to starting_umbrages)
 		var/datum/mind/new_umbrage = pick(antag_candidates)
 		initial_umbrages += new_umbrage
 		antag_candidates -= new_umbrage
@@ -75,7 +75,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 		new_umbrage.special_role = "Umbrage"
 		new_umbrage.restricted_roles = restricted_jobs
 		log_game("[new_umbrage.key] (ckey) has been selected as an umbrage.")
-	return 1
+	return TRUE
 
 /datum/game_mode/umbrage/post_setup()
 	for(var/U in initial_umbrages)
@@ -85,19 +85,19 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 		greet_umbrage(H)
 		equip_umbrage(H)
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/greet_umbrage(mob/living/U) //Announcement and direction to the tutorial
 	if(!U)
-		return
+		return FALSE
 	U << "<span class='velvet big'><b>You are an umbrage!</b></span>"
 	U << "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>"
 	U << "<i>Look for the info button in the top left of your screen if you need help.</i>"
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/greet_veil(mob/living/V)
 	if(!V)
-		return
+		return FALSE
 	V << "<span class='velvet big'><b>ukq wna ieja jks</b></span>" //"you are mine now"
 	V << "<b>Your mind goes numb. Your thoughts go blank. You feel utterly empty. \n\
 	A mind brushes against your own. You dream.\n\
@@ -118,30 +118,30 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	S.link_to_new_body(U)
 	S.give_ability("howto", 1)
 	S.give_ability("divulge", 1)
-	return
+	return TRUE
 
 #warn Umbrages need antag datums when LeoZ finishes his rework
 /datum/game_mode/proc/antag_umbrage(mob/living/U, silent)
 	if(!U.mind)
-		return
+		return FALSE
 	if(!silent)
 		greet_umbrage(U)
 	var/datum/mind/M = U.mind
 	umbrages += M
 	umbrages_and_veils += M
 	M.special_role = "Umbrage"
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/antag_veil(mob/living/U, silent)
 	if(!can_become_veil(U))
-		return
+		return FALSE
 	if(!silent)
 		greet_veil(U)
 	var/datum/mind/M = U.mind
 	veils += M
 	umbrages_and_veils += M
 	M.special_role = "Veil"
-	return 1
+	return TRUE
 
 ///////////
 // PROCS //
@@ -151,15 +151,15 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	for(var/V in ticker.mode.umbrages)
 		var/datum/mind/T = V
 		if(T == M)
-			return 1
-	return
+			return TRUE
+	return FALSE
 
 /proc/is_veil(datum/mind/M)
 	for(var/V in ticker.mode.veils)
 		var/datum/mind/T = V
 		if(T == M)
-			return 1
-	return
+			return TRUE
+	return FALSE
 
 /proc/is_umbrage_or_veil(datum/mind/M)
 	return is_umbrage(M) || is_veil(M)
@@ -177,8 +177,8 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 						Something lies in the Void. Ancient. Unknowable. It watches you with hungry eyes. \n\
 						Eyes filled with stars.</b>\n\
 						<span class='boldwarning'>And not a single fuck was given.</span>")
-		return
-	return 1
+		return FALSE
+	return TRUE
 
 /proc/is_umbrage_progenitor(datum/mind/M)
-	return
+	return FALSE
