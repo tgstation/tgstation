@@ -139,15 +139,12 @@
 
 
 
-/obj/machinery/gibber/verb/eject()
-	set category = "Object"
-	set name = "empty gibber"
-	set src in oview(1)
-
-	if(usr.incapacitated())
+/obj/machinery/gibber/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
 		return
 	src.go_out()
-	add_fingerprint(usr)
+	add_fingerprint(user)
 	return
 
 /obj/machinery/gibber/proc/go_out()

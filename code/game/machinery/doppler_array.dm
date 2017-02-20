@@ -36,26 +36,16 @@ var/list/doppler_arrays = list()
 	else
 		return ..()
 
-/obj/machinery/doppler_array/verb/rotate()
-	set name = "Rotate Tachyon-doppler Dish"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr || !isturf(usr.loc))
-		return
-	if(usr.stat || usr.restrained() || !usr.canmove)
-		return
-	src.setDir(turn(src.dir, 90))
-	return
 
 /obj/machinery/doppler_array/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
+	..()
+	if(!istype(user) || user.incapacitated() || user.stat || !user.canmove || user.restrained())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
 		return
-	else
-		rotate()
+	src.setDir(turn(src.dir, 90))
+	return 1
 
 /obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)

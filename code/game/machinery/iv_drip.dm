@@ -148,20 +148,17 @@
 		update_icon()
 		return
 	else if(beaker)
-		eject_beaker(user)
+		AltClick(user)
 	else
-		toggle_mode()
+		CtrlClick(user)
 
-/obj/machinery/iv_drip/verb/eject_beaker(mob/user)
-	set category = "Object"
-	set name = "Remove IV Container"
-	set src in view(1)
-
-	if(!isliving(usr))
-		usr << "<span class='warning'>You can't do that!</span>"
+/obj/machinery/iv_drip/AltClick(mob/user)
+	..()
+	if(!isliving(user))
+		user << "<span class='warning'>You can't do that!</span>"
 		return
 
-	if(usr.stat)
+	if(user.stat)
 		return
 
 	if(beaker)
@@ -169,20 +166,17 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/iv_drip/verb/toggle_mode()
-	set category = "Object"
-	set name = "Toggle Mode"
-	set src in view(1)
-
-	if(!isliving(usr))
-		usr << "<span class='warning'>You can't do that!</span>"
+/obj/machinery/iv_drip/CtrlClick(mob/user)
+	..()
+	if(!isliving(user))
+		user << "<span class='warning'>You can't do that!</span>"
 		return
 
-	if(usr.stat)
+	if(user.stat)
 		return
 
 	mode = !mode
-	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+	user << "The IV drip is now [mode ? "injecting" : "taking blood"]."
 	update_icon()
 
 /obj/machinery/iv_drip/examine()
