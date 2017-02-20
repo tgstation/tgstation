@@ -291,15 +291,19 @@
 	nodamage = 1
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+	target.animate_atom_living(firer)
 	..()
-	if((istype(target, /obj/item) || istype(target, /obj/structure)) && !is_type_in_list(target, protected_objects))
-		if(istype(target, /obj/structure/statue/petrified))
-			var/obj/structure/statue/petrified/P = target
+
+/atom/proc/animate_atom_living(var/mob/living/owner = null)
+	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
+		if(istype(src, /obj/structure/statue/petrified))
+			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, firer)
+				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
-				S.faction = list("\ref[firer]")
+				if(owner)
+					S.faction = list("\ref[owner]")
 				S.icon = P.icon
 				S.icon_state = P.icon_state
 				S.overlays = P.overlays
@@ -307,21 +311,22 @@
 				S.atom_colours = P.atom_colours.Copy()
 				if(L.mind)
 					L.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
+					if(owner)
+						S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>"
 				P.loc = S
-				qdel(src)
 				return
 		else
-			var/obj/O = target
+			var/obj/O = src
 			if(istype(O, /obj/item/weapon/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
 
-	else if(istype(target, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = target
-		C.ChangeOwner(firer)
+		var/mob/living/simple_animal/hostile/mimic/copy/C = src
+		if(owner)
+			C.ChangeOwner(owner)
 
 /obj/item/projectile/magic/spellblade
 	name = "blade energy"

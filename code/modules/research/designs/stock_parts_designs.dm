@@ -62,7 +62,7 @@
 	id = "quadratic_capacitor"
 	req_tech = list("powerstorage" = 6, "engineering" = 5, "materials" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 200, , MAT_GOLD = 100, MAT_DIAMOND = 100)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 100, MAT_DIAMOND = 100)
 	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
