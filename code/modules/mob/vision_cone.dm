@@ -84,18 +84,7 @@ mob/living/update_vision_cone()
 			//	src.client.hidden_atoms += I
 
 	else
-		return
-
-proc/get_opposite_dir(var/dir)
-    switch(dir)
-        if(NORTH)
-            return SOUTH
-        if(SOUTH)
-            return NORTH
-        if(EAST)
-            return WEST
-        if(WEST)
-            return EAST
+		return	
 
 mob/proc/rest_cone_act()//For showing and hiding the cone when you rest or lie down.
 	if(resting || lying)
