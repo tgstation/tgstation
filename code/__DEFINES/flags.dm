@@ -16,7 +16,7 @@
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
-#define FPRINT			256		// takes a fingerprint
+#define OVERLAY_QUEUED  256	//atom queued to SSoverlay
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
 #define EARBANGPROTECT		1024
@@ -30,7 +30,6 @@
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
 #define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
-#define OVERLAY_QUEUED  65536	//atom queued to SSoverlay
 
 //turf-only flags
 #define NOJAUNT		1
