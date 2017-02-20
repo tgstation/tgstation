@@ -16,11 +16,14 @@ var/global/legacy_gravity = FALSE
 	var/purge_tick = 0
 	var/purging = FALSE
 	var/list/purging_atoms = list()
+	var/list/area_blacklist_typecache
+	var/list/area_blacklist = list(/area/lavaland, /area/mine, /area/centcom)
 
 /datum/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
 
 /datum/subsystem/gravity/Initialize()
+	area_blacklist_typecache = typecacheof(area_blacklist)
 	for(var/area/A in world)
 		areas += A
 	. = ..()
@@ -33,6 +36,8 @@ var/global/legacy_gravity = FALSE
 		if(!A.has_gravity && !A.gravity_generator && !A.gravity_overriding)
 			continue
 		if(!A.gravity_direction)
+			continue
+		if(is_type_in_typecache(A, area_blacklist_typecache))
 			continue
 		for(var/atom/movable/AM in A.contents_affected_by_gravity)
 			if(AM.force_gravity_processing)
