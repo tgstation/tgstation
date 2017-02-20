@@ -41,54 +41,33 @@
 			C.blood_volume += blood_gain
 	..()
 
-/datum/reagent/nutriment/on_new(list/data)
+/datum/reagent/consumable/nutriment/on_new(list/supplied_data)
 	// taste data can sometimes be ("salt" = 3, "chips" = 1)
 	// and we want it to be in the form ("salt" = 0.75, "chips" = 0.25)
 	// which is called "normalizing"
+	if(!supplied_data)
+		supplied_data = data
 
-	var/total = 0
-	for(var/taste in data)
-		total += data[taste]
+	data = counterlist_normalise(supplied_data)
 
-	if(total > 0)
-		var/list/datacopy = data.Copy()
-		data.Cut()
-		for(var/taste in datacopy)
-			data[taste] = datacopy[taste] / total
-
-/datum/reagent/nutriment/on_merge(list/newdata, newvolume)
+/datum/reagent/consumable/nutriment/on_merge(list/newdata, newvolume)
 	if(!islist(newdata) || !newdata.len)
 		return
 
 	// data for nutriment is one or more (flavour -> ratio)
 	// where all the ratio values adds up to 1
 
-	var/list/taste_amounts = list()
-	for(var/taste in data)
-		var/taste_ratio = data[taste]
-		var/taste_amount = taste_ratio * volume
-		if(taste in taste_amounts)
-			taste_amounts[taste] += taste_amount
-		else
-			taste_amounts[taste] = taste_amount
+	var/list/taste_amounts = data.Copy()
+	counterlist_scale(taste_amounts, volume)
 
-	//add the new taste data
-	for(var/taste in newdata)
-		var/taste_ratio = newdata[taste]
-		var/taste_amount = taste_ratio * newvolume
-		if(taste in taste_amounts)
-			taste_amounts[taste] += taste_amount
-		else
-			taste_amounts[taste] = taste_amount
+	var/list/other_taste_amounts = newdata.Copy()
+	counterlist_scale(other_taste_amounts, newvolume)
 
-	// now normalise the data.
-	data.Cut()
-	var/total_value = 0
-	for(var/taste in taste_amounts)
-		total_value += taste_amounts[taste]
+	counterlist_combine(taste_amounts, other_taste_amounts)
 
-	for(var/taste in taste_amounts)
-		data[taste] = taste_amounts[taste] / total_value
+	counterlist_normalise(taste_amounts)
+
+	data = taste_amounts
 
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
