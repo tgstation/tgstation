@@ -253,7 +253,7 @@
 		return FALSE
 	if(throwing)
 		if((strength * 7 >= stabilizer_decay_amount) || !stabilizer)
-			wearer.visible_message("<span class='danger'>[wearer] is jerked towards the new \"ground\" as their flightpack fails to mitigate the gravitational shock.</span")
+			wearer.visible_message("<span class='danger'>[wearer] is jerked towards the new \"ground\" as their flightpack fails to mitigate the gravitational shock.</span>")
 			wearer.throw_at(get_edge_target_turf(wearer, direction), ((strength * 20) - (stabilizer_decay_amount * 2)), 1)
 			momentum_in_direction(80, direction)
 	else if(!stabilizer || (strength * 3 > stabilizer_decay_amount))

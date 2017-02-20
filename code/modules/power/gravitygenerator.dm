@@ -350,16 +350,16 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(gravity_in_level() == 0)
 			alert = 1
 			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
+			current_grav_dir = new_grav_dir
 			message_admins("The gravity generator was brought online. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 	else
 		if(gravity_in_level() == 1)
 			alert = 1
 			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
+			current_grav_dir = FALSE
 			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-	current_grav_dir = new_grav_dir
 	update_icon()
-	if(legacy_gravity)
-		update_list()
+	update_list()
 	resync_gravgen_areas()
 	src.updateUsrDialog()
 	if(alert)

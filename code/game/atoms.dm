@@ -24,6 +24,7 @@
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
 	var/initialized = FALSE
+	var/gravity_handhold = FALSE	//Can be used by mobs to resist gravity.
 
 
 /atom/New()
@@ -129,6 +130,9 @@
 				L.transferItemToLoc(M, src)
 			else
 				M.forceMove(src)
+
+/atom/proc/gravity_handhold(mob/living/L)
+	return TRUE
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)

@@ -4,6 +4,7 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	gravity_handhold = TRUE
 
 /turf/closed/indestructible
 	name = "wall"

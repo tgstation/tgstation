@@ -39,16 +39,19 @@
 		return FALSE
 	var/temp_throw = FALSE
 	if(m_intent == MOVE_INTENT_WALK)
-		if(ismovableatom(get_spacemove_backup()))
-			return FALSE
-		if(prob(10))
+		var/slip_prob = 15
+		var/fall_prob = 5
+		var/atom/A = get_gravity_handgrip()
+		if(!isnull(A) && istype(A, /atom))
+			if(A.gravity_handhold)
+				slip_prob = Clamp(slip_prob - 5, 0, 100)
+				fall_prob = Clamp(fall_prob - 3, 0, 100)
+		if(slip_prob)
 			src << "<span class='warning'>You slip and lose your grip!</span>"
-		else if(prob(5))
+		else if(fall_prob)
 			src << "<span class='warning'>You slip and completely lose your footing!</span>"
+			Weaken(1)
 			temp_throw = TRUE
-			if(prob(25))
-				src << "<span class='warning'>You fall!</span>"
-				Weaken(1)
 		else
 			return FALSE
 	if((gravity_throwing || temp_throw) && !throwing)
@@ -494,7 +497,10 @@
 					. += 6
 				. += config.run_speed
 			if(MOVE_INTENT_WALK)
-				. += config.walk_speed
+				if(!gravity_direction)
+					. += config.walk_speed
+				if(gravity_direction)
+					. += 2	//You crawl a bit faster.
 
 /mob/living/proc/makeTrail(turf/T)
 	if(!has_gravity())
