@@ -9,6 +9,7 @@ var/datum/subsystem/processing/air/SSair
 	display_order = 1
 
 	processing_list = null	//we have a special fire
+	fire_if_empty = TRUE //we handle ourselves
 
 	var/cost_turfs = 0
 	var/cost_groups = 0

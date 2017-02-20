@@ -2,7 +2,6 @@
 
 /datum/subsystem/processing
 	name = "Processing"
-	can_fire = FALSE
 
 	flags = SS_ABSTRACT
 
@@ -10,6 +9,7 @@
 	var/list/processing_list = list()	//what's processing
 	var/list/run_cache = list()	//what's left to process in the next run
 	var/delegate	//what the processing call is
+	var/fire_if_empty = FALSE	//set can_fire to FALSE if idle?
 
 /datum/subsystem/processing/stat_entry(append, forward = FALSE)
 	if(forward)
@@ -28,7 +28,7 @@
 
 /datum/subsystem/processing/proc/stop_processing(datum/D, killed = FALSE)
 	processing_list -= D
-	if(!processing_list.len && !(flags & SS_TICKER))
+	if(!processing_list.len && !fire_if_empty)
 		can_fire = FALSE
 	if(!killed && run_cache.len)
 		run_cache -= D
@@ -57,6 +57,8 @@
 				if(!thing || thing.process(arg) == PROCESS_KILL)
 					stop_processing(thing, TRUE)
 			while(local_cache.len && MC_TICK_CHECK)
+	else if(!fire_if_empty)
+		can_fire = FALSE
 
 /datum/subsystem/processing/Recover(datum/subsystem/processing/predecessor)
 	for(var/I in predecessor.processing_list)
