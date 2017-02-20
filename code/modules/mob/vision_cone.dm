@@ -36,8 +36,8 @@ atom/proc/InCone(atom/center = usr, dir = NORTH)
 		return (dir & (NORTH|SOUTH)) ? 1 : 0
 	return (dir & (EAST|WEST)) ? 1 : 0
 
-//mob/dead/InCone(mob/center = usr, dir = NORTH)
-//	return
+mob/dead/InCone(mob/center = usr, dir = NORTH)
+	return
 
 /*//TG doesn't have the grab item. But if you're porting it and you do then uncomment this.
 mob/living/InCone(mob/center = usr, dir = NORTH)
