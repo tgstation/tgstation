@@ -16,22 +16,23 @@
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
 	var/junkiness = 0  //for junk food. used to lower human satiety.
-	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
+	var/list/bonus_reagents //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
-/obj/item/weapon/reagent_containers/food/snacks/New()
-	..()
-	if(islist(tastes) && tastes.len)
-		var/static/list/flavoured_reagents = list("nutriment", "vitamin")
-		for(var/rid in flavoured_reagents)
-			var/datum/reagent/R = reagents.has_reagent(rid)
-			var/list/new_data = tastes
-			if(istype(R))
-				R.data = new_data
-				R.on_new(R.data) // normalize tastes to 0-1
+/obj/item/weapon/reagent_containers/food/snacks/add_initial_reagents()
+	if(tastes && tastes.len)
+		if(list_reagents)
+			for(var/rid in list_reagents)
+				var/amount = list_reagents[rid]
+				if(rid == "nutriment" || rid == "vitamin")
+					reagents.add_reagent(rid, amount, tastes)
+				else
+					reagents.add_reagent(rid, amount)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
@@ -170,13 +171,14 @@
 						continue contents_loop
 				qdel(A)
 	feedback_add_details("food_made","[type]")
-	if(bonus_reagents.len)
+
+	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
-			var/list/data
 			if(r_id == "nutriment" || r_id == "vitamin")
-				data = tastes
-			reagents.add_reagent(r_id, amount, data)
+				reagents.add_reagent(r_id, amount, tastes)
+			else
+				reagents.add_reagent(r_id, amount)
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
@@ -242,10 +244,13 @@
 	S.create_reagents(S.volume)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
-	if(S.bonus_reagents.len)
+	if(S.bonus_reagents && S.bonus_reagents.len)
 		for(var/r_id in S.bonus_reagents)
 			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
-			S.reagents.add_reagent(r_id, amount)
+			if(r_id == "nutriment" || r_id == "vitamin")
+				S.reagents.add_reagent(r_id, amount, tastes)
+			else
+				S.reagents.add_reagent(r_id, amount)
 
 /obj/item/weapon/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
 	if(cooked_type)

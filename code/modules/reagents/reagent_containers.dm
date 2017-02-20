@@ -21,6 +21,10 @@
 		var/datum/disease/F = new spawned_disease(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", disease_amount, data)
+
+	add_initial_reagents()
+
+/obj/item/weapon/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
