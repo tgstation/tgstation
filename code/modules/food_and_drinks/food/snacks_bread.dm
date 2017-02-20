@@ -156,7 +156,7 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
-	list_reagents = list("bread" = 10)
+	tastes = list("bread" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
