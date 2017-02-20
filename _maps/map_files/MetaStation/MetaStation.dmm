@@ -55206,7 +55206,8 @@
 "bPB" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	name = "tactical armchair"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -89386,7 +89387,8 @@
 /area/crew_quarters/bar)
 "cTS" = (
 /obj/structure/chair{
-	dir = 8
+	dir = 8;
+	name = "tactical chair"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -94446,6 +94448,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
+"ddG" = (
+/obj/structure/chair/stool{
+	name = "tactical stool";
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -100149,7 +100158,7 @@ aaa
 aaa
 aae
 bRb
-cSH
+ddG
 bRb
 bRb
 bRb

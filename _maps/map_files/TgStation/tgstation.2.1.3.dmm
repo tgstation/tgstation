@@ -7519,7 +7519,8 @@
 "apT" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	name = "tactical armchair"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -18672,7 +18673,8 @@
 "aOY" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	name = "tactical armchair"
 	},
 /obj/effect/landmark/start{
 	name = "Assistant"
@@ -18690,7 +18692,8 @@
 "aPa" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	name = "tactical armchair"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/grimy,
@@ -18858,7 +18861,8 @@
 "aPx" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	name = "tactical armchair"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
@@ -53510,7 +53514,8 @@
 /area/security/warden)
 "cmm" = (
 /obj/structure/chair{
-	dir = 8
+	dir = 8;
+	name = "tactical chair"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -61227,6 +61232,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+"cCt" = (
+/obj/structure/chair/stool{
+	name = "tactical stool";
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -71304,7 +71316,7 @@ aaa
 aaa
 aac
 aTp
-cnh
+cCt
 aTp
 aTp
 aTp
