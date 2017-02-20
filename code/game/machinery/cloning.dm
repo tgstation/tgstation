@@ -61,10 +61,9 @@
 	countdown = null
 	if(connected)
 		connected.DetachCloner(src)
-	if(unattached_flesh)
-		for(var/i in unattached_flesh)
-			qdel(i)
-		unattached_flesh.Cut()
+	for(var/i in unattached_flesh)
+		qdel(i)
+	LAZYCLEARLIST(unattached_flesh)
 	unattached_flesh = null
 	. = ..()
 
