@@ -46,9 +46,9 @@
 			if(A.gravity_handhold)
 				slip_prob -= 5
 				fall_prob -= 3
-		if(slip_prob)
+		if(prob(slip_prob))
 			src << "<span class='warning'>You slip and lose your grip!</span>"
-		else if(fall_prob)
+		else if(prob(fall_prob))
 			src << "<span class='warning'>You slip and completely lose your footing!</span>"
 			Weaken(1)
 			temp_throw = TRUE

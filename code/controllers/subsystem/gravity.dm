@@ -76,7 +76,7 @@ var/global/legacy_gravity = FALSE
 	while(currentrun.len)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		if(AM)
-			AM.gravity_tick++
+			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
 				AM.gravity_act()
 				AM.gravity_tick = 0
@@ -88,7 +88,7 @@ var/global/legacy_gravity = FALSE
 	while(currentrun_manual.len)
 		var/atom/movable/AM = currentrun_manual[currentrun_manual.len]
 		if(AM)
-			AM.gravity_tick++
+			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
 				AM.manual_gravity_process()
 				AM.gravity_tick = 0
