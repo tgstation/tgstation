@@ -24,6 +24,8 @@
 	var/state = 0
 	var/locked = 0
 
+	var/obj/item/device/radio/Radio
+
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
@@ -34,6 +36,8 @@
 	B.apply_default_parts(src)
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
+	Radio = new/obj/item/device/radio(src)
+	Radio.listening = 0
 
 /obj/item/weapon/circuitboard/machine/emitter
 	name = "Emitter (Machine Board)"
@@ -167,6 +171,8 @@
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
+				Radio.set_frequency(ENG_FREQ)
+				Radio.talk_into(src, "Alert! Emitter power failure!", ENG_FREQ)
 			return
 		if(!check_delay())
 			return FALSE
