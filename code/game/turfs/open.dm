@@ -11,19 +11,19 @@
 	var/turf_gravity_throwing = 0
 	var/turf_gravity_stunning = 0
 	var/turf_gravity_override = TRUE
-	var/turf_gravity_speed = 5
+	var/turf_gravity_speed = 2
 	var/list/atom/movable/atoms_with_forced_gravity = list()
 	var/turf_has_gravity_override = -1
 
 /turf/open/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == "turf_gravity_overrides_area")
+	if(findtext(var_name, "gravity"))
 		for(var/atom/movable/AM in contents)
 			AM.sync_gravity()
 
 /turf/open/SDQL_update(var_name, new_value)
 	. = ..()
-	if(var_name == "turf_gravity_overrides_area")
+	if(findtext(var_name, "gravity"))
 		for(var/atom/movable/AM in contents)
 			AM.sync_gravity()
 

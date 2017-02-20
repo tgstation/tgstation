@@ -49,7 +49,7 @@
 	var/gravity_strength = 1
 	var/gravity_throwing = FALSE
 	var/gravity_stunning = 0
-	var/gravity_speed = 5	//deciseconds per process. From 1 to practically infinite. Smaller the faster.
+	var/gravity_speed = 2	//deciseconds per process. From 1 to practically infinite. Smaller the faster.
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -426,12 +426,12 @@ var/list/teleportlocs = list()
 
 /area/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == "gravity_direction" || var_name == "gravity_strength" || var_name == "gravity_stunning" || var_name == "gravity_throwing" || var_name == "gravity_override")
+	if(findtext(var_name, "gravity"))
 		update_all_gravity()
 
 /area/SDQL_update(var_name, new_value)
 	. = ..()
-	if(var_name == "gravity_direction" || var_name == "gravity_strength" || var_name == "gravity_stunning" || var_name == "gravity_throwing" || var_name == "gravity_override")
+	if(findtext(var_name, "gravity"))
 		update_all_gravity()
 
 /area/proc/update_all_gravity()

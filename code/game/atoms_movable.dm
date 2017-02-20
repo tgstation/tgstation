@@ -37,7 +37,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 	var/gravity_ignores_turfcheck = FALSE
 	var/gravity_ignores_area = FALSE
 	var/gravity_tick = 0
-	var/gravity_speed = 5
+	var/gravity_speed = 2
 	var/force_gravity_processing = FALSE
 	var/turf/open/forced_gravity_by_turf = null
 	var/area/current_gravity_area = null
@@ -48,9 +48,9 @@ var/global/list/atoms_forced_gravity_processing = list()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
 	if(var_name == "force_gravity_processing")
-		if(var_value && !(src in atoms_forced_gravity_processing))
-			atoms_forced_gravity_processing += src
-		else if(src in atoms_forced_gravity_processing)
+		if(var_value)
+			atoms_forced_gravity_processing[src] = src
+		else if(atoms_forced_gravity_processing[src])
 			atoms_forced_gravity_processing -= src
 
 /atom/movable/SDQL_update(const/var_name, new_value)
@@ -60,9 +60,9 @@ var/global/list/atoms_forced_gravity_processing = list()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
 	if(var_name == "force_gravity_processing")
-		if(new_value && !(src in atoms_forced_gravity_processing))
-			atoms_forced_gravity_processing += src
-		else if(src in atoms_forced_gravity_processing)
+		if(new_value)
+			atoms_forced_gravity_processing[src] = src
+		else if(atoms_forced_gravity_processing[src])
 			atoms_forced_gravity_processing -= src
 
 /atom/movable/proc/manual_gravity_process()
@@ -83,12 +83,16 @@ var/global/list/atoms_forced_gravity_processing = list()
 		current_gravity_area = null
 		A.update_gravity(src, TRUE)
 	if(isturf(loc) || gravity_ignores_turfcheck)
+		var/turf/T = loc
 		if(forced_gravity_by_turf)
-			var/turf/T = loc
 			if(T != forced_gravity_by_turf)
 				stack_trace("[src] DID NOT UNREGISTER FROM [forced_gravity_by_turf] (TURF WITH MANUAL GRAVITY OVERRIDES)!")
 				forced_gravity_by_turf.reset_forced_gravity_atom(src)
 				forced_gravity_by_turf = null
+		if(istype(T, /turf/open))
+			var/turf/open/O = T
+			if(O.turf_gravity_overrides_area)
+				O.force_gravity_on_atom(src)
 		else
 			A.update_gravity(src, is_affected_by_gravity)
 	else
@@ -102,8 +106,8 @@ var/global/list/atoms_forced_gravity_processing = list()
 		if(T.turf_gravity_overrides_area)
 			T.force_gravity_on_atom(src)
 	sync_gravity()
-	if(force_gravity_processing && !(src in atoms_forced_gravity_processing))
-		atoms_forced_gravity_processing += src
+	if(force_gravity_processing)
+		atoms_forced_gravity_processing[src] = src
 	. = ..()
 
 /atom/movable/proc/gravity_act(moving = TRUE)
@@ -216,6 +220,8 @@ var/global/list/atoms_forced_gravity_processing = list()
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
+	if(atoms_forced_gravity_processing[src])
+		atoms_forced_gravity_processing -= src
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null

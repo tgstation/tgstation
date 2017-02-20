@@ -33,7 +33,13 @@ var/global/legacy_gravity = FALSE
 	legacy_gravity = yes
 
 /proc/emergency_reset_gravity_force_processing()
+	var/count = 0
+	for(var/atom/movable/AM in atoms_forced_gravity_processing)
+		AM.force_gravity_processing = FALSE
+		count++
+		CHECK_TICK
 	atoms_forced_gravity_processing = list()
+	return "[count] atoms purged from forced processing!"
 
 /datum/subsystem/gravity/proc/recalculate_atoms()
 	currentrun = list()
