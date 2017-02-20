@@ -48,6 +48,9 @@
 	if(!supplied_data)
 		supplied_data = data
 
+	// if data isn't an associative list, this has some WEIRD side effects
+	// TODO probably check for assoc list?
+
 	data = counterlist_normalise(supplied_data)
 
 /datum/reagent/consumable/nutriment/on_merge(list/newdata, newvolume)

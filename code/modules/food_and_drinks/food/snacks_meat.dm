@@ -54,6 +54,7 @@
 	icon_state = "tofu"
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#F0E68C"
+	tastes = list("tofu" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
@@ -62,6 +63,7 @@
 	list_reagents = list("nutriment" = 2, "toxin" = 2)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
 	filling_color = "#000000"
+	tastes = list("cobwebs" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
 	name = "corned beef and cabbage"
@@ -70,6 +72,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 5)
+	tastes = list("meat" = 1, "cabbage" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/bearsteak
 	name = "Filet migrawr"
@@ -146,6 +149,7 @@
 	bitesize = 12
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
+	tastes = list("the jungle" = 1, "banana" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")

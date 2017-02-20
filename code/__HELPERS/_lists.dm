@@ -492,7 +492,8 @@
 
 /proc/counterlist_combine(list/L1, list/L2)
 	for(var/key in L2)
+		var/other_value = L2[key]
 		if(key in L1)
-			L1[key] += L2[key]
+			L1[key] += other_value
 		else
-			L1[key] = L2[key]
+			L1[key] = other_value
