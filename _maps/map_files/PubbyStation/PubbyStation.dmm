@@ -24285,8 +24285,7 @@
 "aWE" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/that{
-	throwforce = 1;
-	throwing = 1
+	throwforce = 1
 	},
 /turf/open/floor/plasteel/darkred/side{
 	dir = 8
