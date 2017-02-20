@@ -483,7 +483,8 @@
 		return 0
 	if(state)
 		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
-		return
+		return	
+
 	return domove(direction)
 
 /obj/mecha/proc/domove(direction)
@@ -841,6 +842,8 @@
 			user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		else
 			moved_inside(user)
+			if(user.fov)
+				user.fov.alpha = 0 //snowflake for vision cone
 	else
 		user << "<span class='warning'>You stop entering the exosuit!</span>"
 	return
@@ -977,6 +980,8 @@
 	if(L && L.client)
 		L.client.change_view(world.view)
 		zoom_mode = 0
+	if(L.fov)
+		L.fov.alpha = 255 //snowflakey vision cone code away!
 
 /////////////////////////
 ////// Access stuff /////
