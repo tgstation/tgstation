@@ -915,3 +915,8 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
+
+
+/mob/living/setDir(newdir)
+	..()
+	update_vision_cone()

@@ -84,7 +84,7 @@ mob/living/update_vision_cone()
 				if(src.pulling == M)//If we're pulling them we don't want them to be invisible, too hard to play like that.
 					I.override = 0
 
-			//Optional items can be made invisible too. Comment this part out if you wish to items to be invisible.
+			//Optional items can be made invisible too. Uncomment this part if you wish to items to be invisible.
 			//var/obj/item/O
 			//for(O in cone(src, get_opposite_dir(src.dir), oview(src)))
 			//	I = image("split", O)

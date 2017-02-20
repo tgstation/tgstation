@@ -687,7 +687,6 @@ var/next_mob_id = 0
 		return 0
 	setDir(EAST)
 	client.move_delay += movement_delay()
-	update_vision_cone()
 	return 1
 
 
@@ -697,7 +696,6 @@ var/next_mob_id = 0
 		return 0
 	setDir(WEST)
 	client.move_delay += movement_delay()
-	update_vision_cone()
 	return 1
 
 
@@ -707,7 +705,6 @@ var/next_mob_id = 0
 		return 0
 	setDir(NORTH)
 	client.move_delay += movement_delay()
-	update_vision_cone()
 	return 1
 
 
@@ -717,7 +714,6 @@ var/next_mob_id = 0
 		return 0
 	setDir(SOUTH)
 	client.move_delay += movement_delay()
-	update_vision_cone()
 	return 1
 
 
