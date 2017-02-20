@@ -162,6 +162,10 @@
 		var/obj/O = AM
 		if(O.is_frozen)
 			O.make_unfrozen()
+	for(var/I in contents)
+		if(istype(I, /obj/item/device/pressure_plate))
+			var/obj/item/device/pressure_plate/PP = I
+			PP.stepped_on(AM)
 
 /turf/proc/is_plasteel_floor()
 	return 0
