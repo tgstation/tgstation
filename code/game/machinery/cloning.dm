@@ -263,7 +263,7 @@
 
 	if(istype(W,/obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
-		
+
 		if(istype(P.buffer, /obj/machinery/computer/cloning))
 			if(get_area_master(P.buffer) != get_area_master(src))
 				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
@@ -278,7 +278,7 @@
 			P.buffer = src
 			user << "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
 		return
-		
+
 	if (W.GetID())
 		if (!check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
@@ -404,20 +404,6 @@
 		locked = FALSE
 		go_out()
 	..()
-
-
-/*
- *	Diskette Box
- */
-
-/obj/item/weapon/storage/box/disks
-	name = "diskette box"
-	icon_state = "disk_kit"
-
-/obj/item/weapon/storage/box/disks/New()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/disk/data(src)
 
 /*
  *	Manual -- A big ol' manual.
