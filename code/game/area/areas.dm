@@ -555,8 +555,8 @@ var/list/teleportlocs = list()
 	for(var/I in gravgens)
 		var/obj/machinery/gravity_generator/main/GG = I
 		if(GG.on)
-			for(var/I in sortedAreas)
-				var/area/A = I
+			for(var/S in sortedAreas)
+				var/area/A = S
 				if(A.z == GG.z)
 					if(A.ignores_gravgens)
 						continue
