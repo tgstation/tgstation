@@ -441,7 +441,7 @@
 /obj/item/weapon/surgicaldrill,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
@@ -450,7 +450,7 @@
 /obj/item/weapon/hemostat,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTH)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -462,7 +462,7 @@
 /obj/item/weapon/circular_saw,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTH)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -471,7 +471,7 @@
 /obj/item/weapon/retractor,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTH)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -481,7 +481,7 @@
 /obj/item/weapon/cautery,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -579,7 +579,7 @@
 /obj/item/weapon/razor,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (WEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
@@ -591,7 +591,7 @@
 "bK" = (
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (EAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 4
 	},
 /area/holodeck/rec_center/medical)
@@ -659,25 +659,25 @@
 "bX" = (
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
 "bY" = (
 /turf/open/floor/holofloor{
-	icon_state = "white_warn"
+	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
 "bZ" = (
 /obj/structure/table/optable,
 /turf/open/floor/holofloor{
-	icon_state = "white_warn"
+	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
 "ca" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/holofloor{
-	icon_state = "white_warn"
+	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
 "cb" = (
@@ -687,7 +687,7 @@
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -744,14 +744,14 @@
 /obj/machinery/reagentgrinder,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
 "cl" = (
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -844,14 +844,14 @@
 /obj/machinery/chem_master,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
 "cz" = (
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -982,7 +982,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
@@ -998,7 +998,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -1042,7 +1042,7 @@
 "de" = (
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (WEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
@@ -1057,14 +1057,14 @@
 /obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTH)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
 "dh" = (
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTH)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -1079,7 +1079,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
@@ -1094,7 +1094,7 @@
 	density = 0
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white_warn"
+	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
 "dl" = (
@@ -1107,7 +1107,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white_warn"
+	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
 "dm" = (
@@ -1115,7 +1115,7 @@
 	density = 0
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white_warn"
+	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
 "dn" = (
@@ -1125,7 +1125,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -1345,7 +1345,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 9
 	},
 /area/holodeck/rec_center/firingrange)
@@ -1355,7 +1355,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTH)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 1
 	},
 /area/holodeck/rec_center/firingrange)
@@ -1368,7 +1368,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (NORTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 5
 	},
 /area/holodeck/rec_center/firingrange)
@@ -1594,7 +1594,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (WEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 8
 	},
 /area/holodeck/rec_center/firingrange)
@@ -1611,7 +1611,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (EAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 4
 	},
 /area/holodeck/rec_center/firingrange)
@@ -1731,13 +1731,13 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHWEST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 10
 	},
 /area/holodeck/rec_center/firingrange)
 "eH" = (
 /turf/open/floor/holofloor{
-	icon_state = "white_warn"
+	icon_state = "white"
 	},
 /area/holodeck/rec_center/firingrange)
 "eI" = (
@@ -1746,7 +1746,7 @@
 	},
 /turf/open/floor/holofloor{
 	tag = "icon-white_warn (SOUTHEAST)";
-	icon_state = "white_warn";
+	icon_state = "white";
 	dir = 6
 	},
 /area/holodeck/rec_center/firingrange)
