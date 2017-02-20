@@ -159,12 +159,12 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	if(hair_image)
 		cut_overlay(hair_image)
-		ghostimage.overlays += hair_image
+		ghostimage.add_overlay(hair_image)
 		hair_image = null
 
 	if(facial_hair_image)
 		cut_overlay(facial_hair_image)
-		ghostimage.overlays += facial_hair_image
+		ghostimage.add_overlay(facial_hair_image)
 		facial_hair_image = null
 
 
@@ -192,7 +192,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
 				add_overlay(facial_hair_image)
-				ghostimage.overlays += facial_hair_image
+				ghostimage.add_overlay(facial_hair_image)
 		if(hair_style)
 			S = hair_styles_list[hair_style]
 			if(S)
@@ -201,7 +201,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
 				add_overlay(hair_image)
-				ghostimage.overlays += hair_image
+				ghostimage.add_overlay(hair_image)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,

@@ -206,7 +206,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		overlays -= fire_overlay
+		cut_overlay(fire_overlay)
 		SSfire_burning.processing -= src
 
 

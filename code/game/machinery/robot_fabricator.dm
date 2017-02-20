@@ -143,7 +143,7 @@ Please wait until completion...</TT><BR>
 							src.being_built = null
 						src.use_power = 1
 						src.operating = 0
-						src.overlays -= "fab-active"
+						cut_overlay("fab-active")
 		return
 
 	updateUsrDialog()
