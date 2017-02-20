@@ -36,9 +36,6 @@
 	var/alert = signal.data["alert"]
 
 	var/area/our_area = get_area(src)
-	if (our_area.master)
-		our_area = our_area.master
-
 	if(alarm_area == our_area.name)
 		switch(alert)
 			if("severe")

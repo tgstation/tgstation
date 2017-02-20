@@ -155,8 +155,6 @@ def signal_handler(signum, frame):
 if __name__ == "__main__":
 	#listen to signals (quit on ctrl c or kill from OS)
 	signal.signal(signal.SIGINT, signal_handler)
-	signal.signal(signal.SIGTERM, signal_handler)
-	signal.signal(signal.SIGQUIT, signal_handler)
 	irc = setup_irc_socket()
 	t = threading.Thread(target=nudge_handler)
 	t.daemon = True

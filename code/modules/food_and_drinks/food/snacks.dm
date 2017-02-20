@@ -73,15 +73,15 @@
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
 				else
-					M.visible_message("<span class='warning'>[user] cannot force anymore of [src] down [M]'s throat!</span>", \
-										"<span class='warning'>[user] cannot force anymore of [src] down [M]'s throat!</span>")
+					M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
+										"<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>")
 					return 0
 
 				if(!do_mob(user, M))
 					return
 				add_logs(user, M, "fed", reagentlist(src))
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
-									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
+									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
 
 			else
 				user << "<span class='warning'>[M] doesn't seem to have a mouth!</span>"
