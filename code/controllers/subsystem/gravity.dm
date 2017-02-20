@@ -28,6 +28,10 @@ var/global/legacy_gravity = FALSE
 
 /proc/set_legacy_gravity(yes)	//ADMINS: This is an emergency killswitch for when things go out of control.
 	legacy_gravity = yes
+	if(yes)
+		SSgravity.can_fire = FALSE
+	else
+		SSgravity.can_fire = TRUE
 
 /proc/emergency_reset_gravity_force_processing()
 	var/count = 0

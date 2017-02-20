@@ -102,7 +102,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 
 /atom/movable/Initialize()
 	var/turf/open/T = get_turf(src)
-	if(istype(T, /turf/open))
+	if(istype(T)
 		if(T.turf_gravity_overrides_area)
 			T.force_gravity_on_atom(src)
 	sync_gravity()
