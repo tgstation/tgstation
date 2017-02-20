@@ -155,9 +155,9 @@
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday)
 	var/time = (world.timeofday - start_timeofday) / 10
-	var/msg = "Initialized [name] subsystem within [time] seconds!"
+	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world << "<span class='boldannounce'>[msg]</span>"
-	world.log << msg
+	log_world(msg)
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
@@ -211,3 +211,8 @@
 			return 0
 	. = ..()
 
+//when we enter dmm_suite.load_map
+/datum/subsystem/proc/StartLoadingMap()
+
+//when we exit dmm_suite.load_map
+/datum/subsystem/proc/StopLoadingMap()

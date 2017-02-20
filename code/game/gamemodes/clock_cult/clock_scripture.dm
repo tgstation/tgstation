@@ -49,6 +49,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	creation_update()
 
 /datum/clockwork_scripture/proc/creation_update() //updates any on-creation effects
+	return FALSE //return TRUE if updated
 
 /datum/clockwork_scripture/proc/run_scripture()
 	var/successful = FALSE

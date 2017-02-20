@@ -10,10 +10,10 @@
 	max_integrity = 100
 	obj_integrity = 100
 	construction_value = 20
-	break_message = "<span class='warning'>The daemon shatters into millions of pieces!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
-	/obj/item/clockwork/alloy_shards/medium = 4, \
-	/obj/item/clockwork/alloy_shards/small = 6)
+	break_message = "<span class='warning'>The daemon shatters into millions of pieces, leaving only a disc of metal!</span>"
+	debris = list(/obj/item/clockwork/alloy_shards/medium = 1, \
+	/obj/item/clockwork/alloy_shards/small = 6, \
+	/obj/item/clockwork/component/replicant_alloy/replication_plate = 1)
 	var/image/daemon_glow
 	var/image/component_glow
 	var/component_id_to_produce
@@ -27,6 +27,16 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/Destroy()
 	clockwork_daemons--
 	return ..()
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/ratvar_act()
+	..()
+	if(nezbere_invoked)
+		production_time = 0
+		production_cooldown = initial(production_cooldown) * 0.5
+		if(!active)
+			toggle(0)
+	else
+		production_cooldown = initial(production_cooldown)
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/examine(mob/user)
 	..()

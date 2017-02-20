@@ -151,3 +151,53 @@
 		return
 	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
 	cyborg.cell.give(power_to_give)
+
+/datum/status_effect/his_grace
+	id = "his_grace"
+	duration = -1
+	tick_interval = 4
+	alert_type = /obj/screen/alert/status_effect/his_grace
+	var/bloodlust = 0
+
+/obj/screen/alert/status_effect/his_grace
+	name = "His Grace"
+	desc = "His Grace hungers, and you must feed Him."
+	icon_state = "his_grace"
+	alerttooltipstyle = "hisgrace"
+
+/obj/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
+	desc = initial(desc)
+	var/datum/status_effect/his_grace/HG = attached_effect
+	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
+	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
+	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
+	..()
+
+/datum/status_effect/his_grace/on_apply()
+	add_logs(owner, null, "gained His Grace's stun immunity")
+	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
+
+/datum/status_effect/his_grace/tick()
+	bloodlust = 0
+	var/graces = 0
+	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+		if(HG.bloodthirst > bloodlust)
+			bloodlust = HG.bloodthirst
+		if(HG.awakened)
+			graces++
+	if(!graces)
+		owner.apply_status_effect(STATUS_EFFECT_HISWRATH)
+		qdel(src)
+		return
+	var/grace_heal = bloodlust * 0.05
+	owner.adjustBruteLoss(-grace_heal)
+	owner.adjustFireLoss(-grace_heal)
+	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
+	owner.adjustOxyLoss(-(grace_heal * 2))
+	owner.adjustCloneLoss(-grace_heal)
+
+/datum/status_effect/his_grace/on_remove()
+	add_logs(owner, null, "lost His Grace's stun immunity")
+	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
+		owner.stun_absorption -= "hisgrace"
+

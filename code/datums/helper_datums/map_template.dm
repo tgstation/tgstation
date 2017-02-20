@@ -31,6 +31,7 @@
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 		var/turf/B = L
+		atoms += B
 		for(var/A in B)
 			atoms += A
 			if(istype(A,/obj/structure/cable))
@@ -40,7 +41,7 @@
 				atmos_machines += A
 				continue
 
-	SSobj.InitializeAtoms(atoms)
+	SSatoms.InitializeAtoms(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 	SSair.end_map_load()
@@ -74,7 +75,7 @@
 		. = file(mappath)
 
 	if(!.)
-		world.log << "The file of [src] appears to be empty/non-existent."
+		log_world("The file of [src] appears to be empty/non-existent.")
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
