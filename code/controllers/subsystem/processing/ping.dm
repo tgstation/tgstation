@@ -19,7 +19,7 @@ var/datum/subsystem/processing/ping/SSping
 	..()
 
 /datum/subsystem/processing/ping/stop_processing(datum/D)
-	LAZYREMOVE(D.processors, src)
+	D.processors -= src
 	//noop
 
 /datum/subsystem/processing/ping/Recover()
