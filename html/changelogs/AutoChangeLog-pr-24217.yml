@@ -1,4 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - tweak: "Changes centcomm ferry to require centcomm general access instead of admin permission."
