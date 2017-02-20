@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Repairing someone else's robotic limb is instant. Repairing your own robotic limbs will still take time."
+  - tweak: "Repairing limbs with cable or welding will now heal more."
