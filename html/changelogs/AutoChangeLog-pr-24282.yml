@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "bluespace ore cap changed from 100 ores to 500"
