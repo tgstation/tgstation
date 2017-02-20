@@ -39,13 +39,13 @@
 		return FALSE
 	var/temp_throw = FALSE
 	if(m_intent == MOVE_INTENT_WALK)
-		var/slip_prob = 15
+		var/slip_prob = 10
 		var/fall_prob = 5
 		var/atom/A = get_gravity_handgrip()
 		if(!isnull(A) && istype(A, /atom))
 			if(A.gravity_handhold)
-				slip_prob = Clamp(slip_prob - 5, 0, 100)
-				fall_prob = Clamp(fall_prob - 3, 0, 100)
+				slip_prob -= 5
+				fall_prob -= 3
 		if(slip_prob)
 			src << "<span class='warning'>You slip and lose your grip!</span>"
 		else if(fall_prob)

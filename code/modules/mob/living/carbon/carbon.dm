@@ -25,6 +25,11 @@
 	if(gravity_stunning)
 		Weaken(gravity_stunning)
 	var/obj/item/device/flightpack/FP = get_flightpack()
+	if(shoes && istype(shoes, /obj/item/clothing/shoes))
+		var/obj/item/clothing/shoes/S = shoes
+		if(S.negates_gravity())
+			if(prob(70))	//Magboots seriously help.
+				return FALSE
 	if(FP && istype(FP) && FP.flight)
 		FP.gravity_act(gravity_direction, gravity_strength, gravity_throwing, gravity_stunning, gravity_override)
 		return FALSE

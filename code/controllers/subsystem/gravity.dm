@@ -4,7 +4,7 @@ var/global/legacy_gravity = FALSE
 /datum/subsystem/gravity
 	name = "Gravity"
 	priority = 75
-	wait = 2
+	wait = 1
 	init_order = -100
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
 
@@ -12,7 +12,8 @@ var/global/legacy_gravity = FALSE
 	var/list/currentrun_manual = list()
 	var/list/areas = list()
 	var/recalculation_cost = 0
-	var/purge_interval = -1
+	var/do_purge = FALSE
+	var/purge_interval = 600
 	var/purge_tick = 0
 	var/purging = FALSE
 	var/list/purging_atoms = list()
@@ -52,18 +53,22 @@ var/global/legacy_gravity = FALSE
 		if(legacy_gravity)
 			can_fire = FALSE
 			return FALSE
-		purging = FALSE
-		purge_tick++
 		recalculate_atoms()
-		if(purge_tick >= purge_interval)
-			purging_atoms = list()
-			purging = TRUE
-			purge_tick = 0
+		if(do_purge)
+			purging = FALSE
+			purge_tick++
+			if(purge_tick >= purge_interval)
+				purging_atoms = list()
+				purging = TRUE
+				purge_tick = 0
 	while(currentrun.len)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		if(AM)
-			AM.gravity_act()
-		if(purging)	//Only do laggy shit occasionally.
+			AM.gravity_tick++
+			if(AM.gravity_tick >= AM.gravity_speed)
+				AM.gravity_act()
+				AM.gravity_tick = 0
+		if(purging && do_purge)	//Only do laggy shit occasionally.
 			purging_atoms += AM
 		currentrun.len--
 		if(MC_TICK_CHECK)
@@ -71,16 +76,21 @@ var/global/legacy_gravity = FALSE
 	while(currentrun_manual.len)
 		var/atom/movable/AM = currentrun_manual[currentrun_manual.len]
 		if(AM)
-			AM.manual_gravity_process()
-		if(purging)
+			AM.gravity_tick++
+			if(AM.gravity_tick >= AM.gravity_speed)
+				AM.manual_gravity_process()
+				AM.gravity_tick = 0
+		if(purging && do_purge)
 			purging_atoms += AM
 		currentrun_manual.len--
 		if(MC_TICK_CHECK)
 			return
-	if(purging)
+	if(purging && do_purge)
 		while(purging_atoms.len)
 			var/atom/movable/AM = purging_atoms[purging_atoms.len]
 			purging_atoms.len--
+			if(!AM && (AM in processing))
+				processing -= AM
 			if(AM.gravity_ignores_turfcheck || isturf(AM.loc))
 				var/current_area = get_area(AM)
 				if(AM.current_gravity_area)

@@ -49,6 +49,7 @@
 	var/gravity_strength = 1
 	var/gravity_throwing = FALSE
 	var/gravity_stunning = 0
+	var/gravity_speed = 5	//deciseconds per process. From 1 to practically infinite. Smaller the faster.
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -447,6 +448,7 @@ var/list/teleportlocs = list()
 		AM.gravity_stunning = gravity_stunning
 		AM.gravity_throwing = gravity_throwing
 		AM.gravity_override = gravity_overriding
+		AM.gravity_speed = gravity_speed
 		AM.current_gravity_area = src
 		contents_affected_by_gravity[AM] = AM
 	else
@@ -454,6 +456,7 @@ var/list/teleportlocs = list()
 		AM.gravity_strength = initial(AM.gravity_strength)
 		AM.gravity_stunning = FALSE
 		AM.gravity_throwing = FALSE
+		AM.gravity_speed = initial(AM.gravity_speed)
 		AM.gravity_override = initial(AM.gravity_override)
 		AM.current_gravity_area = null
 		if(contents_affected_by_gravity[AM])
@@ -494,6 +497,8 @@ var/list/teleportlocs = list()
 	if(!T || !isturf(T))
 		T = get_turf(src)
 	var/area/A = get_area(T)
+	if(T.turf_has_gravity_override != -1)
+		return turf_has_gravity_override
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
 	else if(A && (A.has_gravity || A.gravity_generator))

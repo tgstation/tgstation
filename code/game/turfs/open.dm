@@ -11,7 +11,9 @@
 	var/turf_gravity_throwing = 0
 	var/turf_gravity_stunning = 0
 	var/turf_gravity_override = TRUE
+	var/turf_gravity_speed = 5
 	var/list/atom/movable/atoms_with_forced_gravity = list()
+	var/turf_has_gravity_override = -1
 
 /turf/open/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -71,6 +73,7 @@
 	AM.gravity_direction = turf_gravity_direction
 	AM.gravity_throwing = turf_gravity_throwing
 	AM.gravity_stunning = turf_gravity_stunning
+	AM.gravity_speed = turf_gravity_speed
 	AM.gravity_override = turf_gravity_override
 
 /turf/open/proc/reset_forced_gravity_atom(atom/movable/AM)
@@ -78,6 +81,7 @@
 		atoms_forced_gravity_processing -= AM
 	AM.forced_gravity_by_turf = null
 	AM.gravity_strength = 0
+	AM.gravity_speed = 5
 	AM.gravity_direction = FALSE
 	AM.gravity_throwing = 0
 	AM.gravity_stunning = 0
