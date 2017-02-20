@@ -11,7 +11,6 @@
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 
-	var/serverip = "[world.internet_address]:[world.port]"
 	var/bantype_pass = 0
 	var/bantype_str
 	var/maxadminbancheck	//Used to limit the number of active bans of a certein type that each admin can give. Used to protect against abuse or mutiny.

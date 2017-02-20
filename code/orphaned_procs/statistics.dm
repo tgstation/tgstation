@@ -272,7 +272,6 @@ var/datum/feedback/blackbox = new()
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 	var/coord = "[L.x], [L.y], [L.z]"
 	var/map = MAP_NAME
-	var/server = "[world.internet_address]:[world.port]"
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during death reporting. Failed to connect.")
