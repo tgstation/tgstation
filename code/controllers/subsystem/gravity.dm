@@ -10,7 +10,6 @@ var/global/legacy_gravity = FALSE
 
 	var/list/currentrun = list()
 	var/list/currentrun_manual = list()
-	var/list/areas = list()
 	var/recalculation_cost = 0
 	var/do_purge = FALSE
 	var/purge_interval = 600
@@ -25,8 +24,6 @@ var/global/legacy_gravity = FALSE
 
 /datum/subsystem/gravity/Initialize()
 	area_blacklist_typecache = typecacheof(area_blacklist)
-	for(var/area/A in world)
-		areas += A
 	. = ..()
 
 /proc/set_legacy_gravity(yes)	//ADMINS: This is an emergency killswitch for when things go out of control.
@@ -38,14 +35,15 @@ var/global/legacy_gravity = FALSE
 		AM.force_gravity_processing = FALSE
 		count++
 		CHECK_TICK
-	atoms_forced_gravity_processing = list()
+	LAZYCLEARLIST(atoms_forced_gravity_processing)
 	return "[count] atoms purged from forced processing!"
 
 /datum/subsystem/gravity/proc/recalculate_atoms()
 	currentrun = list()
 	currentrun_manual = list()
-	var/tempcost = world.timeofday
-	for(var/area/A in areas)
+	var/tempcost = REALTIMEOFDAY
+	for(var/I in sortedAreas)
+		var/area/A = I
 		if(!A.has_gravity && !A.gravity_generator && !A.gravity_overriding)
 			continue
 		if(!A.gravity_direction)
@@ -58,7 +56,7 @@ var/global/legacy_gravity = FALSE
 			currentrun += AM
 	for(var/atom/movable/AM in atoms_forced_gravity_processing)
 		currentrun_manual += AM
-	recalculation_cost = world.timeofday - tempcost
+	recalculation_cost = REALTIMEOFDAY - tempcost
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
 	if(!resumed)
@@ -75,6 +73,7 @@ var/global/legacy_gravity = FALSE
 				purge_tick = 0
 	while(currentrun.len)
 		var/atom/movable/AM = currentrun[currentrun.len]
+		currentrun.len--
 		if(AM)
 			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
@@ -82,11 +81,11 @@ var/global/legacy_gravity = FALSE
 				AM.gravity_tick = 0
 		if(purging && do_purge)	//Only do laggy shit occasionally.
 			purging_atoms += AM
-		currentrun.len--
 		if(MC_TICK_CHECK)
 			return
 	while(currentrun_manual.len)
 		var/atom/movable/AM = currentrun_manual[currentrun_manual.len]
+		currentrun_manual.len--
 		if(AM)
 			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
@@ -94,7 +93,6 @@ var/global/legacy_gravity = FALSE
 				AM.gravity_tick = 0
 		if(purging && do_purge)
 			purging_atoms += AM
-		currentrun_manual.len--
 		if(MC_TICK_CHECK)
 			return
 	if(purging && do_purge)

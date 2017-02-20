@@ -152,7 +152,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			qdel(O)
 	return ..()
 
-/obj/machinery/gravity_generator/main/New()
+/obj/machinery/gravity_generator/main/Initialize()
 	. = ..()
 	gravgens += src
 	resync_gravgen_areas()

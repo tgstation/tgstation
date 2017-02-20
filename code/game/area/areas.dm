@@ -126,15 +126,11 @@ var/list/teleportlocs = list()
 	..()
 
 	power_change()		// all machines set to current power level, also updates icon
-	if(SSgravity)
-		SSgravity.areas += src
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	if(SSgravity)
-		SSgravity.areas -= src
 	return ..()
 
 /area/proc/poweralert(state, obj/source)
@@ -467,7 +463,7 @@ var/list/teleportlocs = list()
 			contents_affected_by_gravity -= AM
 
 /area/Entered(A)
-	if(istype(A, /atom/movable) && !legacy_gravity)
+	if(!legacy_gravity)
 		var/atom/movable/AM = A
 		if(AM.is_affected_by_gravity)
 			update_gravity(AM, TRUE)
@@ -543,7 +539,8 @@ var/list/teleportlocs = list()
 		CHECK_TICK
 
 /proc/reset_all_area_gravity()
-	for(var/area/A in world)
+	for(var/I in sortedAreas)
+		var/area/A = I
 		A.gravity_generator = FALSE
 		A.gravity_overriding = FALSE
 		A.has_gravity = initial(A.has_gravity)
@@ -551,12 +548,15 @@ var/list/teleportlocs = list()
 	resync_gravgen_areas()
 
 /proc/resync_gravgen_areas()
-	for(var/area/A in world)
+	for(var/I in sortedAreas)
+		var/area/A = I
 		A.gravity_generator = FALSE
 		CHECK_TICK
-	for(var/obj/machinery/gravity_generator/main/GG in gravgens)
+	for(var/I in gravgens)
+		var/obj/machinery/gravity_generator/main/GG = I
 		if(GG.on)
-			for(var/area/A in world)
+			for(var/I in sortedAreas)
+				var/area/A = I
 				if(A.z == GG.z)
 					if(A.ignores_gravgens)
 						continue
@@ -564,11 +564,12 @@ var/list/teleportlocs = list()
 					A.gravity_direction = GG.current_grav_dir
 				CHECK_TICK
 		CHECK_TICK
-	for(var/area/A in world)
+	for(var/I in sortedAreas)
+		var/area/A = I
 		A.update_all_gravity()
 		CHECK_TICK
 
 /area/Exited(atom/movable/AM, newloc)
-	. = ..(AM, newloc)
+	..()
 	if(!legacy_gravity)
 		update_gravity(AM, FALSE)

@@ -1,4 +1,3 @@
-
 /turf/open
 	var/slowdown = 0 //negative for faster, positive for slower
 
