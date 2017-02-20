@@ -13,6 +13,7 @@
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
+	var/mob/living/carbon/human/new_character	//for instant transfer once the round is set up
 
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
@@ -426,7 +427,7 @@
 	spawning = 1
 	close_spawn_windows()
 
-	var/mob/living/carbon/human/new_character = new(loc)
+	new_character = new(loc)
 
 	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
@@ -439,10 +440,13 @@
 
 	new_character.name = real_name
 
-	new_character.key = key		//Manually transfer the key to log them in
-	new_character.stopLobbySound()
-
 	return new_character
+
+/mob/new_player/proc/transfer_character()
+	. = new_character
+	if(.)
+		new_character.key = key		//Manually transfer the key to log them in
+		new_character.stopLobbySound()
 
 /mob/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
