@@ -23,6 +23,7 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = 0
+	var/power_fails = 0
 
 	var/obj/item/device/radio/Radio
 
@@ -163,10 +164,12 @@
 			add_load(active_power_usage)
 			if(!powered)
 				powered = 1
+				power_fails = 0;
 				update_icon()
 				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]","singulo")
 		else
-			if(powered)
+			power_fails++
+			if(powered && power_fails > 3)
 				powered = 0
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
