@@ -41,27 +41,53 @@
 			C.blood_volume += blood_gain
 	..()
 
+/datum/reagent/nutriment/on_new(list/data)
+	// taste data can sometimes be ("salt" = 3, "chips" = 1)
+	// and we want it to be in the form ("salt" = 0.75, "chips" = 0.25)
 
-/datum/reagent/nutriment/on_merge(list/newdata, newamount)
+	var/total = 0
+	for(var/taste in data)
+		total += data[taste]
+
+	if(total > 0)
+		var/list/datacopy = data.Copy()
+		data.Cut()
+		for(var/taste in datacopy)
+			data[taste] = datacopy[taste] / total
+
+/datum/reagent/nutriment/on_merge(list/newdata, newvolume)
 	if(!islist(newdata) || !newdata.len)
 		return
 
+	// data for nutriment is one or more (flavour -> ratio)
+	// where all the ratio values adds up to 1
+
+	var/list/taste_amounts = list()
+	for(var/taste in data)
+		var/taste_ratio = data[taste]
+		var/taste_amount = taste_ratio * volume
+		if(taste in taste_amounts)
+			taste_amounts[taste] += taste_amount
+		else
+			taste_amounts[taste] = taste_amount
+
 	//add the new taste data
 	for(var/taste in newdata)
-		if(taste in data)
-			data[taste] += newdata[taste]
+		var/taste_ratio = newdata[taste]
+		var/taste_amount = taste_ratio * newvolume
+		if(taste in taste_amounts)
+			taste_amounts[taste] += taste_amount
 		else
-			data[taste] = newdata[taste]
+			taste_amounts[taste] = taste_amount
 
-	//cull all tastes below 10% of total
-	var/totalFlavor = 0
-	for(var/taste in data)
-		totalFlavor += data[taste]
-	if(!totalFlavor)
-		return
-	for(var/taste in data)
-		if(data[taste]/totalFlavor < 0.1)
-			data -= taste
+	// now normalise the data.
+	data.Cut()
+	var/total_value = 0
+	for(var/taste in taste_amounts)
+		total_value += taste_amounts[taste]
+
+	for(var/taste in taste_amounts)
+		data[taste] = taste_amounts[taste] / total_value
 
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"

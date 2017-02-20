@@ -548,7 +548,7 @@ var/const/INJECT = 5 //injection
 		return TRUE
 
 	else
-		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
+		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 	return FALSE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
@@ -684,26 +684,22 @@ var/const/INJECT = 5 //injection
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
 
-/datum/reagents/proc/generate_taste_message(mob/living/carbon/taster)
-	var/minimum_percent = 15
-
-	// TODO different species have different taste sensitivity?
-	/*
-	if(ishuman(taster))
-		var/mob/living/carbon/human/H = taster
-		minimum_percent = round(15/ (H.isSynthetic() ? TASTE_DULL : H.species.taste_sensitivity))
-	*/
-
+/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+	// the lower the minimum percent, the more sensitive the message is.
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
 	if(minimum_percent <= 100)
 		for(var/datum/reagent/R in reagent_list)
-			if(!R.taste_mult)
+			var/taste_mult = R.taste_mult
+			if(!taste_mult)
 				continue
+			var/reagent_amount = get_reagent_amount(R.id)
+
 			if(istype(R, /datum/reagent/consumable/nutriment))
 				var/list/taste_data = R.data
 				for(var/taste in taste_data)
-					var/amount = taste_data[taste] * R.taste_mult
+					var/ratio = taste_data[taste]
+					var/amount = ratio * taste_mult * reagent_amount
 					if(taste in tastes)
 						tastes[taste] += amount
 					else
@@ -715,25 +711,26 @@ var/const/INJECT = 5 //injection
 					tastes[taste_desc] += taste_amount
 				else
 					tastes[taste_desc] = taste_amount
-
+		world << "tastes->[json_encode(tastes)]"
 		//deal with percentages
 		// TODO it would be great if we could sort these from strong to weak
 		var/total_taste = 0
 		for(var/taste_desc in tastes)
 			total_taste += tastes[taste_desc]
-		for(var/taste_desc in tastes)
-			var/percent = tastes[taste_desc]/total_taste * 100
-			if(percent < minimum_percent)
-				continue
-			var/intensity_desc = "a hint of"
-			if(percent > minimum_percent * 2 || percent == 100)
-				intensity_desc = ""
-			else if(percent > minimum_percent * 3)
-				intensity_desc = "the strong flavor of"
-			if(intensity_desc != "")
-				out += "[intensity_desc] [taste_desc]"
-			else
-				out += "[taste_desc]"
+		if(total_taste > 0)
+			for(var/taste_desc in tastes)
+				var/percent = tastes[taste_desc]/total_taste * 100
+				if(percent < minimum_percent)
+					continue
+				var/intensity_desc = "a hint of"
+				if(percent > minimum_percent * 2 || percent == 100)
+					intensity_desc = ""
+				else if(percent > minimum_percent * 3)
+					intensity_desc = "the strong flavor of"
+				if(intensity_desc != "")
+					out += "[intensity_desc] [taste_desc]"
+				else
+					out += "[taste_desc]"
 
 	return english_list(out, "something indescribable")
 

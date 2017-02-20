@@ -31,6 +31,7 @@
 			var/list/new_data = tastes
 			if(istype(R))
 				R.data = new_data
+				R.on_new(R.data) // normalize tastes to 0-1
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
@@ -169,15 +170,12 @@
 						continue contents_loop
 				qdel(A)
 	feedback_add_details("food_made","[type]")
-	world << "[src]"
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
-			world << r_id
 			var/amount = bonus_reagents[r_id]
 			var/list/data
 			if(r_id == "nutriment" || r_id == "vitamin")
 				data = tastes
-				world << "IMPORTING TASTE DATA"
 			reagents.add_reagent(r_id, amount, data)
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
@@ -215,7 +213,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
 	slice.create_reagents(slice.volume)
 	reagents.trans_to(slice,reagents_per_slice)
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)
