@@ -692,3 +692,12 @@
 /obj/screen/splash/Destroy()
 	holder.screen -= src
 	return ..()
+
+/obj/screen/fov
+	icon = 'icons/mob/vision_cone.dmi'
+	icon_state = "combat"
+	name = " "
+	screen_loc = "1,1"
+	mouse_opacity = 0
+	layer = HUD_LAYER
+	plane = HUD_PLANE
