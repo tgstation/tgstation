@@ -435,6 +435,8 @@ var/list/teleportlocs = list()
 		update_all_gravity()
 
 /area/proc/update_all_gravity()
+	if(legacy_gravity)
+		return FALSE
 	for(var/atom/movable/AM in contents)
 		update_gravity(AM, AM.is_affected_by_gravity)
 		CHECK_TICK
@@ -442,6 +444,8 @@ var/list/teleportlocs = list()
 	gravity_stunning = FALSE
 
 /area/proc/update_gravity(atom/movable/AM, yes)
+	if(legacy_gravity)
+		return FALSE
 	if(yes)
 		AM.gravity_direction = gravity_direction
 		AM.gravity_strength = gravity_strength
