@@ -372,7 +372,7 @@ var/datum/subsystem/ticker/ticker
 				player.close_spawn_windows()
 				player.AIize()
 			else
-				player.create_character()
+				player.create_character(FALSE)
 		else
 			player.new_player_panel()
 		CHECK_TICK

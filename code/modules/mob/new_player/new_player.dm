@@ -302,7 +302,7 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
 	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
@@ -423,7 +423,7 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
-/mob/new_player/proc/create_character()
+/mob/new_player/proc/create_character(transfer_after)
 	spawning = 1
 	close_spawn_windows()
 
@@ -440,7 +440,9 @@
 
 	new_character.name = real_name
 
-	return new_character
+	. = new_character
+	if(transfer_after)
+		transfer_character()
 
 /mob/new_player/proc/transfer_character()
 	. = new_character
