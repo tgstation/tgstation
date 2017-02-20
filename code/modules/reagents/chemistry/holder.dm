@@ -712,9 +712,7 @@ var/const/INJECT = 5 //injection
 		world << "tastes->[json_encode(tastes)]"
 		//deal with percentages
 		// TODO it would be great if we could sort these from strong to weak
-		var/total_taste = 0
-		for(var/taste_desc in tastes)
-			total_taste += tastes[taste_desc]
+		var/total_taste = counterlist_sum(tastes)
 		if(total_taste > 0)
 			for(var/taste_desc in tastes)
 				var/percent = tastes[taste_desc]/total_taste * 100
