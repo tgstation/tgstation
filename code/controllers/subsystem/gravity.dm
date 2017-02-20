@@ -29,6 +29,12 @@ var/global/legacy_gravity = FALSE
 		areas += A
 	. = ..()
 
+/proc/set_legacy_gravity(yes)	//ADMINS: This is an emergency killswitch for when things go out of control.
+	legacy_gravity = yes
+
+/proc/emergency_reset_gravity_force_processing()
+	atoms_forced_gravity_processing = list()
+
 /datum/subsystem/gravity/proc/recalculate_atoms()
 	currentrun = list()
 	currentrun_manual = list()
@@ -89,8 +95,6 @@ var/global/legacy_gravity = FALSE
 		while(purging_atoms.len)
 			var/atom/movable/AM = purging_atoms[purging_atoms.len]
 			purging_atoms.len--
-			if(!AM && (AM in processing))
-				processing -= AM
 			if(AM.gravity_ignores_turfcheck || isturf(AM.loc))
 				var/current_area = get_area(AM)
 				if(AM.current_gravity_area)

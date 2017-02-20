@@ -497,8 +497,10 @@ var/list/teleportlocs = list()
 	if(!T || !isturf(T))
 		T = get_turf(src)
 	var/area/A = get_area(T)
-	if(T.turf_has_gravity_override != -1)
-		return turf_has_gravity_override
+	if(istype(T, /turf/open))
+		var/turf/open/O = T
+		if(O.turf_has_gravity_override != -1)
+			return O.turf_has_gravity_override
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
 	else if(A && (A.has_gravity || A.gravity_generator))

@@ -48,9 +48,9 @@ var/global/list/atoms_forced_gravity_processing = list()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
 	if(var_name == "force_gravity_processing")
-		if(var_value)
+		if(var_value && !(src in atoms_forced_gravity_processing))
 			atoms_forced_gravity_processing += src
-		else
+		else if(src in atoms_forced_gravity_processing)
 			atoms_forced_gravity_processing -= src
 
 /atom/movable/SDQL_update(const/var_name, new_value)
@@ -60,9 +60,9 @@ var/global/list/atoms_forced_gravity_processing = list()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
 	if(var_name == "force_gravity_processing")
-		if(new_value)
+		if(new_value && !(src in atoms_forced_gravity_processing))
 			atoms_forced_gravity_processing += src
-		else
+		else if(src in atoms_forced_gravity_processing)
 			atoms_forced_gravity_processing -= src
 
 /atom/movable/proc/manual_gravity_process()
@@ -80,6 +80,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 	if(current_gravity_area && (A != current_gravity_area))
 		stack_trace("[src] DID NOT UNREGISTER FROM [current_gravity_area] AND REGISTER TO [A] AFTER CHANGING AREAS!")
 		current_gravity_area.update_gravity(src, FALSE)
+		current_gravity_area = null
 		A.update_gravity(src, TRUE)
 	if(isturf(loc) || gravity_ignores_turfcheck)
 		if(forced_gravity_by_turf)
@@ -87,6 +88,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 			if(T != forced_gravity_by_turf)
 				stack_trace("[src] DID NOT UNREGISTER FROM [forced_gravity_by_turf] (TURF WITH MANUAL GRAVITY OVERRIDES)!")
 				forced_gravity_by_turf.reset_forced_gravity_atom(src)
+				forced_gravity_by_turf = null
 		else
 			A.update_gravity(src, is_affected_by_gravity)
 	else
@@ -100,11 +102,13 @@ var/global/list/atoms_forced_gravity_processing = list()
 		if(T.turf_gravity_overrides_area)
 			T.force_gravity_on_atom(src)
 	sync_gravity()
-	if(force_gravity_processing)
+	if(force_gravity_processing && !(src in atoms_forced_gravity_processing))
 		atoms_forced_gravity_processing += src
 	. = ..()
 
 /atom/movable/proc/gravity_act(moving = TRUE)
+	if(legacy_gravity)
+		return FALSE	//KILLSWITCH!
 	if(!isturf(src.loc))	//Gravity was so strong it was pulling shards and rods out of windows!
 		if(!gravity_ignores_turfcheck)	//We don't need to process.
 			sync_gravity()
