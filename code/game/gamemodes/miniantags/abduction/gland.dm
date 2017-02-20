@@ -5,6 +5,7 @@
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
 	origin_tech = "materials=4;biotech=7;abductor=3"
+	beating = TRUE
 	var/cooldown_low = 300
 	var/cooldown_high = 300
 	var/next_activation = 0

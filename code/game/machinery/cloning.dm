@@ -33,7 +33,7 @@
 
 	var/obj/effect/countdown/clonepod/countdown
 
-	var/list/unattached_flesh = list()
+	var/list/unattached_flesh
 	var/flesh_number = 0
 
 	// The "brine" is the reagents that are automatically added in small
@@ -61,9 +61,11 @@
 	countdown = null
 	if(connected)
 		connected.DetachCloner(src)
-	for(var/i in unattached_flesh)
-		qdel(i)
-	unattached_flesh.Cut()
+	if(unattached_flesh)
+		for(var/i in unattached_flesh)
+			qdel(i)
+		unattached_flesh.Cut()
+	unattached_flesh = null
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -395,9 +397,12 @@
 	..()
 
 /obj/machinery/clonepod/proc/maim_clone(mob/living/carbon/human/H)
-	for(var/fl in unattached_flesh)
-		qdel(fl)
-	unattached_flesh.Cut()
+	if(!unattached_flesh)
+		unattached_flesh = list()
+	else
+		for(var/fl in unattached_flesh)
+			qdel(fl)
+		unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
