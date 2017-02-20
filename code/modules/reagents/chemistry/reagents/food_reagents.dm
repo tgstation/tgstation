@@ -44,6 +44,7 @@
 /datum/reagent/nutriment/on_new(list/data)
 	// taste data can sometimes be ("salt" = 3, "chips" = 1)
 	// and we want it to be in the form ("salt" = 0.75, "chips" = 0.25)
+	// which is called "normalizing"
 
 	var/total = 0
 	for(var/taste in data)
