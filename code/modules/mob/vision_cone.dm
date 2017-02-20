@@ -67,7 +67,8 @@ mob/living/update_vision_cone()
 		var/image/I = null
 		for(I in src.client.hidden_atoms)
 			I.override = 0
-			spawn(delay) del(I)
+			spawn(delay) 
+				qdel(I)
 			delay += 10
 		show_cone(src)
 		src.client.hidden_atoms = list()
