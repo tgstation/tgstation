@@ -39,8 +39,8 @@
 		return FALSE
 	var/temp_throw = FALSE
 	if(m_intent == MOVE_INTENT_WALK)
-		var/slip_prob = 10
-		var/fall_prob = 5
+		var/slip_prob = 15
+		var/fall_prob = 7
 		var/atom/A = get_gravity_handgrip()
 		if(!isnull(A) && istype(A, /atom))
 			if(A.gravity_handhold)
@@ -450,7 +450,7 @@
 /mob/living/Move(atom/newloc, direct)
 	if(gravity_direction && (m_intent == MOVE_INTENT_RUN))
 		if(get_dir(get_turf(src), newloc) == opposite_dir(gravity_direction))
-			if(prob(60))
+			if(prob(75))
 				if(prob(10))
 					src << "<span class='warning'>You slip and fail to get anywhere!</span>"
 				return FALSE

@@ -54,7 +54,7 @@ var/global/legacy_gravity = FALSE
 			continue
 		if(is_type_in_typecache(A, area_blacklist_typecache))
 			continue
-		currentrun.Add(A.contents_affected_by_gravity)
+		currentrun += A.contents_affected_by_gravity
 	for(var/atom/movable/AM in atoms_forced_gravity_processing)
 		currentrun_manual += AM
 	recalculation_cost = REALTIMEOFDAY - tempcost
