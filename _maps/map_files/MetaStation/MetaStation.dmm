@@ -1696,7 +1696,7 @@
 	})
 "adk" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
@@ -33438,8 +33438,8 @@
 /area/shuttle/arrival)
 "beJ" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_r"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -34235,7 +34235,7 @@
 /area/engine/break_room)
 "bga" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
@@ -34427,8 +34427,8 @@
 /area/shuttle/arrival)
 "bgu" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -37709,8 +37709,8 @@
 /area/shuttle/arrival)
 "blS" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_l"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -89956,8 +89956,8 @@
 /area/shuttle/supply)
 "cVm" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
@@ -90125,8 +90125,8 @@
 /area/shuttle/auxillary_base)
 "cVN" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -90368,8 +90368,8 @@
 /area/shuttle/abandoned)
 "cWf" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -91587,8 +91587,8 @@
 /area/shuttle/abandoned)
 "cYq" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -92102,7 +92102,7 @@
 /area/shuttle/escape)
 "cZj" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
