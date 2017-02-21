@@ -112,7 +112,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pastrybase
 	filling_color = "#CD853F"
 	list_reagents = list("nutriment" = 1)
-	tastes = list("raw pastry")
+	tastes = list("raw pastry" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pastrybase
 	name = "pastry base"
@@ -121,5 +121,5 @@
 	icon_state = "pastrybase"
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#CD853F"
-	tastes = list("pastry")
+	tastes = list("pastry" = 1)
 
