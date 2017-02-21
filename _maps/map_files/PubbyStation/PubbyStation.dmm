@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 16-02-2017 11:45 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -293,7 +292,7 @@
 /area/wreck/ai)
 "aaE" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -5425,9 +5424,9 @@
 /area/security/warden)
 "akO" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (WEST)";
+	dir = 4;
 	icon_state = "propulsion";
-	dir = 8
+	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -24285,8 +24284,7 @@
 "aWE" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/that{
-	throwforce = 1;
-	throwing = 1
+	throwforce = 1
 	},
 /turf/open/floor/plasteel/darkred/side{
 	dir = 8
@@ -25449,8 +25447,8 @@
 /area/shuttle/arrival)
 "aYZ" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_r"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/arrival)
@@ -26258,8 +26256,8 @@
 /area/shuttle/arrival)
 "baG" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/arrival)
@@ -26930,8 +26928,8 @@
 /area/shuttle/arrival)
 "bbR" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_l"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/arrival)
@@ -30929,8 +30927,8 @@
 /area/maintenance/apmaint)
 "bjY" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
