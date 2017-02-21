@@ -122,7 +122,7 @@
 	description = "A salty sauce made from the soy plant."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
-	taste_description = "unami"
+	taste_description = "umami"
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
