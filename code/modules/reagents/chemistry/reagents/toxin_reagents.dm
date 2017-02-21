@@ -522,8 +522,8 @@
 			if(3)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(!H.heart_attack)
-						H.heart_attack = 1 // rip in pepperoni
+					if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
+						H.set_heartattack(TRUE)
 						if(H.stat == CONSCIOUS)
 							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
 					else

@@ -8,8 +8,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	if(potentialRandomZlevels && potentialRandomZlevels.len)
 		world << "<span class='boldannounce'>Loading away mission...</span>"
 		var/map = pick(potentialRandomZlevels)
-		var/file = file(map)
-		load_new_z_level(file)
+		load_new_z_level(map)
 		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
 /proc/reset_gateway_spawns(reset = FALSE)
