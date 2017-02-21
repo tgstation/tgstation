@@ -29,6 +29,7 @@
 			max_integrity = 500
 			obj_integrity = 500
 			failure_integrity = 200
+			anchored = TRUE
 
 		/obj/chair/InitConstruction()	//init the construction steps
 			new /datum/construction_state/first(src, /obj/item/wood, 2)
@@ -43,6 +44,7 @@
 				icon_state = "unscrewed-legs",\
 				max_integrity = 200,\
 				failure_integrity = 100,\
+				anchored = FALSE,
 				damage_reachable = TRUE\
 			)
 			new /datum/construction_state/last(src,\
@@ -92,6 +94,7 @@
 
 	var/max_integrity   //null values do not adjust these, these should always be smaller for earlier construction steps
 	var/failure_integrity
+	var/anchored
 
 	var/damage_reachable    //if the object can be deconstructed into this state from the next through breaking the object
 							//note that if this is TRUE, modify_max_integrity will not be used to change the object's max_integrity
@@ -108,7 +111,7 @@
 	..(parent, -1 /*don't want to construct with attack_hand/self*/, null, required_type_to_deconstruct, 0, deconstruction_delay, null, deconstruction_message)
 
 /datum/construction_state/New(obj/parent, required_type_to_construct, required_amount_to_construct, required_type_to_deconstruct, construction_delay = 0, deconstruction_delay = 0,\
- 								construction_message, deconstruction_message, examine_message, icon_state, max_integrity, failure_integrity, damage_reachable = FALSE)
+ 								construction_message, deconstruction_message, examine_message, icon_state, max_integrity, failure_integrity, anchored, damage_reachable = FALSE)
 	src.required_type_to_construct = required_type_to_construct
 	src.required_amount_to_construct = required_amount_to_construct
 	src.required_type_to_deconstruct = required_type_to_deconstruct
@@ -121,6 +124,7 @@
 	src.max_integrity = max_integrity
 	src.failure_integrity = failure_integrity
 	src.damage_reachable = damage_reachable
+	src.anchored = anchored
 	parent.AddConstructionStep(src)
 
 /datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed)
@@ -143,6 +147,9 @@
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed && (parent.flags & NODECONSTRUCT))
 		return
+	
+	if(!isnull(anchored))
+		parent.anchored = anchored
 
 	if(icon_state)
 		parent.icon_state = icon_state
@@ -165,7 +172,7 @@
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
 		stack_trace("Very bad param")
-	
+	parent.anchored = initial(parent.anchored)
 	parent.icon_state = initial(parent.icon_state)
 	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
 
