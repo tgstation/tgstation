@@ -256,7 +256,7 @@
 	chemical_cost = 30
 	dna_cost = 2
 
-/obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/para/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", "para sting")
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/C = target
