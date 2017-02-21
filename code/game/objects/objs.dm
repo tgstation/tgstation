@@ -27,6 +27,8 @@
 	var/is_frozen = FALSE
 	var/unique_rename = 0 // can you customize the description/name of the thing?
 
+	var/static/list/construction_steps = list()
+	var/datum/construction_state/current_construction_state	//The current construction_state of the object, null means fully constructed
 
 /obj/New()
 	..()
@@ -38,6 +40,13 @@
 			T.add_blueprints(src)
 		else
 			T.add_blueprints_preround(src)
+
+/obj/Initialize()
+	..()
+	if(isnull(construction_steps[type]))
+		construction_steps[type] = list()
+		if(InitConstruction() != -1)
+			ValidateConstructionSteps()
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
