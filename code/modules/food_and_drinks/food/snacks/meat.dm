@@ -13,6 +13,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain
 	slices_num = 3
 	filling_color = "#FF0000"
+	tastes = list("meat" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/slice, reagents_per_slice)
 	..()
