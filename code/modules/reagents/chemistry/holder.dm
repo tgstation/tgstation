@@ -718,7 +718,6 @@ var/const/INJECT = 5 //injection
 					tastes[taste_desc] += taste_amount
 				else
 					tastes[taste_desc] = taste_amount
-		world << "tastes->[json_encode(tastes)]"
 		//deal with percentages
 		// TODO it would be great if we could sort these from strong to weak
 		var/total_taste = counterlist_sum(tastes)
