@@ -1213,6 +1213,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A mostly harmless jumpsuit recovered from a station overcome by the grey tide. Yeah."
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
+	surplus = 0
 	restricted_roles = list("Assistant")
 
 // Pointless
