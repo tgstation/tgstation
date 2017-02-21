@@ -1696,7 +1696,7 @@
 	})
 "adk" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
@@ -14995,26 +14995,11 @@
 	id = "holdingflash";
 	pixel_x = 25
 	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 1;
-	pixel_y = -1
-	},
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
@@ -20179,6 +20164,7 @@
 	icon_state = "2-4";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aIe" = (
@@ -21708,6 +21694,7 @@
 	icon_state = "2-8";
 	tag = ""
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "aKK" = (
@@ -33451,8 +33438,8 @@
 /area/shuttle/arrival)
 "beJ" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_r"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -34248,7 +34235,7 @@
 /area/engine/break_room)
 "bga" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
@@ -34440,8 +34427,8 @@
 /area/shuttle/arrival)
 "bgu" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -37722,8 +37709,8 @@
 /area/shuttle/arrival)
 "blS" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_l"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -46384,8 +46371,7 @@
 "bAk" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/that{
-	throwforce = 1;
-	throwing = 1
+	throwforce = 1
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -89970,8 +89956,8 @@
 /area/shuttle/supply)
 "cVm" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
@@ -90139,8 +90125,8 @@
 /area/shuttle/auxillary_base)
 "cVN" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -90382,8 +90368,8 @@
 /area/shuttle/abandoned)
 "cWf" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -91601,8 +91587,8 @@
 /area/shuttle/abandoned)
 "cYq" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -92116,7 +92102,7 @@
 /area/shuttle/escape)
 "cZj" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -92982,6 +92968,7 @@
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbh" = (
@@ -93001,6 +92988,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space)
 "dbj" = (
@@ -137722,7 +137710,7 @@ ayY
 aaf
 aBQ
 aaf
-aIb
+anS
 aCZ
 aCZ
 aCZ
@@ -137732,7 +137720,7 @@ aCZ
 aCZ
 aCZ
 aCZ
-aIb
+anS
 aaf
 cXz
 aaf
@@ -141063,17 +141051,17 @@ axY
 axY
 aaa
 cmq
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 aaf
 aaa
 aaa
 aaf
-aIb
+anS
 cXd
 aaa
 axY

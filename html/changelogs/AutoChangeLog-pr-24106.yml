@@ -1,0 +1,11 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Refactors heart attack code, a cardiac arrest will knock someone unconscious and kill them very quickly."
+  - rscadd: "Adds corazone, an anti-heart attack drug, made by mixing 2 parts Phenol, 1 part Lithium. A person with corazone in their system will not suffer any negative effects from missing a heart. Use it during surgery."
+  - rscadd: "Abductor glands are now hearts, the abductor operation table now automatically injects corazone to prevent deaths during surgery. The gland will restart if it stops beating."
+  - bugfix: "Cloning pods always know the name of the person they are cloning."
+  - rscadd: "You can swipe a medical ID card to eject someone from the cloning pod early. The cloning pod will announce this over the radio."
+  - rscdel: "Fresh clones have no organs or limbs, they gain them during the cloning process. Ejecting a clone too early is not recommended. Power loss will also eject a clone as before."
+  - rscdel: "An ejected clone will take damage from being at critical health very quickly upon ejection, rather than before, where a clone could be stable in critical for up to two minutes."
+  - rscadd: "Occupants of cloning pods do not interact with the air outside the pod."

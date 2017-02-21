@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "[Z2] Fixed Centcomm shutters to have proper access levels for inspectors and other Admin given roles"

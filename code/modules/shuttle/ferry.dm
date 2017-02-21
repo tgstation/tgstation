@@ -3,15 +3,15 @@
 	circuit = /obj/item/weapon/circuitboard/computer/ferry
 	shuttleId = "ferry"
 	possible_destinations = "ferry_home;ferry_away"
-
+	req_access = list(access_cent_general)
 
 /obj/machinery/computer/shuttle/ferry/request
 	name = "ferry console"
 	circuit = /obj/item/weapon/circuitboard/computer/ferry/request
 	var/last_request //prevents spamming admins
 	var/cooldown = 600
-	possible_destinations = "ferry_home"
-	admin_controlled = 1
+	possible_destinations = "ferry_home;ferry_away"
+	req_access = list(access_cent_general)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/machinery/computer/shuttle/ferry/request/Topic(href, href_list)
