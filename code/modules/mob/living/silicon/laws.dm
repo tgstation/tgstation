@@ -52,6 +52,11 @@
 	. = laws.replace_random_law(law,groups)
 	post_lawchange(announce)
 
+/mob/living/silicon/proc/shuffle_laws(list/groups, announce = TRUE)
+	laws_sanity_check()
+	laws.shuffle_laws(groups)
+	post_lawchange(announce)
+
 /mob/living/silicon/proc/remove_law(number, announce = TRUE)
 	laws_sanity_check()
 	. = laws.remove_law(number)

@@ -420,13 +420,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
-	var/datum/round_event/ion_storm/ion = new()
-	ion.botEmagChance = 0
+	var/datum/round_event/ion_storm/add_law_only/ion = new()
 	ion.announceEvent = announce_ion_laws
 	ion.ionMessage = input
-	ion.replaceLawsetChance = 0
-	ion.removeRandomLawChance = 0
-	ion.removeDontImproveChance = 0
 
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

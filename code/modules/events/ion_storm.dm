@@ -11,12 +11,19 @@
 	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
 	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
 	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
+	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
 	var/botEmagChance = 10
 	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
 	announceWhen	= 1
 
+/datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
+	replaceLawsetChance = 0
+	removeRandomLawChance = 0
+	removeDontImproveChance = 0
+	shuffleLawsChance = 0
+	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce()
 	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
@@ -30,22 +37,22 @@
 		if(M.stat != 2 && M.see_in_dark != 0)
 			if(prob(replaceLawsetChance))
 				M.laws.pick_weighted_lawset()
-				log_game("Core lawset of [M] was replaced with the following: [english_list(M.laws.inherent)]")
 
 			if(prob(removeRandomLawChance))
-				var/removed = M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
-				log_game("Law [removed] was removed from [M]")
+				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
 
 			var/message = generate_ion_law(ionMessage)
 			if(message)
 				if(prob(removeDontImproveChance))
-					var/replaced = M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
-					log_game("[M] had law [replaced] replaced with [message]")
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 				else
 					M.add_ion_law(message)
-					log_game("ION law added to [M]: [message]")
 
-		M.post_lawchange() //let's just be triple sure this got called
+			if(prob(shuffleLawsChance))
+				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+
+			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			M.post_lawchange()
 
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in living_mob_list)

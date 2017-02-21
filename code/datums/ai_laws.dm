@@ -328,6 +328,32 @@
 			. = supplied[i]
 			supplied[i] = law
 
+/datum/ai_laws/proc/shuffle_laws(list/groups)
+	var/list/laws = list()
+	if(ion.len && (LAW_ION in groups))
+		laws += ion
+	if(inherent.len && (LAW_INHERENT in groups))
+		laws += inherent
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		for(var/law in supplied)
+			if(length(law))
+				laws += law
+
+	if(ion.len && (LAW_ION in groups))
+		for(var/i = 1, i <= ion.len, i++)
+			ion[i] = pick_n_take(laws)
+	if(inherent.len && (LAW_INHERENT in groups))
+		for(var/i = 1, i <= inherent.len, i++)
+			inherent[i] = pick_n_take(laws)
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		var/i = 1
+		for(var/law in supplied)
+			if(length(law))
+				supplied[i] = pick_n_take(laws)
+			if(!laws.len)
+				break
+			i++
+
 /datum/ai_laws/proc/remove_law(number)
 	if(number <= 0)
 		return
