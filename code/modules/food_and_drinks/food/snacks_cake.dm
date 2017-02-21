@@ -45,6 +45,7 @@
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	filling_color = "#FFA500"
+	list_reagents = list("nutriment" = 4, "oculine" = 2, "vitamin" = 1)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 
 
