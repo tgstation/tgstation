@@ -776,7 +776,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A weird mix of whiskey and blumpkin juice."
 	color = "#1EA0FF" // rgb: 102, 67, 0
 	boozepwr = 50
-	taste_description = "molasses and a mouthfull of pool water"
+	taste_description = "molasses and a mouthful of pool water"
 
 /datum/reagent/consumable/ethanol/whiskey_sour //Requested since we had whiskey cola and soda but not sour.
 	name = "Whiskey Sour"

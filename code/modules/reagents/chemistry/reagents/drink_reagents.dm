@@ -550,7 +550,7 @@
 	id = "blumpkinjuice"
 	description = "Juiced from real blumpkin."
 	color = "#00BFFF"
-	taste_description = "a mouthfull of pool water"
+	taste_description = "a mouthful of pool water"
 
 /datum/reagent/consumable/triple_citrus
 	name = "Triple Citrus"
