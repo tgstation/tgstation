@@ -731,10 +731,11 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
 
-/obj/machinery/vending/cola/New()
-	..()
-	var/T = pick(subtypesof(/obj/machinery/vending/cola))
-	new T
+/obj/machinery/vending/cola/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+    new T
+    qdel(src)
 
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
