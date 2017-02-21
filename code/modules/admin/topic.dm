@@ -11,16 +11,14 @@
 		var/client/C = locate(href_list["rejectadminhelp"]) in clients
 		if(!C)
 			return
-		if (deltimer(C.adminhelptimerid))
-			C.giveadminhelpverb()
 
 		C << 'sound/effects/adminhelp.ogg'
 
 		C << "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>"
-		C << "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>"
+		C << "<font color='red'><b>Your admin help was rejected.</b></font>"
 		C << "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
 
-		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
+		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help.")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help.")
 
 	else if(href_list["icissue"])
