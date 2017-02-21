@@ -93,11 +93,12 @@
 	var/deconstruction_sound
 
 	var/examine_message	//null values do not adjust these
+	var/icon
 	var/icon_state
+	var/anchored
 
 	var/max_integrity   //null values do not adjust these, these should always be smaller for earlier construction steps
 	var/failure_integrity
-	var/anchored
 
 	var/damage_reachable    //if the object can be deconstructed into this state from the next through breaking the object
 							//note that if this is TRUE, modify_max_integrity will not be used to change the object's max_integrity
@@ -114,7 +115,7 @@
 	..(parent, -1 /*don't want to construct with attack_hand/self*/, null, required_type_to_deconstruct, 0, deconstruction_delay, null, deconstruction_message)
 
 /datum/construction_state/New(obj/parent, required_type_to_construct, required_amount_to_construct, required_type_to_deconstruct, construction_delay = 0, deconstruction_delay = 0,\
- 								construction_message, deconstruction_message, construction_sound, deconstruction_sound, examine_message, icon_state, max_integrity, failure_integrity,\
+ 								construction_message, deconstruction_message, construction_sound, deconstruction_sound, examine_message, icon, icon_state, max_integrity, failure_integrity,\
 								anchored, damage_reachable = FALSE)
 	src.required_type_to_construct = required_type_to_construct
 	src.required_amount_to_construct = required_amount_to_construct
@@ -126,6 +127,7 @@
 	src.construction_sound = construction_sound
 	src.deconstruction_sound = deconstruction_sound
 	src.examine_message = examine_message
+	src.icon = icon
 	src.icon_state = icon_state
 	src.max_integrity = max_integrity
 	src.failure_integrity = failure_integrity
@@ -160,6 +162,9 @@
 	
 	if(!isnull(anchored))
 		parent.anchored = anchored
+
+	if(icon)
+		parent.icon = icon
 
 	if(icon_state)
 		parent.icon_state = icon_state
