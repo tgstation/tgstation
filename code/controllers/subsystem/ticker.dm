@@ -71,16 +71,14 @@ var/datum/subsystem/ticker/ticker
 		syndicate_code_response	= generate_code_phrase()
 	..()
 	start_at = world.time + (config.lobby_countdown * 10)
-	world << "Please set up your character and select \"Ready\". The game will start in about [config.lobby_countdown] seconds."
-	for(var/client/C in clients)
-		window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 
 /datum/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			if(Master.initializations_finished_with_no_players_logged_in)
-				world << "Please set up your character and select \"Ready\". The game will start in about [config.lobby_countdown] seconds."
 				start_at = world.time + (config.lobby_countdown * 10)
+			for(var/client/C in clients)
+				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			current_state = GAME_STATE_PREGAME
 			fire()
