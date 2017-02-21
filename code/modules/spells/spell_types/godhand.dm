@@ -7,7 +7,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = null
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0
@@ -33,10 +33,10 @@
 		attached_spell.attached_hand = null
 	qdel(src)
 
-/obj/item/weapon/melee/touch_attack/dropped()
+/obj/item/weapon/melee/touch_attack/Destroy()
 	if(attached_spell)
 		attached_spell.attached_hand = null
-	qdel(src)
+	return ..()
 
 /obj/item/weapon/melee/touch_attack/disintegrate
 	name = "\improper disintegrating touch"
