@@ -21,7 +21,7 @@
 		C << "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
-		log_admin("[key_name(usr)] Rejected [C.key]'s admin help.")
+		log_admin_private("[key_name(usr)] Rejected [C.key]'s admin help.")
 
 	else if(href_list["icissue"])
 		var/client/C = locate(href_list["icissue"]) in clients
@@ -35,7 +35,7 @@
 		C << msg
 
 		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
-		log_admin("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
+		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
@@ -255,92 +255,7 @@
 		create_message("note", banckey, null, banreason, null, null, 0, 0)
 
 	else if(href_list["editrights"])
-		if(!check_rights(R_PERMISSIONS))
-			message_admins("[key_name(usr)] attempted to edit the admin permissions without sufficient rights.")
-			return
-
-		var/adm_ckey
-
-		var/task = href_list["editrights"]
-		if(task == "add")
-			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
-			if(!new_ckey)	return
-			if(new_ckey in admin_datums)
-				usr << "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>"
-				return
-			adm_ckey = new_ckey
-			task = "rank"
-		else if(task != "show")
-			adm_ckey = ckey(href_list["ckey"])
-			if(!adm_ckey)
-				usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
-				return
-
-		var/datum/admins/D = admin_datums[adm_ckey]
-
-		if(task == "remove")
-			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
-				if(!D)	return
-				admin_datums -= adm_ckey
-				D.disassociate()
-
-				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
-				log_admin_rank_modification(adm_ckey, "Removed")
-
-		else if(task == "rank")
-			var/new_rank
-			if(admin_ranks.len)
-				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in (admin_ranks|"*New Rank*")
-			else
-				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in list("Judge","Architect", "Executor", "Hound", "*New Rank*")
-
-			var/rights = 0
-			if(D)
-				rights = D.rights
-			switch(new_rank)
-				if(null,"") return
-				if("*New Rank*")
-					new_rank = input("Please input a new rank", "New custom rank", null, null) as null|text
-					if(config.admin_legacy_system)
-						new_rank = ckeyEx(new_rank)
-					if(!new_rank)
-						usr << "<font color='red'>Error: Topic 'editrights': Invalid rank</font>"
-						return
-					if(config.admin_legacy_system)
-						if(admin_ranks.len)
-							if(new_rank in admin_ranks)
-								rights = admin_ranks[new_rank]		//we typed a rank which already exists, use its rights
-							else
-								admin_ranks[new_rank] = 0			//add the new rank to admin_ranks
-				else
-					if(config.admin_legacy_system)
-						new_rank = ckeyEx(new_rank)
-						rights = admin_ranks[new_rank]				//we input an existing rank, use its rights
-
-			if(D)
-				D.disassociate()								//remove adminverbs and unlink from client
-				D.rank = new_rank								//update the rank
-				D.rights = rights								//update the rights based on admin_ranks (default: 0)
-			else
-				D = new /datum/admins(new_rank, rights, adm_ckey)
-
-			var/client/C = directory[adm_ckey]						//find the client with the specified ckey (if they are logged in)
-			D.associate(C)											//link up with the client and add verbs
-
-			log_admin_rank_modification(adm_ckey, new_rank)
-
-		else if(task == "permissions")
-			if(!D)	return
-			var/list/permissionlist = list()
-			for(var/i=1, i<=R_MAXPERMISSION, i<<=1)		//that <<= is shorthand for i = i << 1. Which is a left bitshift
-				permissionlist[rights2text(i)] = i
-			var/new_permission = input("Select a permission to turn on/off", "Permission toggle", null, null) as null|anything in permissionlist
-			if(!new_permission)	return
-			D.rights ^= permissionlist[new_permission]
-
-			log_admin_permission_modification(adm_ckey, permissionlist[new_permission], new_permission)
-
-		edit_admin_permissions()
+		edit_rights_topic(href_list)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -591,7 +506,7 @@
 				if(!reason)
 					return
 
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]")
+		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]")
 		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]</span>")
 		Banlist.cd = "/base/[banfolder]"
@@ -621,7 +536,7 @@
 			switch(alert("Remove appearance ban?","Please Confirm","Yes","No"))
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
-					log_admin("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
+					log_admin_private("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					feedback_inc("ban_appearance_unban", 1)
 					DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, "appearance")
 					if(M.client)
@@ -640,7 +555,7 @@
 				if(M.client)
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [sanitize_russian(reason)]")
-				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [sanitize_russian(reason)]")
+				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [sanitize_russian(reason)]")
 				feedback_inc("ban_appearance",1)
 				create_message("note", M.ckey, null, "Appearance banned - [sanitize_russian(reason)]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
@@ -1025,7 +940,7 @@
 						if(M.client)
 							jobban_buildcache(M.client)
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [sanitize_russian(reason)]")
-						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
+						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
 						feedback_inc("ban_job_tmp",1)
 						feedback_add_details("ban_job_tmp","- [job]")
 						if(!msg)
@@ -1050,7 +965,7 @@
 							if(M.client)
 								jobban_buildcache(M.client)
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [sanitize_russian(reason)]")
-							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
+							log_admin_private("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
 							feedback_add_details("ban_job","- [job]")
 							if(!msg)
@@ -1078,7 +993,7 @@
 				switch(alert("Job: '[job]' Reason: '[replacetext(reason,"ÿ","ß")]' Un-jobban?","Please Confirm","Yes","No"))
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
-						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
+						log_admin_private("[key_name(usr)] unbanned [key_name(M)] from [job]")
 						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
 						if(M.client)
 							jobban_buildcache(M.client)
@@ -1226,7 +1141,7 @@
 					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
 				else
 					M << "<span class='danger'>No ban appeals URL has been set.</span>"
-				log_admin("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
+				log_admin_private("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 
 				qdel(M.client)
@@ -1251,7 +1166,7 @@
 					usr << "<span class='danger'>Failed to apply ban.</span>"
 					return
 				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
-				log_admin("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
+				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>")
 				feedback_inc("ban_perma",1)
 				qdel(M.client)

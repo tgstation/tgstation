@@ -325,27 +325,50 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
+/mob/living/carbon/human/proc/can_heartattack()
+	CHECK_DNA_AND_SPECIES(src)
+	if(NOBLOOD in dna.species.species_traits)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/undergoing_cardiac_arrest()
+	if(!can_heartattack())
+		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot("heart")
+	if(istype(heart) && heart.beating)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/set_heartattack(status)
+	if(!can_heartattack())
+		return FALSE
+
+	var/obj/item/organ/heart/heart = getorganslot("heart")
+	if(!istype(heart))
+		return
+
+	heart.beating = !status
+
 
 /mob/living/carbon/human/proc/handle_heart()
-	CHECK_DNA_AND_SPECIES(src)
-	var/needs_heart = (!(NOBLOOD in dna.species.species_traits))
+	if(!can_heartattack())
+		return
+
 	var/we_breath = (!(NOBREATH in dna.species.species_traits))
 
-	if(heart_attack)
-		if(!needs_heart)
-			heart_attack = FALSE
-		else if(we_breath)
-			if(losebreath < 3)
-				losebreath += 2
-			adjustOxyLoss(5)
-			adjustBruteLoss(1)
-		else
-			// even though we don't require oxygen, our blood still needs
-			// circulation, and without it, our tissues die and start
-			// gaining toxins
-			adjustBruteLoss(3)
-			if(src.reagents)
-				src.reagents.add_reagent("toxin", 2)
+
+	if(!undergoing_cardiac_arrest())
+		return
+
+	// Cardiac arrest, unless corazone
+	if(reagents.get_reagent_amount("corazone"))
+		return
+
+	if(we_breath)
+		adjustOxyLoss(8)
+		Paralyse(4)
+	// Tissues die without blood circulation
+	adjustBruteLoss(2)
 
 /*
 Alcohol Poisoning Chart

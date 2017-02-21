@@ -2545,7 +2545,7 @@
 "aWW" = (/obj/machinery/airalarm{dir = 4; icon_state = "alarm0"; pixel_x = -22},/obj/machinery/camera{c_tag = "Bar West"; dir = 4; network = list("SS13")},/turf/open/floor/plasteel/bar,/area/crew_quarters/bar)
 "aWX" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/bar,/area/crew_quarters/bar)
 "aWY" = (/obj/effect/landmark/event_spawn,/obj/effect/landmark/xmastree,/turf/open/floor/plasteel/bar,/area/crew_quarters/bar)
-"aWZ" = (/obj/structure/table/reinforced,/obj/item/clothing/head/that{throwforce = 1; throwing = 1},/turf/open/floor/plasteel/bar,/area/crew_quarters/bar)
+"aWZ" = (/obj/structure/table/reinforced,/obj/item/clothing/head/that{throwforce = 1},/turf/open/floor/plasteel/bar,/area/crew_quarters/bar)
 "aXa" = (/obj/effect/landmark/start{name = "Bartender"},/turf/open/floor/plasteel/bar,/area/crew_quarters/bar)
 "aXb" = (/obj/machinery/requests_console{department = "Bar"; departmentType = 2; pixel_x = 30; pixel_y = 0},/obj/machinery/camera{c_tag = "Bar"; dir = 8; network = list("SS13")},/obj/structure/table,/obj/machinery/chem_dispenser/drinks,/turf/open/floor/plasteel/bar,/area/crew_quarters/bar)
 "aXc" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/mint,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/kitchen)
