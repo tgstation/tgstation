@@ -50,14 +50,11 @@ var/global/legacy_gravity = FALSE
 		var/area/A = I
 		if(!A.has_gravity && !A.gravity_generator && !A.gravity_overriding)
 			continue
-		if(!A.gravity_direction)
+		if(!A.gravity_direction)	//Right now we don't need this.
 			continue
 		if(is_type_in_typecache(A, area_blacklist_typecache))
 			continue
-		for(var/atom/movable/AM in A.contents_affected_by_gravity)
-			if(AM.force_gravity_processing)
-				continue
-			currentrun += AM
+		currentrun.Add(A.contents_affected_by_gravity)
 	for(var/atom/movable/AM in atoms_forced_gravity_processing)
 		currentrun_manual += AM
 	recalculation_cost = REALTIMEOFDAY - tempcost
@@ -75,18 +72,6 @@ var/global/legacy_gravity = FALSE
 				purging_atoms = list()
 				purging = TRUE
 				purge_tick = 0
-	while(currentrun.len)
-		var/atom/movable/AM = currentrun[currentrun.len]
-		currentrun.len--
-		if(AM)
-			AM.gravity_tick += wait
-			if(AM.gravity_tick >= AM.gravity_speed)
-				AM.gravity_act()
-				AM.gravity_tick = 0
-		if(purging && do_purge)	//Only do laggy shit occasionally.
-			purging_atoms += AM
-		if(MC_TICK_CHECK)
-			return
 	while(currentrun_manual.len)
 		var/atom/movable/AM = currentrun_manual[currentrun_manual.len]
 		currentrun_manual.len--
@@ -96,6 +81,20 @@ var/global/legacy_gravity = FALSE
 				AM.manual_gravity_process()
 				AM.gravity_tick = 0
 		if(purging && do_purge)
+			purging_atoms += AM
+		if(MC_TICK_CHECK)
+			return
+	while(currentrun.len)
+		var/atom/movable/AM = currentrun[currentrun.len]
+		currentrun.len--
+		if(AM)
+			if(AM.force_gravity_processing)
+				continue
+			AM.gravity_tick += wait
+			if(AM.gravity_tick >= AM.gravity_speed)
+				AM.gravity_act()
+				AM.gravity_tick = 0
+		if(purging && do_purge)	//Only do laggy shit occasionally.
 			purging_atoms += AM
 		if(MC_TICK_CHECK)
 			return

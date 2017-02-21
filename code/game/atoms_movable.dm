@@ -117,11 +117,12 @@ var/global/list/atoms_forced_gravity_processing = list()
 		if(!gravity_ignores_turfcheck)	//We don't need to process.
 			sync_gravity()
 		return FALSE
+	var/turf/newturf = get_step(get_turf(src), gravity_direction)
 	if(anchored && !gravity_ignores_anchored)
 		return FALSE
 	if(!gravity_direction)
 		return FALSE
-	if(istype(get_step(src, gravity_direction), /turf/closed))
+	if(!newturf.Enter(src, get_turf(src)))
 		return FALSE
 	if(!override && !has_gravity())
 		return FALSE
