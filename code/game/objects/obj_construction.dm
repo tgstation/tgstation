@@ -278,7 +278,9 @@
 			message = ccs.deconstruction_message
 		else
 			return ..()
-			
+
+		playsound(src, I.usesound, 100, 1)	
+		
 		user << "<span class='notice'>You begin [message] \the [src].</span>"
 		if(do_after(user, wait * I.toolspeed, target = src))
 			user << "<span class='notice'>You finish [message] \the [src].</span>"
