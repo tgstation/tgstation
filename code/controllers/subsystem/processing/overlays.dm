@@ -66,7 +66,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	return cached_appearance
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
-#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.can_fire = TRUE; if(SSoverlays.initialized) { SSoverlays.processing += src; } else { SSoverlays.processing[src] = src; } //The else prevents massive queue at initialization
+#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; 
 /atom/proc/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays
