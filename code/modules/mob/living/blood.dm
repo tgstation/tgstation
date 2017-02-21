@@ -6,11 +6,13 @@
 	if(bleedsuppress)
 		return
 	else
-		bleedsuppress = 1
-		spawn(amount)
-			bleedsuppress = 0
-			if(stat != DEAD && bleed_rate)
-				src << "<span class='warning'>The blood soaks through your bandage.</span>"
+		bleedsuppress = TRUE
+		addtimer(CALLBACK(src, .proc/resume_bleeding), amount)
+
+/mob/living/carbon/human/proc/resume_bleeding()
+	bleedsuppress = 0
+	if(stat != DEAD && bleed_rate)
+		src << "<span class='warning'>The blood soaks through your bandage.</span>"
 
 
 /mob/living/carbon/monkey/handle_blood()
