@@ -44,7 +44,7 @@
 				icon_state = "unscrewed-legs",\
 				max_integrity = 200,\
 				failure_integrity = 100,\
-				anchored = FALSE,
+				anchored = FALSE,\
 				damage_reachable = TRUE\
 			)
 			new /datum/construction_state/last(src,\
