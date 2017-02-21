@@ -70,6 +70,7 @@
 	flags = CONDUCT | NODROP | DROPDEL
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
+	luminosity = 3
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
@@ -89,7 +90,7 @@
 /obj/item/weapon/claymore/highlander/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		loc.layer = FLY_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED
+		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!admin_spawned)
