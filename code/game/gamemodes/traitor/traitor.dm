@@ -225,8 +225,8 @@
 
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
-	var/law = "Accomplish your objectives at all costs."
-	var/law_borg = "Accomplish your AI's objectives at all costs."
+	var/law = "Accomplish your objectives at all costs, and maintain secrecy to the best of your abilities."
+	var/law_borg = "Accomplish your AI's objectives at all costs, and maintain secrecy to the best of your abilities."
 	killer << "<b>Your laws have been changed!</b>"
 	killer.set_zeroth_law(law, law_borg)
 	give_codewords(killer)
