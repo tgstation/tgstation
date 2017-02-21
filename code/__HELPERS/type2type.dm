@@ -98,6 +98,25 @@
 		else
 	return
 
+/proc/opposite_dir(direction)
+	switch(direction)
+		if(NORTH)
+			return SOUTH
+		if(SOUTH)
+			return NORTH
+		if(WEST)
+			return EAST
+		if(EAST)
+			return WEST
+		if(NORTHEAST)
+			return SOUTHWEST
+		if(SOUTHWEST)
+			return NORTHEAST
+		if(SOUTHEAST)
+			return NORTHWEST
+		if(NORTHWEST)
+			return SOUTHEAST
+
 //Turns text into proper directions
 /proc/text2dir(direction)
 	switch(uppertext(direction))
