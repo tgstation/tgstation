@@ -124,7 +124,7 @@
 	parent.AddConstructionStep(src)
 
 /datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed)
-	if(!constructed && (flags & NODECONSTRUCT))
+	if(!constructed && (parent.flags & NODECONSTRUCT))
 		return
 
 	var/datum/construction_state/next = constructed ? next_state : prev_state
@@ -141,7 +141,7 @@
 		parent.OnDeconstruction(id, user)
 
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
-	if(!constructed && (flags & NODECONSTRUCT))
+	if(!constructed && (parent.flags & NODECONSTRUCT))
 		return
 
 	if(icon_state)
