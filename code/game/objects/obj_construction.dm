@@ -162,6 +162,13 @@
 	if(!constructed && ispath(required_type_to_construct, /obj/item/stack/sheet))
 		new required_type_to_construct(get_turf(parent), required_amount_to_construct)
 
+/datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
+	if(!constructed)
+		stack_trace("Very bad param")
+	
+	parent.icon_state = initial(parent.icon_state)
+	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
+
 /obj/proc/InitConstruction()
 	construction_steps[type] = 0	//null op, no construction steps
 	return -1
