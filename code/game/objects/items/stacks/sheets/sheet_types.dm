@@ -376,6 +376,9 @@ var/global/list/datum/stack_recipe/plastic_recipes = list(
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
 
+/obj/item/stack/sheet/plastic/five
+	amount = 5
+
 /obj/item/stack/sheet/plastic/New()
 	recipes = plastic_recipes
 	. = ..()
