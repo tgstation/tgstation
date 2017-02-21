@@ -10,6 +10,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	list_reagents = list("nutriment" = 6)
 	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("dough" = 1)
 
 
 // Dough + rolling pin = flat dough
@@ -77,6 +78,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
 	list_reagents = list("nutriment" = 9)
 	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("batter" = 1)
 
 // Cake batter + rolling pin = pie dough
 /obj/item/weapon/reagent_containers/food/snacks/cakebatter/attackby(obj/item/I, mob/user, params)
@@ -100,6 +102,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pie/plain
 	list_reagents = list("nutriment" = 9)
 	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("dough" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
 	name = "raw pastry base"
