@@ -9,7 +9,6 @@
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
-	icon = 'icons/obj/storage.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	force = 12
@@ -22,7 +21,6 @@
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
 	var/ascend_bonus = 15
-	var/list/warning_messages = list("peckish", "hungry", "famished", "starving", "consume") //Messages that have NOT been shown
 
 /obj/item/weapon/his_grace/New()
 	..()
