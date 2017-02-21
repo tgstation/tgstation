@@ -168,11 +168,17 @@ var/const/INJECT = 5 //injection
 	var/list/cached_reagents = reagent_list
 	if(!target)
 		return
-	if(!target.reagents || src.total_volume<=0)
-		return
+
+	var/datum/reagents/R
+	if(istype(target, /datum/reagents))
+		R = target
+	else
+		if(!target.reagents || src.total_volume<=0)
+			return
+		R = target.reagents
+
 	if(amount < 0)
 		return
-	var/datum/reagents/R = target.reagents
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
@@ -483,6 +489,9 @@ var/const/INJECT = 5 //injection
 	var/react_type
 	if(isliving(A))
 		react_type = "LIVING"
+		if(method == INGEST)
+			var/mob/living/L = A
+			L.taste(src)
 	else if(isturf(A))
 		react_type = "TURF"
 	else if(isobj(A))
