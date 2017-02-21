@@ -63,7 +63,7 @@
 
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
-		layer = ABOVE_ALL_MOB_LAYER
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
