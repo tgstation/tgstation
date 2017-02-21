@@ -47,7 +47,7 @@
 	list_reagents = list("nutriment" = 2, "sugar" = 4)
 	junkiness = 25
 	filling_color = "#8B0000"
-	tastes = list("dried raisins" = !)
+	tastes = list("dried raisins" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin/healthy
 	name = "homemade raisins"

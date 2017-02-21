@@ -225,14 +225,14 @@
 	tastes = list("fish" = 1, "hot peppers" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget
-    name = "chicken nugget"
-    filling_color = "#B22222"
-    bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-    list_reagents = list("nutriment" = 2)
-	tastes = list("\'chicken\'" = 1)
+	name = "chicken nugget"
+	filling_color = "#B22222"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2)
+	tastes = list("\"chicken\"" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget/New()
-    ..()
-    var/shape = pick("lump", "star", "lizard", "corgi")
-    desc = "A 'chicken' nugget vaguely shaped like a [shape]."
-    icon_state = "nugget_[shape]"
+	..()
+	var/shape = pick("lump", "star", "lizard", "corgi")
+	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
+	icon_state = "nugget_[shape]"
