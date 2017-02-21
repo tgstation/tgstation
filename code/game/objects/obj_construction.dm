@@ -89,6 +89,9 @@
 	var/construction_message    //message displayed in the format user.visible_message("[user] [message]", "You [message]")
 	var/deconstruction_message
 
+	var/construction_sound	//Sound played once construction step is complete
+	var/deconstruction_sound
+
 	var/examine_message	//null values do not adjust these
 	var/icon_state
 
@@ -111,7 +114,8 @@
 	..(parent, -1 /*don't want to construct with attack_hand/self*/, null, required_type_to_deconstruct, 0, deconstruction_delay, null, deconstruction_message)
 
 /datum/construction_state/New(obj/parent, required_type_to_construct, required_amount_to_construct, required_type_to_deconstruct, construction_delay = 0, deconstruction_delay = 0,\
- 								construction_message, deconstruction_message, examine_message, icon_state, max_integrity, failure_integrity, anchored, damage_reachable = FALSE)
+ 								construction_message, deconstruction_message, construction_sound, deconstruction_sound, examine_message, icon_state, max_integrity, failure_integrity,\
+								anchored, damage_reachable = FALSE)
 	src.required_type_to_construct = required_type_to_construct
 	src.required_amount_to_construct = required_amount_to_construct
 	src.required_type_to_deconstruct = required_type_to_deconstruct
@@ -119,6 +123,8 @@
 	src.deconstruction_delay = deconstruction_delay
 	src.construction_message = construction_message
 	src.deconstruction_message = deconstruction_message
+	src.construction_sound = construction_sound
+	src.deconstruction_sound = deconstruction_sound
 	src.examine_message = examine_message
 	src.icon_state = icon_state
 	src.max_integrity = max_integrity
@@ -140,8 +146,12 @@
 		id = 0
 
 	if(constructed)
+		if(construction_sound)
+			playsound(parent, construction_sound, 100, TRUE)
 		parent.OnConstruction(id, user)
 	else
+		if(deconstruction_sound)
+			playsound(parent, deconstruction_sound, 100, TRUE)
 		parent.OnDeconstruction(id, user)
 
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
