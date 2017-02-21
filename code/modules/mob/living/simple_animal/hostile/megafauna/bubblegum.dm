@@ -46,7 +46,7 @@ Difficulty: Hard
 	del_on_death = 1
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
-	var/charging = 0
+	var/charging = FALSE
 	medal_type = MEDAL_PREFIX
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -116,10 +116,9 @@ Difficulty: Hard
 	internal = new/obj/item/device/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
-	..()
-	SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
-
-
+	. = ..()
+	if(.)
+		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
 	if(!charging)
@@ -152,7 +151,7 @@ Difficulty: Hard
 	if(!T || T == loc)
 		return
 	new /obj/effect/overlay/temp/dragon_swoop(T)
-	charging = 1
+	charging = TRUE
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(get_dir(src, T))
@@ -161,12 +160,13 @@ Difficulty: Hard
 	sleep(3)
 	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end, bonus_charges))
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end(bonus_charges)
-	charging = 0
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end(bonus_charges, list/effects_to_destroy)
+	charging = FALSE
 	try_bloodattack()
 	if(target)
 		if(bonus_charges)
-			charge(bonus_charges--)
+			bonus_charges--
+			charge(bonus_charges)
 		else
 			Goto(target, move_to_delay, minimum_distance)
 
@@ -192,7 +192,7 @@ Difficulty: Hard
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 		L.throw_at(throwtarget, 3)
 
-	charging = 0
+	charging = FALSE
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()

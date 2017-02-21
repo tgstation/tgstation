@@ -96,7 +96,7 @@
 		return
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75, 1)
+	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
 
 /obj/machinery/firealarm/proc/alarm_in(time)
 	addtimer(CALLBACK(src, .proc/alarm), time)
