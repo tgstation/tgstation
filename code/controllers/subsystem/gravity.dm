@@ -15,6 +15,9 @@ var/global/legacy_gravity = FALSE
 	var/purge_interval = 600
 	var/purge_tick = 0
 	var/purging = FALSE
+	var/error_mismatched_area = 0
+	var/error_no_area = 0
+	var/error_no_turf = 0
 	var/list/purging_atoms = list()
 	var/list/area_blacklist_typecache
 	var/list/area_blacklist = list(/area/lavaland, /area/mine, /area/centcom)
@@ -60,6 +63,7 @@ var/global/legacy_gravity = FALSE
 	recalculation_cost = REALTIMEOFDAY - tempcost
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
+	set waitfor = 0
 	if(!resumed)
 		if(legacy_gravity)
 			can_fire = FALSE
@@ -87,9 +91,7 @@ var/global/legacy_gravity = FALSE
 	while(currentrun.len)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		currentrun.len--
-		if(AM)
-			if(AM.force_gravity_processing)
-				continue
+		if(AM && !AM.force_gravity_processing)
 			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
 				AM.gravity_act()
@@ -106,13 +108,13 @@ var/global/legacy_gravity = FALSE
 				var/current_area = get_area(AM)
 				if(AM.current_gravity_area)
 					if(AM.current_gravity_area != current_area)
-						stack_trace("[AM] AT [AM.x] [AM.y] [AM.z] IN [current_area] INSTEAD OF CURRENT_GRAVITY_AREA [AM.current_gravity_area]!")
+						error_mismatched_area++
 						AM.sync_gravity()
 				else
-					stack_trace("[AM] AT [AM.x] [AM.y] [AM.z] WITHOUT CURRENT GRAVITY AREA SET!")
+					error_no_area++
 					AM.sync_gravity()
 			else
-				stack_trace("[AM] AT [AM.x] [AM.y] [AM.z] IN [AM.current_gravity_area] STILL TICKING WITHOUT BEING IN TURF WITHOUT TURF CHECK OVERRIDE!")
+				error_no_turf++
 				if(AM.current_gravity_area)
 					AM.current_gravity_area.update_gravity(AM, FALSE)
 				AM.sync_gravity()
