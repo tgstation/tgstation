@@ -146,7 +146,7 @@
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
-		overlays -= armrest
+		cut_overlay(armrest)
 
 
 /obj/structure/chair/comfy/brown
