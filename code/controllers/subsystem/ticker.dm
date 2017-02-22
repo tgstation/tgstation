@@ -202,7 +202,7 @@ var/datum/subsystem/ticker/ticker
 	equip_characters()
 	CHECK_TICK
 
-	SSoverlays.Flush()	//Needed here for datacore photos
+	SSoverlays.Flush()	//Flush the majority of the shit
 	CHECK_TICK
 
 	data_core.manifest()
