@@ -66,9 +66,8 @@
 	return
 
 /obj/item/device/pressure_plate/attackby(obj/item/I, mob/living/L)
-	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.drop_item(I))
+	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
 		sigdev = I
-		I.forceMove(src)
 		L << "<span class='notice'>You attach [I] to [src]!</span>"
 	. = ..()
 
