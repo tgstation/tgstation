@@ -26,7 +26,7 @@
 	user << "<span class='notice'>You start gathering the power.</span>"
 	Snd = new/sound('sound/magic/lightning_chargeup.ogg',channel = 7)
 	halo = image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = EFFECTS_LAYER)
-	user.overlays.Add(halo)
+	user.add_overlay(halo)
 	playsound(get_turf(user), Snd, 50, 0)
 	if(do_mob(user,user,100,1))
 		if(ready && cast_check(skipcharge=1))
@@ -39,7 +39,7 @@
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Reset(mob/user = usr)
 	ready = 0
 	if(halo)
-		user.overlays.Remove(halo)
+		user.cut_overlay(halo)
 
 /obj/effect/proc_holder/spell/targeted/tesla/revert_cast(mob/user = usr, message = 1)
 	if(message)

@@ -57,10 +57,9 @@ AI MODULES
 			message_admins("[key_name_admin(user)] tried to upload laws to [law_datum.owner ? key_name_admin(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			overflow = TRUE
 
-	var/law2log = src.transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
+	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
 	if(law_datum.owner)
 		user << "<span class='notice'>Upload complete. [law_datum.owner]'s laws have been modified.</span>"
-		law_datum.owner.show_laws()
 		law_datum.owner.law_change_counter++
 	else
 		user << "<span class='notice'>Upload complete.</span>"
@@ -75,7 +74,7 @@ AI MODULES
 //The proc that actually changes the silicon's laws.
 /obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
 	if(law_datum.owner)
-		law_datum.owner << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: </span>"
+		law_datum.owner << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name].</span>"
 
 
 /******************** Modules ********************/

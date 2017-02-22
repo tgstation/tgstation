@@ -436,7 +436,7 @@
 
 /turf/closed/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
-		overlays -= activated_image
+		cut_overlay(activated_image)
 		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = ON_EDGED_TURF_LAYER)
 		add_overlay(I)
 		desc = "An inactive gibtonite reserve. The ore can be extracted."

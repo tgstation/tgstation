@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/taunting_trail
 	name = "strange smoke"
 	desc = "A cloud of purple smoke."
-	clockwork_desc = "A cloud of purple smoke that blocks non-damaging projectiles and confuses and weakens non-Servants that enter it."
+	clockwork_desc = "A cloud of purple smoke that confuses and weakens non-Servants that enter it."
 	gender = PLURAL
 	max_integrity = 5
 	obj_integrity = 5
