@@ -1,5 +1,4 @@
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
-#define ACTION_BUTTON_THROTTLE_DELAY 2
 
 /obj/screen/movable/action_button
 	var/datum/action/linked_action
@@ -15,9 +14,9 @@
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return 1
-	if(usr.next_action >= world.time)
+	if(usr.next_click >= world.time)
 		return
-	usr.next_action = world.time + ACTION_BUTTON_THROTTLE_DELAY
+	usr.next_click = world.time + (world.fps / 10)
 	linked_action.Trigger()
 	return 1
 
@@ -73,7 +72,7 @@
 	. = list()
 	.["bg_icon"] = ui_style_icon
 	.["bg_state"] = "template"
-	
+
 	//TODO : Make these fit theme
 	.["toggle_icon"] = 'icons/mob/actions.dmi'
 	.["toggle_hide"] = "hide"

@@ -35,7 +35,6 @@
 	var/atom/movable/pulling = null
 	var/grab_state = 0
 
-	var/next_action = 0
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
