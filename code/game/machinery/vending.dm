@@ -805,7 +805,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 10)
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
-	product_ads = "Refreshing!;Ubcr lbh'er guvefgl!;Over 1 trillion souls drank!;Thirsty? Jul abg qevax gur qnexarff?;Gur Funzoyre yvxrf na rzcgl irffry!;Drink up!;Fyhec."
+	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
 
 
 //This one's from bay12
