@@ -74,7 +74,10 @@ def merge_map(newfile, backupfile, tgm):
             if new_tile == old_tile: #this tile is the exact same as before, so the old key is used
                 merged_grid[x,y] = old_key
                 known_keys[new_key] = old_key
-                unused_keys.remove(old_key)
+                try:
+                    unused_keys.remove(old_key)
+                except ValueError as ve_exception:
+                    print("NOTICE: Correcting duplicate dictionary entry. ({})".format(new_key))
                 continue
 
             #the tile is different here, but if it exists in the old dictionary, its old key can be used
@@ -84,7 +87,7 @@ def merge_map(newfile, backupfile, tgm):
                 known_keys[new_key] = newold_key
                 try:
                     unused_keys.remove(newold_key)
-                except ValueError:
+                except ValueError as ve_exception:
                     print("NOTICE: Correcting duplicate dictionary entry. ({})".format(new_key))
 
             #the tile is brand new and it needs a new key, but if the old key isn't being used any longer it can be used instead

@@ -220,8 +220,9 @@
 /obj/screen/parallax_layer/proc/update_o(view)
 	if (!view)
 		view = world.view
-	var/list/new_overlays = list()
+
 	var/count = Ceiling(view/(480/world.icon_size))+1
+	var/list/new_overlays = new
 	for(var/x in -count to count)
 		for(var/y in -count to count)
 			if(x == 0 && y == 0)
@@ -229,8 +230,7 @@
 			var/image/I = image(icon, null, icon_state)
 			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
 			new_overlays += I
-
-	overlays = new_overlays
+	add_overlay(new_overlays)
 	view_sized = view
 
 /obj/screen/parallax_layer/layer_1

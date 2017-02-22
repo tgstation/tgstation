@@ -791,7 +791,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(brass_recipes)
 	SearchVar(disposalpipeID2State)
 	SearchVar(RPD_recipes)
-	SearchVar(highlander_claymores)
 	SearchVar(biblenames)
 	SearchVar(biblestates)
 	SearchVar(bibleitemstates)

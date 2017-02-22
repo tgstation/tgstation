@@ -93,10 +93,6 @@
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
-				pai << "Your supplemental directives have been updated. Your new directives are:"
-				pai << "Prime Directive : <br>[pai.laws.zeroth]"
-				for(var/slaws in pai.laws.supplied)
-					pai << "Supplemental Directives: <br>[slaws]"
 		if(href_list["toggle_holo"])
 			if(pai.canholo)
 				pai << "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>"

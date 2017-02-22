@@ -104,6 +104,7 @@
 	zone = "chest"
 	slot = "heart"
 	origin_tech = "biotech=5"
+	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
@@ -116,15 +117,8 @@
 
 /obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
 	..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.stat == DEAD || H.heart_attack)
-			Stop()
-			return
-		if(!special)
-			H.heart_attack = 1
-
-	addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
+	if(!special)
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
@@ -134,17 +128,10 @@
 	..()
 	if(!beating)
 		visible_message("<span class='notice'>[user] squeezes [src] to \
-			make it beat again!</span>")
+			make it beat again!</span>", "<span class='notice'>You squeeze \
+			[src] to make it beat again!</span>")
 		Restart()
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
-
-/obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(ishuman(M) && beating)
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
-			H.heart_attack = 0
-			return
 
 /obj/item/organ/heart/proc/Stop()
 	beating = 0

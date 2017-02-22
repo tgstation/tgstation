@@ -313,19 +313,53 @@
 	var picked_group = pickweight(replaceable_groups)
 	switch(picked_group)
 		if(LAW_ZEROTH)
+			. = zeroth
 			set_zeroth_law(law)
 		if(LAW_ION)
-			ion[rand(1,ion.len)] = law
+			var/i = rand(1, ion.len)
+			. = ion[i]
+			ion[i] = law
 		if(LAW_INHERENT)
-			inherent[rand(1,inherent.len)] = law
+			var/i = rand(1, inherent.len)
+			. = inherent[i]
+			inherent[i] = law
 		if(LAW_SUPPLIED)
-			supplied[rand(1,supplied.len)] = law
+			var/i = rand(1, supplied.len)
+			. = supplied[i]
+			supplied[i] = law
+
+/datum/ai_laws/proc/shuffle_laws(list/groups)
+	var/list/laws = list()
+	if(ion.len && (LAW_ION in groups))
+		laws += ion
+	if(inherent.len && (LAW_INHERENT in groups))
+		laws += inherent
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		for(var/law in supplied)
+			if(length(law))
+				laws += law
+
+	if(ion.len && (LAW_ION in groups))
+		for(var/i = 1, i <= ion.len, i++)
+			ion[i] = pick_n_take(laws)
+	if(inherent.len && (LAW_INHERENT in groups))
+		for(var/i = 1, i <= inherent.len, i++)
+			inherent[i] = pick_n_take(laws)
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		var/i = 1
+		for(var/law in supplied)
+			if(length(law))
+				supplied[i] = pick_n_take(laws)
+			if(!laws.len)
+				break
+			i++
 
 /datum/ai_laws/proc/remove_law(number)
 	if(number <= 0)
 		return
 	if(inherent.len && number <= inherent.len)
-		inherent -= inherent[number]
+		. = inherent[number]
+		inherent -= .
 		return
 	var/list/supplied_laws = list()
 	for(var/index = 1, index <= supplied.len, index++)
@@ -334,7 +368,8 @@
 			supplied_laws += index //storing the law number instead of the law
 	if(supplied_laws.len && number <= (inherent.len+supplied_laws.len))
 		var/law_to_remove = supplied_laws[number-inherent.len]
-		supplied -= supplied[law_to_remove]
+		. = supplied[law_to_remove]
+		supplied -= .
 		return
 
 /datum/ai_laws/proc/clear_supplied_laws()

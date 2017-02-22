@@ -354,8 +354,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
 	headcolor = C
-	if(head in overlays)
-		overlays -= head
+	cut_overlay(head)
 	head.color = C
 	add_overlay(head)
 

@@ -206,7 +206,7 @@
 
 
 /turf/closed/wall/proc/thermitemelt(mob/user)
-	overlays = list()
+	cut_overlays()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "thermite"
 	O.desc = "Looks hot."
