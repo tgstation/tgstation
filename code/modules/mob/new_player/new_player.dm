@@ -13,7 +13,7 @@
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
-	var/mob/living/carbon/human/new_character	//for instant transfer once the round is set up
+	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
@@ -427,20 +427,21 @@
 	spawning = 1
 	close_spawn_windows()
 
-	new_character = new(loc)
+	var/mob/living/carbon/human/H = new(loc)
 
 	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-	client.prefs.copy_to(new_character)
-	new_character.dna.update_dna_identity()
+	client.prefs.copy_to(H)
+	H.dna.update_dna_identity()
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
-		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
-	new_character.name = real_name
+	H.name = real_name
 
-	. = new_character
+	. = H
+	new_character = .
 	if(transfer_after)
 		transfer_character()
 
