@@ -127,6 +127,8 @@ var/datum/subsystem/ticker/ticker
 				declare_completion(force_ending)
 
 /datum/subsystem/ticker/proc/setup()
+	world << "<span class='boldannounce'>Starting game...</span>"
+	var/init_start = world.timeofday
 		//Create and announce mode
 	var/list/datum/game_mode/runnable_modes
 	if(master_mode == "random" || master_mode == "secret")
@@ -156,10 +158,13 @@ var/datum/subsystem/ticker/ticker
 			SSjob.ResetOccupations()
 			return 0
 
+	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
+	CHECK_TICK
 	SSjob.DivideOccupations() 				//Distribute jobs
+	CHECK_TICK
 
 	if(!Debug2)
 		if(!can_continue)
@@ -171,6 +176,7 @@ var/datum/subsystem/ticker/ticker
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
+	CHECK_TICK
 	if(hide_mode)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
@@ -181,18 +187,28 @@ var/datum/subsystem/ticker/ticker
 	else
 		mode.announce()
 
+	CHECK_TICK
 	current_state = GAME_STATE_PLAYING
 	if(!config.ooc_during_round)
 		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
+	CHECK_TICK
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
-	create_characters() //Create player characters and transfer them
+	create_characters() //Create player characters
+	CHECK_TICK
 	collect_minds()
+	CHECK_TICK
 	equip_characters()
+	CHECK_TICK
 	data_core.manifest()
+	CHECK_TICK
 
-	Master.RoundStart()
+	transfer_characters()	//transfer keys to the new mobs
+
+	Master.RoundStart()	//let the party begin...
+
+	log_world("Game start took [(world.timeofday - init_start)/10]s")
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
@@ -357,34 +373,42 @@ var/datum/subsystem/ticker/ticker
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
 				player.close_spawn_windows()
-				player.AIize()
+				player.AIize(FALSE)
 			else
-				player.create_character()
-				qdel(player)
+				player.create_character(FALSE)
 		else
 			player.new_player_panel()
+		CHECK_TICK
 
 
 /datum/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
 		if(player.mind)
 			ticker.minds += player.mind
+		CHECK_TICK
 
 
 /datum/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
-	for(var/mob/living/carbon/human/player in player_list)
-		if(player && player.mind && player.mind.assigned_role)
+	for(var/mob/new_player/N in player_list)
+		var/mob/living/carbon/human/player = N.new_character
+		if(istype(player) && player.mind && player.mind.assigned_role && player.mind.assigned_role != "AI")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
-				SSjob.EquipRank(player, player.mind.assigned_role, 0)
+				SSjob.EquipRank(N, player.mind.assigned_role, 0)
+		CHECK_TICK
 	if(captainless)
-		for(var/mob/M in player_list)
-			if(!isnewplayer(M))
-				M << "Captainship not forced on anyone."
+		for(var/mob/new_player/N in player_list)
+			if(N.new_character)
+				N << "Captainship not forced on anyone."
+			CHECK_TICK
 
-
+/datum/subsystem/ticker/proc/transfer_characters()
+	for(var/mob/new_player/player in player_list)
+		if(player.transfer_character())
+			qdel(player)
+		
 
 /datum/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
