@@ -20,6 +20,7 @@
 			var/datum/game_mode/cult/C = ticker.mode
 			C.memorize_cult_objectives(owner.mind)
 		if(jobban_isbanned(owner, ROLE_CULTIST))
+			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST)
 			addtimer(CALLBACK(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
 	if(owner.mind)
 		owner.mind.special_role = "Cultist"
@@ -39,6 +40,8 @@
 	owner.faction -= "cult"
 	owner.verbs -= /mob/living/proc/cult_help
 	owner.verbs -= /mob/living/proc/cult_master
+	for(var/datum/action/innate/cultmast/H in usr.actions)
+		qdel(H)
 	owner.clear_alert("bloodsense")
 	..()
 
@@ -50,8 +53,6 @@
 			ticker.mode.update_cult_icons_removed(owner.mind)
 	owner << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
 	owner.attack_log += "\[[time_stamp()]\] <font color=#960000>Has renounced the cult of Nar'Sie!</font>"
-	for(var/datum/action/innate/cultmast/H in usr.actions)
-		qdel(H)
 	if(!silent_update)
 		owner.visible_message("<span class='big'>[owner] looks like [owner.p_they()] just reverted to their old faith!</span>")
 	..()
