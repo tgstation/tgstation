@@ -160,7 +160,7 @@
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
 	use_power = 1
-	overlays -= "fab-active"
+	cut_overlay("fab-active")
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
@@ -457,7 +457,7 @@
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
 				sleep(10)
-				overlays -= mat_overlay //No matter what the overlay shall still be deleted
+				cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
 
 		updateUsrDialog()
 
