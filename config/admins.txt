@@ -7,16 +7,6 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-
-###############################################################################################
-# Basically, ckey goes first. Rank goes after the "="                                         #
-# Case is not important for ckey.                                                             #
-# Case IS important for the rank.                                                             #
-# All punctuation (spaces etc) EXCEPT '-', '_' and '@' will be stripped from rank names.      #
-# Ranks can be anything defined in admin_ranks.txt                                            #
-# NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
-# NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
-###############################################################################################
 Optimumtact = Host
 kingofkosmos = Game Master
 MrStonedOne = Game Master
@@ -125,7 +115,6 @@ RandomMarine = Game Master
 PKPenguin321 = Game Master
 TechnoAlchemist = Game Master
 Aloraydrel = Game Master
-vcordie = Shitcoder
 Quiltyquilty = Game Master
 SnipeDragon = Game Master
 Fjeld = Game Master
