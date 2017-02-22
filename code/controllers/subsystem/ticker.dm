@@ -201,6 +201,10 @@ var/datum/subsystem/ticker/ticker
 	CHECK_TICK
 	equip_characters()
 	CHECK_TICK
+
+	SSoverlays.Flush()	//Flush the majority of the shit
+	CHECK_TICK
+
 	data_core.manifest()
 	CHECK_TICK
 
