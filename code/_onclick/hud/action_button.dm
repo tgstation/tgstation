@@ -14,7 +14,7 @@
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return 1
-	if(usr.next_click >= world.time)
+	if(usr.next_click > world.time)
 		return
 	usr.next_click = world.time + (world.fps / 10)
 	linked_action.Trigger()
