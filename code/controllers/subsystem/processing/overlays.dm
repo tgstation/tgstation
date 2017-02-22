@@ -18,11 +18,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 
 /datum/subsystem/processing/overlays/Initialize()
 	initialized = TRUE
-	for(var/I in processing)
-		var/atom/A = I
-		A.compile_overlays()
-		CHECK_TICK
-	processing.Cut()
+	Flush()
 	..()
 
 /datum/subsystem/processing/overlays/Recover()
