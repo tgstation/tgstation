@@ -16,50 +16,49 @@
 	if(!category)
 		return
 
-	var/obj/screen/alert/alert
+	var/obj/screen/alert/thealert
 	if(alerts[category])
-		alert = alerts[category]
-		if(new_master && new_master != alert.master)
-			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [alert.master]")
+		thealert = alerts[category]
+		if(new_master && new_master != thealert.master)
+			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
 			clear_alert(category)
 			return .()
-		else if(alert.type != type)
+		else if(thealert.type != type)
 			clear_alert(category)
 			return .()
-		else if(!severity || severity == alert.severity)
-			if(alert.timeout)
+		else if(!severity || severity == thealert.severity)
+			if(thealert.timeout)
 				clear_alert(category)
 				return .()
 			else //no need to update
 				return 0
 	else
-		alert = new type()
+		thealert = new type()
 
 	if(new_master)
 		var/old_layer = new_master.layer
 		var/old_plane = new_master.plane
 		new_master.layer = FLOAT_LAYER
 		new_master.plane = FLOAT_PLANE
-		var/atom/yes_this_is_a_bloody_atom = alert
-		yes_this_is_a_bloody_atom.add_overlay(new_master)				// B Y O N D
+		thealert.add_overlay(new_master)
 		new_master.layer = old_layer
 		new_master.plane = old_plane
-		alert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
-		alert.master = new_master
+		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
+		thealert.master = new_master
 	else
-		alert.icon_state = "[initial(alert.icon_state)][severity]"
-		alert.severity = severity
+		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
+		thealert.severity = severity
 
-	alerts[category] = alert
+	alerts[category] = thealert
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
-	alert.transform = matrix(32, 6, MATRIX_TRANSLATE)
-	animate(alert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
+	thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
+	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
-	if(alert.timeout)
-		addtimer(CALLBACK(src, .proc/alert_timeout, alert, category), alert.timeout)
-		alert.timeout = world.time + alert.timeout - world.tick_lag
-	return alert
+	if(thealert.timeout)
+		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
+		thealert.timeout = world.time + thealert.timeout - world.tick_lag
+	return thealert
 
 /mob/proc/alert_timeout(obj/screen/alert/alert, category)
 	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
