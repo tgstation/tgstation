@@ -26,6 +26,7 @@
 	med_hud_set_status()
 
 /mob/living/gravity_act(moving = TRUE)
+	set waitfor = 0
 	. = ..(moving = FALSE)	//We handle movement here.
 	if(!gravity_direction)	//Downwards/upwards gravity with strengths might be a thing later but for now it does nothing.
 		return FALSE
@@ -39,18 +40,20 @@
 		return FALSE
 	var/temp_throw = FALSE
 	if(m_intent == MOVE_INTENT_WALK)
-		var/slip_prob = 15
-		var/fall_prob = 7
+		var/slip_prob = 10
+		var/fall_prob = 5
 		var/atom/A = get_gravity_handgrip()
 		if(!isnull(A) && istype(A, /atom))
 			if(A.gravity_handhold)
-				slip_prob -= 5
-				fall_prob -= 3
+				slip_prob -= (5 * ((gravity_strength + 1)/2))
+				fall_prob -= (3 * ((gravity_strength + 1)/2))
+		slip_prob += (gravity_strength * 5)
+		fall_prob += (gravity_strength * 2)
 		if(prob(slip_prob))
 			src << "<span class='warning'>You slip and lose your grip!</span>"
 		else if(prob(fall_prob))
 			src << "<span class='warning'>You slip and completely lose your footing!</span>"
-			Weaken(1)
+			Weaken(1*gravity_strength)
 			temp_throw = TRUE
 		else
 			return FALSE
@@ -450,7 +453,7 @@
 /mob/living/Move(atom/newloc, direct)
 	if(gravity_direction && (m_intent == MOVE_INTENT_RUN))
 		if(get_dir(get_turf(src), newloc) == opposite_dir(gravity_direction))
-			if(prob(75))
+			if(prob(85))
 				if(prob(10))
 					src << "<span class='warning'>You slip and fail to get anywhere!</span>"
 				return FALSE

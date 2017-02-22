@@ -112,6 +112,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 	. = ..()
 
 /atom/movable/proc/gravity_act(moving = TRUE)
+	set waitfor = 0
 	if(legacy_gravity)
 		return FALSE	//KILLSWITCH!
 	if(!isturf(src.loc))	//Gravity was so strong it was pulling shards and rods out of windows!
@@ -133,8 +134,7 @@ var/global/list/atoms_forced_gravity_processing = list()
 		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 20, gravity_strength * 2)
 		gravity_throwing = FALSE
 	else
-		for(var/i = gravity_strength, i > 0, i--)
-			Move(get_step(src, gravity_direction), gravity_direction)
+		Move(get_step(src, gravity_direction), gravity_direction)
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0

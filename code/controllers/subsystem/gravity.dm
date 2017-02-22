@@ -64,7 +64,6 @@ var/global/legacy_gravity = FALSE
 	recalculation_cost = REALTIMEOFDAY - tempcost
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
-	set waitfor = 0
 	if(!resumed)
 		if(legacy_gravity)
 			can_fire = FALSE
