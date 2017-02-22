@@ -189,7 +189,6 @@ var/datum/subsystem/ticker/ticker
 	current_state = GAME_STATE_PLAYING
 	if(!config.ooc_during_round)
 		toggle_ooc(0) // Turn it off
-	round_start_time = world.time
 
 	CHECK_TICK
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
@@ -211,6 +210,7 @@ var/datum/subsystem/ticker/ticker
 	Master.RoundStart()	//let the party begin...
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
+	round_start_time = world.time
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
