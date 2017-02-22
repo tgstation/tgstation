@@ -351,7 +351,7 @@
 	name = "Lemon-Lime Soda"
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up
-	name = "Space-Up"
+	name = "Space-Up!"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
 	list_reagents = list("space_up" = 30)

@@ -268,7 +268,7 @@
 			if("pwr_game")
 				icon_state = "glass_red"
 				name = "glass of Pwr Game"
-				desc = "Goes well with a valid salad."
+				desc = "Goes well with a Vlad's salad."
 			if("shamblers")
 				icon_state = "glass_red"
 				name = "glass of Shambler's Juice"

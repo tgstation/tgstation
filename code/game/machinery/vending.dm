@@ -701,6 +701,28 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
 
+/obj/machinery/vending/snack/random
+	name = "\improper Random Snackies"
+	desc = "Uh oh!"
+
+/obj/machinery/vending/snack/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+    new T(get_turf(src))
+    qdel(src)
+
+/obj/machinery/vending/snack/blue
+	icon_state = "snackblue"
+
+/obj/machinery/vending/snack/orange
+	icon_state = "snackorange"
+
+/obj/machinery/vending/snack/green
+	icon_state = "snackgreen"
+
+/obj/machinery/vending/snack/teal
+	icon_state = "snackteal"
+
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
@@ -731,10 +753,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
 
+/obj/machinery/vending/cola/random
+	name = "\improper Random Drinkies"
+	desc = "Uh oh!"
+
 /obj/machinery/vending/cola/random/New()
     ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
-    new T
+    new T(get_turf(src))
     qdel(src)
 
 /obj/machinery/vending/cola/blue
@@ -745,12 +771,30 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/cola/red
 	icon_state = "cola_red"
+	name = "\improper Space Cola Vendor"
+	desc = "It vends cola, in space."
+	product_slogans = "Cola in space!"
 
 /obj/machinery/vending/cola/space_up
 	icon_state = "space_up"
+	name = "\improper Space-up! Vendor"
+	desc = "Indulge in an explosion of flavor."
+	product_slogans = "Space-up! Like a hull breach in your mouth."
+
+/obj/machinery/vending/cola/starkist
+	icon_state = "starkist"
+	name = "\improper Star-kist Vendor"
+	desc = "The taste of a star in liquid form."
+	product_slogans = "Drink the stars! Star-kist!"
+
+/obj/machinery/vending/cola/sodie
+	icon_state = "soda"
 
 /obj/machinery/vending/cola/pwr_game
 	icon_state = "pwr_game"
+	name = "/improper Pwr Game Vendor"
+	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
+	product_slogans = "The POWER that gamers crave! PWR GAME!"
 
 /obj/machinery/vending/cola/shamblers
 	name = "\improper Shambler's Vendor"
