@@ -1,5 +1,5 @@
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
-#define ACTION_BUTTON_THROTTLE_DELAY 1
+#define ACTION_BUTTON_THROTTLE_DELAY 2
 
 /obj/screen/movable/action_button
 	var/datum/action/linked_action
