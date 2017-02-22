@@ -404,7 +404,6 @@
 		usr << "It would be premature to select a leader while everyone is still settling in, try again in [(2400-world.time)/10] seconds"
 		return
 	for(var/mob/M in mob_list)
-		spawn(0)
 		if(iscultist(M))
 			M << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 			M.verbs -= /mob/living/proc/cult_master
@@ -435,14 +434,14 @@
 		for(var/mob/M in mob_list)
 			if(iscultist(M))
 				M << "<span class='cultlarge'>[usr] has the cult's support and is now their master. Follow their orders to the best of your ability!"
-		return 1
+		return TRUE
 	else
 		for(var/mob/M in mob_list)
 			if(iscultist(M))
 				M << "<span class='cultlarge'>[usr] could not win the cult's support and shall continue to serve as an acolyte. A new vote may be called shortly."
 				sleep(450)
 				M.verbs += /mob/living/proc/cult_master
-		return 0
+		return FALSE
 
 /proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed)
 	set waitfor = 0
