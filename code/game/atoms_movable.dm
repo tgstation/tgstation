@@ -78,27 +78,28 @@ var/global/list/atoms_forced_gravity_processing = list()
 	if(!A)
 		return FALSE
 	if(current_gravity_area && (A != current_gravity_area))
-		stack_trace("[src] DID NOT UNREGISTER FROM [current_gravity_area] AND REGISTER TO [A] AFTER CHANGING AREAS!")
+		if(SSgravity)
+			SSgravity.error_mismatched_turf++
 		current_gravity_area.update_gravity(src, FALSE)
 		current_gravity_area = null
 		A.update_gravity(src, TRUE)
 	if(isturf(loc) || gravity_ignores_turfcheck)
+		A.update_gravity(src, is_affected_by_gravity)
 		var/turf/T = loc
 		if(forced_gravity_by_turf)
 			if(T != forced_gravity_by_turf)
-				stack_trace("[src] DID NOT UNREGISTER FROM [forced_gravity_by_turf] (TURF WITH MANUAL GRAVITY OVERRIDES)!")
+				if(SSgravity)
+					SSgravity.error_mismatched_turf++
 				forced_gravity_by_turf.reset_forced_gravity_atom(src)
 				forced_gravity_by_turf = null
 		if(istype(T, /turf/open))
 			var/turf/open/O = T
 			if(O.turf_gravity_overrides_area)
 				O.force_gravity_on_atom(src)
-		else
-			A.update_gravity(src, is_affected_by_gravity)
 	else
+		A.update_gravity(src, FALSE)	//We're not on a turf and we don't need to be included in processing.
 		if(forced_gravity_by_turf)
 			forced_gravity_by_turf.reset_forced_gravity_atom(src)
-		A.update_gravity(src, FALSE)	//We're not on a turf and we don't need to be included in processing.
 
 /atom/movable/Initialize()
 	var/turf/open/T = get_turf(src)

@@ -16,6 +16,7 @@ var/global/legacy_gravity = FALSE
 	var/purge_tick = 0
 	var/purging = FALSE
 	var/error_mismatched_area = 0
+	var/error_mismatched_turf = 0
 	var/error_no_area = 0
 	var/error_no_turf = 0
 	var/list/purging_atoms = list()
