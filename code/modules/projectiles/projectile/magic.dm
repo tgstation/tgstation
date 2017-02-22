@@ -155,8 +155,8 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-				Robot.clear_inherent_laws()
-				Robot.clear_zeroth_law(0)
+				Robot.clear_inherent_laws(0)
+				Robot.clear_zeroth_law(0, 0)
 				Robot.connected_ai = null
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
