@@ -405,10 +405,22 @@ var/datum/subsystem/ticker/ticker
 			CHECK_TICK
 
 /datum/subsystem/ticker/proc/transfer_characters()
+	var/list/livings = list()
 	for(var/mob/new_player/player in player_list)
-		if(player.transfer_character())
+		var/mob/living = player.transfer_character()
+		if(living)
 			qdel(player)
-		
+			living.notransform = TRUE
+			if(living.client)
+				new /obj/screen/splash(living.client, TRUE)	
+			livings += living
+	if(livings.len)
+		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
+
+/datum/subsystem/ticker/proc/release_characters(list/livings)
+	for(var/I in livings)
+		var/mob/living/L = I
+		L.notransform = FALSE		
 
 /datum/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
