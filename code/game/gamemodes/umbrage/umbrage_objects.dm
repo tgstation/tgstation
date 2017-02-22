@@ -15,10 +15,13 @@
 	animate(src, alpha = 30, time = 30)
 	QDEL_IN(src, 30)
 
-/obj/item/weapon/dark_bead/Destroy()
-	if(isliving(loc) && !eating)
+/obj/item/weapon/dark_bead/Destroy(force)
+	if(isliving(loc) && !eating && !force)
 		loc << "<span class='warning'>You were too slow! [src] faded away...</span>"
-	return ..()
+	if(!eating || force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/item/weapon/dark_bead/attack(mob/living/carbon/L, mob/living/user)
 	if(!is_umbrage(user.mind) || eating || L == user) //no eating urself ;)))))))
@@ -27,12 +30,9 @@
 	if(!L.health)
 		user << "<span class='warning'>[L] is too weak to drain.</span>"
 		return
-	for(var/V in linked_ability.victims)
-		var/mob/living/M = V
-		if(M == L)
-			user << "<span class='warning'>[L] must be given time to recover from their last draining.</span>"
-			return
-	animate(src, alpha = alpha, time = 0) //Stop the fading animation
+	if(linked_ability.victims[L.real_name])
+		user << "<span class='warning'>[L] must be given time to recover from their last draining.</span>"
+		return
 	eating = 1
 	user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class='velvet bold'>cera qo...</span><br>\
 	<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
@@ -54,18 +54,18 @@
 	U.lucidity++
 	U.lucidity_drained++
 	LAZYADD(U.drained_minds, L.mind)
-	LAZYADD(linked_ability.victims, L)
+	linked_ability.victims[L.real_name] = L
 	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
 	L << sound('sound/magic/devour_will_end.ogg', volume = 75)
 	L.Paralyse(30)
 	L.stuttering += 40
 	L.confused += 40
 	L.reagents.add_reagent("zombiepowder", 2) //Brief window of vulnerability to veiling
-	qdel(src)
+	qdel(src, force = TRUE)
 	#warn Change this dark bead recovery timer - 2 minutes, maybe?
-	spawn(50) //I don't like to use a spawn here, but because of how it works I have to
+	spawn(100) //I don't like to use a spawn here, but because of how it works I have to
 		if(linked_ability && L)
-			LAZYREMOVE(U.drained_minds, L)
+			linked_ability.victims[L.real_name] = null
 			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
 	return TRUE
 

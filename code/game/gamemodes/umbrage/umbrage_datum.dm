@@ -59,12 +59,11 @@
 	return linked_abilities[id]
 
 /datum/umbrage/proc/give_ability(id, silent, consume_lucidity) //Gives an ability of a certain name to the umbrage and consumes lucidity if applicable.
-	var/datum/action/innate/umbrage/ability
-	if(ability_types[id])
-		var/ability_type = ability_types[id]
-		ability = new ability_type
-	else
+	if(!ability_types[id] || has_ability(id))
 		return
+	var/datum/action/innate/umbrage/ability
+	var/ability_type = ability_types[id]
+	ability = new ability_type
 	ability.linked_umbrage = src
 	ability.Grant(linked_body)
 	linked_abilities[ability.id] = ability
@@ -76,15 +75,12 @@
 	return TRUE
 
 /datum/umbrage/proc/take_ability(id, silent) //Takes an ability of a certain name from the umbrage.
-	var/datum/action/innate/umbrage/ability
-	for(var/datum/action/innate/umbrage/U in linked_abilities)
-		if(U.id == id)
-			ability = U
-			break
-	if(!ability)
+	if(!has_ability(id))
 		return
+	var/datum/action/innate/umbrage/ability
+	ability = linked_abilities[id]
 	ability.Remove(linked_body)
-	linked_abilities[ability.id] = null
+	linked_abilities[id] = null
 	LAZYREMOVE(linked_ability_types, ability.type)
 	if(!silent)
 		linked_body << "<span class='warning'>You have lost the \"[ability.name]\" ability.</span>"
