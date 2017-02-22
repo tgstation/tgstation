@@ -1,5 +1,3 @@
-var/global/dmm_suite/maploader = new
-
 dmm_suite{
 	/*
 

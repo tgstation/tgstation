@@ -26,6 +26,12 @@ var/global/dmm_suite/preloader/_preloader = new
  *
  */
 /dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num)
+	//How I wish for RAII
+	Master.StartLoadingMap()
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly)
+	Master.StopLoadingMap()
+
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -243,7 +249,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		first_turf_index++
 
 	//turn off base new Initialization until the whole thing is loaded
-	SSobj.map_loader_begin()
+	SSatoms.map_loader_begin()
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
@@ -264,11 +270,11 @@ var/global/dmm_suite/preloader/_preloader = new
 
 		//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
 		if(world.tick_usage > CURRENT_TICKLIMIT)
-			SSobj.map_loader_stop()
+			SSatoms.map_loader_stop()
 			stoplag()
-			SSobj.map_loader_begin()
+			SSatoms.map_loader_begin()
 	//Restore initialization to the previous value
-	SSobj.map_loader_stop()
+	SSatoms.map_loader_stop()
 
 ////////////////
 //Helpers procs

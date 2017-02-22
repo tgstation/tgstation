@@ -18,13 +18,12 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
-	//overlays that should remain on top and not normally be removed, like c4.
-	var/list/priority_overlays
-
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
 	var/initialized = FALSE
 
+	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
+	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
 /atom/New()
 	//atom creation method that preloads variables at creation
@@ -41,7 +40,7 @@
 	if(luminosity)
 		light = new(src)
 
-	var/do_initialize = SSobj.initialized
+	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSOBJ)
 		Initialize(do_initialize == INITIALIZATION_INNEW_MAPLOAD)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
@@ -74,6 +73,11 @@
 				AA.hide(list(src))
 	if(reagents)
 		qdel(reagents)
+
+	LAZYCLEARLIST(overlays)
+	LAZYCLEARLIST(priority_overlays)
+	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
+
 	return ..()
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)

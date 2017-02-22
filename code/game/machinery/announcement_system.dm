@@ -53,18 +53,12 @@ var/list/announcement_systems = list()
 	cut_overlays()
 	if(arrivalToggle)
 		add_overlay(greenlight)
-	else
-		overlays -= greenlight
 
 	if(newheadToggle)
 		add_overlay(pinklight)
-	else
-		overlays -= pinklight
 
 	if(stat & BROKEN)
 		add_overlay(errorlight)
-	else
-		overlays -= errorlight
 
 /obj/machinery/announcement_system/Destroy()
 	qdel(radio)

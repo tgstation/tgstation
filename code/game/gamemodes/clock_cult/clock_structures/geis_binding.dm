@@ -5,7 +5,8 @@
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
 	max_integrity = 25
 	obj_integrity = 25
-	density = 0
+	density = FALSE
+	immune_to_servant_attacks = TRUE
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "geisbinding_full"
 	break_message = null

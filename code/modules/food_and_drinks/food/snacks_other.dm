@@ -354,8 +354,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
 	headcolor = C
-	if(head in overlays)
-		overlays -= head
+	cut_overlay(head)
 	head.color = C
 	add_overlay(head)
 
@@ -418,3 +417,10 @@
 	icon_state = "taco_plain"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/branrequests
+	name = "Bran Requests Cereal"
+	desc = "A dry cereal that satiates your requests for bran. Tastes uniquely like raisins and salt."
+	icon_state = "bran_requests"
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "sodiumchloride" = 5)
+	bonus_reagents = list("sodiumchloride" = 10)

@@ -148,14 +148,15 @@
 /mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
 	return FALSE
 
-
-/mob/proc/put_in_hand(obj/item/I, hand_index)
+/mob/proc/can_put_in_hand(I, hand_index)
 	if(!put_in_hand_check(I))
 		return FALSE
 	if(!has_hand_for_held_index(hand_index))
 		return FALSE
-	var/obj/item/curr = held_items[hand_index]
-	if(!curr)
+	return !held_items[hand_index]
+
+/mob/proc/put_in_hand(obj/item/I, hand_index)
+	if(can_put_in_hand(I, hand_index))
 		I.forceMove(src)
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
@@ -253,6 +254,17 @@
 		return TRUE
 	if((I.flags & NODROP) && !force)
 		return FALSE
+	return TRUE
+
+/mob/proc/putItemFromInventoryInHandIfPossible(obj/item/I, hand_index, force_removal = FALSE)
+	if(!can_put_in_hand(I, hand_index))
+		return FALSE
+	if(!temporarilyRemoveItemFromInventory(I, force_removal))
+		return FALSE
+	I.remove_item_from_storage(src)
+	if(!put_in_hand(I, hand_index))
+		qdel(I)
+		CRASH("Assertion failure: putItemFromInventoryInHandIfPossible") //should never be possible
 	return TRUE
 
 //The following functions are the same save for one small difference
