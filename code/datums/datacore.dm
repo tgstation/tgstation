@@ -69,7 +69,7 @@
 	for(var/mob/new_player/N in player_list)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
-			CHECK_TICK
+		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment)
 	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
