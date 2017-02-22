@@ -82,7 +82,6 @@
 	set category = "Cultist"
 	set name = "Assert Leadership"
 	pollCultists()
-	return
 
 /datum/action/innate/cultmast
 	name = "FinalReckoning"
@@ -174,12 +173,14 @@
 		blood_target = target
 		for(var/mob/M in mob_list)
 			if(iscultist(M))
-				M << "<span class='cultlarge'><b>["Master"] [caller] has marked [blood_target] as the cult's highest priority, get there immediately!</b></span>"
+				M << "<span class='cultlarge'><b>"Master [ranged_ability_user] has marked [blood_target] as the cult's highest priority, get there immediately!</b></span>"
 		remove_ranged_ability(caller, "The marking rite is complete! It will last for one minute.")
-		spawn(600)
-			blood_target = null
-			for(var/mob/M in mob_list)
-				if(iscultist(M))
-					M << "<span class='cultlarge'><b>The blood mark has expired!</b></span>"
+		addtimer(CALLBACK(GLOBAL_PROC, proc/reset_blood_target), 120, TIMER_OVERRIDE)
 		return TRUE
 	return FALSE
+	
+/proc/reset_blood_target()
+ 	for(var/mob/M in mob_list)
+		if(iscultist(M))
+			M << "<span class='cultlarge'><b>The blood mark on [blood_target] has expired!</b></span>"
+ 	blood_target = null
