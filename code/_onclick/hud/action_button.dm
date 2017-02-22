@@ -1,4 +1,5 @@
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
+#define ACTION_BUTTON_THROTTLE_DELAY 1
 
 /obj/screen/movable/action_button
 	var/datum/action/linked_action
@@ -14,8 +15,9 @@
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return 1
-	if(usr.next_move >= world.time) // Is this needed ?
+	if(usr.next_action >= world.time)
 		return
+	usr.next_action = world.time + ACTION_BUTTON_THROTTLE_DELAY
 	linked_action.Trigger()
 	return 1
 
