@@ -1,4 +1,0 @@
-author: "TalkingCactus"
-delete-after: True
-changes: 
-  - bugfix: "New characters will now have their backpack preference correctly set to \"Department Backpack\"."
