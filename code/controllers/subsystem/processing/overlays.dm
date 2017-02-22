@@ -22,6 +22,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		var/atom/A = I
 		A.compile_overlays()
 		CHECK_TICK
+	processing.Cut()
 	..()
 
 /datum/subsystem/processing/overlays/Recover()
