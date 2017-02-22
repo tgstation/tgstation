@@ -279,7 +279,7 @@ em						{font-style: normal;	font-weight: bold;}
 .cult					{color: #960000;}
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
-.narsie					{color: #960000; font-weight: bold; font-size: 15;}
+.narsie					{color: #960000; font-weight: bold; font-size: 125px;}
 .narsiesmall			{color: #960000; font-weight: bold; font-size: 6;}
 .colossus				{color: #7F282A; font-size: 5;}
 .hierophant				{color: #660099; font-weight: bold; font-style: italic;}
@@ -346,6 +346,7 @@ em						{font-style: normal;	font-weight: bold;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 
+.visited_link			{color: #FF00FF;}
 big img.icon 			{width: 32px; height: 32px;}
 
 .memo					{color: #638500;	text-align: center;}

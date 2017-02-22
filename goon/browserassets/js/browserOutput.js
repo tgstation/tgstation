@@ -54,15 +54,10 @@ var opts = {
 	'mouseDownY': null,
 	'preventFocus': false, //Prevents switching focus to the game window
 
-	//Admin stuff
-	'adminLoaded': false, //Has the admin loaded his shit?
-
 	//Client Connection Data
 	'clientDataLimit': 5,
 	'clientData': [],
 
-	// List of macros in the 'hotkeymode' macro set.
-	'macros': {}
 };
 
 function outerHTML(el) {
@@ -417,11 +412,6 @@ function ehjaxCallback(data) {
 			} else {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
-		} else if (data.loadAdminCode) {
-			if (opts.adminLoaded) {return;}
-			var adminCode = data.loadAdminCode;
-			$('body').append(adminCode);
-			opts.adminLoaded = true;
 		} else if (data.modeChange) {
 			changeMode(data.modeChange);
 		} else if (data.firebug) {
@@ -463,25 +453,6 @@ function toggleWasd(state) {
 	opts.wasd = (state == 'on' ? true : false);
 }
 
-/*****************************************
-*
-* MAKE MACRO DICTIONARY
-*
-******************************************/
-/*
-// Callback for winget.
-function wingetMacros(macros) {
-	var idRegex = /.*?\.(?!(?:CRTL|ALT|SHIFT)\+)(.*?)(?:\+REP)?\.command/; // Do NOT match macros which need crtl, alt or shift to be held down (saves a ton of headache because I don't give enough of a fuck).
-	for (key in macros) {
-		match   = idRegex.exec(key)
-		if (match === null)
-			continue
-		macroID = match[1].toUpperCase();
-
-		opts.macros[macroID] = macros[key];
-	}
-}
-*/
 /*****************************************
 *
 * DOM READY

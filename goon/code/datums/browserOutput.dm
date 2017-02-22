@@ -270,6 +270,7 @@ var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons fo
 			return
 
 		message = replacetext(message, "\n", "<br>")
+		message = replacetext(message, "\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		target << output(url_encode(url_encode(message)), "browseroutput:output")
