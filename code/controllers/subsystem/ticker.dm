@@ -58,11 +58,9 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
-	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
-		login_music = 'sound/ambience/clown.ogg'
-	else
-		var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
-		login_music = pick(music)
+
+	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
+	login_music = pick(music)
 
 /datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
