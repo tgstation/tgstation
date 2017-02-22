@@ -118606,11 +118606,16 @@
 	icon_state = "propulsion";
 	dir = 1
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "edl" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "edm" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -118632,7 +118637,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "edp" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "edq" = (
 /turf/closed/wall/mineral/titanium,
@@ -118669,7 +118674,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "edz" = (
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "edA" = (
 /obj/machinery/computer/shuttle/ferry/request,
@@ -118687,7 +118693,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "edE" = (
 /turf/open/floor/mineral/titanium/blue,
@@ -118696,7 +118702,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "edG" = (
 /obj/structure/grille,
@@ -118755,7 +118761,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "edT" = (
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "edU" = (
 /obj/structure/chair{
@@ -118845,7 +118852,7 @@
 /obj/docking_port/mobile{
 	dir = 1;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
 	port_angle = 0;
@@ -118856,14 +118863,14 @@
 /obj/docking_port/stationary{
 	dir = 1;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
 	turf_type = /turf/open/space;
 	width = 5
 	},
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "eeo" = (
 /obj/structure/grille,
@@ -118872,6 +118879,66 @@
 /area/shuttle/transport)
 "eep" = (
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eeq" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"eer" = (
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/transport)
+"ees" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"eet" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"eeu" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/latejoin,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/shuttle/transport)
+"eev" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"eew" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"eex" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"eey" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 
 (1,1,1) = {"
@@ -152847,17 +152914,17 @@ aaa
 aaa
 aaa
 aaa
-edn
-eds
-edx
+aaa
+aaa
+edo
 edC
-edH
-edM
-edR
-edW
-eeb
-eeg
-eel
+edo
+edo
+eev
+edo
+edo
+eex
+edo
 aaf
 abT
 adr
@@ -153104,17 +153171,17 @@ aaa
 aaa
 aaa
 edk
+ees
 edo
-edt
-edy
+edo
 edD
-edI
-edN
-edS
-edX
-eec
-eeh
-eem
+edD
+edD
+edp
+edD
+edD
+edD
+edC
 aax
 aax
 aax
@@ -153359,18 +153426,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
+eeq
 edl
 edp
-edu
+edp
 edz
-edE
-edJ
-edO
+edp
+edp
+edp
 edT
-edY
-eed
-eei
+edp
+edp
+edp
 een
 acj
 aci
@@ -153617,18 +153684,18 @@ aaa
 aaa
 aaa
 aaa
-edm
-edq
-edv
-edA
+edk
+eet
+edo
+edo
 edF
-edK
-edP
-edU
-edZ
-eee
-eej
-eeo
+edF
+edF
+edp
+edF
+edF
+edF
+edC
 aax
 aax
 aax
@@ -153875,17 +153942,17 @@ aaa
 aaa
 aaa
 aaa
-edr
-edw
-edB
-edG
-edL
-edQ
-edV
-eea
-eef
-eek
-eep
+aaa
+aaa
+edo
+edC
+edo
+edo
+eew
+edo
+edo
+eey
+edo
 aaf
 abR
 adq
@@ -157475,7 +157542,7 @@ aca
 acn
 acn
 acI
-acI
+eeu
 acI
 acI
 adN
@@ -158243,7 +158310,7 @@ abp
 abF
 abW
 abZ
-acn
+eer
 acn
 acn
 acn

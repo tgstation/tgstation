@@ -8287,7 +8287,7 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry_away";
 	name = "unknown";
 	width = 5
