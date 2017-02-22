@@ -41,7 +41,9 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			CHECK_TICK
 
 /datum/subsystem/processing/overlays/proc/Flush()
-	fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
+	if(processing.len)
+		testing("Flushing [processing.len] overlays")
+		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
 
 /atom/proc/compile_overlays()
 	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
