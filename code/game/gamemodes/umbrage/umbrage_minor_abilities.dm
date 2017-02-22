@@ -42,7 +42,7 @@
 	psi_cost = 20
 	lucidity_cost = 0 //Baseline
 	blacklisted = 1
-	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
+	var/list/victims //A list of people we've used the bead on recently; we can't drain them again so soon
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
 	if(!owner || !owner.get_empty_held_indexes())

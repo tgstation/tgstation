@@ -41,9 +41,9 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 ///////////////
 
 /datum/game_mode
-	var/list/umbrages = list() //A list of the minds of all umbrages, including progenitors.
-	var/list/veils = list() //A list of the minds of all veils.
-	var/list/umbrages_and_veils = list() //A list of the minds of all umbrages and veils.
+	var/list/umbrages //A list of the minds of all umbrages, including progenitors.
+	var/list/veils //A list of the minds of all veils.
+	var/list/umbrages_and_veils //A list of the minds of all umbrages and veils.
 
 /datum/game_mode/umbrage
 	name = "umbrage"
@@ -127,8 +127,8 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	if(!silent)
 		greet_umbrage(U)
 	var/datum/mind/M = U.mind
-	umbrages += M
-	umbrages_and_veils += M
+	LAZYADD(umbrages, M)
+	LAZYADD(umbrages_and_veils, M)
 	M.special_role = "Umbrage"
 	return TRUE
 
@@ -138,8 +138,8 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	if(!silent)
 		greet_veil(U)
 	var/datum/mind/M = U.mind
-	veils += M
-	umbrages_and_veils += M
+	LAZYADD(veils, M)
+	LAZYADD(umbrages_and_veils, M)
 	M.special_role = "Veil"
 	return TRUE
 

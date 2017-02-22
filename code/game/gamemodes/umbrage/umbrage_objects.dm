@@ -53,19 +53,19 @@
 	U.psi = U.max_psi
 	U.lucidity++
 	U.lucidity_drained++
-	U.drained_minds += L.mind
+	LAZYADD(U.drained_minds, L.mind)
+	LAZYADD(linked_ability.victims, L)
 	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
 	L << sound('sound/magic/devour_will_end.ogg', volume = 75)
-	linked_ability.victims += L
 	L.Paralyse(30)
 	L.stuttering += 40
 	L.confused += 40
 	L.reagents.add_reagent("zombiepowder", 2) //Brief window of vulnerability to veiling
 	qdel(src)
 	#warn Change this dark bead recovery timer - 2 minutes, maybe?
-	spawn(30) //I don't like to use a spawn here, but because of how it works I have to
+	spawn(50) //I don't like to use a spawn here, but because of how it works I have to
 		if(linked_ability && L)
-			linked_ability.victims -= L
+			LAZYREMOVE(U.drained_minds, L)
 			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
 	return TRUE
 

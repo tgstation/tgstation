@@ -9,13 +9,17 @@
 	var/cycle_progress = 0 //When this reaches 5, it will reset to 0 and regenerate up to 20 spent psi.
 	var/lucidity = 3 //Lucidiy is used to buy abilities. We gain one each time we drain someone.
 	var/lucidity_drained = 3 //How much lucidity we've taken overall.
+	var/list/ability_types = list() //Types of abilities that the umbrage CAN OWN
 	var/list/linked_abilities = list() //Abilities that we have
-	var/list/linked_ability_types = list() //Used for cloning and gaining new bodies
-	var/list/drained_minds = list() //Minds eaten with Devour Will.
+	var/list/linked_ability_types //Types of abilities that the umbrage OWNS
+	var/list/drained_minds //People drained with Devour Will
 
 /datum/umbrage/New()
 	..()
 	START_PROCESSING(SSprocessing, src)
+	for(var/V in subtypesof(/datum/action/innate/umbrage))
+		var/datum/action/innate/umbrage/U = V
+		ability_types[initial(U.id)] = V //"V" is the path
 
 /datum/umbrage/process()
 	cycle_progress++
@@ -52,24 +56,19 @@
 	return TRUE
 
 /datum/umbrage/proc/has_ability(id)
-	for(var/datum/action/innate/umbrage/U in linked_abilities)
-		if(U.id == id)
-			return TRUE
-	return
+	return linked_abilities[id]
 
 /datum/umbrage/proc/give_ability(id, silent, consume_lucidity) //Gives an ability of a certain name to the umbrage and consumes lucidity if applicable.
 	var/datum/action/innate/umbrage/ability
-	for(var/V in subtypesof(/datum/action/innate/umbrage))
-		var/datum/action/innate/umbrage/U = V
-		if(initial(U.id) == id)
-			ability = new U
-			break
-	if(!ability)
+	if(ability_types[id])
+		var/ability_type = ability_types[id]
+		ability = new ability_type
+	else
 		return
 	ability.linked_umbrage = src
 	ability.Grant(linked_body)
-	linked_abilities += ability
-	linked_ability_types += ability.type
+	linked_abilities[ability.id] = ability
+	LAZYADD(linked_ability_types, ability.type)
 	if(!silent)
 		linked_body << "<span class='velvet italic'>You have learned the \"[ability.name]\" ability.</span>"
 	if(consume_lucidity)
@@ -85,8 +84,8 @@
 	if(!ability)
 		return
 	ability.Remove(linked_body)
-	linked_abilities -= ability
-	linked_ability_types -= ability.type
+	linked_abilities[ability.id] = null
+	LAZYREMOVE(linked_ability_types, ability.type)
 	if(!silent)
 		linked_body << "<span class='warning'>You have lost the \"[ability.name]\" ability.</span>"
 	qdel(ability)
