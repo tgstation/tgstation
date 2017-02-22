@@ -66,7 +66,7 @@
 	return
 
 /obj/item/device/pressure_plate/attackby(obj/item/I, mob/living/L)
-	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.dropItem(I))
+	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.drop_item(I))
 		sigdev = I
 		I.loc = src
 		L << "<span class='notice'>You attach [I] to [src]!</span>"
@@ -89,6 +89,8 @@
 		if(tile_overlay)
 			loc.overlays += tile_overlay
 	else
+		if(crossed)
+			trigger()	//no cheesing.
 		invisibility = initial(invisibility)
 		anchored = FALSE
 		icon_state = initial(icon_state)
