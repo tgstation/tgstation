@@ -219,7 +219,7 @@
 		for (var/obj/machinery/field/containment/C in range(30, src))
 			fieldcount += C		
 		if (fieldcount.len<24)
-			radio.talk_into(src,"ALERT: Particle Accelerator has been activated while the containment field is incomplete. A Class 5 Extinction Event is probable unless the issue is immediately remedied!", ENG_FREQ)
+			radio.talk_into(src,"ALERT: Particle Accelerator has been activated with a non-standard containment field configuration. Please inspect containment status to ensure that a Class 5 Extinction Event is not imminent!", ENG_FREQ)
 		use_power = 2
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
