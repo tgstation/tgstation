@@ -168,11 +168,17 @@ var/const/INJECT = 5 //injection
 	var/list/cached_reagents = reagent_list
 	if(!target)
 		return
-	if(!target.reagents || src.total_volume<=0)
-		return
+
+	var/datum/reagents/R
+	if(istype(target, /datum/reagents))
+		R = target
+	else
+		if(!target.reagents || src.total_volume<=0)
+			return
+		R = target.reagents
+
 	if(amount < 0)
 		return
-	var/datum/reagents/R = target.reagents
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
@@ -483,6 +489,9 @@ var/const/INJECT = 5 //injection
 	var/react_type
 	if(isliving(A))
 		react_type = "LIVING"
+		if(method == INGEST)
+			var/mob/living/L = A
+			L.taste(src)
 	else if(isturf(A))
 		react_type = "TURF"
 	else if(isobj(A))
@@ -518,14 +527,13 @@ var/const/INJECT = 5 //injection
 	chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
 
 	for(var/A in cached_reagents)
-
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			R.volume += amount
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change()
-			R.on_merge(data)
+			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
 			return TRUE
@@ -549,7 +557,7 @@ var/const/INJECT = 5 //injection
 		return TRUE
 
 	else
-		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
+		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 	return FALSE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
@@ -685,6 +693,50 @@ var/const/INJECT = 5 //injection
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
 
+/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+	// the lower the minimum percent, the more sensitive the message is.
+	var/list/out = list()
+	var/list/tastes = list() //descriptor = strength
+	if(minimum_percent <= 100)
+		for(var/datum/reagent/R in reagent_list)
+			if(!R.taste_mult)
+				continue
+
+			if(istype(R, /datum/reagent/consumable/nutriment))
+				var/list/taste_data = R.data
+				for(var/taste in taste_data)
+					var/ratio = taste_data[taste]
+					var/amount = ratio * R.taste_mult * R.volume
+					if(taste in tastes)
+						tastes[taste] += amount
+					else
+						tastes[taste] = amount
+			else
+				var/taste_desc = R.taste_description
+				var/taste_amount = R.volume * R.taste_mult
+				if(taste_desc in tastes)
+					tastes[taste_desc] += taste_amount
+				else
+					tastes[taste_desc] = taste_amount
+		//deal with percentages
+		// TODO it would be great if we could sort these from strong to weak
+		var/total_taste = counterlist_sum(tastes)
+		if(total_taste > 0)
+			for(var/taste_desc in tastes)
+				var/percent = tastes[taste_desc]/total_taste * 100
+				if(percent < minimum_percent)
+					continue
+				var/intensity_desc = "a hint of"
+				if(percent > minimum_percent * 2 || percent == 100)
+					intensity_desc = ""
+				else if(percent > minimum_percent * 3)
+					intensity_desc = "the strong flavor of"
+				if(intensity_desc != "")
+					out += "[intensity_desc] [taste_desc]"
+				else
+					out += "[taste_desc]"
+
+	return english_list(out, "something indescribable")
 
 ///////////////////////////////////////////////////////////////////////////////////
 
