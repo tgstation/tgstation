@@ -63,8 +63,6 @@
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/living/carbon/human/user, flag)
 	if(flag) 
 		return // too close  
-	if(!istype(user))
-		return
 	if(user.dna.check_mutation(HULK))
 		user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
 		return
