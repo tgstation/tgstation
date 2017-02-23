@@ -184,5 +184,5 @@
 	fully_heal(TRUE)
 
 /obj/item/drone_shell/dusty
-	name = "dust-caked drone shell"
+	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell."
