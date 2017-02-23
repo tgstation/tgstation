@@ -182,3 +182,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
+
+/obj/item/drone_shell/dusty
+	name = "dust-caked drone shell"
+	desc = "A long-forgotten drone shell."
