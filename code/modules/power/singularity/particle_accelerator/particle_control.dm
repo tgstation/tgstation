@@ -21,11 +21,12 @@
 	var/powered = 0
 	mouse_opacity = 2
 
-/obj/machinery/particle_accelerator/control_box/New()
+/obj/machinery/particle_accelerator/control_box/Initialize()
 	wires = new /datum/wires/particle_accelerator/control_box(src)
 	connected_parts = list()
 	radio = new(src)
 	radio.listening = 0
+	radio.frequency = 1357
 	..()
 
 /obj/machinery/particle_accelerator/control_box/Destroy()
@@ -215,7 +216,6 @@
 	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
 	if(active)
-		radio.frequency = 1357
 		for (var/obj/machinery/field/containment/C in range(30, src))
 			fieldcount += C		
 		if (fieldcount.len<24)
