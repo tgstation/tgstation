@@ -120,10 +120,10 @@
 		update_cult_icons_added(cult_mind)
 		to_chat(cult_mob, "<span class='userdanger'>You are a member of the cult!</span>")
 		add_cultist(cult_mind, 0)
-		if(cult_mob.voiceprint)
+		if(cult_mob.voiceprint || cult_mob.get_faceprint())
 			for(var/_other_cult in cultists_to_cult-cult_mind)
 				var/datum/mind/other_cult = _other_cult
-				other_cult.set_print_manual(cult_mob.voiceprint, cult_mob.real_name, CATEGORY_VOICEPRINTS)
+				other_cult.preknown_identity(cult_mob)
 	..()
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob,tome = 0)

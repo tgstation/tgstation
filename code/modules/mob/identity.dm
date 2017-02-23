@@ -337,6 +337,47 @@ var/global/list/used_voiceprints = list()
 				set_print_entry(linked_print, linked_print_entry, linked_category)
 		set_print_entry(print, print_entry, category)
 
+/datum/mind/proc/preknown_identity(mob/living/subject)
+	var/voice_print = subject.voiceprint
+	var/faceprint = subject.get_faceprint()
+	var/subject_name = subject.real_name
+	if(voice_print)
+		set_print_manual(voice_print, subject_name, CATEGORY_VOICEPRINTS)
+	if(faceprint)
+		set_print_manual(faceprint, subject_name, CATEGORY_FACEPRINTS)
+	if(voice_print && faceprint)
+		unlink_print(voice_print, CATEGORY_VOICEPRINTS)
+		unlink_print(faceprint, CATEGORY_FACEPRINTS)
+		link_print(voice_print, faceprint, CATEGORY_VOICEPRINTS)
+
+/datum/mind/proc/link_print(print, linked_print, print_category)
+	var/print_entry = get_print_entry(print, print_category)
+	var/linked_category = inverse_category(print_category)
+	var/list/linked_print_entry = get_print_entry(linked_print, linked_category)
+	if(!(print_entry && linked_print_entry))
+		return FALSE
+	var/print_name = print_entry[3]
+	linked_print_entry[4] = print
+	print_entry[4] = linked_print
+	set_print_entry(linked_print, linked_print_entry, linked_category)
+	set_print_entry(print, print_entry, print_category)
+	set_print_manual(print, print_name, print_category)
+	. = TRUE
+
+/datum/mind/proc/unlink_print(print, category)
+	var/list/print_entry = get_print_entry(print, category)
+	if(!print_entry)
+		return
+	var/linked_category = inverse_category(category)
+	var/linked_print = print_entry[4]
+	if(linked_print)
+		var/list/linked_print_entry = get_print_entry(linked_print, linked_category)
+		if(linked_print_entry && linked_print_entry[4] == print)
+			linked_print_entry[4] = null
+			set_print_entry(linked_print, linked_print_entry, linked_category)
+	print_entry[4] = null
+	set_print_entry(print, print_entry, category)
+
 /datum/mind/proc/handle_faceprint_caching(atom/movable/seen, faceprint)
 	var/list/cache_entry = identity_cache[seen]
 	if(!cache_entry)
@@ -408,20 +449,6 @@ var/global/list/used_voiceprints = list()
 	selected_ref = null
 	select_mode = null
 
-/datum/identity_manager/proc/unlink(print)
-	var/list/print_entry = mind.get_print_entry(print, cat)
-	if(!print_entry)
-		return
-	var/linked_cat = mind.inverse_category(cat)
-	var/linked_print = print_entry[4]
-	if(linked_print)
-		var/list/linked_print_entry = mind.get_print_entry(linked_print, linked_cat)
-		if(linked_print_entry && linked_print_entry[4] == print)
-			linked_print_entry[4] = null
-			mind.set_print_entry(linked_print, linked_print_entry, linked_cat)
-	print_entry[4] = null
-	mind.set_print_entry(print, print_entry, cat)
-
 /datum/identity_manager/proc/delete_print(ref)
 	var/print = print_refs[ref]
 	refs_lookup -= print
@@ -429,7 +456,7 @@ var/global/list/used_voiceprints = list()
 	var/list/print_entry = mind.get_print_entry(print, cat)
 	if(!print_entry)
 		return
-	unlink(print)
+	mind.unlink_print(print, cat)
 	mind.set_print_entry(print, null, cat)
 	if(selected_ref == ref)
 		done_selecting()
@@ -547,25 +574,16 @@ var/global/list/used_voiceprints = list()
 			else
 				var/selected_cat = mind.inverse_category(cat)
 				var/list/selected_print = print_refs[selected_ref]
-				if(!selected_ref || !selected_print) 
+				if(!(selected_ref && selected_print))
 					done_selecting()
 					return
-				var/list/selected_print_entry = mind.get_print_entry(selected_print, selected_cat)
-				if(!selected_print_entry)
-					done_selecting()
-					return
-				var/selected_name = selected_print_entry[3]
-				selected_print_entry[4] = print
-				print_entry[4] = selected_print
-				mind.set_print_entry(selected_print, selected_print_entry, selected_cat)
-				mind.set_print_entry(print, print_entry, cat)
-				mind.set_print_manual(selected_print, selected_name, selected_cat)
+				mind.link_print(selected_print, print, selected_cat)
 				done_selecting()
 		if("unlinkprint")
 			var/ref = params["printref"]
 			var/print = print_refs[ref]
 			if(print)
-				unlink(print)
+				mind.unlink_print(print, cat)
 		if("writeprint")
 			var/ref = params["printref"]
 			var/print = print_refs[ref]
