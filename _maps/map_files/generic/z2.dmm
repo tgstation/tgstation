@@ -8289,7 +8289,7 @@
 	dwidth = 2;
 	height = 13;
 	id = "ferry_away";
-	name = "unknown";
+	name = "Centcom Ferry Dock";
 	width = 5
 	},
 /turf/open/space,
