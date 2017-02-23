@@ -60,8 +60,9 @@
 		item_state = "flamethrower_0"
 	return
 
-/obj/item/weapon/flamethrower/afterattack(atom/target, var/mob/living/carbon/human/user, flag)
-	if(flag) return // too close  
+/obj/item/weapon/flamethrower/afterattack(atom/target, mob/living/carbon/human/user, flag)
+	if(flag) 
+		return // too close  
 	if(!istype(user))
 		return
 	if(user.dna.check_mutation(HULK))
