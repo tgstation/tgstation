@@ -397,6 +397,7 @@
 	description = "The only drink with the PWR that true gamers crave."
 	id = "pwr_game"
 	color = "#9385bf" // rgb: 58, 52, 75
+	taste_description = "sweet and salty tang"
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/M)
 	if (M.bodytemperature > 310)
@@ -408,6 +409,7 @@
 	description = "~Shake me up some of that Shambler's Juice!~"
 	id = "shamblers"
 	color = "#f00060" // rgb: 94, 0, 38
+	taste_description = "carbonated metallic soda"
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/M)
 	if (M.bodytemperature > 310)
