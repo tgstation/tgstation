@@ -82,9 +82,13 @@
 	set category = "Cultist"
 	set name = "Assert Leadership"
 	pollCultists()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /datum/action/innate/cultmast
 	name = "FinalReckoning"
+	desc = "A single use spell that brings the entire cult to the master's location"
 	button_icon_state = "sintouch"
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
@@ -112,18 +116,19 @@
 							new /obj/effect/overlay/temp/dir_setting/cult/phase(mobloc, M.dir)
 							playsound(mobloc, "sparks", 100, 1)
 						if (4)
-							new /obj/effect/overlay/temp/cult/spray (mobloc)
-							playsound(mobloc, 'sound/magic/lightningbolt.ogg', 100, 1)
+							new /obj/effect/overlay/temp/cult/final_jaunt(mobloc)
+							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
 							mobloc = get_turf(owner)
 							M.forceMove(mobloc)
-		if(i == 4)
-			for(var/datum/action/innate/cultmast/H in owner.actions)
-				qdel(H)
-
+							for(var/datum/action/innate/cultmast/H in owner.actions)
+								qdel(H)
 
 /datum/action/innate/cultmark
     name = "Mark"
     desc = "Marks a target for the cult"
+	button_icon_state = "cult_mark"
+    background_icon_state = "bg_demon"
+    buttontooltipstyle = "cult"
     check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
     var/obj/effect/proc_holder/cultmark/CM
     var/time = 0
