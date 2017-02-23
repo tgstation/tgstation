@@ -81,6 +81,12 @@
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
+	if(user.dna.check_mutation(HULK))
+		user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+		return
+	if(NOGUNS in user.dna.species.species_traits)
+		user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+		return
 	if(!loadedItems || !loadedWeightClass)
 		user << "<span class='warning'>\The [src] has nothing loaded.</span>"
 		return
