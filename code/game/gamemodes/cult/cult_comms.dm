@@ -180,7 +180,7 @@
 			if(iscultist(M))
 				M << "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [blood_target] as the cult's highest priority, get there immediately!</b></span>"
 		remove_ranged_ability(caller, "The marking rite is complete! It will last for one minute.")
-		addtimer(CALLBACK(GLOBAL_PROC, proc/reset_blood_target), 120, TIMER_OVERRIDE)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target), 120, TIMER_OVERRIDE)
 		return TRUE
 	return FALSE
 	
