@@ -17,7 +17,6 @@
 	if(!pref_species)
 		var/rando_race = pick(config.roundstart_races)
 		pref_species = new rando_race()
-	backbag = 1
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
@@ -66,7 +65,7 @@
 	preview_icon.Scale(48+32, 16+32)
 	CHECK_TICK
 	mannequin.setDir(NORTH)
-	
+
 	var/icon/stamp = getFlatIcon(mannequin)
 	CHECK_TICK
 	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)

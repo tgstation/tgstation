@@ -33,7 +33,7 @@
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
-			log_admin("[key_name(usr)] has stickybanned [ckey].\nReason: [ban["message"]]")
+			log_admin_private("[key_name(usr)] has stickybanned [ckey].\nReason: [ban["message"]]")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has stickybanned [ckey].\nReason: [ban["message"]]</span>")
 
 		if ("remove")
@@ -52,7 +52,7 @@
 				return
 			world.SetConfig("ban",ckey, null)
 
-			log_admin("[key_name(usr)] removed [ckey]'s stickyban")
+			log_admin_private("[key_name(usr)] removed [ckey]'s stickyban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [ckey]'s stickyban</span>")
 
 		if ("remove_alt")
@@ -100,7 +100,7 @@
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
-			log_admin("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
+			log_admin_private("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disassociated [alt] from [ckey]'s sticky ban</span>")
 
 		if ("edit")
@@ -124,7 +124,7 @@
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
-			log_admin("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
+			log_admin_private("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]</span>")
 
 		if ("revert")
@@ -142,7 +142,7 @@
 				usr << "<span class='adminnotice'>Error: No cached sticky ban for [ckey] found!"
 			world.SetConfig("ban",ckey,null)
 
-			log_admin("[key_name(usr)] has reverted [ckey]'s sticky ban to it's state at round start.")
+			log_admin_private("[key_name(usr)] has reverted [ckey]'s sticky ban to it's state at round start.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has reverted [ckey]'s sticky ban to it's state at round start.</span>")
 			//revert is mostly used when shit goes rouge, so we have to set it to null
 			//	and wait a byond tick before assigning it to ensure byond clears its shit.
