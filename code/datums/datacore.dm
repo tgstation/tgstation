@@ -68,7 +68,6 @@
 /datum/datacore/proc/manifest()
 	for(var/mob/living/carbon/human/H in player_list)
 		manifest_inject(H)
-		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment)
 	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
