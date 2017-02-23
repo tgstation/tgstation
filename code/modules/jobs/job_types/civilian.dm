@@ -17,6 +17,9 @@ Clown
 	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
+/datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
+	H.rename_self("clown", M.client)
+
 /datum/outfit/job/clown
 	name = "Clown"
 	jobtype = /datum/job/clown
@@ -57,7 +60,6 @@ Clown
 		return
 
 	H.dna.add_mutation(CLOWNMUT)
-	H.rename_self("clown")
 
 /*
 Mime
