@@ -16,7 +16,7 @@
 		return 1
 	if(usr.next_click > world.time)
 		return
-	usr.next_click = world.time + (world.fps / 10)
+	usr.next_click = world.time + 1
 	linked_action.Trigger()
 	return 1
 
