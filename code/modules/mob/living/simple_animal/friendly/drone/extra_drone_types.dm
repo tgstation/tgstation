@@ -185,4 +185,5 @@
 
 /obj/item/drone_shell/dusty
 	name = "derelict drone shell"
-	desc = "A long-forgotten drone shell."
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	default_hatmask = /obj/item/clothing/head/ushanka
