@@ -13,7 +13,6 @@
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
-	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
@@ -302,7 +301,7 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
+	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
 	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
@@ -423,33 +422,27 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
-/mob/new_player/proc/create_character(transfer_after)
+/mob/new_player/proc/create_character()
 	spawning = 1
 	close_spawn_windows()
 
-	var/mob/living/carbon/human/H = new(loc)
+	var/mob/living/carbon/human/new_character = new(loc)
 
 	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-	client.prefs.copy_to(H)
-	H.dna.update_dna_identity()
+	client.prefs.copy_to(new_character)
+	new_character.dna.update_dna_identity()
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
-		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
-	H.name = real_name
+	new_character.name = real_name
 
-	. = H
-	new_character = .
-	if(transfer_after)
-		transfer_character()
+	new_character.key = key		//Manually transfer the key to log them in
+	new_character.stopLobbySound()
 
-/mob/new_player/proc/transfer_character()
-	. = new_character
-	if(.)
-		new_character.key = key		//Manually transfer the key to log them in
-		new_character.stopLobbySound()
+	return new_character
 
 /mob/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

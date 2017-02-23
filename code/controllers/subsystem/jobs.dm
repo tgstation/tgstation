@@ -357,15 +357,7 @@ var/datum/subsystem/job/SSjob
 	return 1
 
 //Gives the player the stuff he should have with his rank
-/datum/subsystem/job/proc/EquipRank(mob/M, rank, joined_late=0)
-	var/mob/new_player/N
-	var/mob/living/H
-	if(!joined_late)
-		N = M
-		H = N.new_character
-	else
-		H = M
-
+/datum/subsystem/job/proc/EquipRank(mob/living/H, rank, joined_late=0)
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
@@ -407,16 +399,16 @@ var/datum/subsystem/job/SSjob
 		if(ismob(new_mob))
 			H = new_mob
 
-	M << "<b>You are the [rank].</b>"
-	M << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
-	M << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
+	H << "<b>You are the [rank].</b>"
+	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
 	if(job.req_admin_notify)
-		M << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
-		M << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
+		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
 
 	if(job && H)
-		job.after_spawn(H, M)
+		job.after_spawn(H)
 
 	return H
 

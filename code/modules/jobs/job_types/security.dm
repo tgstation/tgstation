@@ -183,7 +183,7 @@ Security Officer
 
 var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)
 
-/datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
+/datum/job/officer/after_spawn(mob/living/carbon/human/H)
 	// Assign department security
 	var/department
 	if(H && H.client && H.client.prefs)
@@ -255,9 +255,9 @@ var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT
 				else
 					break
 	if(department)
-		M << "<b>You have been assigned to [department]!</b>"
+		H << "<b>You have been assigned to [department]!</b>"
 	else
-		M << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
+		H << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
 
 
 

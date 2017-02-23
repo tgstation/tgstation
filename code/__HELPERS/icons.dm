@@ -954,8 +954,6 @@ var/global/list/humanoid_icon_cache = list()
 		if(outfit)
 			body.equipOutfit(outfit, TRUE)
 
-		SSoverlays.Flush()
-
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		body.setDir(NORTH)
