@@ -127,11 +127,11 @@
 	name = "Mark Target"
 	desc = "Marks a target for the cult"
 	button_icon_state = "cult_mark"
-    background_icon_state = "bg_demon"
-    buttontooltipstyle = "cult"
-    check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
-    var/obj/effect/proc_holder/cultmark/CM
-    var/time = 0
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	var/obj/effect/proc_holder/cultmark/CM
+	var/time = 0
 
 /datum/action/innate/cultmark/New()
     CM = new()
@@ -185,7 +185,7 @@
 	return FALSE
 	
 /proc/reset_blood_target()
- 	for(var/mob/M in mob_list)
+	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << "<span class='cultlarge'><b>The blood mark on [blood_target] has expired!</b></span>"
 	blood_target = null
