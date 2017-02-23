@@ -78,6 +78,9 @@ Mime
 	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
+/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
+	H.rename_self("mime", M.client)
+
 /datum/outfit/job/mime
 	name = "Mime"
 	jobtype = /datum/job/mime
@@ -105,8 +108,6 @@ Mime
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
-
-	H.rename_self("mime")
 
 /*
 Librarian
