@@ -373,11 +373,14 @@ var/datum/subsystem/ticker/ticker
 	for(var/mob/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
-			if(player.mind.assigned_role=="AI")
+			var/ar = player.mind.assigned_role
+			if(ar=="AI")
 				player.close_spawn_windows()
 				player.AIize(FALSE)
 			else
 				player.create_character(FALSE)
+				if(ar=="Cyborg")
+					player.Robotize(FALSE,FALSE)
 		else
 			player.new_player_panel()
 		CHECK_TICK
@@ -394,7 +397,7 @@ var/datum/subsystem/ticker/ticker
 	var/captainless=1
 	for(var/mob/new_player/N in player_list)
 		var/mob/living/carbon/human/player = N.new_character
-		if(istype(player) && player.mind && player.mind.assigned_role && player.mind.assigned_role != "AI")
+		if(istype(player) && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)

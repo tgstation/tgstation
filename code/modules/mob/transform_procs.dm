@@ -346,7 +346,18 @@
 		qdel(src)
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(delete_items = 0)
+/mob/proc/Robotize(delete_items = 0)
+
+/mob/new_player/Robotize(delete_items = 0, transfer_after = TRUE)
+	spawning = 1
+	if(new_character)
+		new_character = new_character.Robotize(FALSE, transfer_after)
+		testing("New new_character is now [new_character]([new_character.type])")
+		if(config.rename_cyborg && !transfer_after)	//name can't be set in robot/New without the client
+			new_character.rename_self("cyborg", client)
+		. = new_character
+
+/mob/living/carbon/human/Robotize(delete_items = 0, transfer_after = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -373,12 +384,13 @@
 	R.gender = gender
 	R.invisibility = 0
 
-
 	if(mind)		//TODO
+		if(!transfer_after)
+			mind.active = FALSE
 		mind.transfer_to(R)
 		if(mind.special_role)
 			R.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-	else
+	else if(transfer_after)
 		R.key = key
 
 	if (config.rename_cyborg)
