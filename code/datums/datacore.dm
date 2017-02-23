@@ -66,9 +66,8 @@
 			return
 
 /datum/datacore/proc/manifest()
-	for(var/mob/new_player/N in player_list)
-		if(ishuman(N.new_character))
-			manifest_inject(N.new_character, N.client)
+	for(var/mob/living/carbon/human/H in player_list)
+		manifest_inject(H)
 		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment)
@@ -185,7 +184,7 @@
 
 
 var/record_id_num = 1001
-/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
+/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -196,9 +195,7 @@ var/record_id_num = 1001
 			assignment = "Unassigned"
 
 		var/id = num2hex(record_id_num++,6)
-		if(!C)
-			C = H.client
-		var/image = get_id_photo(H, C)
+		var/image = get_id_photo(H)
 		var/obj/item/weapon/photo/photo_front = new()
 		var/obj/item/weapon/photo/photo_side = new()
 		photo_front.photocreate(null, icon(image, dir = SOUTH))
@@ -266,11 +263,7 @@ var/record_id_num = 1001
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C)
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H)
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-	var/datum/preferences/P
-	if(!C)
-		C = H.client
-	if(C)
-		P = C.prefs
+	var/datum/preferences/P = H.client.prefs
 	return get_flat_human_icon(null,J.outfit,P)
