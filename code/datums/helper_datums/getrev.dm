@@ -60,10 +60,10 @@ var/global/datum/getrev/revdata = new()
 	log_world("PR details successfully downloaded")
 	has_pr_details = TRUE
 
-/datum/getrev/proc/GetTestMergeInfo()
+/datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
 		return ""
-	. = "The following pull requests are currently test merged:<br>"
+	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/details = ""
 		if(has_pr_details)

@@ -1,8 +1,0 @@
-author: "MrPerson"
-delete-after: True
-changes: 
-  - experiment: "Ion storms have several new additions:"
-  - rscadd: "25% chance to flatly replace the AI's core lawset with something random in the config. Suddenly the AI is Corporate, deal w/ it."
-  - rscadd: "10% chance to delete one of the AI's core or supplied laws. Hope you treated the AI well without its precious law 1 to protect your sorry ass."
-  - rscadd: "10% chance that, instead of adding a random law, it will instead replace one of the AI's existing core or supplied laws with the ion law. Otherwise, it adds the generated law as normal. There's still a 100% chance of getting a generated ion law."
-  - rscadd: "10% chance afterwards to shuffle all the AI's laws."
