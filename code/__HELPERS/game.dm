@@ -430,6 +430,7 @@
 		FinalReckoning.Grant(usr)
 		Mark.Grant(usr)
 		usr.mind.special_role = "Cult Master"
+		usr.mind.antag_hud_icon_state = "cultmaster"
 		cult_mastered = 1
 		for(var/mob/M in mob_list)
 			if(iscultist(M))
