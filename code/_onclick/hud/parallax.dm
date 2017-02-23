@@ -36,7 +36,12 @@
 
 /datum/hud/proc/apply_parallax_pref()
 	var/client/C = mymob.client
-	if(C.prefs) 
+	if(C.prefs)
+		var/pref = C.prefs.parallax
+		if (isnull(pref))
+			pref = PARALLAX_HIGH
+			if (C.byond_version < 511)
+				pref = PARALLAX_DISABLE
 		switch(C.prefs.parallax)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
