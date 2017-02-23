@@ -28,9 +28,10 @@ Folder contents:
 		/umbrage_antags.dm: Contains antagonist datums for umbrages and veils.
 		/umbrage_datum.dm: Contains the tracking datum for lots of umbrage stuff.
 		/umbrage_major_abilities.dm: Contains hatching and ascension abilities and their related objects.
-		/umbrage_minor_abilities.dm: Contains spells, abilities, and other stuff. Does NOT including hatching and ascension.
 		/umbrage_objects.dm: Contains the few items and structures used in Umbrage.
 		/umbrage_unsorted.dm: Contains things with nowhere else to be, like the umbrage race.
+	/code/game/gamemodes/umbrage/umbrage_abilities
+		Contains files for all abilities but Divulge and Sacrament.
 
 Idea and initial code by Xhuis (my 3rd gamemode now...)
 
