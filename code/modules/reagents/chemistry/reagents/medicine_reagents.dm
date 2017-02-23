@@ -8,6 +8,13 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	overdose_threshold = 60
+
+/datum/reagent/medicine/overdose_process(mob/living/M)
+	if(prob(50))
+		M.adjustToxLoss(1*REM)
+	..()
+	. = 1
 
 /datum/reagent/medicine/on_mob_life(mob/living/M)
 	current_cycle++
@@ -123,6 +130,7 @@
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
+	overdose_threshold = 100
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
@@ -208,6 +216,11 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/silver_sulfadiazine/overdose_process(mob/living/M)
+	M.adjustFireLoss(4, 0)
+	..()
+	. = 1
+
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
 	id = "oxandrolone"
@@ -257,12 +270,18 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
+	M.adjustBruteLoss(4, 0)
+	..()
+	. = 1
+
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
 	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a blood substitute on an IV drip."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
+	overdose_threshold = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
@@ -284,6 +303,12 @@
 			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
 			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
 	..()
+
+/datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
+	M.adjustBruteLoss(1*REM, 0)
+	M.adjustFireLoss(1*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/medicine/mine_salve
 	name = "Miner's Salve"
@@ -359,6 +384,11 @@
 		if(R != src)
 			M.reagents.remove_reagent(R.id,1)
 	..()
+
+/datum/reagent/medicine/charcoal/overdose_process(mob/living/M)
+	M.adjustToxLoss(4*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
@@ -471,6 +501,11 @@
 	M.adjustOxyLoss(-3*REM, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
+	..()
+	. = 1
+
+/datum/reagent/medicine/salbutamol/overdose_process(mob/living/M)
+	M.adjustOxyLoss(6*REM, 0) // Get help, QUICK
 	..()
 	. = 1
 
