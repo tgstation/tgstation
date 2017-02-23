@@ -64,7 +64,7 @@
 	if(flag) 
 		return // too close  
 	if(ishuman(user))
-		mob/living/carbon/human/H = user
+		var/mob/living/carbon/human/H = user
 		if(H.dna.check_mutation(HULK))
 			user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
 			return
