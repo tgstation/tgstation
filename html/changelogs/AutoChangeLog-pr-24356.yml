@@ -1,5 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "The graphical delays with characters at roundstart are gone"
-  - bugfix: "The crew manifest is working again"
