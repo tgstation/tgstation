@@ -77,7 +77,7 @@
 	Fire(user, target)
 
 
-/obj/item/weapon/pneumatic_cannon/proc/Fire(var/mob/living/carbon/human/user, var/atom/target)
+/obj/item/weapon/pneumatic_cannon/proc/Fire(mob/living/carbon/human/user, var/atom/target)
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
