@@ -167,8 +167,9 @@
 	if(factory)
 		factory.spores -= src
 	factory = null
-	oldguy.forceMove(loc)
-	oldguy = null
+	if(oldguy)
+		oldguy.forceMove(get_turf(src))
+		oldguy = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
