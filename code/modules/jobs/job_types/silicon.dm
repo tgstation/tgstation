@@ -35,8 +35,3 @@ Cyborg
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
 	minimal_player_age = 21
-
-/datum/job/cyborg/equip(mob/living/carbon/human/H)
-	if(!H)
-		return 0
-	return H.Robotize()
