@@ -401,7 +401,7 @@
 	var/list/yes_voters = new
 	var/list/cult_total = new
 	if(world.time<1800)
-		usr << "It would be premature to select a leader while everyone is still settling in, try again in [(2400-world.time)/10] seconds"
+		usr << "It would be premature to select a leader while everyone is still settling in, try again in [(1800-world.time)/10] seconds"
 		return
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
