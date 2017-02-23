@@ -7,6 +7,7 @@
 	var/active = FALSE //Used by toggle based abilities.
 	var/ranged_mousepointer
 	var/mob/living/ranged_ability_user
+	var/ranged_clickcd_override = -1
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
@@ -20,7 +21,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		caller << "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled."
 		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
-	ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
+	if(ranged_clickcd_override >= 0)
+		ranged_ability_user.next_click = world.time + ranged_clickcd_override
+	else
+		ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
 	ranged_ability_user.face_atom(A)
 	return FALSE
 

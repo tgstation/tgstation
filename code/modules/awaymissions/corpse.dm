@@ -37,6 +37,7 @@
 	create(ckey = user.ckey)
 
 /obj/effect/mob_spawn/Initialize(mapload)
+	..()
 	if(instant || (roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
