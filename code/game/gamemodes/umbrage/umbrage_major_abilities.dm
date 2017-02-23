@@ -60,9 +60,8 @@
 				user.visible_message("<span class='userdanger'>Gravity fluctuates. Psychic tendrils extend outward and feel blindly around the area.</span>", \
 									"<span class='velvet'>Gravity around you fluctuates. You tentatively reach out, feel with your mind.</span>")
 				for(var/atom/A in view(3, user))
-					spawn(rand(10, 40))
-						if(prob(25))
-							user.Beam(A, icon_state="b_beam", time = rand(30, 100))
+					if(prob(25))
+						addtimer(CALLBACK(src, .proc/woah_spooky_beams_so_real, user, A), rand(10, 40))
 				playsound(user, 'sound/magic/divulge_02.ogg', 80, 0)
 			if(3)
 				user.visible_message("<span class='userdanger'>Sigils form along [user]'s body. \His skin blackens as \he glows a blinding purple.</span>", \
@@ -107,6 +106,9 @@
 	linked_umbrage.give_ability("psi_web")
 	linked_umbrage.give_ability("devour_will")
 	Remove(user) //Take the action away
+
+/datum/action/innate/umbrage/divulge/proc/woah_spooky_beams_so_real(mob/living/user, atom/movable/A)
+	user.Beam(A, icon_state="b_beam", time = rand(30, 100))
 
 /datum/action/innate/umbrage/divulge/proc/refresh()
 	active = 0
