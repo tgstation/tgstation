@@ -450,6 +450,8 @@
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stopLobbySound()
+	else if(spawning)
+		stack_trace("Unable to find a mob for this player: [key]!")
 
 /mob/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
