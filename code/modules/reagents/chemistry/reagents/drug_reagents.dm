@@ -2,6 +2,7 @@
 	name = "Drug"
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "bitterness"
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -35,6 +36,7 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
+	taste_description = "smoke"
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
 	if(prob(1))
@@ -230,6 +232,7 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
+	taste_description = "salt" // because they're bathsalts?
 
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
