@@ -9,13 +9,15 @@
 	var/cycle_progress = 0 //When this reaches 5, it will reset to 0 and regenerate up to 20 spent psi.
 	var/lucidity = 3 //Lucidiy is used to buy abilities. We gain one each time we drain someone.
 	var/lucidity_drained = 3 //How much lucidity we've taken overall.
-	var/list/ability_types = list() //Types of abilities that the umbrage CAN OWN
-	var/list/linked_abilities = list() //Abilities that we have
+	var/list/ability_types //Types of abilities that the umbrage CAN OWN
+	var/list/linked_abilities //Abilities that we have
 	var/list/linked_ability_types //Types of abilities that the umbrage OWNS
 	var/list/drained_minds //People drained with Devour Will
 
 /datum/umbrage/New()
 	..()
+	ability_types = list()
+	linked_abilities = list()
 	START_PROCESSING(SSprocessing, src)
 	for(var/V in subtypesof(/datum/action/innate/umbrage))
 		var/datum/action/innate/umbrage/U = V

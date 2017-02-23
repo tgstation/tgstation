@@ -26,21 +26,22 @@
 	for(var/turf/T in view(5, owner))
 		for(var/atom/movable/AM in T)
 			thrown_atoms += AM
-	for(var/atom/movable/AM in thrown_atoms)
+	for(var/V in thrown_atoms)
+		var/atom/movable/AM = V
 		if(AM == owner || AM.anchored)
 			continue
 		var/distance = get_dist(owner, AM)
 		var/turf/target = get_edge_target_turf(owner, get_dir(owner, get_step_away(AM, owner)))
 		AM.throw_at(target, ((Clamp((5 - (Clamp(distance - 2, 0, distance))), 3, 5))), 1, owner)
 		if(iscarbon(AM))
-			var/mob/living/carbon/L = AM
+			var/mob/living/carbon/C = AM
 			if(distance <= 1) //you done fucked up now
-				L.visible_message("<span class='warning'>The blast sends [L] flying!</span>", "<span class='ownerdanger'>The force sends you flying!</span>")
-				L.Weaken(5)
-				L.adjustBruteLoss(10)
-				L.soundbang_act(1, 5, 15, 5)
+				C.visible_message("<span class='warning'>The blast sends [C] flying!</span>", "<span class='ownerdanger'>The force sends you flying!</span>")
+				C.Weaken(5)
+				C.adjustBruteLoss(10)
+				C.soundbang_act(1, 5, 15, 5)
 			else if(distance <= 3)
-				L.visible_message("<span class='warning'>The blast knocks [L] off their feet!</span>", "<span class='ownerdanger'>The force bowls you over!</span>")
-				L.Weaken(3)
-				L.soundbang_act(1, 3, 5, 0)
+				C.visible_message("<span class='warning'>The blast knocks [C] off their feet!</span>", "<span class='ownerdanger'>The force bowls you over!</span>")
+				C.Weaken(3)
+				C.soundbang_act(1, 3, 5, 0)
 	return TRUE

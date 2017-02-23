@@ -35,8 +35,7 @@
 		return
 	usr << "<span class='warning'>If this attempt fails, you may not try again for another minute.</span>"
 	active = 1
-	spawn(600) //1-minute cooldown on all attempts, regardless of success or failure
-		active = 0
+	addtimer(CALLBACK(src, .proc/refresh), 600)
 	var/mob/living/carbon/human/user = usr
 	user.visible_message("<b>[user]</b> flaps their wings.", "<span class='velvet'>You begin creating a psychic barrier around yourself...</span>")
 	if(!do_after(user, 30, target = user))
@@ -48,7 +47,7 @@
 						"<span class='velvet big'><b>You begin the removal of your human disguise. You will be completely vulnerable during this time.</b></span>")
 	for(var/obj/item/I in user)
 		user.unEquip(I)
-	for(var/turf/T in orange(1, user))
+	for(var/turf/T in RANGE_TURFS(1, user))
 		new/obj/structure/psionic_barrier(T)
 	new/obj/structure/fluff/psionic_vortex(get_turf(user))
 	for(var/stage in 1 to 3)
@@ -96,7 +95,8 @@
 		L.Weaken(5)
 	var/umbrage_name = pick(umbrage_names)
 	var/processed_message = "<span class='velvet'><b>\[Mindlink\] [user.real_name] has removed their human disguise and is now [umbrage_name].</b></span>"
-	for(var/datum/mind/M in ticker.mode.umbrages_and_veils)
+	for(var/V in ticker.mode.umbrages_and_veils)
+		var/datum/mind/M = V
 		M.current << processed_message
 	for(var/mob/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
@@ -107,3 +107,7 @@
 	linked_umbrage.give_ability("psi_web")
 	linked_umbrage.give_ability("devour_will")
 	Remove(user) //Take the action away
+
+/datum/action/innate/umbrage/divulge/proc/refresh()
+	active = 0
+	return TRUE

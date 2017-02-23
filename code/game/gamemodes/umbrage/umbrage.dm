@@ -60,7 +60,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	announce_text = "Eldritch aberrations are trying to enslave the station!\n\
 	<span class='velvet'>Umbrages</span>: Dominate the will of the crew and ascend into a progenitor.\n\
 	<span class='notice'>Crew</span>: Protect your minds and nullify the umbrages before they take over."
-	var/list/initial_umbrages = list()
+	var/list/initial_umbrages
 
 /datum/game_mode/umbrage/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -70,7 +70,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	var/starting_umbrages = Clamp(round(num_players() / 10), 1, 3) //At least 1 umbrage, but no more than 3
 	for(var/i in 1 to starting_umbrages)
 		var/datum/mind/new_umbrage = pick(antag_candidates)
-		initial_umbrages += new_umbrage
+		LAZYADD(initial_umbrages, new_umbrage)
 		antag_candidates -= new_umbrage
 		modePlayer += new_umbrage
 		new_umbrage.special_role = "Umbrage"

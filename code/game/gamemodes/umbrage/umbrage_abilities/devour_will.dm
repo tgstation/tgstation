@@ -8,7 +8,11 @@
 	psi_cost = 20
 	lucidity_cost = 0 //Baseline
 	blacklisted = 1
-	var/list/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
+	var/list/victims //A list of people we've used the bead on recently; we can't drain them again so soon
+
+/datum/action/innate/umbrage/devour_will/New()
+	..()
+	victims = list()
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
 	if(!owner || !owner.get_empty_held_indexes())
@@ -17,7 +21,7 @@
 
 /datum/action/innate/umbrage/devour_will/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand begins to shimmer...</span>", "<span class='velvet bold'>pwga...</span><br>\
-	<span owner='notice'>You begin forming a dark bead...</span>")
+	<span class='notice'>You begin forming a dark bead...</span>")
 	playsound(owner, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	if(!do_after(owner, 10, target = owner))
 		return
@@ -27,4 +31,11 @@
 	var/obj/item/weapon/dark_bead/B = new
 	owner.put_in_hands(B)
 	B.linked_ability = src
+	return TRUE
+
+/datum/action/innate/umbrage/devour_will/proc/make_mob_eligible(mob/living/L)
+	if(!L || !victims[L.real_name])
+		return
+	victims[L.real_name] = null
+	owner << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
 	return TRUE

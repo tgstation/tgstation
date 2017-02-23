@@ -61,14 +61,13 @@
 	L.stuttering += 40
 	L.confused += 40
 	L.reagents.add_reagent("zombiepowder", 2) //Brief window of vulnerability to veiling
+	addtimer(CALLBACK(linked_ability, .proc/make_mob_eligible, L), 50)
 	qdel(src, force = TRUE)
 	#warn Change this dark bead recovery timer - 2 minutes, maybe?
-	spawn(100) //I don't like to use a spawn here, but because of how it works I have to
-		if(linked_ability && L)
-			linked_ability.victims[L.real_name] = null
-			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
 	return TRUE
 
+/obj/item/weapon/dark_bead/proc/make_mob_eligible(mob/living/L)
+	linked_ability.make_mob_eligible(L)
 
 
 //Umbral tendrils: Formed by the Pass ability. See umbrage_abilities.dm for more details.
