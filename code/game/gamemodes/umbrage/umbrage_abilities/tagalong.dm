@@ -26,16 +26,13 @@
 		tagging_along = null
 		return TRUE
 
-/datum/action/innate/umbrage/tagalong/Trigger()
-	if(..())
-		addtimer(CALLBACK(src, .proc/swap_psi_costs), 1)
-
 /datum/action/innate/umbrage/tagalong/Activate()
 	if(tagging_along)
 		owner.visible_message("<span class='warning'>[tagging_along]'s shadow suddenly breaks away from their body!</span>", "<span class='notice'>You break away from [tagging_along].</span>")
 		owner.forceMove(get_turf(tagging_along))
 		tagging_along = null
 		STOP_PROCESSING(SSprocessing, src)
+		addtimer(CALLBACK(src, .proc/swap_psi_costs), 1)
 		return TRUE
 	else
 		var/list/targets = list()
@@ -58,6 +55,7 @@
 		owner.forceMove(target)
 		tagging_along = target
 		START_PROCESSING(SSprocessing, src)
+		addtimer(CALLBACK(src, .proc/swap_psi_costs), 1)
 		return TRUE
 
 /datum/action/innate/umbrage/tagalong/proc/swap_psi_costs() //Psi costs change for jumping in and out, so umbrages can disengage freely
