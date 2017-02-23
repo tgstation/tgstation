@@ -130,7 +130,7 @@
 	S.agent = 1
 	S.team = team_number
 	H.real_name = team_name + " Agent"
-	scientist.set_print_manual(H.voiceprint, H.real_name, CATEGORY_VOICEPRINTS)
+	scientist.preknown_identity(H)
 	equip_common(H,team_number)
 	equip_agent(H,team_number)
 	greet_agent(agent,team_number)
@@ -143,7 +143,7 @@
 	S.scientist = 1
 	S.team = team_number
 	H.real_name = team_name + " Scientist"
-	agent.set_print_manual(H.voiceprint, H.real_name, CATEGORY_VOICEPRINTS)
+	agent.preknown_identity(H)
 	equip_common(H,team_number)
 	equip_scientist(H,team_number)
 	greet_scientist(scientist,team_number)

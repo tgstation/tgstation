@@ -585,8 +585,6 @@
 			var/datum/species/abductor/Byy = H.dna.species
 			if(Ayy.team != Byy.team)
 				continue
-		if(owner.voiceprint)
-			rendered = "<span class='abductor'><b>[H.get_voiceprint_name(owner, owner.voiceprint)]:</b> [message]</span>"
 		H << rendered
 	for(var/mob/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)

@@ -309,10 +309,10 @@
 		var/mob/living/carbon/human/H = synd_mind.current
 		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
 		H.real_name = synd_mind.name
-		if(H.voiceprint)
+		if(H.voiceprint || H.get_faceprint())
 			for(var/_other_synd in syndicates-synd_mind)
 				var/datum/mind/other_synd = _other_synd
-				other_synd.set_print_manual(H.voiceprint, H.real_name, CATEGORY_VOICEPRINTS)
+				other_synd.preknown_identity(H)
 	return
 
 /proc/is_nuclear_operative(mob/M)

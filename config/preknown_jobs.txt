@@ -1,0 +1,84 @@
+# This is the configuration for which jobs know each other at roundstart.
+# It contains a bunch of groups with role titles in them,
+# a role can be in multiple groups.
+
+# First specify the name of the group surrounded by brackets, this can be whatever you want.
+# The group name must use alphanumeric characters or spaces, but cannot start with a space.
+# Following that, add the ranks underneath the group name preceeded by a tab character.
+# These job names must match the title var of each job datum.
+# After you're done adding the jobs together, you can start a new group using more brackets.
+# All jobs within groups will know each other at roundstart
+
+# There are two special groups, "[Famous]", which contains roles that all crew members know at roundstart,
+# and "[Friendly]", which contains roles that automatically know all crewmembers at roundstart.
+
+[Famous]
+	Captain
+	Clown
+
+[Friendly]
+
+[Command]
+	Captain
+	Head of Personnel
+	Head of Security
+	Chief Engineer
+	Research Director
+	Chief Medical Officer
+
+[Engineering]
+	Chief Engineer
+	Station Engineer
+	Atmospheric Technician
+
+[Medical]
+	Chief Medical Officer
+	Medical Doctor
+	Geneticist
+	Chemist
+
+[Virology]
+	Chief Medical Officer
+	Virologist
+
+[Genetics]
+	Chief Medical Officer
+	Research Director
+	Geneticist
+
+[Science]
+	Research Director
+	Scientist
+	Roboticist
+
+[Supply]
+	Quartermaster
+	Cargo Technician
+	Shaft Miner
+
+[Security]
+	Head of Security
+	Warden
+	Detective
+	Security Officer
+
+[Foodservice]
+	Bartender
+	Botanist
+	Cook
+
+[Entertainment]
+	Clown
+	Mime
+
+[Custodial]
+	Janitor
+
+[Library]
+	Librarian
+
+[Law]
+	Lawyer
+
+[Chapel]
+	Chaplain
