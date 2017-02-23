@@ -13,7 +13,7 @@
 	//CRUCIAL: only randomized stands are to use the value system.
 
 /datum/guardian_abilities/proc/handle_stats()
-
+	initial_coeff = stando.damage_coeff
 
 /datum/guardian_abilities/proc/life_act()
 
@@ -85,7 +85,6 @@
 		playsound(stando.loc, stando.attack_sound, 50, 1, 1)
 		playsound(stando.loc, stando.attack_sound, 50, 1, 1)
 
-
 //killed queem u bad cat
 
 /datum/guardian_abilities/bomb
@@ -132,13 +131,13 @@
 		else
 			stando << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
 
-//
+//rore zone
+
 /datum/guardian_abilities/ranged
 	value = 4
 	var/list/snares = list()
 	var/datum/action/innate/snare/plant/P = new
 	var/datum/action/innate/snare/remove/R = new
-
 
 /datum/guardian_abilities/ranged/handle_stats()
 	stando.has_mode = TRUE
@@ -384,10 +383,10 @@
 
 /datum/guardian_abilities/lightning/destroy_act()
 	removechains()
-	return ..()
+	return . = stando.Destroy()
 
 /datum/guardian_abilities/lightning/manifest_act()
-	. = ..()
+	. = stando.Manifest()
 	if(.)
 		if(user)
 			userchain = stando.Beam(user, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
@@ -476,6 +475,7 @@
 	charging = 0
 
 /datum/guardian_abilities/charge/handle_stats()
+	. = ..()
 	stando.melee_damage_lower += 7
 	stando.melee_damage_upper += 7
 	stando.ranged = 1 //technically
@@ -544,6 +544,7 @@
 	value = 4
 
 /datum/guardian_abilities/protector/handle_stats()
+	. = ..()
 	stando.has_mode = TRUE
 	stando.melee_damage_lower = 7
 	stando.melee_damage_upper = 7
@@ -614,6 +615,7 @@
 	value = 3
 	var/obj/structure/recieving_pad/beacon
 	var/beacon_cooldown = 0
+	var/datum/action/innate/beacon/B = new
 
 
 /datum/guardian_abilities/heal/proc/plant_beacon()
@@ -636,7 +638,18 @@
 	beacon_cooldown = world.time + 3000
 
 
+/datum/action/innate/beacon
+	background_icon_state = "bg_alien"
+	name = "Plant Beacon"
+	button_icon_state = "set_drop"
+
+/datum/action/innate/beacon/Activate()
+	var/mob/living/simple_animal/hostile/guardian/A = owner
+	for(var/datum/guardian_abilities/heal/I in A.current_abilities)
+		I.plant_beacon()
+
 /datum/guardian_abilities/heal/handle_stats()
+	. = ..()
 	stando.a_intent = INTENT_HARM
 	stando.friendly = "heals"
 	stando.speed -= 0.5
@@ -645,6 +658,7 @@
 	stando.melee_damage_lower += 7
 	stando.melee_damage_upper += 7
 	stando.toggle_button_type = /obj/screen/guardian/ToggleMode
+	B.Grant(stando)
 
 	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(stando)
@@ -710,7 +724,7 @@
 
 	stando << "<span class='danger'><B>You begin to warp [A].</span></B>"
 	A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", \
-	"<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>")
+	"<span class='userdanger'>You start to glow faintly, and you feel strangely weightless!</span>")
 	stando.do_attack_animation(A, null, 1)
 
 	if(!do_mob(stando, A, 60)) //now start the channel
@@ -730,8 +744,8 @@
 /datum/guardian_abilities/dextrous
 	value = 4
 
-
 /datum/guardian_abilities/dextrous/handle_stats()
+	. = ..()
 	stando.dextrous = 1
 	stando.environment_target_typecache = list(
 	/obj/machinery/door/window,
@@ -758,18 +772,20 @@
 		stando.drop_all_held_items()
 		return 1 //lose items, then return
 
-//T H E  W O R L D - Z A  W A R U D O
+//T   H   E      W   O   R   L   D   .   -   Z   A      W   A   R   U   D   O   .
+//somebody once told me the world was gonna roll me
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/guardian
 	invocation = null
 	summon_type = list(/obj/effect/timestop/wizard/guardian)
 	clothes_req = 0
 
 /datum/guardian_abilities/timestop
-	var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/guardian/T = new
 	value = 5
 
 /datum/guardian_abilities/timestop/handle_stats()
-	stando.mind.AddSpell(T)
+	. = ..()
+	var/obj/effect/proc_holder/spell/S = new/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/guardian
+	stando.mind.AddSpell(S)
 	stando.melee_damage_lower += 5
 	stando.melee_damage_upper += 5
 	stando.obj_damage += 40
@@ -778,12 +794,21 @@
 //prop hunt
 
 /datum/guardian_abilities/shapeshift
-	value = 5
-	var/obj/item/remembered
+	value = 4
+	var/obj/item/remembered = null
+	var/obj/item/host = null
+
+/datum/guardian_abilities/shapeshift/recall_act()
+	if(. = stando.Recall())
+		if(host)
+			qdel(host)
 
 /datum/guardian_abilities/shapeshift/handle_stats()
+	. = ..()
 	stando.has_mode = TRUE
-
+	stando.range += 3
+	stando.melee_damage_lower += 3
+	stando.melee_damage_upper += 3
 
 /datum/guardian_abilities/shapeshift/alt_ability_act(obj/item/A)
 	if(!istype(A))
@@ -791,17 +816,63 @@
 	if(stando.loc == user)
 		stando << "<span class='danger'><B>You must be manifested to remember an item!</span></B>"
 		return
-	remembered = A
+	remembered = A.type
+	stando << "<span class='danger'><B>You remember \the [remembered.name]!</span></B>"
 
 /datum/guardian_abilities/shapeshift/handle_mode()
 	if(!toggle)
-		var/host = new remembered
-		stando.forceMove(host)
-		remembered = null
-		stando << "<span class='danger'><B>You switch to scout mode.</span></B>"
+		if(remembered)
+			host = new remembered(get_turf(stando))
+			stando.forceMove(host)
+			stando.visible_message("<span class='danger'>[stando] twists into the shape of [host.name]!</span>")
+			playsound(stando.loc, 'sound/weapons/draw_bow.ogg', 50, 1, 1)
+			remembered = null
+		else
+			stando << "<span class='danger'><B>You don't have a remembered item!</span></B>"
+			return
 		toggle = TRUE
 	else
-		stando.forceMove(get_turf(user))
-		qdel(host)
-		stando << "<span class='danger'><B>You switch to combat mode.</span></B>"
+		stando.forceMove(get_turf(stando))
+		if(host)
+			qdel(host)
+		stando << "<span class='danger'><B>You twist back into your original form.</span></B>"
 		toggle = FALSE
+
+//ion man
+
+/datum/guardian_abilities/ion/handle_stats()
+	. = ..()
+	stando.projectiletype = /obj/item/projectile/ion
+	stando.ranged_cooldown_time = 5
+	stando.ranged = 1
+	stando.range += 3
+	stando.melee_damage_lower += 3
+	stando.melee_damage_upper += 3
+
+/datum/guardian_abilities/ion/ability_act()
+	empulse(stando.target, 1, 1)
+
+//oingo boingo
+
+/datum/guardian_abilities/bounce
+	value = 1
+	var/bounce_distance = 5
+
+/datum/guardian_abilities/bounce/handle_stats()
+	stando.range += 3
+	stando.melee_damage_lower += 3
+	stando.melee_damage_upper += 3
+
+/datum/guardian_abilities/bounce/ability_act(atom/movable/A)
+	var/atom/throw_target = get_edge_target_turf(A, stando.dir)
+	A.throw_at(throw_target, bounce_distance, 14, stando) //interesting
+
+/datum/guardian_abilities/bounce/boom_act(severity)
+	stando.visible_message("<span class='danger'>The explosion bounces off [stando]'s rubbery surface!</span>")
+	for(var/mob/M in range(7,stando))
+		if(M != user)
+			M.ex_act(severity)
+	return . = stando.ex_act()
+
+
+

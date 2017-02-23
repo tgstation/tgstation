@@ -49,7 +49,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/list/abilities = list()
 	var/list/current_abilities = list()
 
-	var/range = 10 //how far from the user the spirit can be
+	var/range = 0 //how far from the user the spirit can be
 	var/has_mode = FALSE
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
