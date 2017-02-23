@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "Off-station and carded AIs no longer prevent Judgement scripture from unlocking."
