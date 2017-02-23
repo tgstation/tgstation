@@ -496,7 +496,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/transfer)
 "abx" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aby" = (
@@ -7018,7 +7018,7 @@
 	},
 /area/hallway/primary/fore)
 "aoF" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/red/corner{
 	dir = 2
 	},
@@ -16381,7 +16381,7 @@
 	},
 /area/hallway/primary/central)
 "aJv" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
 "aJw" = (
@@ -16899,7 +16899,7 @@
 	},
 /area/hallway/primary/central)
 "aKG" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
 "aKH" = (
@@ -17684,7 +17684,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aMC" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aMD" = (
@@ -18267,7 +18267,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aOf" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -18314,7 +18314,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aOk" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/entry)
 "aOl" = (
@@ -18863,7 +18863,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aPy" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/entry)
 "aPz" = (
@@ -19369,7 +19369,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQR" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQS" = (
@@ -20271,7 +20271,7 @@
 	},
 /area/hallway/secondary/exit)
 "aTl" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 0;
@@ -24015,7 +24015,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bcc" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bcd" = (
@@ -24419,7 +24419,7 @@
 	},
 /area/hallway/primary/starboard)
 "bdd" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bde" = (
@@ -45776,7 +45776,7 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
 "bVK" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bVL" = (
