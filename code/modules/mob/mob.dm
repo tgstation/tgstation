@@ -823,7 +823,7 @@ var/next_mob_id = 0
 		if(!("\ref[src]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
 			faction_src -= "\ref[src]" //if we don't do this, we'll never have an exact match.
 		if(!("\ref[target]" in faction_src))
-			faction_src -= "\ref[target]" //same thing here.
+			faction_target -= "\ref[target]" //same thing here.
 		return faction_check(faction_src, faction_target, TRUE)
 	return faction_check(faction, target.faction, FALSE)
 
