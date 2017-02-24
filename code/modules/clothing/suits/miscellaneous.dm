@@ -281,6 +281,23 @@
 	flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
 
+/obj/item/clothing/suit/hooded/flashy_costume //too flashy
+	name = "flashy costume"
+	desc = "What did you expect?"
+	icon_state = "flashy"
+	item_state = "armor"
+	body_parts_covered = CHEST|GROIN
+	flags = THICKMATERIAL
+	hoodtype = /obj/item/clothing/head/hooded/flash_button
+
+/obj/item/clothing/head/hooded/flash_button
+	name = "flash button"
+	desc = "You will learn to fear the flash."
+	icon_state = "flashy"
+	body_parts_covered = HEAD
+	flags = THICKMATERIAL
+	flags_inv = HIDEHAIR|HIDEEARS
+
 /obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
 	desc = "A horribly bloated suit made from human skins."
