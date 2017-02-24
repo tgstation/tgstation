@@ -85,6 +85,7 @@
 	var/datum/progressbar/progress = new(user, things.len, src)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(src, .proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		sleep(1)
+	qdel(progress)
 	orient2hud(user)
 	src_object.orient2hud(user)
 	if(user.s_active) //refresh the HUD to show the transfered contents
