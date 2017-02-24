@@ -61248,18 +61248,18 @@
 /area/shuttle/auxillary_base)
 "cCu" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cCv" = (
 /turf/open/floor/pod/light,
-/area/shuttle/transport)
+/area/space)
 "cCw" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "cCx" = (
 /obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cCy" = (
 /obj/structure/shuttle/engine/heater{
@@ -61276,6 +61276,9 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
+"cCA" = (
+/turf/open/floor/pod/light,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -71422,9 +71425,9 @@ aPu
 aRY
 awW
 cxu
-cxB
 cxC
-cxI
+cxC
+cxC
 cxu
 awW
 awZ
@@ -71679,7 +71682,7 @@ ayl
 aRY
 awW
 cCu
-cCv
+cxC
 cCx
 cxC
 cCz
@@ -71936,9 +71939,9 @@ ayl
 aRY
 awW
 cxu
-cxB
 cxC
-cxI
+cxC
+cxC
 cxu
 awW
 awZ

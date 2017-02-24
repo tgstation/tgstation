@@ -94450,18 +94450,18 @@
 /area/shuttle/auxillary_base)
 "ddH" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "ddI" = (
 /turf/open/floor/pod/light,
-/area/shuttle/transport)
+/area/space)
 "ddJ" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "ddK" = (
 /obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "ddL" = (
 /obj/structure/shuttle/engine/heater{
@@ -94478,6 +94478,9 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
+"ddN" = (
+/turf/open/floor/pod/light,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -105145,9 +105148,9 @@ aVu
 bxu
 aRA
 cVn
-cVu
 cVv
-cVB
+cVv
+cVv
 cVn
 aRA
 aVu
@@ -105402,7 +105405,7 @@ aVu
 bxv
 aWS
 ddH
-ddI
+cVv
 ddK
 cVv
 ddM
@@ -105659,9 +105662,9 @@ bvE
 bxw
 aWS
 cVn
-cVu
 cVv
-cVB
+cVv
+cVv
 cVn
 aWS
 bKU

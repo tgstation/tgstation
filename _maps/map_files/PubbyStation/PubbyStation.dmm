@@ -55448,7 +55448,7 @@
 /area/shuttle/transport)
 "cie" = (
 /obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cif" = (
 /obj/structure/shuttle/engine/heater{
@@ -55464,6 +55464,10 @@
 "cig" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/pod/light,
+/area/shuttle/transport)
+"cih" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 
 (1,1,1) = {"
@@ -74617,9 +74621,9 @@ aVm
 bhz
 aTr
 bjZ
-blv
 blt
-boa
+blt
+blt
 bjZ
 aaa
 aaa
@@ -74873,8 +74877,8 @@ aWm
 aVm
 bhz
 aTr
-cib
-cic
+cih
+blt
 cie
 blt
 cig
@@ -75131,9 +75135,9 @@ aVn
 bhz
 aTr
 bjZ
-blv
 blt
-boa
+blt
+blt
 bjZ
 aaa
 aaa

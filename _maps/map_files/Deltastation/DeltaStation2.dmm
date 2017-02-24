@@ -118762,7 +118762,7 @@
 /area/shuttle/transport)
 "edT" = (
 /obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "edU" = (
 /obj/structure/chair{
@@ -153170,15 +153170,15 @@ aaa
 aaa
 aaa
 aaa
-edk
+eeq
 ees
 edo
 edo
 edD
 edD
-edD
 edp
-edD
+edp
+edp
 edD
 edD
 edC
@@ -153684,15 +153684,15 @@ aaa
 aaa
 aaa
 aaa
-edk
+eeq
 eet
 edo
 edo
 edF
 edF
-edF
 edp
-edF
+edp
+edp
 edF
 edF
 edC
@@ -153948,10 +153948,10 @@ edo
 edC
 edo
 edo
-eew
+eev
 edo
 edo
-eey
+eex
 edo
 aaf
 abR
