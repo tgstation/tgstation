@@ -868,7 +868,7 @@
 	A.throw_at(throw_target, bounce_distance, 14, stando) //interesting
 
 /datum/guardian_abilities/bounce/boom_act(severity)
-	stando.visible_message("<span class='danger'>The explosion bounces off [stando]'s rubbery surface!</span>")
+	stando.visible_message("<span class='danger'>The explosive force bounces off [stando]'s rubbery surface!</span>")
 	for(var/mob/M in range(7,stando))
 		if(M != user)
 			M.ex_act(severity)
