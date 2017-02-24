@@ -1,6 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - rscdel: "Limit on Mining Satchel of Holding Removed"
-  - tweak: "Dumping/mass pickup/mass transfer of items is now lag checked"
-  - rscadd: "Dumping/mass pickup/mass transfer of items has a progress bar"
