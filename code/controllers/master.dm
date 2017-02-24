@@ -39,6 +39,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	var/make_runtime = 0
 
+	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
 	// Has round started? (So we know what subsystems to run)
 	var/round_started = 0
 
@@ -150,7 +151,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Set world options.
 	world.sleep_offline = 1
 	world.fps = config.fps
+	var/initialized_tod = world.timeofday
 	sleep(1)
+	initializations_finished_with_no_players_logged_in = initialized_tod < world.timeofday - 10
 	// Loop.
 	Master.StartProcessing(0)
 

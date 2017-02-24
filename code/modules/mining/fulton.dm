@@ -84,13 +84,13 @@ var/list/total_extraction_beacons = list()
 			balloon2 = image('icons/obj/fulton_balloon.dmi',"fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays += balloon2
+			holder_obj.add_overlay(balloon2)
 			sleep(4)
 			balloon = image('icons/obj/fulton_balloon.dmi',"fulton_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays -= balloon2
-			holder_obj.overlays += balloon
+			holder_obj.cut_overlay(balloon2)
+			holder_obj.add_overlay(balloon)
 			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
 			animate(holder_obj, pixel_z = 10, time = 20)
 			sleep(20)
@@ -123,10 +123,10 @@ var/list/total_extraction_beacons = list()
 			balloon3 = image('icons/obj/fulton_balloon.dmi',"fulton_retract")
 			balloon3.pixel_y = 10
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays -= balloon
-			holder_obj.overlays += balloon3
+			holder_obj.cut_overlay(balloon)
+			holder_obj.add_overlay(balloon3)
 			sleep(4)
-			holder_obj.overlays -= balloon3
+			holder_obj.cut_overlay(balloon3)
 			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
 			animate(holder_obj, pixel_z = 0, time = 5)

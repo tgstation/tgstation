@@ -1696,7 +1696,7 @@
 	})
 "adk" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
@@ -9255,7 +9255,7 @@
 	})
 "aql" = (
 /obj/machinery/light,
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/fitness{
 	name = "\improper Recreation Area"
@@ -28277,7 +28277,7 @@
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aWp" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/vault,
 /area/hallway/primary/central)
 "aWq" = (
@@ -33438,8 +33438,8 @@
 /area/shuttle/arrival)
 "beJ" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_r"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -34235,7 +34235,7 @@
 /area/engine/break_room)
 "bga" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
@@ -34427,8 +34427,8 @@
 /area/shuttle/arrival)
 "bgu" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -37709,8 +37709,8 @@
 /area/shuttle/arrival)
 "blS" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_l"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -40346,7 +40346,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
 "bqi" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/newscaster{
 	pixel_x = -28;
 	pixel_y = 1
@@ -41727,7 +41727,7 @@
 	name = "Arrivals"
 	})
 "bsl" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry{
@@ -41814,7 +41814,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
 "bst" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/port)
 "bsu" = (
@@ -42112,9 +42112,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
-/obj/machinery/vending/cola{
-	pixel_x = 2
-	},
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bsW" = (
@@ -42174,9 +42172,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/obj/machinery/vending/snack{
-	pixel_x = -2
-	},
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bta" = (
@@ -46089,7 +46085,7 @@
 	name = "\improper Command Hallway"
 	})
 "bzK" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/bridge/meeting_room{
 	name = "\improper Command Hallway"
@@ -50234,7 +50230,7 @@
 /turf/closed/wall/r_wall,
 /area/gateway)
 "bGQ" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/vault,
 /area/bridge/meeting_room{
 	name = "\improper Command Hallway"
@@ -52166,7 +52162,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bKl" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/machinery/newscaster{
 	pixel_y = -29
 	},
@@ -52197,7 +52193,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKp" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKq" = (
@@ -57712,7 +57708,7 @@
 	name = "Port Maintenance"
 	})
 "bTD" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/machinery/newscaster{
 	pixel_x = -30;
 	pixel_y = 0
@@ -66893,7 +66889,7 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -76578,7 +76574,7 @@
 	icon_state = "map-right-MS";
 	pixel_y = 32
 	},
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -79173,7 +79169,7 @@
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "cCZ" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/aft)
 "cDa" = (
@@ -83346,7 +83342,7 @@
 	name = "\improper Departure Lounge"
 	})
 "cJD" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security in red at the top, you see engineering in yellow, science in purple, escape in checkered red-and-white, medbay in green, arrivals in checkered red-and-blue, and then cargo in brown.";
 	icon_state = "map-right-MS";
@@ -89956,8 +89952,8 @@
 /area/shuttle/supply)
 "cVm" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
@@ -90125,8 +90121,8 @@
 /area/shuttle/auxillary_base)
 "cVN" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -90368,8 +90364,8 @@
 /area/shuttle/abandoned)
 "cWf" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -91121,10 +91117,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cXx" = (
-/obj/machinery/vending/cola{
-	pixel_x = -1;
-	use_power = 0
-	},
+/obj/machinery/vending/cola/random,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXy" = (
@@ -91204,10 +91197,7 @@
 	},
 /area/mining_construction)
 "cXF" = (
-/obj/machinery/vending/snack{
-	pixel_x = -1;
-	use_power = 0
-	},
+/obj/machinery/vending/snack/random,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXG" = (
@@ -91587,8 +91577,8 @@
 /area/shuttle/abandoned)
 "cYq" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -92102,7 +92092,7 @@
 /area/shuttle/escape)
 "cZj" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)

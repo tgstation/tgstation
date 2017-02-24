@@ -507,8 +507,9 @@
 	icon_state = "tonguenormal"
 	zone = "mouth"
 	slot = "tongue"
-	var/say_mod = null
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
+	var/say_mod = null
+	var/taste_sensitivity = 15 // lower is more sensitive.
 
 /obj/item/organ/tongue/get_spans()
 	return list()
@@ -531,6 +532,7 @@
 	desc = "A thin and long muscle typically found in reptilian races, apparently moonlights as a nose."
 	icon_state = "tonguelizard"
 	say_mod = "hisses"
+	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 
 /obj/item/organ/tongue/lizard/TongueSpeech(var/message)
 	var/regex/lizard_hiss = new("s+", "g")
@@ -545,6 +547,7 @@
 	desc = "A freakish looking meat tube that apparently can take in liquids."
 	icon_state = "tonguefly"
 	say_mod = "buzzes"
+	taste_sensitivity = 25 // you eat vomit, this is a mercy
 
 /obj/item/organ/tongue/fly/TongueSpeech(var/message)
 	var/regex/fly_buzz = new("z+", "g")
@@ -559,6 +562,7 @@
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
+	taste_sensitivity = 101 // ayys cannot taste anything.
 
 /obj/item/organ/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
@@ -584,6 +588,7 @@
 	desc = "Between the decay and the fact that it's just lying there you doubt a tongue has ever seemed less sexy."
 	icon_state = "tonguezombie"
 	say_mod = "moans"
+	taste_sensitivity = 32
 
 /obj/item/organ/tongue/zombie/TongueSpeech(var/message)
 	var/list/message_list = splittext(message, " ")
@@ -606,6 +611,7 @@
 	desc = "According to leading xenobiologists the evolutionary benefit of having a second mouth in your mouth is \"that it looks badass\"."
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
+	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
@@ -619,6 +625,7 @@
 	icon_state = "tonguebone"
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
+	taste_sensitivity = 101 // skeletons cannot taste anything
 
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -655,6 +662,7 @@
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
+	taste_sensitivity = 25 // not as good as an organic tongue
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT

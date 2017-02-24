@@ -8,18 +8,22 @@
 	min_players = 2
 
 /datum/round_event/ion_storm
+	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
+	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
+	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
+	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
 	var/botEmagChance = 10
 	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
 	announceWhen	= 1
 
-/datum/round_event/ion_storm/New(var/botEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
-	src.botEmagChance = botEmagChance
-	src.announceEvent = announceEvent
-	src.ionMessage = ionMessage
-	src.ionAnnounceChance = ionAnnounceChance
-	..()
+/datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
+	replaceLawsetChance = 0
+	removeRandomLawChance = 0
+	removeDontImproveChance = 0
+	shuffleLawsChance = 0
+	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce()
 	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
@@ -29,14 +33,26 @@
 /datum/round_event/ion_storm/start()
 	//AI laws
 	for(var/mob/living/silicon/ai/M in living_mob_list)
+		M.laws_sanity_check()
 		if(M.stat != 2 && M.see_in_dark != 0)
+			if(prob(replaceLawsetChance))
+				M.laws.pick_weighted_lawset()
+
+			if(prob(removeRandomLawChance))
+				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
+
 			var/message = generate_ion_law(ionMessage)
 			if(message)
-				M.add_ion_law(message)
-				log_game("ION law added to [M]: [message]")
-				M << "<br>"
-				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
-				M << "<br>"
+				if(prob(removeDontImproveChance))
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+				else
+					M.add_ion_law(message)
+
+			if(prob(shuffleLawsChance))
+				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+
+			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			M.post_lawchange()
 
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
@@ -545,7 +561,7 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
-							
+
 	return message
 
 #undef ION_RANDOM
