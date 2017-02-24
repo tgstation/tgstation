@@ -129,7 +129,7 @@
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		if(A.Adjacent(src)) // see adjacent.dm
+		if(A.Adjacent(src) || W.reach >= get_dist(src, A)) // see adjacent.dm
 			if(W)
 				if(W.pre_attackby(A,src,params))
 					// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
