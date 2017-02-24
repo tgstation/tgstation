@@ -381,6 +381,7 @@ var/bomb_set
 		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
+		SSshuttle.force_shuttle = 1
 	else
 		bomb_set = FALSE
 		detonation_timer = null

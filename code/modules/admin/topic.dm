@@ -299,6 +299,13 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 		href_list["secrets"] = "check_antagonist"
 
+	else if(href_list["force_shuttle"])
+		if(!check_rights(R_ADMIN) || SSshuttle.force_shuttle)	return
+
+		SSshuttle.force_shuttle = 1
+		log_admin("[key_name(usr)] allowed the Emergency Shuttle to come.")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] allowed the Emergency Shuttle to come.</span>")
+
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
 			return

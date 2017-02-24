@@ -21,6 +21,7 @@
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+	var/syndies_made_contact = 0 //Used for tracking when (if?) the syndicates actually manage to step foot on space station 13
 
 /datum/game_mode/nuclear/pre_setup()
 	var/n_players = num_players()
@@ -164,6 +165,14 @@
 		return 1
 	return ..()
 
+/datum/game_mode/nuclear/proc/are_operatives_onsite()
+	for(var/datum/mind/operative_mind in syndicates)
+		if(ismob(operative_mind.current))
+			var/mob/M = operative_mind.current
+			if(!M.stat && isarea(M.loc) && M.loc in the_station_areas)
+				syndies_made_contact = 1
+				SSshuttle.force_shuttle = 1
+
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat!=2))
@@ -175,6 +184,8 @@
 		return replacementmode.check_finished()
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
 		return 1
+	if(!syndies_made_contact)
+		are_operatives_onsite()
 	if(are_operatives_dead())
 		if(bomb_set) //snaaaaaaaaaake! It's not over yet!
 			return 0

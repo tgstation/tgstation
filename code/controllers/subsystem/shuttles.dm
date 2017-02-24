@@ -25,6 +25,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/area/emergencyLastCallLoc
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
+	var/force_shuttle = 0			//Even in abscence of danger, the shuttle will come.
 	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
