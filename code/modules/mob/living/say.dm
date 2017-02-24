@@ -251,8 +251,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			var/mob/living/carbon/C = src
 			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
 			if(V && V.can_speak_with())
-				C.say(V.handle_speech(message), spans = V.spans, sanitize = FALSE)
-				V.speak_with(message) //words come before actions
+				V.handle_speech(message) //message
+				V.speak_with(message) //action
 		return TRUE
 	return FALSE
 

@@ -529,9 +529,9 @@
 		..()
 
 /obj/item/weapon/picture_frame/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(displayed)
-		overlays |= getFlatIcon(displayed)
+		add_overlay(getFlatIcon(displayed))
 	else
 		icon_state = initial(icon_state)
 
@@ -543,7 +543,7 @@
 						 "<span class='notice'>You attach the sign to [T].</span>")
 	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/obj/structure/sign/picture_frame/PF = new /obj/structure/sign/picture_frame(T)
-	PF.overlays = overlays.Copy()
+	PF.copy_overlays(src)
 	if(displayed)
 		PF.framed = displayed
 	if(contents.len)
@@ -601,8 +601,8 @@
 		framed.show()
 
 /obj/structure/sign/picture_frame/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(framed)
-		overlays |= getFlatIcon(framed)
+		add_overlay(getFlatIcon(framed))
 	else
 		icon_state = initial(icon_state)

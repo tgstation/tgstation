@@ -62,8 +62,7 @@ var/datum/feedback/blackbox = new()
 	if (!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
-	establish_db_connection()
-	if (!dbcon.IsConnected()) return
+	if (!dbcon.Connect()) return
 	var/round_id
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
@@ -213,8 +212,7 @@ var/datum/feedback/blackbox = new()
 	for(var/mob/M in player_list)
 		if(M.client)
 			playercount += 1
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		log_game("SQL ERROR during player polling. Failed to connect.")
 	else
 		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
@@ -227,8 +225,7 @@ var/datum/feedback/blackbox = new()
 	if(!config.sql_enabled)
 		return
 	var/admincount = admins.len
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		log_game("SQL ERROR during admin polling. Failed to connect.")
 	else
 		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
@@ -273,8 +270,7 @@ var/datum/feedback/blackbox = new()
 	var/coord = "[L.x], [L.y], [L.z]"
 	var/map = MAP_NAME
 	var/server = "[world.internet_address]:[world.port]"
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		log_game("SQL ERROR during death reporting. Failed to connect.")
 	else
 		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord, mapname, server) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[L.gender]', [L.getBruteLoss()], [L.getFireLoss()], [L.brainloss], [L.getOxyLoss()], '[coord]', '[map]', '[server]')")
@@ -295,8 +291,7 @@ var/datum/feedback/blackbox = new()
 		log_game("Round ended without any feedback being generated. No feedback was sent to the database.")
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		log_game("SQL ERROR during feedback reporting. Failed to connect.")
 	else
 

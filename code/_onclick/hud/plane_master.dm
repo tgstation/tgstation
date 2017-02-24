@@ -11,7 +11,7 @@
 		backdrop.transform = matrix(200, 0, 0, 0, 200, 0)
 		backdrop.layer = BACKGROUND_LAYER
 		backdrop.blend_mode = BLEND_OVERLAY
-		overlays += backdrop
+		add_overlay(backdrop)
 	..()
 
 /obj/screen/plane_master/game_world
