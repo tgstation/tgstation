@@ -431,20 +431,6 @@
 		if(occupant.reagents.get_reagent_amount(bt) < 1)
 			occupant.reagents.add_reagent(bt, 1)
 
-
-/*
- *	Diskette Box
- */
-
-/obj/item/weapon/storage/box/disks
-	name = "diskette box"
-	icon_state = "disk_kit"
-
-/obj/item/weapon/storage/box/disks/New()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/disk/data(src)
-
 /*
  *	Manual -- A big ol' manual.
  */

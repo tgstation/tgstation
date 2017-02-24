@@ -36,8 +36,9 @@
 
 /obj/item/weapon/storage/box/update_icon()
 	. = ..()
-	cut_overlays()
-	add_overlay(image('icons/obj/storage.dmi', "[illustration]"))
+	if(illustration)
+		cut_overlays()
+		add_overlay(image('icons/obj/storage.dmi', "[illustration]"))
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
 	..()
