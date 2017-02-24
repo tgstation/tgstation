@@ -52,8 +52,11 @@
 	..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!is_servant_of_ratvar(user) || !ishuman(target) || used || (brainmob && brainmob.key))
+	if(!is_servant_of_ratvar(user) || !ishuman(target))
 		..()
+		return
+	if(used || (brainmob && brainmob.key))
+		user << "<span class='nezbere'>\"This vessel is filled, friend. Provide it with a body.\"</span>"
 		return
 	if(is_servant_of_ratvar(target))
 		user << "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>"

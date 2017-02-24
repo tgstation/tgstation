@@ -100,8 +100,8 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.stat != DEAD && prob(50 / severity))
-			H.heart_attack = TRUE
+		if(H.stat != DEAD && prob(50 / severity) && H.can_heartattack())
+			H.set_heartattack(TRUE)
 			H << "<span class='userdanger'>You feel a horrible agony in your chest!</span>"
 			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
@@ -109,7 +109,7 @@
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H))
 		return
-	H.heart_attack = FALSE
+	H.set_heartattack(FALSE)
 	if(H.stat == CONSCIOUS)
 		H << "<span class='notice'>You feel your heart beating again!</span>"
 

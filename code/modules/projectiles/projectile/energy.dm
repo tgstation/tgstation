@@ -188,3 +188,24 @@
 /obj/item/projectile/energy/tesla_revolver/Destroy()
 	qdel(chain)
 	return ..()
+
+
+/obj/item/projectile/energy/tesla_cannon
+	name = "tesla bolt"
+	icon_state = "tesla_projectile"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	var/chain
+
+/obj/item/projectile/energy/tesla_cannon/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+	..()
+
+/obj/item/projectile/energy/tesla_cannon/on_hit(atom/target)
+	. = ..()
+	tesla_zap(src, 3, 10000, explosive = FALSE, stun_mobs = FALSE)
+	qdel(src)
+
+/obj/item/projectile/energy/tesla_cannon/Destroy()
+	qdel(chain)
+	return ..()

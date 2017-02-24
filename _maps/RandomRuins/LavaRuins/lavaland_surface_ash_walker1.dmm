@@ -90,6 +90,7 @@
 /obj/item/seeds/glowshroom,
 /obj/item/seeds/glowshroom,
 /obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/storage/bag/plants/portaseeder,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

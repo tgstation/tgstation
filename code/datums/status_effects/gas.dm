@@ -14,7 +14,7 @@
 	if(!owner.stat)
 		owner << "You become frozen in a cube!"
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
-	owner.overlays += cube
+	owner.add_overlay(cube)
 	owner.update_canmove()
 
 /datum/status_effect/freon/tick()
@@ -25,6 +25,6 @@
 /datum/status_effect/freon/on_remove()
 	if(!owner.stat)
 		owner << "The cube melts!"
-	owner.overlays -= cube
+	owner.cut_overlay(cube)
 	owner.bodytemperature += 100
 	owner.update_canmove()

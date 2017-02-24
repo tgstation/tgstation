@@ -1,7 +1,7 @@
 
 //########################## POSTERS ##################################
 
-#define NUM_OF_POSTER_DESIGNS 36 // contraband posters
+#define NUM_OF_POSTER_DESIGNS 44 // contraband posters
 
 #define NUM_OF_POSTER_DESIGNS_LEGIT 35 // corporate approved posters
 
@@ -54,7 +54,15 @@ list(name = "- Punch Shit", desc = " Fight things for no reason, like a man!"),
 list(name = "- The Griffin", desc = " The Griffin commands you to be the worst you can be. Will you?"),
 list(name = "- Lizard", desc = " This lewd poster depicts a lizard preparing to mate."),
 list(name = "- Free Drone", desc = " This poster commemorates the bravery of the rogue drone banned by CentComm."),
-list(name = "- Busty Backdoor Xeno Babes 6", desc = " Get a load, or give, of these all natural Xenos!") )
+list(name = "- Busty Backdoor Xeno Babes 6", desc = " Get a load, or give, of these all natural Xenos!"),
+list(name = "- Robust Softdrinks", desc = " Robust Softdrinks: More robust than a toolbox to the head!"),
+list(name = "- Shambler's Juice", desc = "~Shake me up some of that Shambler's Juice!~"),
+list(name = "- Pwr Game", desc = "The POWER that gamers CRAVE! In partnership with Vlad's Salad."),
+list(name = "- Sun-kist", desc = "Drink the stars!"),
+list(name = "- Space Cola", desc = "Your favorite cola, in space."),
+list(name = "- Space-Up!", desc = "Sucked out into space by the FLAVOR!"),
+list(name = "- Kudzu", desc = "A poster advertising a movie about plants. How dangerous could they possibly be?"),
+list(name = "- Masked Men", desc = "A poster advertising a movie about some masked men.") )
 
 // LEGIT
 
