@@ -13,7 +13,7 @@
 	stat = 0
 	verb_say = "beeps"
 	verb_exclaim = "beeps"
-	var/cooldown = 9999
+	var/cooldown = 999999
 	var/active = 0
 	var/icontype = "beacon"
 
