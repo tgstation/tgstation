@@ -11,9 +11,9 @@
 	density = 1
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
-	verb_say = "beeps"
-	verb_exclaim = "beeps"
-	var/cooldown = 999999
+	verb_say = "states"
+	var/cooldown = 0
+
 	var/active = 0
 	var/icontype = "beacon"
 
@@ -28,6 +28,7 @@
 	icon_state = "[icontype]1"
 	active = 1
 	machines |= src
+	START_PROCESSING(SSobj, src)
 	if(user)
 		user << "<span class='notice'>You activate the beacon.</span>"
 
@@ -82,18 +83,21 @@
 
 //stealth direct power usage
 /obj/machinery/power/singularity_beacon/process()
+	say("Process")
 	if(!active)
 		return PROCESS_KILL
 	else
 		if(surplus() > 1500)
 			add_load(1500)
-			for(var/obj/singularity/singulo in world)
-				if(singulo.z == z && (world.time < cooldown)
-					speak("The [singulo] is now [get_dist(src,singulo)] standard lengths away to the [get_dir(src,singulo)]")
-			cooldown = world.time + 1000				
+			if(cooldown <= world.time)
+				cooldown = world.time + 100
+				for(var/obj/singularity/singulo in world)
+					if(singulo.z == z)
+						say("The [singulo] is now [get_dist(src,singulo)] standard lengths away to the [dir2text(get_dir(src,singulo))]")
 		else
 			Deactivate()
-
+			say("Insufficient charge detected - powering down")
+		
 
 /obj/machinery/power/singularity_beacon/syndicate
 	icontype = "beaconsynd"
