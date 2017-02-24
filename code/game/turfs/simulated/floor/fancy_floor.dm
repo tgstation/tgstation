@@ -127,7 +127,7 @@
 
 /turf/open/floor/fakepit	
 	name = "chasm"
-	desc = "Watch your step!"
+	desc = "wait no, just a picture"
 	smooth = SMOOTH_TRUE | SMOOTH_BORDER
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
