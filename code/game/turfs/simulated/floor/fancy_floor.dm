@@ -95,7 +95,7 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
 	flags = NONE
 
 /turf/open/floor/carpet/New()
