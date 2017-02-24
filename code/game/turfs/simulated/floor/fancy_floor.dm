@@ -2,6 +2,8 @@
  * Wood floor
  * Grass floor
  * Carpet floor
+ * Fake pits
+ * Fake space
  */
 
 /turf/open/floor/wood
@@ -123,6 +125,12 @@
 	burnt = 1
 	update_icon()
 
+/turf/open/floor/fakepit	
+	name = "chasm"
+	desc = "Watch your step!"
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	icon = 'icons/turf/floors/Chasms.dmi'
+	icon_state = "smooth"
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
