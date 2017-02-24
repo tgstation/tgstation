@@ -544,11 +544,19 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 25
 	refundable = TRUE
 
-/datum/uplink_item/support/reinforcement/syndieborg
-	name = "Syndicate Cyborg"
+/datum/uplink_item/support/reinforcement/assault_borg
+	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
-	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
-	cost = 80
+	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/assault
+	refundable = TRUE
+	cost = 65
+
+/datum/uplink_item/support/reinforcement/medical_borg
+	name = "Syndicate Medical Cyborg"
+	desc = "A combat medic cyborg, with potent healing reagents and a medical beam gun, but limited offensive potential."
+	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/medical
+	refundable = TRUE
+	cost = 35
 
 /datum/uplink_item/support/gygax
 	name = "Gygax Exosuit"
@@ -1182,6 +1190,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 14
 	item = /obj/item/weapon/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
+
+/datum/uplink_item/role_restricted/mimery
+	name = "Guide to Advanced Mimery Series"
+	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisble walls, and shoot bullets out of their fingers. Obviously only works for Mimes."
+	cost = 15
+	item = /obj/item/weapon/storage/box/syndie_kit/mimery
+	restricted_roles = list("Mime")
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"

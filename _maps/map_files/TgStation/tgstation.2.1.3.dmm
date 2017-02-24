@@ -496,7 +496,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/transfer)
 "abx" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aby" = (
@@ -2098,7 +2098,7 @@
 /area/security/main)
 "aeD" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
@@ -7018,7 +7018,7 @@
 	},
 /area/hallway/primary/fore)
 "aoF" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/red/corner{
 	dir = 2
 	},
@@ -8921,7 +8921,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/shuttle/auxillary_base{
+/obj/machinery/computer/auxillary_base{
 	pixel_y = 0
 	},
 /turf/closed/wall,
@@ -13980,8 +13980,8 @@
 /area/shuttle/arrival)
 "aEx" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_r"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/arrival)
@@ -14518,8 +14518,8 @@
 /area/shuttle/arrival)
 "aFF" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/arrival)
@@ -16381,7 +16381,7 @@
 	},
 /area/hallway/primary/central)
 "aJv" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
 "aJw" = (
@@ -16707,8 +16707,8 @@
 /area/shuttle/arrival)
 "aKi" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l";
-	dir = 8
+	dir = 4;
+	icon_state = "burst_l"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/arrival)
@@ -16899,7 +16899,7 @@
 	},
 /area/hallway/primary/central)
 "aKG" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
 "aKH" = (
@@ -17684,7 +17684,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aMC" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aMD" = (
@@ -18267,7 +18267,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aOf" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -18314,7 +18314,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aOk" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/entry)
 "aOl" = (
@@ -18863,7 +18863,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aPy" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/entry)
 "aPz" = (
@@ -19369,7 +19369,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQR" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQS" = (
@@ -20175,8 +20175,7 @@
 "aSY" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/that{
-	throwforce = 1;
-	throwing = 1
+	throwforce = 1
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -20272,7 +20271,7 @@
 	},
 /area/hallway/secondary/exit)
 "aTl" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 0;
@@ -24016,7 +24015,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bcc" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bcd" = (
@@ -24420,7 +24419,7 @@
 	},
 /area/hallway/primary/starboard)
 "bdd" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bde" = (
@@ -39899,7 +39898,7 @@
 "bJc" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
+	req_access_txt = "0"
 	},
 /obj/docking_port/mobile{
 	dir = 8;
@@ -45777,7 +45776,7 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
 "bVK" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bVL" = (
@@ -52688,9 +52687,9 @@
 /area/maintenance/asmaint2)
 "ckq" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (WEST)";
+	dir = 4;
 	icon_state = "propulsion";
-	dir = 8
+	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -54992,7 +54991,7 @@
 /area/engine/engineering)
 "cpc" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
@@ -58915,9 +58914,9 @@
 /area/hallway/secondary/entry)
 "cwU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (WEST)";
+	dir = 4;
 	icon_state = "propulsion";
-	dir = 8
+	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -59095,8 +59094,8 @@
 /area/shuttle/escape)
 "cxt" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
@@ -59377,8 +59376,8 @@
 /area/shuttle/abandoned)
 "cyf" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -59423,8 +59422,8 @@
 /area/hallway/secondary/entry)
 "cym" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -59542,8 +59541,8 @@
 /area/maintenance/aft)
 "cyF" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -61224,6 +61223,15 @@
 "cCs" = (
 /obj/structure/mining_shuttle_beacon{
 	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"cCt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
@@ -72376,7 +72384,7 @@ aqN
 asD
 asD
 asD
-asD
+cCt
 asD
 asD
 asD

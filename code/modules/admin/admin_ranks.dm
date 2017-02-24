@@ -127,8 +127,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			previous_rights = R.rights
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!dbcon.Connect())
 			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
 			diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
 			config.admin_legacy_system = 1
@@ -202,8 +201,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!dbcon.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
@@ -375,8 +373,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	edit_admin_permissions()
 
 /datum/admins/proc/updateranktodb(ckey,newrank)
-	establish_db_connection()
-	if (!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_admin_rank = sanitizeSQL(newrank)

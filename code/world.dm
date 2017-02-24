@@ -51,7 +51,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
-		if(!setup_database_connection())
+		if(!dbcon.Connect())
 			log_world("Your server failed to establish a connection with the database.")
 		else
 			log_world("Database connection established.")
@@ -71,14 +71,13 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	Master.Setup(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
-var/last_irc_status = 0
-
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
 		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
+	var/static/last_irc_status = 0
 
 	if("ping" in input)
 		var/x = 1
@@ -240,7 +239,7 @@ var/last_irc_status = 0
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns
-	RoundEndSound(round_end_sound_sent)
+	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 	world << "<span class='boldannounce'>Rebooting world. Loading next map...</span>"
 	for(var/thing in clients)
@@ -248,7 +247,7 @@ var/last_irc_status = 0
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 
-/world/proc/RoundEndSound(round_end_sound_sent)
+/world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
 	var/round_end_sound
 	if(!ticker && ticker.round_end_sound)
@@ -269,6 +268,10 @@ var/last_irc_status = 0
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg'\
 		)
+
+	for(var/thing in clients)
+		new /obj/screen/splash(thing, FALSE, FALSE)
+
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
@@ -349,47 +352,6 @@ var/last_irc_status = 0
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-#define FAILED_DB_CONNECTION_CUTOFF 5
-var/failed_db_connections = 0
-
-/proc/setup_database_connection()
-
-	if(failed_db_connections >= FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
-		return 0
-
-	if(!dbcon)
-		dbcon = new()
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-	. = dbcon.IsConnected()
-	if ( . )
-		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
-	else
-		failed_db_connections++		//If it failed, increase the failed connections counter.
-		if(config.sql_enabled)
-			log_world("SQL error: " + dbcon.ErrorMsg())
-
-	return .
-
-//This proc ensures that the connection to the feedback database (global variable dbcon) is established
-/proc/establish_db_connection()
-	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
-		return 0
-
-	if(!dbcon || !dbcon.IsConnected())
-		return setup_database_connection()
-	else
-		return 1
-
-#undef FAILED_DB_CONNECTION_CUTOFF
-
 
 /proc/maprotate()
 	if (!SERVERTOOLS)

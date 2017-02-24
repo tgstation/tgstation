@@ -24,7 +24,7 @@
 /mob/new_player/proc/poll_player(pollid)
 	if(!pollid)
 		return
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
@@ -349,7 +349,7 @@
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
-	if (!establish_db_connection())
+	if (!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM `[format_table_name(table)]` WHERE pollid = [pollid] AND ckey = '[ckey]'")
@@ -379,7 +379,7 @@
 	return 1
 
 /mob/new_player/proc/vote_valid_check(pollid, holder, type)
-	if (!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	pollid = text2num(pollid)
@@ -406,7 +406,7 @@
 	return 1
 
 /mob/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
-	if (!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -482,7 +482,7 @@
 
 
 /mob/new_player/proc/vote_on_poll(pollid, optionid)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -504,7 +504,7 @@
 	return 1
 
 /mob/new_player/proc/log_text_poll_reply(pollid, replytext)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -533,7 +533,7 @@
 	return 1
 
 /mob/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -563,7 +563,7 @@
 	return 1
 
 /mob/new_player/proc/vote_on_multi_poll(pollid, optionid)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())

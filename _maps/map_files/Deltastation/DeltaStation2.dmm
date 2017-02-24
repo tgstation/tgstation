@@ -1341,10 +1341,12 @@
 /area/mining_construction)
 "acy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/mining_shuttle_beacon,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 26
+	},
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
@@ -1450,7 +1452,7 @@
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "acK" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -1567,7 +1569,7 @@
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
 "acY" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry{
@@ -1701,9 +1703,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/mining_construction)
 "adl" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -1839,9 +1839,10 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/shuttle/auxillary_base{
+/obj/docking_port/mobile/auxillary_base{
 	pixel_y = 0
 	},
+/obj/machinery/computer/auxillary_base,
 /turf/closed/wall,
 /area/shuttle/auxillary_base)
 "adz" = (
@@ -2600,14 +2601,14 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore_starboard_maintenance)
 "afd" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
 /area/maintenance/starboard/fore_starboard_maintenance)
 "afe" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -7565,7 +7566,7 @@
 	name = "Arrivals"
 	})
 "apg" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Arrivals - Aft";
@@ -7578,7 +7579,7 @@
 	name = "Arrivals"
 	})
 "aph" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 26
@@ -26661,7 +26662,7 @@
 /area/security/prison)
 "aVZ" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
@@ -30331,24 +30332,17 @@
 	icon_state = "manifold";
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
 "bcW" = (
-/obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
 "bcX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
@@ -30460,7 +30454,7 @@
 	},
 /obj/machinery/door/airlock/shuttle{
 	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
+	req_access_txt = "0"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -40716,7 +40710,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bvp" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
@@ -41754,7 +41748,7 @@
 /turf/open/floor/plasteel/redyellow,
 /area/engine/break_room)
 "bwW" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/redyellow,
 /area/engine/break_room)
 "bwX" = (
@@ -42088,7 +42082,7 @@
 	},
 /area/bridge)
 "bxA" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
 	icon_state = "darkblue";
@@ -42096,7 +42090,7 @@
 	},
 /area/bridge)
 "bxB" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
 	icon_state = "darkblue";
@@ -58030,7 +58024,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "bYw" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
@@ -61790,7 +61784,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "ceX" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/structure/sign/poster{
 	icon_state = "poster8_legit";
 	pixel_y = -32;
@@ -68374,7 +68368,7 @@
 	name = "\improper Command Hallway"
 	})
 "cqX" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/bridge/meeting_room{
@@ -78563,13 +78557,13 @@
 /obj/effect/turf_decal/delivery,
 /area/hallway/primary/central)
 "cIy" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/machinery/light,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cIz" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -79827,7 +79821,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/sleep)
 "cKP" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -80555,7 +80549,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/sleep)
 "cMn" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
@@ -86282,7 +86276,7 @@
 	name = "Medbay Central"
 	})
 "cWl" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -108455,7 +108449,7 @@
 	name = "Research Division"
 	})
 "dJP" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/light,
 /obj/machinery/status_display{
 	pixel_y = -32
@@ -113585,7 +113579,7 @@
 /area/chapel/main)
 "dTt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -113923,7 +113917,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -118593,6 +118587,19 @@
 	dir = 1
 	},
 /area/maintenance/starboard/fore_starboard_maintenance)
+"edi" = (
+/obj/structure/mining_shuttle_beacon,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"edj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -156533,7 +156540,7 @@ cNo
 cPd
 cLH
 cSo
-cUa
+cTY
 cVG
 cXw
 cYW
@@ -161566,7 +161573,7 @@ acz
 acP
 acP
 acP
-acP
+edj
 acP
 acP
 acP
@@ -162593,7 +162600,7 @@ aaG
 acA
 acR
 acR
-acR
+edi
 ady
 acR
 acR
@@ -164185,7 +164192,7 @@ aNg
 aYO
 bar
 bbF
-bcY
+bcX
 bbF
 bgl
 bii

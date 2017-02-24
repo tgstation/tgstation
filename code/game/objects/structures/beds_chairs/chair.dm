@@ -63,7 +63,7 @@
 
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
-		layer = ABOVE_ALL_MOB_LAYER
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
@@ -146,7 +146,7 @@
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
-		overlays -= armrest
+		cut_overlay(armrest)
 
 
 /obj/structure/chair/comfy/brown

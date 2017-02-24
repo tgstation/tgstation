@@ -93,7 +93,7 @@
 				src.l_set = 1
 			else if ((src.code == src.l_code) && (src.l_set == 1))
 				src.locked = 0
-				src.overlays = null
+				cut_overlays()
 				add_overlay(image('icons/obj/storage.dmi', icon_opened))
 				src.code = null
 			else
@@ -101,7 +101,7 @@
 		else
 			if ((href_list["type"] == "R") && (!src.l_setshort))
 				src.locked = 1
-				src.overlays = null
+				cut_overlays()
 				src.code = null
 				src.close(usr)
 			else
