@@ -400,6 +400,33 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/ash_catcher
+	name = "Ash Catcher"
+	result = /obj/item/ash_catcher
+	time = 50
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide_chunk = 1,
+				/obj/item/stack/rods = 2)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/ash_catcher/alternate //For primitive lavaland roles i.e. ash walkers
+	name = "Ash Catcher (Alternate Recipe)"
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide_chunk = 1,
+				/obj/item/stack/sheet/bone = 1)
+
+/datum/crafting_recipe/goliath_chunks
+	name = "Break Down Goliath Hide"
+	result = /obj/item/stack/sheet/animalhide/goliath_hide_chunk/three
+	time = 10
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/goliath_hide
+	name = "Piece Together Goliath Hide"
+	result = /obj/item/stack/sheet/animalhide/goliath_hide
+	time = 10
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide_chunk = 3)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden bike horn"
 	result = /obj/item/weapon/bikehorn/golden
