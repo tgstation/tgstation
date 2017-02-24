@@ -58,7 +58,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	if(!orbiting)
 		handle_energy()
 
-		move_the_basket_ball(round(2 + orbiting_balls.len * .1))
+		move_the_basket_ball(round(3 + orbiting_balls.len * .1))
 
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
 
