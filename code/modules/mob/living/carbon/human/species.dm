@@ -120,12 +120,10 @@
 		heart.Insert(C)
 
 	if(lungs)
-		lungs.Remove(C)
 		qdel(lungs)
 		lungs = null
 
 	if(eyes)
-		eyes.Remove(C)
 		qdel(eyes)
 		eyes = new mutanteyes
 		mutanteyes.Insert(C)
@@ -138,7 +136,6 @@
 		lungs.Insert(C)
 
 	if((NOHUNGER in species_traits) && appendix)
-		appendix.Remove(C)
 		qdel(appendix)
 	else if((!(NOHUNGER in species_traits)) && (!appendix))
 		appendix = new()
