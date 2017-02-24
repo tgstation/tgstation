@@ -21,11 +21,6 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/weapon/storage/box/bodybags
-	name = "body bags"
-	desc = "The label indicates that it contains body bags."
-	icon_state = "bodybags"
-
 /obj/item/weapon/storage/box/bodybags/New()
 	..()
 	for(var/i in 1 to 7)
