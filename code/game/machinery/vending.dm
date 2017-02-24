@@ -792,7 +792,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/cola/pwr_game
 	icon_state = "pwr_game"
-	name = "/improper Pwr Game Vendor"
+	name = "\improper Pwr Game Vendor"
 	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
 	product_slogans = "The POWER that gamers crave! PWR GAME!"
 
