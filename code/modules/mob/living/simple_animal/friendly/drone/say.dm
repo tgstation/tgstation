@@ -22,7 +22,7 @@
 		var/mob/living/simple_animal/drone/M = W
 		if(istype(M) && M.stat != DEAD)
 			if(faction_checked_mob)
-				if(faction_check_mob(faction_checked_mob, exact_faction_match))
+				if(M.faction_check_mob(faction_checked_mob, exact_faction_match))
 					M << msg
 			else
 				M << msg
