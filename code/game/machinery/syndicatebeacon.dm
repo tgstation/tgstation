@@ -11,7 +11,9 @@
 	density = 1
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
-
+	verb_say = "beeps"
+	verb_exclaim = "beeps"
+	var/cooldown = 9999
 	var/active = 0
 	var/icontype = "beacon"
 
@@ -85,6 +87,10 @@
 	else
 		if(surplus() > 1500)
 			add_load(1500)
+			for(var/obj/singularity/singulo in world)
+				if(singulo.z == z && (world.time < cooldown)
+					speak("The [singulo] is now [get_dist(src,singulo)] standard lengths away to the [get_dir(src,singulo)]")
+			cooldown = world.time + 1000				
 		else
 			Deactivate()
 
