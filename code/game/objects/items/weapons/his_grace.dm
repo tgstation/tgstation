@@ -9,6 +9,7 @@
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
+	icon = 'icons/obj/weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	force = 12
