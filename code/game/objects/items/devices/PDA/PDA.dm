@@ -999,13 +999,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		user << "You do not have a PDA. You should make an issue report about this."
 
-//Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
-	name = "spare PDAs"
-	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "pda"
-
 /obj/item/weapon/storage/box/PDAs/New()
 	..()
 	new /obj/item/device/pda(src)
