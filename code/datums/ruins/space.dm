@@ -242,6 +242,12 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
+	
+/datum/map_template/ruin/space/luxuryvehicle
+	id = "luxuryvehicle"
+	suffix = ".dmm"
+	name = "A luxury vehicle showcase ambushed by pirates, hope you brought cash"
+	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"	
 
 /datum/map_template/ruin/space/dragoon
 	id = "dragoon"
