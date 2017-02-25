@@ -2026,6 +2026,7 @@
 #include "code\modules\uplink\uplink.dm"
 #include "code\modules\uplink\uplink_item.dm"
 #include "code\modules\vehicles\atv.dm"
+#include "code\modules\vehicles\bicycle.dm"
 #include "code\modules\vehicles\pimpin_ride.dm"
 #include "code\modules\vehicles\scooter.dm"
 #include "code\modules\vehicles\secway.dm"
