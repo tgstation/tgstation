@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Cargo can now order plastic sheets to make plastic flaps. No doubt
-other uses for plastic will be discovered in the future."
-  - rscadd: "To deconstruct plastic flaps, unscrew from the floor, then cut apart with wirecutters. Plastic flaps have examine tips like reinforced walls."
