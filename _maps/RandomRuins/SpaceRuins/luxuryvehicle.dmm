@@ -13,7 +13,7 @@
 "m" = (/turf/closed/indestructible/fakeglass,/area/ruin/unpowered)
 "n" = (/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "o" = (/obj/vehicle/space/speedbike/speedwagon,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"p" = (/obj/structure/shuttle/engine/propulsion{dir = 6},/turf/open/space,/area/space)
+"p" = (/obj/structure/shuttle/engine/propulsion{dir = 6},/turf/open/space,/area/ruin/unpowered)
 "q" = (/obj/machinery/computer,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "r" = (/obj/effect/mob_spawn/human/corpse/pirate/ranged,/obj/structure/chair/comfy/brown{dir = 6},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "s" = (/obj/effect/mob_spawn/human/corpse/pirate,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
