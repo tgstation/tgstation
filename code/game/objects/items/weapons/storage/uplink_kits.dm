@@ -135,7 +135,7 @@
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
-	icon_state = "syndiebox"
+	icon_state = "box_of_doom"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
