@@ -20,10 +20,13 @@ var/list/bike_music = list('sound/misc/bike1.mid',
 
 /obj/vehicle/bicycle/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	..()
-	buckled_mob.stopLobbySound() // :^)
+	if(buckled_mob)
+		buckled_mob.stopLobbySound() // :^)
 
 /obj/vehicle/bicycle/tesla_act() // :::^^^)))
 	name = "fried bicycle"
 	desc = "Well spent."
 	riding_datum = null
 	color = rgb(63, 23, 4)
+	for(var/m in buckled_mobs)
+		unbuckle_mob(m,1)
