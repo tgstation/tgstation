@@ -33,7 +33,7 @@
 		user.say(html_decode(message))
 	else
 		user.whisper(html_decode(message))
-	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << my_message
