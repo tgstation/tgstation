@@ -903,6 +903,7 @@
 /obj/item/weapon/storage/box/ingredients/New()
 	..()
 	if(item_state)
+		name = "[name] ([item_state])"
 		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
 
 /obj/item/weapon/storage/box/emptysandbags
