@@ -59095,9 +59095,9 @@
 "cxt" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
-	icon_state = "propulsion"
+	icon_state = "propulsion_l"
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "cxu" = (
 /turf/closed/wall/mineral/titanium,
@@ -59127,8 +59127,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "cxy" = (
-/turf/open/floor/mineral/titanium/blue,
-/turf/closed/wall/mineral/titanium/interior,
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "cxz" = (
 /obj/machinery/computer/shuttle/ferry/request,
@@ -59142,21 +59146,28 @@
 /area/ai_monitored/security/armory)
 "cxB" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cxC" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "cxD" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "cxE" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
 	port_angle = 0;
@@ -59167,13 +59178,13 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
 	turf_type = /turf/open/space;
 	width = 5
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "cxF" = (
 /obj/machinery/door/airlock/titanium{
@@ -59203,7 +59214,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cxJ" = (
 /obj/machinery/door/airlock/external{
@@ -61235,6 +61246,39 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+"cCu" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"cCv" = (
+/turf/open/floor/pod/light,
+/area/space)
+"cCw" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"cCx" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"cCy" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"cCz" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"cCA" = (
+/turf/open/floor/pod/light,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -69583,7 +69627,7 @@ cwU
 aaa
 aaa
 aaa
-aaa
+cxt
 aaa
 aaa
 aaf
@@ -70095,11 +70139,11 @@ auO
 auP
 cxY
 arB
-cxt
+aaa
 cxy
 cxC
-cxy
-cxt
+cCy
+aaa
 aaf
 aaa
 aaf
@@ -70352,11 +70396,11 @@ asE
 cyb
 avP
 arB
+aaa
 cxu
 cxC
-cxC
-cxH
 cxu
+aaa
 arB
 awW
 awW
@@ -70610,9 +70654,9 @@ aQG
 aRX
 arB
 cxu
-cxz
-cxC
-cxH
+cxu
+cCw
+cxu
 cxu
 arB
 awY
@@ -70866,11 +70910,11 @@ azy
 ayl
 aRY
 awW
-cxv
+cxw
 cxB
 cxC
 cxI
-cxv
+cxw
 awW
 awZ
 ayl
@@ -71381,9 +71425,9 @@ aPu
 aRY
 awW
 cxu
-cxB
 cxC
-cxI
+cxC
+cxC
 cxu
 awW
 awZ
@@ -71637,11 +71681,11 @@ ayl
 ayl
 aRY
 awW
-cxu
-cxB
+cCu
 cxC
-cxI
-cxu
+cCx
+cxC
+cCz
 awW
 awZ
 ayl
@@ -71894,11 +71938,11 @@ ayl
 ayl
 aRY
 awW
-cxw
-cxB
+cxu
 cxC
-cxI
-cxw
+cxC
+cxC
+cxu
 awW
 awZ
 ayl
@@ -72408,11 +72452,11 @@ awW
 awV
 aRY
 awW
-cxu
+cxw
 cxB
 cxC
 cxI
-cxu
+cxw
 awW
 awZ
 ayk
@@ -72666,9 +72710,9 @@ ayl
 aRY
 awW
 cxu
-cxv
+cxw
 cxE
-cxv
+cxw
 cxu
 awW
 awZ

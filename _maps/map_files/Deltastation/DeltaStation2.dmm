@@ -118600,6 +118600,346 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+"edk" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"edl" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"edm" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edn" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edo" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edp" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"edq" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edr" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eds" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edt" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edu" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edv" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edw" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edx" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edy" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edz" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"edA" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edB" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edC" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"edD" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"edE" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edF" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"edG" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"edH" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edI" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edJ" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edK" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edL" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edM" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edN" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edO" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edP" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edQ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edR" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edS" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edT" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"edU" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edV" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"edW" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"edX" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edY" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"edZ" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"eea" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"eeb" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eec" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"eed" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"eee" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"eef" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eeg" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eeh" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"eei" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"eej" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"eek" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eel" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eem" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"een" = (
+/obj/docking_port/mobile{
+	dir = 1;
+	dwidth = 2;
+	height = 13;
+	id = "ferry";
+	name = "ferry shuttle";
+	port_angle = 0;
+	preferred_direction = 4;
+	roundstart_move = "ferry_away";
+	width = 5
+	},
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 13;
+	id = "ferry_home";
+	name = "port bay 2";
+	turf_type = /turf/open/space;
+	width = 5
+	},
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"eeo" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"eep" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"eeq" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"eer" = (
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/transport)
+"ees" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"eet" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"eeu" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/latejoin,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/shuttle/transport)
+"eev" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"eew" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"eex" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"eey" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
 
 (1,1,1) = {"
 aaa
@@ -152329,7 +152669,7 @@ aaa
 aaa
 aaa
 aaf
-brL
+aax
 aaD
 agn
 agN
@@ -152576,17 +152916,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+edo
+edC
+edo
+edo
+eev
+edo
+edo
+eex
+edo
 aaf
-ebM
+abT
 adr
 agl
 agN
@@ -152830,20 +153170,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-brL
-brL
+eeq
+ees
+edo
+edo
+edD
+edD
+edp
+edp
+edp
+edD
+edD
+edC
+aax
+aax
 aax
 agl
 agN
@@ -153086,21 +153426,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-ebL
-ebN
+eeq
+edl
+edp
+edp
+edz
+edp
+edp
+edp
+edT
+edp
+edp
+edp
+een
+acj
+aci
 acj
 agl
 agN
@@ -153344,20 +153684,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-brL
-brL
+eeq
+eet
+edo
+edo
+edF
+edF
+edp
+edp
+edp
+edF
+edF
+edC
+aax
+aax
 aax
 agl
 agQ
@@ -153604,17 +153944,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+edo
+edC
+edo
+edo
+eev
+edo
+edo
+eex
+edo
 aaf
-ebO
+abR
 adq
 ago
 agM
@@ -153871,7 +154211,7 @@ aaa
 aaa
 aaa
 aaf
-brL
+aax
 aaD
 agp
 agN
@@ -157202,7 +157542,7 @@ aca
 acn
 acn
 acI
-acI
+eeu
 acI
 acI
 adN
@@ -157970,7 +158310,7 @@ abp
 abF
 abW
 abZ
-acn
+eer
 acn
 acn
 acn
