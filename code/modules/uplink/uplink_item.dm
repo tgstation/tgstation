@@ -1210,7 +1210,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
-	desc = "A mostly harmless jumpsuit recovered from a station overcome by the grey tide. Yeah."
+	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
 	surplus = 0
