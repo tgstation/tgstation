@@ -29,9 +29,9 @@
 /mob/living/simple_animal/hostile/clockwork/fragment/Life()
 	..()
 	if(movement_delay_time > world.time)
-		adjustHealth(-0.1)
+		adjustHealth(-0.2)
 	else
-		adjustHealth(-0.5)
+		adjustHealth(-1)
 
 /mob/living/simple_animal/hostile/clockwork/fragment/Stat()
 	..()
