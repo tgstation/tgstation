@@ -26,4 +26,4 @@ var/list/bike_music = list('sound/misc/bike1.mid',
 	name = "fried bicycle"
 	desc = "Well spent."
 	riding_datum = null
-	color = = rgb(63, 23, 4)
+	color = rgb(63, 23, 4)
