@@ -1006,7 +1006,7 @@
 	if(aim_for_mouth && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_mouth))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
-			"<span class='notice'> You slap [target] in the face! </span>",\
+			"<span class='notice'>You slap [target] in the face! </span>",\
 		"You hear a slap.")
 		target.endTailWag()
 		return FALSE
