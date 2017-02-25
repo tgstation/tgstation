@@ -9179,9 +9179,6 @@
 	})
 "aoh" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/mineral/ore_redemption{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -9189,6 +9186,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 4;
+	output_dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
