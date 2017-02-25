@@ -12,17 +12,17 @@ This file contains the arcane tome files.
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	var/list/rune_types //Rune types that we can draw
 	var/list/keyword_runes //Rune types that need a keyword when drawing
 
 /obj/item/weapon/tome/New()
 	..()
-	rune_types = list()
-	for(var/i_can_do_loops_now_thanks_remie in non_revealed_runes)
-		var/obj/effect/rune/R = i_can_do_loops_now_thanks_remie
-		rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
-		if(initial(R.req_keyword))
-			LAZYADD(keyword_runes, R)
+	if(!LAZYLEN(rune_types))
+		rune_types = list()
+		for(var/i_can_do_loops_now_thanks_remie in non_revealed_runes)
+			var/obj/effect/rune/R = i_can_do_loops_now_thanks_remie
+			rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
+			if(initial(R.req_keyword))
+				LAZYADD(keyword_runes, R)
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
@@ -186,15 +186,14 @@ This file contains the arcane tome files.
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in rune_types
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
-	for(var/V in keyword_runes)
-		if(rune_types[entered_rune_name] == V)
-			chosen_keyword = stripped_input(user, "Enter a keyword for the new rune.", "Words of Power")
-			if(!chosen_keyword)
-				scribe_rune(user) //Go back a menu!
-				return
 	rune_to_scribe = rune_types[entered_rune_name]
 	if(!rune_to_scribe)
 		return
+	if(initial(rune_to_scribe.req_keyword))
+		chosen_keyword = stripped_input(user, "Enter a keyword for the new rune.", "Words of Power")
+		if(!chosen_keyword)
+			scribe_rune(user) //Go back a menu!
+			return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
 	A = get_area(src)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
