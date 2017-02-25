@@ -27535,10 +27535,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_end (WEST)";
-	icon_state = "white_warn_end"
-	},
+/turf/open/space,
 /area/shuttle/pod_3)
 "aXH" = (
 /obj/structure/chair{
@@ -27554,10 +27551,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
-	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/pod_3)
 "aXI" = (
 /obj/structure/chair{
@@ -27577,10 +27571,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
-	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/pod_3)
 "aXJ" = (
 /obj/structure/grille,
@@ -38768,10 +38759,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
-	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/labor)
 "brX" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -38784,10 +38772,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
-	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/labor)
 "brZ" = (
 /obj/structure/closet/emcloset,
@@ -83732,10 +83717,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_end (WEST)";
-	icon_state = "white_warn_end"
-	},
+/turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "cRR" = (
 /obj/structure/cable/white{
@@ -83745,10 +83727,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
-	},
+/turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "cRS" = (
 /obj/structure/cable/white{
@@ -83769,10 +83748,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
-	},
+/turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "cRT" = (
 /obj/structure/cable/white{
@@ -83791,10 +83767,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_end (EAST)";
-	icon_state = "white_warn_end"
-	},
+/turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "cRU" = (
 /obj/structure/cable/white{
@@ -104152,9 +104125,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
+/turf/open/floor/plasteel{
+	tag = "icon-warning (EAST)"
 	},
 /area/toxins/mixing{
 	name = "\improper Toxins Lab"
@@ -104169,9 +104141,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
+/turf/open/floor/plasteel{
+	tag = "icon-warning (EAST)"
 	},
 /area/toxins/mixing{
 	name = "\improper Toxins Lab"
@@ -104183,9 +104154,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
+/turf/open/floor/plasteel{
+	tag = "icon-warning (EAST)"
 	},
 /area/toxins/mixing{
 	name = "\improper Toxins Lab"
@@ -104201,9 +104171,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side"
+/turf/open/floor/plasteel{
+	tag = "icon-warning (EAST)"
 	},
 /area/toxins/mixing{
 	name = "\improper Toxins Lab"
@@ -108643,10 +108612,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn (NORTHWEST)";
-	icon_state = "white_warn"
-	},
+/turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dKg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -109043,10 +109009,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn (SOUTHWEST)";
-	icon_state = "white_warn"
-	},
+/turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dKX" = (
 /obj/structure/cable/white{
@@ -109061,10 +109024,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn (SOUTHEAST)";
-	icon_state = "white_warn"
-	},
+/turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dKY" = (
 /obj/machinery/door/firedoor,
