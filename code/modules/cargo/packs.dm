@@ -1254,6 +1254,12 @@
 	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 	crate_name = "cardboard sheets crate"
 
+/datum/supply_pack/materials/plastic50
+	name = "50 Plastic Sheets"
+	cost = 1000
+	contains = list(/obj/item/stack/sheet/plastic/fifty)
+	crate_name = "plastic sheets crate"
+
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
 	cost = 1000
