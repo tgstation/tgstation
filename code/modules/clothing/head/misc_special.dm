@@ -76,6 +76,10 @@
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
 	return on * heat
+	
+/obj/item/clothing/head/hardhat/cakehat/get_dismemberment_chance()
+	return 0
+	
 /*
  * Ushanka
  */
