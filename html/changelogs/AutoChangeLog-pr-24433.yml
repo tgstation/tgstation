@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "[Delta] Fixes varedited tiles causing tiles to appear as if they have no texture"
