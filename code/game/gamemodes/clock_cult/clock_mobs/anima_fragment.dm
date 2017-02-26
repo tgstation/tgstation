@@ -60,8 +60,8 @@
 		attacktext = previousattacktext
 		changeNext_move(CLICK_CD_MELEE)
 		if(!ratvar_awakens)
-			adjustHealth(5)
-			adjust_movement_delay(22.5) //with the above, total of 35 movement delay
+			adjustHealth(4)
+			adjust_movement_delay(20) //with the above damage, total of 30 movement delay plus speed = 0 due to damage
 
 /mob/living/simple_animal/hostile/clockwork/fragment/emp_act(severity)
 	adjust_movement_delay(50/severity)
