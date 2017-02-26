@@ -109,6 +109,9 @@
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			var/message = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
+			if(user.ckey == "icepacks")
+				user.gib()
+				return
 			bombers += message
 			message_admins(message)
 			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
