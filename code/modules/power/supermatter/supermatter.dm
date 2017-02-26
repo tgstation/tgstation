@@ -355,3 +355,12 @@
 /obj/machinery/power/supermatter_shard/hugbox
 	takes_damage = 0
 	produces_gas = 0
+
+/obj/machinery/power/supermatter_shard/crystal
+	name = "supermatter crystal"
+	desc = "A strangely translucent and iridescent crystal. <span class='danger'>You get headaches just from looking at it.</span>"
+	icon_state = "darkmatter"
+	anchored = 1
+	gasefficency = 0.15
+	explosion_power = 20
+

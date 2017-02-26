@@ -46313,10 +46313,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Mix to Engine";
-	on = 0
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
@@ -55601,7 +55599,8 @@
 /obj/machinery/button/door{
 	id = "engsm";
 	name = "Radiation Shutters Control";
-	pixel_y = -24;
+	pixel_x = 24;
+	pixel_y = 0;
 	req_access_txt = "24"
 	},
 /turf/open/floor/engine,
@@ -60227,14 +60226,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cAm" = (
-/obj/machinery/power/supermatter_shard{
-	anchored = 1;
-	base_icon_state = "darkmatter";
-	explosion_power = 20;
-	gasefficency = 0.15;
-	icon_state = "darkmatter";
-	name = "supermatter crystal"
-	},
+/obj/machinery/power/supermatter_shard/crystal,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cAn" = (
@@ -61292,14 +61284,16 @@
 /area/atmos)
 "cCD" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "Mix to Engine";
+	on = 0
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
 "cCE" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
