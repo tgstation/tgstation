@@ -12,7 +12,6 @@ This file contains the arcane tome files.
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	var/list/keyword_runes //Rune types that need a keyword when drawing
 
 /obj/item/weapon/tome/New()
 	..()
@@ -21,8 +20,6 @@ This file contains the arcane tome files.
 		for(var/i_can_do_loops_now_thanks_remie in non_revealed_runes)
 			var/obj/effect/rune/R = i_can_do_loops_now_thanks_remie
 			rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
-			if(initial(R.req_keyword))
-				LAZYADD(keyword_runes, R)
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
