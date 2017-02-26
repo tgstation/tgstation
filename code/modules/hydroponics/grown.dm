@@ -166,7 +166,6 @@
 	var/obj/item/T
 	if(trash)
 		T = generate_trash()
-	qdel(src)
-	if(trash)
 		user.put_in_hands(T)
 		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
+	qdel(src)
