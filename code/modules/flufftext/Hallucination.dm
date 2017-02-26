@@ -23,31 +23,25 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		return
 
 	//Least obvious
-	var/list/minor = list("sounds"=20,"bolts_minor"=10,"whispers"=15,"message"=5)
+	var/list/minor = list("sounds"=25,"bolts_minor"=5,"whispers"=15,"message"=10)
 	//Something's wrong here
-	var/list/medium = list("hudscrew"=15,"items"=15,"dangerflash"=15,"bolts"=10,"flood"=10,"husks"=10,"battle"=10)
+	var/list/medium = list("hudscrew"=15,"items"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15)
 	//AAAAH
-	var/list/major = list("fake"=10,"death"=5,"xeno"=10,"singulo"=10,"delusion"=10)
-
-	var/grade = 0
-	var/current = list()
-	var/trip_length = 0
+	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"delusion"=20)
 
 	handling_hal = 1
 	while(hallucination > 20)
 		sleep(rand(200,500)/(hallucination/25))
-		trip_length += 1
-		if(prob(min(20,trip_length*2)))
-			grade = min(3,grade+1)
 		if(prob(20))
 			continue
-		current = list()
-		for(var/a in minor)
-			current[a] = minor[a] * (grade==0?2:1)
-		for(var/b in medium)
-			current[b] = medium[b] * (grade==1?2:1)
-		for(var/c in major)
-			current[c] = major[c] * (grade==2?2:1)
+		var/list/current = list()
+		switch(rand(100))
+			if(1 to 50)
+				current = minor
+			if(51 to 85)
+				current = medium
+			if(86 to 100)
+				current = major
 
 		var/halpick = pickweight(current)
 
@@ -225,11 +219,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/singularity_scare/New(loc,var/mob/living/carbon/T)
 	target = T
-	var/turf/start = T.loc
+	var/turf/start = get_turf(T)
 	var/screen_border = pick(SOUTH,EAST,WEST,NORTH)
 	for(var/i = 0,i<11,i++)
 		start = get_step(start,screen_border)
 	s = new(start,target)
+	s.parent = src
 	for(var/i = 0,i<11,i++)
 		sleep(5)
 		s.loc = get_step(get_turf(s),get_dir(s,target))
@@ -243,13 +238,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_layer = MASSIVE_OBJ_LAYER
 	px = -96
 	py = -96
+	var/obj/effect/hallucination/singularity_scare/parent
 
 /obj/effect/hallucination/simple/singularity/proc/Eat(atom/OldLoc, Dir)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = 1
-		target.SetSleeping(20)
-		addtimer(CALLBACK(src, .proc/wake_and_restore), rand(50, 100))
+		target.SetSleeping(8)
+		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
 /obj/effect/hallucination/battle
 
@@ -260,24 +256,24 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(1) //Laser fight
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/weapons/Laser.ogg',0,1,0,25)
-				sleep(rand(1,5))
+				sleep(rand(4,12))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 		if(2) //Esword fight
 			target << sound('sound/weapons/saberon.ogg',0,1,0,15)
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/weapons/blade1.ogg',,0,1,0,25)
-				sleep(rand(1,5))
+				sleep(rand(4,12))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 			target << sound('sound/weapons/saberoff.ogg',0,1,0,15)
 		if(3) //Gun fight
 			for(var/i=0,i<hits,i++)
 				target << sound(get_sfx("gunshot"),0,1,0,25)
-				sleep(rand(1,5))
+				sleep(rand(4,12))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 		if(4) //Stunprod + cablecuff
 			target << sound('sound/weapons/Egloves.ogg',0,1,40)
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
-			sleep(30)
+			sleep(20)
 			target << sound('sound/weapons/cablecuff.ogg',0,1,0,15)
 		if(5) // Tick Tock
 			for(var/i=0,i<hits,i++)
@@ -382,7 +378,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	step_away(src,my_target,2)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
+	my_target << P.hitsound
 	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
 							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
@@ -423,7 +419,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/fake_attacker/proc/attack_loop()
 	while(1)
 		sleep(rand(5,10))
-		if(obj_integrity < 0)
+		if(obj_integrity < 0 || my_target.stat)
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
@@ -456,6 +452,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/fake_attacker/proc/collapse()
 	collapse = 1
 	updateimage()
+	qdel(src)
 
 /obj/effect/fake_attacker/proc/fake_blood(mob/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
@@ -483,7 +480,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 /obj/effect/hallucination/bolts
 	var/list/doors = list()
 
-/obj/effect/hallucination/bolts/New(loc,var/mob/living/carbon/T,var/door_number=-1) //-1 for sever 1-2 for subtle
+/obj/effect/hallucination/bolts/New(loc,var/mob/living/carbon/T,var/door_number=-1) //-1 for severe, 1-2 for subtle
 	target = T
 	var/image/I = null
 	var/count = 0
@@ -491,23 +488,26 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		if(count>door_number && door_number>0)
 			break
 		count++
-		I = image(A.icon,A,"door_locked",layer=A.layer+0.1)
+		I = image(A.overlays_file, get_turf(A), "lights_bolts",layer=A.layer+0.1)
 		doors += I
 		if(target.client)
 			target.client.images |= I
-		sleep(2)
+			target << sound('sound/machines/BoltsDown.ogg', volume = 50)
+		sleep(rand(6,12))
 	sleep(100)
 	for(var/image/B in doors)
 		if(target.client)
 			target.client.images.Remove(B)
+			target << sound('sound/machines/BoltsUp.ogg', volume = 50)
+		sleep(rand(6,12))
 	qdel(src)
 
 /obj/effect/hallucination/whispers
 
 /obj/effect/hallucination/whispers/New(loc,var/mob/living/carbon/T)
 	target = T
-	var/speak_messages = list("I'm watching you...","[target.name]!","Go away!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!")
-	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick(teleportlocs)]!!","Where's [target.name]?","Call the shuttle!")
+	var/speak_messages = list("I'm watching you...","[target.name]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!","EI NATH!!", "RUN!!", "Kill me!")
+	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(teleportlocs)]!!","Where's [target.name]?","Call the shuttle!","AI rogue!!")
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
@@ -540,6 +540,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		"<span class='notice'>You hear something squeezing through the ducts...</span>", \
 		"<span class='notice'>You hear a distant scream.</span>", \
 		"<span class='notice'>You feel invincible, nothing can hurt you!</span>", \
+		"<span class='warning'>You feel a tiny prick!</span>", \
 		"<B>[target]</B> sneezes.", \
 		"<span class='warning'>You feel faint.</span>", \
 		"<span class='noticealien'>You hear a strange, alien voice in your head...</span>[pick("Hiss","Ssss")]", \
@@ -578,22 +579,31 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					if(prob(50))src << 'sound/effects/Explosion1.ogg'
 					else src << 'sound/effects/Explosion2.ogg'
 				if(3) src << 'sound/effects/explosionfar.ogg'
-				if(4) src << 'sound/effects/Glassbr1.ogg'
-				if(5) src << 'sound/effects/Glassbr2.ogg'
-				if(6) src << 'sound/effects/Glassbr3.ogg'
-				if(7) src << 'sound/machines/twobeep.ogg'
-				if(8) src << 'sound/machines/windowdoor.ogg'
+				if(4) src << pick('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg')
+				if(5)
+					src << 'sound/weapons/ring.ogg'
+					sleep(15)
+					src << 'sound/weapons/ring.ogg'
+					sleep(15)
+					src << 'sound/weapons/ring.ogg'
+				if(6) src << 'sound/magic/Summon_guns.ogg'
+				if(7) src << 'sound/machines/Alarm.ogg'
+				if(8) src << 'sound/voice/bfreeze.ogg'
 				if(9)
 					//To make it more realistic, I added two gunshots (enough to kill)
 					src << 'sound/weapons/Gunshot.ogg'
 					spawn(rand(10,30))
 						src << 'sound/weapons/Gunshot.ogg'
-				if(10) src << 'sound/weapons/smash.ogg'
+						sleep(rand(5,10))
+						src << sound(get_sfx("bodyfall"),0,1,0,25)
+				if(10) src << 'sound/effects/pray_chaplain.ogg'
 				if(11)
 					//Same as above, but with tasers.
 					src << 'sound/weapons/Taser.ogg'
 					spawn(rand(10,30))
 						src << 'sound/weapons/Taser.ogg'
+						sleep(rand(5,10))
+						src << sound(get_sfx("bodyfall"),0,1,0,25)
 			//Rare audio
 				if(12)
 			//These sounds are (mostly) taken from Hidden: Source
@@ -604,19 +614,32 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 					src << pick(creepyasssounds)
 				if(13)
-					src << "<span class='warning'>You feel a tiny prick!</span>"
+					src << 'sound/effects/ratvar_rises.ogg'
+					sleep(150)
+					src << 'sound/effects/ratvar_reveal.ogg'
 				if(14)
 					src << "<h1 class='alert'>Priority Announcement</h1>"
 					src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
 					src << sound('sound/AI/shuttledock.ogg')
+				//Deconstructing a wall
 				if(15)
 					src << 'sound/items/Welder.ogg'
+					sleep(105)
+					src << 'sound/items/Ratchet.ogg'
+				//Hacking a door
 				if(16)
 					src << 'sound/items/Screwdriver.ogg'
+					spawn(rand(10,30))
+					for(var/i = rand(1,3), i>0, i--)
+						src << 'sound/weapons/empty.ogg'
+						sleep(rand(10,30))
+					src << 'sound/machines/airlockforced.ogg'
 				if(17)
 					src << 'sound/weapons/saberon.ogg'
 				if(18)
-					src << 'sound/weapons/saberoff.ogg'
+					src << "<h1 class='alert'>Biohazard Alert</h1>"
+					src << "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>"
+					src << 'sound/AI/outbreak5.ogg'
 		if("hudscrew")
 			//Screwy HUD
 			//src << "Screwy HUD"
@@ -701,9 +724,17 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 						halimage = null
 		if("death")
 			//Fake death
-			hal_screwyhud = 1
+			hal_screwyhud = 2
 			SetSleeping(20)
-			spawn(rand(50,100))
+			var/area/area = get_area(src)
+			src << "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>"
+			if(prob(50))
+				var/list/dead_people
+				for(var/mob/dead/observer/G in player_list)
+					dead_people += G
+				var/mob/dead/observer/fakemob = pick(dead_people)
+				src << "<span class='deadsay'><b>DEAD:[fakemob.name]</b> says, \"rip\"</span>"
+			spawn(rand(50,70))
 				hal_screwyhud = 0
 				SetSleeping(0)
 		if("husks")
@@ -726,6 +757,6 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 							halbody = image('icons/mob/alien.dmi',target,"alienother",TURF_LAYER)
 
 					if(client) client.images += halbody
-					spawn(rand(50,80)) //Only seen for a brief moment.
+					spawn(rand(30,50)) //Only seen for a brief moment.
 						if(client) client.images -= halbody
 						halbody = null
