@@ -9255,7 +9255,7 @@
 	})
 "aql" = (
 /obj/machinery/light,
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/fitness{
 	name = "\improper Recreation Area"
@@ -28277,7 +28277,7 @@
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aWp" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/vault,
 /area/hallway/primary/central)
 "aWq" = (
@@ -40346,7 +40346,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
 "bqi" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/machinery/newscaster{
 	pixel_x = -28;
 	pixel_y = 1
@@ -41727,7 +41727,7 @@
 	name = "Arrivals"
 	})
 "bsl" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry{
@@ -41814,7 +41814,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
 "bst" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/port)
 "bsu" = (
@@ -42112,9 +42112,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
-/obj/machinery/vending/cola{
-	pixel_x = 2
-	},
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bsW" = (
@@ -42174,9 +42172,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/obj/machinery/vending/snack{
-	pixel_x = -2
-	},
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bta" = (
@@ -46089,7 +46085,7 @@
 	name = "\improper Command Hallway"
 	})
 "bzK" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/bridge/meeting_room{
 	name = "\improper Command Hallway"
@@ -50234,7 +50230,7 @@
 /turf/closed/wall/r_wall,
 /area/gateway)
 "bGQ" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/vault,
 /area/bridge/meeting_room{
 	name = "\improper Command Hallway"
@@ -52166,7 +52162,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bKl" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/machinery/newscaster{
 	pixel_y = -29
 	},
@@ -52197,7 +52193,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKp" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKq" = (
@@ -57712,7 +57708,7 @@
 	name = "Port Maintenance"
 	})
 "bTD" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/machinery/newscaster{
 	pixel_x = -30;
 	pixel_y = 0
@@ -66893,7 +66889,7 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -76578,7 +76574,7 @@
 	icon_state = "map-right-MS";
 	pixel_y = 32
 	},
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -79173,7 +79169,7 @@
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "cCZ" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/aft)
 "cDa" = (
@@ -83346,7 +83342,7 @@
 	name = "\improper Departure Lounge"
 	})
 "cJD" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack/random,
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security in red at the top, you see engineering in yellow, science in purple, escape in checkered red-and-white, medbay in green, arrivals in checkered red-and-blue, and then cargo in brown.";
 	icon_state = "map-right-MS";
@@ -89957,9 +89953,9 @@
 "cVm" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
-	icon_state = "propulsion"
+	icon_state = "propulsion_l"
 	},
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "cVn" = (
 /turf/closed/wall/mineral/titanium,
@@ -89978,8 +89974,12 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "cVr" = (
-/turf/open/floor/mineral/titanium/blue,
-/turf/closed/wall/mineral/titanium/interior,
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "cVs" = (
 /obj/machinery/computer/shuttle/ferry/request,
@@ -89993,21 +89993,28 @@
 /area/shuttle/transport)
 "cVu" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cVv" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "cVw" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "cVx" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
 	port_angle = 0;
@@ -90018,13 +90025,13 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
 	turf_type = /turf/open/space;
 	width = 5
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "cVy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -90048,7 +90055,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cVC" = (
 /mob/living/simple_animal/sloth/citrus,
@@ -91121,10 +91128,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cXx" = (
-/obj/machinery/vending/cola{
-	pixel_x = -1;
-	use_power = 0
-	},
+/obj/machinery/vending/cola/random,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXy" = (
@@ -91204,10 +91208,7 @@
 	},
 /area/mining_construction)
 "cXF" = (
-/obj/machinery/vending/snack{
-	pixel_x = -1;
-	use_power = 0
-	},
+/obj/machinery/vending/snack/random,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXG" = (
@@ -94437,6 +94438,39 @@
 /obj/docking_port/stationary/public_mining_dock,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+"ddH" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"ddI" = (
+/turf/open/floor/pod/light,
+/area/space)
+"ddJ" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"ddK" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"ddL" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"ddM" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"ddN" = (
+/turf/open/floor/pod/light,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -103304,11 +103338,11 @@ aaa
 aaa
 aaa
 aaf
-aaf
 aaa
 aaa
+cVm
 aaa
-aaf
+aaa
 aaf
 aaa
 aaa
@@ -103818,11 +103852,11 @@ aWS
 bvB
 aWT
 aWS
-cVm
+aaa
 cVr
 cVv
-cVr
-cVm
+ddL
+aaa
 aWS
 bKS
 aWT
@@ -104075,11 +104109,11 @@ aYC
 aVu
 aWU
 aRA
+aaa
 cVn
-cVt
 cVv
-cVA
 cVn
+aaa
 aRA
 btS
 aWU
@@ -104333,9 +104367,9 @@ aVw
 aWU
 aWS
 cVn
-cVs
-cVv
-cVA
+cVn
+ddJ
+cVn
 cVn
 aWS
 aVw
@@ -104589,11 +104623,11 @@ aRA
 bvC
 bxt
 aYC
-cVo
+cVp
 cVu
 cVv
 cVB
-cVo
+cVp
 aYC
 bKT
 aWU
@@ -105104,9 +105138,9 @@ aVu
 bxu
 aRA
 cVn
-cVu
 cVv
-cVB
+cVv
+cVv
 cVn
 aRA
 aVu
@@ -105360,11 +105394,11 @@ aWS
 aVu
 bxv
 aWS
-cVn
-cVu
+ddH
 cVv
-cVB
-cVn
+ddK
+cVv
+ddM
 aWS
 aVu
 bMu
@@ -105617,11 +105651,11 @@ btO
 bvE
 bxw
 aWS
-cVp
-cVu
+cVn
 cVv
-cVB
-cVp
+cVv
+cVv
+cVn
 aWS
 bKU
 bMv
@@ -106131,11 +106165,11 @@ btP
 aWX
 bxx
 aRA
-cVn
+cVp
 cVu
 cVv
 cVB
-cVn
+cVp
 aRA
 btS
 bxw
@@ -106388,11 +106422,11 @@ btQ
 bvG
 bxw
 aWS
-cVq
-cVo
+cVn
+cVp
 cVx
-cVo
-cVq
+cVp
+cVn
 aWS
 aVu
 bxw

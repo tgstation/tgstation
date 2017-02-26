@@ -166,7 +166,7 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
-	var/base_cooldown = 1800
+	var/base_cooldown = RATVARIAN_SPEAR_DURATION
 
 /datum/action/innate/function_call/IsAvailable()
 	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
@@ -181,9 +181,7 @@
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
 	if(!ratvar_awakens)
-		R.clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		R.timerid = addtimer(CALLBACK(R, /obj/item/clockwork/ratvarian_spear.proc/break_spear), base_cooldown, TIMER_STOPPABLE)
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
 	addtimer(CALLBACK(src, .proc/update_actions), base_cooldown)

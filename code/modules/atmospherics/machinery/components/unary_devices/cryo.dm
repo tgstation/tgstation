@@ -114,7 +114,7 @@
 		if(occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
-			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
+			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
 			radio.talk_into(src, "Patient fully restored", radio_channel)
 			if(autoeject) // Eject if configured.
 				radio.talk_into(src, "Auto ejecting patient now", radio_channel)
