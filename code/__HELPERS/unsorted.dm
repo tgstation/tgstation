@@ -930,8 +930,8 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 		if(LA.lying)
 			return 0
 	var/goal_dir = angle2dir(dir2angle(get_dir(B,A)+180))
-	var/clockwise_A_dir = turn(A.dir, 45)
-	var/anticlockwise_A_dir = turn(B.dir, -45)
+	var/clockwise_A_dir = turn(A.dir, -45)
+	var/anticlockwise_A_dir = turn(B.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
 		return 1
