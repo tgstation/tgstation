@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "Clockwork objects are overall easier to deconstruct:"
-  - wip: "Clockwork Walls now take 33% less time to slice through, Brass Windows now work like non-reinforced windows, and Pinion Airlocks now have less health and only two steps to decon(wrench, then crowbar)."
-  - rscadd: "EMPing Pinion Airlocks and Brass Windoors now has a high chance to open them and will not shock or bolt them."

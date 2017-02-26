@@ -1,5 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - bugfix: "Fixes space bar kitchen freezer access level"
-  - bugfix: "Fixes giving IDs proper access for players who spawn on a ruin via a player sleeper/spawners"
