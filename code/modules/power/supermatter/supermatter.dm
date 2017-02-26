@@ -359,6 +359,7 @@
 /obj/machinery/power/supermatter_shard/crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal. <span class='danger'>You get headaches just from looking at it.</span>"
+	base_icon_state = "darkmatter"
 	icon_state = "darkmatter"
 	anchored = 1
 	gasefficency = 0.15

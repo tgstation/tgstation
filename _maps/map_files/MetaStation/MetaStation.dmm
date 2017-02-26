@@ -14483,8 +14483,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering{
-	name = "Supermatter Engine Room";
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Supermatter Engine";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -16913,8 +16913,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering{
-	name = "Supermatter Engine Room";
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Supermatter Engine";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plasteel/black,
@@ -18490,8 +18490,8 @@
 /area/engine/engineering)
 "aFz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Supermatter Engine Room";
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Supermatter Engine";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -20899,6 +20899,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/weapon/pipe_dispenser,
+/obj/item/weapon/pipe_dispenser,
+/obj/item/weapon/pipe_dispenser,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aJq" = (
@@ -22326,8 +22329,8 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/door/airlock/engineering{
-	name = "Supermatter Engine Room";
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Supermatter Engine";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -22357,7 +22360,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aMj" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/glass_engineering{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "10"
@@ -27399,16 +27402,15 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "aVf" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/door/airlock/engineering{
+	name = "Supermatter Engine";
+	req_access_txt = "10"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/engine/engineering)
 "aVg" = (
 /obj/structure/sign/securearea{
@@ -94555,7 +94557,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/glass_engineering{
 	name = "Laser Room";
 	req_access_txt = "10"
 	},
@@ -95176,7 +95178,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/glass_engineering{
 	name = "Laser Room";
 	req_access_txt = "10"
 	},
@@ -137748,7 +137750,7 @@ aQd
 aJs
 aSA
 aTN
-ayW
+aVf
 apc
 aYu
 aZM
