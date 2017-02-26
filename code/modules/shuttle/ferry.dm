@@ -5,6 +5,15 @@
 	possible_destinations = "ferry_home;ferry_away"
 	req_access = list(access_cent_general)
 
+	var/aiControlDisabled = 1
+
+/obj/machinery/computer/shuttle/ferry/proc/canAIControl(mob/user)
+	return ((aiControlDisabled != 1));
+
+/obj/machinery/computer/shuttle/ferry/attack_ai(mob/user)
+	if(!src.canAIControl(user))
+		return
+
 /obj/machinery/computer/shuttle/ferry/request
 	name = "ferry console"
 	circuit = /obj/item/weapon/circuitboard/computer/ferry/request
