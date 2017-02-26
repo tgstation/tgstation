@@ -25,7 +25,7 @@ ALTER TABLE `feedback`.`ban`
 , ADD COLUMN `a_ipTEMP` INT UNSIGNED NOT NULL AFTER `a_ip`
 , ADD COLUMN `unbanned_ipTEMP` INT UNSIGNED NULL DEFAULT NULL AFTER `unbanned_ip`;
 SET SQL_SAFE_UPDATES = 0;
-UPDATE `feedback`.`ban2`
+UPDATE `feedback`.`ban`
  SET `server_ip` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`serverip`, ':', 1)), ''), INET_ATON('0.0.0.0'))
 , `server_port` = IF(`serverip` LIKE '%:_%', CAST(SUBSTRING_INDEX(`serverip`, ':', -1) AS UNSIGNED), '0')
 , `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'))
@@ -48,7 +48,7 @@ ALTER TABLE `feedback`.`connection_log`
 , ADD COLUMN `server_port` SMALLINT UNSIGNED NOT NULL AFTER `server_ip`
 , ADD COLUMN `ipTEMP` INT UNSIGNED NOT NULL AFTER `ip`;
 SET SQL_SAFE_UPDATES = 0;
-UPDATE `feedback`.`ban2`
+UPDATE `feedback`.`ban`
  SET `server_ip` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`serverip`, ':', 1)), ''), INET_ATON('0.0.0.0'))
 , `server_port` = IF(`serverip` LIKE '%:_%', CAST(SUBSTRING_INDEX(`serverip`, ':', -1) AS UNSIGNED), '0')
 , `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
@@ -78,7 +78,7 @@ ALTER TABLE `feedback`.`death`
 , ADD COLUMN `server_ip` INT UNSIGNED NOT NULL AFTER `server`
 , ADD COLUMN `server_port` SMALLINT UNSIGNED NOT NULL AFTER `server_ip`;
 SET SQL_SAFE_UPDATES = 0;
-UPDATE `feedback`.`ban2`
+UPDATE `feedback`.`ban`
  SET `server_ip` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`server`, ':', 1)), ''), INET_ATON('0.0.0.0'))
 , `server_port` = IF(`server` LIKE '%:_%', CAST(SUBSTRING_INDEX(`server`, ':', -1) AS UNSIGNED), '0');
 SET SQL_SAFE_UPDATES = 1;
@@ -124,7 +124,7 @@ ALTER TABLE `feedback`.`poll_textreply`
  CHANGE COLUMN `replytext` `replytext` VARCHAR(2048) NOT NULL
 , ADD COLUMN `ipTEMP` INT UNSIGNED NOT NULL AFTER `ip`;
 SET SQL_SAFE_UPDATES = 0;
-UPDATE `feedback`.`ban2`
+UPDATE `feedback`.`ban`
  SET `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`poll_textreply`
@@ -137,7 +137,7 @@ ALTER TABLE `feedback`.`poll_vote`
  CHANGE COLUMN `ckey` `ckey` VARCHAR(32) NOT NULL
 , ADD COLUMN `ipTEMP` INT UNSIGNED NOT NULL AFTER `ip`;
 SET SQL_SAFE_UPDATES = 0;
-UPDATE `feedback`.`ban2`
+UPDATE `feedback`.`ban`
  SET `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`poll_vote`
