@@ -256,19 +256,19 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(1) //Laser fight
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/weapons/Laser.ogg',0,1,0,25)
-				sleep(rand(4,12))
+				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 4))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 		if(2) //Esword fight
 			target << sound('sound/weapons/saberon.ogg',0,1,0,15)
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/weapons/blade1.ogg',,0,1,0,25)
-				sleep(rand(4,12))
+				sleep(CLICK_CD_MELEE)
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 			target << sound('sound/weapons/saberoff.ogg',0,1,0,15)
 		if(3) //Gun fight
 			for(var/i=0,i<hits,i++)
 				target << sound(get_sfx("gunshot"),0,1,0,25)
-				sleep(rand(4,12))
+				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 4))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 		if(4) //Stunprod + cablecuff
 			target << sound('sound/weapons/Egloves.ogg',0,1,40)
