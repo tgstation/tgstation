@@ -1,49 +1,48 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/obj/structure/lattice,/turf/open/space,/area/ruin/unpowered)
-"c" = (/obj/structure/girder/reinforced,/turf/open/space,/area/ruin/unpowered)
-"d" = (/turf/closed/wall/shuttle/smooth,/area/ruin/unpowered)
-"e" = (/turf/closed/indestructible/fakedoor,/area/ruin/unpowered)
-"f" = (/turf/closed/wall/shuttle/smooth/overspace,/area/ruin/unpowered)
-"g" = (/turf/open/floor/plating/airless,/area/ruin/unpowered)
-"h" = (/obj/structure/fluff/broken_flooring,/turf/open/floor/plating/airless,/area/ruin/unpowered)
-"i" = (/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"j" = (/obj/effect/mob_spawn/human/corpse/pirate/ranged,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"k" = (/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"l" = (/obj/effect/forcefield/luxury_shuttle{threshhold = 4000},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"m" = (/turf/closed/indestructible/fakeglass,/area/ruin/unpowered)
-"n" = (/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"o" = (/obj/effect/forcefield/luxury_shuttle{threshhold = 4000},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"p" = (/obj/vehicle/space/speedbike/speedwagon,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"q" = (/obj/structure/shuttle/engine/propulsion{dir = 6},/turf/open/space,/area/ruin/unpowered)
+"b" = (/turf/closed/indestructible/opshuttle,/area/ruin/unpowered)
+"c" = (/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"d" = (/obj/effect/forcefield/luxury_shuttle{threshhold = 4000},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"e" = (/obj/structure/shuttle/engine/propulsion{dir = 6},/turf/open/space,/area/ruin/unpowered)
+"f" = (/obj/effect/forcefield/luxury_shuttle{threshhold = 4000},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"g" = (/obj/vehicle/space/speedbike/speedwagon,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"h" = (/obj/structure/lattice,/turf/open/space,/area/ruin/unpowered)
+"i" = (/obj/structure/girder/reinforced,/turf/open/space,/area/ruin/unpowered)
+"j" = (/turf/closed/indestructible/fakedoor,/area/ruin/unpowered)
+"k" = (/turf/open/floor/plating/airless,/area/ruin/unpowered)
+"l" = (/obj/structure/fluff/broken_flooring,/turf/open/floor/plating/airless,/area/ruin/unpowered)
+"m" = (/obj/effect/mob_spawn/human/corpse/pirate/ranged,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"n" = (/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"o" = (/obj/structure/flora/ausbushes/sunnybush,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"p" = (/turf/closed/indestructible/fakeglass,/area/ruin/unpowered)
+"q" = (/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "r" = (/obj/machinery/computer,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "s" = (/obj/effect/mob_spawn/human/corpse/pirate/ranged,/obj/structure/chair/comfy/brown{dir = 6},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "t" = (/obj/effect/mob_spawn/human/corpse/pirate,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "u" = (/obj/machinery/porta_turret/syndicate{name = "intruder removal system"; stun_projectile = /obj/item/projectile/magic/teleport},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "v" = (/obj/structure/mecha_wreckage/seraph{dir = 6},/obj/item/device/gps{gpstag = "CAR"},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"w" = (/obj/structure/flora/ausbushes/sunnybush,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"x" = (/turf/closed/wall/shuttle/interior,/area/ruin/unpowered)
+"w" = (/obj/effect/forcefield/luxury_shuttle{threshhold = 1000},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"x" = (/obj/vehicle/scooter,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 "y" = (/obj/item/weapon/melee/energy/blade/hardlight,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"z" = (/obj/effect/forcefield/luxury_shuttle{threshhold = 1000},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"A" = (/obj/effect/mob_spawn/human/corpse/pirate,/obj/item/weapon/melee/energy/blade/hardlight,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"B" = (/obj/vehicle/space/speedbike,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
-"C" = (/obj/vehicle/space/speedbike/red{dir = 6},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"z" = (/obj/effect/mob_spawn/human/corpse/pirate,/obj/item/weapon/melee/energy/blade/hardlight,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"A" = (/obj/vehicle/space/speedbike,/turf/open/floor/mineral/gold,/area/ruin/unpowered)
+"B" = (/obj/vehicle/space/speedbike/red{dir = 6},/turf/open/floor/mineral/gold,/area/ruin/unpowered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaabbbcdddeeddddfaaaaaaa
-aaaaaaacbghijkiiliiidaaaaaaa
-aaaaaaamggiiiinioipidqaaaaaa
-aaaaaaamrsitutvwxxxxdqaaaaaa
-aaaaaaamiiyiiiiiziiidqaaaaaa
-aaaaaaadiiAijkiizBCidaaaaaaa
-aaaaaaafddddddeeddddfaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaabbbbbbaaaa
+aaaaaaaaaaaaaaaaabcdcccbeaaa
+aaaaaaaaaaaaaaaabccfcgcbeaaa
+aaaaaaaaahibbbjjcccbbbbbaaaa
+aaaaaaaihklcmnccccobaaaaaaaa
+aaaaaaapkkccccqccccbbbbbaaaa
+aaaaaaaprsctutvccucwccxbeaaa
+aaaaaaapccyccccccccbbbbbaaaa
+aaaaaaaabczcmnccccobaaaaaaaa
+aaaaaaaaabbbbbjjcccbbbbbaaaa
+aaaaaaaaaaaaaaaabccwcccbeaaa
+aaaaaaaaaaaaaaaaabcwABcbeaaa
+aaaaaaaaaaaaaaaaaabbbbbbaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
