@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "Stops AI And Borgs From Interfacing With Ferry Console"
