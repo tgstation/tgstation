@@ -416,7 +416,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
 				if(A && alert_s)
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
-					_alert_drones(msg, 1)
+					_alert_drones(msg, TRUE)
 					U << msg
 
 
