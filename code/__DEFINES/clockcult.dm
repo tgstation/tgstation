@@ -86,9 +86,9 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
 //Objective defines
-#define CLOCKCULT_GATEWAY "gateway"
+#define CLOCKCULT_GATEWAY "summon ratvar"
 
-#define CLOCKCULT_ESCAPE "escape"
+#define CLOCKCULT_ESCAPE "proselytize the station"
 
 //misc clockcult stuff
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
@@ -98,3 +98,5 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 #define PROSELYTIZER_REPAIR_PER_TICK 4 //how much a proselytizer repairs each tick, and also how many deciseconds each tick is
 
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
+
+#define RATVARIAN_SPEAR_DURATION 1800 //how long ratvarian spears last; defaults to 3 minutes
