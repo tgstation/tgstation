@@ -923,13 +923,19 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 //Get the dir to the RIGHT of dir if they were on a clock
 //NORTH --> NORTHEAST
-/proc/get_clockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)+45)
+/proc/get_clockwise_dir(dir, cardinal = FALSE)
+	if(cardinal)
+		. = angle2dir(dir2angle(dir)+90)
+	else
+		. = angle2dir(dir2angle(dir)+45)
 
 //Get the dir to the LEFT of dir if they were on a clock
 //NORTH --> NORTHWEST
-/proc/get_anticlockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)-45)
+/proc/get_anticlockwise_dir(dir, cardinal = FALSE)
+	if(cardinal)
+		. = angle2dir(dir2angle(dir)-90)
+	else
+		. = angle2dir(dir2angle(dir)-45)
 
 
 //Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
@@ -1371,7 +1377,7 @@ var/valid_HTTPSGet = FALSE
 			\______(_______;;; __;;;
 		*/
 	var/temp_file = "HTTPSGetOutput.txt"
-	var/command 
+	var/command
 	if(world.system_type == MS_WINDOWS)
 		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
 	else if(world.system_type == UNIX)

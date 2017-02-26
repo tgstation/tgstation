@@ -110,6 +110,12 @@
 			inserted_id = I
 			interact(user)
 		return
+	if(istype(W, /obj/item/device/multitool) && panel_open)
+		input_dir = get_clockwise_dir(input_dir, TRUE)
+		output_dir = get_clockwise_dir(output_dir, TRUE)
+		user << "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>"
+		return
+
 	if(exchange_parts(user, W))
 		return
 
