@@ -51021,8 +51021,8 @@
 "cgL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
-	name = "Engine Room";
-	req_access_txt = "32"
+	name = "Supermatter Engine Room";
+	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -54507,8 +54507,8 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
-	name = "Engine Room";
-	req_access_txt = "32"
+	name = "Supermatter Engine Room";
+	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -55213,8 +55213,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
-	name = "Engine Room";
-	req_access_txt = "32"
+	name = "Supermatter Engine Room";
+	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -55777,11 +55777,12 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cqE" = (
-/obj/machinery/door/airlock/glass_atmos{
-	name = "Supermatter Chamber";
-	req_access_txt = "24"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/glass_engineering{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqF" = (
@@ -55984,8 +55985,8 @@
 "crd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
-	name = "Engine Room";
-	req_access_txt = "32"
+	name = "Supermatter Engine Room";
+	req_access_txt = "10"
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -56112,9 +56113,10 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "crt" = (
-/obj/machinery/door/airlock/glass_atmos{
+/obj/machinery/door/airlock/glass_engineering{
+	heat_proof = 1;
 	name = "Supermatter Chamber";
-	req_access_txt = "24"
+	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62832,7 +62834,6 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGe" = (
-/obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -62844,7 +62845,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGg" = (
-/obj/structure/table/reinforced,
+/obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGh" = (
@@ -62989,7 +62990,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Laser Room";
-	req_access_txt = "32"
+	req_access_txt = "10"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -63002,7 +63003,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Laser Room";
-	req_access_txt = "32"
+	req_access_txt = "10"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -89405,7 +89406,7 @@ ced
 bVI
 cay
 ccw
-chZ
+ciZ
 ciZ
 ciZ
 ckC

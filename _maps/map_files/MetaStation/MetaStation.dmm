@@ -14480,12 +14480,12 @@
 /area/engine/engineering)
 "ayW" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room";
-	req_access_txt = "10"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Supermatter Engine Room";
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -16190,6 +16190,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aBM" = (
@@ -16199,13 +16200,14 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aBN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aBO" = (
@@ -16873,6 +16875,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aCV" = (
@@ -16905,12 +16910,12 @@
 "aCY" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room";
-	req_access_txt = "10"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Supermatter Engine Room";
+	req_access_txt = "10"
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -17727,6 +17732,9 @@
 	dir = 9;
 	pixel_y = 0
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aEr" = (
@@ -18483,7 +18491,7 @@
 "aFz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "Engine Room";
+	name = "Supermatter Engine Room";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -19445,6 +19453,9 @@
 	dir = 8;
 	on = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aGY" = (
@@ -19999,6 +20010,9 @@
 /obj/item/weapon/tank/internals/emergency_oxygen/engi,
 /obj/effect/turf_decal/delivery,
 /obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	name = "floor"
 	},
@@ -20881,6 +20895,9 @@
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -22296,19 +22313,22 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aMg" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room";
-	req_access_txt = "10"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Supermatter Engine Room";
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -22337,9 +22357,10 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aMj" = (
-/obj/machinery/door/airlock/glass_atmos{
+/obj/machinery/door/airlock/engineering{
+	heat_proof = 1;
 	name = "Supermatter Chamber";
-	req_access_txt = "24"
+	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -23742,6 +23763,9 @@
 "aOR" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/firecloset,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aOS" = (
@@ -24403,6 +24427,9 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQb" = (
@@ -25831,7 +25858,15 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aSz" = (
-/turf/open/floor/plasteel,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
 /area/engine/engineering)
 "aSA" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -25850,10 +25885,6 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aSB" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -25861,9 +25892,9 @@
 	pixel_y = 0
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
+	dir = 4
 	},
-/turf/open/floor/engine,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "aSC" = (
 /obj/structure/cable{
@@ -26549,6 +26580,9 @@
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -94271,6 +94305,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ddY" = (
@@ -94282,6 +94317,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ddZ" = (
@@ -95014,13 +95050,18 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfC" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	icon_state = "intact";
+	dir = 4
+	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -135388,7 +135429,7 @@ axY
 aJm
 aKy
 aMb
-aNp
+aJu
 axY
 aPX
 aRm
@@ -136924,17 +136965,17 @@ aAr
 ddX
 aCU
 aEq
-aSz
+aTO
 aGX
 aHZ
 aJp
-aSz
-aMf
-aSz
+aTO
+aSB
+aTO
 aOR
 aQa
 aGX
-aSz
+aTO
 aTK
 aVd
 aBI
@@ -137448,7 +137489,7 @@ aIa
 aIa
 aIa
 aIa
-dfC
+aSz
 aTM
 aVe
 apc
@@ -137962,7 +138003,7 @@ aKG
 axY
 aQe
 aRv
-aSB
+dfC
 aTN
 aVe
 apc
