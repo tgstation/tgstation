@@ -9,6 +9,7 @@
 #define GIRDER_DISPLACED 3
 #define GIRDER_DISASSEMBLED 4
 
+
 //rwall construction states
 #define INTACT 0
 #define SUPPORT_LINES 1
@@ -17,6 +18,10 @@
 #define BOLTS 4
 #define SUPPORT_RODS 5
 #define SHEATH 6
+
+//plastic flaps construction states
+#define PLASTIC_FLAPS_NORMAL 0
+#define PLASTIC_FLAPS_DETACHED 1
 
 //default_unfasten_wrench() return defines
 #define CANT_UNFASTEN 0
@@ -49,8 +54,7 @@
 
 //Construction defines for the pinion airlock
 #define GEAR_SECURE 1
-#define GEAR_UNFASTENED 2
-#define GEAR_LOOSE 3
+#define GEAR_LOOSE 2
 
 //other construction-related things
 

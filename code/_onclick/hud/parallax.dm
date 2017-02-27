@@ -235,6 +235,7 @@
 			var/image/I = image(icon, null, icon_state)
 			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
 			new_overlays += I
+	cut_overlays()
 	add_overlay(new_overlays)
 	view_sized = view
 

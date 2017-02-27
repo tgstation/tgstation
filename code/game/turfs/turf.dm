@@ -279,11 +279,13 @@
 		usr << "<span class='notice'>You start dumping out the contents...</span>"
 		if(!do_after(usr,20,target=src_object))
 			return 0
-	for(var/obj/item/I in src_object)
-		if(user.s_active != src_object)
-			if(I.on_found(user))
-				return
-		src_object.remove_from_storage(I, src) //No check needed, put everything inside
+
+	var/list/things = src_object.contents.Copy()
+	var/datum/progressbar/progress = new(user, things.len, src)
+	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/weapon/storage.proc/mass_remove_from_storage, src, things, progress)))
+		sleep(1)
+	qdel(progress)
+
 	return 1
 
 //////////////////////////////

@@ -156,7 +156,7 @@
 /datum/clockwork_scripture/create_object/anima_fragment
 	descname = "Fast Soul Vessel Shell"
 	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health, notable melee power, \
+	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health and slight regeneration, notable melee power, \
 	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Call forth...", "...the soldiers of Armorer.")
 	channel_time = 80
