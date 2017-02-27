@@ -72,7 +72,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(target.client) target.client.images |= current_image
 
 /obj/effect/hallucination/simple/proc/GetImage()
-	var/image/I = image(image_icon,loc,image_state,image_layer,dir=src.dir)
+	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
 	I.pixel_x = px
 	I.pixel_y = py
 	if(col_mod)
