@@ -1832,7 +1832,7 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
+		var/input = strip_html_properly(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", ""))
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
 			return
@@ -1852,7 +1852,7 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s syndicate request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
+		var/input = strip_html_properly(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s syndicate request.")
 			return

@@ -84,7 +84,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE)
 	if(sanitize)
-		message = trim(copytext(sanitize(capitalize_uni(message)), 1, MAX_MESSAGE_LEN))
+		message = strip_html_properly(trim(copytext(sanitize(capitalize_uni(message)), 1, MAX_MESSAGE_LEN)))
 	if(!message || message == "")
 		return
 

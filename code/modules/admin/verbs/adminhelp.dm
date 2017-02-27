@@ -94,9 +94,9 @@
 	//clean the input msg
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = strip_html_properly(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 	if(!msg)	return
-	var/original_msg = sanitize_russian(msg)
+	var/original_msg = strip_html_simple(sanitize_russian(msg))
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp

@@ -16,7 +16,7 @@
 	if(!input || !IsAvailable())
 		return
 
-	cultist_commune(usr, input)
+	cultist_commune(usr, strip_html_properly(input))
 	return
 
 /proc/cultist_commune(mob/living/user, message)
@@ -30,9 +30,9 @@
 	if(!user)
 		return
 	if(!ishuman(user))
-		user.say(rhtml_decode(message,1))
+		user.say(message)
 	else
-		user.whisper(rhtml_decode(message,1))
+		user.whisper(message)
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [russian_html2text(message)]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))

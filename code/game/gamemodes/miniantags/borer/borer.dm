@@ -174,7 +174,7 @@ var/total_borer_hosts_needed = 10
 		src << "You cannot do that in your current state."
 		return
 
-	var/input = stripped_input(src, "Please enter a message to tell your host.", "Borer", null)
+	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell your host.", "Borer", null))
 	if(!input)
 		return
 
@@ -202,7 +202,7 @@ var/total_borer_hosts_needed = 10
 	if(!B)
 		return
 
-	var/input = stripped_input(src, "Please enter a message to tell the borer.", "Message", null)
+	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell the borer.", "Message", null))
 	if(!input)
 		return
 
@@ -226,7 +226,7 @@ var/total_borer_hosts_needed = 10
 	if(!B || !B.host_brain)
 		return
 	var/mob/living/captive_brain/CB = B.host_brain
-	var/input = stripped_input(src, "Please enter a message to tell the trapped mind.", "Message", null)
+	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell the trapped mind.", "Message", null))
 	if(!input)
 		return
 

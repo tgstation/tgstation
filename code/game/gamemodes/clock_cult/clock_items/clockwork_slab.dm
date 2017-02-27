@@ -228,10 +228,10 @@
 	if(!user.can_speak_vocal())
 		user << "<span class='warning'>You cannot speak into the slab!</span>"
 		return FALSE
-	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
+	var/message = strip_html_properly(stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant"))
 	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
 		return FALSE
-	clockwork_say(user, text2ratvar("Servants, hear my words. [rhtml_decode(message,1)]"), TRUE)
+	clockwork_say(user, text2ratvar("Servants, hear my words. [russian_html2text(message)]"), TRUE)
 	titled_hierophant_message(user, russian_html2text(message))
 	return TRUE
 

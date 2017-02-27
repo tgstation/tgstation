@@ -102,7 +102,7 @@
 
 /obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
-		var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
+		var/msg = strip_html_properly(stripped_input(usr, "What do you wish to tell [M]?", null, ""))
 		if(!msg)
 			charge_counter = charge_max
 			return

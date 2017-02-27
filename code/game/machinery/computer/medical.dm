@@ -300,7 +300,7 @@
 				switch(href_list["field"])
 					if("fingerprint")
 						if(active1)
-							var/t1 = stripped_input("Please input fingerprint hash:", "Med. records", src.active1.fields["fingerprint"], null)
+							var/t1 = strip_html_properly(stripped_input("Please input fingerprint hash:", "Med. records", src.active1.fields["fingerprint"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["fingerprint"] = t1
@@ -324,55 +324,55 @@
 							active1.fields["species"] = t1
 					if("mi_dis")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["mi_dis"] = t1
 					if("mi_dis_d")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize minor dis.:", "Med. records", src.active2.fields["mi_dis_d"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_multiline_input("Please summarize minor dis.:", "Med. records", src.active2.fields["mi_dis_d"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["mi_dis_d"] = t1
 					if("ma_dis")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis"] = t1
 					if("ma_dis_d")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize major dis.:", "Med. records", src.active2.fields["ma_dis_d"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_multiline_input("Please summarize major dis.:", "Med. records", src.active2.fields["ma_dis_d"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis_d"] = t1
 					if("alg")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_input("Please state allergies:", "Med. records", src.active2.fields["alg"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_input("Please state allergies:", "Med. records", src.active2.fields["alg"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["alg"] = t1
 					if("alg_d")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize allergies:", "Med. records", src.active2.fields["alg_d"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_multiline_input("Please summarize allergies:", "Med. records", src.active2.fields["alg_d"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["alg_d"] = t1
 					if("cdi")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["cdi"] = t1
 					if("cdi_d")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize diseases:", "Med. records", src.active2.fields["cdi_d"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_multiline_input("Please summarize diseases:", "Med. records", src.active2.fields["cdi_d"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["cdi_d"] = t1
 					if("notes")
 						if(active2)
-							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_multiline_input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null)))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["notes"] = t1
@@ -387,7 +387,7 @@
 							src.temp = text("<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=an'>A-</A> <A href='?src=\ref[];temp=1;blood_type=ap'>A+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=bn'>B-</A> <A href='?src=\ref[];temp=1;blood_type=bp'>B+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=abn'>AB-</A> <A href='?src=\ref[];temp=1;blood_type=abp'>AB+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=on'>O-</A> <A href='?src=\ref[];temp=1;blood_type=op'>O+</A><BR>", src, src, src, src, src, src, src, src)
 					if("b_dna")
 						if(active2)
-							var/t1 = stripped_input("Please input DNA hash:", "Med. records", src.active2.fields["b_dna"], null)
+							var/t1 = strip_html_properly(stripped_input("Please input DNA hash:", "Med. records", src.active2.fields["b_dna"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["b_dna"] = t1
@@ -494,7 +494,7 @@
 				if(!(active2 in data_core.medical))
 					return
 				var/a2 = src.active2
-				var/t1 = stripped_multiline_input("Add Comment:", "Med. records", null, null)
+				var/t1 = strip_html_properly(stripped_multiline_input("Add Comment:", "Med. records", null, null))
 				if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1

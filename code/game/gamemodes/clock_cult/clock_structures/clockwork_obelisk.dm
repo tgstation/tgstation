@@ -55,7 +55,7 @@
 			if(!user.can_speak_vocal())
 				user << "<span class='warning'>You cannot speak through the obelisk!</span>"
 				return
-			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
+			var/input = strip_html_properly(stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", ""))
 			if(!is_servant_of_ratvar(user) || !input || !user.canUseTopic(src, !issilicon(user)))
 				return
 			if(active)
@@ -67,7 +67,7 @@
 			if(!user.can_speak_vocal())
 				user << "<span class='warning'>You cannot speak through the obelisk!</span>"
 				return
-			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [rhtml_decode(input,1)]"))
+			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [russian_html2text(input)]"))
 			titled_hierophant_message(user, russian_html2text(input), "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(active)

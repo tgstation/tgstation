@@ -411,7 +411,7 @@
 	return ..()
 
 /datum/action/innate/linked_minds/Activate()
-	var/message = stripped_input(owner, "Enter a message to tell your marauder.", "Telepathy")
+	var/message = strip_html_properly(stripped_input(owner, "Enter a message to tell your marauder.", "Telepathy"))
 	if(!owner || !message)
 		return FALSE
 	if(!linked_marauder)

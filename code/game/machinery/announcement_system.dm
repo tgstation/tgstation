@@ -130,13 +130,13 @@ var/list/announcement_systems = list()
 		return
 
 	if(href_list["ArrivalTopic"])
-		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
+		var/NewMessage = strip_html_properly(stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival))
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
 			arrival = russian_html2text(NewMessage)
 	else if(href_list["NewheadTopic"])
-		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
+		var/NewMessage = strip_html_properly(stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead))
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)

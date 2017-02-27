@@ -104,7 +104,7 @@
 /obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
-	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
+	var/message = strip_html_properly(stripped_input(user,"Discreetly send a gang-wide message.","Send Message"))
 	if(!message || !can_use(user))
 		return
 	if(user.z > 2)

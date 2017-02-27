@@ -25,7 +25,7 @@
 	charge_max = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/communicate_wizard/cast(mob/living/user, message)
-	message = stripped_input(usr, "Please choose a message to tell to the servants and wizard.", "Voice of Magic", "")
+	message = strip_html_properly(stripped_input(usr, "Please choose a message to tell to the servants and wizard.", "Voice of Magic", ""))
 	if(!message)
 		return
 	sleep(10)

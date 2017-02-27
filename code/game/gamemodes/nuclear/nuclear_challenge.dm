@@ -38,7 +38,7 @@
 
 	if(custom_threat == "Yes")
 		declaring_war = TRUE
-		war_declaration = stripped_input(user, "Insert your custom declaration", "Declaration")
+		war_declaration = strip_html_properly(stripped_input(user, "Insert your custom declaration", "Declaration"))
 		declaring_war = FALSE
 
 	if(!check_allowed(user) || !war_declaration)
