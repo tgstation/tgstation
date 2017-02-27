@@ -45,10 +45,13 @@
 		LAZYREMOVE(D.processors, src)
 
 /datum/subsystem/processing/fire(resumed = 0, arg = wait)
+	var/list/local_cache
 	if (!resumed)
-		run_cache = processing_list.Copy()
-	//cache for sanic speed (lists are references anyways)
-	var/list/local_cache = run_cache
+		local_cache = processing_list.Copy()
+		run_cache = local_cache
+	else
+		local_cache = run_cache
+	//cache for sanic speed (lists are references anyways) = run_cache
 	var/local_delegate = delegate
 
 	if(local_cache.len)
