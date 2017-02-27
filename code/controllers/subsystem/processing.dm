@@ -21,6 +21,7 @@
 
 /datum/subsystem/processing/proc/start_processing(datum/D)
 	if(D && !(src in D.processors))
+		D.processors += src
 		processing_list += D
 		can_fire = TRUE
 		return TRUE
