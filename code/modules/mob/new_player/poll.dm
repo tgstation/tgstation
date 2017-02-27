@@ -362,7 +362,7 @@
 		return
 	. = "Player"
 	if(client.holder)
-		. = client.holder.rank
+		. = client.holder.rank.name
 	return .
 
 
@@ -412,7 +412,7 @@
 	var/datum/admins/holder = client.holder
 	var/rank = "Player"
 	if (holder)
-		rank = holder.rank
+		rank = holder.rank.name
 	var/ckey = client.ckey
 	var/address = client.address
 
@@ -482,7 +482,7 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_OPTION))
 		return 0
-	var/adminrank = poll_check_voted(pollid)
+	var/adminrank = sanitizeSQL(poll_check_voted(pollid))
 	if(!adminrank)
 		return
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
@@ -507,7 +507,7 @@
 	if(!replytext)
 		usr << "The text you entered was blank. Please correct the text and submit again."
 		return
-	var/adminrank = poll_check_voted(pollid, TRUE)
+	var/adminrank = sanitizeSQL(poll_check_voted(pollid, TRUE))
 	if(!adminrank)
 		return
 	replytext = sanitizeSQL(replytext)
@@ -543,7 +543,8 @@
 		return
 	var/adminrank = "Player"
 	if(client.holder)
-		adminrank = client.holder.rank
+		adminrank = client.holder.rank.name
+	adminrank = sanitizeSQL(adminrank)
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]', [(isnull(rating)) ? "null" : rating])")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
@@ -585,7 +586,8 @@
 		return 2
 	var/adminrank = "Player"
 	if(client.holder)
-		adminrank = client.holder.rank
+		adminrank = client.holder.rank.name
+	adminrank = sanitizeSQL(adminrank)
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
