@@ -276,6 +276,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		var/charged = FALSE //only get hit once
 		while(get_turf(bubblegum) != landing)
 			bubblegum.forceMove(get_step_towards(bubblegum, landing))
+			bubblegum.setDir(get_dir(bubblegum, landing))
 			target << sound('sound/effects/meteorimpact.ogg', volume = 150)
 			shake_camera(target, 2, 1)
 			if(bubblegum.Adjacent(target) && !charged)
