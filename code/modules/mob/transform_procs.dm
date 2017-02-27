@@ -287,9 +287,12 @@
 	qdel(src)
 
 
-/mob/new_player/AIize()
+/mob/new_player/AIize(transfer_after)
 	spawning = 1
-	return ..()
+	. = ..()
+	new_character = .
+	if(!transfer_after)	//name can't be set in AI/New without the client
+		new_character.rename_self("ai", client)
 
 /mob/living/carbon/human/AIize()
 	if (notransform)
@@ -311,7 +314,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/proc/AIize()
+/mob/proc/AIize(transfer_after = TRUE)
 	if(client)
 		stopLobbySound()
 
@@ -334,10 +337,13 @@
 			if (sloc.name == "AI")
 				loc_landmark = sloc.loc
 
-	. = new /mob/living/silicon/ai(loc_landmark, null, src)
-	qdel(src)
-	return
+	if(!transfer_after)
+		mind.active = FALSE
 
+	. = new /mob/living/silicon/ai(loc_landmark, null, src)
+
+	if(transfer_after)
+		qdel(src)
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize(delete_items = 0)
