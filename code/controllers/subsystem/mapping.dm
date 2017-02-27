@@ -113,7 +113,7 @@ var/datum/subsystem/mapping/SSmapping
 	for(var/I in 1 to 6)
 		loader.load_map(file("_maps/map_files/generic/Space.dmm"), no_afterchange = TRUE)
 	SortAreas()
-	INIT_ANNOUNCE("Done loading map!") //can't think of anywhere better to put it
+	INIT_ANNOUNCE("Done loading map!")
 #undef INIT_ANNOUNCE
 
 /datum/subsystem/mapping/proc/maprotate()
