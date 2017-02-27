@@ -566,6 +566,14 @@
 	materials = list(MAT_METAL = 500)
 	build_path = /obj/item/ammo_box/foambox
 	category = list("initial", "Misc")
+	
+/datum/design/c38S
+    name = "Ammo Box (.38S)
+	id = "c38s"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL 30000)
+	build_path = /obj/item/ammo_box/c38/weak
+	category = list("initial", "Security")
 
 //hacked autolathe recipes
 /datum/design/flamethrower
