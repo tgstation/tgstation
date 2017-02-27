@@ -193,17 +193,12 @@ var/datum/subsystem/ticker/ticker
 	CHECK_TICK
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters
-	CHECK_TICK
 	collect_minds()
-	CHECK_TICK
 	equip_characters()
-	CHECK_TICK
 
 	SSoverlays.Flush()	//Flush the majority of the shit
-	CHECK_TICK
 
 	data_core.manifest()
-	CHECK_TICK
 
 	transfer_characters()	//transfer keys to the new mobs
 
