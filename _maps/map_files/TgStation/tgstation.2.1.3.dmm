@@ -62170,6 +62170,7 @@
 /turf/open/floor/plasteel/black,
 /area/assembly/robotics)
 "cDW" = (
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
 	},
