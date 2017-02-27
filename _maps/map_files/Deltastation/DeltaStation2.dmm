@@ -12460,6 +12460,7 @@
 	})
 "axR" = (
 /obj/machinery/door/airlock/glass_atmos{
+	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
@@ -14280,7 +14281,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
-	pixel_y = 23
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -16890,7 +16894,8 @@
 	},
 /obj/machinery/door/airlock/glass_atmos{
 	name = "Power Monitoring";
-	req_access_txt = "24"
+	req_access_txt = "0";
+	req_one_access_txt = "24;10"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
