@@ -412,3 +412,5 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
+#define OPPOSITE_DIR(D) turn(D, 180)

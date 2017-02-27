@@ -443,6 +443,11 @@
 	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
+	for(var/mob/M in oview(src))
+		M.update_vision_cone()
+
+	update_vision_cone()
+
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
 	if(isopenturf(loc) && !is_flying())
@@ -915,3 +920,8 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
+
+
+/mob/living/setDir(newdir)
+	..()
+	update_vision_cone()

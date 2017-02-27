@@ -665,6 +665,7 @@ var/next_mob_id = 0
 	else
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
+	update_vision_cone()
 	update_transform()
 	update_action_buttons_icon(status_only=TRUE)
 	if(isliving(src))
