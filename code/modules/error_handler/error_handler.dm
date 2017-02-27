@@ -12,6 +12,9 @@ var/global/total_runtimes_skipped = 0
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
 
+	if(e_src.var_edited)	//admins gtfo
+		return
+
 	total_runtimes++
 
 	var/erroruid = "[E.file][E.line]"
