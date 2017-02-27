@@ -25,7 +25,7 @@
 		if(!processors)
 			D.processors = list(src)
 		else if(src in processors)
-			return
+			return FALSE
 		else
 			processors += src
 		processing_list += D
