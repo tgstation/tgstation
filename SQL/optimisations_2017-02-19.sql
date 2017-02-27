@@ -66,9 +66,9 @@ ALTER TABLE `feedback`.`death`
 , CHANGE COLUMN `mapname` `mapname` VARCHAR(32) NOT NULL
 , CHANGE COLUMN `job` `job` VARCHAR(32) NOT NULL
 , CHANGE COLUMN `special` `special` VARCHAR(32) NULL DEFAULT NULL
-, CHANGE COLUMN `name` `name` VARCHAR(32) NOT NULL
+, CHANGE COLUMN `name` `name` VARCHAR(96) NOT NULL
 , CHANGE COLUMN `byondkey` `byondkey` VARCHAR(32) NOT NULL
-, CHANGE COLUMN `laname` `laname` VARCHAR(32) NULL DEFAULT NULL
+, CHANGE COLUMN `laname` `laname` VARCHAR(96) NULL DEFAULT NULL
 , CHANGE COLUMN `lakey` `lakey` VARCHAR(32) NULL DEFAULT NULL
 , CHANGE COLUMN `gender` `gender` ENUM('neuter', 'male', 'female', 'plural') NOT NULL
 , CHANGE COLUMN `bruteloss` `bruteloss` SMALLINT UNSIGNED NOT NULL
