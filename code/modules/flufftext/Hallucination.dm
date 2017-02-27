@@ -328,7 +328,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = 1
-		target.SetSleeping(8)
+		target.SetSleeping(8, no_alert = TRUE)
 		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
 /obj/effect/hallucination/battle
@@ -866,7 +866,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		if("death")
 			//Fake death
 			hal_screwyhud = 2
-			SetSleeping(20)
+			SetSleeping(20, no_alert = TRUE)
 			var/area/area = get_area(src)
 			src << "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>"
 			if(prob(50))
@@ -874,9 +874,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				for(var/mob/dead/observer/G in player_list)
 					dead_people += G
 				var/mob/dead/observer/fakemob = pick(dead_people)
-				sleep(rand(30, 60))
-				src << "<span class='deadsay'><b>DEAD:[fakemob.name]</b> says, \"[pick("rip","welcome [first_name()]","you too?","is the AI malf",\
-				 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>"
+				if(fakemob)
+					sleep(rand(30, 60))
+					src << "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","welcome [first_name()]","you too?","is the AI malf?",\
+					 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>"
 			sleep(rand(50,70))
 			hal_screwyhud = 0
 			SetSleeping(0)
