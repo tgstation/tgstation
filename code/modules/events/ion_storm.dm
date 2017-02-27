@@ -107,6 +107,7 @@
 	//Foods. Drinks aren't included due to grammar; if you want to add drinks, make a new set
 	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.
 	var/ionfood = pick_list(ION_FILE, "ionfood")
+	var/iondrinks = pick_list(ION_FILE, "iondrinks")
 
 	var/message = ""
 
@@ -327,15 +328,17 @@
 		if(24 to 26) //The AI must always
 			message = "YOU MUST ALWAYS [ionmust]"
 
-		if(27 to 28) //Humans must eat X to survive
-			switch(rand(1,4)) //What is X?
+		if(27 to 28) //Humans must consume X to survive
+			switch(rand(1,5)) //What is X?
 				if(1) //X is a food
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionfood] TO SURVIVE"
-				if(2) //X is an object
+				if(2) //X is a drink
+					message = "HUMANS MUST DRINK [ionadjectiveshalf][iondrinks] TO SURVIVE"
+				if(3) //X is an object
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionobjects] TO SURVIVE"
-				if(3) //X is a threat
+				if(4) //X is a threat
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionthreats] TO SURVIVE"
-				if(4) //X is a job
+				if(5) //X is a job
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ioncrew1] TO SURVIVE"
 
 		if(29 to 31) //Change jobs or ranks
