@@ -1191,7 +1191,7 @@ B --><-- A
 		return
 	A.add_overlay(I)
 	sleep(duration)
-	A.overlays -= I
+	A.cut_overlay(I)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
@@ -1286,6 +1286,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_NULL(item) qdel(item); item = null
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)

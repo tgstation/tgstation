@@ -15,7 +15,7 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
-	faction |= "\ref[src]"
+	faction += "\ref[src]"
 
 
 /mob/living/prepare_huds()
@@ -188,7 +188,12 @@
 					return
 		if(pulling == AM)
 			stop_pulling()
+		var/current_dir
+		if(isliving(AM))
+			current_dir = AM.dir
 		step(AM, t)
+		if(current_dir)
+			AM.setDir(current_dir)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs

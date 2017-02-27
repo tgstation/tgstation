@@ -140,3 +140,8 @@
 	for(var/i in 1 to 4)
 		new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
+
+/obj/structure/closet/crate/science
+	name = "science crate"
+	desc = "A science crate."
+	icon_state = "scicrate"

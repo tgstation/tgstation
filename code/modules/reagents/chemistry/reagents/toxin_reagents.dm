@@ -6,6 +6,8 @@
 	id = "toxin"
 	description = "A toxic chemical."
 	color = "#CF3600" // rgb: 207, 54, 0
+	taste_description = "bitterness"
+	taste_mult = 1.2
 	var/toxpwr = 1.5
 
 /datum/reagent/toxin/on_mob_life(mob/living/M)
@@ -20,6 +22,7 @@
 	description = "A powerful poison derived from certain species of mushroom."
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 2.5
+	taste_description = "mushroom"
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
@@ -27,6 +30,8 @@
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
 	toxpwr = 0
+	taste_description = "slime"
+	taste_mult = 0.9
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
@@ -52,6 +57,8 @@
 	name = "Plasma"
 	id = "plasma"
 	description = "Plasma in its liquid form."
+	taste_description = "bitterness"
+	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
 
@@ -87,6 +94,7 @@
 	description = "A powerful poison used to stop respiration."
 	color = "#7DC3A0"
 	toxpwr = 0
+	taste_description = "acid"
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
 	. = TRUE
@@ -111,6 +119,8 @@
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
+	taste_description = "slime"
+	taste_mult = 1.3
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
 	if(prob(10))
@@ -128,6 +138,7 @@
 	description = "Useful for dealing with undesirable customers."
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
+	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
 	if(M.disabilities & FAT)
@@ -140,6 +151,7 @@
 	description = "A deadly neurotoxin produced by the dreaded spess carp."
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
+	taste_description = "fish"
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -148,6 +160,7 @@
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
+	taste_description = "death"
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.status_flags |= FAKEDEATH
@@ -168,6 +181,7 @@
 	description = "A powerful hallucinogen. Not a thing to be messed with."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
+	taste_description = "sourness"
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
 	M.hallucination += 10
@@ -179,6 +193,7 @@
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
+	taste_mult = 1
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/structure/alien/weeds))
@@ -238,6 +253,7 @@
 	description = "A natural toxin produced by blob spores that induces combustion in its victim."
 	color = "#9ACD32"
 	toxpwr = 0.5
+	taste_description = "burning"
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
@@ -287,6 +303,7 @@
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "piss water"
 
 /datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
 	switch(current_cycle)
@@ -319,6 +336,7 @@
 	description = "A nonlethal poison that inhibits speech in its victim."
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
+	taste_description = "silence"
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
 	M.silent = max(M.silent, 3)
@@ -465,6 +483,7 @@
 	color = "#d6d6d8"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	taste_description = "bad cooking"
 
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
@@ -522,8 +541,8 @@
 			if(3)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(!H.heart_attack)
-						H.heart_attack = 1 // rip in pepperoni
+					if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
+						H.set_heartattack(TRUE)
 						if(H.stat == CONSCIOUS)
 							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
 					else
@@ -540,6 +559,7 @@
 	color = "#195096"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
+	taste_mult = 0 // undetectable, I guess?
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
@@ -599,6 +619,7 @@
 	name = "Lipolicide"
 	id = "lipolicide"
 	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. More deadly to those without nutriment in their body."
+	taste_description = "mothballs"
 	reagent_state = LIQUID
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -666,6 +687,7 @@
 	color = "#AC88CA" //RGB: 172, 136, 202
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	taste_description = "spinning"
 
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
 	if(M.hud_used)
@@ -692,6 +714,7 @@
 	color = "#ADBDCD"
 	metabolization_rate = 0.8 * REAGENTS_METABOLISM
 	toxpwr = 0.25
+	taste_description = "skewing"
 
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/M)
 	if(M.hud_used)
@@ -746,6 +769,7 @@
 	color = "#00FF32"
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
+	taste_description = "acid"
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
@@ -790,6 +814,7 @@
 	description = "Makes the target off balance and dizzy"
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "dizziness"
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
 	if(M.confused < 6)
@@ -806,6 +831,7 @@
 	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "tiredness"
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.

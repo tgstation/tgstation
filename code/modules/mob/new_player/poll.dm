@@ -6,7 +6,7 @@
 	if(!dbcon.IsConnected())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
-	var/DBQuery/query_get_poll = dbcon.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE [(client.holder ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime")
+	var/DBQuery/query_get_poll = dbcon.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE Now() BETWEEN starttime AND endtime [(client.holder ? "" : "AND adminonly = false")]")
 	if(!query_get_poll.Execute())
 		var/err = query_get_poll.ErrorMsg()
 		log_game("SQL ERROR obtaining id, question from poll_question table. Error : \[[err]\]\n")
@@ -24,7 +24,7 @@
 /mob/new_player/proc/poll_player(pollid)
 	if(!pollid)
 		return
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
@@ -349,7 +349,7 @@
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
-	if (!establish_db_connection())
+	if (!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM `[format_table_name(table)]` WHERE pollid = [pollid] AND ckey = '[ckey]'")
@@ -362,7 +362,7 @@
 		return
 	. = "Player"
 	if(client.holder)
-		. = client.holder.rank
+		. = client.holder.rank.name
 	return .
 
 
@@ -379,24 +379,14 @@
 	return 1
 
 /mob/new_player/proc/vote_valid_check(pollid, holder, type)
-	if (!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	pollid = text2num(pollid)
 	if (!pollid || pollid < 0)
 		return 0
 	//validate the poll is actually the right type of poll and its still active
-	var/DBQuery/select_query = dbcon.NewQuery({"
-		SELECT id
-		FROM [format_table_name("poll_question")]
-		WHERE
-			[(holder ? "" : "adminonly = false AND")]
-			id = [pollid]
-			AND
-			Now() BETWEEN starttime AND endtime
-			AND
-			polltype = '[type]'
-	"})
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime AND polltype = '[type]' [(holder ? "" : "AND adminonly = false")]")
 	if (!select_query.Execute())
 		var/err = select_query.ErrorMsg()
 		log_game("SQL ERROR validating poll via poll_question table. Error : \[[err]\]\n")
@@ -406,7 +396,7 @@
 	return 1
 
 /mob/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
-	if (!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -422,7 +412,7 @@
 	var/datum/admins/holder = client.holder
 	var/rank = "Player"
 	if (holder)
-		rank = holder.rank
+		rank = holder.rank.name
 	var/ckey = client.ckey
 	var/address = client.address
 
@@ -461,7 +451,7 @@
 	for (var/vote in numberedvotelist)
 		if (sqlrowlist != "")
 			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
-		sqlrowlist += "(Now(), [pollid], [vote], '[sanitizeSQL(ckey)]', '[sanitizeSQL(address)]', '[sanitizeSQL(rank)]')"
+		sqlrowlist += "(Now(), [pollid], [vote], '[sanitizeSQL(ckey)]', INET_ATON('[sanitizeSQL(address)]'), '[sanitizeSQL(rank)]')"
 
 	//now lets delete their old votes (if any)
 	var/DBQuery/voted_query = dbcon.NewQuery("DELETE FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
@@ -482,7 +472,7 @@
 
 
 /mob/new_player/proc/vote_on_poll(pollid, optionid)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -492,10 +482,10 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_OPTION))
 		return 0
-	var/adminrank = poll_check_voted(pollid)
+	var/adminrank = sanitizeSQL(poll_check_voted(pollid))
 	if(!adminrank)
 		return
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', '[client.address]', '[adminrank]')")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding vote to table. Error : \[[err]\]\n")
@@ -504,7 +494,7 @@
 	return 1
 
 /mob/new_player/proc/log_text_poll_reply(pollid, replytext)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -517,14 +507,14 @@
 	if(!replytext)
 		usr << "The text you entered was blank. Please correct the text and submit again."
 		return
-	var/adminrank = poll_check_voted(pollid, TRUE)
+	var/adminrank = sanitizeSQL(poll_check_voted(pollid, TRUE))
 	if(!adminrank)
 		return
 	replytext = sanitizeSQL(replytext)
 	if(!(length(replytext) > 0) || !(length(replytext) <= 8000))
 		usr << "The text you entered was invalid or too long. Please correct the text and submit again."
 		return
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', '[client.address]', '[replytext]', '[adminrank]')")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', INET_ATON('[client.address]'), '[replytext]', '[adminrank]')")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding text reply to table. Error : \[[err]\]\n")
@@ -533,7 +523,7 @@
 	return 1
 
 /mob/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -553,8 +543,9 @@
 		return
 	var/adminrank = "Player"
 	if(client.holder)
-		adminrank = client.holder.rank
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', '[client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
+		adminrank = client.holder.rank.name
+	adminrank = sanitizeSQL(adminrank)
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]', [(isnull(rating)) ? "null" : rating])")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding vote to table. Error : \[[err]\]\n")
@@ -563,7 +554,7 @@
 	return 1
 
 /mob/new_player/proc/vote_on_multi_poll(pollid, optionid)
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	if (!vote_rig_check())
@@ -595,8 +586,9 @@
 		return 2
 	var/adminrank = "Player"
 	if(client.holder)
-		adminrank = client.holder.rank
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', '[client.address]', '[adminrank]')")
+		adminrank = client.holder.rank.name
+	adminrank = sanitizeSQL(adminrank)
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding vote to table. Error : \[[err]\]\n")
