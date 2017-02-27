@@ -69,7 +69,7 @@
 		var/ipquery = ""
 		var/cidquery = ""
 		if(address)
-			ipquery = " OR ip = '[address]' "
+			ipquery = " OR ip = INET_ATON('[address]') "
 
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
