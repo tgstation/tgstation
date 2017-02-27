@@ -1,0 +1,5 @@
+author: "Kor, Jordie0608 and Tokiko1"
+delete-after: True
+changes: 
+  - rscadd: "Singularity containment has been replaced on box, meta, and delta with a supermatter room. The supermatter gives ample warning when melting down, so hopefully we'll see fewer 15 minute rounds ended by a loose singularity."
+  - rscadd: "Supermatter crystals now collapse into singularities when they fail, rather than explode."
