@@ -27,7 +27,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//Something's wrong here
 	var/list/medium = list("hudscrew"=15,"items"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15)
 	//AAAAH
-	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"delusion"=20)
+	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20)
 
 	handling_hal = 1
 	while(hallucination > 20)
@@ -211,6 +211,38 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/simple/clown/scary
 	image_state = "scary_clown"
+
+/obj/effect/hallucination/simple/borer
+	image_icon = 'icons/mob/animal.dmi'
+	image_state = "brainslug"
+
+/obj/effect/hallucination/borer
+	//A borer paralyzes you and crawls in your ear
+	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
+	var/obj/effect/hallucination/simple/borer/borer = null
+
+/obj/effect/hallucination/borer/New(loc,var/mob/living/carbon/T)
+	target = T
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
+		if(!U.welded)
+			pump = U
+			break
+	if(pump)
+		borer = new(pump.loc,target)
+		for(var/i=0, i<11, i++)
+			walk_to(borer, get_step(borer, get_cardinal_dir(borer, T)))
+			if(borer.Adjacent(T))
+				T << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
+				T.Stun(4)
+				sleep(50)
+				qdel(borer)
+				sleep(rand(60, 90))
+				T << "<span class='changeling'><i>Primary [rand(1000,9999)] states:</i> [pick("Hello","Hi","You're my slave now!","Don't try to get rid of me...")]</span>"
+				break
+			sleep(4)
+		if(!QDELETED(borer))
+			qdel(borer)
+	qdel(src)
 
 /obj/effect/hallucination/singularity_scare
 	//Singularity moving towards you.
@@ -552,6 +584,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 	switch(hal_type)
 		if("xeno")
 			new /obj/effect/hallucination/xeno_attack(src.loc,src)
+		if("borer")
+			new /obj/effect/hallucination/borer(src.loc,src)
 		if("singulo")
 			new /obj/effect/hallucination/singularity_scare(src.loc,src)
 		if("battle")
@@ -573,7 +607,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		if("sounds")
 			//Strange audio
 			//src << "Strange Audio"
-			switch(rand(1,18))
+			switch(rand(1,19))
 				if(1) src << 'sound/machines/airlock.ogg'
 				if(2)
 					if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -640,6 +674,12 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					src << "<h1 class='alert'>Biohazard Alert</h1>"
 					src << "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>"
 					src << 'sound/AI/outbreak5.ogg'
+				if(19) //Tesla loose!
+					src << sound('sound/magic/lightningbolt.ogg', volume = 35)
+					sleep(20)
+					src << sound('sound/magic/lightningbolt.ogg', volume = 65)
+					sleep(20)
+					src << sound('sound/magic/lightningbolt.ogg', volume = 100)
 		if("hudscrew")
 			//Screwy HUD
 			//src << "Screwy HUD"
