@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Drone shells are now points of interest in the orbit list."
-  - rscadd: "Derelict drone shells now spawn with appropriate headgear."
