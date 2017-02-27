@@ -289,6 +289,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(6)
 			dat += "<h3>Post Title to Newscaster</h3>"
 			if(!scanner)
+				for(var/obj/machinery/libraryscanner/S in range(9))
+					scanner = S
+					break
+			if(!scanner)
 				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
 				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
