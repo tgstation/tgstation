@@ -540,8 +540,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 /obj/effect/hallucination/whispers/New(loc,var/mob/living/carbon/T)
 	target = T
-	var/speak_messages = list("I'm watching you...","[target.name]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!","EI NATH!!", "RUN!!", "Kill me!")
-	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(teleportlocs)]!!","Where's [target.name]?","Call the shuttle!","AI rogue!!")
+	var/speak_messages = list("I'm watching you...","[target.first_name()]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!","EI NATH!!", "RUN!!", "Kill me!")
+	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(teleportlocs)]!!","Where's [target.first_name()]?","Call the shuttle!","AI rogue!!")
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
@@ -779,10 +779,12 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				for(var/mob/dead/observer/G in player_list)
 					dead_people += G
 				var/mob/dead/observer/fakemob = pick(dead_people)
-				src << "<span class='deadsay'><b>DEAD:[fakemob.name]</b> says, \"rip\"</span>"
-			spawn(rand(50,70))
-				hal_screwyhud = 0
-				SetSleeping(0)
+				sleep(rand(30, 60))
+				src << "<span class='deadsay'><b>DEAD:[fakemob.name]</b> says, \"[pick("rip","welcome [first_name()]","you too?","is the AI malf",\
+				 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]]\"</span>"
+			sleep(rand(50,70))
+			hal_screwyhud = 0
+			SetSleeping(0)
 		if("husks")
 			if(!halbody)
 				var/list/possible_points = list()
