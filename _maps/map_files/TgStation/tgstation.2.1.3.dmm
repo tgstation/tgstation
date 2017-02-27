@@ -1961,7 +1961,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Prison Hallway";
+	c_tag = "Prison Hallway - East";
 	network = list("SS13","Prison")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -28362,9 +28362,7 @@
 "blx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 140;
-	on = 1;
-	pressure_checks = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
@@ -62251,6 +62249,20 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
+"cEe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Prison Hallway - West";
+	network = list("SS13","Prison")
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
+"cEf" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/red/side,
+/area/security/prison)
 
 (1,1,1) = {"
 aaa
@@ -86227,12 +86239,12 @@ aaa
 aai
 cCH
 cCP
-cCS
-cCX
+cCP
+cCP
 cDa
 aei
 aeO
-afI
+cEf
 aai
 cDp
 cDs
@@ -86744,12 +86756,12 @@ aai
 aai
 aai
 aai
-aei
+cEe
 aeO
 afI
 aai
 cDr
-cDu
+cDs
 aai
 aaa
 aiU
@@ -87003,7 +87015,7 @@ ada
 adF
 aef
 aeQ
-afz
+afI
 aai
 aai
 aai
@@ -93677,7 +93689,7 @@ aaf
 aaf
 aaf
 aaf
-cCC
+cCB
 cCN
 acp
 acP
@@ -95223,7 +95235,7 @@ cCF
 abU
 act
 cCU
-cCZ
+cCU
 ato
 abq
 afi
@@ -102235,7 +102247,7 @@ bon
 bBN
 bEi
 cEb
-cEc
+cEb
 bDU
 bFO
 bBN
@@ -108911,7 +108923,7 @@ btb
 buo
 bvJ
 cDZ
-cEa
+cDZ
 bwQ
 bxW
 bvK
