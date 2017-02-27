@@ -158,13 +158,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		ghost_others = client.prefs.ghost_others
 
 	if(hair_image)
-		overlays -= hair_image
-		ghostimage.overlays -= hair_image
+		cut_overlay(hair_image)
+		ghostimage.add_overlay(hair_image)
 		hair_image = null
 
 	if(facial_hair_image)
-		overlays -= facial_hair_image
-		ghostimage.overlays -= facial_hair_image
+		cut_overlay(facial_hair_image)
+		ghostimage.add_overlay(facial_hair_image)
 		facial_hair_image = null
 
 
@@ -192,7 +192,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
 				add_overlay(facial_hair_image)
-				ghostimage.overlays += facial_hair_image
+				ghostimage.add_overlay(facial_hair_image)
 		if(hair_style)
 			S = hair_styles_list[hair_style]
 			if(S)
@@ -201,7 +201,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
 				add_overlay(hair_image)
-				ghostimage.overlays += hair_image
+				ghostimage.add_overlay(hair_image)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,
@@ -782,3 +782,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			SSpai.recruitWindow(src)
 	else
 		usr << "Can't become a pAI candidate while not dead!"
+
+/mob/dead/observer/CtrlShiftClick(mob/user)
+	if(isobserver(user) && check_rights(R_SPAWN))
+		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+

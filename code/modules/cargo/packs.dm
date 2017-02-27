@@ -833,6 +833,7 @@
 
 /datum/supply_pack/science
 	group = "Science"
+	crate_type = /obj/structure/closet/crate/science
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -846,7 +847,7 @@
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
 	crate_name = "robotics assembly crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/robotics/mecha_ripley
 	name = "Circuit Crate (Ripley APLU)"
@@ -856,7 +857,7 @@
 					/obj/item/weapon/circuitboard/mecha/ripley/main,
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals)
 	crate_name = "\improper APLU Ripley circuit crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
@@ -865,7 +866,7 @@
 	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals,
 					/obj/item/weapon/circuitboard/mecha/odysseus/main)
 	crate_name = "\improper Odysseus circuit crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -895,7 +896,7 @@
 					/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen)
 	crate_name = "shield generators crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
@@ -904,7 +905,7 @@
 	contains = list(/obj/item/device/transfer_valve,
 					/obj/item/device/transfer_valve)
 	crate_name = "tank transfer valves crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
 /datum/supply_pack/science/bz_canister
@@ -913,7 +914,7 @@
 	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
 /datum/supply_pack/science/freon_canister
@@ -922,7 +923,7 @@
 	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
 	crate_name = "freon canister crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
 /datum/supply_pack/science/research
@@ -931,7 +932,7 @@
 	access = access_research
 	contains = list(/obj/item/device/machineprototype)
 	crate_name = "machine prototype crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
@@ -1252,6 +1253,12 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 	crate_name = "cardboard sheets crate"
+
+/datum/supply_pack/materials/plastic50
+	name = "50 Plastic Sheets"
+	cost = 1000
+	contains = list(/obj/item/stack/sheet/plastic/fifty)
+	crate_name = "plastic sheets crate"
 
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"

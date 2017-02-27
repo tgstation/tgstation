@@ -81,6 +81,9 @@
 		user << "<span class='warning'>[src] is empty!</span>"
 		return
 	..()
+	if(!iscyborg(user))
+		reagents.maximum_volume = 0 //Makes them useless afterwards
+		container_type = 0
 	update_icon()
 	spawn(80)
 		if(iscyborg(user) && !reagents.total_volume)

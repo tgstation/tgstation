@@ -1,4 +1,4 @@
-
+#define FAILED_DB_CONNECTION_CUTOFF 5
 
 //cursors
 #define Default_Cursor	0
@@ -47,6 +47,7 @@ DBConnection
 		//
 	var/server = ""
 	var/port = 3306
+	var/failed_connections = 0
 
 DBConnection/New(dbi_handler,username,password_handler,cursor_handler)
 	src.dbi = dbi_handler
@@ -55,7 +56,26 @@ DBConnection/New(dbi_handler,username,password_handler,cursor_handler)
 	src.default_cursor = cursor_handler
 	_db_con = _dm_db_new_con()
 
-DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
+DBConnection/proc/Connect()
+	if(IsConnected())
+		return TRUE
+
+	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
+		return FALSE
+
+	var/user = sqlfdbklogin
+	var/pass = sqlfdbkpass
+	var/db = sqlfdbkdb
+	var/address = sqladdress
+	var/port = sqlport
+
+	doConnect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	. = IsConnected()
+	if (!. && config.sql_enabled)
+		log_world("SQL error: " + ErrorMsg())
+		++failed_connections
+
+DBConnection/proc/doConnect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
 	if(!config.sql_enabled)
 		return 0
 	if(!src) return 0
@@ -63,7 +83,9 @@ DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_han
 	if(!cursor_handler) cursor_handler = Default_Cursor
 	return _dm_db_connect(_db_con,dbi_handler,user_handler,password_handler,cursor_handler,null)
 
-DBConnection/proc/Disconnect() return _dm_db_close(_db_con)
+DBConnection/proc/Disconnect()
+	failed_connections = 0
+	return _dm_db_close(_db_con)
 
 DBConnection/proc/IsConnected()
 	if(!config.sql_enabled) return 0
@@ -206,3 +228,6 @@ DBColumn/proc/SqlTypeName(type_handler=src.sql_type)
 #undef TIME
 #undef STRING
 #undef BLOB
+
+
+#undef FAILED_DB_CONNECTION_CUTOFF

@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - tweak: "Total subsystem initialization time will now be displayed"
