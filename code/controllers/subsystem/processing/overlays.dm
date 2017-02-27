@@ -12,14 +12,12 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	fire_if_empty = TRUE
 
 	var/list/overlay_icon_state_caches
-	var/initialized = FALSE
 
 /datum/subsystem/processing/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
 	LAZYINITLIST(overlay_icon_state_caches)
 
 /datum/subsystem/processing/overlays/Initialize()
-	initialized = TRUE
 	for(var/I in processing_list)
 		var/atom/A = I
 		A.compile_overlays()
