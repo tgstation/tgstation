@@ -40,15 +40,15 @@
 		return FALSE
 	var/temp_throw = FALSE
 	if(m_intent == MOVE_INTENT_WALK)
-		var/slip_prob = 10
-		var/fall_prob = 5
+		var/slip_prob = mob_base_gravity_slip_chance
+		var/fall_prob = mob_base_gravity_fall_chance
 		var/atom/A = get_gravity_handgrip()
 		if(!isnull(A) && istype(A, /atom))
 			if(A.gravity_handhold)
-				slip_prob -= (5 * ((gravity_strength + 1)/2))
-				fall_prob -= (3 * ((gravity_strength + 1)/2))
-		slip_prob += (gravity_strength * 5)
-		fall_prob += (gravity_strength * 2)
+				slip_prob = mob_handhold_gravity_slip_chance
+				fall_prob = mob_handhold_gravity_fall_chance
+		slip_prob += (gravity_strength * mob_gravity_strength_slip_mod)
+		fall_prob += (gravity_strength * mob_gravity_strength_fall_mod)
 		if(prob(slip_prob))
 			src << "<span class='warning'>You slip and lose your grip!</span>"
 		else if(prob(fall_prob))
@@ -58,6 +58,7 @@
 		else
 			return FALSE
 	if((gravity_throwing || temp_throw) && !throwing)
+		Weaken(1)
 		throw_at(get_edge_target_turf(src, gravity_direction), gravity_strength * 20, gravity_strength)
 	else
 		step(src, gravity_direction)

@@ -1,5 +1,12 @@
 var/datum/subsystem/gravity/SSgravity
 var/global/legacy_gravity = FALSE
+var/global/mob_base_gravity_slip_chance = 10
+var/global/mob_base_gravity_fall_chance = 5
+var/global/mob_handhold_gravity_slip_chance = 6
+var/global/mob_handhold_gravity_fall_chance = 3
+var/global/mob_gravity_strength_slip_mod = 3
+var/global/mob_gravity_strength_fall_mod = 1.5
+
 
 /datum/subsystem/gravity
 	name = "Gravity"
@@ -15,6 +22,7 @@ var/global/legacy_gravity = FALSE
 	var/purge_interval = 600
 	var/purge_tick = 0
 	var/purging = FALSE
+	var/error_no_atom = 0
 	var/error_mismatched_area = 0
 	var/error_mismatched_turf = 0
 	var/error_no_area = 0
@@ -22,29 +30,80 @@ var/global/legacy_gravity = FALSE
 	var/list/purging_atoms = list()
 	var/list/area_blacklist_typecache
 	var/list/area_blacklist = list(/area/lavaland, /area/mine, /area/centcom)
+	var/mob_slip_chance = 0
+	var/mob_fall_chance = 0
+	var/mob_slip_chance_handhold = 0
+	var/mob_fall_chance_handhold = 0
+	var/mob_slip_chance_mod = 3
+	var/mob_fall_chance_mod = 1.5
+	var/normal_gravity = 0
 
 /datum/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
 
 /datum/subsystem/gravity/Initialize()
 	area_blacklist_typecache = typecacheof(area_blacklist)
+	mob_slip_chance = mob_base_gravity_slip_chance
+	mob_fall_chance = mob_base_gravity_fall_chance
+	mob_slip_chance_handhold = mob_handhold_gravity_slip_chance
+	mob_fall_chance_handhold = mob_handhold_gravity_fall_chance
+	mob_slip_chance_mod = mob_gravity_strength_slip_mod
+	mob_fall_chance_mod = mob_gravity_strength_fall_mod
+	normal_gravity = legacy_gravity
 	. = ..()
 
-/proc/set_legacy_gravity(yes)	//ADMINS: This is an emergency killswitch for when things go out of control.
-	legacy_gravity = yes
-	if(yes)
+/datum/subsystem/gravity/Recover()
+	Initialize()	//Force init..
+	if(istype(SSgravity))
+		do_purge = SSgravity.do_purge
+		purge_interval = SSgravity.purge_interval
+		error_no_atom = SSgravity.error_no_atom
+		error_mismatched_area = SSgravity.error_mismatched_area
+		error_mismatched_turf = SSgravity.error_mismatched_turf
+		error_no_area = SSgravity.error_no_area
+		error_no_turf = SSgravity.error_no_turf
+	..()
+
+/datum/subsystem/gravity/proc/sync_to_global_variables()
+	world << "Syncing to global vars!"
+	mob_base_gravity_slip_chance = mob_slip_chance
+	mob_base_gravity_fall_chance = mob_fall_chance
+	mob_handhold_gravity_slip_chance = mob_slip_chance_handhold
+	mob_handhold_gravity_fall_chance = mob_fall_chance_handhold
+	mob_gravity_strength_slip_mod = mob_slip_chance_mod
+	mob_gravity_strength_fall_mod = mob_fall_chance_mod
+	legacy_gravity = normal_gravity
+	if(legacy_gravity)
 		SSgravity.can_fire = FALSE
 	else
 		SSgravity.can_fire = TRUE
 
+/datum/subsystem/gravity/vv_edit_var()
+	..()
+	sync_to_global_variables()
+
+/datum/subsystem/gravity/SDQL_update()
+	..()
+	sync_to_global_variables()
+
 /proc/emergency_reset_gravity_force_processing()
 	var/count = 0
-	for(var/atom/movable/AM in atoms_forced_gravity_processing)
-		AM.force_gravity_processing = FALSE
-		count++
+	while(atoms_forced_gravity_processing.len)
+		var/atom/movable/AM = atoms_forced_gravity_processing[atoms_forced_gravity_processing.len]
+		atoms_forced_gravity_processing.len--
+		if(!istype(AM))
+			if(SSgravity)
+				SSgravity.error_no_atom++
+			continue
+		else
+			AM.force_gravity_processing = FALSE
+			count++
 		CHECK_TICK
 	LAZYCLEARLIST(atoms_forced_gravity_processing)
-	return "[count] atoms purged from forced processing!"
+	var/atoms_not_found = "ERROR: NO SUBSYSTEM!"
+	if(SSgravity)
+		atoms_not_found = SSgravity.error_no_atom
+	return "[count] atoms purged from forced processing! [atoms_not_found] things found so far that were not atoms!"
 
 /datum/subsystem/gravity/proc/recalculate_atoms()
 	currentrun = list()
@@ -59,8 +118,7 @@ var/global/legacy_gravity = FALSE
 		if(is_type_in_typecache(A, area_blacklist_typecache))
 			continue
 		currentrun += A.contents_affected_by_gravity
-	for(var/atom/movable/AM in atoms_forced_gravity_processing)
-		currentrun_manual += AM
+	currentrun_manual = atoms_forced_gravity_processing.Copy()
 	recalculation_cost = REALTIMEOFDAY - tempcost
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
@@ -79,11 +137,13 @@ var/global/legacy_gravity = FALSE
 	while(currentrun_manual.len)
 		var/atom/movable/AM = currentrun_manual[currentrun_manual.len]
 		currentrun_manual.len--
-		if(AM)
+		if(istype(AM))
 			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
 				AM.manual_gravity_process()
 				AM.gravity_tick = 0
+		else
+			error_no_atom++
 		if(purging && do_purge)
 			purging_atoms += AM
 		if(MC_TICK_CHECK)

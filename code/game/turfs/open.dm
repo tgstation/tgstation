@@ -65,8 +65,8 @@
 	. = ..()
 
 /turf/open/proc/force_gravity_on_atom(atom/movable/AM)
-	if(!AM.force_gravity_processing)
-		atoms_forced_gravity_processing += AM
+	if(!atoms_forced_gravity_processing[AM])
+		atoms_forced_gravity_processing[AM] = AM
 	AM.forced_gravity_by_turf = src
 	AM.gravity_strength = turf_gravity_strength
 	AM.gravity_direction = turf_gravity_direction
@@ -76,7 +76,7 @@
 	AM.gravity_override = turf_gravity_override
 
 /turf/open/proc/reset_forced_gravity_atom(atom/movable/AM)
-	if(!AM.force_gravity_processing)
+	if(atoms_forced_gravity_processing[AM])
 		atoms_forced_gravity_processing -= AM
 	AM.forced_gravity_by_turf = null
 	AM.gravity_strength = 0
