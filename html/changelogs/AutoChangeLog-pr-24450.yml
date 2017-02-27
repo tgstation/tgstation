@@ -1,0 +1,4 @@
+author: "TrustyGun"
+delete-after: True
+changes: 
+  - imageadd: "Box sprites are improved."
