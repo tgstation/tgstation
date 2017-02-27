@@ -27,7 +27,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//Something's wrong here
 	var/list/medium = list("hudscrew"=15,"items"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15,"self_delusion"=10)
 	//AAAAH
-	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20)
+	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20,"koolaid"=10)
 
 	handling_hal = 1
 	while(hallucination > 20)
@@ -244,6 +244,58 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			qdel(borer)
 	qdel(src)
 
+/obj/effect/hallucination/simple/bubblegum
+	name = "Bubblegum"
+	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+	image_state = "bubblegum"
+	px = -32
+
+/obj/effect/hallucination/oh_yeah
+	var/turf/closed/wall/wall
+	var/obj/effect/hallucination/simple/bubblegum/bubblegum = null
+	var/image/fakebroken
+	var/image/fakerune
+
+/obj/effect/hallucination/oh_yeah/New(loc,var/mob/living/carbon/T)
+	target = T
+	for(var/turf/closed/wall/W in range(7,target))
+		wall = W
+		break
+	if(wall)
+		fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
+		var/turf/landing = get_turf(target)
+		var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
+		fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+		fakebroken.override = TRUE
+		if(target.client)
+			target.client.images |= fakebroken
+			target.client.images |= fakerune
+		target << sound('sound/effects/meteorimpact.ogg', volume = 150)
+		bubblegum = new(wall, target)
+		sleep(10) //ominous wait
+		var/charged = FALSE //only get hit once
+		while(get_turf(bubblegum) != landing)
+			bubblegum.forceMove(get_step_towards(bubblegum, landing))
+			target << sound('sound/effects/meteorimpact.ogg', volume = 150)
+			shake_camera(target, 2, 1)
+			if(bubblegum.Adjacent(target) && !charged)
+				charged = TRUE
+				target.Weaken(4)
+				target.staminaloss += 40
+				step_away(target, bubblegum)
+				shake_camera(target, 4, 3)
+				target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
+			sleep(2)
+		sleep(30)
+		qdel(bubblegum)
+	qdel(src)
+
+/obj/effect/hallucination/oh_yeah/Destroy()
+	if(target.client)
+		target.client.images.Remove(fakebroken)
+		target.client.images.Remove(fakerune)
+	return ..()
+
 /obj/effect/hallucination/singularity_scare
 	//Singularity moving towards you.
 	//todo Hide where it moved with fake space images
@@ -351,6 +403,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
+	return ..()
 
 /obj/effect/hallucination/self_delusion
 	var/image/delusion
@@ -388,6 +441,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/self_delusion/Destroy()
 	if(target.client)
 		target.client.images.Remove(delusion)
+	return ..()
 
 /obj/effect/hallucination/fakeattacker/New(loc,var/mob/living/carbon/T)
 	target = T
@@ -627,6 +681,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			new /obj/effect/hallucination/borer(src.loc,src)
 		if("singulo")
 			new /obj/effect/hallucination/singularity_scare(src.loc,src)
+		if("koolaid")
+			new /obj/effect/hallucination/oh_yeah(src.loc,src)
 		if("battle")
 			new /obj/effect/hallucination/battle(src.loc,src)
 		if("flood")
