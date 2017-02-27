@@ -306,7 +306,7 @@
 					S.faction = list("\ref[owner]")
 				S.icon = P.icon
 				S.icon_state = P.icon_state
-				S.copy_overlays(P)
+				S.copy_overlays(P, TRUE)
 				S.color = P.color
 				S.atom_colours = P.atom_colours.Copy()
 				if(L.mind)
