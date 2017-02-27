@@ -368,18 +368,10 @@ var/datum/subsystem/ticker/ticker
 	for(var/mob/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
-			var/ar = player.mind.assigned_role
-			if(ar=="AI")
-				player.close_spawn_windows()
-				player.AIize(FALSE)
-			else
-				player.create_character(FALSE)
-				if(ar=="Cyborg")
-					player.Robotize(FALSE,FALSE)
+			player.create_character(FALSE)
 		else
 			player.new_player_panel()
 		CHECK_TICK
-
 
 /datum/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)

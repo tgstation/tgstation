@@ -286,14 +286,6 @@
 
 	qdel(src)
 
-
-/mob/new_player/AIize(transfer_after)
-	spawning = 1
-	. = ..()
-	new_character = .
-	if(!transfer_after)	//name can't be set in AI/New without the client
-		new_character.rename_self("ai", client)
-
 /mob/living/carbon/human/AIize()
 	if (notransform)
 		return
@@ -345,19 +337,7 @@
 	if(transfer_after)
 		qdel(src)
 
-//human -> robot
-/mob/proc/Robotize(delete_items = 0)
-
-/mob/new_player/Robotize(delete_items = 0, transfer_after = TRUE)
-	spawning = 1
-	if(new_character)
-		new_character = new_character.Robotize(FALSE, transfer_after)
-		testing("New new_character is now [new_character]([new_character.type])")
-		if(config.rename_cyborg && !transfer_after)	//name can't be set in robot/New without the client
-			new_character.rename_self("cyborg", client)
-		. = new_character
-
-/mob/living/carbon/human/Robotize(delete_items = 0, transfer_after = TRUE)
+/mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)

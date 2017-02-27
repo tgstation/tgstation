@@ -14,8 +14,11 @@ AI
 	minimal_player_age = 30
 
 /datum/job/ai/equip(mob/living/carbon/human/H)
-	if(!H)
-		return 0
+	return H.AIize(FALSE)
+
+/datum/job/cyborg/after_spawn(mob/living/silicon/ai/AI, mob/M)
+	if(config.rename_cyborg)	//name can't be set in robot/New without the client
+		AI.rename_self("ai", M.client)
 
 /datum/job/ai/config_check()
 	if(config && config.allow_ai)
@@ -35,3 +38,10 @@ Cyborg
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
 	minimal_player_age = 21
+
+/datum/job/cyborg/equip(mob/living/carbon/human/H)
+	return H.Robotize(FALSE, FALSE)
+
+/datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
+	if(config.rename_cyborg)	//name can't be set in robot/New without the client
+		R.rename_self("cyborg", M.client)

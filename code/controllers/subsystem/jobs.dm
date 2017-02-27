@@ -406,6 +406,10 @@ var/datum/subsystem/job/SSjob
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))
 			H = new_mob
+			if(!joined_late)
+				N.new_character = H
+			else
+				M = H
 
 	M << "<b>You are the [rank].</b>"
 	M << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
