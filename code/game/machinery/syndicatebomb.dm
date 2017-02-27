@@ -531,7 +531,7 @@
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)
-				B.detonation_time = world.time + BUTTON_DELAY
+				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
