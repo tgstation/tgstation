@@ -38,8 +38,9 @@
 	proc_list -= D
 	if(!proc_list.len && !fire_if_empty)
 		can_fire = FALSE
-	if(!killed && run_cache.len)
-		run_cache -= D
+	var/list/rc = run_cache
+	if(!killed && rc.len)
+		rc -= D
 	if(D)
 		LAZYREMOVE(D.processors, src)
 
