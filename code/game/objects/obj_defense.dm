@@ -189,29 +189,22 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(Clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
-	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
-		resistance_flags |= ON_FIRE
+	if(!IS_PROCESSING(SSfire_burning, src) && (resistance_flags & FLAMMABLE))
 		SSfire_burning.start_processing(src)
 		add_overlay(fire_overlay, TRUE)
 		return 1
 
 /obj/proc/fire_processing()
-	if(resistance_flags & ON_FIRE)
-		take_damage(20, BURN, "fire", 0)
-	else
-		return PROCESS_KILL
+	take_damage(20, BURN, "fire", 0)
 
 //called when the obj is destroyed by fire
 /obj/proc/burn()
-	if(resistance_flags & ON_FIRE)
-		SSfire_burning.stop_processing(src)
+	SSfire_burning.stop_processing(src)
 	deconstruct(FALSE)
 
 /obj/proc/extinguish()
-	if(resistance_flags & ON_FIRE)
-		resistance_flags &= ~ON_FIRE
-		cut_overlay(fire_overlay, TRUE)
-		SSfire_burning.stop_processing(src)
+	cut_overlay(fire_overlay, TRUE)
+	SSfire_burning.stop_processing(src)
 
 /obj/proc/tesla_act(var/power)
 	being_shocked = 1

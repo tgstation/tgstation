@@ -66,7 +66,7 @@
 			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
 				continue
 			. = 1
-			if((O.resistance_flags & (ON_FIRE)))
+			if(IS_PROCESSING(SSfire_burning, O))
 				continue
 			if(!(O.resistance_flags & FLAMMABLE))
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava

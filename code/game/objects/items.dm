@@ -204,7 +204,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(anchored)
 		return
 
-	if(resistance_flags & ON_FIRE)
+	if(IS_PROCESSING(SSfire_burning, src))
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))

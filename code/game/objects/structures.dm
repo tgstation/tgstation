@@ -95,7 +95,7 @@
 /obj/structure/examine(mob/user)
 	..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
-		if(resistance_flags & ON_FIRE)
+		if(IS_PROCESSING(SSfire_burning, src))
 			user << "<span class='warning'>It's on fire!</span>"
 		if(broken)
 			user << "<span class='notice'>It looks broken.</span>"

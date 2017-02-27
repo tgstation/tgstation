@@ -108,10 +108,10 @@
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
 		var/obj/item/weapon/storage/book/bible/B = L.bible_check()
 		if(B)
-			if(!(B.resistance_flags & ON_FIRE))
+			if(!IS_PROCESSING(SSfire_burning, B))
 				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
-				if(!(BI.resistance_flags & ON_FIRE))
+				if(!IS_PROCESSING(SSfire_burning, BI))
 					BI.fire_act()
 			continue
 		if(is_servant_of_ratvar(L) || (L.disabilities & BLIND) || L.null_rod_check())
