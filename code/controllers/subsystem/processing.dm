@@ -20,16 +20,23 @@
 		..("[stat_tag]:FIX THIS SHIT")
 
 /datum/subsystem/processing/proc/start_processing(datum/D)
-	if(D && !(src in D.processors))
-		D.processors += src
+	var/processors = D.processors
+	if(D)
+		if(!processors)
+			D.processors = list(src)
+		else if(src in processors)
+			return
+		else
+			processors += src
 		processing_list += D
 		can_fire = TRUE
 		return TRUE
 	return FALSE
 
 /datum/subsystem/processing/proc/stop_processing(datum/D, killed = FALSE)
-	processing_list -= D
-	if(!processing_list.len && !fire_if_empty)
+	var/list/proc_list = processing_list
+	proc_list -= D
+	if(!proc_list.len && !fire_if_empty)
 		can_fire = FALSE
 	if(!killed && run_cache.len)
 		run_cache -= D
