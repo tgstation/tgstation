@@ -182,3 +182,12 @@
 
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
+
+/obj/item/drone_shell/dusty
+	name = "derelict drone shell"
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	drone_type = /mob/living/simple_animal/drone/derelict
+
+/mob/living/simple_animal/drone/derelict
+	name = "derelict drone"
+	default_hatmask = /obj/item/clothing/head/ushanka

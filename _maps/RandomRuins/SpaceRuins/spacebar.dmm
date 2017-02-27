@@ -147,7 +147,9 @@
 /turf/closed/wall,
 /area/ruin/powered/spacebar/bar)
 "aG" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	req_access = null
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/spacebar/bar)
 "aH" = (

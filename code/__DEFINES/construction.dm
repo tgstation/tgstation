@@ -54,8 +54,7 @@
 
 //Construction defines for the pinion airlock
 #define GEAR_SECURE 1
-#define GEAR_UNFASTENED 2
-#define GEAR_LOOSE 3
+#define GEAR_LOOSE 2
 
 //other construction-related things
 
