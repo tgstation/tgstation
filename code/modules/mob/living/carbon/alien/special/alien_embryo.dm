@@ -5,6 +5,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	var/stage = 0
+	var/bursting = FALSE
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -63,15 +64,18 @@
 
 
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
-	if(!owner)
+	if(!owner || bursting)
 		return
+
+	bursting = TRUE
 
 	var/list/candidates = pollCandidates("Do you want to play as an alien larva that will burst out of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
 
-	if(QDELETED(src) || QDELETED(owner) || !owner)
+	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	if(!candidates.len)
+	if(!candidates.len || !owner)
+		bursting = FALSE
 		stage = 4
 		return
 
@@ -99,8 +103,10 @@
 		new_xeno.invisibility = 0
 
 	if(gib_on_success)
+		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner] in a shower of gore!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		owner.gib(TRUE)
 	else
+		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
 		owner.adjustBruteLoss(40)
 		owner.cut_overlay(overlay)
 	qdel(src)
