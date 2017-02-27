@@ -1,3 +1,13 @@
+19 February 2017, by Jordie0608
+
+Optimised and indexed significant portions of the schema.
+
+See the file 'optimisations_2017-02-19.sql' for instructions on how to apply these changes to your database.
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
 30 January 2017, by Lzimann
 
 Modified table 'death', adding the columns 'mapname' and 'server'.
