@@ -21,6 +21,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	for(var/I in processing_list)
 		var/atom/A = I
 		A.compile_overlays()
+		LAZYREMOVE(A.processors, src)
 		CHECK_TICK
 	processing_list.Cut()
 	..()
