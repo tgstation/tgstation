@@ -149,7 +149,7 @@ var/time_last_changed_position = 0
 			S = "--------"
 		dat += "<a href='?src=\ref[src];choice=scan'>[S]</a>"
 		dat += "<table>"
-		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b></td></tr>"
+		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"
 		var/ID
 		if(scan && (access_change_ids in scan.access) && !target_dept)
 			ID = 1
@@ -193,6 +193,19 @@ var/time_last_changed_position = 0
 					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
 				if(0)
 					dat += "Denied"
+			dat += "</td><td>"
+			switch(job.total_positions)
+				if(0)
+					dat += "Denied"
+				else
+					if(ID)
+						if(job in ticker.prioritized_jobs)
+							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
+						else
+							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
+					else
+						dat += "Prioritize"
+
 			dat += "</td></tr>"
 		dat += "</table>"
 	else
@@ -228,7 +241,7 @@ var/time_last_changed_position = 0
 			header += "<div align='center'><br>"
 			header += "<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || "
 			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
-			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
+			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
 			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
 
 		header += "<hr>"
@@ -404,6 +417,7 @@ var/time_last_changed_position = 0
 			head_subordinates = null
 			authenticated = 0
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
+
 		if("access")
 			if(href_list["allowed"])
 				if(authenticated)
@@ -496,6 +510,22 @@ var/time_last_changed_position = 0
 				j.total_positions--
 				opened_positions[edit_job_target]--
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+
+		if ("prioritize_job")
+			// TOGGLE WHETHER JOB APPEARS AS PRIORITIZED IN THE LOBBY
+			if(scan && (access_change_ids in scan.access) && !target_dept)
+				var/priority_target = href_list["job"]
+				var/datum/job/j = SSjob.GetJob(priority_target)
+				if(!j)
+					return 0
+				var/priority = TRUE
+				if(j in ticker.prioritized_jobs)
+					ticker.prioritized_jobs -= j
+					priority = FALSE
+				else
+					ticker.prioritized_jobs += j
+				usr << "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 		if ("print")
 			if (!( printing ))

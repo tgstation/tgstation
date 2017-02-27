@@ -56,13 +56,15 @@ var/datum/subsystem/ticker/ticker
 
 	var/news_report
 
+	var/list/prioritized_jobs = list()
+
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
 /datum/subsystem/ticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
-	
+
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -335,7 +337,7 @@ var/datum/subsystem/ticker/ticker
 
 		if(mode)
 			mode.explosion_in_progress = 0
-			world << "<B>The station was destoyed by the nuclear blast!</B>"
+			world << "<B>The station was destroyed by the nuclear blast!</B>"
 			mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
 
 	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up), 300)
@@ -608,7 +610,7 @@ var/datum/subsystem/ticker/ticker
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
+			next_in_line << "<span class='danger'>No response received. You have been removed from the line.</span>"
 			queued_players -= next_in_line
 			queue_delay = 0
 
@@ -694,19 +696,19 @@ var/datum/subsystem/ticker/ticker
 		if(CULT_SUMMON)
 			news_message = "Company officials would like to clarify that [station_name()] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
 		if(NUKE_MISS)
-			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space near by."
+			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space nearby."
 		if(OPERATIVES_KILLED)
 			news_message = "Repairs to [station_name()] are underway after an elite Syndicate death squad was wiped out by the crew."
 		if(OPERATIVE_SKIRMISH)
 			news_message = "A skirmish between security forces and Syndicate agents aboard [station_name()] ended with both sides bloodied but intact."
 		if(REVS_WIN)
-			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] that there will be no wage increases for workers."
+			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] there will be no wage increases for workers."
 		if(REVS_LOSE)
 			news_message = "[station_name()] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
 		if(WIZARD_KILLED)
-			news_message = "Tensions have flared with the Wizard's Federation following the death of one of their members aboard [station_name()]."
+			news_message = "Tensions have flared within the Space Wizard Federation following the death of one of their members aboard [station_name()]."
 		if(STATION_NUKED)
-			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are under way."
+			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
 		if(CLOCK_SUMMON)
 			news_message = "The garbled messages about hailing a mouse and strange energy readings from [station_name()] have been discovered to be an ill-advised, if thorough, prank by a clown."
 		if(CLOCK_SILICONS)
@@ -729,4 +731,3 @@ var/datum/subsystem/ticker/ticker
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
-		
