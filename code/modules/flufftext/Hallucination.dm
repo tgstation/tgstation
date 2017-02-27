@@ -320,7 +320,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
 	target = T
 	var/image/A = null
-	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon")
+	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(H == target)
 			continue
@@ -335,6 +335,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				A = image('icons/mob/pets.dmi',H,"corgi")
 			if("skeleton")//Skeletons
 				A = image('icons/mob/human.dmi',H,"skeleton")
+			if("zombie")//Zombies
+				A = image('icons/mob/human.dmi',H,"zombie")
 			if("demon")//Demon
 				A = image('icons/mob/mob.dmi',H,"daemon")
 			if("custom")
@@ -607,7 +609,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		if("sounds")
 			//Strange audio
 			//src << "Strange Audio"
-			switch(rand(1,19))
+			switch(rand(1,20))
 				if(1) src << 'sound/machines/airlock.ogg'
 				if(2)
 					if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -680,6 +682,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					src << sound('sound/magic/lightningbolt.ogg', volume = 65)
 					sleep(20)
 					src << sound('sound/magic/lightningbolt.ogg', volume = 100)
+				if(20) //AI is doomsdaying!
+					src << "<h1 class='alert'>Anomaly Alert</h1>"
+					src << "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>"
+					src << 'sound/AI/aimalf.ogg'
 		if("hudscrew")
 			//Screwy HUD
 			//src << "Screwy HUD"
