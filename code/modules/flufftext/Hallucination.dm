@@ -25,7 +25,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//Least obvious
 	var/list/minor = list("sounds"=25,"bolts_minor"=5,"whispers"=15,"message"=10)
 	//Something's wrong here
-	var/list/medium = list("hudscrew"=15,"items"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15)
+	var/list/medium = list("hudscrew"=15,"items"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15,"self_delusion"=10)
 	//AAAAH
 	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20)
 
@@ -352,6 +352,43 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(target.client)
 			target.client.images.Remove(I)
 
+/obj/effect/hallucination/self_delusion
+	var/image/delusion
+
+/obj/effect/hallucination/self_delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null)
+	target = T
+	var/image/A = null
+	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie","robot")
+	switch(kind)
+		if("clown")//Clown
+			A = image('icons/mob/animal.dmi',target,"clown")
+		if("carp")//Carp
+			A = image('icons/mob/animal.dmi',target,"carp")
+		if("corgi")//Corgi
+			A = image('icons/mob/pets.dmi',target,"corgi")
+		if("skeleton")//Skeletons
+			A = image('icons/mob/human.dmi',target,"skeleton")
+		if("zombie")//Zombies
+			A = image('icons/mob/human.dmi',target,"zombie")
+		if("demon")//Demon
+			A = image('icons/mob/mob.dmi',target,"daemon")
+		if("robot")//Cyborg
+			A = image('icons/mob/robots.dmi',target,"robot")
+			target << sound('sound/voice/liveagain.ogg')
+		if("custom")
+			A = image(custom_icon_file, target, custom_icon)
+	A.override = 1
+	if(target.client)
+		target << "<span class='userdanger'>[target] is hit by a bolt of change in the chest!</span>"
+		target << sound('sound/magic/Staff_Change.ogg')
+		delusion = A
+		target.client.images |= A
+	QDEL_IN(src, duration)
+
+/obj/effect/hallucination/self_delusion/Destroy()
+	if(target.client)
+		target.client.images.Remove(delusion)
+
 /obj/effect/hallucination/fakeattacker/New(loc,var/mob/living/carbon/T)
 	target = T
 	var/mob/living/carbon/human/clone = null
@@ -596,6 +633,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			new /obj/effect/hallucination/fake_flood(src.loc,src)
 		if("delusion")
 			new /obj/effect/hallucination/delusion(src.loc,src)
+		if("self_delusion")
+			new /obj/effect/hallucination/self_delusion(src.loc,src)
 		if("fake")
 			new /obj/effect/hallucination/fakeattacker(src.loc,src)
 		if("bolts")
@@ -781,7 +820,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				var/mob/dead/observer/fakemob = pick(dead_people)
 				sleep(rand(30, 60))
 				src << "<span class='deadsay'><b>DEAD:[fakemob.name]</b> says, \"[pick("rip","welcome [first_name()]","you too?","is the AI malf",\
-				 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]]\"</span>"
+				 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>"
 			sleep(rand(50,70))
 			hal_screwyhud = 0
 			SetSleeping(0)
