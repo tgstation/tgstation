@@ -13,17 +13,16 @@ var/datum/subsystem/processing/ping/SSping
 
 /datum/subsystem/processing/ping/New()
 	NEW_SS_GLOBAL(SSping)
-
-/datum/subsystem/processing/ping/Initialize()
 	processing_list = clients
-	..()
 
 /datum/subsystem/processing/ping/stop_processing(datum/D)
-	D.processors -= src
-	//noop
+	CRASH("stop_processing called on SSping!")
+
+/datum/subsystem/processing/ping/start_processing(datum/D)
+	CRASH("stop_processing called on SSping!")
 
 /datum/subsystem/processing/ping/Recover()
-	//noop
+	..(SSping)
 
 /client/process(wait)
 	. = (world.time - connection_time < PING_BUFFER_TIME || inactivity >= (wait-1))
