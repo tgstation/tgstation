@@ -135,6 +135,7 @@
 	icon_state = "brassbox"
 	item_state = null
 	has_hinges = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 28
