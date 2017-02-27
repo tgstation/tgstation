@@ -13,9 +13,10 @@
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment)
 	weather_immunities = list("lava")
 	movement_type = FLYING
-	playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
-	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. \n Your goal is to serve the Justiciar and his servants \
-	in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"
+	playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have decent health that very gradually regenerates, do \
+	decent damage, and move at extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however.\n\
+	Your goal is to serve the Justiciar and his servants in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require \
+	opposable thumbs.</b>"
 	var/movement_delay_time //how long the fragment is slowed after being hit
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
@@ -24,6 +25,13 @@
 	if(prob(1))
 		name = "anime fragment"
 		desc = "I-it's not like I want to show you the light of the Justiciar or anything, B-BAKA!"
+
+/mob/living/simple_animal/hostile/clockwork/fragment/Life()
+	..()
+	if(movement_delay_time > world.time)
+		adjustHealth(-0.2)
+	else
+		adjustHealth(-1)
 
 /mob/living/simple_animal/hostile/clockwork/fragment/Stat()
 	..()

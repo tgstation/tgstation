@@ -186,7 +186,7 @@
 	wet = wet_setting
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
-			overlays -= wet_overlay
+			cut_overlay(wet_overlay)
 			wet_overlay = null
 		var/turf/open/floor/F = src
 		if(istype(F))
@@ -212,7 +212,7 @@
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
-				overlays -= wet_overlay
+				cut_overlay(wet_overlay)
 
 /turf/open/proc/HandleWet()
 	if(!wet)

@@ -61,8 +61,8 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 /obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does
 	return
 
-/obj/item/organ/vocal_cords/proc/handle_speech(message) //change the message
-	return message
+/obj/item/organ/vocal_cords/proc/handle_speech(message) //actually say the message
+	owner.say(message, spans = spans, sanitize = FALSE)
 
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
@@ -122,10 +122,12 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
+	owner.say(uppertext(message), spans = spans, sanitize = FALSE)
+	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	return //voice of god speaks for us
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
-	var/cooldown = voice_of_god(message, owner, spans = null, base_multiplier)
+	var/cooldown = voice_of_god(message, owner, spans, base_multiplier)
 	next_command = world.time + (cooldown * cooldown_mod)
 
 //////////////////////////////////////
@@ -145,9 +147,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		else if (is_servant_of_ratvar(user))
 			span_list = list("ratvar")
 		else
-			span_list = list("colossus","yell")
-	user.say(uppertext(message), spans = span_list, sanitize = FALSE)
-	playsound(get_turf(user), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+			span_list = list()
 
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
@@ -235,9 +235,8 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	//SLEEP
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.Sleeping(2 * power_multiplier)
+		for(var/mob/living/carbon/C in listeners)
+			C.Sleeping(2 * power_multiplier)
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))

@@ -152,10 +152,8 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 //the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
 	if(!(resistance_flags & UNACIDABLE) && acid_volume)
-
-		if(!acid_level)
-			SSacid.start_processing(src)
-			add_overlay(acid_overlay, 1)
+		SSacid.start_processing(src)
+		add_overlay(acid_overlay, TRUE)
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
@@ -174,8 +172,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
 	if(!acid_level)
-		overlays -= acid_overlay
-		priority_overlays -= acid_overlay
+		cut_overlay(acid_overlay, TRUE)
 		return 0
 
 //called when the obj is destroyed by acid.
@@ -195,7 +192,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.start_processing(src)
-		add_overlay(fire_overlay)
+		add_overlay(fire_overlay, TRUE)
 		return 1
 
 /obj/proc/fire_processing()
@@ -213,7 +210,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		overlays -= fire_overlay
+		cut_overlay(fire_overlay, TRUE)
 		SSfire_burning.stop_processing(src)
 
 /obj/proc/tesla_act(var/power)

@@ -318,6 +318,8 @@
 		"tonic",
 		"sodawater",
 		"lemon_lime",
+		"pwr_game",
+		"shamblers",
 		"sugar",
 		"orangejuice",
 		"limejuice",

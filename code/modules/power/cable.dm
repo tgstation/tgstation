@@ -500,10 +500,11 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
-		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
-		if(!do_mob(user, H, 50))
-			return
-		if(item_heal_robotic(H, user, 0, 5))
+		if(user == H)
+			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
+			if(!do_mob(user, H, 50))
+				return
+		if(item_heal_robotic(H, user, 0, 15))
 			use(1)
 		return
 	else

@@ -53,7 +53,7 @@
 
 /obj/item/weapon/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
-	item_state = "toolbox_red_old"
+	icon_state = "toolbox_red_old"
 	old = TRUE
 
 /obj/item/weapon/storage/toolbox/mechanical
@@ -72,7 +72,7 @@
 
 /obj/item/weapon/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
-	item_state = "toolbox_blue_old"
+	icon_state = "toolbox_blue_old"
 	old = TRUE
 
 /obj/item/weapon/storage/toolbox/electrical

@@ -196,7 +196,7 @@ var/bomb_set
 		update_icon_lights()
 
 /obj/machinery/nuclearbomb/proc/update_icon_interior()
-	overlays -= interior
+	cut_overlay(interior)
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
 			interior = image(icon,"panel-unscrewed")
@@ -213,7 +213,7 @@ var/bomb_set
 	add_overlay(interior)
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
-	overlays -= lights
+	cut_overlay(lights)
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
 			lights = null

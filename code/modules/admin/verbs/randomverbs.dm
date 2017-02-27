@@ -190,25 +190,6 @@
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/cmd_admin_add_random_ai_law()
-	set category = "Fun"
-	set name = "Add Random AI Law"
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes")
-		return
-	log_admin("[key_name(src)] has added a random AI law.")
-	message_admins("[key_name_admin(src)] has added a random AI law.")
-
-	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
-	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
-
-	new /datum/round_event/ion_storm(0, announce_ion_laws)
-	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
 //I use this proc for respawn character too. /N
 /proc/create_xeno(ckey)
 	if(!ckey)
@@ -439,8 +420,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
-	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
-	ion.start()
+	var/datum/round_event/ion_storm/add_law_only/ion = new()
+	ion.announceEvent = announce_ion_laws
+	ion.ionMessage = input
 
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

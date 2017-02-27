@@ -8,6 +8,7 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	taste_description = "bitterness"
 
 /datum/reagent/medicine/on_mob_life(mob/living/M)
 	current_cycle++
@@ -32,6 +33,7 @@
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	can_synth = 0
+	taste_description = "badmins"
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
@@ -70,6 +72,7 @@
 	name = "Nanites"
 	id = "nanites"
 	description = "Tiny nanomachines capable of rapid cellular regeneration."
+	taste_description = "sludge"
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
@@ -123,6 +126,7 @@
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
+	taste_description = "sludge"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
@@ -160,6 +164,7 @@
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	overdose_threshold = 30
+	taste_description = "fish"
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
@@ -264,6 +269,7 @@
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "sweetness and salt"
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
 	if(prob(33))
@@ -351,6 +357,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "ash"
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -392,6 +399,7 @@
 	reagent_state = LIQUID
 	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "acid"
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
@@ -640,6 +648,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
 	if(M.disabilities & BLIND)
@@ -733,6 +742,7 @@
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "magnets"
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
@@ -776,6 +786,7 @@
 	id = "mutadone"
 	description = "Removes jitteriness and restores genetic defects."
 	color = "#5096C8"
+	taste_description = "acid"
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
@@ -788,6 +799,7 @@
 	id = "antihol"
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
 	color = "#00B4C8"
+	taste_description = "raw egg"
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/M)
 	M.dizziness = 0
@@ -947,6 +959,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+	taste_description = "a roll of gauze"
 
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -980,6 +993,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+	taste_description = "grossness"
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
 	if(prob(80))
@@ -1116,3 +1130,11 @@
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
+
+/datum/reagent/medicine/corazone
+	// Heart attack code will not do as damage if corazone is present
+	// because it's SPACE MAGIC ASPIRIN
+	name = "Corazone"
+	id = "corazone"
+	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
+	color = "#F5F5F5"

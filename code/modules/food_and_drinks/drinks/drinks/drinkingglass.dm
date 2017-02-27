@@ -265,6 +265,14 @@
 				icon_state = "space-up_glass"
 				name = "glass of Space-up"
 				desc = "Space-up. It helps you keep your cool."
+			if("pwr_game")
+				icon_state = "glass_red"
+				name = "glass of Pwr Game"
+				desc = "Goes well with a Vlad's salad."
+			if("shamblers")
+				icon_state = "glass_red"
+				name = "glass of Shambler's Juice"
+				desc = "Mmm mm, shambly."
 			if("lemon_lime")
 				icon_state = "glass_yellow"
 				name = "glass of Lemon-Lime"
@@ -648,7 +656,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	name = "Space Cola"
 	list_reagents = list("cola" = 50)
-	
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list("nuka_cola" = 50)

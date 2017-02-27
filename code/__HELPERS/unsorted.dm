@@ -1191,7 +1191,7 @@ B --><-- A
 		return
 	A.add_overlay(I)
 	sleep(duration)
-	A.overlays -= I
+	A.cut_overlay(I)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
