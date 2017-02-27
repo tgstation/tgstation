@@ -96,10 +96,10 @@ var/list/announcement_systems = list()
 	var/message
 
 	if(message_type == "ARRIVAL" && arrivalToggle)
-		message = CompileText(arrival, user, rank)
+		message = russian_html2text(CompileText(arrival, user, rank))
 
 	else if(message_type == "NEWHEAD" && newheadToggle)
-		message = CompileText(newhead, user, rank)
+		message = russian_html2text(CompileText(newhead, user, rank))
 
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, list(SPAN_ROBOT))
@@ -134,13 +134,13 @@ var/list/announcement_systems = list()
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
-			arrival = russian_html2text(NewMessage)
+			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = strip_html_properly(stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead))
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
-			newhead = russian_html2text(NewMessage)
+			newhead = NewMessage
 
 	else if(href_list["NewheadT-Topic"])
 		newheadToggle = !newheadToggle

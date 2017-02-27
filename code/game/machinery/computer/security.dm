@@ -435,7 +435,7 @@ What a mess.*/
 								default_description += "\n[c.crimeName]\n"
 								default_description += "[c.crimeDetails]\n"
 
-						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", russian_html2text(default_description), null)
+						var/info = sanitize_russian(strip_html_properly(input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description)))
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 							printing = 1
