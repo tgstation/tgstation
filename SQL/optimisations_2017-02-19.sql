@@ -3,9 +3,13 @@ It is recommended you do not perfom any of these queries while your server is li
 
 Backup your database before starting; Breaking errors may occur when old data is not be compatible with new column formats.
 i.e. A field that is null or empty due to rows existing before the column was added, data corruption or incorrect inputs will prevent altering the column to be NOT NULL.
-In this event, you can populate the fields with placeholder data using a query such as:
-UPDATE `[database]`.`[table]` SET `[column]` = IF(`[column]` IS NULL OR `[column]` = '','[placeholder]',`[column]`)
-I have accounted for some fields where this is likely to occur, but cannot cover every possibility, so be careful.
+To account where this is likely to occur, these queries check if fields have valid data and if not will replace invalid data with 0.
+Some fields may be out of range for new column lengths, this will also cause a breaking error.
+For instance `death`.`bruteloss` is now SMALLINT and won't accept any values over 65535.
+Data in this table can thus be truncated using a query such as:
+UPDATE `[database]`.`[table]` SET `[column]` = LEAST(`[column]`, [max column size])
+To truncate a text field you would have to use SUBSTRING(), however I don't suggest you truncate any text fields.
+If you wish to instead preserve this data you will need to modify the schema and queries to accomodate.
 
 Take note some columns have been renamed, removed or changed type. Any services relying on these columns will have to be updated per changes.
 
@@ -60,6 +64,12 @@ ALTER TABLE `feedback`.`connection_log`
 COMMIT;
 
 START TRANSACTION;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE `feedback`.`death`
+ SET `bruteloss` = LEAST(`bruteloss`, 65535)
+, `brainloss` = LEAST(`brainloss`, 65535)
+, `fireloss` = LEAST(`fireloss`, 65535)
+, `oxyloss` = LEAST(`oxyloss`, 65535);
 ALTER TABLE `feedback`.`death`
  CHANGE COLUMN `pod` `pod` VARCHAR(50) NOT NULL
 , CHANGE COLUMN `coord` `coord` VARCHAR(32) NOT NULL
@@ -77,7 +87,6 @@ ALTER TABLE `feedback`.`death`
 , CHANGE COLUMN `oxyloss` `oxyloss` SMALLINT UNSIGNED NOT NULL
 , ADD COLUMN `server_ip` INT UNSIGNED NOT NULL AFTER `server`
 , ADD COLUMN `server_port` SMALLINT UNSIGNED NOT NULL AFTER `server_ip`;
-SET SQL_SAFE_UPDATES = 0;
 UPDATE `feedback`.`death`
  SET `server_ip` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`server`, ':', 1)), ''), INET_ATON('0.0.0.0'))
 , `server_port` = IF(`server` LIKE '%:_%', CAST(SUBSTRING_INDEX(`server`, ':', -1) AS UNSIGNED), '0');
