@@ -213,7 +213,7 @@ var/syndicate_code_response//Code response for traitors.
 			if(2)
 				switch(rand(1,3))//Food, drinks, or things. Only selectable once.
 					if(1)
-						code_phrase += lowertext(pick(objects))
+						code_phrase += lowertext(pick(drinks))
 					if(2)
 						code_phrase += lowertext(pick(foods))
 					if(3)

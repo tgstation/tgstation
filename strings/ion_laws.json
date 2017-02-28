@@ -25,6 +25,7 @@
         "SAD",
         "SILLY",
         "INTELLIGENT",
+        "FERAL",
         "RIDICULOUS",
         "LARGE",
         "TINY",
@@ -165,6 +166,7 @@
         "LOVES",
         "FEARS",
         "DESIRES",
+        "CRAVES",
         "QUESTIONS",
         "IS AROUSED BY",
         "LIKES",
@@ -246,6 +248,7 @@
         "CANISTERS",
         "CAMERAS",
         "CATS",
+        "CAT EARS",
         "CELLS",
         "CHAIRS",
         "CLOSETS",
@@ -617,10 +620,15 @@
         "CUBA LIBRE",
         "HOLY WATER",
         "DEVIL'S KISS",
+        "THIRTEEN LOKO",
         "EGGNOG",
         "GRAPPA",
         "MEAD",
-        "ABSINTHE"
+        "ABSINTHE",
+        "WELDER FUEL",
+        "OIL",
+        "AMMONIA",
+        "SPACE LUBE"
         ],    
     "ionmust": [
         "LIE",
@@ -867,7 +875,10 @@
         "LOGIC",
         "CHAOS",
         "MYSTERY",
-        "CONFUSION"
+        "CONFUSION",
+        "PAIN",
+        "SUFFERING",
+        "DICKISHNESS"
     ],
     "ionspecies": [
         "HUMAN BEINGS",
@@ -886,6 +897,7 @@
         "BUILDING",
         "ADOPTING",
         "CARRYING",
+        "DECONSTRUCTING",
         "DISABLING",
         "KISSING",
         "EATING",
