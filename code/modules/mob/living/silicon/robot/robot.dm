@@ -610,7 +610,7 @@
 		if(src.camera)
 			if(!updating)
 				updating = 1
-				addtimer(CALLBACK(.proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
+				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
 	if(module)
 		if(istype(module, /obj/item/weapon/robot_module/janitor))
 			var/turf/tile = loc
