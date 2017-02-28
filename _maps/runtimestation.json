@@ -2,7 +2,7 @@
     "map_name": "Runtime Station",
     "map_path": "map_files/debug",
     "map_file": "runtimestation.dmm",
-    "minetype": "Lavaland",
+    "minetype": "lavaland",
     "transition_config": "default",
     "titlescreen_icon_state": "title"
 }

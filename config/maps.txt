@@ -5,7 +5,7 @@ Lines not inside map blocks are also ignored
 Duplicated entries use the latter one.
 All whitespace at the start and end of lines is ignored. (including indentation, thats just for show)
 Format:
-#map [map name] (name of .dm file in _maps folder without the .dm part)
+#map [map name] (name of .json file in _maps folder without the .json part)
 	minplayers [number] (0 or less disables this requirement)
 	maxplayers [number] (0 or less disables this requirement)
 	default (The last map with this defined will get all votes of players who have not explicitly voted for a map)
