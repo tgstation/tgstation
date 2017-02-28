@@ -285,11 +285,11 @@
 	reset_cooldowns()
 
 /datum/excited_group/process()
-	breakdown_cooldown++
-	dismantle_cooldown++
-	if(breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
+	var/bc = ++breakdown_cooldown
+	var/dc = ++dismantle_cooldown
+	if(bc >= EXCITED_GROUP_BREAKDOWN_CYCLES)
 		self_breakdown()
-	else if(dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
+	else if(dc >= EXCITED_GROUP_DISMANTLE_CYCLES)
 		dismantle()
 
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
