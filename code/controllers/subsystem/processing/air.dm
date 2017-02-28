@@ -81,7 +81,7 @@ var/datum/subsystem/processing/air/SSair
 	delegate = deleg;\
 	..(resumed, argument);\
 	cost_var = MC_AVERAGE(cost_var, TICK_DELTA_TO_MS(world.tick_usage - timer));\
-	if(state != SS_RUNNING) { return; }\
+	if(state != SS_RUNNING) return;\
 	resumed = FALSE;\
 	currentpart = nextpart;
 
