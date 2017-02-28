@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - tweak: "Communications console can also check the ID the user is wearing."
