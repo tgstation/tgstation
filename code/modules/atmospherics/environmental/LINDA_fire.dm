@@ -48,7 +48,7 @@
 	mouse_opacity = 0
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = FLY_LAYER
 	luminosity = 3
 
 	var/volume = 125
