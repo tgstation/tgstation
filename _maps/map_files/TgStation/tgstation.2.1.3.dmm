@@ -29764,7 +29764,7 @@
 	dir = 4
 	},
 /turf/open/floor/bluegrid,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bos" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -29865,7 +29865,7 @@
 	dir = 8
 	},
 /turf/closed/wall,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "boD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -29876,13 +29876,13 @@
 	dir = 4
 	},
 /turf/open/floor/bluegrid,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "boE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/bluegrid,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "boF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29905,7 +29905,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "boH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -29962,7 +29962,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "boM" = (
 /turf/open/floor/plasteel/white/corner{
 	dir = 2
@@ -30521,7 +30521,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bpT" = (
 /obj/structure/table,
 /obj/item/device/mmi,
@@ -30571,7 +30571,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bpW" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -30611,7 +30611,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bpZ" = (
 /obj/item/weapon/folder/white,
 /obj/structure/table,
@@ -32024,21 +32024,21 @@
 /obj/structure/table,
 /obj/item/weapon/crowbar/large,
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bsP" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bsQ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bsR" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/assembly/robotics)
+/area/assembly/chargebay)
 "bsS" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/bodybags,
@@ -104423,8 +104423,8 @@ bdP
 bnc
 boC
 bpV
-cEn
-cEo
+bdP
+bdP
 bto
 buL
 bvB
@@ -104671,7 +104671,7 @@ aZc
 baT
 bcj
 beC
-cEg
+aYV
 bfT
 biG
 bkg
@@ -104681,7 +104681,7 @@ bop
 bor
 bpS
 bsO
-bfV
+buh
 btn
 buH
 byf
@@ -104928,7 +104928,7 @@ aYV
 bba
 aXq
 aYV
-cEh
+aYV
 bht
 biI
 bkh
@@ -104938,7 +104938,7 @@ blw
 boE
 bpY
 bsQ
-bfV
+buh
 btx
 buU
 byf
@@ -105185,7 +105185,7 @@ bar
 aYV
 aXq
 aYV
-cEi
+aYV
 bfT
 biH
 bkh
@@ -105195,7 +105195,7 @@ blv
 boD
 bpY
 bsP
-bfV
+buh
 btw
 buT
 byf
@@ -105442,7 +105442,7 @@ aFu
 bcv
 aXq
 aYV
-cEj
+bfU
 bhu
 biJ
 bhM
@@ -105450,9 +105450,9 @@ bjW
 blx
 bne
 boL
-cEl
+bqb
 bsR
-bfV
+buh
 buo
 bxd
 byf
@@ -105699,7 +105699,7 @@ aFu
 aYV
 cBk
 aYV
-cEk
+bfU
 bhu
 biJ
 bhK
@@ -105707,9 +105707,9 @@ bjP
 blt
 bnd
 boG
-cEm
+bqa
 bsR
-bfV
+buh
 buo
 bvb
 byh
