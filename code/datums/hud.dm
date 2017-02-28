@@ -48,6 +48,7 @@ var/datum/atom_hud/huds = list( \
 		return
 	for(var/i in hud_icons)
 		M.client.images -= A.hud_list[i]
+		M.client.hidden_images -= A.hud_list[i]
 
 /datum/atom_hud/proc/add_hud_to(mob/M)
 	if(!M)
@@ -66,9 +67,15 @@ var/datum/atom_hud/huds = list( \
 /datum/atom_hud/proc/add_to_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
 	if(!M || !M.client || !A)
 		return
+	var/in_cone = FALSE
+	if(A in cone(M, OPPOSITE_DIR(M.dir), view(10, M)))
+		in_cone = TRUE
 	for(var/i in hud_icons)
 		if(A.hud_list[i])
-			M.client.images |= A.hud_list[i]
+			if(in_cone)
+				M.client.hidden_images |= A.hud_list[i]
+			else
+				M.client.images |= A.hud_list[i]
 
 //MOB PROCS
 /mob/proc/reload_huds()
