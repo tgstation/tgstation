@@ -19,6 +19,7 @@ var/time_last_changed_position = 0
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
+	var/prioritycount = 0 // we don't want 500 prioritized jobs
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -202,7 +203,10 @@ var/time_last_changed_position = 0
 						if(job in ticker.prioritized_jobs)
 							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
-							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
+							if(prioritycount < 5)
+								dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
+							else
+								dat += "Denied"
 					else
 						dat += "Prioritize"
 
@@ -521,9 +525,11 @@ var/time_last_changed_position = 0
 				var/priority = TRUE
 				if(j in ticker.prioritized_jobs)
 					ticker.prioritized_jobs -= j
+					prioritycount--
 					priority = FALSE
 				else
 					ticker.prioritized_jobs += j
+					prioritycount++
 				usr << "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
