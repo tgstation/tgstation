@@ -10,7 +10,7 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/pass/IsAvailable()
-	if(!owner || !owner.get_empty_held_indexes())
+	if(!owner.get_empty_held_indexes())
 		return
 	return ..()
 

@@ -77,7 +77,47 @@
 	icon_state = "dark_bead"
 	flags = NODROP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE | INDESTRUCTIBLE
+	var/psi_cost //How much psi we're using right now
 	var/datum/umbrage/linked_umbrage
+
+/obj/item/weapon/umbral_tendrils/afterattack(atom/target, mob/living/user, proximity)
+	var/used = FALSE
+	switch(user.a_intent)
+		if("help") //Mobility and movement
+		if("disarm") //Object and item interaction
+		if("grab") //Grabbing things from a distance
+		if("harm") //Disabling and hurting oter people
+			if(isliving(target))
+				used = disable_victim(user, target)
+	if(used)
+		linked_umbrage.use_psi(psi_cost)
+		qdel(src)
+
+/obj/item/weapon/umbral_tendrils/proc/disable_victim(mob/living/user, mob/living/target)
+	if(!linked_umbrage.has_psi(40))
+		user << "<span class='warning'>You need at least 40 psi to disable someone!</span>"
+		return
+	user.visible_message("<span class='warning'>[user] swings \his [src] in an arc towards [target]!</span>", "<span class='notice'>You swing your tendrils towards [target]!</span>")
+	playsound(user, 'sound/magic/Tail_swing.ogg', 50, 1)
+	sleep(0.5)
+	if(!target in view(7, user))
+		user.visible_message("<span class='warning'>[user]'s [src] bounce harmlessly off of the floor!</span>", "<span class='warning'>[target] left your line of sight!</span>")
+		playsound(user, 'sound/weapons/Genhit.ogg', 50, 1)
+		return
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.visible_message("<span class='warning'>[user]'s [src] slam into [C]'s stomach, knocking them over!</span>", "<span class='userdanger'>You feel something heavy slam into your gut, and the wind goes out of you!</span>")
+		playsound(C, "swing_hit", 50, 1)
+		C.Weaken(4)
+		C.silent += 8
+	else if(issilicon(target))
+		var/mob/living/silicon/S = target
+		S.visible_message("<span class='warning'>[user]'s [src] slam into [S]'s chassis, leaving a sizable dent!</span>", "<span class='userdanger'>Heavy percussive maintenance detected. Motor circuits rebooting.</span>")
+		playsound(S, 'sound/effects/bang.ogg', 75, 1)
+		S.adjustBruteLoss(10)
+		S.Stun(3)
+	psi_cost = 40
+	return 1
 
 
 //Psionic barrier: Created during Divulge. Has a regenerating health pool and protects the umbrage from harm.

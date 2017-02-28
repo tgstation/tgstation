@@ -42,6 +42,9 @@
 		give_ability(initial(U.id), 1)
 	return TRUE
 
+/datum/umbrage/proc/has_psi(psi_amount)
+	return psi >= psi_amount
+
 /datum/umbrage/proc/use_psi(used_psi)
 	cycle_progress = 0 //Reset regenerating psi when we use more
 	psi = max(0, min(psi - used_psi, max_psi))

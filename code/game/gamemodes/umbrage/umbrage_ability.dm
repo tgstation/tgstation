@@ -13,7 +13,10 @@
 	var/successful_activation = 0
 	if(!IsAvailable())
 		return
-	successful_activation = Activate()
+	if(!active)
+		successful_activation = Activate()
+	else
+		successful_activation = Deactivate()
 	if(successful_activation)
 		var/datum/umbrage/U = linked_umbrage
 		if(U)
