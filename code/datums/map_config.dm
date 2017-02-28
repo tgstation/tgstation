@@ -9,7 +9,7 @@
     var/map_path = "map_files/TgStation"
     var/map_file = "tgstation.2.1.3.dmm"
 
-    var/minetype = "Lavaland"
+    var/minetype = "lavaland"
 
     var/titlescreen_icon_state = "title"
 
