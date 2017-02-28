@@ -58,27 +58,28 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
-	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
-		login_music = 'sound/ambience/clown.ogg'
-	else
-		var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
-		login_music = pick(music)
 
 /datum/subsystem/ticker/Initialize(timeofday)
+	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
+	login_music = pick(music)
+	
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
 		syndicate_code_response	= generate_code_phrase()
 	..()
 	start_at = world.time + (config.lobby_countdown * 10)
-	world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
-	world << "Please set up your character and select \"Ready\". The game will start in about [config.lobby_countdown] seconds."
-	current_state = GAME_STATE_PREGAME
-	for(var/client/C in clients)
-		window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 
 /datum/subsystem/ticker/fire()
 	switch(current_state)
+		if(GAME_STATE_STARTUP)
+			if(Master.initializations_finished_with_no_players_logged_in)
+				start_at = world.time + (config.lobby_countdown * 10)
+			for(var/client/C in clients)
+				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
+			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
+			current_state = GAME_STATE_PREGAME
+			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
 			if(isnull(timeLeft))

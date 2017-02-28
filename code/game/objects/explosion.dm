@@ -163,6 +163,7 @@ var/explosionid = 1
 				I.throw_at(throw_at, throw_range, I.throw_speed)
 
 		if(TICK_CHECK)
+			stoplag()
 			var/circumference = (PI * init_dist * 2) + 8 //+8 to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
 				for(var/Unexplode in exploded_this_tick)
