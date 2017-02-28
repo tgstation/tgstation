@@ -270,9 +270,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
-				for(var/obj/machinery/libraryscanner/S in range(9))
-					scanner = S
-					break
+				findscanner(9)
 			if(!scanner)
 				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
@@ -289,9 +287,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(6)
 			dat += "<h3>Post Title to Newscaster</h3>"
 			if(!scanner)
-				for(var/obj/machinery/libraryscanner/S in range(9))
-					scanner = S
-					break
+				scanner = findscanner(9)
 			if(!scanner)
 				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
@@ -316,6 +312,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/findscanner(viewrange)
+	for(var/obj/machinery/libraryscanner/S in range(viewrange))
+		return S
+	return null
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
 	var/spook = pick("blood", "brass")
