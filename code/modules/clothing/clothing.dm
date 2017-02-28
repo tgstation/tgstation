@@ -360,8 +360,7 @@ BLIND     // can't see anything
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
-	var/dropped_before = TRUE
-
+	var/dropped_twice = FALSE
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -378,22 +377,22 @@ BLIND     // can't see anything
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
-	..()
+	. = ..()
 	if(offset && slot_flags & slotdefine2slotbit(slot))
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
 		user.update_inv_shoes()
-		dropped_before = FALSE
+		dropped_twice = TRUE
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
-	dropped_before = TRUE
+	dropped_twice = FALSE
 	user.pixel_y -= offset
 	worn_y_dimension = 32
 
 /obj/item/clothing/shoes/dropped(mob/user)
-	..()
-	if(offset && !dropped_before)
-		restore_offsets()
+	if(offset && dropped_twice)
+		restore_offsets(user)
+	. = ..()
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaging = TRUE)
 	..()

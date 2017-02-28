@@ -215,3 +215,18 @@
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
 	put_on_delay = 50
+
+/obj/item/clothing/shoes/heels
+	name = "black thigh-high heels"
+	desc = "These look very hard to walk in."
+	icon_state = "bheels"
+	offset = 1
+
+/obj/item/clothing/shoes/heels/step_action() //the damascus steel slippery slope is lined with shards of byzantine glass
+	var/mob/living/carbon/human/C = loc
+	var/obj/item/bodypart/right = C.get_bodypart("r_leg")
+	var/obj/item/bodypart/left = C.get_bodypart("l_leg")
+	if(istype(C) && C.m_intent == MOVE_INTENT_RUN && prob(25))
+		right.dismember(BRUTE)
+		left.dismember(BRUTE)
+
