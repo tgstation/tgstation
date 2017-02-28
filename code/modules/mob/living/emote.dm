@@ -459,6 +459,7 @@
 	message = "spins around dizzily!"
 
 /datum/emote/living/spin/run_emote(mob/user)
+	user.client.move_delay = (user.movement_delay() * 2) + world.time
 	user.spin(20, 1)
 	if(istype(user, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = user
