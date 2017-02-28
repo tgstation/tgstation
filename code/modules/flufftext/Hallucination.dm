@@ -23,9 +23,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		return
 
 	//Least obvious
-	var/list/minor = list("sounds"=25,"bolts_minor"=5,"whispers"=15,"message"=10)
+	var/list/minor = list("sounds"=25,"bolts_minor"=5,"whispers"=15,"message"=10,"hudscrew"=15)
 	//Something's wrong here
-	var/list/medium = list("hudscrew"=15,"items"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15,"self_delusion"=10)
+	var/list/medium = list("fake_alert"=15,"items"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15,"self_delusion"=10)
 	//AAAAH
 	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20,"koolaid"=10)
 
@@ -785,9 +785,56 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		if("hudscrew")
 			//Screwy HUD
 			//src << "Screwy HUD"
-			hal_screwyhud = pick(1,2,3,3,4,4)
-			spawn(rand(100,250))
-				hal_screwyhud = 0
+			hal_screwyhud = pick(1,2,3,3,4,4,5)
+			sleep(rand(100,250))
+			hal_screwyhud = 0
+
+		if("fake_alert")
+			var/alert_type = pick("oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
+			switch(alert_type)
+				if("oxy")
+					throw_alert("oxy", /obj/screen/alert/oxy, override = TRUE)
+				if("not_enough_tox")
+					throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox, override = TRUE)
+				if("not_enough_co2")
+					throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2, override = TRUE)
+				if("too_much_oxy")
+					throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy, override = TRUE)
+				if("too_much_co2")
+					throw_alert("too_much_co2", /obj/screen/alert/too_much_co2, override = TRUE)
+				if("tox_in_air")
+					throw_alert("tox_in_air", /obj/screen/alert/tox_in_air, override = TRUE)
+				if("nutrition")
+					if(prob(50))
+						throw_alert("nutrition", /obj/screen/alert/fat, override = TRUE)
+					else
+						throw_alert("nutrition", /obj/screen/alert/starving, override = TRUE)
+				if("weightless")
+					throw_alert("weightless", /obj/screen/alert/weightless, override = TRUE)
+				if("fire")
+					throw_alert("fire", /obj/screen/alert/fire, override = TRUE)
+				if("temp")
+					if(prob(50))
+						throw_alert("temp", /obj/screen/alert/hot, 3, override = TRUE)
+					else
+						throw_alert("temp", /obj/screen/alert/cold, 3, override = TRUE)
+				if("pressure")
+					if(prob(50))
+						throw_alert("pressure", /obj/screen/alert/highpressure, 2, override = TRUE)
+					else
+						throw_alert("pressure", /obj/screen/alert/lowpressure, 2, override = TRUE)
+				//BEEP BOOP I AM A ROBOT
+				if("newlaw")
+					throw_alert("newlaw", /obj/screen/alert/newlaw, override = TRUE)
+				if("locked")
+					throw_alert("locked", /obj/screen/alert/locked, override = TRUE)
+				if("hacked")
+					throw_alert("hacked", /obj/screen/alert/hacked, override = TRUE)
+				if("charge")
+					throw_alert("charge",/obj/screen/alert/emptycell, override = TRUE)
+			sleep(rand(100,200))
+			clear_alert(alert_type, clear_override = TRUE)
+
 		if("items")
 			//Strange items
 			//src << "Traitor Items"
