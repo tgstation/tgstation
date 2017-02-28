@@ -27618,6 +27618,12 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	density = 0;
+	layer = 3;
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "bkp" = (
@@ -28234,6 +28240,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
 "blw" = (
@@ -30337,11 +30344,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/sortjunction{
-	dir = 2;
-	icon_state = "pipe-j2s";
-	sortType = 14
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -30350,6 +30352,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bpR" = (
@@ -61514,6 +61517,39 @@
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
 	},
+/area/assembly/robotics)
+"cDb" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/sortjunction{
+	dir = 2;
+	icon_state = "pipe-j2s";
+	sortType = 14
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cDc" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/assembly/robotics)
+"cDd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/window/eastright{
+	name = "Robotics Surgery";
+	req_access_txt = "29"
+	},
+/turf/open/floor/plasteel/black,
 /area/assembly/robotics)
 
 (1,1,1) = {"
@@ -103280,7 +103316,7 @@ baR
 bcb
 bdl
 bdO
-bPv
+cDb
 bgo
 bPv
 bPv
@@ -104829,7 +104865,7 @@ bjP
 blt
 bfT
 boG
-bpY
+cDd
 cCZ
 box
 buo
@@ -106626,7 +106662,7 @@ biQ
 biL
 blC
 bou
-bou
+cDc
 bou
 cCY
 biL
