@@ -148,11 +148,11 @@ var/datum/subsystem/processing/air/SSair
 		else
 			CRASH("SSair/start_processing: Invalid list_type: [list_type]")
 
-	if(!has_processors)
-		D.processors = list()
 	if(has_air_processor)
 		D.processors[src] += list_type
-	else
+	else 
+		if(!has_processors)
+			D.processors = list()
 		D.processors[src] = list(list_type)
 
 /datum/subsystem/processing/air/stop_processing(datum/D, list_type)
@@ -172,7 +172,7 @@ var/datum/subsystem/processing/air/SSair
 			atmos_machinery -= D
 		if(SSAIR_ACTIVETURFS)
 			var/turf/open/T = D
-			src.active_turfs -= T
+			active_turfs -= T
 			if(istype(T))
 				T.excited = 0
 				if(T.excited_group)
