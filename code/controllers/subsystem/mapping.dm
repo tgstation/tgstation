@@ -25,7 +25,7 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
 	if(!previous_map_config)
-		previous_map_config = new("previous_map.json")
+		previous_map_config = new("previous_map.json", delete_after = TRUE)
 		if(previous_map_config.defaulted)
 			previous_map_config = null
 	if(!config)

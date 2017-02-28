@@ -30,10 +30,14 @@
     var/config_min_users = 0
     var/voteweight = 1
 
-/datum/map_config/New(filename = "next_map.json", default_to_box)
+/datum/map_config/New(filename = "next_map.json", default_to_box, delete_after)
     if(default_to_box)
         return
+    LoadConfig(filename)
+    if(delete_after)
+        fdel(filename)
 
+/datum/map_config/proc/LoadConfig(filename)
     var/json = file(filename)
     if(!json)
         log_world("Could not open map_config: [filename]")
@@ -71,8 +75,6 @@
         transition_config[TransitionStringToEnum(I)] = TransitionStringToEnum(jtcl[I])
     
     defaulted = FALSE
-
-    return TRUE
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) log_world(X + "missing from json!")
 /datum/map_config/proc/ValidateJSON(list/json)
