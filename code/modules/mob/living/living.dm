@@ -915,3 +915,12 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
+
+/mob/living/verb/request_replacement()
+	set name = "Ghost Replacement"
+	set category = "OOC"
+
+	if(alert(src, "Do you want to offer control of your mob to dead players?", "Ghost Replacement", "Yes", "No") == "No")
+		return
+
+	offer_control(src)

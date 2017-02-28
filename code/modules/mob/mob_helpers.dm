@@ -454,6 +454,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 		theghost = pick(candidates)
 		M << "Your mob has been taken over by a ghost!"
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
+		M.attack_log += "\[[time_stamp()]\] [key_name(theghost)] has taken control of [key_name(M)]"
 		M.ghostize(0)
 		M.key = theghost.key
 		return TRUE

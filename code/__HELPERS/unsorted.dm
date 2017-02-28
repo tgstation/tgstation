@@ -1,5 +1,3 @@
-
-
 /*
  * A large number of misc global procs.
  */
