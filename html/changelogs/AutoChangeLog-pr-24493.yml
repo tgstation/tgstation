@@ -1,0 +1,4 @@
+author: "Supermichael777"
+delete-after: True
+changes: 
+  - tweak: "The button now has a five second delay when detonating bombs"
