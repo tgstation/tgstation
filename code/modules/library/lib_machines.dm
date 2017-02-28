@@ -477,7 +477,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			say("Printer currently unavailable, please wait a moment.")
 	if(href_list["printposter"])
 		if(cooldown < world.time)
-			new /obj/item/weapon/poster/legit(src.loc)
+			new /obj/item/weapon/poster/random_official(src.loc)
 			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
