@@ -216,7 +216,7 @@
 				remove = 0
 
 	if((atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2) || (!our_excited_group && remove == 1))
-		SSair.stop_processing(src, SSAIR_ACTIVETURFS)
+		return PROCESS_KILL
 
 /turf/open/proc/share_air(turf/open/T, fire_count, adjacent_turfs_length)
 	if(T.current_cycle < fire_count)
