@@ -116,9 +116,6 @@ var/datum/subsystem/mapping/SSmapping
 	TryLoadZ(config.GetFullMapPath(), FailedZs, 1)
 	INIT_ANNOUNCE("Loaded station!")
 
-	TryLoadZ("_maps/map_files/generic/SpaceDock.dmm", FailedZs)
-	TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs)
-
 	INIT_ANNOUNCE("Loading mining level...")
 	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs)
 	INIT_ANNOUNCE("Loaded mining level!")
@@ -135,8 +132,6 @@ var/datum/subsystem/mapping/SSmapping
 			msg += ", [I]"
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
-	else
-		INIT_ANNOUNCE("Done loading map!")
 #undef INIT_ANNOUNCE
 
 /datum/subsystem/mapping/proc/maprotate()
