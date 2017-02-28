@@ -18,7 +18,7 @@
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 	
-	if(client && SSmapping.previous_map_config && ticker.state == GAME_STATE_STARTUP)
+	if(client && !SSmapping.previous_map_config.defaulted && ticker.state == GAME_STATE_STARTUP)
 		testing("Found oldie")
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
@@ -75,8 +75,7 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
-		var/datum/map_config/cached = SSmapping.config 
-		stat("Map:", cached ? cached.map_name : "Loading...")
+		stat("Map:", SSmapping.config.map_name)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = ticker.GetTimeLeft()

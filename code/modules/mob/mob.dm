@@ -546,7 +546,7 @@ var/next_mob_id = 0
 	if(statpanel("Status"))
 		if (client)
 			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config ? SSmapping.config.map_name : "Loading"]")
+		stat(null, "Map: [SSmapping.config.map_name]")
 		var/datum/map_config/cached = SSmapping.next_map_config
 		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
