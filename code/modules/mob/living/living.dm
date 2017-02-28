@@ -444,7 +444,8 @@
 		s_active.close(src)
 
 	for(var/mob/M in oview(src))
-		M.update_vision_cone()
+		if(M.client && (src in cone(M, OPPOSITE_DIR(M.dir), view(10, M))))
+			M.update_vision_cone()
 
 	update_vision_cone()
 
