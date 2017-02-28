@@ -38,6 +38,10 @@
         fdel(filename)
 
 /datum/map_config/proc/LoadConfig(filename)
+    if(!fexists(filename))
+        log_world("map_config not found: [filename]")
+        return
+
     var/json = file(filename)
     if(!json)
         log_world("Could not open map_config: [filename]")
