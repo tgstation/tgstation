@@ -254,8 +254,7 @@
 	if(current_construction_state && current_construction_state.examine_message)
 		user << current_construction_state.examine_message
 
-/obj/attack_hand(mob/user)
-	. = ..()
+/obj/attack_hand(mob/user)	//obj/item doesn't call this so we're fine
 	HandConstruction(user)
 
 /obj/item/attack_self(mob/user)
