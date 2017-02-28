@@ -125,7 +125,7 @@ var/datum/subsystem/processing/air/SSair
 		if(SSAIR_ACTIVETURFS)	//except this
 			var/turf/open/T = D
 			if(istype(T) && T.air)
-				T.excited = 1
+				T.excited = TRUE
 				active_turfs[T] = T
 				if(add_to_active_block_changes && T.excited_group)
 					T.excited_group.garbage_collect()
