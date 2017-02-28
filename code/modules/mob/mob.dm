@@ -464,10 +464,17 @@ var/next_mob_id = 0
 	reset_perspective(null)
 	unset_machine()
 
-//suppress the .click macro so people can't use it to identify the location of items or aimbot
-/mob/verb/ClickSubstitute()
-	set hidden = 1
+//suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
+/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".click"
+	set hidden = TRUE
+	set category = null
+	return
+
+/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+	set name = ".dblclick"
+	set hidden = TRUE
+	set category = null
 	return
 
 /mob/Topic(href, href_list)
