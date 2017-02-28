@@ -216,7 +216,7 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	SSair.start_processing(target, SSAIR_ACTIVETURFS)
+	SSair.start_processing(target, SSAIR_ACTIVETURFS, FALSE)
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()

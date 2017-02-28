@@ -120,4 +120,4 @@
 	G.parse_gas_string(text)
 
 	air.merge(G)
-	SSair.start_processing(src, SSAIR_ACTIVETURFS)
+	SSair.start_processing(src, SSAIR_ACTIVETURFS, FALSE)

@@ -388,7 +388,7 @@
 		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 	else //Solid but neighbor is open
 		temperature_share_open_to_solid(other)
-	SSair.start_processing(src, SSAIR_ACTIVETURFS)
+	SSair.start_processing(src, SSAIR_ACTIVETURFS, FALSE)
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
