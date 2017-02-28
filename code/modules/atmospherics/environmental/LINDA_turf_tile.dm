@@ -276,7 +276,7 @@
 	var/dismantle_cooldown = 0
 
 /datum/excited_group/New()
-	SSair.excited_groups += src
+	SSair.start_processing(src, SSAIR_EXCITEDGROUPS)
 
 /datum/excited_group/proc/add_turf(turf/open/T)
 	turf_list += T
