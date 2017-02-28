@@ -110,3 +110,13 @@ The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple/green/hidden
 	level = 1
+
+/obj/machinery/atmospherics/pipe/simple/orange
+	pipe_color=rgb(255,127,39)
+	color=rgb(255,127,39)
+
+/obj/machinery/atmospherics/pipe/simple/orange/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/simple/orange/hidden
+	level = 1

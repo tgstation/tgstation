@@ -149,7 +149,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
-		overlays = O.overlays
+		copy_overlays(O)
 		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
 		add_overlay(googly_eyes)
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))

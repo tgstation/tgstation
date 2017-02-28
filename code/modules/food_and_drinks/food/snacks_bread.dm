@@ -3,6 +3,7 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	volume = 80
 	slices_num = 5
+	tastes = list("bread" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
@@ -22,6 +23,7 @@
 	list_reagents = list("nutriment" = 10)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/bread
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/plain
+	tastes = list("bread" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/plain
 	name = "bread slice"
@@ -36,6 +38,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
 	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	tastes = list("bread" = 10, "meat" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	name = "meatbread slice"
@@ -49,6 +52,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
 	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	tastes = list("bread" = 10, "acid" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
 	name = "xenomeatbread slice"
@@ -64,6 +68,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
 	list_reagents = list("nutriment" = 30, "toxin" = 15, "vitamin" = 5)
+	tastes = list("bread" = 10, "cobwebs" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
 	name = "spider meat bread slice"
@@ -79,6 +84,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
 	bonus_reagents = list("nutriment" = 5, "banana" = 20)
 	list_reagents = list("nutriment" = 20, "banana" = 20)
+	tastes = list("bread" = 10) // bananjuice will also flavour
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
@@ -95,6 +101,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
 	list_reagents = list("nutriment" = 20, "vitamin" = 5)
+	tastes = list("bread" = 10, "tofu" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
 	name = "tofubread slice"
@@ -110,6 +117,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/creamcheese
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
 	list_reagents = list("nutriment" = 20, "vitamin" = 5)
+	tastes = list("bread" = 10, "cheese" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/creamcheese
 	name = "cream cheese bread slice"
@@ -125,6 +133,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/mimana
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
 	list_reagents = list("nutriment" = 20, "mutetoxin" = 5, "nothing" = 5, "vitamin" = 5)
+	tastes = list("bread" = 10, "silence" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/mimana
 	name = "mimana bread slice"
@@ -147,6 +156,7 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("bread" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"

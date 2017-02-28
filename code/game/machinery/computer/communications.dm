@@ -64,11 +64,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		if("login")
 			var/mob/M = usr
+
 			var/obj/item/weapon/card/id/I = M.get_active_held_item()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
-			if (I && istype(I))
+			if(!istype(I))
+				I = M.get_idcard()
+
+			if(I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
 					auth_id = "[I.registered_name] ([I.assignment])"

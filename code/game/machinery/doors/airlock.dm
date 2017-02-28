@@ -81,20 +81,13 @@ var/list/airlock_overlays = list()
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
-	var/image/old_frame_overlay //keep those in order to prevent unnecessary updating
-	var/image/old_filling_overlay
-	var/image/old_lights_overlay
-	var/image/old_panel_overlay
-	var/image/old_weld_overlay
-	var/image/old_sparks_overlay
-	var/image/old_dam_overlay
-
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 
 	explosion_block = 1
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 /obj/machinery/door/airlock/New()
 	..()
@@ -115,6 +108,10 @@ var/list/airlock_overlays = list()
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/Initialize()
 	..()
@@ -452,35 +449,14 @@ var/list/airlock_overlays = list()
 				else
 					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
-	//doesn't use cut_overlays() for performance reasons
-	if(frame_overlay != old_frame_overlay)
-		overlays -= old_frame_overlay
-		add_overlay(frame_overlay)
-		old_frame_overlay = frame_overlay
-	if(filling_overlay != old_filling_overlay)
-		overlays -= old_filling_overlay
-		add_overlay(filling_overlay)
-		old_filling_overlay = filling_overlay
-	if(lights_overlay != old_lights_overlay)
-		overlays -= old_lights_overlay
-		add_overlay(lights_overlay)
-		old_lights_overlay = lights_overlay
-	if(panel_overlay != old_panel_overlay)
-		overlays -= old_panel_overlay
-		add_overlay(panel_overlay)
-		old_panel_overlay = panel_overlay
-	if(weld_overlay != old_weld_overlay)
-		overlays -= old_weld_overlay
-		add_overlay(weld_overlay)
-		old_weld_overlay = weld_overlay
-	if(sparks_overlay != old_sparks_overlay)
-		overlays -= old_sparks_overlay
-		add_overlay(sparks_overlay)
-		old_sparks_overlay = sparks_overlay
-	if(damag_overlay != old_dam_overlay)
-		overlays -= old_dam_overlay
-		add_overlay(damag_overlay)
-		old_dam_overlay = damag_overlay
+	cut_overlays()
+	add_overlay(frame_overlay)
+	add_overlay(filling_overlay)
+	add_overlay(lights_overlay)
+	add_overlay(panel_overlay)
+	add_overlay(weld_overlay)
+	add_overlay(sparks_overlay)
+	add_overlay(damag_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/iconkey = "[icon_state][icon_file]"
@@ -788,10 +764,10 @@ var/list/airlock_overlays = list()
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
 						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
-					else if(src.secondsElectrified==-1)
-						src.secondsElectrified = 0
-					else if(src.secondsElectrified>0)
-						src.secondsElectrified = 0
+					else if(secondsElectrified==-1)
+						set_electrified(0)
+					else if(secondsElectrified>0)
+						set_electrified(0)
 
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
@@ -874,12 +850,12 @@ var/list/airlock_overlays = list()
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
-						src.secondsElectrified = 30
+						set_electrified(30)
 						spawn(10)
 							while (src.secondsElectrified>0)
 								src.secondsElectrified-=1
 								if(src.secondsElectrified<0)
-									src.secondsElectrified = 0
+									set_electrified(0)
 								src.updateUsrDialog()
 								sleep(10)
 				if(6)
@@ -893,7 +869,7 @@ var/list/airlock_overlays = list()
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
-						src.secondsElectrified = -1
+						set_electrified(-1)
 
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
@@ -1446,7 +1422,7 @@ var/list/airlock_overlays = list()
 		safe = FALSE //DOOR CRUSH
 		close()
 		bolt() //Bolt it!
-		secondsElectrified = -1  //Shock it!
+		set_electrified(-1)  //Shock it!
 		if(origin)
 			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
 
@@ -1455,7 +1431,7 @@ var/list/airlock_overlays = list()
 	// Must be powered and have working AI wire.
 	if(canAIControl(src) && !stat)
 		unbolt()
-		secondsElectrified = 0
+		set_electrified(0)
 		open()
 		safe = TRUE
 
@@ -1468,6 +1444,9 @@ var/list/airlock_overlays = list()
 		wires.cut_all()
 		update_icon()
 
+/obj/machinery/door/airlock/proc/set_electrified(seconds)
+	secondsElectrified = seconds
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()

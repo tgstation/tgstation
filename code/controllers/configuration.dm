@@ -10,6 +10,9 @@
 	var/autoadmin = 0
 	var/autoadmin_rank = "Game Admin"
 
+/datum/protected_configuration/SDQL_update()
+	return FALSE
+
 /datum/protected_configuration/vv_get_var(var_name)
 	return debug_variable(var_name, "SECRET", 0, src)
 

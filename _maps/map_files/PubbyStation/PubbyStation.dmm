@@ -30928,9 +30928,9 @@
 "bjY" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
-	icon_state = "propulsion"
+	icon_state = "propulsion_l"
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "bjZ" = (
 /turf/closed/wall/mineral/titanium,
@@ -31721,11 +31721,15 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "bls" = (
-/turf/open/floor/mineral/titanium/blue,
-/turf/closed/wall/mineral/titanium/interior,
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "blt" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "blu" = (
 /obj/machinery/computer/shuttle/ferry/request,
@@ -31733,7 +31737,7 @@
 /area/shuttle/transport)
 "blv" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "blw" = (
 /obj/structure/grille,
@@ -32371,15 +32375,22 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "bmM" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "bmN" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
 	port_angle = 0;
@@ -32390,13 +32401,13 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 2;
-	height = 12;
+	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
 	turf_type = /turf/open/space;
 	width = 5
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "bmO" = (
 /obj/machinery/door/airlock/external{
@@ -33077,7 +33088,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "bob" = (
 /turf/open/floor/plasteel/neutral/corner,
@@ -55424,6 +55435,40 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
+"cib" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"cic" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"cid" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"cie" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"cif" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"cig" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"cih" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
 
 (1,1,1) = {"
 aaa
@@ -72778,7 +72823,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bjY
 aaa
 aaa
 aaa
@@ -73290,11 +73335,11 @@ aaa
 aaa
 aaa
 aaa
-bjY
+aaa
 bls
 blt
-bls
-bjY
+cif
+aaa
 aaa
 aaa
 aaa
@@ -73547,11 +73592,11 @@ aaa
 aaa
 aaa
 aaa
+aaa
 bjZ
 blt
-blt
-bnZ
 bjZ
+aaa
 aaa
 aaa
 aaa
@@ -73805,9 +73850,9 @@ aTr
 aTr
 aTr
 bjZ
-blu
-blt
-bnZ
+bjZ
+cid
+bjZ
 bjZ
 aaa
 aaa
@@ -74061,11 +74106,11 @@ aTr
 aVl
 bhz
 aTr
-bka
+bkb
 blv
 blt
 boa
-bka
+bkb
 aaa
 aaa
 aaa
@@ -74576,9 +74621,9 @@ aVm
 bhz
 aTr
 bjZ
-blv
 blt
-boa
+blt
+blt
 bjZ
 aaa
 aaa
@@ -74832,11 +74877,11 @@ aWm
 aVm
 bhz
 aTr
-bjZ
-blv
+cih
 blt
-boa
-bjZ
+cie
+blt
+cig
 aaa
 aaa
 aaa
@@ -75089,11 +75134,11 @@ aVm
 aVn
 bhz
 aTr
-bkb
-blv
+bjZ
 blt
-boa
-bkb
+blt
+blt
+bjZ
 aaa
 aaa
 aaa
@@ -75603,11 +75648,11 @@ aTr
 bgE
 bhA
 aTr
-bjZ
+bkb
 blv
 blt
 boa
-bjZ
+bkb
 aaa
 aaa
 aaa
@@ -75861,9 +75906,9 @@ aXs
 bhz
 aTr
 bjZ
-bka
+bkb
 bmN
-bka
+bkb
 bjZ
 aaa
 aaa
