@@ -142,5 +142,10 @@ tgui assets are licensed under a Creative Commons Attribution-ShareAlike 4.0 Int
 See tgui/LICENSE.md for the MIT license.
 See tgui/assets/fonts/SIL-OFL-1.1-LICENSE.md for the SIL Open Font License.
 
-All assets including icons and sound are under a Creative Commons 3.0 BY-SA
-license (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+
+<B>LICENSE UPDATE CC-BY-SA -> CC-BY-NC-SA</B><br>
+All assets including icons and sounds before commit [THIS COMMIT PLEASE PR AFTER] on [MERGE DATE] at [MERGE TIME PST]
+is licensed under Creative Commons 3.0 BY-SA (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+
+All assets including icons and sounds after commit [THIS COMMIT PLEASE PR AFTER] on [MERGE DATE] at [MERGE TIME PST]
+is licensed under Creative Commons 3.0 BY-NC-SA (https://creativecommons.org/licenses/by-nc-sa/3.0/) unless otherwise indicated.
