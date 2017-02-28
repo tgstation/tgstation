@@ -26277,16 +26277,10 @@
 	},
 /area/assembly/robotics)
 "bhw" = (
-/obj/machinery/r_n_d/circuit_imprinter,
-/obj/item/weapon/book/manual/robotics_cyborgs{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/machinery/computer/rdconsole/robotics,
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "bhx" = (
-/obj/machinery/computer/rdconsole/robotics,
 /obj/machinery/requests_console{
 	department = "Robotics";
 	departmentType = 2;
@@ -26296,6 +26290,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/r_n_d/circuit_imprinter,
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "bhy" = (
@@ -26909,6 +26904,12 @@
 	pixel_y = 24;
 	req_access_txt = "29"
 	},
+/obj/structure/table,
+/obj/item/weapon/book/manual/robotics_cyborgs{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/whitered/corner{
 	dir = 4
 	},
@@ -105630,7 +105631,7 @@ aXq
 bds
 bfV
 bhx
-biM
+biL
 bkm
 cCK
 blG
@@ -105887,7 +105888,7 @@ aXq
 aYV
 bfV
 bhw
-biL
+biM
 biL
 blB
 blF
