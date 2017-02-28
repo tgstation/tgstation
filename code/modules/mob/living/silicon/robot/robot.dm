@@ -1010,8 +1010,7 @@
 		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
 		return
 	if(!riding_datum)
-		riding_datum = new /datum/riding/cyborg
-		riding_datum.ridden = src
+		riding_datum = new /datum/riding/cyborg(src)
 	if(buckled_mobs)
 		if(buckled_mobs.len >= max_buckled_mobs)
 			return
