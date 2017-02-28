@@ -56,7 +56,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/implanter/New()
+/obj/item/weapon/implanter/Initialize(mapload)
 	..()
 	if(imp_type)
 		imp = new imp_type(src)
