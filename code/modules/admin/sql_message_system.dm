@@ -255,9 +255,9 @@
 					notedata += data
 		output += "<h2><center>[target_ckey]</center></h2><center>"
 		if(!linkless)
-			output += "<a href='?_src_=holder;addmessage=[target_ckey]'>\[Add message\]</a>"
+			output += "<a href='?_src_=holder;addnote=[target_ckey]'>\[Add note\]</a>"
+			output += " <a href='?_src_=holder;addmessage=[target_ckey]'>\[Add message\]</a>"
 			output += " <a href='?_src_=holder;addwatch=[target_ckey]'>\[Add to watchlist\]</a>"
-			output += " <a href='?_src_=holder;addnote=[target_ckey]'>\[Add note\]</a>"
 			output += " <a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Refresh page\]</a></center>"
 		else
 			output += " <a href='?_src_=holder;showmessageckeylinkless=[target_ckey]'>\[Refresh page\]</a></center>"

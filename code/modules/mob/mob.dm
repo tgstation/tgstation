@@ -465,6 +465,12 @@ var/next_mob_id = 0
 	reset_perspective(null)
 	unset_machine()
 
+//suppress the .click macro so people can't use it to identify the location of items or aimbot
+/mob/verb/ClickSubstitute()
+	set hidden = 1
+	set name = ".click"
+	return
+
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")

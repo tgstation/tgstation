@@ -278,7 +278,7 @@
 				counterchance = initial(counterchance)
 				var/previousattacktext = attacktext
 				attacktext = "counters"
-				target.attack_animal(src)
+				UnarmedAttack(target)
 				attacktext = previousattacktext
 			else
 				counterchance = min(counterchance + initial(counterchance), 100)
