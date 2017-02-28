@@ -98,22 +98,45 @@ var/datum/subsystem/mapping/SSmapping
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
+/datum/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
+	var/static/dmm_suite/loader
+	if(!loader)
+		loader = new
+	if(!loader.load_map(file(filename), 0, 0, forceLevel, no_afterchange = TRUE))
+		errorList |= filename
+	if(last)
+		QDEL_NULL(loader)
+
 #define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
 /datum/subsystem/mapping/proc/loadWorld()
-	var/dmm_suite/loader = new
-	//TODO: FUCKING ERROR CHECKING YOU SCRUB
-	INIT_ANNOUNCE("Loading Map '[config.map_name]'...")
-	loader.load_map(file(config.GetFullMapPath()), 0, 0, 1, no_afterchange = TRUE)
+	//if any of these fail, something has gone horribly, HORRIBLY, wrong
+	var/list/FailedZs = list()
+
+	INIT_ANNOUNCE("Loading [config.map_name]...")
+	TryLoadZ(config.GetFullMapPath(), FailedZs, 1)
 	INIT_ANNOUNCE("Loaded station!")
-	loader.load_map(file("_maps/map_files/generic/SpaceDock.dmm"), no_afterchange = TRUE)
-	loader.load_map(file("_maps/map_files/generic/Space.dmm"), no_afterchange = TRUE)
+
+	TryLoadZ("_maps/map_files/generic/SpaceDock.dmm", FailedZs)
+	TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs)
+
 	INIT_ANNOUNCE("Loading mining level...")
-	loader.load_map(file("_maps/map_files/generic/[config.minetype].dmm"), no_afterchange = TRUE)
+	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs)
 	INIT_ANNOUNCE("Loaded mining level!")
-	for(var/I in 1 to 6)
-		loader.load_map(file("_maps/map_files/generic/Space.dmm"), no_afterchange = TRUE)
+
+	for(var/I in 1 to 5)
+		TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs)
+	TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs, last = TRUE)
+
 	SortAreas()
-	INIT_ANNOUNCE("Done loading map!")
+
+	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
+		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
+		for(var/I in 2 to FailedZs.len)
+			msg += ", [I]"
+		msg += ". Yell at your server host!"
+		INIT_ANNOUNCE(msg)
+	else
+		INIT_ANNOUNCE("Done loading map!")
 #undef INIT_ANNOUNCE
 
 /datum/subsystem/mapping/proc/maprotate()
