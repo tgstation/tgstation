@@ -270,7 +270,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	if(callShuttle)
 		if(EMERGENCY_IDLE_OR_RECALLED)
-			emergency.request(null, 1.2)
+			emergency.request(null, 1.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
