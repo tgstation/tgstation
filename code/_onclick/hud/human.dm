@@ -302,6 +302,9 @@
 	pull_icon.screen_loc = ui_pull_resist
 	static_inventory += pull_icon
 
+	mymob.fov = new /obj/screen/fov()
+	static_inventory += mymob.fov
+
 	lingchemdisplay = new /obj/screen/ling/chems()
 	infodisplay += lingchemdisplay
 
