@@ -208,12 +208,8 @@ var/list/datum/donator/donators = list()
 	var/category = "Debug"
 
 proc/load_donator(ckey)
-	if(ckey == "account12") // for debug purpooooses
-		new /datum/donator(ckey, 100)
-		return 1
-
 	var/DBConnection/dbcon2 = new()
-	dbcon2.Connect("dbi:mysql:forum2:[sqladdress]:[sqlport]","[sqlfdbklogin]","[sqlfdbkpass]")
+	dbcon2.doConnect("dbi:mysql:forum2:[sqladdress]:[sqlport]","[sqlfdbklogin]","[sqlfdbkpass]") //pidorasy
 
 	if(!dbcon2.IsConnected())
 //		world.log << "Failed to connect to database [dbcon2.ErrorMsg()] in load_donator([ckey])."
