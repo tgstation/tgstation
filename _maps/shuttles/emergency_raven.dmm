@@ -310,7 +310,7 @@
 	id = "shuttleflash";
 	pixel_x = -21;
 	pixel_y = 21;
-	step_x = 0
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
