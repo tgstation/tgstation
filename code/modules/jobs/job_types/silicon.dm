@@ -16,9 +16,8 @@ AI
 /datum/job/ai/equip(mob/living/carbon/human/H)
 	return H.AIize(FALSE)
 
-/datum/job/cyborg/after_spawn(mob/living/silicon/ai/AI, mob/M)
-	if(config.rename_cyborg)	//name can't be set in robot/New without the client
-		AI.rename_self("ai", M.client)
+/datum/job/ai/after_spawn(mob/living/silicon/ai/AI, mob/M)
+	AI.rename_self("ai", M.client)
 
 /datum/job/ai/config_check()
 	if(config && config.allow_ai)

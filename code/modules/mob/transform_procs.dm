@@ -334,8 +334,7 @@
 
 	. = new /mob/living/silicon/ai(loc_landmark, null, src)
 
-	if(transfer_after)
-		qdel(src)
+	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
 	if (notransform)
