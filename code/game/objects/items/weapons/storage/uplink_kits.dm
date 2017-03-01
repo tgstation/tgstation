@@ -128,7 +128,7 @@
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
-			new /obj/item/weapon/storage/belt/military/assault(src) // 3 tc
+			new /obj/item/weapon/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/weapon/card/id/syndicate(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
 
