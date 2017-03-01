@@ -90,7 +90,7 @@
 	if(..())
 		return
 	if(href_list["purchase"])
-		var/datum/mining_equipment/prize = locate(href_list["purchase"])
+		var/datum/GBP_equipment/prize = locate(href_list["purchase"])
 		if (!prize || !(prize in prize_list))
 			return
 		if(prize.cost > GBP)
