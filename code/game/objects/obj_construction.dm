@@ -83,7 +83,6 @@
 	var/datum/construction_state/next = constructed ? next_state : prev_state
 	var/id
 	if(next)
-		parent.current_construction_state = next
 		next.OnReached(parent, user, constructed)
 		id = next.id
 	else
@@ -101,6 +100,7 @@
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed && (parent.flags & NODECONSTRUCT))
 		return
+	parent.current_construction_state = next
 	
 	if(!isnull(anchored))
 		parent.anchored = anchored
@@ -138,6 +138,7 @@
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
 		stack_trace("Very bad param")
+	parent.current_construction_state = next
 	parent.anchored = initial(parent.anchored)
 	parent.icon_state = initial(parent.icon_state)
 	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
