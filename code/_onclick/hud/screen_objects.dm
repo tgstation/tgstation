@@ -667,8 +667,8 @@
 			L.say(pick(word_messages))
 
 /obj/screen/splash
-	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
+	icon = 'config/title_screens/title_screens.dmi'
+	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
@@ -678,17 +678,10 @@
 	..()
 	holder = C
 	holder.screen += src
-	var/list/title_screens = list()
-	for(var/A in flist("config/title_screens/_Always/")) //flist is kinda crap at its job
-		title_screens += "config/title_screens/_Always/" + A
-	for(var/M in flist("config/title_screens/[MAP_NAME]/"))
-		title_screens += "config/title_screens/[MAP_NAME]/" + M
-	if(prob(1))
-		for(var/R in flist("config/title_screens/_Rare/"))
-			title_screens += "config/title_screens/_Rare/" + R
 
-	if(!isemptylist(title_screens))
-		icon = icon(text2path(pick(title_screens)))
+	if(SStitle.title_screen)
+		icon_state = SStitle.title_screen.icon_state
+
 	if(fadeout)
 		animate(src, alpha = 0, time = 30)
 	else
@@ -700,3 +693,4 @@
 /obj/screen/splash/Destroy()
 	holder.screen -= src
 	return ..()
+

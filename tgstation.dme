@@ -182,6 +182,7 @@
 #include "code\controllers\subsystem\ticker.dm"
 #include "code\controllers\subsystem\time_tracking.dm"
 #include "code\controllers\subsystem\timer.dm"
+#include "code\controllers\subsystem\title_screen.dm"
 #include "code\controllers\subsystem\voting.dm"
 #include "code\controllers\subsystem\weather.dm"
 #include "code\controllers\subsystem\processing\fastprocess.dm"
