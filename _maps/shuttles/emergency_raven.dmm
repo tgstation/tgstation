@@ -317,7 +317,7 @@
 	id = "shuttleflash";
 	pixel_x = -26;
 	pixel_y = 0;
-	step_x = 0
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
@@ -1041,7 +1041,7 @@
 	pixel_x = 0;
 	pixel_y = -26;
 	req_access_txt = "150";
-	step_x = 0
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
