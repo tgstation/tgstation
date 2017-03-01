@@ -1224,6 +1224,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	restricted_roles = list("Assistant")
 
+/datum/uplink_item/role_restricted/objection
+	name = "Objection Gavel"
+	desc = "An especially commanding gavel that stops time so lawyers can properly deliver their legal arguments, or their illegal murder."
+	item = /obj/item/weapon/gavelhammer/objection
+	cost = 14
+	surplus = 0
+	restricted_roles = list("Lawyer")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

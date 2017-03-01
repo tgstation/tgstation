@@ -18,6 +18,33 @@
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+// Objection Gavel: lawyer-specific traitor item
+
+/obj/item/weapon/gavelhammer/objection
+	name = "objection gavel"
+	desc = "Order, order! I'm planting bombs in my courthouse!"
+	var/duration = 250
+	var/cooldown = 0
+
+/obj/item/weapon/gavelhammer/objection/attack_self(mob/living/carbon/user)
+	object(user)
+
+/obj/item/weapon/gavelhammer/objection/after_attack(mob/living/carbon/user)
+	object(user)
+
+/obj/item/weapon/gavelhammer/objection/proc/object(mob/living/carbon/user)
+	if(cooldown < world.time)
+		cooldown = world.time + 3000 //5 minutes
+		playsound(loc, 'sound/items/gavel.ogg', 100, 1)
+		user.say("OBJECTION!!")
+		add_fingerprint(user)
+		var/obj/effect/timestop/T = new /obj/effect/timestop(user.loc)
+		T.immune += user
+		T.duration = duration
+		T.timestop()
+	else
+		user << "<span class='warning'>The gavel is recharging!</span>"
+
 /obj/item/weapon/gavelblock
 	name = "gavel block"
 	desc = "Smack it with a gavel hammer when the assistants get rowdy."
@@ -29,7 +56,10 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/gavelblock/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/gavelhammer))
+	if(istype(I, /obj/item/weapon/gavelhammer/objection))
+		var/obj/item/weapon/gavelhammer/objection/gavel = I
+		gavel.object()
+	else if(istype(I, /obj/item/weapon/gavelhammer))
 		playsound(loc, 'sound/items/gavel.ogg', 100, 1)
 		user.visible_message("<span class='warning'>[user] strikes [src] with [I].</span>")
 		user.changeNext_move(CLICK_CD_MELEE)
