@@ -493,16 +493,8 @@
 	else if(istype(G, /obj/item/weapon/gun/energy))
 		var/obj/item/weapon/gun/energy/EG = G
 		if(islist(EG.ammo_type) && EG.ammo_type.len)
-			var/obj/item/ammo_casing/AC = new EG.ammo_type[1].type(src)
-			qdel(EG)
-			if(!istype(AC)||!AC.projectile_type)
-				qdel(AC)
-				return FALSE
+			var/obj/item/ammo_casing/AC = EG.ammo_type[1]
 			var/obj/item/projectile/P = new AC.projectile_type(src)
-			qdel(AC)
-			if(!istype(P))
-				qdel(P)
-				return FALSE
 			set_chameleon_vars(P)
 			qdel(P)
 	else if(istype(G, /obj/item/weapon/gun/syringe))
