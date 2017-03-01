@@ -65,7 +65,6 @@
 	else
 		dat += text("Exporter: <A href='?src=\ref[src];action=enable'>Off</A><br>")
 	dat += text("Power consumption: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A><br>")
-	dat += text("Total power generation: [(powernet == null ? "Unconnected" : "[avail()/1000] kilowatts")]<br>")
 	dat += text("Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
 	dat += text("Power exported: [power_drained] kilowatts<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
@@ -106,7 +105,7 @@
 			for(var/obj/machinery/GBP_vendor/G in world)
 				G.GBP += drain_rate/100
 		else
-			visible_message("Insufficient power detected, shutting down")
+			visible_message("Power export levels have exceeded energy surplus, shutting down")
 			active = 0
 			icon_state = "dominator"
 	else
