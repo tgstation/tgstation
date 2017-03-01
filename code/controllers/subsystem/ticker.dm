@@ -62,7 +62,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
-	
+	log_game("DEBUG: [login_music] chose to be played")
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -729,4 +729,3 @@ var/datum/subsystem/ticker/ticker
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
-		
