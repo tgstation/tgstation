@@ -84,7 +84,7 @@
 			examine_message = "The monitor is not screwed in."
 			icon_state = "4"
 		},
-		new /datum/construction_state/last{
+		/datum/construction_state/last{
 			required_type_to_deconstruct = /obj/item/weapon/screwdriver
 			deconstruction_message = "disconnect the monitor from"
 			icon_state = "ai_ready"
