@@ -1225,7 +1225,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	restricted_roles = list("Assistant")
 	
 // Challenges!
-/datum/uplink_item/Challenge
+/datum/uplink_item/challenge
 	category = "Challenges"
 	surplus = 0
 	
