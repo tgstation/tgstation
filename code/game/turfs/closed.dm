@@ -32,12 +32,19 @@
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
-	var/titlescreen = TITLESCREEN
 
 /turf/closed/indestructible/splashscreen/Initialize()
 	..()
-	if(titlescreen)
-		icon_state = titlescreen
+	var/list/title_screens = list()
+	for(var/A in flist("config/title_screens/_Always/")) //flist is kinda crap at its job
+		title_screens += "config/title_screens/_Always/" + A
+	for(var/M in flist("config/title_screens/[MAP_NAME]/"))
+		title_screens += "config/title_screens/[MAP_NAME]/" + M
+	if(prob(1))
+		for(var/R in flist("config/title_screens/_Rare/"))
+			title_screens += "config/title_screens/_Rare/" + R
+	if(!isemptylist(title_screens))
+		icon = text2path(pick(title_screens))
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
