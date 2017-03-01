@@ -302,6 +302,13 @@
 		else
 			return ..()
 
+		//snowflake stuff here
+		if(istype(I, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = I
+			if(!WT.isOn())
+				user << "<span class='warning'>The welder must be on for this task!</span>"
+				return
+
 		playsound(src, I.usesound, 100, 1)	
 		
 		user << "<span class='notice'>You begin [message] \the [src].</span>"
