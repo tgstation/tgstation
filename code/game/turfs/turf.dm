@@ -386,6 +386,8 @@
 			continue
 		if(istype(A, /obj/docking_port))
 			continue
+		if(A == T0)
+			continue
 		qdel(A, force=TRUE)
 
 	T0.ChangeTurf(turf_type)

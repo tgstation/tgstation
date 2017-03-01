@@ -136,6 +136,7 @@
 	name = "box"
 	desc = "A sleek, sturdy box."
 	icon_state = "syndiebox"
+	illustration = "writing_syndie"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
