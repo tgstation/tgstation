@@ -20,70 +20,75 @@
 	return ..()
 
 /obj/structure/AIcore/InitConstruction()
-	new /datum/construction_state/first(src, /obj/item/stack/sheet/plasteel, 4)
-	new /datum/construction_state(src,\
-		required_type_to_construct = /obj/item/weapon/wrench,\
-		required_type_to_deconstruct = /obj/item/weapon/weldingtool,\
-		construction_delay = 20,\
-		deconstruction_delay = 20,\
-		construction_message = "securing",\
-		deconstruction_message = "slicing apart",\
-		examine_message = "It is welded together and the floor bolts are up.",\
-		icon_state = "0",\
-		anchored = FALSE,\
-	)
-	new /datum/construction_state(src,
-		required_type_to_construct = /obj/item/weapon/circuitboard/aicore,\
-		required_type_to_deconstruct = /obj/item/weapon/wrench,\
-		required_amount_to_construct = 1,\
-		deconstruction_delay = 20,\
-		construction_message = "add the circuit to",\
-		deconstruction_message = "slicing apart",\
-		examine_message = "The floor bolts are down and it's missing a circuit.",\
-		icon_state = "0",\
-		anchored = TRUE,\
-	)
-	new /datum/construction_state(src,
-		required_type_to_construct = /obj/item/weapon/screwdriver,\
-		required_type_to_deconstruct = /obj/item/weapon/crowbar,\
-		construction_message = "screw the circuit board into",\
-		deconstruction_message = "remove the circuit from",\
-		examine_message = "The circuit is unscrewed.",\
-		icon_state = "1",\
-	)
-	new /datum/construction_state(src,
-		required_type_to_construct = /obj/item/stack/cable_coil,
-		required_amount_to_construct = 5,
-		required_type_to_deconstruct = /obj/item/weapon/screwdriver,
-		construction_message = "adding cables to",\
-		deconstruction_message = "remove the circuit from",\
-		construction_delay = 20,\
-		examine_message = "The circuit is screwed in and it is unwired",\
-		icon_state = "2",\
-	)
-	new /datum/construction_state(src,
-		required_type_to_construct = /obj/item/stack/sheet/rglass,\
-		required_amount_to_construct = 2,\
-		required_type_to_deconstruct = /obj/item/weapon/wirecutters,\
-		construction_message = "putting the glass panel in",\
-		deconstruction_message = "remove the cables from",\
-		construction_delay = 20,\
-		examine_message = "It is wired up and missing a monitor.",\
-		icon_state = "3",\
-	)
-	new /datum/construction_state(src,\
-		required_type_to_construct = /obj/item/weapon/screwdriver,\
-		required_type_to_deconstruct = /obj/item/weapon/crowbar,\
-		construction_message = "connect the monitor to",\
-		deconstruction_message = "remove the panel from",\
-		construction_delay = 20,\
-		examine_message = "The monitor is not screwed in.",\
-		icon_state = "4",\
-	)
-	new /datum/construction_state/last(src,\
-		required_type_to_deconstruct = /obj/item/weapon/screwdriver,\
-		deconstruction_message = "disconnect the monitor from",\
-		icon_state = "ai_ready",\
+	return newlist(
+		/datum/construction_state/first{
+			required_type_to_construct = /obj/item/stack/sheet/plasteel
+			required_amount_to_construct = 4
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/weapon/wrench
+			required_type_to_deconstruct = /obj/item/weapon/weldingtool
+			construction_delay = 20
+			deconstruction_delay = 20
+			construction_message = "securing"
+			deconstruction_message = "slicing apart"
+			examine_message = "It is welded together and the floor bolts are up."
+			icon_state = "0"
+			anchored = 0
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/weapon/circuitboard/aicore
+			required_type_to_deconstruct = /obj/item/weapon/wrench
+			required_amount_to_construct = 1
+			deconstruction_delay = 20
+			construction_message = "add the circuit to"
+			deconstruction_message = "slicing apart"
+			examine_message = "The floor bolts are down and it's missing a circuit."
+			icon_state = "0"
+			anchored = 1
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/weapon/screwdriver
+			required_type_to_deconstruct = /obj/item/weapon/crowbar
+			construction_message = "screw the circuit board into"
+			deconstruction_message = "remove the circuit from"
+			examine_message = "The circuit is unscrewed."
+			icon_state = "1"
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/stack/cable_coil
+			required_amount_to_construct = 5
+			required_type_to_deconstruct = /obj/item/weapon/screwdriver
+			construction_message = "adding cables to"
+			deconstruction_message = "remove the circuit from"
+			construction_delay = 20
+			examine_message = "The circuit is screwed in and it is unwired"
+			icon_state = "2"
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/stack/sheet/rglass
+			required_amount_to_construct = 2
+			required_type_to_deconstruct = /obj/item/weapon/wirecutters
+			construction_message = "putting the glass panel in"
+			deconstruction_message = "remove the cables from"
+			construction_delay = 20
+			examine_message = "It is wired up and missing a monitor."
+			icon_state = "3"
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/weapon/screwdriver
+			required_type_to_deconstruct = /obj/item/weapon/crowbar
+			construction_message = "connect the monitor to"
+			deconstruction_message = "remove the panel from"
+			construction_delay = 20
+			examine_message = "The monitor is not screwed in."
+			icon_state = "4"
+		},
+		new /datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/weapon/screwdriver
+			deconstruction_message = "disconnect the monitor from"
+			icon_state = "ai_ready"
+		}
 	)
 
 /obj/structure/AIcore/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip)

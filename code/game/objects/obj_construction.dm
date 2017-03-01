@@ -25,47 +25,7 @@
 	/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
 																							Setting skip to TRUE requests that no further checks other than the base be made
 
-	Psuedo Example:
-		/obj/chair
-			icon = 'chair.dmi'
-			icon_state = 'built'
-			max_integrity = 500
-			obj_integrity = 500
-			failure_integrity = 200
-			anchored = TRUE
-
-		/obj/chair/InitConstruction()	//init the construction steps
-			new /datum/construction_state/first(src, /obj/item/wood, 2)
-			new /datum/construction_state(src,\
-				required_type_to_construct = /obj/item/screwdriver,
-				required_type_to_deconstruct = /obj/item/crowbar,
-				construction_delay = 4,\
-				deconstruction_delay = 4,\
-				construction_message = "screwing the legs to",\
-				deconstruction_message = "prying the wood from"\
-				examine_message = "The legs are unscrewed",\
-				icon_state = "unscrewed-legs",\
-				max_integrity = 200,\
-				failure_integrity = 100,\
-				anchored = FALSE,\
-				damage_reachable = TRUE\
-			)
-			new /datum/construction_state/last(src,\
-				required_type_to_deconstruct = /obj/item/screwdriver,\
-				deconstruction_delay = 4,\
-				deconstruction_message = "unscrewing the legs from"\
-			)
-		
-		/obj/chair/OnDeconstruction(state_id, mob/user, forced)
-			if(forced)
-				user << "You break \the [src] apart"
-			if(!state_id)
-				qdel(src)
-		
-		/obj/item/wood/attack_self()	// build the base of the chair
-			var/obj/C = new /obj/chair(get_turf(src))
-			C.Construct()
-		
+	See ai_core.dm for a good example		
 		
 */
 
@@ -111,32 +71,10 @@
 	var/datum/construction_state/next_state		//the state that will be next once constructed
 	var/datum/construction_state/prev_state		//the state that will be next once deconstructed
 
-/datum/construction_state/first/New(obj/parent, material_type, material_amount)
-	..(parent, material_type, material_amount)
+/datum/construction_state/first	//this should only contain required_type_to_construct and required_amount_to_construct for the final materials
 
-/datum/construction_state/last/New(obj/parent, required_type_to_deconstruct, deconstruction_delay = 0, deconstruction_message)
-	..(parent, -1 /*don't want to construct with attack_hand/self*/, null, required_type_to_deconstruct, 0, deconstruction_delay, null, deconstruction_message)
-
-/datum/construction_state/New(obj/parent, required_type_to_construct, required_amount_to_construct, required_type_to_deconstruct, construction_delay = 0, deconstruction_delay = 0,\
- 								construction_message, deconstruction_message, construction_sound, deconstruction_sound, examine_message, icon, icon_state, max_integrity, failure_integrity,\
-								anchored, damage_reachable = FALSE)
-	src.required_type_to_construct = required_type_to_construct
-	src.required_amount_to_construct = required_amount_to_construct
-	src.required_type_to_deconstruct = required_type_to_deconstruct
-	src.construction_delay = construction_delay
-	src.deconstruction_delay = deconstruction_delay
-	src.construction_message = construction_message
-	src.deconstruction_message = deconstruction_message
-	src.construction_sound = construction_sound
-	src.deconstruction_sound = deconstruction_sound
-	src.examine_message = examine_message
-	src.icon = icon
-	src.icon_state = icon_state
-	src.max_integrity = max_integrity
-	src.failure_integrity = failure_integrity
-	src.damage_reachable = damage_reachable
-	src.anchored = anchored
-	parent.AddConstructionStep(src)
+/datum/construction_state/last
+	required_type_to_construct = -1
 
 /datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed)
 	if(!constructed && (parent.flags & NODECONSTRUCT))
@@ -205,23 +143,33 @@
 	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
 	parent.update_icon()
 
-/obj/proc/InitConstruction()
-	construction_steps[type] = 0	//null op, no construction steps
+/obj/proc/SetupConstruction()
+	if(isnull(construction_steps[type]))
+		var/Result = InitConstruction()
+		if(Result != -1)
+			LinkConstructionSteps(Result)
+			if(!ValidateConstructionSteps(Result))
+				Result = list()
+		else
+			Result = list()
+		construction_steps[type] = Result
+
+/obj/proc/InitConstruction() //null op, no construction steps
+	//derivatives return a proper list
 	return -1
 	
-/obj/proc/AddConstructionStep(datum/construction_state/step)
-	var/list/our_steps = construction_steps[type]
-	if(our_steps.len)
-		var/datum/construction_state/prev_step = our_steps[our_steps.len]
-		prev_step.next_state = step
-		step.prev_state = prev_step
-	our_steps += step
+/proc/LinkConstructionSteps(list/steps)
+	for(var/I in 1 to steps.len)
+		if(I != 1)
+			var/datum/construction_state/prev_step = steps[I - 1]
+			var/datum/construction_state/curr_step = steps[I]
+			prev_step.next_state = curr_step
+			curr_step.prev_state = prev_step
 
 //use this proc to make sure there's nothing impossible with the construction chain
 //called after InitConstruction
 //trust no coder, especially that Cyberboss guy
-/obj/proc/ValidateConstructionSteps()
-	var/cached_construction_steps = construction_steps[type]
+/obj/proc/ValidateConstructionSteps(cached_construction_steps)
 	if(length(cached_construction_steps))
 		var/datum/construction_state/current_step = cached_construction_steps[1]
 		var/last_max_integrity = current_step.max_integrity ? current_step.max_integrity : max_integrity
@@ -231,24 +179,31 @@
 			var/error = "Construction Error: [type] step [current_step.id]: "
 			if(current_step.max_integrity && current_step.max_integrity < last_max_integrity)
 				WARNING(error + "Max integrity lowered after construction")
+				. = FALSE
 			if(current_step.failure_integrity && current_step.failure_integrity < last_failure_integrity)
 				WARNING(error + "Failure integrity lowered after construction")
+				. = FALSE
 			if(current_step.required_type_to_construct)
 				if(ispath(current_step.required_type_to_construct, /obj/item/stack))
 					if(!current_step.required_amount_to_construct)
 						WARNING(error +"No amount set for material construction")
+						. = FALSE
 				else if(current_step.required_amount_to_construct > 1)
 					WARNING(error + "Invalid material amount for non stack construction")
+					. = FALSE
 				if(!ispath(current_step.required_type_to_construct, /obj/item))
 					WARNING(error +"Invalid /obj/item type specified for construction: '[current_step.required_type_to_construct]'")
+					. = FALSE
 			else if(!current_step.required_type_to_deconstruct)
 				WARNING(error + "Hand values for both construction and deconstruction types")
+				. = FALSE
 			
 			if(current_step.required_type_to_deconstruct && !ispath(current_step.required_type_to_deconstruct, /obj/item))
 				WARNING("Invalid /obj/item type specified for deconstruction: '[current_step.required_type_to_deconstruct]'")
+				. = FALSE
 	else
 		WARNING("Construction Error: InitConstruction for [type] defined but no steps were added")
-		construction_steps[type] = 0
+		. = FALSE
 
 /obj/proc/OnConstruction(state_id, mob/user)
 

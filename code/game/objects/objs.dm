@@ -43,10 +43,7 @@
 
 /obj/Initialize()
 	..()
-	if(isnull(construction_steps[type]))
-		construction_steps[type] = list()
-		if(InitConstruction() != -1)
-			ValidateConstructionSteps()
+	SetupConstruction()
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
