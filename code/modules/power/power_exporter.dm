@@ -69,34 +69,34 @@
 	dat += text("Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
 	dat += text("Power exported: [power_drained] kilowatts<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-	user << browse(dat, "window=port_gen")
-	onclose(user, "port_gen")
+	var/datum/browser/popup = new(user, "vending", "Power Exporter", 400, 350)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/power/exporter/Topic(href, href_list)
 	if(..())
 		return
-
 	src.add_fingerprint(usr)
-	if(href_list["action"])
-		if(href_list["action"] == "enable")
+	switch(href_list["action"])
+		if("enable")
 			if(!active && !crit_fail)
 				active = 1
 				src.updateUsrDialog()
 				if(active && !crit_fail && anchored && powernet && drain_rate)
 					icon_state = "dominator-yellow"
-		if(href_list["action"] == "disable")
+		if("disable")
 			if (active)
 				active = 0
 				src.updateUsrDialog()
-		if(href_list["action"] == "set_power")
+		if("set_power")
 			drain_rate = input("Power export rate (in kW):", name, drain_rate)
 			src.updateUsrDialog()
 			if(drain_rate > powernet.netexcess && drain_rate <= powernet.avail)
 				visible_message("This power setting will drain power at the expense of SMES or APC charging!")
 			if(active && !crit_fail && anchored && powernet && drain_rate)
 				icon_state = "dominator-yellow"
-		if (href_list["action"] == "close")
-			usr << browse(null, "window=port_gen")
+		if ("close")
+			popup.close()
 			usr.unset_machine()
 
 
@@ -112,8 +112,6 @@
 			visible_message("Insufficient power detected, shutting down")
 			active = 0
 			icon_state = "dominator"
-			return
 	else
 		active = 0
 		icon_state = "dominator"
-		return
