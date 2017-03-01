@@ -387,7 +387,7 @@ BLIND     // can't see anything
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	dropped_twice = FALSE
 	user.pixel_y -= offset
-	worn_y_dimension = 32
+	worn_y_dimension = world.icon_size
 
 /obj/item/clothing/shoes/dropped(mob/user)
 	if(offset && dropped_twice)
