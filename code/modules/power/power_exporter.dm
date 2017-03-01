@@ -100,7 +100,7 @@
 /obj/machinery/power/exporter/process()
 	src.updateUsrDialog()
 	if(active && !crit_fail && anchored && powernet)
-		if(drain_rate <= powernet.netexcess)
+		if(drain_rate*1000 <= powernet.netexcess)
 			powernet.load += drain_rate*1000
 			power_drained += drain_rate
 			for(var/obj/machinery/GBP_vendor/G in world)
