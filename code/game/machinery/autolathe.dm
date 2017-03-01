@@ -210,6 +210,7 @@
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
+				playsound(src.loc, "sound/machines/printer/ambigious3d/medium.ogg", 100, 1) // !P@
 				if(is_stack)
 					spawn(32*coeff)
 						use_power(power)

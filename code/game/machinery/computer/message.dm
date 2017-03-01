@@ -46,11 +46,14 @@
 			src.spark_system.start()
 			var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
 			MK.loc = src.loc
+			MK.forceMove(src)
 			// Will help make emagging the console not so easy to get away with.
 			MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
 			var/time = 100 * length(src.linkedServer.decryptkey)
 			addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 			message = rebootmsg
+			new_printjob(item = MK) // 'Print' it.
+
 		else
 			user << "<span class='notice'>A no server error appears on the screen.</span>"
 

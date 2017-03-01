@@ -15,13 +15,14 @@
 	var/datum/data/record/active2 = null
 	var/a_id = null
 	var/temp = null
-	var/printing = null
 	var/can_change_id = 0
 	var/list/Perp
 	var/tempname = null
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	default_printer = "inkjet"
+	max_printjobs = 5
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
@@ -354,69 +355,66 @@ What a mess.*/
 
 
 			if("Print Record")
-				if(!( printing ))
-					printing = 1
-					data_core.securityPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
-					sleep(30)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-					P.info = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
-					if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
-						if(config.mutant_races)
-							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
-						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
-					else
-						P.info += "<B>General Record Lost!</B><BR>"
-					if((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
-						P.info += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", active2.fields["criminal"])
+				data_core.securityPrintCount++
+				var/text = ""
+				var/title = ""
+				text = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
+				if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+					text += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
+					if(config.mutant_races)
+						text += "\nSpecies: [active1.fields["species"]]<BR>"
+					text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
+				else
+					text += "<B>General Record Lost!</B><BR>"
+				if((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
+					text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", active2.fields["criminal"])
 
-						P.info += "<BR>\n<BR>\nMinor Crimes:<BR>\n"
-						P.info +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+					text += "<BR>\n<BR>\nMinor Crimes:<BR>\n"
+					text +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 <tr>
 <th>Crime</th>
 <th>Details</th>
 <th>Author</th>
 <th>Time Added</th>
 </tr>"}
-						for(var/datum/data/crime/c in active2.fields["mi_crim"])
-							P.info += "<tr><td>[c.crimeName]</td>"
-							P.info += "<td>[c.crimeDetails]</td>"
-							P.info += "<td>[c.author]</td>"
-							P.info += "<td>[c.time]</td>"
-							P.info += "</tr>"
-						P.info += "</table>"
+					for(var/datum/data/crime/c in active2.fields["mi_crim"])
+						text += "<tr><td>[c.crimeName]</td>"
+						text += "<td>[c.crimeDetails]</td>"
+						text += "<td>[c.author]</td>"
+						text += "<td>[c.time]</td>"
+						text += "</tr>"
+					text += "</table>"
 
-						P.info += "<BR>\nMajor Crimes: <BR>\n"
-						P.info +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+					text += "<BR>\nMajor Crimes: <BR>\n"
+					text +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 <tr>
 <th>Crime</th>
 <th>Details</th>
 <th>Author</th>
 <th>Time Added</th>
 </tr>"}
-						for(var/datum/data/crime/c in active2.fields["ma_crim"])
-							P.info += "<tr><td>[c.crimeName]</td>"
-							P.info += "<td>[c.crimeDetails]</td>"
-							P.info += "<td>[c.author]</td>"
-							P.info += "<td>[c.time]</td>"
-							P.info += "</tr>"
-						P.info += "</table>"
+					for(var/datum/data/crime/c in active2.fields["ma_crim"])
+						text += "<tr><td>[c.crimeName]</td>"
+						text += "<td>[c.crimeDetails]</td>"
+						text += "<td>[c.author]</td>"
+						text += "<td>[c.time]</td>"
+						text += "</tr>"
+					text += "</table>"
 
 
-						P.info += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["notes"])
-						var/counter = 1
-						while(active2.fields[text("com_[]", counter)])
-							P.info += text("[]<BR>", active2.fields[text("com_[]", counter)])
-							counter++
-						P.name = text("SR-[] '[]'", data_core.securityPrintCount, active1.fields["name"])
-					else
-						P.info += "<B>Security Record Lost!</B><BR>"
-						P.name = text("SR-[] '[]'", data_core.securityPrintCount, "Record Lost")
-					P.info += "</TT>"
-					printing = null
+					text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["notes"])
+					var/counter = 1
+					while(active2.fields[text("com_[]", counter)])
+						text += text("[]<BR>", active2.fields[text("com_[]", counter)])
+						counter++
+					title = text("SR-[] '[]'", data_core.securityPrintCount, active1.fields["name"])
+				else
+					text += "<B>Security Record Lost!</B><BR>"
+					title = text("SR-[] '[]'", data_core.securityPrintCount, "Record Lost")
+				text += "</TT>"
+				new_printjob(title, text)
 			if("Print Poster")
-				if(!( printing ))
+				if(printer_can_print(1))
 					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
 					if(wanted_name)
 						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
@@ -437,13 +435,11 @@ What a mess.*/
 
 						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
 						if(info)
-							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
-							printing = 1
-							sleep(30)
-							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
-								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-								new /obj/item/weapon/poster/legit/wanted(src.loc, photo.img, wanted_name, info)
-							printing = 0
+							var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
+							var/obj/item/weapon/poster/legit/wanted/P = new/obj/item/weapon/poster/legit/wanted(src.loc, photo.img, wanted_name, info)
+							P.forceMove(src)
+							new_printjob(item = P)
+
 
 //RECORD DELETE
 			if("Delete All Records")

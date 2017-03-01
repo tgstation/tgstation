@@ -136,7 +136,7 @@ Please wait until completion...</TT><BR>
 
 					src.add_overlay("fab-active")
 					src.updateUsrDialog()
-
+					playsound(src.loc, "sound/machines/printer/ambigious3d/medium.ogg", 100, 1) // !P@
 					spawn (build_time)
 						if (!isnull(src.being_built))
 							src.being_built.loc = get_turf(src)

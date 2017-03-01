@@ -122,6 +122,7 @@
 				return
 			storedpda.icon_state = P.icon_state
 			storedpda.desc = P.desc
+			playsound(src.loc, "sound/machines/printer/ambigious3d/short.ogg", 100, 1) // !P@
 			ejectpda()
 
 		else
