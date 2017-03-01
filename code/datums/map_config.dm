@@ -71,13 +71,14 @@
 
     titlescreen_icon_state = json["titlescreen_icon_state"]
 
-    transition_config.Cut()
-
     var/list/jtcl = json["transition_config"]
 
-    for(var/I in jtcl)
-        transition_config[TransitionStringToEnum(I)] = TransitionStringToEnum(jtcl[I])
-    
+    if(jtcl != "default")
+        transition_config.Cut()
+
+        for(var/I in jtcl)
+            transition_config[TransitionStringToEnum(I)] = TransitionStringToEnum(jtcl[I])
+        
     defaulted = FALSE
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) log_world(X + "missing from json!")
@@ -98,9 +99,7 @@
         log_world("Map file ([path]) does not exist!")
         return
 
-    if(json["transition_config"] == "default")
-        json["transition_config"] = initial(transition_config)
-    else
+    if(json["transition_config"] != "default")
         if(!islist(json["transition_config"]))
             log_world("transition_config is not a list!") 
             return
