@@ -1,5 +1,6 @@
 /var/list/sacrificed = list() //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+var/global/list/rune_types //Every rune that can be drawn by tomes
 
 /*
 

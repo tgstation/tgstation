@@ -7,9 +7,9 @@
 /obj/item/weapon/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-	icon_state = "green"
+	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	force = 12
@@ -22,7 +22,6 @@
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
 	var/ascend_bonus = 15
-	var/list/warning_messages = list("peckish", "hungry", "famished", "starving", "consume") //Messages that have NOT been shown
 
 /obj/item/weapon/his_grace/New()
 	..()
@@ -41,7 +40,7 @@
 /obj/item/weapon/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
 		consume(M)
-		if(LAZYLEN(contents) >= victims_needed && !ascended)
+		if(LAZYLEN(contents) >= victims_needed)
 			ascend()
 	else
 		..()
@@ -211,10 +210,12 @@
 	force = initial(force) + force_bonus
 
 /obj/item/weapon/his_grace/proc/ascend()
+	if(ascended)
+		return
 	var/mob/living/carbon/human/master = loc
 	force_bonus += ascend_bonus
-	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
-	icon_state = "gold"
+	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
+	icon_state = "his_grace_ascended"
 	item_state = "toolbox_gold"
 	ascended = TRUE
 	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)

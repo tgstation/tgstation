@@ -1,6 +1,6 @@
 var/datum/subsystem/atoms/SSatoms
 
-#define INITIALIZATION_INSSOBJ 0	//New should not call Initialize
+#define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
@@ -9,7 +9,7 @@ var/datum/subsystem/atoms/SSatoms
 	init_order = 11
 	flags = SS_NO_FIRE
 
-	var/initialized = INITIALIZATION_INSSOBJ
+	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
 /datum/subsystem/atoms/New()
@@ -23,7 +23,7 @@ var/datum/subsystem/atoms/SSatoms
 	return ..()
 
 /datum/subsystem/atoms/proc/InitializeAtoms(list/atoms = null)
-	if(initialized == INITIALIZATION_INSSOBJ)
+	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
 	var/list/late_loaders
@@ -73,7 +73,7 @@ var/datum/subsystem/atoms/SSatoms
 
 /datum/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
-	initialized = INITIALIZATION_INSSOBJ
+	initialized = INITIALIZATION_INSSATOMS
 
 /datum/subsystem/atoms/proc/map_loader_stop()
 	initialized = old_initialized

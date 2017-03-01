@@ -61,9 +61,17 @@
 	return
 
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
-	if(flag) return // too close
-	// Make sure our user is still holding us
-	if(user && user.get_active_held_item() == src)
+	if(flag) 
+		return // too close  
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.check_mutation(HULK))
+			user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			return
+		if(NOGUNS in H.dna.species.species_traits)
+			user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+			return
+	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
