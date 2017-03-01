@@ -11,7 +11,7 @@
 	/datum/construction_state/last/New(obj/parent, required_type_to_deconstruct, deconstruction_delay, deconstruction_message) - Specify the reqiuired tools and message for the first deconstruction step
 																																	Must be declared last, if at all, in InitConstruction
 
-	/obj/var/current_construction_state - A reference to an objects current construction_state, null means fully constructed
+	/obj/var/current_construction_state - A reference to an objects current construction_state, null means fully constructed and can't be deconstructed
 
 	/obj/proc/InitConstruction - Called when the first instance of an object type is initialized to set up it's construction steps. Should not call the base
 
