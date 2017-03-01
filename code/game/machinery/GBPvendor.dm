@@ -98,7 +98,7 @@
 			GBP -= prize.cost
 			GBP_spent += prize.cost
 			for(var/i in 1 to prize.amount)
-	   			new prize.equipment_path(get_turf(src))
+				new prize.equipment_path(get_turf(src))
 			if(prize.cost== 10000) // Still a placeholder
 				for(var/i in 1 to prize.amount)
 					new /obj/item/clothing/head/helmet/space/chronos(get_turf(src))
