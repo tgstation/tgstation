@@ -22,7 +22,7 @@
 
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state
 
-	/obj/proc/ConstructionChecks(datum/construction_state/start_state, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
+	/obj/proc/ConstructionChecks(datum/construction_state/start_state, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
 																									Setting skip to TRUE requests that no further checks other than the base be made
 
 	Psuedo Example:
@@ -86,8 +86,8 @@
 
 	var/required_amount_to_construct
 
-	var/construction_delay      //number multiplied by toolspeed, hands and materials have a pseudo-toolspeed of 1
-	var/deconstruction_delay
+	var/construction_delay      //number multiplied by toolspeed, hands have a pseudo-toolspeed of 1
+	var/deconstruction_delay	//note if these are zero, the action will happen instantly and the messages should reflect that
 
 	var/construction_message    //message displayed in the format user.visible_message("[user] [message]", "You [message]")
 	var/deconstruction_message
@@ -189,6 +189,7 @@
 			new required_type_to_construct(get_turf(parent), required_amount_to_construct)
 		else
 			new required_type_to_construct(get_turf(parent))
+	parent.update_icon()
 
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
@@ -196,6 +197,7 @@
 	parent.anchored = initial(parent.anchored)
 	parent.icon_state = initial(parent.icon_state)
 	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
+	parent.update_icon()
 
 /obj/proc/InitConstruction()
 	construction_steps[type] = 0	//null op, no construction steps
@@ -324,20 +326,22 @@
 			return
 
 		playsound(src, I.usesound, 100, 1)	
-		
-		user << "<span class='notice'>You begin [message] \the [src].</span>"
-		if(wait && do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs, I, user)))
-			if(istype(Mats) && !Mats.use(ccs.required_amount_to_construct))
-				user << "<span class='warning'>You no longer have enough [Mats]!</span>"
-				return
-			else
+		var/cont
+		if(wait)
+			user << "<span class='notice'>You begin [message] \the [src].</span>"
+			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs, constructed, I, user, FALSE))
+		else
+			cont = ConstructionChecks(ccs, constructed, I, user, FALSE)
+
+		if(cont)
+			if(!istype(Mats))
 				qdel(Mats)
-			user << "<span class='notice'>You finish [message] \the [src].</span>"
+			user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
 			ccs.OnLeft(src, user, constructed)
 	else
 		return ..()
 
-/obj/proc/ConstructionChecks(datum/construction_state/state_started, obj/item/I, mob/user, skip) 
+/obj/proc/ConstructionChecks(datum/construction_state/state_started, constructing, obj/item/I, mob/user, skip) 
 	if(current_construction_state != state_started)
 		user << "<span class='warning'>You were interrupted!</span>"
 		return FALSE
