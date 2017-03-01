@@ -607,7 +607,6 @@
 	faction = "turret"
 	emp_vunerable = 0
 	mode = TURRET_LETHAL
-	check_anomalies = TRUE
 
 /obj/machinery/porta_turret/centcomm_shuttle/assess_perp(mob/living/carbon/human/perp)
 	return 0
