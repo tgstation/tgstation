@@ -10,13 +10,15 @@
 	blacklisted = 0
 
 /datum/action/innate/umbrage/demented_outburst/Activate()
+	in_use = TRUE
 	owner.visible_message("<span class='warning'>[owner] begins to growl!</span>", "<span class='velvet bold'>cap...</span><br>\
 	<span class='danger'>You begin harnessing every ounce of your power...</span>")
 	playsound(owner, 'sound/magic/demented_outburst_charge.ogg', 100, 0)
 	addtimer(CALLBACK(src, .proc/outburst, owner), 50)
 	return TRUE
 
-/datum/action/innate/umbrage/demented_outburst/proc/outburst(mob/living/owner)
+/datum/action/innate/umbrage/demented_outburst/proc/outburst()
+	in_use = FALSE
 	if(!owner || owner.stat)
 		return
 	owner.visible_message("<span class='boldwarning'>[owner] lets out a deafening scream!</span>", "<span class='velvet bold italics'>WSWU!</span><br>\

@@ -7,6 +7,7 @@
 	var/psi_cost = 0
 	var/lucidity_cost = 0 //How much lucidity the ability costs to buy; if this is 0, it isn't listed on the catalog
 	var/blacklisted = 1 //If the ability can't be gained from the psi web
+	var/in_use = FALSE //For channeled/cast-time abilities
 	var/datum/umbrage/linked_umbrage //Our linked umbrage datum
 
 /datum/action/innate/umbrage/Trigger()
@@ -23,9 +24,10 @@
 			U.use_psi(psi_cost)
 
 /datum/action/innate/umbrage/IsAvailable()
-	var/datum/umbrage/U = linked_umbrage
-	if(!U)
+	if(!linked_umbrage)
 		return
-	if(U.psi < psi_cost)
+	if(!linked_umbrage.has_psi(psi_cost))
+		return
+	if(in_use)
 		return
 	return ..()

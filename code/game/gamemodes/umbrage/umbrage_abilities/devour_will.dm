@@ -20,11 +20,14 @@
 	return ..()
 
 /datum/action/innate/umbrage/devour_will/Activate()
+	in_use = TRUE
 	owner.visible_message("<span class='warning'>[owner]'s hand begins to shimmer...</span>", "<span class='velvet bold'>pwga...</span><br>\
 	<span class='notice'>You begin forming a dark bead...</span>")
 	playsound(owner, 'sound/magic/devour_will_begin.ogg', 50, 1)
 	if(!do_after(owner, 10, target = owner))
+		in_use = FALSE
 		return
+	in_use = FALSE
 	owner.visible_message("<span class='warning'>A glowing black orb appears in [owner]'s hand!</span>", "<span class='velvet bold'>...iejz</span><br>\
 	<span class='notice'>You form a dark bead in your hand.</span>")
 	playsound(owner, 'sound/magic/devour_will_form.ogg', 50, 1)

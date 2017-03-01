@@ -3,7 +3,7 @@
 	name = "Crawling Shadows"
 	id = "crawling_shadows"
 	desc = "Assumes a shadowy form that can crawl through vents and squeeze through the cracks in doors. You can also knock people out by attacking them."
-	button_icon_state = "umbrage_simulacrum"
+	button_icon_state = "umbrage_crawling_shadows"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	psi_cost = 75
 	lucidity_cost = 3 //Very powerful!

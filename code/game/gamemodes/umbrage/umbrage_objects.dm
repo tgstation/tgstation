@@ -27,11 +27,14 @@
 	if(!is_umbrage(user.mind) || eating || L == user) //no eating urself ;)))))))
 		return
 	var/datum/umbrage/U = linked_ability.linked_umbrage
-	if(!L.health)
+	if(!L.health || L.stat)
 		user << "<span class='warning'>[L] is too weak to drain.</span>"
 		return
 	if(linked_ability.victims[L.real_name])
 		user << "<span class='warning'>[L] must be given time to recover from their last draining.</span>"
+		return
+	if(!L.mind || is_umbrage_or_veil(L.mind))
+		user << "<span class='warning'>You cannot drain allies or the mindless.</span>"
 		return
 	eating = 1
 	user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class='velvet bold'>cera qo...</span><br>\
