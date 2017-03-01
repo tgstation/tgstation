@@ -51,17 +51,9 @@
 
 /obj/item/weapon/implanter/mindshield
 	name = "implanter (mindshield)"
-
-/obj/item/weapon/implanter/mindshield/New()
-	imp = new /obj/item/weapon/implant/mindshield(src)
-	..()
-	update_icon()
-
+	imp_type = /obj/item/weapon/implant/mindshield
 
 /obj/item/weapon/implantcase/mindshield
 	name = "implant case - 'Mindshield'"
 	desc = "A glass case containing a mindshield implant."
-
-/obj/item/weapon/implantcase/mindshield/New()
-	imp = new /obj/item/weapon/implant/mindshield(src)
-	..()
+	imp_type = /obj/item/weapon/implant/mindshield
