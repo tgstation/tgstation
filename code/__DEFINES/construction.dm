@@ -35,12 +35,12 @@
 #define SCREWS_OUT -1
 
 //ai core defines
-#define EMPTY_CORE 0
-#define CIRCUIT_CORE 1
-#define SCREWED_CORE 2
-#define CABLED_CORE 3
-#define GLASS_CORE 4
-#define AI_READY_CORE 5
+#define EMPTY_CORE 1
+#define CIRCUIT_CORE 2
+#define SCREWED_CORE 3
+#define CABLED_CORE 4
+#define GLASS_CORE 5
+#define AI_READY_CORE 6
 
 //field generator construction defines
 #define FG_UNSECURED 0

@@ -22,8 +22,8 @@
 
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state
 
-	/obj/proc/ConstructionChecks(datum/construction_state/start_state, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
-																									Setting skip to TRUE requests that no further checks other than the base be made
+	/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
+																							Setting skip to TRUE requests that no further checks other than the base be made
 
 	Psuedo Example:
 		/obj/chair
@@ -341,13 +341,13 @@
 	else
 		return ..()
 
-/obj/proc/ConstructionChecks(datum/construction_state/state_started, constructing, obj/item/I, mob/user, skip) 
-	if(current_construction_state != state_started)
+/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip) 
+	if(current_construction_state.id != state_started_id)
 		user << "<span class='warning'>You were interrupted!</span>"
 		return FALSE
 	
 	var/obj/item/stack/Mats = I
-	if(istype(Mats) &&  Mats.amount < state_started.required_amount_to_construct)
+	if(istype(Mats) && Mats.amount < state_started.required_amount_to_construct)
 		user << "<span class='warning'>You no longer have enough [Mats]!</span>"
 		return FALSE
 	return TRUE
