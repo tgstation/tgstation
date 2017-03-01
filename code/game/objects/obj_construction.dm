@@ -145,6 +145,7 @@
 	var/datum/construction_state/next = constructed ? next_state : prev_state
 	var/id
 	if(next)
+		parent.current_construction_state = next
 		next.OnReached(parent, user, constructed)
 		id = next.id
 	else
@@ -185,11 +186,16 @@
 		parent.modify_max_integrity(max_integrity ? max_integrity : parent.max_integrity, FALSE, new_failure_integrity = failure_integrity)
 
 	if(!constructed && required_amount_to_construct)
+		var/atom/A
 		if(ispath(required_type_to_construct, /obj/item/stack))
-			new required_type_to_construct(get_turf(parent), required_amount_to_construct)
+			A = new required_type_to_construct(get_turf(parent), required_amount_to_construct)
 		else
-			new required_type_to_construct(get_turf(parent))
-	parent.update_icon()
+			A = new required_type_to_construct(get_turf(parent))
+		parent.transfer_fingerprints_to(A)
+
+/datum/construction_state/first/OnReached(obj/parent, mob/user, constructed)
+	. = ..()
+	qdel(parent)
 
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
@@ -232,7 +238,7 @@
 					if(!current_step.required_amount_to_construct)
 						WARNING(error +"No amount set for material construction")
 				else if(current_step.required_amount_to_construct > 1)
-						WARNING(error + "Invalid material amount for non stack construction")
+					WARNING(error + "Invalid material amount for non stack construction")
 				if(!ispath(current_step.required_type_to_construct, /obj/item))
 					WARNING(error +"Invalid /obj/item type specified for construction: '[current_step.required_type_to_construct]'")
 			else if(!current_step.required_type_to_deconstruct)
@@ -247,8 +253,6 @@
 /obj/proc/OnConstruction(state_id, mob/user)
 
 /obj/proc/OnDeconstruction(state_id, mob/user, forced)
-	if(!state_id)
-		qdel(src)
 
 /obj/proc/Construct(mob/user)
 	var/cached_construction_steps = construction_steps[type]
@@ -258,6 +262,7 @@
 			first_step = first_step.next_state
 		if(first_step)
 			first_step.OnReached(src, user, TRUE)
+		current_construction_state = first_step
 	setDir(user.dir)
 	add_fingerprint(user)
 	//nothing to do otherwise
@@ -347,7 +352,7 @@
 		return FALSE
 	
 	var/obj/item/stack/Mats = I
-	if(istype(Mats) && Mats.amount < state_started.required_amount_to_construct)
+	if(istype(Mats) && Mats.amount < current_construction_state.required_amount_to_construct)
 		user << "<span class='warning'>You no longer have enough [Mats]!</span>"
 		return FALSE
 	return TRUE
