@@ -287,7 +287,7 @@
 
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
-	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
+	var/mission = sanitize_russian(input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses."))
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
 	var/squadSpawned = 0
 
