@@ -131,16 +131,16 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Sort subsystems by init_order, so they initialize in the correct order.
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 
-	var/start_timeofday = world.timeofday
+	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
 	CURRENT_TICKLIMIT = config.tick_limit_mc_init
 	for (var/datum/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
-		SS.Initialize(world.timeofday)
+		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-	var/time = (world.timeofday - start_timeofday) / 10
+	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
 	world << "<span class='boldannounce'>[msg]</span>"
@@ -151,9 +151,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Set world options.
 	world.sleep_offline = 1
 	world.fps = config.fps
-	var/initialized_tod = world.timeofday
+	var/initialized_tod = REALTIMEOFDAY
 	sleep(1)
-	initializations_finished_with_no_players_logged_in = initialized_tod < world.timeofday - 10
+	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
 	// Loop.
 	Master.StartProcessing(0)
 
@@ -231,7 +231,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	normalsubsystems += tickersubsystems
 	lobbysubsystems += tickersubsystems
 
-	init_timeofday = world.timeofday
+	init_timeofday = REALTIMEOFDAY
 	init_time = world.time
 
 	iteration = 1
@@ -240,7 +240,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/list/subsystems_to_check
 	//the actual loop.
 	while (1)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)

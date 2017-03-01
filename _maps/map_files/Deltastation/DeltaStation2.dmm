@@ -2034,7 +2034,8 @@
 /area/shuttle/syndicate)
 "adU" = (
 /obj/structure/chair/office/dark{
-	dir = 8
+	dir = 8;
+	name = "tactical swivel chair"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
@@ -2043,7 +2044,8 @@
 /area/shuttle/syndicate)
 "adW" = (
 /obj/structure/chair/office/dark{
-	dir = 1
+	dir = 1;
+	name = "tactical swivel chair"
 	},
 /obj/machinery/button/door{
 	id = "syndieshutters";
@@ -2056,7 +2058,8 @@
 /area/shuttle/syndicate)
 "adX" = (
 /obj/structure/chair/office/dark{
-	dir = 4
+	dir = 4;
+	name = "tactical swivel chair"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
@@ -2535,7 +2538,8 @@
 /area/mining_construction)
 "aeT" = (
 /obj/structure/chair{
-	dir = 4
+	dir = 4;
+	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -2543,7 +2547,8 @@
 /area/shuttle/syndicate)
 "aeU" = (
 /obj/structure/chair{
-	dir = 8
+	dir = 8;
+	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -3058,7 +3063,9 @@
 /turf/open/floor/plasteel/podhatch,
 /area/shuttle/syndicate)
 "agf" = (
-/obj/structure/chair,
+/obj/structure/chair{
+	name = "tactical chair"
+	},
 /turf/open/floor/plasteel/podhatch{
 	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
@@ -3706,7 +3713,8 @@
 /area/shuttle/syndicate)
 "ahq" = (
 /obj/structure/chair{
-	dir = 1
+	dir = 1;
+	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
