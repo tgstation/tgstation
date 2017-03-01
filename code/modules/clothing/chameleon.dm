@@ -156,6 +156,8 @@
 	return 1
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise()
+	if(istype(target, /obj/item/weapon/gun/chameleon))
+		return	//Please no crash!
 	START_PROCESSING(SSprocessing, src)
 	random_look(owner)
 
