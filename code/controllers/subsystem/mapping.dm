@@ -102,7 +102,7 @@ var/datum/subsystem/mapping/SSmapping
 	var/static/dmm_suite/loader
 	if(!loader)
 		loader = new
-	if(!loader.load_map(file(filename), 0, 0, forceLevel, no_afterchange = TRUE))
+	if(!loader.load_map(file(filename), 0, 0, forceLevel, no_changeturf = TRUE))
 		errorList |= filename
 	if(last)
 		QDEL_NULL(loader)
