@@ -55,6 +55,10 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
+/obj/structure/window/Construct(mob/user)
+	..()
+	ini_dir = dir
+
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 	for(var/obj/item/weapon/shard/shard in debris)

@@ -123,18 +123,9 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/atom/O = new R.result_type( usr.loc )
-		O.setDir(usr.dir)
+		var/obj/O = new R.result_type( usr.loc )
+		O.Construct(usr)
 		use(R.req_amount * multiplier)
-
-		//START: oh fuck i'm so sorry
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			W.ini_dir = W.dir
-		else if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			W.ini_dir = W.dir
-		//END: oh fuck i'm so sorry
 
 		//is it a stack ?
 		if (R.max_res_amount > 1)
@@ -144,16 +135,6 @@
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
-
-		if (istype(O,/obj/item))
-			usr.put_in_hands(O)
-		O.add_fingerprint(usr)
-
-		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
-			for (var/obj/item/I in O)
-				qdel(I)
-		//BubbleWrap END
 
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )

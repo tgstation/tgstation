@@ -247,7 +247,13 @@
 			first_step = first_step.next_state
 		if(first_step)
 			first_step.OnReached(src, user, TRUE)
+	setDir(user.dir)
+	add_fingerprint(user)
 	//nothing to do otherwise
+
+/obj/item/Construct(mob/user)
+	..()
+	user.put_in_hands(src)
 
 /obj/examine(mob/user)
 	..()

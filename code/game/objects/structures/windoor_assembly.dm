@@ -39,6 +39,10 @@
 	ini_dir = dir
 	air_update_turf(1)
 
+/obj/structure/windoor_assembly/Construct(mob/user)
+	..()
+	ini_dir = dir
+
 /obj/structure/windoor_assembly/Destroy()
 	density = 0
 	air_update_turf(1)

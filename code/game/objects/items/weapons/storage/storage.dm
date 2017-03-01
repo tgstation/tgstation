@@ -561,3 +561,8 @@
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
 		CHECK_TICK
+
+/obj/item/weapon/storage/Construct(mob/user)
+	..()
+	for (var/obj/item/I in src)
+		qdel(I)
