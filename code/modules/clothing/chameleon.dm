@@ -146,7 +146,7 @@
 	target.icon = initial(picked_item.icon)
 	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon) && istype(picked_item, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/energy/laser/chameleon/CG = target
-		CG.get_chameleon_vars(picked_item.type)
+		CG.get_chameleon_projectile(picked_item.type)
 
 /datum/action/item_action/chameleon/change/Trigger()
 	if(!IsAvailable())
@@ -436,7 +436,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_vars(obj/item/projectile/P)
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles/dmi', "icon_state" = "laser")
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
 	for(var/V in copy_vars)
 		if(P.vars[V])
 			chameleon_projectile_vars[V] = P.vars[V]
@@ -445,7 +445,7 @@
 			if(chambered.vars[V])
 				chambered.vars[V] = chameleon_projectile_vars[V]
 		if(copy_sound)
-			chameber.fire_sound = fire_sound
+			chambered.fire_sound = fire_sound
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
 	chameleon_projectile_vars = list()
@@ -493,7 +493,7 @@
 	else if(istype(G, /obj/item/weapon/gun/energy))
 		var/obj/item/weapon/gun/energy/EG = G
 		if(islist(EG.ammo_type) && EG.ammo_type.len)
-			var/obj/item/ammo_casing/AC = new EG.ammo_type[1](src)
+			var/obj/item/ammo_casing/AC = new EG.ammo_type[1].type(src)
 			qdel(EG)
 			if(!istype(AC)||!AC.projectile_type)
 				qdel(AC)
