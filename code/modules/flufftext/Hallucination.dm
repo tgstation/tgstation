@@ -11,11 +11,16 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
+#define SCREWYHUD_NONE 0
+#define SCREWYHUD_CRIT 1
+#define SCREWYHUD_DEAD 2
+#define SCREWYHUD_HEALTHY 3
+
 /mob/living/carbon
 	var/image/halimage
 	var/image/halbody
 	var/obj/halitem
-	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator, 5 - perfect health
+	var/hal_screwyhud = SCREWYHUD_NONE
 	var/handling_hal = 0
 
 /mob/living/carbon/proc/handle_hallucinations()
@@ -53,7 +58,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/mob/living/carbon/target = null
 
 /obj/effect/hallucination/proc/wake_and_restore()
-	target.hal_screwyhud = 0
+	target.hal_screwyhud = SCREWYHUD_NONE
 	target.SetSleeping(0)
 
 /obj/effect/hallucination/simple
@@ -328,7 +333,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/singularity/proc/Eat(atom/OldLoc, Dir)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
-		target.hal_screwyhud = 1
+		target.hal_screwyhud = SCREWYHUD_CRIT
 		target.SetSleeping(8, no_alert = TRUE)
 		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
@@ -761,7 +766,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				//Hacking a door
 				if(16)
 					src << 'sound/items/Screwdriver.ogg'
-					spawn(rand(10,30))
+					sleep(rand(10,30))
 					for(var/i = rand(1,3), i>0, i--)
 						src << 'sound/weapons/empty.ogg'
 						sleep(rand(10,30))
@@ -785,7 +790,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		if("hudscrew")
 			//Screwy HUD
 			//src << "Screwy HUD"
-			hal_screwyhud = pick(1,2,3,3,4,4,5)
+			hal_screwyhud = pick(SCREWYHUD_NONE,SCREWYHUD_CRIT,SCREWYHUD_DEAD,SCREWYHUD_HEALTHY)
 			sleep(rand(100,250))
 			hal_screwyhud = 0
 
@@ -916,7 +921,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					halimage = null
 		if("death")
 			//Fake death
-			hal_screwyhud = 2
+			hal_screwyhud = SCREWYHUD_DEAD
 			SetSleeping(20, no_alert = TRUE)
 			var/area/area = get_area(src)
 			src << "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>"
@@ -930,7 +935,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					src << "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","welcome [first_name()]","you too?","is the AI malf?",\
 					 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>"
 			sleep(rand(50,70))
-			hal_screwyhud = 0
+			hal_screwyhud = SCREWYHUD_NONE
 			SetSleeping(0)
 		if("husks")
 			if(!halbody)
