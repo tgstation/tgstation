@@ -37,6 +37,8 @@ var/datum/subsystem/mapping/SSmapping
 	if(config.defaulted)
 		world << "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>"
 	loadWorld()
+	SortAreas()
+	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
@@ -123,8 +125,6 @@ var/datum/subsystem/mapping/SSmapping
 	for(var/I in 1 to 5)
 		TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs)
 	TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs, last = TRUE)
-
-	SortAreas()
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"

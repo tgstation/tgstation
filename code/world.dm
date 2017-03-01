@@ -57,9 +57,6 @@
 
 	data_core = new /datum/datacore()
 
-	SortAreas()						//Build the list of all existing areas and sort it alphabetically
-	process_teleport_locs()			//Sets up the wizard teleport locations
-
 	Master.Setup(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
