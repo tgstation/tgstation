@@ -202,6 +202,7 @@
 			if(current_step.required_type_to_deconstruct && !ispath(current_step.required_type_to_deconstruct, /obj/item))
 				WARNING("Invalid /obj/item type specified for deconstruction: '[current_step.required_type_to_deconstruct]'")
 				. = FALSE
+			current_step = current_step.next_state
 	else
 		WARNING("Construction Error: InitConstruction for [type] defined but no steps were added")
 		. = FALSE
