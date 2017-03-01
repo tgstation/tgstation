@@ -1226,7 +1226,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	
 // Challenges!
 /datum/uplink_item/Challenge
-    category = "Challenges"
+	category = "Challenges"
 	surplus = 0
 	
 /datum/uplink_item/challenge/greentext
