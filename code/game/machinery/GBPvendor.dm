@@ -7,8 +7,8 @@
 	density = 1
 	anchored = 1
 	var/GBP = 0
-	var/GBP_spent = 0
-	var/GBP_earned = GBP + GBP_spent
+	var/GBPspent = 0
+	var/GBPearned = 0
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
 		new /datum/GBP_equipment("Whiskey",				/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,		10,	1),
 		new /datum/GBP_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,						20,	1),
@@ -35,6 +35,7 @@
 	var/equipment_name = "generic"
 	var/equipment_path = null
 	var/cost = 0
+	var/amount = 0
 
 /datum/GBP_equipment/New(name, path, cost, amount)
 	src.equipment_name = name
@@ -58,10 +59,11 @@
 	interact(user)
 
 /obj/machinery/GBP_vendor/interact(mob/user)
+	GBPearned = GBP + GBPspent
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	dat += "You have <td>[GBP]</td> engineering voucher points<br>"
-	switch(round(GBP_earned*100/world.time))
+	switch(round(GBPearned*100/world.time))
 		if(0 to 5)
 			dat += "Rating: Terrible<br>"
 		if(6 to 10)
@@ -96,7 +98,7 @@
 		if(prize.cost > GBP)
 		else if(prize.cost >= 300) // Placeholder spaghetti calm your shit
 			GBP -= prize.cost
-			GBP_spent += prize.cost
+			GBPspent += prize.cost
 			for(var/i in 1 to prize.amount)
 				new prize.equipment_path(get_turf(src))
 			if(prize.cost== 10000) // Still a placeholder
