@@ -239,6 +239,8 @@
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 	var/cross_name = "Other server"
+	var/cross_address = "byond://"
+	var/cross_allowed = FALSE
 	var/showircname = 0
 
 	var/list/gamemode_cache = null
@@ -418,9 +420,9 @@
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
 				if("cross_server_address")
-					global.cross_address = value
+					cross_address = value
 					if(value != "byond:\\address:port")
-						global.cross_allowed = 1
+						cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
 				if("panic_server_name")

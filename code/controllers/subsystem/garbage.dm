@@ -416,8 +416,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(Debug2)
 	SearchVar(comms_key)
 	SearchVar(comms_allowed)
-	SearchVar(cross_address)
-	SearchVar(cross_allowed)
 	SearchVar(medal_hub)
 	SearchVar(medal_pass)
 	SearchVar(medals_enabled)
