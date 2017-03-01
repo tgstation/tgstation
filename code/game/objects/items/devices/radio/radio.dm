@@ -541,6 +541,8 @@
 	subspace_switchable = 1
 	dog_fashion = null
 
+/obj/item/device/radio/borg/emp_act(severity)	//keeps bad things from happening
+
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
