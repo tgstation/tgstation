@@ -23,18 +23,21 @@
 /obj/item/weapon/gavelhammer/objection
 	name = "objection gavel"
 	desc = "Order, order! I'm planting bombs in my courthouse!"
-	var/duration = 250
+	var/duration = 200
 	var/cooldown = 0
 
 /obj/item/weapon/gavelhammer/objection/attack_self(mob/living/carbon/user)
 	object(user)
 
-/obj/item/weapon/gavelhammer/objection/after_attack(mob/living/carbon/user)
+/obj/item/weapon/gavelhammer/objection/afterattack(atom/O, mob/user, proximity)
 	object(user)
 
 /obj/item/weapon/gavelhammer/objection/proc/object(mob/living/carbon/user)
 	if(cooldown < world.time)
 		cooldown = world.time + 3000 //5 minutes
+		var/area/A = get_area(loc)
+		if(A.name == "Courtroom" || A.name == "Holodeck - Chapel Courtroom")
+			duration = 400
 		playsound(loc, 'sound/items/gavel.ogg', 100, 1)
 		user.say("OBJECTION!!")
 		add_fingerprint(user)
