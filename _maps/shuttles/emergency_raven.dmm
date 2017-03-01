@@ -1,14 +1,25 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/closed/wall/shuttle/smooth,
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
 /area/shuttle/escape)
 "ab" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/window/shuttle,
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/poddoor/shutters{
+	id = "shuttleshutters";
+	name = "blast shutters"
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -81,7 +92,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "ar" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "as" = (
 /obj/structure/table/optable,
@@ -162,7 +173,7 @@
 	},
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/hatch{
 	name = "Shuttle Bridge Access";
 	req_access_txt = "19"
 	},
@@ -172,7 +183,7 @@
 	},
 /area/shuttle/escape)
 "aG" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/hatch{
 	name = "Shuttle Bridge Access";
 	req_access_txt = "19"
 	},
@@ -227,37 +238,33 @@
 	},
 /area/shuttle/escape)
 "aN" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Medical Wing"
-	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
 /area/shuttle/escape)
 "aO" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Medical Wing"
-	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
 	},
 /area/shuttle/escape)
 "aP" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/hatch{
 	name = "Shuttle Security Bride Access";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aQ" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/hatch{
 	name = "Shuttle Bridge Access";
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aR" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/hatch{
 	name = "Shuttle EVA";
 	req_access_txt = "19"
 	},
@@ -308,9 +315,9 @@
 "aY" = (
 /obj/machinery/flasher{
 	id = "shuttleflash";
-	pixel_x = -21;
-	pixel_y = 21;
-	pixel_x = 0
+	pixel_x = -26;
+	pixel_y = 0;
+	step_x = 0
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
@@ -533,7 +540,7 @@
 /area/shuttle/escape)
 "bo" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "bp" = (
 /mob/living/simple_animal/bot/medbot{
@@ -558,9 +565,7 @@
 	},
 /area/shuttle/escape)
 "bs" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Medical Wing"
-	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "bt" = (
@@ -611,14 +616,13 @@
 /turf/open/floor/plasteel/darkpurple/side,
 /area/shuttle/escape)
 "bD" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/hatch{
 	name = "Shuttle Brig";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "bE" = (
-/obj/machinery/door/airlock/shuttle,
 /obj/docking_port/mobile/emergency{
 	dwidth = 14;
 	height = 18;
@@ -626,6 +630,7 @@
 	timid = 1;
 	width = 32
 	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "bF" = (
@@ -668,9 +673,9 @@
 	},
 /area/shuttle/escape)
 "bJ" = (
-/obj/structure/window/shuttle,
 /obj/structure/grille,
-/turf/open/floor/plasteel/black,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "bK" = (
 /obj/structure/chair,
@@ -679,9 +684,7 @@
 	},
 /area/shuttle/escape)
 "bL" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Storage Room"
-	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side{
 	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
@@ -707,9 +710,7 @@
 	},
 /area/shuttle/escape)
 "bP" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Storage Room"
-	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side,
 /area/shuttle/escape)
 "bQ" = (
@@ -794,13 +795,13 @@
 	},
 /area/shuttle/escape)
 "bR" = (
-/obj/machinery/door/airlock/glass_titanium,
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
 	},
 /area/shuttle/escape)
 "bS" = (
-/obj/machinery/door/airlock/glass_titanium,
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
 	},
@@ -930,17 +931,13 @@
 	},
 /area/shuttle/escape)
 "cj" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Engine Room"
-	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/corner{
 	dir = 8
 	},
 /area/shuttle/escape)
 "ck" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Engine Room"
-	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/corner,
 /area/shuttle/escape)
 "cl" = (
@@ -987,36 +984,528 @@
 	dir = 4
 	},
 /area/shuttle/escape)
+"cr" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"cs" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ct" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cw" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"cx" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"cy" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"cz" = (
+/obj/machinery/button/door{
+	id = "shuttleshutters";
+	name = "Bridge Blast Shutters";
+	pixel_x = 0;
+	pixel_y = -26;
+	req_access_txt = "150";
+	step_x = 0
+	},
+/turf/open/floor/plasteel/darkblue/side,
+/area/shuttle/escape)
+"cA" = (
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters{
+	id = "shuttleshutters";
+	name = "blast shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cB" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cC" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cD" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"cE" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cF" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cG" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cH" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cI" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"cJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cL" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cM" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cN" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cO" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cP" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cQ" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cR" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"cS" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cT" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cV" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cW" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cX" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cY" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"cZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"da" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"db" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dc" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dd" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"de" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"df" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dg" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dh" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"di" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dj" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dk" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dl" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dm" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dn" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"do" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dp" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ds" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dt" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"du" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dv" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"dw" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dx" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dy" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dz" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dA" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dC" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dD" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"dE" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dF" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dG" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"dH" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dI" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dJ" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dK" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dL" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"dM" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dN" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dO" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dP" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dQ" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"dR" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dS" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dT" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dU" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dV" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"dW" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dX" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dY" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"dZ" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ea" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"eb" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ec" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ed" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ee" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ef" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"eg" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"eh" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ei" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"ej" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ek" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"el" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"em" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"en" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"eo" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ep" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"eq" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"er" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"es" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"et" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"eu" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ev" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"ew" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"ex" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ey" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/shuttle/escape)
+"ez" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"eA" = (
+/turf/open/space,
+/obj/machinery/porta_turret/centcomm_shuttle{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
-aa
+cs
 ac
 ac
-aa
+cD
 ad
 aa
-ac
-ac
-aa
-ac
-ac
-bw
-aa
+cu
+cu
+cs
+cu
+cu
+bs
+cs
 bE
-bJ
-ac
-aa
+cu
+cu
+cD
 ad
 aa
-bw
-aa
-bw
-aa
-ac
-aa
-ac
-aa
+bs
+cu
+bs
+cs
+cu
+cs
+cu
+ei
 ad
 ad
 aa
@@ -1027,8 +1516,8 @@ ab
 ae
 am
 au
-aa
-aa
+cs
+cs
 ar
 aW
 bc
@@ -1040,9 +1529,9 @@ bD
 bF
 bK
 bM
-aa
+cs
 ad
-aa
+cs
 bF
 be
 be
@@ -1050,9 +1539,9 @@ be
 be
 be
 cd
-aa
+cs
 ad
-aa
+cx
 ar
 co
 "}
@@ -1061,7 +1550,7 @@ ac
 af
 an
 av
-aa
+cs
 an
 aP
 aX
@@ -1074,9 +1563,9 @@ ab
 br
 aC
 bN
-aa
-aa
-aa
+cs
+cs
+cs
 br
 bZ
 ca
@@ -1084,9 +1573,9 @@ aC
 bZ
 ca
 bz
-aa
-aa
-aa
+cs
+cs
+cs
 cl
 co
 "}
@@ -1098,12 +1587,12 @@ aw
 ar
 aJ
 ar
-aa
-ac
-aa
-aa
-ac
-aa
+cs
+cu
+cs
+cs
+cu
+cs
 ar
 br
 aC
@@ -1118,7 +1607,7 @@ aC
 bZ
 ca
 bz
-bo
+ab
 ch
 ar
 cl
@@ -1152,7 +1641,7 @@ aC
 bZ
 ca
 bO
-cf
+bR
 bG
 cj
 cm
@@ -1186,7 +1675,7 @@ aC
 bZ
 ca
 by
-cg
+bS
 bq
 ck
 cn
@@ -1196,18 +1685,18 @@ cq
 ac
 aj
 ao
-aw
+cz
 ar
 aM
 ar
-aa
-ac
-aa
-bo
+cs
+cu
+cs
+ab
 br
 bz
 bo
-aa
+cs
 bL
 bP
 ar
@@ -1220,7 +1709,7 @@ aC
 bZ
 ca
 bz
-bo
+ab
 ci
 ar
 cl
@@ -1231,22 +1720,22 @@ ac
 ak
 ap
 az
-aa
+cs
 ap
 aR
 ba
 ba
 bj
-aa
+cs
 br
 bz
-aa
+cs
 bH
 bG
 bz
-aa
-aa
-aa
+cs
+cs
+cs
 br
 bZ
 ca
@@ -1254,9 +1743,9 @@ aC
 bZ
 ca
 bz
-aa
-aa
-aa
+cs
+cs
+cs
 cl
 co
 "}
@@ -1265,22 +1754,22 @@ ab
 al
 aq
 aA
-aa
-aa
+cs
+cs
 ar
 bb
 bf
 bk
-aa
+cs
 br
 bz
-aa
+cs
 bI
 aZ
 bQ
-aa
+cs
 ad
-aa
+cs
 bW
 aZ
 bq
@@ -1288,44 +1777,44 @@ aC
 by
 aZ
 ce
-aa
+cs
 ad
-aa
+cy
 ar
 co
 "}
 (10,1,1) = {"
-aa
-aa
+cr
+cs
 ac
-ac
-aa
+cA
+cI
 ad
-aa
-aa
+cr
+cs
 aR
-aa
+cs
 ar
 br
 bz
 ar
-ac
-ac
-ac
-aa
+cu
+cu
+cu
+cI
 ad
-aa
-aa
-aa
+cr
+cs
+cs
 br
 aC
 bz
-aa
-aa
-aa
+cs
+cs
+en
 ad
 ad
-aa
+cr
 ar
 "}
 (11,1,1) = {"
@@ -1339,10 +1828,10 @@ ad
 ad
 ad
 ad
-aa
+cs
 bs
 bs
-aa
+cs
 ad
 ad
 ad
@@ -1350,11 +1839,11 @@ ad
 ad
 ad
 ad
-ac
+cu
 cb
 aC
 cc
-ac
+cu
 ad
 ad
 ad
@@ -1365,14 +1854,14 @@ ad
 (12,1,1) = {"
 ad
 ad
-aa
-aa
-ac
-aa
-aa
-aa
-aa
-aa
+cx
+cs
+cu
+cs
+cs
+cs
+cs
+cs
 bo
 bt
 bA
@@ -1382,16 +1871,16 @@ ad
 ad
 ad
 aa
-aa
-aa
-aa
+cs
+cs
+cs
 br
 aC
 bz
-aa
-aa
-aa
-aa
+cs
+cs
+cs
+cD
 ad
 ad
 ad
@@ -1410,12 +1899,12 @@ bl
 bp
 bu
 bA
-aa
+cs
 ad
 ad
 ad
 ad
-aa
+cs
 bV
 be
 be
@@ -1425,18 +1914,18 @@ bO
 be
 be
 cd
-aa
+cs
 ad
 ad
 ad
 "}
 (14,1,1) = {"
 ad
-ac
+cu
 as
 aC
 aC
-aa
+cs
 aT
 aC
 bh
@@ -1444,12 +1933,12 @@ bh
 aC
 bv
 bB
-ac
+cu
 ad
 ad
 ad
 ad
-ac
+cu
 br
 bX
 bX
@@ -1459,18 +1948,18 @@ bX
 bX
 bX
 bz
-ac
+cu
 ad
 ad
 ad
 "}
 (15,1,1) = {"
 ad
-ac
+cu
 at
 aD
 aC
-aa
+cs
 aU
 aC
 aC
@@ -1478,12 +1967,12 @@ aC
 aC
 aC
 bC
-ac
+cu
 ad
 ad
 ad
 ad
-ac
+cu
 br
 bY
 bY
@@ -1493,14 +1982,14 @@ bY
 bY
 bY
 bz
-ac
+cu
 ad
 ad
 ad
 "}
 (16,1,1) = {"
 ad
-aa
+cr
 ar
 aE
 aI
@@ -1512,12 +2001,12 @@ bm
 bi
 bm
 ar
-aa
+cI
 ad
 ad
 ad
 ad
-aa
+cs
 bW
 aZ
 aZ
@@ -1527,7 +2016,7 @@ aZ
 aZ
 aZ
 ce
-aa
+cs
 ad
 ad
 ad
@@ -1535,33 +2024,33 @@ ad
 (17,1,1) = {"
 ad
 ad
-aa
-aa
-ac
-aa
-aa
-ac
-ac
-ac
-ac
-aa
-aa
+cy
+cs
+cu
+cs
+cs
+cu
+cu
+cu
+cu
+cs
+cI
 ad
 ad
 ad
 ad
 ad
-aa
-aa
-ac
-ac
+cr
+cs
+cu
+cu
 ab
-ac
+cu
 ab
-ac
-ac
-aa
-aa
+cu
+cu
+cs
+cI
 ad
 ad
 ad

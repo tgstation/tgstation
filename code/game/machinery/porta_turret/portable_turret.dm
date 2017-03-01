@@ -592,6 +592,29 @@
 	cover.name = name
 	cover.desc = desc
 
+/obj/machinery/porta_turret/centcomm_shuttle
+	installation = null
+	always_up = 1
+	use_power = 0
+	has_cover = 0
+	scan_range = 9
+	stun_projectile = /obj/item/projectile/bullet
+	lethal_projectile = /obj/item/projectile/bullet
+	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	icon_state = "syndie_off"
+	base_icon_state = "syndie"
+	faction = "turret"
+	emp_vunerable = 0
+	mode = TURRET_LETHAL
+	check_anomalies = TRUE
+
+/obj/machinery/porta_turret/centcomm_shuttle/assess_perp(mob/living/carbon/human/perp)
+	return 0
+
+/obj/machinery/porta_turret/centcomm_shuttle/setup()
+	return
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////
