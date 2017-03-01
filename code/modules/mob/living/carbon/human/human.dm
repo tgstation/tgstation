@@ -911,8 +911,7 @@
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
 	if(!riding_datum)
-		riding_datum = new /datum/riding/human
-		riding_datum.ridden = src
+		riding_datum = new /datum/riding/human(src)
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
 		return
 	if(buckled)	//NO INFINITE STACKING!!

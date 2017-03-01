@@ -246,8 +246,9 @@
 		for(var/datum/objective/objective in objectives)
 			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
 
-	if(window)	recipient << browse(sanitize_russian(output, 1),"window=memory")
-	else
+	if(window)
+		recipient << browse(sanitize_russian(output, 1),"window=memory")
+	else if(objectives.len || memory)
 		recipient << "<i>[output]</i>"
 
 /datum/mind/proc/edit_memory()

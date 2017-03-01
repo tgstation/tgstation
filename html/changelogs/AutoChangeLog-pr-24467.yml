@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Anima Fragments now slam into non-Servants when bumping. This will ONLY happen if the fragment is not slowed, and slamming into someone will slightly damage the fragment and slow it severely."

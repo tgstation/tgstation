@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Diagnostic HUDs can now see if airlocks are shocked."
