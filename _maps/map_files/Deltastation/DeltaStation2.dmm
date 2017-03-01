@@ -110621,30 +110621,28 @@
 /turf/closed/wall,
 /area/chapel/main)
 "dNL" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
 "dNM" = (
-/obj/structure/cable/white{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn (NORTHWEST)"
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
 	},
+/turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
@@ -110668,10 +110666,6 @@
 	name = "\improper Departure Lounge"
 	})
 "dNP" = (
-/obj/structure/cable/white{
-	tag = "icon-0-2";
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc{
 	cell_type = 10000;
 	dir = 1;
@@ -110684,6 +110678,10 @@
 	dir = 2;
 	name = "departures camera"
 	},
+/obj/structure/cable/white{
+	tag = "icon-0-2";
+	icon_state = "0-2"
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -110692,10 +110690,10 @@
 	name = "\improper Departure Lounge"
 	})
 "dNQ" = (
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -110709,16 +110707,13 @@
 	name = "\improper Departure Lounge"
 	})
 "dNS" = (
+/obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -111079,11 +111074,11 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "dOE" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -111205,14 +111200,10 @@
 	name = "\improper Departure Lounge"
 	})
 "dOP" = (
+/obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -118940,6 +118931,786 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/transport)
+"eez" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeA" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeB" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeC" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeD" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeE" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeF" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeG" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeH" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeI" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeJ" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeK" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeL" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeM" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeN" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeO" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeP" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeQ" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeR" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeS" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeT" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeU" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeV" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeW" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeX" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeY" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eeZ" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efa" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efb" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efc" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efd" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efe" = (
+/turf/open/space,
+/area/shuttle/escape)
+"eff" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efg" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efh" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efi" = (
+/turf/open/space,
+/area/shuttle/escape)
+"efj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efk" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efl" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efm" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn (NORTHWEST)"
+	},
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efn" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efo" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efp" = (
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efq" = (
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efr" = (
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efs" = (
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"eft" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/space)
+"efu" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efv" = (
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efw" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efx" = (
+/turf/open/space,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"efy" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efA" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	tag = "icon-manifold (NORTH)";
+	icon_state = "manifold";
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efH" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	tag = "icon-manifold (NORTH)";
+	icon_state = "manifold";
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efI" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/neutral,
+/area/security/checkpoint2)
+"efJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efK" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (NORTHEAST)";
+	icon_state = "intact";
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efN" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efQ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold (NORTH)";
+	icon_state = "manifold";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efS" = (
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Departures - Aft";
+	dir = 1;
+	name = "departures camera"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (SOUTHWEST)";
+	icon_state = "intact";
+	dir = 10
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efX" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efY" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"efZ" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint2)
+"ega" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/space)
+"egb" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	req_access_txt = "63"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"egc" = (
+/obj/structure/fans/tiny,
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: EXTERNAL AIRLOCK";
+	pixel_x = 32;
+	tag = "icon-doors"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/space)
+"egd" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 10
+	},
+/area/space)
+"ege" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/red/side,
+/area/space)
+"egf" = (
+/obj/machinery/computer/prisoner,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 6
+	},
+/area/space)
+"egg" = (
+/obj/machinery/computer/secure_data,
+/turf/open/floor/plasteel/red,
+/area/space)
+"egh" = (
+/obj/machinery/computer/security,
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 10
+	},
+/area/space)
+"egi" = (
+/obj/structure/closet/secure_closet/security,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/red/side{
+	dir = 6
+	},
+/area/space)
+"egj" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/structure/sign/poster{
+	icon_state = "poster22_legit";
+	pixel_y = -32;
+	tag = "icon-poster22_legit"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 10
+	},
+/area/space)
+"egk" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/red/side,
+/area/space)
+"egl" = (
+/obj/structure/table,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/structure/cable/white{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/obj/item/weapon/restraints/handcuffs,
+/obj/item/weapon/restraints/handcuffs,
+/obj/item/device/assembly/flash/handheld,
+/turf/open/floor/plasteel/red/side,
+/area/space)
+"egm" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/red/side,
+/area/space)
+"egn" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -26
+	},
+/obj/machinery/light,
+/obj/machinery/camera{
+	c_tag = "Security - Departures Starboard";
+	dir = 1;
+	name = "security camera"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 6
+	},
+/area/space)
+"ego" = (
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
+/obj/structure/cable/white,
+/obj/structure/cable/white{
+	tag = "icon-0-2";
+	icon_state = "0-2"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egp" = (
+/obj/machinery/door/airlock/external{
+	name = "External Airlock";
+	req_access_txt = "13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (WEST)"
+	},
+/area/space)
+"egq" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"egr" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"egs" = (
+/obj/structure/cable/white{
+	tag = "icon-0-4";
+	icon_state = "0-4"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egt" = (
+/obj/structure/cable/white,
+/obj/structure/cable/white{
+	tag = "icon-0-4";
+	icon_state = "0-4"
+	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egu" = (
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egv" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"egw" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"egx" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"egy" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"egz" = (
+/obj/structure/cable/white{
+	tag = "icon-0-4";
+	icon_state = "0-4"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egA" = (
+/obj/structure/cable/white,
+/obj/structure/cable/white{
+	tag = "icon-0-4";
+	icon_state = "0-4"
+	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egB" = (
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egC" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"egD" = (
+/obj/structure/cable/white,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"egE" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/red,
+/area/space)
+"egF" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/red,
+/area/space)
+"egG" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/red,
+/area/space)
+"egH" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/space)
+"egI" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/space)
+"egJ" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/space)
+"egK" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel/vault{
+	dir = 4
+	},
+/area/space)
+"egL" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/folder/red,
+/obj/item/weapon/restraints/handcuffs,
+/obj/item/device/assembly/flash/handheld,
+/turf/open/floor/plasteel/vault,
+/area/space)
+"egM" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/darkblue/side,
+/area/space)
+"egN" = (
+/obj/machinery/computer/med_data,
+/turf/open/floor/plasteel/darkblue/side{
+	dir = 6
+	},
+/area/space)
+"egO" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/plasteel/darkblue/side{
+	dir = 10
+	},
+/area/space)
+"egP" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/plasteel/darkblue/side,
+/area/space)
+"egQ" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/vault,
+/area/space)
+"egR" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/high,
+/turf/open/floor/plasteel/vault{
+	dir = 4
+	},
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -155375,6 +156146,8 @@ dLN
 dMO
 dNL
 dOE
+dQi
+dQi
 dPt
 dQi
 dQi
@@ -155389,16 +156162,14 @@ dPA
 dWZ
 dXF
 dYr
-dZg
-dZQ
+egc
+egp
 aaH
 aaH
 aaa
 aaf
 aaa
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -155631,6 +156402,8 @@ dKK
 dLO
 dMP
 dNM
+efj
+efm
 dOF
 dPu
 dQj
@@ -155641,21 +156414,19 @@ dQj
 dQj
 dQj
 dQj
-dVU
-dWA
+efy
+efL
 ahL
 ahL
 ahL
-ahL
-dZR
+aGe
+egq
 aaf
 aaf
 aaa
 agg
 aaf
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -155888,6 +156659,8 @@ ahA
 ahA
 dMQ
 dNN
+dPx
+dPx
 dOG
 dPv
 dPx
@@ -155898,21 +156671,19 @@ dQo
 dQo
 dQo
 dQo
-dVV
-dWB
+efz
+efM
 ahN
 dXG
 dYs
-dZh
-dZR
+egd
+egr
 aaf
 agg
 aaf
 agg
 aaa
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -156144,7 +156915,9 @@ dJU
 dKL
 dLP
 dMQ
-dNO
+dNN
+dPx
+dPx
 dOH
 dPw
 dQk
@@ -156155,19 +156928,17 @@ dPw
 dQk
 dQZ
 dQk
-dVW
-dWC
+efA
+efN
 dXa
 dXH
 dYt
-dZi
-dXb
+ege
+egs
 aaf
 aaf
 aaa
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -156402,6 +157173,8 @@ ako
 dLQ
 dMR
 dNO
+dPx
+dPx
 dOI
 dPx
 dQl
@@ -156412,19 +157185,17 @@ dPx
 dQl
 dRa
 dRV
-dVX
-dWB
+efB
+efO
 dXb
 dXI
 dYu
-dZj
-dZS
+egf
+egt
 aaa
 aaf
 aaa
 aaf
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -156659,6 +157430,8 @@ dKM
 dLR
 dMS
 dNO
+dPx
+dPx
 dOI
 dPx
 dQm
@@ -156669,19 +157442,17 @@ dPx
 dTZ
 dRb
 dVk
-dVX
-dWB
+efC
+efP
 dXc
 dXJ
 dYv
-dZk
-dZT
+egg
+egu
 aaf
 aaf
 aaa
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -156916,6 +157687,8 @@ dKN
 dLS
 dMT
 dNO
+dPx
+dPx
 dOI
 dPx
 dQl
@@ -156926,19 +157699,17 @@ dPx
 dQl
 dRc
 dRV
-dVX
-dWD
+efD
+efQ
 dXd
 dXK
 dYw
-dZl
-dZR
+egh
+egv
 aaf
 agg
 aaf
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -157173,6 +157944,8 @@ dKO
 ahA
 dMQ
 dNP
+dPw
+dPw
 dOJ
 dPx
 dQn
@@ -157183,19 +157956,17 @@ dTu
 dUa
 dRd
 dVl
-dVX
-dWB
+efE
+efR
 dXe
 dXL
 dYx
-dZm
-dZR
+egi
+egw
 aaf
 agg
 aaa
 aaf
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -157430,6 +158201,8 @@ dKP
 dLT
 dMU
 dNO
+dPx
+dPx
 dOK
 dPx
 dQl
@@ -157440,19 +158213,17 @@ dPx
 dQl
 dRa
 dRV
-dVX
-dWE
+efF
+efS
 ahL
 dXk
 dYy
-dXk
-dZR
+brL
+egx
 aaf
 agg
 aaa
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -157687,6 +158458,8 @@ dKQ
 dLU
 dMV
 dNQ
+efk
+efn
 dOL
 dPy
 dQm
@@ -157697,19 +158470,17 @@ dPx
 dQl
 dRb
 dVk
-dVX
-dWB
+efG
+efT
 dXb
 dXM
 dYz
-dZn
-dZR
+egj
+egy
 aaf
 agg
 aaf
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -157944,6 +158715,8 @@ dKR
 dLV
 dMW
 dNO
+dPx
+dPx
 dOM
 dOK
 dQl
@@ -157954,19 +158727,17 @@ dPx
 dQl
 dRc
 dRV
-dVY
-dWF
+efH
+efU
 dXf
 dXN
 dYA
-dZo
-dXb
+egk
+egz
 aaf
 aaf
 aaa
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -158201,6 +158972,8 @@ dKb
 dLW
 dMV
 dNQ
+efl
+efo
 dON
 dPz
 dQo
@@ -158211,19 +158984,17 @@ dPx
 dPx
 dUF
 dPx
-dVZ
-dWB
+efI
+efV
 dXg
 dXO
 dYB
-dZp
-dZS
+egl
+egA
 aaa
 aaf
 aaa
 aaf
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -158469,18 +159240,18 @@ dOO
 dOO
 dOO
 dOO
-dWG
+dOO
+efJ
+efW
 dXh
 dXP
 dYC
-dZq
-dZT
+egm
+egB
 aaf
 aaf
 aaa
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -158717,6 +159488,8 @@ dMQ
 dNS
 dOP
 dPA
+dUG
+dPA
 dPA
 dPA
 dPA
@@ -158725,19 +159498,17 @@ dPA
 dPA
 dUG
 dPA
-dPA
-dPA
+efK
+efX
 dXi
 dXQ
 dYD
-dZr
-dZR
+egn
+egC
 aaf
 agg
 aaf
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -158975,6 +159746,8 @@ dMY
 dMY
 dMY
 dMY
+dMY
+dMY
 dRe
 dRY
 dRe
@@ -158982,17 +159755,15 @@ dMY
 dMY
 dUH
 dMY
-dMY
-dRe
+dXk
+efY
 dXj
 dXR
 dYE
-dZs
-dZU
+ego
+egD
 aaf
 agg
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -159231,21 +160002,21 @@ aaf
 aaf
 aaf
 aaf
+efp
+efr
 dMY
 dRf
 dMY
-dRf
-dMY
+eft
+brL
 aaf
-aaf
-aaf
-dMY
-dRf
+efu
+efw
 dXk
 dXS
 dXk
-aaf
-aaf
+ega
+brL
 aaf
 aaa
 aaa
@@ -159488,21 +160259,21 @@ aaa
 aaa
 aaa
 aaa
+efq
+efs
 dMY
 dRe
 dMY
-dRe
-dMY
+ebL
+brL
 aaa
-aaa
-aaa
-dMY
-dRe
+efv
+efx
 dXk
-dXR
+efZ
 dXk
-aaa
-aaa
+egb
+brL
 aaa
 aaa
 aaa
@@ -159738,6 +160509,8 @@ dGy
 dHP
 aaa
 aaa
+eeP
+efh
 dJk
 dKS
 dKT
@@ -159759,10 +160532,8 @@ dKT
 dXT
 dKT
 dKT
-dKT
-dKT
-aaa
-aaa
+ebj
+ebj
 aaa
 aaa
 aaa
@@ -159994,6 +160765,8 @@ dFa
 dGz
 dHQ
 aaa
+eez
+eeQ
 dJj
 dKd
 dKT
@@ -160016,10 +160789,8 @@ dKT
 dXU
 dYF
 dZt
-dZV
-dKT
-aaa
-aaa
+egE
+ebj
 aaa
 aaa
 aaa
@@ -160251,6 +161022,8 @@ dEX
 dGA
 dHP
 aaa
+eeA
+eeR
 dJj
 dKd
 dKU
@@ -160273,10 +161046,8 @@ dXl
 dXU
 dXU
 dXU
-dZV
-dKU
-aaa
-aaa
+egF
+ebm
 aaa
 aaa
 aaa
@@ -160508,6 +161279,8 @@ dFb
 dGB
 dHP
 aaa
+eeB
+eeS
 dJj
 dKd
 dKU
@@ -160530,10 +161303,8 @@ dKT
 dXV
 dXU
 dXU
-dZV
-dKT
-aaa
-aaa
+egG
+ebj
 aaa
 aaa
 aaa
@@ -160765,6 +161536,8 @@ dEZ
 dGC
 dHQ
 aaf
+eeC
+eeT
 dJk
 dJk
 dKT
@@ -160792,10 +161565,8 @@ dKT
 dKT
 dRZ
 dKU
-dKT
-dKT
-aaa
-aaa
+ebj
+ebj
 aad
 aaa
 aaa
@@ -161022,6 +161793,8 @@ dEX
 dGA
 dHP
 aaa
+eeD
+eeU
 dJj
 dKd
 dKT
@@ -161049,10 +161822,8 @@ dKT
 eat
 eax
 eaD
-eaL
-dKT
-aaa
-aaa
+egK
+ebj
 aaa
 aaa
 aaa
@@ -161279,6 +162050,8 @@ dEY
 dGz
 dHP
 aaa
+eeE
+eeV
 dJj
 dKd
 dKU
@@ -161306,10 +162079,8 @@ dKT
 eau
 eay
 eaE
-eaM
-dKU
-aaa
-aaa
+egL
+ebm
 aaa
 aaa
 aaa
@@ -161536,6 +162307,8 @@ dFc
 dGD
 dHQ
 aaf
+eeF
+eeW
 dJk
 dJk
 dKT
@@ -161563,10 +162336,8 @@ dNc
 eav
 eav
 eaF
-eaN
-dKU
-aaa
-aaa
+egM
+ebm
 aaa
 aaa
 aaa
@@ -161793,6 +162564,8 @@ dFd
 dGE
 dHP
 aaa
+eeG
+eeX
 dJj
 dKd
 dKU
@@ -161820,10 +162593,8 @@ dXm
 eav
 eav
 eaG
-eaO
-dKU
-aaa
-aaa
+egN
+ebm
 aaa
 aaa
 aaa
@@ -162050,6 +162821,8 @@ dFe
 dGF
 dHP
 aaa
+eeH
+eeY
 dJj
 dKd
 dKU
@@ -162077,10 +162850,8 @@ dXm
 eav
 eav
 eaH
-eaP
-dKU
-aaa
-aaa
+egO
+ebm
 aaa
 aaa
 aaa
@@ -162307,6 +163078,8 @@ dFf
 dGG
 dHQ
 aaf
+eeI
+eeZ
 dJk
 dJk
 dKT
@@ -162334,10 +163107,8 @@ dNc
 eav
 eaz
 eaF
-eaQ
-dKU
-aaa
-aaa
+egP
+ebm
 aaa
 aaa
 aaa
@@ -162564,6 +163335,8 @@ dFg
 dGH
 dHP
 aaa
+eeJ
+efa
 dJj
 dKd
 dKU
@@ -162591,10 +163364,8 @@ dKT
 eau
 eaA
 eaI
-eaR
-dKU
-aaa
-aaa
+egQ
+ebm
 aaa
 aaa
 aaa
@@ -162821,6 +163592,8 @@ dEY
 dGA
 dHP
 aaa
+eeK
+efb
 dJj
 dKd
 dKT
@@ -162848,10 +163621,8 @@ dKT
 eaw
 eaB
 eaJ
-eaS
-dKT
-aaa
-aaa
+egR
+ebj
 aaa
 aaa
 aaa
@@ -163078,6 +163849,8 @@ dEY
 dGI
 dHQ
 aaf
+eeL
+efc
 dJk
 dJk
 dKT
@@ -163105,10 +163878,8 @@ dKT
 dKT
 dRZ
 dKU
-dKT
-dKT
-aaa
-aaa
+ebj
+ebj
 aaa
 aaa
 aaa
@@ -163335,6 +164106,8 @@ dEY
 dGx
 dHP
 aaa
+eeM
+efd
 dJj
 dKd
 dKU
@@ -163357,10 +164130,8 @@ dKT
 dYb
 dYJ
 dZz
-eaa
-dKT
-aaa
-aaa
+egH
+ebj
 aaa
 aaa
 aaa
@@ -163592,6 +164363,8 @@ dFa
 dGJ
 dHP
 aaa
+eeN
+efe
 dJj
 dKd
 dKU
@@ -163614,10 +164387,8 @@ dKT
 dYa
 dYK
 dLZ
-eaa
-dKU
-aaa
-aaa
+egI
+ebm
 aaa
 aaa
 aaa
@@ -163849,6 +164620,8 @@ dFa
 dGK
 dHQ
 aaa
+eeO
+eff
 dJj
 dKd
 dKT
@@ -163871,10 +164644,8 @@ dKT
 dLY
 dYL
 dZA
-eaa
-dKT
-aaa
-aaa
+egJ
+ebj
 aaa
 aaa
 aaa
@@ -164107,6 +164878,8 @@ dGL
 dHP
 aaa
 aaa
+efg
+efi
 dJk
 dKS
 dKT
@@ -164128,10 +164901,8 @@ dKT
 dKU
 dYM
 dYM
-dKU
-dKT
-aaa
-aaa
+ebm
+ebj
 aaa
 aaa
 aaa
