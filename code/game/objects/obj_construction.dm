@@ -38,8 +38,8 @@
 				required_type_to_deconstruct = /obj/item/crowbar,
 				construction_delay = 4,\
 				deconstruction_delay = 4,\
-				construction_message = "screwing the legs to \the",\
-				deconstruction_message = "prying the wood from \the"\
+				construction_message = "screwing the legs to",\
+				deconstruction_message = "prying the wood from"\
 				examine_message = "The legs are unscrewed",\
 				icon_state = "unscrewed-legs",\
 				max_integrity = 200,\
@@ -50,7 +50,7 @@
 			new /datum/construction_state/last(src,\
 				required_type_to_deconstruct = /obj/item/screwdriver,\
 				deconstruction_delay = 4,\
-				deconstruction_message = "unscrewing the legs from \the"\
+				deconstruction_message = "unscrewing the legs from"\
 			)
 		
 		/obj/chair/OnDeconstruction(state_id, mob/user, forced)
@@ -280,7 +280,7 @@
 		else
 			return
 			
-		user << "<span class='notice'>You begin [message] \the [src].</span>"
+		user << "<span class='notice'>You begin [message] \the [src]...</span>"
 		if(do_after(user, wait, target = src))
 			user << "<span class='notice'>You finish [message] \the [src].</span>"
 			ccs.OnLeft(src, user, constructed)
