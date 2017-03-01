@@ -270,6 +270,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
 				if(!input || !(usr in view(1,src)))
 					return
+				if(CM.lastTimeUsed + 600 > world.time)
+					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Centcomm_announce(input, usr)
 				usr << "<span class='notice'>Message transmitted to Central Command.</span>"
@@ -286,6 +288,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
 				if(!input || !(usr in view(1,src)))
+					return
+				if(CM.lastTimeUsed + 600 > world.time)
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Syndicate_announce(input, usr)
@@ -306,6 +310,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)))
+					return
+				if(CM.lastTimeUsed + 600 > world.time)
 					return
 				Nuke_request(input, usr)
 				usr << "<span class='notice'>Request sent.</span>"
