@@ -19,7 +19,6 @@
 	var/mob/owner
 
 /datum/action/New(Target)
-	START_PROCESSING(SSobj, src)
 	target = Target
 	button = new
 	button.linked_action = src
@@ -28,12 +27,7 @@
 	if(desc)
 		button.desc = desc
 
-/datum/action/process()
-	UpdateButtonIcon()
-	Process()
-
 /datum/action/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		Remove(owner)
 	target = null
