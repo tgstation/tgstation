@@ -110,6 +110,10 @@
 
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/Click()
+	var/mob/living/carbon/human/owner = usr
+	if(owner.incapacitated())
+		owner << "<span class='warning'>You can't properly point your fingers while incapacitated.</span>"
+		return
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
