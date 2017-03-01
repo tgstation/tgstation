@@ -130,7 +130,7 @@
 			if (O)
 				observer.loc = O.loc
 			else
-				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
+				src << "<span class='notice'>Teleporting failed. The map is probably still loading...</span>"
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
