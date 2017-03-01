@@ -4,7 +4,7 @@
 	icon_state = "bicycle"
 	var/easter_egg_chance = 1
 
-var/list/bike_music = list('sound/misc/bike1.mid',
+var/static/list/bike_music = list('sound/misc/bike1.mid',
 							'sound/misc/bike2.mid',
 							'sound/misc/bike3.mid')
 /obj/vehicle/bicycle/New()
