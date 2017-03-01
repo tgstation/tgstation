@@ -9,6 +9,17 @@
 	lucidity_cost = 1 //Very niche, so low cost
 	blacklisted = 0
 
+/datum/action/innate/umbrage/New()
+	START_PROCESSING(SSobj, src)
+	..()
+
+/datum/action/innate/umbrage/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/datum/action/innate/umbrage/process()
+	UpdateButtonIcon() //Constantly checks the shuttle call
+
 /datum/action/innate/umbrage/silver_tongue/IsAvailable()
 	if(SSshuttle.emergency.mode != SHUTTLE_CALL)
 		return

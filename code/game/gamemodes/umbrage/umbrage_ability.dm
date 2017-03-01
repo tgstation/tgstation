@@ -10,17 +10,6 @@
 	var/in_use = FALSE //For channeled/cast-time abilities
 	var/datum/umbrage/linked_umbrage //Our linked umbrage datum
 
-/datum/action/innate/umbrage/New()
-	START_PROCESSING(SSobj, src)
-	..()
-
-/datum/action/innate/umbrage/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/datum/action/innate/umbrage/process()
-	UpdateButtonIcon() //This is to constantly check psi
-
 /datum/action/innate/umbrage/Trigger()
 	var/successful_activation = 0
 	if(!IsAvailable())
