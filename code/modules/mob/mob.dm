@@ -417,7 +417,7 @@ var/next_mob_id = 0
 	set category = "IC"
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-	msg = sanitize(msg)
+	msg = sanitize_russian(msg, 1)
 
 	if(mind)
 		mind.store_memory(msg)
