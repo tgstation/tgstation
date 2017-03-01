@@ -69,7 +69,7 @@
 	else if(banckey)
 		ckey = ckey(banckey)
 		computerid = bancid
-		ip = banip
+		ip = banip ? banip : 0
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
 	query.Execute()
