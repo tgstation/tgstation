@@ -20,7 +20,7 @@
 	jump_action.Grant(user)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if( (stat & (NOPOWER|BROKEN)) || !Adjacent(user) || user.eye_blind || user.incapacitated() )
+	if( (stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && !user.has_unlimited_silicon_privilege) || user.eye_blind || user.incapacitated() )
 		user.unset_machine()
 
 /obj/machinery/computer/camera_advanced/Destroy()
@@ -64,13 +64,10 @@
 		eyeobj.setLoc(eyeobj.loc)
 
 /obj/machinery/computer/camera_advanced/attack_robot(mob/user)
-	if(!Adjacent(user)) //Borgs can use the console without issue so long as they remain next to it.
-		user << "<span class='warning'>You must be adjacent to the console in order to interact with it.</span>"
-		return
 	return attack_hand(user)
 
-//obj/machinery/computer/camera_advanced/attack_ai(mob/user)
-//	return //AIs would need to disable their own camera procs to use the console safely.
+obj/machinery/computer/camera_advanced/attack_ai(mob/user)
+	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
 
 
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
