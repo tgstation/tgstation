@@ -96,7 +96,6 @@
 			if(active && !crit_fail && anchored && powernet && drain_rate)
 				icon_state = "dominator-yellow"
 		if ("close")
-			popup.close()
 			usr.unset_machine()
 
 
