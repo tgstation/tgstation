@@ -22,6 +22,8 @@
 
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state
 
+	/obj/proc/ConstructionChecks(datum/construction_state/start_state, mob/user) - Called in the do_after of a construction step. Must call the base. Returning FALSE will cancel the step
+
 	Psuedo Example:
 		/obj/chair
 			icon = 'chair.dmi'
@@ -312,7 +314,7 @@
 		playsound(src, I.usesound, 100, 1)	
 		
 		user << "<span class='notice'>You begin [message] \the [src].</span>"
-		if(do_after(user, wait * I.toolspeed, target = src))
+		if(wait && do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs, user)))
 			user << "<span class='notice'>You finish [message] \the [src].</span>"
 			ccs.OnLeft(src, user, constructed)
 			var/obj/item/stack/Mats = I
@@ -320,3 +322,8 @@
 				Mats.use(ccs.required_amount_to_construct)
 	else
 		return ..()
+
+/obj/proc/ConstructionChecks(datum/construction_state/state_started, mob/user)
+	. = current_construction_state == state_started
+	if(!.)
+		user << "<span class='warning'>You were interrupted!</span>"
