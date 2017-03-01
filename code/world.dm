@@ -60,12 +60,6 @@
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 	process_teleport_locs()			//Sets up the wizard teleport locations
 
-	#ifdef MAP_NAME
-	map_name = "[MAP_NAME]"
-	#else
-	map_name = "Unknown"
-	#endif
-
 	Master.Setup(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
@@ -122,7 +116,7 @@
 		if(ticker)
 			s["gamestate"] = ticker.current_state
 
-		s["map_name"] = map_name ? map_name : "Unknown"
+		s["map_name"] = SSmapping.config.map_name
 
 		if(key_valid && ticker && ticker.mode)
 			s["real_mode"] = ticker.mode.name

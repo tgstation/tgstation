@@ -479,7 +479,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(CELLRATE)
 	SearchVar(CHARGELEVEL)
 	SearchVar(powernets)
-	SearchVar(map_name)
 	SearchVar(hair_styles_list)
 	SearchVar(hair_styles_male_list)
 	SearchVar(hair_styles_female_list)
