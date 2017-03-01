@@ -38,6 +38,8 @@
 		var/area/A = get_area(loc)
 		if(A.name == "Courtroom" || A.name == "Holodeck - Chapel Courtroom")
 			duration = 400
+		else
+			duration = 200
 		playsound(loc, 'sound/items/gavel.ogg', 100, 1)
 		user.say("OBJECTION!!")
 		add_fingerprint(user)
