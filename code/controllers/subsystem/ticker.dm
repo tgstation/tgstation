@@ -185,8 +185,6 @@ var/datum/subsystem/ticker/ticker
 	else
 		mode.announce()
 
-	CHECK_TICK
-	current_state = GAME_STATE_PLAYING
 	if(!config.ooc_during_round)
 		toggle_ooc(0) // Turn it off
 
@@ -209,6 +207,8 @@ var/datum/subsystem/ticker/ticker
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
+	
+	current_state = GAME_STATE_PLAYING
 
 	if(SSevent.holidays)
 		world << "<font color='blue'>and...</font>"
