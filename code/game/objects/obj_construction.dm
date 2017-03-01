@@ -22,7 +22,8 @@
 
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state
 
-	/obj/proc/ConstructionChecks(datum/construction_state/start_state, mob/user) - Called in the do_after of a construction step. Must call the base. Returning FALSE will cancel the step
+	/obj/proc/ConstructionChecks(datum/construction_state/start_state, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
+																									Setting skip to TRUE requests that no further checks other than the base be made
 
 	Psuedo Example:
 		/obj/chair
@@ -74,10 +75,10 @@
 	/*
 		These can be:
 			null for requiring attack_self/attack_hand on help intent
-			An /obj/item path for a required tool
-			An /obj/item/stack path for required materials (construction only)
+			An /obj/item path for a required tool/material
 
-		If it's the last one, required_amount_to_construct is the amount of that material required to reach the next state
+		If it's a consumed material, required_amount_to_construct is the amount of that material required to reach the next state
+		null amounts act as a tool. No more than 1 can be specified if the material is not a stack
 		Used materials will be extracted when the object is deconstructed to this state or if the user attack_hand's on help intent
 	*/
 	var/required_type_to_construct
@@ -183,8 +184,11 @@
 	else if(max_integrity || failure_integrity)
 		parent.modify_max_integrity(max_integrity ? max_integrity : parent.max_integrity, FALSE, new_failure_integrity = failure_integrity)
 
-	if(!constructed && ispath(required_type_to_construct, /obj/item/stack/sheet))
-		new required_type_to_construct(get_turf(parent), required_amount_to_construct)
+	if(!constructed && required_amount_to_construct)
+		if(ispath(required_type_to_construct, /obj/item/stack))
+			new required_type_to_construct(get_turf(parent), required_amount_to_construct)
+		else
+			new required_type_to_construct(get_turf(parent))
 
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
@@ -222,10 +226,13 @@
 			if(current_step.failure_integrity && current_step.failure_integrity < last_failure_integrity)
 				WARNING(error + "Failure integrity lowered after construction")
 			if(current_step.required_type_to_construct)
-				if(ispath(current_step.required_type_to_construct, /obj/item/stack) && !current_step.required_amount_to_construct)
-					WARNING("No amount set for material construction")
-				else if(!ispath(current_step.required_type_to_construct, /obj/item))
-					WARNING("Invalid /obj/item type specified for construction: '[current_step.required_type_to_construct]'")
+				if(ispath(current_step.required_type_to_construct, /obj/item/stack))
+					if(!current_step.required_amount_to_construct)
+						WARNING(error +"No amount set for material construction")
+				else if(current_step.required_amount_to_construct > 1)
+						WARNING(error + "Invalid material amount for non stack construction")
+				if(!ispath(current_step.required_type_to_construct, /obj/item))
+					WARNING(error +"Invalid /obj/item type specified for construction: '[current_step.required_type_to_construct]'")
 			else if(!current_step.required_type_to_deconstruct)
 				WARNING(error + "Hand values for both construction and deconstruction types")
 			
@@ -311,19 +318,32 @@
 				user << "<span class='warning'>The welder must be on for this task!</span>"
 				return
 
+		var/obj/item/stack/Mats = I
+		if(istype(Mats) && Mats.amount < ccs.required_amount_to_construct)
+			user << "<span class='warning'>You don't have enough [Mats]!</span>"
+			return
+
 		playsound(src, I.usesound, 100, 1)	
 		
 		user << "<span class='notice'>You begin [message] \the [src].</span>"
-		if(wait && do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs, user)))
+		if(wait && do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs, I, user)))
+			if(istype(Mats) && !Mats.use(ccs.required_amount_to_construct))
+				user << "<span class='warning'>You no longer have enough [Mats]!</span>"
+				return
+			else
+				qdel(Mats)
 			user << "<span class='notice'>You finish [message] \the [src].</span>"
 			ccs.OnLeft(src, user, constructed)
-			var/obj/item/stack/Mats = I
-			if(istype(Mats))
-				Mats.use(ccs.required_amount_to_construct)
 	else
 		return ..()
 
-/obj/proc/ConstructionChecks(datum/construction_state/state_started, mob/user)
-	. = current_construction_state == state_started
-	if(!.)
+/obj/proc/ConstructionChecks(datum/construction_state/state_started, obj/item/I, mob/user, skip) 
+	if(current_construction_state != state_started)
 		user << "<span class='warning'>You were interrupted!</span>"
+		return FALSE
+	
+	var/obj/item/stack/Mats = I
+	if(istype(Mats) &&  Mats.amount < state_started.required_amount_to_construct)
+		user << "<span class='warning'>You no longer have enough [Mats]!</span>"
+		return FALSE
+	return TRUE
