@@ -619,3 +619,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
 	if(M && M.dirty < 100)
 		M.dirty++
+
+/obj/item/Construct(mob/user)
+	..()
+	user.put_in_hands(src)

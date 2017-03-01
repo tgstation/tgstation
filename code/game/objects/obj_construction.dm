@@ -251,10 +251,6 @@
 	add_fingerprint(user)
 	//nothing to do otherwise
 
-/obj/item/Construct(mob/user)
-	..()
-	user.put_in_hands(src)
-
 /obj/examine(mob/user)
 	..()
 	if(current_construction_state && current_construction_state.examine_message)
