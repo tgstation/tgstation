@@ -78,7 +78,7 @@
 						A.aiControlDisabled = -1
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
-				A.secondsElectrified = 30
+				A.set_electrified(30)
 				if(usr)
 					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 				add_logs(usr, A, "electrified")
@@ -87,7 +87,7 @@
 						while (A.secondsElectrified > 0)
 							A.secondsElectrified -= 1
 							if(A.secondsElectrified < 0)
-								A.secondsElectrified = 0
+								A.set_electrified(0)
 							sleep(10)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
@@ -137,10 +137,10 @@
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
 			if(mend)
 				if(A.secondsElectrified)
-					A.secondsElectrified = 0
+					A.set_electrified(0)
 			else
 				if(A.secondsElectrified != -1)
-					A.secondsElectrified = -1
+					A.set_electrified(-1)
 					if(usr)
 						A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 					add_logs(usr, A, "electrified")

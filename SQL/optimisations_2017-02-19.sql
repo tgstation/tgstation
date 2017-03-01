@@ -118,13 +118,22 @@ ALTER TABLE `feedback`.`player`
 , CHANGE COLUMN `ipTEMP` `ip` INT(10) UNSIGNED NOT NULL;
 COMMIT;
 
+START TRANSACTION;
 ALTER TABLE `feedback`.`poll_question`
  CHANGE COLUMN `polltype` `polltype` ENUM('OPTION', 'TEXT', 'NUMVAL', 'MULTICHOICE', 'IRV') NOT NULL
 , CHANGE COLUMN `adminonly` `adminonly` TINYINT(1) UNSIGNED NOT NULL
 , CHANGE COLUMN `createdby_ckey` `createdby_ckey` VARCHAR(32) NULL DEFAULT NULL
-, CHANGE COLUMN `createdby_ip` `createdby_ip` VARCHAR(32) NULL DEFAULT NULL
-, CHANGE COLUMN `for_trialmin` `for_trialmin` VARCHAR(32) NULL DEFAULT NULL
-, CHANGE COLUMN `dontshow` `dontshow` TINYINT(1) UNSIGNED NOT NULL;
+, CHANGE COLUMN `dontshow` `dontshow` TINYINT(1) UNSIGNED NOT NULL
+, ADD COLUMN `createdby_ipTEMP` INT UNSIGNED NOT NULL AFTER `createdby_ip`
+, DROP COLUMN `for_trialmin`;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE `feedback`.`poll_question`
+ SET `createdby_ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`createdby_ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
+SET SQL_SAFE_UPDATES = 1;
+ALTER TABLE `feedback`.`poll_question`
+ DROP COLUMN `createdby_ip`
+, CHANGE COLUMN `createdby_ipTEMP` `createdby_ip` INT(10) UNSIGNED NOT NULL;
+COMMIT;
 
 START TRANSACTION;
 ALTER TABLE `feedback`.`poll_textreply`

@@ -83,7 +83,7 @@
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 /client/proc/playtitlemusic()
-	while(ticker.current_state == GAME_STATE_STARTUP) //wait for ticker init to set the login music
+	while(!ticker.login_music) //wait for ticker init to set the login music
 		stoplag()
 	if(!ticker.login_music)
 		return

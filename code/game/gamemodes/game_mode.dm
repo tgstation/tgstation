@@ -103,7 +103,7 @@
 	return
 
 
-///Allows rounds to basically be "rerolled" should the initial premise fall through
+///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()
 	var/list/living_crew = list()
 
@@ -156,9 +156,9 @@
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(rand(1200,3000)) //somewhere between 2 and 5 minutes from now
+	spawn(rand(600,1800)) //somewhere between 1 and 3 minutes from now
 		if(!config.midround_antag[ticker.mode.config_tag])
 			round_converted = 0
 			return 1

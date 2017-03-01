@@ -52,7 +52,7 @@ var/datum/subsystem/processing/air/SSair
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
 	msg += "EG:[excited_groups.len]|"
- 	msg += "HS:[hotspots.len]|"
+	msg += "HS:[hotspots.len]|"
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"

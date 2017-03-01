@@ -129,7 +129,7 @@
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
 	if (building)
-		area = src.loc.loc:master
+		area = get_area(src)
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"

@@ -75,3 +75,5 @@
 
 	var/list/implants = null
 	var/tesla_ignore = FALSE
+
+	var/datum/riding/riding_datum

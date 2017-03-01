@@ -7518,8 +7518,10 @@
 /area/security/processing)
 "apT" = (
 /obj/structure/chair/comfy/beige{
+	desc = "It looks comfy and extra tactical.\n<span class='notice'>Alt-click to rotate it clockwise.</span>";
 	dir = 1;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	name = "tactical armchair"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -53551,7 +53553,8 @@
 /area/security/warden)
 "cmm" = (
 /obj/structure/chair{
-	dir = 8
+	dir = 8;
+	name = "tactical chair"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -63342,6 +63345,14 @@
 "cHB" = (
 /turf/closed/wall/r_wall,
 /area/space)
+"cHC" = (
+/obj/structure/chair/stool{
+	desc = "Apply butt, tactically.";
+	name = "tactical stool";
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -73419,7 +73430,7 @@ aaa
 aaa
 aac
 aTp
-cnh
+cHC
 aTp
 aTp
 aTp
