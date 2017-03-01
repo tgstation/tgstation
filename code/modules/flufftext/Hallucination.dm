@@ -895,22 +895,25 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				if(possible_points.len)
 					var/turf/open/floor/target = pick(possible_points)
 
-					switch(rand(1,3))
+					switch(rand(1,4))
 						if(1)
 							//src << "Space"
 							halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
 						if(2)
-							//src << "Fire"
-							halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
+							//src << "Lava"
+							halimage = image('icons/turf/floors/lava.dmi',target,"smooth",TURF_LAYER)
 						if(3)
+							//src << "Chasm"
+							halimage = image('icons/turf/floors/Chasms.dmi',target,"smooth",TURF_LAYER)
+						if(4)
 							//src << "C4"
 							halimage = image('icons/obj/grenade.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
 					if(client) client.images += halimage
-					spawn(rand(10,50)) //Only seen for a brief moment.
-						if(client) client.images -= halimage
-						halimage = null
+					sleep(rand(40,60)) //Only seen for a brief moment.
+					if(client) client.images -= halimage
+					halimage = null
 		if("death")
 			//Fake death
 			hal_screwyhud = 2
