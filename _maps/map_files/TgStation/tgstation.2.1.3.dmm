@@ -30350,11 +30350,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -106429,7 +106424,7 @@ blv
 bls
 bfT
 boD
-cHY
+bpY
 bsP
 box
 btw
