@@ -310,7 +310,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					usr << "<span class='warning'>Arrays recycling. Please stand by.</span>"
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
-				if(!input || !(usr in view(1,src)) || !checkCCcooldown)
+				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				Nuke_request(input, usr)
 				usr << "<span class='notice'>Request sent.</span>"
