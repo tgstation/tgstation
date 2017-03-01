@@ -322,7 +322,7 @@
 
 		var/obj/item/stack/Mats = I
 		if(istype(Mats) && Mats.amount < ccs.required_amount_to_construct)
-			user << "<span class='warning'>You don't have enough [Mats]!</span>"
+			user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more [Mats] first!</span>"
 			return
 
 		playsound(src, I.usesound, 100, 1)	
