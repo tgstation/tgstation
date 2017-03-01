@@ -91,8 +91,6 @@
 		if("set_power")
 			drain_rate = input("Power export rate (in kW):", name, drain_rate)
 			src.updateUsrDialog()
-			if(drain_rate > powernet.netexcess && drain_rate <= powernet.avail)
-				visible_message("This power setting will drain power at the expense of SMES or APC charging!")
 			if(active && !crit_fail && anchored && powernet && drain_rate)
 				icon_state = "dominator-yellow"
 		if ("close")
@@ -102,7 +100,7 @@
 /obj/machinery/power/exporter/process()
 	src.updateUsrDialog()
 	if(active && !crit_fail && anchored && powernet)
-		if(drain_rate <= powernet.avail)
+		if(drain_rate <= powernet.netexcess)
 			powernet.load += drain_rate*1000
 			power_drained += drain_rate
 			for(var/obj/machinery/GBP_vendor/G in world)
