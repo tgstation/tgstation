@@ -71,7 +71,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/image_layer = MOB_LAYER
 	var/active = 1 //qdelery
 
-/obj/effect/hallucination/simple/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/simple/Initialize(var/mob/living/carbon/T)
 	target = T
 	current_image = GetImage()
 	if(target.client) target.client.images |= current_image
@@ -121,7 +121,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/radius = 0
 	var/next_expand = 0
 
-/obj/effect/hallucination/fake_flood/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/fake_flood/Initialize(var/mob/living/carbon/T)
 	..()
 	target = T
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
@@ -168,7 +168,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_icon = 'icons/mob/alien.dmi'
 	image_state = "alienh_pounce"
 
-/obj/effect/hallucination/simple/xeno/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/simple/xeno/Initialize(var/mob/living/carbon/T)
 	..()
 	name = "alien hunter ([rand(1, 1000)])"
 
@@ -183,7 +183,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/xeno/xeno = null
 
-/obj/effect/hallucination/xeno_attack/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/xeno_attack/Initialize(var/mob/living/carbon/T)
 	target = T
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
@@ -209,7 +209,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_icon = 'icons/mob/animal.dmi'
 	image_state = "clown"
 
-/obj/effect/hallucination/simple/clown/New(loc,var/mob/living/carbon/T,duration)
+/obj/effect/hallucination/simple/clown/Initialize(var/mob/living/carbon/T,duration)
 	..(loc, T)
 	name = pick(clown_names)
 	QDEL_IN(src,duration)
@@ -226,7 +226,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/borer/borer = null
 
-/obj/effect/hallucination/borer/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/borer/Initialize(var/mob/living/carbon/T)
 	target = T
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
@@ -261,7 +261,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/image/fakebroken
 	var/image/fakerune
 
-/obj/effect/hallucination/oh_yeah/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/oh_yeah/Initialize(var/mob/living/carbon/T)
 	target = T
 	for(var/turf/closed/wall/W in range(7,target))
 		wall = W
@@ -307,7 +307,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//todo Hide where it moved with fake space images
 	var/obj/effect/hallucination/simple/singularity/s = null
 
-/obj/effect/hallucination/singularity_scare/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/singularity_scare/Initialize(var/mob/living/carbon/T)
 	target = T
 	var/turf/start = get_turf(T)
 	var/screen_border = pick(SOUTH,EAST,WEST,NORTH)
@@ -339,7 +339,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/battle
 
-/obj/effect/hallucination/battle/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/battle/Initialize(var/mob/living/carbon/T)
 	target = T
 	var/hits = rand(3,6)
 	switch(rand(1,5))
@@ -375,7 +375,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion
 	var/list/image/delusions = list()
 
-/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
+/obj/effect/hallucination/delusion/Initialize(mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
@@ -414,7 +414,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/self_delusion
 	var/image/delusion
 
-/obj/effect/hallucination/self_delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null)
+/obj/effect/hallucination/self_delusion/Initialize(mob/living/carbon/T,force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null)
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie","robot")
@@ -449,7 +449,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target.client.images.Remove(delusion)
 	return ..()
 
-/obj/effect/hallucination/fakeattacker/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/fakeattacker/Initialize(var/mob/living/carbon/T)
 	target = T
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
@@ -522,7 +522,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			for(var/mob/O in oviewers(world.view , my_target))
 				O << "<span class='danger'>[my_target] stumbles around.</span>"
 
-/obj/effect/fake_attacker/New(loc,var/mob/living/carbon/T)
+/obj/effect/fake_attacker/Initialize(var/mob/living/carbon/T)
 	..()
 	my_target = T
 	QDEL_IN(src, 300)
@@ -611,7 +611,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 /obj/effect/hallucination/bolts
 	var/list/doors = list()
 
-/obj/effect/hallucination/bolts/New(loc,var/mob/living/carbon/T,var/door_number=-1) //-1 for severe, 1-2 for subtle
+/obj/effect/hallucination/bolts/Initialize(var/mob/living/carbon/T,var/door_number=-1) //-1 for severe, 1-2 for subtle
 	target = T
 	var/image/I = null
 	var/count = 0
@@ -635,7 +635,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 /obj/effect/hallucination/whispers
 
-/obj/effect/hallucination/whispers/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/whispers/Initialize(var/mob/living/carbon/T)
 	target = T
 	var/speak_messages = list("I'm watching you...","[target.first_name()]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!","EI NATH!!", "RUN!!", "Kill me!")
 	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(teleportlocs)]!!","Where's [target.first_name()]?","Call the shuttle!","AI rogue!!")
@@ -663,7 +663,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 /obj/effect/hallucination/message
 
-/obj/effect/hallucination/message/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/message/Initialize(var/mob/living/carbon/T)
 	target = T
 	var/chosen = pick("<span class='userdanger'>The light burns you!</span>", \
 		"<span class='danger'>You don't feel like yourself.</span>", \
