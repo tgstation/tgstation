@@ -381,3 +381,22 @@
 	R.module.add_module(S, FALSE, TRUE)
 
 	return 1
+	
+/obj/item/borg/upgrade/traitorsec
+	name = "Despot upgrade module"
+	desc = "Ilegal upgrade board that unlocks the banned security module"
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	origin_tech = "data=4;combat=4;syndicate=3"
+	
+/obj/item/borg/upgrade/traitorsec/attack()
+	return
+
+/obj/item/borg/upgrade/afterattack(atom/target, mob/user, proximity)
+	var/atom/A = target
+	if(!proximity && prox_check)
+		return
+	if(!isrobot(target))
+		return
+	A.emag_act(user)
+	A.transform to(/obj/item/weapon/robot_module/security)
