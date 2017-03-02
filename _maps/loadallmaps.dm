@@ -11,4 +11,8 @@
 #include "map_files\generic\Lavaland.dmm"
 #include "map_files\generic\Space.dmm"
 #include "map_files\generic\SpaceDock.dmm"
+
+#ifdef TRAVISBUILDING
+#include "templates.dm"
+#endif
 #endif
