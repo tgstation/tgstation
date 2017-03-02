@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Clones no longer gasp for air while in cloning pods."
+  - rscadd: "Adds a new reagent, \"Mime's Bane\", that prevents all emoting while
+it is in a victim's system. Currently admin only."
