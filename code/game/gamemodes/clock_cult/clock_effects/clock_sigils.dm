@@ -78,16 +78,16 @@
 /obj/effect/clockwork/sigil/submission
 	name = "ominous sigil"
 	desc = "A luminous golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for seven seconds."
+	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for nine seconds."
 	icon_state = "sigilsubmission"
 	layer = LOW_SIGIL_LAYER
 	alpha = 125
 	color = "#FAE48C"
 	stat_affected = UNCONSCIOUS
 	resist_string = "glows faintly yellow"
-	var/convert_time = 70
-	var/glow_light = 2 //soft light
-	var/glow_falloff = 1
+	var/convert_time = 90
+	var/glow_light = 4 //bright light
+	var/glow_falloff = 3
 	var/delete_on_finish = TRUE
 	sigil_name = "Sigil of Submission"
 	var/glow_type
