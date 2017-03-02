@@ -145,6 +145,11 @@
 	e_cost = 500
 	fire_sound = 'sound/weapons/Kenetic_accel.ogg' // fine spelling there chap
 
+/obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	..()
+	if(loc && istype(loc, /obj/item/weapon/gun/energy/kinetic_accelerator))
+		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = loc
+		KA.modify_projectile(BB)
 
 //Projectiles
 /obj/item/projectile/kinetic
