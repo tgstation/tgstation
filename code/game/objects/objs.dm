@@ -232,6 +232,3 @@
 		return
 	else
 		return
-
-/obj/unobtainable/New()
-	qdel(src)	//admemes get out
