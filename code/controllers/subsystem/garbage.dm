@@ -942,7 +942,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(GALOSHES_DONT_HELP)
 	SearchVar(SLIDE_ICE)
 	SearchVar(limb_icon_cache)
-	SearchVar(ALIEN_AFK_BRACKET)
 	SearchVar(MIN_IMPREGNATION_TIME)
 	SearchVar(MAX_IMPREGNATION_TIME)
 	SearchVar(MIN_ACTIVE_TIME)
