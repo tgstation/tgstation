@@ -1,6 +1,6 @@
-var/datum/subsystem/events/SSevent
+var/datum/controller/subsystem/events/SSevent
 
-/datum/subsystem/events
+/datum/controller/subsystem/events
 	name = "Events"
 	init_order = 6
 
@@ -16,11 +16,11 @@ var/datum/subsystem/events/SSevent
 	var/wizardmode = 0
 
 
-/datum/subsystem/events/New()
+/datum/controller/subsystem/events/New()
 	NEW_SS_GLOBAL(SSevent)
 
 
-/datum/subsystem/events/Initialize(time, zlevel)
+/datum/controller/subsystem/events/Initialize(time, zlevel)
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
@@ -31,7 +31,7 @@ var/datum/subsystem/events/SSevent
 	..()
 
 
-/datum/subsystem/events/fire(resumed = 0)
+/datum/controller/subsystem/events/fire(resumed = 0)
 	if(!resumed)
 		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
@@ -50,17 +50,17 @@ var/datum/subsystem/events/SSevent
 			return
 
 //checks if we should select a random event yet, and reschedules if necessary
-/datum/subsystem/events/proc/checkEvent()
+/datum/controller/subsystem/events/proc/checkEvent()
 	if(scheduled <= world.time)
 		spawnEvent()
 		reschedule()
 
 //decides which world.time we should select another random event at.
-/datum/subsystem/events/proc/reschedule()
+/datum/controller/subsystem/events/proc/reschedule()
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
 //selects a random event based on whether it can occur and it's 'weight'(probability)
-/datum/subsystem/events/proc/spawnEvent()
+/datum/controller/subsystem/events/proc/spawnEvent()
 	if(!config.allow_random_events)
 //		var/datum/round_event_control/E = locate(/datum/round_event_control/dust) in control
 //		if(E)	E.runEvent()
@@ -174,7 +174,7 @@ var/datum/subsystem/events/SSevent
 */
 
 //sets up the holidays and holidays list
-/datum/subsystem/events/proc/getHoliday()
+/datum/controller/subsystem/events/proc/getHoliday()
 	if(!config.allow_holidays)
 		return		// Holiday stuff was not enabled in the config!
 
@@ -194,12 +194,12 @@ var/datum/subsystem/events/SSevent
 		holidays = shuffle(holidays)
 		world.update_status()
 
-/datum/subsystem/events/proc/toggleWizardmode()
+/datum/controller/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode
 	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 
 
-/datum/subsystem/events/proc/resetFrequency()
+/datum/controller/subsystem/events/proc/resetFrequency()
 	frequency_lower = initial(frequency_lower)
 	frequency_upper = initial(frequency_upper)

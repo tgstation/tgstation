@@ -1,6 +1,6 @@
-var/datum/subsystem/mapping/SSmapping
+var/datum/controller/subsystem/mapping/SSmapping
 
-/datum/subsystem/mapping
+/datum/controller/subsystem/mapping
 	name = "Mapping"
 	init_order = 12
 	flags = SS_NO_FIRE
@@ -18,12 +18,12 @@ var/datum/subsystem/mapping/SSmapping
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
-/datum/subsystem/mapping/New()
+/datum/controller/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
 	return ..()
 
 
-/datum/subsystem/mapping/Initialize(timeofday)
+/datum/controller/subsystem/mapping/Initialize(timeofday)
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
@@ -53,15 +53,15 @@ var/datum/subsystem/mapping/SSmapping
    Used by the AI doomsday and the self destruct nuke.
 */
 
-/datum/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
+/datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
 	nuke_threats[nuke] = TRUE
 	check_nuke_threats()
 
-/datum/subsystem/mapping/proc/remove_nuke_threat(datum/nuke)
+/datum/controller/subsystem/mapping/proc/remove_nuke_threat(datum/nuke)
 	nuke_threats -= nuke
 	check_nuke_threats()
 
-/datum/subsystem/mapping/proc/check_nuke_threats()
+/datum/controller/subsystem/mapping/proc/check_nuke_threats()
 	for(var/datum/d in nuke_threats)
 		if(!istype(d) || QDELETED(d))
 			nuke_threats -= d
@@ -72,7 +72,7 @@ var/datum/subsystem/mapping/SSmapping
 		var/turf/open/floor/T = N
 		T.icon_state = (threats ? "rcircuitanim" : T.icon_regular_floor)
 
-/datum/subsystem/mapping/Recover()
+/datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
@@ -81,7 +81,7 @@ var/datum/subsystem/mapping/SSmapping
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 
-/datum/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
+/datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)
 	for(var/map in filelist)
 		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
@@ -91,7 +91,7 @@ var/datum/subsystem/mapping/SSmapping
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
 
-/datum/subsystem/mapping/proc/preloadRuinTemplates()
+/datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
 	banned += generateMapList("config/spaceruinblacklist.txt")
@@ -114,7 +114,7 @@ var/datum/subsystem/mapping/SSmapping
 		else if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
 
-/datum/subsystem/mapping/proc/preloadShuttleTemplates()
+/datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
 
 	for(var/item in subtypesof(/datum/map_template/shuttle))
@@ -129,7 +129,7 @@ var/datum/subsystem/mapping/SSmapping
 		shuttle_templates[S.shuttle_id] = S
 		map_templates[S.shuttle_id] = S
 
-/datum/subsystem/mapping/proc/preloadShelterTemplates()
+/datum/controller/subsystem/mapping/proc/preloadShelterTemplates()
 	for(var/item in subtypesof(/datum/map_template/shelter))
 		var/datum/map_template/shelter/shelter_type = item
 		if(!(initial(shelter_type.mappath)))

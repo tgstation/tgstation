@@ -1,9 +1,9 @@
-var/datum/subsystem/lighting/SSlighting
+var/datum/controller/subsystem/lighting/SSlighting
 
 #define SSLIGHTING_LIGHTS 1
 #define SSLIGHTING_TURFS 2
 
-/datum/subsystem/lighting
+/datum/controller/subsystem/lighting
 	name = "Lighting"
 	init_order = 1
 	wait = 1
@@ -17,12 +17,12 @@ var/datum/subsystem/lighting/SSlighting
 	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
 
 
-/datum/subsystem/lighting/New()
+/datum/controller/subsystem/lighting/New()
 	NEW_SS_GLOBAL(SSlighting)
 	return ..()
 
 
-/datum/subsystem/lighting/stat_entry()
+/datum/controller/subsystem/lighting/stat_entry()
 	..("L:[round(changed_lights_workload,1)]|T:[round(changed_turfs_workload,1)]")
 
 
@@ -30,7 +30,7 @@ var/datum/subsystem/lighting/SSlighting
 //effects and then processes every turf in the queue, updating their lighting object's appearance
 //Any light that returns 1 in check() deletes itself
 //By using queues we are ensuring we don't perform more updates than are necessary
-/datum/subsystem/lighting/fire(resumed = 0)
+/datum/controller/subsystem/lighting/fire(resumed = 0)
 	var/ticklimit = CURRENT_TICKLIMIT
 	//split our tick allotment in half so we don't spend it all on lightshift checks
 	CURRENT_TICKLIMIT = world.tick_usage + ((ticklimit-world.tick_usage)/2)
@@ -62,7 +62,7 @@ var/datum/subsystem/lighting/SSlighting
 		changed_turfs.Cut(1,i)
 
 //same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
-/datum/subsystem/lighting/Initialize(timeofday)
+/datum/controller/subsystem/lighting/Initialize(timeofday)
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	if (config.starlight)
 		for(var/area/A in world)
@@ -87,7 +87,7 @@ var/datum/subsystem/lighting/SSlighting
 //Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs
 //It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
 //does not crash
-/datum/subsystem/lighting/Recover()
+/datum/controller/subsystem/lighting/Recover()
 	if(!istype(SSlighting.changed_turfs))
 		SSlighting.changed_turfs = list()
 	if(!istype(SSlighting.changed_lights))

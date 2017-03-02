@@ -1,6 +1,6 @@
-var/datum/subsystem/processing/overlays/SSoverlays
+var/datum/controller/subsystem/processing/overlays/SSoverlays
 
-/datum/subsystem/processing/overlays
+/datum/controller/subsystem/processing/overlays
 	name = "Overlay"
 	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1
@@ -12,11 +12,11 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	var/list/overlay_icon_state_caches
 	var/initialized = FALSE
 
-/datum/subsystem/processing/overlays/New()
+/datum/controller/subsystem/processing/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
 	LAZYINITLIST(overlay_icon_state_caches)
 
-/datum/subsystem/processing/overlays/Initialize()
+/datum/controller/subsystem/processing/overlays/Initialize()
 	initialized = TRUE
 	for(var/I in processing)
 		var/atom/A = I
@@ -25,11 +25,11 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	processing.Cut()
 	..()
 
-/datum/subsystem/processing/overlays/Recover()
+/datum/controller/subsystem/processing/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
 	processing = SSoverlays.processing
 
-/datum/subsystem/processing/overlays/fire()
+/datum/controller/subsystem/processing/overlays/fire()
 	while(processing.len)
 		var/atom/thing = processing[processing.len]
 		processing.len--

@@ -1,6 +1,6 @@
-var/datum/subsystem/npcpool/SSnpc
+var/datum/controller/subsystem/npcpool/SSnpc
 
-/datum/subsystem/npcpool
+/datum/controller/subsystem/npcpool
 	name = "NPC Pool"
 	init_order = 17
 	display_order = 6
@@ -15,18 +15,18 @@ var/datum/subsystem/npcpool/SSnpc
 	var/list/botPool_l = list() //list of all npcs using the pool
 	var/list/botPool_l_non = list() //list of all non SNPC mobs using the pool
 
-/datum/subsystem/npcpool/proc/insertBot(toInsert)
+/datum/controller/subsystem/npcpool/proc/insertBot(toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
 		botPool_l |= toInsert
 
-/datum/subsystem/npcpool/New()
+/datum/controller/subsystem/npcpool/New()
 	NEW_SS_GLOBAL(SSnpc)
 
-/datum/subsystem/npcpool/stat_entry()
+/datum/controller/subsystem/npcpool/stat_entry()
 	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")
 
 
-/datum/subsystem/npcpool/proc/cleanNull()
+/datum/controller/subsystem/npcpool/proc/cleanNull()
 		//cleanup nulled bots
 	listclearnulls(botPool_l)
 	listclearnulls(needsDelegate)
@@ -34,7 +34,7 @@ var/datum/subsystem/npcpool/SSnpc
 	listclearnulls(needsAssistant)
 
 
-/datum/subsystem/npcpool/fire()
+/datum/controller/subsystem/npcpool/fire()
 	//bot delegation and coordination systems
 	//General checklist/Tasks for delegating a task or coordinating it (for SNPCs)
 	// 1. Bot proximity to task target: if too far, delegate, if close, coordinate
@@ -121,7 +121,7 @@ var/datum/subsystem/npcpool/SSnpc
 						candidate.update_icons()
 			npcCount++
 
-/datum/subsystem/npcpool/Recover()
+/datum/controller/subsystem/npcpool/Recover()
 	if (istype(SSnpc.botPool_l))
 		botPool_l = SSnpc.botPool_l
 	if (istype(SSnpc.botPool_l_non))
