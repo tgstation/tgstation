@@ -383,7 +383,7 @@
 	return 1
 	
 /obj/item/borg/upgrade/traitorsec
-	name = "O.V.E.R.S.E.E.R. upgrade module"
+	name = "Bloodhound upgrade module"
 	desc = "Ilegal upgrade board that unlocks the banned security module"
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
@@ -399,4 +399,4 @@
 	if(!isrobot(target))
 		return
 	A.emag_act(user)
-	A.transform to(/obj/item/weapon/robot_module/security)
+	A.transform_to(/obj/item/weapon/robot_module/security)
