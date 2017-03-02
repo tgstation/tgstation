@@ -60,7 +60,7 @@ var/datum/subsystem/ticker/ticker
 	NEW_SS_GLOBAL(ticker)
 
 /datum/subsystem/ticker/Initialize(timeofday)
-	var/list/music = list('sound/ambience/title1.ogg','sound/ambience/title2.ogg','sound/ambience/title3.ogg','sound/ambience/title4.ogg','sound/misc/i_did_not_grief_them.ogg','sound/ambience/clown.ogg')//file2list(ROUND_START_MUSIC_LIST, "\n")
+	var/list/music = list('sound/ambience/title1.ogg','sound/ambience/title2.ogg','sound/ambience/title3.ogg','sound/ambience/title4.ogg','sound/misc/i_did_not_grief_them.ogg','sound/ambience/miles.ogg','sound/ambience/viklund.ogg')//file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
 	if(!syndicate_code_phrase)
