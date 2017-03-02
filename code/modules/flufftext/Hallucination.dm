@@ -700,7 +700,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 /obj/effect/hallucination/whispers/Initialize(mapload, var/mob/living/carbon/T)
 	..()
 	target = T
-	var/speak_messages = list("I'm watching you...","[target.first_name()]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!","EI NATH!!", "RUN!!", "Kill me!")
+	var/speak_messages = list("I'm watching you...","[target.first_name()]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!","EI NATH!!", "RUN!!", "Kill me!","O bidai nabora se'sma!", "[text2ratvar("They're on to me!")]")
 	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(teleportlocs)]!!","Where's [target.first_name()]?","Call the shuttle!","AI rogue!!")
 
 	var/list/mob/living/carbon/people = list()
@@ -715,7 +715,12 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				person = H
 		people += H
 	if(person) //Basic talk
+		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
 		target << target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans())
+		if(target.client)
+			target.client.images |= speech_overlay
+			sleep(30)
+			target.client.images.Remove(speech_overlay)
 	else // Radio talk
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in living_mob_list)
