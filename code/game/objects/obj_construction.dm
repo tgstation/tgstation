@@ -99,6 +99,9 @@
 			playsound(parent, deconstruction_sound, 100, TRUE)
 		if(parent.OnDeconstruction(id, user) && loot)
 			qdel(loot)
+		
+		if(istype(next, /datum/construction_state/first))
+			qdel(parent)
 
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed && (parent.flags & NODECONSTRUCT))
@@ -132,10 +135,6 @@
 		else
 			. = new required_type_to_construct(parent.loc)
 		parent.transfer_fingerprints_to(.)
-
-/datum/construction_state/first/OnReached(obj/parent, mob/user, constructed)
-	. = ..()
-	qdel(parent)
 
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
