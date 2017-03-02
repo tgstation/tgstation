@@ -18,6 +18,8 @@ var/list/department_radio_keys = list(
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
 	  ":x" = "cords",		"#x" = "cords",			".x" = "cords",
+	  ":p" = "admin",		"#p" = "admin",			".p" = "admin",
+	  ":d" = "deadmin",		"#d" = "deadmin",		".d" = "deadmin",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -38,6 +40,8 @@ var/list/department_radio_keys = list(
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
 	  ":X" = "cords",		"#X" = "cords",			".X" = "cords",
+	  ":P" = "admin",		"#P" = "admin",			".P" = "admin",
+	  ":D" = "deadmin",		"#D" = "deadmin",		".D" = "deadmin",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -88,24 +92,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(!message || message == "")
 		return
 
-	//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	//message = ruscapitalize(message)
-	//message = pointization(message)
-
-	if(stat == DEAD)
-		say_dead(message)
-		return
-
-	if(check_emote(message))
-		return
-
-	if(!can_speak_basic(message)) //Stat is seperate so I can handle whispers properly.
-		return
-
 	var/message_mode = get_message_mode(message)
-
-	if(stat && !(message_mode in crit_allowed_modes))
-		return
+	var/original_message = message
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
@@ -113,6 +101,29 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		message = copytext(message, 3)
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
+	
+	if(message_mode == "admin")
+		if(client)
+			client.cmd_admin_say(message)
+		return
+	
+	if(message_mode == "deadmin")
+		if(client)
+			client.dsay(message)
+		return
+
+	if(stat == DEAD)
+		say_dead(original_message)
+		return
+
+	if(check_emote(original_message))
+		return
+
+	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
+		return
+
+	if(stat && !(message_mode in crit_allowed_modes))
+		return
 
 	if(handle_inherent_channels(message, message_mode)) //Hiveminds, binary chat & holopad.
 		return

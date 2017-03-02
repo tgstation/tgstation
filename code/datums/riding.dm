@@ -209,6 +209,13 @@
 	generic_pixel_x = 0
 	generic_pixel_y = 4
 
+//i want to ride my
+/datum/riding/bicycle
+	keytype = null
+	generic_pixel_x = 0
+	generic_pixel_y = 4
+	vehicle_move_delay = 0
+
 //speedbike
 /datum/riding/space/speedbike
 	keytype = null

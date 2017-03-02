@@ -1734,8 +1734,9 @@
 					)
 	crate_name= "shield control board crate"
 
-/datum/supply_pack/misc/vape
-      name = "Pack of E-Cigarettes"
-      cost = 7000
-      contains = list (/obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape)
-      crate_name = "e-cigarettes crate"
+/datum/supply_pack/misc/bicycle
+	name = "Bicycle"
+	cost = 1000000
+	contains = list(/obj/vehicle/bicycle)
+	crate_name = "Bicycle Crate"
+	crate_type = /obj/structure/closet/crate/large
