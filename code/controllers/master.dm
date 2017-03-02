@@ -112,7 +112,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		StartProcessing(10)
 	else
 		world << "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>"
-		Setup(20, TRUE)
+		Initialize(20, TRUE)
 
 
 // Please don't stuff random bullshit here,

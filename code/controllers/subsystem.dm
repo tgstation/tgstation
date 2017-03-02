@@ -145,7 +145,7 @@
 
 
 //used to initialize the subsystem AFTER the map has loaded
-/datum/controller/subsystem/proc/Initialize(start_timeofday)
+/datum/controller/subsystem/Initialize(start_timeofday)
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world << "<span class='boldannounce'>[msg]</span>"
@@ -153,7 +153,7 @@
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
-/datum/controller/subsystem/proc/stat_entry(msg)
+/datum/controller/subsystem/stat_entry(msg)
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
@@ -191,7 +191,7 @@
 
 //usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
-/datum/controller/subsystem/proc/Recover()
+/datum/controller/subsystem/Recover()
 
 /datum/controller/subsystem/vv_edit_var(var_name, var_value)
 	switch (var_name)
