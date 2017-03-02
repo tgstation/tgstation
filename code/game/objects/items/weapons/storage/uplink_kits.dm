@@ -316,3 +316,10 @@
 	..()
 	new /obj/item/weapon/spellbook/oneuse/mimery_blockade(src)
 	new /obj/item/weapon/spellbook/oneuse/mimery_guns(src)
+	
+	/obj/item/weapon/storage/box/syndie_kit/traitorsec_boards/New()
+	..()
+	contents = list()
+	new /obj/item/borg/upgrade/traitorsec(src)
+	new /obj/item/borg/upgrade/traitorsec(src)
+	new /obj/item/borg/upgrade/traitorsec(src)
