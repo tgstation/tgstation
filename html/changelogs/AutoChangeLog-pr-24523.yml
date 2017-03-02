@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Ghosts are polled if they want to play an alien larva that is about
-to chestburst. They are also told who is the (un)lucky victim."
