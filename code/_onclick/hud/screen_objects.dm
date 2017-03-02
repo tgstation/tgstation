@@ -667,7 +667,7 @@
 			L.say(pick(word_messages))
 
 /obj/screen/splash
-	icon = 'config/title_screens/title_screens.dmi'
+	icon = 'config/title_screens/images/blank.png'
 	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
@@ -680,7 +680,7 @@
 	holder.screen += src
 
 	if(SStitle.title_screen)
-		icon_state = SStitle.title_screen.icon_state
+		icon = SStitle.title_screen.icon
 
 	if(fadeout)
 		animate(src, alpha = 0, time = 30)

@@ -11,7 +11,7 @@ var/datum/subsystem/title/SStitle
 	NEW_SS_GLOBAL(SStitle)
 
 /datum/subsystem/title/Initialize()
-	var/list/provisional_title_screens = icon_states(icon('config/title_screens/title_screens.dmi'))
+	var/list/provisional_title_screens = flist("config/title_screens/images/")
 	var/list/title_screens = list()
 	var/use_rare_screens = FALSE
 
@@ -23,10 +23,19 @@ var/datum/subsystem/title/SStitle
 
 	for(var/S in provisional_title_screens)
 		var/list/L = splittext(S,"+")
-		if(L.len == 1 || (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(MAP_NAME)))))
+		if((L.len == 1 && L[1] != "blank.png")|| (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(MAP_NAME)))))
 			title_screens += S
 
 	if(!isemptylist(title_screens))
-		if(length(title_screens) > 1 && "default" in title_screens)
-			title_screens -= "default"
-		title_screen.icon_state = pick(title_screens)
+		if(length(title_screens) > 1)
+			for(var/S in title_screens)
+				var/list/L = splittext(S,".")
+				if(L.len != 2 || L[1] != "default")
+					continue
+				title_screens -= S
+				break
+
+		var/path_string = "config/title_screens/images/[pick(title_screens)]"
+		var/icon/screen_to_use = new(path_string)
+
+		title_screen.icon = screen_to_use

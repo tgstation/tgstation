@@ -1,6 +1,6 @@
 ---LICENSE NOTICE---
 
-The server operator(s) is responsible for the copyright status of all images placed within title_screens.dmi unless otherwise noted.
+The server operator(s) is responsible for the copyright status of all images placed within the /config/title_screens/images folder unless otherwise noted.
 
 If an image requires attribution and/or a specific license it is up to the operator(s) to make this information publicly available on either 
 a website associated with their server or on the server itself. 
@@ -22,9 +22,9 @@ Do not remove this notice.
 These are examples of properly attrubuted and licensed images. 
 They are not an actual part of any license under any circumstance.
 
-"rare+foobar" was created by Mya Quinn on Feburary 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
+rare+foobar.png was created by Mya Quinn on Feburary 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
 
-Unless otherwise noted all iamges were created by Cuban Pete on July 26, 2555. They are licensed under the RUMBABEAT Public License (http://example.com/license/url/).
+Unless otherwise noted all images were created by Cuban Pete on July 26, 2555. They are licensed under the RUMBABEAT Public License.(http://example.com/license/url/).
 
 ---END EXAMPLES (NOT PART OF ANY LICENSE)---
 
@@ -33,6 +33,6 @@ Unless otherwise noted all iamges were created by Cuban Pete on July 26, 2555. T
 
 ---ADD LICENSING INFORMATION BELOW---
 
-The initial images named "" (No Name) and "default" use the default licensing found in README.md in the root directory of the project.
+blank.png and default.dmi use the default licensing found in README.md in the root directory of the project.
 
 
