@@ -301,7 +301,6 @@
 	pocket1 = /obj/item/device/radio/off
 	back = /obj/item/weapon/storage/backpack/explorer
 	objectives = "Yar har! Pillage the ruins around you, or aim for the station itself."
-	implants = list(/obj/item/weapon/implant/mindshield)
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
