@@ -81,16 +81,16 @@ global procs
 		Returns the list of spans that are always applied to messages of this atom.
 		Always return ..() | + youroutput when overriding this proc!
 
+	compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
+		Called by compose_message, returns namepart with special tags added to it.
+		Normally returns namepart unchanged, but can be overridden.
+
 /mob
 	say_dead(message)
 		Sends a message to all dead people. Does not use Hear().
 
 	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 		Composes the message mobs see on their screen when they hear something.
-
-	compose_namepart(atom/movable/speaker, namepart)
-		Called by compose_message, returns namepart with special tags added to it.
-		Normally returns namepart unchanged, but can be overridden.
 
 	hivecheck()
 		Returns 1 if the mob can hear and talk in the alien hivemind.
@@ -118,6 +118,9 @@ global procs
 		Checks if the mob can vocalize their message. This is seperate so, for example, muzzles don't block
 		hivemind chat.
 		Called right after handle_inherent_channels()
+
+	compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
+		mob/living's compose_namepart will attach an href link to the namepart if the edit_tag arg is provided
 
 	get_message_mode(message)
 		Checks the start of the message for a message mode, then returns said message mode.

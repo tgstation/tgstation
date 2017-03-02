@@ -198,7 +198,7 @@ var/record_id_num = 1001
 		var/obj/item/weapon/photo/photo_front = new()
 		var/obj/item/weapon/photo/photo_side = new()
 		var/faceprint = H.get_faceprint()
-		var/list/M_info = new(3)
+		var/list/M_info = new(PHOTO_MOB_INFO_LEN)
 		if(faceprint)
 			M_info[1] = TRUE
 			M_info[2] = faceprint

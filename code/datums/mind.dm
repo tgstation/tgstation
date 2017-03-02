@@ -51,6 +51,7 @@
 	var/list/voiceprints = list() // remembering other people's voices
 	var/list/faceprints = list() // remembering other people's faces
 	var/list/identity_cache = list()
+	var/list/identity_edit_tags = list()
 	var/datum/identity_manager/idman
 	var/update_idman = FALSE //if set to TRUE, idman will update next tick, and automatically reset this to FALSE
 

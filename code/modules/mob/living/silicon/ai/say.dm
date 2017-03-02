@@ -4,7 +4,7 @@
 		return
 	..(message)
 
-/mob/living/silicon/ai/compose_namepart(atom/movable/speaker, namepart, radio_freq)
+/mob/living/silicon/ai/compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
 	. = namepart
 	if(!speaker)
 		return

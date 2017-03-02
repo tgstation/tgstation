@@ -40,7 +40,7 @@ var/list/freqtospan = list(
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, name, message_mode)
+/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, name, message_mode, edit_tag)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -55,9 +55,9 @@ var/list/freqtospan = list(
 	//Message
 	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message, spans, message_mode)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_namepart(speaker, namepart, radio_freq)][endspanpart][messagepart]"
+	return "[spanpart1][spanpart2][freqpart][compose_namepart(speaker, namepart, edit_tag, radio_freq)][endspanpart][messagepart]"
 
-/atom/movable/proc/compose_namepart(atom/movable/speaker, namepart, radio_freq)
+/atom/movable/proc/compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
 	return namepart
 
 /atom/movable/proc/say_quote(input, list/spans=list())

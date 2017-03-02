@@ -36,48 +36,48 @@ var/global/datum/crewmonitor/crewmonitor = new
 /datum/crewmonitor/New()
 	. = ..()
 
-	var/list/_jobs = list()
-	_jobs["Captain"] = 00
-	_jobs["Head of Personnel"] = 50
-	_jobs["Head of Security"] = 10
-	_jobs["Warden"] = 11
-	_jobs["Security Officer"] = 12
-	_jobs["Detective"] = 13
-	_jobs["Chief Medical Officer"] = 20
-	_jobs["Chemist"] = 21
-	_jobs["Geneticist"] = 22
-	_jobs["Virologist"] = 23
-	_jobs["Medical Doctor"] = 24
-	_jobs["Research Director"] = 30
-	_jobs["Scientist"] = 31
-	_jobs["Roboticist"] = 32
-	_jobs["Chief Engineer"] = 40
-	_jobs["Station Engineer"] = 41
-	_jobs["Atmospheric Technician"] = 42
-	_jobs["Quartermaster"] = 51
-	_jobs["Shaft Miner"] = 52
-	_jobs["Cargo Technician"] = 53
-	_jobs["Bartender"] = 61
-	_jobs["Cook"] = 62
-	_jobs["Botanist"] = 63
-	_jobs["Librarian"] = 64
-	_jobs["Chaplain"] = 65
-	_jobs["Clown"] = 66
-	_jobs["Mime"] = 67
-	_jobs["Janitor"] = 68
-	_jobs["Lawyer"] = 69
-	_jobs["Admiral"] = 200
-	_jobs["Centcom Commander"] = 210
-	_jobs["Custodian"] = 211
-	_jobs["Medical Officer"] = 212
-	_jobs["Research Officer"] = 213
-	_jobs["Emergency Response Team Commander"] = 220
-	_jobs["Security Response Officer"] = 221
-	_jobs["Engineer Response Officer"] = 222
-	_jobs["Medical Response Officer"] = 223
-	_jobs["Assistant"] = 999 //Unknowns/custom jobs should appear after civilians, and before assistants
+	var/list/new_jobs = list()
+	new_jobs["Captain"] = 00
+	new_jobs["Head of Personnel"] = 50
+	new_jobs["Head of Security"] = 10
+	new_jobs["Warden"] = 11
+	new_jobs["Security Officer"] = 12
+	new_jobs["Detective"] = 13
+	new_jobs["Chief Medical Officer"] = 20
+	new_jobs["Chemist"] = 21
+	new_jobs["Geneticist"] = 22
+	new_jobs["Virologist"] = 23
+	new_jobs["Medical Doctor"] = 24
+	new_jobs["Research Director"] = 30
+	new_jobs["Scientist"] = 31
+	new_jobs["Roboticist"] = 32
+	new_jobs["Chief Engineer"] = 40
+	new_jobs["Station Engineer"] = 41
+	new_jobs["Atmospheric Technician"] = 42
+	new_jobs["Quartermaster"] = 51
+	new_jobs["Shaft Miner"] = 52
+	new_jobs["Cargo Technician"] = 53
+	new_jobs["Bartender"] = 61
+	new_jobs["Cook"] = 62
+	new_jobs["Botanist"] = 63
+	new_jobs["Librarian"] = 64
+	new_jobs["Chaplain"] = 65
+	new_jobs["Clown"] = 66
+	new_jobs["Mime"] = 67
+	new_jobs["Janitor"] = 68
+	new_jobs["Lawyer"] = 69
+	new_jobs["Admiral"] = 200
+	new_jobs["Centcom Commander"] = 210
+	new_jobs["Custodian"] = 211
+	new_jobs["Medical Officer"] = 212
+	new_jobs["Research Officer"] = 213
+	new_jobs["Emergency Response Team Commander"] = 220
+	new_jobs["Security Response Officer"] = 221
+	new_jobs["Engineer Response Officer"] = 222
+	new_jobs["Medical Response Officer"] = 223
+	new_jobs["Assistant"] = 999 //Unknowns/custom jobs should appear after civilians, and before assistants
 
-	jobs = _jobs
+	jobs = new_jobs
 	interfaces = list()
 	data = list()
 	tracking = list()
@@ -136,7 +136,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 		if (ignore_unused || hi.isUsed())
 			var/list/results = list()
-			var/list/_tracking = list()
+			var/list/new_tracking = list()
 			var/obj/item/clothing/under/U
 			var/obj/item/weapon/card/id/I
 			var/turf/pos
@@ -198,8 +198,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 							area = format_text(player_area.name)
 							pos_x = pos.x
 							pos_y = pos.y
-							tracking_pos = ++_tracking.len
-							_tracking[tracking_pos] = H
+							tracking_pos = ++new_tracking.len
+							new_tracking[tracking_pos] = H
 						else
 							area = null
 							pos_x = null
@@ -209,7 +209,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.can_track(null), tracking_pos)
 
 			data = results
-			tracking = _tracking
+			tracking = new_tracking
 			updateFor(null, hi, z) // updates for everyone
 
 /datum/crewmonitor/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)

@@ -260,7 +260,7 @@
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/list/mob_detail = list()
 	for(var/mob/M in the_turf)
-		var/list/M_info = new(3) //[1] = if it's a faceprint or just a direct name, [2] = for the faceprint or direct name, [3] = looks hurt or not, [thereafter] = stuff they are holding
+		var/list/M_info = new(PHOTO_MOB_INFO_LEN) //[1] = if it's a faceprint or just a direct name, [2] = for the faceprint or direct name, [3] = looks hurt or not, [thereafter] = stuff they are holding
 		if(M.invisibility)
 			if(see_ghosts && isobserver(M))
 				var/mob/dead/observer/O = M

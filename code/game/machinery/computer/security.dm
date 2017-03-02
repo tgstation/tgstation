@@ -600,7 +600,7 @@ What a mess.*/
 							if(tape)
 								var/list/print_lookup = list()
 								var/list/random_names = list()
-								var/list/_tapeinfo = list()
+								var/list/new_tapeinfo = list()
 								var/datum/species/S = new
 								for(var/list/entry in tape.storedinfo)
 									if(!islist(entry))
@@ -623,14 +623,13 @@ What a mess.*/
 											random_name = S.random_name(pick(MALE, FEMALE))
 										random_names[random_name] = TRUE
 										print_lookup[voice_print] = random_name
-									var/list/new_entry = new(2)
-									var/infopos = ++_tapeinfo.len
-									new_entry = new(2)
+									var/list/new_entry = new(SECURITY_TAPEINFO_ENTRY_LEN)
+									var/infopos = ++new_tapeinfo.len
 									new_entry[1] = voice_print
 									new_entry[2] = message
-									_tapeinfo[infopos] = new_entry
+									new_tapeinfo[infopos] = new_entry
 									temp += "<li>[timestamp] [random_name] <a href='?src=\ref[src];choice=Change Voice Sample;voicesample=[infopos]'>&quot;[message]&quot;</a></li>"
-								tapeinfo = _tapeinfo
+								tapeinfo = new_tapeinfo
 							temp += "<li><a href='?src=\ref[src];choice=Change Voice Sample;voicesample=none'>None</a></li>"
 							temp += "</ul>"
 					if("sex")
