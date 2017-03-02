@@ -3,7 +3,7 @@
 	anchored = TRUE
 	name = "\improper AI core"
 	icon = 'icons/mob/AI.dmi'
-	icon_state = "ai_ready"
+	icon_state = "ai-empty"
 	obj_integrity = 500
 	max_integrity = 500
 	var/datum/ai_laws/laws = new()
@@ -42,7 +42,7 @@
 			required_amount_to_construct = 1
 			deconstruction_delay = 20
 			construction_message = "add the circuit to"
-			deconstruction_message = "slicing apart"
+			deconstruction_message = "unsecuring"
 			examine_message = "The floor bolts are down and it's missing a circuit."
 			icon_state = "0"
 			anchored = 1
@@ -60,7 +60,7 @@
 			required_amount_to_construct = 5
 			required_type_to_deconstruct = /obj/item/weapon/screwdriver
 			construction_message = "adding cables to"
-			deconstruction_message = "remove the circuit from"
+			deconstruction_message = "unscrew the circuit from"
 			construction_delay = 20
 			examine_message = "The circuit is screwed in and it is unwired"
 			icon_state = "2"
@@ -69,7 +69,7 @@
 			required_type_to_construct = /obj/item/stack/sheet/rglass
 			required_amount_to_construct = 2
 			required_type_to_deconstruct = /obj/item/weapon/wirecutters
-			construction_message = "putting the glass panel in"
+			construction_message = "putting the monitor in"
 			deconstruction_message = "remove the cables from"
 			construction_delay = 20
 			examine_message = "It is wired up and missing a monitor."
@@ -79,7 +79,7 @@
 			required_type_to_construct = /obj/item/weapon/screwdriver
 			required_type_to_deconstruct = /obj/item/weapon/crowbar
 			construction_message = "connect the monitor to"
-			deconstruction_message = "remove the panel from"
+			deconstruction_message = "remove the monitor from"
 			construction_delay = 20
 			examine_message = "The monitor is not screwed in."
 			icon_state = "4"
@@ -87,7 +87,6 @@
 		/datum/construction_state/last{
 			required_type_to_deconstruct = /obj/item/weapon/screwdriver
 			deconstruction_message = "disconnect the monitor from"
-			icon_state = "ai_ready"
 		}
 	)
 

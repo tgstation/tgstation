@@ -6,10 +6,10 @@
 
 	/datum/construction_state - The datum that holds all properties of an object's unfinished state, these datums are stored in a static list keyed by type. See the datum definition below
 
-	/datum/construction_state/first/New(obj/parent, material_type, material_amount)	- Specify the materials to be dropped after full deconstruction, must be declared first, if at all, in InitConstruction
+	/datum/construction_state/first/New(obj/parent, material_type, material_amount)	- Specify the materials to be dropped after full deconstruction, must be declared first in InitConstruction
 
 	/datum/construction_state/last/New(obj/parent, required_type_to_deconstruct, deconstruction_delay, deconstruction_message) - Specify the reqiuired tools and message for the first deconstruction step
-																																	Must be declared last, if at all, in InitConstruction
+																																	Must be declared last in InitConstruction
 
 	/obj/var/current_construction_state - A reference to an objects current construction_state, null means fully constructed and can't be deconstructed
 
@@ -23,7 +23,7 @@
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state
 
 	/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
-																							Setting skip to TRUE requests that no further checks other than the base be made
+																							Setting skip to TRUE requests that no further checks other than the base be made. This is not used for hand construction
 
 	See ai_core.dm for a good example		
 		
@@ -142,7 +142,6 @@
 	parent.anchored = initial(parent.anchored)
 	parent.icon_state = initial(parent.icon_state)
 	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
-	parent.update_icon()
 
 /obj/proc/SetupConstruction()
 	if(isnull(construction_steps[type]))
@@ -161,16 +160,18 @@
 	
 /proc/LinkConstructionSteps(list/steps)
 	for(var/I in 1 to steps.len)
+		var/datum/construction_state/curr_step = steps[I]
 		if(I != 1)
 			var/datum/construction_state/prev_step = steps[I - 1]
-			var/datum/construction_state/curr_step = steps[I]
 			prev_step.next_state = curr_step
 			curr_step.prev_state = prev_step
+		curr_step.id = I - 1
 
 //use this proc to make sure there's nothing impossible with the construction chain
 //called after InitConstruction
 //trust no coder, especially that Cyberboss guy
 /obj/proc/ValidateConstructionSteps(cached_construction_steps)
+	. = TRUE
 	if(length(cached_construction_steps))
 		var/datum/construction_state/current_step = cached_construction_steps[1]
 		var/last_max_integrity = current_step.max_integrity ? current_step.max_integrity : max_integrity
@@ -192,7 +193,7 @@
 				else if(current_step.required_amount_to_construct > 1)
 					WARNING(error + "Invalid material amount for non stack construction")
 					. = FALSE
-				if(!ispath(current_step.required_type_to_construct, /obj/item))
+				if(!ispath(current_step.required_type_to_construct, /obj/item) && !istype(current_step, /datum/construction_state/last))
 					WARNING(error +"Invalid /obj/item type specified for construction: '[current_step.required_type_to_construct]'")
 					. = FALSE
 			else if(!current_step.required_type_to_deconstruct)
@@ -212,8 +213,8 @@
 /obj/proc/OnDeconstruction(state_id, mob/user, forced)
 
 /obj/proc/Construct(mob/user)
-	var/cached_construction_steps = construction_steps[type]
-	if(cached_construction_steps)
+	var/list/cached_construction_steps = construction_steps[type]
+	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
 		if(first_step.type == /datum/construction_state/first)
 			first_step = first_step.next_state
@@ -253,14 +254,19 @@
 		else
 			return
 			
-		user << "<span class='notice'>You begin [message] \the [src]...</span>"
-		if(do_after(user, wait, target = src))
-			user << "<span class='notice'>You finish [message] \the [src].</span>"
-			ccs.OnLeft(src, user, constructed)
+		if(wait)
+			user << "<span class='notice'>You begin [message] \the [src]...</span>"
+			if(!do_after(user, wait, target = src))
+				return
+		user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
+		ccs.OnLeft(src, user, constructed)
 
 /obj/attackby(obj/item/I, mob/living/user)
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs)
+		if(src in user.construction_tasks)
+			return
+
 		var/constructed
 		var/wait
 		var/message
@@ -281,23 +287,35 @@
 			if(!WT.isOn())
 				user << "<span class='warning'>The welder must be on for this task!</span>"
 				return
+			else
+				WT.remove_fuel(M = user)
 
 		var/obj/item/stack/Mats = I
 		if(istype(Mats) && Mats.amount < ccs.required_amount_to_construct)
-			user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more [Mats] first!</span>"
+			user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>"
 			return
 
-		playsound(src, I.usesound, 100, 1)	
+		if(I.usesound)
+			playsound(src, I.usesound, 100, TRUE)	
+
 		var/cont
+		LAZYADD(user.construction_tasks, src)
 		if(wait)
 			user << "<span class='notice'>You begin [message] \the [src].</span>"
-			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs, constructed, I, user, FALSE))
+			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, I, user, FALSE))
 		else
-			cont = ConstructionChecks(ccs, constructed, I, user, FALSE)
+			cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
+		LAZYREMOVE(user.construction_tasks, src)
 
 		if(cont)
-			if(!istype(Mats))
-				qdel(Mats)
+			if(constructed && ccs.required_amount_to_construct)
+				if(istype(Mats))
+					if(!Mats.use(ccs.required_amount_to_construct))
+						user << "<span class='warning'>You no longer have enough of [Mats]!</span>"
+						return
+				else
+					qdel(Mats)
+
 			user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
 			ccs.OnLeft(src, user, constructed)
 	else
@@ -308,8 +326,13 @@
 		user << "<span class='warning'>You were interrupted!</span>"
 		return FALSE
 	
+	var/obj/item/weapon/weldingtool/WT = I
+	if(istype(WT) && !WT.isOn())
+		user << "<span class='warning'>\The [WT] runs out of fuel!</span>"
+		return FALSE
+	
 	var/obj/item/stack/Mats = I
 	if(istype(Mats) && Mats.amount < current_construction_state.required_amount_to_construct)
-		user << "<span class='warning'>You no longer have enough [Mats]!</span>"
+		user << "<span class='warning'>You no longer have enough of [Mats]!</span>"
 		return FALSE
 	return TRUE

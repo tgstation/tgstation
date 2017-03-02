@@ -36,11 +36,12 @@
 
 //ai core defines
 #define EMPTY_CORE 1
-#define CIRCUIT_CORE 2
-#define SCREWED_CORE 3
-#define CABLED_CORE 4
-#define GLASS_CORE 5
-#define AI_READY_CORE 6
+#define ANCHORED_CORE 2
+#define CIRCUIT_CORE 3
+#define SCREWED_CORE 4
+#define CABLED_CORE 5
+#define GLASS_CORE 6
+#define AI_READY_CORE 7
 
 //field generator construction defines
 #define FG_UNSECURED 0
