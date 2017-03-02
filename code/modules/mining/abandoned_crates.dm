@@ -42,7 +42,7 @@
 				new /obj/item/weapon/ore/diamond(src)
 		if(21 to 25)
 			for(var/i in 1 to 5)
-				new /obj/item/weapon/poster/contraband(src)
+				new /obj/item/weapon/poster/random_contraband(src)
 		if(26 to 30)
 			for(var/i in 1 to 3)
 				new /obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
