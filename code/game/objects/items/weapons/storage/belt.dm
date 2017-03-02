@@ -403,8 +403,8 @@
 /obj/item/weapon/storage/belt/holster/full/New()
 	..()
 	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
-	new /obj/item/ammo_box/magazine/internal/cylinder/rev38(src)
-	new /obj/item/ammo_box/magazine/internal/cylinder/rev38(src)
+	new /obj/item/ammo_box/c38(src)
+	new /obj/item/ammo_box/c38(src)
 
 /obj/item/weapon/storage/belt/fannypack
 	name = "fannypack"
