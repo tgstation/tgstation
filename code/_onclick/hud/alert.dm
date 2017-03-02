@@ -35,7 +35,6 @@
 	else
 		thealert = new type()	
 		
-		
 	if(new_master)
 		var/old_layer = new_master.layer
 		var/old_plane = new_master.plane
