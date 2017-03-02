@@ -33,8 +33,9 @@
 	..()
 	if(!isliving(user))
 		return
-	user << "<span class='notice'>You reveal [src]!</span>"
-	flare()
+	if(get_dist(user, src) <= 1)
+		user << "<span class='notice'>You reveal [src]!</span>"
+		flare()
 
 /obj/structure/trap/proc/flare()
 	// Makes the trap visible, and starts the cooldown until it's
