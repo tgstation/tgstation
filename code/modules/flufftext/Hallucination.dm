@@ -279,14 +279,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(target.client)
 			target.client.images |= fakebroken
 			target.client.images |= fakerune
-		target << sound('sound/effects/meteorimpact.ogg', volume = 150)
+		target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150)
 		bubblegum = new(wall, target)
 		sleep(10) //ominous wait
 		var/charged = FALSE //only get hit once
 		while(get_turf(bubblegum) != landing)
 			bubblegum.forceMove(get_step_towards(bubblegum, landing))
 			bubblegum.setDir(get_dir(bubblegum, landing))
-			target << sound('sound/effects/meteorimpact.ogg', volume = 150)
+			target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150)
 			shake_camera(target, 2, 1)
 			if(bubblegum.Adjacent(target) && !charged)
 				charged = TRUE
@@ -351,29 +351,37 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	switch(rand(1,5))
 		if(1) //Laser fight
 			for(var/i=0,i<hits,i++)
-				target << sound('sound/weapons/Laser.ogg',0,1,0,25)
+				target.playsound_local(null, 'sound/weapons/Laser.ogg', 25)
+				if(prob(75))
+					addtimer(CALLBACK(target, .proc/playsound_local, null, 'sound/weapons/sear.ogg', 25), rand(10,20))
+				else
+					addtimer(CALLBACK(target, .proc/playsound_local, null, 'sound/weapons/effects/searwall.ogg', 25), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 4))
-			target << sound(get_sfx("bodyfall"),0,1,0,25)
+			target.playsound_local(null, get_sfx("bodyfall"), 25)
 		if(2) //Esword fight
-			target << sound('sound/weapons/saberon.ogg',0,1,0,15)
+			target.playsound_local(null, 'sound/weapons/saberon.ogg',15)
 			for(var/i=0,i<hits,i++)
-				target << sound('sound/weapons/blade1.ogg',,0,1,0,25)
+				target.playsound_local(null, 'sound/weapons/blade1.ogg', 25)
 				sleep(CLICK_CD_MELEE)
-			target << sound(get_sfx("bodyfall"),0,1,0,25)
-			target << sound('sound/weapons/saberoff.ogg',0,1,0,15)
+			target.playsound_local(null, get_sfx("bodyfall"), 25)
+			target.playsound_local(null, 'sound/weapons/saberoff.ogg', 15)
 		if(3) //Gun fight
 			for(var/i=0,i<hits,i++)
-				target << sound(get_sfx("gunshot"),0,1,0,25)
+				target.playsound_local(null, get_sfx("gunshot"), 25)
+				if(prob(75))
+					addtimer(CALLBACK(target, .proc/playsound_local, null, 'sound/weapons/pierce.ogg', 25), rand(10,20))
+				else
+					addtimer(CALLBACK(target, .proc/playsound_local, null, "ricochet", 25), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 4))
-			target << sound(get_sfx("bodyfall"),0,1,0,25)
+			target.playsound_local(null, get_sfx("bodyfall"), 25)
 		if(4) //Stunprod + cablecuff
-			target << sound('sound/weapons/Egloves.ogg',0,1,40)
-			target << sound(get_sfx("bodyfall"),0,1,0,25)
+			target.playsound_local(null, 'sound/weapons/Egloves.ogg', 40)
+			target.playsound_local(null, get_sfx("bodyfall"), 25)
 			sleep(20)
-			target << sound('sound/weapons/cablecuff.ogg',0,1,0,15)
+			target.playsound_local(null, 'sound/weapons/cablecuff.ogg', 15)
 		if(5) // Tick Tock
 			for(var/i=0,i<hits,i++)
-				target << sound('sound/items/timer.ogg',0,1,0,25)
+				target.playsound_local(null, 'sound/items/timer.ogg', 25)
 				sleep(15)
 	qdel(src)
 
@@ -397,10 +405,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(image_file)
 				switch(item)
 					if("esword")
-						target << sound('sound/weapons/saberon.ogg',0,1,0,15)
+						target.playsound_local(H, 'sound/weapons/saberon.ogg')
 						A = image(image_file,H,"swordred", layer=ABOVE_MOB_LAYER)
 					if("dual_esword")
-						target << sound('sound/weapons/saberon.ogg',0,1,0,15)
+						target.playsound_local(H, 'sound/weapons/saberon.ogg')
 						A = image(image_file,H,"dualsaberred1", layer=ABOVE_MOB_LAYER)
 					if("stunpaper")
 						A = image(image_file,H,"paper", layer=ABOVE_MOB_LAYER)
@@ -417,7 +425,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					target.client.images |= A
 					sleep(rand(150,250))
 					if(item == "esword" || item == "dual_esword")
-						target << sound('sound/weapons/saberoff.ogg',0,1,0,15)
+						target.playsound_local(H, 'sound/weapons/saberoff.ogg')
 					target.client.images.Remove(A)
 				break
 	qdel(src)
@@ -485,13 +493,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			A = image('icons/mob/mob.dmi',target,"daemon")
 		if("robot")//Cyborg
 			A = image('icons/mob/robots.dmi',target,"robot")
-			target << sound('sound/voice/liveagain.ogg')
+			target.playsound_local(target,'sound/voice/liveagain.ogg')
 		if("custom")
 			A = image(custom_icon_file, target, custom_icon)
 	A.override = 1
 	if(target.client)
 		target << "<span class='userdanger'>[target] is hit by a bolt of change in the chest!</span>"
-		target << sound('sound/magic/Staff_Change.ogg')
+		target.playsound_local(target,'sound/magic/Staff_Change.ogg')
 		delusion = A
 		target.client.images |= A
 	QDEL_IN(src, duration)
@@ -562,7 +570,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	step_away(src,my_target,2)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	my_target << P.hitsound
+	my_target.playsound_local(src, P.hitsound)
 	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
 							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
@@ -614,7 +622,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(prob(15))
 				do_attack_animation(my_target, ATTACK_EFFECT_PUNCH)
 				if(weapon_name)
-					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
+					my_target.playsound_local(my_target, weap.hitsound)
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
@@ -623,7 +631,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
+					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
 					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
@@ -677,13 +685,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		doors += I
 		if(target.client)
 			target.client.images |= I
-			target << sound('sound/machines/BoltsDown.ogg', volume = 50)
+			target.playsound_local(get_turf(A), 'sound/machines/BoltsDown.ogg',30,0,3)
 		sleep(rand(6,12))
 	sleep(100)
 	for(var/image/B in doors)
 		if(target.client)
 			target.client.images.Remove(B)
-			target << sound('sound/machines/BoltsUp.ogg', volume = 50)
+			target.playsound_local(get_turf(B), 'sound/machines/BoltsUp.ogg',30,0,3)
 		sleep(rand(6,12))
 	qdel(src)
 
@@ -769,36 +777,36 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			//Strange audio
 			//src << "Strange Audio"
 			switch(rand(1,20))
-				if(1) src << 'sound/machines/airlock.ogg'
+				if(1) playsound_local(null,'sound/machines/airlock.ogg')
 				if(2)
-					if(prob(50))src << 'sound/effects/Explosion1.ogg'
-					else src << 'sound/effects/Explosion2.ogg'
-				if(3) src << 'sound/effects/explosionfar.ogg'
-				if(4) src << pick('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg')
+					if(prob(50)) playsound_local(null,'sound/effects/Explosion1.ogg')
+					else playsound_local(null, 'sound/effects/Explosion2.ogg')
+				if(3) playsound_local(null, 'sound/effects/explosionfar.ogg')
+				if(4) playsound_local(null, pick('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg'))
 				if(5)
-					src << 'sound/weapons/ring.ogg'
+					playsound_local(null, 'sound/weapons/ring.ogg')
 					sleep(15)
-					src << 'sound/weapons/ring.ogg'
+					playsound_local(null, 'sound/weapons/ring.ogg')
 					sleep(15)
-					src << 'sound/weapons/ring.ogg'
-				if(6) src << 'sound/magic/Summon_guns.ogg'
-				if(7) src << 'sound/machines/Alarm.ogg'
-				if(8) src << 'sound/voice/bfreeze.ogg'
+					playsound_local(null, 'sound/weapons/ring.ogg')
+				if(6) playsound_local(null, 'sound/magic/Summon_guns.ogg')
+				if(7) playsound_local(null, 'sound/machines/Alarm.ogg')
+				if(8) playsound_local(null, 'sound/voice/bfreeze.ogg')
 				if(9)
 					//To make it more realistic, I added two gunshots (enough to kill)
-					src << 'sound/weapons/Gunshot.ogg'
+					playsound_local(null, 'sound/weapons/Gunshot.ogg', 25)
 					spawn(rand(10,30))
-						src << 'sound/weapons/Gunshot.ogg'
+						playsound_local(null, 'sound/weapons/Gunshot.ogg', 25)
 						sleep(rand(5,10))
-						src << sound(get_sfx("bodyfall"),0,1,0,25)
-				if(10) src << 'sound/effects/pray_chaplain.ogg'
+						playsound_local(null, sound(get_sfx("bodyfall"), 25))
+				if(10) playsound_local(null, 'sound/effects/pray_chaplain.ogg')
 				if(11)
 					//Same as above, but with tasers.
-					src << 'sound/weapons/Taser.ogg'
+					playsound_local(null, 'sound/weapons/Taser.ogg', 25)
 					spawn(rand(10,30))
-						src << 'sound/weapons/Taser.ogg'
+						playsound_local(null, 'sound/weapons/Taser.ogg', 25)
 						sleep(rand(5,10))
-						src << sound(get_sfx("bodyfall"),0,1,0,25)
+						playsound_local(null, sound(get_sfx("bodyfall"), 25))
 			//Rare audio
 				if(12)
 			//These sounds are (mostly) taken from Hidden: Source
@@ -807,44 +815,46 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 						'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
 						'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-					src << pick(creepyasssounds)
+					playsound_local(null, pick(creepyasssounds))
 				if(13)
-					src << 'sound/effects/ratvar_rises.ogg'
+					playsound_local(null, 'sound/effects/ratvar_rises.ogg')
 					sleep(150)
-					src << 'sound/effects/ratvar_reveal.ogg'
+					playsound_local(null, 'sound/effects/ratvar_reveal.ogg')
 				if(14)
 					src << "<h1 class='alert'>Priority Announcement</h1>"
 					src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
-					src << sound('sound/AI/shuttledock.ogg')
+					playsound_local(null, 'sound/AI/shuttledock.ogg')
 				//Deconstructing a wall
 				if(15)
-					src << 'sound/items/Welder.ogg'
+					playsound_local(null, 'sound/items/Welder.ogg', 25)
 					sleep(105)
-					src << 'sound/items/Ratchet.ogg'
+					playsound_local(null, 'sound/items/Welder2.ogg', 25)
+					sleep(15)
+					playsound_local(null, 'sound/items/Ratchet.ogg', 25)
 				//Hacking a door
 				if(16)
-					src << 'sound/items/Screwdriver.ogg'
+					playsound_local(null, 'sound/items/Screwdriver.ogg', 50)
 					sleep(rand(10,30))
 					for(var/i = rand(1,3), i>0, i--)
-						src << 'sound/weapons/empty.ogg'
+						playsound_local(null, 'sound/weapons/empty.ogg', 50)
 						sleep(rand(10,30))
-					src << 'sound/machines/airlockforced.ogg'
+					playsound_local(null, 'sound/machines/airlockforced.ogg', 50)
 				if(17)
-					src << 'sound/weapons/saberon.ogg'
+					playsound_local(null, 'sound/weapons/saberon.ogg')
 				if(18)
 					src << "<h1 class='alert'>Biohazard Alert</h1>"
 					src << "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>"
-					src << 'sound/AI/outbreak5.ogg'
+					playsound_local(null, 'sound/AI/outbreak5.ogg')
 				if(19) //Tesla loose!
-					src << sound('sound/magic/lightningbolt.ogg', volume = 35)
+					playsound_local(null, 'sound/magic/lightningbolt.ogg', 35)
 					sleep(20)
-					src << sound('sound/magic/lightningbolt.ogg', volume = 65)
+					playsound_local(null, 'sound/magic/lightningbolt.ogg', 65)
 					sleep(20)
-					src << sound('sound/magic/lightningbolt.ogg', volume = 100)
+					playsound_local(null, 'sound/magic/lightningbolt.ogg', 100)
 				if(20) //AI is doomsdaying!
 					src << "<h1 class='alert'>Anomaly Alert</h1>"
 					src << "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>"
-					src << 'sound/AI/aimalf.ogg'
+					playsound_local(null, 'sound/AI/aimalf.ogg')
 		if("hudscrew")
 			//Screwy HUD
 			//src << "Screwy HUD"
