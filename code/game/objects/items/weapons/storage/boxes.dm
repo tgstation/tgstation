@@ -372,6 +372,7 @@
 	icon_state = "monkeycubebox"
 	storage_slots = 7
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	illustration = null
 
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
@@ -639,6 +640,7 @@
 	name = "box of rubber shots"
 	desc = "A box full of rubber shots, designed for riot shotguns."
 	icon_state = "rubbershot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/rubbershot/New()
 	..()
@@ -649,6 +651,7 @@
 	name = "box of lethal shotgun shots"
 	desc = "A box full of lethal shots, designed for riot shotguns."
 	icon_state = "lethalshot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/lethalshot/New()
 	..()
@@ -664,6 +667,7 @@
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
 	icon_state = "rubbershot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/beanbag/New()
 	..()

@@ -694,5 +694,7 @@
 		QDEL_IN(src, 30)
 
 /obj/screen/splash/Destroy()
-	holder.screen -= src
+	if(holder)
+		holder.screen -= src
+		holder = null
 	return ..()
