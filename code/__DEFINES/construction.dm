@@ -106,3 +106,7 @@
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
+
+#define BARSIGN_UNWIRED 1
+#define BARSIGN_OPEN 2
+#define BARSIGN_COMPLETE 3

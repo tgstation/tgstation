@@ -14,7 +14,6 @@
 	var/emagged = 0
 	var/state = 0
 	var/prev_sign = ""
-	var/panel_open = 0
 
 
 
@@ -51,11 +50,6 @@
 	if(!broken && !(flags & NODECONSTRUCT))
 		broken = 1
 
-/obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 2)
-	new /obj/item/stack/cable_coil (loc, 2)
-	qdel(src)
-
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -66,8 +60,6 @@
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-
-
 /obj/structure/sign/barsign/attack_hand(mob/user)
 	if (!src.allowed(user))
 		user << "<span class='info'>Access denied.</span>"
@@ -77,45 +69,66 @@
 		return
 	pick_sign()
 
+/obj/structure/sign/barsign/InitConstruction()
+	return newlist(
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/stack/cable_coil
+			required_amount_to_construct = 2
+			required_type_to_deconstruct = -1
+			construction_message = "replace the wires of"
+			examine_message = "It is unwired"
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/weapon/screwdriver
+			required_type_to_deconstruct = /obj/item/weapon/wirecutters
+			construction_message = "close the maintenance panel of"
+			deconstruction_message = "cut the wires out of"
+			examine_message = "Its maintenance panel is open"
+		},
+		/datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/weapon/screwdriver
+			deconstruction_message = "open the maintenance panel of"
+		}
+	)
 
+/obj/structure/sign/barsign/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip)
+	. = ..()
+	if(!. || skip)
+		return
+	
+	if (state_started_id == BARSIGN_COMPLETE && !allowed(user))
+		user << "<span class='info'>Access denied.</span>"
+		return FALSE
+	
+	if (state_started_id == BARSIGN_OPEN && emagged)
+		user << "<span class='warning'>The wires are fried beyond repair.</span>"
+		return FALSE
 
+/obj/structure/sign/barsign/OnDeconstruction(id, mob/user, forced)
+	..()
+	if(!id)	//busted
+		new /obj/item/stack/sheet/metal (loc, 2)
+		new /obj/item/stack/cable_coil (loc, 2)
+		return
+	
+	if(id == BARSIGN_UNWIRED)
+		broken = FALSE
+		return
 
-/obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(!allowed(user))
-			user << "<span class='info'>Access denied.</span>"
-			return
-		if(!panel_open)
-			user << "<span class='notice'>You open the maintenance panel.</span>"
-			set_sign(new /datum/barsign/hiddensigns/signoff)
-			panel_open = 1
-		else
-			user << "<span class='notice'>You close the maintenance panel.</span>"
-			if(!broken && !emagged)
-				set_sign(pick(barsigns))
-			else if(emagged)
-				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
-			else
-				set_sign(new /datum/barsign/hiddensigns/empbarsign)
-			panel_open = 0
+	. = broken	//delete wires if fried
+	set_sign(new /datum/barsign/hiddensigns/signoff)
 
-	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/C = I
-		if(emagged) //Emagged, not broken by EMP
-			user << "<span class='warning'>Sign has been damaged beyond repair!</span>"
-			return
-		else if(!broken)
-			user << "<span class='warning'>This sign is functioning properly!</span>"
-			return
-
-		if(C.use(2))
-			user << "<span class='notice'>You replace the burnt wiring.</span>"
-			broken = 0
-		else
-			user << "<span class='warning'>You need at least two lengths of cable!</span>"
+/obj/structure/sign/barsign/OnConstruction(id, mob/user)
+	..()
+	//panel closed
+	if(id != BARSIGN_COMPLETE)
+		return
+	if(!broken && !emagged)
+		set_sign(pick(barsigns))
+	else if(emagged)
+		set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	else
-		return ..()
-
+		set_sign(new /datum/barsign/hiddensigns/empbarsign)
 
 /obj/structure/sign/barsign/emp_act(severity)
     set_sign(new /datum/barsign/hiddensigns/empbarsign)
