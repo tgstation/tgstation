@@ -520,6 +520,7 @@
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
+	desc = "A puddle used for washing one's hands and face."
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attack_hand(mob/M)
