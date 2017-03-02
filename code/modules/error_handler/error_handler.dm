@@ -44,6 +44,7 @@ var/global/total_runtimes_skipped = 0
 	//Each occurence of an unique error adds to its cooldown time...
 	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
 	// ... which is used to silence an error if it occurs too often, too fast
+#ifndef TESTING
 	if(cooldown > configured_error_cooldown * configured_error_limit)
 		cooldown = -1
 		silencing = TRUE
@@ -55,6 +56,7 @@ var/global/total_runtimes_skipped = 0
 			if(skipcount > 0)
 				world.log << "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line]."
 				error_cache.log_error(E, skip_count = skipcount)
+#endif
 
 	error_last_seen[erroruid] = world.time
 	error_cooldown[erroruid] = cooldown
