@@ -598,10 +598,10 @@
 	use_power = 0
 	has_cover = 0
 	scan_range = 9
-	stun_projectile = /obj/item/projectile/bullet
-	lethal_projectile = /obj/item/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	stun_projectile = /obj/item/projectile/plasma/turret
+	lethal_projectile = /obj/item/projectile/plasma/turret
+	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
+	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "turret"
