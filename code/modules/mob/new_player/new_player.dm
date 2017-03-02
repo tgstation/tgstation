@@ -19,7 +19,6 @@
 	mob_list += src
 	
 	if(client && !SSmapping.previous_map_config.defaulted && ticker.state == GAME_STATE_STARTUP)
-		testing("Found oldie")
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
 
