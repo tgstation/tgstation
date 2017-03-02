@@ -3,8 +3,8 @@
 	desc = "A black ball with a stenciled number eight in white on the side. It seems full of dark liquid.\nThe instructions state that you should ask your question aloud, and then shake."
 
 	// TEMPORARY SPRITES PLEASE REPLACE XXX TODO FIXME
-	icon = 'icons/obj/singularity.dmi'
-	icon_state = "singularity_s1"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "eightball"
 
 	verb_say = "rattles"
 
@@ -35,6 +35,12 @@
 		"My sources say no",
 		"Outlook not so good",
 		"Very doubtful")
+
+/obj/item/toy/eightball/Initialize(mapload)
+	..()
+	if(prob(1))
+		new /obj/item/toy/eightball/haunted(get_turf(src))
+		qdel(src)
 
 /obj/item/toy/eightball/attack_self(mob/user)
 	if(shaking)
@@ -91,7 +97,13 @@
 	var/list/votes
 
 /obj/item/toy/eightball/haunted/Initialize(mapload)
+	..()
 	votes = list()
+	poi_list |= src
+
+/obj/item/toy/eightball/haunted/Destroy()
+	poi_list -= src
+	. = ..()
 
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)
@@ -106,7 +118,7 @@
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = last_message
-	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=\ref[src];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK, ghost_sound='sound/magic/Staff_animation.ogg')
+	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=\ref[src];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK)
 
 /obj/item/toy/eightball/haunted/Topic(href, href_list)
 	if(href_list["interact"])

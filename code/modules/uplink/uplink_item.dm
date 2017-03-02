@@ -1231,6 +1231,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/toy/eightball/haunted
 	cost = 2
 	restricted_roles = list("Chaplain", "Librarian")
+	limited_stock = 1 // please don't spam deadchat
 
 // Pointless
 /datum/uplink_item/badass
