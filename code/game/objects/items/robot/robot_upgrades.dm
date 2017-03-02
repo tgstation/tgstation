@@ -394,7 +394,7 @@
 	if(..())
 		return 0
     
-	wiresexposed = TRUE
+	R.wiresexposed = TRUE
 	R.emag_act(user)
-	wiresexposed = FALSE
-	A.transform_to(/obj/item/weapon/robot_module/security)
+	R.wiresexposed = FALSE
+	R.transform_to(/obj/item/weapon/robot_module/security)
