@@ -383,7 +383,7 @@
 	return 1
 	
 /obj/item/borg/upgrade/traitorsec
-	name = "Despot upgrade module"
+	name = "O.V.E.R.S.E.E.R. upgrade module"
 	desc = "Ilegal upgrade board that unlocks the banned security module"
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
