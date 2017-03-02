@@ -557,13 +557,13 @@ var/list/binary = list("0","1")
 
 //Used for applying byonds text macros to strings that are loaded at runtime
 /proc/apply_text_macros(string)
-	var/next_backslash = findtextEx(string, "\\")
+	var/next_backslash = findtext(string, "\\")
 	if(!next_backslash)
 		return string
 	
 	var/leng = length(string)
 
-	var/next_space = findtextEx(string, " ", next_backslash + 1)
+	var/next_space = findtext(string, " ", next_backslash + 1)
 	if(!next_space)
 		next_space = leng - next_backslash
 
@@ -572,8 +572,7 @@ var/list/binary = list("0","1")
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
 	var/macro = lowertext(copytext(string, next_backslash + 1, next_space))
-	var/rest = next_backslash > leng ? "" : copytext(string, next_space)
-
+	var/rest = next_backslash > leng ? "" : copytext(string, next_space + 1)
 
 	//See http://www.byond.com/docs/ref/info.html#/DM/text/macros
 	switch(macro)
@@ -608,5 +607,7 @@ var/list/binary = list("0","1")
 		if("hers")
 			base = text("[]\hers", rest)
 	
-	testing("Substituted macro(\\[macro]) in string([string]). Result: [base + rest]")
-	. = base + .(rest)
+	testing("Substituted macro(\\[macro]) in string([string]). Result: \"[base + rest]\"")
+	. = base
+	if(rest)
+		. += .(rest)
