@@ -9,6 +9,8 @@
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 
+	var/list/static/ignore_typecache
+
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/structure/trap/Initialize(mapload)
@@ -17,35 +19,53 @@
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
 
+	if(!ignore_typecache)
+		ignore_typecache = typecacheof(list(
+			/obj/effect,
+			/mob/dead))
+
 /obj/structure/trap/Destroy()
 	qdel(spark_system)
 	spark_system = null
 	. = ..()
 
+/obj/structure/trap/examine(mob/user)
+	..()
+	if(!isliving(user))
+		return
+	user << "<span class='notice'>You reveal [src]!</span>"
+	flare()
+
+/obj/structure/trap/proc/flare()
+	// Makes the trap visible, and starts the cooldown until it's
+	// able to be triggered again.
+	visible_message("<span class='warning'>[src] flares brightly!</span>")
+	alpha = 200
+	animate(src, alpha = initial(alpha), time = time_between_triggers)
+	last_trigger = world.time
+	spark_system.start()
+
 /obj/structure/trap/Crossed(atom/movable/AM)
 	if(last_trigger + time_between_triggers > world.time)
 		return
-	alpha = initial(alpha)
+	// Don't want the traps triggered by sparks, ghosts or projectiles.
+	if(is_type_in_typecache(AM, ignore_typecache))
+		return
+	flare()
 	if(isliving(AM))
-		var/mob/living/L = AM
-		last_trigger = world.time
-		alpha = 200
-		trap_effect(L)
-		animate(src, alpha = initial(alpha), time = time_between_triggers)
+		trap_effect(AM)
 
 /obj/structure/trap/proc/trap_effect(mob/living/L)
 	return
 
 /obj/structure/trap/stun
 	name = "shock trap"
-	desc = "A trap that will shock you and it will render you immobile. You'd better avoid it."
+	desc = "A trap that will shock and render you immobile. You'd better avoid it."
 	icon_state = "trap-shock"
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
 	L.Weaken(5)
-	spark_system.start()
-
 
 /obj/structure/trap/fire
 	name = "flame trap"
@@ -55,9 +75,10 @@
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	L << "<span class='danger'><B>Spontaneous combustion!</B></span>"
 	L.Weaken(1)
-	var/turf/Lturf = get_turf(L)
-	new /obj/effect/hotspot(Lturf)
-	spark_system.start()
+
+/obj/structure/trap/fire/flare()
+	..()
+	new /obj/effect/hotspot(get_turf(src))
 
 
 /obj/structure/trap/chill
@@ -69,7 +90,7 @@
 	L << "<span class='danger'><B>You're frozen solid!</B></span>"
 	L.Weaken(1)
 	L.bodytemperature -= 300
-	spark_system.start()
+	L.apply_status_effect(/datum/status_effect/freon)
 
 
 /obj/structure/trap/damage
@@ -82,10 +103,11 @@
 	L << "<span class='danger'><B>The ground quakes beneath your feet!</B></span>"
 	L.Weaken(5)
 	L.adjustBruteLoss(35)
-	var/turf/Lturf = get_turf(L)
-	spark_system.start()
-	var/obj/structure/flora/rock/giant_rock = new(Lturf)
-	QDEL_IN(giant_rock, 50) // short lived earthquake.
+
+/obj/structure/trap/damage/flare()
+	..()
+	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
+	QDEL_IN(giant_rock, 200)
 
 
 /obj/structure/trap/ward
