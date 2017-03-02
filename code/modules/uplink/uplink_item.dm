@@ -1223,6 +1223,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	surplus = 0
 	restricted_roles = list("Assistant")
+	
+/datum/uplink_item/role_restricted/traitorsec
+	name = "D.E.S.P.O.T. upgrade module"
+	desc = "An illegal cyborg upgrade module that both hacks the cyborg and activates it's hidden security module."
+	item = /obj/item/borg/upgrade/traitorsec
+	cost = 12
+	restricted_roles = list("Roboticist")
+	surplus = 5
 
 // Pointless
 /datum/uplink_item/badass
