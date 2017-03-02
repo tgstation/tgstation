@@ -18,7 +18,8 @@
 	/obj/proc/OnConstruction(state_id, mob/user) - Called when a construction step is completed on an object with the new state_id. If state_id is zero, the object has been fully constructed.
 
 	/obj/proc/OnDeconstruction(state_id, mob/user, forced) - Called when a deconstruction step is completed on an object with the new state_id. If state_id is zero, the object has been fully deconstructed
-															 forced is if the object was aggressively put into this state. If it's true, user may be null
+															 forced is if the object was aggressively put into this state. If it's true, user may be null. Returning TRUE from this function will prevent loot
+															 from being spawned by the upcoming construction state
 
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state
 
@@ -82,8 +83,9 @@
 
 	var/datum/construction_state/next = constructed ? next_state : prev_state
 	var/id
+	var/obj/loot
 	if(next)
-		next.OnReached(parent, user, constructed)
+		loot = next.OnReached(parent, user, constructed)
 		id = next.id
 	else
 		id = 0
@@ -95,7 +97,8 @@
 	else
 		if(deconstruction_sound)
 			playsound(parent, deconstruction_sound, 100, TRUE)
-		parent.OnDeconstruction(id, user)
+		if(parent.OnDeconstruction(id, user) && loot)
+			qdel(loot)
 
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed && (parent.flags & NODECONSTRUCT))
@@ -124,12 +127,11 @@
 		parent.modify_max_integrity(max_integrity ? max_integrity : parent.max_integrity, FALSE, new_failure_integrity = failure_integrity)
 
 	if(!constructed && required_amount_to_construct)
-		var/atom/A
 		if(ispath(required_type_to_construct, /obj/item/stack))
-			A = new required_type_to_construct(get_turf(parent), required_amount_to_construct)
+			. = new required_type_to_construct(parent.loc, required_amount_to_construct)
 		else
-			A = new required_type_to_construct(get_turf(parent))
-		parent.transfer_fingerprints_to(A)
+			. = new required_type_to_construct(parent.loc)
+		parent.transfer_fingerprints_to(.)
 
 /datum/construction_state/first/OnReached(obj/parent, mob/user, constructed)
 	. = ..()
