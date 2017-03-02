@@ -72,9 +72,11 @@
 	var/datum/construction_state/next_state		//the state that will be next once constructed
 	var/datum/construction_state/prev_state		//the state that will be next once deconstructed
 
-/datum/construction_state/first	//this should only contain required_type_to_construct and required_amount_to_construct for the final materials
+/datum/construction_state/first	//this should only contain construction parameters
+	//reaching this state deletes the object
+	required_type_to_deconstruct = -1
 
-/datum/construction_state/last
+/datum/construction_state/last	//this should only contain deconstruction parameters
 	required_type_to_construct = -1
 
 /datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed)
@@ -167,8 +169,8 @@
 			var/datum/construction_state/prev_step = steps[I - 1]
 			prev_step.next_state = curr_step
 			curr_step.prev_state = prev_step
-		if(istype(curr_step, /datum/construction_step/first))
-			offset = 1
+		if(istype(curr_step, /datum/construction_state/first))
+			offset = 1	//entering the first state counts as death
 		curr_step.id = I - offset
 
 //use this proc to make sure there's nothing impossible with the construction chain
