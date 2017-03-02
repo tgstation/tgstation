@@ -237,7 +237,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		for(var/plant in P.plants)
 			if(!plants[plant])
 				uploaded++
-				plants[plant] = 1S
+				plants[plant] = 1
 		for(var/animal in P.animals)
 			if(!animals[animal])
 				uploaded++
