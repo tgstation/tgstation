@@ -72,3 +72,6 @@
 #ifndef SERVERTOOLS
 #define SERVERTOOLS 0
 #endif
+
+//Enables the dedicate April Fools Day code. Don't expect this to be well maintained or even compile if it's not near april fools...
+//#define APRIL_FOOLS_MODE
