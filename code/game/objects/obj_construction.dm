@@ -15,7 +15,7 @@
 
 	/obj/proc/InitConstruction - Called when the first instance of an object type is initialized to set up it's construction steps. Should not call the base
 
-	/obj/proc/OnConstruction(state_id, mob/user) - Called when a construction step is completed on an object with the new state_id. If state_id is zero, the object has been fully constructed.
+	/obj/proc/OnConstruction(state_id, mob/user) - Called when a construction step is completed on an object with the new state_id. If state_id is zero, the object has been fully constructed abd can't be deconstructed.
 
 	/obj/proc/OnDeconstruction(state_id, mob/user, forced) - Called when a deconstruction step is completed on an object with the new state_id. If state_id is zero, the object has been fully deconstructed
 															 forced is if the object was aggressively put into this state. If it's true, user may be null. Returning TRUE from this function will prevent loot
@@ -79,37 +79,37 @@
 /datum/construction_state/last	//this should only contain deconstruction parameters
 	required_type_to_construct = NO_DECONSTRUCT
 
-/datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed)
-	if(!constructed && (parent.flags & NODECONSTRUCT))
-		return
-
+/datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed, forced)
 	var/datum/construction_state/next = constructed ? next_state : prev_state
 	var/id
 	var/obj/loot
 	if(next)
-		loot = next.OnReached(parent, user, constructed)
-		id = next.id
+		loot = next.OnReached(parent, user, constructed)	//let the next state know
+		id = next.id	//id cached for next step
 	else
-		id = 0
+		id = 0	//unrecoverable step (destroyed/locked in)
 
 	if(constructed)
 		if(construction_sound)
 			playsound(parent, construction_sound, 100, TRUE)
-		parent.OnConstruction(id, user)
+		parent.OnConstruction(id, user)	//run event
 	else
-		if(deconstruction_sound)
+		if(!forced && deconstruction_sound)	//forced implys hitsounds and stuff
 			playsound(parent, deconstruction_sound, 100, TRUE)
-		if(parent.OnDeconstruction(id, user) && loot)
+
+		if((parent.OnDeconstruction(id, user, forced) || forced) && loot)	//no loot for vandals or if we're told not to
 			qdel(loot)
 		
 		if(!id)
-			qdel(parent)
+			qdel(parent)	//deconstructed fully
+
+/datum/construction_state/proc/DamageDeconstruct(obj/parent)	//called by obj_break
+	if(prev_state && prev_state.damage_reachable)
+		OnLeft(parent, usr, FALSE, TRUE)
 
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
-	if(!constructed && (parent.flags & NODECONSTRUCT))
-		return
-	parent.current_construction_state = src
-	
+	parent.current_construction_state = src	//moving on
+
 	if(!isnull(anchored))
 		parent.anchored = anchored
 
@@ -121,17 +121,17 @@
 
 	if(!constructed && damage_reachable)
 		var/cached_max_integrity = max_integrity
-		var/cached_failure_integrity = failure_integrity
+		var/cached_failure_integrity = failure_integrity	//modify damage additively
 		if(cached_max_integrity)
 			parent.max_integrity = cached_max_integrity
 			parent.obj_integrity = min(parent.obj_integrity, cached_max_integrity)
 		if(cached_failure_integrity)
 			parent.integrity_failure = cached_failure_integrity
 
-	else if(max_integrity || failure_integrity)
+	else if(max_integrity || failure_integrity)	//modify damage by percentage
 		parent.modify_max_integrity(max_integrity ? max_integrity : parent.max_integrity, FALSE, new_failure_integrity = failure_integrity)
 
-	if(!constructed && required_amount_to_construct)
+	if(!constructed && required_amount_to_construct)	//spawn loot
 		if(ispath(required_type_to_construct, /obj/item/stack))
 			. = new required_type_to_construct(parent.loc, required_amount_to_construct)
 		else
@@ -141,24 +141,30 @@
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
 		stack_trace("Very bad param")
+	//return to object defaults
 	parent.current_construction_state = src
 	parent.anchored = initial(parent.anchored)
 	parent.icon_state = initial(parent.icon_state)
 	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
 
-/obj/proc/SetupConstruction()
-	if(isnull(construction_steps[type]))
-		var/Result = InitConstruction()
+/obj/proc/SetupConstruction()	//called by Initialize
+	var/list/our_steps = construction_steps[type]
+	if(isnull(our_steps))
+		var/list/Result = InitConstruction()	//get steps for the first time
 		if(Result != -1)
-			LinkConstructionSteps(Result)
+			LinkConstructionSteps(Result)	//assign ids and stitch the linked list together
 			if(!ValidateConstructionSteps(Result))
 				Result = list()
+			else
+				current_construction_state = Result[Result.len]	//start fully constructed by default
 		else
 			Result = list()
-		construction_steps[type] = Result
+		construction_steps[type] = Result	//cache it
+	else if(our_steps.len)
+		current_construction_state = our_steps[our_steps.len]	//start fully constructed by default
 
 /obj/proc/InitConstruction() //null op, no construction steps
-	//derivatives return a proper list
+	//derivatives return a proper newlist of construction steps
 	return -1
 	
 /proc/LinkConstructionSteps(list/steps)
@@ -170,7 +176,7 @@
 			prev_step.next_state = curr_step
 			curr_step.prev_state = prev_step
 		if(istype(curr_step, /datum/construction_state/first))
-			offset = 1	//entering the first state counts as death
+			offset = 1	//entering the first state counts as full deconstruction
 		curr_step.id = I - offset
 
 //use this proc to make sure there's nothing impossible with the construction chain
@@ -180,11 +186,20 @@
 	. = TRUE
 	if(length(cached_construction_steps))
 		var/datum/construction_state/current_step = cached_construction_steps[1]
+		if(!istype(current_step))
+			WARNING("Construction Error: [type]: Found non construction state in list: [current_step]")
+			return FALSE
 		var/last_max_integrity = current_step.max_integrity ? current_step.max_integrity : max_integrity
 		var/last_failure_integrity = current_step.failure_integrity ? current_step.failure_integrity : integrity_failure
 		current_step = current_step.next_state
+		if(!current_step)
+			WARNING("Construction Error: [type]: Only one construction state")
+			return FALSE
 		var/last_found = FALSE
 		while(current_step)
+			if(!istype(current_step))
+				WARNING("Construction Error: [type]: Found non construction state in list: [current_step]")
+				return FALSE
 			var/error = "Construction Error: [type] step [current_step.id]: "
 			if(istype(current_step, /datum/construction_state/first))
 				WARNING(error + "construction_state/first not first")
@@ -224,10 +239,12 @@
 		WARNING("Construction Error: InitConstruction for [type] defined but no steps were added")
 		. = FALSE
 
+//construction events
 /obj/proc/OnConstruction(state_id, mob/user)
 
 /obj/proc/OnDeconstruction(state_id, mob/user, forced)
 
+//called after Initialize if the obj was constructed from scratch
 /obj/proc/Construct(mob/user)
 	var/list/cached_construction_steps = construction_steps[type]
 	if(cached_construction_steps.len)
@@ -253,6 +270,7 @@
 	. = ..()
 	HandConstruction(user)
 
+//construct by hand
 /obj/proc/HandConstruction(mob/user)
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs)
@@ -275,8 +293,9 @@
 			if(!do_after(user, wait, target = src))
 				return
 		user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
-		ccs.OnLeft(src, user, constructed)
+		ccs.OnLeft(src, user, constructed, FALSE)
 
+//construct by tool if possible
 /obj/attackby(obj/item/I, mob/living/user)
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs)
@@ -297,7 +316,7 @@
 		else
 			return ..()
 
-		//snowflake stuff here
+		//snowflakish stuff here
 		if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(!WT.isOn())
@@ -311,9 +330,8 @@
 			user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>"
 			return
 
-
 		var/cont
-		LAZYADD(user.construction_tasks, src)
+		LAZYADD(user.construction_tasks, src)	//prevent repeats
 		if(wait)
 			if(I.usesound)
 				playsound(src, I.usesound, 100, TRUE)	
@@ -335,7 +353,7 @@
 					qdel(Mats)
 
 			user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
-			ccs.OnLeft(src, user, constructed)
+			ccs.OnLeft(src, user, constructed, FALSE)
 	else
 		return ..()
 

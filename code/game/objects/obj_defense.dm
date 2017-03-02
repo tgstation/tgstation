@@ -226,7 +226,9 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //what happens when the obj's health is below integrity_failure level.
 /obj/proc/obj_break(damage_flag)
-	return
+	var/datum/construction_state/ccs = current_construction_state
+	if(ccs)
+		ccs.DamageDeconstruct(src)
 
 //what happens when the obj's integrity reaches zero.
 /obj/proc/obj_destruction(damage_flag)
