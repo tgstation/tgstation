@@ -401,6 +401,8 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/value = attributes[attribute]
 		if(islist(value))
 			value = deepCopyList(value)
+		if(istext(value))
+			value = eval("\"[value]\"")
 		what.vars[attribute] = value
 	use_preloader = FALSE
 
