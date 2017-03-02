@@ -390,11 +390,11 @@
 	origin_tech = "data=4;combat=4;syndicate=3"
 
 
-/obj/item/borg/upgrade/traitorsec/action(mob/living/silicon/robot/R,/mob/living/user)
+/obj/item/borg/upgrade/traitorsec/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return 0
     
 	R.wiresexposed = TRUE
 	R.emag_act(user)
 	R.wiresexposed = FALSE
-	R.transform_to(/obj/item/weapon/robot_module/security)
+	R.module.transform_to(/obj/item/weapon/robot_module/security)
