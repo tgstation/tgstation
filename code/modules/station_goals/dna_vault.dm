@@ -277,7 +277,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		if(VAULT_ARMOUR)
 			H << "<span class='notice'>Your feel tough.</span>"
 			S.armor = 30
-		f(VAULT_SPEED)
+		if(VAULT_SPEED)
 			H << "<span class='notice'>Your feel faster.</span>"
 			S.speedmod = -1
 	power_lottery[H] = list()
