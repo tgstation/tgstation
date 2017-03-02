@@ -1,0 +1,1 @@
+#define PHOTO_MOB_INFO_LEN 3

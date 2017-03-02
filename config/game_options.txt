@@ -230,6 +230,7 @@ TRAITOR_OBJECTIVES_AMOUNT 2
 ALLOW_LATEJOIN_ANTAGONISTS
 
 ## Time window in seconds you can latejoin and get filled in with identities of the crew.
+## Comment out or give a negative number to allow identity fill in forever.
 LATEJOIN_IDENTITY_RETCON 60
 
 ## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.

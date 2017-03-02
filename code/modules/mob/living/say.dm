@@ -168,8 +168,11 @@ var/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
 	var/deaf_message
 	var/deaf_type
 	var/voice
+	var/edit_print_ref
 	if(voice_print)
 		voice = get_voiceprint_name(speaker, voice_print)
+		if(mind && voice_print != voiceprint)
+			edit_print_ref = mind.voiceprint_edit_tag(voice_print)
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
 			deaf_message = "<span class='name'>[voice ? voice : speaker]</span> [speaker.verb_say] something but you cannot hear them."
@@ -178,7 +181,7 @@ var/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 	if(voice || !(message_langs & languages_understood) || force_compose) //force_compose is so AIs don't end up without their hrefs.
-		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans, voice, message_mode)
+		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans, voice, message_mode, edit_print_ref)
 		last_voiceprint_message(voice_print, remove_html_tags(message))
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
@@ -209,6 +212,11 @@ var/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
+
+/mob/living/compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
+	if(edit_tag)
+		namepart = "<a href='?src=\ref[src];voiceprint_edit=[edit_tag];t=[world.time]'>[namepart]</a>"
+	. = namepart
 
 /mob/proc/binarycheck()
 	return 0

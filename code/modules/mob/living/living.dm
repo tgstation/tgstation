@@ -73,6 +73,27 @@
 	staticOverlays["animal"] = staticOverlay
 
 
+/mob/living/Topic(href, href_list)
+	..()
+	if(href_list["voiceprint_edit"] && href_list["t"] && usr == src && mind && client)
+		var/edit_tag = href_list["voiceprint_edit"]
+		var/href_timestamp = text2num(href_list["t"])
+		var/tag_entry = mind.identity_edit_tags[edit_tag]
+		if(tag_entry && href_timestamp >= world.time - IDENTITY_EXPIRE_TIME)
+			var/voice_print = tag_entry[1]
+			var/tag_timestamp = tag_entry[2]
+			if(tag_timestamp < world.time - IDENTITY_EXPIRE_TIME)
+				return
+			var/voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
+			if(!voiceprint_entry)
+				return
+			var/VP_name = voiceprint_entry[3]
+			mind.set_print_manual(voice_print, VP_name, CATEGORY_VOICEPRINTS)
+			var/chosen_name = input(src, "Please enter a new name for this person.", "Rename Person", VP_name)
+			if(!chosen_name || stat == DEAD || QDELETED(mind))
+				return
+			mind.set_print_manual(voice_print, chosen_name, CATEGORY_VOICEPRINTS)
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if(..()) //we are thrown onto something

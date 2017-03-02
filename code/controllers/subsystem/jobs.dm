@@ -413,7 +413,7 @@ var/datum/controller/subsystem/job/SSjob
 		var/datum/mind/H_mind = H.mind
 		H_mind.assigned_role = rank
 
-		if(H.voiceprint && (!joined_late || world.time - round_start_time <= config.latejoin_identity_retcon))
+		if(H.voiceprint && (!joined_late || config.latejoin_identity_retcon < 0 || world.time - round_start_time <= config.latejoin_identity_retcon))
 			var/H_famous = famous_occupations[rank]
 			var/H_friendly = friendly_occupations[rank]
 			var/list/H_knowledge_positions = list()

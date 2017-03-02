@@ -181,8 +181,8 @@
 	return (a < b ? a : b)
 
 //Returns text with HTML tags removed. Meaning, the entire tag, not just the < and > characters
-var/regex/remove_html_tags_regex = regex("<.*?>", "g")
 /proc/remove_html_tags(text)
+	var/static/regex/remove_html_tags_regex = regex("<.*?>", "g")
 	. = remove_html_tags_regex.Replace(text)
 
 /*
@@ -369,8 +369,8 @@ var/list/binary = list("0","1")
 	return temp1
 
 //Returns text with all vowels removed
-var/regex/consonants_regex = regex("\[aeiou]", "gi")
 /proc/consonants(text)
+	var/static/regex/consonants_regex = regex("\[aeiou]", "gi")
 	. = consonants_regex.Replace(text)
 
 //merges non-null characters (3rd argument) from "from" into "into". Returns result
