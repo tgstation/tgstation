@@ -87,7 +87,7 @@
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
-
+	var/mob/mob_viewer //the mob viewing this alert
 
 /obj/screen/alert/MouseEntered(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
@@ -251,22 +251,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense
 	name = "Blood Sense"
-	
-	// wew fuck this shit
-
-
-
 	desc = "Allows you to sense blood that is manipulated by dark magicks."
-	
-	
-	
 	icon_state = "cult_sense"
-	
-	
 	var/image/finder
-	
-	
-	
 	var/icon/sacrifice
 
 /obj/screen/alert/bloodsense/New()
