@@ -383,18 +383,18 @@
 	return 1
 	
 /obj/item/borg/upgrade/traitorsec
-        name = "Bloodhound upgrade module"
-        desc = "Ilegal upgrade board that unlocks the banned security module"
-        icon_state = "cyborg_upgrade3"
-        require_module = 1
-        origin_tech = "data=4;combat=4;syndicate=3"
+	name = "Bloodhound upgrade module"
+	desc = "Ilegal upgrade board that unlocks the banned security module"
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	origin_tech = "data=4;combat=4;syndicate=3"
 
 
 /obj/item/borg/upgrade/traitorsec/action(mob/living/silicon/robot/R,/mob/living/user)
 	if(..())
 		return 0
-       
-       wiresexposed = TRUE
-        A.emag_act(user)
-        wiresexposed = FALSE
-        A.transform_to(/obj/item/weapon/robot_module/security)
+    
+	wiresexposed = TRUE
+	R.emag_act(user)
+	wiresexposed = FALSE
+	A.transform_to(/obj/item/weapon/robot_module/security)
