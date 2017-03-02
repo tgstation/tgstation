@@ -147,11 +147,11 @@
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_LOBBY)
 		src << "You will now hear music in the game lobby."
-		if(istype(mob, /mob/new_player))
+		if(isnewplayer(mob))
 			playtitlemusic()
 	else
 		src << "You will no longer hear music in the game lobby."
-		if(istype(mob, /mob/new_player))
+		if(isnewplayer(mob))
 			mob.stopLobbySound()
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -244,7 +244,7 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()
-		if(istype(mob,/mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.update_icon(new_form)
 
@@ -258,7 +258,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
 
@@ -273,7 +273,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			if("default sprites")
 				prefs.ghost_accs = GHOST_ACCS_NONE
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.update_icon()
 
@@ -306,7 +306,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			if("White Ghost")
 				prefs.ghost_others = GHOST_OTHERS_SIMPLE
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.updateghostsight()
 
@@ -334,7 +334,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.ghost_hud = !prefs.ghost_hud
 	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
 	prefs.save_preferences()
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		mob.hud_used.show_hud()
 
 /client/verb/toggle_inquisition() // warning: unexpected inquisition

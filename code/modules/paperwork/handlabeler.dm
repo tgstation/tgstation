@@ -9,8 +9,7 @@
 	var/mode = 0
 
 /obj/item/weapon/hand_labeler/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pointing \the [src] \
-		at \himself. They're going to label themselves as a suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!</span>")
 	labels_left = max(labels_left - 1, 0)
 
 	var/old_real_name = user.real_name
@@ -84,19 +83,16 @@
 /obj/item/weapon/hand_labeler/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
-		if(!user.unEquip(I))
-			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		qdel(I)
-		labels_left = initial(labels_left)
-		return
+		labels_left = initial(labels_left)	//Yes, it's capped at its initial value
 
 /obj/item/weapon/hand_labeler/borg
 	name = "cyborg-hand labeler"
 
 /obj/item/weapon/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
 	..(A, user, proximity)
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		return
 
 	var/mob/living/silicon/robot/borgy = user
@@ -119,4 +115,4 @@
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	item_state = "electropack"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY

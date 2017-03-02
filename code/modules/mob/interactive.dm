@@ -72,6 +72,8 @@
 	var/forceProcess = 0
 	var/processTime = 8
 	var/lastProc = 0
+	var/walkdebug = 0	//causes sparks in our path target. used for debugging
+	var/debugexamine = 0 //If we show debug info in our examine
 	var/showexaminetext = 1	//If we show our telltale examine text
 
 	var/list/knownStrings = list()
@@ -130,19 +132,19 @@
 	myjob = new/datum/job/assistant()
 	job = myjob.title
 	myjob.equip(src)
-	myjob.apply_fingerprints(src)
 
 /mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
 	. = ..()
 	retal = 1
 	retal_target = user
 
-/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
 	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
 	if(potentialAssault)
 		retal = 1
 		retal_target = potentialAssault
 	..()
+
 
 /client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
 	set name = "Reset SNPC"
@@ -203,7 +205,6 @@
 						for(var/obj/item/W in T)
 							qdel(W)
 						T.myjob.equip(T)
-						T.myjob.apply_fingerprints(T)
 						T.doSetup()
 						break
 			if(choice == "Random")
@@ -212,7 +213,6 @@
 				for(var/obj/item/W in T)
 					qdel(W)
 				T.myjob.equip(T)
-				T.myjob.apply_fingerprints(T)
 				T.doSetup()
 				if(prob(25))
 					var/list/validchoices = list()
@@ -236,7 +236,6 @@
 					for(var/obj/item/W in T)
 						qdel(W)
 					T.myjob.equip(T)
-					T.myjob.apply_fingerprints(T)
 					T.doSetup()
 				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
 				if(shouldDoppel)
@@ -296,11 +295,9 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-			BP.change_bodypart_status(ORGAN_ROBOTIC)
+			BP.change_bodypart_status(BODYPART_ROBOTIC)
 	update_icons()
-	update_damage_overlays(0)
-
-	hand = 0
+	update_damage_overlays()
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
 	//job specific favours
 	switch(myjob.title)
@@ -375,8 +372,8 @@
 			var/datum/objective_item/steal/S = new A
 			traitorTarget = locate(S.targetitem) in world
 		if(SNPC_MARTYR) // MY LIFE FOR SPESZUL
-			var/targetType = pick(/obj/structure/particle_accelerator,/obj/machinery/gravity_generator/main,/obj/machinery/power/smes)
-			traitorTarget = locate(targetType) in world
+			var/targetType = pick(/obj/machinery/gravity_generator/main/station,/obj/machinery/power/smes/engineering,/obj/machinery/telecomms/hub)
+			traitorTarget = locate(targetType) in machines
 		if(SNPC_PSYCHO) // YOU'RE LIKE A FLESH BICYLE AND I WANT TO DISMANTLE YOU
 			traitorTarget = null
 
@@ -410,9 +407,9 @@
 	var/mob/living/carbon/human/M = target
 	if(target)
 		if(health > 0)
-			if(M.a_intent == "help")
+			if(M.a_intent == INTENT_HELP)
 				chatter()
-			if(M.a_intent == "harm")
+			if(M.a_intent == INTENT_HARM)
 				retal = 1
 				retal_target = target
 
@@ -423,10 +420,6 @@
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in view(MIN_RANGE_FIND,src)
 	if(C)
 		retalTarget(C)
-
-/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
-	..(P,def_zone)
-	retalTarget(P.firer)
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)
 	..(M)
@@ -491,28 +484,35 @@
 	if(other_hand)
 		if(other_hand.loc != src)
 			other_hand = null
-	if(hand)
-		if(!l_hand)
+
+	var/obj/item/L = get_item_for_held_index(1) //just going to hardcode SNPCs to 2 hands, for now.
+	var/obj/item/R = get_item_for_held_index(2) //they're just VERY assume-y about 2 hands.
+	if(active_hand_index == 1)
+		if(!L)
 			main_hand = null
-			if(r_hand)
+			if(R)
 				swap_hands()
 	else
-		if(!r_hand)
+		if(!R)
 			main_hand = null
-			if(l_hand)
+			if(L)
 				swap_hands()
 
+
 /mob/living/carbon/human/interactive/proc/swap_hands()
-	hand = !hand
-	var/obj/item/T = other_hand
-	main_hand = other_hand
-	other_hand = T
+	var/oindex = active_hand_index
+	if(active_hand_index == 1)
+		active_hand_index = 2
+	else
+		active_hand_index = 1
+	main_hand = get_active_held_item()
+	other_hand = get_item_for_held_index(oindex)
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/take_to_slot(obj/item/G, var/hands=0)
-	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
+	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	if(hands)
-		slots = list ("left hand" = slot_l_hand,"right hand" = slot_r_hand)
+		slots = list ("left hand" = slot_hands,"right hand" = slot_hands)
 	G.loc = src
 	if(G.force && G.force > best_force)
 		best_force = G.force
@@ -520,14 +520,14 @@
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/insert_into_backpack()
-	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
+	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	var/obj/item/I = get_item_by_slot(pick(slots))
 	var/obj/item/weapon/storage/BP = get_item_by_slot(slot_back)
 	if(back && BP && I)
 		if(BP.can_be_inserted(I,0))
 			BP.handle_item_insertion(I,0)
 	else
-		unEquip(I,TRUE)
+		dropItemToGround(I,TRUE)
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/targetRange(towhere)
@@ -604,14 +604,16 @@
 					D.open()
 
 	if(update_hands)
+		var/obj/item/l_hand = get_item_for_held_index(1)
+		var/obj/item/r_hand = get_item_for_held_index(2)
 		if(l_hand || r_hand)
 			if(l_hand)
-				hand = 1
+				active_hand_index = 1
 				main_hand = l_hand
 				if(r_hand)
 					other_hand = r_hand
 			else if(r_hand)
-				hand = 0
+				active_hand_index = 2
 				main_hand = r_hand
 				if(l_hand) //this technically shouldnt occur, but its a redundancy
 					other_hand = l_hand
@@ -620,7 +622,7 @@
 
 	if(pulledby)
 		if(Adjacent(pulledby))
-			a_intent = "disarm"
+			a_intent = INTENT_DISARM
 			pulledby.attack_hand(src)
 			inactivity_period = 10
 
@@ -659,12 +661,12 @@
 				if(istype(TARGET, /obj/item/weapon))
 					var/obj/item/weapon/W = TARGET
 					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-						if(!l_hand || !r_hand)
+						if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
 							put_in_hands(W)
 						else
 							insert_into_backpack()
 				else
-					if(!l_hand || !r_hand)
+					if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
 						put_in_hands(TARGET)
 					else
 						insert_into_backpack()
@@ -676,7 +678,7 @@
 					take_to_slot(C,1)
 					if(!equip_to_appropriate_slot(C))
 						var/obj/item/I = get_item_by_slot(C)
-						unEquip(I)
+						dropItemToGround(I)
 						spawn(5)
 							equip_to_appropriate_slot(C)
 				update_hands = 1
@@ -737,7 +739,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
-		addtimer(src, "doProcess", processTime)
+		addtimer(CALLBACK(src, .proc/doProcess), processTime)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()
@@ -754,8 +756,8 @@
 	spawn(0)
 		call(src,Proc)(src)
 
-/mob/living/carbon/human/interactive/proc/tryWalk(turf/inTarget)
-	if(restrictedJob) // we're a job that has to stay in our home
+/mob/living/carbon/human/interactive/proc/tryWalk(turf/inTarget, override = 0)
+	if(restrictedJob && !override) // we're a job that has to stay in our home
 		if(!(get_turf(inTarget) in get_area_turfs(job2area(myjob))))
 			TARGET = null
 			return
@@ -796,6 +798,13 @@
 	set background = 1
 	if(!target)
 		return 0
+
+	if(walkdebug)
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+		spark_system.set_up(5, 0, target)
+		spark_system.attach(target)
+		spark_system.start()
+
 
 	if(myPath.len <= 0)
 		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1, id=Path_ID)
@@ -1066,27 +1075,27 @@
 					if(change)
 						HP.attackby(internalBeaker,src)
 
-	var/obj/item/weapon/reagent_containers/food/snacks/grown/GF = locate(/obj/item/weapon/reagent_containers/food/snacks/grown) in view(12,src)
-	if(GF)
-		if(!Adjacent(GF))
-			tryWalk(get_turf(GF))
-		else
-			GF.attackby(internalBag,src)
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/GF = locate(/obj/item/weapon/reagent_containers/food/snacks/grown) in view(12,src)
+		if(GF)
+			if(!Adjacent(GF))
+				tryWalk(get_turf(GF))
+			else
+				GF.attackby(internalBag,src)
 
-	if(internalBag.contents.len > 0)
-		var/obj/machinery/smartfridge/SF = locate(/obj/machinery/smartfridge) in range(12,src)
-		if(!Adjacent(SF))
-			tryWalk(get_turf(SF))
-		else
-			customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over the [SF]!")
-			//smartfridges call updateUsrDialog when you call attackby, so we're going to have to cheese-magic-space this
-			for(var/obj/toLoad in internalBag.contents)
-				if(contents.len >= SF.max_n_of_items)
-					break
-				if(SF.accept_check(toLoad))
-					SF.load(toLoad)
-				else
-					qdel(toLoad) // destroy everything we dont need
+		if(internalBag.contents.len > 0)
+			var/obj/machinery/smartfridge/SF = locate(/obj/machinery/smartfridge) in range(12,src)
+			if(!Adjacent(SF))
+				tryWalk(get_turf(SF), 1)
+			else
+				customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over the [SF]!")
+				//smartfridges call updateUsrDialog when you call attackby, so we're going to have to cheese-magic-space this
+				for(var/obj/toLoad in internalBag.contents)
+					if(contents.len >= SF.max_n_of_items)
+						break
+					if(SF.accept_check(toLoad))
+						SF.load(toLoad)
+					else
+						qdel(toLoad) // destroy everything we dont need
 
 /mob/living/carbon/human/interactive/proc/bartend(obj)
 	if(shouldModulePass())
@@ -1145,11 +1154,11 @@
 	var/mob/living/carbon/human/clownTarget
 	var/list/clownPriority = list()
 
-	var/obj/item/weapon/reagent_containers/spray/S
-	if(!locate(/obj/item/weapon/reagent_containers/spray) in allContents)
-		new/obj/item/weapon/reagent_containers/spray(src)
-	else
-		S = locate(/obj/item/weapon/reagent_containers/spray) in allContents
+	var/obj/item/weapon/reagent_containers/spray/S = locate(/obj/item/weapon/reagent_containers/spray) in allContents
+
+	if(!S)
+		S = new/obj/item/weapon/reagent_containers/spray(src)
+		S.amount_per_transfer_from_this = 10
 
 	for(var/mob/living/carbon/human/C in rangeCheck)
 		var/pranksNearby = 100
@@ -1212,27 +1221,25 @@
 
 	if(shouldTryHeal == 1)
 		for(var/mob/living/carbon/human/C in nearby)
-			if(istype(C,/mob/living/carbon/human)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
-				if(C.health <= 75)
-					if(get_dist(src,C) <= 2)
-						src.say("Wait, [C], let me heal you!")
-						M.attack(C,src)
-						sleep(25)
-					else
-						tryWalk(get_turf(C))
+			if(C.health <= 75)
+				if(get_dist(src,C) <= 2)
+					src.say("Wait, [C], let me heal you!")
+					M.attack(C,src)
+					sleep(25)
+				else
+					tryWalk(get_turf(C))
 	else if(shouldTryHeal == 2)
 		if(HPS)
 			if(HPS.reagents.total_volume <= 0)
 				HPS.reagents.add_reagent("tricordrazine",30)
 			for(var/mob/living/carbon/human/C in nearby)
-				if(istype(C,/mob/living/carbon/human))
-					if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
-						if(get_dist(src,C) <= 2)
-							src.say("Wait, [C], let me heal you!")
-							HPS.attack(C,src)
-							sleep(25)
-						else
-							tryWalk(get_turf(C))
+				if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
+					if(get_dist(src,C) <= 2)
+						src.say("Wait, [C], let me heal you!")
+						HPS.attack(C,src)
+						sleep(25)
+					else
+						tryWalk(get_turf(C))
 
 
 /mob/living/carbon/human/interactive/proc/dojanitor(obj)
@@ -1261,8 +1268,7 @@
 				sleep(25)
 
 /mob/living/carbon/human/interactive/proc/customEmote(var/text)
-	for(var/mob/living/carbon/M in view(src))
-		M.show_message("<span class='notice'>[text]</span>", 2)
+	visible_message("<span class='notice'>[text]</span>")
 
 // START COOKING MODULE
 /mob/living/carbon/human/interactive/proc/cookingwithmagic(var/obj/item/weapon/reagent_containers/food/snacks/target)
@@ -1319,7 +1325,7 @@
 		if(SF)
 			if(SF.contents.len > 0)
 				if(!Adjacent(SF))
-					tryWalk(get_turf(SF))
+					tryWalk(get_turf(SF),1)
 				else
 					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], grabbing various foodstuffs from [SF] and sticking them in it's mouth!")
 					for(var/obj/item/A in SF.contents)
@@ -1459,17 +1465,17 @@
 	if(canmove)
 		if((graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			interest += targetInterestShift
-			a_intent = "harm"
+			a_intent = INTENT_HARM
 			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
 			if(retal)
 				TARGET = retal_target
 			else
 				var/mob/living/M = locate(/mob/living) in oview(7,src)
-				if(M != src && !compareFaction(M.faction))
-					TARGET = M
 				if(!M)
 					doing = doing & ~FIGHTING
+				else if(M != src && !compareFaction(M.faction))
+					TARGET = M
 
 	//no infighting
 	if(retal)
@@ -1510,7 +1516,7 @@
 
 	if((TARGET && (doing & FIGHTING))) // this is a redundancy check
 		var/mob/living/M = TARGET
-		if(istype(M,/mob/living))
+		if(isliving(M))
 			if(M.health > 1)
 				//THROWING OBJECTS
 				for(var/A in allContents)
@@ -1537,8 +1543,8 @@
 						if(istype(main_hand,/obj/item/weapon/gun))
 							var/obj/item/weapon/gun/G = main_hand
 							if(G.can_trigger_gun(src))
-								if(istype(main_hand,/obj/item/weapon/gun/projectile))
-									var/obj/item/weapon/gun/projectile/P = main_hand
+								if(istype(main_hand,/obj/item/weapon/gun/ballistic))
+									var/obj/item/weapon/gun/ballistic/P = main_hand
 									if(!P.chambered)
 										P.chamber_round()
 										P.update_icon()
@@ -1579,7 +1585,7 @@
 						tryWalk(TARGET)
 					else
 						if(Adjacent(TARGET))
-							a_intent = pick("disarm","harm")
+							a_intent = pick(INTENT_DISARM, INTENT_HARM)
 							M.attack_hand(src)
 			timeout++
 		else if(timeout >= 10 || !(targetRange(M) > 14))
@@ -1622,4 +1628,12 @@
 	targetInterestShift = 2 // likewise
 	faction += "bot_grey"
 	graytide = 1
+	..()
+
+//Walk softly and carry a big stick
+/mob/living/carbon/human/interactive/robust/New()
+	TRAITS |= TRAIT_FRIENDLY
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_SMART
+	faction += "bot_power"
 	..()

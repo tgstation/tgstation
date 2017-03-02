@@ -3,6 +3,7 @@ var/global/default_martial_art = new/datum/martial_art
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD)
+	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	pressure_resistance = 25
 	//Hair colour and style
 	var/hair_color = "000"
@@ -30,11 +31,7 @@ var/global/default_martial_art = new/datum/martial_art
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
-	var/obj/item/shoes = null
 	var/obj/item/belt = null
-	var/obj/item/gloves = null
-	var/obj/item/clothing/glasses/glasses = null
-	var/obj/item/ears = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -49,7 +46,8 @@ var/global/default_martial_art = new/datum/martial_art
 
 	var/name_override //For temporary visible name changes
 
-	var/heart_attack = 0
-
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/datum/personal_crafting/handcrafting
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	can_ride_typecache = list(/mob/living/carbon/human)

@@ -44,8 +44,8 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			user << "Unweld the [src] first!"
-		if(do_after(user, 80/W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 80*W.toolspeed, target = src))
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "You dismantle the [src]."
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
@@ -59,7 +59,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
+					if (do_after(user,20*W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored = 1
@@ -70,7 +70,7 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
+					if (do_after(user,20*W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored  = 0

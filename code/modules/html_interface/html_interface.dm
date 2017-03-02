@@ -68,9 +68,9 @@ You have to use modules/client/asset_cache to ensure they get sent BEFORE the in
 
 	** Sample code **
 
-mob/var/datum/html_interface/hi
+/mob/var/datum/html_interface/hi
 
-mob/verb/test()
+/mob/verb/test()
 	if (!hi) hi = new/datum/html_interface(src, "[src.key]")
 
 	hi.updateLayout("<div id=\"content\"></div>")

@@ -19,6 +19,7 @@ Clown
 
 /datum/outfit/job/clown
 	name = "Clown"
+	jobtype = /datum/job/clown
 
 	belt = /obj/item/device/pda/clown
 	uniform = /obj/item/clothing/under/rank/clown
@@ -34,13 +35,17 @@ Clown
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1
 		)
 
+	implants = list(/obj/item/weapon/implant/sad_trombone)
+
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
 
+	box = /obj/item/weapon/storage/box/hug/survival
+
+
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-
 	if(visualsOnly)
 		return
 
@@ -48,13 +53,8 @@ Clown
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-
 	if(visualsOnly)
 		return
-
-	var/obj/item/weapon/implant/sad_trombone/S = new/obj/item/weapon/implant/sad_trombone(H)
-	S.imp_in = H
-	S.implanted = 1
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
@@ -80,6 +80,7 @@ Mime
 
 /datum/outfit/job/mime
 	name = "Mime"
+	jobtype = /datum/job/mime
 
 	belt = /obj/item/device/pda/mime
 	uniform = /obj/item/clothing/under/rank/mime
@@ -128,12 +129,16 @@ Librarian
 
 /datum/outfit/job/librarian
 	name = "Librarian"
+	jobtype = /datum/job/librarian
 
 	belt = /obj/item/device/pda/librarian
 	uniform = /obj/item/clothing/under/rank/librarian
 	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/weapon/barcodescanner
 	l_pocket = /obj/item/device/laser_pointer
+	backpack_contents = list(
+		/obj/item/soapstone = 1
+	)
 
 /*
 Lawyer
@@ -157,6 +162,7 @@ Lawyer
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
+	jobtype = /datum/job/lawyer
 
 	belt = /obj/item/device/pda/lawyer
 	ears = /obj/item/device/radio/headset/headset_sec
@@ -165,14 +171,15 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
+	r_pocket = /obj/item/clothing/tie/lawyers_badge
+
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-
 	if(visualsOnly)
 		return
 
-	var/datum/job/lawyer/J = SSjob.GetJob(H.job)
+	var/datum/job/lawyer/J = SSjob.GetJobType(jobtype)
 	J.lawyers++
 	if(J.lawyers>1)
 		uniform = /obj/item/clothing/under/lawyer/purpsuit

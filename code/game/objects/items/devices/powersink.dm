@@ -5,7 +5,7 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1

@@ -11,6 +11,9 @@
 		icon_state = icon_regular_floor
 
 
+/turf/open/floor/plasteel/airless
+	initial_gas_mix = "TEMP=2.7"
+
 
 /turf/open/floor/plasteel/black
 	icon_state = "dark"
@@ -182,18 +185,15 @@
 /turf/open/floor/plasteel/arrival/corner
 	icon_state = "arrivalcorner"
 
-
-/turf/open/floor/plasteel/escape
-	icon_state = "escape"
-/turf/open/floor/plasteel/escape/corner
-	icon_state = "escapecorner"
-
-
 /turf/open/floor/plasteel/caution
 	icon_state = "caution"
 /turf/open/floor/plasteel/caution/corner
 	icon_state = "cautioncorner"
 
+/turf/open/floor/plasteel/escape
+	icon_state = "escape"
+/turf/open/floor/plasteel/escape/corner
+	icon_state = "escapecorner"
 
 /turf/open/floor/plasteel/whitebot
 	icon_state = "whitebot"
@@ -300,6 +300,18 @@
 /turf/open/floor/plasteel/shuttle/white
 	icon_state = "shuttlefloor3"
 /turf/open/floor/plasteel/shuttle/purple
+	icon_state = "shuttlefloor5"
+
+/turf/open/floor/plasteel/airless/shuttle
+	icon_state = "shuttlefloor"
+/turf/open/floor/plasteel/airless/shuttle/red
+	name = "Brig floor"
+	icon_state = "shuttlefloor4"
+/turf/open/floor/plasteel/airless/shuttle/yellow
+	icon_state = "shuttlefloor2"
+/turf/open/floor/plasteel/airless/shuttle/white
+	icon_state = "shuttlefloor3"
+/turf/open/floor/plasteel/airless/shuttle/purple
 	icon_state = "shuttlefloor5"
 
 
@@ -441,7 +453,9 @@
 
 /turf/open/floor/plasteel/sandeffect
 	icon_state = "sandeffect"
+
 /turf/open/floor/plasteel/sandeffect/warning
 	icon_state = "warningsandeffect"
+
 /turf/open/floor/plasteel/sandeffect/warning/corner
 	icon_state = "warningsandeffectcorners"

@@ -40,7 +40,7 @@
 		id_tag = num2text(uid)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	A.air_scrub_names -= id_tag
 	A.air_scrub_info -= id_tag
 
@@ -131,7 +131,7 @@
 		"sigtype" = "status"
 	)
 
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	if(!A.air_scrub_names[id_tag])
 		name = "\improper [A.name] air scrubber #[A.air_scrub_names.len + 1]"
 		A.air_scrub_names[id_tag] = name
@@ -184,9 +184,10 @@
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
-			var/list/removed_gases = removed.gases
-			if (isnull(removed)) //in space
+			//Nothing left to remove from the tile
+			if (isnull(removed))
 				return
+			var/list/removed_gases = removed.gases
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
@@ -338,9 +339,9 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			user << "<span class='notice'>Now welding the scrubber.</span>"
-			if(do_after(user, 20/W.toolspeed, target = src))
+			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -352,6 +353,7 @@
 					welded = 0
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+				pipe_vision_img.plane = ABOVE_HUD_PLANE
 			return 0
 	else
 		return ..()
@@ -373,6 +375,7 @@
 	welded = 0
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+	pipe_vision_img.plane = ABOVE_HUD_PLANE
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 

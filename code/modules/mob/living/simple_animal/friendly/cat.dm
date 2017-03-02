@@ -14,7 +14,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	minbodytemp = 200
@@ -80,7 +80,8 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
-	var/list/family = list()
+	var/list/family = list()//var restored from savefile, has count of each child type
+	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
 	var/memory_saved = 0
 
@@ -99,6 +100,12 @@
 		Write_Memory()
 	..()
 
+/mob/living/simple_animal/pet/cat/Runtime/make_babies()
+	var/mob/baby = ..()
+	if(baby)
+		children += baby
+		return baby
+
 /mob/living/simple_animal/pet/cat/Runtime/death()
 	if(!memory_saved)
 		Write_Memory(1)
@@ -115,7 +122,7 @@
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	family = list()
 	if(!dead)
-		for(var/mob/living/simple_animal/pet/cat/kitten/C in mob_list)
+		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
 			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
 				continue
 			if(C.type in family)
@@ -261,6 +268,6 @@
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()
-	if(L.a_intent == "harm" && L.reagents && !stat)
+	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)

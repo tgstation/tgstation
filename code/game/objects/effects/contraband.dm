@@ -1,7 +1,7 @@
 
 //########################## POSTERS ##################################
 
-#define NUM_OF_POSTER_DESIGNS 36 // contraband posters
+#define NUM_OF_POSTER_DESIGNS 44 // contraband posters
 
 #define NUM_OF_POSTER_DESIGNS_LEGIT 35 // corporate approved posters
 
@@ -54,7 +54,15 @@ list(name = "- Punch Shit", desc = " Fight things for no reason, like a man!"),
 list(name = "- The Griffin", desc = " The Griffin commands you to be the worst you can be. Will you?"),
 list(name = "- Lizard", desc = " This lewd poster depicts a lizard preparing to mate."),
 list(name = "- Free Drone", desc = " This poster commemorates the bravery of the rogue drone banned by CentComm."),
-list(name = "- Busty Backdoor Xeno Babes 6", desc = " Get a load, or give, of these all natural Xenos!") )
+list(name = "- Busty Backdoor Xeno Babes 6", desc = " Get a load, or give, of these all natural Xenos!"),
+list(name = "- Robust Softdrinks", desc = " Robust Softdrinks: More robust than a toolbox to the head!"),
+list(name = "- Shambler's Juice", desc = "~Shake me up some of that Shambler's Juice!~"),
+list(name = "- Pwr Game", desc = "The POWER that gamers CRAVE! In partnership with Vlad's Salad."),
+list(name = "- Sun-kist", desc = "Drink the stars!"),
+list(name = "- Space Cola", desc = "Your favorite cola, in space."),
+list(name = "- Space-Up!", desc = "Sucked out into space by the FLAVOR!"),
+list(name = "- Kudzu", desc = "A poster advertising a movie about plants. How dangerous could they possibly be?"),
+list(name = "- Masked Men", desc = "A poster advertising a movie about some masked men.") )
 
 // LEGIT
 
@@ -103,10 +111,10 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
-	burn_state = FLAMMABLE
-	var/serial_number = 0
+	resistance_flags = FLAMMABLE
+	var/serial = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
-	var/official = 0
+	var/rolled_official = 0
 
 
 /obj/item/weapon/poster/contraband
@@ -118,20 +126,20 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	name = "motivational poster"
 	icon_state = "rolled_legit"
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
-	official = 1
+	rolled_official = 1
 
 /obj/item/weapon/poster/New(turf/loc, given_serial = 0)
 	if(given_serial == 0)
-		if(!official)
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
-			resulting_poster = new(serial_number,official)
+		if(!rolled_official)
+			serial = rand(1, NUM_OF_POSTER_DESIGNS)
+			resulting_poster = new(serial,rolled_official)
 		else
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
-			resulting_poster = new(serial_number,official)
+			serial = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
+			resulting_poster = new(serial,rolled_official)
 	else
-		serial_number = given_serial
+		serial = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
-	name += " - No. [serial_number]"
+	name += " - No. [serial]"
 	..(loc)
 
 
@@ -182,8 +190,10 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	var/placespeed = 37 // don't change this, otherwise the animation will not sync to the progress bar
 
 /obj/structure/sign/poster/New(serial,rolled_official)
-	serial_number = serial
-	official = rolled_official
+	if (!serial_number)
+		serial_number = serial
+	if(!official)
+		official = rolled_official
 	if(serial_number == loc)
 		if(!official)
 			serial_number = rand(1, NUM_OF_POSTER_DESIGNS)	//This is for the mappers that want individual posters without having to use rolled posters.
@@ -201,7 +211,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters))
-		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(loc, I.usesound, 100, 1)
 		if(ruined)
 			user << "<span class='notice'>You remove the remnants of the poster.</span>"
 			qdel(src)
@@ -225,21 +235,16 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	add_fingerprint(user)
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/location, official)
+	pixel_x = 0
+	pixel_y = 0
+	var/obj/item/weapon/poster/P
 	if (!official)
-		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
-		loc = P
+		P = new /obj/item/weapon/poster/contraband(src, serial_number)
 	else
-		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
-		loc = P
-
+		P = new /obj/item/weapon/poster/legit(src, serial_number)
+	P.resulting_poster = src
+	P.forceMove(location)
+	loc = P
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
@@ -261,18 +266,20 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
 	var/obj/structure/sign/poster/D = P.resulting_poster
 
-	var/temp_loc = user.loc
+	var/temp_loc = get_turf(user)
 	flick("poster_being_set",D)
 	D.loc = src
-	D.official = P.official
+	D.official = P.rolled_official
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 
 	if(do_after(user,D.placespeed,target=src))
-		if(!D)
+		if(!D || QDELETED(D))
 			return
 
-		if(istype(src,/turf/closed/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"
-		else
-			D.roll_and_drop(temp_loc,D.official)
+			return
+
+	D.roll_and_drop(temp_loc,D.official)
+	user << "<span class='notice'>The poster falls down!</span>"

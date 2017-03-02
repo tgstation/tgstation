@@ -19,6 +19,17 @@
 	if((ckey in admin_datums) || (ckey in deadmins))
 		admin = 1
 
+	//Whitelist
+	if(config.usewhitelist)
+		if(!check_whitelist(ckey(key)))
+			if (admin)
+				log_admin("The admin [key] has been allowed to bypass the whitelist")
+				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass the whitelist</span>")
+				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass the whitelist</span>")
+			else
+				log_access("Failed Login: [key] - Not on whitelist")
+				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
+
 	//Guest Checking
 	if(IsGuestKey(key))
 		if (!guests_allowed)
@@ -50,33 +61,31 @@
 
 		var/ckeytext = ckey(key)
 
-		if(!establish_db_connection())
-			world.log << "Ban database connection failure. Key [ckeytext] not checked"
+		if(!dbcon.Connect())
+			log_world("Ban database connection failure. Key [ckeytext] not checked")
 			diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 
 		var/ipquery = ""
 		var/cidquery = ""
 		if(address)
-			ipquery = " OR ip = '[address]' "
+			ipquery = " OR ip = INET_ATON('[address]') "
 
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
 
 		query.Execute()
 
 		while(query.NextRow())
 			var/pckey = query.item[1]
-			//var/pip = query.item[2]
-			//var/pcid = query.item[3]
-			var/ackey = query.item[4]
-			var/reason = query.item[5]
-			var/expiration = query.item[6]
-			var/duration = query.item[7]
-			var/bantime = query.item[8]
-			var/bantype = query.item[9]
+			var/ackey = query.item[2]
+			var/reason = query.item[3]
+			var/expiration = query.item[4]
+			var/duration = query.item[5]
+			var/bantime = query.item[6]
+			var/bantype = query.item[7]
 			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
 				//admin bans MUST match on ckey to prevent cid-spoofing attacks
 				//	as well as dynamic ip abuse

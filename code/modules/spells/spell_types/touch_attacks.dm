@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/touch/
+/obj/effect/proc_holder/spell/targeted/touch
 	var/hand_path = "/obj/item/weapon/melee/touch_attack"
 	var/obj/item/weapon/melee/touch_attack/attached_hand = null
 	invocation_type = "none" //you scream on connecting, not summoning
@@ -24,17 +24,8 @@
 		sleep(1)
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/ChargeHand(mob/living/carbon/user)
-	var/hand_handled = 1
 	attached_hand = new hand_path(src)
-	if(user.hand) 	//left active hand
-		if(!user.equip_to_slot_if_possible(attached_hand, slot_l_hand, 0, 1, 1))
-			if(!user.equip_to_slot_if_possible(attached_hand, slot_r_hand, 0, 1, 1))
-				hand_handled = 0
-	else			//right active hand
-		if(!user.equip_to_slot_if_possible(attached_hand, slot_r_hand, 0, 1, 1))
-			if(!user.equip_to_slot_if_possible(attached_hand, slot_l_hand, 0, 1, 1))
-				hand_handled = 0
-	if(!hand_handled)
+	if(!user.put_in_hands(attached_hand))
 		qdel(attached_hand)
 		charge_counter = charge_max
 		attached_hand = null
@@ -67,4 +58,4 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
-	sound = "sound/magic/FleshToStone.ogg"
+	sound = 'sound/magic/FleshToStone.ogg'

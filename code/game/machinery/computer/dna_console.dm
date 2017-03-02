@@ -72,7 +72,7 @@
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
-	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
+	if(!(in_range(src, user) || issilicon(user)))
 		popup.close()
 		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
@@ -316,7 +316,7 @@
 		return
 	if(!isturf(usr.loc))
 		return
-	if(!( (isturf(loc) && in_range(src, usr)) || istype(usr, /mob/living/silicon) ))
+	if(!((isturf(loc) && in_range(src, usr)) || issilicon(usr)))
 		return
 	if(current_screen == "working")
 		return

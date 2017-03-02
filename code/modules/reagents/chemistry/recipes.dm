@@ -36,7 +36,7 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
-		var/message = "A [reaction_name] reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+		var/message = "A [reaction_name] reaction has occurred in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
 		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
@@ -50,16 +50,16 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
-			C.flash_eyes()
+			C.flash_act()
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen
 			if (reaction_name == "Friendly Gold Slime")
 				chosen = pick(chemical_mob_spawn_nicecritters)
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
-			var/mob/living/simple_animal/C = new chosen
+			var/spawnloc = get_turf(holder.my_atom)
+			var/mob/living/simple_animal/C = new chosen(spawnloc)
 			C.faction |= mob_faction
-			C.loc = get_turf(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
@@ -74,9 +74,9 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 			if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
 				if(setting_type)
 					var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
-					X.throw_at_fast(throw_target, moving_power, 1)
+					X.throw_at(throw_target, moving_power, 1)
 				else
-					X.throw_at_fast(T, moving_power, 1)
+					X.throw_at(T, moving_power, 1)
 			else
 				spawn(0) //so everything moves at the same time.
 					if(setting_type)

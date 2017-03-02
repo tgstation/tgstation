@@ -15,8 +15,8 @@
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[key_name_admin(lastkey)]<A HREF='?_src_=holder;adminmoreinfo=\ref[toucher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[toucher]'>FLW</A>)"
-	message_admins("Reagent explosion reaction occured at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>[inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occured at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+	message_admins("Reagent explosion reaction occurred at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>[inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occurred at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
 	e.start()
@@ -60,16 +60,18 @@
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
-			var/diety = ticker.Bible_deity_name
-			if(!ticker.Bible_deity_name)
-				diety = "Christ"
-			R << "<span class='userdanger'>The power of [diety] compels you!</span>"
+			var/deity
+			if(SSreligion.Bible_deity_name)
+				deity = SSreligion.Bible_deity_name
+			else
+				deity = "Christ"
+			R << "<span class='userdanger'>The power of [deity] compels you!</span>"
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
 		sleep(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
-			if(iscultist(C) || is_handofgod_cultist(C))
+			if(iscultist(C))
 				C << "<span class='userdanger'>The divine explosion sears you!</span>"
 				C.Weaken(2)
 				C.adjust_fire_stacks(5)
@@ -130,10 +132,10 @@
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
-		PoolOrNew(/obj/effect/hotspot, turf)
+		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 1000 // hot as shit
 
-/datum/chemical_reaction/reagent_explosion/methsplosion/
+/datum/chemical_reaction/reagent_explosion/methsplosion
 	name = "Meth explosion"
 	id = "methboom1"
 	results = list("methboom1" = 1)
@@ -145,7 +147,7 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
-		PoolOrNew(/obj/effect/hotspot, turf)
+		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 1000 // hot as shit
 	..()
 
@@ -218,7 +220,7 @@
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		if(C.flash_eyes())
+		if(C.flash_act())
 			if(get_dist(C, location) < 4)
 				C.Weaken(5)
 			else
@@ -237,7 +239,7 @@
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		if(C.flash_eyes())
+		if(C.flash_act())
 			if(get_dist(C, location) < 4)
 				C.Weaken(5)
 			else
@@ -259,7 +261,7 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, 0, location)
+		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()
@@ -279,7 +281,7 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, 0, location)
+		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()
@@ -297,16 +299,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		if(C.check_ear_prot())
-			continue
-		C.show_message("<span class='warning'>BANG</span>", 2)
-		C.Stun(5)
-		C.Weaken(5)
-		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
-		if(C.ear_damage >= 15)
-			C << "<span class='warning'>Your ears start to ring badly!</span>"
-		else if(C.ear_damage >= 5)
-			C << "<span class='warning'>Your ears start to ring!</span>"
+		C.soundbang_act(1, 5, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -318,17 +311,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		if(C.check_ear_prot())
-			continue
-		C.show_message("<span class='warning'>BANG</span>", 2)
-		C.Stun(5)
-		C.Weaken(5)
-		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
-		if(C.ear_damage >= 15)
-			C << "<span class='warning'>Your ears start to ring badly!</span>"
-		else if(C.ear_damage >= 5)
-			C << "<span class='warning'>Your ears start to ring!</span>"
-
+		C.soundbang_act(1, 5, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"
@@ -371,3 +354,52 @@
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // also cools the fuck down
 	return
+
+/datum/chemical_reaction/teslium
+	name = "Teslium"
+	id = "teslium"
+	results = list("teslium" = 3)
+	required_reagents = list("stable_plasma" = 1, "silver" = 1, "blackpowder" = 1)
+	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
+	required_temp = 400
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning
+	name = "Teslium Destabilization"
+	id = "teslium_lightning"
+	required_reagents = list("teslium" = 1, "water" = 1)
+	results = list("destabilized_teslium" = 1)
+	strengthdiv = 100
+	modifier = -100
+	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
+	mix_sound = 'sound/machines/defib_zap.ogg'
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
+	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
+	var/T2 = created_volume * 50
+	var/T3 = created_volume * 120
+	sleep(5)
+	if(created_volume >= 75)
+		tesla_zap(holder.my_atom, 7, T1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		sleep(15)
+	if(created_volume >= 40)
+		tesla_zap(holder.my_atom, 7, T2)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		sleep(15)
+	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
+		tesla_zap(holder.my_atom, 7, T3)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
+	id = "teslium_lightning2"
+	required_temp = 474
+	required_reagents = list("teslium" = 1)
+
+/datum/chemical_reaction/reagent_explosion/nitrous_oxide
+	name = "N2O explosion"
+	id = "n2o_explosion"
+	required_reagents = list("nitrous_oxide" = 1)
+	strengthdiv = 7
+	required_temp = 575
+	modifier = 1

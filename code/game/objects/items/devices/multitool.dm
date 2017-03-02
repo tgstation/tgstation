@@ -13,7 +13,7 @@
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon_state = "multitool"
 	force = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
@@ -88,5 +88,12 @@
 /obj/item/device/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
-	icon = 'icons/obj/items_cyborg.dmi'
-	toolspeed = 2
+	toolspeed = 0.5
+
+/obj/item/device/multitool/abductor
+	name = "alien multitool"
+	desc = "An omni-technological interface."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "multitool"
+	toolspeed = 0.1
+	origin_tech = "magnets=5;engineering=5;abductor=3"

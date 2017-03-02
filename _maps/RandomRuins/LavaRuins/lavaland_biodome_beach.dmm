@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -149,7 +149,7 @@
 	},
 /area/ruin/powered)
 "az" = (
-/obj/item/clothing/tie/dope_necklace,
+/obj/item/clothing/neck/necklace/dope,
 /obj/item/weapon/reagent_containers/spray/spraytan,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
@@ -158,10 +158,12 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 "aB" = (
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	dir = 1;
 	tag = "icon-asteroidwarning (NORTH)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
 	},
 /area/ruin/powered)
 "aC" = (
@@ -182,7 +184,8 @@
 /area/ruin/powered)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-	emagged = 1
+	emagged = 1;
+	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered)
@@ -207,10 +210,12 @@
 /obj/item/weapon/tank/internals/emergency_oxygen,
 /obj/item/trash/candy,
 /obj/item/toy/talking/owl,
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	dir = 1;
 	tag = "icon-asteroidwarning (NORTH)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
 	},
 /area/ruin/powered)
 "aK" = (
@@ -276,10 +281,12 @@
 /area/ruin/powered)
 "aW" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	dir = 1;
 	tag = "icon-asteroidwarning (NORTH)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
 	},
 /area/ruin/powered)
 "aX" = (
@@ -302,7 +309,8 @@
 	icon_state = "tube1"
 	},
 /turf/open/floor/pod/dark{
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bb" = (
@@ -315,7 +323,9 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "bd" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	req_access = null
+	},
 /turf/open/floor/wood,
 /area/ruin/powered)
 "be" = (
@@ -330,7 +340,8 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark{
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bg" = (
@@ -811,7 +822,7 @@ bU
 bU
 ab
 ab
-ab
+aa
 "}
 (8,1,1) = {"
 aa
@@ -843,7 +854,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (9,1,1) = {"
 aa
@@ -875,7 +886,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (10,1,1) = {"
 aa
@@ -907,7 +918,7 @@ bV
 bU
 bU
 ab
-ab
+aa
 "}
 (11,1,1) = {"
 aa
@@ -939,7 +950,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (12,1,1) = {"
 aa
@@ -971,7 +982,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (13,1,1) = {"
 aa
@@ -1003,7 +1014,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (14,1,1) = {"
 aa
@@ -1035,7 +1046,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (15,1,1) = {"
 aa
@@ -1067,7 +1078,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (16,1,1) = {"
 aa
@@ -1099,7 +1110,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (17,1,1) = {"
 aa
@@ -1131,7 +1142,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (18,1,1) = {"
 aa
@@ -1163,7 +1174,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (19,1,1) = {"
 aa
@@ -1195,7 +1206,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (20,1,1) = {"
 aa
@@ -1227,7 +1238,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (21,1,1) = {"
 aa
@@ -1259,7 +1270,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (22,1,1) = {"
 aa
@@ -1291,7 +1302,7 @@ bU
 bV
 bU
 ab
-ab
+aa
 "}
 (23,1,1) = {"
 aa
@@ -1323,7 +1334,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (24,1,1) = {"
 aa
@@ -1355,7 +1366,7 @@ bU
 bU
 ab
 ab
-ab
+aa
 "}
 (25,1,1) = {"
 aa

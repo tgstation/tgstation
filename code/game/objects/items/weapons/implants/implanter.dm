@@ -6,7 +6,7 @@
 	item_state = "syringe_0"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
@@ -21,16 +21,16 @@
 		origin_tech = initial(origin_tech)
 
 
-/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
-	if(!iscarbon(M))
+/obj/item/weapon/implanter/attack(mob/living/M, mob/user)
+	if(!istype(M))
 		return
 	if(user && imp)
 		if(M != user)
 			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
 
 		var/turf/T = get_turf(M)
-		if(T && (M == user || do_after(user, 50)))
-			if(user && M && (get_turf(M) == T) && src && imp)
+		if(T && (M == user || do_mob(user, M, 50)))
+			if(src && imp)
 				if(imp.implant(M, user))
 					if (M == user)
 						user << "<span class='notice'>You implant yourself.</span>"
@@ -38,11 +38,13 @@
 						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
+				else
+					user << "<span class='warning'>[src] fails to implant [M].</span>"
 
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_hand() != W)
+		if(user.get_active_held_item() != W)
 			return
 		if(!in_range(src, user) && loc != user)
 			return
@@ -55,8 +57,7 @@
 
 /obj/item/weapon/implanter/New()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 
 

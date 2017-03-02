@@ -5,7 +5,7 @@
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
 	flags = CONDUCT
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 
 
@@ -16,7 +16,7 @@
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
 	flags = CONDUCT
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
@@ -28,7 +28,7 @@
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
 	flags = CONDUCT
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
@@ -42,7 +42,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
 	flags = CONDUCT
 	force = 15
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
@@ -53,7 +53,7 @@
 	icon_state = "scalpel"
 	flags = CONDUCT
 	force = 10
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -64,9 +64,7 @@
 	sharpness = IS_SHARP_ACCURATE
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with [src]! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is slitting \his throat with [src]! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>"))
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 
@@ -79,7 +77,7 @@
 	throwhitsound =  'sound/weapons/pierce.ogg'
 	flags = CONDUCT
 	force = 15
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
@@ -93,7 +91,7 @@
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical_drapes"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
 

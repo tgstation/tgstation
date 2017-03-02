@@ -3,7 +3,7 @@
 	desc = null //Different examine for traitors
 	item_state = "electronic"
 	icon_state = "doorCharge"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 4
 	throw_speed = 1
 	flags = NOBLUDGEON
@@ -24,6 +24,13 @@
 		if(3)
 			if(prob(25))
 				ex_act(1)
+
+/obj/item/device/doorCharge/Destroy()
+	if(istype(loc, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = loc
+		if(A.charge == src)
+			A.charge = null
+	return ..()
 
 /obj/item/device/doorCharge/examine(mob/user)
 	..()

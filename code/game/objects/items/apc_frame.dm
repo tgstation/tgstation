@@ -3,7 +3,7 @@
 	flags = CONDUCT
 	origin_tech = "materials=1;engineering=1"
 	item_state = "syringe_kit"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
 	var/inverse = 0
 	// For inverse dir frames like light fixtures.
@@ -16,7 +16,7 @@
 		return
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
-	if(!istype(loc, /turf/open/floor))
+	if(!isfloorturf(loc))
 		usr << "<span class='warning'>You cannot place [src] on this spot!</span>"
 		return
 	if(A.requires_power == 0 || istype(A, /area/space))
@@ -51,7 +51,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		// For camera-building borgs
 		var/turf/T = get_step(get_turf(user), user.dir)
-		if(istype(T, /turf/closed/wall))
+		if(iswallturf(T))
 			T.attackby(src, user, params)
 
 	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
@@ -103,6 +103,6 @@
 	icon_state = "door_electronics"
 	item_state = "electronic"
 	flags = CONDUCT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "engineering=2;programming=1"
 	materials = list(MAT_METAL=50, MAT_GLASS=50)

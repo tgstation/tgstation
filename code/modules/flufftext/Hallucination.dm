@@ -11,7 +11,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
-/mob/living/carbon/
+/mob/living/carbon
 	var/image/halimage
 	var/image/halbody
 	var/obj/halitem
@@ -206,6 +206,18 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
 	qdel(src)
 
+/obj/effect/hallucination/simple/clown
+	image_icon = 'icons/mob/animal.dmi'
+	image_state = "clown"
+
+/obj/effect/hallucination/simple/clown/New(loc,var/mob/living/carbon/T,duration)
+	..(loc, T)
+	name = pick(clown_names)
+	QDEL_IN(src,duration)
+
+/obj/effect/hallucination/simple/clown/scary
+	image_state = "scary_clown"
+
 /obj/effect/hallucination/singularity_scare
 	//Singularity moving towards you.
 	//todo Hide where it moved with fake space images
@@ -237,7 +249,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = 1
 		target.SetSleeping(20)
-		addtimer(src, "wake_and_restore", rand(50, 100))
+		addtimer(CALLBACK(src, .proc/wake_and_restore), rand(50, 100))
 
 /obj/effect/hallucination/battle
 
@@ -294,7 +306,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")
 			if("skeleton")//Skeletons
-				A = image('icons/mob/human.dmi',H,"skeleton_s")
+				A = image('icons/mob/human.dmi',H,"skeleton")
 			if("demon")//Demon
 				A = image('icons/mob/mob.dmi',H,"daemon")
 			if("custom")
@@ -303,11 +315,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	sleep(duration)
+	QDEL_IN(src, duration)
+
+/obj/effect/hallucination/delusion/Destroy()
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
-	qdel(src)
 
 /obj/effect/hallucination/fakeattacker/New(loc,var/mob/living/carbon/T)
 	target = T
@@ -324,14 +337,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		return
 
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(get_turf(target),target)
-	if(clone.l_hand)
-		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.l_hand.name
-			F.weap = clone.l_hand
-	else if (clone.r_hand)
-		if(!(locate(clone.r_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.r_hand.name
-			F.weap = clone.r_hand
+	for(var/obj/item/I in clone.held_items)
+		if(!(locate(I) in non_fakeattack_weapons))
+			clone_weapon = I.name
+			F.weap = I
 
 	F.name = clone.name
 	F.my_target = target
@@ -367,7 +376,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/collapse
 	var/image/down
 
-	var/health = 100
+	obj_integrity = 100
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
 	step_away(src,my_target,2)
@@ -377,7 +386,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
 							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
-	src.health -= P.force
+	obj_integrity -= P.force
 
 /obj/effect/fake_attacker/Crossed(mob/M, somenumber)
 	if(M == my_target)
@@ -391,7 +400,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target = T
 	QDEL_IN(src, 300)
 	step_away(src,my_target,2)
-	addtimer(src, "attack_loop", 0)
+	INVOKE_ASYNC(src, .proc/attack_loop)
 
 
 /obj/effect/fake_attacker/proc/updateimage()
@@ -414,7 +423,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/fake_attacker/proc/attack_loop()
 	while(1)
 		sleep(rand(5,10))
-		if(src.health < 0)
+		if(obj_integrity < 0)
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
@@ -423,7 +432,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			updateimage()
 		else
 			if(prob(15))
-				src.do_attack_animation(my_target)
+				do_attack_animation(my_target, ATTACK_EFFECT_PUNCH)
 				if(weapon_name)
 					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
@@ -455,7 +464,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	target << I
 	QDEL_IN(O, 300)
 
-var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\
+var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
@@ -619,10 +628,14 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			//src << "Traitor Items"
 			if(!halitem)
 				halitem = new
-				var/list/slots_free = list(ui_lhand,ui_rhand)
-				if(l_hand) slots_free -= ui_lhand
-				if(r_hand) slots_free -= ui_rhand
-				if(istype(src,/mob/living/carbon/human))
+				var/obj/item/l_hand = get_item_for_held_index(1)
+				var/obj/item/r_hand = get_item_for_held_index(2)
+				var/l = ui_hand_position(get_held_index_of_item(l_hand))
+				var/r = ui_hand_position(get_held_index_of_item(r_hand))
+				var/list/slots_free = list(l,r)
+				if(l_hand) slots_free -= l
+				if(r_hand) slots_free -= r
+				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					if(!H.belt) slots_free += ui_belt
 					if(!H.l_store) slots_free += ui_storage1
@@ -630,6 +643,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				if(slots_free.len)
 					halitem.screen_loc = pick(slots_free)
 					halitem.layer = ABOVE_HUD_LAYER
+					halitem.plane = ABOVE_HUD_PLANE
 					switch(rand(1,6))
 						if(1) //revolver
 							halitem.icon = 'icons/obj/guns/projectile.dmi'
@@ -701,13 +715,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 					var/turf/open/floor/target = pick(possible_points)
 					switch(rand(1,4))
 						if(1)
-							var/image/body = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
+							var/image/body = image('icons/mob/human.dmi',target,"husk",TURF_LAYER)
 							var/matrix/M = matrix()
 							M.Turn(90)
 							body.transform = M
 							halbody = body
 						if(2,3)
-							halbody = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
+							halbody = image('icons/mob/human.dmi',target,"husk",TURF_LAYER)
 						if(4)
 							halbody = image('icons/mob/alien.dmi',target,"alienother",TURF_LAYER)
 

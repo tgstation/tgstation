@@ -4,21 +4,35 @@
 	//Handle items on mob
 
 	//first implants & organs
-	var/list/implants = list()
+	var/list/stored_implants = list()
 	var/list/int_organs = list()
 
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/W in src)
-			implants += W
+		for(var/X in implants)
+			var/obj/item/weapon/implant/IMP = X
+			stored_implants += IMP
+			IMP.removed(src, 1, 1)
 
 	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/I in internal_organs)
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
 			int_organs += I
 			I.Remove(src, 1)
 
+	var/list/missing_bodyparts_zones = get_missing_limbs()
+
+	var/obj/item/cavity_object
+
+	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	if(CH.cavity_item)
+		cavity_object = CH.cavity_item
+		CH.cavity_item = null
+
 	if(tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants-int_organs))
-			unEquip(W)
+		var/Itemlist = get_equipped_items()
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
+			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
 	notransform = 1
@@ -28,14 +42,9 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
-	var/atom/movable/overlay/animation = new( loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-	flick("h2monkey", animation)
+	new /obj/effect/overlay/temp/monkeyify(get_turf(src))
 	sleep(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	qdel(animation)
 
 	// hash the original name?
 	if(tr_flags & TR_HASHNAME)
@@ -56,7 +65,7 @@
 	if(hellbound)
 		O.hellbound = hellbound
 	O.loc = loc
-	O.a_intent = "harm"
+	O.a_intent = INTENT_HARM
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
@@ -68,31 +77,54 @@
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
-		O.setToxLoss(getToxLoss())
-		O.adjustBruteLoss(getBruteLoss())
-		O.setOxyLoss(getOxyLoss())
-		O.adjustFireLoss(getFireLoss())
+		O.setToxLoss(getToxLoss(), 0)
+		O.adjustBruteLoss(getBruteLoss(), 0)
+		O.setOxyLoss(getOxyLoss(), 0)
+		O.setCloneLoss(getCloneLoss(), 0)
+		O.adjustFireLoss(getFireLoss(), 0)
+		O.setBrainLoss(getBrainLoss(), 0)
+		O.updatehealth()
 		O.radiation = radiation
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/I in implants)
-			I.loc = O
-			I.implanted = O
+		for(var/Y in implants)
+			var/obj/item/weapon/implant/IMP = Y
+			IMP.implant(O, null, 1)
 
 	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/I in O.internal_organs)
-			qdel(I)
+		for(var/X in O.internal_organs)
+			qdel(X)
 
-		for(var/obj/item/organ/I in int_organs)
+		for(var/X in int_organs)
+			var/obj/item/organ/I = X
 			I.Insert(O, 1)
+
+	var/obj/item/bodypart/chest/torso = O.get_bodypart("chest")
+	if(cavity_object)
+		torso.cavity_item = cavity_object //cavity item is given to the new chest
+		cavity_object.loc = O
+
+	for(var/missing_zone in missing_bodyparts_zones)
+		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
+		BP.drop_limb(1)
+		if(!(tr_flags & TR_KEEPORGANS)) //we didn't already get rid of the organs of the newly spawned mob
+			for(var/X in O.internal_organs)
+				var/obj/item/organ/G = X
+				if(BP.body_zone == check_zone(G.zone))
+					if(mind && mind.changeling && istype(G, /obj/item/organ/brain))
+						continue //so headless changelings don't lose their brain when transforming
+					qdel(G) //we lose the organs in the missing limbs
+		qdel(BP)
 
 	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
 		if(O.mind.changeling)
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+
+
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 
@@ -113,28 +145,40 @@
 	//Handle items on mob
 
 	//first implants & organs
-	var/list/implants = list()
+	var/list/stored_implants = list()
 	var/list/int_organs = list()
 
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/W in src)
-			implants += W
+		for(var/X in implants)
+			var/obj/item/weapon/implant/IMP = X
+			stored_implants += IMP
+			IMP.removed(src, 1, 1)
 
 	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/I in internal_organs)
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
 			int_organs += I
 			I.Remove(src, 1)
 
+	var/list/missing_bodyparts_zones = get_missing_limbs()
+
+	var/obj/item/cavity_object
+
+	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	if(CH.cavity_item)
+		cavity_object = CH.cavity_item
+		CH.cavity_item = null
+
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants-int_organs))
-			unEquip(W)
+		var/Itemlist = get_equipped_items()
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
+			dropItemToGround(W, TRUE)
 			if (client)
 				client.screen -= W
-			if (W)
-				W.loc = loc
-				W.dropped(src)
-				W.layer = initial(W.layer)
+
+
 
 	//Make mob invisible and spawn animation
 	notransform = 1
@@ -143,16 +187,11 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	var/atom/movable/overlay/animation = new( loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-	flick("monkey2h", animation)
+	new /obj/effect/overlay/temp/monkeyify/humanify(get_turf(src))
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
-	qdel(animation)
 
 	dna.transfer_identity(O)
 	O.updateappearance(mutcolor_update=1)
@@ -188,25 +227,46 @@
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
-		O.setToxLoss(getToxLoss())
-		O.adjustBruteLoss(getBruteLoss())
-		O.setOxyLoss(getOxyLoss())
-		O.adjustFireLoss(getFireLoss())
+		O.setToxLoss(getToxLoss(), 0)
+		O.adjustBruteLoss(getBruteLoss(), 0)
+		O.setOxyLoss(getOxyLoss(), 0)
+		O.setCloneLoss(getCloneLoss(), 0)
+		O.adjustFireLoss(getFireLoss(), 0)
+		O.setBrainLoss(getBrainLoss(), 0)
+		O.updatehealth()
 		O.radiation = radiation
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/I in implants)
-			I.loc = O
-			I.implanted = O
-		O.sec_hud_set_implants()
+		for(var/Y in implants)
+			var/obj/item/weapon/implant/IMP = Y
+			IMP.implant(O, null, 1)
 
 	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/I in O.internal_organs)
-			qdel(I)
+		for(var/X in O.internal_organs)
+			qdel(X)
 
-		for(var/obj/item/organ/I in int_organs)
+		for(var/X in int_organs)
+			var/obj/item/organ/I = X
 			I.Insert(O, 1)
+
+
+	var/obj/item/bodypart/chest/torso = get_bodypart("chest")
+	if(cavity_object)
+		torso.cavity_item = cavity_object //cavity item is given to the new chest
+		cavity_object.loc = O
+
+	for(var/missing_zone in missing_bodyparts_zones)
+		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
+		BP.drop_limb(1)
+		if(!(tr_flags & TR_KEEPORGANS)) //we didn't already get rid of the organs of the newly spawned mob
+			for(var/X in O.internal_organs)
+				var/obj/item/organ/G = X
+				if(BP.body_zone == check_zone(G.zone))
+					if(mind && mind.changeling && istype(G, /obj/item/organ/brain))
+						continue //so headless changelings don't lose their brain when transforming
+					qdel(G) //we lose the organs in the missing limbs
+		qdel(BP)
 
 	if(mind)
 		mind.transfer_to(O)
@@ -214,7 +274,7 @@
 			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
 				mind.changeling.purchasedpowers -= HF
 
-	O.a_intent = "help"
+	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
@@ -243,7 +303,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -254,53 +314,27 @@
 /mob/proc/AIize()
 	if(client)
 		stopLobbySound()
-	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
 
-	if(mind)
-		mind.transfer_to(O)
-	else
-		O.key = key
-
-	var/obj/loc_landmark
+	var/turf/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in landmarks_list)
-		if (sloc.name != "AI")
+		if(sloc.name != "AI")
 			continue
-		if (locate(/mob/living) in sloc.loc)
+		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
-		loc_landmark = sloc
-	if (!loc_landmark)
+		loc_landmark = sloc.loc
+	if(!loc_landmark)
 		for(var/obj/effect/landmark/tripai in landmarks_list)
-			if (tripai.name == "tripai")
-				if(locate(/mob/living) in tripai.loc)
+			if(tripai.name == "tripai")
+				if(locate(/mob/living/silicon/ai) in tripai.loc)
 					continue
-				loc_landmark = tripai
-	if (!loc_landmark)
-		O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
+				loc_landmark = tripai.loc
+	if(!loc_landmark)
+		src << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
 			if (sloc.name == "AI")
-				loc_landmark = sloc
+				loc_landmark = sloc.loc
 
-	O.loc = loc_landmark.loc
-	for (var/obj/item/device/radio/intercom/comm in O.loc)
-		comm.ai += O
-
-	O << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-	O << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
-	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-	O << "To use something, simply click on it."
-	O << {"Use say ":b to speak to your cyborgs through binary."} //"
-	O << "For department channels, use the following say commands:"
-	O << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
-	O.show_laws()
-	O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
-
-	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-
-	O.job = "AI"
-
-	O.rename_self("ai")
-	. = O
+	. = new /mob/living/silicon/ai(loc_landmark, null, src)
 	qdel(src)
 	return
 
@@ -313,7 +347,7 @@
 		if(delete_items)
 			qdel(W)
 		else
-			unEquip(W)
+			dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -364,7 +398,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -383,7 +417,7 @@
 		if("Drone")
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
-	new_xeno.a_intent = "harm"
+	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
@@ -394,7 +428,7 @@
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -415,7 +449,7 @@
 		new_slime = pick(babies)
 	else
 		new_slime = new /mob/living/simple_animal/slime(loc)
-	new_slime.a_intent = "harm"
+	new_slime.a_intent = INTENT_HARM
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
@@ -432,28 +466,11 @@
 	qdel(src)
 
 
-/mob/proc/become_god(var/side_colour)
-	var/mob/camera/god/G = new /mob/camera/god(loc)
-	G.side = side_colour
-	if(mind)
-		mind.transfer_to(G)
-	else
-		G.key = key
-
-	G.job = "Deity"
-	G.rename_self("deity")
-	G.update_icons()
-
-	. = G
-	qdel(src)
-
-
-
 /mob/living/carbon/human/proc/corgize()
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
 	canmove = 0
@@ -463,7 +480,7 @@
 		qdel(t)
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
-	new_corgi.a_intent = "harm"
+	new_corgi.a_intent = INTENT_HARM
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
@@ -482,7 +499,7 @@
 	if(notransform)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		dropItemToGround(W)
 
 	regenerate_icons()
 	notransform = 1
@@ -496,7 +513,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 
 
 	new_mob << "You suddenly feel more... animalistic."
@@ -515,7 +532,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 	new_mob << "You feel more... animalistic"
 
 	. = new_mob

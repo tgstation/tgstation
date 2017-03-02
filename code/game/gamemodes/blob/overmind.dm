@@ -14,7 +14,7 @@
 	pass_flags = PASSBLOB
 	faction = list("blob")
 
-	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
+	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/last_attack = 0
@@ -72,7 +72,7 @@
 
 /mob/camera/blob/Destroy()
 	for(var/BL in blobs)
-		var/obj/effect/blob/B = BL
+		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)
 			B.overmind = null
 			B.update_icon() //reset anything that was ours
@@ -104,10 +104,10 @@
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
-		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.obj_integrity)]</font></div>"
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.hud_used.blobpwrdisplay)
-				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.health)]</font></div>"
+				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.obj_integrity)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
 	blob_points = Clamp(blob_points + points, 0, max_blob_points)
@@ -150,14 +150,14 @@
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return
 
-/mob/camera/blob/blob_act(obj/effect/blob/B)
+/mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
 
 /mob/camera/blob/Stat()
 	..()
 	if(statpanel("Status"))
 		if(blob_core)
-			stat(null, "Core Health: [blob_core.health]")
+			stat(null, "Core Health: [blob_core.obj_integrity]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 		if(ticker && istype(ticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/B = ticker.mode
@@ -173,14 +173,14 @@
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
 	if(placed)
-		var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
+		var/obj/structure/blob/B = locate() in range("3x3", NewLoc)
 		if(B)
 			loc = NewLoc
 		else
 			return 0
 	else
 		var/area/A = get_area(NewLoc)
-		if(istype(NewLoc, /turf/open/space) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
 			return 0
 		loc = NewLoc
 		return 1

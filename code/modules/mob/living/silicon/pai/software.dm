@@ -125,21 +125,21 @@
 	switch(soft)
 		// Purchasing new software
 		if("buy")
-			if(src.subscreen == 1)
+			if(subscreen == 1)
 				var/target = href_list["buy"]
 				if(available_software.Find(target))
 					var/cost = src.available_software[target]
-					if(src.ram >= cost)
-						src.ram -= cost
-						src.software.Add(target)
+					if(ram >= cost)
+						ram -= cost
+						software.Add(target)
 					else
-						src.temp = "Insufficient RAM available."
+						temp = "Insufficient RAM available."
 				else
-					src.temp = "Trunk <TT> \"[target]\"</TT> not found."
+					temp = "Trunk <TT> \"[target]\"</TT> not found."
 
 		// Configuring onboard radio
 		if("radio")
-			src.card.radio.attack_self(src)
+			radio.attack_self(src)
 
 		if("image")
 			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
@@ -166,7 +166,7 @@
 					pID = 9
 				if("Null")
 					pID = 10
-			src.card.setEmotion(pID)
+			card.setEmotion(pID)
 
 		if("signaller")
 
@@ -195,7 +195,7 @@
 			if(href_list["getdna"])
 				var/mob/living/M = card.loc
 				var/count = 0
-				while(!istype(M, /mob/living))
+				while(!isliving(M))
 					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 					M = M.loc
 					count++
@@ -211,7 +211,7 @@
 				else if(href_list["ringer"])
 					pda.silent = !pda.silent
 				else if(href_list["target"])
-					if(silence_time)
+					if(silent)
 						return alert("Communications circuits remain unitialized.")
 
 					var/target = locate(href_list["target"])
@@ -265,7 +265,7 @@
 				src.hackdoor = null
 			if(href_list["cable"])
 				var/turf/T = get_turf(src.loc)
-				src.cable = new /obj/item/weapon/pai_cable(T)
+				cable = new /obj/item/weapon/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
@@ -356,7 +356,7 @@
 	dat += "<b>Prime Directive</b><br>"
 	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
-	for(var/slaws in src.laws.supplied)
+	for(var/slaws in laws.supplied)
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
@@ -372,7 +372,7 @@
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
+		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\
 						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
 		if(!M.has_dna())
@@ -384,7 +384,7 @@
 		else
 			P << "<b>DNA does not match stored Master DNA.</b>"
 	else
-		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+		P << "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly."
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -497,9 +497,9 @@
 				 <h4>Host Bioscan</h4><br>
 				"}
 		var/mob/living/M = card.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
-				if(istype(M, /turf))
+		if(!isliving(M))
+			while(!isliving(M))
+				if(isturf(M))
 					src.temp = "Error: No biological host found. <br>"
 					src.subscreen = 0
 					return dat

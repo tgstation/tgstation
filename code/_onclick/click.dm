@@ -32,8 +32,12 @@
 */
 /atom/Click(location,control,params)
 	usr.ClickOn(src, params)
+
 /atom/DblClick(location,control,params)
 	usr.DblClickOn(src,params)
+
+/atom/MouseWheel(delta_x,delta_y,location,control,params)
+	usr.MouseWheelOn(src, delta_x, delta_y, params)
 
 /*
 	Standard mob ClickOn()
@@ -53,7 +57,7 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
+	if(client && client.click_intercept)
 		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return
 
@@ -98,24 +102,22 @@
 		throw_item(A)
 		return
 
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 
 
 	if(W == A)
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand(0)
-		else
-			update_inv_r_hand(0)
+		update_inv_hands()
 		return
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
 		if(W)
-			var/resolved = A.attackby(W,src)
-			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
+			if(W.pre_attackby(A,src,params))
+				var/resolved = A.attackby(W,src)
+				if(!resolved && A && W)
+					W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -129,10 +131,11 @@
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
-				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+				if(W.pre_attackby(A,src,params))
+					// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+					var/resolved = A.attackby(W,src,params)
+					if(!resolved && A && W)
+						W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
 				if(ismob(A))
 					changeNext_move(CLICK_CD_MELEE)
@@ -222,6 +225,7 @@
 	Ctrl click
 	For most objects, pull
 */
+
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
@@ -231,6 +235,13 @@
 	if(istype(ML))
 		ML.pulled(src)
 
+/mob/living/carbon/human/CtrlClick(mob/user)
+	if(ishuman(user) && Adjacent(user))
+		var/mob/living/carbon/human/H = user
+		H.dna.species.grab(H, src, H.martial_art)
+		H.next_click = world.time + CLICK_CD_MELEE
+	else
+		..()
 /*
 	Alt click
 	Unused except for AI
@@ -349,15 +360,11 @@
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
-	screen_loc = "CENTER-7,CENTER-7"
+	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/proc/MakeGreed()
-	. = list()
-	for(var/i = 0, i<15, i++)
-		for(var/j = 0, j<15, j++)
-			var/obj/screen/click_catcher/CC = new()
-			CC.screen_loc = "NORTH-[i],EAST-[j]"
-			. += CC
+/obj/screen/click_catcher/New()
+	..()
+	transform = matrix(200, 0, 0, 0, 200, 0)
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -365,7 +372,23 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
 	. = 1
+
+
+/* MouseWheelOn */
+
+/mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	return
+
+/mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	var/list/modifier = params2list(params)
+	if(modifier["shift"])
+		var/view = 0
+		if(delta_y > 0)
+			view = -1
+		else
+			view = 1
+		add_view_range(view)

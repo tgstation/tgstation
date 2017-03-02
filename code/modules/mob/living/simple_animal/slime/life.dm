@@ -63,7 +63,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(istype(Target, /mob/living/silicon))
+				if(issilicon(Target))
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -343,7 +343,7 @@
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
-					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
+					if(ishuman(L)) //Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
 						if(src.type in H.dna.species.ignored_by)
 							continue
@@ -393,7 +393,7 @@
 				else if(canmove && isturf(loc) && prob(33))
 					step(src, pick(cardinal))
 		else if(!AIproc)
-			addtimer(src, "AIprocess", 0)
+			INVOKE_ASYNC(src, .proc/AIprocess)
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()

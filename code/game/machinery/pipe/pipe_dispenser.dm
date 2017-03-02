@@ -79,9 +79,9 @@
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40/W.toolspeed, target = src))
+			if (do_after(user, 40*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
@@ -92,9 +92,9 @@
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20/W.toolspeed, target = src))
+			if (do_after(user, 20*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
@@ -195,16 +195,16 @@ Nah
 		return 1
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
-<A href='?src=\ref[src];tube=0'>Straight Tube</A><BR>
-<A href='?src=\ref[src];tube=1'>Straight Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=2'>Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=3'>Diagonal Tube</A><BR>
-<A href='?src=\ref[src];tube=4'>Junction</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
 <b>Station Equipment:</b><BR>
-<A href='?src=\ref[src];tube=5'>Through Tube Station</A><BR>
-<A href='?src=\ref[src];tube=6'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=7'>Tube Blocker</A><BR>
-<A href='?src=\ref[src];tube=8'>Transit Tube Pod</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -219,34 +219,28 @@ Nah
 	if(!wait)
 		if(href_list["tube"])
 			var/tube_type = text2num(href_list["tube"])
-			if(tube_type <= 4)
-				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(src.loc)
-				switch(tube_type)
-					if(0)
-						C.icon_state = "E-W"
-					if(1)
-						C.icon_state = "E-W-Pass"
-					if(2)
-						C.icon_state = "S-NE"
-					if(3)
-						C.icon_state = "NE-SW"
-					if(4)
-						C.icon_state = "W-NE-SE"
+			var/obj/structure/C
+			switch(tube_type)
+				if(TRANSIT_TUBE_STRAIGHT)
+					C = new /obj/structure/c_transit_tube(loc)
+				if(TRANSIT_TUBE_STRAIGHT_CROSSING)
+					C = new /obj/structure/c_transit_tube/crossing(loc)
+				if(TRANSIT_TUBE_CURVED)
+					C = new /obj/structure/c_transit_tube/curved(loc)
+				if(TRANSIT_TUBE_DIAGONAL)
+					C = new /obj/structure/c_transit_tube/diagonal(loc)
+				if(TRANSIT_TUBE_DIAGONAL_CROSSING)
+					C = new /obj/structure/c_transit_tube/diagonal/crossing(loc)
+				if(TRANSIT_TUBE_JUNCTION)
+					C = new /obj/structure/c_transit_tube/junction(loc)
+				if(TRANSIT_TUBE_STATION)
+					C = new /obj/structure/c_transit_tube/station(loc)
+				if(TRANSIT_TUBE_TERMINUS)
+					C = new /obj/structure/c_transit_tube/station/reverse(loc)
+				if(TRANSIT_TUBE_POD)
+					C = new /obj/structure/c_transit_tube_pod(loc)
+			if(C)
 				C.add_fingerprint(usr)
-			else
-				switch(tube_type)
-					if(5)
-						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(src.loc)
-						C.add_fingerprint(usr)
-					if(6)
-						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(src.loc)
-						C.add_fingerprint(usr)
-					if(7)
-						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(src.loc)
-						C.add_fingerprint(usr)
-					if(8)
-						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(src.loc)
-						C.add_fingerprint(usr)
 			wait = 1
 			spawn(15)
 				wait = 0

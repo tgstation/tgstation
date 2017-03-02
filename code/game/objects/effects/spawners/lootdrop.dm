@@ -23,16 +23,16 @@
 	lootdoubles = 0
 
 	loot = list(
-				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
-				/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 5,
-				/obj/item/weapon/gun/projectile/revolver/mateba,
-				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
+				/obj/item/weapon/gun/ballistic/automatic/pistol = 8,
+				/obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/weapon/gun/ballistic/revolver/mateba,
+				/obj/item/weapon/gun/ballistic/automatic/pistol/deagle
 				)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
-				/obj/item/weapon/gun/projectile/revolver/russian = 5,
+				/obj/item/weapon/gun/ballistic/revolver/russian = 5,
 				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
 				/obj/item/toy/cards/deck/syndicate = 2
 				)
@@ -87,7 +87,7 @@
 				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
-				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
+				/obj/item/clothing/head/that{throwforce = 1;} = 1,
 				/obj/item/clothing/head/ushanka = 1,
 				/obj/item/clothing/head/welding = 1,
 				/obj/item/clothing/mask/gas = 15,
@@ -121,7 +121,7 @@
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
-				//obj/item/weapon/gun/projectile/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
+				//obj/item/weapon/gun/ballistic/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
 				/obj/item/weapon/hand_labeler = 1,
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,
@@ -157,14 +157,32 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
+				/obj/item/weapon/storage/toolbox/artistic = 2,
 				"" = 3
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner
-	name = "lootcrate spawner"
+	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = 0
 
 	loot = list(
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
+
+/obj/effect/spawner/lootdrop/organ_spawner
+	name = "organ spawner"
+	loot = list(
+		/obj/item/organ/heart/gland/bloody = 7,
+		/obj/item/organ/heart/gland/bodysnatch = 4,
+		/obj/item/organ/heart/gland/egg = 7,
+		/obj/item/organ/heart/gland/emp = 3,
+		/obj/item/organ/heart/gland/mindshock = 5,
+		/obj/item/organ/heart/gland/plasma = 7,
+		/obj/item/organ/heart/gland/pop = 5,
+		/obj/item/organ/heart/gland/slime = 4,
+		/obj/item/organ/heart/gland/spiderman = 5,
+		/obj/item/organ/heart/gland/ventcrawling = 1,
+		/obj/item/organ/body_egg/alien_embryo = 1,
+		/obj/item/organ/hivelord_core = 2)
+	lootcount = 3

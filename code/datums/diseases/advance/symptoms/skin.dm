@@ -21,14 +21,14 @@ BONUS
 	resistance = -1
 	stage_speed = -1
 	transmittable = -2
-	level = 4
+	level = 5
 	severity = 1
 
 /datum/symptom/vitiligo/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.skin_tone == "albino")
 				return
@@ -65,14 +65,14 @@ BONUS
 	resistance = -1
 	stage_speed = -1
 	transmittable = -2
-	level = 4
+	level = 5
 	severity = 1
 
 /datum/symptom/revitiligo/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.skin_tone == "african2")
 				return

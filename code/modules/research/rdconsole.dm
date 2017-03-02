@@ -105,9 +105,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	files = new /datum/research(src) //Setup the research data holder.
 	matching_designs = list()
 	if(!id)
-		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
-			S.initialize()
-			break
+		fix_noid_research_servers()
 
 /*	Instead of calling this every tick, it is only being called when needed
 /obj/machinery/computer/rdconsole/process()
@@ -138,7 +136,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	updateUsrDialog()
 
 
-/obj/machinery/computer/rdconsole/deconstruction()
+/obj/machinery/computer/rdconsole/on_deconstruction()
 	if(linked_destroy)
 		linked_destroy.linked_console = null
 		linked_destroy = null
@@ -188,8 +186,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(t_disk)
 				if(!n)
 					for(var/tech in t_disk.tech_stored)
-						if(tech)
-							files.AddTech2Known(tech)
+						files.AddTech2Known(tech)
 				else
 					files.AddTech2Known(t_disk.tech_stored[n])
 				updateUsrDialog()
@@ -212,7 +209,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		var/slot = text2num(href_list["copy_tech"])
-		t_disk.tech_stored[slot] = files.known_tech[href_list["copy_tech_ID"]]
+		var/datum/tech/T = files.known_tech[href_list["copy_tech_ID"]]
+		if(T)
+			t_disk.tech_stored[slot] = T.copy()
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
@@ -277,7 +276,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
 
 			else if(linked_destroy.loaded_item)
-				linked_destroy.loaded_item.loc = linked_destroy.loc
+				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
 				linked_destroy.loaded_item = null
 				linked_destroy.icon_state = "d_analyzer"
 				screen = 1.0
@@ -438,6 +437,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_lathe.reagents.remove_reagent(R, being_built.reagents_list[R]*coeff)
 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+
+		coeff *= being_built.lathe_time_factor
+
 		spawn(32*coeff*amount**0.8)
 			if(linked_lathe)
 				if(g2g) //And if we only fail the material requirements, we still spend time and power
@@ -446,7 +448,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						var/obj/item/new_item = new P(src)
 						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 							new_item.investigate_log("built by [key]","singulo")
-						if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
+						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/weapon/ore/bluespace_crystal)) // To avoid materials dupe glitches
 							new_item.materials = efficient_mats.Copy()
 						new_item.loc = linked_lathe.loc
 						if(!already_logged)
@@ -568,7 +570,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
 			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
 			screen = 0.0
@@ -1066,7 +1068,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/robotics/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (RD Console - Robotics)"
+		circuit.name = "RD Console - Robotics (Computer Board)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
 
 /obj/machinery/computer/rdconsole/core

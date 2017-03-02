@@ -123,17 +123,9 @@
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
 		var/obj/effect/rune/teleport/T = R
-		var/resultkey = T.listkey
-		if(resultkey in teleportnames)
-			duplicaterunecount[resultkey]++
-			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
-		else
-			teleportnames.Add(resultkey)
-			duplicaterunecount[resultkey] = 1
-		potential_runes[resultkey] = T
+		potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
@@ -147,11 +139,15 @@
 
 	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(!actual_selected_rune)
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
+	var/turf/target = get_turf(actual_selected_rune)
+	if(is_blocked_turf(target, TRUE))
+		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
+		return ..(user, 0)
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
-	user.forceMove(get_turf(actual_selected_rune))
+	user.forceMove(target)
 	return ..()
 
 
@@ -253,7 +249,7 @@
 		else
 			target.Weaken(10)
 			target.Stun(10)
-			target.flash_eyes(1,1)
+			target.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = target
 				S.emp_act(1)
@@ -316,7 +312,7 @@
 				target << "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>"
 				target.emote("scream")
 				target.confused = max(0, target.confused + 3)
-				target.flash_eyes()
+				target.flash_act()
 		qdel(src)
 
 
@@ -345,8 +341,8 @@
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
 	..()
 	if(proximity_flag && iscultist(user))
+		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
-			var/turf/T = get_turf(target)
 			if(target.use(25))
 				new /obj/structure/constructshell(T)
 				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
@@ -355,16 +351,16 @@
 				qdel(src)
 			else
 				user << "<span class='warning'>You need more metal to produce a construct shell!</span>"
-			if(istype(target, /obj/item/stack/sheet/plasteel))
-				var/quantity = min(target.amount, uses)
-				uses -= quantity
-				new /obj/item/stack/sheet/runed_metal(T,quantity)
-				target.use(quantity)
-				user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
-				user << sound('sound/effects/magic.ogg',0,1,25)
-				invoke(user, 1)
-				if(uses <= 0)
-					qdel(src)
+		else if(istype(target, /obj/item/stack/sheet/plasteel))
+			var/quantity = min(target.amount, uses)
+			uses -= quantity
+			new /obj/item/stack/sheet/runed_metal(T,quantity)
+			target.use(quantity)
+			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
+			user << sound('sound/effects/magic.ogg',0,1,25)
+			invoke(user, 1)
+			if(uses <= 0)
+				qdel(src)
 		else
 			user << "<span class='warning'>The talisman must be used on metal or plasteel!</span>"
 

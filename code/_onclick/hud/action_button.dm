@@ -1,8 +1,12 @@
+#define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
 
 /obj/screen/movable/action_button
 	var/datum/action/linked_action
 	var/actiontooltipstyle = ""
 	screen_loc = null
+
+	var/button_icon_state
+	var/appearance_cache
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
@@ -10,8 +14,9 @@
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return 1
-	if(usr.next_move >= world.time) // Is this needed ?
+	if(usr.next_click > world.time)
 		return
+	usr.next_click = world.time + 1
 	linked_action.Trigger()
 	return 1
 
@@ -21,6 +26,9 @@
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
+	var/hide_icon = 'icons/mob/actions.dmi'
+	var/hide_state = "hide"
+	var/show_state = "show"
 
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	var/list/modifiers = params2list(params)
@@ -38,16 +46,18 @@
 	usr.update_action_buttons()
 
 
-/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
-	if(isalien(user))
-		icon_state = "bg_alien"
-	else
-		icon_state = "bg_default"
+/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(datum/hud/owner_hud)
+	var settings = owner_hud.get_action_buttons_icons()
+	icon = settings["bg_icon"]
+	icon_state = settings["bg_state"]
+	hide_icon = settings["toggle_icon"]
+	hide_state = settings["toggle_hide"]
+	show_state = settings["toggle_show"]
 	UpdateIcon()
 
 /obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
 	cut_overlays()
-	var/image/img = image(icon, src, hidden ? "show" : "hide")
+	var/image/img = image(hide_icon, src, hidden ? show_state : hide_state)
 	add_overlay(img)
 
 
@@ -58,11 +68,22 @@
 /obj/screen/movable/action_button/MouseExited()
 	closeToolTip(usr)
 
+/datum/hud/proc/get_action_buttons_icons()
+	. = list()
+	.["bg_icon"] = ui_style_icon
+	.["bg_state"] = "template"
 
-/mob/proc/update_action_buttons_icon()
+	//TODO : Make these fit theme
+	.["toggle_icon"] = 'icons/mob/actions.dmi'
+	.["toggle_hide"] = "hide"
+	.["toggle_show"] = "show"
+
+//see human and alien hud for specific implementations.
+
+/mob/proc/update_action_buttons_icon(status_only = FALSE)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.UpdateButtonIcon(status_only)
 
 //This is the proc used to update all the action buttons.
 /mob/proc/update_action_buttons(reload_screen)

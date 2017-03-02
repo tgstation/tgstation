@@ -5,7 +5,7 @@ var/list/total_extraction_beacons = list()
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
@@ -24,7 +24,7 @@ var/list/total_extraction_beacons = list()
 			possible_beacons += EP
 
 	if(!possible_beacons.len)
-		user << "There are no extraction beacons in existance!"
+		user << "There are no extraction beacons in existence!"
 		return
 
 	else
@@ -71,7 +71,7 @@ var/list/total_extraction_beacons = list()
 			var/image/balloon
 			var/image/balloon2
 			var/image/balloon3
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				M.Weaken(16) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
@@ -84,13 +84,13 @@ var/list/total_extraction_beacons = list()
 			balloon2 = image('icons/obj/fulton_balloon.dmi',"fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays += balloon2
+			holder_obj.add_overlay(balloon2)
 			sleep(4)
 			balloon = image('icons/obj/fulton_balloon.dmi',"fulton_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays -= balloon2
-			holder_obj.overlays += balloon
+			holder_obj.cut_overlay(balloon2)
+			holder_obj.add_overlay(balloon)
 			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
 			animate(holder_obj, pixel_z = 10, time = 20)
 			sleep(20)
@@ -104,7 +104,7 @@ var/list/total_extraction_beacons = list()
 			sleep(10)
 			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
 			animate(holder_obj, pixel_z = 1000, time = 30)
-			if(istype(A, /mob/living/carbon/human))
+			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetParalysis(0)
 				L.drowsyness = 0
@@ -123,10 +123,10 @@ var/list/total_extraction_beacons = list()
 			balloon3 = image('icons/obj/fulton_balloon.dmi',"fulton_retract")
 			balloon3.pixel_y = 10
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays -= balloon
-			holder_obj.overlays += balloon3
+			holder_obj.cut_overlay(balloon)
+			holder_obj.add_overlay(balloon3)
 			sleep(4)
-			holder_obj.overlays -= balloon3
+			holder_obj.cut_overlay(balloon3)
 			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
 			animate(holder_obj, pixel_z = 0, time = 5)
@@ -139,12 +139,12 @@ var/list/total_extraction_beacons = list()
 
 /obj/item/fulton_core
 	name = "extraction beacon signaller"
-	desc = "Emits a signal which fulton recovery devices can lock on to. Activate in hand to create a beacon."
+	desc = "Emits a signal which fulton recovery devices can lock onto. Activate in hand to create a beacon."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "subspace_amplifier"
 
 /obj/item/fulton_core/attack_self(mob/user)
-	if(do_after(user,15,target = user) && !qdeleted(src))
+	if(do_after(user,15,target = user) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
 		qdel(src)
 
@@ -173,12 +173,12 @@ var/list/total_extraction_beacons = list()
 	var/atom/movable/stored_obj
 
 /obj/item/weapon/extraction_pack/proc/check_for_living_mobs(atom/A)
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return 1
 	for(var/thing in A.GetAllContents())
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
 			if(L.stat != DEAD)
 				return 1

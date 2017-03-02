@@ -56,27 +56,27 @@
 	if(!use_power)
 		return 1
 
-	var/area/A = src.loc.loc		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
+	var/area/A = get_area(src)		// make sure it's in an area
+	if(!A)
 		return 0					// if not, then not powered
 	if(chan == -1)
 		chan = power_channel
-	return A.master.powered(chan)	// return power status of the area
+	return A.powered(chan)	// return power status of the area
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
 	var/area/A = get_area(src)		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
+	if(!A)
 		return
 	if(chan == -1)
 		chan = power_channel
-	A.master.use_power(amount, chan)
+	A.use_power(amount, chan)
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
-	if(!A || !A.master)
+	if(!A)
 		return
-	A.master.addStaticPower(value, powerchannel)
+	A.addStaticPower(value, powerchannel)
 
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
@@ -117,7 +117,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.intact || !istype(T, /turf/open/floor))
+		if(T.intact || !isfloorturf(T))
 			return
 		if(get_dist(src, user) > 1)
 			return
@@ -275,11 +275,16 @@
 //M is a mob who touched wire/whatever
 //power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
+//siemens_coeff - layman's terms, conductivity
+//dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1)
+/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(istype(M.loc,/obj/mecha))
 		return 0	//feckin mechs are dumb
-	if(istype(M,/mob/living/carbon/human))
+	if(dist_check)
+		if(!in_range(source,M))
+			return 0
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves

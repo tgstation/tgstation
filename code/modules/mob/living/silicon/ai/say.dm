@@ -47,7 +47,7 @@
 	if (!message)
 		return
 
-	var/obj/machinery/hologram/holopad/T = current
+	var/obj/machinery/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
 		send_speech(message, 7, T, "robot", get_spans())
 		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.

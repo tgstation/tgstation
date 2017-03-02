@@ -19,19 +19,22 @@
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine"),
+		list("oculine","inacusiate"),
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 
 /obj/machinery/sleeper/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/sleeper(null)
 	B.apply_default_parts(src)
 	update_icon()
+	reset_chem_buttons()
 
 /obj/item/weapon/circuitboard/machine/sleeper
-	name = "circuit board (Sleeper)"
+	name = "Sleeper (Machine Board)"
 	build_path = /obj/machinery/sleeper
 	origin_tech = "programming=3;biotech=2;engineering=3"
 	req_components = list(
@@ -54,19 +57,20 @@
 	available_chems = list()
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
+	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "-open"
 
-/obj/machinery/sleeper/container_resist()
+/obj/machinery/sleeper/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
 /obj/machinery/sleeper/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
@@ -77,12 +81,6 @@
 		..(user)
 		if(occupant && occupant.stat != DEAD)
 			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
-
-/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
@@ -166,18 +164,36 @@
 				return
 			if(inject_chem(chem))
 				. = TRUE
+				if(scrambled_chems && prob(5))
+					usr << "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>"
+
+/obj/machinery/sleeper/emag_act(mob/user)
+	scramble_chem_buttons()
+	user << "<span class='warning'>You scramble the sleepers user interface!</span>"
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))
-		occupant.reagents.add_reagent(chem, 10)
+		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
 	if(!occupant)
 		return
 	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/health = occupant.health > min_health || chem == "epinephrine"
-	return amount && health
+	var/occ_health = occupant.health > min_health || chem == "epinephrine"
+	return amount && occ_health
+
+/obj/machinery/sleeper/proc/reset_chem_buttons()
+	scrambled_chems = FALSE
+	LAZYINITLIST(chem_buttons)
+	for(var/chem in available_chems)
+		chem_buttons[chem] = chem
+
+/obj/machinery/sleeper/proc/scramble_chem_buttons()
+	scrambled_chems = TRUE
+	var/list/av_chem = available_chems.Copy()
+	for(var/chem in av_chem)
+		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
 
 
 /obj/machinery/sleeper/syndie

@@ -4,7 +4,7 @@ var/list/GPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;magnets=1;bluespace=2"
 	var/gpstag = "COM0"
@@ -24,13 +24,13 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
-	overlays -= "working"
+	cut_overlay("working")
 	add_overlay("emp")
-	addtimer(src, "reboot", 300)
+	addtimer(CALLBACK(src, .proc/reboot), 300)
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
-	overlays -= "emp"
+	cut_overlay("emp")
 	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
@@ -39,7 +39,7 @@ var/list/GPS_list = list()
 	if(emped)
 		user << "It's busted!"
 	if(tracking)
-		overlays -= "working"
+		cut_overlay("working")
 		user << "[src] is no longer tracking, or visible to other GPS devices."
 		tracking = FALSE
 	else

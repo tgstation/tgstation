@@ -28,7 +28,7 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 2))
 		var/mob/living/M = A.affected_mob
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			switch(A.stage)
 				if(1)

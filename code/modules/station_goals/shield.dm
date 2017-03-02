@@ -7,14 +7,14 @@
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
-			 We have a prototype shielding system you will deploy to reduce collision related accidents.
+			 We have a prototype shielding system you must deploy to reduce collision-related accidents.
 
-			 You can order the satellites and control systems through cargo shuttle.
+			 You can order the satellites and control systems at cargo.
 			 "}
 
 
 /datum/station_goal/station_shield/on_report()
-	//Unlock 
+	//Unlock
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat]
 	P.special_enabled = TRUE
 
@@ -37,7 +37,7 @@
 	return coverage.len
 
 /obj/item/weapon/circuitboard/machine/computer/sat_control
-	name = "circuit board (Satellite Network Control)"
+	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
 	origin_tech = "engineering=3"
 
@@ -47,8 +47,7 @@
 	circuit = /obj/item/weapon/circuitboard/machine/computer/sat_control
 	var/notice
 
-/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "sat_control", name, 400, 305, master_ui, state)
@@ -69,7 +68,7 @@
 
 /obj/machinery/computer/sat_control/ui_data()
 	var/list/data = list()
-	
+
 	data["satellites"] = list()
 	for(var/obj/machinery/satellite/S in machines)
 		data["satellites"] += list(list(
@@ -78,8 +77,8 @@
 			"mode" = S.mode
 		))
 	data["notice"] = notice
-	
-	
+
+
 	var/datum/station_goal/station_shield/G = locate() in ticker.mode.station_goals
 	if(G)
 		data["meteor_shield"] = 1
@@ -96,6 +95,7 @@
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	density = 1
+	use_power = FALSE
 	var/static/gid = 0
 	var/id = 0
 
@@ -116,7 +116,7 @@
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)
-		anchored = 1	
+		anchored = 1
 	else
 		animate(src, pixel_y = 0, time = 10)
 		anchored = 0
@@ -135,11 +135,12 @@
 	name = "Meteor Shield Satellite"
 	desc = "Meteor Point Defense Satellite"
 	mode = "M-SHIELD"
-	var/kill_range = 10
-	
+	speed_process = TRUE
+	var/kill_range = 14
+
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			return FALSE
 	return TRUE
 
@@ -152,7 +153,7 @@
 		if(get_dist(M,src) > kill_range)
 			continue
 		if(!emagged && space_los(M))
-			Beam(get_turf(M),time=5,maxdistance=kill_range)
+			Beam(get_turf(M),icon_state="sat_beam",time=5,maxdistance=kill_range)
 			qdel(M)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)

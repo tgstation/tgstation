@@ -2,6 +2,7 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturf = /turf/open/space/transit
+	flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 
 /turf/open/space/transit/south
 	dir = SOUTH
@@ -60,13 +61,13 @@
 /turf/open/space/transit/attackby()
 	return
 
-/turf/open/space/transit/New()
+/turf/open/space/transit/Initialize()
+	..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
-	..()
 
-/turf/open/space/transit/update_icon()
+/turf/open/space/transit/proc/update_icon()
 	var/p = 9
 	var/angle = 0
 	var/state = 1

@@ -26,24 +26,30 @@ Bonus
 
 /datum/symptom/sensory_restoration/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 3))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(2)
-				if(M.reagents.get_reagent_amount("inacusiate")<10)
-					M.reagents.add_reagent("inacusiate", 10)
-					M << "<span class='notice'>Your hearing feels clearer and crisp.</span>"
-			if(3)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 )
-					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10))
-					M << "<span class='notice'>You feel sober.</span>"
-			if(4)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaphydramine") < 10)
-					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10, "synaphydramine"=5))
-					M << "<span class='notice'>You feel focused.</span>"
-			if(5)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaphydramine") < 10 && M.reagents.get_reagent_amount("mannitol") < 10)
-					M.reagents.add_reagent_list(list("mannitol"=10, "antihol"=10, "inacusiate"=10, "synaphydramine"=10))
+	var/mob/living/M = A.affected_mob
+	if(A.stage >= 2)
+		M.setEarDamage(0,0)
+
+	if(A.stage >= 3)
+		M.dizziness = 0
+		M.drowsyness = 0
+		M.slurring = 0
+		M.confused = 0
+		M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.drunkenness = max(H.drunkenness - 10, 0)
+
+	if(A.stage >= 4)
+		M.drowsyness = max(M.drowsyness-5, 0)
+		if(M.reagents.has_reagent("mindbreaker"))
+			M.reagents.remove_reagent("mindbreaker", 5)
+		if(M.reagents.has_reagent("histamine"))
+			M.reagents.remove_reagent("histamine", 5)
+		M.hallucination = max(0, M.hallucination - 10)
+
+	if(A.stage >= 5)
+		M.adjustBrainLoss(-3)
 	return
 
 /*
@@ -72,30 +78,54 @@ Bonus
 	transmittable = -4
 	level = 6
 	severity = 5
+	var/sleepy = 0
+	var/sleepy_ticks = 0
 
 /datum/symptom/sensory_destruction/Activate(var/datum/disease/advance/A)
 	..()
+	var/mob/living/M = A.affected_mob
 	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1)
 				M << "<span class='warning'>You can't feel anything.</span>"
 			if(2)
 				M << "<span class='warning'>You feel absolutely hammered.</span>"
 				if(prob(10))
-					M.reagents.add_reagent("morphine",rand(5,7))
+					sleepy_ticks += rand(10,14)
 			if(3)
 				M.reagents.add_reagent("ethanol",rand(5,7))
 				M << "<span class='warning'>You try to focus on not dying.</span>"
 				if(prob(15))
-					M.reagents.add_reagent("morphine",rand(5,7))
+					sleepy_ticks += rand(10,14)
 			if(4)
-				M.reagents.add_reagent_list(list("ethanol" = rand(7,15), "mindbreaker" = rand(5,10)))
+				M.reagents.add_reagent("ethanol",rand(6,10))
 				M << "<span class='warning'>u can count 2 potato!</span>"
 				if(prob(20))
-					M.reagents.add_reagent("morphine",rand(5,7))
+					sleepy_ticks += rand(10,14)
 			if(5)
-				M.reagents.add_reagent_list(list("impedrezene" = rand(5,15), "ethanol" = rand(7,20), "mindbreaker" = rand(5,15)))
+				M.reagents.add_reagent("ethanol",rand(7,13))
 				if(prob(25))
-					M.reagents.add_reagent("morphine",rand(5,7))
+					sleepy_ticks += rand(10,14)
+
+	if(sleepy_ticks)
+		if(A.stage>=4)
+			M.hallucination = min(M.hallucination + 10, 50)
+		if(A.stage>=5)
+			if(prob(80))
+				M.adjustBrainLoss(1)
+			if(prob(50))
+				M.drowsyness = max(M.drowsyness, 3)
+		sleepy++
+		sleepy_ticks--
+	else
+		sleepy = 0
+
+	switch(sleepy) //Works like morphine
+		if(11)
+			M << "<span class='warning'>You start to feel tired...</span>"
+		if(12 to 24)
+			M.drowsyness += 1
+		if(24 to INFINITY)
+			M.Sleeping(2, 0)
+
 	return

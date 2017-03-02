@@ -20,7 +20,7 @@
 		user << "<span class='userdanger'>No... just one more try...</span>"
 		user.gib()
 	else
-		user.visible_message("<span class='warning'>[user], pulls [src]'s lever with a glint in their eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
+		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
@@ -47,7 +47,7 @@
 
 /obj/structure/cursed_money/New()
 	. = ..()
-	addtimer(src, "collapse", 600)
+	addtimer(CALLBACK(src, .proc/collapse), 600)
 
 /obj/structure/cursed_money/proc/collapse()
 	visible_message("<span class='warning'>[src] falls in on itself, \
@@ -79,7 +79,7 @@
 /obj/effect/gluttony/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
 		return 1
-	if(istype(mover, /mob/living/carbon/human))
+	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
 			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
@@ -97,7 +97,7 @@
 	icon_state = "magic_mirror"
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
-	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as their hand leaves the mirror!</B></span>", \
+	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
 	var/turf/T = get_turf(user)
 	T.ChangeTurf(/turf/open/chasm/straight_down)
@@ -114,7 +114,7 @@
 	item_state = "render"
 	force = 18
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
@@ -123,7 +123,7 @@
 		return
 	if(!istype(user))
 		return
-	if(istype(AM, /mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(user.real_name != H.dna.real_name)
 			user.real_name = H.dna.real_name

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /obj/machinery/implantchair
 	name = "mindshield implanter"
@@ -51,7 +51,7 @@
 	data["ready_implants"]  = ready_implants
 	data["ready"] = ready
 	data["replenishing"] = replenishing
-	
+
 	return data
 
 /obj/machinery/implantchair/ui_act(action, params)
@@ -68,7 +68,7 @@
 			implant(occupant,usr)
 			. = TRUE
 
-/obj/machinery/implantchair/proc/implant(mob/living/carbon/M,mob/user)
+/obj/machinery/implantchair/proc/implant(mob/living/M,mob/user)
 	if (!istype(M))
 		return
 	if(!ready_implants || !ready)
@@ -77,15 +77,15 @@
 		ready_implants--
 		if(!replenishing && auto_replenish)
 			replenishing = TRUE
-			addtimer(src,"replenish",replenish_cooldown)
+			addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
 		if(injection_cooldown > 0)
 			ready = FALSE
-			addtimer(src,"set_ready",injection_cooldown)
+			addtimer(CALLBACK(src,"set_ready"),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
 	update_icon()
 
-/obj/machinery/implantchair/proc/implant_action(mob/living/carbon/M)
+/obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/weapon/implant/I = new implant_type
 	if(I.implant(M))
 		visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
@@ -106,7 +106,7 @@
 	if(ready_implants < max_implants)
 		ready_implants++
 	if(ready_implants < max_implants)
-		addtimer(src,"replenish",replenish_cooldown)
+		addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
 	else
 		replenishing = FALSE
 
@@ -114,8 +114,7 @@
 	ready = TRUE
 	update_icon()
 
-/obj/machinery/implantchair/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/implantchair/container_resist(mob/living/user)
 	if(state_open)
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -131,14 +130,14 @@
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 
-/obj/machinery/implantchair/close_machine(mob/user)
+/obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
 		..(user)
 		if(auto_inject && ready && ready_implants > 0)
@@ -172,8 +171,8 @@
 	var/objective = "Obey the law. Praise Nanotrasen."
 	var/custom = FALSE
 
-/obj/machinery/implantchair/brainwash/implant_action(mob/living/carbon/C,mob/user)
-	if(!istype(C) || !C.mind)
+/obj/machinery/implantchair/brainwash/implant_action(mob/living/C,mob/user)
+	if(!istype(C) || !C.mind) // I don't know how this makes any sense for silicons but laws trump objectives anyway.
 		return 0
 	if(custom)
 		if(!user || !user.Adjacent(src))
@@ -189,4 +188,3 @@
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
 
-	

@@ -25,20 +25,24 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	anchored = 1
 	density = 1
 	use_power = 0
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
+
+/obj/machinery/gravity_generator/throw_at()
+	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/blob_act(obj/effect/blob/B)
+/obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))
 		set_broken()
 
-/obj/machinery/gravity_generator/tesla_act(var/power)
+/obj/machinery/gravity_generator/tesla_act(power, explosive)
 	..()
-	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+	if(explosive)
+		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon()
 	..()
@@ -63,9 +67,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	stat &= ~BROKEN
 
 /obj/machinery/gravity_generator/part/Destroy()
-	set_broken()
 	if(main_part)
 		qdel(main_part)
+	set_broken()
 	return ..()
 
 //
@@ -93,7 +97,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Generator which spawns with the station.
 //
 
-/obj/machinery/gravity_generator/main/station/initialize()
+/obj/machinery/gravity_generator/main/station/Initialize()
+	..()
 	setup_parts()
 	middle.add_overlay("activated")
 	update_list()
@@ -103,10 +108,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 //
 /obj/machinery/gravity_generator/main/station/admin
 	use_power = 0
-
-/obj/machinery/gravity_generator/main/station/admin/New()
-	..()
-	initialize()
 
 //
 // Main Generator with the main code
@@ -135,7 +136,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
-		qdel(O)
+		if(!QDESTROYING(O))
+			qdel(O)
 	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
@@ -190,7 +192,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(istype(I, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You secure the screws of the framework.</span>"
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, I.usesound, 50, 1)
 				broken_state++
 				update_icon()
 				return
@@ -220,7 +222,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You secure the plating to the framework.</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, I.usesound, 75, 1)
 				set_fix()
 				return
 	return ..()
@@ -372,7 +374,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/mob/M in mob_list)
 		if(M.z != z)
 			continue
-		M.update_gravity(M.has_gravity())
+		M.update_gravity(M.mob_has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
 			M.playsound_local(T, 'sound/effects/alert.ogg', 100, 1, 0.5)

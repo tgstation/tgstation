@@ -12,8 +12,9 @@
 	volume = 15
 	var/mode = SYRINGE_DRAW
 	var/busy = 0		// needed for delayed drawing of blood
-	var/projectile_type = /obj/item/projectile/bullet/dart/syringe
+	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
+	container_type = TRANSPARENT
 
 /obj/item/weapon/reagent_containers/syringe/New()
 	..()
@@ -60,6 +61,12 @@
 		if(!L.can_inject(user, 1))
 			return
 
+	// chance of monkey retaliation
+	if(istype(target, /mob/living/carbon/monkey) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
+		var/mob/living/carbon/monkey/M
+		M = target
+		M.retaliate(user)
+		
 	switch(mode)
 		if(SYRINGE_DRAW)
 
@@ -245,5 +252,5 @@
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
-	projectile_type = /obj/item/projectile/bullet/dart/syringe/piercing
+	proj_piercing = 1
 	origin_tech = "combat=3;materials=4;engineering=5"

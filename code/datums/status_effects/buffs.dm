@@ -2,7 +2,7 @@
 
 /datum/status_effect/shadow_mend
 	id = "shadow_mend"
-	duration = 3
+	duration = 30
 	alert_type = /obj/screen/alert/status_effect/shadow_mend
 
 /obj/screen/alert/status_effect/shadow_mend
@@ -26,8 +26,8 @@
 
 /datum/status_effect/void_price
 	id = "void_price"
-	duration = 30
-	tick_interval = 3
+	duration = 300
+	tick_interval = 30
 	alert_type = /obj/screen/alert/status_effect/void_price
 
 /obj/screen/alert/status_effect/void_price
@@ -40,11 +40,12 @@
 	owner.adjustBruteLoss(3)
 
 
-
 /datum/status_effect/vanguard_shield
 	id = "vanguard"
-	duration = 20
+	duration = 200
+	tick_interval = 0 //tick as fast as possible
 	alert_type = /obj/screen/alert/status_effect/vanguard
+	var/datum/progressbar/progbar
 
 /obj/screen/alert/status_effect/vanguard
 	name = "Vanguard"
@@ -60,9 +61,21 @@
 		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."
 	..()
 
+/datum/status_effect/vanguard_shield/Destroy()
+	qdel(progbar)
+	progbar = null
+	return ..()
+
 /datum/status_effect/vanguard_shield/on_apply()
-	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
+	add_logs(owner, null, "gained Vanguard stun immunity")
+	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	progbar = new(owner, duration, owner)
+	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
+	progbar.update(duration - world.time)
+
+/datum/status_effect/vanguard_shield/tick()
+	progbar.update(duration - world.time)
 
 /datum/status_effect/vanguard_shield/on_remove()
 	var/vanguard = owner.stun_absorption["vanguard"]
@@ -82,14 +95,17 @@
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 15)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
-				owner.Paralyse(stuns_blocked * 2)
+				stuns_blocked *= 2
+				owner.Paralyse(stuns_blocked)
+		else
+			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
-
+		add_logs(owner, null, "lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]")
 
 
 /datum/status_effect/inathneqs_endowment
 	id = "inathneqs_endowment"
-	duration = 15
+	duration = 150
 	alert_type = /obj/screen/alert/status_effect/inathneqs_endowment
 
 /obj/screen/alert/status_effect/inathneqs_endowment
@@ -99,15 +115,89 @@
 	alerttooltipstyle = "clockcult"
 
 /datum/status_effect/inathneqs_endowment/on_apply()
+	add_logs(owner, null, "gained Inath-neq's invulnerability")
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
+	var/oldcolor = owner.color
 	owner.color = "#1E8CE1"
 	owner.fully_heal()
-	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " is glowing with a flickering blue light!")
+	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
 	owner.status_flags |= GODMODE
-	animate(owner, color = initial(owner.color), time = 150, easing = EASE_IN)
+	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
+	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
 
 /datum/status_effect/inathneqs_endowment/on_remove()
+	add_logs(owner, null, "lost Inath-neq's invulnerability")
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+
+
+/datum/status_effect/cyborg_power_regen
+	id = "power_regen"
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/power_regen
+	var/power_to_give = 0 //how much power is gained each tick
+
+/obj/screen/alert/status_effect/power_regen
+	name = "Power Regeneration"
+	desc = "You are quickly regenerating power!"
+	icon_state = "power_regen"
+
+/datum/status_effect/cyborg_power_regen/tick()
+	var/mob/living/silicon/robot/cyborg = owner
+	if(!istype(cyborg) || !cyborg.cell)
+		qdel(src)
+		return
+	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
+	cyborg.cell.give(power_to_give)
+
+/datum/status_effect/his_grace
+	id = "his_grace"
+	duration = -1
+	tick_interval = 4
+	alert_type = /obj/screen/alert/status_effect/his_grace
+	var/bloodlust = 0
+
+/obj/screen/alert/status_effect/his_grace
+	name = "His Grace"
+	desc = "His Grace hungers, and you must feed Him."
+	icon_state = "his_grace"
+	alerttooltipstyle = "hisgrace"
+
+/obj/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
+	desc = initial(desc)
+	var/datum/status_effect/his_grace/HG = attached_effect
+	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
+	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
+	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
+	..()
+
+/datum/status_effect/his_grace/on_apply()
+	add_logs(owner, null, "gained His Grace's stun immunity")
+	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
+
+/datum/status_effect/his_grace/tick()
+	bloodlust = 0
+	var/graces = 0
+	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+		if(HG.bloodthirst > bloodlust)
+			bloodlust = HG.bloodthirst
+		if(HG.awakened)
+			graces++
+	if(!graces)
+		owner.apply_status_effect(STATUS_EFFECT_HISWRATH)
+		qdel(src)
+		return
+	var/grace_heal = bloodlust * 0.05
+	owner.adjustBruteLoss(-grace_heal)
+	owner.adjustFireLoss(-grace_heal)
+	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
+	owner.adjustOxyLoss(-(grace_heal * 2))
+	owner.adjustCloneLoss(-grace_heal)
+
+/datum/status_effect/his_grace/on_remove()
+	add_logs(owner, null, "lost His Grace's stun immunity")
+	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
+		owner.stun_absorption -= "hisgrace"
+

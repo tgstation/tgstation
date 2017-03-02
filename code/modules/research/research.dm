@@ -84,12 +84,14 @@ research holder datum.
 //Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 //Input: datum/tech; Output: Null
 /datum/research/proc/AddTech2Known(datum/tech/T)
+	if(!T)
+		return
 	if(known_tech[T.id])
 		var/datum/tech/known = known_tech[T.id]
 		if(T.level > known.level)
 			known.level = T.level
 		return
-	known_tech[T.id] = T
+	known_tech[T.id] = T.copy()
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
 	if(known_designs[D.id])
@@ -141,6 +143,16 @@ research holder datum.
 		var/datum/design/D = new path(src)
 		possible_designs += D
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
+			AddDesign2Known(D)
+
+//Limb Grower files
+/datum/research/limbgrower/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & LIMBGROWER) && ("initial" in D.category))
 			AddDesign2Known(D)
 
 /datum/research/autolathe/AddDesign2Known(datum/design/D)
@@ -288,6 +300,11 @@ research holder datum.
 
 	return cost
 
+/datum/tech/proc/copy()
+	var/datum/tech/T = new type()
+	T.level = level
+	return T
+
 /obj/item/weapon/disk/tech_disk
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
@@ -297,10 +314,12 @@ research holder datum.
 	var/max_tech_stored = 1
 
 /obj/item/weapon/disk/tech_disk/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_tech_stored)
 		tech_stored += null
+
 
 /obj/item/weapon/disk/tech_disk/adv
 	name = "advanced technology disk"

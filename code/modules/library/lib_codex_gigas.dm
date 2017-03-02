@@ -3,7 +3,7 @@
 	icon_state ="demonomicon"
 	throw_speed = 1
 	throw_range = 10
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	author = "Forces beyond your comprehension"
 	unique = 1
 	title = "The codex gigas"
@@ -15,6 +15,7 @@
 
 /obj/item/weapon/book/codex_gigas/attack_self(mob/user)
 	if(is_blind(user))
+		user << "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>"
 		return
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"

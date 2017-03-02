@@ -2,8 +2,8 @@
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
 	desc = "This is rubbish."
-	w_class = 1
-	burn_state = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
 
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
@@ -40,7 +40,7 @@
 /obj/item/trash/plate
 	name = "plate"
 	icon_state = "plate"
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/trash/pistachios
 	name = "pistachios pack"
@@ -53,7 +53,7 @@
 /obj/item/trash/tray
 	name = "tray"
 	icon_state = "tray"
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/trash/candle
 	name = "candle"
@@ -63,7 +63,18 @@
 /obj/item/trash/can
 	name = "crushed can"
 	icon_state = "cola"
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
+
+/obj/item/trash/coal
+	name = "lump of coal"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "slag"
+	desc = "Someone's gotten on the naughty list."
+
+/obj/item/trash/coal/burn()
+	visible_message("[src] fuses into a diamond! Someone wasn't so naughty after all...")
+	new /obj/item/weapon/ore/diamond(loc)
+	qdel(src)

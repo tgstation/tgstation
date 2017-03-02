@@ -17,7 +17,9 @@
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -205,6 +207,12 @@
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
 			reagents.add_reagent("singulo", 2)
 	ice_creamed = 1
+
+/obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 4)
+	qdel(src)
+
 
 #undef ICECREAM_VANILLA
 #undef ICECREAM_CHOCOLATE

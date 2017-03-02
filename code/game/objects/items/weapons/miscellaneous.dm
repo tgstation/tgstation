@@ -7,7 +7,7 @@
 	throwforce = 3
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 
 /obj/item/weapon/skub
@@ -15,5 +15,5 @@
 	name = "skub"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "skub"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")

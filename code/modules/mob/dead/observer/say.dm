@@ -12,7 +12,7 @@
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 
-		if(istype(V.source, /mob/living/silicon/ai))
+		if(isAI(V.source))
 			var/mob/living/silicon/ai/S = V.source
 			speaker = S.eyeobj
 		else

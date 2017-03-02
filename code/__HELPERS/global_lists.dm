@@ -27,6 +27,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
 
 
@@ -50,6 +51,11 @@
 	for(var/path in subtypesof(/datum/tech))
 		var/datum/tech/D = new path()
 		tech_list[D.id] = D
+
+	//Emotes
+	for(var/path in subtypesof(/datum/emote))
+		var/datum/emote/E = new path()
+		emote_list[E.key] = E
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 

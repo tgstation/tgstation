@@ -5,9 +5,10 @@
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
 	color = "#550000"
+	taste_description = "sweet tasting metal"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && istype(T, /turf/closed/wall))
+	if(reac_volume >= 1 && iswallturf(T))
 		var/turf/closed/wall/Wall = T
 		if(istype(Wall, /turf/closed/wall/r_wall))
 			Wall.thermite = Wall.thermite+(reac_volume*2.5)
@@ -26,6 +27,7 @@
 	id = "nitroglycerin"
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 	color = "#808080" // rgb: 128, 128, 128
+	taste_description = "oil"
 
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
@@ -33,6 +35,7 @@
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
 	color = "#FFFF00"
+	taste_description = "metal"
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
@@ -41,6 +44,7 @@
 	reagent_state = LIQUID
 	color = "#FFC8C8"
 	metabolization_rate = 4
+	taste_description = "burning"
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
@@ -54,17 +58,17 @@
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
-	if(istype(T, /turf/open/floor/))
+	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
 			F.make_plating()
 		else if(prob(reac_volume))
 			F.burn_tile()
-		if(istype(F, /turf/open/floor/))
+		if(isfloorturf(F))
 			for(var/turf/turf in range(1,F))
 				if(!locate(/obj/effect/hotspot) in turf)
-					PoolOrNew(/obj/effect/hotspot, F)
-	if(istype(T, /turf/closed/wall/))
+					new /obj/effect/hotspot(F)
+	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
 			W.ChangeTurf(/turf/open/floor/plating)
@@ -75,7 +79,7 @@
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
-				PoolOrNew(/obj/effect/hotspot, M.loc)
+				new /obj/effect/hotspot(M.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"
@@ -83,6 +87,7 @@
 	description = "Sends everything flying from the detonation point."
 	reagent_state = LIQUID
 	color = "#5A64C8"
+	taste_description = "air and bitterness"
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -90,6 +95,7 @@
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
 	color = "#210021"
+	taste_description = "compressed bitterness"
 
 /datum/reagent/blackpowder
 	name = "Black Powder"
@@ -98,6 +104,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.05
+	taste_description = "salt"
 
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
@@ -112,6 +119,7 @@
 	description = "Makes a very bright flash."
 	reagent_state = LIQUID
 	color = "#C8C8C8"
+	taste_description = "salt"
 
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
@@ -119,6 +127,7 @@
 	description = "Makes a large cloud of smoke that can carry reagents."
 	reagent_state = LIQUID
 	color = "#C8C8C8"
+	taste_description = "smoke"
 
 /datum/reagent/sonic_powder
 	name = "Sonic Powder"
@@ -126,6 +135,7 @@
 	description = "Makes a deafening noise."
 	reagent_state = LIQUID
 	color = "#C8C8C8"
+	taste_description = "loud noises"
 
 /datum/reagent/phlogiston
 	name = "Phlogiston"
@@ -133,6 +143,7 @@
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
 	color = "#FA00AF"
+	taste_description = "burning"
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.IgniteMob()
@@ -151,6 +162,7 @@
 	description = "Very flammable."
 	reagent_state = LIQUID
 	color = "#FA00AF"
+	taste_description = "burning"
 
 /datum/reagent/napalm/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
@@ -164,9 +176,10 @@
 /datum/reagent/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the container 0K."
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "bitterness"
 
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
@@ -190,9 +203,10 @@
 /datum/reagent/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "bitterness"
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/M)
 	if(M.reagents.has_reagent("oxygen"))
@@ -205,4 +219,22 @@
 		holder.remove_reagent("oxygen", 1)
 		holder.chem_temp += 10
 		holder.handle_reactions()
+	..()
+
+/datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
+	name = "Teslium"
+	id = "teslium"
+	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow to come into contact with water."
+	reagent_state = LIQUID
+	color = "#20324D" //RGB: 32, 50, 77
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "charged metal"
+	var/shock_timer = 0
+
+/datum/reagent/teslium/on_mob_life(mob/living/M)
+	shock_timer++
+	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
+		shock_timer = 0
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+		playsound(M, "sparks", 50, 1)
 	..()

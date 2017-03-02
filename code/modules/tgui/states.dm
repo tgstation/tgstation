@@ -20,13 +20,13 @@
 	if(!state)
 		return
 
-	if(istype(user, /mob/dead/observer))
+	if(isobserver(user))
 		// If they turn on ghost AI control, admins can always interact.
 		if(IsAdminGhost(user))
 			. = max(., UI_INTERACTIVE)
 
 		// Regular ghosts can always at least view if in range.
-		if(get_dist(src_object, src) < user.client.view)
+		if(get_dist(src_object, user) < user.client.view)
 			. = max(., UI_UPDATE)
 
 	// Check if the state allows interaction

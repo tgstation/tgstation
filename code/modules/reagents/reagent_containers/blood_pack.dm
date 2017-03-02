@@ -78,7 +78,7 @@
 		var/t = stripped_input(user, "What would you like to label the blood pack?", name, null, 53)
 		if(!user.canUseTopic(src))
 			return
-		if(user.get_active_hand() != I)
+		if(user.get_active_held_item() != I)
 			return
 		if(loc != user)
 			return

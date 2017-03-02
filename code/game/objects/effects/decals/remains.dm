@@ -11,6 +11,9 @@
 	desc = "They look like the remains of something... alien. They have a strange aura about them."
 	icon_state = "remainsxeno"
 
+/obj/effect/decal/remains/xeno/larva
+	icon_state = "remainslarva"
+
 /obj/effect/decal/remains/robot
 	desc = "They look like the remains of something mechanical. They have a strange aura about them."
 	icon = 'icons/mob/robots.dmi'

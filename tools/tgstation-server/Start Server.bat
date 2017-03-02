@@ -14,7 +14,7 @@ call bin\getcurdate.bat
 cls
 echo Watch Dog.
 echo Server Running. Watching for server exits.
-start /WAIT /ABOVENORMAL "" dreamdaemon.exe gamefolder\%PROJECTNAME%.dmb -port %PORT% -trusted -close -log "data\logs\runtimes\runtime-%CUR_DATE%.log"
+start /WAIT /ABOVENORMAL "" dreamdaemon.exe gamefolder\%PROJECTNAME%.dmb -port %PORT% -trusted -public -close -log "data\logs\runtimes\runtime-%CUR_DATE%.log"
 cls
 echo Watch Dog.
 echo Server exit detected. Restarting in 60 seconds.

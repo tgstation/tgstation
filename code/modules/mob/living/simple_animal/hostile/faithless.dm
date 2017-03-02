@@ -19,6 +19,7 @@
 	robust_searching = 1
 
 	harm_intent_damage = 10
+	obj_damage = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "grips"

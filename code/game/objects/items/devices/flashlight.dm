@@ -4,7 +4,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
@@ -12,7 +12,7 @@
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
-/obj/item/device/flashlight/initialize()
+/obj/item/device/flashlight/Initialize()
 	..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
@@ -56,17 +56,15 @@
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
+		if(ishuman(M) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
 			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(M.flash_eyes(visual = 1))
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+			if(M.flash_act(visual = 1))
+				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes.</span>")
+				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
@@ -77,7 +75,7 @@
 				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
 					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
 				else //they're okay!
-					if(C.flash_eyes(visual = 1))
+					if(C.flash_act(visual = 1))
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
@@ -113,7 +111,7 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			PoolOrNew(/obj/effect/overlay/temp/medical_holosign, list(T,user)) //produce a holographic glow
+			new /obj/effect/overlay/temp/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
@@ -147,7 +145,7 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	brightness_on = 5
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	materials = list()
 	on = 1
@@ -170,7 +168,7 @@
 		attack_self(usr)
 
 //Bananalamp
-obj/item/device/flashlight/lamp/bananalamp
+/obj/item/device/flashlight/lamp/bananalamp
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
@@ -181,7 +179,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
@@ -251,7 +249,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
@@ -273,13 +271,13 @@ obj/item/device/flashlight/lamp/bananalamp
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
 	item_state = "slime"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
+	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0

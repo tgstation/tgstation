@@ -9,8 +9,9 @@
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
 	density = 1
-	burn_state = FLAMMABLE
-	burntime = 15
+	resistance_flags = FLAMMABLE
+	obj_integrity = 60
+	max_integrity = 60
 	var/obj/item/weapon/canvas/painting = null
 
 
@@ -18,7 +19,7 @@
 /obj/structure/easel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/canvas))
 		var/obj/item/weapon/canvas/C = I
-		user.unEquip(C)
+		user.dropItemToGround(C)
 		painting = C
 		C.loc = get_turf(src)
 		C.layer = layer+0.1
@@ -51,7 +52,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	desc = "draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/whichGlobalBackup = 1 //List index
 
 /obj/item/weapon/canvas/nineteenXnineteen

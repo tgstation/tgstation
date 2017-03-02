@@ -3,7 +3,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	var/datum/research/files
-	var/health = 100
+	var/heat_health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
 	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
@@ -18,10 +18,9 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
-	initialize() //Agouri
 
 /obj/item/weapon/circuitboard/machine/rdserver
-	name = "circuit board (R&D Server)"
+	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/r_n_d/server
 	origin_tech = "programming=3"
 	req_components = list(
@@ -38,7 +37,8 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/r_n_d/server/initialize()
+/obj/machinery/r_n_d/server/Initialize(mapload)
+	..()
 	if(!files) files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
@@ -56,12 +56,12 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(0 to T0C)
-			health = min(100, health + 1)
+			heat_health = min(100, heat_health + 1)
 		if(T0C to (T20C + 20))
-			health = Clamp(health, 0, 100)
+			heat_health = Clamp(heat_health, 0, 100)
 		if((T20C + 20) to (T0C + 70))
-			health = max(0, health - 1)
-	if(health <= 0)
+			heat_health = max(0, heat_health - 1)
+	if(heat_health <= 0)
 		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
 		var/updateRD = 0
@@ -84,17 +84,9 @@
 	griefProtection()
 	..()
 
-
 /obj/machinery/r_n_d/server/ex_act(severity, target)
 	griefProtection()
 	..()
-
-
-/obj/machinery/r_n_d/server/blob_act(obj/effect/blob/B)
-	griefProtection()
-	..()
-
-
 
 //Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
@@ -129,7 +121,7 @@
 				air_update_turf()
 
 //called when the server is deconstructed.
-/obj/machinery/r_n_d/server/deconstruction()
+/obj/machinery/r_n_d/server/on_deconstruction()
 	griefProtection()
 	..()
 
@@ -144,8 +136,11 @@
 	name = "Centcom Central R&D Database"
 	server_id = -1
 
-/obj/machinery/r_n_d/server/centcom/initialize()
+/obj/machinery/r_n_d/server/centcom/Initialize()
 	..()
+	fix_noid_research_servers()
+
+/proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
 	for(var/obj/machinery/r_n_d/server/S in machines)
@@ -234,7 +229,7 @@
 
 	else if(href_list["reset_tech"])
 		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/tech/T = temp_server.files.known_tech[href_list["reset_tech"]]
 			if(T)
 				T.level = 1
@@ -242,7 +237,7 @@
 
 	else if(href_list["reset_design"])
 		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
 			if(D)
 				temp_server.files.known_designs -= D.id

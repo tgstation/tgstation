@@ -33,7 +33,7 @@
 
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
-	user << browse("[dat]", "window=console_stacking_machine")
+	user << browse(dat, "window=console_stacking_machine")
 
 	return
 

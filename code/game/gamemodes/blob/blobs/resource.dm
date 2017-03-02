@@ -1,26 +1,26 @@
-/obj/effect/blob/resource
+/obj/structure/blob/resource
 	name = "resource blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
 	desc = "A thin spire of slightly swaying tendrils."
-	health = 60
-	maxhealth = 60
+	obj_integrity = 60
+	max_integrity = 60
 	point_return = 15
 	var/resource_delay = 0
 
-/obj/effect/blob/resource/scannerreport()
+/obj/structure/blob/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."
 
-/obj/effect/blob/resource/creation_action()
+/obj/structure/blob/resource/creation_action()
 	if(overmind)
 		overmind.resource_blobs += src
 
-/obj/effect/blob/resource/Destroy()
+/obj/structure/blob/resource/Destroy()
 	if(overmind)
 		overmind.resource_blobs -= src
 	return ..()
 
-/obj/effect/blob/resource/Be_Pulsed()
+/obj/structure/blob/resource/Be_Pulsed()
 	. = ..()
 	if(resource_delay > world.time)
 		return

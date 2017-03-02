@@ -262,3 +262,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/baseball
 	category = CAT_BURGER
+
+/datum/crafting_recipe/food/baconburger
+	name = "Bacon Burger"
+	reqs = list(
+			/obj/item/weapon/reagent_containers/food/snacks/meat/bacon = 3,
+			/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/baconburger
+	category = CAT_BURGER

@@ -19,7 +19,7 @@
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
-	targetitem = /obj/item/weapon/gun/energy/gun/hos
+	targetitem = /obj/item/weapon/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
 
@@ -105,7 +105,7 @@
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
-		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
+		if(isAI(A) && A.stat != 2) //See if any AI's are alive inside that card.
 			return 1
 	return 0
 
@@ -155,7 +155,7 @@
 
 /datum/objective_item/special/aegun
 	name = "an advanced energy gun"
-	targetitem = /obj/item/weapon/gun/energy/gun/nuclear
+	targetitem = /obj/item/weapon/gun/energy/e_gun/nuclear
 	difficulty = 10
 
 /datum/objective_item/special/ddrill

@@ -2,6 +2,7 @@
 	name = "Drug"
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "bitterness"
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -12,7 +13,7 @@
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/M)
 	M.set_drugginess(15)
-	if(isturf(M.loc) && !istype(M.loc, /turf/open/space))
+	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove)
 			if(prob(10)) step(M, pick(cardinal))
 	if(prob(7))
@@ -35,6 +36,7 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
+	taste_description = "smoke"
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
 	if(prob(1))
@@ -173,13 +175,13 @@
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
 	if(M.canmove && !istype(M.loc, /atom/movable))
-		for(var/i = 0, i < 4, i++)
+		for(var/i in 1 to 4)
 			step(M, pick(cardinal))
 	if(prob(20))
 		M.emote("laugh")
 	if(prob(33))
 		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 	..()
@@ -230,6 +232,7 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
+	taste_description = "salt" // because they're bathsalts?
 
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
@@ -252,12 +255,12 @@
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
 	M.hallucination += 10
 	if(M.canmove && !istype(M.loc, /atom/movable))
-		for(var/i = 0, i < 8, i++)
+		for(var/i in 1 to 8)
 			step(M, pick(cardinal))
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	if(prob(33))
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 	..()

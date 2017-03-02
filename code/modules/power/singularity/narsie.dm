@@ -25,8 +25,8 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<span class='narsie'>NAR-SIE HAS RISEN</span>"
-	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
+	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
+	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
 
 	var/area/A = get_area(src)
 	if(A)
@@ -41,7 +41,7 @@
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
 	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
-	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, src.loc)
+	new /obj/effect/particle_effect/smoke/sleeping(src.loc)
 
 
 /obj/singularity/narsie/process()
@@ -50,7 +50,7 @@
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	if(istype(target, /obj/structure/clockwork/massive/ratvar))
+	if(istype(target, /obj/structure/destructible/clockwork/massive/ratvar))
 		move(get_dir(src, target)) //Oh, it's you again.
 	else
 		move()
@@ -63,8 +63,10 @@
 
 
 /obj/singularity/narsie/Bump(atom/A)
-	forceMove(get_turf(A))
-	A.narsie_act()
+	var/turf/T = get_turf(A)
+	if(T == loc)
+		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie
+	forceMove(T)
 
 
 /obj/singularity/narsie/mezzer()
@@ -86,7 +88,7 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
-	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
+	for(var/obj/structure/destructible/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
 		if(enemy.z != z)
 			continue
 		acquire(enemy)

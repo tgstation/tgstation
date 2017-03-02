@@ -20,7 +20,7 @@
 /obj/machinery/zvent/process_atmos()
 
 	//all this object does, is make its turf share air with the ones above and below it, if they have a vent too.
-	if (istype(loc,/turf)) //if we're not on a valid turf, forget it
+	if(isturf(loc)) //if we're not on a valid turf, forget it
 		for (var/new_z in list(-1,1))  //change this list if a fancier system of z-levels gets implemented
 			var/turf/open/zturf_conn = locate(x,y,z+new_z)
 			if (istype(zturf_conn))

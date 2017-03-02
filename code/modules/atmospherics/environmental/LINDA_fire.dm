@@ -33,7 +33,7 @@
 		if(oxy < 0.5 || tox < 0.5)
 			return 0
 
-		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
+		active_hotspot = new /obj/effect/hotspot(src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
@@ -46,7 +46,6 @@
 /obj/effect/hotspot
 	anchored = 1
 	mouse_opacity = 0
-	unacidable = 1//So you can't melt fire with acid.
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -70,6 +69,8 @@
 	if(!istype(location) || !(location.air))
 		return 0
 
+	location.active_hotspot = src
+
 	if(volume > CELL_VOLUME*0.95)
 		bypassing = 1
 	else
@@ -88,9 +89,9 @@
 		location.assume_air(affected)
 
 	for(var/A in loc)
-		var/atom/item = A
-		if(item && item != src) // It's possible that the item is deleted in temperature_expose
-			item.fire_act(null, temperature, volume)
+		var/atom/AT = A
+		if(AT && AT != src) // It's possible that the item is deleted in temperature_expose
+			AT.fire_act(temperature, volume)
 	return 0
 
 
@@ -148,18 +149,15 @@
 /obj/effect/hotspot/Destroy()
 	SetLuminosity(0)
 	SSair.hotspots -= src
+	var/turf/open/T = loc
+	if(istype(T) && T.active_hotspot == src)
+		T.active_hotspot = null
 	DestroyTurf()
-	if(istype(loc, /turf))
-		var/turf/open/T = loc
-		if(T.active_hotspot == src)
-			T.active_hotspot = null
 	loc = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()
-
-	if(istype(loc, /turf))
+	if(isturf(loc))
 		var/turf/T = loc
 		if(T.to_be_destroyed)
 			var/chance_of_deletion
@@ -176,4 +174,4 @@
 /obj/effect/hotspot/Crossed(mob/living/L)
 	..()
 	if(isliving(L))
-		L.fire_act()
+		L.fire_act(temperature, volume)

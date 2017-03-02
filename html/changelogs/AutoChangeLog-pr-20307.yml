@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "The lava staff now has a short delay before creating lava, with a visible indicator."
-  - tweak: "The lava staff's cooldown is now somewhat shorter, and turning lava back into basalt has a much shorter cooldown and no delay."

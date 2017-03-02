@@ -29,7 +29,7 @@
 	for(var/obj/effect/landmark/R in landmarks_list)
 		if(R.name != "blobspawn")
 			if(prob(35))
-				if(istype(R.loc,/turf/open/space))
+				if(isspaceturf(R.loc))
 					new /mob/living/simple_animal/chicken/rabbit/space(R.loc)
 				else
 					new /mob/living/simple_animal/chicken/rabbit(R.loc)
@@ -111,9 +111,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/loaded/New()
 	..()
-	var/color = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
-	icon_state = "egg-[color]"
-	item_color = "[color]"
+	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
+	icon_state = "egg-[eggcolor]"
+	item_color = "[eggcolor]"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,

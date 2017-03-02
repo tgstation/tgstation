@@ -19,7 +19,7 @@
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
-	unacidable = 1 //and no deleting hoomans inside
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
@@ -29,10 +29,11 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
-	var/health = 300 //health is health
+	var/melee_energy_drain = 15
+	obj_integrity = 300 //obj_integrity is health
+	max_integrity = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	//the values in this list show how much damage will pass through, not how much will be absorbed.
-	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
+	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
@@ -48,7 +49,6 @@
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
-
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
 	var/use_internal_tank = 0
@@ -58,6 +58,7 @@
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
+	var/list/trackers = list()
 
 	var/max_temperature = 25000
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
@@ -110,9 +111,12 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
+	var/nextsmash = 0
+	var/smashcooldown = 3	//deciseconds
+
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
-	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
 
 /obj/mecha/New()
@@ -137,14 +141,16 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
+	diag_hud_set_mechtracking()
 
-	return
 
 /obj/mecha/Destroy()
 	go_out()
+	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
 		if(isAI(M))
-			M.gib() //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. Forever.
+			occupant = null
+			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
 
@@ -152,7 +158,7 @@
 		explosion(get_turf(loc), 0, 0, 1, 3)
 
 	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
 				WR.crowbar_salvage += E
@@ -176,6 +182,8 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
+		if(AI)
+			AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
@@ -240,7 +248,7 @@
 
 /obj/mecha/examine(mob/user)
 	..()
-	var/integrity = health/initial(health)*100
+	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
 			user << "It's fully intact."
@@ -256,8 +264,6 @@
 		user << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
 			user << "\icon[ME] [ME]"
-	return
-
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -276,7 +282,7 @@
 			if(cabin_air && cabin_air.return_volume()>0)
 				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1),"fire")
+					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			internal_temp_regulation = 0
@@ -342,7 +348,7 @@
 				else
 					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
-		var/integrity = health/initial(health)*100
+		var/integrity = obj_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
@@ -352,8 +358,11 @@
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
-
-		if(occupant.loc != src) //something went wrong
+		var/actual_loc = occupant.loc
+		if(istype(actual_loc, /obj/item/device/mmi))
+			var/obj/item/device/mmi/M = actual_loc
+			actual_loc = M.mecha
+		if(actual_loc != src) //something went wrong
 			occupant.clear_alert("charge")
 			occupant.clear_alert("mech damage")
 			RemoveActions(occupant, human_occupant=1)
@@ -367,6 +376,7 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
+	diag_hud_set_mechtracking()
 
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
@@ -547,15 +557,19 @@
 			if(..()) //mech was thrown
 				return
 			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
-				obstacle.mech_melee_attack(src)
-				if(!obstacle || (obstacle && !obstacle.density))
-					step(src,dir)
-			if(istype(obstacle, /obj))
+				if(nextsmash < world.time)
+					obstacle.mech_melee_attack(src)
+					if(!obstacle || !obstacle.density)
+						step(src,dir)
+					nextsmash = world.time + smashcooldown
+			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)
 					step(obstacle, dir)
-			else if(istype(obstacle, /mob))
-				step(obstacle, dir)
+			else if(ismob(obstacle))
+				var/mob/M = obstacle
+				if(!M.anchored)
+					step(obstacle, dir)
 
 
 
@@ -568,7 +582,7 @@
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
-		if(ignore_threshold || health*100/initial(health) < internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -576,7 +590,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
 				qdel(ME)
@@ -611,12 +625,27 @@
 	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
-		var/obj/item/mecha_parts/mecha_tracking/B = locate(/obj/item/mecha_parts/mecha_tracking) in src
-		if(B) //Beacons give the AI more detailed mech information.
+		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
 			user << "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"
 			user << "[B.get_mecha_info()]"
+			break
 		//Nothing like a big, red link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
+	else
+		examine(user)
+		if(occupant)
+			user << "<span class='warning'>This exosuit has a pilot and cannot be controlled.</span>"
+			return
+		var/can_control_mech = 0
+		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
+			can_control_mech = 1
+			user << "<span class='notice'>\icon[src] Status of [name]:</span>\n\
+				[A.get_mecha_info()]"
+			break
+		if(!can_control_mech)
+			user << "<span class='warning'>You cannot control exosuits without AI control beacons installed.</span>"
+			return
+		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='boldnotice'>Take control of exosuit?</span></a><br>"
 
 /obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
@@ -632,13 +661,10 @@
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
 				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
 				return
-			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
-				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
-				return
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
-			AI.loc = card
+			AI.forceMove(card)
 			card.AI = AI
 			occupant = null
 			AI.controlled_mech = null
@@ -647,12 +673,13 @@
 			AI << "You have been downloaded to a mobile storage device. Wireless connection offline."
 			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory."
 
-		if(AI_MECH_HACK) //Called by Malf AI mob on the mech.
-			new /obj/structure/AIcore/deactivated(AI.loc)
-			if(occupant) //Oh, I am sorry, were you using that?
-				AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
-				occupant << "<span class='danger'>You have been forcibly ejected!</span>"
-				go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
+		if(AI_MECH_HACK) //Called by AIs on the mech
+			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
+			if(AI.can_dominate_mechs)
+				if(occupant) //Oh, I am sorry, were you using that?
+					AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
+					occupant << "<span class='danger'>You have been forcibly ejected!</span>"
+					go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 			ai_enter_mech(AI, interaction)
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
@@ -675,7 +702,7 @@
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
 	AI.ai_restore_power()
-	AI.loc = src
+	AI.forceMove(src)
 	occupant = AI
 	icon_state = initial(icon_state)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -686,10 +713,10 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	AI << "[AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
-	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
-	GrantActions(AI)
+	AI << "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
+	GrantActions(AI, !AI.can_dominate_mechs)
 
 
 //An actual AI (simple_animal mecha pilot) entering the mech
@@ -804,7 +831,7 @@
 	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, 40, target = src))
-		if(health <= 0)
+		if(obj_integrity <= 0)
 			user << "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"
@@ -835,60 +862,60 @@
 	else
 		return 0
 
-/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
+/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "<span class='warning'>Consciousness matrix not detected!</span>"
-		return 0
+		return FALSE
 	else if(mmi_as_oc.brainmob.stat)
 		user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
-		return 0
+		return FALSE
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
-		return 0
-	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
+		return FALSE
+	else if(dna_lock && (!mmi_as_oc.brainmob.stored_dna || (dna_lock != mmi_as_oc.brainmob.stored_dna.unique_enzymes)))
 		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
-		return 0
+		return FALSE
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)
-			return mmi_moved_inside(mmi_as_oc,user)
+			return mmi_moved_inside(mmi_as_oc, user)
 		else
 			user << "<span class='warning'>Occupant detected!</span>"
 	else
 		user << "<span class='notice'>You stop inserting the MMI.</span>"
-	return 0
+	return FALSE
 
-/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
-	if(mmi_as_oc && user in range(1))
-		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-			user << "<span class='notice'>Consciousness matrix not detected!</span>"
-			return 0
-		else if(mmi_as_oc.brainmob.stat)
-			user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
-			return 0
-		if(!user.unEquip(mmi_as_oc))
-			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
-			return
-		var/mob/brainmob = mmi_as_oc.brainmob
-		occupant = brainmob
-		brainmob.loc = src //should allow relaymove
-		brainmob.reset_perspective(src)
-		brainmob.canmove = 1
-		mmi_as_oc.loc = src
-		mmi_as_oc.mecha = src
-		icon_state = initial(icon_state)
-		setDir(dir_in)
-		log_message("[mmi_as_oc] moved in as pilot.")
-		if(!internal_damage)
-			occupant << sound('sound/mecha/nominal.ogg',volume=50)
-		GrantActions(brainmob)
-		return 1
-	else
-		return 0
+/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
+	if(!(Adjacent(mmi_as_oc) && Adjacent(user)))
+		return FALSE
+	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
+		user << "<span class='notice'>Consciousness matrix not detected!</span>"
+		return FALSE
+	else if(mmi_as_oc.brainmob.stat)
+		user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
+		return FALSE
+	if(!user.transferItemToLoc(mmi_as_oc, src))
+		user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
+		return FALSE
+	var/mob/brainmob = mmi_as_oc.brainmob
+	mmi_as_oc.mecha = src
+	occupant = brainmob
+	brainmob.forceMove(src) //should allow relaymove
+	brainmob.reset_perspective(src)
+	brainmob.remote_control = src
+	brainmob.update_canmove()
+	icon_state = initial(icon_state)
+	update_icon()
+	setDir(dir_in)
+	log_message("[mmi_as_oc] moved in as pilot.")
+	if(!internal_damage)
+		occupant << sound('sound/mecha/nominal.ogg',volume=50)
+	GrantActions(brainmob)
+	return TRUE
 
-/obj/mecha/container_resist()
+/obj/mecha/container_resist(mob/living/user)
 	go_out()
 
 
@@ -905,15 +932,29 @@
 	if(ishuman(occupant))
 		mob_container = occupant
 		RemoveActions(occupant, human_occupant=1)
-	else if(istype(occupant, /mob/living/carbon/brain))
-		var/mob/living/carbon/brain/brain = occupant
+	else if(istype(occupant, /mob/living/brain))
+		var/mob/living/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
-	else if(isAI(occupant) && forced) //This should only happen if there are multiple AIs in a round, and at least one is Malf.
-		RemoveActions(occupant)
-		occupant.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
-		occupant = null
-		return
+	else if(isAI(occupant))
+		var/mob/living/silicon/ai/AI = occupant
+		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
+			RemoveActions(occupant)
+			occupant.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+			occupant = null
+			return
+		else
+			if(!AI.linked_core)
+				AI << "<span class='userdanger'>Inactive core destroyed. Unable to return.</span>"
+				AI.linked_core = null
+				return
+			AI << "<span class='notice'>Returning to core...</span>"
+			AI.controlled_mech = null
+			AI.remote_control = null
+			RemoveActions(occupant, 1)
+			mob_container = AI
+			newloc = get_turf(AI.linked_core)
+			qdel(AI.linked_core)
 	else
 		return
 	var/mob/living/L = occupant
@@ -934,7 +975,7 @@
 		setDir(dir_in)
 
 	if(L && L.client)
-		L.client.view = world.view
+		L.client.change_view(world.view)
 		zoom_mode = 0
 
 /////////////////////////

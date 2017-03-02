@@ -1,6 +1,7 @@
 /obj/structure/flora
-	burn_state = FLAMMABLE
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 150
+	max_integrity = 150
 	anchored = 1
 
 //trees
@@ -23,7 +24,10 @@
 					return
 				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "You hear the sound of a tree falling.")
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
+				icon = 'icons/obj/flora/pinetrees.dmi'
 				icon_state = "tree_stump"
+				density = 0
+				pixel_x = -16
 				name += " stump"
 				cut = TRUE
 				for(var/i=1 to log_amount)
@@ -55,6 +59,15 @@
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
+
+/obj/structure/flora/tree/palm
+	icon = 'icons/misc/beach2.dmi'
+	icon_state = "palm1"
+
+/obj/structure/flora/tree/palm/New()
+	..()
+	icon_state = pick("palm1","palm2")
+	pixel_x = 0
 
 /obj/structure/festivus
 	name = "festivus pole"
@@ -229,7 +242,7 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 	layer = ABOVE_MOB_LAYER
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 10
 	throwforce = 13
 	throw_speed = 2
@@ -239,6 +252,7 @@
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
 	user.add_alt_appearance("sneaking_mission", I, player_list)
+	..()
 
 /obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
 	..()
@@ -278,7 +292,7 @@
 	icon_state = "basalt"
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	density = 1
 
 /obj/structure/flora/rock/New()

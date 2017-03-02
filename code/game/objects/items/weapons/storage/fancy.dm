@@ -17,7 +17,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
 	var/fancy_open = FALSE
@@ -116,7 +116,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
@@ -133,7 +133,7 @@
 	name = "\improper [name] packet"
 
 /obj/item/weapon/storage/fancy/cigarettes/AltClick(mob/user)
-	if(user.get_active_hand())
+	if(user.get_active_held_item())
 		return
 	for(var/obj/item/weapon/lighter/lighter in src)
 		remove_from_storage(lighter, user.loc)
@@ -247,7 +247,7 @@
 /obj/item/weapon/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of NanoTrasen brand rolling papers."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
 	storage_slots = 10
@@ -269,7 +269,7 @@
 	desc = "A case of premium cigars. Very expensive."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarcase"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	storage_slots = 5
 	can_hold = list(/obj/item/clothing/mask/cigarette/cigar)
 	icon_type = "premium cigar"

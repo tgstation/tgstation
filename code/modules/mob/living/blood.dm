@@ -6,11 +6,13 @@
 	if(bleedsuppress)
 		return
 	else
-		bleedsuppress = 1
-		spawn(amount)
-			bleedsuppress = 0
-			if(stat != DEAD && bleed_rate)
-				src << "<span class='warning'>The blood soaks through your bandage.</span>"
+		bleedsuppress = TRUE
+		addtimer(CALLBACK(src, .proc/resume_bleeding), amount)
+
+/mob/living/carbon/human/proc/resume_bleeding()
+	bleedsuppress = 0
+	if(stat != DEAD && bleed_rate)
+		src << "<span class='warning'>The blood soaks through your bandage.</span>"
 
 
 /mob/living/carbon/monkey/handle_blood()
@@ -22,7 +24,7 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
-	if(NOBLOOD in dna.species.specflags)
+	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
 		return
 
@@ -86,7 +88,7 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
-	if(!(NOBLOOD in dna.species.specflags))
+	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
 
@@ -162,8 +164,13 @@
 		blood_data["trace_chem"] = list2params(temp_chem)
 		if(mind)
 			blood_data["mind"] = mind
+		else if(last_mind)
+			blood_data["mind"] = last_mind
 		if(ckey)
 			blood_data["ckey"] = ckey
+		else if(last_mind)
+			blood_data["ckey"] = ckey(last_mind.key)
+
 		if(!suiciding)
 			blood_data["cloneable"] = 1
 		blood_data["blood_type"] = copytext(dna.blood_type,1,0)
@@ -188,7 +195,7 @@
 /mob/living/carbon/human/get_blood_id()
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.specflags) || (disabilities & NOCLONE))
+	else if((NOBLOOD in dna.species.species_traits) || (disabilities & NOCLONE))
 		return
 	return "blood"
 
@@ -231,7 +238,7 @@
 		if(drop)
 			if(drop.drips < 3)
 				drop.drips++
-				drop.overlays |= pick(drop.random_icon_states)
+				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
 				return
 			else
@@ -252,7 +259,7 @@
 		B.blood_DNA |= temp_blood_DNA
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
-	if(!(NOBLOOD in dna.species.specflags))
+	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
 /mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)

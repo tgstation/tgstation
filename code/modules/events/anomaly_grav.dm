@@ -7,8 +7,6 @@
 /datum/round_event/anomaly/anomaly_grav
 	startWhen = 3
 	announceWhen = 20
-	endWhen = 120
-
 
 /datum/round_event/anomaly/anomaly_grav/announce()
 	priority_announce("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")

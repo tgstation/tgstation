@@ -4,16 +4,17 @@
 	icon_state = "clipboard"
 	item_state = "clipboard"
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
 	slot_flags = SLOT_BELT
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/clipboard/New()
 	update_icon()
+	..()
 
 
 /obj/item/weapon/clipboard/update_icon()
@@ -28,14 +29,13 @@
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/paper))
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.loc = src
 		toppaper = W
 		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
 		update_icon()
 	else if(toppaper)
-		toppaper.attackby(usr.get_active_hand(), usr)
+		toppaper.attackby(user.get_active_held_item(), user)
 		update_icon()
 
 
@@ -75,19 +75,19 @@
 
 		if(href_list["addpen"])
 			if(!haspen)
-				if(istype(usr.get_active_hand(), /obj/item/weapon/pen))
-					var/obj/item/weapon/pen/W = usr.get_active_hand()
-					if(!usr.unEquip(W))
+				var/obj/item/held = usr.get_active_held_item()
+				if(istype(held, /obj/item/weapon/pen))
+					var/obj/item/weapon/pen/W = held
+					if(!usr.transferItemToLoc(W, src))
 						return
-					W.loc = src
 					haspen = W
 					usr << "<span class='notice'>You slot [W] into [src].</span>"
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
 			if(istype(P) && P.loc == src)
-				if(usr.get_active_hand())
-					P.attackby(usr.get_active_hand(), usr)
+				if(usr.get_active_held_item())
+					P.attackby(usr.get_active_held_item(), usr)
 
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])

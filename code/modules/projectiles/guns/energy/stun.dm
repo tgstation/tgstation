@@ -7,18 +7,18 @@
 	origin_tech = "combat=3"
 	ammo_x_offset = 3
 
-/obj/item/weapon/gun/energy/shock_revolver
+/obj/item/weapon/gun/energy/tesla_revolver
 	name = "tesla gun"
-	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operator as it is the target."
+	desc = "An experimental gun based on an experimental engine, it's about as likely to kill its operator as it is the target."
 	icon_state = "tesla"
 	item_state = "tesla"
-	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
+	ammo_type = list(/obj/item/ammo_casing/energy/tesla_revolver)
 	origin_tech = "combat=4;materials=4;powerstorage=4"
 	can_flashlight = 0
 	pin = null
 	shaded_charge = 1
 
-/obj/item/weapon/gun/energy/gun/advtaser
+/obj/item/weapon/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
@@ -26,21 +26,19 @@
 	origin_tech = "combat=4"
 	ammo_x_offset = 2
 
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg
+/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_flashlight = 0
 	can_charge = 0
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/newshot()
-	..()
-	robocharge()
+	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
-	item_state = "combat=3"
+	item_state = "disabler"
+	origin_tech = "combat=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 
@@ -48,7 +46,5 @@
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = 0
+	use_cyborg_cell = 1
 
-/obj/item/weapon/gun/energy/disabler/cyborg/newshot()
-	..()
-	robocharge()

@@ -9,11 +9,11 @@
 
 	if(!ninjacost(10))
 		var/mob/living/carbon/human/H = affecting
-		var/slot = H.hand ? slot_l_hand : slot_r_hand
-
-		if(H.equip_to_slot_or_del(new /obj/item/weapon/throwing_star/ninja(H), slot))
+		var/obj/item/weapon/throwing_star/ninja/N = new(H)
+		if(H.put_in_hands(N))
 			H << "<span class='notice'>A throwing star has been created in your hand!</span>"
-
+		else
+			qdel(N)
 		H.throw_mode_on() //So they can quickly throw it.
 
 

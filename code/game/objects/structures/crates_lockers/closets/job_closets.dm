@@ -63,6 +63,7 @@
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
+	new /obj/item/weapon/paint/paint_remover(src)
 	new /obj/item/device/flashlight(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/caution(src)
@@ -93,6 +94,8 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"
@@ -106,6 +109,10 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
+	new /obj/item/clothing/suit/studentuni(src)
+	new /obj/item/clothing/head/cage(src)
+	new /obj/item/clothing/suit/witchhunter(src)
+	new /obj/item/clothing/head/witchunter_hat(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/weapon/storage/backpack/cultpack (src)
@@ -119,8 +126,11 @@
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
+	horizontal = TRUE
+	delivery_icon = "deliverycrate"
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"

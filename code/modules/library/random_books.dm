@@ -20,12 +20,9 @@
 	var/book_count = 2
 	anchored = 1
 	state = 2
-/obj/structure/bookcase/random/New()
-	..()
-	if(ticker && ticker.current_state >= GAME_STATE_PLAYING)
-		initialize()
 
-/obj/structure/bookcase/random/initialize()
+/obj/structure/bookcase/random/Initialize(mapload)
+	..()
 	if(!book_count || !isnum(book_count))
 		update_icon()
 		return
@@ -37,7 +34,7 @@
 	. = list()
 	if(!isnum(amount) || amount<1)
 		return
-	if(!establish_db_connection())
+	if (!dbcon.Connect())
 		if(fail_loud || prob(5))
 			var/obj/item/weapon/paper/P = new(location)
 			P.info = "There once was a book from Nantucket<br>But the database failed us, so f*$! it.<br>I tried to be good to you<br>Now this is an I.O.U<br>If you're feeling entitled, well, stuff it!<br><br><font color='gray'>~</font>"
@@ -77,8 +74,9 @@
 	name = "bookcase (Reference)"
 	category = "Reference"
 	var/ref_book_prob = 20
-/obj/structure/bookcase/random/reference/initialize()
+
+/obj/structure/bookcase/random/reference/Initialize(mapload)
+	..()
 	while(book_count > 0 && prob(ref_book_prob))
 		book_count--
 		new /obj/item/weapon/book/manual/random(src)
-	..()

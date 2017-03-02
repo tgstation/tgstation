@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -9,7 +9,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "d" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "e" = (
@@ -57,7 +57,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ruin/powered)
 "o" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ruin/powered)
 "p" = (
@@ -69,7 +69,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ruin/powered)
 "r" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/circuit/off,
 /area/ruin/powered)
 "s" = (
@@ -96,7 +96,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "x" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -136,7 +136,8 @@
 /area/ruin/powered)
 "D" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 "E" = (
@@ -147,19 +148,22 @@
 	info = "meat grinder requires sacri"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 "G" = (
 /obj/effect/mob_spawn/human/syndicatecommando,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 "H" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 
@@ -872,7 +876,7 @@ b
 h
 s
 h
-z
+h
 s
 s
 s

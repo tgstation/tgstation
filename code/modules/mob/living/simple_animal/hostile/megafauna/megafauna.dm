@@ -6,15 +6,16 @@
 	desc = "Attack the weak point for massive damage."
 	health = 1000
 	maxHealth = 1000
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
-	obj_damage = 75
+	obj_damage = 400
 	luminosity = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
-	flying = 1
+	movement_type = FLYING
 	robust_searching = 1
+	ranged_ignores_vision = TRUE
 	stat_attack = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -74,7 +75,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.stat != DEAD)
-			if(ranged && ranged_cooldown <= world.time)
+			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
 		else
 			devour(L)
@@ -91,10 +92,13 @@
 		([newloc.x],[newloc.y],[newloc.z])")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
+	if(!L)
+		return
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-	adjustBruteLoss(-L.maxHealth/2)
+	if(z != ZLEVEL_STATION && !client) //NPC monsters won't heal while on station
+		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
@@ -111,12 +115,11 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
-
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
-		return
+		return FALSE
 
 	if(admin_spawned)
-		return
+		return FALSE
 
 	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 		for(var/mob/living/L in view(7,src))
@@ -129,6 +132,7 @@
 				UnlockMedal("[medaltype] [suffixm]",C)
 				SetScore(BOSS_SCORE,C,1)
 				SetScore(score_type,C,1)
+	return TRUE
 
 /proc/UnlockMedal(medal,client/player)
 

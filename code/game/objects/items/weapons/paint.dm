@@ -4,14 +4,15 @@
 /obj/item/weapon/paint
 	gender= PLURAL
 	name = "paint"
-	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
+	desc = "Used to recolor floors and walls. Can be removed by the janitor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	item_color = "FFFFFF"
 	item_state = "paintcan"
-	w_class = 3
-	burn_state = FLAMMABLE
-	burntime = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red
@@ -57,7 +58,7 @@
 
 /obj/item/weapon/paint/anycolor/attack_self(mob/user)
 	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
-	if ((user.get_active_hand() != src || user.stat || user.restrained()))
+	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
 		return
 	switch(t1)
 		if("red")
@@ -83,17 +84,19 @@
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
-	if(!istype(target) || istype(target, /turf/open/space))
+	if(!istype(target) || isspaceturf(target))
 		return
-	target.color = "#" + item_color
+	var/newcolor = "#" + item_color
+	target.add_atom_colour(newcolor, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/weapon/paint/paint_remover
 	gender =  PLURAL
 	name = "paint remover"
+	desc = "Used to remove color from floors and walls."
 	icon_state = "paint_neutral"
 
 /obj/item/weapon/paint/paint_remover/afterattack(turf/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(istype(target) && target.color != initial(target.color))
-		target.color = initial(target.color)
+		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

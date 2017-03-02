@@ -5,14 +5,14 @@
 /mob/living/proc/robot_talk(message)
 	log_say("[key_name(src)] : [message]")
 	var/desig = "Default Cyborg" //ezmode for taters
-	if(istype(src, /mob/living/silicon))
+	if(issilicon(src))
 		var/mob/living/silicon/S = src
 		desig = trim_left(S.designation + " " + S.job)
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/M in player_list)
 		if(M.binarycheck())
-			if(istype(M, /mob/living/silicon/ai))
+			if(isAI(M))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
 				M << renderedAI
 			else
@@ -21,7 +21,7 @@
 			var/following = src
 			// If the AI talks on binary chat, we still want to follow
 			// it's camera eye, like if it talked on the radio
-			if(istype(src, /mob/living/silicon/ai))
+			if(isAI(src))
 				var/mob/living/silicon/ai/ai = src
 				following = ai.eyeobj
 			var/link = FOLLOW_LINK(M, following)
@@ -65,5 +65,5 @@
 	if(message_mode == MODE_BINARY)
 		if(binarycheck())
 			robot_talk(message)
-			return 1
+		return 1
 	return 0

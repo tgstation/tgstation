@@ -18,15 +18,17 @@
 	item_state = "pen"
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
+	var/traitor_unlock_degrees = 0
+	var/degrees = 0
 
 /obj/item/weapon/pen/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
+	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/pen/blue
@@ -62,6 +64,25 @@
 	user << "<span class='notice'>\The [src] will now write in [colour].</span>"
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
+
+/obj/item/weapon/pen/attack_self(mob/living/carbon/user)
+	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
+	if(deg && (deg > 0 && deg <= 360))
+		degrees = deg
+		user << "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>"
+		if(hidden_uplink && degrees == traitor_unlock_degrees)
+			user << "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>"
+			degrees = 0
+			hidden_uplink.interact(user)
+
+
+/obj/item/weapon/pen/attackby(obj/item/I, mob/user, params)
+	if(hidden_uplink)
+		return hidden_uplink.attackby(I, user, params)
+	else
+		return ..()
+
+
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
 		return
@@ -83,7 +104,7 @@
  */
 /obj/item/weapon/pen/sleepy
 	origin_tech = "engineering=4;syndicate=2"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 
 /obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
@@ -125,7 +146,7 @@
 	else
 		on = 1
 		force = 18
-		w_class = 3
+		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
 		embed_chance = 100 //rule of cool
@@ -141,3 +162,12 @@
 	else
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+
+//Crayons path disambiguity sigh.
+/obj/item/proc/on_write(obj/item/weapon/paper/P, mob/user)
+	return
+
+/obj/item/weapon/pen/poison/on_write(obj/item/weapon/paper/P, mob/user)
+	P.contact_poison = "delayed_toxin"
+	P.contact_poison_volume = 10
+	add_logs(user,P,"used poison pen on")

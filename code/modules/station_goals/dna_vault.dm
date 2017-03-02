@@ -7,7 +7,7 @@
 #define VAULT_NOBREATH "Lung Enhancement"
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
-#define VAULT_ARMOUR "Bone Reinforcment"
+#define VAULT_ARMOUR "Bone Reinforcement"
 
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
@@ -20,7 +20,7 @@
 	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * ticker.totalPlayersReady) , ticker.totalPlayersReady) // 75%+ roundstart population.
 	var/non_standard_plants = non_standard_plants_count()
-	plant_count = rand(round(0.7 * non_standard_plants),round(0.9 * non_standard_plants))
+	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
 
 /datum/station_goal/dna_vault/proc/non_standard_plants_count()
 	. = 0
@@ -30,15 +30,15 @@
 			.++
 
 /datum/station_goal/dna_vault/get_report()
-	return {"Our long term prediction systems say there's 99% chance of system-wide cataclysm in near future.
-	 We need you to construct DNA Vault aboard your station.
+	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
+	 We need you to construct a DNA Vault aboard your station.
 
-	 DNA Vault needs to contain samples of:
+	 The DNA Vault needs to contain samples of:
 	 [animal_count] unique animal data
 	 [plant_count] unique non-standard plant data
 	 [human_count] unique sapient humanoid DNA data
 
-	 Base vault parts should be availible for shipping by your cargo shuttle."}
+	 Base vault parts are available for shipping via cargo."}
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -52,7 +52,7 @@
 	if(..())
 		return TRUE
 	for(var/obj/machinery/dna_vault/V in machines)
-		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna >= human_count)
+		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna.len >= human_count)
 			return TRUE
 	return FALSE
 
@@ -85,7 +85,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
-			user << "<span clas='warning'>Plants needs to be ready to harvest to perform full data scan.</span>" //Because space dna is actually magic
+			user << "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>" //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
 			user << "<span class='notice'>Plant data already present in local storage.<span>"
@@ -98,7 +98,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
-				user << "<span class='warning'>No compatibile DNA detected</span>"
+				user << "<span class='warning'>No compatible DNA detected</span>"
 				return
 		if(animals[target.type])
 			user << "<span class='notice'>Animal data already present in local storage.<span>"
@@ -110,14 +110,14 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(dna[H.dna.uni_identity])
-			user << "<span class='notice'>Humanoid data already present in local storage.<span>" 
+			user << "<span class='notice'>Humanoid data already present in local storage.<span>"
 			return
 		dna[H.dna.uni_identity] = 1
 		user << "<span class='notice'>Humanoid data added to local storage.<span>"
 
 
 /obj/item/weapon/circuitboard/machine/dna_vault
-	name = "circuit board (DNA Vault)"
+	name = "DNA Vault (Machine Board)"
 	build_path = /obj/machinery/dna_vault
 	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
@@ -257,20 +257,22 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
 			H << "<span class='notice'>You feel resistant to airborne toxins.</span>"
-			S.tox_breath_dam_min = 0
-			S.tox_breath_dam_max = 0
-			S.specflags |= VIRUSIMMUNE
+			if(locate(/obj/item/organ/lungs) in H.internal_organs)
+				var/obj/item/organ/lungs/L = H.internal_organs_slot["lungs"]
+				L.tox_breath_dam_min = 0
+				L.tox_breath_dam_max = 0
+			S.species_traits |= VIRUSIMMUNE
 		if(VAULT_NOBREATH)
 			H << "<span class='notice'>Your lungs feel great.</span>"
-			S.specflags |= NOBREATH
+			S.species_traits |= NOBREATH
 		if(VAULT_FIREPROOF)
-			H << "<span class='notice'>Your feel fireproof.</span>"
+			H << "<span class='notice'>You feel fireproof.</span>"
 			S.burnmod = 0.5
 			S.heatmod = 0
 		if(VAULT_STUNTIME)
 			H << "<span class='notice'>Nothing can keep you down for long.</span>"
 			S.stunmod = 0.5
 		if(VAULT_ARMOUR)
-			H << "<span class='notice'>Your feel tough.</span>"
+			H << "<span class='notice'>You feel tough.</span>"
 			S.armor = 30
 	power_lottery[H] = list()

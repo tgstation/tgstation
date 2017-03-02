@@ -45,20 +45,20 @@
 		if(affected_mob.notransform)
 			return
 		affected_mob.notransform = 1
-		for(var/obj/item/W in affected_mob)
-			if(istype(W, /obj/item/weapon/implant))
-				qdel(W)
-				continue
-			W.layer = initial(W.layer)
-			W.loc = affected_mob.loc
-			W.dropped(affected_mob)
+		for(var/obj/item/W in affected_mob.get_equipped_items())
+			affected_mob.dropItemToGround(W)
+		for(var/obj/item/I in affected_mob.held_items)
+			affected_mob.dropItemToGround(I)
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
 		if(istype(new_mob))
-			new_mob.a_intent = "harm"
+			new_mob.a_intent = INTENT_HARM
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else
 				new_mob.key = affected_mob.key
+
+		new_mob.name = affected_mob.real_name
+		new_mob.real_name = new_mob.name
 		qdel(affected_mob)
 
 
@@ -187,7 +187,7 @@
 	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4	= list("<span class='danger'>You are turning into a slime.</span>")
 	stage5	= list("<span class='danger'>You have become a slime.</span>")
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/simple_animal/slime/random
 
 /datum/disease/transformation/slime/stage_act()
 	..()

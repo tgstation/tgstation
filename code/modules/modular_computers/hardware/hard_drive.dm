@@ -4,11 +4,15 @@
 	power_usage = 25
 	icon_state = "harddisk_mini"
 	critical = 1
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "programming=1;engineering=1"
+	device_type = MC_HDD
 	var/max_capacity = 128
 	var/used_capacity = 0
 	var/list/stored_files = list()		// List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+
+/obj/item/weapon/computer_hardware/hard_drive/on_remove(obj/item/device/modular_computer/MC, mob/user)
+	MC.shutdown_computer()
 
 /obj/item/weapon/computer_hardware/hard_drive/proc/install_default_programs()
 	store_file(new/datum/computer_file/program/computerconfig(src)) 	// Computer configuration utility, allows hardware control and displays more info than status bar
@@ -129,7 +133,7 @@
 	origin_tech = "programming=2;engineering=2"
 	power_usage = 50 					// Hybrid, medium capacity and medium power storage
 	icon_state = "harddisk_mini"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/computer_hardware/hard_drive/super
 	name = "super hard disk drive"
@@ -138,7 +142,7 @@
 	origin_tech = "programming=3;engineering=3"
 	power_usage = 100					// High-capacity but uses lots of power, shortening battery life. Best used with APC link.
 	icon_state = "harddisk_mini"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/computer_hardware/hard_drive/cluster
 	name = "cluster hard disk drive"
@@ -147,7 +151,7 @@
 	origin_tech = "programming=4;engineering=4"
 	max_capacity = 2048
 	icon_state = "harddisk"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 // For tablets, etc. - highly power efficient.
 /obj/item/weapon/computer_hardware/hard_drive/small
@@ -157,7 +161,7 @@
 	origin_tech = "programming=2;engineering=2"
 	max_capacity = 64
 	icon_state = "ssd_mini"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"
@@ -166,4 +170,4 @@
 	origin_tech = "programming=1;engineering=1"
 	max_capacity = 32
 	icon_state = "ssd_micro"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY

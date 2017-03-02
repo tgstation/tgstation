@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /datum/game_mode/blob/send_intercept(report = 0)
 	var/intercepttext = ""
@@ -36,7 +36,6 @@
 				if (aiPlayer.client)
 					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "Laws Updated: [law]"
 		else
 			..()
 	return
@@ -57,20 +56,23 @@
 /datum/station_state/proc/count(count_territories)
 	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
-		if(istype(T,/turf/open/floor))
-			if(!(T:burnt))
+		if(isfloorturf(T))
+			var/turf/open/floor/TF = T
+			if(!(TF.burnt))
 				src.floor += 12
 			else
 				src.floor += 1
 
-		if(istype(T, /turf/closed/wall))
-			if(T:intact)
+		if(iswallturf(T))
+			var/turf/closed/wall/TW = T
+			if(TW.intact)
 				src.wall += 2
 			else
 				src.wall += 1
 
 		if(istype(T, /turf/closed/wall/r_wall))
-			if(T:intact)
+			var/turf/closed/wall/r_wall/TRW = T
+			if(TRW.intact)
 				src.r_wall += 2
 			else
 				src.r_wall += 1
@@ -79,8 +81,10 @@
 		for(var/obj/O in T.contents)
 			if(istype(O, /obj/structure/window))
 				src.window += 1
-			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-				src.grille += 1
+			else if(istype(O, /obj/structure/grille))
+				var/obj/structure/grille/GR = O
+				if(!GR.broken)
+					src.grille += 1
 			else if(istype(O, /obj/machinery/door))
 				src.door += 1
 			else if(istype(O, /obj/machinery))
