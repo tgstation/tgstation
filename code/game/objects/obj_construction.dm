@@ -100,7 +100,7 @@
 		if(parent.OnDeconstruction(id, user) && loot)
 			qdel(loot)
 		
-		if(istype(next, /datum/construction_state/first))
+		if(!id)
 			qdel(parent)
 
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
@@ -160,13 +160,16 @@
 	return -1
 	
 /proc/LinkConstructionSteps(list/steps)
+	var/offset = 0
 	for(var/I in 1 to steps.len)
 		var/datum/construction_state/curr_step = steps[I]
 		if(I != 1)
 			var/datum/construction_state/prev_step = steps[I - 1]
 			prev_step.next_state = curr_step
 			curr_step.prev_state = prev_step
-		curr_step.id = I - 1
+		if(istype(curr_step, /datum/construction_step/first))
+			offset = 1
+		curr_step.id = I - offset
 
 //use this proc to make sure there's nothing impossible with the construction chain
 //called after InitConstruction
