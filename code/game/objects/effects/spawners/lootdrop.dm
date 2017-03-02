@@ -158,6 +158,7 @@
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
 				/obj/item/weapon/storage/toolbox/artistic = 2,
+				/obj/item/toy/eightball = 1,
 				"" = 3
 				)
 

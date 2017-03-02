@@ -1216,6 +1216,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
@@ -1223,6 +1224,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	surplus = 0
 	restricted_roles = list("Assistant")
+
+/datum/uplink_item/role_restricted/haunted_magic_eightball
+	name = "Haunted Magic Eightball"
+	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. Be warned, that spirits are often capricious or just little assholes. To use, simply speak your question aloud, then begin shaking."
+	item = /obj/item/toy/eightball/haunted
+	cost = 2
+	restricted_roles = list("Chaplain", "Librarian")
 
 // Pointless
 /datum/uplink_item/badass
