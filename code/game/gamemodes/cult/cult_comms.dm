@@ -1,3 +1,4 @@
+
 /datum/action/innate/cultcomm
 	name = "Communion"
 	button_icon_state = "cult_comms"
@@ -33,6 +34,8 @@
 	else
 		user.whisper(html_decode(message))
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
+	if (user.mind.special_role == "Cult Master")
+		my_message = "<span class='cultlarge'><b>[(ishuman(user) ? "Master" : "Lord")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << my_message
@@ -40,7 +43,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [my_message]"
 
-log_say("[user.real_name]/[user.key] : [message]")
+	log_say("[user.real_name]/[user.key] : [message]")
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"
@@ -73,7 +76,7 @@ log_say("[user.real_name]/[user.key] : [message]")
 	var/datum/browser/popup = new(usr, "mind", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
-	return 1
+return 1
 
 /mob/living/proc/cult_master()
 	set category = "Cultist"
