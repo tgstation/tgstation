@@ -23729,20 +23729,11 @@
 	name = "Cargo Port";
 	req_access_txt = "48;50"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
 "aLp" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTHWEST)";
 	icon_state = "brown";
@@ -23752,10 +23743,10 @@
 	name = "\improper Departure Lounge"
 	})
 "aLq" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	tag = "icon-intact (SOUTHEAST)";
+	icon_state = "intact";
+	dir = 6
 	},
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTH)";
@@ -39512,6 +39503,9 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -39543,6 +39537,70 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
+"bmw" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bmx" = (
+/turf/closed/wall,
+/area/space)
+"bmy" = (
+/turf/open/floor/plasteel,
+/area/space)
+"bmz" = (
+/turf/open/floor/plasteel,
+/area/space)
+"bmA" = (
+/turf/open/floor/plasteel,
+/area/space)
+"bmB" = (
+/turf/closed/wall,
+/area/space)
+"bmC" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"bmD" = (
+/turf/open/floor/plasteel,
+/area/space)
+"bmE" = (
+/turf/open/floor/plasteel,
+/area/space)
+"bmF" = (
+/turf/closed/wall,
+/area/space)
+"bmG" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"bmH" = (
+/turf/open/floor/plasteel,
+/area/space)
+"bmI" = (
+/turf/open/floor/plasteel,
+/area/space)
+"bmJ" = (
+/turf/closed/wall,
+/area/space)
+"bmK" = (
+/turf/closed/wall,
+/area/space)
+"bmL" = (
+/turf/closed/wall,
+/area/space)
+"bmM" = (
+/turf/closed/wall,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -86173,7 +86231,7 @@ aaa
 aaa
 axW
 blN
-bma
+blZ
 bmm
 axW
 aaa
@@ -86686,9 +86744,9 @@ aaa
 aaa
 aaa
 azb
-blP
-bmc
-bmo
+blM
+blZ
+bml
 azb
 aaa
 aaa
@@ -86943,9 +87001,9 @@ aaa
 aaa
 aaa
 azb
-blQ
-bmd
-bmp
+blM
+blZ
+bml
 azb
 aaa
 aaa
@@ -87200,9 +87258,9 @@ aaa
 aaa
 aaa
 azb
-blR
-bme
-bmq
+blM
+blZ
+bml
 azb
 aaa
 aaa
@@ -87457,9 +87515,9 @@ aaa
 aaa
 aaa
 azb
-blS
-bmf
-bmr
+blM
+blZ
+bml
 azb
 aaa
 aaa
@@ -87714,14 +87772,14 @@ aaa
 aaa
 aaa
 axW
-blT
-bmg
+blO
+blZ
 bms
 axW
-aaa
-aaa
-aaa
-aaa
+bmx
+bmB
+bmF
+bmJ
 aaa
 aaa
 aaa
@@ -87973,12 +88031,12 @@ aaa
 axW
 blU
 bmh
-bmt
-axW
-aaa
-aaa
-aaa
-aaa
+bml
+bmw
+bmy
+bmC
+bmG
+bmK
 aaa
 aaa
 aaa
@@ -88228,14 +88286,14 @@ aaa
 aaa
 aaa
 axW
-blV
-bmi
-bmu
-axW
-aaa
-aaa
-aaa
-aaa
+blM
+blZ
+bml
+blZ
+bmz
+bmD
+bmH
+bmL
 aaa
 aaa
 aaa
@@ -88485,14 +88543,14 @@ aaa
 aaa
 aaa
 axW
-blW
-bmj
-bmv
-axW
-aaa
-aaa
-aaa
-aaa
+blM
+blZ
+bml
+blZ
+bmA
+bmE
+bmI
+bmM
 aaa
 aaa
 aaa
