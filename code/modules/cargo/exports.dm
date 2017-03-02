@@ -112,7 +112,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/amount = get_amount(O)
 	total_cost += cost
 	total_amount += amount
-	amt_sold_inround += amount
+	amt_sold_inround += total_amount
 	
 	feedback_add_details("export_sold_amount","[O.type]|[amount]")
 	feedback_add_details("export_sold_cost","[O.type]|[cost]")
