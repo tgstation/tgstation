@@ -251,9 +251,22 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense
 	name = "Blood Sense"
+	
+	// wew fuck this shit
+
+
+
 	desc = "Allows you to sense blood that is manipulated by dark magicks."
+	
+	
+	
 	icon_state = "cult_sense"
+	
+	
 	var/image/finder
+	
+	
+	
 	var/icon/sacrifice
 
 /obj/screen/alert/bloodsense/New()
