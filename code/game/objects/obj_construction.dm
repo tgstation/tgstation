@@ -6,7 +6,7 @@
 
 	/datum/construction_state - The datum that holds all properties of an object's unfinished state, these datums are stored in a static list keyed by type. See the datum definition below
 
-	/datum/construction_state/first/New(obj/parent, material_type, material_amount)	- Specify the materials to be dropped after full deconstruction, must be declared first in InitConstruction
+	/datum/construction_state/first/New(obj/parent, material_type, material_amount)	- Specify the materials to be dropped after full deconstruction, must be declared first in InitConstruction if at all
 
 	/datum/construction_state/last/New(obj/parent, required_type_to_deconstruct, deconstruction_delay, deconstruction_message) - Specify the reqiuired tools and message for the first deconstruction step
 																																	Must be declared last in InitConstruction
@@ -177,8 +177,18 @@
 		var/last_max_integrity = current_step.max_integrity ? current_step.max_integrity : max_integrity
 		var/last_failure_integrity = current_step.failure_integrity ? current_step.failure_integrity : integrity_failure
 		current_step = current_step.next_state
+		var/last_found = FALSE
 		while(current_step)
 			var/error = "Construction Error: [type] step [current_step.id]: "
+			if(istype(current_step, /datum/construction_state/first))
+				WARNING(error + "construction_state/first not first")
+				. = FALSE
+			if(last_found)
+				WARNING(error + "construction_state/last not last")
+				last_found = FALSE
+				. = FALSE
+			if(istype(current_step, /datum/construction_state/last))
+				last_found = TRUE
 			if(current_step.max_integrity && current_step.max_integrity < last_max_integrity)
 				WARNING(error + "Max integrity lowered after construction")
 				. = FALSE
