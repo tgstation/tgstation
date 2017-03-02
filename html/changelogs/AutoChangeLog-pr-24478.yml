@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Hallucinations have been modified to increase the creepiness factor and reduce the boring factor."
+  - rscadd: "Added some new hallucinations."
+  - bugfix: "Fixed a bug where the singularity hallucination was stunning for longer than intended and leaving the fake HUD crit icon permanently."

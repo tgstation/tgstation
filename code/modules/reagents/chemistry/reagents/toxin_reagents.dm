@@ -860,3 +860,11 @@
 			M.Weaken(1, 0)
 		. = 1
 	..()
+
+/datum/reagent/toxin/mimesbane
+	name = "Mime's Bane"
+	id = "mimesbane"
+	description = "A nonlethal neurotoxin that interferes with the victim's ability to gesture."
+	color = "#F0F8FF" // rgb: 240, 248, 255
+	toxpwr = 0
+	taste_description = "stillness"

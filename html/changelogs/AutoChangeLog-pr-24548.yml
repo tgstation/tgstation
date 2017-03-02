@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - experiment: "Mappers now have an easier time adding posters, and specifying whether they're random, random official, random contraband or a specific poster."
+  - rscdel: "Posters no longer have serial numbers when rolled up; their names are visible instead."
