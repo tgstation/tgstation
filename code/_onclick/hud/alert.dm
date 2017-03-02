@@ -246,7 +246,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You have no factory, and are slowly dying!"
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
-
+	
 // BLOODCULT
 
 /obj/screen/alert/bloodsense
@@ -254,7 +254,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Allows you to sense blood that is manipulated by dark magicks."
 	icon_state = "cult_sense"
 	var/image/finder
-	var/icon/sacrifice 
+	var/icon/sacrifice
 
 /obj/screen/alert/bloodsense/New()
 	..()
