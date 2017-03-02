@@ -8,7 +8,8 @@
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
 #define VAULT_ARMOUR "Bone Reinforcement"
-#define VAULT_SPEED "Muscle Stimulus"
+#define VAULT_SPEED "Leg Muscle Stimulus"
+#define VAULT_QUICK "Arm Muscle Stimulus"
 
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
@@ -191,7 +192,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	if(user in power_lottery)
 		return
 	var/list/L = list()
-	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR, VAULT_SPEED)
+	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
 	power_lottery[user] = L
@@ -236,7 +237,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		for(var/plant in P.plants)
 			if(!plants[plant])
 				uploaded++
-				plants[plant] = 1
+				plants[plant] = 1S
 		for(var/animal in P.animals)
 			if(!animals[animal])
 				uploaded++
@@ -278,6 +279,9 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 			H << "<span class='notice'>Your feel tough.</span>"
 			S.armor = 30
 		if(VAULT_SPEED)
-			H << "<span class='notice'>Your feel faster.</span>"
+			H << "<span class='notice'>Your legs feel faster.</span>"
 			S.speedmod = -1
+		if(VAULT_QUICK)
+			H << "<span class='notice'>Your arms move as fast as lightning.</span>"
+			H.next_move_modifier = 0.5
 	power_lottery[H] = list()
