@@ -15,7 +15,7 @@
 #define HANDSLOW        32		// If an item has this flag, it will slow you to carry it
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
-#define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
+#define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff	//OBJCONREF TODO: DELETE THIS
 #define OVERLAY_QUEUED  256		//atom queued to SSoverlay
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 

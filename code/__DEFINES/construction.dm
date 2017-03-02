@@ -2,6 +2,8 @@
 
 //Defines for construction states
 
+#define NO_DECONSTRUCT -1   //use as a type for required_type_to_(de)construct to prevent passing that state
+
 //girder construction states
 #define GIRDER_NORMAL 0
 #define GIRDER_REINF_STRUTS 1

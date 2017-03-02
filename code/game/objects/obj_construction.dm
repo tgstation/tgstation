@@ -74,10 +74,10 @@
 
 /datum/construction_state/first	//this should only contain construction parameters
 	//reaching this state deletes the object
-	required_type_to_deconstruct = -1
+	required_type_to_deconstruct = NO_DECONSTRUCT
 
 /datum/construction_state/last	//this should only contain deconstruction parameters
-	required_type_to_construct = -1
+	required_type_to_construct = NO_DECONSTRUCT
 
 /datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed)
 	if(!constructed && (parent.flags & NODECONSTRUCT))
