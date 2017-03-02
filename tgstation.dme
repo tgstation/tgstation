@@ -274,6 +274,7 @@
 #include "code\datums\helper_datums\icon_snapshot.dm"
 #include "code\datums\helper_datums\teleport.dm"
 #include "code\datums\helper_datums\topic_input.dm"
+#include "code\datums\martial\berserker.dm"
 #include "code\datums\martial\krav_maga.dm"
 #include "code\datums\martial\wrestling.dm"
 #include "code\datums\ruins\lavaland.dm"
