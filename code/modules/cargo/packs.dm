@@ -1689,7 +1689,7 @@
 	cost = 12000
 	special = TRUE
 	contains = list(
-					/obj/item/weapon/circuitboard/machine/dna_vault
+					/obj/item/weapon/circuitboard/machine/dna_vault,
 					/obj/item/device/dna_probe,
 					/obj/item/device/dna_probe,
 					/obj/item/device/dna_probe,
