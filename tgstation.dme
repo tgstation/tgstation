@@ -701,6 +701,7 @@
 #include "code\game\objects\items\devices\paicard.dm"
 #include "code\game\objects\items\devices\pipe_painter.dm"
 #include "code\game\objects\items\devices\powersink.dm"
+#include "code\game\objects\items\devices\pressureplates.dm"
 #include "code\game\objects\items\devices\scanners.dm"
 #include "code\game\objects\items\devices\sensor_device.dm"
 #include "code\game\objects\items\devices\taperecorder.dm"
