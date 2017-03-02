@@ -294,14 +294,14 @@
 
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
-		SSair.excited_groups -= E
+		SSair.stop_processing(E, SSAIR_EXCITEDGROUPS)
 		for(var/t in E.turf_list)
 			var/turf/open/T = t
 			T.excited_group = src
 			turf_list += T
 		reset_cooldowns()
 	else
-		SSair.excited_groups -= src
+		SSair.stop_processing(src, SSAIR_EXCITEDGROUPS)
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = E
@@ -344,18 +344,17 @@
 /datum/excited_group/proc/dismantle()
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		T.excited = 0
 		T.recently_active = 0
 		T.excited_group = null
-		SSair.active_turfs -= T
-	garbage_collect()
+		SSair.stop_processing(T, SSAIR_ACTIVETURFS)
+	turf_list.Cut()
 
 /datum/excited_group/proc/garbage_collect()
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited_group = null
 	turf_list.Cut()
-	SSair.excited_groups -= src
+	SSair.stop_processing(src, SSAIR_EXCITEDGROUPS)
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()
