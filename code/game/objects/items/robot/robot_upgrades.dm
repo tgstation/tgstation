@@ -391,8 +391,8 @@
 
 
 /obj/item/borg/upgrade/traitorsec/action(mob/living/silicon/robot/R,/mob/living/user)
-        if(..())
-            return 0
+	if(..())
+		return 0
        
        wiresexposed = TRUE
         A.emag_act(user)
