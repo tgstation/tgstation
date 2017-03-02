@@ -34,8 +34,8 @@
 				return 0
 	else
 		thealert = new type()
+		
 	thealert.mob_viewer = src
-
 	if(new_master)
 		var/old_layer = new_master.layer
 		var/old_plane = new_master.plane
