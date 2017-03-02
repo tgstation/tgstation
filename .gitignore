@@ -192,7 +192,3 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
-
-#New dynamic map config
-next_map.json
-previous_map.json

@@ -30,7 +30,7 @@
     var/config_min_users = 0
     var/voteweight = 1
 
-/datum/map_config/New(filename = "next_map.json", default_to_box, delete_after)
+/datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after)
     if(default_to_box)
         return
     LoadConfig(filename)
@@ -149,7 +149,7 @@
     return "_maps/[mp]/[mf]"
 
 /datum/map_config/proc/MakeNextMap()
-    return config_filename == "next_map.json" || fcopy(config_filename, "next_map.json")
+    return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
 
 /datum/map_config/proc/MakePreviousMap()
-    return config_filename == "previous_map.json" || fcopy(config_filename, "previous_map.json")
+    return config_filename == "data/previous_map.json" || fcopy(config_filename, "data/previous_map.json")
