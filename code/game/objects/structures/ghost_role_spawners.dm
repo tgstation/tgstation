@@ -287,3 +287,32 @@
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
+
+// Pirates!! They steal shit from the station and from space.
+
+/obj/effect/mob_spawn/human/pirate
+	name = "barely working sleeper"
+	desc = "This sleeper seems to barely work.. It seems to be hastily hacked together."
+	mob_name = "pirate"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+	uniform = /obj/item/clothing/under/pirate
+	shoes = /obj/item/clothing/shoes/laceup
+	pocket1 = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	objectives = "Yar har! Pillage the ruins around you, or aim for the station itself."
+	implants = list(/obj/item/weapon/implant/mindshield)
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	flavour_text = "You are a space pirate! Your goal is to pillage the ruins around you and the station close by. Remember the pirate code: <font size=6><b>DO NOT KILL FOR NO REASON.</b></font>"
+
+/obj/effect/mob_spawn/human/pirate/captain
+	name = "sleeper"
+	desc = "Compared to the other sleepers, this one is isolated and works cleaner."
+	flavour_text = "You are the captain of this here ship! Lead your crew to vast treasures and bounty. Remember the pirate code: <font size=6><b>DO NOT KILL FOR NO REASON.</b></font>"
+
+
+/obj/effect/mob_spawn/human/pirate/captain/New(mob/living/new_spawn)
+	var/captain_names = pick("Rotten","Blackbeard", "Greybeard", "Jack Sparrow", "Blackeye", "Robustbeard", "Cannonball", "Foxy", "Threepwood", "One Eyed Willy", "Dutchman")
+	new_spawn.real_name = "Captain [captain_names]"

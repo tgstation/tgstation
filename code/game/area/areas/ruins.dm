@@ -198,3 +198,9 @@
 /area/ruin/abandonedzoo
 	name = "Abandoned Zoo"
 	icon_state = "green"
+
+//Ruin of Pirate Ship
+
+/area/ruin/powered/pirate
+	name = "Pirate Ship"
+	icon_state = "green"

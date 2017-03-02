@@ -1,0 +1,93 @@
+"aa" = (/turf/open/space,/area/space)
+"ab" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
+"ac" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered/no_grav)
+"ad" = (/turf/closed/wall/mineral/wood,/area/ruin/powered/pirate)
+"ae" = (/obj/structure/girder,/turf/open/floor/plating,/area/ruin/powered/pirate)
+"af" = (/obj/structure/window/reinforced{dir = 1},/obj/effect/decal/cleanable/cobweb,/obj/effect/decal/cleanable/dirt,/obj/structure/table/wood,/obj/item/device/flashlight/lantern,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ag" = (/obj/structure/window/reinforced{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ah" = (/obj/machinery/door/window/northleft,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ai" = (/obj/machinery/door/window/northright,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aj" = (/obj/structure/window/reinforced{dir = 1},/obj/effect/decal/cleanable/dirt,/obj/structure/table/wood,/obj/item/device/flashlight/lantern,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ak" = (/turf/open/floor/plating,/area/ruin/powered/pirate)
+"al" = (/obj/machinery/vending/sustenance,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"am" = (/obj/machinery/vending/sovietsoda,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"an" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ao" = (/obj/structure/window/reinforced{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood{icon_state = "wood-broken3"},/area/ruin/powered/pirate)
+"ap" = (/obj/item/weapon/vending_refill/autodrobe,/obj/item/weapon/vending_refill/autodrobe,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aq" = (/obj/machinery/vending/clothing,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ar" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"as" = (/turf/open/floor/wood,/area/ruin/powered/pirate)
+"at" = (/obj/effect/decal/cleanable/cobweb,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"au" = (/obj/effect/mob_spawn/human/pirate/captain,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"av" = (/turf/open/floor/wood{icon_state = "wood-broken"},/area/ruin/powered/pirate)
+"aw" = (/obj/structure/chair/stool,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ax" = (/obj/item/stack/sheet/mineral/wood,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ay" = (/obj/structure/mineral_door/wood,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"az" = (/turf/open/floor/wood{icon_state = "wood-broken3"},/area/ruin/powered/pirate)
+"aA" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood{icon_state = "wood-broken"},/area/ruin/powered/pirate)
+"aB" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 4},/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aC" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aD" = (/obj/structure/table/wood,/obj/item/weapon/bikehorn,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aE" = (/obj/structure/table/wood,/obj/item/weapon/c4,/obj/item/device/pda/clear,/obj/item/device/pda/clear,/obj/item/device/pda/clear,/obj/item/device/pda/clear,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aF" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood{icon_state = "wood-broken3"},/area/ruin/powered/pirate)
+"aG" = (/obj/item/trash/deadmouse,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood{icon_state = "wood-broken"},/area/ruin/powered/pirate)
+"aH" = (/obj/machinery/modular_computer/console/preset,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aI" = (/obj/structure/chair/stool,/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aJ" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aK" = (/obj/structure/table/wood,/obj/item/weapon/storage/backpack/explorer,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aL" = (/obj/structure/table/wood,/obj/item/weapon/soap/homemade,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aM" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/tactical,/obj/item/trash/plate,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aN" = (/obj/structure/table/wood,/obj/item/clothing/suit/space/pirate,/obj/item/clothing/mask/gas,/obj/item/clothing/head/helmet/space/pirate,/obj/item/weapon/tank/jetpack/carbondioxide,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aO" = (/obj/item/stack/sheet/mineral/wood/fifty,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aP" = (/obj/structure/shuttle/engine/propulsion{dir = 4; icon_state = "propulsion"},/turf/open/space,/area/space)
+"aQ" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aR" = (/obj/structure/table/wood,/obj/item/weapon/storage/backpack/satchel/explorer,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aS" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/brute,/obj/item/device/radio,/obj/item/device/radio,/obj/item/device/radio,/obj/item/device/radio,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aT" = (/obj/effect/mob_spawn/human/pirate,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aU" = (/obj/structure/table/wood,/obj/item/clothing/suit/space/pirate,/obj/item/clothing/mask/gas,/obj/item/clothing/head/helmet/space/pirate,/obj/item/weapon/tank/jetpack/carbondioxide,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/obj/item/device/flashlight/lantern,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aV" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aW" = (/obj/structure/chair/stool,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aX" = (/obj/structure/piano,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aY" = (/obj/structure/rack,/obj/item/weapon/gun/energy/e_gun/advtaser,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aZ" = (/obj/structure/rack,/obj/item/weapon/gun/energy/e_gun/dragnet,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ba" = (/obj/item/weapon/gun/energy/taser,/obj/item/weapon/gun/energy/taser,/obj/item/weapon/rack_parts,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bb" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/mechanical/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bc" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/emergency/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bd" = (/obj/item/trash/deadmouse,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"be" = (/obj/structure/window/reinforced,/obj/effect/decal/cleanable/dirt,/obj/structure/table/wood,/obj/item/device/flashlight/lantern,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bf" = (/obj/structure/window/reinforced,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bg" = (/obj/machinery/door/window/southleft,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bh" = (/obj/machinery/door/window/southright,/turf/open/floor/wood,/area/ruin/powered/pirate)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabababababababacacacacacababababaaaaaaaaaa
+aaaaababababababababababababacacacacacacacacacababaaaaaaaaaa
+aaaaababababababababababababacacacacacacacacacababababaaaaaa
+aaaaabababababababacacacacacacacacacacacacacacacacabababaaaa
+aaababababadadadadaeaeaeadadadafagagagahaiagagagajadakababaa
+aaabadadadadalamanagaoagapaqadararananasasananananadakakaaaa
+ababadatauadasavasasawaxananayananasazasasasaAananayanaBaaaa
+ababaCaraAayasasawaDaEasananadanaFasasasasasaFananadaGaBaaaa
+ababaCaHaIadasawaJaKaLaMawasadaranasasaNaNaNananaOadanaBaPaa
+ababaCanaQayasasasaRaSasasasadanasasasaTaTaTanananadanaBaPaa
+ababadaUaVadanananaWaWasazasayanasasasasasananaranayaAaBaPaa
+aaabadadadadaXaFanaYaZbabbbcadanavasasasasasasananadbdaBaPaa
+aaababababadadadadadadadadadadbebfbfbfbgbhbfbfbfbeadadadacaa
+aaaaaaabababacacacacacacacacacacacacacacacababababababababab
+aaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacababababababaa
+aaaaaaaaaaaaaaaaaaaaacacacacacacacacacacabababababababababaa
+aaaaaaaaaaaaaaaaaaaaababababababababababababababababababaaaa
+aaaaaaaaabababaaaaaaaaaaaaaaaaababababaaaaababababababaaaaaa
+aaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
