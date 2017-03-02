@@ -146,5 +146,4 @@
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
-	var/datum/riding/riding_datum
 	var/list/can_ride_typecache = list()

@@ -41,7 +41,7 @@
 		light = new(src)
 
 	var/do_initialize = SSatoms.initialized
-	if(do_initialize > INITIALIZATION_INSSOBJ)
+	if(do_initialize > INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
 		Initialize(arglist(args))
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc

@@ -131,7 +131,7 @@ var/list/global_modular_computers = list()
 	update_icon()
 
 /obj/machinery/modular_computer/attackby(var/obj/item/weapon/W as obj, mob/user)
-	if(cpu)
+	if(cpu && !(flags & NODECONSTRUCT))
 		return cpu.attackby(W, user)
 	return ..()
 

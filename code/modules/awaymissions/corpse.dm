@@ -349,7 +349,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	has_id = 1
 	id_job = "Bartender"
-	id_access = "Bartender"
+	id_access_list = list(access_bar)
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
@@ -386,7 +386,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	has_id = 1
 	id_job = "Bridge Officer"
-	id_access = "Captain"
+	id_access_list = list(access_cent_captain)
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -401,7 +401,7 @@
 	pocket1 = /obj/item/weapon/lighter
 	has_id = 1
 	id_job = "Commander"
-	id_access = "Captain"
+	id_access_list = list(access_cent_captain)
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
@@ -414,7 +414,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	has_id = 1
 	id_job = "Private Security Force"
-	id_access = "Security Officer"
+	id_access_list = list(access_cent_specops)
 
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE

@@ -83,7 +83,9 @@
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 /client/proc/playtitlemusic()
-	if(!ticker || !ticker.login_music)
+	while(!ticker.login_music) //wait for ticker init to set the login music
+		stoplag()
+	if(!ticker.login_music)
 		return
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS

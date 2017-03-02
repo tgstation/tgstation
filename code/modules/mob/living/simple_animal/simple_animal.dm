@@ -361,7 +361,7 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -540,11 +540,10 @@
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
-/mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/mob/living/simple_animal/Moved()
 	. = ..()
 	if(riding_datum)
-		riding_datum.handle_vehicle_layer()
-		riding_datum.handle_vehicle_offsets()
+		riding_datum.on_vehicle_move()
 
 
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)

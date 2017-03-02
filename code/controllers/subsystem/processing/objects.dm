@@ -1,16 +1,9 @@
 var/datum/subsystem/objects/SSobj
-
-#define INITIALIZATION_INSSOBJ 0	//New should not call Initialize
-#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
-#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
-
 /datum/subsystem/objects
 	name = "Objects"
 	priority = 40
 	flags = SS_NO_INIT
 
-	var/initialized = INITIALIZATION_INSSOBJ
-	var/old_initialized
 	var/list/processing = list()
 	var/list/currentrun = list()
 
