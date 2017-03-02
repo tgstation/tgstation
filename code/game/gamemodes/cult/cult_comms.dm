@@ -77,7 +77,7 @@
 	var/datum/browser/popup = new(usr, "mind", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
-return 1
+	return 1
 
 /mob/living/proc/cult_master()
 	set category = "Cultist"
