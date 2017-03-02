@@ -15,6 +15,7 @@
 
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
+	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
@@ -228,9 +229,8 @@
 		if (length(law) > 0)
 			if (force || src.lawcheck[index+1] == "Yes")
 				src.say("[radiomod] [number]. [law]")
+				number++
 				sleep(10)
-			number++
-
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
 		var/law = src.laws.supplied[index]
@@ -239,8 +239,8 @@
 			if(src.lawcheck.len >= number+1)
 				if (force || src.lawcheck[number+1] == "Yes")
 					src.say("[radiomod] [number]. [law]")
+					number++
 					sleep(10)
-				number++
 
 
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite

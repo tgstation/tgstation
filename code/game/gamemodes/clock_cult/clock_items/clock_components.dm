@@ -45,6 +45,15 @@
 	servant_of_ratvar_messages = list("The eye flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/clockwork/component/belligerent_eye/lens_gem
+	name = "lens gem"
+	desc = "A tiny pinkish gem. It catches the light oddly, almost glowing."
+	clockwork_desc = "The gem from an interdiction lens. <b>Serviceable as a substitute for a belligerent eye.</b>"
+	icon_state = "lens_gem"
+	cultist_message = "The gem turns black and cold for a moment before its normal glow returns."
+	servant_of_ratvar_messages = list("\"Disgusting failure.\"" = TRUE, "You feel scrutinized." = FALSE, "\"Weaklings.\"" = TRUE, "\"Pathetic defenses.\"" = TRUE)
+	w_class = WEIGHT_CLASS_TINY
+
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"
 	desc = "A sturdy brass cog with a faintly glowing blue gem in its center."
@@ -54,14 +63,14 @@
 	servant_of_ratvar_messages = list("\"Be safe, child.\"" = FALSE, "You feel unexplainably comforted." = FALSE, "\"Never forget: Pain is temporary. What you do for the Justiciar is eternal.\"" = FALSE)
 	message_span = "inathneq"
 
-/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock
-	name = "pinion lock"
-	desc = "A dented and scratched gear. It's very heavy."
-	clockwork_desc = "A broken gear lock for pinion airlocks. <b>Serviceable as a substitute for a vanguard cogwheel.</b>"
-	icon_state = "pinion_lock"
-	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter." = FALSE, "\"Damaged gears are better than broken bodies.\"" = TRUE, \
-	"\"It's a shame it can't be reused.\"" = TRUE)
+/obj/item/clockwork/component/vanguard_cogwheel/onyx_prism
+	name = "onyx prism"
+	desc = "An onyx prism with a small aperture. It's very heavy."
+	clockwork_desc = "A broken prism from a mending motor. <b>Serviceable as a substitute for a vanguard cogwheel.</b>"
+	icon_state = "onyx_prism"
+	cultist_message = "The prism grows painfully hot in your hands."
+	servant_of_ratvar_messages = list("The prism isn't getting any lighter." = FALSE, "\"So... you haven't failed yet. Have hope, child.\"" = TRUE, \
+	"\"Better these machines break than you do.\"" = TRUE)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/geis_capacitor
@@ -73,6 +82,15 @@
 	servant_of_ratvar_messages = list("\"Disgusting.\"" = FALSE, "\"Well, aren't you an inquisitive fellow?\"" = FALSE, "A foul presence pervades your mind, then vanishes." = FALSE, \
 	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"" = FALSE)
 	message_span = "sevtug"
+
+/obj/item/clockwork/component/geis_capacitor/fallen_armor
+	name = "fallen armor"
+	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
+	clockwork_desc = "The armor from a former clockwork marauder. <b>Serviceable as a substitute for a geis capacitor.</b>"
+	icon_state = "fallen_armor"
+	cultist_message = "Red flame sputters from the mask's eye before winking out."
+	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/geis_capacitor/antennae
 	name = "mania motor antennae"
@@ -100,17 +118,16 @@
 	icon_state = "smashed_anime_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."
 	servant_of_ratvar_messages = list("\"...still fight...\"" = FALSE, "\"...where am I...?\"" = FALSE, "\"...put me... slab...\"" = FALSE)
-	message_span = "heavy_brass"
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/clockwork/component/replicant_alloy/fallen_armor
-	name = "fallen armor"
-	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
-	clockwork_desc = "The armor from a former clockwork marauder. <b>Serviceable as a substitute for replicant alloy.</b>"
-	icon_state = "fallen_armor"
-	cultist_message = "Red flame sputters from the mask's eye before winking out."
-	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
-	message_span = "heavy_brass"
+/obj/item/clockwork/component/replicant_alloy/replication_plate
+	name = "replication plate"
+	desc = "A flat, heavy disc of metal with a triangular formation on its surface."
+	clockwork_desc = "The replication plate from a tinkerer's daemon. <b>Serviceable as a substitute for replicant alloy.</b>"
+	icon_state = "replication_plate"
+	cultist_message = "The plate shudders in your hands, as though trying to get away."
+	servant_of_ratvar_messages = list("\"Put this in a slab and get back to work.\"" = FALSE, "\"Worse servants than you have held these.\"" = TRUE, \
+	"\"It would be wise to protect these better, friend.\"" = TRUE)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/hierophant_ansible
@@ -183,3 +200,9 @@
 	randomsinglesprite = TRUE
 	randomspritemax = 3
 	icon_state = "shard_small"
+
+/obj/item/clockwork/alloy_shards/pinion_lock
+	name = "pinion lock"
+	desc = "A dented and scratched gear. It's very heavy."
+	clockwork_desc = "A broken gear lock for pinion airlocks. Can be proselytized for additional power."
+	icon_state = "pinion_lock"

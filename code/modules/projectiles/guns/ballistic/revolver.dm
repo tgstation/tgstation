@@ -355,4 +355,3 @@
 		user.emote("scream")
 		user.drop_item()
 		user.Weaken(4)
-	return

@@ -36,6 +36,7 @@
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
 	if (user.mind.special_role == "Cult Master")
 		my_message = "<span class='cultlarge'><b>[(ishuman(user) ? "Master" : "Lord")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
+
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << my_message

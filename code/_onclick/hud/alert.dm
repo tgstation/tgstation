@@ -34,7 +34,7 @@
 				return 0
 	else
 		thealert = new type()
-	
+
 	thealert.mob_viewer = src
 
 	if(new_master)
@@ -50,7 +50,7 @@
 	else
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
-		
+
 	alerts[category] = thealert
 	if(client && hud_used)
 		hud_used.reorganize_alerts()

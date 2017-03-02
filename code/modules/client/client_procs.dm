@@ -195,11 +195,11 @@ var/next_external_rsc = 0
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
-
+	
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
-
+	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	if (byond_version < config.client_error_version)		//Out of date client.
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
 		src << config.client_error_message
@@ -325,8 +325,7 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(src.ckey)
@@ -347,13 +346,12 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	establish_db_connection()
-	if (!dbcon.IsConnected())
+	if (!dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(ckey)
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]' AND ckey != '[sql_ckey]'")
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
@@ -377,12 +375,11 @@ var/next_external_rsc = 0
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
 	query_insert.Execute()
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]''[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]');")
 	query_accesslog.Execute()
 
 /client/proc/check_randomizer(topic)

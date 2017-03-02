@@ -1,6 +1,6 @@
 
 /mob/living/carbon/alien/larva/regenerate_icons()
-	overlays = list()
+	cut_overlays()
 	update_icons()
 
 /mob/living/carbon/alien/larva/update_icons()

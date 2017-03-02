@@ -40,20 +40,18 @@ var/datum/subsystem/timer/SStimer
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
 
 /datum/subsystem/timer/fire(resumed = FALSE)
-	if (length(clienttime_timers))
-		for (var/thing in clienttime_timers)
-			var/datum/timedevent/ctime_timer = thing
-			if (ctime_timer.spent)
-				qdel(ctime_timer)
-				continue
-			if (ctime_timer.timeToRun <= REALTIMEOFDAY)
-				var/datum/callback/callBack = ctime_timer.callBack
-				ctime_timer.spent = TRUE
-				callBack.InvokeAsync()
-				qdel(ctime_timer)
-
-			if (MC_TICK_CHECK)
-				return
+	while(length(clienttime_timers))
+		var/datum/timedevent/ctime_timer = clienttime_timers[clienttime_timers.len]
+		if (ctime_timer.timeToRun <= REALTIMEOFDAY)
+			--clienttime_timers.len
+			var/datum/callback/callBack = ctime_timer.callBack
+			ctime_timer.spent = TRUE
+			callBack.InvokeAsync()
+			qdel(ctime_timer)
+		else
+			break	//None of the rest are ready to run
+		if (MC_TICK_CHECK)
+			return
 
 	var/static/list/spent = list()
 	var/static/datum/timedevent/timer
@@ -208,11 +206,24 @@ var/datum/subsystem/timer/SStimer
 		SStimer.timer_id_dict["timerid[id]"] = src
 
 	if (callBack.object != GLOBAL_PROC)
-		LAZYINITLIST(callBack.object.active_timers)
-		callBack.object.active_timers += src
+		LAZYADD(callBack.object.active_timers, src)
 
 	if (flags & TIMER_CLIENT_TIME)
-		SStimer.clienttime_timers += src
+		//sorted insert
+		var/list/ctts = SStimer.clienttime_timers
+		var/cttl = length(ctts)
+		if(cttl)
+			var/datum/timedevent/Last = ctts[cttl]
+			if(Last.timeToRun >= timeToRun)
+				ctts += src
+			else if(cttl > 1)
+				for(var/I in cttl to 1)
+					var/datum/timedevent/E = ctts[I]
+					if(E.timeToRun <= timeToRun)
+						ctts.Insert(src, I)
+						break
+		else
+			ctts += src	
 		return
 
 	//get the list of buckets
@@ -299,7 +310,11 @@ proc/addtimer(datum/callback/callback, wait, flags)
 	var/hash
 
 	if (flags & TIMER_UNIQUE)
-		var/list/hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
+		var/list/hashlist
+		if(flags & TIMER_NO_HASH_WAIT)
+			hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, flags & TIMER_CLIENT_TIME)
+		else
+			hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
 		hashlist += callback.arguments
 		hash = hashlist.Join("|||||||")
 

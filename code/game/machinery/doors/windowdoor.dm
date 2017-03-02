@@ -339,6 +339,10 @@
 	change_construction_value(-2)
 	return ..()
 
+/obj/machinery/door/window/clockwork/emp_act(severity)
+	if(prob(80/severity))
+		open()
+
 /obj/machinery/door/window/clockwork/ratvar_act()
 	if(ratvar_awakens)
 		obj_integrity = max_integrity

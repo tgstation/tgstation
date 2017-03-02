@@ -24,6 +24,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
+	var/list/sleptDestroy = list()	//Same as above but these are paths that slept during their Destroy call
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 	// all types that did not respect qdel(A, force=TRUE) and returned one
@@ -92,6 +93,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		var/datum/A
 		A = locate(refID)
 		if (A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+			#ifdef GC_FAILURE_HARD_LOOKUP
+			A.find_references()
+			#endif
+
 			// Something's still referring to the qdel'd object.  Kill it.
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
@@ -164,13 +169,17 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		del(D)
 	else if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
+		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
+		if(world.time != start_time)
+			SSgarbage.sleptDestroy["[D.type]"]++
 		if(!D)
 			return
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_IWILLGC)
+				D.gc_destroyed = world.time
 				return
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				if(!force)
@@ -221,6 +230,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 #ifdef TESTING
 /datum/var/running_find_references
+/datum/var/last_find_references = 0
 
 /datum/verb/find_refs()
 	set category = "Debug"
@@ -254,17 +264,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
+	last_find_references = world.time
 	find_references_in_globals()
 	for(var/datum/thing in world)
-		if(usr && usr.client && !usr.client.running_find_references) return
-		for(var/varname in thing.vars)
-			var/variable = thing.vars[varname]
-			if(variable == src)
-				testing("Found [src.type] \ref[src] in [thing.type]'s [varname] var.")
-			else if(islist(variable))
-				if(src in variable)
-					testing("Found [src.type] \ref[src] in [thing.type]'s [varname] list var.")
-		CHECK_TICK
+		DoSearchVar(thing, "WorldRef: [thing]")
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -312,29 +315,42 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	usr << browse(dat, "window=qdeletedlog")
 
-#define SearchVar(X) DoSearchVar(X, #X)
+#define SearchVar(X) DoSearchVar(X, "Global: " + #X)
 
 /datum/proc/DoSearchVar(X, Xname)
-	if(islist(X))
-		if(src in X)
-			testing("Found [src.type] \ref[src] in global list [Xname].")
-	else if(istype(X, /datum))
+	if(usr && usr.client && !usr.client.running_find_references) return
+	if(istype(X, /datum))
 		var/datum/D = X
+		if(D.last_find_references == last_find_references)
+			return
+		D.last_find_references = last_find_references
 		for(var/V in D.vars)
 			for(var/varname in D.vars)
 				var/variable = D.vars[varname]
 				if(variable == src)
-					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. Global: [Xname]")
-				else if(islist(variable) && src in variable)
-					testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
+					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
+				else if(islist(variable))
+					if(src in variable)
+						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
+#ifdef GC_FAILURE_HARD_LOOKUP
+					for(var/I in variable)
+						DoSearchVar(I, TRUE)
+				else
+					DoSearchVar(variable, "[Xname]: [varname]")
+#endif
+	else if(islist(X))
+		if(src in X)
+			testing("Found [src.type] \ref[src] in list [Xname].")
+#ifdef GC_FAILURE_HARD_LOOKUP
+		for(var/I in X)
+			DoSearchVar(I, Xname + ": list")
+#else
 	CHECK_TICK
+#endif
 
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
-	SearchVar(last_irc_status)
-	SearchVar(inerror)
-	SearchVar(failed_db_connections)
 	SearchVar(nextmap)
 	SearchVar(mapchanging)
 	SearchVar(rebootingpendingmapchange)
@@ -541,19 +557,12 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(ruin_landmarks)
 	SearchVar(awaydestinations)
 	SearchVar(sortedAreas)
-	SearchVar(map_templates)
-	SearchVar(ruins_templates)
-	SearchVar(space_ruins_templates)
-	SearchVar(lava_ruins_templates)
-	SearchVar(shuttle_templates)
-	SearchVar(shelter_templates)
 	SearchVar(transit_markers)
 	SearchVar(clients)
 	SearchVar(admins)
 	SearchVar(deadmins)
 	SearchVar(directory)
 	SearchVar(stealthminID)
-	SearchVar(current_watchlist)
 	SearchVar(player_list)
 	SearchVar(mob_list)
 	SearchVar(living_mob_list)
@@ -672,8 +681,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(wire_colors)
 	SearchVar(wire_color_directory)
 	SearchVar(wire_name_directory)
-	SearchVar(possiblethemes)
-	SearchVar(max_secret_rooms)
 	SearchVar(blood_splatter_icons)
 	SearchVar(all_radios)
 	SearchVar(radiochannels)
@@ -784,7 +791,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(brass_recipes)
 	SearchVar(disposalpipeID2State)
 	SearchVar(RPD_recipes)
-	SearchVar(highlander_claymores)
 	SearchVar(biblenames)
 	SearchVar(biblestates)
 	SearchVar(bibleitemstates)
@@ -830,7 +836,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(pipenetwarnings)
 	SearchVar(the_gateway)
 	SearchVar(potentialRandomZlevels)
-	SearchVar(maploader)
 	SearchVar(use_preloader)
 	SearchVar(_preloader)
 	SearchVar(swapmaps_iconcache)

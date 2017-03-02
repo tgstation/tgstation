@@ -13,9 +13,9 @@
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/open/floor/bluegrid/New()
-	..()
+/turf/open/floor/bluegrid/Initialize()
 	SSmapping.nuke_tiles += src
+	..()
 
 /turf/open/floor/bluegrid/Destroy()
 	SSmapping.nuke_tiles -= src
@@ -67,7 +67,7 @@
 	icon_state = "plating"
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
-/turf/open/floor/clockwork/New()
+/turf/open/floor/clockwork/Initialize()
 	..()
 	new /obj/effect/overlay/temp/ratvar/floor(src)
 	new /obj/effect/overlay/temp/ratvar/beam(src)

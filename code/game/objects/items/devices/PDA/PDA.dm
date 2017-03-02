@@ -416,7 +416,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
 				if(A && alert_s)
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
-					_alert_drones(msg, 1)
+					_alert_drones(msg, TRUE)
 					U << msg
 
 
@@ -998,13 +998,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
 		user << "You do not have a PDA. You should make an issue report about this."
-
-//Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
-	name = "spare PDAs"
-	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "pda"
 
 /obj/item/weapon/storage/box/PDAs/New()
 	..()

@@ -93,6 +93,7 @@
 	if(istype(S) && S.deathmessage)
 		message_simple = S.deathmessage
 	. = ..()
+	message_simple = initial(message_simple)
 	if(. && isalienadult(user))
 		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
@@ -451,3 +452,20 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
+
+/datum/emote/living/spin
+	key = "spin"
+	key_third_person = "spins"
+	message = "spins around dizzily!"
+
+/datum/emote/living/spin/run_emote(mob/user)
+	user.spin(20, 1)
+	if(istype(user, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = user
+		if(R.buckled_mobs)
+			for(var/mob/M in R.buckled_mobs)
+				if(R.riding_datum)
+					R.riding_datum.force_dismount(M)
+				else
+					R.unbuckle_all_mobs()
+	..()

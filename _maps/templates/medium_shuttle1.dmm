@@ -4,9 +4,9 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	tag = "icon-burst_l (EAST)";
+	dir = 8;
 	icon_state = "burst_l";
-	dir = 4
+	tag = "icon-burst_l (EAST)"
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -149,9 +149,9 @@
 	})
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	tag = "icon-burst_r (EAST)";
+	dir = 8;
 	icon_state = "burst_r";
-	dir = 4
+	tag = "icon-burst_r (EAST)"
 	},
 /turf/open/space,
 /area/ruin/powered{

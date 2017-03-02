@@ -238,15 +238,6 @@ var/list/bloody_footprints_cache = list()
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 
-//Fire and Acid stuff, for resistance_flags
-#define LAVA_PROOF 1
-#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
-#define FLAMMABLE 4
-#define ON_FIRE 8
-#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
-#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
-#define INDESTRUCTIBLE 64 //doesn't take damage
-
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
@@ -346,7 +337,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 //debug printing macros
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
-#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) log_world("DEBUG: [msg]")
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
@@ -409,3 +400,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define TURF_DECAL_PAINT "paint"
 #define TURF_DECAL_DAMAGE "damage"
 #define TURF_DECAL_DIRT "dirt"
+
+//Error handler defines
+#define ERROR_USEFUL_LEN 2

@@ -9,14 +9,14 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/repair_amount = 4 //how much a proselytizer can repair each cycle
-	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
+	var/can_be_repaired = TRUE //if a proselytizer can repair it
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/alloy_shards/small = 3) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
+	var/immune_to_servant_attacks = FALSE //if we ignore attacks from servants of ratvar instead of taking damage
 
 /obj/structure/destructible/clockwork/New()
 	..()
@@ -59,8 +59,23 @@
 		return "<span class='[heavily_damaged ? "alloy":"brass"]'>[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity[heavily_damaged ? "!":"."]</span>"
 	return ..()
 
+/obj/structure/destructible/clockwork/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
+		return FALSE
+	return ..()
+
 /obj/structure/destructible/clockwork/hulk_damage()
 	return 20
+
+/obj/structure/destructible/clockwork/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
+		return FALSE
+	return ..()
+
+/obj/structure/destructible/clockwork/mech_melee_attack(obj/mecha/M)
+	if(M.occupant && is_servant_of_ratvar(M.occupant) && immune_to_servant_attacks)
+		return FALSE
+	return ..()
 
 /obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
 	if(ratvar_awakens)
@@ -72,9 +87,10 @@
 		. *= min(max_integrity/max(obj_integrity, 1), 4)
 	. = round(., 0.01)
 
-/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user, silent)
 	if(anchored && obj_integrity <= round(max_integrity * 0.25, 1))
-		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+		if(!silent)
+			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -94,6 +110,11 @@
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
 			update_anchored(user, TRUE)
 		return 1
+	return ..()
+
+/obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user)
+	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
+		return FALSE
 	return ..()
 
 /obj/structure/destructible/clockwork/proc/update_anchored(mob/user, do_damage)
@@ -154,13 +175,21 @@
 	SSobj.processing -= src
 	return ..()
 
+/obj/structure/destructible/clockwork/powered/ratvar_act()
+	..()
+	if(nezbere_invoked)
+		needs_power = FALSE
+	else
+		needs_power = initial(needs_power)
+
 /obj/structure/destructible/clockwork/powered/process()
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
-/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
-		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
+		if(!silent)
+			user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 

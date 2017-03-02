@@ -154,10 +154,10 @@
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday)
-	var/time = (world.timeofday - start_timeofday) / 10
-	var/msg = "Initialized [name] subsystem within [time] seconds!"
+	var/time = (REALTIMEOFDAY - start_timeofday) / 10
+	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world << "<span class='boldannounce'>[msg]</span>"
-	world.log << msg
+	log_world(msg)
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
@@ -167,7 +167,7 @@
 
 
 
-	if(can_fire)
+	if(can_fire && !(SS_NO_FIRE in flags))
 		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
@@ -211,3 +211,8 @@
 			return 0
 	. = ..()
 
+//when we enter dmm_suite.load_map
+/datum/subsystem/proc/StartLoadingMap()
+
+//when we exit dmm_suite.load_map
+/datum/subsystem/proc/StopLoadingMap()

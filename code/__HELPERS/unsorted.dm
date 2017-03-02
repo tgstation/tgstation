@@ -919,19 +919,6 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 		return !QDELETED(D)
 	return 0
 
-
-
-//Get the dir to the RIGHT of dir if they were on a clock
-//NORTH --> NORTHEAST
-/proc/get_clockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)+45)
-
-//Get the dir to the LEFT of dir if they were on a clock
-//NORTH --> NORTHWEST
-/proc/get_anticlockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)-45)
-
-
 //Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
 //To the opposite dir of the dir returned by get_dir(B,A)
 //If one of them is a match, then A is facing B
@@ -943,8 +930,8 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 		if(LA.lying)
 			return 0
 	var/goal_dir = angle2dir(dir2angle(get_dir(B,A)+180))
-	var/clockwise_A_dir = get_clockwise_dir(A.dir)
-	var/anticlockwise_A_dir = get_anticlockwise_dir(B.dir)
+	var/clockwise_A_dir = turn(A.dir, -45)
+	var/anticlockwise_A_dir = turn(B.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
 		return 1
@@ -1191,7 +1178,7 @@ B --><-- A
 		return
 	A.add_overlay(I)
 	sleep(duration)
-	A.overlays -= I
+	A.cut_overlay(I)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
@@ -1286,6 +1273,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_NULL(item) qdel(item); item = null
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1336,3 +1324,59 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
 				return FALSE
 	return TRUE
+
+//WHATEVER YOU USE THIS FOR MUST BE SANITIZED TO SHIT, IT USES SHELL
+//It also sleeps
+
+//Set this to TRUE before calling
+//This prevents RCEs from badmins
+//kevinz000 if you touch this I will hunt you down
+var/valid_HTTPSGet = FALSE
+/proc/HTTPSGet(url)
+	if(findtext(url, "\""))
+		valid_HTTPSGet = FALSE
+
+	if(!valid_HTTPSGet)
+		if(usr)
+			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
+		else
+			CRASH("Invalid HTTPSGet call on: [url]")
+	valid_HTTPSGet = FALSE
+
+	//"This has got to be the ugliest hack I have ever done"
+	//warning, here be dragons
+	/*
+						|  @___oo
+				/\  /\   / (__,,,,|
+				) /^\) ^\/ _)
+				)   /^\/   _)
+				)   _ /  / _)
+			/\  )/\/ ||  | )_)
+		<  >      |(,,) )__)
+			||      /    \)___)\
+			| \____(      )___) )___
+			\______(_______;;; __;;;
+		*/
+	var/temp_file = "HTTPSGetOutput.txt"
+	var/command
+	if(world.system_type == MS_WINDOWS)
+		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
+	else if(world.system_type == UNIX)
+		command = "wget -O [temp_file] [url]"
+	else
+		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
+
+	world.log << "HTTPSGet: [url]"
+	var/result = shell(command)
+	if(result != 0)
+		world.log << "Download failed: shell exited with code: [result]"
+		return
+
+	var/f = file(temp_file)
+	if(!f)
+		world.log << "Download failed: Temp file not found"
+		return
+
+	. = file2text(f)
+	f = null
+	fdel(temp_file)

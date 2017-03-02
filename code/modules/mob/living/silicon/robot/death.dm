@@ -30,4 +30,6 @@
 
 	update_icons()
 
+	unbuckle_all_mobs(TRUE)
+
 	sql_report_death(src)

@@ -144,7 +144,7 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/teleport(mob/user)
 	log_game("[user]([user.ckey] teleported [prisoner]([prisoner.ckey]) to the Labor Camp ([beacon.x], [beacon.y], [beacon.z]) for [id.goal] points.")
 	teleporter.handle_prisoner(id, temporary_record)
-	playsound(loc, "sound/weapons/emitter.ogg", 50, 1)
+	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Weaken(2) // small travel dizziness
 	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"

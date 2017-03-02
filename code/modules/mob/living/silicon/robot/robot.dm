@@ -89,7 +89,9 @@
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
 
-
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	can_ride_typecache = list(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -300,7 +302,6 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
-		stat("Station Time:", worldtime2text())
 		if(module)
 			for(var/datum/robot_energy_storage/st in module.storages)
 				stat("[st.name]:", "[st.energy]/[st.max_energy]")
@@ -596,6 +597,12 @@
 	update_fire()
 
 #define BORG_CAMERA_BUFFER 30
+
+/mob/living/silicon/robot/proc/do_camera_update(oldLoc)
+	if(oldLoc != src.loc)
+		cameranet.updatePortableCamera(src.camera)
+	updating = 0
+
 /mob/living/silicon/robot/Move(a, b, flag)
 	var/oldLoc = src.loc
 	. = ..()
@@ -603,10 +610,7 @@
 		if(src.camera)
 			if(!updating)
 				updating = 1
-				spawn(BORG_CAMERA_BUFFER)
-					if(oldLoc != src.loc)
-						cameranet.updatePortableCamera(src.camera)
-					updating = 0
+				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
 	if(module)
 		if(istype(module, /obj/item/weapon/robot_module/janitor))
 			var/turf/tile = loc
@@ -995,3 +999,41 @@
 	hat = new_hat
 	new_hat.forceMove(src)
 	update_icons()
+
+/mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
+	. = ..()
+	if(!(M in buckled_mobs) && isliving(M))
+		buckle_mob(M)
+
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+	if(!is_type_in_typecache(M, can_ride_typecache))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		return
+	if(!riding_datum)
+		riding_datum = new /datum/riding/cyborg(src)
+	if(buckled_mobs)
+		if(buckled_mobs.len >= max_buckled_mobs)
+			return
+		if(M in buckled_mobs)
+			return
+	if(stat)
+		return
+	if(incapacitated())
+		return
+	if(M.restrained())
+		return
+	if(module)
+		if(!module.allow_riding)
+			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
+			return
+	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		return
+	. = ..(M, force, check_loc)
+
+/mob/living/silicon/robot/unbuckle_mob(mob/user)
+	if(iscarbon(user))
+		if(riding_datum)
+			riding_datum.unequip_buckle_inhands(user)
+			riding_datum.restore_position(user)
+	. = ..(user)
