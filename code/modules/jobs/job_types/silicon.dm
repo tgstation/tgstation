@@ -19,6 +19,13 @@ AI
 /datum/job/ai/after_spawn(mob/living/silicon/ai/AI, mob/M)
 	AI.rename_self("ai", M.client)
 
+	//we may have been created after our borg
+	if(ticker.current_state == GAME_STATE_SETTING_UP)
+		for(var/mob/living/silicon/robot/R in silicon_mobs)
+			if(!R.connected_ai)
+				R.TryConnectToAI()
+
+
 /datum/job/ai/config_check()
 	if(config && config.allow_ai)
 		return 1
