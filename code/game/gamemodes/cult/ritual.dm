@@ -219,9 +219,10 @@ This file contains the arcane tome files.
 			if(!check_rune_turf(Turf, user) || (loc.z && loc.z != ZLEVEL_STATION)|| !A.blob_allowed)
 				return
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
-			for(var/B in spiral_range_turfs(1, user, 1))
-				var/obj/structure/emergency_shield/sanguine/N = new(B)
-				shields += N
+			for(var/B in circlerangeturfs(user, 1))
+				if(B == Turf)
+					continue
+				shields += new/obj/structure/emergency_shield/sanguine(B)
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
@@ -240,7 +241,7 @@ This file contains the arcane tome files.
 	user.visible_message("<span class='warning'>[user] creates a strange circle[user.blood_volume ? " in their own blood":""].</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
-		var/obj/structure/emergency_shield/S = V
+		var/obj/structure/emergency_shield/sanguine/S = V
 		if(S && !QDELETED(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
