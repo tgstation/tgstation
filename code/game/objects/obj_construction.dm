@@ -305,16 +305,18 @@
 			user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>"
 			return
 
-		if(I.usesound)
-			playsound(src, I.usesound, 100, TRUE)	
 
 		var/cont
 		LAZYADD(user.construction_tasks, src)
 		if(wait)
+			if(I.usesound)
+				playsound(src, I.usesound, 100, TRUE)	
 			user << "<span class='notice'>You begin [message] \the [src].</span>"
 			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, I, user, FALSE))
 		else
 			cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
+			if(cont && I.usesound)
+				playsound(src, I.usesound, 100, TRUE)	
 		LAZYREMOVE(user.construction_tasks, src)
 
 		if(cont)
