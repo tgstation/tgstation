@@ -48,16 +48,15 @@
 "aV" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
 "aW" = (/obj/structure/chair/stool,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
 "aX" = (/obj/structure/piano,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"aY" = (/obj/structure/rack,/obj/item/weapon/gun/energy/e_gun/advtaser,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"aZ" = (/obj/structure/rack,/obj/item/weapon/gun/energy/e_gun/dragnet,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"ba" = (/obj/item/weapon/gun/energy/taser,/obj/item/weapon/gun/energy/taser,/obj/item/weapon/rack_parts,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"bb" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/mechanical/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"bc" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/emergency/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"bd" = (/obj/item/trash/deadmouse,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"be" = (/obj/structure/window/reinforced,/obj/effect/decal/cleanable/dirt,/obj/structure/table/wood,/obj/item/device/flashlight/lantern,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"bf" = (/obj/structure/window/reinforced,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"bg" = (/obj/machinery/door/window/southleft,/turf/open/floor/wood,/area/ruin/powered/pirate)
-"bh" = (/obj/machinery/door/window/southright,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aY" = (/obj/structure/rack,/obj/item/weapon/melee/energy/sword/pirate,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"aZ" = (/obj/item/weapon/rack_parts,/obj/item/weapon/melee/energy/sword/pirate,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"ba" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/mechanical/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bb" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/emergency/old,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bc" = (/obj/item/trash/deadmouse,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bd" = (/obj/structure/window/reinforced,/obj/effect/decal/cleanable/dirt,/obj/structure/table/wood,/obj/item/device/flashlight/lantern,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"be" = (/obj/structure/window/reinforced,/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bf" = (/obj/machinery/door/window/southleft,/turf/open/floor/wood,/area/ruin/powered/pirate)
+"bg" = (/obj/machinery/door/window/southright,/turf/open/floor/wood,/area/ruin/powered/pirate)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -77,8 +76,8 @@ ababaCaraAayasasawaDaEasananadanaFasasasasasaFananadaGaBaaaa
 ababaCaHaIadasawaJaKaLaMawasadaranasasaNaNaNananaOadanaBaPaa
 ababaCanaQayasasasaRaSasasasadanasasasaTaTaTanananadanaBaPaa
 ababadaUaVadanananaWaWasazasayanasasasasasananaranayaAaBaPaa
-aaabadadadadaXaFanaYaZbabbbcadanavasasasasasasananadbdaBaPaa
-aaababababadadadadadadadadadadbebfbfbfbgbhbfbfbfbeadadadacaa
+aaabadadadadaXaFaYaYaYaZbabbadanavasasasasasasananadbcaBaPaa
+aaababababadadadadadadadadadadbdbebebebfbgbebebebdadadadacaa
 aaaaaaabababacacacacacacacacacacacacacacacababababababababab
 aaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacababababababaa
 aaaaaaaaaaaaaaaaaaaaacacacacacacacacacacabababababababababaa

@@ -299,18 +299,18 @@
 	uniform = /obj/item/clothing/under/pirate
 	shoes = /obj/item/clothing/shoes/laceup
 	pocket1 = /obj/item/device/radio/off
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/weapon/storage/backpack/explorer
 	objectives = "Yar har! Pillage the ruins around you, or aim for the station itself."
 	implants = list(/obj/item/weapon/implant/mindshield)
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
-	flavour_text = "You are a space pirate! Your goal is to pillage the ruins around you and the station close by. Remember the pirate code: <font size=6><b>DO NOT KILL FOR NO REASON.</b></font>"
+	flavour_text = "You are a space pirate! Your goal is to pillage the ruins around you and the station close by. Remember the pirate code: <b>DO NOT KILL FOR NO REASON.</b>"
 
 /obj/effect/mob_spawn/human/pirate/captain
 	name = "sleeper"
 	desc = "Compared to the other sleepers, this one is isolated and works cleaner."
-	flavour_text = "You are the captain of this here ship! Lead your crew to vast treasures and bounty. Remember the pirate code: <font size=6><b>DO NOT KILL FOR NO REASON.</b></font>"
+	flavour_text = "You are the captain of this here ship! Lead your crew to vast treasures and bounty. Remember the pirate code: <b>DO NOT KILL FOR NO REASON.</b>"
 
 
 /obj/effect/mob_spawn/human/pirate/captain/New(mob/living/new_spawn)
