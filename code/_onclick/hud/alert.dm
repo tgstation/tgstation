@@ -253,10 +253,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
     desc = "Allows you to sense blood that is manipulated by dark magicks."
     icon_state = "cult_sense"
     var/image/finder
+	var/icon/sacrifice 
 
 /obj/screen/alert/bloodsense/New()
 	..()
 	finder = new('icons/mob/screen_alert.dmi', "no_sacrifice")
+	if(sac_target.client.prefs && sac_target.client.prefs.UI_style)
+		sacrifice = ui_style2icon(sac_target.client.prefs.UI_style)
 	add_overlay(finder)
 	START_PROCESSING(SSprocessing, src)
 	process()
@@ -272,7 +275,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	if(!blood_target && !sac_complete)
 		cut_overlays()
-		finder.icon_state = "no_sacrifice"
+		finder.icon_state = blend(sacrifice, ICON_OVERLAY)
 		desc = "Nar-Sie demands that [sac_target] be sacrificed before the summoning can begin."
 		add_overlay(finder)
 		return
