@@ -1,0 +1,5 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "You can now craft pressure plates."
+  - rscadd: "Pressure plates are hidden under the floor like smuggler satchels are, but you can attach a signaller to them to have it signal when a mob passes over them!"
