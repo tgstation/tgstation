@@ -49,7 +49,7 @@
 	shaking = TRUE
 
 	start_shaking(user)
-	if(do_after(user, shake_time, target=src))
+	if(do_after(user, shake_time, needhand=TRUE, target=src, progress=TRUE))
 		var/answer = get_answer()
 		say(answer)
 
@@ -99,14 +99,14 @@
 		return
 	interact(user)
 
-/obj/item/toy/eightball/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
-	last_message = message
+/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+	last_message = raw_message
 
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = last_message
-	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", enter_link="<a href=?src=\ref[src];interact=1>(Click to help)</a>", source=user, action=NOTIFY_ATTACK, ghost_sound='sound/magic/Staff_animation.ogg')
+	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=\ref[src];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK, ghost_sound='sound/magic/Staff_animation.ogg')
 
 /obj/item/toy/eightball/haunted/Topic(href, href_list)
 	if(href_list["interact"])
@@ -138,7 +138,7 @@
 	// yes, if there is a tie, there is an arbitary decision
 	// but we never said the spirit world was fair
 	for(var/A in tallied_votes)
-		var/amount = answers[A]
+		var/amount = tallied_votes[A]
 		if(amount > most_amount)
 			most_popular_answer = A
 
@@ -164,7 +164,7 @@
 		L["answer"] = pa
 		var/amount = 0
 		if(pa in tallied_votes)
-			amount = tallied_votes[amount]
+			amount = tallied_votes[pa]
 		L["amount"] = amount
 		var/selected = FALSE
 		if(votes[user.ckey] == pa)

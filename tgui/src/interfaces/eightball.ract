@@ -3,8 +3,8 @@
     <ui-section>
       {{#each data.answers}}
         <ui-button
-          grid action='vote' params='{"answer": "{{answer}}"}'
-          style='{{selected ? "selected" : null}}' >{{answer}} ({{amount}}
+          action='vote' params='{"answer": "{{answer}}"}'
+          style='{{selected ? "selected" : null}}' >{{answer}} ({{amount}})
         </ui-button>
       {{/each}}
     </ui-section>
