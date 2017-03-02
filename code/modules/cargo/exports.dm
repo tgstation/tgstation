@@ -65,6 +65,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export
+	var/dim_returns = TRUE // Items give diminishing returns by default, see next line
+	var/amt_sold_inround = 0 // The more you sell the lower the price! Don't flood the market!
 
 	// Used by print-out
 	var/total_cost = 0
@@ -72,7 +74,14 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
-	return cost * get_amount(O, contr, emag)
+	var/endcost = 0
+	if(dim_returns && cost > amt_sold_inround)
+		endcost = (cost - amt_sold_inround) * get_amount(O, contr, emag)
+	if(dim_returns && cost < amt_sold_inround)
+		endcost = 0
+	else 
+		endcost = cost * get_amount(O, contr, emag)
+	return endcost
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
@@ -103,6 +112,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/amount = get_amount(O)
 	total_cost += cost
 	total_amount += amount
+	amt_sold_inround += amount
+	
 	feedback_add_details("export_sold_amount","[O.type]|[amount]")
 	feedback_add_details("export_sold_cost","[O.type]|[cost]")
 
