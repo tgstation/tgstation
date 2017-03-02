@@ -941,26 +941,3 @@ var/list/wall_runes = list()
 	user.Beam(T,icon_state="drainbeam",time=5)
 	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
 	"<span class='cult'>Blood flows into you, healing your wounds and revitalizing your spirit.</span>")
-
-	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
-	user << "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
-	var/turf/T = get_turf(src)
-	var/obj/structure/emergency_shield/invoker/N = new(T)
-
-	new_human.key = ghost_to_spawn.key
-	ticker.mode.add_cultist(new_human.mind, 0)
-	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
-
-	while(user in T)
-		if(user.stat)
-			break
-		user.apply_damage(0.1, BRUTE)
-		sleep(3)
-
-	qdel(N)
-	if(new_human)
-		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
-								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
-		for(var/obj/I in new_human)
-			new_human.dropItemToGround(I)
-		new_human.dust()
