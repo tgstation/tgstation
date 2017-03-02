@@ -113,6 +113,7 @@
 	
 	if(id == BARSIGN_UNWIRED)
 		broken = FALSE
+		obj_integrity = max_integrity
 		return
 
 	. = broken	//delete wires if fried
