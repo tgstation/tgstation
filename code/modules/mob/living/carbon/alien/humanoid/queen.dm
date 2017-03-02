@@ -33,7 +33,7 @@
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
-		var/image/I = image(icon = 'icons/mob/alien.dmi' , icon_state = "alienq_running", loc = owner)
+		var/image/I = image(icon = 'icons/mob/alien.dmi' , icon_state = "alienq", loc = owner)
 		I.override = 1
 		I.pixel_x -= owner.pixel_x
 		I.pixel_y -= owner.pixel_y
