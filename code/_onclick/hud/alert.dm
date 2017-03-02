@@ -35,7 +35,6 @@
 	else
 		thealert = new type()
 		
-	thealert.mob_viewer = src
 	if(new_master)
 		var/old_layer = new_master.layer
 		var/old_plane = new_master.plane
@@ -50,6 +49,7 @@
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
 
+	thealert.mob_viewer = src
 	alerts[category] = thealert
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
