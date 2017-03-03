@@ -109,22 +109,28 @@ var/datum/subsystem/mapping/SSmapping
 	if(last)
 		QDEL_NULL(loader)
 
+/datum/subsystem/mapping/proc/CreateSpace()
+	++world.maxz
+	CHECK_TICK
+	for(var/T in block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, world.maxz)))
+		CHECK_TICK
+		new /turf/open/space(T)
+
 #define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
 /datum/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	TryLoadZ(config.GetFullMapPath(), FailedZs, 1)
+	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station!")
 
 	INIT_ANNOUNCE("Loading mining level...")
-	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs)
+	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
 	INIT_ANNOUNCE("Loaded mining level!")
 
-	for(var/I in 1 to 5)
-		TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs)
-	TryLoadZ("_maps/map_files/generic/Space.dmm", FailedZs, last = TRUE)
+	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
+		CreateSpace()
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
