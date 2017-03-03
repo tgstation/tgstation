@@ -492,19 +492,17 @@ var/list/teleport_runes = list()
 		return
 		
 	for(var/M in invokers)
-		if(istype(M, /mob/living/carbon/human))
-			if(/datum/antagonist/ghostcultist in M.antag_datums)
-				M.visible_message("<span class='warning'>[M] is annihilated.</span>", \
+		if(istype(M, /mob/living))
+			var/mob/living/H = M
+			if(/datum/antagonist/ghostcultist in H.antag_datums)
+				H.visible_message("<span class='warning'>[H] is annihilated.</span>", \
 										  "<span class='cultlarge'>You are drawn back into the Geomiter. Your form breaks apart.</span>")
-				for(var/obj/I in M)
-					M.dropItemToGround(I)
-				M.dust()
-			invokers - M	
-	var/I = 0
-	for(var/M in invokers)
-		if(M)
-			I + 1
-	if(I < req_cultists)
+				for(var/obj/I in H)
+					H.dropItemToGround(I)
+				H.dust()
+				invokers.remove(M)
+			
+	if(invokers.len < req_cultists)
 		return
 
 	//BEGIN THE SUMMONING
