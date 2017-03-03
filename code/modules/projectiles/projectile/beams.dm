@@ -147,5 +147,5 @@
 		M.gib()
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		M.visible_message("<span class='danger'>[M] turns to dust!</span>")
-		M.dust()
+		S.visible_message("<span class='danger'>[M] turns to dust!</span>")
+		S.dust()
