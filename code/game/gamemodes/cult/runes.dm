@@ -490,6 +490,23 @@ var/list/teleport_runes = list()
 			M << "<span class='warning'>Nar-Sie is already on this plane!</span>"
 		log_game("Summon Nar-Sie rune failed - already summoned")
 		return
+		
+	for(var/M in invokers)
+		if(istype(M, /mob/living/carbon/human))
+			if(/datum/antagonist/ghostcultist in M.antag_datums)
+				M.visible_message("<span class='warning'>[M] is annihilated.</span>", \
+										  "<span class='cultlarge'>You are drawn back into the Geomiter. Your form breaks apart.</span>")
+				for(var/obj/I in M)
+					M.dropItemToGround(I)
+				M.dust()
+			invokers - M	
+	var/I = 0
+	for(var/M in invokers)
+		if(M)
+			I + 1
+	if(I < req_cultists)
+		return
+
 	//BEGIN THE SUMMONING
 	used = 1
 	..()
@@ -944,6 +961,9 @@ var/list/wall_runes = list()
 
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
+/datum/antagonist/ghostcultist
+	some_flufftext = "You are a spirit yanked from the geomiter. BEWARE ITS POWER."
+
 /obj/effect/rune/manifest
 	cultist_name = "Manifest Spirit"
 	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
@@ -983,6 +1003,7 @@ var/list/wall_runes = list()
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
+	var/datum/antagonist/ghostcultist/D = new /datum/antagonist/ghostcultist
 	..()
 	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
 	user << "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
@@ -990,6 +1011,7 @@ var/list/wall_runes = list()
 	var/obj/structure/emergency_shield/invoker/N = new(T)
 
 	new_human.key = ghost_to_spawn.key
+	D.give_to_body(new_human)
 	ticker.mode.add_cultist(new_human.mind, 0)
 	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
 
