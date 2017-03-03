@@ -75,7 +75,7 @@
 /obj/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
 	if(.)
-		if(resistance_flags & ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
+		if(IS_PROCESSING(SSfire_burning, src)) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 

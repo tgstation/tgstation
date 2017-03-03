@@ -120,6 +120,7 @@
 	flick("airlock_sensor_cycle", src)
 
 /obj/machinery/airlock_sensor/process()
+	..()
 	if(on)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal

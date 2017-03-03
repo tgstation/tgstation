@@ -30,6 +30,7 @@
 	var/list/color_altered_mobs = list()
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/quiet = FALSE
+	var/some_fuckery_I_dont_understand
 
 /obj/item/weapon/greentext/New()
 	..()
@@ -45,7 +46,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -54,7 +55,7 @@
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	last_holder 	= null
 	new_holder 		= null
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	..()
 
 /obj/item/weapon/greentext/process()
@@ -69,7 +70,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
-		resistance_flags |= ON_FIRE
+		some_fuckery_I_dont_understand = TRUE
 		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
@@ -78,7 +79,7 @@
 		last_holder = new_holder //long live the king
 
 /obj/item/weapon/greentext/Destroy(force)
-	if(!(resistance_flags & ON_FIRE) && !force)
+	if(!some_fuckery_I_dont_understand && !force)
 		return QDEL_HINT_LETMELIVE
 
 	. = ..()

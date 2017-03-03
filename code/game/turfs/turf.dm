@@ -38,7 +38,7 @@
 
 	levelupdate()
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
@@ -46,7 +46,7 @@
 
 	if(requires_activation)
 		CalculateAdjacentTurfs()
-		SSair.add_to_active(src)
+		SSair.start_processing(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
@@ -55,7 +55,6 @@
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
-	SSair.remove_from_active(src)
 	visibilityChanged()
 	initialized = FALSE
 	requires_activation = FALSE
@@ -256,7 +255,7 @@
 
 	air.temperature /= turf_count
 	air.holder = src
-	SSair.add_to_active(src)
+	SSair.start_processing(src, SSAIR_ACTIVETURFS)
 
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(baseturf)
@@ -393,9 +392,9 @@
 	T0.ChangeTurf(turf_type)
 
 	T0.redraw_lighting()
-	SSair.remove_from_active(T0)
+	SSair.stop_processing(T0, SSAIR_ACTIVETURFS)
 	T0.CalculateAdjacentTurfs()
-	SSair.add_to_active(T0,1)
+	SSair.start_processing(T0, SSAIR_ACTIVETURFS, TRUE)
 
 /turf/proc/is_transition_turf()
 	return

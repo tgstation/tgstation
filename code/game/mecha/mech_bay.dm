@@ -45,6 +45,7 @@
 	max_charge = MC * 25
 
 /obj/machinery/mech_bay_recharge_port/process()
+	..()
 	if(stat & NOPOWER || !recharge_console)
 		return
 	if(!recharging_mech)

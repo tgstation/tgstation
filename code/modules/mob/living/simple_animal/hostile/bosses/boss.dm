@@ -90,8 +90,7 @@
 
 /datum/boss_active_timed_battle/New()
 	..()
-	SSobj.processing.Add(src)
-
+	SSobj.start_processing(src)
 
 /datum/boss_active_timed_battle/proc/assign_abilities(list/L)
 	if(!L)
@@ -133,5 +132,4 @@
 
 /datum/boss_active_timed_battle/Destroy()
 	abilities = null
-	SSobj.processing.Remove(src)
 	return ..()

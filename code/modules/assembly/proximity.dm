@@ -21,7 +21,7 @@
 
 /obj/item/device/assembly/prox_sensor/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	oldloc = loc
 
 /obj/item/device/assembly/prox_sensor/describe()

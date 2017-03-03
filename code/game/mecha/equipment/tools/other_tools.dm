@@ -196,7 +196,6 @@
 	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	if(chassis)
 		chassis.cut_overlay(droid_overlay)
 	return ..()
@@ -208,7 +207,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
 	chassis.cut_overlay(droid_overlay)
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
@@ -221,12 +220,12 @@
 	if(href_list["toggle_repairs"])
 		chassis.cut_overlay(droid_overlay)
 		if(equip_ready)
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
 			log_message("Activated.")
 			set_ready_state(0)
 		else
-			STOP_PROCESSING(SSobj, src)
+			SSobj.stop_processing(src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
 			log_message("Deactivated.")
 			set_ready_state(1)
@@ -236,9 +235,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/process()
 	if(!chassis)
-		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		return
+		return PROCESS_KILL
 	var/h_boost = health_boost
 	var/repaired = 0
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
@@ -254,14 +252,14 @@
 		repaired = 1
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
-			STOP_PROCESSING(SSobj, src)
 			set_ready_state(1)
+			return PROCESS_KILL
 	else //no repair needed, we turn off
-		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
 		chassis.cut_overlay(droid_overlay)
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		chassis.add_overlay(droid_overlay)
+		return PROCESS_KILL
 
 
 
@@ -279,14 +277,9 @@
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
 	selectable = 0
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/detach()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	..()
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_charge()
 	if(equip_ready) //disabled
@@ -310,11 +303,11 @@
 	..()
 	if(href_list["toggle_relay"])
 		if(equip_ready) //inactive
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 			set_ready_state(0)
 			log_message("Activated.")
 		else
-			STOP_PROCESSING(SSobj, src)
+			SSobj.stop_processing(src)
 			set_ready_state(1)
 			log_message("Deactivated.")
 
@@ -325,15 +318,13 @@
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
 	if(!chassis || chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
-		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		return
+		return PROCESS_KILL
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge) || !chassis.cell)
-		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
 		occupant_message("No powercell detected.")
-		return
+		return PROCESS_KILL
 	if(cur_charge < chassis.cell.maxcharge)
 		var/area/A = get_area(chassis)
 		if(A)
@@ -370,16 +361,12 @@
 	..()
 	generator_init()
 
-/obj/item/mecha_parts/mecha_equipment/generator/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/plasma(src)
 	fuel.amount = 0
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/Topic(href, href_list)
@@ -387,11 +374,11 @@
 	if(href_list["toggle"])
 		if(equip_ready) //inactive
 			set_ready_state(0)
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 			log_message("Activated.")
 		else
 			set_ready_state(1)
-			STOP_PROCESSING(SSobj, src)
+			SSobj.stop_processing(src)
 			log_message("Deactivated.")
 
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
@@ -445,21 +432,18 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/process()
 	if(!chassis)
-		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		return
+		return PROCESS_KILL
 	if(fuel.amount<=0)
-		STOP_PROCESSING(SSobj, src)
 		log_message("Deactivated - no fuel.")
 		set_ready_state(1)
-		return
+		return PROCESS_KILL
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
 		set_ready_state(1)
 		occupant_message("No powercell detected.")
 		log_message("Deactivated.")
-		STOP_PROCESSING(SSobj, src)
-		return
+		return PROCESS_KILL
 	var/use_fuel = fuel_per_cycle_idle
 	if(cur_charge < chassis.cell.maxcharge)
 		use_fuel = fuel_per_cycle_active

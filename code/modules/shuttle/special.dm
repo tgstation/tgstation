@@ -27,7 +27,7 @@
 		icon_state = initial(icon_state)
 
 /obj/machinery/power/emitter/energycannon/magical/process()
-	. = ..()
+	..()
 	if(active_tables.len >= tables_required)
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\
@@ -67,11 +67,7 @@
 
 /obj/structure/table/abductor/wabbajack/New()
 	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/table/abductor/wabbajack/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	SSobj.start_processing(src)
 
 /obj/structure/table/abductor/wabbajack/process()
 	var/area = orange(4, src)

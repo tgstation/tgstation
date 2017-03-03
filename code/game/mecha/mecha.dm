@@ -131,7 +131,7 @@
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 	add_cell()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
@@ -184,7 +184,6 @@
 			qdel(internal_tank)
 		if(AI)
 			AI.gib() //No wreck, no AI to recover
-	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null

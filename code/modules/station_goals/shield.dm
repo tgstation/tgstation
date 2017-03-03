@@ -145,6 +145,7 @@
 	return TRUE
 
 /obj/machinery/satellite/meteor_shield/process()
+	..()
 	if(!active)
 		return
 	for(var/obj/effect/meteor/M in meteor_list)

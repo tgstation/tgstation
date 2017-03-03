@@ -116,6 +116,7 @@
 		return ..()
 
 /obj/machinery/hydroponics/process()
+	..()
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(myseed && (myseed.loc != src))

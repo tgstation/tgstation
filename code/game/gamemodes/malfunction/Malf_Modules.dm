@@ -67,7 +67,6 @@
 	if(countdown)
 		qdel(countdown)
 		countdown = null
-	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
 	for(var/A in ai_list)
@@ -80,7 +79,7 @@
 	detonation_timer = world.time + default_timer
 	timing = TRUE
 	countdown.start()
-	START_PROCESSING(SSfastprocess, src)
+	SSfastprocess.start_processing(src)
 	SSshuttle.registerHostileEnvironment(src)
 	SSmapping.add_nuke_threat(src) //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
@@ -88,14 +87,14 @@
 	. = max(0, (round((detonation_timer - world.time) / 10)))
 
 /obj/machinery/doomsday_device/process()
+	..()
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
 	if(!timing)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+		return PROCESS_KILL
 	var/sec_left = seconds_remaining()
 	if(sec_left <= 0)
 		timing = FALSE

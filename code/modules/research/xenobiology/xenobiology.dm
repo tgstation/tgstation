@@ -488,7 +488,7 @@
 
 /obj/effect/golemrune/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost

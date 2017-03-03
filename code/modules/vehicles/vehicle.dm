@@ -97,7 +97,7 @@
 /obj/vehicle/examine(mob/user)
 	..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
-		if(resistance_flags & ON_FIRE)
+		if(IS_PROCESSING(SSfire_burning, src))
 			user << "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)

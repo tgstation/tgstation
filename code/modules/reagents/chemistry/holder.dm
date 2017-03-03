@@ -23,7 +23,7 @@ var/const/INJECT = 5 //injection
 	maximum_volume = maximum
 
 	if(!(flags & REAGENT_NOREACT))
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
@@ -60,7 +60,6 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/Destroy()
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -285,8 +284,7 @@ var/const/INJECT = 5 //injection
 /datum/reagents/process()
 	var/list/cached_reagents = reagent_list
 	if(flags & REAGENT_NOREACT)
-		STOP_PROCESSING(SSobj, src)
-		return
+		return PROCESS_KILL
 
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -297,9 +295,9 @@ var/const/INJECT = 5 //injection
 		// Order is important, process() can remove from processing if
 		// the flag is present
 		flags &= ~(REAGENT_NOREACT)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)

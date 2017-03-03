@@ -53,7 +53,7 @@
 
 /obj/item/weapon/paper/update_icon()
 
-	if(resistance_flags & ON_FIRE)
+	if(IS_PROCESSING(SSfire_burning, src))
 		icon_state = "paper_onfire"
 		return
 	if(info)
@@ -309,7 +309,7 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 
-	if(resistance_flags & ON_FIRE)
+	if(IS_PROCESSING(SSfire_burning, src))
 		return
 
 	if(is_blind(user))

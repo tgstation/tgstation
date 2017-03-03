@@ -121,6 +121,7 @@
 	deployed_shields.Cut()
 
 /obj/machinery/shieldgen/process()
+	..()
 	if((stat & BROKEN) && active)
 		if(deployed_shields.len && prob(5))
 			qdel(pick(deployed_shields))
@@ -302,6 +303,7 @@
 	add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/process()
+	..()
 	power()
 	if(power)
 		storedpower -= 50 //this way it can survive longer and survive at all
@@ -462,6 +464,7 @@
 
 
 /obj/machinery/shieldwall/process()
+	..()
 	if(needs_power)
 		if(isnull(gen_primary)||isnull(gen_secondary))
 			qdel(src)

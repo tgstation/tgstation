@@ -55,6 +55,7 @@
 				. = pod
 
 /obj/machinery/computer/cloning/process()
+	..()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
 

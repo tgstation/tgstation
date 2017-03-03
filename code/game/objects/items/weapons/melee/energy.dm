@@ -67,15 +67,11 @@
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
-/obj/item/weapon/melee/energy/sword/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
 /obj/item/weapon/melee/energy/sword/process()
 	if(active)
 		open_flame()
 	else
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
@@ -101,7 +97,7 @@
 		w_class = w_class_on
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] is now active.</span>"
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -113,7 +109,7 @@
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/is_hot()

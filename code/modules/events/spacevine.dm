@@ -440,7 +440,7 @@
 /obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	spawn_spacevine_piece(loc, , muts)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
@@ -457,10 +457,6 @@
 
 /obj/effect/spacevine_controller/singularity_pull()
 	return
-
-/obj/effect/spacevine_controller/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/structure/spacevine/parent, list/muts)
 	var/obj/structure/spacevine/SV = new(location)

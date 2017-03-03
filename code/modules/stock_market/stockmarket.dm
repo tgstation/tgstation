@@ -11,7 +11,7 @@
 		..()
 		generateBrokers()
 		generateStocks()
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /datum/stockMarket/proc/balanceLog(var/whose, var/net)
 	if (!(whose in balances))

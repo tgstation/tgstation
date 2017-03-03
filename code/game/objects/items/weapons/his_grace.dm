@@ -25,10 +25,9 @@
 
 /obj/item/weapon/his_grace/New()
 	..()
-	START_PROCESSING(SSprocessing, src)
+	SSmediumprocess.start_processing(src)
 
 /obj/item/weapon/his_grace/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
 	return ..()

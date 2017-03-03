@@ -14,7 +14,7 @@
 
 /obj/item/device/assembly/timer/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/device/assembly/timer/describe()
 	if(timing)
@@ -33,10 +33,10 @@
 /obj/item/device/assembly/timer/toggle_secure()
 	secured = !secured
 	if(secured)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
 		timing = 0
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 	update_icon()
 	return secured
 

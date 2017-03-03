@@ -28,7 +28,7 @@
 	icon_state = "[icontype]1"
 	active = 1
 	machines |= src
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	if(user)
 		user << "<span class='notice'>You activate the beacon.</span>"
 
@@ -83,6 +83,7 @@
 
 //stealth direct power usage
 /obj/machinery/power/singularity_beacon/process()
+	..()
 	if(!active)
 		return PROCESS_KILL
 	else

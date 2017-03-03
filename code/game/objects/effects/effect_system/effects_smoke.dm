@@ -33,15 +33,10 @@
 /obj/effect/particle_effect/smoke/New()
 	..()
 	create_reagents(500)
-	START_PROCESSING(SSobj, src)
-
-
-/obj/effect/particle_effect/smoke/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	INVOKE_ASYNC(src, .proc/fade_out)
 	QDEL_IN(src, 10)
 

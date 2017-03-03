@@ -151,7 +151,7 @@
 		burning = 1
 		SetLuminosity(6)
 		Burn()
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	StartBurning()
@@ -185,7 +185,7 @@
 		icon_state = "bonfire"
 		burning = 0
 		SetLuminosity(0)
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/M, force = 0)
 	if(..())

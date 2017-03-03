@@ -13,7 +13,7 @@
 
 /obj/item/device/assembly/infra/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/device/assembly/infra/Destroy()
 	if(first)
@@ -33,12 +33,12 @@
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
 		on = 0
 		if(first)
 			qdel(first)
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 	update_icon()
 	return secured
 

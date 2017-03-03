@@ -28,6 +28,7 @@ var/global/list/rad_collectors = list()
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
+	..()
 	if(loaded_tank)
 		if(!loaded_tank.air_contents.gases["plasma"])
 			investigate_log("<font color='red'>out of fuel</font>.","singulo")

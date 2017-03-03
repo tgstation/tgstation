@@ -45,12 +45,12 @@
 		..()
 
 /obj/machinery/syndicatebomb/process()
+	..()
 	if(!active)
-		STOP_PROCESSING(SSfastprocess, src)
 		detonation_timer = null
 		next_beep = null
 		countdown.stop()
-		return
+		return PROCESS_KILL
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
@@ -80,7 +80,7 @@
 		if(defused && payload in src)
 			payload.defuse()
 			countdown.stop()
-			STOP_PROCESSING(SSfastprocess, src)
+			return PROCESS_KILL
 
 /obj/machinery/syndicatebomb/New()
 	wires = new /datum/wires/syndicatebomb(src)
@@ -96,7 +96,6 @@
 	if(countdown)
 		qdel(countdown)
 		countdown = null
-	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
@@ -200,7 +199,7 @@
 
 /obj/machinery/syndicatebomb/proc/activate()
 	active = TRUE
-	START_PROCESSING(SSfastprocess, src)
+	SSfastprocess.start_processing(src)
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)

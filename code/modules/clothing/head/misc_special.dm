@@ -64,7 +64,7 @@
 	throwforce = 15
 	damtype = BURN
 	hitsound = 'sound/items/Welder.ogg'
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
 	..()
@@ -72,7 +72,7 @@
 	throwforce = 0
 	damtype = BRUTE
 	hitsound = 'sound/weapons/tap.ogg'
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
 	return on * heat

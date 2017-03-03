@@ -40,8 +40,7 @@
 
 /turf/closed/mineral/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir)))
-	queue_smooth(src)
-
+	QUEUE_SMOOTH(src)
 
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 

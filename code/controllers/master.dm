@@ -135,6 +135,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Initialize subsystems.
 	CURRENT_TICKLIMIT = config.tick_limit_mc_init
 	for (var/datum/subsystem/SS in subsystems)
+		if (SS.flags & SS_ABSTRACT)
+			subsystems -= SS
+			continue
 		if (SS.flags & SS_NO_INIT)
 			continue
 		SS.Initialize(REALTIMEOFDAY)

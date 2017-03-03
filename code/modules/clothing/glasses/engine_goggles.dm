@@ -15,13 +15,13 @@
 	mode = !mode
 
 	if(mode)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
 		user << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
 	else
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
 		invis_view = SEE_INVISIBLE_MINIMUM
@@ -120,10 +120,10 @@
 	on = !on
 
 	if(on)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 		user << "<span class='notice'>You turn the goggles on.</span>"
 	else
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 		user << "<span class='notice'>You turn the goggles off.</span>"
 		invis_update()
 

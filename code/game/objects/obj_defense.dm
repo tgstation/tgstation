@@ -145,7 +145,6 @@
 		qdel(src)
 	return 2
 
-
 ///// ACID
 
 var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "icon_state" = "acid")
@@ -153,10 +152,8 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 //the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
 	if(!(resistance_flags & UNACIDABLE) && acid_volume)
-
-		if(!acid_level)
-			SSacid.processing[src] = src
-			add_overlay(acid_overlay, TRUE)
+		SSacid.start_processing(src)
+		add_overlay(acid_overlay, TRUE)
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
@@ -175,11 +172,12 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
 	if(!acid_level)
+		cut_overlay(acid_overlay, TRUE)
 		return 0
 
 //called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	SSacid.processing -= src
+	SSacid.stop_processing(src)
 	deconstruct(FALSE)
 
 //// FIRE
@@ -191,25 +189,22 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(Clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
-	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
-		resistance_flags |= ON_FIRE
-		SSfire_burning.processing[src] = src
+	if(!IS_PROCESSING(SSfire_burning, src) && (resistance_flags & FLAMMABLE))
+		SSfire_burning.start_processing(src)
 		add_overlay(fire_overlay, TRUE)
 		return 1
 
+/obj/proc/fire_processing()
+	take_damage(20, BURN, "fire", 0)
+
 //called when the obj is destroyed by fire
 /obj/proc/burn()
-	if(resistance_flags & ON_FIRE)
-		SSfire_burning.processing -= src
+	SSfire_burning.stop_processing(src)
 	deconstruct(FALSE)
 
 /obj/proc/extinguish()
-	if(resistance_flags & ON_FIRE)
-		resistance_flags &= ~ON_FIRE
-		cut_overlay(fire_overlay, TRUE)
-		SSfire_burning.processing -= src
-
-
+	cut_overlay(fire_overlay, TRUE)
+	SSfire_burning.stop_processing(src)
 
 /obj/proc/tesla_act(var/power)
 	being_shocked = 1

@@ -43,7 +43,7 @@
 
 /obj/structure/table/update_icon()
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()

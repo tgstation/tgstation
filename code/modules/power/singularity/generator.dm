@@ -29,6 +29,7 @@
 		return ..()
 
 /obj/machinery/the_singularitygen/process()
+	..()
 	if(energy > 0)
 		if(energy >= 200)
 			var/turf/T = get_turf(src)

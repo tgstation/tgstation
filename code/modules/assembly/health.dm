@@ -22,10 +22,10 @@
 /obj/item/device/assembly/health/toggle_secure()
 	secured = !secured
 	if(secured && scanning)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
 		scanning = 0
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 	update_icon()
 	return secured
 
@@ -67,10 +67,9 @@
 		return 0
 	scanning = !scanning
 	if(scanning)
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
-		STOP_PROCESSING(SSobj, src)
-	return
+		SSobj.stop_processing(src)
 
 /obj/item/device/assembly/health/interact(mob/user as mob)//TODO: Change this to the wires thingy
 	if(!secured)

@@ -58,6 +58,7 @@
 	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/process()
+	..()
 
 	if(recharged < 0)
 		recharge()

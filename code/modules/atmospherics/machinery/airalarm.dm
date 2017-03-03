@@ -551,6 +551,7 @@
 			icon_state = "alarm1"
 
 /obj/machinery/airalarm/process()
+	..()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
 		return
 

@@ -146,12 +146,10 @@
 //which should be the only place it's referenced.
 //Called when start(), announce() and end() has all been called.
 /datum/round_event/proc/kill()
-	SSevent.running -= src
-
+	SSevent.stop_processing(src)
 
 //Sets up the event then adds the event to the the list of running events
 /datum/round_event/New(my_processing = TRUE)
 	setup()
 	processing = my_processing
-	SSevent.running += src
-	return ..()
+	SSevent.start_processing(src)

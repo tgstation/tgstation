@@ -17,7 +17,7 @@
 
 /obj/machinery/portable_atmospherics/New()
 	..()
-	SSair.atmos_machinery += src
+	SSair.start_processing(src, SSAIR_ATMOSMACHINERY)
 
 	air_contents = new
 	air_contents.volume = volume
@@ -27,8 +27,6 @@
 	return 1
 
 /obj/machinery/portable_atmospherics/Destroy()
-	SSair.atmos_machinery -= src
-
 	disconnect()
 	qdel(air_contents)
 	air_contents = null

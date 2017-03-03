@@ -86,11 +86,10 @@
 /obj/item/clockwork/slab/New()
 	..()
 	update_slab_info(src)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
 
 /obj/item/clockwork/slab/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	if(slab_ability && slab_ability.ranged_ability_user)
 		slab_ability.remove_ranged_ability()
 	slab_ability = null
@@ -113,8 +112,7 @@
 //Component Generation
 /obj/item/clockwork/slab/process()
 	if(!produces_components)
-		STOP_PROCESSING(SSobj, src)
-		return
+		return PROCESS_KILL
 	if(production_time > world.time)
 		return
 	var/servants = 0

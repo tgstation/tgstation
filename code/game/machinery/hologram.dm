@@ -151,6 +151,7 @@ var/list/holopads = list()
 		clear_holo(user)
 
 /obj/machinery/holopad/process()
+	..()
 	if(masters.len)//If there is a hologram.
 		for (var/mob/living/silicon/ai/master in masters)
 			if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.

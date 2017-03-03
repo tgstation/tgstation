@@ -65,6 +65,7 @@
 		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
+	..()
 	if(!panel_open && powered()) //If the machine is partially disassembled and/or depowered, it should not process minerals
 		var/turf/T = get_step(src, input_dir)
 		var/i = 0

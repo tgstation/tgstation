@@ -34,7 +34,7 @@
 
 /obj/item/device/camera_bug/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/device/camera_bug/Destroy()
 	get_cameras()

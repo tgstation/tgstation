@@ -77,14 +77,13 @@
 
 /obj/item/weapon/claymore/highlander/New()
 	..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/weapon/claymore/highlander/Destroy()
 	if(nuke_disk)
 		nuke_disk.forceMove(get_turf(src))
 		nuke_disk.visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
 		nuke_disk = null
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/claymore/highlander/process()

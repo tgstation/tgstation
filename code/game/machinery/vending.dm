@@ -541,6 +541,7 @@
 
 
 /obj/machinery/vending/process()
+	..()
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(!active)

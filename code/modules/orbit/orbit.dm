@@ -8,7 +8,7 @@
 /datum/orbit/New(_orbiter, _orbiting, _lock)
 	orbiter = _orbiter
 	orbiting = _orbiting
-	SSorbit.processing += src
+	SSorbit.start_processing(src)
 	if (!orbiting.orbiters)
 		orbiting.orbiters = list()
 	orbiting.orbiters += src
@@ -23,7 +23,6 @@
 
 //do not qdel directly, use stop_orbit on the orbiter. (This way the orbiter can bind to the orbit stopping)
 /datum/orbit/Destroy(force = FALSE)
-	SSorbit.processing -= src
 	if (orbiter)
 		orbiter.orbiting = null
 		orbiter = null

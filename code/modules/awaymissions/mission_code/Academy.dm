@@ -37,12 +37,7 @@
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/academy_wizard_spawner/Destroy()
-	if(!broken)
-		STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
@@ -107,8 +102,8 @@
 	if(!broken)
 		broken = 1
 		visible_message("<span class='warning'>[src] breaks down!</span>")
-		icon_state = "forge_off"
-		STOP_PROCESSING(SSobj, src)
+		icon_state = "forge_off"		
+		SSobj.stop_processing(src)
 
 /datum/outfit/wizard/academy
 	name = "Academy Wizard"

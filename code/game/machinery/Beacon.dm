@@ -42,6 +42,7 @@
 		icon_state = "[state]"
 
 /obj/machinery/bluespace_beacon/process()
+	..()
 	if(!Beacon)
 		var/turf/T = loc
 		Beacon = new /obj/item/device/radio/beacon

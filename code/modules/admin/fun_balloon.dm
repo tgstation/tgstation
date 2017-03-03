@@ -8,11 +8,7 @@
 
 /obj/effect/fun_balloon/New()
 	. = ..()
-	SSobj.processing |= src
-
-/obj/effect/fun_balloon/Destroy()
-	SSobj.processing -= src
-	. = ..()
+	SSobj.start_processing(src)
 
 /obj/effect/fun_balloon/process()
 	if(!popped && check() && !QDELETED(src))

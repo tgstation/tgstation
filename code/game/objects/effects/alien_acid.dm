@@ -32,11 +32,9 @@
 	pixel_x = target.pixel_x + rand(-4,4)
 	pixel_y = target.pixel_y + rand(-4,4)
 
-	START_PROCESSING(SSobj, src)
-
+	SSobj.start_processing(src)
 
 /obj/effect/acid/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	target = null
 	return ..()
 

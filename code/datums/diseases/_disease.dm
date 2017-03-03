@@ -128,8 +128,7 @@ var/list/diseases = subtypesof(/datum/disease)
 
 /datum/disease/process()
 	if(!holder)
-		SSdisease.processing -= src
-		return
+		return PROCESS_KILL
 
 	if(prob(infectivity))
 		spread(holder)
@@ -169,7 +168,7 @@ var/list/diseases = subtypesof(/datum/disease)
 						cure()
 						return
 
-	SSdisease.processing += src
+	SSdisease.start_processing(src)
 
 
 /datum/disease/proc/IsSame(datum/disease/D)
@@ -186,11 +185,6 @@ var/list/diseases = subtypesof(/datum/disease)
 
 /datum/disease/proc/GetDiseaseID()
 	return type
-
-
-/datum/disease/Destroy()
-	SSdisease.processing.Remove(src)
-	return ..()
 
 
 /datum/disease/proc/IsSpreadByTouch()

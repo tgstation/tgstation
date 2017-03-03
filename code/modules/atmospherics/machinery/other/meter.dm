@@ -18,12 +18,11 @@
 
 /obj/machinery/meter/New()
 	..()
-	SSair.atmos_machinery += src
+	SSair.start_processing(src, SSAIR_ATMOSMACHINERY)
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 	return 1
 
 /obj/machinery/meter/Destroy()
-	SSair.atmos_machinery -= src
 	src.target = null
 	return ..()
 

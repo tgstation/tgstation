@@ -14,7 +14,7 @@
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	..()
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 		queue_smooth_neighbors(src)
 		icon_state = ""
 	if(ticker)
@@ -95,7 +95,7 @@
 /obj/structure/examine(mob/user)
 	..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
-		if(resistance_flags & ON_FIRE)
+		if(IS_PROCESSING(SSfire_burning, src))
 			user << "<span class='warning'>It's on fire!</span>"
 		if(broken)
 			user << "<span class='notice'>It looks broken.</span>"

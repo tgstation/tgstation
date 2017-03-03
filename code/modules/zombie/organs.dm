@@ -24,11 +24,11 @@
 
 /obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = 0)
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	if(iszombie(M) && old_species)
 		M.set_species(old_species)
 	if(timer_id)

@@ -244,10 +244,10 @@
 	on = !on
 	if(on)
 		cyborg << "<span class='notice'>You activate the self-repair module.</span>"
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	else
 		cyborg << "<span class='notice'>You deactivate the self-repair module.</span>"
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/update_icon()
@@ -260,7 +260,7 @@
 		icon_state = "cyborg_upgrade5"
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	on = FALSE
 	update_icon()
 

@@ -44,8 +44,7 @@
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
 	src.spawn_fast = spawn_fast
-	START_PROCESSING(SSobj, src)
-	return
+	SSobj.start_processing(src)
 
 /obj/effect/rend/process()
 	if(!spawn_fast)

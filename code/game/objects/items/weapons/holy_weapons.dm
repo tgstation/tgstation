@@ -363,11 +363,7 @@
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/nullrod/tribal_knife/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/item/weapon/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)

@@ -116,6 +116,7 @@
 	process()
 
 /obj/machinery/computer/emergency_shuttle/process()
+	..()
 	// Launch check is in process in case auth_need changes for some reason
 	// probably external.
 	. = FALSE

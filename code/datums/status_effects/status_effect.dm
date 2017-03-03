@@ -21,7 +21,6 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	addtimer(CALLBACK(src, .proc/start_ticking), 1) //Give us time to set any variables
 
 /datum/status_effect/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
 	if(owner)
 		owner.clear_alert(id)
 		on_remove()
@@ -42,7 +41,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	if(alert_type)
 		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to
-	START_PROCESSING(SSfastprocess, src)
+	SSfastprocess.start_processing(src)
 
 /datum/status_effect/process()
 	if(!owner)

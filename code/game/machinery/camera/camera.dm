@@ -405,6 +405,7 @@
 	assembly.update_icon()
 
 /obj/machinery/camera/portable/process() //Updates whenever the camera is moved.
+	..()
 	if(cameranet && get_turf(src) != prev_turf)
 		cameranet.updatePortableCamera(src)
 		prev_turf = get_turf(src)

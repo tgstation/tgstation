@@ -289,7 +289,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 /datum/gang_points/New()
 	next_point_time = world.time + next_point_interval
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any

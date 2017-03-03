@@ -99,12 +99,12 @@
 		M.SetStunned(0)
 		M.SetWeakened(0)
 		combat_cooldown = 0
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown==initial(combat_cooldown))
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/device/abductor/proc/AbductorCheck(user)
 	if(isabductor(user))
@@ -611,7 +611,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()
 	if(iscarbon(AM))
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 		AM << "<span class='danger'>You feel a series of tiny pricks!</span>"
 
 /obj/structure/table/optable/abductor/process()
@@ -621,10 +621,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		for(var/chemical in injected_reagents)
 			if(C.reagents.get_reagent_amount(chemical) < 1)
 				C.reagents.add_reagent(chemical, 1)
-
-/obj/structure/table/optable/abductor/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
 
 /obj/structure/closet/abductor
 	name = "alien locker"

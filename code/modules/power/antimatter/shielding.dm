@@ -83,8 +83,9 @@
 
 
 /obj/machinery/am_shielding/process()
-	if(!processing)
-		. = PROCESS_KILL
+	//..()
+	//if(!processing)
+	. = PROCESS_KILL
 	//TODO: core functions and stability
 	//TODO: think about checking the airmix for plasma and increasing power output
 	return
@@ -192,7 +193,7 @@
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
 	machines |= src
-	START_PROCESSING(SSmachine, src)
+	SSmachine.start_processing(src)
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Add(src)

@@ -62,6 +62,7 @@
 	addtimer(CALLBACK(src, .proc/updateDialog), 5)
 
 /obj/machinery/embedded_controller/process()
+	..()
 	if(program)
 		program.process()
 

@@ -20,7 +20,7 @@
 	if(_victim && _target && _steps_per_tick && !_victim.force_moving)
 		last_processed = world.time
 		_victim.force_moving = src
-		START_PROCESSING(SSfastprocess, src)
+		SSfastprocess.start_processing(src)
 	else
 		qdel(src)	//if you want to overwrite the current forced movement, call qdel(victim.force_moving) before creating this
 
@@ -29,7 +29,6 @@
 		victim.force_moving = null
 		if(moved_at_all)
 			victim.forceMove(victim.loc)	//get the side effects of moving here that require us to currently not be force_moving aka reslipping on ice
-		STOP_PROCESSING(SSfastprocess, src)
 	victim = null
 	target = null
 	return ..()

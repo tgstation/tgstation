@@ -141,6 +141,7 @@
 		use_power = 1
 
 /obj/machinery/particle_accelerator/control_box/process()
+	..()
 	if(active)
 		//a part is missing!
 		if(connected_parts.len < 6)

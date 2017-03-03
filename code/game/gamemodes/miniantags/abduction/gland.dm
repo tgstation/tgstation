@@ -221,15 +221,15 @@
 
 /obj/structure/spider/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/structure/spider/cocoon/abductor/process()
 	if(world.time > hatch_time)
-		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc
 		qdel(src)
+		return PROCESS_KILL
 
 
 /obj/item/organ/heart/gland/plasma

@@ -58,9 +58,6 @@
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 
-	if(!.)
-		STOP_PROCESSING(SSmachine, src)
-
 /obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -122,7 +119,7 @@
 	cut_overlays()
 	operating = 0
 	stat |= BROKEN
-	STOP_PROCESSING(SSmachine, src)
+	SSmachine.stop_processing(src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -132,7 +129,6 @@
 	qdel(spark_system)
 	qdel(countdown)
 	countdown = null
-	STOP_PROCESSING(SSmachine, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -181,7 +177,7 @@
 		countdown.start()
 
 		SetLuminosity(3)
-		START_PROCESSING(SSmachine, src)
+		SSmachine.start_processing(src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in ticker.mode.gangs)

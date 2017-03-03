@@ -48,7 +48,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "lit match"
 		desc = "A match. This one is lit."
 		attack_verb = list("burnt","singed")
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 		update_icon()
 
 /obj/item/weapon/match/proc/matchburnout()
@@ -62,7 +62,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
 		attack_verb = list("flicked")
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 
 /obj/item/weapon/match/dropped(mob/user)
 	matchburnout()
@@ -123,10 +123,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 15)
 
-/obj/item/clothing/mask/cigarette/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user, params)
 	if(!lit && smoketime > 0)
 		var/lighting_text = W.ignition_effect(src, user)
@@ -179,7 +175,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(flavor_text)
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 	//can't think of any other way to update the overlays :<
 	if(ismob(loc))
@@ -344,10 +340,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	name = "empty [initial(name)]"
 
-/obj/item/clothing/mask/cigarette/pipe/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
 	smoketime--
@@ -362,7 +354,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M.update_inv_wear_mask()
 			packeditem = 0
 			name = "empty [initial(name)]"
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 		return
 	open_flame()
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
@@ -402,7 +394,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 		return
 	if(!lit && smoketime > 0)
 		user << "<span class='notice'>You empty [src] onto [location].</span>"
@@ -490,7 +482,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 		else
 			lit = 0
 			update_icon()
@@ -502,7 +494,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
 			user.AddLuminosity(-1)
-			STOP_PROCESSING(SSobj, src)
+			SSobj.stop_processing(src)
 	else
 		. = ..()
 
@@ -671,7 +663,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!screw)
 			user << "<span class='notice'>You start puffing on the vape.</span>"
 			reagents.set_reacting(TRUE)
-			START_PROCESSING(SSobj, src)
+			SSobj.start_processing(src)
 		else //it will not start if the vape is opened.
 			user << "<span class='warning'>You need to close the cap first!</span>"
 
@@ -679,7 +671,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/carbon/C = user
 	if(C.get_item_by_slot(slot_wear_mask) == src)
 		reagents.set_reacting(FALSE)
-		STOP_PROCESSING(SSobj, src)
+		SSobj.stop_processing(src)
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
 	if(reagents.total_volume)
@@ -713,7 +705,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!reagents.total_volume)
 		if(ismob(loc))
 			M << "<span class='notice'>The [name] is empty!</span>"
-			STOP_PROCESSING(SSobj, src)
+			. = PROCESS_KILL
 			//it's reusable so it won't unequip when empty
 		return
 	//open flame removed because vapes are a closed system, they wont light anything on fire

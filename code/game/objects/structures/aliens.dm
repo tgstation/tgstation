@@ -180,11 +180,7 @@
 	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
 	if(W && W != src)
 		qdel(W)
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/alien/weeds/node/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/structure/alien/weeds/node/process()
 	for(var/obj/structure/alien/weeds/W in range(node_range, src))

@@ -8,35 +8,36 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	init_order = -6
 
 	stat_tag = "Ov"
-	currentrun = null
+	delegate = /atom/.proc/compile_overlays
+	fire_if_empty = TRUE
+
 	var/list/overlay_icon_state_caches
-	var/initialized = FALSE
 
 /datum/subsystem/processing/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
 	LAZYINITLIST(overlay_icon_state_caches)
 
 /datum/subsystem/processing/overlays/Initialize()
-	initialized = TRUE
-	for(var/I in processing)
+	for(var/I in processing_list)
 		var/atom/A = I
 		A.compile_overlays()
+		LAZYREMOVE(A.processors, src)
 		CHECK_TICK
-	processing.Cut()
+	processing_list.Cut()
 	..()
 
 /datum/subsystem/processing/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
-	processing = SSoverlays.processing
+	..(SSoverlays)
 
-/datum/subsystem/processing/overlays/fire()
-	while(processing.len)
-		var/atom/thing = processing[processing.len]
-		processing.len--
-		if(thing)
-			thing.compile_overlays(FALSE)
-		if(MC_TICK_CHECK)
-			break
+/datum/subsystem/processing/overlays/fire(resumed)
+	if(run_cache.len)
+		run_cache += processing_list
+		processing_list.Cut()
+	else
+		run_cache = processing_list
+		processing_list = list()
+	..(TRUE)
 
 /atom/proc/compile_overlays()
 	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
@@ -47,7 +48,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		overlays = priority_overlays
 	else
 		overlays.Cut()
-	flags &= ~OVERLAY_QUEUED
+	return PROCESS_KILL
 
 /atom/proc/iconstate2appearance(iconstate)
 	var/static/image/stringbro = new()
@@ -66,8 +67,6 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	cached_icon["[iconstate]"] = cached_appearance
 	return cached_appearance
 
-#define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
-#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; 
 /atom/proc/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays
@@ -82,8 +81,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		cached_priority.Cut()
 		need_compile = TRUE
 
-	if(NOT_QUEUED_ALREADY && need_compile)
-		QUEUE_FOR_COMPILE
+	if(need_compile)
+		SSoverlays.start_processing(src)
 
 /atom/proc/cut_overlay(list/overlays, priority)
 	var/static/image/appearance_bro = new()
@@ -112,8 +111,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	if(priority)
 		LAZYREMOVE(cached_priority, overlays)
 
-	if(NOT_QUEUED_ALREADY && ((init_o_len != LAZYLEN(cached_priority)) || (init_p_len != LAZYLEN(cached_overlays))))
-		QUEUE_FOR_COMPILE
+	if((init_o_len != LAZYLEN(cached_priority)) || (init_p_len != LAZYLEN(cached_overlays)))
+		SSoverlays.start_processing(src)
 
 /atom/proc/add_overlay(list/overlays, priority = FALSE)
 	var/static/image/appearance_bro = new()
@@ -149,8 +148,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		cached_overlays += overlays
 		need_compile = init_o_len != cached_overlays.len
 
-	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
-		QUEUE_FOR_COMPILE
+	if(need_compile) //have we caught more pokemon?
+		SSoverlays.start_processing(src)
 
 /atom/proc/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
 	if(!other)
@@ -164,13 +163,9 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			our_overlays = cached_other.Copy()
 		else
 			our_overlays |= cached_other
-		if(NOT_QUEUED_ALREADY)
-			QUEUE_FOR_COMPILE
+		SSoverlays.start_processing(src)
 	else if(cut_old)
 		cut_overlays()
-
-#undef NOT_QUEUED_ALREADY
-#undef QUEUE_FOR_COMPILE
 
 //TODO: Better solution for these?
 /image/proc/add_overlay(x)

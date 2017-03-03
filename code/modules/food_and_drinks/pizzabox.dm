@@ -82,7 +82,7 @@
 	if(open && !bomb_defused)
 		audible_message("<span class='warning'>\icon[src] *beep*</span>")
 		bomb_active = TRUE
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	update_icon()
 
 /obj/item/pizzabox/attack_hand(mob/user)
@@ -201,7 +201,7 @@
 	return
 
 /obj/item/pizzabox/proc/unprocess()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	qdel(wires)
 	wires = null
 	update_icon()

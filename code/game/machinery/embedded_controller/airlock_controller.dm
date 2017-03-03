@@ -57,6 +57,7 @@
 			target_state = AIRLOCK_STATE_CLOSED
 
 /datum/computer/file/embedded_program/airlock_controller/process()
+	..()
 	var/process_again = 1
 	while(process_again)
 		process_again = 0

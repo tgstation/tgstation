@@ -23,17 +23,17 @@
 		L.status_flags |= GODMODE
 		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		max_integrity = obj_integrity
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 	..()
 
 /obj/structure/statue/petrified/process()
 	if(!petrified_mob)
-		STOP_PROCESSING(SSobj, src)
+		. = PROCESS_KILL
 	timer--
 	petrified_mob.Stun(2) //So they can't do anything while petrified
 	if(timer <= 0)
-		STOP_PROCESSING(SSobj, src)
 		qdel(src)
+		return PROCESS_KILL
 
 /obj/structure/statue/petrified/contents_explosion(severity, target)
 	return

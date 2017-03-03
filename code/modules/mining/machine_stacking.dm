@@ -86,6 +86,7 @@
 		storage.amount -= stack_amt
 
 /obj/machinery/mineral/stacking_machine/process()
+	..()
 	var/turf/T = get_step(src, input_dir)
 	if(T)
 		for(var/obj/item/stack/sheet/S in T)

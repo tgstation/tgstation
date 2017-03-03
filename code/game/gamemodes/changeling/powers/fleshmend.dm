@@ -17,11 +17,7 @@
 
 /obj/effect/proc_holder/changeling/fleshmend/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/effect/proc_holder/changeling/fleshmend/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	..()
+	SSobj.start_processing(src)
 
 /obj/effect/proc_holder/changeling/fleshmend/process()
 	if(recent_uses > 1)

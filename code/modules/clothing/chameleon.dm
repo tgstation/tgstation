@@ -153,15 +153,14 @@
 	return 1
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise()
-	START_PROCESSING(SSprocessing, src)
+	SSmediumprocess.start_processing(src)
 	random_look(owner)
 
 	emp_timer = world.time + EMP_RANDOMISE_TIME
 
 /datum/action/item_action/chameleon/change/process()
 	if(world.time > emp_timer)
-		STOP_PROCESSING(SSprocessing, src)
-		return
+		return PROCESS_KILL
 	random_look(owner)
 
 /datum/action/item_action/chameleon/change/proc/update_item_icon()

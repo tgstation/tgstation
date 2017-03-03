@@ -39,6 +39,7 @@
 	power_change()
 
 /obj/machinery/computer/process()
+	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
 	return 1

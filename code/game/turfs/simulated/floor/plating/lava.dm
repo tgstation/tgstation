@@ -16,15 +16,15 @@
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	if(burn_stuff(AM))
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /turf/open/floor/plating/lava/hitby(atom/movable/AM)
 	if(burn_stuff(AM))
-		START_PROCESSING(SSobj, src)
+		SSobj.start_processing(src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /turf/open/floor/plating/lava/singularity_act()
 	return
@@ -66,7 +66,7 @@
 			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
 				continue
 			. = 1
-			if((O.resistance_flags & (ON_FIRE)))
+			if(IS_PROCESSING(SSfire_burning, O))
 				continue
 			if(!(O.resistance_flags & FLAMMABLE))
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava

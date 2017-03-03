@@ -28,13 +28,13 @@
 
 /obj/effect/countdown/proc/start()
 	if(!started)
-		START_PROCESSING(SSfastprocess, src)
+		SSfastprocess.start_processing(src)
 		started = TRUE
 
 /obj/effect/countdown/proc/stop()
 	if(started)
 		maptext = null
-		STOP_PROCESSING(SSfastprocess, src)
+		SSfastprocess.stop_processing(src)
 		started = FALSE
 
 /obj/effect/countdown/proc/get_value()
@@ -57,7 +57,6 @@
 
 /obj/effect/countdown/Destroy()
 	attached_to = null
-	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
 /obj/effect/countdown/ex_act(severity, target) //immune to explosions

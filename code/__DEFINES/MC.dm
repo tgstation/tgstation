@@ -5,8 +5,7 @@
 #define MC_AVERAGE_SLOW(average, current) (0.9 * (average) + 0.1 * (current))
 #define NEW_SS_GLOBAL(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
 
-#define START_PROCESSING(Processor, Datum) if (!Datum.isprocessing) {Datum.isprocessing = 1;Processor.processing += Datum}
-#define STOP_PROCESSING(Processor, Datum) Datum.isprocessing = 0;Processor.processing -= Datum
+#define IS_PROCESSING(SS, D) (SS in D.processors)
 
 //SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
@@ -43,6 +42,10 @@
 //	(IE: if a 5ds wait SS takes 2ds to run, its next fire should be 5ds away, not 3ds like it normally would be)
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128
+
+//Susbsystem isn't real and is meant to be derived.
+// Prevents it from ever being created
+#define SS_ABSTRACT 256
 
 //SUBSYSTEM STATES
 #define SS_IDLE 0		//aint doing shit.

@@ -13,11 +13,7 @@
 
 /obj/item/device/radio/intercom/New()
 	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/device/radio/intercom/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+	SSobj.start_processing(src)
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	interact(user)

@@ -194,13 +194,13 @@ effective or pretty fucking useless.
 		return
 	user << "<span class='notice'>You activate [src].</span>"
 	src.user = user
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	old_alpha = user.alpha
 	on = 1
 
 /obj/item/device/shadowcloak/proc/Deactivate()
 	user << "<span class='notice'>You deactivate [src].</span>"
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 	if(user)
 		user.alpha = old_alpha
 	on = 0

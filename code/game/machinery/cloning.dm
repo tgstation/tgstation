@@ -210,7 +210,7 @@
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
-
+	..()
 	if(!is_operational()) //Autoeject if power is lost
 		if (occupant)
 			go_out()

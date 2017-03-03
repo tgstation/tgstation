@@ -47,7 +47,7 @@ var/bomb_set
 	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
-	STOP_PROCESSING(SSobj, core)
+	SSobj.stop_processing(core)
 	update_icon()
 	poi_list |= src
 	previous_level = get_security_level()
@@ -135,7 +135,7 @@ var/bomb_set
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
-					START_PROCESSING(SSobj, core)
+					SSobj.start_processing(core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -158,7 +158,7 @@ var/bomb_set
 						if(M.use(20))
 							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
 							deconstruction_state = NUKESTATE_PANEL_REMOVED
-							STOP_PROCESSING(SSobj, core)
+							SSobj.stop_processing(core)
 							update_icon()
 						else
 							user << "<span class='warning'>You need more metal to do that!</span>"
@@ -226,6 +226,7 @@ var/bomb_set
 	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()
+	..()
 	if(timing && !exploding)
 		bomb_set = TRUE
 		if(detonation_timer < world.time)
@@ -500,7 +501,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 
 /obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/claymore/highlander))
@@ -574,7 +575,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 			[ADMIN_COORDJMP(diskturf)].")
 		log_game("[src] has been !!force deleted!! in [COORD(diskturf)].")
 		poi_list -= src
-		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 	var/turf/targetturf = relocate()

@@ -1,48 +1,26 @@
 #define MAX_THROWING_DIST 512 // 2 z-levels on default width
 #define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
-var/datum/subsystem/throwing/SSthrowing
+var/datum/subsystem/processing/throwing/SSthrowing
 
-/datum/subsystem/throwing
+/datum/subsystem/processing/throwing
 	name = "Throwing"
 	priority = 25
 	wait = 1
 	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
 
-	var/list/currentrun
-	var/list/processing
+	stat_tag = "T"
 
-/datum/subsystem/throwing/New()
+/datum/subsystem/processing/throwing/New()
 	NEW_SS_GLOBAL(SSthrowing)
-	processing = list()
 
+/datum/subsystem/processing/throwing/Recover()
+	..(SSthrowing)
 
-/datum/subsystem/throwing/stat_entry()
-	..("P:[processing.len]")
-
-
-/datum/subsystem/throwing/fire(resumed = 0)
-	if (!resumed)
-		src.currentrun = processing.Copy()
-
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-
-	while(length(currentrun))
-		var/atom/movable/AM = currentrun[currentrun.len]
-		var/datum/thrownthing/TT = currentrun[AM]
-		currentrun.len--
-		if (!AM || !TT)
-			processing -= AM
-			if (MC_TICK_CHECK)
-				return
-			continue
-
-		TT.tick()
-
-		if (MC_TICK_CHECK)
-			return
-
-	currentrun = null
+/datum/subsystem/processing/throwing/start_processing(datum/thrownthing/TT)
+	..()
+	if(state == SS_PAUSED && length(run_cache))
+		run_cache[TT] = TT
+	TT.process()
 
 /datum/thrownthing
 	var/atom/movable/thrownthing
@@ -63,15 +41,17 @@ var/datum/subsystem/throwing/SSthrowing
 	var/diagonal_error
 	var/datum/callback/callback
 
-/datum/thrownthing/proc/tick()
+/datum/thrownthing/process()
 	var/atom/movable/AM = thrownthing
+	if(!AM)
+		return PROCESS_KILL
 	if (!isturf(AM.loc) || !AM.throwing)
 		finalize()
-		return
+		return PROCESS_KILL
 
 	if (dist_travelled && hitcheck()) //to catch sneaky things moving on our tile while we slept
 		finalize()
-		return
+		return PROCESS_KILL
 
 	var/atom/step
 
@@ -80,7 +60,7 @@ var/datum/subsystem/throwing/SSthrowing
 	while (tilestomove-- > 0)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc))
 			finalize()
-			return
+			return PROCESS_KILL
 
 		if (dist_travelled <= max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
 			step = get_step(AM, get_dir(AM, target_turf))
@@ -94,23 +74,22 @@ var/datum/subsystem/throwing/SSthrowing
 
 		if (!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			finalize()
-			return
+			return PROCESS_KILL
 
 		AM.Move(step, get_dir(AM, step))
 
 		if (!AM.throwing) // we hit something during our move
 			finalize(hit = TRUE)
-			return
+			return PROCESS_KILL
 
 		dist_travelled++
 
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
-			return
+			return PROCESS_KILL
 
 /datum/thrownthing/proc/finalize(hit = FALSE)
 	set waitfor = 0
-	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
 	thrownthing.throwing = null
 	if (!hit)

@@ -104,7 +104,7 @@
 		return 0
 	if(!broken && !burnt)
 		if(smooth)
-			queue_smooth(src)
+			QUEUE_SMOOTH(src)
 	else
 		make_plating()
 		if(smooth)

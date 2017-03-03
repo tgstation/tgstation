@@ -28,6 +28,7 @@
 
 
 /obj/machinery/mineral/mint/process()
+	..()
 	var/turf/T = get_step(src, input_dir)
 	if(!T)
 		return

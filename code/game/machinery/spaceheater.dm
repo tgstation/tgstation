@@ -72,6 +72,7 @@
 		add_overlay("sheater-open")
 
 /obj/machinery/space_heater/process()
+	..()
 	if(!on || !is_operational())
 		return
 

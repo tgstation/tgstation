@@ -39,6 +39,7 @@
 		reset = new reset_path(get_turf(src))
 
 /obj/item/weapon/twohanded/ctf/process()
+	..()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in player_list)
@@ -46,7 +47,7 @@
 			if(istype(mob_area, /area/ctf))
 				M << "<span class='userdanger'>\The [src] has been returned \
 					to base!</span>"
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/weapon/twohanded/ctf/attack_hand(mob/living/user)
 	if(!user)
@@ -67,13 +68,13 @@
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='userdanger'>\The [src] has been taken!</span>"
-	STOP_PROCESSING(SSobj, src)
+	SSobj.stop_processing(src)
 
 /obj/item/weapon/twohanded/ctf/dropped(mob/user)
 	..()
 	user.anchored = FALSE
 	reset_cooldown = world.time + 200 //20 seconds
-	START_PROCESSING(SSobj, src)
+	SSobj.start_processing(src)
 	for(var/mob/M in player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
@@ -162,6 +163,7 @@
 	..()
 
 /obj/machinery/capture_the_flag/process()
+	..()
 	for(var/i in spawned_mobs)
 		if(!i)
 			spawned_mobs -= i
@@ -607,6 +609,7 @@
 	var/point_rate = 1
 
 /obj/machinery/control_point/process()
+	..()
 	if(controlling)
 		controlling.control_points += point_rate
 		if(controlling.control_points >= controlling.control_points_to_win)

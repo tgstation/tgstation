@@ -17,11 +17,11 @@
 	machinery_computer = null
 
 /obj/item/device/modular_computer/processor/New(comp)
-	STOP_PROCESSING(SSobj, src) // Processed by its machine
-
 	if(!comp || !istype(comp, /obj/machinery/modular_computer))
 		CRASH("Inapropriate type passed to obj/item/device/modular_computer/processor/New()! Aborting.")
 		return
+	SSobj.stop_processing(src) // Processed by its machine
+	..()
 	// Obtain reference to machinery computer
 	all_components = list()
 	idle_threads = list()

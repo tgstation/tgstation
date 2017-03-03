@@ -38,7 +38,8 @@
 #define SMOOTH_MORE		2	//smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
 #define SMOOTH_DIAGONAL	4	//if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER	8	//atom will smooth with the borders of the map
-#define SMOOTH_QUEUED	16	//atom is currently queued to smooth.
+
+#define QUEUE_SMOOTH(X) SSicon_smooth.start_processing(X)
 
 #define NULLTURF_BORDER 123456789
 
@@ -109,22 +110,22 @@
 
 	return adjacencies
 
-//do not use, use queue_smooth(atom)
-/proc/smooth_icon(atom/A)
-	if(!A || !A.smooth)
+//do not use, use SSicon_smooth.start_processing(atom)
+/atom/proc/smooth_icon()
+	. = PROCESS_KILL	//we've run, we're done
+	if(!smooth)
 		return
-	A.smooth &= ~SMOOTH_QUEUED
-	if (!A.z)
+	if (!z)
 		return
-	if(QDELETED(A))
+	if(QDELETED(src))
 		return
-	if((A.smooth & SMOOTH_TRUE) || (A.smooth & SMOOTH_MORE))
-		var/adjacencies = calculate_adjacencies(A)
+	if((smooth & SMOOTH_TRUE) || (smooth & SMOOTH_MORE))
+		var/adjacencies = calculate_adjacencies(src)
 
-		if(A.smooth & SMOOTH_DIAGONAL)
-			A.diagonal_smooth(adjacencies)
+		if(smooth & SMOOTH_DIAGONAL)
+			diagonal_smooth(adjacencies)
 		else
-			cardinal_smooth(A, adjacencies)
+			cardinal_smooth(src, adjacencies)
 
 /atom/proc/diagonal_smooth(adjacencies)
 	switch(adjacencies)
@@ -299,16 +300,16 @@
 		var/turf/T = V
 		if(T.smooth)
 			if(now)
-				smooth_icon(T)
+				T.smooth_icon()
 			else
-				queue_smooth(T)
+				QUEUE_SMOOTH(T)
 		for(var/R in T)
 			var/atom/A = R
 			if(A.smooth)
 				if(now)
-					smooth_icon(A)
+					A.smooth_icon()
 				else
-					queue_smooth(A)
+					QUEUE_SMOOTH(A)
 
 /atom/proc/clear_smooth_overlays()
 	cut_overlay(top_left_corner)
@@ -375,17 +376,7 @@
 	for(var/V in orange(1,A))
 		var/atom/T = V
 		if(T.smooth)
-			queue_smooth(T)
-
-//SSicon_smooth
-/proc/queue_smooth(atom/A)
-	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
-		return
-
-	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
-	A.smooth |= SMOOTH_QUEUED
-
+			QUEUE_SMOOTH(T)
 
 //Example smooth wall
 /turf/closed/wall/smooth
