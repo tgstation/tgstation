@@ -86,6 +86,7 @@
 		if("disable")
 			if (active)
 				active = 0
+				drain_rate = 0
 				src.updateUsrDialog()
 		if("set_power")
 			drain_rate = input("Power export rate (in kW):", name, drain_rate)
@@ -104,7 +105,9 @@
 		else
 			visible_message("Power export levels have exceeded energy surplus, shutting down")
 			active = 0
+			drain_rate = 0
 			icon_state = "dominator"
 	else
 		active = 0
+		drain_rate = 0
 		icon_state = "dominator"
