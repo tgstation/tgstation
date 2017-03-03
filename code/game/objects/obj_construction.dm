@@ -269,7 +269,7 @@
 			first_step.OnReached(src, user, TRUE)
 	setDir(user.dir)
 	add_fingerprint(user)
-	//nothing to do otherwise
+	feedback_add_details("obj_construction","[type]")
 
 /obj/examine(mob/user)
 	..()
