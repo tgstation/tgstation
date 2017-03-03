@@ -98,7 +98,7 @@
 		user << "<span class='warning'>Get that [brain.name] out of there first!</span>"
 		return FALSE
 
-/obj/structure/AIcore/OnConstruction(state_id, mob/user)
+/obj/structure/AIcore/OnConstruction(state_id, mob/user, obj/item/used)
 	..()
 	if(state_id != AI_READY_CORE || !brain)
 		return
@@ -111,7 +111,7 @@
 	feedback_inc("cyborg_ais_created",1)
 	qdel(src)
 
-/obj/structure/AIcore/OnDeconstruction(state_id, mob/user, forced)
+/obj/structure/AIcore/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
 	..()
 	update_icon()
 

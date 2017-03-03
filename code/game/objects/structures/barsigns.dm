@@ -104,14 +104,14 @@
 		user << "<span class='warning'>The wires are fried beyond repair.</span>"
 		return FALSE
 
-/obj/structure/sign/barsign/OnDeconstruction(id, mob/user, forced)
+/obj/structure/sign/barsign/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
 	..()
-	if(!id)	//busted
+	if(!state_id)	//busted
 		new /obj/item/stack/sheet/metal (loc, 2)
 		new /obj/item/stack/cable_coil (loc, 2)
 		return
 	
-	if(id == BARSIGN_UNWIRED)
+	if(state_id == BARSIGN_UNWIRED)
 		broken = FALSE
 		obj_integrity = max_integrity
 		return
@@ -119,10 +119,10 @@
 	. = broken	//delete wires if fried
 	set_sign(new /datum/barsign/hiddensigns/signoff)
 
-/obj/structure/sign/barsign/OnConstruction(id, mob/user)
+/obj/structure/sign/barsign/OnConstruction(state_id, mob/user, obj/item/used)
 	..()
 	//panel closed
-	if(id != BARSIGN_COMPLETE)
+	if(state_id != BARSIGN_COMPLETE)
 		return
 	if(!broken && !emagged)
 		set_sign(pick(barsigns))

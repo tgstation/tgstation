@@ -15,18 +15,23 @@
 
 	/obj/proc/InitConstruction - Called when the first instance of an object type is initialized to set up it's construction steps. Should not call the base
 
-	/obj/proc/OnConstruction(state_id, mob/user) - Called when a construction step is completed on an object with the new state_id. If state_id is zero, the object has been fully constructed abd can't be deconstructed.
+	/obj/proc/OnConstruction(state_id, mob/user, obj/item/used) - Called when a construction step is completed on an object with the new state_id
+																If state_id is zero, the object has been fully constructed abd can't be deconstructed.
+																used is the material object if any used for construction and it will be deleted on return
 
-	/obj/proc/OnDeconstruction(state_id, mob/user, forced) - Called when a deconstruction step is completed on an object with the new state_id. If state_id is zero, the object has been fully deconstructed
-															 forced is if the object was aggressively put into this state. If it's true, user may be null. Returning TRUE from this function will prevent loot
-															 from being spawned by the upcoming construction state
+	/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced) - Called when a deconstruction step is completed on an object with the new state_id. 
+															 If state_id is zero, the object has been fully deconstructed
+															 created is the item that has been dropped, if any.
+															 forced is if the object was aggressively put into this state. If it's true, user MAY be null, created WILL be null.
+															 Returning TRUE from this function will cause created to be deleted before it is dropped
 
-	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state
+	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state. This will be called automatically if obj/var/always_construct is set to TRUE.
+									Calling this after a current_construction_state has been assigned (which this does) has no effect
 
 	/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
-																							Setting skip to TRUE requests that no further checks other than the base be made. This is not used for hand construction
+																							Setting skip to TRUE for parent calls requests that no further checks other than the base be made. 
 
-	See ai_core.dm for a good example		
+	See ai_core.dm or barsigns.dm for good examples
 		
 */
 
@@ -79,7 +84,7 @@
 /datum/construction_state/last	//this should only contain deconstruction parameters
 	required_type_to_construct = NO_DECONSTRUCT
 
-/datum/construction_state/proc/OnLeft(obj/parent, mob/user, constructed, forced)
+/datum/construction_state/proc/OnLeft(obj/parent, mob/user, obj/item/tool, constructed, forced)
 	var/datum/construction_state/next = constructed ? next_state : prev_state
 	var/id
 	var/obj/loot
@@ -92,12 +97,19 @@
 	if(constructed)
 		if(construction_sound)
 			playsound(parent, construction_sound, 100, TRUE)
-		parent.OnConstruction(id, user)	//run event
+		if(!required_amount_to_construct)
+			tool = null
+		parent.OnConstruction(id, user, tool)	//run event
+		var/obj/item/stack/S = tool
+		if(istype(S))
+			S.use(required_amount_to_construct)
+		else
+			qdel(tool)
 	else
 		if(!forced && deconstruction_sound)	//forced implys hitsounds and stuff
 			playsound(parent, deconstruction_sound, 100, TRUE)
 
-		if((parent.OnDeconstruction(id, user, forced) || forced) && loot)	//no loot for vandals or if we're told not to
+		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot)	//no loot for vandals or if we're told not to
 			qdel(loot)
 		
 		if(!id)
@@ -105,7 +117,7 @@
 
 /datum/construction_state/proc/DamageDeconstruct(obj/parent)	//called by obj_break
 	if(prev_state && prev_state.damage_reachable)
-		OnLeft(parent, usr, FALSE, TRUE)
+		OnLeft(parent, usr, null, FALSE, TRUE)
 
 /datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
 	parent.current_construction_state = src	//moving on
@@ -240,12 +252,14 @@
 		. = FALSE
 
 //construction events
-/obj/proc/OnConstruction(state_id, mob/user)
+/obj/proc/OnConstruction(state_id, mob/user, obj/item/used)
 
-/obj/proc/OnDeconstruction(state_id, mob/user, forced)
+/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created)
 
 //called after Initialize if the obj was constructed from scratch
 /obj/proc/Construct(mob/user)
+	if(current_construction_state)
+		return
 	var/list/cached_construction_steps = construction_steps[type]
 	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
@@ -253,7 +267,6 @@
 			first_step = first_step.next_state
 		if(first_step)
 			first_step.OnReached(src, user, TRUE)
-		current_construction_state = first_step
 	setDir(user.dir)
 	add_fingerprint(user)
 	//nothing to do otherwise
@@ -293,7 +306,7 @@
 			if(!do_after(user, wait, target = src))
 				return
 		user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
-		ccs.OnLeft(src, user, constructed, FALSE)
+		ccs.OnLeft(src, user, null, constructed, FALSE)
 
 //construct by tool if possible
 /obj/attackby(obj/item/I, mob/living/user)
@@ -336,6 +349,7 @@
 			if(I.usesound)
 				playsound(src, I.usesound, 100, TRUE)	
 			user << "<span class='notice'>You begin [message] \the [src].</span>"
+			//Checks will always run because we've verified do_after will last at least 1 tick
 			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, I, user, FALSE))
 		else
 			cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
@@ -344,16 +358,8 @@
 		LAZYREMOVE(user.construction_tasks, src)
 
 		if(cont)
-			if(constructed && ccs.required_amount_to_construct)
-				if(istype(Mats))
-					if(!Mats.use(ccs.required_amount_to_construct))
-						user << "<span class='warning'>You no longer have enough of [Mats]!</span>"
-						return
-				else
-					qdel(Mats)
-
 			user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
-			ccs.OnLeft(src, user, constructed, FALSE)
+			ccs.OnLeft(src, user, I, constructed, FALSE)
 	else
 		return ..()
 
