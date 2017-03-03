@@ -577,7 +577,7 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			toggle_ctf(usr)
+			toggle_all_ctf(usr)
 		if("masspurrbation")
 			if(!check_rights(R_FUN))
 				return

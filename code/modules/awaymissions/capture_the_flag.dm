@@ -117,7 +117,7 @@
 	desc = "This is where a blue banner used to play capture the flag \
 		would go."
 
-/proc/toggle_ctf(mob/user)
+/proc/toggle_all_ctf(mob/user)
 	var/ctf_enabled = FALSE
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		ctf_enabled = CTF.toggle_ctf()
@@ -204,7 +204,7 @@
 		if(user.client && user.client.holder)
 			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
 			if(response == "Yes")
-				toggle_ctf(user)
+				toggle_all_ctf(user)
 		return
 
 	if(ticker.current_state < GAME_STATE_PLAYING)
