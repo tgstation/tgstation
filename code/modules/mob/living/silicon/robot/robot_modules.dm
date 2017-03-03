@@ -369,8 +369,7 @@
 	hat_offset = -2
 
 /obj/item/weapon/robot_module/peacekeeper/Initialize()
-	//if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS]) //If it's April Fool's, peacekeepers become "security" cyborgs!
-	if(0)
+	if(!SSevent.holidays || !SSevent.holidays[APRIL_FOOLS]) //If it's April Fool's, peacekeepers become "security" cyborgs!
 		return 1
 	name = "Security"
 	basic_modules = list(
