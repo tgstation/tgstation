@@ -290,7 +290,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	F << the_mode
 
 /world/proc/load_motd()
-	join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
+	join_motd = sanitize_russian(file2text("config/motd.txt")) + "<br>" + revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()
