@@ -131,7 +131,7 @@
 		for(/obj/machinery/computer/station_alert/SA in world)
 			air_alarm_bonus = max(0,1000 - SA.air_alarm_count * 200)
 			power_alarms_bonus = max(0,1000 - SA.power_alarm_count * 200)
-			fire_alarms_bonus = max(0,500 - SA.fire_alarm_count * 100
+			fire_alarms_bonus = max(0,500 - SA.fire_alarm_count * 100)
 		switch(air_alarm_bonus + power_alarms_bonus + fire_alarms_bonus)
 			if(0)
 				rating = "NOT WORTH THE AIR YOU'RE BREATHING, CONSIDER SUICIDE"
@@ -147,7 +147,7 @@
 				rating = "ABSOLUTELY FLAWLESS, YOU ARE THE ALPHA-ENGINEERS"
 		radio.talk_into(src,"UPDATE: The engineering department has been awarded [air_alarm_bonus] points for the state of the station's air, [power_alarm_bonus] points for the state of the station's power, and [fire_alarm_bonus] points for the state of the station's fire alarms.")
 		spawn(20)
-			radio.talk_into(src,"This bonus represents [((air_alarm_bonus + power_alarms_bonus + fire_alarms_bonus)/2500)*100]% of the total possible bonus. Your rating is: [rating]. Consult the station alert console for details."
+			radio.talk_into(src,"This bonus represents [((air_alarm_bonus + power_alarms_bonus + fire_alarms_bonus)/2500)*100]% of the total possible bonus. Your rating is: [rating]. Consult the station alert console for details.")
 		GBP_alarm_cooldown = world.time + 3000
 		GBP_power_export += (air_alarm_bonus + power_alarms_bonus + fire_alarms_bonus) //Adds to the total points without having to update every process
 	GBP += GBP_power_export
