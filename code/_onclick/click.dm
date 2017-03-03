@@ -159,6 +159,7 @@
 		if(2 to INFINITY)
 			var/obj/dummy = new(get_turf(here)) //We'll try to move this every tick, failing if we can't
 			dummy.pass_flags |= PASSTABLE
+			QDEL_IN(dummy, 10) //1-second grace period for calculation
 			for(var/i in 1 to reach) //Limit it to that many tries
 				var/turf/T = get_step(dummy, get_dir(dummy, there))
 				if(dummy.loc == there.loc)
