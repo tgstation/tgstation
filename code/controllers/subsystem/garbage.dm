@@ -754,8 +754,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(fire_overlay)
 	SearchVar(acid_overlay)
 	SearchVar(BUMP_TELEPORTERS)
-	SearchVar(contrabandposters)
-	SearchVar(legitposters)
 	SearchVar(blacklisted_glowshroom_turfs)
 	SearchVar(PDAs)
 	SearchVar(rod_recipes)

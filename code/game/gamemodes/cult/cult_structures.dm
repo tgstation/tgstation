@@ -22,6 +22,7 @@
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		if(obj_integrity < max_integrity)
+			M.changeNext_move(CLICK_CD_MELEE)
 			obj_integrity = min(max_integrity, obj_integrity + 5)
 			Beam(M, icon_state="sendbeam", time=4)
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \

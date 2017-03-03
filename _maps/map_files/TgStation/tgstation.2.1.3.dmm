@@ -7159,7 +7159,7 @@
 "aoW" = (
 /obj/structure/table,
 /obj/item/weapon/stamp,
-/obj/item/weapon/poster/legit,
+/obj/item/weapon/poster/random_official,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "aoX" = (
@@ -50272,7 +50272,7 @@
 	name = "2maintenance loot spawner"
 	},
 /obj/item/toy/minimeteor,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cfn" = (

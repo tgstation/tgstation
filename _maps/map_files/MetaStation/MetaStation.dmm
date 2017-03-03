@@ -4485,7 +4485,7 @@
 /area/maintenance/fore)
 "ahT" = (
 /obj/structure/table,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fore)
@@ -5212,9 +5212,9 @@
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/watertank,
 /obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -5335,9 +5335,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness{
@@ -7422,7 +7421,7 @@
 	pixel_y = 7
 	},
 /obj/structure/window/reinforced,
-/obj/item/weapon/poster/legit,
+/obj/item/weapon/poster/random_official,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -7718,7 +7717,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -9055,7 +9054,7 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/neck/tie/blue,
 /obj/item/clothing/head/soft/blue,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault,
@@ -9116,9 +9115,8 @@
 /area/security/main)
 "apX" = (
 /obj/item/weapon/cigbutt,
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -9174,7 +9172,7 @@
 	})
 "aqe" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -9802,7 +9800,7 @@
 	},
 /obj/item/weapon/folder/red,
 /obj/item/weapon/folder/red,
-/obj/item/weapon/poster/legit,
+/obj/item/weapon/poster/random_official,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ari" = (
@@ -10021,11 +10019,11 @@
 /area/crew_quarters/sleep)
 "arF" = (
 /obj/structure/closet,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -11402,7 +11400,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -16234,7 +16232,7 @@
 	dir = 4
 	},
 /obj/structure/closet/cardboard,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -16785,7 +16783,7 @@
 "aCL" = (
 /obj/item/clothing/glasses/meson,
 /obj/structure/closet/crate,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -16943,7 +16941,7 @@
 	})
 "aDd" = (
 /obj/structure/closet,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -17881,7 +17879,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -19904,7 +19902,7 @@
 /area/crew_quarters/sleep)
 "aHP" = (
 /obj/machinery/washing_machine,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/barber,
@@ -22085,7 +22083,7 @@
 	},
 /obj/item/weapon/paper,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -22113,7 +22111,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/freezer,
@@ -26908,7 +26906,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault,
@@ -27502,7 +27500,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/brown/corner{
@@ -27751,9 +27749,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -30332,7 +30329,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/brown{
@@ -33109,10 +33106,10 @@
 "bev" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/pump,
-/obj/structure/sign/poster{
+/obj/effect/turf_decal/delivery,
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bew" = (
@@ -34178,7 +34175,7 @@
 	},
 /obj/structure/cable/yellow,
 /obj/item/weapon/wrench,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/brown{
@@ -38310,9 +38307,8 @@
 	pixel_x = 0;
 	pixel_y = 21
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 5
@@ -39532,7 +39528,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -43684,7 +43680,7 @@
 "bvZ" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -44810,7 +44806,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
@@ -46253,7 +46249,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -47115,9 +47111,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -47519,9 +47514,8 @@
 /area/security/vacantoffice)
 "bCO" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet{
@@ -48106,7 +48100,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "bDL" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/random,
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "bDM" = (
@@ -49658,7 +49652,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
@@ -49718,7 +49712,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
@@ -49732,7 +49726,7 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -50226,9 +50220,8 @@
 	dir = 4
 	},
 /obj/item/clothing/head/sombrero,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/random{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -50991,8 +50984,8 @@
 /obj/structure/table/wood,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/paper,
-/obj/structure/sign/poster{
-	pixel_y = 32
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -51024,9 +51017,8 @@
 /obj/structure/urinal{
 	pixel_y = 29
 	},
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet{
@@ -53914,9 +53906,8 @@
 	dir = 4
 	},
 /obj/item/device/instrument/guitar,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/random{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -55006,7 +54997,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/weapon/poster/legit,
+/obj/item/weapon/poster/random_official,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -55395,11 +55386,11 @@
 	pixel_y = 0;
 	req_access_txt = "19"
 	},
-/obj/item/weapon/poster/legit,
-/obj/item/weapon/poster/legit,
-/obj/item/weapon/poster/legit,
-/obj/item/weapon/poster/legit,
-/obj/item/weapon/poster/legit,
+/obj/item/weapon/poster/random_official,
+/obj/item/weapon/poster/random_official,
+/obj/item/weapon/poster/random_official,
+/obj/item/weapon/poster/random_official,
+/obj/item/weapon/poster/random_official,
 /obj/item/device/paicard{
 	desc = "A real NanoTrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
 	name = "NanoTrasen-brand personal AI device exhibit"
@@ -55731,9 +55722,8 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 4
@@ -55744,9 +55734,8 @@
 "bQM" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder,
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -55766,16 +55755,14 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/random{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bQP" = (
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -56576,7 +56563,7 @@
 /area/crew_quarters/kitchen)
 "bSb" = (
 /obj/machinery/light/small,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
@@ -56977,7 +56964,7 @@
 	name = "Theatre Stage";
 	req_access_txt = "0"
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
 /turf/open/floor/carpet,
@@ -57004,7 +56991,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 29
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -57021,7 +57008,7 @@
 	name = "\improper Corporate Showroom"
 	})
 "bSN" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/crew_quarters/kitchen)
 "bSO" = (
@@ -58643,9 +58630,8 @@
 /obj/item/clothing/mask/pig,
 /obj/item/weapon/bikehorn,
 /obj/structure/table/wood,
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -58876,9 +58862,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/clown{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -59421,7 +59406,7 @@
 "bWW" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -59748,7 +59733,7 @@
 /area/maintenance/portsolar)
 "bXw" = (
 /obj/structure/rack,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -60336,7 +60321,7 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating,
 /area/maintenance/aft{
 	name = "Aft Maintenance"
@@ -61540,13 +61525,12 @@
 	},
 /obj/item/clothing/mask/horsehead,
 /obj/structure/table/wood,
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -63861,7 +63845,7 @@
 	network = list("SS13")
 	},
 /obj/structure/table/wood,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -64391,7 +64375,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -65333,7 +65317,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -66915,7 +66899,7 @@
 "cju" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -68269,7 +68253,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -68533,9 +68517,8 @@
 /obj/machinery/firealarm{
 	pixel_y = 29
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
@@ -70281,9 +70264,8 @@
 	pixel_x = 11;
 	pixel_y = 0
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
@@ -71610,9 +71592,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	req_access_txt = 1
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -72569,7 +72550,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -73213,7 +73194,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -74738,9 +74719,8 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -74759,7 +74739,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -76379,7 +76359,7 @@
 	})
 "cyS" = (
 /obj/structure/chair/stool,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -76906,9 +76886,8 @@
 /area/solar/port)
 "czM" = (
 /obj/structure/chair/stool,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -77678,9 +77657,8 @@
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/medical/research{
@@ -82359,24 +82337,23 @@
 	name = "Aft Maintenance"
 	})
 "cIo" = (
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
+/obj/item/weapon/poster/random_contraband,
 /obj/item/weapon/reagent_containers/food/drinks/beer{
 	pixel_x = -3;
 	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/food/drinks/ale,
 /obj/structure/table/wood,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
-	},
 /obj/item/device/instrument/eguitar,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
@@ -82965,7 +82942,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/weapon/ore/slag,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/maintenance/aft{
@@ -83445,7 +83421,7 @@
 /obj/structure/light_construct/small,
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -83634,11 +83610,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
@@ -84495,7 +84471,7 @@
 	})
 "cLI" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/poster/legit,
+/obj/item/weapon/poster/random_official,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/landmark{
 	name = "blobstart"
@@ -84726,9 +84702,8 @@
 /obj/item/clothing/mask/breath,
 /obj/machinery/space_heater,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/sign/poster{
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
@@ -84860,7 +84835,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -85842,7 +85817,7 @@
 	})
 "cNV" = (
 /obj/structure/chair/stool,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -86661,7 +86636,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
@@ -86686,7 +86661,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -87242,7 +87217,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -87482,12 +87457,11 @@
 	icon_state = "plant-24";
 	layer = 4.1
 	},
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -87609,10 +87583,10 @@
 	},
 /obj/item/seeds/glowshroom,
 /obj/item/seeds/corn,
-/obj/structure/sign/poster{
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/aft{
 	name = "Aft Maintenance"
@@ -89937,7 +89911,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cVP" = (
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
@@ -95798,6 +95772,20 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
+"dhn" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/weapon/ore/slag,
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 
 (1,1,1) = {"
 aaa
@@ -117821,7 +117809,7 @@ cxU
 cGL
 cxU
 cxU
-cgM
+dhn
 cPW
 bTs
 cLZ
