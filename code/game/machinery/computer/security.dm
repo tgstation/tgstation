@@ -1,5 +1,3 @@
-
-
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
 	desc = "Used to view and edit personnel's security records"
@@ -443,7 +441,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-								new /obj/item/weapon/poster/legit/wanted(src.loc, photo.img, wanted_name, info)
+								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)
 							printing = 0
 
 //RECORD DELETE

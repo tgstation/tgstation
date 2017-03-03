@@ -136,6 +136,12 @@
 	item_state = "glasses"
 	vision_correction = 1 //corrects nearsightedness
 
+/obj/item/clothing/glasses/regular/jamjar
+	name = "Jamjar Glasses"
+	desc = "Also known as Virginity Protectors."
+	icon_state = "jamjar_glasses"
+	item_state = "jamjar_glasses"
+
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
 	desc = "Made by Uncool. Co."

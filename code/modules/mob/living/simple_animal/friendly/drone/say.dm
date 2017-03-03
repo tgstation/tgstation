@@ -17,13 +17,12 @@
 
 
 //Base proc for anything to call
-/proc/_alert_drones(msg, dead_can_hear = 0, list/factions)
+/proc/_alert_drones(msg, dead_can_hear = 0, mob/living/faction_checked_mob, exact_faction_match)
 	for(var/W in mob_list)
 		var/mob/living/simple_animal/drone/M = W
 		if(istype(M) && M.stat != DEAD)
-			if(factions && factions.len)
-				var/list/friendly = factions&M.faction
-				if(friendly.len)
+			if(faction_checked_mob)
+				if(M.faction_check_mob(faction_checked_mob, exact_faction_match))
 					M << msg
 			else
 				M << msg
@@ -33,15 +32,12 @@
 
 
 //Wrapper for drones to handle factions
-/mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = 0)
-	_alert_drones(msg, dead_can_hear, faction)
+/mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = FALSE)
+	_alert_drones(msg, dead_can_hear, src, TRUE)
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)
-	var/rendered = "<i>Drone Chat: \
-		<span class='name'>[name]</span>: \
-		<span class='message'>[say_quote(msg, get_spans())]</span></i>"
-	alert_drones(rendered, 1)
+	alert_drones("<i>Drone Chat: <span class='name'>[name]</span> <span class='message'>[say_quote(msg, get_spans())]</span></i>", TRUE)
 
 /mob/living/simple_animal/drone/binarycheck()
 	return TRUE

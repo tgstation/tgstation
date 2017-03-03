@@ -9179,9 +9179,6 @@
 	})
 "aoh" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/mineral/ore_redemption{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -9189,6 +9186,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 4;
+	output_dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -12087,11 +12088,11 @@
 "ass" = (
 /obj/machinery/mineral/mint,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster{
-	pixel_y = 32
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end,
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -12558,7 +12559,7 @@
 	name = "Central Port Maintenance"
 	})
 "atc" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
 /area/maintenance/fpmaint2{
 	name = "Central Port Maintenance"
@@ -12912,12 +12913,12 @@
 /turf/closed/wall/r_wall,
 /area/atmos)
 "atK" = (
-/obj/structure/sign/poster{
-	pixel_x = 32
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/caution/corner{
 	tag = "icon-cautioncorner (NORTH)";
@@ -13515,7 +13516,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -13906,10 +13907,10 @@
 	},
 /area/crew_quarters/bar)
 "avn" = (
-/obj/structure/sign/poster,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/sign/poster/random,
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "avo" = (
@@ -16983,7 +16984,7 @@
 	},
 /area/crew_quarters/sleep)
 "aAK" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/random,
 /turf/closed/wall,
 /area/crew_quarters/theatre)
 "aAL" = (
@@ -18286,7 +18287,7 @@
 /obj/item/toy/crayon/spraycan/lubecan{
 	charges = 5
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/clown{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/vault{
@@ -18330,10 +18331,10 @@
 	},
 /area/crew_quarters/theatre)
 "aCT" = (
-/obj/structure/sign/poster,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/sign/poster/random,
 /turf/closed/wall,
 /area/crew_quarters/theatre)
 "aCU" = (
@@ -19477,11 +19478,11 @@
 "aES" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/baguette,
-/obj/structure/sign/poster{
-	pixel_y = -32
-	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -19504,12 +19505,12 @@
 	},
 /area/crew_quarters/theatre)
 "aEU" = (
-/obj/structure/sign/poster{
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -21593,7 +21594,7 @@
 	icon_state = "plant-21";
 	layer = 4.1
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/redyellow,
@@ -28120,7 +28121,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "aSH" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
 /area/maintenance/starboard)
 "aSI" = (
@@ -28786,15 +28787,15 @@
 /area/maintenance/starboard)
 "aTU" = (
 /obj/structure/table/wood,
-/obj/item/weapon/poster/contraband{
+/obj/item/weapon/poster/random_contraband{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/poster/contraband{
+/obj/item/weapon/poster/random_contraband{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aTV" = (
@@ -31722,11 +31723,11 @@
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/black,
 /obj/item/device/taperecorder,
-/obj/structure/sign/poster{
-	pixel_y = 32
-	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -31750,8 +31751,8 @@
 	name = "Port Maintenance"
 	})
 "aZs" = (
-/obj/structure/sign/poster,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -31833,10 +31834,10 @@
 	name = "Port Maintenance"
 	})
 "aZz" = (
-/obj/structure/sign/poster,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -33429,7 +33430,7 @@
 	name = "Port Maintenance"
 	})
 "bca" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -34408,7 +34409,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -34796,11 +34797,11 @@
 	})
 "bev" = (
 /obj/machinery/computer/slot_machine,
-/obj/structure/sign/poster{
-	pixel_y = -32
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -34855,7 +34856,7 @@
 "bez" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,

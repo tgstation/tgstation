@@ -345,7 +345,7 @@
 		if(smooth)
 			queue_smooth(src)
 
-		overlays -= crack_overlay
+		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
 		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
@@ -474,6 +474,7 @@
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	glass_type = /obj/item/stack/tile/brass
 	glass_amount = 1
+	reinf = FALSE
 	var/made_glow = FALSE
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)

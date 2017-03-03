@@ -62,7 +62,7 @@
 		T.ratvar_act(1)
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
-		for(var/obj/singularity/narsie/N in poi_list)
+		for(var/obj/singularity/narsie/N in singularities)
 			if(N.z == z)
 				prey = N
 				break

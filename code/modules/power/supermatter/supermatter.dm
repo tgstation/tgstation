@@ -91,9 +91,12 @@
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()
-	investigate_log("has exploded.", "supermatter")
-	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
+	investigate_log("has collapsed into a singularity.", "supermatter")
+	var/turf/T = get_turf(src)
 	qdel(src)
+	if(T)
+		var/obj/singularity/S = new(T)
+		S.energy = 800
 
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/T = loc
@@ -352,3 +355,13 @@
 /obj/machinery/power/supermatter_shard/hugbox
 	takes_damage = 0
 	produces_gas = 0
+
+/obj/machinery/power/supermatter_shard/crystal
+	name = "supermatter crystal"
+	desc = "A strangely translucent and iridescent crystal. <span class='danger'>You get headaches just from looking at it.</span>"
+	base_icon_state = "darkmatter"
+	icon_state = "darkmatter"
+	anchored = 1
+	gasefficency = 0.15
+	explosion_power = 20
+

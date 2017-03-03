@@ -12,7 +12,8 @@ var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = 
 var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
 var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
-var/global/ratvar_awakens = 0 //If Ratvar has been summoned; not a boolean, for proper handling of multiple ratvars
+var/global/ratvar_awakens = 0 //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
+var/global/nezbere_invoked = 0 //If Nezbere has been invoked; not a boolean, for proper handling of multiple Nezberes
 var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
 var/global/list/all_scripture = list() //a list containing scripture instances; not used to track existing scripture
 
@@ -48,7 +49,9 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 
 #define MAX_COMPONENTS_BEFORE_RAND (10*LOWER_PROB_PER_COMPONENT) //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
 
-#define CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
+#define GLOBAL_CLOCKWORK_GENERAL_COOLDOWN 3000 //how long globally-affecting clockwork generals go on cooldown after use, defaults to 5 minutes
+
+#define CLOCKWORK_GENERAL_COOLDOWN 2000 //how long clockwork generals go on cooldown after use, defaults to 3 minutes 20 seconds
 
 //clockcult power defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
@@ -83,9 +86,9 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
 //Objective defines
-#define CLOCKCULT_GATEWAY "gateway"
+#define CLOCKCULT_GATEWAY "summon ratvar"
 
-#define CLOCKCULT_ESCAPE "escape"
+#define CLOCKCULT_ESCAPE "proselytize the station"
 
 //misc clockcult stuff
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
@@ -95,3 +98,5 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 #define PROSELYTIZER_REPAIR_PER_TICK 4 //how much a proselytizer repairs each tick, and also how many deciseconds each tick is
 
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
+
+#define RATVARIAN_SPEAR_DURATION 1800 //how long ratvarian spears last; defaults to 3 minutes

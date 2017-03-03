@@ -13,6 +13,23 @@
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	var/hinges = "single_hinge"
+	var/has_hinges = TRUE
+
+/obj/item/weapon/storage/toolbox/Initialize()
+	..()
+	if(has_hinges)
+		if(prob(10))
+			hinges = "double_hinge"
+		else if(prob(1))
+			hinges = "triple_hinge"
+	update_icon()
+
+/obj/item/weapon/storage/toolbox/update_icon()
+	..()
+	cut_overlays()
+	add_overlay(image('icons/obj/storage.dmi', "[hinges]"))
+
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -36,7 +53,8 @@
 
 /obj/item/weapon/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
-	item_state = "toolbox_red_old"
+	icon_state = "toolbox_red_old"
+	has_hinges = FALSE
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -54,7 +72,8 @@
 
 /obj/item/weapon/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
-	item_state = "toolbox_blue_old"
+	icon_state = "toolbox_blue_old"
+	has_hinges = FALSE
 
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
@@ -114,12 +133,13 @@
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
+	item_state = null
+	has_hinges = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 28
 	storage_slots = 28
-	slowdown = 1
-	flags = HANDSLOW
 	attack_verb = list("robusted", "crushed", "smashed")
 	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
 

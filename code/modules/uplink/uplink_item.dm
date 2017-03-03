@@ -544,11 +544,19 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 25
 	refundable = TRUE
 
-/datum/uplink_item/support/reinforcement/syndieborg
-	name = "Syndicate Cyborg"
+/datum/uplink_item/support/reinforcement/assault_borg
+	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
-	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
-	cost = 80
+	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/assault
+	refundable = TRUE
+	cost = 65
+
+/datum/uplink_item/support/reinforcement/medical_borg
+	name = "Syndicate Medical Cyborg"
+	desc = "A combat medic cyborg, with potent healing reagents and a medical beam gun, but limited offensive potential."
+	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/medical
+	refundable = TRUE
+	cost = 35
 
 /datum/uplink_item/support/gygax
 	name = "Gygax Exosuit"
@@ -1186,7 +1194,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisble walls, and shoot bullets out of their fingers. Obviously only works for Mimes."
-	cost = 15
+	cost = 12
 	item = /obj/item/weapon/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
 
@@ -1208,6 +1216,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+/datum/uplink_item/role_restricted/ancient_jumpsuit
+	name = "Ancient Jumpsuit"
+	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
+	item = /obj/item/clothing/under/color/grey/glorf
+	cost = 20
+	surplus = 0
+	restricted_roles = list("Assistant")
 
 // Pointless
 /datum/uplink_item/badass

@@ -28,6 +28,16 @@
 	clockwork_daemons--
 	return ..()
 
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/ratvar_act()
+	..()
+	if(nezbere_invoked)
+		production_time = 0
+		production_cooldown = initial(production_cooldown) * 0.5
+		if(!active)
+			toggle(0)
+	else
+		production_cooldown = initial(production_cooldown)
+
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))

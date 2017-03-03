@@ -421,7 +421,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			return 1 //successful heal
 		else
-			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
+			user << "<span class='warning'>[affecting] is already in good condition!</span>"
 
 
 /proc/IsAdminGhost(var/mob/user)

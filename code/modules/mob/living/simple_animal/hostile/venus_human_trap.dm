@@ -69,7 +69,7 @@
 	var/grasp_pull_chance = 85
 	var/grasp_range = 4
 	del_on_death = 1
-	
+
 /mob/living/simple_animal/hostile/venus_human_trap/Destroy()
 	for(var/L in grasping)
 		var/datum/beam/B = grasping[L]
@@ -99,7 +99,7 @@
 		if(grasping.len < max_grasps)
 			grasping:
 				for(var/mob/living/L in view(grasp_range, src))
-					if(L == src || faction_check(L) || (L in grasping) || L == target)
+					if(L == src || faction_check_mob(L) || (L in grasping) || L == target)
 						continue
 					for(var/t in getline(src,L))
 						for(var/a in t)

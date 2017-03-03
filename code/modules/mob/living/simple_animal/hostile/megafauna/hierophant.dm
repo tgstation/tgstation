@@ -588,7 +588,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/blast/proc/do_damage(turf/T)
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
-		if((friendly_fire_check && caster && caster.faction_check(L)) || L.stat == DEAD)
+		if((friendly_fire_check && caster && caster.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
@@ -603,7 +603,7 @@ Difficulty: Hard
 	for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
 		hit_things += M
 		if(M.occupant)
-			if(friendly_fire_check && caster && caster.faction_check(M.occupant))
+			if(friendly_fire_check && caster && caster.faction_check_mob(M.occupant))
 				continue
 			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)

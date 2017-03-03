@@ -65,6 +65,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	update_icon()
 
 /obj/machinery/requests_console/update_icon()
+	if(stat & NOPOWER)
+		set_light(0)
+	else
+		set_light(2)
 	if(open)
 		if(!hackState)
 			icon_state="req_comp_open"
@@ -187,7 +191,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
-						Console.set_light(1)
+
 				newmessagepriority = 0
 				update_icon()
 				var/messageComposite = ""
@@ -374,7 +378,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								alert = "Message from [department][authentic]"
 								Console.createmessage(src, alert , sending, 1, 1)
 						screen = 6
-						Console.set_light(2)
 
 				if(radio_freq)
 					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq)
@@ -475,7 +478,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
 			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
-	set_light(2)
 
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/crowbar))

@@ -44,6 +44,7 @@
 /obj/item/weapon/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "wrench_brass"
 	toolspeed = 0.5
 
@@ -167,6 +168,7 @@
 /obj/item/weapon/screwdriver/brass
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "screwdriver_brass"
 	toolspeed = 0.5
 
@@ -259,6 +261,7 @@
 /obj/item/weapon/wirecutters/brass
 	name = "brass wirecutters"
 	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "cutters_brass"
 	toolspeed = 0.5
 
@@ -409,10 +412,11 @@
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.remove_fuel(1))
 			playsound(loc, usesound, 50, 1)
-			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
-			if(!do_mob(user, H, 50))
-				return
-			item_heal_robotic(H, user, 5, 0)
+			if(user == H)
+				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
+				if(!do_mob(user, H, 50))
+					return
+			item_heal_robotic(H, user, 15, 0)
 	else
 		return ..()
 
@@ -624,6 +628,7 @@
 /obj/item/weapon/weldingtool/experimental/brass
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "brasswelder"
 	item_state = "brasswelder"
 
@@ -668,6 +673,7 @@
 /obj/item/weapon/crowbar/brass
 	name = "brass crowbar"
 	desc = "A brass crowbar. It feels faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "crowbar_brass"
 	toolspeed = 0.5
 
