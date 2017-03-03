@@ -1,0 +1,4 @@
+author: "Sligneris"
+delete-after: True
+changes: 
+  - imageadd: "Updated sprites for the small xeno queen mode"

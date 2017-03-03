@@ -11,8 +11,6 @@
 
     var/minetype = "lavaland"
 
-    var/titlescreen_icon_state = "title"
-
     var/list/transition_config = list(MAIN_STATION = CROSSLINKED,
                                     CENTCOMM = SELFLOOPING,
                                     EMPTY_AREA_1 = CROSSLINKED,
@@ -69,8 +67,6 @@
 
     minetype = json["minetype"]
 
-    titlescreen_icon_state = json["titlescreen_icon_state"]
-
     var/list/jtcl = json["transition_config"]
 
     if(jtcl != "default")
@@ -87,12 +83,7 @@
     CHECK_EXISTS("map_path")
     CHECK_EXISTS("map_file")
     CHECK_EXISTS("minetype")
-    CHECK_EXISTS("titlescreen_icon_state")
     CHECK_EXISTS("transition_config")
-
-    if(!(json["titlescreen_icon_state"] in icon_states('icons/misc/fullscreen.dmi')))
-        log_world("Invalid icon state for splash screen: [json["titlescreen_icon_state"]]!")
-        return
 
     var/path = GetFullMapPath(json["map_path"], json["map_file"])
     if(!fexists(path))

@@ -1,0 +1,8 @@
+author: "Incoming5643"
+delete-after: True
+changes: 
+  - imageadd: "Server Owners: There is a new system for title screens accessible from config/title_screen folder."
+  - rscadd: "This system allows for multiple rotating title screens as well as map specific title screens."
+  - rscadd: "It also allows for hosting title screens in formats other than DMI."
+  - rscadd: "See the readme.txt in config/title_screen for full details.
+remove: The previous method of title screen selection, the define TITLESCREEN, has been depreciated by this change."

@@ -667,21 +667,21 @@
 			L.say(pick(word_messages))
 
 /obj/screen/splash
-	icon = 'icons/misc/fullscreen.dmi'
+	icon = 'config/title_screens/images/blank.png'
+	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_map_title)
+/obj/screen/splash/New(client/C, visible)
 	holder = C
 	holder.screen += src
+
 	if(!visible)
 		alpha = 0
-	if(use_previous_map_title && SSmapping.previous_map_config)
-		icon_state = SSmapping.previous_map_config.titlescreen_icon_state
-	else
-		icon_state = SSmapping.config.titlescreen_icon_state
+	if(SStitle.title_screen)
+		icon = SStitle.title_screen.icon
 	..()
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
