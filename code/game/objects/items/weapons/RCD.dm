@@ -3,6 +3,7 @@
 /*
 CONTAINS:
 RCD
+ARCD
 */
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
@@ -603,3 +604,25 @@ RCD
 	origin_tech = "materials=4"
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
+	
+/obj/item/weapon/rcd/arcd
+	name = "advanced rapid-construction-device (ARCD)"
+	max_matter = 300
+	color = #ff000
+
+	/* Build delays (deciseconds) */
+
+	walldelay = 10
+	grilledelay = 5
+	windowdelay = 5
+	airlockdelay = 20
+	decongirderdelay = 10
+	deconwalldelay = 20
+	deconfloordelay = 30
+	deconwindowdelay = 20
+	deconairlockdelay = 20
+	
+/obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
+	proximity = true
+	..()
+	
