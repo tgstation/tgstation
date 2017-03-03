@@ -8,6 +8,7 @@
 	verb_say = "states"
 	var/drain_rate = 0	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
+	var/rating = ""
 	var/active = 0
 
 /obj/machinery/power/exporter/examine(mob/user)
@@ -67,6 +68,22 @@
 	dat += text("Power consumption: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A><br>")
 	dat += text("Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
 	dat += text("Power exported: [power_drained] kilowatts<br>")
+	switch(drain_rate)
+		if(0 to 200)
+			Rating = "TERRIBLE"
+		if(201 to 400)
+			Rating = "BAD"
+		if(401 to 800)
+			Rating = "SUBPAR"
+		if(801 to 1800)
+			Rating = "DECENT"
+		if(1801 to 4000)
+			Rating = "ROBUST"
+		if(4001 to 7000)
+			Rating = "GOOD BOY"
+		if(7001 to 999999)
+			Rating = "HOLY SHIT YOU ABSOLUTE MADMAN!"
+	dat += text("Current export rating: [rating]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 	var/datum/browser/popup = new(user, "vending", "Power Exporter", 400, 350)
 	popup.set_content(dat)
