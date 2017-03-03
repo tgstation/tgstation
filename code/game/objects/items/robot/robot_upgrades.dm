@@ -397,3 +397,4 @@
 	R.module.transform_to(/obj/item/weapon/robot_module/security)
 	R.emag_act(user)
 	
+	return 1
