@@ -255,14 +255,14 @@ var/global/dmm_suite/preloader/_preloader = new
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd,no_changeturf)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
 			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
+			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd,no_changeturf)//instance new turf
 			T.underlays += underlay
 			index++
 
