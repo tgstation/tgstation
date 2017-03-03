@@ -138,7 +138,6 @@
 			iconF = "flight_on"
 		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 
-
 //Casing
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -151,17 +150,6 @@
 	if(loc && istype(loc, /obj/item/weapon/gun/energy/kinetic_accelerator))
 		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = loc
 		KA.modify_projectile(BB)
-
-		var/turf/proj_turf = get_turf(BB)
-		if(!isturf(proj_turf))
-			return
-		var/datum/gas_mixture/environment = proj_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure > 50)
-			BB.name = "weakened [BB.name]"
-			var/obj/item/projectile/kinetic/K = BB
-			K.damage *= K.pressure_decrease
-
 
 //Projectiles
 /obj/item/projectile/kinetic
@@ -177,6 +165,17 @@
 	var/turf_aoe = FALSE
 	var/mob_aoe = 0
 	var/list/hit_overlays = list()
+
+/obj/item/projectile/kinetic/prehit(atom/target)
+	var/turf/target_turf = get_turf(target)
+	if(!isturf(target_turf))
+		return
+	var/datum/gas_mixture/environment = target_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure > 50)
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+	. = ..()
 
 /obj/item/projectile/kinetic/on_range()
 	strike_thing()
