@@ -1,5 +1,5 @@
 
-/mob/living/alien/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/carbon/alien/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (hit_percent <= 0))
 		return 0
@@ -7,7 +7,7 @@
 		if(BRUTE)
 			adjustBruteLoss(damage * hit_percent)
 		if(BURN)
-			adjustFireLoss(damage * 2 * hit_percent)
+			adjustFireLoss(damage * 2 * hit_percent) // Xenos take double burn damage, MUY IMPORTANTE
 		if(OXY)
 			if(damage < 0) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
 				adjustOxyLoss(damage * hit_percent)
