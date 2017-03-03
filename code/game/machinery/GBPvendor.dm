@@ -1,6 +1,6 @@
 
 /obj/machinery/GBP_vendor
-	name = "engineering points tracker"
+	name = "Engineering Points Manager"
 	desc = "Who's a good boy?"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "liberationstation"
