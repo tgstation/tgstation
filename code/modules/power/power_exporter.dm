@@ -16,7 +16,7 @@
 	if(!active)
 		user << "<span class='notice'>The exporter seems to be offline.</span>"
 	else
-		user << "<span class='notice'>The [src] is exporting [drain_rate] kilowatts of power, it has consumed [power_drained/1000] kilowatts so far.</span>"
+		user << "<span class='notice'>The [src] is exporting [drain_rate] kilowatts of power, it has consumed [power_drained] kilowatts so far.</span>"
 
 
 /obj/machinery/power/exporter/attackby(obj/item/O, mob/user, params)
@@ -70,19 +70,19 @@
 	dat += text("Power exported: [power_drained] kilowatts<br>")
 	switch(drain_rate)
 		if(0 to 200)
-			Rating = "TERRIBLE"
+			rating = "TERRIBLE"
 		if(201 to 400)
-			Rating = "BAD"
+			rating = "BAD"
 		if(401 to 800)
-			Rating = "SUBPAR"
+			rating = "SUBPAR"
 		if(801 to 1800)
-			Rating = "DECENT"
+			rating = "DECENT"
 		if(1801 to 4000)
-			Rating = "ROBUST"
+			rating = "ROBUST"
 		if(4001 to 7000)
-			Rating = "GOOD BOY"
+			rating = "GOOD BOY"
 		if(7001 to 999999)
-			Rating = "HOLY SHIT YOU ABSOLUTE MADMAN!"
+			rating = "HOLY SHIT YOU ABSOLUTE MADMAN!"
 	dat += text("Current export rating: [rating]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 	var/datum/browser/popup = new(user, "vending", "Power Exporter", 400, 350)
