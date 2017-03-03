@@ -1,6 +1,6 @@
 #if !defined(MAP_FILE)
 
-		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
+		#define TITLESCREEN "title2" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
 		#define MINETYPE "lavaland"
 
