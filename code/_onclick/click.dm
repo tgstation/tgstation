@@ -154,7 +154,6 @@
 		if(0)
 			return here.loc == there.loc
 		if(1)
-			world << here.Adjacent(there)
 			return here.Adjacent(there)
 		if(2 to INFINITY)
 			var/obj/dummy = new(get_turf(here)) //We'll try to move this every tick, failing if we can't
