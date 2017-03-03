@@ -70,11 +70,10 @@
 	return !cleared
 
 /obj/machinery/computer/station_alert/process()
-	air_alarm_count = alarms(atmosphere).len
-	power_alarm_count = alarms(power).len
-	fire_alarm_count = alarms(fire).len
+	air_alarm_count = LAZYLEN(alarms["Atmosphere"])
+	power_alarm_count = LAZYLEN(alarms["Power"])
+	fire_alarm_count = LAZYLEN(alarms["Fire"])
 	..()
-
 
 
 /obj/machinery/computer/station_alert/update_icon()
