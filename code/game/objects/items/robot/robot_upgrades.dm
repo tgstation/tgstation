@@ -393,8 +393,7 @@
 /obj/item/borg/upgrade/traitorsec/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return 0
-    
-	R.wiresexposed = TRUE
-	R.emag_act(user)
-	R.wiresexposed = FALSE
+		
 	R.module.transform_to(/obj/item/weapon/robot_module/security)
+	R.emag_act(user)
+	
