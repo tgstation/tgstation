@@ -1476,6 +1476,16 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
+"eB" = (
+/obj/machinery/flasher{
+	id = "shuttleflash";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -1531,7 +1541,7 @@ bK
 bM
 cs
 ad
-cs
+cu
 bF
 be
 be
@@ -1539,7 +1549,7 @@ be
 be
 be
 cd
-cs
+cu
 ad
 cx
 ar
@@ -1589,8 +1599,8 @@ aJ
 ar
 cs
 cu
-cs
-cs
+cu
+cu
 cu
 cs
 ar
@@ -1621,7 +1631,7 @@ ax
 aF
 aK
 aQ
-aY
+be
 be
 be
 be
@@ -1655,7 +1665,7 @@ ay
 aG
 aL
 aQ
-aZ
+eB
 aZ
 aZ
 aZ
@@ -1691,7 +1701,7 @@ aM
 ar
 cs
 cu
-cs
+cu
 ab
 br
 bz
@@ -1769,7 +1779,7 @@ aZ
 bQ
 cs
 ad
-cs
+cu
 bW
 aZ
 bq
@@ -1777,7 +1787,7 @@ aC
 by
 aZ
 ce
-cs
+cu
 ad
 cy
 ar
@@ -1804,13 +1814,13 @@ cu
 cI
 ad
 cr
-cs
+cu
 cs
 br
 aC
 bz
 cs
-cs
+cu
 en
 ad
 ad
@@ -1858,9 +1868,9 @@ cx
 cs
 cu
 cs
-cs
-cs
-cs
+cu
+cu
+cu
 cs
 bo
 bt
@@ -1899,7 +1909,7 @@ bl
 bp
 bu
 bA
-cs
+cu
 ad
 ad
 ad
@@ -1925,7 +1935,7 @@ cu
 as
 aC
 aC
-cs
+cu
 aT
 aC
 bh
@@ -1959,7 +1969,7 @@ cu
 at
 aD
 aC
-cs
+cu
 aU
 aC
 aC
