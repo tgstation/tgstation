@@ -17,11 +17,11 @@
 	var/alarm_rating = ""
 	var/GBP_alarm_cooldown = 4500
 	var/list/prize_list = list(
-		new /datum/GBP_equipment("Tendie",				/obj/item/weapon/reagent_containers/food/snacks/nugget,				50,	1),
-		new /datum/GBP_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,						50,	1),
+		new /datum/GBP_equipment("Tendie",				/obj/item/weapon/reagent_containers/food/snacks/nugget,				50,		1),
+		new /datum/GBP_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,						50,		1),
 		new /datum/GBP_equipment("Soap",				/obj/item/weapon/soap/nanotrasen,									100,	1),
 		new /datum/GBP_equipment("Insulated Gloves",				/obj/item/clothing/gloves/color/yellow,					100,	1),
-		new /datum/GBP_equipment("Fulton Beacon",		/obj/item/fulton_core,												50,	1),
+		new /datum/GBP_equipment("Fulton Beacon",		/obj/item/fulton_core,												50,		1),
 		new /datum/GBP_equipment("Fulton Pack",			/obj/item/weapon/extraction_pack,									200,	1),
 		new /datum/GBP_equipment("Space Cash",			/obj/item/stack/spacecash/c1000,									250,	1),
 		new /datum/GBP_equipment("50 metal sheets",			/obj/item/stack/sheet/metal/fifty,								500,	1),
@@ -137,8 +137,6 @@
 				power_alarm_bonus = max(0,(1000 - (SA.power_alarm_count * 200)))
 				fire_alarm_bonus = max(0,(500 - (SA.fire_alarm_count * 100)))
 				limit++
-			else
-				return
 		switch(air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus)
 			if(0)
 				alarm_rating = "NOT WORTH THE AIR YOU'RE BREATHING, CONSIDER SUICIDE"
