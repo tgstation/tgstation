@@ -134,8 +134,9 @@ var/datum/subsystem/mapping/SSmapping
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
-		for(var/I in 2 to FailedZs.len)
-			msg += ", [I]"
+		if(FailedZs.len > 1)
+			for(var/I in 2 to FailedZs.len)
+				msg += ", [I]"
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
