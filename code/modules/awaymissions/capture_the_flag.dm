@@ -117,6 +117,13 @@
 	desc = "This is where a blue banner used to play capture the flag \
 		would go."
 
+/proc/toggle_ctf(mob/user)
+	var/ctf_enabled = FALSE
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		ctf_enabled = CTF.toggle_ctf()
+	message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+	notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+
 /obj/machinery/capture_the_flag
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
@@ -197,10 +204,7 @@
 		if(user.client && user.client.holder)
 			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
 			if(response == "Yes")
-				for(var/obj/machinery/capture_the_flag/CTF in machines)
-					CTF.start_ctf()
-				message_admins("[key_name_admin(user)] has enabled CTF!")
-				notify_ghosts("CTF has been enabled!", 'sound/effects/ghost2.ogg')
+				toggle_ctf(user)
 		return
 
 	if(ticker.current_state < GAME_STATE_PLAYING)
@@ -660,3 +664,11 @@
 					if(istype(mob_area, /area/ctf))
 						M << "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>"
 				break
+
+#undef WHITE_TEAM
+#undef RED_TEAM
+#undef BLUE_TEAM
+#undef FLAG_RETURN_TIME
+#undef INSTAGIB_RESPAWN
+#undef DEFAULT_RESPAWN
+#undef AMMO_DROP_LIFETIME
