@@ -1567,7 +1567,7 @@
 	contraband = TRUE
 	cost = 3000
 	num_contained = 6
-	contains = list(/obj/item/weapon/poster/contraband,
+	contains = list(/obj/item/weapon/poster/random_contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
 					/obj/item/seeds/ambrosia/deus,
@@ -1733,3 +1733,10 @@
 					/obj/item/weapon/circuitboard/machine/computer/sat_control
 					)
 	crate_name= "shield control board crate"
+
+/datum/supply_pack/misc/bicycle
+	name = "Bicycle"
+	cost = 1000000
+	contains = list(/obj/vehicle/bicycle)
+	crate_name = "Bicycle Crate"
+	crate_type = /obj/structure/closet/crate/large

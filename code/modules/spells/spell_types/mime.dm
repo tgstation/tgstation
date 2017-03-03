@@ -65,7 +65,7 @@
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	name = "Invisible Blockade"
-	desc = "With more polished skills, a powerful mime can create a invisble blockade, blocking off a 3x1 area."
+	desc = "Form an invisible three tile wide blockade."
 	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
@@ -90,7 +90,7 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "An ancient technqiue, passed down from mentor to student. Allows you to shoot bullets out of your fingers."
+	desc = "Shoot a mimed bullet from your fingers that does a stun and some damage."
 	school = "mime"
 	panel = "Mime"
 	charge_max = 300
@@ -110,6 +110,10 @@
 
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/Click()
+	var/mob/living/carbon/human/owner = usr
+	if(owner.incapacitated())
+		owner << "<span class='warning'>You can't properly point your fingers while incapacitated.</span>"
+		return
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
 			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
@@ -124,7 +128,7 @@
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 1"
-	desc = "When you turn the pages, it won't make a sound!"
+	desc = "The pages don't make any sound when turned."
 	icon_state ="bookmime"
 
 /obj/item/weapon/spellbook/oneuse/mimery_guns
