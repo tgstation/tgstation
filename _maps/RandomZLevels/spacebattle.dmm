@@ -1872,7 +1872,7 @@
 /area/awaymission/spacebattle/cruiser)
 "gc" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gd" = (
