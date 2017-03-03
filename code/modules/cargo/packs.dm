@@ -1567,7 +1567,7 @@
 	contraband = TRUE
 	cost = 3000
 	num_contained = 6
-	contains = list(/obj/item/weapon/poster/contraband,
+	contains = list(/obj/item/weapon/poster/random_contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
 					/obj/item/seeds/ambrosia/deus,
