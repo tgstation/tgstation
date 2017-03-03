@@ -4,17 +4,12 @@
 
 	- Interface -
 
-	/datum/construction_state - The datum that holds all properties of an object's unfinished state, these datums are stored in a static list keyed by type. See the datum definition below
+	/datum/construction_state - The datum that holds all properties of an object's unfinished states. See the datum definition below
 
-	/datum/construction_state/first/New(obj/parent, material_type, material_amount)	- Specify the materials to be dropped after full deconstruction, must be declared first in InitConstruction if at all
+	/obj/var/datum/construction_state/current_construction_state - A reference to an objects current construction_state, null means no construction steps defined
 
-	/datum/construction_state/last/New(obj/parent, required_type_to_deconstruct, deconstruction_delay, deconstruction_message) - Specify the reqiuired tools and message for the first deconstruction step
-																																	Must be declared last in InitConstruction
-
-	/obj/var/current_construction_state - A reference to an objects current construction_state, null means no construction steps defined
-
-	/obj/proc/InitConstruction - Called when the first instance of an object type is initialized to set up it's construction steps. Should not call the base.
-								 Consider this a staic proc. Do not try to modify src here
+	CONSTRUCTION_BLUEPRINT(<full object path>) - Called to list out the construction steps of the object path given. This is a proc definition for an internal datum.
+												Should return a list of construction_state datums. See ai_core.dm or barsigns.dm for good examples
 
 	/obj/proc/OnConstruction(state_id, mob/user, obj/item/used) - Called when a construction step is completed on an object with the new state_id
 																If state_id is zero, the object has been fully constructed abd can't be deconstructed.
@@ -31,9 +26,6 @@
 
 	/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
 																							Setting skip to TRUE for parent calls requests that no further checks other than the base be made. 
-
-	See ai_core.dm or barsigns.dm for good examples
-		
 */
 
 /datum/construction_state
@@ -161,21 +153,33 @@
 	parent.icon_state = initial(parent.icon_state)
 	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
 
-/obj/proc/SetupConstruction()	//called by Initialize
+/datum/construction_blueprint
+	var/owner_type
+
+/datum/construction_blueprint/proc/GetBlueprint()
+	return list()
+
+//See __HELPERS/game.dm for CONSTRUCTION_BLUEPRINT macro
+
+/obj/proc/SetupConstruction()
 	var/list/our_steps = construction_steps[type]
 	if(isnull(our_steps))
-		var/list/Result = InitConstruction()	//get steps for the first time
-		if(Result != -1)
-			LinkConstructionSteps(Result)	//assign ids and stitch the linked list together
-			if(!ValidateConstructionSteps(Result))
-				Result = list()
-			else
-				current_construction_state = Result[Result.len]	//start fully constructed by default
-		else
-			Result = list()
-		construction_steps[type] = Result	//cache it
-	else if(our_steps.len)
-		current_construction_state = our_steps[our_steps.len]	//start fully constructed by default
+		our_steps = list()
+		if(construction_blueprint)
+			var/datum/construction_blueprint/BP = new construction_blueprint
+			var/temp = BP.GetBlueprint()	//get steps for the first time
+			if(!temp)
+				WARNING("Invalid construction_blueprint for [type]!")
+				temp = -1
+			if(temp != -1)
+				LinkConstructionSteps(temp)	//assign ids and stitch the linked list together
+				if(ValidateConstructionSteps(temp))
+					our_steps = temp
+		construction_steps[type] = our_steps	//cache it
+	if(our_steps.len)
+		var/stepslength = our_steps.len
+		current_construction_state = our_steps[stepslength]	//start fully constructed by default
+	return our_steps
 
 /obj/proc/InitConstruction() //null op, no construction steps
 	//derivatives return a proper newlist of construction steps

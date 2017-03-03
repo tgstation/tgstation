@@ -511,3 +511,18 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
+
+//See game/objects/obj_construction.dm
+#define CONSTRUCTION_BLUEPRINT(type)\
+type/construction_blueprint = /datum/construction_blueprint##type;\
+/datum/construction_blueprint##type{\
+	owner_type = type;\
+}\
+/datum/construction_blueprint##type/GetBlueprint()
+
+//Oh god, please forgive me for this colon, I tried using a '.' but it wouldn't work
+#define GET_CONSTRUCTION_BLUEPRINT(type, outlist)\
+	var##type/construction_blueprint_get_parent_type = type;\
+	var/construction_blueprint_get_type = initial(construction_blueprint_get_parent_type:construction_blueprint);\
+	var/datum/construction_blueprint/construction_blueprint_getter = new construction_blueprint_get_type;\
+	outlist = construction_blueprint_getter.GetBlueprint();

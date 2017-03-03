@@ -19,10 +19,11 @@
 		brain = null
 	return ..()
 
-/obj/structure/AIcore/InitConstruction()
-	return newlist(
+CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore)
+	. = newlist(
 		/datum/construction_state/first{
-			required_type_to_construct = /obj/item/stack/sheet/plasteel
+		//See the end of the proc for why this is commented out
+		//	required_type_to_construct = /obj/item/stack/sheet/plasteel
 			required_amount_to_construct = 4
 		},
 		/datum/construction_state{
@@ -89,6 +90,12 @@
 			deconstruction_message = "disconnect the monitor from"
 		}
 	)
+	
+	//This is here to work around a byond bug
+	//http://www.byond.com/forum/?post=2220240
+
+	var/datum/construction_state/first/X = .[1]
+	X.required_type_to_construct = /obj/item/stack/sheet/plasteel
 
 /obj/structure/AIcore/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip)
 	. = ..()
