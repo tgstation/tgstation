@@ -608,7 +608,8 @@ ARCD
 /obj/item/weapon/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
 	max_matter = 300
-	color = #ff000
+	matter = 300
+	color = "red"
 
 	/* Build delays (deciseconds) */
 
@@ -622,7 +623,13 @@ ARCD
 	deconwindowdelay = 20
 	deconairlockdelay = 20
 	
-/obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
-	proximity = true
-	..()
 	
+/obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
+	proximity = 1
+	if(get_dist(get_turf(A),get_turf(user)) > 7)
+		user << "<span class='warning'>The \'Out of Range\' light on \
+		the RCD blinks red.</span>"
+		return
+	user.Beam(A,icon_state="rped_upgrade",time=20)
+	..()
+
