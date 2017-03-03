@@ -5,6 +5,9 @@
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/weapon/circuitboard/computer/stationalert
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
+	var/air_alarm_count = 0
+	var/power_alarm_count = 0
+	var/fire_alarm_count = 0
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -66,9 +69,13 @@
 				L -= I
 	return !cleared
 
-
 /obj/machinery/computer/station_alert/process()
+	air_alarm_count = alarms(atmosphere).len
+	power_alarm_count = alarms(power).len
+	fire_alarm_count = alarms(fire).len
 	..()
+
+
 
 /obj/machinery/computer/station_alert/update_icon()
 	..()
