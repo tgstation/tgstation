@@ -3,7 +3,7 @@
 //PUBLIC -  call these wherever you want
 
 
-/mob/proc/throw_alert(category, type, severity, obj/new_master)
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
 
 /* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
@@ -11,7 +11,9 @@
  severity is an optional number that will be placed at the end of the icon_state for this alert
  For example, high pressure's icon_state is "highpressure" and can be serverity 1 or 2 to get "highpressure1" or "highpressure2"
  new_master is optional and sets the alert's icon state to "template" in the ui_style icons with the master as an overlay.
- Clicks are forwarded to master */
+ Clicks are forwarded to master
+ Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
+ */
 
 	if(!category)
 		return
@@ -19,8 +21,11 @@
 	var/obj/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
+		if(thealert.override_alerts)
+			return 0
 		if(new_master && new_master != thealert.master)
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
+
 			clear_alert(category)
 			return .()
 		else if(thealert.type != type)
@@ -34,6 +39,9 @@
 				return 0
 	else
 		thealert = new type()
+		thealert.override_alerts = override
+		if(override)
+			thealert.timeout = null
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -65,9 +73,11 @@
 		clear_alert(category)
 
 // Proc to clear an existing alert.
-/mob/proc/clear_alert(category)
+/mob/proc/clear_alert(category, clear_override = FALSE)
 	var/obj/screen/alert/alert = alerts[category]
 	if(!alert)
+		return 0
+	if(alert.override_alerts && !clear_override)
 		return 0
 
 	alerts -= category
@@ -85,6 +95,7 @@
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
+	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 
 
 /obj/screen/alert/MouseEntered(location,control,params)

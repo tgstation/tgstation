@@ -35,6 +35,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/stat_msg1
 	var/stat_msg2
 
+/obj/machinery/computer/communications/proc/checkCCcooldown()
+	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
+	if(CM.lastTimeUsed + 600 > world.time)
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/communications/New()
 	shuttle_caller_list += src
@@ -264,11 +269,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
-				if(CM.lastTimeUsed + 600 > world.time)
+				if(!checkCCcooldown())
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
-				if(!input || !(usr in view(1,src)))
+				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Centcomm_announce(input, usr)
@@ -280,12 +285,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
-				if(CM.lastTimeUsed + 600 > world.time)
+				if(!checkCCcooldown())
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
-				if(!input || !(usr in view(1,src)))
+				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Syndicate_announce(input, usr)
@@ -301,11 +306,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		if("nukerequest") //When there's no other way
 			if(src.authenticated==2)
-				if(CM.lastTimeUsed + 600 > world.time)
+				if(!checkCCcooldown())
 					usr << "<span class='warning'>Arrays recycling. Please stand by.</span>"
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
-				if(!input || !(usr in view(1,src)))
+				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				Nuke_request(input, usr)
 				usr << "<span class='notice'>Request sent.</span>"
