@@ -302,25 +302,29 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 	if(!Mport)
 		user << "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>"
 		return
-	var/search_radius = max(Mport.width, Mport.height)*0.5
-	var/list/landing_areas = get_areas_in_range(search_radius, landing_spot)
-	for(var/area/shuttle/auxillary_base/AB in landing_areas) //You land NEAR the base, not IN it.
-		user << "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>"
-		SSshuttle.stationary.Remove(Mport)
-		qdel(Mport)
-		return
+
 	var/obj/docking_port/mobile/mining_shuttle
+	var/list/landing_turfs = list() //List of turfs where the mining shuttle may land.
 	for(var/S in SSshuttle.mobile)
 		var/obj/docking_port/mobile/MS = S
 		if(MS.id != "mining")
 			continue
 		mining_shuttle = MS
+		landing_turfs = mining_shuttle.return_ordered_turfs(x,y,z,dir)
+		break
 
 	if(!mining_shuttle) //Not having a mining shuttle is a map issue
 		user << "<span class='warning'>No mining shuttle signal detected. Please contact Nanotrasen Support.</span>"
 		SSshuttle.stationary.Remove(Mport)
 		qdel(Mport)
 		return
+
+	for(var/L in landing_turfs) //You land NEAR the base, not IN it.
+		if(istype(get_area(L), /area/shuttle/auxillary_base))
+			user << "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>"
+			SSshuttle.stationary.Remove(Mport)
+			qdel(Mport)
+			return
 
 	if(!mining_shuttle.canDock(Mport))
 		user << "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>"
@@ -331,7 +335,7 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
 	user << "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>"
 	anchored = 1 //Locks in place to mark the landing zone.
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()
 	anti_spam_cd = 0
