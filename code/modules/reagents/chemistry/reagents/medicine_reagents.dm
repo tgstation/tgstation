@@ -159,9 +159,10 @@
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
-	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else."
+	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
 	color = "#0000C8"
 	taste_description = "muscle"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
