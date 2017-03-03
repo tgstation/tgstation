@@ -118,6 +118,9 @@
 	e_cost = 50
 	fire_sound = 'sound/weapons/taser2.ogg'
 
+/obj/item/ammo_casing/energy/disabler/laser_tag
+	projectile_type = /obj/item/projectile/beam/disabler/laser_tag
+
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
 	select_name = "plasma burst"

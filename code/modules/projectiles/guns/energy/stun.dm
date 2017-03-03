@@ -48,3 +48,6 @@
 	can_charge = 0
 	use_cyborg_cell = 1
 
+/obj/item/weapon/gun/energy/disabler/cyborg/laser_tag
+	desc = "An integrated laser tag gun for recreational use."
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/laser_tag)

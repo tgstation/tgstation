@@ -195,3 +195,12 @@
 /obj/item/weapon/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
 		..()
+
+//Gag stun baton for clowns and valid borgs. Has no effect.
+/obj/item/weapon/melee/baton/loaded/inflatable
+	desc = "A rubber lookalike of a stun baton. It doesn't do anything..."
+
+/obj/item/weapon/melee/baton/loaded/inflatable/baton_stun(mob/living/M, mob/living/validborg)
+	validborg.visible_message("<span class='warning'>[validborg] conks [M] on the head with the inflatable [name]!</span>", "<span class='danger'>[validborg] has stunned [M] with [src]!</span>")
+	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	return 1
