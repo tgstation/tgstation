@@ -1,11 +1,13 @@
 
 /obj/machinery/GBP_vendor
-	name = "engineering point redemption"
+	name = "engineering points tracker"
 	desc = "Who's a good boy?"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "liberationstation"
+	verb_say = "states"
 	density = 1
 	anchored = 1
+	var/obj/item/device/radio/radio
 	var/GBP = 0
 	var/GBPearned = 0
 	var/power_export_bonus = 0
@@ -14,25 +16,7 @@
 	var/fire_alarm_bonus = 0
 	var/alarm_rating = ""
 	var/GBP_alarm_cooldown = 4500
-	var/list/prize_list = list()
-
-/datum/GBP_equipment
-	var/equipment_name = "generic"
-	var/equipment_path = null
-	var/cost = 0
-	var/amount = 0
-
-/datum/GBP_equipment/New(name, path, cost, amount)
-	src.equipment_name = name
-	src.equipment_path = path
-	src.cost = cost
-	src.amount = amount
-
-/obj/machinery/GBP_vendor/Initialize()
-	radio = new(src)
-	radio.listening = 0
-	radio.frequency = 1357
-	prize_list = (
+	var/list/prize_list = list(
 		new /datum/GBP_equipment("Tendie",				/obj/item/weapon/reagent_containers/food/snacks/nugget,				50,	1),
 		new /datum/GBP_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,						50,	1),
 		new /datum/GBP_equipment("Soap",				/obj/item/weapon/soap/nanotrasen,									100,	1),
@@ -57,6 +41,23 @@
 		new /datum/GBP_equipment("Chrono Suit x5",		/obj/item/clothing/suit/space/chronos,								15000,	5),
 		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/speedwagon,				30000,	5),
 		)
+		
+/datum/GBP_equipment
+	var/equipment_name = "generic"
+	var/equipment_path = null
+	var/cost = 0
+	var/amount = 0
+
+/datum/GBP_equipment/New(name, path, cost, amount)
+	src.equipment_name = name
+	src.equipment_path = path
+	src.cost = cost
+	src.amount = amount
+
+/obj/machinery/GBP_vendor/Initialize()
+	radio = new(src)
+	radio.listening = 0
+	radio.frequency = 1357
 	..()
 	
 /obj/machinery/GBP_vendor/Destroy()
@@ -84,8 +85,8 @@
 /obj/machinery/GBP_vendor/interact(mob/user)
 	var/dat
 	dat +="<div class='statusDisplay'>"
-	dat += "You currently have <td>[GBP]</td> engineering voucher points<br>"
-	dat += "You have earned a total of <td>[GBPearned]</td> this shift<br>"
+	dat += "You currently have <td>[round(GBP)]</td> engineering voucher points<br>"
+	dat += "You have earned a total of <td>[round(GBPearned)]</td> this shift<br>"
 	dat += "</div>"
 	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
 	for(var/datum/GBP_equipment/prize in prize_list)
@@ -119,37 +120,42 @@
 			new prize.equipment_path(src.loc)
 			feedback_add_details("Engi_equipment_bought",
 				"[src.type]|[prize.equipment_path]")
+	updateUsrDialog()
 
 /obj/machinery/GBP_vendor/attackby(obj/item/I, mob/user, params)
 	return ..()
 
 /obj/machinery/GBP_vendor/process()
-	GBP_power_export = 0
-	for(/obj/machinery/power/exporter/PE in world)
-		GBP_power_export = PE.drain_rate/150
+	power_export_bonus = 0
+	for(var/obj/machinery/power/exporter/PE in world)
+		power_export_bonus = PE.drain_rate/150
 	if(GBP_alarm_cooldown <= world.time)
-		for(/obj/machinery/computer/station_alert/SA in world)
-			air_alarm_bonus = max(0,1000 - SA.air_alarm_count * 200)
-			power_alarms_bonus = max(0,1000 - SA.power_alarm_count * 200)
-			fire_alarms_bonus = max(0,500 - SA.fire_alarm_count * 100)
-		switch(air_alarm_bonus + power_alarms_bonus + fire_alarms_bonus)
+		var/limit = 0 // ugh
+		for(var/obj/machinery/computer/station_alert/SA in world)
+			if(!limit)
+				air_alarm_bonus = max(0,(1000 - (SA.air_alarm_count * 200)))
+				power_alarm_bonus = max(0,(1000 - (SA.power_alarm_count * 200)))
+				fire_alarm_bonus = max(0,(500 - (SA.fire_alarm_count * 100)))
+				limit++
+			else
+				return
+		switch(air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus)
 			if(0)
-				rating = "NOT WORTH THE AIR YOU'RE BREATHING, CONSIDER SUICIDE"
+				alarm_rating = "NOT WORTH THE AIR YOU'RE BREATHING, CONSIDER SUICIDE"
 			if(100 to 900)
-				rating = "COMPLICIT IN THE STATION'S DOWNFALL"
+				alarm_rating = "COMPLICIT IN THE STATION'S DOWNFALL"
 			if(1000 to 1500)
-				rating = "HALF-ASSED"
+				alarm_rating = "HALF-ASSED"
 			if(1600 to 2000)
-				rating = "ADEQUATE AND UNREMARKABLE"
+				alarm_rating = "ADEQUATE AND UNREMARKABLE"
 			if(2100 to 2400)
-				rating = "IMPRESSIVE"
+				alarm_rating = "IMPRESSIVE"
 			if(2500)
-				rating = "ABSOLUTELY FLAWLESS, YOU ARE THE ALPHA-ENGINEERS"
+				alarm_rating = "ABSOLUTELY FLAWLESS"
 		radio.talk_into(src,"UPDATE: The engineering department has been awarded [air_alarm_bonus] points for the state of the station's air, [power_alarm_bonus] points for the state of the station's power, and [fire_alarm_bonus] points for the state of the station's fire alarms.")
-		spawn(20)
-			radio.talk_into(src,"This bonus represents [((air_alarm_bonus + power_alarms_bonus + fire_alarms_bonus)/2500)*100]% of the total possible bonus. Your rating is: [rating]. Consult the station alert console for details.")
+		spawn(50)
+			radio.talk_into(src,"This bonus represents [((air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus)/2500)*100]% of the total possible bonus. Your rating is: [alarm_rating]. Consult the station alert console for details.")
 		GBP_alarm_cooldown = world.time + 3000
-		GBP_power_export += (air_alarm_bonus + power_alarms_bonus + fire_alarms_bonus) //Adds to the total points without having to update every process
-	GBP += GBP_power_export
-	GBP_earned += GBP_power_export
-	updateUsrDialog()
+		power_export_bonus += (air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus) //Adds to the total points without having to update every process
+	GBP += power_export_bonus
+	GBPearned += power_export_bonus
