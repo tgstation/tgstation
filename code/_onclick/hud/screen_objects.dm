@@ -669,7 +669,7 @@
 /obj/screen/splash
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
-	screen_loc = "1,1"
+	screen_loc = "SOUTHWEST to NORTHEAST"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
