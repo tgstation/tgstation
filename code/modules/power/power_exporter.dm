@@ -97,13 +97,10 @@
 
 
 /obj/machinery/power/exporter/process()
-	src.updateUsrDialog()
 	if(active && !crit_fail && anchored && powernet)
 		if(powernet.netexcess >= 1)
 			powernet.load += drain_rate*1000
 			power_drained += drain_rate
-			for(var/obj/machinery/GBP_vendor/G in world)
-				G.GBP += drain_rate/150
 		else
 			visible_message("Power export levels have exceeded energy surplus, shutting down")
 			active = 0
