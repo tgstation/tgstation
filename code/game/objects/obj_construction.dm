@@ -11,9 +11,10 @@
 	/datum/construction_state/last/New(obj/parent, required_type_to_deconstruct, deconstruction_delay, deconstruction_message) - Specify the reqiuired tools and message for the first deconstruction step
 																																	Must be declared last in InitConstruction
 
-	/obj/var/current_construction_state - A reference to an objects current construction_state, null means fully constructed and can't be deconstructed
+	/obj/var/current_construction_state - A reference to an objects current construction_state, null means no construction steps defined
 
-	/obj/proc/InitConstruction - Called when the first instance of an object type is initialized to set up it's construction steps. Should not call the base
+	/obj/proc/InitConstruction - Called when the first instance of an object type is initialized to set up it's construction steps. Should not call the base.
+								 Consider this a staic proc. Do not try to modify src here
 
 	/obj/proc/OnConstruction(state_id, mob/user, obj/item/used) - Called when a construction step is completed on an object with the new state_id
 																If state_id is zero, the object has been fully constructed abd can't be deconstructed.
@@ -93,6 +94,7 @@
 		id = next.id	//id cached for next step
 	else
 		id = 0	//unrecoverable step (destroyed/locked in)
+		parent.current_construction_state = null
 
 	if(constructed)
 		if(construction_sound)
