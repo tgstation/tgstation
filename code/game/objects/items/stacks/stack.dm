@@ -137,10 +137,7 @@
 				return
 
 	if (src && usr.machine==src) //do not reopen closed window
-		spawn( 0 )
-			src.interact(usr)
-			return
-	return
+		addtimer(CALLBACK(src, /atom/.proc/interact, usr), 0)
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (src.get_amount() < R.req_amount*multiplier)
