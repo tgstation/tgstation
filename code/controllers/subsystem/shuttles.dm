@@ -175,7 +175,12 @@ var/datum/subsystem/shuttle/SSshuttle
 			return
 		emergency = backup_shuttle
 
-	if(world.time - round_start_time < config.shuttle_refuel_delay)
+	var/free = 0
+	for(var/E in singulo_list)
+		var/containment = locate(/obj/machinery/field/containment) in urange(30, E, 1)
+		if(!containment)
+			free = 1
+	if(world.time - round_start_time < config.shuttle_refuel_delay && !free)
 		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
 		return
 
