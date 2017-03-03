@@ -19,7 +19,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/launch_warning = TRUE
 	var/list/turrets = list() //List of connected turrets
 
-	req_one_access = list(access_cargo, access_construction, access_heads)
+	req_one_access = list(access_cargo, access_construction, access_heads, access_research)
 	var/possible_destinations
 	clockwork = TRUE
 	var/obj/item/device/gps/internal/base/locator
