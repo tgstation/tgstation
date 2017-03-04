@@ -67,22 +67,20 @@
 	else if(mode != SHUTTLE_IGNITING)
 		mode = SHUTTLE_IDLE
 
-		//dock for people on the shuttle
-		var/found_awake
-		for(var/A in areas)
-			for(var/mob/living/L in A)
-				//don't dock for braindead'
-				if(L.key && L.client && L.stat != DEAD)
-					found_awake = TRUE
-					break
-			if(found_awake)
-				break
+		var/found_awake = PersonCheck()
 
 		if(docked && !found_awake)
 			hyperspace_sound(1)
 			request(assigned_transit)
 		else if(!docked && found_awake)
 			SendToStation()
+
+/obj/docking_port/mobile/arrivals/proc/PersonCheck()
+	for(var/A in areas)
+		for(var/mob/living/L in A)
+			//don't dock for braindead'
+			if(L.key && L.client && L.stat != DEAD)
+				return TRUE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
 	if(!docked && mode == SHUTTLE_IDLE)
@@ -105,12 +103,17 @@
 		A << s
 
 /obj/docking_port/mobile/arrivals/dock(obj/docking_port/stationary/S1, force=FALSE)
+	if(docked && PersonCheck())
+		return FALSE
+
 	docked = S1 != assigned_transit
 	if(!docked)
 		hyperspace_sound(2)
+	else
+		hyperspace_sound(3)
+
 	. = ..()
 	if(docked)
-		hyperspace_sound(3)
 		
 	for(var/L in queued_announces)
 		AnnounceArrival(arglist(L))
