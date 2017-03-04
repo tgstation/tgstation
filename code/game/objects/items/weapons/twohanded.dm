@@ -588,6 +588,17 @@
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()
 
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+	if(!proximity || !wielded)
+		return
+	if(istype(target, /turf/simulated/wall))
+		var/turf/simulated/wall/W = target
+		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
+		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		W.take_damage(120)
+		return 1
+	..()
+
 //HF blade
 
 /obj/item/weapon/twohanded/vibro_weapon
