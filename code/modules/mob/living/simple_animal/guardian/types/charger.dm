@@ -15,7 +15,7 @@
 	var/obj/screen/alert/chargealert
 
 /mob/living/simple_animal/hostile/guardian/charger/Life()
-	..()
+	. = ..()
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
 			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)
@@ -33,12 +33,14 @@
 
 /mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
 	charging = 1
-	throw_at(targeted_atom, range, 1, src, 0)
+	throw_at(targeted_atom, range, 1, src, 0, callback = CALLBACK(src, .proc/charging_end))
+
+/mob/living/simple_animal/hostile/guardian/charger/proc/charging_end()
 	charging = 0
 
 /mob/living/simple_animal/hostile/guardian/charger/Move()
 	if(charging)
-		PoolOrNew(/obj/effect/overlay/temp/decoy/fading, list(loc,src))
+		new /obj/effect/overlay/temp/decoy/fading(loc,src)
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/charger/snapback()

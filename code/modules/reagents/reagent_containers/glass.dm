@@ -3,7 +3,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	spillable = 1
 	resistance_flags = ACID_PROOF
 
@@ -20,7 +20,7 @@
 		return
 
 	if(istype(M))
-		if(user.a_intent == "harm")
+		if(user.a_intent == INTENT_HARM)
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
@@ -28,6 +28,10 @@
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
+			if(isturf(target) && reagents.reagent_list.len && thrownby)
+				add_logs(thrownby, target, "splashed [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
+				log_game("[key_name(thrownby)] splashed [english_list(reagents.reagent_list)] at [COORD(target)].")
+				message_admins("[key_name_admin(thrownby)] splashed [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
 			reagents.reaction(M, TOUCH)
 			add_logs(user, M, "splashed", R)
 			reagents.clear_reagents()
@@ -79,7 +83,7 @@
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
 	else if(reagents.total_volume)
-		if(user.a_intent == "harm")
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
 			reagents.reaction(target, TOUCH)
@@ -224,7 +228,7 @@
 	icon_state = "bucket"
 	item_state = "bucket"
 	materials = list(MAT_METAL=200)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 70
@@ -255,7 +259,6 @@
 	else if(isprox(O))
 		user << "<span class='notice'>You add [O] to [src].</span>"
 		qdel(O)
-		user.unEquip(src)
 		qdel(src)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else

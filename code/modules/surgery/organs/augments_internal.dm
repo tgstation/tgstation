@@ -26,7 +26,7 @@
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
 	zone = "head"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
@@ -55,13 +55,15 @@
 				stored_items += I
 
 		var/list/L = owner.get_empty_held_indexes()
-		if(L && L.len == owner.held_items.len)
+		if(LAZYLEN(L) == owner.held_items.len)
 			owner << "<span class='notice'>You are not holding any items, your hands relax...</span>"
 			active = 0
 			stored_items = list()
 		else
 			for(var/obj/item/I in stored_items)
 				owner << "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>"
+				I.flags |= NODROP
+
 	else
 		release_items()
 		owner << "<span class='notice'>Your hands relax...</span>"
@@ -72,7 +74,8 @@
 		return
 	var/range = severity ? 10 : 5
 	var/atom/A
-	release_items()
+	if(active)
+		release_items()
 	..()
 	for(var/obj/item/I in stored_items)
 		A = pick(oview(range))
@@ -83,7 +86,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		I.flags ^= NODROP
+		I.flags &= ~NODROP
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
@@ -113,7 +116,7 @@
 	if(crit_fail)
 		return
 	crit_fail = TRUE
-	addtimer(src, "reboot", 90 / severity)
+	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
@@ -128,7 +131,7 @@
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
 	slot = "breathing_tube"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=2;biotech=3"
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
@@ -153,8 +156,11 @@
 
 /obj/item/weapon/storage/box/cyber_implants/bundle
 	name = "boxed cybernetic implants"
-	var/list/boxed = list(/obj/item/organ/cyberimp/eyes/xray,/obj/item/organ/cyberimp/eyes/thermals,
-						/obj/item/organ/cyberimp/brain/anti_stun, /obj/item/organ/cyberimp/chest/reviver)
+	var/list/boxed = list(
+		/obj/item/organ/eyes/robotic/xray,
+		/obj/item/organ/eyes/robotic/thermals,
+		/obj/item/organ/cyberimp/brain/anti_stun,
+		/obj/item/organ/cyberimp/chest/reviver)
 	var/amount = 5
 
 /obj/item/weapon/storage/box/cyber_implants/bundle/New()

@@ -33,7 +33,7 @@
 /mob/living/proc/get_ear_protection()
 	return 0
 
-/mob/living/proc/on_hit(obj/item/projectile/proj_type)
+/mob/living/proc/on_hit(obj/item/projectile/P)
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
@@ -92,7 +92,7 @@
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)
-	if(M.occupant.a_intent == "harm")
+	if(M.occupant.a_intent == INTENT_HARM)
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
@@ -110,7 +110,7 @@
 				return
 		updatehealth()
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-						"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE, M.occupant)
+						"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
@@ -146,7 +146,7 @@
 				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
-			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != "grab")
+			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
 				return 0
 		user.grab_state++
 		switch(user.grab_state)
@@ -185,7 +185,7 @@
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
@@ -198,7 +198,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M, src, "attacked")
 		return 1
 
@@ -208,7 +208,7 @@
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
-	if (M.a_intent == "harm")
+	if (M.a_intent == INTENT_HARM)
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0
@@ -217,11 +217,11 @@
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			return 1
 		else
 			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
@@ -235,12 +235,12 @@
 			if(prob(90))
 				add_logs(L, src, "attacked")
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE, L)
+					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE, L)
+					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -267,7 +267,6 @@
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
-	flash_act()
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
@@ -275,8 +274,9 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+	if(tesla_shock && tesla_ignore)
+		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
 			adjustFireLoss(shock_damage)
@@ -300,6 +300,9 @@
 	return(gain)
 
 /mob/living/narsie_act()
+	if(status_flags & GODMODE)
+		return
+
 	if(is_servant_of_ratvar(src) && !stat)
 		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
 		adjustBruteLoss(35)
@@ -324,13 +327,19 @@
 
 
 /mob/living/ratvar_act()
-	if(!is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
-		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
-		adjustFireLoss(35)
-		if(src)
-			adjust_fire_stacks(1)
-			IgniteMob()
-		return FALSE
+	if(status_flags & GODMODE)
+		return
+
+	if(stat != DEAD && !is_servant_of_ratvar(src))
+		for(var/obj/item/weapon/implant/mindshield/M in implants)
+			qdel(M)
+		if(!add_servant_of_ratvar(src))
+			src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+			adjustFireLoss(35)
+			if(src)
+				adjust_fire_stacks(1)
+				IgniteMob()
+			return FALSE
 	return TRUE
 
 
@@ -338,7 +347,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
 		overlay_fullscreen("flash", type)
-		addtimer(src, "clear_fullscreen", 25, FALSE, "flash", 25)
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return 1
 
 //called when the mob receives a loud bang

@@ -10,12 +10,12 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_NECK
 	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_color = "white"
 	resistance_flags = FLAMMABLE
 
@@ -247,7 +247,7 @@ LINEN BINS
 		amount++
 		user << "<span class='notice'>You put [I] in [src].</span>"
 		update_icon()
-	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.drop_item())
 			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
 			return

@@ -1,4 +1,5 @@
-#define BUTTON_COOLDOWN 30
+#define BUTTON_COOLDOWN 60 // cant delay the bomb forever
+#define BUTTON_DELAY	50 //five seconds
 
 /obj/machinery/syndicatebomb
 	icon = 'icons/obj/assemblies.dmi'
@@ -11,9 +12,11 @@
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	var/minimum_timer = 60
-	var/timer_set = 60
+	var/minimum_timer = 90
+	var/timer_set = 90
 	var/maximum_timer = 60000
+
+	var/can_unanchor = TRUE
 
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
@@ -27,6 +30,19 @@
 	var/next_beep
 	var/detonation_timer
 	var/explode_now = FALSE
+
+/obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
+	. = (payload in src) && (active || ignore_active) && !defused
+	if(.)
+		payload.detonate()
+
+/obj/machinery/syndicatebomb/obj_break()
+	if(!try_detonate())
+		..()
+
+/obj/machinery/syndicatebomb/obj_destruction()
+	if(!try_detonate())
+		..()
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
@@ -58,8 +74,7 @@
 		active = FALSE
 		timer_set = initial(timer_set)
 		update_icon()
-		if(payload in src)
-			payload.detonate()
+		try_detonate(TRUE)
 	//Counter terrorists win
 	else if(!active || defused)
 		if(defused && payload in src)
@@ -98,20 +113,20 @@
 		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench) && can_unanchor)
 		if(!anchored)
 			if(!isturf(loc) || isspaceturf(loc))
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
 			else
 				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
-				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
+				playsound(loc, I.usesound, 50, 1)
 				anchored = 1
 				if(active)
 					user << "<span class='notice'>The bolts lock in place.</span>"
 		else
 			if(!active)
 				user << "<span class='notice'>You wrench the bomb from the floor.</span>"
-				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
+				playsound(loc, I.usesound, 50, 1)
 				anchored = 0
 			else
 				user << "<span class='warning'>The bolts are locked down!</span>"
@@ -155,16 +170,19 @@
 			user << "<span class='warning'>You need more fuel to complete this task!</span>"
 			return
 
-		playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+		playsound(loc, WT.usesound, 50, 1)
 		user << "<span class='notice'>You start to cut the [src] apart...</span>"
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
 				return
 			user << "<span class='notice'>You cut the [src] apart.</span>"
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
+		var/old_integ = obj_integrity
 		. = ..()
+		if((old_integ > obj_integrity) && active && !defused && (payload in src))
+			user << "<span class='warning'>That seems like a really bad idea...</span>"
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	interact(user)
@@ -217,12 +235,12 @@
 	name = "training bomb"
 	icon_state = "training-bomb"
 	desc = "A salvaged syndicate device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
-	payload = /obj/item/weapon/bombcore/training/
+	payload = /obj/item/weapon/bombcore/training
 
 /obj/machinery/syndicatebomb/badmin
 	name = "generic summoning badmin bomb"
 	desc = "Oh god what is in this thing?"
-	payload = /obj/item/weapon/bombcore/badmin/summon/
+	payload = /obj/item/weapon/bombcore/badmin/summon
 
 /obj/machinery/syndicatebomb/badmin/clown
 	name = "clown bomb"
@@ -232,7 +250,7 @@
 	beepsound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/syndicatebomb/badmin/varplosion
-	payload = /obj/item/weapon/bombcore/badmin/explosion/
+	payload = /obj/item/weapon/bombcore/badmin/explosion
 
 /obj/machinery/syndicatebomb/empty
 	name = "bomb"
@@ -254,7 +272,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
@@ -331,7 +349,7 @@
 	qdel(B)
 	qdel(src)
 
-/obj/item/weapon/bombcore/badmin/summon/
+/obj/item/weapon/bombcore/badmin/summon
 	var/summon_path = /obj/item/weapon/reagent_containers/food/snacks/cookie
 	var/amt_summon = 1
 
@@ -350,10 +368,10 @@
 	..()
 
 /obj/item/weapon/bombcore/badmin/explosion
-	var/HeavyExplosion = 2
-	var/MediumExplosion = 5
-	var/LightExplosion = 11
-	var/Flames = 11
+	var/HeavyExplosion = 5
+	var/MediumExplosion = 10
+	var/LightExplosion = 20
+	var/Flames = 20
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
 	explosion(get_turf(src), HeavyExplosion, MediumExplosion, LightExplosion, flame_range = Flames)
@@ -361,7 +379,7 @@
 
 /obj/item/weapon/bombcore/miniature
 	name = "small bomb core"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/bombcore/miniature/detonate()
 	if(adminlog)
@@ -402,7 +420,7 @@
 		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
-		addtimer(src, "detonate", 10)
+		addtimer(CALLBACK(src, .proc/detonate), 10)
 
 	// If it's not a time release bomb, do normal explosion
 
@@ -435,7 +453,7 @@
 
 /obj/item/weapon/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar) && beakers.len > 0)
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		for (var/obj/item/B in beakers)
 			B.loc = get_turf(src)
 			beakers -= B
@@ -499,11 +517,11 @@
 
 /obj/item/device/syndicatedetonator
 	name = "big red button"
-	desc = "Nothing good can come of pressing a button this garish..."
+	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'"
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "syndicate=3"
 	var/timer = 0
 	var/detonated =	0
@@ -513,7 +531,7 @@
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)
-				B.explode_now = TRUE
+				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
@@ -530,4 +548,7 @@
 		existant =	0
 		timer = world.time + BUTTON_COOLDOWN
 
+
+
 #undef BUTTON_COOLDOWN
+#undef BUTTON_DELAY

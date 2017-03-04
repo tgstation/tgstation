@@ -22,6 +22,11 @@
 		switch(level)
 			if(SEC_LEVEL_GREEN)
 				minor_announce(config.alert_desc_green, "Attention! Security level lowered to green:")
+				if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
+					if(security_level >= SEC_LEVEL_RED)
+						SSshuttle.emergency.modTimer(4)
+					else
+						SSshuttle.emergency.modTimer(2)
 				security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
@@ -29,8 +34,12 @@
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
 					minor_announce(config.alert_desc_blue_upto, "Attention! Security level elevated to blue:",1)
+					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
+						SSshuttle.emergency.modTimer(0.5)
 				else
 					minor_announce(config.alert_desc_blue_downto, "Attention! Security level lowered to blue:")
+					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
+						SSshuttle.emergency.modTimer(2)
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
@@ -38,6 +47,11 @@
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					minor_announce(config.alert_desc_red_upto, "Attention! Code red!",1)
+					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
+						if(security_level == SEC_LEVEL_GREEN)
+							SSshuttle.emergency.modTimer(0.25)
+						else
+							SSshuttle.emergency.modTimer(0.5)
 				else
 					minor_announce(config.alert_desc_red_downto, "Attention! Code red!")
 				security_level = SEC_LEVEL_RED
@@ -54,6 +68,11 @@
 					pod.admin_controlled = 0
 			if(SEC_LEVEL_DELTA)
 				minor_announce(config.alert_desc_delta, "Attention! Delta security level reached!",1)
+				if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
+					if(security_level == SEC_LEVEL_GREEN)
+						SSshuttle.emergency.modTimer(0.25)
+					else if(security_level == SEC_LEVEL_BLUE)
+						SSshuttle.emergency.modTimer(0.5)
 				security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)

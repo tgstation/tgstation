@@ -31,7 +31,7 @@
 	maxbodytemp = 1500
 
 	faction = list("carp")
-	flying = 1
+	movement_type = FLYING
 	pressure_resistance = 200
 	gold_core_spawnable = 1
 

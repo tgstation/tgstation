@@ -7,7 +7,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
@@ -49,13 +49,13 @@
 		qdel(active_dummy)
 		active_dummy = null
 		usr << "<span class='notice'>You deactivate \the [src].</span>"
-		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
+		new /obj/effect/overlay/temp/emp/pulse(get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 		C.activate(usr, saved_appearance, src)
 		usr << "<span class='notice'>You activate \the [src].</span>"
-		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
+		new /obj/effect/overlay/temp/emp/pulse(get_turf(src))
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)

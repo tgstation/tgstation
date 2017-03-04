@@ -52,12 +52,11 @@
 	stealth_active = 1
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/cloak,
-			list(get_turf(M), M.dir))
+		new /obj/effect/overlay/temp/dir_setting/ninja/cloak(get_turf(M), M.dir)
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
-		M.overlays = disguise.overlays
+		M.copy_overlays(disguise, TRUE)
 		M.update_inv_hands()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
@@ -66,8 +65,7 @@
 	stealth_active = 0
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja,
-			list(get_turf(M), M.dir))
+		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(M), M.dir)
 		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
@@ -271,18 +269,20 @@
 
 <br>
  1.Acquire fresh specimen.<br>
- 2.Put the specimen on operating table<br>
- 3.Apply surgical drapes preparing for dissection<br>
- 4.Apply scalpel to specimen torso<br>
- 5.Retract skin from specimen's torso<br>
- 6.Apply scalpel to specimen's torso<br>
- 7.Search through the specimen's torso with your hands to remove any organs<br>
- 8.Insert replacement gland (Retrieve one from gland storage)<br>
- 9.Consider dressing the specimen back to not disturb the habitat <br>
- 10.Put the specimen in the experiment machinery<br>
- 11.Choose one of the machine options and follow displayed instructions<br>
+ 2.Put the specimen on operating table.<br>
+ 3.Apply surgical drapes, preparing for experimental dissection.<br>
+ 4.Apply scalpel to specimen's torso.<br>
+ 5.Clamp bleeders on specimen's torso with a hemostat.<br>
+ 6.Retract skin of specimen's torso with a retractor.<br>
+ 7.Apply scalpel again to specimen's torso.<br>
+ 8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
+ 9.Insert replacement gland (Retrieve one from gland storage).<br>
+ 10.Consider dressing the specimen back to not disturb the habitat. <br>
+ 11.Put the specimen in the experiment machinery.<br>
+ 12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
+ 13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
 <br>
-Congratulations! You are now trained for xenobiology research!"}
+Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/weapon/paper/abductor/update_icon()
 	return
@@ -306,7 +306,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=4;combat=4;biotech=7;abductor=4"
 	force = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
@@ -437,7 +437,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
-		var/obj/item/organ/gland/temp = locate() in H.internal_organs
+		var/obj/item/organ/heart/gland/temp = locate() in H.internal_organs
 		if(temp)
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else
@@ -484,30 +484,35 @@ Congratulations! You are now trained for xenobiology research!"}
 	desc = "It's a gleaming sharp knife made out of silvery-green metal."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	desc = "You've never seen this before."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	desc = "You're not sure if you want the veil pulled back."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	desc = "Maybe alien surgeons have finally found a use for the drill."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
@@ -515,6 +520,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		Unless..."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/clothing/head/helmet/abductor
 	name = "agent headgear"
@@ -526,15 +532,6 @@ Congratulations! You are now trained for xenobiology research!"}
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers
-
-/obj/structure/table/optable/abductor
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "bed"
-	can_buckle = 1
-	buckle_lying = 1
-	flags = NODECONSTRUCT
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
 
 /obj/structure/bed/abductor
 	name = "resting contraption"
@@ -554,8 +551,8 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30/I.toolspeed, target = src))
+		playsound(src.loc, I.usesound, 50, 1)
+		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
@@ -572,6 +569,17 @@ Congratulations! You are now trained for xenobiology research!"}
 			new /obj/structure/table/abductor(src.loc)
 			qdel(src)
 		return
+	if(istype(I, /obj/item/stack/sheet/mineral/silver))
+		var/obj/item/stack/sheet/P = I
+		if(P.get_amount() < 1)
+			user << "<span class='warning'>You need one sheet of silver to do \
+				this!</span>"
+			return
+		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		if(do_after(user, 50, target = src))
+			P.use(1)
+			new /obj/structure/table/optable/abductor(src.loc)
+			qdel(src)
 
 /obj/structure/table/abductor
 	name = "alien table"
@@ -585,6 +593,38 @@ Congratulations! You are now trained for xenobiology research!"}
 	canSmoothWith = null
 	frame = /obj/structure/table_frame/abductor
 
+/obj/structure/table/optable/abductor
+	name = "alien operating table"
+	desc = "Used for alien medical procedures. The surface is covered in tiny spines."
+	frame = /obj/structure/table_frame/abductor
+	buildstack = /obj/item/stack/sheet/mineral/silver
+	framestack = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+	framestackamount = 1
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "bed"
+	can_buckle = 1
+	buckle_lying = 1
+
+	var/static/list/injected_reagents = list("corazone")
+
+/obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
+	. = ..()
+	if(iscarbon(AM))
+		START_PROCESSING(SSobj, src)
+		AM << "<span class='danger'>You feel a series of tiny pricks!</span>"
+
+/obj/structure/table/optable/abductor/process()
+	. = PROCESS_KILL
+	for(var/mob/living/carbon/C in get_turf(src))
+		. = TRUE
+		for(var/chemical in injected_reagents)
+			if(C.reagents.get_reagent_amount(chemical) < 1)
+				C.reagents.add_reagent(chemical, 1)
+
+/obj/structure/table/optable/abductor/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/structure/closet/abductor
 	name = "alien locker"
@@ -611,7 +651,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return
 				user << "<span class='notice'>You disassemble the airlock assembly.</span>"

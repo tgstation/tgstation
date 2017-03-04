@@ -47,7 +47,7 @@
 
 /obj/structure/cursed_money/New()
 	. = ..()
-	addtimer(src, "collapse", 600)
+	addtimer(CALLBACK(src, .proc/collapse), 600)
 
 /obj/structure/cursed_money/proc/collapse()
 	visible_message("<span class='warning'>[src] falls in on itself, \
@@ -114,7 +114,7 @@
 	item_state = "render"
 	force = 18
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)

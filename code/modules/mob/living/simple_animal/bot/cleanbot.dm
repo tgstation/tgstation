@@ -136,7 +136,7 @@
 			bot_patrol()
 
 	if(target)
-		if(qdeleted(target) || !isturf(target.loc))
+		if(QDELETED(target) || !isturf(target.loc))
 			target = null
 			mode = BOT_IDLE
 			return
@@ -217,7 +217,7 @@
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
-			visible_message("<span class='danger'>[src] smashes [target] with it's mop!</span>")
+			visible_message("<span class='danger'>[src] smashes [target] with its mop!</span>")
 			M.death()
 		target = null
 
@@ -242,7 +242,7 @@
 					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-				PoolOrNew(/obj/effect/particle_effect/foam, loc)
+				new /obj/effect/particle_effect/foam(loc)
 
 	else
 		..()

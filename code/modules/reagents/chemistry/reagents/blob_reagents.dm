@@ -3,6 +3,7 @@
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
 	color = "#FFFFFF"
+	taste_description = "slime and errors"
 	var/complementary_color = "#000000" //a color that's complementary to the normal blob color
 	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
 	var/effectdesc = null //any long, blob-tile specific effects
@@ -31,7 +32,7 @@
 /datum/reagent/blob/proc/death_reaction(obj/structure/blob/B, damage_flag) //when a blob dies, do this
 	return
 
-/datum/reagent/blob/proc/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T) //when the blob expands, do this
+/datum/reagent/blob/proc/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O) //when the blob expands, do this
 	return
 
 /datum/reagent/blob/proc/tesla_reaction(obj/structure/blob/B, power) //when the blob is hit by a tesla bolt, do this
@@ -69,9 +70,42 @@
 			newB.update_icon()
 	return ..()
 
-/datum/reagent/blob/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T)
+/datum/reagent/blob/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(prob(30))
 		newB.expand(null, null, 0) //do it again!
+
+//does massive brute and burn damage, but can only expand manually
+/datum/reagent/blob/networked_fibers
+	name = "Networked Fibers"
+	id = "networked_fibers"
+	description = "will do high brute and burn damage but non-manual expansion will only generate resources."
+	shortdesc = "will do high brute and burn damage."
+	effectdesc = "will move your core when manually expanding near it."
+	analyzerdescdamage = "Does high brute and burn damage."
+	analyzerdesceffect = "Is highly mobile and generates resources rapidly."
+	color = "#CDC0B0"
+	complementary_color = "#FFF68F"
+
+/datum/reagent/blob/networked_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
+	if(M)
+		M.apply_damage(0.6*reac_volume, BURN)
+
+/datum/reagent/blob/networked_fibers/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
+	if(!O && newB.overmind)
+		if(!istype(B, /obj/structure/blob/node))
+			newB.overmind.add_points(1)
+			qdel(newB)
+	else
+		var/area/A = get_area(T)
+		if(!isspaceturf(T) && !istype(A, /area/shuttle))
+			for(var/obj/structure/blob/core/C in range(1, newB))
+				if(C.overmind == O)
+					newB.forceMove(get_turf(C))
+					C.forceMove(T)
+					C.setDir(get_dir(newB, C))
+					O.add_points(1)
 
 //does brute damage, shifts away when damaged
 /datum/reagent/blob/shifting_fragments
@@ -88,7 +122,7 @@
 	reac_volume = ..()
 	M.apply_damage(0.7*reac_volume, BRUTE)
 
-/datum/reagent/blob/shifting_fragments/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T)
+/datum/reagent/blob/shifting_fragments/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(istype(B, /obj/structure/blob/normal) || (istype(B, /obj/structure/blob/shield) && prob(25)))
 		newB.forceMove(get_turf(B))
 		B.forceMove(T)
@@ -137,7 +171,7 @@
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
 			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
-				PoolOrNew(/obj/effect/hotspot, T)
+				new /obj/effect/hotspot(T)
 	if(damage_flag == "fire")
 		return 0
 	return ..()
@@ -164,7 +198,7 @@
 	M.adjustToxLoss(1*REM)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 5 //fully healed, honest
+		N.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
 	..()
 
 /datum/reagent/blob/regenerative_materia/on_mob_delete(mob/living/M)
@@ -209,7 +243,7 @@
 		B.overmind.blob_mobs.Add(BS)
 	return ..()
 
-/datum/reagent/blob/zombifying_pods/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T)
+/datum/reagent/blob/zombifying_pods/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(prob(10))
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
 		BS.overmind = B.overmind
@@ -266,7 +300,7 @@
 	var/initial_volume = reac_volume
 	reac_volume = ..()
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
-		var/obj/effect/overlay/temp/explosion/fast/E = PoolOrNew(/obj/effect/overlay/temp/explosion/fast, get_turf(M))
+		var/obj/effect/overlay/temp/explosion/fast/E = new /obj/effect/overlay/temp/explosion/fast(get_turf(M))
 		E.alpha = 150
 		for(var/mob/living/L in orange(get_turf(M), 1))
 			if("blob" in L.faction) //no friendly fire

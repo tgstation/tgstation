@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /*
  * A large number of misc global procs.
@@ -283,27 +283,20 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
-	var/list/names = list()
-	var/list/pois = list()
 	var/list/namecounts = list()
-
+	var/list/pois = list()
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
 			if(!isbot(M) && !istype(M, /mob/camera/))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
+		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
+
+		if(M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if (M.stat == 2)
-			if(istype(M, /mob/dead/observer/))
+		if(M.stat == DEAD)
+			if(isobserver(M))
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
@@ -313,14 +306,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		for(var/atom/A in poi_list)
 			if(!A || !A.loc)
 				continue
-			var/name = A.name
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			pois[name] = A
+			pois[avoid_assoc_duplicate_keys(A.name, namecounts)] = A
 
 	return pois
 //Orders mobs by type then by name
@@ -437,12 +423,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(M.ckey == key)
 			return M
 
-// Returns the atom sitting on the turf.
-// For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
-/proc/get_atom_on_turf(atom/movable/M)
+//Returns the atom sitting on the turf.
+//For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+//Optional arg 'type' to stop once it reaches a specific type instead of a turf.
+/proc/get_atom_on_turf(atom/movable/M, stop_type)
 	var/atom/loc = M
 	while(loc && loc.loc && !isturf(loc.loc))
 		loc = loc.loc
+		if(stop_type && istype(loc, stop_type))
+			break
 	return loc
 
 // returns the turf located at the map edge in the specified direction relative to A
@@ -533,12 +522,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return 1
 
-/proc/is_blocked_turf(turf/T)
+/proc/is_blocked_turf(turf/T, exclude_mobs)
 	if(T.density)
 		return 1
 	for(var/i in T)
 		var/atom/A = i
-		if(A.density)
+		if(A.density && (!exclude_mobs || !ismob(A)))
 			return 1
 	return 0
 
@@ -766,53 +755,27 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loc = loc.loc
 	return null
 
-//Quick type checks for some tools
-var/global/list/common_tools = list(
-/obj/item/stack/cable_coil,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wirecutters,
-/obj/item/device/multitool,
-/obj/item/weapon/crowbar)
-
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/is_pointed(obj/item/W)
-	if(istype(W, /obj/item/weapon/pen))
-		return 1
-	if(istype(W, /obj/item/weapon/screwdriver))
-		return 1
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		return 1
-	if(istype(W, /obj/item/weapon/kitchen/fork))
-		return 1
-	else
-		return 0
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
+var/list/can_embed_types = typecacheof(list(
+	/obj/item/stack/rods,
+	/obj/item/pipe))
+
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
 
-	var/list/embed_items = list(\
-	/obj/item/stack/rods,\
-	)
-
-	if(is_type_in_list(W, embed_items))
+	if(is_type_in_typecache(W, can_embed_types))
 		return 1
 
 
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = list(
+var/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
@@ -820,22 +783,22 @@ var/list/WALLITEMS = list(
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
-	)
+	))
 
-var/list/WALLITEMS_EXTERNAL = list(
+var/list/WALLITEMS_EXTERNAL = typecacheof(list(
 	/obj/machinery/camera, /obj/structure/camera_assembly,
-	/obj/structure/light_construct, /obj/machinery/light)
+	/obj/structure/light_construct, /obj/machinery/light))
 
-var/list/WALLITEMS_INVERSE = list(
-	/obj/structure/light_construct, /obj/machinery/light)
+var/list/WALLITEMS_INVERSE = typecacheof(list(
+	/obj/structure/light_construct, /obj/machinery/light))
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(is_type_in_list(O, WALLITEMS_INVERSE))
+			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -846,8 +809,8 @@ var/list/WALLITEMS_INVERSE = list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
-		if(is_type_in_list(O, WALLITEMS_EXTERNAL) && check_external)
-			if(is_type_in_list(O, WALLITEMS_INVERSE))
+		if(is_type_in_typecache(O, WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -855,7 +818,7 @@ var/list/WALLITEMS_INVERSE = list(
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -934,8 +897,8 @@ var/list/WALLITEMS_INVERSE = list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = Clamp(origin.x + text2num(tX) - world.view + 1, 1, world.maxx)
-	tY = Clamp(origin.y + text2num(tY) - world.view + 1, 1, world.maxy)
+	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -953,21 +916,8 @@ var/list/WALLITEMS_INVERSE = list(
 
 /proc/IsValidSrc(datum/D)
 	if(istype(D))
-		return !qdeleted(D)
+		return !QDELETED(D)
 	return 0
-
-
-
-//Get the dir to the RIGHT of dir if they were on a clock
-//NORTH --> NORTHEAST
-/proc/get_clockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)+45)
-
-//Get the dir to the LEFT of dir if they were on a clock
-//NORTH --> NORTHWEST
-/proc/get_anticlockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)-45)
-
 
 //Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
 //To the opposite dir of the dir returned by get_dir(B,A)
@@ -980,8 +930,8 @@ var/list/WALLITEMS_INVERSE = list(
 		if(LA.lying)
 			return 0
 	var/goal_dir = angle2dir(dir2angle(get_dir(B,A)+180))
-	var/clockwise_A_dir = get_clockwise_dir(A.dir)
-	var/anticlockwise_A_dir = get_anticlockwise_dir(B.dir)
+	var/clockwise_A_dir = turn(A.dir, -45)
+	var/anticlockwise_A_dir = turn(B.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
 		return 1
@@ -1189,14 +1139,17 @@ B --><-- A
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		C.proximity_checkers |= A
+		LAZYINITLIST(C.proximity_checkers)
+		C.proximity_checkers[A] = TRUE
 	return L
 
-/proc/remove_from_proximity_list(atom/A, range)
-	var/turf/T = get_turf(A)
+/proc/remove_from_proximity_list(atom/A, range, oldloc = null)
+	var/turf/T = get_turf(oldloc ? oldloc : A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
+		if (!C.proximity_checkers)
+			continue
 		C.proximity_checkers.Remove(A)
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
@@ -1210,10 +1163,13 @@ B --><-- A
 	var/list/O = M - L
 	for(var/C in N)
 		var/turf/D = C
+		if (!D.proximity_checkers)
+			continue
 		D.proximity_checkers.Remove(checker)
 	for(var/E in O)
 		var/turf/F = E
-		F.proximity_checkers |= checker
+		LAZYINITLIST(F.proximity_checkers)
+		F.proximity_checkers[checker] = TRUE
 	return 1
 
 /proc/flick_overlay_static(image/I, atom/A, duration)
@@ -1222,7 +1178,7 @@ B --><-- A
 		return
 	A.add_overlay(I)
 	sleep(duration)
-	A.overlays -= I
+	A.cut_overlay(I)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
@@ -1244,7 +1200,7 @@ B --><-- A
 		if(!istype(A, type))
 			continue
 		var/distance = get_dist(source, A)
-		if(!closest_distance)
+		if(!closest_atom)
 			closest_distance = distance
 			closest_atom = A
 		else
@@ -1253,9 +1209,14 @@ B --><-- A
 				closest_atom = A
 	return closest_atom
 
-proc/pick_closest_path(value)
-	var/list/matches = get_fancy_list_of_types()
-	if (!isnull(value) && value!="")
+
+proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
+	if (value == FALSE) //nothing should be calling us with a number, so this is safe
+		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
+		if (isnull(value))
+			return
+	value = trim(value)
+	if(!isnull(value) && value != "")
 		matches = filter_fancy_list(matches, value)
 
 	if(matches.len==0)
@@ -1265,7 +1226,7 @@ proc/pick_closest_path(value)
 	if(matches.len==1)
 		chosen = matches[1]
 	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
 	chosen = matches[chosen]
@@ -1282,16 +1243,14 @@ proc/pick_closest_path(value)
 #define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
-	. = round(1*DELTA_CALC)
-	sleep(world.tick_lag)
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += round(2*DELTA_CALC)
-		sleep(world.tick_lag*2*DELTA_CALC)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += round(4*DELTA_CALC)
-			sleep(world.tick_lag*4*DELTA_CALC)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
+	. = 0
+	var/i = 1
+	do
+		. += round(i*DELTA_CALC)
+		sleep(i*world.tick_lag*DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
@@ -1309,31 +1268,12 @@ proc/pick_closest_path(value)
 		return
 
 	C.color = flash_color
-	spawn(0)
-		animate(C, color = initial(C.color), time = flash_time)
+	animate(C, color = initial(C.color), time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
-#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
-
-/proc/check_for_cleanbot_bug()
-	var/static/admins_warned //bet you didn't know you could do this!
-	var/icon/Icon_test = icon('icons/BadAss.dmi')
-	if(!istype(Icon_test))
-		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			spawn(25)
-				message_admins(msg)
-		stack_trace(msg)
-	var/sound/Sound_test = sound('sound/misc/null.ogg')
-	if(!istype(Sound_test))
-		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			spawn(25)
-				message_admins(msg)
-		stack_trace(msg)
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_NULL(item) qdel(item); item = null
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1341,3 +1281,138 @@ proc/pick_closest_path(value)
 	while(length(str) < 5)
 		str = "0" + str
 	. = str
+
+/atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
+	var/initialpixelx = pixel_x
+	var/initialpixely = pixel_y
+	var/shiftx = rand(-pixelshiftx,pixelshiftx)
+	var/shifty = rand(-pixelshifty,pixelshifty)
+	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
+	pixel_x = initialpixelx
+	pixel_y = initialpixely
+
+/proc/weightclass2text(var/w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			. = "tiny"
+		if(WEIGHT_CLASS_SMALL)
+			. = "small"
+		if(WEIGHT_CLASS_NORMAL)
+			. = "normal-sized"
+		if(WEIGHT_CLASS_BULKY)
+			. = "bulky"
+		if(WEIGHT_CLASS_HUGE)
+			. = "huge"
+		if(WEIGHT_CLASS_GIGANTIC)
+			. = "gigantic"
+		else
+			. = ""
+
+/var/mob/dview/dview_mob = new
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	dview_mob.loc = center
+
+	dview_mob.see_invisible = invis_flags
+
+	. = view(range, dview_mob)
+	dview_mob.loc = null
+
+/mob/dview
+	invisibility = 101
+	density = 0
+	see_in_dark = 1e6
+	anchored = 1
+
+/mob/dview/Destroy(force=0)
+	stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+
+	if (!force)
+		return QDEL_HINT_LETMELIVE
+
+	world.log << "EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS"
+	global.dview_mob = new
+	return QDEL_HINT_QUEUE
+
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center;           \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
+
+//can a window be here, or is there a window blocking it?
+/proc/valid_window_location(turf/T, dir_to_check)
+	if(!T)
+		return FALSE
+	for(var/obj/O in T)
+		if(istype(O, /obj/machinery/door/window) && (O.dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR))
+			return FALSE
+		if(istype(O, /obj/structure/windoor_assembly))
+			var/obj/structure/windoor_assembly/W = O
+			if(W.ini_dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+		if(istype(O, /obj/structure/window))
+			var/obj/structure/window/W = O
+			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+	return TRUE
+
+//WHATEVER YOU USE THIS FOR MUST BE SANITIZED TO SHIT, IT USES SHELL
+//It also sleeps
+
+//Set this to TRUE before calling
+//This prevents RCEs from badmins
+//kevinz000 if you touch this I will hunt you down
+var/valid_HTTPSGet = FALSE
+/proc/HTTPSGet(url)
+	if(findtext(url, "\""))
+		valid_HTTPSGet = FALSE
+
+	if(!valid_HTTPSGet)
+		if(usr)
+			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
+		else
+			CRASH("Invalid HTTPSGet call on: [url]")
+	valid_HTTPSGet = FALSE
+
+	//"This has got to be the ugliest hack I have ever done"
+	//warning, here be dragons
+	/*
+						|  @___oo
+				/\  /\   / (__,,,,|
+				) /^\) ^\/ _)
+				)   /^\/   _)
+				)   _ /  / _)
+			/\  )/\/ ||  | )_)
+		<  >      |(,,) )__)
+			||      /    \)___)\
+			| \____(      )___) )___
+			\______(_______;;; __;;;
+		*/
+	var/temp_file = "HTTPSGetOutput.txt"
+	var/command
+	if(world.system_type == MS_WINDOWS)
+		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
+	else if(world.system_type == UNIX)
+		command = "wget -O [temp_file] [url]"
+	else
+		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
+
+	world.log << "HTTPSGet: [url]"
+	var/result = shell(command)
+	if(result != 0)
+		world.log << "Download failed: shell exited with code: [result]"
+		return
+
+	var/f = file(temp_file)
+	if(!f)
+		world.log << "Download failed: Temp file not found"
+		return
+
+	. = file2text(f)
+	f = null
+	fdel(temp_file)

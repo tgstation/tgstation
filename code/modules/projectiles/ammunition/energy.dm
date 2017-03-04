@@ -116,7 +116,7 @@
 	projectile_type = /obj/item/projectile/beam/disabler
 	select_name  = "disable"
 	e_cost = 50
-	fire_sound = "sound/weapons/taser2.ogg"
+	fire_sound = 'sound/weapons/taser2.ogg'
 
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
@@ -133,7 +133,7 @@
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0
-	fire_sound = "sound/weapons/pulse3.ogg"
+	fire_sound = 'sound/weapons/pulse3.ogg'
 	var/obj/item/weapon/gun/energy/wormhole_projector/gun = null
 	select_name = "blue"
 
@@ -147,11 +147,14 @@
 	e_cost = 500
 	fire_sound = 'sound/weapons/Genhit.ogg'
 
+/obj/item/ammo_casing/energy/bolt/halloween
+	projectile_type = /obj/item/projectile/energy/bolt/halloween
+
 /obj/item/ammo_casing/energy/bolt/large
 	projectile_type = /obj/item/projectile/energy/bolt/large
 	select_name = "heavy bolt"
 
-obj/item/ammo_casing/energy/net
+/obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/energy/net
 	select_name = "netting"
 	pellets = 6
@@ -181,7 +184,7 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/gravityrepulse
 	projectile_type = /obj/item/projectile/gravityrepulse
 	e_cost = 0
-	fire_sound = "sound/weapons/wave.ogg"
+	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "repulse"
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
@@ -192,7 +195,7 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/gravityattract
 	projectile_type = /obj/item/projectile/gravityattract
 	e_cost = 0
-	fire_sound = "sound/weapons/wave.ogg"
+	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "attract"
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
@@ -204,7 +207,7 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/gravitychaos
 	projectile_type = /obj/item/projectile/gravitychaos
 	e_cost = 0
-	fire_sound = "sound/weapons/wave.ogg"
+	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "chaos"
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null

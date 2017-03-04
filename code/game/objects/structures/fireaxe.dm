@@ -26,12 +26,12 @@
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
-	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help" && !broken)
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP && !broken)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
 			user << "<span class='notice'>You begin repairing [src].</span>"
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user, 40/I.toolspeed, target = src))
+			playsound(loc, WT.usesound, 40, 1)
+			if(do_after(user, 40*I.toolspeed, target = src))
 				obj_integrity = max_integrity
 				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 				update_icon()
@@ -129,6 +129,15 @@
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
+
+/obj/structure/fireaxecabinet/attack_tk(mob/user)
+	if(locked)
+		user <<"<span class='warning'> The [name] won't budge!</span>"
+		return
+	else
+		open = !open
+		update_icon()
+		return
 
 /obj/structure/fireaxecabinet/update_icon()
 	cut_overlays()

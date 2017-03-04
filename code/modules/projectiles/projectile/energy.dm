@@ -29,7 +29,7 @@
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(C.status_flags & CANWEAKEN)
-			addtimer(C, "do_jitter_animation", 5, FALSE, jitter)
+			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, jitter), 5)
 
 /obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -71,7 +71,7 @@
 
 /obj/effect/nettingportal/New()
 	..()
-	SetLuminosity(3)
+	set_light(3)
 	var/obj/item/device/radio/beacon/teletarget = null
 	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
@@ -155,11 +155,15 @@
 /obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 15
+	damage = 8
 	damage_type = TOX
 	nodamage = 0
 	weaken = 5
 	stutter = 5
+
+/obj/item/projectile/energy/bolt/halloween
+	name = "candy corn"
+	icon_state = "candy_corn"
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20
@@ -182,5 +186,26 @@
 	qdel(src)
 
 /obj/item/projectile/energy/tesla_revolver/Destroy()
+	qdel(chain)
+	return ..()
+
+
+/obj/item/projectile/energy/tesla_cannon
+	name = "tesla bolt"
+	icon_state = "tesla_projectile"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	var/chain
+
+/obj/item/projectile/energy/tesla_cannon/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+	..()
+
+/obj/item/projectile/energy/tesla_cannon/on_hit(atom/target)
+	. = ..()
+	tesla_zap(src, 3, 10000, explosive = FALSE, stun_mobs = FALSE)
+	qdel(src)
+
+/obj/item/projectile/energy/tesla_cannon/Destroy()
 	qdel(chain)
 	return ..()

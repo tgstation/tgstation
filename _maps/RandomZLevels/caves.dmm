@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock,
 /area/space)
@@ -805,7 +805,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bG" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2374,7 +2374,7 @@
 	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll";
 	name = "Shipment Receipt"
 	},
-/obj/item/organ/cyberimp/eyes/thermals,
+/obj/item/organ/eyes/robotic/thermals,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/slimepotion/fireproof,
 /turf/open/floor/plating/asteroid/basalt{

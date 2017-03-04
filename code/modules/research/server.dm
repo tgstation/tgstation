@@ -18,10 +18,9 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
-	initialize() //Agouri
 
 /obj/item/weapon/circuitboard/machine/rdserver
-	name = "circuit board (R&D Server)"
+	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/r_n_d/server
 	origin_tech = "programming=3"
 	req_components = list(
@@ -38,7 +37,8 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/r_n_d/server/initialize()
+/obj/machinery/r_n_d/server/Initialize(mapload)
+	..()
 	if(!files) files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
@@ -136,8 +136,11 @@
 	name = "Centcom Central R&D Database"
 	server_id = -1
 
-/obj/machinery/r_n_d/server/centcom/initialize()
+/obj/machinery/r_n_d/server/centcom/Initialize()
 	..()
+	fix_noid_research_servers()
+
+/proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
 	for(var/obj/machinery/r_n_d/server/S in machines)
@@ -226,7 +229,7 @@
 
 	else if(href_list["reset_tech"])
 		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/tech/T = temp_server.files.known_tech[href_list["reset_tech"]]
 			if(T)
 				T.level = 1
@@ -234,7 +237,7 @@
 
 	else if(href_list["reset_design"])
 		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
 			if(D)
 				temp_server.files.known_designs -= D.id

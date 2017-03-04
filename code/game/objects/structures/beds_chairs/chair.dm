@@ -13,10 +13,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-
-/obj/structure/chair/New()
-	..()
-	handle_layer()
+	layer = OBJ_LAYER
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -35,7 +32,7 @@
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
 		if(!user.drop_item())
@@ -65,10 +62,14 @@
 			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
-	if(dir == NORTH)
-		layer = ABOVE_ALL_MOB_LAYER
+	if(has_buckled_mobs() && dir == NORTH)
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
+
+/obj/structure/chair/post_buckle_mob(mob/living/M)
+	..()
+	handle_layer()
 
 /obj/structure/chair/proc/spin()
 	setDir(turn(dir, 90))
@@ -138,14 +139,14 @@
 /obj/structure/chair/comfy/New()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
-
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
+	..()
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
-		overlays -= armrest
+		cut_overlay(armrest)
 
 
 /obj/structure/chair/comfy/brown
@@ -212,7 +213,7 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	item_state = "chair"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
 	throw_range = 3
@@ -253,7 +254,6 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	user.unEquip(src,1) //Even NODROP chairs are destroyed.
 	qdel(src)
 
 

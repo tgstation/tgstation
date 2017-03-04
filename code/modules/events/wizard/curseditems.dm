@@ -1,7 +1,7 @@
 /datum/round_event_control/wizard/cursed_items //fashion disasters
 	name = "Cursed Items"
 	weight = 3
-	typepath = /datum/round_event/wizard/cursed_items/
+	typepath = /datum/round_event/wizard/cursed_items
 	max_occurrences = 3
 	earliest_start = 0
 
@@ -19,12 +19,12 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal, /obj/item/clothing/head/wizard)
+			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/head/wizard)
 			ruins_spaceworthiness = 1
 		if("swords")
 			loadout[5] = /obj/item/weapon/katana/cursed
 		if("bigfatdoobie")
-			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy/
+			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
 			loadout[4] = /obj/item/clothing/mask/luchador
@@ -49,7 +49,7 @@
 			if(loadout[i])
 				var/obj/item/J = loadout[i]
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
-				H.unEquip(slots[i])
+				H.temporarilyRemoveItemFromInventory(slots[i], TRUE)
 				H.equip_to_slot_or_del(I, wearslots[i])
 				I.flags |= NODROP
 				I.name = "cursed " + I.name

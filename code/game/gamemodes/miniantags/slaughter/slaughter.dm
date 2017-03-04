@@ -13,7 +13,7 @@
 	icon_state = "daemon"
 	icon_living = "daemon"
 	speed = 1
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -120,7 +120,7 @@
 	real_name = "laughter demon"
 	desc = "A large, adorable creature covered in armor with pink bows."
 	speak_emote = list("giggles","titters","chuckles")
-	emote_hear = list("gaffaws","laughs")
+	emote_hear = list("guffaws","laughs")
 	response_help  = "hugs"
 	attacktext = "wildly tickles"
 

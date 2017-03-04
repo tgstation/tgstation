@@ -63,6 +63,8 @@
 			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_id
 		if(MC_SDD)
 			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_disk
+		if(MC_AI)
+			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_card
 
 /obj/item/device/modular_computer/processor/remove_verb(path)
 	switch(path)
@@ -70,3 +72,5 @@
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_id
 		if(MC_SDD)
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk
+		if(MC_AI)
+			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_card

@@ -15,7 +15,7 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
-	faction |= "\ref[src]"
+	faction += "\ref[src]"
 
 
 /mob/living/prepare_huds()
@@ -31,6 +31,7 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in player_list)
 		for(var/image/I in staticOverlays)
@@ -44,7 +45,8 @@
 
 /mob/living/ghostize(can_reenter_corpse = 1)
 	var/prev_client = client
-	if(..())
+	. = ..()
+	if(.)
 		if(ranged_ability && prev_client)
 			ranged_ability.remove_mousepointer(prev_client)
 
@@ -124,10 +126,10 @@
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap
 		//the puller can always swap with its victim if on grab intent
-		if(M.pulledby == src && a_intent == "grab")
+		if(M.pulledby == src && a_intent == INTENT_GRAB)
 			mob_swap = 1
 		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		else if((M.restrained() || M.a_intent == "help") && (restrained() || a_intent == "help"))
+		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
 			mob_swap = 1
 		if(mob_swap)
 			//switch our position with M
@@ -187,7 +189,12 @@
 					return
 		if(pulling == AM)
 			stop_pulling()
+		var/current_dir
+		if(isliving(AM))
+			current_dir = AM.dir
 		step(AM, t)
+		if(current_dir)
+			AM.setDir(current_dir)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
@@ -437,18 +444,21 @@
 	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
-/mob/living/movement_delay()
+/mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
-	if(isopenturf(loc))
+	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	switch(m_intent)
-		if("run")
-			if(drowsyness > 0)
-				. += 6
-			. += config.run_speed
-		if("walk")
-			. += config.walk_speed
+	if(ignorewalk)
+		. += config.run_speed
+	else
+		switch(m_intent)
+			if(MOVE_INTENT_RUN)
+				if(drowsyness > 0)
+					. += 6
+				. += config.run_speed
+			if(MOVE_INTENT_WALK)
+				. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
 	if(!has_gravity())
@@ -481,7 +491,7 @@
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.specflags) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
 		return
 	..()
 
@@ -515,7 +525,7 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-	if(!slipping)
+	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/verb/resist()
@@ -594,7 +604,7 @@
 	if(!override)
 		float(!has_gravity)
 
-/mob/living/proc/float(on)
+/mob/living/float(on)
 	if(throwing)
 		return
 	var/fixed = 0
@@ -602,6 +612,8 @@
 		fixed = 1
 	if(on && !floating && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		sleep(10)
+		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
@@ -621,11 +633,11 @@
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
-					who.unEquip(what)
-					add_logs(src, who, "stripped", addition="of [what]")
+					if(who.dropItemToGround(what))
+						add_logs(src, who, "stripped", addition="of [what]")
 			if(what == who.get_item_by_slot(where))
-				who.unEquip(what)
-				add_logs(src, who, "stripped", addition="of [what]")
+				if(who.dropItemToGround(what))
+					add_logs(src, who, "stripped", addition="of [what]")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -636,29 +648,30 @@
 		return
 	if(what)
 		var/list/where_list
+		var/final_where
+
 		if(islist(where))
 			where_list = where
-			if(!what.mob_can_equip(who, src, where[1], 1))
-				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
-				return
+			final_where = where[1]
 		else
-			if(!what.mob_can_equip(who, src, where, 1))
-				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
-				return
+			final_where = where
+
+		if(!what.mob_can_equip(who, src, final_where, TRUE))
+			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
+			return
+
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
-			if(what && Adjacent(who))
-				unEquip(what)
-				if(where_list)
-					who.put_in_hand(what, where_list[2])
-				else
-					who.equip_to_slot_if_possible(what, where, 0, 1)
-				add_logs(src, who, "equipped", what)
-
+			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
+				if(temporarilyRemoveItemFromInventory(what))
+					if(where_list)
+						who.put_in_hand(what, where_list[2])
+					else
+						who.equip_to_slot(what, where, TRUE)
 
 /mob/living/singularity_pull(S, current_size)
 	if(current_size >= STAGE_SIX)
-		throw_at_fast(S,14,3, spin=1)
+		throw_at(S,14,3, spin=1)
 	else
 		step_towards(src,S)
 
@@ -749,7 +762,7 @@
 	return 0
 
 /mob/living/proc/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(butcher_results)
 		for(var/path in butcher_results)
@@ -818,14 +831,14 @@
 			return 1
 	return 0
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	stop_pulling()
 	. = ..()
 
 // Called when we are hit by a bolt of polymorph and changed
-// Generally the mob we are currently in, is about to be deleted
+// Generally the mob we are currently in is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
-	new_mob.name = name
+	new_mob.name = real_name
 	new_mob.real_name = real_name
 
 	if(mind)
@@ -854,7 +867,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.AddLuminosity(3)
+		src.set_light(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
@@ -864,7 +877,7 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		src.AddLuminosity(-3)
+		src.set_light(0)
 		clear_alert("fire")
 		update_fire()
 
@@ -892,3 +905,19 @@
 		IgniteMob()
 
 //Mobs on Fire end
+
+// used by secbot and monkeys Crossed
+/mob/living/proc/knockOver(var/mob/living/carbon/C)
+	C.visible_message("<span class='warning'>[pick( \
+					  "[C] dives out of [src]'s way!", \
+					  "[C] stumbles over [src]!", \
+					  "[C] jumps out of [src]'s path!", \
+					  "[C] trips over [src] and falls!", \
+					  "[C] topples over [src]!", \
+					  "[C] leaps out of [src]'s way!")]</span>")
+	C.Weaken(2)
+
+/mob/living/post_buckle_mob(mob/living/M)
+	if(riding_datum)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.handle_vehicle_layer()

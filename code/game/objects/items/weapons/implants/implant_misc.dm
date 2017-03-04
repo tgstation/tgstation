@@ -71,11 +71,11 @@
 	var/healthstring = ""
 
 /obj/item/weapon/implant/health/proc/sensehealth()
-	if (!implanted)
+	if (!imp_in)
 		return "ERROR"
 	else
-		if(isliving(implanted))
-			var/mob/living/L = implanted
+		if(isliving(imp_in))
+			var/mob/living/L = imp_in
 			healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
 		if (!healthstring)
 			healthstring = "ERROR"

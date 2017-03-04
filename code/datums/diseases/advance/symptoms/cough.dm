@@ -35,6 +35,6 @@ BONUS
 			else
 				M.emote("cough")
 				var/obj/item/I = M.get_active_held_item()
-				if(I && I.w_class == 1)
+				if(I && I.w_class == WEIGHT_CLASS_TINY)
 					M.drop_item()
 	return

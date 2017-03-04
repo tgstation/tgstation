@@ -12,7 +12,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
@@ -29,6 +29,12 @@
 		user << "<span class='warning'>Uh... how do those things work?!</span>"
 		apply_cuffs(user,user)
 		return
+
+	// chance of monkey retaliation
+	if(istype(C, /mob/living/carbon/monkey) && prob(MONKEY_CUFF_RETALIATION_PROB))
+		var/mob/living/carbon/monkey/M
+		M = C
+		M.retaliate(user)
 
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
@@ -159,8 +165,7 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-			if(!remove_item_from_storage(user))
-				user.unEquip(src)
+			remove_item_from_storage(user)
 			user.put_in_hands(W)
 			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 			qdel(src)
@@ -180,8 +185,7 @@
 			M.use(6)
 			user.put_in_hands(S)
 			user << "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>"
-			if(!remove_item_from_storage(user))
-				user.unEquip(src)
+			remove_item_from_storage(user)
 			qdel(src)
 	else
 		return ..()
@@ -228,7 +232,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "engineering=3;combat=3"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
@@ -277,8 +281,10 @@
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
-				if(!SA.flying && SA.mob_size > MOB_SIZE_TINY)
+				if(SA.mob_size > MOB_SIZE_TINY)
 					snap = 1
+			if(L.movement_type & FLYING)
+				snap = 0
 			if(snap)
 				armed = 0
 				icon_state = "[initial(icon_state)][armed]"
@@ -297,7 +303,7 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
 	..()
-	addtimer(src, "dissipate", 100)
+	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
 	if(!istype(loc, /mob))
@@ -321,7 +327,7 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
-/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
@@ -352,7 +358,7 @@
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
 
 /obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)

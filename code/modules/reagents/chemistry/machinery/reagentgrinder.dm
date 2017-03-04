@@ -26,6 +26,8 @@
 				/obj/item/stack/sheet/mineral/bananium = list("banana" = 20),
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
+				/obj/item/stack/sheet/bluespace_crystal = list("bluespace" = 20),
+				/obj/item/weapon/ore/bluespace_crystal = list("bluespace" = 20),
 				/obj/item/weapon/grown/nettle/basic = list("sacid" = 0),
 				/obj/item/weapon/grown/nettle/death = list("facid" = 0, "sacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
@@ -70,6 +72,9 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = list("pumpkinjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/apple = list("applejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = list("grapejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = list("grapejuice" = 0),
 		)
 
 		var/list/dried_items = list(
@@ -118,7 +123,7 @@
 		if(default_unfasten_wrench(user, I))
 				return
 
-		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
+		if (istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER) )
 				if (!beaker)
 						if(!user.drop_item())
 								return 1
@@ -158,7 +163,7 @@
 				return 1
 
 		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				if(user.a_intent == "harm")
+				if(user.a_intent == INTENT_HARM)
 						return ..()
 				else
 						user << "<span class='warning'>Cannot refine into a reagent!</span>"

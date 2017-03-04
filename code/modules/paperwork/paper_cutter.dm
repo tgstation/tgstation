@@ -2,10 +2,10 @@
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "papercutter-cutter"
+	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/item/weapon/paper/storedpaper = null
 	var/obj/item/weapon/hatchet/cutterblade/storedcutter = null
 	var/cuttersecured = TRUE
@@ -15,6 +15,7 @@
 /obj/item/weapon/papercutter/New()
 	..()
 	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
+	update_icon()
 
 
 /obj/item/weapon/papercutter/suicide_act(mob/user)
@@ -99,10 +100,7 @@
 
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!remove_item_from_storage(M))
-			if(!M.unEquip(src))
-				return
-		M.put_in_hand(src, H.held_index)
+		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	add_fingerprint(M)
 
 

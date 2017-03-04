@@ -34,7 +34,7 @@
 			text += "Cybersun Industries representatives claimed that they, in joint research with the Tiger Cooperative, have made a major breakthrough in brainwashing technology, and have \
 			made the nanobots that apply the \"conversion\" very small and capable of fitting into usually innocent objects - namely, pens. While they refused to outsource this technology for \
 			months to come due to its flaws, they reported some as missing but passed it off to carelessness. At Central Command, we don't like mysteries, and we have reason to believe that this \
-			technology was stolen for anti-Nanotrasen use. Be on the lookout for territory claims and unusually violent crew behavior, applying loyalty implants as necessary."
+			technology was stolen for anti-Nanotrasen use. Be on the lookout for territory claims and unusually violent crew behavior, applying mindshield implants as necessary."
 		if("malf")
 			text += "A large ionospheric anomaly recently passed through your sector. Although physically undetectable, ionospherics tend to have an extreme effect on telecommunications equipment \
 			as well as artificial intelligence units. Closely observe the behavior of artificial intelligence, and treat any machine malfunctions as purposeful. If necessary, termination of the \

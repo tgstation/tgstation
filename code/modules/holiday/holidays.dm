@@ -141,6 +141,14 @@
 	end_day = 2
 	begin_month = APRIL
 
+/datum/holiday/april_fools/celebrate()
+	if(ticker)
+		ticker.login_music = 'sound/ambience/clown.ogg'
+		for(var/mob/new_player/P in mob_list)
+			if(P.client)
+				P.stopLobbySound()
+				P.client.playtitlemusic()
+
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
 	begin_day = 20
@@ -302,6 +310,11 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/doomsday
+	name = "Mayan Doomsday Anniversary"
+	begin_day = 21
+	begin_month = DECEMBER
+
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 23
@@ -310,6 +323,20 @@
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
+
+/datum/holiday/festive_season
+	name = FESTIVE_SEASON
+	begin_day = 1
+	begin_month = DECEMBER
+	end_day = 31
+
+/datum/holiday/festive_season/celebrate()
+	for(var/obj/effect/landmark/xmastree/XT in landmarks_list)
+		new XT.tree(get_turf(XT))
+		qdel(XT)
+
+/datum/holiday/festive_season/greet()
+	return "Have a nice festive season!"
 
 /datum/holiday/boxing
 	name = "Boxing Day"

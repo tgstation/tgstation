@@ -63,7 +63,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
-		src << "There's already a weed node here."
+		user << "There's already a weed node here."
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
@@ -122,14 +122,14 @@ Doesn't work on other aliens/AI.*/
 		if (get_dist(user,M) <= 1)
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
-			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
+			M << "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>"
+			user << "<span class='noticealien'>You transfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
 	return
 
 /obj/effect/proc_holder/alien/acid
-	name = "Corrossive Acid"
+	name = "Corrosive Acid"
 	desc = "Drench an object in acid, destroying it over time."
 	plasma_cost = 200
 	action_icon_state = "alien_acid"
@@ -184,26 +184,28 @@ Doesn't work on other aliens/AI.*/
 	var/message
 	if(active)
 		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
-		remove_ranged_ability(user, message)
+		remove_ranged_ability(message)
 	else
 		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
-		add_ranged_ability(user, message)
+		add_ranged_ability(user, message, TRUE)
 
 /obj/effect/proc_holder/alien/neurotoxin/update_icon()
 	action.button_icon_state = "alien_neurotoxin_[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return
 	var/p_cost = 50
-	if(!iscarbon(user) || user.lying || user.stat)
-		remove_ranged_ability(user)
+	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
+		remove_ranged_ability(ranged_ability_user)
 		return
+
+	var/mob/living/carbon/user = ranged_ability_user
 
 	if(user.getPlasma() < p_cost)
 		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
-		remove_ranged_ability(user)
+		remove_ranged_ability()
 		return
 
 	var/turf/T = user.loc
@@ -283,26 +285,6 @@ Doesn't work on other aliens/AI.*/
 				M.reset_perspective()
 		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
 	return
-
-/obj/effect/proc_holder/alien/nightvisiontoggle
-	name = "Toggle Night Vision"
-	desc = "Toggles Night Vision"
-	plasma_cost = 0
-	has_action = 0 // Has dedicated GUI button already
-
-/obj/effect/proc_holder/alien/nightvisiontoggle/fire(mob/living/carbon/alien/user)
-	if(!user.nightvision)
-		user.see_in_dark = 8
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
-		user.nightvision = 1
-		user.hud_used.nightvisionicon.icon_state = "nightvision1"
-	else if(user.nightvision == 1)
-		user.see_in_dark = 4
-		user.see_invisible = 45
-		user.nightvision = 0
-		user.hud_used.nightvisionicon.icon_state = "nightvision0"
-
-	return 1
 
 /obj/effect/proc_holder/alien/sneak
 	name = "Sneak"

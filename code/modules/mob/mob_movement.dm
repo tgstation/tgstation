@@ -127,6 +127,8 @@
 		return 0
 	if(moving)
 		return 0
+	if(mob.force_moving)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)	//Move though walls
@@ -173,7 +175,11 @@
 
 	moving = 0
 	if(mob && .)
-		mob.throwing = 0
+		if(mob.throwing)
+			mob.throwing.finalize(FALSE)
+
+	for(var/obj/O in mob)
+		O.on_mob_move(direct, src)
 
 	return .
 
@@ -236,19 +242,19 @@
 				L.loc = locate(locx,locy,mobloc.z)
 				var/limit = 2//For only two trailing shadows.
 				for(var/turf/T in getline(mobloc, L.loc))
-					PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(T, L.dir))
+					new /obj/effect/overlay/temp/dir_setting/ninja/shadow(T, L.dir)
 					limit--
 					if(limit<=0)
 						break
 			else
-				PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(mobloc, L.dir))
+				new /obj/effect/overlay/temp/dir_setting/ninja/shadow(mobloc, L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 				L << "<span class='warning'>[S] bars your passage!</span>"
-				if(istype(L, /mob/living/simple_animal/revenant))
+				if(isrevenant(L))
 					var/mob/living/simple_animal/revenant/R = L
 					R.reveal(20)
 					R.stun(20)
@@ -306,14 +312,19 @@
 
 //moves the mob/object we're pulling
 /mob/proc/Move_Pulled(atom/A)
-	if (!pulling)
+	if(!pulling)
 		return
-	if (pulling.anchored || !pulling.Adjacent(src))
+	if(pulling.anchored || !pulling.Adjacent(src))
 		stop_pulling()
 		return
-	if (A == loc && pulling.density)
+	if(isliving(pulling))
+		var/mob/living/L = pulling
+		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
+			stop_pulling()
+			return
+	if(A == loc && pulling.density)
 		return
-	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+	if(!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
 	step(pulling, get_dir(pulling.loc, A))
 
@@ -413,8 +424,12 @@
 
 /client/verb/toggle_walk_run()
 	set name = "toggle-walk-run"
-	set hidden = 1
+	set hidden = TRUE
+	set instant = TRUE
+	if(mob)
+		mob.toggle_move_intent()
 
-	if(mob && mob.hud_used && mob.hud_used.static_inventory)
-		for(var/obj/screen/mov_intent/selector in mob.hud_used.static_inventory)
-			selector.toggle(mob);
+/mob/proc/toggle_move_intent()
+	if(hud_used && hud_used.static_inventory)
+		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
+			selector.toggle(src)

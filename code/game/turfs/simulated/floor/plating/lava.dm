@@ -3,9 +3,13 @@
 /turf/open/floor/plating/lava
 	name = "lava"
 	icon_state = "lava"
+	gender = PLURAL //"That's some lava."
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-	luminosity = 1
+
+	light_range = 2
+	light_power = 0.75
+	light_color = "#c48a18"
 
 /turf/open/floor/plating/lava/ex_act()
 	return
@@ -25,6 +29,12 @@
 	if(!burn_stuff())
 		STOP_PROCESSING(SSobj, src)
 
+/turf/open/floor/plating/lava/singularity_act()
+	return
+
+/turf/open/floor/plating/lava/singularity_pull(S, current_size)
+	return
+
 /turf/open/floor/plating/lava/make_plating()
 	return
 
@@ -36,17 +46,31 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
+
+/turf/open/floor/plating/lava/proc/is_safe()
+	//if anything matching this typecache is found in the lava, we don't burn things
+	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk))
+	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
+	return LAZYLEN(found_safeties)
+
+
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
+
+	if(is_safe())
+		return FALSE
+
 	var/thing_to_check = src
 	if (AM)
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
-			if((O.resistance_flags & (LAVA_PROOF|ON_FIRE|INDESTRUCTIBLE)) || O.throwing)
+			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
 				continue
 			. = 1
+			if((O.resistance_flags & (ON_FIRE)))
+				continue
 			if(!(O.resistance_flags & FLAMMABLE))
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 			if(O.resistance_flags & FIRE_PROOF)
@@ -55,10 +79,11 @@
 				O.armor["fire"] = 50
 			O.fire_act(10000, 1000)
 
-
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
+			if(L.movement_type & FLYING)
+				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)

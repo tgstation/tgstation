@@ -26,7 +26,7 @@
 				if(M.mind)
 					for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
 						S.charge_counter = S.charge_max
-				M <<"<span class='notice'>you feel raw magic flowing through you, it feels good!</span>"
+				M <<"<span class='notice'>You feel raw magic flowing through you. It feels good!</span>"
 			else
 				M <<"<span class='notice'>you feel very strange for a moment, but then it passes.</span>"
 				burnt_out = 1
@@ -58,6 +58,7 @@
 				if(istype(item,/obj/item/weapon/gun/magic/wand) && I.max_charges != 0)
 					var/obj/item/weapon/gun/magic/W = item
 					W.icon_state = initial(W.icon_state)
+				I.recharge_newshot()
 				charged_item = I
 				break
 			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
@@ -83,13 +84,16 @@
 								C.maxcharge = 1
 								burnt_out = 1
 						C.charge = C.maxcharge
+						if(istype(C.loc,/obj/item/weapon/gun))
+							var/obj/item/weapon/gun/G = C.loc
+							G.process_chamber()
 						item.update_icon()
 						charged_item = item
 						break
 		if(!charged_item)
-			L << "<span class='notice'>you feel magical power surging to your hands, but the feeling rapidly fades...</span>"
+			L << "<span class='notice'>You feel magical power surging through your hands, but the feeling rapidly fades...</span>"
 		else if(burnt_out)
 			L << "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>"
 		else
-			playsound(get_turf(L), "sound/magic/Charge.ogg", 50, 1)
+			playsound(get_turf(L), 'sound/magic/Charge.ogg', 50, 1)
 			L << "<span class='notice'>[charged_item] suddenly feels very warm!</span>"

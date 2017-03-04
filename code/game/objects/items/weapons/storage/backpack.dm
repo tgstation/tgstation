@@ -14,18 +14,14 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK	//ERROOOOO
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 21
 	storage_slots = 21
 	resistance_flags = 0
 	obj_integrity = 300
 	max_integrity = 300
-
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
-	playsound(src.loc, "rustle", 50, 1, -5)
-	return ..()
 
 /*
  * Backpack Types
@@ -36,7 +32,7 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=5;materials=4;engineering=4;plasmatech=5"
 	icon_state = "holdingpack"
-	max_w_class = 6
+	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 35
 	resistance_flags = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
@@ -95,8 +91,8 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/santabag/suicide_act(mob/user)
@@ -272,7 +268,7 @@
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	w_class = 3 //Can fit in backpacks itself.
+	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	max_combined_w_class = 15
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
@@ -289,7 +285,7 @@
 
 /obj/item/weapon/storage/backpack/satchel/flat/New()
 	..()
-	PoolOrNew(/obj/item/stack/tile/plasteel, src)
+	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
 	SSpersistence.new_secret_satchels += src
 
@@ -297,7 +293,7 @@
 	SSpersistence.new_secret_satchels -= src
 	return ..()
 
-/obj/item/weapon/storage/backpack/satchel/flat/secret/
+/obj/item/weapon/storage/backpack/satchel/flat/secret
 	var/list/reward_one_of_these = list() //Intended for map editing
 	var/list/reward_all_of_these = list() //use paths!
 	var/revealed = 0
@@ -454,7 +450,7 @@
 	contents = list()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
+	new /obj/item/weapon/gun/ballistic/automatic/c20r(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
 	return
 
@@ -465,7 +461,7 @@
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	return
@@ -478,7 +474,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -490,7 +486,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -503,7 +499,7 @@
 	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
 	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
 	new /obj/item/weapon/gun/syringe/syndicate(src)
-	new /obj/item/weapon/gun/projectile/automatic/c20r/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/c20r/toy(src)
 	new /obj/item/weapon/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
@@ -530,7 +526,7 @@
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/weapon/watertank/operator(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
-	new /obj/item/weapon/gun/projectile/automatic/pistol/APS(src)
+	new /obj/item/weapon/gun/ballistic/automatic/pistol/APS(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka(src)

@@ -2,7 +2,7 @@
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
 	status_flags = 0
-	ventcrawler = 0 //pull over that ass too fat
+	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
 	unique_name = 0
 	pixel_x = -16
 	bubble_icon = "alienroyal"
@@ -33,7 +33,7 @@
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
-		var/image/I = image(icon = 'icons/mob/alien.dmi' , icon_state = "alienq_running", loc = owner)
+		var/image/I = image(icon = 'icons/mob/alien.dmi' , icon_state = "alienq", loc = owner)
 		I.override = 1
 		I.pixel_x -= owner.pixel_x
 		I.pixel_y -= owner.pixel_y

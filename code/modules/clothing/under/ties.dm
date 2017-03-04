@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
 
 /obj/item/clothing/tie/proc/attach(obj/item/clothing/under/U, user)
@@ -50,10 +50,10 @@
 	U.cut_overlays()
 	U.hastie = null
 
-/obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U)
+/obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U)
+/obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 /*
 /obj/item/clothing/tie/blue
@@ -93,7 +93,7 @@
 
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			var/body_part = parse_zone(user.zone_selected)
 			if(body_part)
 				var/their = "their"
@@ -140,7 +140,7 @@
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
-	if(ishuman(M) && (user.a_intent == "help"))
+	if(ishuman(M) && (user.a_intent == INTENT_HELP))
 
 		if(M.wear_suit)
 			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
@@ -389,21 +389,19 @@
 	if(!..())
 		return 0
 	if(isliving(U.loc))
-		on_uniform_equip(U)
+		on_uniform_equip(U, user)
 
 /obj/item/clothing/tie/lawyers_badge/detach(obj/item/clothing/under/U, user)
 	..()
 	if(isliving(U.loc))
-		on_uniform_dropped(U)
+		on_uniform_dropped(U, user)
 
-/obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U)
-	if(!isliving(U.loc))
-		return
-	var/mob/living/L = U.loc
-	L.bubble_icon = "lawyer"
+/obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L)
+		L.bubble_icon = "lawyer"
 
-/obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U)
-	if(!isliving(U.loc))
-		return
-	var/mob/living/L = U.loc
-	L.bubble_icon = initial(L.bubble_icon)
+/obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L)
+		L.bubble_icon = initial(L.bubble_icon)

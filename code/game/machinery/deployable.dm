@@ -27,13 +27,13 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm" && material == METAL)
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user, 40/I.toolspeed, target = src))
+				playsound(loc, WT.usesound, 40, 1)
+				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = Clamp(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
@@ -97,16 +97,20 @@
 	proj_pass_rate = 20
 	armor = list(melee = 10, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 
+	var/deploy_time = 40
+	var/deploy_message = TRUE
+
 
 /obj/structure/barricade/security/New()
 	..()
-	addtimer(src, "deploy", 40)
+	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
 
 /obj/structure/barricade/security/proc/deploy()
 	icon_state = "barrier1"
 	density = 1
 	anchored = 1
-	visible_message("<span class='warning'>[src] deploys!</span>")
+	if(deploy_message)
+		visible_message("<span class='warning'>[src] deploys!</span>")
 
 
 /obj/item/weapon/grenade/barrier

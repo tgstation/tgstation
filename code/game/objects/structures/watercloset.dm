@@ -14,6 +14,7 @@
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
+	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -23,7 +24,7 @@
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -74,17 +75,17 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30/I.toolspeed, target = src))
+		if(do_after(user, 30*I.toolspeed, target = src))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
 
 	else if(cistern)
-		if(user.a_intent != "harm")
-			if(I.w_class > 3)
+		if(user.a_intent != INTENT_HARM)
+			if(I.w_class > WEIGHT_CLASS_NORMAL)
 				user << "<span class='warning'>[I] does not fit!</span>"
 				return
-			if(w_items + I.w_class > 5)
+			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
 				user << "<span class='warning'>The cistern is full!</span>"
 				return
 			if(!user.drop_item())
@@ -118,7 +119,7 @@
 	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -139,6 +140,7 @@
 			else
 				hiddenitem.forceMove(get_turf(src))
 			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
+			hiddenitem = null
 	else
 		..()
 
@@ -146,7 +148,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
 			exposed = !exposed
 	else if(exposed)
@@ -169,7 +171,7 @@
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "urinalcake"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
 /obj/machinery/shower
@@ -218,7 +220,7 @@
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
-		if(do_after(user, 50/I.toolspeed, target = src))
+		if(do_after(user, 50*I.toolspeed, target = src))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -404,6 +406,7 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
+	var/dispensedreagent = "water" // for whenever plumbing happens
 
 
 /obj/structure/sink/attack_hand(mob/living/user)
@@ -452,8 +455,8 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
-		if(RG.flags & OPENCONTAINER)
-			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+		if(RG.container_type & OPENCONTAINER)
+			RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
 			return 1
 
@@ -473,16 +476,16 @@
 				return
 
 	if(istype(O, /obj/item/weapon/mop))
-		O.reagents.add_reagent("water", 5)
+		O.reagents.add_reagent("[dispensedreagent]", 5)
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
-		user.drop_item()
-		M.loc = get_turf(src)
-		M.Expand()
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		user << "<span class='notice'>You tear off a strip of gauze and make a rag.</span>"
+		G.use(1)
 		return
 
 	if(!istype(O))
@@ -490,7 +493,7 @@
 	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='notice'>You start washing [O]...</span>"
 		busy = 1
 		if(!do_after(user, 40, target = src))
@@ -499,6 +502,9 @@
 		busy = 0
 		O.clean_blood()
 		O.acid_level = 0
+		create_reagents(5)
+		reagents.add_reagent("[dispensedreagent]", 5)
+		reagents.reaction(O, TOUCH)
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
@@ -518,6 +524,7 @@
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
+	desc = "A puddle used for washing one's hands and face."
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attack_hand(mob/M)

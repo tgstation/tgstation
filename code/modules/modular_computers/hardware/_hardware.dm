@@ -4,7 +4,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 
-	w_class = 1	// w_class limits which devices can contain this component.
+	w_class = WEIGHT_CLASS_TINY	// w_class limits which devices can contain this component.
 	// 1: PDAs/Tablets, 2: Laptops, 3-4: Consoles only
 	var/obj/item/device/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
@@ -92,12 +92,12 @@
 
 // Called when component is removed from PC.
 /obj/item/weapon/computer_hardware/proc/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
-	try_eject()
+	try_eject(forced = 1)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
 /obj/item/weapon/computer_hardware/proc/try_insert(obj/item/I, mob/living/user = null)
 	return FALSE
 
 // Called when someone tries to eject something from it - card from card reader, etc.
-/obj/item/weapon/computer_hardware/proc/try_eject(slot=0, mob/living/user = null)
+/obj/item/weapon/computer_hardware/proc/try_eject(slot=0, mob/living/user = null, forced = 0)
 	return FALSE

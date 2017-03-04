@@ -84,8 +84,9 @@
 	bleedsuppress = 1
 	S.icon = icon
 	S.icon_state = icon_state
-	S.overlays = overlays
-	S.color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	S.copy_overlays(overlays)
+	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return 1
 
 /mob/living/carbon/monkey/petrify(statue_timer)

@@ -78,7 +78,7 @@ Difficulty: Medium
 			minimum_distance = 0
 			speed = 0
 			charging = 1
-			addtimer(src, "reset_charge", 50)
+			addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
 	ranged = 1
@@ -147,8 +147,7 @@ Difficulty: Medium
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	item_state = "staffofstorms"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'

@@ -101,7 +101,6 @@ Class Procs:
 	pressure_resistance = 15
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 
 	var/stat = 0
 	var/emagged = 0
@@ -126,6 +125,8 @@ Class Procs:
 	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/New()
+	if (!armor)
+		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	..()
 	machines += src
 	if(!speed_process)
@@ -155,7 +156,7 @@ Class Procs:
 /obj/machinery/emp_act(severity)
 	if(use_power && !stat)
 		use_power(7500/severity)
-		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+		new /obj/effect/overlay/temp/emp(loc)
 	..()
 
 /obj/machinery/proc/open_machine(drop = 1)
@@ -168,13 +169,11 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/L in src)
-		L.forceMove(T)
-		L.update_canmove() //so the mob falls if he became unconscious inside the machine.
-		. += L
-
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
+		if(isliving(A))
+			var/mob/living/L = A
+			L.update_canmove()
 	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
@@ -242,12 +241,12 @@ Class Procs:
 
 
 /obj/machinery/attack_paw(mob/living/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE, user)
+		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "melee", 1)
 
 
@@ -357,16 +356,36 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	if(istype(W) &&  !(flags & NODECONSTRUCT))
-		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
+/obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
+	if(!isfloorturf(loc) && !anchored)
+		user << "<span class='warning'>[src] needs to be on the floor to be secured!</span>"
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
+	if(istype(W) && !(flags & NODECONSTRUCT))
+		var/can_be_unfasten = can_be_unfasten_wrench(user)
+		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
+			return can_be_unfasten
+		if(time)
+			user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>"
 		playsound(loc, W.usesound, 50, 1)
-		if(do_after(user, time/W.toolspeed, target = src))
-			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+		var/prev_anchored = anchored
+		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
+		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
+			user << "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>"
 			anchored = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		return 1
-	return 0
+			return SUCCESSFUL_UNFASTEN
+		return FAILED_UNFASTEN
+	return CANT_UNFASTEN
+
+/obj/proc/unfasten_wrench_check(prev_anchored, mob/user) //for the do_after, this checks if unfastening conditions are still valid
+	if(anchored != prev_anchored)
+		return FALSE
+	if(can_be_unfasten_wrench(user, TRUE) != SUCCESSFUL_UNFASTEN) //if we aren't explicitly successful, cancel the fuck out
+		return FALSE
+	return TRUE
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
 	if(!istype(W))
@@ -418,9 +437,7 @@ Class Procs:
 			user << "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
-			if(100 to INFINITY)
-				user <<  "It seems pristine and undamaged."
-			if(50 to 100)
+			if(50 to 99)
 				user <<  "It looks slightly damaged."
 			if(25 to 50)
 				user <<  "It appears heavily damaged."

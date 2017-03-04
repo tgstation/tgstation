@@ -15,7 +15,7 @@
 	var/sand_type = /obj/item/weapon/ore/glass
 	var/floor_variance = 20 //probability floor has a different icon state
 
-/turf/open/floor/plating/asteroid/New()
+/turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
 	..()
 	name = proper_name
@@ -117,15 +117,15 @@
 /turf/open/floor/plating/asteroid/basalt/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/plating/asteroid/basalt/New()
+/turf/open/floor/plating/asteroid/basalt/Initialize()
 	..()
 	switch(icon_state)
 		if("basalt1", "basalt2", "basalt3") //5 and 9 are too dark to glow and make the amount of glows in tunnels too high
-			SetLuminosity(1, 1) //this is basically a 3.75% chance that a basalt floor glows
+			set_light(1, 0.1)
 
 /turf/open/floor/plating/asteroid/basalt/gets_dug()
 	if(!dug)
-		SetLuminosity(0)
+		set_light(0)
 	..()
 
 
@@ -149,10 +149,9 @@
 
 /turf/open/floor/plating/asteroid/airless/cave
 	var/length = 100
-	var/mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
-	var/megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, \
-	/mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM)
-	var/flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
+	var/list/mob_spawn_list
+	var/list/megafauna_spawn_list
+	var/list/flora_spawn_list
 	var/sanity = 1
 	var/forward_cave_dir = 1
 	var/backward_cave_dir = 2
@@ -177,10 +176,18 @@
 /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
 
-/turf/open/floor/plating/asteroid/airless/cave/New(loc)
+/turf/open/floor/plating/asteroid/airless/cave/Initialize()
+	if (!mob_spawn_list)
+		mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
+	if (!megafauna_spawn_list)
+		megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM)
+	if (!flora_spawn_list)
+		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
+
 	if(!has_data)
 		produce_tunnel_from_data()
-	..()
+	else
+		..()	//do not continue after changeturfing or we will do a double initialize
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
 	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.
@@ -230,7 +237,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type)
+				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,TRUE)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
@@ -256,7 +263,7 @@
 	SpawnFlora(T)
 
 	SpawnMonster(T)
-	T.ChangeTurf(turf_type)
+	T.ChangeTurf(turf_type,FALSE,TRUE)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
@@ -316,6 +323,3 @@
 
 /turf/open/floor/plating/asteroid/snow/atmosphere
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-
-
-

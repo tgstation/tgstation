@@ -39,10 +39,11 @@
 	var/attempt_open = 0
 
 // Pickup loot
-/mob/living/simple_animal/hostile/mimic/crate/initialize()
+/mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	..()
-	for(var/obj/item/I in loc)
-		I.loc = src
+	if(mapload)	//eat shit
+		for(var/obj/item/I in loc)
+			I.loc = src
 
 /mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
 	..()
@@ -71,7 +72,7 @@
 		visible_message("<b>[src]</b> starts to move!")
 		attempt_open = 1
 
-/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(damage)
+/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	trigger()
 	. = ..()
 
@@ -148,7 +149,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
-		overlays = O.overlays
+		copy_overlays(O)
 		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
 		add_overlay(googly_eyes)
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
@@ -210,7 +211,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/ranged
 	var/obj/item/weapon/gun/TrueGun = null
 	var/obj/item/weapon/gun/magic/Zapstick
-	var/obj/item/weapon/gun/projectile/Pewgun
+	var/obj/item/weapon/gun/ballistic/Pewgun
 	var/obj/item/weapon/gun/energy/Zapgun
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
@@ -231,7 +232,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			Zapstick = G
 			var/obj/item/ammo_casing/magic/M = Zapstick.ammo_type
 			projectiletype = initial(M.projectile_type)
-		if(istype(G, /obj/item/weapon/gun/projectile))
+		if(istype(G, /obj/item/weapon/gun/ballistic))
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
 			casingtype = initial(M.ammo_type)

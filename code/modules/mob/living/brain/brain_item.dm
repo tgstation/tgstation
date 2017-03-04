@@ -11,7 +11,8 @@
 	origin_tech = "biotech=5"
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/brain/brainmob = null
-	var/damaged_brain = 0 //whether the brain organ is damaged.
+	var/damaged_brain = FALSE //whether the brain organ is damaged.
+	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
 	..()
@@ -33,6 +34,9 @@
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0)
 	..()
 	if(!special)
+		if(C.has_brain_worms())
+			var/mob/living/simple_animal/borer/B = C.has_brain_worms()
+			B.leave_victim() //Should remove borer if the brain is removed - RR
 		transfer_identity(C)
 	C.update_hair()
 
@@ -71,7 +75,10 @@
 		else
 			user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
 	else
-		user << "This one is completely devoid of life."
+		if(decoy_override)
+			user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
+		else
+			user << "This one is completely devoid of life."
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -92,9 +99,9 @@
 		if(!C.get_bodypart("head"))
 			return
 		user.drop_item()
-		var/msg = "[C] has [src] inserted into \his head by [user]."
+		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
-			msg = "[user] inserts [src] into \his head!"
+			msg = "[user] inserts [src] into [user.p_their()] head!"
 
 		C.visible_message("<span class='danger'>[msg]</span>",
 						"<span class='userdanger'>[msg]</span>")

@@ -40,7 +40,7 @@
 		id_tag = num2text(uid)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	A.air_scrub_names -= id_tag
 	A.air_scrub_info -= id_tag
 
@@ -131,7 +131,7 @@
 		"sigtype" = "status"
 	)
 
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	if(!A.air_scrub_names[id_tag])
 		name = "\improper [A.name] air scrubber #[A.air_scrub_names.len + 1]"
 		A.air_scrub_names[id_tag] = name
@@ -339,9 +339,9 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			user << "<span class='notice'>Now welding the scrubber.</span>"
-			if(do_after(user, 20/W.toolspeed, target = src))
+			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)

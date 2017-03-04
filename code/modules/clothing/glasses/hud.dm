@@ -46,6 +46,16 @@
 	invis_view = SEE_INVISIBLE_MINIMUM
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/hud/health/sunglasses
+	name = "Medical HUDSunglasses"
+	desc = "Sunglasses with a medical HUD."
+	icon_state = "sunhudmed"
+	origin_tech = "magnets=3;biotech=3;engineering=3"
+	darkness_view = 1
+	flash_protect = 1
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/blue
+
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
@@ -73,12 +83,25 @@
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/security/chameleon
-	name = "Chamleon Security HUD"
-	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
+	name = "Chameleon Security HUD"
+	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
 	flash_protect = 1
 
-/obj/item/clothing/glasses/hud/security/chameleon/attack_self(mob/user)
-	chameleon(user)
+	// Yes this code is the same as normal chameleon glasses, but we don't
+	// have multiple inheritance, okay?
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/clothing/glasses/hud/security/chameleon/New()
+	..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/clothing/glasses
+	chameleon_action.chameleon_name = "Glasses"
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
+	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
+	. = ..()
+	chameleon_action.emp_randomise()
 
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
@@ -87,9 +110,9 @@
 	icon_state = "hudpatch"
 
 /obj/item/clothing/glasses/hud/security/sunglasses
-	name = "HUDSunglasses"
-	desc = "Sunglasses with a HUD."
-	icon_state = "sunhud"
+	name = "Security HUDSunglasses"
+	desc = "Sunglasses with a security HUD."
+	icon_state = "sunhudsec"
 	origin_tech = "magnets=3;combat=3;engineering=3"
 	darkness_view = 1
 	flash_protect = 1

@@ -57,17 +57,17 @@
 	AM.loc = T
 	AM.newtonian_move(dir)
 
-//Overwrite because we dont want people building rods in space.
-/turf/open/space/transit/attackby()
-	return
+//Overwrite because we dont want people building rods
+/turf/open/space/transit/attackby(obj/item/C, mob/user)
+	..(C, user, /area/shuttle)
 
-/turf/open/space/transit/New()
+/turf/open/space/transit/Initialize()
+	..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
-	..()
 
-/turf/open/space/transit/update_icon()
+/turf/open/space/transit/proc/update_icon()
 	var/p = 9
 	var/angle = 0
 	var/state = 1

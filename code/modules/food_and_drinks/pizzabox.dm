@@ -28,6 +28,7 @@
 
 /obj/item/pizzabox/New()
 	update_icon()
+	..()
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -38,11 +39,11 @@
 	desc = initial(desc)
 	if(open)
 		if(pizza)
-			desc = "[desc] It appears to have \a [pizza] inside."
+			desc = "[desc] It appears to have \a [pizza] inside. Use your other hand to take it out."
 		if(bomb)
 			desc = "[desc] Wait, what?! It has \a [bomb] inside!"
 			if(bomb_defused)
-				desc = "[desc] The bomb seems inert."
+				desc = "[desc] The bomb seems inert. Use your other hand to activate it."
 			if(bomb_active)
 				desc = "[desc] It looks like it's about to go off!"
 	else
@@ -191,6 +192,7 @@
 		if(bomb in src)
 			bomb.detonate()
 			unprocess()
+			qdel(src)
 	if(!bomb_active || bomb_defused)
 		if(bomb_defused && bomb in src)
 			bomb.defuse()

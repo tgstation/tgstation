@@ -26,7 +26,7 @@
 	status_flags = 0
 	faction = list("cult")
 	status_flags = CANPUSH
-	flying = 1
+	movement_type = FLYING
 	loot = list(/obj/item/weapon/ectoplasm)
 	del_on_death = 1
 

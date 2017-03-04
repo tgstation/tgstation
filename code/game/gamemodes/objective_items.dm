@@ -19,7 +19,7 @@
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
-	targetitem = /obj/item/weapon/gun/energy/gun/hos
+	targetitem = /obj/item/weapon/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
 
@@ -155,7 +155,7 @@
 
 /datum/objective_item/special/aegun
 	name = "an advanced energy gun"
-	targetitem = /obj/item/weapon/gun/energy/gun/nuclear
+	targetitem = /obj/item/weapon/gun/energy/e_gun/nuclear
 	difficulty = 10
 
 /datum/objective_item/special/ddrill

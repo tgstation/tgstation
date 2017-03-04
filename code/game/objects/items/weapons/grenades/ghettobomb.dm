@@ -3,7 +3,7 @@
 /obj/item/weapon/grenade/iedcasing
 	name = "improvised firebomb"
 	desc = "A weak, improvised incendiary device."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"
@@ -47,7 +47,7 @@
 		if(clown_check(user))
 			user << "<span class='warning'>You light the [name]!</span>"
 			active = 1
-			overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
+			cut_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"), TRUE)	//this line make no sense
 			icon_state = initial(icon_state) + "_active"
 			add_fingerprint(user)
 			var/turf/bombturf = get_turf(src)
@@ -58,7 +58,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
-			addtimer(src, "prime", det_time)
+			addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()

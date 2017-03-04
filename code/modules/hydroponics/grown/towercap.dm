@@ -11,11 +11,10 @@
 	production = 1
 	yield = 5
 	potency = 50
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
 
 /obj/item/seeds/tower/steel
@@ -38,7 +37,7 @@
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=1"
@@ -53,10 +52,12 @@
 
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
-		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(seed.potency / 25))
+		var/seed_modifier = 0
+		if(seed)
+			seed_modifier = round(seed.potency / 25)
+		var/obj/item/stack/plank = new plank_type(user.loc, 1 + seed_modifier)
 		var/old_plank_amount = plank.amount
 		for(var/obj/item/stack/ST in user.loc)
 			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
@@ -70,13 +71,15 @@
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
-			usr.unEquip(W)
+			usr.dropItemToGround(W)
 			usr.put_in_active_hand(T)
 			qdel(leaf)
 			qdel(src)
 			return
 		else
 			usr << "<span class ='warning'>You must dry this first!</span>"
+	else
+		return ..()
 
 /obj/item/weapon/grown/log/tree
 	seed = null
@@ -146,7 +149,7 @@
 	if(!burning && CheckOxygen())
 		icon_state = "bonfire_on_fire"
 		burning = 1
-		SetLuminosity(6)
+		set_light(6)
 		Burn()
 		START_PROCESSING(SSobj, src)
 
@@ -181,7 +184,7 @@
 	if(burning)
 		icon_state = "bonfire"
 		burning = 0
-		SetLuminosity(0)
+		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/M, force = 0)

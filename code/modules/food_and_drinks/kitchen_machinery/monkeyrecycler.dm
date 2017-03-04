@@ -20,7 +20,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/monkey_recycler
-	name = "circuit board (Monkey Recycler)"
+	name = "Monkey Recycler (Machine Board)"
 	build_path = /obj/machinery/monkey_recycler
 	origin_tech = "programming=1;biotech=2"
 	req_components = list(

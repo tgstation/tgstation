@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /*
 CONTAINS:
@@ -17,7 +17,7 @@ RCD
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
@@ -179,6 +179,7 @@ RCD
 	set category = "Object"
 	set src in usr
 
+	airlockcost = initial(airlockcost)
 	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
 	switch(airlockcat)
 		if("Solid")
@@ -207,6 +208,7 @@ RCD
 						airlock_type = /obj/machinery/door/airlock/external
 					if("High Security")
 						airlock_type = /obj/machinery/door/airlock/highsecurity
+						airlockcost += 2 * sheetmultiplier	//extra cost
 			else
 				airlock_type = /obj/machinery/door/airlock
 
@@ -261,8 +263,6 @@ RCD
 		if((matter + R.ammoamt) > max_matter)
 			user << "<span class='warning'>The RCD can't hold any more matter-units!</span>"
 			return
-		if(!user.unEquip(W))
-			return
 		qdel(W)
 		matter += R.ammoamt
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -278,24 +278,16 @@ RCD
 		return ..()
 
 /obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
-    var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
-    if(maxsheets > 0)
-        if(S.amount > maxsheets)
-            //S.amount -= maxsheets
-            S.use(maxsheets)
-            matter += value*maxsheets
-            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RCD. </span>"
-        else
-            matter += value*(S.amount)
-            user.unEquip()
-            S.use(S.amount)
-            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
-
-        return 1
-    user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
-    return 0
+	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
+	if(maxsheets > 0)
+		var/amount_to_use = min(S.amount, maxsheets)
+		S.use(amount_to_use)
+		matter += value*amount_to_use
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the RCD. </span>"
+		return 1
+	user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
+	return 0
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
@@ -333,7 +325,7 @@ RCD
 			if(isspaceturf(A))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
-					user << "<span class='notice'>You start building floor...</span>"
+					user << "<span class='notice'>You start building a floor...</span>"
 					activate()
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
@@ -342,7 +334,7 @@ RCD
 			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
-					user << "<span class='notice'>You start building wall...</span>"
+					user << "<span class='notice'>You start building a wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
 						if(!istype(F)) return 0
@@ -377,7 +369,7 @@ RCD
 							break
 
 					if(door_check)
-						user << "<span class='notice'>You start building airlock...</span>"
+						user << "<span class='notice'>You start building an airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user)) return 0
@@ -549,7 +541,7 @@ RCD
 		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
 		vibrating violently!</b></span>")
 	// 5 seconds to get rid of it
-	addtimer(src, "detonate_pulse_explode", 50)
+	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
 
 /obj/item/weapon/rcd/proc/detonate_pulse_explode()
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
@@ -604,10 +596,10 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	origin_tech = "materials=3"
-	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
+	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
 /obj/item/weapon/rcd_ammo/large
 	origin_tech = "materials=4"
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160

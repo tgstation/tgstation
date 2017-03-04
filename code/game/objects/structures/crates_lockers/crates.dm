@@ -12,6 +12,7 @@
 	climbable = TRUE
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
+	delivery_icon = "deliverycrate"
 	var/obj/item/weapon/paper/manifest/manifest
 
 /obj/structure/closet/crate/New()
@@ -97,6 +98,21 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/blood/random(src)
 
+/obj/structure/closet/crate/freezer/surplus_limbs
+	name = "surplus prosthetic limbs"
+	desc = "A crate containing an assortment of cheap prosthetic limbs."
+
+/obj/structure/closet/crate/freezer/surplus_limbs/New()
+	. = ..()
+	new /obj/item/bodypart/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/r_leg/robot/surplus(src)
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
@@ -124,3 +140,8 @@
 	for(var/i in 1 to 4)
 		new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
+
+/obj/structure/closet/crate/science
+	name = "science crate"
+	desc = "A science crate."
+	icon_state = "scicrate"

@@ -1,4 +1,5 @@
 //////Kitchen Spike
+#define VIABLE_MOB_CHECK(X) (isliving(X) && !issilicon(X) && !isbot(X))
 
 /obj/structure/kitchenspike_frame
 	name = "meatspike frame"
@@ -19,7 +20,7 @@
 		if(R.get_amount() >= 4)
 			R.use(4)
 			user << "<span class='notice'>You add spikes to the frame.</span>"
-			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
+			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(istype(I, /obj/item/weapon/weldingtool))
@@ -27,11 +28,11 @@
 		if(!WT.remove_fuel(0, user))
 			return
 		user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
-		playsound(src.loc, "sound/items/Welder.ogg", 40, 1)
-		if(do_after(user, 40/WT.toolspeed, 1, target = src))
+		playsound(src.loc, WT.usesound, 40, 1)
+		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(!WT.isOn())
 				return
-			playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
+			playsound(src.loc, WT.usesound, 50, 1)
 			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
@@ -61,8 +62,8 @@
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!has_buckled_mobs())
-			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-			if(do_after(user, 20/I.toolspeed, target = src))
+			playsound(loc, I.usesound, 100, 1)
+			if(do_after(user, 20*I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
 				deconstruct(TRUE)
 		else
@@ -71,14 +72,16 @@
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
-	if(isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
+	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
-			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+			if(user.pulling != L)
+				return
+			playsound(src.loc, 'sound/effects/splat.ogg', 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc
 			L.emote("scream")
@@ -140,9 +143,11 @@
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)
-		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc)
 		transfer_fingerprints_to(F)
 	else
 		new /obj/item/stack/sheet/metal(src.loc, 4)
 	new /obj/item/stack/rods(loc, 4)
 	qdel(src)
+
+#undef VIABLE_MOB_CHECK

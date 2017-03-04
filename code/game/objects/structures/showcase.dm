@@ -53,7 +53,7 @@
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
 	if(istype(W, /obj/item/weapon/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(do_after(user, 20*W.toolspeed, target = src))
 			playsound(loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You start to crowbar the showcase apart...</span>"
 			new /obj/item/stack/sheet/metal (get_turf(src), 4)

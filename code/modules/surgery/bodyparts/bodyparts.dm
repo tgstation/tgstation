@@ -59,15 +59,15 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
+		if(EASYLIMBATTACHMENT in H.dna.species.species_traits)
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
-					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
+					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
 					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
 				else
 					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
 					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
-				user.unEquip(src,1)
+				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				attach_limb(C)
 				return
 	..()
@@ -220,7 +220,7 @@
 
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
-		species_flags_list = H.dna.species.specflags
+		species_flags_list = H.dna.species.species_traits
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
@@ -231,7 +231,7 @@
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
-		if(MUTCOLORS in S.specflags)
+		if(MUTCOLORS in S.species_traits)
 			if(S.fixed_mut_color)
 				species_color = S.fixed_mut_color
 			else
@@ -287,11 +287,11 @@
 	if(animal_origin)
 		if(status == BODYPART_ORGANIC)
 			if(species_id == "husk")
-				standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state"="[animal_origin]_husk_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state"="[animal_origin]_husk_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
-				standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state"="[animal_origin]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state"="[animal_origin]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
-			standing += image("icon"='icons/mob/augments.dmi', "icon_state"="[animal_origin]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			standing += image("icon"='icons/mob/augments.dmi', "icon_state"="[animal_origin]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		return standing
 
 	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
@@ -304,21 +304,21 @@
 	if(status == BODYPART_ORGANIC)
 		if(should_draw_greyscale)
 			if(should_draw_gender)
-				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else if(use_digitigrade)
-				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="digitigrade_[use_digitigrade]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="digitigrade_[use_digitigrade]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
-				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
 			if(should_draw_gender)
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 	else
 		if(should_draw_gender)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[initial(icon_state)]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[initial(icon_state)]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		standing += I
 		return standing
 
@@ -379,7 +379,7 @@
 
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_chest_s"
+	icon_state = "alien_chest"
 	dismemberable = 0
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
@@ -391,7 +391,7 @@
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "larva_chest_s"
+	icon_state = "larva_chest"
 	dismemberable = 0
 	max_damage = 50
 	animal_origin = LARVA_BODYPART
@@ -420,7 +420,7 @@
 
 /obj/item/bodypart/l_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_l_arm_s"
+	icon_state = "alien_l_arm"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
@@ -454,7 +454,7 @@
 
 /obj/item/bodypart/r_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_r_arm_s"
+	icon_state = "alien_r_arm"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
@@ -490,7 +490,7 @@
 
 /obj/item/bodypart/l_leg/alien
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_l_leg_s"
+	icon_state = "alien_l_leg"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
@@ -528,7 +528,7 @@
 
 /obj/item/bodypart/r_leg/alien
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_r_leg_s"
+	icon_state = "alien_r_leg"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0

@@ -32,7 +32,7 @@
 	name = "bath_salts"
 	id = "bath_salts"
 	results = list("bath_salts" = 7)
-	required_reagents = list("????" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
+	required_reagents = list("bad_food" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/aranesp

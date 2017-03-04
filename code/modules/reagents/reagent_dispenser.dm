@@ -84,12 +84,14 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
 	..()
-	if(!qdeleted(src)) //wasn't deleted by the projectile's effects.
+	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
 		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
 			var/boom_message = "[key_name_admin(P.firer)] triggered a fueltank explosion via projectile."
 			bombers += boom_message
 			message_admins(boom_message)
-			log_game("[key_name(P.firer)] triggered a fueltank explosion via projectile.")
+			var/log_message = "[key_name(P.firer)] triggered a fueltank explosion via projectile."
+			P.firer.attack_log += "\[[time_stamp()]\] [log_message]"
+			log_attack(log_message)
 			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
@@ -103,15 +105,17 @@
 				user << "<span class='warning'>Your [W.name] is already full!</span>"
 				return
 			reagents.trans_to(W, W.max_fuel)
-			user.visible_message("<span class='notice'>[user] refills \his [W.name].</span>", "<span class='notice'>You refill [W].</span>")
+			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			update_icon()
 		else
-			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling \his [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-			var/message = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
-			bombers += message
-			message_admins(message)
-			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
+			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
+			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
+			bombers += message_admins
+			message_admins(message_admins)
+			var/message_log = "[key_name(user)] triggered a fueltank explosion via welding tool."
+			user.attack_log += "\[[time_stamp()]\] [message_log]"
+			log_attack(message_log)
 			boom()
 		return
 	return ..()
@@ -162,7 +166,7 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src.loc,0,3,5,7,10)
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		qdel(src)
 
 

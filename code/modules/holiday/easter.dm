@@ -111,9 +111,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/loaded/New()
 	..()
-	var/color = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
-	icon_state = "egg-[color]"
-	item_color = "[color]"
+	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
+	icon_state = "egg-[eggcolor]"
+	item_color = "[eggcolor]"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -725,10 +725,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/abandonedzoo)
 "bD" = (
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating/airless,
 /area/ruin/abandonedzoo)
 "bE" = (

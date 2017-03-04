@@ -3,7 +3,7 @@
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
 	throwforce = 1
 	throw_speed = 3
@@ -17,10 +17,6 @@
 	..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
-
-/obj/item/stack/tile/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -110,6 +106,7 @@
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakespace
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
@@ -122,6 +119,7 @@
 	icon_state = "tile_noslip"
 	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
+	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
@@ -147,14 +145,6 @@
 	desc = "A darkly colored grooved floor tile."
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
-
-/obj/item/stack/tile/brass
-	name = "brass floor tile"
-	singular_name = "brass floor tile"
-	desc = "A brass floor tile. It vibrates slightly."
-	icon_state = "tile_brass"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	turf_type = /turf/open/floor/clockwork
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel

@@ -25,25 +25,17 @@
 		return
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin removing rods...</span>"
-		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30/C.toolspeed, target = src))
+		playsound(src, C.usesound, 80, 1)
+		if(do_after(user, 30*C.toolspeed, target = src))
 			if(!istype(src, /turf/open/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/open/floor/plating)
 			return
 
-
-/turf/open/floor/engine/ex_act(severity, target)
-	contents_explosion(severity, target)
-	switch(severity)
-		if(1)
-			ChangeTurf(src.baseturf)
-		if(2)
-			if(prob(50))
-				ChangeTurf(src.baseturf)
-		else
-			return
+/turf/open/floor/engine/acid_act(acidpwr, acid_volume)
+	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
+	. = ..()
 
 /turf/open/floor/engine/ex_act(severity,target)
 	var/shielded = is_shielded()
@@ -69,7 +61,7 @@
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(30))
-				PoolOrNew(floor_tile, src)
+				new floor_tile(src)
 				make_plating()
 		else if(prob(30))
 			ReplaceWithLattice()
@@ -114,10 +106,10 @@
 	icon_state = "plating"
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
-/turf/open/floor/engine/cult/New()
+/turf/open/floor/engine/cult/Initialize()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor/bloodcult, src)
+	new /obj/effect/overlay/temp/cult/turf/floor(src)
+	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
 	realappearence.linked = src
 
 /turf/open/floor/engine/cult/Destroy()
@@ -137,15 +129,15 @@
 	return
 
 /turf/open/floor/engine/cult/ratvar_act()
-	..()
+	. = ..()
 	if(istype(src, /turf/open/floor/engine/cult)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/open/floor/engine/cult/airless
 	initial_gas_mix = "TEMP=2.7"
-
 
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"

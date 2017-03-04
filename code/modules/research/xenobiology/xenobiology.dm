@@ -7,12 +7,13 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
 	var/Uses = 1 // uses before it goes inert
+	var/qdel_timer = null // deletion timer, for delayed reactions
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
@@ -121,7 +122,7 @@
 /obj/item/slimepotion
 	name = "slime potion"
 	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=4"
 
 /obj/item/slimepotion/afterattack(obj/item/weapon/reagent_containers/target, mob/user , proximity)
@@ -156,8 +157,8 @@
 	qdel(src)
 
 /obj/item/slimepotion/sentience
-	name = "sentience potion"
-	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
+	name = "intelligence potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
 	origin_tech = "biotech=6"
@@ -184,7 +185,7 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, POLL_IGNORE_SENTIENCE_POTION, SM) // see poll_ignore.dm
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -344,13 +345,16 @@
 
 	if(istype(C, /obj/vehicle))
 		var/obj/vehicle/V = C
-		if(V.vehicle_move_delay <= 0)
-			user << "<span class='warning'>The [C] can't be made any faster!</span>"
-			return ..()
-		V.vehicle_move_delay = 0
+		var/datum/riding/R = V.riding_datum
+		if(V.riding_datum)
+			if(R.vehicle_move_delay <= 0 )
+				user << "<span class='warning'>The [C] can't be made any faster!</span>"
+				return ..()
+			R.vehicle_move_delay = 0
 
 	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
-	C.color = "#FF0000"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
 
@@ -375,7 +379,8 @@
 		return ..()
 	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
 	C.name = "fireproofed [C.name]"
-	C.color = "#000080"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
 	C.resistance_flags |= FIRE_PROOF
@@ -426,7 +431,7 @@
 	desc = "a golem's thick outter shell"
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY
@@ -524,7 +529,8 @@
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
 	G.key = ghost.key
-	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
+	Serve [user], and assist [user.p_them()] in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 
 	G.mind.enslave_mind_to_creator(user)
@@ -614,7 +620,7 @@
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
 	icon_state = "tile-bluespace"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10
@@ -630,7 +636,7 @@
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles"
 	icon_state = "tile-sepia"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10
@@ -651,5 +657,6 @@
 	var/area/A = get_area(src)
 	if(success)
 		for(var/turf/T in A)
-			T.color = "#2956B2"
+			T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 		qdel(src)

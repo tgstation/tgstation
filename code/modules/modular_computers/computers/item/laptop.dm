@@ -10,14 +10,14 @@
 
 	hardware_flag = PROGRAM_LAPTOP
 	max_hardware_size = 2
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 	flags = HANDSLOW // No running around with open laptops in hands.
 
 	screen_on = 0 		// Starts closed
 	var/start_open = 1	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
-	var/w_class_open = 4
+	var/w_class_open = WEIGHT_CLASS_BULKY
 	var/slowdown_open = 1
 
 /obj/item/device/modular_computer/laptop/New()

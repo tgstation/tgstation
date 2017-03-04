@@ -88,7 +88,7 @@
 
 
 
-proc/get_location_modifier(mob/M)
+/proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)
 	if(locate(/obj/structure/table/optable, T))
 		return 1

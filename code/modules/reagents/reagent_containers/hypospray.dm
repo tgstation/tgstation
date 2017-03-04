@@ -8,7 +8,7 @@
 	volume = 30
 	possible_transfer_amounts = list()
 	resistance_flags = ACID_PROOF
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE
@@ -81,6 +81,9 @@
 		user << "<span class='warning'>[src] is empty!</span>"
 		return
 	..()
+	if(!iscyborg(user))
+		reagents.maximum_volume = 0 //Makes them useless afterwards
+		container_type = 0
 	update_icon()
 	spawn(80)
 		if(iscyborg(user) && !reagents.total_volume)

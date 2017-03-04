@@ -3,7 +3,7 @@
 	desc = "It measures something."
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
-	var/obj/machinery/atmospherics/pipe/target = null
+	var/atom/target = null
 	anchored = 1
 	power_channel = ENVIRON
 	var/frequency = 0
@@ -27,8 +27,9 @@
 	src.target = null
 	return ..()
 
-/obj/machinery/meter/initialize()
-	if (!target)
+/obj/machinery/meter/Initialize(mapload)
+	..()
+	if (mapload && !target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/process_atmos()
@@ -98,9 +99,9 @@
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (do_after(user, 40/W.toolspeed, target = src))
+		if (do_after(user, 40*W.toolspeed, target = src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
@@ -131,14 +132,8 @@
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 //	why are you yelling?
+/obj/machinery/meter/turf
 
-/obj/machinery/meter/turf/New()
+/obj/machinery/meter/turf/Initialize()
 	..()
 	src.target = loc
-	return 1
-
-
-/obj/machinery/meter/turf/initialize()
-	if (!target)
-		src.target = loc
-

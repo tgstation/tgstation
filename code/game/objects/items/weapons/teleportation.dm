@@ -17,7 +17,7 @@
 	var/broadcasting = null
 	var/listening = 1
 	flags = CONDUCT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 7
@@ -79,7 +79,7 @@ Frequency:
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
 				for (var/obj/item/weapon/implant/tracking/W in tracked_implants)
-					if (!W.implanted || !ismob(W.loc))
+					if (!W.imp_in || !ismob(W.loc))
 						continue
 					else
 						var/mob/M = W.loc
@@ -129,7 +129,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10000)
@@ -148,7 +148,7 @@ Frequency:
 	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			var/area/A = get_area(com.target)
-			if(A.noteleport)
+			if(!A || A.noteleport)
 				continue
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[get_area(com.target)] (Active)"] = com.target

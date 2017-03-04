@@ -1,6 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - rscadd: "NEW HOTKEYS"
-  - rscadd: "The number pad can be used to select the body part you want to target (Cycle through head -> eyes -> mouth with 8) in hotkey mode. Be sure Numlock is on!"
-  - rscadd: "Holding shift can be used as a modifier to your current run state in both hotkey and normal mode."

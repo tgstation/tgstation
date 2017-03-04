@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /obj/singularity
 	name = "gravitational singularity"
@@ -36,6 +36,7 @@
 	..()
 	START_PROCESSING(SSobj, src)
 	poi_list |= src
+	singularities |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
@@ -45,6 +46,7 @@
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
+	singularities.Remove(src)
 	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)

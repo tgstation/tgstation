@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
@@ -20,7 +20,7 @@ var/global/mulebot_count = 0
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	a_intent = "harm" //No swapping
+	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 
@@ -480,7 +480,8 @@ var/global/mulebot_count = 0
 
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.blood_DNA |= blood_DNA.Copy()
+						if(blood_DNA && blood_DNA.len)
+							B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -666,6 +667,10 @@ var/global/mulebot_count = 0
 
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)
+
+	var/list/blood_dna = H.get_blood_dna_list()
+	if(blood_dna)
+		transfer_blood_dna(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move

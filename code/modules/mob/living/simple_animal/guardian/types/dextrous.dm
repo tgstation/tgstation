@@ -22,7 +22,7 @@
 /mob/living/simple_animal/hostile/guardian/dextrous/death(gibbed)
 	..()
 	if(internal_storage)
-		unEquip(internal_storage)
+		dropItemToGround(internal_storage)
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)
@@ -46,9 +46,9 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/guardian/dextrous/Recall()
-	if(loc == summoner || cooldown > world.time)
-		return 0
+/mob/living/simple_animal/hostile/guardian/dextrous/Recall(forced)
+	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
+		return FALSE
 	drop_all_held_items()
 	return ..() //lose items, then return
 
@@ -58,8 +58,8 @@
 		..() //lose items, then return
 
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
-/mob/living/simple_animal/hostile/guardian/dextrous/unEquip(obj/item/I, force)
-	if(..(I,force))
+/mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force)
+	if(..())
 		update_inv_hands()
 		if(I == internal_storage)
 			internal_storage = null

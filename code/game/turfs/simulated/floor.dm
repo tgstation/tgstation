@@ -30,15 +30,21 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
-	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
-	var/list/burnt_states = list()
+	var/list/broken_states
+	var/list/burnt_states
 
-/turf/open/floor/New()
+/turf/open/floor/Initialize(mapload)
+	if (!broken_states)
+		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+	if (!burnt_states)
+		burnt_states = list()
 	..()
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
+	if(mapload)
+		MakeDirty()
 
 /turf/open/floor/ex_act(severity, target)
 	var/shielded = is_shielded()
@@ -141,9 +147,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			else
 				user << "<span class='danger'>You remove the floor tile.</span>"
 				if(floor_tile)
-					PoolOrNew(floor_tile, src)
+					new floor_tile(src)
 		make_plating()
-		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+		playsound(src, C.usesound, 80, 1)
 		return 1
 	return 0
 
@@ -151,17 +157,17 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(current_size == STAGE_THREE)
 		if(prob(30))
 			if(floor_tile)
-				PoolOrNew(floor_tile, src)
+				new floor_tile(src)
 				make_plating()
 	else if(current_size == STAGE_FOUR)
 		if(prob(50))
 			if(floor_tile)
-				PoolOrNew(floor_tile, src)
+				new floor_tile(src)
 				make_plating()
 	else if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(70))
-				PoolOrNew(floor_tile, src)
+				new floor_tile(src)
 				make_plating()
 		else if(prob(50))
 			ReplaceWithLattice()
@@ -170,19 +176,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/engine/cult)
 
-/turf/open/floor/ratvar_act(force)
-	var/converted = (prob(40) || force)
-	if(converted)
+/turf/open/floor/ratvar_act(force, ignore_mobs)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/open/floor/clockwork)
-	for(var/I in src)
-		var/atom/A = I
-		if(ismob(A) || converted)
-			A.ratvar_act()
-
-/turf/open/floor/initialize()
-	..()
-	MakeDirty()
 
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
-

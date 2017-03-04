@@ -27,7 +27,8 @@
 	var/lastcirc = "00"
 
 
-/obj/machinery/power/generator/initialize()
+/obj/machinery/power/generator/Initialize(mapload)
+	..()
 	var/obj/machinery/atmospherics/components/binary/circulator/circpath = /obj/machinery/atmospherics/components/binary/circulator
 	cold_circ = locate(circpath) in get_step(src, cold_dir)
 	hot_circ = locate(circpath) in get_step(src, hot_dir)
@@ -173,10 +174,6 @@
 /obj/machinery/power/generator/interact(mob/user)
 
 	user.set_machine(src)
-
-	//user << browse(t, "window=teg;size=460x300")
-	//onclose(user, "teg")
-
 	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
 	popup.set_content(get_menu())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

@@ -10,17 +10,6 @@
 		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
 		AH.toggle_leap()
 
-/obj/screen/alien/nightvision
-	name = "toggle night-vision"
-	icon_state = "nightvision1"
-	screen_loc = ui_alien_nightvision
-
-/obj/screen/alien/nightvision/Click()
-	var/mob/living/carbon/alien/A = usr
-	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
-	if(T)
-		T.fire(A)
-
 /obj/screen/alien/plasma_display
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "power_display2"
@@ -35,7 +24,11 @@
 	desc = "Allows you to sense the general direction of your Queen."
 	screen_loc = ui_alien_queen_finder
 
-/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
+
+/datum/hud/alien
+	ui_style_icon = 'icons/mob/screen_alien.dmi'
+
+/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner, ui_style = 'icons/mob/screen_alien.dmi')
 	..()
 
 	var/obj/screen/using
@@ -43,18 +36,18 @@
 //equippable shit
 
 //hands
-	build_hand_slots('icons/mob/screen_alien.dmi')
+	build_hand_slots(ui_style)
 
 //begin buttons
 
 	using = new /obj/screen/swap_hand()
-	using.icon = 'icons/mob/screen_alien.dmi'
+	using.icon = ui_style
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand_position(owner,1)
 	static_inventory += using
 
 	using = new /obj/screen/swap_hand()
-	using.icon = 'icons/mob/screen_alien.dmi'
+	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
 	static_inventory += using
@@ -76,22 +69,22 @@
 	static_inventory += using
 
 	using = new /obj/screen/drop()
-	using.icon = 'icons/mob/screen_alien.dmi'
+	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
 	static_inventory += using
 
 	using = new /obj/screen/resist()
-	using.icon = 'icons/mob/screen_alien.dmi'
+	using.icon = ui_style
 	using.screen_loc = ui_pull_resist
 	hotkeybuttons += using
 
 	throw_icon = new /obj/screen/throw_catch()
-	throw_icon.icon = 'icons/mob/screen_alien.dmi'
+	throw_icon.icon = ui_style
 	throw_icon.screen_loc = ui_drop_throw
 	hotkeybuttons += throw_icon
 
 	pull_icon = new /obj/screen/pull()
-	pull_icon.icon = 'icons/mob/screen_alien.dmi'
+	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)
 	pull_icon.screen_loc = ui_pull_resist
 	static_inventory += pull_icon
@@ -100,9 +93,6 @@
 
 	healths = new /obj/screen/healths/alien()
 	infodisplay += healths
-
-	nightvisionicon = new /obj/screen/alien/nightvision()
-	infodisplay += nightvisionicon
 
 	alien_plasma_display = new /obj/screen/alien/plasma_display()
 	infodisplay += alien_plasma_display
@@ -121,7 +111,7 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/alien/persistant_inventory_update()
+/datum/hud/alien/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/alien/humanoid/H = mymob

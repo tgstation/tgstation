@@ -2,7 +2,7 @@
 /obj/structure/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
-	luminosity = 1
+	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
@@ -31,6 +31,7 @@
 	..()
 	ConsumeTile()
 	if(atmosblock)
+		CanAtmosPass = ATMOS_PASS_NO
 		air_update_turf(1)
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
@@ -62,9 +63,6 @@
 						result++
 		. -= result - 1
 
-/obj/structure/blob/CanAtmosPass(turf/T)
-	return !atmosblock
-
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
@@ -83,9 +81,9 @@
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
-		color = overmind.blob_reagent_datum.color
+		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
 	else
-		color = null
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 /obj/structure/blob/process()
 	Life()
@@ -142,7 +140,7 @@
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
-	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
+	var/obj/effect/overlay/temp/blob/O = new /obj/effect/overlay/temp/blob(src.loc)
 	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
@@ -194,7 +192,7 @@
 			B.loc = T
 			B.update_icon()
 			if(B.overmind && expand_reaction)
-				B.overmind.blob_reagent_datum.expand_reaction(src, B, T)
+				B.overmind.blob_reagent_datum.expand_reaction(src, B, T, controller)
 			return B
 		else
 			blob_attack_animation(T, controller)
@@ -210,7 +208,7 @@
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
-			PoolOrNew(/obj/effect/overlay/temp/emp, get_turf(src))
+			new /obj/effect/overlay/temp/emp(get_turf(src))
 
 /obj/structure/blob/tesla_act(power)
 	..()
@@ -224,6 +222,9 @@
 	..()
 	if(overmind)
 		overmind.blob_reagent_datum.extinguish_reaction(src)
+
+/obj/structure/blob/hulk_damage()
+	return 15
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
@@ -324,7 +325,7 @@
 /obj/structure/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
-	luminosity = 0
+	light_range = 0
 	obj_integrity = 21
 	max_integrity = 25
 	health_regen = 1

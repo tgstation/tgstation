@@ -4,25 +4,27 @@
 
 //Ocular Warden: Creates an ocular warden, which defends a small area near it.
 /datum/clockwork_scripture/create_object/ocular_warden
-	descname = "Turret"
+	descname = "Structure, Turret"
 	name = "Ocular Warden"
-	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
+	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	required_components = list("belligerent_eye" = 2, "replicant_alloy" = 1)
-	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 1)
+	consumed_components = list(BELLIGERENT_EYE = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
-	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
+	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
-	usage_tip = "Although powerful, the warden is very weak and should optimally be placed behind barricades."
+	usage_tip = "Although powerful, the warden is very fragile and should optimally be placed behind barricades."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 	space_allowed = TRUE
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
+	quickbind = TRUE
+	quickbind_desc = "Creates an Ocular Warden, which will automatically attack nearby unrestrained non-Servants that can see it."
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
-	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(3, invoker))
-		invoker << "<span class='alloy'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
+	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(OCULAR_WARDEN_EXCLUSION_RANGE, invoker))
+		invoker << "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
 		return FALSE
 	return ..()
 
@@ -34,67 +36,57 @@
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 60
-	required_components = list("belligerent_eye" = 2, "hierophant_ansible" = 1)
-	consumed_components = list("belligerent_eye" = 1, "hierophant_ansible" = 1)
+	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
-	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
+	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates a Cogscarab Shell, which produces a Cogscarab when filled with a Soul Vessel."
 
 
-//Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
-/datum/clockwork_scripture/fellowship_armory
-	descname = "Area Servant Armor"
-	name = "Fellowship Armory"
-	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
-	It grows faster to invoke with more nearby servants."
-	invocations = list("Shield me...", "...with the...", "... fragments of Engine!")
-	channel_time = 110 //effectively 100 because it counts the invoker
-	required_components = list("vanguard_cogwheel" = 2, "replicant_alloy" = 1)
-	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
-	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
+//Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
+/datum/clockwork_scripture/create_object/vitality_matrix
+	descname = "Trap, Damage to Healing"
+	name = "Vitality Matrix"
+	desc = "Places a sigil that drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much Vitality all \
+	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's non-oxygen damage."
+	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
+	channel_time = 60
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1)
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/vitality
+	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
+	usage_tip = "The sigil will be consumed upon reviving a Servant."
 	tier = SCRIPTURE_SCRIPT
-	multiple_invokers_used = TRUE
-	multiple_invokers_optional = TRUE
-	sort_priority = 4
-
-/datum/clockwork_scripture/fellowship_armory/run_scripture()
-	for(var/mob/living/L in range(1, invoker))
-		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
-			channel_time = max(channel_time - 10, 0)
-	return ..()
-
-/datum/clockwork_scripture/fellowship_armory/scripture_effects()
-	for(var/mob/living/L in range(1, invoker))
-		if(!is_servant_of_ratvar(L))
-			continue
-		L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
-		playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
-		L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
-		L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
-		L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves)
-		L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
-	return TRUE
+	one_per_tile = TRUE
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 3
+	quickbind = TRUE
+	quickbind_desc = "Creates a Vitality Matrix, which drains non-Servants on it to heal Servants that cross it."
 
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
 /datum/clockwork_scripture/create_object/sigil_of_submission
-	descname = "Conversion Trap"
+	descname = "Trap, Conversion"
 	name = "Sigil of Submission"
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 2)
-	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
+	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "This is not a primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
+	usage_tip = "This is not a primary conversion method - use Geis for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 5
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
 
 
 //Soul Vessel: Creates a soul vessel, which can seek a ghost or be used on the uncovered head of a dead or dying human to take their brain.
@@ -104,48 +96,52 @@
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 30
-	required_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
-	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
-	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell."
+	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
+	quickbind = TRUE
+	quickbind_desc = "Creates a Soul Vessel, which can be placed in construct shells and cyborg bodies once filled."
 
 
 //Clockwork Proselytizer: Creates a clockwork proselytizer, used to convert objects and repair clockwork structures.
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
-	descname = "Necessary, Converts Objects"
+	descname = "Converts Objects to Ratvarian"
 	name = "Clockwork Proselytizer"
-	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloys to function."
+	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	required_components = list("guvax_capacitor" = 1, "replicant_alloy" = 2)
-	consumed_components = list("guvax_capacitor" = 1, "replicant_alloy" = 1)
+	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
-	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
-	usage_tip = "Clockwork walls cause adjacent tinkerer's caches to generate components passively, making them a vital tool. Clockwork floors heal servants standing on them."
+	creator_message = "<span class='brass'>You form a clockwork proselytizer.</span>"
+	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
+	quickbind = TRUE
+	quickbind_desc = "Creates a Clockwork Proselytizer, which can convert various objects to Ratvarian variants."
 
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 /datum/clockwork_scripture/function_call
-	descname = "Summonable Spear"
+	descname = "Permanent Summonable Spear"
 	name = "Function Call"
 	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
 	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
-	required_components = list("replicant_alloy" = 2, "hierophant_ansible" = 1)
-	consumed_components = list("replicant_alloy" = 1, "hierophant_ansible" = 1)
+	consumed_components = list(REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
@@ -170,7 +166,7 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
-	var/base_cooldown = 1800
+	var/base_cooldown = RATVARIAN_SPEAR_DURATION
 
 /datum/action/innate/function_call/IsAvailable()
 	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
@@ -179,17 +175,16 @@
 
 /datum/action/innate/function_call/Activate()
 	if(!owner.get_empty_held_indexes())
-		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
+		usr << "<span class='warning'>You need an empty hand to call forth your spear!</span>"
 		return FALSE
 	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
 	if(!ratvar_awakens)
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		addtimer(R, "break_spear", base_cooldown, FALSE)
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
-	addtimer(src, "update_actions", base_cooldown, FALSE)
+	addtimer(CALLBACK(src, .proc/update_actions), base_cooldown)
 	return TRUE
 
 /datum/action/innate/function_call/proc/update_actions()
@@ -205,13 +200,15 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 2)
-	consumed_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 1)
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
 
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
 	if(!isturf(invoker.loc))
@@ -219,7 +216,7 @@
 		return FALSE
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(is_servant_of_ratvar(L) && !L.stat != DEAD)
+		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
 			other_servants++
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		other_servants++
@@ -241,52 +238,69 @@
 	return slab.procure_gateway(invoker, duration, portal_uses)
 
 
-//Volt Void: Channeled for up to thirty times over thirty seconds. Consumes power from most power storages and deals slight burn damage to the invoker.
+//Volt Void: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
 /datum/clockwork_scripture/channeled/volt_void
-	descname = "Channeled, Area Power Drain"
+	descname = "Channeled, Targeted Energy Blasts"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
-	desc = "Drains energy from nearby power sources, dealing burn damage if the total power consumed is above a threshhold. Channeled every second for a maximum of thirty seconds."
-	chant_invocations = list("Draw charge to this shell!")
-	chant_amount = 30
-	chant_interval = 10
-	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 2)
-	consumed_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
-	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
+	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fifth of a second for a maximum of ten seconds."
+	channel_time = 30
+	invocations = list("Amperage...", "...grant me your power!")
+	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
+	chant_amount = 4
+	chant_interval = 5
+	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
-	var/total_power_drained = 0
-	var/power_damage_threshhold = 3000
-	var/augument_damage_threshhold = 6000
+	quickbind = TRUE
+	quickbind_desc = "Allows you to fire energy rays at target locations. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
+	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
+	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
 
 /datum/clockwork_scripture/channeled/volt_void/chant_effects(chant_number)
-	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
-	var/power_drained = 0
-	for(var/atom/movable/A in view(7, invoker))
-		power_drained += A.power_drain(TRUE)
-	var/obj/effect/clockwork/sigil/transmission/ST = locate(/obj/effect/clockwork/sigil/transmission) in get_turf(invoker)
-	if(ST && power_drained >= 50)
-		var/sigil_drain = 0
-		while(power_drained >= 50)
-			ST.modify_charge(-50)
-			power_drained -= 50
-			sigil_drain += 10
-		power_drained += sigil_drain //readd part of the power given to the sigil to the power drained this cycle
-		ST.visible_message("<span class='warning'>[ST] flares a brilliant orange!</span>")
-	total_power_drained += power_drained
-	if(power_drained >= 100 && total_power_drained >= power_damage_threshhold)
-		var/power_damage = power_drained * 0.01
-		invoker.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='warning'>You feel the warmth of electricity running into your body.</span>")
-		if(ishuman(invoker))
-			var/mob/living/carbon/human/H = invoker
-			for(var/X in H.bodyparts)
-				var/obj/item/bodypart/BP = X
-				if(ratvar_awakens || (BP.status == BODYPART_ROBOTIC && total_power_drained < augument_damage_threshhold)) //if ratvar is alive, it won't damage and will always heal augumented limbs
-					if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
-						H.update_damage_overlays()
-				else
-					if(BP.receive_damage(0, power_damage))
-						H.update_damage_overlays()
-		else if(isanimal(invoker))
-			var/mob/living/simple_animal/A = invoker
-			A.adjustHealth(-power_damage) //if a simple animal is using volt void, just heal it
+	slab.busy = null
+	var/datum/clockwork_scripture/ranged_ability/volt_ray/ray = new
+	ray.slab = slab
+	ray.invoker = invoker
+	var/turf/T = get_turf(invoker)
+	if(!ray.run_scripture() && slab && invoker)
+		if(can_recite() && T == get_turf(invoker))
+			if(!ratvar_awakens)
+				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
+				var/multiplier = 0.5
+				var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
+				if(VC.try_use_power(usable_power))
+					multiplier += (usable_power * 0.0005) //at maximum power, should be 1 multiplier
+				qdel(VC)
+				if(iscyborg(invoker))
+					var/mob/living/silicon/robot/C = invoker
+					if(C.cell)
+						var/prev_power = usable_power //we don't want to increase the multiplier past 1
+						usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
+						if(usable_power > 0 && C.cell.use(usable_power))
+							multiplier += (usable_power * 0.0005)
+				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
+				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
+				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
+				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
+			invoker << "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>"
+		else
+			return FALSE
 	return TRUE
+
+/obj/effect/ebeam/volt_ray
+	name = "volt_ray"
+	layer = LYING_MOB_LAYER
+
+/datum/clockwork_scripture/ranged_ability/volt_ray
+	name = "Volt Ray"
+	slab_icon = "volt"
+	allow_mobility = FALSE
+	ranged_type = /obj/effect/proc_holder/slab/volt
+	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
+	<b>Left-click a target to fire, quickly!</b></span>"
+	timeout_time = 20
+
+/obj/structure/destructible/clockwork/powered/volt_checker
+	invisibility = INVISIBILITY_ABSTRACT

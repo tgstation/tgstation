@@ -4,7 +4,6 @@ var/datum/subsystem/tgui/SStgui
 	name = "tgui"
 	wait = 9
 	init_order = 16
-	display_order = 6
 	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY
 	priority = 110
 
@@ -17,6 +16,9 @@ var/datum/subsystem/tgui/SStgui
 	basehtml = file2text('tgui/tgui.html') // Read the HTML from disk.
 
 	NEW_SS_GLOBAL(SStgui)
+
+/datum/subsystem/tgui/Shutdown()
+	close_all_uis()
 
 /datum/subsystem/tgui/stat_entry()
 	..("P:[processing_uis.len]")

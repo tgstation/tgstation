@@ -1,5 +1,5 @@
 /mob/living/silicon/pai/say(msg)
-	if(silence_time)
+	if(silent)
 		src << "<span class='warning'>Communication circuits remain unitialized.</span>"
 	else
 		..(msg)

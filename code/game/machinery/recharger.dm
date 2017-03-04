@@ -17,7 +17,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/recharger
-	name = "circuit board (Weapon Recharger)"
+	name = "Weapon Recharger (Machine Board)"
 	build_path = /obj/machinery/recharger
 	origin_tech = "powerstorage=4;engineering=3;materials=4"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
@@ -34,7 +34,7 @@
 		anchored = !anchored
 		power_change()
 		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(loc, G.usesound, 75, 1)
 		return
 
 	var/allowed = is_type_in_list(G, allowed_devices)
@@ -51,8 +51,8 @@
 				return 1
 
 			if (istype(G, /obj/item/weapon/gun/energy))
-				var/obj/item/weapon/gun/energy/gun = G
-				if(!gun.can_charge)
+				var/obj/item/weapon/gun/energy/E = G
+				if(!E.can_charge)
 					user << "<span class='notice'>Your gun has no external power connector.</span>"
 					return 1
 
@@ -112,6 +112,7 @@
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
 				E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+				E.recharge_newshot()
 				use_power(250 * recharge_coeff)
 				using_power = 1
 

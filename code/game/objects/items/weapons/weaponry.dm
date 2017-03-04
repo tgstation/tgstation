@@ -1,28 +1,5 @@
 /obj/item/weapon
 
-	var/unique_rename = 0 //allows renaming with a pen
-
-/obj/item/weapon/examine(mob/user)
-	..()
-	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it.</span>"
-
-/obj/item/weapon/attackby(obj/item/I, mob/user, params)
-	if(unique_rename)
-		if(istype(I, /obj/item/weapon/pen))
-			rename_weapon(user)
-	..()
-
-/obj/item/weapon/proc/rename_weapon(mob/M)
-	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
-
-	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
-		name = input
-		M << "You name the weapon [input]. Say hello to your new friend."
-		return
-
-
-
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -30,7 +7,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
@@ -56,7 +33,7 @@
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -75,7 +52,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
@@ -88,50 +65,45 @@
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
-var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags = CONDUCT | NODROP
+	flags = CONDUCT | NODROP | DROPDEL
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
+	luminosity = 3
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
-	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/weapon/claymore/highlander/New()
 	..()
 	START_PROCESSING(SSobj, src)
-	highlander_claymores++
 
 /obj/item/weapon/claymore/highlander/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	highlander_claymores--
 	if(nuke_disk)
 		nuke_disk.forceMove(get_turf(src))
 		nuke_disk.visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
 		nuke_disk = null
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/claymore/highlander/process()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		if(L.stat != DEAD)
-			if(announced || admin_spawned || highlander_claymores > 1)
-				return
-			announced = TRUE
-			L.fully_heal()
-			world << "<span class='userdanger'>[uppertext(L.real_name)] IS THE ONLY ONE LEFT STANDING!</span>"
-			world << sound('sound/misc/highlander_only_one.ogg')
-			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING!</span>"
-			for(var/obj/item/weapon/bloodcrawl/B in L)
-				qdel(B)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
+	else
+		if(!admin_spawned)
+			qdel(src)
+
 
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
+	user.status_flags += IGNORESLOWDOWN
 
 /obj/item/weapon/claymore/highlander/dropped(mob/living/user)
+	user.status_flags -= IGNORESLOWDOWN
 	qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
@@ -174,35 +146,35 @@ var/highlander_claymores = 0
 		if(2)
 			user << "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>"
 			new_name = "double-notched claymore"
-			color = rgb(255, 235, 235)
+			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
 		if(3)
 			user << "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>"
 			new_name = "triple-notched claymore"
-			color = rgb(255, 215, 215)
+			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
 		if(4)
 			user << "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>"
 			new_name = "many-notched claymore"
-			color = rgb(255, 195, 195)
+			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
 		if(5)
 			user << "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>"
 			new_name = "battle-tested claymore"
-			color = rgb(255, 175, 175)
+			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
 		if(6)
 			user << "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>"
 			new_name = "battle-scarred claymore"
-			color = rgb(255, 155, 155)
+			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
 		if(7)
 			user << "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>"
 			new_name = "vicious claymore"
-			color = rgb(255, 135, 135)
+			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
 		if(8)
 			user << "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>"
 			new_name = "bloodthirsty claymore"
-			color = rgb(255, 115, 115)
+			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
 		if(9)
 			user << "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>"
 			new_name = "gore-stained claymore"
-			color = rgb(255, 95, 95)
+			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)
 			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
@@ -210,7 +182,7 @@ var/highlander_claymores = 0
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_valhalla"
 			item_state = "cultblade"
-			color = initial(color)
+			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -224,7 +196,7 @@ var/highlander_claymores = 0
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
@@ -249,7 +221,7 @@ var/highlander_claymores = 0
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1150, MAT_GLASS=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
@@ -257,26 +229,24 @@ var/highlander_claymores = 0
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
 
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		user.unEquip(I)
+		remove_item_from_storage(user)
+		qdel(I)
+		qdel(src)
 
 		user.put_in_hands(S)
 		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
-		qdel(I)
-		qdel(src)
 
 	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		user.unEquip(I)
+		remove_item_from_storage(user)
 
-		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
+
 		qdel(I)
 		qdel(src)
+
+		user.put_in_hands(P)
 	else
 		return ..()
 
@@ -290,7 +260,7 @@ var/highlander_claymores = 0
 	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
 	embedded_pain_multiplier = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
@@ -304,7 +274,7 @@ var/highlander_claymores = 0
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 3
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
@@ -320,7 +290,7 @@ var/highlander_claymores = 0
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
-		w_class = 3
+		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -328,7 +298,7 @@ var/highlander_claymores = 0
 		sharpness = IS_SHARP
 	else
 		force = 3
-		w_class = 2
+		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
@@ -348,7 +318,7 @@ var/highlander_claymores = 0
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
@@ -367,7 +337,7 @@ var/highlander_claymores = 0
 	item_state = "stick"
 	force = 5
 	throwforce = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
@@ -380,7 +350,7 @@ var/highlander_claymores = 0
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 	resistance_flags = FLAMMABLE
@@ -402,7 +372,7 @@ var/highlander_claymores = 0
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/ectoplasm
 	name = "ectoplasm"
@@ -421,14 +391,14 @@ var/highlander_claymores = 0
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	flags = NODROP | ABSTRACT
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	force = 21
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
-	hitsound = "sound/weapons/chainsawhit.ogg"
+	hitsound = 'sound/weapons/chainsawhit.ogg'
 
 /obj/item/weapon/mounted_chainsaw/dropped()
 	..()
@@ -470,7 +440,7 @@ var/highlander_claymores = 0
 	item_state = "skateboard"
 	force = 12
 	throwforce = 4
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/weapon/melee/skateboard/attack_self(mob/user)
@@ -486,7 +456,7 @@ var/highlander_claymores = 0
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0
 
@@ -550,17 +520,19 @@ var/highlander_claymores = 0
 	throwforce = 1
 	attack_verb = list("swatted", "smacked")
 	hitsound = 'sound/effects/snap.ogg'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
 /obj/item/weapon/melee/flyswatter/New()
+	..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
-					/obj/item/queen_bee/
+					/obj/item/queen_bee
 	))
+
 
 /obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)

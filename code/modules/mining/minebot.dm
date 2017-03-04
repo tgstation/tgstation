@@ -9,10 +9,9 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
 	faction = list("neutral")
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	wander = 0
@@ -76,8 +75,9 @@
 			if(maxHealth == health)
 				user << "<span class='info'>[src] is at full integrity.</span>"
 			else
-				adjustBruteLoss(-10)
-				user << "<span class='info'>You repair some of the armor on [src].</span>"
+				if(W.remove_fuel(0, user))
+					adjustBruteLoss(-10)
+					user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
 		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
@@ -94,7 +94,7 @@
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
+	if(M.a_intent == INTENT_HELP)
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)
@@ -183,9 +183,9 @@
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 
 	if(user.light_on)
-		user.AddLuminosity(-6)
+		user.set_light(0)
 	else
-		user.AddLuminosity(6)
+		user.set_light(6)
 	user.light_on = !user.light_on
 	user << "<span class='notice'>You toggle your light [user.light_on ? "on" : "off"].</span>"
 

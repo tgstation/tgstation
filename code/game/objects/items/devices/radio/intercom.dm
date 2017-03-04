@@ -3,7 +3,7 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
 	var/number = 0
 	var/anyai = 1
@@ -56,7 +56,7 @@
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
 
-		var/area/A = get_area_master(src)
+		var/area/A = get_area(src)
 		if(!A || emped)
 			on = 0
 		else

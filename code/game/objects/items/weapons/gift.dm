@@ -43,8 +43,8 @@
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,
 		/obj/item/weapon/grown/corncob,
-		/obj/item/weapon/poster/contraband,
-		/obj/item/weapon/poster/legit,
+		/obj/item/weapon/poster/random_contraband,
+		/obj/item/weapon/poster/random_official,
 		/obj/item/weapon/book/manual/barman_recipes,
 		/obj/item/weapon/book/manual/chef_recipes,
 		/obj/item/weapon/bikehorn,
@@ -64,7 +64,8 @@
 		/obj/item/clothing/suit/poncho/green,
 		/obj/item/clothing/suit/poncho/red,
 		/obj/item/clothing/suit/snowman,
-		/obj/item/clothing/head/snowman)
+		/obj/item/clothing/head/snowman,
+		/obj/item/trash/coal)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
 	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
@@ -74,9 +75,7 @@
 	if(!ispath(gift_type,/obj/item))
 		return
 
+	qdel(src)
 	var/obj/item/I = new gift_type(M)
-	M.unEquip(src, 1)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
-	qdel(src)
-	return

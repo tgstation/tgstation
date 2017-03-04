@@ -27,8 +27,6 @@
 	//cause a runtime
 	else if(ispath(circuit))
 		circuit = new circuit(null)
-	power_change()
-	update_icon()
 
 /obj/machinery/computer/Destroy()
 	if(circuit)
@@ -36,7 +34,8 @@
 		circuit = null
 	return ..()
 
-/obj/machinery/computer/initialize()
+/obj/machinery/computer/Initialize()
+	..()
 	power_change()
 
 /obj/machinery/computer/process()
@@ -74,9 +73,9 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	update_icon()
 	return
 
@@ -84,7 +83,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, I.usesound, 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			deconstruct(TRUE, user)
 	else
 		return ..()
@@ -115,7 +114,6 @@
 			if(prob(10))
 				obj_break("energy")
 	..()
-
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()

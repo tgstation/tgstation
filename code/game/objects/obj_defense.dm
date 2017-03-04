@@ -66,17 +66,19 @@
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
+/obj/proc/hulk_damage()
+	return 150 //the damage hulks do on punches to this object, is affected by melee armor
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
-		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, user)
+		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		if(density)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		take_damage(150, BRUTE, "melee", 0, get_dir(src, user))
+		take_damage(hulk_damage(), BRUTE, "melee", 0, get_dir(src, user))
 		return 1
 	return 0
 
@@ -90,26 +92,26 @@
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user))
+	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user))
 
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	attack_generic(user, 60, BRUTE, "melee", 0)
+	if(attack_generic(user, 60, BRUTE, "melee", 0))
+		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("[M.friendly] [src]")
+		M.emote("custom", message = "[M.friendly] [src]")
 		return 0
 	else
 		var/play_soundeffect = 1
 		if(M.environment_smash)
 			play_soundeffect = 0
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		if(M.obj_damage)
-			attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect)
+			. = attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect)
 		else
-			attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect)
-		return 1
+			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect)
+		if(. && !play_soundeffect)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
@@ -134,12 +136,12 @@
 				return 0
 			else
 				return 0
-	visible_message("<span class='danger'>[M.name] has hit [src].</span>", null, null, COMBAT_MESSAGE_RANGE, M.occupant)
+	visible_message("<span class='danger'>[M.name] has hit [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
 	ex_act(1)
-	if(src && !qdeleted(src))
+	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
 
@@ -154,7 +156,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 		if(!acid_level)
 			SSacid.processing[src] = src
-			add_overlay(acid_overlay, 1)
+			add_overlay(acid_overlay, TRUE)
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
@@ -192,7 +194,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		add_overlay(fire_overlay)
+		add_overlay(fire_overlay, TRUE)
 		return 1
 
 //called when the obj is destroyed by fire
@@ -204,7 +206,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		overlays -= fire_overlay
+		cut_overlay(fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
 
@@ -213,7 +215,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	addtimer(src, "reset_shocked", 10)
+	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 /obj/proc/reset_shocked()
 	being_shocked = 0
@@ -234,3 +236,24 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 		burn()
 	else
 		deconstruct(FALSE)
+
+//changes max_integrity while retaining current health percentage
+//returns TRUE if the obj broke, FALSE otherwise
+/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE, new_failure_integrity = null)
+	var/current_integrity = obj_integrity
+	var/current_max = max_integrity
+
+	if(current_integrity != 0 && current_max != 0)
+		var/percentage = current_integrity / current_max
+		current_integrity = max(1, round(percentage * new_max))	//don't destroy it as a result
+		obj_integrity = current_integrity
+
+	max_integrity = new_max
+
+	if(new_failure_integrity != null)
+		integrity_failure = new_failure_integrity
+
+	if(can_break && integrity_failure && current_integrity <= integrity_failure)
+		obj_break(damage_type)
+		return TRUE
+	return FALSE

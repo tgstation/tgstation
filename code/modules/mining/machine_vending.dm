@@ -9,8 +9,6 @@
 	anchored = 1
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
-		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,			50),
-		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,							200),
 		new /datum/data/mining_equipment("Whiskey",				/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,			100),
 		new /datum/data/mining_equipment("Absinthe",			/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100),
 		new /datum/data/mining_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,							150),
@@ -55,7 +53,7 @@
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
 		)
 
-/datum/data/mining_equipment/
+/datum/data/mining_equipment
 	var/equipment_name = "generic"
 	var/equipment_path = null
 	var/cost = 0
@@ -71,7 +69,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
-	name = "circuit board (Mining Equipment Vendor)"
+	name = "Mining Equipment Vendor (Machine Board)"
 	build_path = /obj/machinery/mineral/equipment_vendor
 	origin_tech = "programming=1;engineering=3"
 	req_components = list(
@@ -166,10 +164,10 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
-	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
+	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
@@ -180,6 +178,7 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
+			new /obj/item/clothing/glasses/welding(src.loc)
 		if("Extraction and Rescue Kit")
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
@@ -187,6 +186,8 @@
 			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
+		if("Mining Conscription Kit")
+			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -223,7 +224,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem
-	name = "circuit board (Golem Ship Equipment Vendor)"
+	name = "Golem Ship Equipment Vendor (Machine Board)"
 	build_path = /obj/machinery/mineral/equipment_vendor/golem
 
 
@@ -236,7 +237,7 @@
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /**********************Mining Point Card**********************/
 
@@ -260,3 +261,35 @@
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
 	user << "There's [points] point\s on the card."
+
+///Conscript kit
+/obj/item/weapon/card/mining_access_card
+	name = "mining access card"
+	desc = "A small card, that when used on any ID, will add mining access."
+	icon_state = "data"
+
+/obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+	if(istype(AM, /obj/item/weapon/card/id) && proximity)
+		var/obj/item/weapon/card/id/I = AM
+		I.access |=	access_mining
+		I.access |= access_mining_station
+		I.access |= access_mineral_storeroom
+		I.access |= access_cargo
+		user  << "You upgrade [I] with mining access."
+		qdel(src)
+	..()
+
+/obj/item/weapon/storage/backpack/dufflebag/mining_conscript
+	name = "mining conscription kit"
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+
+/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
+	..()
+	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/clothing/suit/hooded/explorer(src)
+	new /obj/item/device/encryptionkey/headset_cargo(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/weapon/card/mining_access_card(src)

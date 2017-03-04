@@ -56,7 +56,7 @@
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
-	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE, user)
+	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw. Attacker - [user].",1)
 	log_append_to_last("Armor saved.")
 
@@ -72,7 +72,7 @@
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	log_message("Attack by simple animal. Attacker - [user].",1)
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("[user.friendly] [src]")
+		user.emote("custom", message = "[user.friendly] [src]")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -88,16 +88,14 @@
 		return 1
 
 
+/obj/mecha/hulk_damage()
+	return 15
 
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
-	if(user.a_intent == "harm")
+	. = ..()
+	if(.)
 		log_message("Attack by hulk. Attacker - [user].",1)
-		user.changeNext_move(CLICK_CD_MELEE)
 		add_logs(user, src, "punched", "hulk powers")
-		user.visible_message("<span class='danger'>[user] hits [name]. The metal creaks and bends.</span>", null, null, COMBAT_MESSAGE_RANGE, user)
-		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
-		take_damage(15, BRUTE, "melee", 0, get_dir(src, user))
-		return 1
 
 /obj/mecha/blob_act(obj/structure/blob/B)
 	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
@@ -154,7 +152,7 @@
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
-			user << "[src]-[W] interface initialized successfuly"
+			user << "[src]-[W] interface initialized successfully."
 		else
 			user << "[src]-[W] interface initialization failed."
 		return
@@ -210,7 +208,7 @@
 			else
 				user << "<span class='warning'>You need two lengths of cable to fix this mech!</span>"
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != "harm")
+	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != INTENT_HARM)
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			user << "<span class='notice'>You repair the damaged temperature controller.</span>"
@@ -241,7 +239,7 @@
 				user << "<span class='notice'>There's already a powercell installed.</span>"
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(obj_integrity<max_integrity)
@@ -260,12 +258,12 @@
 		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
-		W.forceMove(src)
 		trackers += W
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
+		diag_hud_set_mechtracking()
 		return
 	else
 		return ..()
@@ -284,6 +282,9 @@
 
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
+	if(!has_charge(melee_energy_drain))
+		return 0
+	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
@@ -311,7 +312,7 @@
 			L.narsie_act()
 
 /obj/mecha/ratvar_act()
-	if(occupant)
+	if((ratvar_awakens || clockwork_gateway_activated) && occupant)
 		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
 			full_repair(TRUE)
 		else

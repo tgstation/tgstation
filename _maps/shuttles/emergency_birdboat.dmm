@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space,
 /area/space)
@@ -37,8 +37,8 @@
 /area/shuttle/escape)
 "h" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -69,8 +69,8 @@
 /area/shuttle/escape)
 "o" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -96,8 +96,8 @@
 /area/shuttle/escape)
 "t" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -157,7 +157,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "F" = (
@@ -176,7 +176,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "H" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
 	dheight = 0;
 	dir = 8;

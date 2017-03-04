@@ -5,7 +5,7 @@
 	item_state = "lgloves"
 	force = 0
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 7
 	var/state
@@ -52,5 +52,5 @@
 		var/obj/item/weapon/tank/T = W
 		blow(T, user)
 		return
-	if (is_sharp(W) || W.is_hot() || is_pointed(W))
+	if (W.is_sharp() || W.is_hot() || is_pointed(W))
 		burst()

@@ -8,7 +8,7 @@
 	icon_state = "sechailer"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
@@ -17,6 +17,7 @@
 	var/cooldown_special
 	var/recent_uses = 0
 	var/broken_hailer = 0
+	var/safety = TRUE
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
@@ -56,14 +57,20 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/halt)
+/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/halt))
 		halt()
 	else
 		adjustmask(user)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
+	if(safety)
+		safety = FALSE
+		user << "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer."
+	else
+		return
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -107,61 +114,66 @@
 			if(4)
 				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
 
-		switch(phrase)	//sets the properties of the chosen phrase
-			if(1)				// good cop
-				phrase_text = "HALT! HALT! HALT!"
-				phrase_sound = "halt"
-			if(2)
-				phrase_text = "Stop in the name of the Law."
-				phrase_sound = "bobby"
-			if(3)
-				phrase_text = "Compliance is in your best interest."
-				phrase_sound = "compliance"
-			if(4)
-				phrase_text = "Prepare for justice!"
-				phrase_sound = "justice"
-			if(5)
-				phrase_text = "Running will only increase your sentence."
-				phrase_sound = "running"
-			if(6)				// bad cop
-				phrase_text = "Don't move, Creep!"
-				phrase_sound = "dontmove"
-			if(7)
-				phrase_text = "Down on the floor, Creep!"
-				phrase_sound = "floor"
-			if(8)
-				phrase_text = "Dead or alive you're coming with me."
-				phrase_sound = "robocop"
-			if(9)
-				phrase_text = "God made today for the crooks we could not catch yesterday."
-				phrase_sound = "god"
-			if(10)
-				phrase_text = "Freeze, Scum Bag!"
-				phrase_sound = "freeze"
-			if(11)
-				phrase_text = "Stop right there, criminal scum!"
-				phrase_sound = "imperial"
-			if(12)				// LA-PD
-				phrase_text = "Stop or I'll bash you."
-				phrase_sound = "bash"
-			if(13)
-				phrase_text = "Go ahead, make my day."
-				phrase_sound = "harry"
-			if(14)
-				phrase_text = "Stop breaking the law, ass hole."
-				phrase_sound = "asshole"
-			if(15)
-				phrase_text = "You have the right to shut the fuck up."
-				phrase_sound = "stfu"
-			if(16)
-				phrase_text = "Shut up crime!"
-				phrase_sound = "shutup"
-			if(17)
-				phrase_text = "Face the wrath of the golden bolt."
-				phrase_sound = "super"
-			if(18)
-				phrase_text = "I am, the LAW!"
-				phrase_sound = "dredd"
+		if(!safety)
+			phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND POO AND SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
+			phrase_sound = "emag"
+		else
+
+			switch(phrase)	//sets the properties of the chosen phrase
+				if(1)				// good cop
+					phrase_text = "HALT! HALT! HALT!"
+					phrase_sound = "halt"
+				if(2)
+					phrase_text = "Stop in the name of the Law."
+					phrase_sound = "bobby"
+				if(3)
+					phrase_text = "Compliance is in your best interest."
+					phrase_sound = "compliance"
+				if(4)
+					phrase_text = "Prepare for justice!"
+					phrase_sound = "justice"
+				if(5)
+					phrase_text = "Running will only increase your sentence."
+					phrase_sound = "running"
+				if(6)				// bad cop
+					phrase_text = "Don't move, Creep!"
+					phrase_sound = "dontmove"
+				if(7)
+					phrase_text = "Down on the floor, Creep!"
+					phrase_sound = "floor"
+				if(8)
+					phrase_text = "Dead or alive you're coming with me."
+					phrase_sound = "robocop"
+				if(9)
+					phrase_text = "God made today for the crooks we could not catch yesterday."
+					phrase_sound = "god"
+				if(10)
+					phrase_text = "Freeze, Scum Bag!"
+					phrase_sound = "freeze"
+				if(11)
+					phrase_text = "Stop right there, criminal scum!"
+					phrase_sound = "imperial"
+				if(12)				// LA-PD
+					phrase_text = "Stop or I'll bash you."
+					phrase_sound = "bash"
+				if(13)
+					phrase_text = "Go ahead, make my day."
+					phrase_sound = "harry"
+				if(14)
+					phrase_text = "Stop breaking the law, ass hole."
+					phrase_sound = "asshole"
+				if(15)
+					phrase_text = "You have the right to shut the fuck up."
+					phrase_sound = "stfu"
+				if(16)
+					phrase_text = "Shut up crime!"
+					phrase_sound = "shutup"
+				if(17)
+					phrase_text = "Face the wrath of the golden bolt."
+					phrase_sound = "super"
+				if(18)
+					phrase_text = "I am, the LAW!"
+					phrase_sound = "dredd"
 
 		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)

@@ -4,8 +4,7 @@
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
 	origin_tech = "biotech=3"
-	force = 1
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	var/zone = "chest"
 	var/slot
@@ -105,6 +104,7 @@
 	zone = "chest"
 	slot = "heart"
 	origin_tech = "biotech=5"
+	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
@@ -117,15 +117,8 @@
 
 /obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
 	..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.stat == DEAD || H.heart_attack)
-			Stop()
-			return
-		if(!special)
-			H.heart_attack = 1
-
-	addtimer(src, "stop_if_unowned", 120)
+	if(!special)
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
@@ -135,17 +128,10 @@
 	..()
 	if(!beating)
 		visible_message("<span class='notice'>[user] squeezes [src] to \
-			make it beat again!</span>")
+			make it beat again!</span>", "<span class='notice'>You squeeze \
+			[src] to make it beat again!</span>")
 		Restart()
-		addtimer(src, "stop_if_unowned", 80)
-
-/obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(ishuman(M) && beating)
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
-			H.heart_attack = 0
-			return
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
 
 /obj/item/organ/heart/proc/Stop()
 	beating = 0
@@ -193,7 +179,7 @@
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
-			if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 				H.blood_volume = max(H.blood_volume - blood_loss, 0)
 				H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
 				if(add_colour)
@@ -226,7 +212,7 @@
 
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
-			if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
@@ -255,7 +241,7 @@
 	zone = "chest"
 	slot = "lungs"
 	gender = PLURAL
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/list/breathlevels = list("safe_oxygen_min" = 16,"safe_oxygen_max" = 0,"safe_co2_min" = 0,"safe_co2_max" = 10,
 	"safe_toxins_min" = 0,"safe_toxins_max" = 0.05,"SA_para_min" = 1,"SA_sleep_min" = 5,"BZ_trip_balls_min" = 1)
 
@@ -284,16 +270,16 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	var/specflags = list()
-	if(H && H.dna && H.dna.species && H.dna.species.specflags)
-		specflags = H.dna.species.specflags
+	var/species_traits = list()
+	if(H && H.dna && H.dna.species && H.dna.species.species_traits)
+		species_traits = H.dna.species.species_traits
 
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent("epinephrine"))
 			return
 		if(H.health >= HEALTH_THRESHOLD_CRIT)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else if(!(NOCRITDAMAGE in specflags))
+		else if(!(NOCRITDAMAGE in species_traits))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = 1
@@ -463,11 +449,11 @@
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if(abs(310.15 - breath.temperature) > 50)
 
-		var/specflags = list()
-		if(H && H.dna && H.dna.species && H.dna.species.specflags)
-			specflags = H.dna.species.specflags
+		var/species_traits = list()
+		if(H && H.dna && H.dna.species && H.dna.species.species_traits)
+			species_traits = H.dna.species.species_traits
 
-		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
+		if(!(mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
@@ -476,7 +462,7 @@
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 
-		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
+		if(!(RESISTHOT in species_traits)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
@@ -521,8 +507,9 @@
 	icon_state = "tonguenormal"
 	zone = "mouth"
 	slot = "tongue"
-	var/say_mod = null
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
+	var/say_mod = null
+	var/taste_sensitivity = 15 // lower is more sensitive.
 
 /obj/item/organ/tongue/get_spans()
 	return list()
@@ -545,6 +532,7 @@
 	desc = "A thin and long muscle typically found in reptilian races, apparently moonlights as a nose."
 	icon_state = "tonguelizard"
 	say_mod = "hisses"
+	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 
 /obj/item/organ/tongue/lizard/TongueSpeech(var/message)
 	var/regex/lizard_hiss = new("s+", "g")
@@ -559,6 +547,7 @@
 	desc = "A freakish looking meat tube that apparently can take in liquids."
 	icon_state = "tonguefly"
 	say_mod = "buzzes"
+	taste_sensitivity = 25 // you eat vomit, this is a mercy
 
 /obj/item/organ/tongue/fly/TongueSpeech(var/message)
 	var/regex/fly_buzz = new("z+", "g")
@@ -573,6 +562,7 @@
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
+	taste_sensitivity = 101 // ayys cannot taste anything.
 
 /obj/item/organ/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
@@ -598,6 +588,7 @@
 	desc = "Between the decay and the fact that it's just lying there you doubt a tongue has ever seemed less sexy."
 	icon_state = "tonguezombie"
 	say_mod = "moans"
+	taste_sensitivity = 32
 
 /obj/item/organ/tongue/zombie/TongueSpeech(var/message)
 	var/list/message_list = splittext(message, " ")
@@ -619,7 +610,8 @@
 	name = "alien tongue"
 	desc = "According to leading xenobiologists the evolutionary benefit of having a second mouth in your mouth is \"that it looks badass\"."
 	icon_state = "tonguexeno"
-	say_mod = "hiss"
+	say_mod = "hisses"
+	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
@@ -633,6 +625,7 @@
 	icon_state = "tonguebone"
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
+	taste_sensitivity = 101 // skeletons cannot taste anything
 
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -661,6 +654,18 @@
 /obj/item/organ/tongue/bone/chatter
 	name = "chattering bone \"tongue\""
 	chattering = TRUE
+
+/obj/item/organ/tongue/robot
+	name = "robotic voicebox"
+	desc = "A voice synthesizer that can interface with organic lifeforms."
+	status = ORGAN_ROBOTIC
+	icon_state = "tonguerobot"
+	say_mod = "states"
+	attack_verb = list("beeped", "booped")
+	taste_sensitivity = 25 // not as good as an organic tongue
+
+/obj/item/organ/tongue/robot/get_spans()
+	return ..() | SPAN_ROBOT
 
 /obj/item/organ/appendix
 	name = "appendix"
@@ -692,5 +697,168 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
-		S.reagents.add_reagent("????", 5)
+		S.reagents.add_reagent("bad_food", 5)
 	return S
+
+/mob/living/proc/regenerate_organs()
+	return 0
+
+/mob/living/carbon/regenerate_organs()
+	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
+		var/obj/item/organ/lungs/L = new()
+		L.Insert(src)
+
+	if(!(NOBLOOD in dna.species.species_traits) && !getorganslot("heart"))
+		var/obj/item/organ/heart/H = new()
+		H.Insert(src)
+
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/tongue/T
+
+		for(var/tongue_type in dna.species.mutant_organs)
+			if(ispath(tongue_type, /obj/item/organ/tongue))
+				T = new tongue_type()
+				T.Insert(src)
+
+		// if they have no mutant tongues, give them a regular one
+		if(!T)
+			T = new()
+			T.Insert(src)
+
+	if(!getorganslot("eye_sight"))
+		var/obj/item/organ/eyes/E
+
+		if(dna && dna.species && dna.species.mutanteyes)
+			E = new dna.species.mutanteyes()
+
+		else
+			E = new()
+		E.Insert(src)
+
+//Eyes
+
+/obj/item/organ/eyes
+	name = "eyes"
+	icon_state = "eyeballs"
+	desc = "I see you!"
+	zone = "eyes"
+	slot = "eye_sight"
+
+	var/sight_flags = 0
+	var/see_in_dark = 2
+	var/tint = 0
+	var/eye_color = "fff"
+	var/old_eye_color = "fff"
+	var/flash_protect = 0
+	var/see_invisible = SEE_INVISIBLE_LIVING
+
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(ishuman(owner) && eye_color)
+		var/mob/living/carbon/human/HMN = owner
+		old_eye_color = HMN.eye_color
+		HMN.eye_color = eye_color
+		HMN.regenerate_icons()
+	M.update_tint()
+	owner.update_sight()
+
+/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(ishuman(M) && eye_color)
+		var/mob/living/carbon/human/HMN = M
+		HMN.eye_color = old_eye_color
+		HMN.regenerate_icons()
+	M.update_tint()
+	M.update_sight()
+
+/obj/item/organ/eyes/night_vision
+	name = "shadow eyes"
+	desc = "A spooky set of eyes that can see in the dark."
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	actions_types = list(/datum/action/item_action/organ_action/use)
+	var/night_vision = TRUE
+
+/obj/item/organ/eyes/night_vision/ui_action_click()
+	if(night_vision)
+		see_in_dark = 4
+		see_invisible = SEE_INVISIBLE_LIVING
+		night_vision = FALSE
+	else
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		night_vision = TRUE
+	owner.update_sight()
+
+/obj/item/organ/eyes/night_vision/alien
+	name = "alien eyes"
+	desc = "It turned out they had them after all!"
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	sight_flags = SEE_MOBS
+
+
+///Robotic
+
+/obj/item/organ/eyes/robotic
+	name = "robotic eyes"
+	icon_state = "cybernetic_eyeballs"
+	desc = "Your vision is augmented."
+	status = ORGAN_ROBOTIC
+
+/obj/item/organ/eyes/robotic/emp_act(severity)
+	if(!owner)
+		return
+	if(severity > 1)
+		if(prob(10 * severity))
+			return
+	owner << "<span class='warning'>Static obfuscates your vision!</span>"
+	owner.flash_act(visual = 1)
+
+/obj/item/organ/eyes/robotic/xray
+	name = "X-ray eyes"
+	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
+	eye_color = "000"
+	see_in_dark = 8
+	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+
+/obj/item/organ/eyes/robotic/thermals
+	name = "Thermals eyes"
+	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
+	eye_color = "FC0"
+	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
+	sight_flags = SEE_MOBS
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	flash_protect = -1
+	see_in_dark = 8
+
+/obj/item/organ/eyes/robotic/flashlight
+	name = "flashlight eyes"
+	desc = "It's two flashlights rigged together with some wire. Why would you put these in someones head?"
+	eye_color ="fee5a3"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flashlight_eyes"
+	flash_protect = 2
+	tint = INFINITY
+
+/obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
+	return
+
+/obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
+	..()
+	set_light(15)
+
+
+/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
+	set_light(-15)
+	..()
+
+// Welding shield implant
+/obj/item/organ/eyes/robotic/shield
+	name = "shielded robotic eyes"
+	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
+	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
+	flash_protect = 2
+
+/obj/item/organ/eyes/robotic/shield/emp_act(severity)
+	return

@@ -167,6 +167,14 @@ macro "default"
 		name = "CTRL+NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -193,22 +201,26 @@ macro "default"
 		is-disabled = false
 	elem 
 		name = "F7"
+		command = "Toggle-Build-Mode-Self"
+		is-disabled = false
+	elem
+		name = "CTRL+F7"
 		command = "Stealth-Mode"
 		is-disabled = false
 	elem 
 		name = "F8"
-		command = "Toggle-Build-Mode-Self"
+		command = "Invisimin"
 		is-disabled = false
 	elem 
 		name = "F12"
 		command = "F12"
 		is-disabled = false
 	elem 
-		name = "SHIFT"
+		name = "ALT"
 		command = "toggle-walk-run"
 		is-disabled = false
 	elem 
-		name = "SHIFT+UP"
+		name = "ALT+UP"
 		command = "toggle-walk-run"
 		is-disabled = false
 
@@ -465,6 +477,14 @@ macro "hotkeys"
 		name = "NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -493,6 +513,10 @@ macro "hotkeys"
 		name = "F7"
 		command = "Stealth-Mode"
 		is-disabled = false
+	elem
+		name = "CTRL+F7"
+		command = "Stealth-Mode"
+		is-disabled = false
 	elem 
 		name = "F8"
 		command = "Toggle-Build-Mode-Self"
@@ -502,11 +526,11 @@ macro "hotkeys"
 		command = "F12"
 		is-disabled = false
 	elem 
-		name = "SHIFT"
+		name = "ALT"
 		command = "toggle-walk-run"
 		is-disabled = false
 	elem 
-		name = "SHIFT+UP"
+		name = "ALT+UP"
 		command = "toggle-walk-run"
 		is-disabled = false
 
@@ -594,6 +618,10 @@ macro "robot-default"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
+		is-disabled = false
+	elem 
+		name = "CTRL+H"
+		command = "talk-wheel"
 		is-disabled = false
 	elem 
 		name = "CTRL+O"
@@ -689,11 +717,15 @@ macro "robot-default"
 		is-disabled = false
 	elem 
 		name = "F7"
+		command = "Toggle-Build-Mode-Self"
+		is-disabled = false
+	elem
+		name = "CTRL+F7"
 		command = "Stealth-Mode"
 		is-disabled = false
 	elem 
 		name = "F8"
-		command = "Toggle-Build-Mode-Self"
+		command = "Invisimin"
 		is-disabled = false
 	elem 
 		name = "F12"
@@ -808,6 +840,18 @@ macro "robot-hotkeys"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
+		is-disabled = false	
+	elem 
+		name = "H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "CTRL+H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "M"
+		command = "me"
 		is-disabled = false
 	elem 
 		name = "O"
@@ -947,11 +991,15 @@ macro "robot-hotkeys"
 		is-disabled = false
 	elem 
 		name = "F7"
+		command = "Toggle-Build-Mode-Self"
+		is-disabled = false
+	elem
+		name = "CTRL+F7"
 		command = "Stealth-Mode"
 		is-disabled = false
 	elem 
 		name = "F8"
-		command = "Toggle-Build-Mode-Self"
+		command = "Invisimin"
 		is-disabled = false
 	elem 
 		name = "F12"

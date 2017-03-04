@@ -1,16 +1,6 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0)
 	return dna.species.can_equip(I, slot, disable_warning, src)
 
-
-/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
-	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0))
-			return slot
-	if(qdel_on_fail)
-		qdel(I)
-	return null
-
-
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -151,14 +141,14 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/unEquip(obj/item/I)
+/mob/living/carbon/human/doUnEquip(obj/item/I, force)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
 
 	if(I == wear_suit)
 		if(s_store)
-			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
+			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
 			update_action_buttons_icon() //certain action buttons may be usable again.
 		wear_suit = null
@@ -167,13 +157,13 @@
 		update_inv_wear_suit()
 	else if(I == w_uniform)
 		if(r_store)
-			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
+			dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
 		if(l_store)
-			unEquip(l_store, 1)
+			dropItemToGround(l_store, TRUE)
 		if(wear_id)
-			unEquip(wear_id)
+			dropItemToGround(wear_id)
 		if(belt)
-			unEquip(belt)
+			dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
 		update_inv_w_uniform()

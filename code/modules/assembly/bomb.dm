@@ -3,7 +3,7 @@
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 4
 	flags = CONDUCT
@@ -21,7 +21,7 @@
 		icon_state = bombtank.icon_state
 	if(bombassembly)
 		add_overlay(bombassembly.icon_state)
-		add_overlay(bombassembly.overlays)
+		copy_overlays(bombassembly)
 		add_overlay("bomb_assembly")
 
 /obj/item/device/onetankbomb/attackby(obj/item/weapon/W, mob/user, params)
@@ -91,8 +91,9 @@
 
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
-	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
-	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
+	M.temporarilyRemoveItemFromInventory(src, TRUE)	//Remove the tank from your character,in case you were holding it
+	if(!M.put_in_hands(R))		//Equips the bomb if possible, or puts it on the floor.
+		forceMove(get_turf(M))
 
 	R.bombassembly = S	//Tell the bomb about its assembly part
 	S.master = R		//Tell the assembly about its new owner

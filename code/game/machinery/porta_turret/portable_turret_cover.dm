@@ -14,7 +14,6 @@
 	max_integrity = 80
 	var/obj/machinery/porta_turret/parent_turret = null
 
-
 /obj/machinery/porta_turret_cover/Destroy()
 	if(parent_turret)
 		parent_turret.cover = null
@@ -49,14 +48,14 @@
 
 		if(!parent_turret.anchored)
 			parent_turret.anchored = 1
-			parent_turret.invisibility = INVISIBILITY_OBSERVER
-			parent_turret.icon_state = "grey_target_prism"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
+			parent_turret.invisibility = 0
+			parent_turret.update_icon()
 		else
 			parent_turret.anchored = 0
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
-			parent_turret.icon_state = "turretCover"
-			parent_turret.invisibility = 0
+			parent_turret.invisibility = INVISIBILITY_MAXIMUM
+			parent_turret.update_icon()
 			qdel(src)
 
 	else if(I.GetID())

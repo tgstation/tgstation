@@ -13,9 +13,11 @@
 	var/mob/living/carbon/human/prisoner = null
 	var/datum/data/record/temporary_record = null
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/gulag_teleporter_computer/New()
 	..()
-	addtimer(src, "scan_machinery", 5)
+	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
@@ -124,7 +126,7 @@
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(src, "teleport", 5, FALSE, usr)
+			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()
@@ -144,21 +146,14 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/teleport(mob/user)
 	log_game("[user]([user.ckey] teleported [prisoner]([prisoner.ckey]) to the Labor Camp ([beacon.x], [beacon.y], [beacon.z]) for [id.goal] points.")
 	teleporter.handle_prisoner(id, temporary_record)
-	playsound(loc, "sound/weapons/emitter.ogg", 50, 1)
+	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Weaken(2) // small travel dizziness
 	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"
-	PoolOrNew(/obj/effect/particle_effect/sparks, prisoner.loc)
+	new /obj/effect/particle_effect/sparks(prisoner.loc)
 	playsound(src.loc, "sparks", 50, 1)
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()
 	id = null
 	temporary_record = null
-
-
-
-
-
-
-

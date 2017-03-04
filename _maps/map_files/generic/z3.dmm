@@ -1,5 +1,5 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/obj/docking_port/stationary{dheight = 0; dir = 2; dwidth = 11; height = 22; id = "whiteship_away"; name = "Deep Space"; width = 35},/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dheight = 0;dir = 2;dwidth = 11;height = 22;id = "whiteship_away";name = "Deep Space";width = 35},/turf/open/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

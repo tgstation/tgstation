@@ -3,7 +3,7 @@
 	desc = "Removable disk used to store data."
 	power_usage = 10
 	icon_state = "datadisk6"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	critical = 0
 	max_capacity = 16
 	origin_tech = "programming=1"

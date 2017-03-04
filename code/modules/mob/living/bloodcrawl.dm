@@ -19,9 +19,6 @@
 /obj/effect/dummy/slaughter/singularity_act()
 	return
 
-/obj/effect/dummy/slaughter/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
 
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
@@ -53,7 +50,7 @@
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
-	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
+	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(mobloc)
 	src.ExtinguishMob()
 
 	// Keep a reference to whatever we're pulling, because forceMove()
@@ -145,15 +142,14 @@
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	var/oldcolor = src.color
 	//Makes the mob have the color of the blood pool it came out of
+	var/newcolor = rgb(149, 10, 10)
 	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
-		src.color = rgb(43, 186, 0)
-	else
-		src.color = rgb(149, 10, 10)
+		newcolor = rgb(43, 186, 0)
+	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
 	spawn(30)
-		src.color = oldcolor
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)
@@ -172,7 +168,6 @@
 		var/mob/living/carbon/C = src
 		for(var/obj/item/weapon/bloodcrawl/BC in C)
 			BC.flags = null
-			C.unEquip(BC)
 			qdel(BC)
 	qdel(src.holder)
 	src.holder = null

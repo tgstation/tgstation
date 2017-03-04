@@ -30,7 +30,7 @@
 				L.embedded_objects -= I
 
 			if(objects > 0)
-				user.visible_message("[user] sucessfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You sucessfully remove [objects] objects from [H]'s [L.name].</span>")
+				user.visible_message("[user] sucessfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")
 			else
 				user << "<span class='warning'>You find no objects embedded in [H]'s [L]!</span>"
 

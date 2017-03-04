@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
@@ -19,7 +19,7 @@
 /obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		qdel(src)
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
@@ -71,7 +71,7 @@
 /obj/item/weapon/grenade/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.unEquip(src)
+		M.dropItemToGround(src)
 
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user, params)

@@ -80,7 +80,7 @@
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 		M.layer = initial(M.layer)
-		overlays -= nest_overlay
+		cut_overlay(nest_overlay)
 
 /obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -90,7 +90,7 @@
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
 		return ..()

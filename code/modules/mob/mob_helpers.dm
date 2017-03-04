@@ -274,63 +274,51 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
+var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
+
+/mob/proc/first_name()
+	firstname.Find(real_name)
+	return firstname.match
+
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & NODROP))
 			return 1
 	return 0
 
-//converts intent-strings into numbers and back
-/proc/intent_numeric(argument)
-	if(istext(argument))
-		switch(argument)
-			if("help")
-				return 0
-			if("disarm")
-				return 1
-			if("grab")
-				return 2
-			else
-				return 3
-	else
-		switch(argument)
-			if(0)
-				return "help"
-			if(1)
-				return "disarm"
-			if(2)
-				return "grab"
-			else
-				return "harm"
-
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isalienadult(src) || isbrain(src))
-		switch(input)
-			if("help", "disarm", "grab", "harm")
-				a_intent = input
-			if("right")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 1) % 4)
-			if("left")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 3) % 4)
+	if(!possible_a_intents || !possible_a_intents.len)
+		return
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+	if(input in possible_a_intents)
+		a_intent = input
+	else
+		var/current_intent = possible_a_intents.Find(a_intent)
 
-	else if(iscyborg(src) || ismonkey(src) || islarva(src))
-		switch(input)
-			if("help")
-				a_intent = "help"
-			if("harm")
-				a_intent = "harm"
-			if("right","left")
-				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+		if(!current_intent)
+			// Failsafe. Just in case some badmin was playing with VV.
+			current_intent = 1
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+		if(input == INTENT_HOTKEY_RIGHT)
+			current_intent += 1
+		if(input == INTENT_HOTKEY_LEFT)
+			current_intent -= 1
+
+		// Handle looping
+		if(current_intent < 1)
+			current_intent = possible_a_intents.len
+		if(current_intent > possible_a_intents.len)
+			current_intent = 1
+
+		a_intent = possible_a_intents[current_intent]
+
+	if(hud_used && hud_used.action_intent)
+		hud_used.action_intent.icon_state = "[a_intent]"
+
 
 /proc/is_blind(A)
 	if(ismob(A))
@@ -390,12 +378,14 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
+			if(flashwindow)
+				window_flash(O.client)
 			if(source)
 				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
 				if(A)
@@ -431,7 +421,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			return 1 //successful heal
 		else
-			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
+			user << "<span class='warning'>[affecting] is already in good condition!</span>"
 
 
 /proc/IsAdminGhost(var/mob/user)
@@ -483,3 +473,17 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
 				TW.Click()
 
+/mob/proc/is_flying(mob/M = src)
+	if(M.movement_type & FLYING)
+		return 1
+	else
+		return 0
+
+mob/proc/click_random_mob()
+	var/list/nearby_mobs = list()
+	for(var/mob/living/L in range(1, src))
+		if(L!=src)
+			nearby_mobs |= L
+	if(nearby_mobs.len)
+		var/mob/living/T = pick(nearby_mobs)
+		ClickOn(T)

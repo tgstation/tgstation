@@ -1,5 +1,6 @@
 /var/list/sacrificed = list() //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+var/global/list/rune_types //Every rune that can be drawn by tomes
 
 /*
 
@@ -22,7 +23,7 @@ To draw a rune, use an arcane tome.
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = ABOVE_NORMAL_TURF_LAYER
+	layer = LOW_OBJ_LAYER
 	color = "#FF0000"
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
@@ -107,8 +108,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
-		chanters |= user
-		invokers |= user
+		chanters += user
+		invokers += user
 	if(req_cultists > 1 || allow_excess_invokers)
 		for(var/mob/living/L in range(1, src))
 			if(iscultist(L))
@@ -120,16 +121,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 						continue
 				if(L.stat)
 					continue
-				invokers |= L
+				invokers += L
 		if(invokers.len >= req_cultists)
+			invokers -= user
 			if(allow_excess_invokers)
-				chanters |= invokers
+				chanters += invokers
 			else
-				invokers -= user
 				shuffle(invokers)
-				for(var/i in 0 to req_cultists)
+				for(var/i in 1 to req_cultists)
 					var/L = pick_n_take(invokers)
-					chanters |= L
+					if(L)
+						chanters += L
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
@@ -151,8 +153,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>The markings pulse with a \
 		small flash of red light, then fall dark.</span>")
 	spawn(0) //animate is a delay, we want to avoid being delayed
-		animate(src, color = rgb(255, 0, 0), time = 0)
-		animate(src, color = initial(color), time = 5)
+		var/oldcolor = color
+		color = rgb(255, 0, 0)
+		animate(src, color = oldcolor, time = 5)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
@@ -217,7 +221,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
 	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
 	talisman_type = possible_talismans[entered_talisman_name]
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || rune_in_use || !talisman_type)
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || rune_in_use || !talisman_type)
 		return
 	papers_on_rune = checkpapers()
 	if(!papers_on_rune.len)
@@ -229,7 +233,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
 	rune_in_use = 1
-	if(!do_after(user, 100, target = paper_to_imbue))
+	if(!do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
 		rune_in_use = 0
 		return
 	new talisman_type(get_turf(src))
@@ -268,18 +272,10 @@ var/list/teleport_runes = list()
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
 		var/obj/effect/rune/teleport/T = R
-		var/resultkey = T.listkey
-		if(resultkey in teleportnames)
-			duplicaterunecount[resultkey]++
-			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
-		else
-			teleportnames.Add(resultkey)
-			duplicaterunecount[resultkey] = 1
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
-			potential_runes[resultkey] = T
+			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
@@ -295,13 +291,13 @@ var/list/teleport_runes = list()
 
 	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !actual_selected_rune)
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || !actual_selected_rune)
 		fail_invoke()
 		return
 
 	var/turf/T = get_turf(src)
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target))
+	if(is_blocked_turf(target, TRUE))
 		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		fail_invoke()
 		return
@@ -354,6 +350,7 @@ var/list/teleport_runes = list()
 		return
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
+	var/oldcolor = color
 	color = "#7D1717"
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
@@ -372,7 +369,8 @@ var/list/teleport_runes = list()
 		invocation = "Barhah hra zar'garis!"
 		..()
 		do_sacrifice(L, invokers)
-	animate(src, color = initial(color), time = 5)
+	animate(src, color = oldcolor, time = 5)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
@@ -418,7 +416,7 @@ var/list/teleport_runes = list()
 	else
 		sacrificed += sacrificial
 
-	PoolOrNew(/obj/effect/overlay/temp/cult/sac, get_turf(src))
+	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
 	for(var/M in invokers)
 		if(sacrifice_fulfilled)
 			M << "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>"
@@ -496,14 +494,14 @@ var/list/teleport_runes = list()
 	//BEGIN THE SUMMONING
 	used = 1
 	..()
-	world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
+	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
 		color = "#FF0000"
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 	if(cult_mode)
 		cult_mode.eldergod = 0
+	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -560,7 +558,7 @@ var/list/teleport_runes = list()
 		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
 	else
 		mob_to_revive = potential_revive_mobs[1]
-	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_revive, user))
+	if(!src || QDELETED(src) || rune_in_use || !validness_checks(mob_to_revive, user))
 		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
@@ -591,7 +589,7 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - revival target moved")
 		return 0
 	var/mob/dead/observer/ghost = target_mob.get_ghost(TRUE)
-	if(!ghost)
+	if(!ghost && (!target_mob.mind || !target_mob.mind.active))
 		user << "<span class='cultitalic'>The corpse to revive has no spirit!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")
@@ -721,6 +719,7 @@ var/list/wall_runes = list()
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
 	color = "#C80000"
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/density_timer
 	var/recharging = FALSE
 
@@ -738,9 +737,6 @@ var/list/wall_runes = list()
 	wall_runes -= src
 	air_update_turf(1)
 	return ..()
-
-/obj/effect/rune/wall/CanAtmosPass(turf/T)
-	return !density
 
 /obj/effect/rune/wall/BlockSuperconductivity()
 	return density
@@ -767,20 +763,21 @@ var/list/wall_runes = list()
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
-	density_timer = addtimer(src, "lose_density", 900)
+	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900, TIMER_STOPPABLE)
 
 /obj/effect/rune/wall/proc/lose_density()
 	if(density)
 		recharging = TRUE
 		density = FALSE
 		update_state()
-		color = "#696969"
-		animate(src, color = initial(color), time = 50, easing = EASE_IN)
-		addtimer(src, "recharge", 50)
+		var/oldcolor = color
+		add_atom_colour("#696969", FIXED_COLOUR_PRIORITY)
+		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
+		addtimer(CALLBACK(src, .proc/recharge), 50)
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE
-	color = initial(color)
+	add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 /obj/effect/rune/wall/proc/update_state()
 	deltimer(density_timer)
@@ -791,10 +788,10 @@ var/list/wall_runes = list()
 		I.alpha = 60
 		I.color = "#701414"
 		add_overlay(I)
-		color = "#FF0000"
+		add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	else
 		cut_overlays()
-		color = "#C80000"
+		add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
@@ -813,7 +810,7 @@ var/list/wall_runes = list()
 		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(!cultist_to_summon)
 		user << "<span class='cultitalic'>You require a summoning target!</span>"
@@ -865,7 +862,7 @@ var/list/wall_runes = list()
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
 	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
-	SetLuminosity(6)
+	set_light(6)
 	color = "#FC9B54"
 	for(var/M in invokers)
 		var/mob/living/L = M
@@ -895,7 +892,7 @@ var/list/wall_runes = list()
 	if(!src)
 		return
 	do_area_burn(T, 1.5)
-	PoolOrNew(/obj/effect/hotspot, T)
+	new /obj/effect/hotspot(T)
 	qdel(src)
 
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
@@ -1008,5 +1005,5 @@ var/list/wall_runes = list()
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
-			new_human.unEquip(I)
+			new_human.dropItemToGround(I)
 		new_human.dust()

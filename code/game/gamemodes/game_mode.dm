@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /*
  * GAMEMODES (by Rastaf0)
@@ -25,6 +25,7 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/required_players = 0
+	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
@@ -56,7 +57,7 @@
 		if((player.client)&&(player.ready))
 			playerC++
 	if(!Debug2)
-		if(playerC < required_players)
+		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!Debug2)
@@ -102,7 +103,7 @@
 	return
 
 
-///Allows rounds to basically be "rerolled" should the initial premise fall through
+///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()
 	var/list/living_crew = list()
 
@@ -138,30 +139,30 @@
 		message_admins("Convert_roundtype failed due to round length. Limit is [config.midround_antag_time_check] minutes.")
 		return null
 
-	var/list/antag_canadates = list()
+	var/list/antag_candidates = list()
 
 	for(var/mob/living/carbon/human/H in living_crew)
 		if(H.client && H.client.prefs.allow_midround_antag)
-			antag_canadates += H
+			antag_candidates += H
 
-	if(!antag_canadates)
-		message_admins("Convert_roundtype failed due to no antag canadates.")
+	if(!antag_candidates)
+		message_admins("Convert_roundtype failed due to no antag candidates.")
 		return null
 
-	antag_canadates = shuffle(antag_canadates)
+	antag_candidates = shuffle(antag_candidates)
 
 	if(config.protect_roles_from_antagonist)
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(rand(1200,3000)) //somewhere between 2 and 5 minutes from now
+	spawn(rand(600,1800)) //somewhere between 1 and 3 minutes from now
 		if(!config.midround_antag[ticker.mode.config_tag])
 			round_converted = 0
 			return 1
-		for(var/mob/living/carbon/human/H in antag_canadates)
+		for(var/mob/living/carbon/human/H in antag_candidates)
 			replacementmode.make_antag_chance(H)
 		round_converted = 2
 		message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
@@ -546,8 +547,6 @@
 		var/datum/station_goal/G = T
 		if(config_tag in initial(G.gamemode_blacklist))
 			continue
-		//if(num_players() < initial(G.required_crew))
-		//	continue
 		possible += T
 	var/goal_weights = 0
 	while(possible.len && goal_weights < STATION_GOAL_BUDGET)

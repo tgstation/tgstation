@@ -16,14 +16,13 @@
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
-#define FPRINT			256		// takes a fingerprint
+#define OVERLAY_QUEUED  256		//atom queued to SSoverlay
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
 #define EARBANGPROTECT		1024
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
-#define OPENCONTAINER	4096	// is an open container for chemistry purposes
 #define HEADBANGPROTECT		4096
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
@@ -32,10 +31,15 @@
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
 #define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
+/* Secondary atom flags, access using the SECONDARY_FLAG macros */
+
+#define NO_EMP_WIRES "no_emp_wires"
+
 //turf-only flags
 #define NOJAUNT		1
 #define UNUSED_TRANSIT_TURF 2
 #define CAN_BE_DIRTY 4 //If a turf can be made dirty at roundstart. This is also used in areas.
+#define NO_DEATHRATTLE 16 // Do not notify deadchat about any deaths that occur on this turf.
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -49,33 +53,12 @@
 #define PASSMOB			16
 #define LETPASSTHROW	32
 
-//flags for species
 
-#define MUTCOLORS		1
-#define HAIR			2
-#define FACEHAIR		3
-#define EYECOLOR		4
-#define LIPS			5
-#define RESISTTEMP		6
-#define RADIMMUNE		7
-#define NOBREATH		8
-#define NOGUNS			9
-#define NOBLOOD			10
-#define NOFIRE			11
-#define VIRUSIMMUNE		12
-#define PIERCEIMMUNE	13
-#define NOTRANSSTING	14
-#define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NODISMEMBER		16
-#define NOHUNGER		17
-#define NOCRITDAMAGE	18
-#define NOZOMBIE		19
-#define EASYDISMEMBER	20
-#define EASYLIMBATTACHMENT 21
-#define TOXINLOVER		22
-#define DIGITIGRADE		23	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+//Movement Types
+#define IMMOBILE 0
+#define GROUND 1
+#define FLYING 2
 
-#define FLYING	65536
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
@@ -92,3 +75,12 @@
 
 // Flags for reagents
 #define REAGENT_NOREACT 1
+
+//Fire and Acid stuff, for resistance_flags
+#define LAVA_PROOF 1
+#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
+#define FLAMMABLE 4
+#define ON_FIRE 8
+#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 64 //doesn't take damage

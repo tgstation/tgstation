@@ -1,0 +1,38 @@
+<ui-display>
+  <ui-button action='toggle'>{{data.recollection ? "Recital":"Recollection"}}</ui-button>
+  <ui-button action='component'>Target Component: {{{data.target_comp}}}</ui-button>
+</ui-display>
+{{#if data.recollection}}
+	 <ui-display>
+		{{{data.rec_text}}}
+ 	 </ui-display>
+{{else}}
+	<ui-display title='Components (with Global Cache)' button>
+ 	 <ui-section>
+ 	   {{{data.components}}}
+ 	 </ui-section>
+	</ui-display>
+	<ui-display>
+		<ui-section>
+			<ui-button state='{{data.selected == "Driver" ? "selected" : null}}' action='select' params='{"category": "Driver"}'>Driver</ui-button> 
+			<ui-button state='{{data.selected == "Script" ? "selected" : null}}' action='select' params='{"category": "Script"}'>Scripts</ui-button> 
+			<ui-button state='{{data.selected == "Application" ? "selected" : null}}' action='select' params='{"category": "Application"}'>Applications</ui-button> 
+			<ui-button state='{{data.selected == "Revenant" ? "selected" : null}}' action='select' params='{"category": "Revenant"}'>Revenant</ui-button> 
+			<ui-button state='{{data.selected == "Judgement" ? "selected" : null}}' action='select' params='{"category": "Judgement"}'>Judgement</ui-button>
+			<br>{{{data.tier_info}}}
+		</ui-section><hr>
+		<ui-section>
+		{{#each data.scripture}}
+			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite{{{required}}}</ui-button>
+		 	 {{#if quickbind}}
+				{{#if bound}}
+					<ui-button action='bind' params='{"category": "{{type}}"}'>Unbind {{{bound}}}</ui-button>
+				{{else}}
+					<ui-button action='bind' params='{"category": "{{type}}"}'>Quickbind</ui-button>
+				{{/if}}
+		  	{{/if}}
+		  	{{{name}}} {{{descname}}} {{{invokers}}}</div>
+		{{/each}}
+		</ui-section>
+	</ui-display>
+{{/if}}

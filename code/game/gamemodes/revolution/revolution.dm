@@ -79,9 +79,14 @@
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
-				if(istype(lenin.current,/mob/new_player))
+				if(istype(lenin.current,/mob/new_player)) //We don't want to make the same mistake again
 					continue
 				else
+					var/mob/Nm = lenin.current
+					if(Nm.job in restricted_jobs)	//Don't make the HOS a replacement revhead
+						antag_candidates += lenin	//Let's let them keep antag chance for other antags
+						continue
+
 					head_revolutionaries += lenin
 					break
 
@@ -204,7 +209,7 @@
 	if(revolutionaries) //Head Revs are not in this list
 		var/list/promotable_revs = list()
 		for(var/datum/mind/khrushchev in revolutionaries)
-			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
+			if(khrushchev.current && !khrushchev.current.incapacitated() && !khrushchev.current.restrained() && khrushchev.current.client && khrushchev.current.stat != DEAD)
 				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 					promotable_revs += khrushchev
 		if(promotable_revs.len)
@@ -270,7 +275,7 @@
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
-		addtimer(src, "replace_jobbaned_player", 0, FALSE, rev_mind.current, ROLE_REV, ROLE_REV)
+		INVOKE_ASYNC(src, .proc/replace_jobbaned_player, rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
@@ -347,9 +352,14 @@
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads killed")
 		world << "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+
+		ticker.news_report = REVS_WIN
+
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='redtext'>The heads of staff managed to stop the revolution!</span>"
+
+		ticker.news_report = REVS_LOSE
 	..()
 	return 1
 

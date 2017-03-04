@@ -295,3 +295,33 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/powercrepe
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/taco
+	name ="Classic Taco"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/taco
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tacoplain
+	name ="Plain Taco"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/branrequests
+	name = "Bran Requests Cereal"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
+	category = CAT_MISCFOOD

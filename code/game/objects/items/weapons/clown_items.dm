@@ -15,7 +15,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
@@ -44,7 +44,7 @@
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
 	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!")
-	PoolOrNew(/obj/effect/particle_effect/foam, loc)
+	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
@@ -65,20 +65,24 @@
 			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 			qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
+		var/mob/living/carbon/human/H = user
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
+		H.lip_style = null //removes lipstick
+		H.update_body()
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You clean \the [target.name].</span>"
-			target.color = initial(target.color)
-			target.SetOpacity(initial(target.opacity))
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			target.set_opacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You clean \the [target.name].</span>"
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.clean_blood()
 			target.wash_cream()
 	return
@@ -97,7 +101,7 @@
 	item_state = "bike_horn"
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")

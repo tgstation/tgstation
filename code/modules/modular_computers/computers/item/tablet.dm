@@ -7,6 +7,6 @@
 	icon_state_menu = "menu"
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	steel_sheet_cost = 1
 	slot_flags = SLOT_ID | SLOT_BELT

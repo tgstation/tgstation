@@ -4,7 +4,7 @@
 	icon_state = "flash"
 	item_state = "flashtool"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
 	origin_tech = "magnets=2;combat=1"
 
@@ -47,9 +47,12 @@
 	if(!crit_fail)
 		crit_fail = 1
 		update_icon()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
+	else
 		var/turf/T = get_turf(src)
-		if(T)
-			T.visible_message("[src] burns out!")
+		T.visible_message("<span class='danger'>[src] burns out!</span>")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
@@ -84,18 +87,13 @@
 /obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 15, targeted = 1)
 	add_logs(user, M, "flashed", src)
 	if(user && targeted)
-		if(M.weakeyes)
-			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
 		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
-			M.Stun(1)
+			M.Weaken(rand(4,6))
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			user << "<span class='danger'>You blind [M] with the flash!</span>"
 			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
-			if(M.weakeyes)
-				M.Stun(2)
-				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shield your eyes!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
@@ -116,7 +114,7 @@
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(6)
+		M.Weaken(rand(4,6))
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
@@ -174,11 +172,11 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
+	new /obj/effect/overlay/temp/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
+	new /obj/effect/overlay/temp/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return
@@ -204,7 +202,7 @@
 		I.owner << "<span class='warning'>Your photon projector implant overheats and deactivates!</span>"
 		I.Retract()
 	overheat = FALSE
-	addtimer(src, "cooldown", flashcd * 2)
+	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
 
 /obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
@@ -212,7 +210,7 @@
 			I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
 		return FALSE
 	overheat = TRUE
-	addtimer(src, "cooldown", flashcd)
+	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
 	return TRUE
@@ -220,3 +218,66 @@
 
 /obj/item/device/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
+
+/obj/item/device/assembly/flash/shield
+	name = "strobe shield"
+	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "flashshield"
+	item_state = "flashshield"
+	slot_flags = SLOT_BACK
+	force = 10
+	throwforce = 5
+	throw_speed = 2
+	throw_range = 3
+	w_class = WEIGHT_CLASS_BULKY
+	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	origin_tech = "materials=3;combat=4"
+	attack_verb = list("shoved", "bashed")
+	block_chance = 50
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)
+
+/obj/item/device/assembly/flash/shield/flash_recharge(interval=10)
+	if(times_used >= 4)
+		burn_out()
+		return 0
+	return 1
+
+/obj/item/device/assembly/flash/shield/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/device/assembly/flash/handheld))
+		var/obj/item/device/assembly/flash/handheld/flash = W
+		if(flash.crit_fail)
+			user << "No sense replacing it with a broken bulb."
+			return
+		else
+			user << "You begin to replace the bulb."
+			if(do_after(user, 20, target = src))
+				if(flash.crit_fail || !flash || QDELETED(flash))
+					return
+				crit_fail = FALSE
+				times_used = 0
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				update_icon()
+				flash.crit_fail = TRUE
+				flash.update_icon()
+				return
+	..()
+
+/obj/item/device/assembly/flash/shield/update_icon(flash = 0)
+	item_state = "flashshield"
+	item_state = "flashshield"
+
+	if(crit_fail)
+		icon_state = "riot"
+		item_state = "riot"
+	else if(flash)
+		item_state = "flashshield_flash"
+		item_state = "flashshield_flash"
+		addtimer(CALLBACK(src, .proc/update_icon), 5)
+
+	if(holder)
+		holder.update_icon()
+
+/obj/item/device/assembly/flash/shield/hit_reaction(obj/item/weapon/W, mob/user, params)
+	activate()
+	return ..()

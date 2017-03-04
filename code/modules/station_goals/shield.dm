@@ -7,9 +7,9 @@
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
-			 We have a prototype shielding system you will deploy to reduce collision related accidents.
+			 We have a prototype shielding system you must deploy to reduce collision-related accidents.
 
-			 You can order the satellites and control systems through cargo shuttle.
+			 You can order the satellites and control systems at cargo.
 			 "}
 
 
@@ -37,7 +37,7 @@
 	return coverage.len
 
 /obj/item/weapon/circuitboard/machine/computer/sat_control
-	name = "circuit board (Satellite Network Control)"
+	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
 	origin_tech = "engineering=3"
 
@@ -47,8 +47,7 @@
 	circuit = /obj/item/weapon/circuitboard/machine/computer/sat_control
 	var/notice
 
-/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "sat_control", name, 400, 305, master_ui, state)
@@ -96,6 +95,7 @@
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	density = 1
+	use_power = FALSE
 	var/static/gid = 0
 	var/id = 0
 
@@ -135,7 +135,8 @@
 	name = "Meteor Shield Satellite"
 	desc = "Meteor Point Defense Satellite"
 	mode = "M-SHIELD"
-	var/kill_range = 10
+	speed_process = TRUE
+	var/kill_range = 14
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))

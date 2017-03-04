@@ -11,6 +11,7 @@
 	max_integrity = 20
 	spillable = 1
 	resistance_flags = ACID_PROOF
+	unique_rename = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	cut_overlays()
@@ -264,6 +265,14 @@
 				icon_state = "space-up_glass"
 				name = "glass of Space-up"
 				desc = "Space-up. It helps you keep your cool."
+			if("pwr_game")
+				icon_state = "glass_red"
+				name = "glass of Pwr Game"
+				desc = "Goes well with a Vlad's salad."
+			if("shamblers")
+				icon_state = "glass_red"
+				name = "glass of Shambler's Juice"
+				desc = "Mmm mm, shambly."
 			if("lemon_lime")
 				icon_state = "glass_yellow"
 				name = "glass of Lemon-Lime"
@@ -331,7 +340,7 @@
 			if("andalusia")
 				icon_state = "andalusia"
 				name = "Andalusia"
-				desc = "A nice, strange named drink."
+				desc = "A nice, strangely named drink."
 			if("sbiten")
 				icon_state = "sbitenglass"
 				name = "Sbiten"
@@ -339,11 +348,11 @@
 			if("red_mead")
 				icon_state = "red_meadglass"
 				name = "Red Mead"
-				desc = "A True Vikings Beverage, though its color is strange."
+				desc = "A True Viking's Beverage, though its color is strange."
 			if("mead")
 				icon_state = "meadglass"
 				name = "Mead"
-				desc = "A Vikings Beverage, though a cheap one."
+				desc = "A Viking's Beverage, though a cheap one."
 			if("iced_beer")
 				icon_state = "iced_beerglass"
 				name = "Iced Beer"
@@ -451,7 +460,7 @@
 			if("chocolatepudding")
 				icon_state = "chocolatepudding"
 				name = "Chocolate Pudding"
-				desc = ""
+				desc = "Tasty."
 			if("vanillapudding")
 				icon_state = "vanillapudding"
 				name = "Vanilla Pudding"
@@ -508,6 +517,14 @@
 				icon_state = "triplecitrus" //needs own sprite mine are trash
 				name = "glass of triple citrus"
 				desc = "A mixture of citrus juices. Tangy, yet smooth."
+			if("grappa")
+				icon_state = "grappa"
+				name = "glass of grappa"
+				desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
+			if("eggnog")
+				icon_state = "glass_yellow"
+				name = "Eggnog"
+				desc = "For enjoying the most wonderful time of the year."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
@@ -561,7 +578,7 @@
 			if("hcider")
 				icon_state = "shotglassbrown"
 				name = "shot of hard cider"
-				desc = "Not meant to be drinken from a shot glass."
+				desc = "Not meant to be drunk from a shot glass."
 			if("rum")
 				icon_state = "shotglassbrown"
 				name = "shot of rum"
@@ -628,16 +645,21 @@
 		desc = "A shot glass - the universal symbol for bad decisions."
 		return
 
-// for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/New()
 	..()
 	on_reagent_change()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/soda
+	name = "Soda Water"
 	list_reagents = list("sodawater" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
+	name = "Space Cola"
 	list_reagents = list("cola" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
+	name = "Nuka Cola"
+	list_reagents = list("nuka_cola" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
@@ -654,7 +676,7 @@
 		..()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(obj/target, mob/user)
-	if(user.a_intent == "harm" && ismob(target) && target.reagents && reagents.total_volume)
+	if(user.a_intent == INTENT_HARM && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
 		add_logs(user, target, "splashed", src)
@@ -667,7 +689,7 @@
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
-	else if(reagents.total_volume && user.a_intent == "harm")
+	else if(reagents.total_volume && user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 							"<span class='notice'>You splash the contents of [src] onto [target].</span>")
 		reagents.reaction(target, TOUCH)

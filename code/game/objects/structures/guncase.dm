@@ -12,17 +12,14 @@
 	var/open = 1
 	var/capacity = 4
 
-/obj/structure/guncase/New()
+/obj/structure/guncase/Initialize(mapload)
 	..()
-	update_icon()
-
-/obj/structure/guncase/initialize()
-	..()
-	for(var/obj/item/I in loc.contents)
-		if(istype(I, gun_category))
-			I.loc = src
-		if(contents.len >= capacity)
-			break
+	if(mapload)
+		for(var/obj/item/I in loc.contents)
+			if(istype(I, gun_category))
+				I.loc = src
+			if(contents.len >= capacity)
+				break
 	update_icon()
 
 /obj/structure/guncase/update_icon()
@@ -46,7 +43,7 @@
 			update_icon()
 			return
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		open = !open
 		update_icon()
 	else
@@ -98,11 +95,11 @@
 	name = "shotgun locker"
 	desc = "A locker that holds shotguns."
 	case_type = "shotgun"
-	gun_category = /obj/item/weapon/gun/projectile/shotgun
+	gun_category = /obj/item/weapon/gun/ballistic/shotgun
 
 /obj/structure/guncase/ecase
 	name = "energy gun locker"
 	desc = "A locker that holds energy guns."
 	icon_state = "ecase"
 	case_type = "egun"
-	gun_category = /obj/item/weapon/gun/energy/gun
+	gun_category = /obj/item/weapon/gun/energy/e_gun

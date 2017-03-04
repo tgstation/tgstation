@@ -89,7 +89,7 @@
 		user.SetStunned(0)
 		user.next_move = 1
 		user.alpha = 255
-		user.color = "#ffffff"
+		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
 		user.anchored = 0
@@ -97,7 +97,7 @@
 		for(var/obj/item/I in user.held_items)
 			if(I in hands_nodrop)
 				I.flags &= ~NODROP
-		if(phase_underlay && !qdeleted(phase_underlay))
+		if(phase_underlay && !QDELETED(phase_underlay))
 			user.underlays -= phase_underlay
 			qdel(phase_underlay)
 			phase_underlay = null
@@ -121,10 +121,15 @@
 		teleport_now.UpdateButtonIcon()
 
 		var/list/nonsafe_slots = list(slot_belt, slot_back)
+		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
-			if(slot_item && !(slot_item.type in chronosafe_items) && user.unEquip(slot_item))
-				user << "<span class='notice'>Your [slot_item.name] got left behind.</span>"
+			exposed += slot_item
+		exposed += user.held_items
+		for(var/exposed_item in exposed)
+			var/obj/item/exposed_I = exposed_item
+			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.dropItemToGround(exposed_I))
+				user << "<span class='notice'>Your [exposed_I.name] got left behind.</span>"
 
 		user.ExtinguishMob()
 
@@ -142,12 +147,12 @@
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
-		phase_timer_id = addtimer(src, "phase_2", 3, FALSE, user, to_turf, phase_in_ds)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_2, user, to_turf, phase_in_ds), 3, TIMER_STOPPABLE)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
 	if(teleporting && activated && user)
 		animate(user, alpha = 0, time = 2)
-		phase_timer_id = addtimer(src, "phase_3", 2, FALSE, user, to_turf, phase_in_ds)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_3, user, to_turf, phase_in_ds), 2, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 
@@ -155,20 +160,20 @@
 	if(teleporting && activated && user)
 		user.forceMove(to_turf)
 		animate(user, alpha = 255, time = phase_in_ds)
-		phase_timer_id = addtimer(src, "phase_4", phase_in_ds, FALSE, user, to_turf)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_4, user, to_turf), phase_in_ds, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_4(mob/living/carbon/human/user, turf/to_turf)
 	if(teleporting && activated && user)
 		animate(user, color = "#ffffff", time = 3)
-		phase_timer_id = addtimer(src, "finish_chronowalk", 3, FALSE, user, to_turf)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/finish_chronowalk, user, to_turf), 3, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 
 
 /obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
-	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "white")
+	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
 	user_icon.AddAlphaMask(getFlatIcon(user))
 	var/image/phase = new(user_icon)
 	phase.appearance_flags = RESET_COLOR|RESET_ALPHA

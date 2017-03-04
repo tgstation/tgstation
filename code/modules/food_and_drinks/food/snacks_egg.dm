@@ -8,6 +8,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
+	tastes = list("chocolate" = 4, "sweetness" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
@@ -16,6 +17,7 @@
 	list_reagents = list("nutriment" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
+	tastes = list("egg" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
@@ -42,34 +44,42 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
 	item_color = "blue"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
 	item_color = "green"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
 	item_color = "mime"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
 	item_color = "orange"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
 	item_color = "purple"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
 	item_color = "rainbow"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
 	item_color = "red"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
 	item_color = "yellow"
+	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "fried egg"
@@ -79,6 +89,7 @@
 	bitesize = 1
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 3)
+	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
@@ -87,6 +98,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 2, "vitamin" = 1)
+	tastes = list("egg" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette	//FUCK THIS
 	name = "omelette du fromage"
@@ -96,7 +108,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 	bitesize = 1
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("egg" = 1, "cheese" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/kitchen/fork))
@@ -122,5 +135,6 @@
 	icon_state = "benedict"
 	bonus_reagents = list("vitamin" = 4)
 	trash = /obj/item/trash/plate
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)
+	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)

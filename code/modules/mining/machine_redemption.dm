@@ -28,7 +28,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/ore_redemption
-	name = "circuit board (Ore Redemption)"
+	name = "Ore Redemption (Machine Board)"
 	build_path = /obj/machinery/mineral/ore_redemption
 	origin_tech = "programming=1;engineering=2"
 	req_components = list(
@@ -110,6 +110,12 @@
 			inserted_id = I
 			interact(user)
 		return
+	if(istype(W, /obj/item/device/multitool) && panel_open)
+		input_dir = turn(input_dir, -90)
+		output_dir = turn(output_dir, -90)
+		user << "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>"
+		return
+
 	if(exchange_parts(user, W))
 		return
 

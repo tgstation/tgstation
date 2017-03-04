@@ -16,22 +16,22 @@
 /obj/structure/destructible/clockwork/massive/ratvar/New()
 	..()
 	ratvar_awakens++
-	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
-		R.update_force()
+	for(var/obj/O in all_clockwork_objects)
+		O.ratvar_act()
 	START_PROCESSING(SSobj, src)
-	world << "<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>"
-	world << 'sound/effects/ratvar_reveal.ogg'
+	send_to_playing_players("<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>")
+	send_to_playing_players('sound/effects/ratvar_reveal.ogg')
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.1)
+	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0.1), 50)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	ratvar_awakens--
-	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
-		R.update_force()
+	for(var/obj/O in all_clockwork_objects)
+		O.ratvar_act()
 	STOP_PROCESSING(SSobj, src)
-	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
+	send_to_playing_players("<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>")
 	return ..()
 
 /obj/structure/destructible/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
@@ -44,8 +44,9 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
 	var/turf/T = get_turf(A)
+	if(T == loc)
+		T = get_step(A, A.dir) //please don't run into a window like a bird, ratvar
 	forceMove(T)
-	T.ratvar_act()
 
 /obj/structure/destructible/clockwork/massive/ratvar/Process_Spacemove()
 	return clashing
@@ -61,7 +62,7 @@
 		T.ratvar_act(1)
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
-		for(var/obj/singularity/narsie/N in poi_list)
+		for(var/obj/singularity/narsie/N in singularities)
 			if(N.z == z)
 				prey = N
 				break
@@ -76,7 +77,7 @@
 				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
 				prey << 'sound/effects/ratvar_reveal.ogg'
 	else
-		if(prob(10) || is_servant_of_ratvar(prey) || prey.z != z)
+		if((!istype(prey, /obj/singularity/narsie) && prob(10)) || is_servant_of_ratvar(prey) || prey.z != z)
 			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
 			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
 			prey = null
@@ -103,11 +104,12 @@
 	var/winner = "Undeclared"
 	var/base_victory_chance = 1
 	while(src && narsie)
-		world << 'sound/magic/clockwork/ratvar_attack.ogg'
+		send_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg')
 		sleep(5.2)
 		for(var/mob/M in mob_list)
-			flash_color(M, flash_color="#966400", flash_time=1)
-			shake_camera(M, 4, 3)
+			if(!isnewplayer(M))
+				flash_color(M, flash_color="#966400", flash_time=1)
+				shake_camera(M, 4, 3)
 		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
 		var/narsie_chance = ticker.mode.cult.len
 		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
@@ -118,26 +120,27 @@
 			winner = "Ratvar"
 			break
 		sleep(rand(2,5))
-		world << 'sound/magic/clockwork/narsie_attack.ogg'
+		send_to_playing_players('sound/magic/clockwork/narsie_attack.ogg')
 		sleep(7.4)
 		for(var/mob/M in mob_list)
-			flash_color(M, flash_color="#C80000", flash_time=1)
-			shake_camera(M, 4, 3)
+			if(!isnewplayer(M))
+				flash_color(M, flash_color="#C80000", flash_time=1)
+				shake_camera(M, 4, 3)
 		if(narsie_chance > ratvar_chance)
 			winner = "Nar-Sie"
 			break
 		base_victory_chance *= 2 //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
-			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
-			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
-			world << 'sound/magic/demon_dies.ogg'
+			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>\n\
+			<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>") //nar-sie get out
+			send_to_playing_players('sound/magic/clockwork/anima_fragment_attack.ogg')
+			send_to_playing_players('sound/magic/demon_dies.ogg')
 			clashing = FALSE
 			qdel(narsie)
 		if("Nar-Sie")
-			world << "<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>" //Broken English
-			world << 'sound/magic/demon_attack1.ogg'
-			world << 'sound/magic/clockwork/anima_fragment_death.ogg'
+			send_to_playing_players("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>") //Broken English
+			send_to_playing_players('sound/magic/demon_attack1.ogg')
+			send_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg')
 			narsie.clashing = FALSE
 			qdel(src)

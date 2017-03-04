@@ -10,7 +10,7 @@
 		return
 
 	for(var/obj/item/W in M)
-		if(!M.unEquip(W))
+		if(!M.dropItemToGround(W))
 			qdel(W)
 			M.regenerate_icons()
 
@@ -58,7 +58,7 @@
 		return
 	world << "[msg]"
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins("<span class='adminnotice'><b> GlobalNarrate: [key_name_admin(usr)] :</b> [msg]<BR></span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] Sent a global narrate</span>")
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_direct_narrate(mob/M)
@@ -70,7 +70,7 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to who?", "Active Players") as null|anything in player_list
+		M = input("Direct narrate to whom?", "Active Players") as null|anything in player_list
 
 	if(!M)
 		return
@@ -188,25 +188,6 @@
 	if(C)
 		C << "You have been [muteunmute] from [mute_string] by [key_name(usr, include_name = FALSE)]."
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/client/proc/cmd_admin_add_random_ai_law()
-	set category = "Fun"
-	set name = "Add Random AI Law"
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes")
-		return
-	log_admin("[key_name(src)] has added a random AI law.")
-	message_admins("[key_name_admin(src)] has added a random AI law.")
-
-	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
-	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
-
-	new /datum/round_event/ion_storm(0, announce_ion_laws)
-	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 //I use this proc for respawn character too. /N
@@ -439,8 +420,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
-	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
-	ion.start()
+	var/datum/round_event/ion_storm/add_law_only/ion = new()
+	ion.announceEvent = announce_ion_laws
+	ion.ionMessage = input
 
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -508,7 +490,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		qdel(O)
+		if(isturf(O))
+			var/turf/T = O
+			T.ChangeTurf(T.baseturf)
+		else
+			qdel(O)
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
@@ -777,6 +763,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(!check_rights(R_DEBUG))
 		return
+	var/confirm = alert(src, "Disable Latejoin spawns??", "Message", "Yes", "No")
+	if(confirm != "Yes")
+		return
 
 	latejoin.Cut()
 
@@ -1007,7 +996,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		return
 
 	for(var/mob/living/carbon/human/H in mob_list)
-		new /obj/item/organ/body_egg/zombie_infection(H)
+		new /obj/item/organ/zombie_infection(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
@@ -1024,7 +1013,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/body_egg/zombie_infection/I in zombie_infection_list)
+	for(var/obj/item/organ/zombie_infection/I in zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")

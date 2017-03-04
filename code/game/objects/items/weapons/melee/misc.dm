@@ -1,6 +1,13 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+/obj/item/weapon/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(target.check_block())
+		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind their back!</span>",
+					"<span class='userdanger'>You block the attack!</span>")
+		user.Stun(2)
+		return TRUE
+
 
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
@@ -11,7 +18,7 @@
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
@@ -28,9 +35,11 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	origin_tech = "combat=5,biotech=5"
-	w_class = 5.0
-	force = 15
+	w_class = WEIGHT_CLASS_HUGE
+	force = 20
 	throwforce = 10
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/sabre
@@ -42,7 +51,7 @@
 	unique_rename = 1
 	force = 15
 	throwforce = 10
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
 	armour_penetration = 75
 	sharpness = IS_SHARP
@@ -64,7 +73,7 @@
 	item_state = "classic_baton"
 	slot_flags = SLOT_BELT
 	force = 12 //9 hit crit
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 0
 	var/on = 1
 
@@ -87,7 +96,7 @@
 		return
 	if(!isliving(target))
 		return
-	if (user.a_intent == "harm")
+	if (user.a_intent == INTENT_HARM)
 		if(!..())
 			return
 		if(!iscyborg(target))
@@ -97,6 +106,8 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+					return
+				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 			target.Weaken(3)
@@ -117,7 +128,7 @@
 	icon_state = "telebaton_0"
 	item_state = null
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	needs_permit = 0
 	force = 0
 	on = 0
@@ -133,8 +144,8 @@
 		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		add_fingerprint(user)
 	sleep(3)
-	if (H && !qdeleted(H))
-		if (B && !qdeleted(B))
+	if (H && !QDELETED(H))
+		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
 		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
@@ -146,7 +157,7 @@
 		user << "<span class ='warning'>You extend the baton.</span>"
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
-		w_class = 4 //doesnt fit in backpack when its on for balance
+		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
 		force = 10 //stunbaton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
@@ -154,7 +165,7 @@
 		icon_state = "telebaton_0"
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = SLOT_BELT
-		w_class = 2
+		w_class = WEIGHT_CLASS_SMALL
 		force = 0 //not so robust now
 		attack_verb = list("hit", "poked")
 
@@ -168,7 +179,7 @@
 	icon_state = "supermatter_sword"
 	item_state = "supermatter_sword"
 	slot_flags = null
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
@@ -178,6 +189,8 @@
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
+	qdel(shard.countdown)
+	shard.countdown = null
 	START_PROCESSING(SSobj, src)
 	visible_message("<span class='warning'>[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
 
@@ -252,3 +265,21 @@
 
 /obj/item/weapon/melee/supermatter_sword/add_blood(list/blood_dna)
 	return 0
+
+/obj/item/weapon/melee/curator_whip
+	name = "curator's whip"
+	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
+	icon_state = "whip"
+	item_state = "chain"
+	slot_flags = SLOT_BELT
+	force = 15
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/chainhit.ogg'
+
+/obj/item/weapon/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
+	if(ishuman(target) && proximity_flag)
+		var/mob/living/carbon/human/H = target
+		H.drop_all_held_items()
+		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+	..()

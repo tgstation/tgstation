@@ -7,7 +7,7 @@
 	density = 0
 	var/active = 1
 
-/obj/structure/firepit/initialize()
+/obj/structure/firepit/Initialize()
 	..()
 	toggleFirepit()
 
@@ -17,7 +17,6 @@
 		toggleFirepit()
 	else
 		..()
-
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
@@ -33,10 +32,10 @@
 
 /obj/structure/firepit/proc/toggleFirepit()
 	if(active)
-		SetLuminosity(8)
+		set_light(8)
 		icon_state = "firepit-active"
 	else
-		SetLuminosity(0)
+		set_light(0)
 		icon_state = "firepit"
 
 /obj/structure/firepit/extinguish()
@@ -79,7 +78,8 @@
 
 /*Cabin's forest*/
 /datum/mapGenerator/snowy
-	modules = list(/datum/mapGeneratorModule/snow/pineTrees, \
+	modules = list(/datum/mapGeneratorModule/bottomlayer/snow, \
+	/datum/mapGeneratorModule/snow/pineTrees, \
 	/datum/mapGeneratorModule/snow/deadTrees, \
 	/datum/mapGeneratorModule/snow/randBushes, \
 	/datum/mapGeneratorModule/snow/randIceRocks, \
@@ -89,6 +89,9 @@
 	if(istype(T,/turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
+
+/datum/mapGeneratorModule/bottomlayer/snow
+	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
 
 /datum/mapGeneratorModule/snow/pineTrees
 	spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)

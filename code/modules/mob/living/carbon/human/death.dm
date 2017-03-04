@@ -1,8 +1,8 @@
 /mob/living/carbon/human/gib_animation()
-	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-h"))
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-h")
 
 /mob/living/carbon/human/dust_animation()
-	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-h"))
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
@@ -16,27 +16,23 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
-	stat = DEAD
+
+	. = ..()
+
 	dizziness = 0
 	jitteriness = 0
-	heart_attack = 0
 
 	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc
 		if(M.occupant == src)
 			M.go_out()
 
-	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
-
 	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)
 		sql_report_death(src)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
-	. = ..(gibbed)
 	if(mind && mind.devilinfo)
-		addtimer(mind.devilinfo, "beginResurrectionCheck", 0, FALSE, src)
+		INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

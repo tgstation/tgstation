@@ -52,6 +52,7 @@
 	visor_flags_inv = HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
@@ -234,8 +235,8 @@
 
 	return
 
-/obj/item/clothing/head/helmet/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_helmet_flashlight)
+/obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_helmet_flashlight))
 		toggle_helmlight()
 	else
 		..()
@@ -245,13 +246,12 @@
 		var/obj/item/device/flashlight/seclite/S = I
 		if(can_flashlight)
 			if(!F)
-				if(!user.unEquip(S))
+				if(!user.transferItemToLoc(S, src))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
-					SetLuminosity(0)
+					set_light(0)
 				F = S
-				S.loc = src
 				update_icon()
 				update_helmlight(user)
 				verbs += /obj/item/clothing/head/helmet/proc/toggle_helmlight
@@ -298,37 +298,13 @@
 /obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
 		if(F.on)
-			if(loc == user)
-				user.AddLuminosity(F.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(F.brightness_on)
+			set_light(F.brightness_on)
 		else
-			if(loc == user)
-				user.AddLuminosity(-F.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(0)
+			set_light(0)
 		update_icon()
 
 	else
-		if(loc == user)
-			user.AddLuminosity(-5)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
-/obj/item/clothing/head/helmet/pickup(mob/user)
-	..()
-	if(F)
-		if(F.on)
-			user.AddLuminosity(F.brightness_on)
-			SetLuminosity(0)
-
-
-/obj/item/clothing/head/helmet/dropped(mob/user)
-	..()
-	if(F)
-		if(F.on)
-			user.AddLuminosity(-F.brightness_on)
-			SetLuminosity(F.brightness_on)

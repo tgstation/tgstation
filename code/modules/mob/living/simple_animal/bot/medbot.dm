@@ -38,10 +38,15 @@
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
+	var/treatment_brute_avoid = "tricordrazine"
 	var/treatment_brute = "bicaridine"
+	var/treatment_oxy_avoid = null
 	var/treatment_oxy = "dexalin"
+	var/treatment_fire_avoid = "tricordrazine"
 	var/treatment_fire = "kelotane"
-	var/treatment_tox = "antitoxin"
+	var/treatment_tox_avoid = "tricordrazine"
+	var/treatment_tox = "charcoal"
+	var/treatment_virus_avoid = null
 	var/treatment_virus = "spaceacillin"
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
@@ -50,7 +55,6 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "tricordrazine"
 	treatment_brute = "tricordrazine"
 	treatment_fire = "tricordrazine"
 	treatment_tox = "tricordrazine"
@@ -62,8 +66,11 @@
 	heal_threshold = 0
 	declare_crit = 0
 	treatment_oxy = "pancuronium"
+	treatment_brute_avoid = null
 	treatment_brute = "pancuronium"
+	treatment_fire_avoid = null
 	treatment_fire = "sodium_thiopental"
+	treatment_tox_avoid = null
 	treatment_tox = "sodium_thiopental"
 
 /mob/living/simple_animal/bot/medbot/update_icon()
@@ -350,29 +357,25 @@
 				return 1
 
 	//They're injured enough for it!
-	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
+	if((!C.reagents.has_reagent(treatment_brute_avoid)) && (C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
 		return 1 //If they're already medicated don't bother!
 
-	if((C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
+	if((!C.reagents.has_reagent(treatment_oxy_avoid)) && (C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
 		return 1
 
-	if((C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
+	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return 1
 
-	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
+	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return 1
 
-	if(treat_virus)
+	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
 		for(var/datum/disease/D in C.viruses)
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
-			if(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC)
-				return 0
-			if(D.severity == NONTHREAT) // medibot doesn't try to heal truly harmless viruses
-				return 0
-			if((D.stage > 1) || (D.spread_flags & AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
-
-				if(!C.reagents.has_reagent(treatment_virus))
-					return 1 //STOP DISEASE FOREVER
+			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
+			&& D.severity != NONTHREAT \
+			&& (D.stage > 1 || (D.spread_flags & AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+				return 1 //STOP DISEASE FOREVER
 
 	return 0
 
@@ -426,23 +429,23 @@
 							virus = 1
 
 			if(!reagent_id && (virus))
-				if(!C.reagents.has_reagent(treatment_virus))
+				if(!C.reagents.has_reagent(treatment_virus) && !C.reagents.has_reagent(treatment_virus_avoid))
 					reagent_id = treatment_virus
 
 		if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_brute))
+			if(!C.reagents.has_reagent(treatment_brute) && !C.reagents.has_reagent(treatment_brute_avoid))
 				reagent_id = treatment_brute
 
 		if(!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
-			if(!C.reagents.has_reagent(treatment_oxy))
+			if(!C.reagents.has_reagent(treatment_oxy) && !C.reagents.has_reagent(treatment_oxy_avoid))
 				reagent_id = treatment_oxy
 
 		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_fire))
+			if(!C.reagents.has_reagent(treatment_fire) && !C.reagents.has_reagent(treatment_fire_avoid))
 				reagent_id = treatment_fire
 
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_tox))
+			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
 				reagent_id = treatment_tox
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
@@ -466,7 +469,8 @@
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
-		spawn(30)//replace with do mob
+		var/failed = FALSE;
+		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
@@ -478,16 +482,23 @@
 				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
 					"<span class='userdanger'>[src] injects you with its syringe!</span>")
 			else
-				visible_message("[src] retracts its syringe.")
-			update_icon()
-			soft_reset()
-			return
+				failed = TRUE
+		else
+			failed = TRUE
+
+		if(failed)
+			visible_message("[src] retracts its syringe.")
+		update_icon()
+		soft_reset()
+		return
 
 	reagent_id = null
 	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
 	var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+	if(!R.overdose_threshold) //Some chems do not have an OD threshold
+		return 0
 	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)
 	if(current_volume + injection_amount > R.overdose_threshold)
 		return 1

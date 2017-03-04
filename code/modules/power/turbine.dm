@@ -30,6 +30,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -49,6 +50,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
@@ -76,14 +78,14 @@
 	inturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_compressor
-	name = "circuit board (Power Compressor)"
+	name = "Power Compressor (Machine Board)"
 	build_path = /obj/machinery/power/compressor
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/manipulator = 6)
 
-/obj/machinery/power/compressor/initialize()
+/obj/machinery/power/compressor/Initialize()
 	..()
 	locate_machinery()
 	if(!turbine)
@@ -132,9 +134,6 @@
 		return
 
 	default_deconstruction_crowbar(I)
-
-/obj/machinery/power/compressor/CanAtmosPass(turf/T)
-	return !density
 
 /obj/machinery/power/compressor/process()
 	if(!turbine)
@@ -195,14 +194,14 @@
 	outturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_turbine
-	name = "circuit board (Power Turbine)"
+	name = "Power Turbine (Machine Board)"
 	build_path = /obj/machinery/power/turbine
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/capacitor = 6)
 
-/obj/machinery/power/turbine/initialize()
+/obj/machinery/power/turbine/Initialize()
 	..()
 	locate_machinery()
 	if(!compressor)
@@ -220,9 +219,6 @@
 	compressor = locate() in get_step(src, get_dir(outturf, src))
 	if(compressor)
 		compressor.locate_machinery()
-
-/obj/machinery/power/turbine/CanAtmosPass(turf/T)
-	return !density
 
 /obj/machinery/power/turbine/process()
 
@@ -341,10 +337,9 @@
 
 
 
-/obj/machinery/computer/turbine_computer/initialize()
+/obj/machinery/computer/turbine_computer/Initialize()
 	..()
-	spawn(10)
-		locate_machinery()
+	locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
 	compressor = locate(/obj/machinery/power/compressor) in range(5, src)

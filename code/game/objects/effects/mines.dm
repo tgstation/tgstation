@@ -11,12 +11,13 @@
 	victim << "<span class='danger'>*click*</span>"
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
-		if(!SA.flying)
-			triggermine(SA)
-	else
-		triggermine(AM)
+	if(isturf(loc))
+		if(ismob(AM))
+			var/mob/MM = AM
+			if(!(MM.movement_type & FLYING))
+				triggermine(AM)
+		else
+			triggermine(AM)
 
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
@@ -114,7 +115,7 @@
 	name = "Red Orb"
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
-	color = "red"
+	color = "#FF0000"
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
@@ -148,7 +149,7 @@
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"
 	desc = "You feel better just looking at it."
-	color = "blue"
+	color = "#0000FF"
 
 /obj/effect/mine/pickup/healing/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
@@ -159,7 +160,7 @@
 /obj/effect/mine/pickup/speed
 	name = "Yellow Orb"
 	desc = "You feel faster just looking at it."
-	color = "yellow"
+	color = "#FFFF00"
 	duration = 300
 
 /obj/effect/mine/pickup/speed/mineEffect(mob/living/carbon/victim)

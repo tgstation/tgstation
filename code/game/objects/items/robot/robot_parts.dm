@@ -24,22 +24,35 @@
 
 /obj/item/robot_suit/New()
 	..()
-	src.updateicon()
+	updateicon()
+
+/obj/item/robot_suit/prebuilt/New()
+	l_arm = new(src)
+	r_arm = new(src)
+	l_leg = new(src)
+	r_leg = new(src)
+	head = new(src)
+	head.flash1 = new(head)
+	head.flash2 = new(head)
+	chest = new(src)
+	chest.wired = TRUE
+	chest.cell = new /obj/item/weapon/stock_parts/cell/high/plus(chest)
+	..()
 
 /obj/item/robot_suit/proc/updateicon()
-	src.cut_overlays()
-	if(src.l_arm)
-		src.add_overlay("l_arm+o")
-	if(src.r_arm)
-		src.add_overlay("r_arm+o")
-	if(src.chest)
-		src.add_overlay("chest+o")
-	if(src.l_leg)
-		src.add_overlay("l_leg+o")
-	if(src.r_leg)
-		src.add_overlay("r_leg+o")
-	if(src.head)
-		src.add_overlay("head+o")
+	cut_overlays()
+	if(l_arm)
+		add_overlay("l_arm+o")
+	if(r_arm)
+		add_overlay("r_arm+o")
+	if(chest)
+		add_overlay("chest+o")
+	if(l_leg)
+		add_overlay("l_leg+o")
+	if(r_leg)
+		add_overlay("r_leg+o")
+	if(head)
+		add_overlay("head+o")
 
 /obj/item/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
@@ -58,19 +71,18 @@
 				var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 				B.loc = get_turf(src)
 				user << "<span class='notice'>You arm the robot frame.</span>"
-				if (user.get_inactive_held_item()==src)
-					user.unEquip(src)
-					user.put_in_inactive_hand(B)
+				var/holding_this = user.get_inactive_held_item()==src
 				qdel(src)
+				if (holding_this)
+					user.put_in_inactive_hand(B)
 			else
 				user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		src.l_leg = W
@@ -79,9 +91,8 @@
 	else if(istype(W, /obj/item/bodypart/r_leg/robot))
 		if(src.r_leg)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		src.r_leg = W
@@ -90,9 +101,8 @@
 	else if(istype(W, /obj/item/bodypart/l_arm/robot))
 		if(src.l_arm)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		src.l_arm = W
@@ -101,9 +111,8 @@
 	else if(istype(W, /obj/item/bodypart/r_arm/robot))
 		if(src.r_arm)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
 		W.cut_overlays()
 		src.r_arm = W
@@ -114,9 +123,8 @@
 		if(src.chest)
 			return
 		if(CH.wired && CH.cell)
-			if(!user.unEquip(CH))
+			if(!user.transferItemToLoc(CH, src))
 				return
-			CH.forceMove(src)
 			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
 			CH.cut_overlays()
 			src.chest = CH
@@ -135,9 +143,8 @@
 		if(src.head)
 			return
 		if(HD.flash2 && HD.flash1)
-			if(!user.unEquip(HD))
+			if(!user.transferItemToLoc(HD, src))
 				return
-			HD.loc = src
 			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
 			HD.cut_overlays()
 			src.head = HD
@@ -155,19 +162,19 @@
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!isturf(loc))
-				user << "<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise!</span>"
+				user << "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>"
 				return
 			if(!M.brainmob)
-				user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
+				user << "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>"
 				return
 
 			var/mob/living/brain/BM = M.brainmob
 			if(!BM.key || !BM.mind)
-				user << "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>"
+				user << "<span class='warning'>The MMI indicates that their mind is completely unresponsive; there's no point!</span>"
 				return
 
 			if(!BM.client) //braindead
-				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
+				user << "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>"
 				return
 
 			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
@@ -175,26 +182,21 @@
 				return
 
 			if(jobban_isbanned(BM, "Cyborg"))
-				user << "<span class='warning'>This MMI does not seem to fit!</span>"
+				user << "<span class='warning'>This [M.name] does not seem to fit!</span>"
 				return
 
-			if(!user.unEquip(W))
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
 			if(!O)
 				return
 
-			if(M.hacked || M.clockwork)
+			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
 				aisync = 0
 				lawsync = 0
-				var/datum/ai_laws/L
-				if(M.clockwork)
-					L = new/datum/ai_laws/ratvar
-				else
-					L = new/datum/ai_laws/syndicate_override
-				O.laws = L
-				L.associate(O)
+				O.laws = M.laws
+				M.laws.associate(O)
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
@@ -209,11 +211,11 @@
 					O.connected_ai = forced_ai
 			if(!lawsync)
 				O.lawupdate = 0
-				if(!M.hacked && !M.clockwork)
+				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
 			ticker.mode.remove_antag_for_borging(BM.mind)
-			if(!M.clockwork)
+			if(!istype(M.laws, /datum/ai_laws/ratvar))
 				remove_servant_of_ratvar(BM, TRUE)
 			BM.mind.transfer_to(O)
 
@@ -227,7 +229,7 @@
 			O.cell = chest.cell
 			chest.cell.loc = O
 			chest.cell = null
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
@@ -235,7 +237,7 @@
 
 			feedback_inc("cyborg_birth",1)
 
-			src.loc = O
+			forceMove(O)
 			O.robot_suit = src
 
 			if(!locomotion)

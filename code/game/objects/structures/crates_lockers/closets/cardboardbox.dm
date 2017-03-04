@@ -1,3 +1,4 @@
+#define SNAKE_SPAM_TICKS 600 //how long between cardboard box openings that trigger the '!'
 /obj/structure/closet/cardboard
 	name = "large cardboard box"
 	desc = "Just a box..."
@@ -9,9 +10,10 @@
 	integrity_failure = 0
 	can_weld_shut = 0
 	cutting_tool = /obj/item/weapon/wirecutters
-	open_sound = 'sound/effects/rustle2.ogg'
+	open_sound = "rustle"
 	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
+	delivery_icon = "deliverybox"
 	var/move_speed_multiplier = 1
 	var/move_delay = 0
 	var/egged = 0
@@ -29,29 +31,27 @@
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
 		return 0
-	if(!egged)
+	var/list/alerted = null
+	if(egged < world.time)
 		var/mob/living/Snake = null
 		for(var/mob/living/L in src.contents)
 			Snake = L
 			break
 		if(Snake)
-			var/list/alerted = viewers(7,src)
-			if(alerted)
-				for(var/mob/living/L in alerted)
-					if(!L.stat)
-						L.do_alert_animation(L)
-						egged = 1
-				alerted << sound('sound/machines/chime.ogg')
+			alerted = viewers(7,src)
 	..()
+	if(LAZYLEN(alerted))
+		egged = world.time + SNAKE_SPAM_TICKS
+		for(var/mob/living/L in alerted)
+			if(!L.stat)
+				if(!L.incapacitated(ignore_restraints = 1))
+					L.face_atom(src)
+				L.do_alert_animation(L)
+		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /mob/living/proc/do_alert_animation(atom/A)
-	var/image/I
-	I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
-	var/list/viewing = list()
-	for(var/mob/M in viewers(A))
-		if(M.client)
-			viewing |= M.client
-	flick_overlay(I,viewing,8)
+	var/image/I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
+	flick_overlay_view(I, A, 8)
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
@@ -68,3 +68,4 @@
 	open_sound = 'sound/machines/click.ogg'
 	cutting_sound = 'sound/items/Welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
+#undef SNAKE_SPAM_TICKS

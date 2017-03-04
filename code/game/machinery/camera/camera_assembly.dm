@@ -31,6 +31,12 @@
 	if(building)
 		setDir(ndir)
 
+/obj/structure/camera_assembly/Destroy()
+	for(var/I in upgrades)
+		qdel(I)
+	upgrades.Cut()
+	return ..()
+
 /obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
 		if(1)
@@ -92,7 +98,7 @@
 				C.setDir(src.dir)
 
 				C.network = tempnetwork
-				var/area/A = get_area_master(src)
+				var/area/A = get_area(src)
 				C.c_tag = "[A.name] ([rand(1, 999)])"
 
 
@@ -128,8 +134,8 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 	user << "<span class='notice'>You start to weld \the [src]...</span>"
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-	if(do_after(user, 20, target = src))
+	playsound(src.loc, WT.usesound, 50, 1)
+	if(do_after(user, 20*WT.toolspeed, target = src))
 		if(WT.isOn())
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			return 1

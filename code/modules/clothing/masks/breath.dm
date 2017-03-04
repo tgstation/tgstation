@@ -6,7 +6,7 @@
 	body_parts_covered = 0
 	flags = MASKINTERNALS
 	visor_flags = MASKINTERNALS
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	actions_types = list(/datum/action/item_action/adjust)

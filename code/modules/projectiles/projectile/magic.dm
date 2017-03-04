@@ -17,53 +17,6 @@
 		var/mob/M = target
 		M.death(0)
 
-/obj/item/projectile/magic/fireball
-	name = "bolt of fireball"
-	icon_state = "fireball"
-	damage = 10
-	damage_type = BRUTE
-	nodamage = 0
-
-	//explosion values
-	var/exp_heavy = 0
-	var/exp_light = 2
-	var/exp_flash = 3
-	var/exp_fire = 2
-
-/obj/item/projectile/magic/fireball/Range()
-	var/turf/T1 = get_step(src,turn(dir, -45))
-	var/turf/T2 = get_step(src,turn(dir, 45))
-	var/turf/T3 = get_step(src,dir)
-	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
-	if(L && L.stat != DEAD)
-		Bump(L,1) //Magic Bullet #teachthecontroversy
-		return
-	L = locate(/mob/living) in T2
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	L = locate(/mob/living) in T3
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	..()
-
-/obj/item/projectile/magic/fireball/on_hit(target)
-	. = ..()
-	var/turf/T = get_turf(target)
-	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
-	if(ismob(target)) //multiple flavors of pain
-		var/mob/living/M = target
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
-
-/obj/item/projectile/magic/fireball/infernal
-	name = "infernal fireball"
-	exp_heavy = -1
-	exp_light = -1
-	exp_flash = 4
-	exp_fire= 5
-
-
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
 	icon_state = "ion"
@@ -79,6 +32,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
+			C.regenerate_organs()
 		if(target.revive(full_heal = 1))
 			target.grab_ghost(force = TRUE) // even suicides
 			target << "<span class='notice'>You rise with a start, \
@@ -151,6 +105,7 @@
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
 	wabbajack(change)
+	qdel(src)
 
 /proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
@@ -171,7 +126,7 @@
 		Robot.notify_ai(1)
 	else
 		for(var/obj/item/W in contents)
-			if(!M.unEquip(W))
+			if(!M.dropItemToGround(W))
 				qdel(W)
 
 	var/mob/living/new_mob
@@ -200,6 +155,9 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.clear_inherent_laws(0)
+				Robot.clear_zeroth_law(0, 0)
+				Robot.connected_ai = null
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 		if("xeno")
@@ -315,7 +273,7 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 
 	M.wabbajack_act(new_mob)
 
@@ -333,36 +291,42 @@
 	nodamage = 1
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+	target.animate_atom_living(firer)
 	..()
-	if((istype(target, /obj/item) || istype(target, /obj/structure)) && !is_type_in_list(target, protected_objects))
-		if(istype(target, /obj/structure/statue/petrified))
-			var/obj/structure/statue/petrified/P = target
+
+/atom/proc/animate_atom_living(var/mob/living/owner = null)
+	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
+		if(istype(src, /obj/structure/statue/petrified))
+			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, firer)
+				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
-				S.faction = list("\ref[firer]")
+				if(owner)
+					S.faction = list("\ref[owner]")
 				S.icon = P.icon
 				S.icon_state = P.icon_state
-				S.overlays = P.overlays
+				S.copy_overlays(P, TRUE)
 				S.color = P.color
+				S.atom_colours = P.atom_colours.Copy()
 				if(L.mind)
 					L.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
+					if(owner)
+						S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>"
 				P.loc = S
-				qdel(src)
 				return
 		else
-			var/obj/O = target
+			var/obj/O = src
 			if(istype(O, /obj/item/weapon/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
 
-	else if(istype(target, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = target
-		C.ChangeOwner(firer)
+		var/mob/living/simple_animal/hostile/mimic/copy/C = src
+		if(owner)
+			C.ChangeOwner(owner)
 
 /obj/item/projectile/magic/spellblade
 	name = "blade energy"
@@ -372,3 +336,94 @@
 	flag = "magic"
 	dismemberment = 50
 	nodamage = 0
+
+/obj/item/projectile/magic/arcane_barrage
+	name = "arcane bolt"
+	icon_state = "arcane_barrage"
+	damage = 20
+	damage_type = BURN
+	nodamage = 0
+	armour_penetration = 0
+	flag = "magic"
+
+/obj/item/projectile/magic/aoe
+	name = "Area Bolt"
+	desc = "What the fuck does this do?!"
+	damage = 0
+	var/proxdet = TRUE
+
+/obj/item/projectile/magic/aoe/Range()
+	if(proxdet)
+		var/turf/T1 = get_step(src,turn(dir, -45))
+		var/turf/T2 = get_step(src,turn(dir, 45))
+		var/turf/T3 = get_step(src,dir)
+		var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
+		if(L && L.stat != DEAD)
+			Bump(L,1) //Magic Bullet #teachthecontroversy
+			return
+		L = locate(/mob/living) in T2
+		if(L && L.stat != DEAD)
+			Bump(L,1)
+			return
+		L = locate(/mob/living) in T3
+		if(L && L.stat != DEAD)
+			Bump(L,1)
+			return
+	..()
+
+/obj/item/projectile/magic/aoe/lightning
+	name = "lightning bolt"
+	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
+	damage = 15
+	damage_type = BURN
+	nodamage = 0
+	speed = 0.3
+	flag = "magic"
+
+	var/tesla_power = 20000
+	var/tesla_range = 15
+	var/tesla_boom = FALSE
+	var/chain
+	var/mob/living/caster
+
+/obj/item/projectile/magic/aoe/lightning/fire(setAngle)
+	if(caster)
+		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+	..()
+
+/obj/item/projectile/magic/aoe/lightning/on_hit(target)
+	. = ..()
+	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
+	qdel(src)
+
+/obj/item/projectile/magic/aoe/lightning/Destroy()
+	qdel(chain)
+	. = ..()
+
+/obj/item/projectile/magic/aoe/fireball
+	name = "bolt of fireball"
+	icon_state = "fireball"
+	damage = 10
+	damage_type = BRUTE
+	nodamage = 0
+
+	//explosion values
+	var/exp_heavy = 0
+	var/exp_light = 2
+	var/exp_flash = 3
+	var/exp_fire = 2
+
+/obj/item/projectile/magic/aoe/fireball/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
+	if(ismob(target)) //multiple flavors of pain
+		var/mob/living/M = target
+		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+
+/obj/item/projectile/magic/aoe/fireball/infernal
+	name = "infernal fireball"
+	exp_heavy = -1
+	exp_light = -1
+	exp_flash = 4
+	exp_fire= 5
