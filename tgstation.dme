@@ -476,6 +476,7 @@
 #include "code\game\gamemodes\umbrage\umbrage_abilities\crawling_shadows.dm"
 #include "code\game\gamemodes\umbrage\umbrage_abilities\demented_outburst.dm"
 #include "code\game\gamemodes\umbrage\umbrage_abilities\devour_will.dm"
+#include "code\game\gamemodes\umbrage\umbrage_abilities\listener_bug.dm"
 #include "code\game\gamemodes\umbrage\umbrage_abilities\pass.dm"
 #include "code\game\gamemodes\umbrage\umbrage_abilities\silver_tongue.dm"
 #include "code\game\gamemodes\umbrage\umbrage_abilities\simulacrum.dm"

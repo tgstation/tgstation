@@ -43,6 +43,7 @@
 /mob/living/proc/umbrage_say(message)
 	var/processed_message
 	if(is_umbrage(mind))
+		src << "<span class='velvet bold'>saa'teo</span>"
 		if(!is_umbrage_progenitor(usr.mind))
 			processed_message = "<span class='velvet'><b>\[Mindlink\] Umbrage [real_name]:</b> \"[message]\"</span>"
 		else
@@ -50,8 +51,7 @@
 	else if(is_veil(mind))
 		processed_message = "<span class='velvet'><b>\[Mindlink\] [real_name]:</b> \"[message]\"</span>"
 	else
-		return 0 //How are you doing this in the first place?
-	src << "<span class='velvet bold'>saa'teo</span>"
+		processed_message = "<span class='velvet'><b>\[Mindlink\] [real_name]'s Listening Bug:</b> \"[message]\"</span>"
 	listclearnulls(ticker.mode.umbrages_and_veils)
 	for(var/V in ticker.mode.umbrages_and_veils)
 		var/datum/mind/M = V

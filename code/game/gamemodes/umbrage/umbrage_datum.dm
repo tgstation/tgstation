@@ -49,9 +49,11 @@
 	cycle_progress = 0 //Reset regenerating psi when we use more
 	psi = max(0, min(psi - used_psi, max_psi))
 	psi_used_since_last_cycle += used_psi
-	for(var/ability in linked_abilities)
-		var/datum/action/innate/umbrage/U = ability
-		U.UpdateButtonIcon()
+	for(var/path in linked_ability_types)
+		var/datum/action/innate/umbrage/U = path
+		if(has_ability(initial(U.id)))
+			U = linked_abilities[initial(U.id)] //yes, yes, this is silly.
+			U.UpdateButtonIcon()
 	return TRUE
 
 /datum/umbrage/proc/regenerate_psi()

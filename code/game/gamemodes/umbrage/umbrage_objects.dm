@@ -123,6 +123,72 @@
 	return 1
 
 
+//Umbral spawn: Formed by the Listening Bug ability. Can be used on a human to relay everything they say to Mindlink.
+/obj/item/weapon/umbral_spawn
+	name = "umbral spawn"
+	desc = "A disgusting, glowing violet insect the size of your hand."
+	icon = 'icons/mob/actions.dmi'
+	icon_state = "umbrage_listening_bug"
+	w_class = 2
+	flags = NODROP | CONDUCT
+	var/datum/action/innate/umbrage/linked_ability
+
+/obj/item/weapon/umbral_spawn/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/umbral_spawn/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/umbral_spawn/process()
+	if(isturf(loc))
+		visible_message("<span class='warning'>[src] shrivels up and turns to dust!</span>")
+		qdel(src)
+
+/obj/item/weapon/umbral_spawn/afterattack(atom/target, mob/living/user, proximity)
+	if(!ishuman(target) || user == target)
+		return
+	var/mob/living/carbon/human/H = target
+	if(H.mind && is_umbrage_or_veil(H.mind))
+		user << "<span class='warning'>You can't implant allies.</span>"
+		return
+	if(H.stat)
+		return
+	if(H.getorgan(type))
+		user << "<span class='warning'>[H] is already implanted.</span>"
+		return
+	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	if((!HD || HD.status != BODYPART_ROBOTIC) && !H.getorgan(type))
+		new /obj/item/organ/umbral_spawn(H)
+		user << "<span class='notice'>You silently implant [src] into [H]'s brain. The Mindlink will hear everything they say.</span>"
+		flags &= ~NODROP
+		user.drop_item()
+		linked_ability.active = 0
+		qdel(src)
+	return 1
+
+/obj/item/organ/umbral_spawn
+	name = "umbral spawn"
+	desc = "A disgusting, glowing violet insect the size of your hand."
+	icon_state = "innards"
+	origin_tech = "biotech=5"
+	zone = "head"
+	slot = "listener_bug"
+
+/obj/item/organ/umbral_spawn/on_find(mob/living/finder)
+	..()
+	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
+
+/obj/item/organ/umbral_spawn/New()
+	..()
+	if(iscarbon(loc))
+		Insert(loc)
+
+/obj/item/organ/umbral_spawn/Remove(mob/living/carbon/C, special = 0)
+	..()
+	qdel(src)
+
 //Psionic barrier: Created during Divulge. Has a regenerating health pool and protects the umbrage from harm.
 /obj/structure/psionic_barrier
 	name = "psionic barrier"

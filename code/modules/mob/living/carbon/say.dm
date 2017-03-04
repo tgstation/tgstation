@@ -11,7 +11,8 @@
 		message = T.TongueSpeech(message)
 	if(wear_mask)
 		message = wear_mask.speechModification(message)
-
+	if(getorganslot("listener_bug"))
+		umbrage_say(message)
 	return message
 
 /mob/living/carbon/can_speak_vocal(message)
