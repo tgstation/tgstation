@@ -25,7 +25,7 @@
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
 		log_admin_private("[key_name(usr)] Rejected [C.key]'s admin help.")
-		spamcooldown = world.time + 300 // 30 seconds
+		spamcooldown = world.time + 150 // 15 seconds
 
 	else if(href_list["icissue"])
 		if(world.time && spamcooldown > world.time)
@@ -43,7 +43,7 @@
 
 		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
 		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
-		spamcooldown = world.time + 300 // 30 seconds
+		spamcooldown = world.time + 150 // 15 seconds
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
