@@ -1,0 +1,4 @@
+author: "PJB3005"
+delete-after: True
+changes: 
+  - rscadd: "Rebased to /vg/station lighting code."
