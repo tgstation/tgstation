@@ -28,25 +28,11 @@ var/datum/subsystem/gravity/SSgravity
 	var/error_no_turf = 0
 	var/list/purging_atoms = list()
 	var/static/list/area_blacklist_typecache = typecacheof(list(/area/lavaland, /area/mine, /area/centcom))
-	var/mob_slip_chance = 0
-	var/mob_fall_chance = 0
-	var/mob_slip_chance_handhold = 0
-	var/mob_fall_chance_handhold = 0
-	var/mob_slip_chance_mod = 3
-	var/mob_fall_chance_mod = 1.5
-	var/normal_gravity = 0
 
 /datum/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
 
 /datum/subsystem/gravity/Initialize()
-	mob_slip_chance = mob_base_gravity_slip_chance
-	mob_fall_chance = mob_base_gravity_fall_chance
-	mob_slip_chance_handhold = mob_handhold_gravity_slip_chance
-	mob_fall_chance_handhold = mob_handhold_gravity_fall_chance
-	mob_slip_chance_mod = mob_gravity_strength_slip_mod
-	mob_fall_chance_mod = mob_gravity_strength_fall_mod
-	normal_gravity = legacy_gravity
 	. = ..()
 
 /datum/subsystem/gravity/Recover()
@@ -58,28 +44,6 @@ var/datum/subsystem/gravity/SSgravity
 	error_mismatched_turf = SSgravity.error_mismatched_turf
 	error_no_area = SSgravity.error_no_area
 	error_no_turf = SSgravity.error_no_turf
-
-/datum/subsystem/gravity/proc/sync_to_global_variables()
-	world << "Syncing to global vars!"
-	mob_base_gravity_slip_chance = mob_slip_chance
-	mob_base_gravity_fall_chance = mob_fall_chance
-	mob_handhold_gravity_slip_chance = mob_slip_chance_handhold
-	mob_handhold_gravity_fall_chance = mob_fall_chance_handhold
-	mob_gravity_strength_slip_mod = mob_slip_chance_mod
-	mob_gravity_strength_fall_mod = mob_fall_chance_mod
-	legacy_gravity = normal_gravity
-	if(legacy_gravity)
-		SSgravity.can_fire = FALSE
-	else
-		SSgravity.can_fire = TRUE
-
-/datum/subsystem/gravity/vv_edit_var()
-	..()
-	sync_to_global_variables()
-
-/datum/subsystem/gravity/SDQL_update()
-	..()
-	sync_to_global_variables()
 
 /datum/subsystem/gravity/proc/reset_gravity_processing()
 	var/count = 0
