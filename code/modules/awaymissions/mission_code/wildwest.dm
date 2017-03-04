@@ -122,7 +122,7 @@
 		return
 	C << "<span class='notice'>Death is not your end!</span>"
 
-	spawn(rand(80,120))
+	if(do_after(C, rand(80,120), target = C))
 		C.revive(full_heal = 1, admin_revive = 1)
 		C << "<span class='notice'>You have regenerated.</span>"
 		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
