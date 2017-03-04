@@ -261,8 +261,7 @@
 	var/jobname // the mob's "job"
 
 	if(jammed)
-		message = stars(message)
-		voice = stars(voice)
+		message = Gibberish(message,100)
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
