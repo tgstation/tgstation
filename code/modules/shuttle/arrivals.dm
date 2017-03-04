@@ -72,7 +72,7 @@
 		for(var/A in areas)
 			for(var/mob/living/L in A)
 				//don't dock for braindead'
-				if(L.key && L.client)
+				if(L.key && L.client && L.stat != DEAD)
 					found_awake = TRUE
 					break
 			if(found_awake)
