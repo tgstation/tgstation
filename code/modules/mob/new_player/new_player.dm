@@ -302,7 +302,7 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	if(SSshuttle.arrivals)
-		SSshuttle.arrivals.RequireUndocked()
+		SSshuttle.arrivals.RequireUndocked(src)
 
 	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)

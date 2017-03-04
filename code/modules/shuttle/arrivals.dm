@@ -116,13 +116,14 @@
 		AnnounceArrival(arglist(L))
 	LAZYCLEARLIST(queued_announces)
 
-/obj/docking_port/mobile/arrivals/proc/RequireUndocked()
+/obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(docked || damaged)
 		return
 	if(mode == SHUTTLE_IDLE)
 		request(assigned_transit)
 
-	while(docked && !damaged)
+	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
+	while(mode == SHUTTLE_IGNITING && docked && !damaged)
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
