@@ -3,7 +3,6 @@ var/datum/subsystem/machines/SSmachine
 /datum/subsystem/machines
 	name = "Machines"
 	init_order = 9
-	display_order = 3
 	flags = SS_KEEP_TIMING
 	var/list/processing = list()
 	var/list/currentrun = list()
