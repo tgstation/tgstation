@@ -40,3 +40,21 @@ var/datum/subsystem/parallax/SSparallax
 		if (MC_TICK_CHECK)
 			return
 	currentrun = null
+
+/datum/subsystem/parallax/proc/UpdateForClient(client/C)
+	if (!C || !C.eye)
+		return
+	var/atom/movable/A = C.eye
+	if(!A)
+		return
+	for (A; isloc(A.loc) && !isturf(A.loc); A = A.loc);
+
+	if(A != C.movingmob)
+		if(C.movingmob != null)
+			C.movingmob.client_mobs_in_contents -= C.mob
+			UNSETEMPTY(C.movingmob.client_mobs_in_contents)
+		LAZYINITLIST(A.client_mobs_in_contents)
+		A.client_mobs_in_contents += C.mob
+		C.movingmob = A
+	
+	A.update_parallax_contents()

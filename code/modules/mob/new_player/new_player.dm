@@ -325,6 +325,8 @@
 
 	character.forceMove(D)
 
+	SSparallax.UpdateForClient(character.client)
+
 	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
 	if(chair)
 		chair.buckle_mob(character)

@@ -99,9 +99,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	update_icon()
 
-	if(!T)
-		T = pick(latejoin)			//Safety in case we cannot find the body's position
-	loc = T
+	loc = pick(get_area_turfs(/area/shuttle/arrival))
 
 	if(!name)							//To prevent nameless ghosts
 		name = random_unique_name(gender)
