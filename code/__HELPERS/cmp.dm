@@ -33,9 +33,7 @@ var/cmp_field = "name"
 	return b.init_order - a.init_order
 
 /proc/cmp_subsystem_display(datum/subsystem/a, datum/subsystem/b)
-	if(a.display_order == b.display_order)
-		return sorttext(b.name, a.name)
-	return a.display_order - b.display_order
+	return sorttext(b.name, a.name)
 
 /proc/cmp_subsystem_priority(datum/subsystem/a, datum/subsystem/b)
 	return a.priority - b.priority

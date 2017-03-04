@@ -405,10 +405,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(image_file)
 				switch(item)
 					if("esword")
-						target.playsound_local(H, 'sound/weapons/saberon.ogg')
+						target.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
 						A = image(image_file,H,"swordred", layer=ABOVE_MOB_LAYER)
 					if("dual_esword")
-						target.playsound_local(H, 'sound/weapons/saberon.ogg')
+						target.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
 						A = image(image_file,H,"dualsaberred1", layer=ABOVE_MOB_LAYER)
 					if("stunpaper")
 						A = image(image_file,H,"paper", layer=ABOVE_MOB_LAYER)
@@ -425,7 +425,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					target.client.images |= A
 					sleep(rand(150,250))
 					if(item == "esword" || item == "dual_esword")
-						target.playsound_local(H, 'sound/weapons/saberoff.ogg')
+						target.playsound_local(H, 'sound/weapons/saberoff.ogg',35,1)
 					target.client.images.Remove(A)
 				break
 	qdel(src)
@@ -493,13 +493,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			A = image('icons/mob/mob.dmi',target,"daemon")
 		if("robot")//Cyborg
 			A = image('icons/mob/robots.dmi',target,"robot")
-			target.playsound_local(target,'sound/voice/liveagain.ogg')
+			target.playsound_local(target,'sound/voice/liveagain.ogg', 75, 1)
 		if("custom")
 			A = image(custom_icon_file, target, custom_icon)
 	A.override = 1
 	if(target.client)
-		target << "<span class='userdanger'>[target] is hit by a bolt of change in the chest!</span>"
-		target.playsound_local(target,'sound/magic/Staff_Change.ogg')
+		target << "<span class='italics'>...wabbajack...wabbajack...</span>"
+		target.playsound_local(target,'sound/magic/Staff_Change.ogg', 50, 1, -1)
 		delusion = A
 		target.client.images |= A
 	QDEL_IN(src, duration)
@@ -620,9 +620,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			updateimage()
 		else
 			if(prob(15))
-				do_attack_animation(my_target, ATTACK_EFFECT_PUNCH)
 				if(weapon_name)
-					my_target.playsound_local(my_target, weap.hitsound)
+					my_target.playsound_local(my_target, weap.hitsound, weap.get_clamped_volume())
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
@@ -631,7 +630,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
+					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1, -1)
 					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
@@ -700,8 +699,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 /obj/effect/hallucination/whispers/Initialize(mapload, var/mob/living/carbon/T)
 	..()
 	target = T
-	var/speak_messages = list("I'm watching you...","[target.first_name()]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!","EI NATH!!", "RUN!!", "Kill me!","O bidai nabora se'sma!", "[text2ratvar("They're on to me!")]")
-	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(teleportlocs)]!!","Where's [target.first_name()]?","Call the shuttle!","AI rogue!!")
+	var/speak_messages = list("I'm watching you...","[target.first_name()]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","HELP!!","EI NATH!!", "RUN!!", "Kill me!","O bidai nabora se'sma!", "[text2ratvar("Divinity, grant...")]")
+	var/radio_messages = list("Xenos!","Singularity loose!","Comms down!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(teleportlocs)][prob(50)?"!":"!!"]","Where's [target.first_name()]?","Call the shuttle!","AI rogue!!")
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
@@ -782,21 +781,21 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			//Strange audio
 			//src << "Strange Audio"
 			switch(rand(1,20))
-				if(1) playsound_local(null,'sound/machines/airlock.ogg')
+				if(1) playsound_local(null,'sound/machines/airlock.ogg', 15)
 				if(2)
-					if(prob(50)) playsound_local(null,'sound/effects/Explosion1.ogg')
-					else playsound_local(null, 'sound/effects/Explosion2.ogg')
-				if(3) playsound_local(null, 'sound/effects/explosionfar.ogg')
-				if(4) playsound_local(null, pick('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg'))
+					if(prob(50)) playsound_local(null,'sound/effects/Explosion1.ogg', 50)
+					else playsound_local(null, 'sound/effects/Explosion2.ogg', 50)
+				if(3) playsound_local(null, 'sound/effects/explosionfar.ogg', 50)
+				if(4) playsound_local(null, pick('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg'), 50)
 				if(5)
-					playsound_local(null, 'sound/weapons/ring.ogg')
+					playsound_local(null, 'sound/weapons/ring.ogg', 35)
 					sleep(15)
-					playsound_local(null, 'sound/weapons/ring.ogg')
+					playsound_local(null, 'sound/weapons/ring.ogg', 35)
 					sleep(15)
-					playsound_local(null, 'sound/weapons/ring.ogg')
-				if(6) playsound_local(null, 'sound/magic/Summon_guns.ogg')
-				if(7) playsound_local(null, 'sound/machines/Alarm.ogg')
-				if(8) playsound_local(null, 'sound/voice/bfreeze.ogg')
+					playsound_local(null, 'sound/weapons/ring.ogg', 35)
+				if(6) playsound_local(null, 'sound/magic/Summon_guns.ogg', 50, 1)
+				if(7) playsound_local(null, 'sound/machines/Alarm.ogg', 100, 0)
+				if(8) playsound_local(null, 'sound/voice/bfreeze.ogg', 35, 0)
 				if(9)
 					//To make it more realistic, I added two gunshots (enough to kill)
 					playsound_local(null, 'sound/weapons/Gunshot.ogg', 25)
@@ -804,7 +803,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 						playsound_local(null, 'sound/weapons/Gunshot.ogg', 25)
 						sleep(rand(5,10))
 						playsound_local(null, sound(get_sfx("bodyfall"), 25))
-				if(10) playsound_local(null, 'sound/effects/pray_chaplain.ogg')
+				if(10) playsound_local(null, 'sound/effects/pray_chaplain.ogg', 50)
 				if(11)
 					//Same as above, but with tasers.
 					playsound_local(null, 'sound/weapons/Taser.ogg', 25)
@@ -822,30 +821,30 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 					playsound_local(null, pick(creepyasssounds))
 				if(13)
-					playsound_local(null, 'sound/effects/ratvar_rises.ogg')
+					playsound_local(null, 'sound/effects/ratvar_rises.ogg', 100)
 					sleep(150)
-					playsound_local(null, 'sound/effects/ratvar_reveal.ogg')
+					playsound_local(null, 'sound/effects/ratvar_reveal.ogg', 100)
 				if(14)
 					src << "<h1 class='alert'>Priority Announcement</h1>"
 					src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
-					playsound_local(null, 'sound/AI/shuttledock.ogg')
+					playsound_local(null, 'sound/AI/shuttledock.ogg', 100)
 				//Deconstructing a wall
 				if(15)
-					playsound_local(null, 'sound/items/Welder.ogg', 25)
+					playsound_local(null, 'sound/items/Welder.ogg', 15)
 					sleep(105)
-					playsound_local(null, 'sound/items/Welder2.ogg', 25)
+					playsound_local(null, 'sound/items/Welder2.ogg', 15)
 					sleep(15)
-					playsound_local(null, 'sound/items/Ratchet.ogg', 25)
+					playsound_local(null, 'sound/items/Ratchet.ogg', 15)
 				//Hacking a door
 				if(16)
-					playsound_local(null, 'sound/items/Screwdriver.ogg', 50)
+					playsound_local(null, 'sound/items/Screwdriver.ogg', 15)
 					sleep(rand(10,30))
 					for(var/i = rand(1,3), i>0, i--)
-						playsound_local(null, 'sound/weapons/empty.ogg', 50)
+						playsound_local(null, 'sound/weapons/empty.ogg', 15)
 						sleep(rand(10,30))
-					playsound_local(null, 'sound/machines/airlockforced.ogg', 50)
+					playsound_local(null, 'sound/machines/airlockforced.ogg', 15)
 				if(17)
-					playsound_local(null, 'sound/weapons/saberon.ogg')
+					playsound_local(null, 'sound/weapons/saberon.ogg',35,1)
 				if(18)
 					src << "<h1 class='alert'>Biohazard Alert</h1>"
 					src << "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>"
@@ -859,7 +858,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				if(20) //AI is doomsdaying!
 					src << "<h1 class='alert'>Anomaly Alert</h1>"
 					src << "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>"
-					playsound_local(null, 'sound/AI/aimalf.ogg')
+					playsound_local(null, 'sound/AI/aimalf.ogg', 100)
 		if("hudscrew")
 			//Screwy HUD
 			//src << "Screwy HUD"
