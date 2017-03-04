@@ -43,8 +43,9 @@
 	log = list()
 	scanning = 0
 
-/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, proximity)
+/obj/item/device/detective_scanner/pre_attackby(atom/A, mob/user, params)
 	scan(A, user)
+	return FALSE
 
 /obj/item/device/detective_scanner/proc/scan(atom/A, mob/user)
 
