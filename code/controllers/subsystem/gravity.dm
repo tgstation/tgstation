@@ -1,12 +1,4 @@
 var/datum/subsystem/gravity/SSgravity
-var/global/legacy_gravity = FALSE
-var/global/mob_base_gravity_slip_chance = 10
-var/global/mob_base_gravity_fall_chance = 5
-var/global/mob_handhold_gravity_slip_chance = 6
-var/global/mob_handhold_gravity_fall_chance = 3
-var/global/mob_gravity_strength_slip_mod = 3
-var/global/mob_gravity_strength_fall_mod = 1.5
-
 
 /datum/subsystem/gravity
 	name = "Gravity"
@@ -15,6 +7,13 @@ var/global/mob_gravity_strength_fall_mod = 1.5
 	init_order = -100
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
 
+	var/mob_base_gravity_slip_chance = 10
+	var/mob_base_gravity_fall_chance = 5
+	var/mob_handhold_gravity_slip_chance = 10
+	var/mob_handhold_gravity_fall_chance = 3
+	var/mob_gravity_strength_slip_mod = 3
+	var/mob_gravity_strength_fall_mod = 1.5
+	var/legacy_gravity = FALSE
 	var/list/currentrun = list()
 	var/list/currentrun_manual = list()
 	var/recalculation_cost = 0
@@ -54,15 +53,13 @@ var/global/mob_gravity_strength_fall_mod = 1.5
 
 /datum/subsystem/gravity/Recover()
 	Initialize()	//Force init..
-	if(istype(SSgravity))
-		do_purge = SSgravity.do_purge
-		purge_interval = SSgravity.purge_interval
-		error_no_atom = SSgravity.error_no_atom
-		error_mismatched_area = SSgravity.error_mismatched_area
-		error_mismatched_turf = SSgravity.error_mismatched_turf
-		error_no_area = SSgravity.error_no_area
-		error_no_turf = SSgravity.error_no_turf
-	..()
+	do_purge = SSgravity.do_purge
+	purge_interval = SSgravity.purge_interval
+	error_no_atom = SSgravity.error_no_atom
+	error_mismatched_area = SSgravity.error_mismatched_area
+	error_mismatched_turf = SSgravity.error_mismatched_turf
+	error_no_area = SSgravity.error_no_area
+	error_no_turf = SSgravity.error_no_turf
 
 /datum/subsystem/gravity/proc/sync_to_global_variables()
 	world << "Syncing to global vars!"
@@ -86,8 +83,10 @@ var/global/mob_gravity_strength_fall_mod = 1.5
 	..()
 	sync_to_global_variables()
 
-/proc/emergency_reset_gravity_force_processing()
+/datum/subsystem/gravity/proc/reset_gravity_processing()
 	var/count = 0
+	var/can_fire_old = can_fire
+	can_fire = FALSE
 	while(atoms_forced_gravity_processing.len)
 		var/atom/movable/AM = atoms_forced_gravity_processing[atoms_forced_gravity_processing.len]
 		atoms_forced_gravity_processing.len--
@@ -103,6 +102,7 @@ var/global/mob_gravity_strength_fall_mod = 1.5
 	var/atoms_not_found = "ERROR: NO SUBSYSTEM!"
 	if(SSgravity)
 		atoms_not_found = SSgravity.error_no_atom
+	can_fire = can_fire_old
 	return "[count] atoms purged from forced processing! [atoms_not_found] things found so far that were not atoms!"
 
 /datum/subsystem/gravity/proc/recalculate_atoms()
@@ -134,6 +134,9 @@ var/global/mob_gravity_strength_fall_mod = 1.5
 				purging_atoms = list()
 				purging = TRUE
 				purge_tick = 0
+	var/list/currentrun_manual = src.currentrun_manual
+	var/list/purging_atoms = src.purging_atoms
+	var/list/currentrun = src.currentrun
 	while(currentrun_manual.len)
 		var/atom/movable/AM = currentrun_manual[currentrun_manual.len]
 		currentrun_manual.len--
