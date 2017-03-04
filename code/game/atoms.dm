@@ -2,7 +2,10 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+
 	var/flags = 0
+	var/list/secondary_flags
+
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
@@ -165,16 +168,6 @@
 /atom/proc/is_transparent()
 	return container_type & TRANSPARENT
 
-/*//Convenience proc to see whether a container can be accessed in a certain way.
-
-/atom/proc/can_subract_container()
-	return flags & EXTRACT_CONTAINER
-
-/atom/proc/can_add_container()
-	return flags & INSERT_CONTAINER
-*/
-
-
 /atom/proc/allow_drop()
 	return 1
 
@@ -185,7 +178,7 @@
 	return
 
 /atom/proc/emp_act(severity)
-	if(istype(wires))
+	if(istype(wires) && !HAS_SECONDARY_FLAG(src, NO_EMP_WIRES))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)

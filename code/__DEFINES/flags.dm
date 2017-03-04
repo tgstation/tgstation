@@ -31,6 +31,10 @@
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
 #define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
+/* Secondary atom flags, access using the SECONDARY_FLAG macros */
+
+#define NO_EMP_WIRES "no_emp_wires"
+
 //turf-only flags
 #define NOJAUNT		1
 #define UNUSED_TRANSIT_TURF 2
