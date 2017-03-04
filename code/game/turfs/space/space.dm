@@ -61,7 +61,7 @@
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, area/area_restriction)
+/turf/open/space/attackby(obj/item/C, mob/user, params, area/area_restriction)
 	..()
 	if(istype(C, /obj/item/stack/rods))
 		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
