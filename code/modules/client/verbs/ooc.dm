@@ -52,6 +52,7 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
+	mob.ooc_log += "\[[time_stamp()]\] [raw_msg]"
 
 	var/keyname = key
 	if(prefs.unlock_content)

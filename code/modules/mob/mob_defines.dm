@@ -26,7 +26,10 @@
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
-	var/attack_log = list( )
+	var/list/attack_log = list()
+	var/list/say_log = list() //a log of what we've said, with a timestamp as the key for each message
+	var/list/ooc_log = list()
+	var/list/emote_log = list()
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/disabilities = 0	//Carbon
