@@ -248,7 +248,7 @@
 
 	if(window)
 		recipient << browse(output,"window=memory")
-	else
+	else if(objectives.len || memory)
 		recipient << "<i>[output]</i>"
 
 /datum/mind/proc/edit_memory()
