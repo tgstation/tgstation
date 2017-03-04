@@ -825,10 +825,8 @@
 	})
 "be" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster{
-	icon_state = "poster7";
-	pixel_y = 32;
-	serial_number = 7
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a4{
@@ -930,13 +928,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/sign/poster{
-	icon_state = "poster17";
-	pixel_x = -32;
-	pixel_y = 0;
-	serial_number = 17
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/space_cube{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -1484,11 +1479,8 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/obj/structure/sign/poster{
-	icon_state = "poster5";
-	pixel_x = 0;
-	pixel_y = 32;
-	serial_number = 5
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/loadingarea{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -1702,14 +1694,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/poster{
-	icon_state = "poster10";
-	pixel_x = 32;
-	pixel_y = 0;
-	serial_number = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/sign/poster/contraband/hacking_guide{
+	pixel_x = 32
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -2542,16 +2531,13 @@
 	})
 "dq" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster{
-	icon_state = "poster24";
-	pixel_x = 0;
-	pixel_y = -32;
-	serial_number = 24
-	},
 /obj/item/weapon/pen,
 /obj/item/weapon/paper{
 	info = "Log 1:<br>While mining today I noticed the NT station was finished with its renovations. They placed some huge reinforced tumor on the station, looks so ugly. I wouldn't be surprised if those pigs decided to turn that little astronomy outpost into a prison with that thing, it'd be pretty typical of them.<br><br>Log 2:<br>Really dumb of me but I just waved at an engineer in the outpost, and he waved back. I hope to god he was too dumb or drunk to recognize the suit, because if he isn't then we might have to pull out before they come looking for us.<br><br>Log 3:<br>That huge reinforced tumor in their science section has been making a lot of noise lately. I've been hearing some banging and scratching from the other side and I'm kind of glad now that they reinforced this thing so much. I'll be sleeping with my gun under my pillow from now on.";
 	name = "Personal Log"
+	},
+/obj/structure/sign/poster/contraband/c20r{
+	pixel_y = -32
 	},
 /turf/open/floor/wood{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -3750,11 +3736,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/poster{
-	icon_state = "poster5_legit";
-	pixel_x = 0;
-	pixel_y = 32;
-	serial_number = 21
+/obj/structure/sign/poster/official/build{
+	pixel_y = 32
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -4606,14 +4589,12 @@
 	name = "MO19 Research"
 	})
 "fU" = (
-/obj/structure/sign/poster{
-	icon_state = "poster21_legit";
-	pixel_y = 32;
-	serial_number = 21
-	},
 /obj/item/device/radio/off,
 /obj/item/weapon/screwdriver{
 	pixel_y = 10
+	},
+/obj/structure/sign/poster/official/safety_report{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5;
@@ -6007,7 +5988,7 @@
 "hK" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -7174,11 +7155,8 @@
 	})
 "jw" = (
 /obj/machinery/vending/snack,
-/obj/structure/sign/poster{
-	icon_state = "poster14";
-	pixel_x = 0;
-	pixel_y = 32;
-	serial_number = 14
+/obj/structure/sign/poster/contraband/eat{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel{
 	burnt = 1;
@@ -7936,11 +7914,8 @@
 	name = "MO19 Arrivals"
 	})
 "kx" = (
-/obj/structure/sign/poster{
-	icon_state = "poster2_legit";
-	pixel_x = 0;
-	pixel_y = -32;
-	serial_number = 2
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 2;
@@ -9233,10 +9208,8 @@
 	})
 "mC" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster{
-	icon_state = "poster7";
-	pixel_y = -32;
-	serial_number = 7
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{

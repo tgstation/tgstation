@@ -4,8 +4,6 @@
 		// This is a developer sandbox map that will compile and
 		// load quickly. Not intended for production deployment.
 
-		#define TITLESCREEN "title"
-
 		#define MINETYPE "lavaland"
 
         #include "map_files\debug\runtimestation.dmm"

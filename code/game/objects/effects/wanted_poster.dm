@@ -1,14 +1,11 @@
-/obj/item/weapon/poster/legit/wanted
-	var/poster_desc
+/obj/item/weapon/poster/wanted
 	icon_state = "rolled_poster"
 
-/obj/item/weapon/poster/legit/wanted/New(turf/loc, icon/person_icon, wanted_name, description)
-	..(loc)
+/obj/item/weapon/poster/wanted/New(turf/loc, icon/person_icon, wanted_name, description)
+	var/obj/structure/sign/poster/wanted/wanted_poster = new(person_icon, wanted_name, description)
+	..(loc, wanted_poster)
 	name = "wanted poster ([wanted_name])"
 	desc = "A wanted poster for [wanted_name]."
-	poster_desc = description
-	qdel(resulting_poster)
-	resulting_poster = new /obj/structure/sign/poster/wanted(person_icon, wanted_name, poster_desc)
 
 /obj/structure/sign/poster/wanted
 	var/wanted_name
@@ -35,14 +32,8 @@
 	the_icon.Insert(icon('icons/obj/contraband.dmi', "poster_ripped"), "poster_ripped")
 	icon = the_icon
 
-/obj/structure/sign/poster/wanted/attack_hand(mob/user)
-	..()
-
-/obj/structure/sign/poster/wanted/attackby()
-	..()
-
 /obj/structure/sign/poster/wanted/roll_and_drop(turf/location)
-	var/obj/item/weapon/poster/legit/wanted/P = new(src, null, wanted_name, desc)
-	P.resulting_poster = src
-	P.loc = location
-	loc = P
+	var/obj/item/weapon/poster/P = ..(location)
+	P.name = "wanted poster ([wanted_name])"
+	P.desc = "A wanted poster for [wanted_name]."
+	return P

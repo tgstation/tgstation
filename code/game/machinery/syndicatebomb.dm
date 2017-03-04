@@ -1,4 +1,5 @@
-#define BUTTON_COOLDOWN 30
+#define BUTTON_COOLDOWN 60 // cant delay the bomb forever
+#define BUTTON_DELAY	50 //five seconds
 
 /obj/machinery/syndicatebomb
 	icon = 'icons/obj/assemblies.dmi'
@@ -516,7 +517,7 @@
 
 /obj/item/device/syndicatedetonator
 	name = "big red button"
-	desc = "Nothing good can come of pressing a button this garish..."
+	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'"
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
@@ -530,7 +531,7 @@
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)
-				B.explode_now = TRUE
+				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
@@ -550,3 +551,4 @@
 
 
 #undef BUTTON_COOLDOWN
+#undef BUTTON_DELAY
