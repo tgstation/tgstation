@@ -1308,6 +1308,42 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		else
 			. = ""
 
+/var/mob/dview/dview_mob = new
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	dview_mob.loc = center
+
+	dview_mob.see_invisible = invis_flags
+
+	. = view(range, dview_mob)
+	dview_mob.loc = null
+
+/mob/dview
+	invisibility = 101
+	density = 0
+	see_in_dark = 1e6
+	anchored = 1
+
+/mob/dview/Destroy(force=0)
+	stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+
+	if (!force)
+		return QDEL_HINT_LETMELIVE
+
+	world.log << "EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS"
+	global.dview_mob = new
+	return QDEL_HINT_QUEUE
+
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center;           \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
+
 //can a window be here, or is there a window blocking it?
 /proc/valid_window_location(turf/T, dir_to_check)
 	if(!T)

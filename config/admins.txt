@@ -123,4 +123,3 @@ Tacolizard = Game Master
 TrustyGun = Game Master
 Cyberboss = Game Master
 NJose = Host
-Ein-Linet = Host

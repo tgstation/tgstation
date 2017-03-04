@@ -201,4 +201,3 @@
 	for(var/obj/structure/spacevine/SV in src)
 		if(!QDESTROYING(SV))//Helps avoid recursive loops
 			qdel(SV)
-	UpdateAffectingLights()

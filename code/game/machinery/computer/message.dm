@@ -17,7 +17,7 @@
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
 	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
-	var/rebootmsg = "<span class='warning'>%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
+	var/rebootmsg = "<span class='warning'>%$&(ï¿½: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
 	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = 0		// Is it being hacked into by the AI/Cyborg
@@ -29,6 +29,8 @@
 	var/obj/item/device/pda/customrecepient = null
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
+
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user, params)
 	if(istype(O, /obj/item/weapon/screwdriver) && emagged)
@@ -47,7 +49,7 @@
 			var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
 			MK.loc = src.loc
 			// Will help make emagging the console not so easy to get away with.
-			MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
+			MK.info += "<br><br><font color='red'>ï¿½%@%(*$%&(ï¿½&?*(%&ï¿½/{}</font>"
 			var/time = 100 * length(src.linkedServer.decryptkey)
 			addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 			message = rebootmsg
