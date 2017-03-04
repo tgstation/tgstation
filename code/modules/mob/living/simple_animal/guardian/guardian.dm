@@ -341,10 +341,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
 		src << "<span class='notice'>You activate your light.</span>"
-		set_light(3)
+		SetLuminosity(3)
 	else
 		src << "<span class='notice'>You deactivate your light.</span>"
-		set_light(0)
+		SetLuminosity(0)
 
 /mob/living/simple_animal/hostile/guardian/verb/ShowType()
 	set name = "Check Guardian Type"

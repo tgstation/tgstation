@@ -13,8 +13,6 @@
 	var/obj/item/weapon/card/id/prisoner/inserted_id
 	circuit = /obj/item/weapon/circuitboard/computer/prisoner
 
-	light_color = LIGHT_COLOR_RED
-
 /obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
 		return
@@ -142,3 +140,5 @@
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+

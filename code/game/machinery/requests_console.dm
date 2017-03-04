@@ -56,6 +56,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/priority = -1 ; //Priority of the message being sent
 	var/obj/item/device/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
+	luminosity = 0
 	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 70, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
@@ -66,9 +67,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console/update_icon()
 	if(stat & NOPOWER)
-		set_light(0)
+		SetLuminosity(0)
 	else
-		set_light(2)
+		SetLuminosity(2)
 	if(open)
 		if(!hackState)
 			icon_state="req_comp_open"
@@ -191,7 +192,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
-
 				newmessagepriority = 0
 				update_icon()
 				var/messageComposite = ""

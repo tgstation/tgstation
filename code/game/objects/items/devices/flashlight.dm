@@ -14,15 +14,26 @@
 
 /obj/item/device/flashlight/Initialize()
 	..()
-	update_brightness()
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		SetLuminosity(brightness_on)
+	else
+		icon_state = initial(icon_state)
+		SetLuminosity(0)
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+		if(loc == user)
+			user.AddLuminosity(brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+		if(loc == user)
+			user.AddLuminosity(-brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	on = !on
@@ -68,6 +79,21 @@
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
+
+
+/obj/item/device/flashlight/pickup(mob/user)
+	..()
+	if(on)
+		user.AddLuminosity(brightness_on)
+		SetLuminosity(0)
+
+
+/obj/item/device/flashlight/dropped(mob/user)
+	..()
+	if(on)
+		user.AddLuminosity(-brightness_on)
+		SetLuminosity(brightness_on)
+
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -162,7 +188,6 @@
 	var/on_damage = 7
 	var/produce_heat = 1500
 	heat = 1000
-	light_color = LIGHT_COLOR_FLARE
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.

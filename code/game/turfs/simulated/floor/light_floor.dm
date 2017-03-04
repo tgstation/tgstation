@@ -1,7 +1,7 @@
 /turf/open/floor/light
 	name = "light floor"
 	desc = "A wired glass tile embedded into the floor."
-	light_range = 5
+	luminosity = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light
 	broken_states = list("light_broken")
@@ -22,24 +22,24 @@
 		switch(state)
 			if(0)
 				icon_state = "light_on-[coloredlights[currentcolor]]"
-				set_light(1)
+				SetLuminosity(1)
 			if(1)
 				var/num = pick("1","2","3","4")
 				icon_state = "light_on_flicker[num]"
-				set_light(1)
+				SetLuminosity(1)
 			if(2)
 				icon_state = "light_on_broken"
-				set_light(1)
+				SetLuminosity(1)
 			if(3)
 				icon_state = "light_off"
-				set_light(0)
+				SetLuminosity(0)
 	else
-		set_light(0)
+		SetLuminosity(0)
 		icon_state = "light_off"
 
 
 /turf/open/floor/light/ChangeTurf(turf/T)
-	set_light(0)
+	SetLuminosity(0)
 	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)

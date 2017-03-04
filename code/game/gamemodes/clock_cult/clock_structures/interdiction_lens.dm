@@ -29,9 +29,9 @@
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		set_light(4, 0.2)
+		SetLuminosity(4, 2)
 	else
-		set_light(0)
+		SetLuminosity(0)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
@@ -49,7 +49,7 @@
 	recharging = world.time + recharge_time
 	flick("interdiction_lens_discharged", src)
 	icon_state = "interdiction_lens_inactive"
-	set_light(2, 0.1)
+	SetLuminosity(2,1)
 	disabled = TRUE
 	return TRUE
 

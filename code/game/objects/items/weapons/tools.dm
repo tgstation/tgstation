@@ -429,7 +429,7 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 		if(get_fuel() <= 0)
-			set_light(0)
+			user.AddLuminosity(-light_intensity)
 
 		if(isliving(O))
 			var/mob/living/L = O
@@ -441,8 +441,8 @@
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	switched_on(user)
 	if(welding)
-		set_light(light_intensity)
-
+		SetLuminosity(0)
+		user.AddLuminosity(light_intensity)
 	update_icon()
 
 
@@ -506,12 +506,31 @@
 //Switches the welder off
 /obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	welding = 0
-	set_light(0)
+	if(user == loc) //If player is holding the welder
+		user.AddLuminosity(-light_intensity)
+		SetLuminosity(0)
+	else
+		SetLuminosity(0)
 
 	force = 3
 	damtype = "brute"
 	hitsound = "swing_hit"
 	update_icon()
+
+
+/obj/item/weapon/weldingtool/pickup(mob/user)
+	..()
+	if(welding)
+		SetLuminosity(0)
+		user.AddLuminosity(light_intensity)
+
+
+/obj/item/weapon/weldingtool/dropped(mob/user)
+	..()
+	if(welding)
+		if(user)
+			user.AddLuminosity(-light_intensity)
+		SetLuminosity(light_intensity)
 
 
 /obj/item/weapon/weldingtool/examine(mob/user)

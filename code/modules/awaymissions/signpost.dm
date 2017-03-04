@@ -9,7 +9,7 @@
 
 /obj/structure/signpost/New()
 	. = ..()
-	set_light(2)
+	SetLuminosity(2)
 
 /obj/structure/signpost/attackby(obj/item/weapon/W, mob/user, params)
 	return attack_hand(user)

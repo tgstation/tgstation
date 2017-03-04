@@ -218,20 +218,13 @@
 			turfs -= turfs[key]
 			turfs -= key
 	if(A)
-		A.set_dynamic_lighting()
-		for (var/turf/T in turfs)
-			var/area/old_area = T.loc
-			A.contents += T
-			T.change_area(old_area, T)
-		
+		A.contents += turfs
+		A.SetDynamicLighting()
 	else
 		A = new
 		A.setup(str)
-		A.set_dynamic_lighting()
-		for (var/turf/T in turfs)
-			var/area/old_area = T.loc
-			A.contents += T
-			T.change_area(old_area, T)
+		A.contents += turfs
+		A.SetDynamicLighting()
 	A.has_gravity = old_gravity
 
 	for(var/area/RA in old.related)

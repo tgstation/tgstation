@@ -6,10 +6,7 @@
 	gender = PLURAL //"That's some lava."
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-
-	light_range = 2
-	light_power = 0.75
-	light_color = "#c48a18"
+	luminosity = 1
 
 /turf/open/floor/plating/lava/ex_act()
 	return

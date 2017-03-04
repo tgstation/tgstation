@@ -104,7 +104,7 @@ Difficulty: Medium
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
-	light_range = 2
+	luminosity = 2
 	duration = 12
 
 /obj/effect/overlay/temp/dragon_swoop
