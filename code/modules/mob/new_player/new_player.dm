@@ -323,7 +323,7 @@
 					D = T
 					continue
 
-	character.loc = D
+	character.forceMove(D)
 
 	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
 	if(chair)
