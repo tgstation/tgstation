@@ -39,16 +39,17 @@
 	if(!has_gravity() && !gravity_override)
 		return FALSE
 	var/temp_throw = FALSE
-	if(m_intent == MOVE_INTENT_WALK)
-		var/slip_prob = mob_base_gravity_slip_chance
-		var/fall_prob = mob_base_gravity_fall_chance
+
+	if(m_intent == MOVE_INTENT_WALK && SSgravity)
+		var/slip_prob = SSgravity.mob_base_gravity_slip_chance
+		var/fall_prob = SSgravity.mob_base_gravity_fall_chance
 		var/atom/A = get_gravity_handgrip()
 		if(!isnull(A) && istype(A, /atom))
 			if(A.gravity_handhold)
-				slip_prob = mob_handhold_gravity_slip_chance
-				fall_prob = mob_handhold_gravity_fall_chance
-		slip_prob += (gravity_strength * mob_gravity_strength_slip_mod)
-		fall_prob += (gravity_strength * mob_gravity_strength_fall_mod)
+				slip_prob = SSgravity.mob_handhold_gravity_slip_chance
+				fall_prob = SSgravity.mob_handhold_gravity_fall_chance
+		slip_prob += (gravity_strength * SSgravity.mob_gravity_strength_slip_mod)
+		fall_prob += (gravity_strength * SSgravity.mob_gravity_strength_fall_mod)
 		if(prob(slip_prob))
 			src << "<span class='warning'>You slip and lose your grip!</span>"
 		else if(prob(fall_prob))

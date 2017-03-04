@@ -1,6 +1,4 @@
 
-var/global/list/atoms_forced_gravity_processing = list()
-
 /atom/movable
 	layer = OBJ_LAYER
 	var/is_affected_by_gravity = FALSE	//Set to FALSE if this item should never be moved by gravity no matter what. Don't varedit before it has initialized!
@@ -60,10 +58,11 @@ var/global/list/atoms_forced_gravity_processing = list()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
 	if(var_name == "force_gravity_processing")
-		if(new_value)
-			atoms_forced_gravity_processing[src] = src
-		else if(atoms_forced_gravity_processing[src])
-			atoms_forced_gravity_processing -= src
+		if(SSgravity)
+			if(new_value)
+				SSgravity.atoms_forced_gravity_processing[src] = src
+			else if(SSgravity.atoms_forced_gravity_processing[src])
+				SSgravity.atoms_forced_gravity_processing -= src
 
 /atom/movable/proc/manual_gravity_process()
 	sync_gravity()
@@ -108,8 +107,8 @@ var/global/list/atoms_forced_gravity_processing = list()
 		if(T.turf_gravity_overrides_area)
 			T.force_gravity_on_atom(src)
 	sync_gravity()
-	if(force_gravity_processing)
-		atoms_forced_gravity_processing[src] = src
+	if(force_gravity_processing && SSgravity)
+		SSgravity.atoms_forced_gravity_processing[src] = src
 
 /atom/movable/proc/gravity_act(moving = TRUE)
 	set waitfor = FALSE
@@ -222,8 +221,8 @@ var/global/list/atoms_forced_gravity_processing = list()
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
-	if(atoms_forced_gravity_processing[src])
-		atoms_forced_gravity_processing -= src
+	if(SSgravity && SSgravity.atoms_forced_gravity_processing[src])
+		SSgravity.atoms_forced_gravity_processing -= src
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null

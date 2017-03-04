@@ -107,7 +107,7 @@ var/list/teleportlocs = list()
 
 
 /area/Initialize()
-	contents_affected_by_gravity = list()
+	LAZYINITLIST(contents_affected_by_gravity)
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
@@ -432,7 +432,7 @@ var/list/teleportlocs = list()
 		update_all_gravity()
 
 /area/proc/update_all_gravity()
-	if(legacy_gravity)
+	if(SSgravity && SSgravity.legacy_gravity)
 		return FALSE
 	for(var/atom/movable/AM in contents)
 		update_gravity(AM, AM.is_affected_by_gravity)
@@ -464,7 +464,7 @@ var/list/teleportlocs = list()
 			contents_affected_by_gravity -= AM
 
 /area/Entered(A)
-	if(!legacy_gravity)
+	if(SSgravity && !SSgravity.legacy_gravity)
 		var/atom/movable/AM = A
 		if(AM.is_affected_by_gravity)
 			update_gravity(AM, TRUE)
@@ -506,7 +506,7 @@ var/list/teleportlocs = list()
 		return 0
 	else if(A && (A.has_gravity || A.gravity_generator))
 		return 1
-	if(legacy_gravity)
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
 		// There's a gravity generator on our z level
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
@@ -572,5 +572,5 @@ var/list/teleportlocs = list()
 
 /area/Exited(atom/movable/AM, newloc)
 	..()
-	if(!legacy_gravity)
+	if(SSgravity && !SSgravity.legacy_gravity)
 		update_gravity(AM, FALSE)

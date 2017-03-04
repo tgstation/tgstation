@@ -11,8 +11,12 @@
 	var/turf_gravity_stunning = 0
 	var/turf_gravity_override = TRUE
 	var/turf_gravity_speed = 2
-	var/list/atom/movable/atoms_with_forced_gravity = list()
+	var/list/atom/movable/atoms_with_forced_gravity
 	var/turf_has_gravity_override = -1
+
+/turf/open/Initialize()
+	LAZYINITLIST(atoms_with_forced_gravity)
+	..()
 
 /turf/open/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -65,8 +69,9 @@
 	. = ..()
 
 /turf/open/proc/force_gravity_on_atom(atom/movable/AM)
-	if(!atoms_forced_gravity_processing[AM])
-		atoms_forced_gravity_processing[AM] = AM
+	if(SSgravity)
+		if(!SSgravity.atoms_forced_gravity_processing[AM])
+			SSgravity.atoms_forced_gravity_processing[AM] = AM
 	AM.forced_gravity_by_turf = src
 	AM.gravity_strength = turf_gravity_strength
 	AM.gravity_direction = turf_gravity_direction
@@ -76,8 +81,9 @@
 	AM.gravity_override = turf_gravity_override
 
 /turf/open/proc/reset_forced_gravity_atom(atom/movable/AM)
-	if(atoms_forced_gravity_processing[AM])
-		atoms_forced_gravity_processing -= AM
+	if(SSgravity)
+		if(SSgravity.atoms_forced_gravity_processing[AM])
+			LAZYREMOVE(SSgravity.atoms_forced_gravity_processing, AM)
 	AM.forced_gravity_by_turf = null
 	AM.gravity_strength = 0
 	AM.gravity_speed = 5

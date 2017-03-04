@@ -2,7 +2,6 @@
 //
 // Gravity Generator
 //
-var/global/list/gravgens = list()
 var/list/gravity_generators = list() // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
 
 var/const/POWER_IDLE = 0
@@ -139,7 +138,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
-	gravgens -= src
+	if(SSgravity)
+		SSgravity.gravgens -= src
 	on = 0
 	update_list()
 	resync_gravgen_areas()
@@ -154,8 +154,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator/main/Initialize()
 	. = ..()
-	gravgens += src
-	resync_gravgen_areas()
+	if(SSgravity)
+		SSgravity.gravgens += src
+		resync_gravgen_areas()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)

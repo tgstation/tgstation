@@ -78,5 +78,3 @@
 
 	var/current_gravturn = 0
 	is_affected_by_gravity = TRUE
-
-	var/datum/riding/riding_datum

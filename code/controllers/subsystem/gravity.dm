@@ -4,7 +4,7 @@ var/datum/subsystem/gravity/SSgravity
 	name = "Gravity"
 	priority = 75
 	wait = 1
-	init_order = -100
+	init_order = 1
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
 
 	var/mob_base_gravity_slip_chance = 10
@@ -26,13 +26,18 @@ var/datum/subsystem/gravity/SSgravity
 	var/error_mismatched_turf = 0
 	var/error_no_area = 0
 	var/error_no_turf = 0
-	var/list/purging_atoms = list()
+	var/list/gravgens
+	var/list/purging_atoms
+	var/list/atoms_forced_gravity_processing
 	var/static/list/area_blacklist_typecache = typecacheof(list(/area/lavaland, /area/mine, /area/centcom))
 
 /datum/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
 
 /datum/subsystem/gravity/Initialize()
+	LAZYINITLIST(gravgens)
+	LAZYINITILST(purging_atoms)
+	LAZYINITLIST(atoms_forced_gravity_processing)
 	. = ..()
 
 /datum/subsystem/gravity/Recover()
@@ -93,7 +98,7 @@ var/datum/subsystem/gravity/SSgravity
 			purging = FALSE
 			purge_tick++
 			if(purge_tick >= purge_interval)
-				purging_atoms = list()
+				LAZYCLEARLIST(purging_atoms)
 				purging = TRUE
 				purge_tick = 0
 	var/list/currentrun_manual = src.currentrun_manual
