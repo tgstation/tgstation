@@ -542,14 +542,14 @@
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if(src in ticker.mode.devils)
-		if(devilinfo && devilinfo.ascendable)
-			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil='ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
+		if(devilinfo && !devilinfo.ascendable)
+			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
 		else
-			text += "<a href='?src=\ref[src];devil='devil'>DEVIL</a>|<b>ASCENDABLE DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
+			text += "<a href='?src=\ref[src];devil=devil'>DEVIL</a>|<b>ASCENDABLE DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
 	else if(src in ticker.mode.sintouched)
-		text += "devil|<b>SINTOUCHED</b>|<a href='?src=\ref[src];devil=clear'>human</a>"
+		text += "devil|Ascendable Devil|<b>SINTOUCHED</b>|<a href='?src=\ref[src];devil=clear'>human</a>"
 	else
-		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil='ascendable_devil'>Ascendable Devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
+		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
 
 	if(current && current.client && (ROLE_DEVIL in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
@@ -1118,6 +1118,11 @@
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
 					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
 					devilinfo = null
 					if(issilicon(current))
@@ -1139,7 +1144,7 @@
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
-				ticker.mode.finalize_devil(src)
+				ticker.mode.finalize_devil(src, FALSE)
 				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
 				announce_objectives()
