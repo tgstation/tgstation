@@ -115,7 +115,8 @@
 	. = ..()
 		
 	for(var/L in queued_announces)
-		AnnounceArrival(arglist(L))
+		var/datum/callback/C = L
+		C.Invoke()
 	LAZYCLEARLIST(queued_announces)
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
@@ -129,9 +130,8 @@
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
-	var/L = args.Copy()
 	LAZYINITLIST(queued_announces)
-	queued_announces[queued_announces.len + 1] = L
+	queued_announces.Add(CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
 
 /obj/docking_port/mobile/arrivals/canDock(obj/docking_port/stationary/S)
 	if(docked && damaged)
