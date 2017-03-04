@@ -63,18 +63,6 @@
 	else
 		step(src, gravity_direction)
 
-/mob/living/sync_gravity()
-	. = ..()
-	/*var/matrix/turnmatrix = matrix(transform)	//Not working, someone help me on this, this is supposed to turn the mob so it's standing like gravity is in that direction but it isn't working.
-	if(gravity_direction)
-		gravity_turn = dir2angle(gravity_direction)
-		turnmatrix.TurnTo(current_gravturn, gravity_turn)
-		current_gravturn = gravity_turn
-	else
-		turnmatrix.TurnTo(current_gravturn, 0)
-		current_gravturn = 0
-	animate(src, transform = turnmatrix, time = 20)*/
-
 /mob/living/Destroy()
 	if(ranged_ability)
 		ranged_ability.remove_ranged_ability(src)
