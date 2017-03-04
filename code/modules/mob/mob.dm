@@ -970,9 +970,9 @@ var/next_mob_id = 0
 	.["Toggle Build Mode"] = "?_src_=vars;build_mode=\ref[src]"
 	.["Assume Direct Control"] = "?_src_=vars;direct_control=\ref[src]"
 	.["Offer Control to Ghosts"] = "?_src_=vars;offer_control=\ref[src]"
-/*
+
 /mob/vv_get_var(var_name)
 	switch(var_name)
-		if ("attack_log")
-			return debug_variable(var_name, attack_log, 0, src, FALSE)
-	. = ..()*/
+		if("logging")
+			return debug_variable(var_name, logging, 0, src, FALSE)
+	. = ..()
