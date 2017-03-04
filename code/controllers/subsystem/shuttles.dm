@@ -70,6 +70,7 @@ var/datum/subsystem/shuttle/SSshuttle
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
+	..()
 
 /datum/subsystem/shuttle/proc/setup_transit_zone()
 	if(transit_markers.len == 0)
