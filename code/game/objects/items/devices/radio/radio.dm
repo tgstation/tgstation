@@ -238,6 +238,12 @@
 	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
 
+	var/jammed = FALSE
+	for(var/obj/item/device/jammer/jammer in active_jammers)
+		if(get_dist(position,get_turf(jammer)) < jammer.range)
+			jammed = TRUE
+			break
+
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
@@ -254,6 +260,9 @@
 
 	var/jobname // the mob's "job"
 
+	if(jammed)
+		message = stars(message)
+		voice = stars(voice)
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
