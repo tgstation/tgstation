@@ -401,7 +401,7 @@
 			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(70))
+			if (prob(max(70 - (bomb_armor * 0.5), 0)))
 				Paralyse(10)
 
 		if(3)
@@ -411,7 +411,7 @@
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(50))
+			if (prob(max(50 - (bomb_armor * 0.5), 0)))
 				Paralyse(8)
 
 	take_overall_damage(b_loss,f_loss)

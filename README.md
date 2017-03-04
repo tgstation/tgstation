@@ -1,7 +1,6 @@
 ##/tg/station v1.0.1
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
-
+[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>

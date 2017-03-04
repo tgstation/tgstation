@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Cyborg radios can no longer have their inaccessible wires pulsed by
+EMPs."
