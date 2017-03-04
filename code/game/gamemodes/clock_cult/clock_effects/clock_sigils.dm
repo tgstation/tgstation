@@ -83,8 +83,8 @@
 	layer = LOW_SIGIL_LAYER
 	alpha = 125
 	color = "#FAE48C"
-	light_power = 2 //soft light
-	light_range = 0.9
+	light_range = 2 //soft light
+	light_power = 0.9
 	light_color = "#FAE48C"
 	stat_affected = UNCONSCIOUS
 	resist_string = "glows faintly yellow"
@@ -154,8 +154,8 @@
 	icon_state = "sigiltransgression"
 	alpha = 200
 	color = "#A97F1B"
-	light_power = 3 //bright light
-	light_range = 1
+	light_range = 3 //bright light
+	light_power = 1
 	light_color = "#A97F1B"
 	delete_on_finish = FALSE
 	sigil_name = "Sigil of Accession"
