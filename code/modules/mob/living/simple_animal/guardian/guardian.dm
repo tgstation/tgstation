@@ -30,27 +30,19 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //1 by default but abilities chip down on the total 1.
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 1
-	obj_damage = 0
-	melee_damage_lower = 0
-	melee_damage_upper = 0 // all 0 by default until abilities come into play
+	obj_damage = 40
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
-	ranged_cooldown_time = 0 //changed in the abilities datum
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
 	var/mob/living/summoner
-
-	var/obj/item/internal_storage //what we're storing within ourself
-
-	var/list/abilities = list()
-	var/list/current_abilities = list()
-
-	var/range = 0 //how far from the user the spirit can be
-	var/has_mode = FALSE
+	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
 	var/playstyle_string = "<span class='holoparasite'>You are a standard Guardian. You shouldn't exist!</span>"
@@ -58,61 +50,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 
-/mob/living/simple_animal/hostile/guardian/verb/Battlecry()
-	set name = "Set Battlecry"
-	set category = "Guardian"
-	set desc = "Choose what you shout as you attack people."
-	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
-	if(input)
-		for(var/datum/guardian_abilities/I in current_abilities)
-			I.battlecry = input
-
 /mob/living/simple_animal/hostile/guardian/New(loc, theme)
-	setthemename(theme)
-	for(var/type in abilities)
-		var/datum/guardian_abilities/G = new type
-		G.user = summoner
-		G.stando = src
-		G.handle_stats()
-		current_abilities += G
 	parasites |= src
+	setthemename(theme)
+
 	..()
-
-/mob/living/simple_animal/hostile/guardian/Shoot()
-	. = ..()
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.ranged_attack()
-
-/mob/living/simple_animal/hostile/guardian/AttackingTarget()
-	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
-		return 0
-	else
-		for(var/datum/guardian_abilities/I in current_abilities)
-			I.ability_act()
-		..()
-		return 1
-
-/mob/living/simple_animal/hostile/guardian/AltClickOn(atom/movable/A)
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.alt_ability_act(A)
-
-/mob/living/simple_animal/hostile/guardian/Crossed(atom/movable/A)
-	..()
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.bump_reaction(A)
-
-/mob/living/simple_animal/hostile/guardian/Bumped(atom/movable/A)
-	..()
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.bump_reaction(A)
-
-/mob/living/simple_animal/hostile/guardian/Bump(atom/movable/A)
-	..()
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.bump_reaction(A)
-
-
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
@@ -131,8 +73,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
 	parasites -= src
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.destroy_act()
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
@@ -186,9 +126,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	. = ..()
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.life_act()
-
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
 	med_hud_set_status()
@@ -224,25 +161,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(cooldown >= world.time)
 			stat(null, "Manifest/Recall Cooldown Remaining: [max(round((cooldown - world.time)*0.1, 0.1), 0)] seconds")
 
-
-
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	. = ..()
 	snapback()
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.move_act()
-
-/mob/living/simple_animal/hostile/guardian/OpenFire(atom/A)
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.openfire_act(A)
-
-/mob/living/simple_animal/hostile/guardian/throw_impact(atom/A)
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.impact_act(A)
 
 /mob/living/simple_animal/hostile/guardian/proc/snapback()
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.snapback_act()
 	if(summoner)
 		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
@@ -256,31 +179,16 @@ var/global/list/parasites = list() //all currently existing/living guardians
 				forceMove(summoner.loc)
 				new /obj/effect/overlay/temp/guardian/phase(loc)
 
-
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
 
-/mob/living/simple_animal/hostile/guardian/examine(mob/user)
-	if(dextrous)
-		var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
-		msg += "[desc]\n"
-
-		for(var/obj/item/I in held_items)
-			if(!(I.flags & ABSTRACT))
-				if(I.blood_DNA)
-					msg += "<span class='warning'>It has \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
-				else
-					msg += "It has \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
-
-		if(internal_storage && !(internal_storage.flags&ABSTRACT))
-			if(internal_storage.blood_DNA)
-				msg += "<span class='warning'>It is holding \icon[internal_storage] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
-			else
-				msg += "It is holding \icon[internal_storage] \a [internal_storage] in its internal storage.\n"
-		msg += "*---------*</span>"
-		user << msg
+/mob/living/simple_animal/hostile/guardian/AttackingTarget()
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
+		return 0
 	else
 		..()
+		return 1
 
 /mob/living/simple_animal/hostile/guardian/death()
 	drop_all_held_items()
@@ -288,8 +196,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(summoner)
 		summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 		summoner.death()
-	if(internal_storage && dextrous)
-		dropItemToGround(internal_storage)
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	if(summoner && hud_used && hud_used.healths)
@@ -301,8 +207,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //The spirit is invincible, but passes on damage to the summoner
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.adjusthealth_act(amount, updating_health = TRUE, forced = FALSE)
 	. = amount
 	if(summoner)
 		if(loc == summoner)
@@ -316,10 +220,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
-
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.boom_act(severity, target)
 	switch(severity)
 		if(1)
 			gib()
@@ -411,54 +312,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	apply_overlay(GUARDIAN_HANDS_LAYER)
 
 /mob/living/simple_animal/hostile/guardian/regenerate_icons()
-	if(dextrous)
-		update_inv_hands()
-		update_inv_internal_storage()
-
-/mob/living/simple_animal/hostile/guardian/can_equip(obj/item/I, slot)
-	if(dextrous)
-		switch(slot)
-			if(slot_generic_dextrous_storage)
-				if(internal_storage)
-					return 0
-				return 1
-	..()
-
-/mob/living/simple_animal/hostile/guardian/doUnEquip(obj/item/I, force)
-	if(dextrous)
-		if(..())
-			update_inv_hands()
-			if(I == internal_storage)
-				internal_storage = null
-				update_inv_internal_storage()
-			return 1
-		return 0
-
-/mob/living/simple_animal/hostile/guardian/getBackSlot()
-	return slot_generic_dextrous_storage
-
-/mob/living/simple_animal/hostile/guardian/getBeltSlot()
-	return slot_generic_dextrous_storage
-
-/mob/living/simple_animal/hostile/guardian/proc/update_inv_internal_storage()
-	if(internal_storage && client && hud_used && hud_used.hud_shown	&& dextrous)
-		internal_storage.screen_loc = ui_id
-		client.screen += internal_storage
-
-
-
-/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/I, slot)
-	if(dextrous)
-		if(!..())
-			return
-
-		switch(slot)
-			if(slot_generic_dextrous_storage)
-				internal_storage = I
-				update_inv_internal_storage()
-			else
-				src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
-
+	update_inv_hands()
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
@@ -469,11 +323,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		forceMove(summoner.loc)
 		new /obj/effect/overlay/temp/guardian/phase(loc)
 		cooldown = world.time + 10
-		for(var/datum/guardian_abilities/I in current_abilities)
-			I.manifest_act()
 		return TRUE
 	return FALSE
-
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
@@ -482,26 +333,18 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 	forceMove(summoner)
 	cooldown = world.time + 10
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.recall_act()
 	return TRUE
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
-	if(has_mode)
-		for(var/datum/guardian_abilities/I in current_abilities)
-			I.handle_mode()
-	else
-		src << "<span class='danger'><B>You don't have another mode!</span></B>"
+	src << "<span class='danger'><B>You don't have another mode!</span></B>"
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
 		src << "<span class='notice'>You activate your light.</span>"
-		SetLuminosity(3)
+		set_light(3)
 	else
 		src << "<span class='notice'>You deactivate your light.</span>"
-		SetLuminosity(0)
-	for(var/datum/guardian_abilities/I in current_abilities)
-		I.light_switch()
+		set_light(0)
 
 /mob/living/simple_animal/hostile/guardian/verb/ShowType()
 	set name = "Check Guardian Type"

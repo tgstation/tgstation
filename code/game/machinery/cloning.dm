@@ -38,7 +38,11 @@
 
 	// The "brine" is the reagents that are automatically added in small
 	// amounts to the occupant.
-	var/static/list/brine_types = list("salbutamol", "bicaridine", "corazone")
+	var/static/list/brine_types = list(
+		"salbutamol", // anti-oxyloss
+		"bicaridine", // NOBREATHE species take brute in crit
+		"corazone", // prevents cardiac arrest damage
+		"mimesbane") // stops them gasping from lack of air.
 
 /obj/machinery/clonepod/New()
 	..()
@@ -430,20 +434,6 @@
 	for(var/bt in brine_types)
 		if(occupant.reagents.get_reagent_amount(bt) < 1)
 			occupant.reagents.add_reagent(bt, 1)
-
-
-/*
- *	Diskette Box
- */
-
-/obj/item/weapon/storage/box/disks
-	name = "diskette box"
-	icon_state = "disk_kit"
-
-/obj/item/weapon/storage/box/disks/New()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/disk/data(src)
 
 /*
  *	Manual -- A big ol' manual.

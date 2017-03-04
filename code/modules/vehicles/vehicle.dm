@@ -15,6 +15,10 @@
 	var/view_range = 7
 	var/datum/riding/riding_datum = null
 
+/obj/vehicle/Destroy()
+	QDEL_NULL(riding_datum)
+	return ..()
+
 /obj/vehicle/update_icon()
 	return
 
@@ -53,7 +57,7 @@
 		riding_datum.handle_ride(user, direction)
 
 
-/obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/obj/vehicle/Moved()
 	. = ..()
 	if(riding_datum)
 		riding_datum.handle_vehicle_layer()

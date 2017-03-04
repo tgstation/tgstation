@@ -1,4 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - bugfix: "Disables sound/frequency variance on cryo tube alert sound"

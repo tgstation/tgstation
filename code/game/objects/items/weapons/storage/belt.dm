@@ -399,6 +399,12 @@
 		/obj/item/ammo_box,
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER
+	
+/obj/item/weapon/storage/belt/holster/full/New()
+	..()
+	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
+	new /obj/item/ammo_box/c38(src)
+	new /obj/item/ammo_box/c38(src)
 
 /obj/item/weapon/storage/belt/fannypack
 	name = "fannypack"

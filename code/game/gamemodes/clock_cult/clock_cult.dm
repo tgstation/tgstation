@@ -218,7 +218,7 @@ Credit where due:
 			if(half_victory)
 				text += "<span class='large_brass'><b>The crew escaped before [clockwork_objective == CLOCKCULT_GATEWAY ? "Ratvar could rise":"the station could be proselytized"], but the gateway \
 				was successfully constructed!</b></span>"
-				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
+				feedback_set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed ([clockwork_objective])")
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
