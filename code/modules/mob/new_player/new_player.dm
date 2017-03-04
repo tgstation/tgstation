@@ -321,6 +321,11 @@
 					continue
 
 	character.loc = D
+
+	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
+	if(chair)
+		chair.buckle_mob(character)
+
 	ticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc
