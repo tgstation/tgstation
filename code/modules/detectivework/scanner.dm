@@ -18,31 +18,30 @@
 	if(log.len && !scanning)
 		scanning = 1
 		user << "<span class='notice'>Printing report, please wait...</span>"
-
-		spawn(100)
-
-			// Create our paper
-			var/obj/item/weapon/paper/P = new(get_turf(src))
-			P.name = "paper- 'Scanner Report'"
-			P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
-			P.info += jointext(log, "<BR>")
-			P.info += "<HR><B>Notes:</B><BR>"
-			P.info_links = P.info
-
-			if(ismob(loc))
-				var/mob/M = loc
-				M.put_in_hands(P)
-				M << "<span class='notice'>Report printed. Log cleared.<span>"
-
-			// Clear the logs
-			log = list()
-			scanning = 0
+		addtimer(CALLBACK(src, .proc/PrintReport), 100)
 	else
 		user << "<span class='notice'>The scanner has no logs or is in use.</span>"
 
 /obj/item/device/detective_scanner/attack(mob/living/M, mob/user)
 	return
 
+/obj/item/device/detective_scanner/proc/PrintReport()
+	// Create our paper
+	var/obj/item/weapon/paper/P = new(get_turf(src))
+	P.name = "paper- 'Scanner Report'"
+	P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
+	P.info += jointext(log, "<BR>")
+	P.info += "<HR><B>Notes:</B><BR>"
+	P.info_links = P.info
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.put_in_hands(P)
+		M << "<span class='notice'>Report printed. Log cleared.<span>"
+
+	// Clear the logs
+	log = list()
+	scanning = 0
 
 /obj/item/device/detective_scanner/afterattack(atom/A, mob/user, proximity)
 	scan(A, user)
