@@ -17,12 +17,10 @@
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
-	
-	/*
-	if(client && !SSmapping.previous_map_config.defaulted && ticker.state == GAME_STATE_STARTUP)
+
+	if(client && ticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
-	*/
 
 	if(length(newplayer_start))
 		loc = pick(newplayer_start)

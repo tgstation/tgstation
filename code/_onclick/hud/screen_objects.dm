@@ -674,14 +674,18 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible)
+/obj/screen/splash/New(client/C, visible, use_previous_title)
 	holder = C
-	holder.screen += src
 
 	if(!visible)
 		alpha = 0
 	if(SStitle.title_screen)
 		icon = SStitle.title_screen.icon
+
+	holder.screen += src
+	if(use_previous_title && !SSmapping.previous_map_config.defaulted)
+		holder.screen -= src	//Yell at Cyberboss to finish this
+
 	..()
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)

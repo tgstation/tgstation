@@ -224,7 +224,7 @@
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	world << "<span class='boldannounce'>Rebooting world. Loading next map...</span>"
+	world << "<span class='boldannounce'>Rebooting world...</span>"
 	for(var/thing in clients)
 		var/client/C = thing
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
