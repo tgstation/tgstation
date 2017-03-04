@@ -41,6 +41,8 @@
 		/obj/item/weapon/storage/box/actionfigure				= 1,
 		/obj/item/weapon/restraints/handcuffs/fake              = 2)
 
+	light_color = LIGHT_COLOR_GREEN
+
 /obj/machinery/computer/arcade/New()
 	..()
 	// If it's a generic arcade machine, pick a random arcade
