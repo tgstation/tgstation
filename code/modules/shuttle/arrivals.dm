@@ -113,7 +113,6 @@
 		hyperspace_sound(3)
 
 	. = ..()
-	if(docked)
 		
 	for(var/L in queued_announces)
 		AnnounceArrival(arglist(L))
