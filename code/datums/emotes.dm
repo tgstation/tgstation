@@ -98,6 +98,8 @@ var/global/list/emote_list = list()
 			return FALSE
 		if(restraint_check && user.restrained())
 			return FALSE
+		if(user.reagents && user.reagents.has_reagent("mimesbane"))
+			return FALSE
 
 
 /datum/emote/sound

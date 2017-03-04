@@ -9,7 +9,6 @@ var/datum/subsystem/lighting/SSlighting
 	wait = 1
 	flags = SS_TICKER
 	priority = 25
-	display_order = 5
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
 	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
