@@ -101,7 +101,7 @@ Difficulty: Very Hard
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
-	luminosity = 2
+	light_range = 2
 	duration = 8
 	var/target
 
@@ -272,7 +272,7 @@ Difficulty: Very Hard
 	icon_state = "blackbox"
 	icon_on = "blackbox"
 	icon_off = "blackbox"
-	luminosity = 8
+	light_range = 8
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
@@ -365,7 +365,7 @@ Difficulty: Very Hard
 	desc = "A strange chunk of crystal, being in the presence of it fills you with equal parts excitement and dread."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "anomaly_crystal"
-	luminosity = 8
+	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = 0
 	density = 1
@@ -616,7 +616,7 @@ Difficulty: Very Hard
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	luminosity = 4
+	light_range = 4
 	faction = list("neutral")
 	languages_spoken = SLIME
 	languages_understood = ALL

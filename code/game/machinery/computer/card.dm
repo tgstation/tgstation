@@ -43,6 +43,8 @@ var/time_last_changed_position = 0
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
@@ -544,6 +546,8 @@ var/time_last_changed_position = 0
 	target_dept = 2
 	icon_screen = "idhos"
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3
 	icon_screen = "idcmo"
@@ -552,6 +556,10 @@ var/time_last_changed_position = 0
 	target_dept = 4
 	icon_screen = "idrd"
 
+	light_color = LIGHT_COLOR_PINK
+
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
 	icon_screen = "idce"
+
+	light_color = LIGHT_COLOR_YELLOW
