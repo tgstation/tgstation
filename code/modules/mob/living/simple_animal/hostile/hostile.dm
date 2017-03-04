@@ -172,7 +172,7 @@
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = faction_check(L)
+			var/faction_check = faction_check_mob(L)
 			if(robust_searching)
 				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 					return 0
@@ -312,11 +312,7 @@
 	do_alert_animation(src)
 	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, targets_from))
-		var/list/L = M.faction&faction
-		var/success = L.len
-		if(exact_faction_match)
-			success = (L.len == faction.len) //since the above op is &, an exact match would be of the same length
-		if(success)
+		if(faction_check_mob(M, TRUE))
 			if(M.AIStatus == AI_OFF)
 				return
 			else
@@ -328,12 +324,12 @@
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
-				if(faction_check(L) && !attack_same)
+				if(faction_check_mob(L) && !attack_same)
 					return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)
-		var/datum/callback/cb = CALLBACK(A, .proc/Shoot)
+		var/datum/callback/cb = CALLBACK(src, .proc/Shoot, A)
 		addtimer(cb, 1)
 		addtimer(cb, 4)
 		addtimer(cb, 6)

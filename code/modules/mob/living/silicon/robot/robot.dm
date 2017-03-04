@@ -610,7 +610,7 @@
 		if(src.camera)
 			if(!updating)
 				updating = 1
-				addtimer(CALLBACK(.proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
+				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
 	if(module)
 		if(istype(module, /obj/item/weapon/robot_module/janitor))
 			var/turf/tile = loc
@@ -1002,7 +1002,7 @@
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(!(M in buckled_mobs))
+	if(!(M in buckled_mobs) && isliving(M))
 		buckle_mob(M)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -1010,8 +1010,7 @@
 		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
 		return
 	if(!riding_datum)
-		riding_datum = new /datum/riding/cyborg
-		riding_datum.ridden = src
+		riding_datum = new /datum/riding/cyborg(src)
 	if(buckled_mobs)
 		if(buckled_mobs.len >= max_buckled_mobs)
 			return

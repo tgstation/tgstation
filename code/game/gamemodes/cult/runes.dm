@@ -1,5 +1,6 @@
 /var/list/sacrificed = list() //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+var/global/list/rune_types //Every rune that can be drawn by tomes
 
 /*
 
@@ -232,7 +233,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
 	rune_in_use = 1
-	if(!do_after(user, 100, target = paper_to_imbue))
+	if(!do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
 		rune_in_use = 0
 		return
 	new talisman_type(get_turf(src))

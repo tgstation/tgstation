@@ -27,6 +27,7 @@ var/global/datum/getrev/revdata = new()
 		for(var/line in testmerge)
 			if(line)
 				log_world("Test merge active of PR #[line]")
+				feedback_add_details("testmerged_prs","[line]")
 		log_world("Based off master commit [parentcommit]")
 	else
 		log_world(parentcommit)
@@ -35,14 +36,14 @@ var/global/datum/getrev/revdata = new()
 /datum/getrev/proc/DownloadPRDetails()
 	if(!config.githubrepoid)
 		if(testmerge.len)
-			world.log << "PR details download failed: No github repo config set"
+			log_world("PR details download failed: No github repo config set")
 		return
 	if(!isnum(text2num(config.githubrepoid)))
-		world.log << "PR details download failed: Invalid github repo id: [config.githubrepoid]"
+		log_world("PR details download failed: Invalid github repo id: [config.githubrepoid]")
 		return
 	for(var/line in testmerge)
 		if(!isnum(text2num(line)))
-			world.log << "PR details download failed: Invalid PR number: [line]"
+			log_world("PR details download failed: Invalid PR number: [line]")
 			return
 
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
@@ -54,16 +55,16 @@ var/global/datum/getrev/revdata = new()
 		testmerge[line] = json_decode(json)
 
 		if(!testmerge[line])
-			world.log << "PR details download failed: null details returned"
+			log_world("PR details download failed: null details returned")
 			return
 		CHECK_TICK
-	world.log << "PR details successfully downloaded"
+	log_world("PR details successfully downloaded")
 	has_pr_details = TRUE
 
-/datum/getrev/proc/GetTestMergeInfo()
+/datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
 		return ""
-	. = "The following pull requests are currently test merged:<br>"
+	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/details = ""
 		if(has_pr_details)
@@ -92,8 +93,8 @@ var/global/datum/getrev/revdata = new()
 	src << "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes"
 	if(config.show_game_type_odds)
 		if(ticker.current_state == GAME_STATE_PLAYING)
-			src <<"<b>Game Mode Odds for current round:</b>"
 			var/prob_sum = 0
+			var/current_odds_differ = FALSE
 			var/list/probs = list()
 			var/list/modes = config.gamemode_cache
 			for(var/mode in modes)
@@ -101,17 +102,18 @@ var/global/datum/getrev/revdata = new()
 				var/ctag = initial(M.config_tag)
 				if(!(ctag in config.probabilities))
 					continue
-				if((config.min_pop[ctag] && (config.min_pop[ctag] > ticker.totalPlayersReady)) || (initial(M.required_players) > ticker.totalPlayersReady))
-					continue
-				if(config.max_pop[ctag] && (config.max_pop[ctag] < ticker.totalPlayersReady))
+				if((config.min_pop[ctag] && (config.min_pop[ctag] > ticker.totalPlayersReady)) || (config.max_pop[ctag] && (config.max_pop[ctag] < ticker.totalPlayersReady)) || (initial(M.required_players) > ticker.totalPlayersReady))
+					current_odds_differ = TRUE
 					continue
 				probs[ctag] = 1
 				prob_sum += config.probabilities[ctag]
-			for(var/ctag in probs)
-				if(config.probabilities[ctag] > 0)
-					var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
-					src << "[ctag] [percentage]%"
-
+			if(current_odds_differ)
+				src <<"<b>Game Mode Odds for current round:</b>"
+				for(var/ctag in probs)
+					if(config.probabilities[ctag] > 0)
+						var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
+						src << "[ctag] [percentage]%"
+		
 		src <<"<b>All Game Mode Odds:</b>"
 		var/sum = 0
 		for(var/ctag in config.probabilities)

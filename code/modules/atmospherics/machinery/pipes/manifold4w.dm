@@ -99,3 +99,13 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/green/hidden
 	level = 1
+
+/obj/machinery/atmospherics/pipe/manifold4w/orange
+	pipe_color=rgb(255,127,39)
+	color=rgb(255,127,39)
+
+/obj/machinery/atmospherics/pipe/manifold4w/orange/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/manifold4w/orange/hidden
+	level = 1

@@ -702,6 +702,28 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
 
+/obj/machinery/vending/snack/random
+	name = "\improper Random Snackies"
+	desc = "Uh oh!"
+
+/obj/machinery/vending/snack/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+    new T(get_turf(src))
+    qdel(src)
+
+/obj/machinery/vending/snack/blue
+	icon_state = "snackblue"
+
+/obj/machinery/vending/snack/orange
+	icon_state = "snackorange"
+
+/obj/machinery/vending/snack/green
+	icon_state = "snackgreen"
+
+/obj/machinery/vending/snack/teal
+	icon_state = "snackteal"
+
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
@@ -726,11 +748,66 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
+
+/obj/machinery/vending/cola/random
+	name = "\improper Random Drinkies"
+	desc = "Uh oh!"
+
+/obj/machinery/vending/cola/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+    new T(get_turf(src))
+    qdel(src)
+
+/obj/machinery/vending/cola/blue
+	icon_state = "Cola_Machine"
+
+/obj/machinery/vending/cola/black
+	icon_state = "cola_black"
+
+/obj/machinery/vending/cola/red
+	icon_state = "red_cola"
+	name = "\improper Space Cola Vendor"
+	desc = "It vends cola, in space."
+	product_slogans = "Cola in space!"
+
+/obj/machinery/vending/cola/space_up
+	icon_state = "space_up"
+	name = "\improper Space-up! Vendor"
+	desc = "Indulge in an explosion of flavor."
+	product_slogans = "Space-up! Like a hull breach in your mouth."
+
+/obj/machinery/vending/cola/starkist
+	icon_state = "starkist"
+	name = "\improper Star-kist Vendor"
+	desc = "The taste of a star in liquid form."
+	product_slogans = "Drink the stars! Star-kist!"
+
+/obj/machinery/vending/cola/sodie
+	icon_state = "soda"
+
+/obj/machinery/vending/cola/pwr_game
+	icon_state = "pwr_game"
+	name = "\improper Pwr Game Vendor"
+	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
+	product_slogans = "The POWER that gamers crave! PWR GAME!"
+
+/obj/machinery/vending/cola/shamblers
+	name = "\improper Shambler's Vendor"
+	desc = "~Shake me up some of that Shambler's Juice!~"
+	icon_state = "shamblers_juice"
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 10)
+	product_slogans = "~Shake me up some of that Shambler's Juice!~"
+	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
+
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -1022,7 +1099,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/under/skirt/black=1,/obj/item/clothing/under/skirt/blue=1,/obj/item/clothing/under/skirt/red=1,/obj/item/clothing/under/skirt/purple=1,
 	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
 	/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
-	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
+	/obj/item/clothing/glasses/regular=1,/obj/item/clothing/glasses/regular/jamjar=1,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
 	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
 	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,

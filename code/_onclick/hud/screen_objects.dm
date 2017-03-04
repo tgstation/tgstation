@@ -667,8 +667,8 @@
 			L.say(pick(word_messages))
 
 /obj/screen/splash
-	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
+	icon = 'config/title_screens/images/blank.png'
+	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
@@ -678,9 +678,10 @@
 	..()
 	holder = C
 	holder.screen += src
-	var/titlescreen = TITLESCREEN
-	if(titlescreen)
-		icon_state = titlescreen
+
+	if(SStitle.title_screen)
+		icon = SStitle.title_screen.icon
+
 	if(fadeout)
 		animate(src, alpha = 0, time = 30)
 	else
@@ -690,5 +691,7 @@
 		QDEL_IN(src, 30)
 
 /obj/screen/splash/Destroy()
-	holder.screen -= src
+	if(holder)
+		holder.screen -= src
+		holder = null
 	return ..()

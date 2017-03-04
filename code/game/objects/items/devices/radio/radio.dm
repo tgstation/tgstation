@@ -541,6 +541,10 @@
 	subspace_switchable = 1
 	dog_fashion = null
 
+/obj/item/device/radio/borg/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
+
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate

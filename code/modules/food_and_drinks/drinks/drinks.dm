@@ -351,7 +351,7 @@
 	name = "Lemon-Lime Soda"
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up
-	name = "Space-Up"
+	name = "Space-Up!"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
 	list_reagents = list("space_up" = 30)
@@ -380,4 +380,14 @@
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game
+	name = "Pwr Game"
+	desc = "The only drink with the PWR that true gamers crave."
+	icon_state = "purple_can"
+	list_reagents = list("pwr_game" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers
+	name = "Shambler's Juice"
+	desc = "~Shake me up some of that Shambler's Juice!~"
+	icon_state = "shamblers"
+	list_reagents = list("shamblers" = 30)

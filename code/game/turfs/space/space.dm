@@ -60,9 +60,11 @@
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, params)
+/turf/open/space/attackby(obj/item/C, mob/user, area_restriction)
 	..()
 	if(istype(C, /obj/item/stack/rods))
+		if(area_restriction && !istype(get_area(src), area_restriction))
+			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)

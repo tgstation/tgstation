@@ -35,7 +35,7 @@
 		usr << "Bad map file: [map]"
 		return
 
-	var/datum/map_template/M = new(map=map, rename="[map]")
+	var/datum/map_template/M = new(map, "[map]")
 	if(M.preload_size(map))
 		usr << "Map template '[map]' ready to place ([M.width]x[M.height])"
 		SSmapping.map_templates[M.name] = M
