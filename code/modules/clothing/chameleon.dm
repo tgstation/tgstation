@@ -122,6 +122,9 @@
 		update_item(picked_item)
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
+	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon))
+		var/obj/item/weapon/gun/energy/laser/chameleon/CG = target
+		CG.get_chameleon_projectile(picked_item)
 	if(isliving(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
@@ -144,9 +147,6 @@
 			var/obj/item/clothing/PCL = picked_item
 			CL.flags_cover = initial(PCL.flags_cover)
 	target.icon = initial(picked_item.icon)
-	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon) && istype(picked_item, /obj/item/weapon/gun))
-		var/obj/item/weapon/gun/energy/laser/chameleon/CG = target
-		CG.get_chameleon_projectile(picked_item.type)
 
 /datum/action/item_action/chameleon/change/Trigger()
 	if(!IsAvailable())
@@ -431,8 +431,8 @@
 
 /obj/item/weapon/gun/energy/laser/chameleon/Initialize()
 	..()
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
-	copy_vars = list("name", "icon", "icon_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags")
+	copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags")
+	get_chameleon_projectile(/obj/item/weapon/gun/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
@@ -442,12 +442,9 @@
 	for(var/V in copy_vars)
 		if(P.vars[V])
 			chameleon_projectile_vars[V] = P.vars[V]
-	if(chambered)
-		for(var/V in chameleon_projectile_vars)
-			if(chambered.vars[V])
-				chambered.vars[V] = chameleon_projectile_vars[V]
-		if(copy_sound)
-			chambered.fire_sound = fire_sound
+	if(istype(chambered, /obj/item/ammo_casing/energy/chameleon))
+		var/obj/item/ammo_casing/energy/chameleon/AC = chambered
+		AC.projectile_vars = chameleon_projectile_vars.Copy()
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
 	chameleon_projectile_vars = list()
