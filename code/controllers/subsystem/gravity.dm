@@ -27,8 +27,7 @@ var/datum/subsystem/gravity/SSgravity
 	var/error_no_area = 0
 	var/error_no_turf = 0
 	var/list/purging_atoms = list()
-	var/list/area_blacklist_typecache
-	var/list/area_blacklist = list(/area/lavaland, /area/mine, /area/centcom)
+	var/static/list/area_blacklist_typecache = typecacheof(list(/area/lavaland, /area/mine, /area/centcom))
 	var/mob_slip_chance = 0
 	var/mob_fall_chance = 0
 	var/mob_slip_chance_handhold = 0
@@ -41,7 +40,6 @@ var/datum/subsystem/gravity/SSgravity
 	NEW_SS_GLOBAL(SSgravity)
 
 /datum/subsystem/gravity/Initialize()
-	area_blacklist_typecache = typecacheof(area_blacklist)
 	mob_slip_chance = mob_base_gravity_slip_chance
 	mob_fall_chance = mob_base_gravity_fall_chance
 	mob_slip_chance_handhold = mob_handhold_gravity_slip_chance
