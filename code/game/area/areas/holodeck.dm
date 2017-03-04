@@ -1,8 +1,7 @@
 /area/holodeck
 	name = "Holodeck"
 	icon_state = "Holodeck"
-	luminosity = 1
-	lighting_use_dynamic = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags = 0
 
 	var/obj/machinery/computer/holodeck/linked
@@ -125,4 +124,3 @@
 /area/holodeck/rec_center/thunderdome1218
 	name = "Holodeck - 1218 AD"
 	restricted = 1
-

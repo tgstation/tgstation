@@ -511,3 +511,13 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
+
+
+/proc/GetRedPart(const/hexa)
+	return hex2num(copytext(hexa, 2, 4))
+
+/proc/GetGreenPart(const/hexa)
+	return hex2num(copytext(hexa, 4, 6))
+
+/proc/GetBluePart(const/hexa)
+	return hex2num(copytext(hexa, 6, 8))

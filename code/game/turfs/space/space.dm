@@ -14,6 +14,8 @@
 
 	var/global/datum/gas_mixture/space/space_gas = new
 	plane = PLANE_SPACE
+	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
@@ -52,18 +54,17 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,5)
-			light.mode = LIGHTING_STARLIGHT
+			set_light(2)
 			return
-		SetLuminosity(0)
+		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, area_restriction)
+/turf/open/space/attackby(obj/item/C, mob/user, area/area_restriction)
 	..()
 	if(istype(C, /obj/item/stack/rods))
-		if(area_restriction && !istype(get_area(src), area_restriction))
+		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
 			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)

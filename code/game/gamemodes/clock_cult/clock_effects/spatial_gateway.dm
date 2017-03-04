@@ -5,7 +5,7 @@
 	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
 	density = 1
-	luminosity = 2
+	light_range = 2
 	var/sender = TRUE //If this gateway is made for sending, not receiving
 	var/both_ways = FALSE
 	var/lifetime = 25 //How many deciseconds this portal will last
