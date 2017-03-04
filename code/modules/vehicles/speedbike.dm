@@ -60,3 +60,26 @@
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
  	. = ..()
 		riding_datum = new/datum/riding/space/speedbike/speedwagon
+
+/obj/vehicle/space/speedbike/memewagon
+	name = "Engitopia's Magnum Opus"
+	desc = "The supreme department, manifest"
+	icon = 'icons/obj/bike.dmi'
+	icon_state = "speedwagon"
+	layer = LYING_MOB_LAYER
+	overlay_state = "speedwagon_cover"
+
+/obj/vehicle/space/speedbike/speedwagon/Bump(mob/living/A)
+	. = ..()
+	if(A.density && has_buckled_mobs() && (istype(A, /mob/living/carbon/human) && has_buckled_mobs()))
+		var/atom/throw_target = get_edge_target_turf(A, pick(cardinal))
+		A.throw_at(throw_target, 10, 8)
+		A.Weaken(2)
+		A.adjustStaminaLoss(10)
+		A.apply_damage(rand(1,5), BRUTE)
+		visible_message("<span class='danger'>[src] crashes into [A]!</span>")
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+
+/obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+ 	. = ..()
+		riding_datum = new/datum/riding/space/speedbike/speedwagon
