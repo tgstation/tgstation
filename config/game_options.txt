@@ -477,3 +477,6 @@ LAVALAND_BUDGET 60
 
 ## Space Ruin Budged
 Space_Budget 16
+
+#Time in ds from when a player latejoins till the arrival shuttle docks at the station
+ARRIVALS_SHUTTLE_DOCK_WINDOW 50

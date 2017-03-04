@@ -63624,6 +63624,22 @@
 	dir = 1
 	},
 /area/assembly/robotics)
+"cIg" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion"
+	},
+/obj/docking_port/mobile/arrivals,
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 15;
+	id = "arrivals_stationary";
+	name = "arrivals";
+	width = 7
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 aaa
@@ -73248,7 +73264,7 @@ aFE
 aFE
 aFE
 aEr
-aLs
+aCU
 azy
 auP
 azy
@@ -75558,7 +75574,7 @@ aaa
 aCS
 aEx
 aFF
-aFF
+cIg
 aFF
 aKi
 aCS

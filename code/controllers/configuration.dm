@@ -251,6 +251,8 @@
 	var/error_silence_time = 6000 // How long a unique error will be silenced for
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
 
+	var/arrivals_shuttle_dock_window = 50	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -743,6 +745,8 @@
 					MAX_EX_LIGHT_RANGE = BombCap
 					MAX_EX_FLASH_RANGE = BombCap
 					MAX_EX_FLAME_RANGE = BombCap
+				if("arrivals_shuttle_dock_window")
+					config.arrivals_shuttle_dock_window = min(0, text2num(value))
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
