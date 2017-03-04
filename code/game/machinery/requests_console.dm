@@ -68,7 +68,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(stat & NOPOWER)
 		set_light(0)
 	else
-		set_light(2,0.7,#34d352)//green light
+		set_light(2,0.7,"#34D352")//green light
 	if(open)
 		if(!hackState)
 			icon_state="req_comp_open"
