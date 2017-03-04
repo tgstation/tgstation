@@ -36,9 +36,9 @@
 		new /datum/GBP_equipment("Ranged RCD x3",			/obj/item/weapon/rcd/arcd,										5000,	3),
 		new /datum/GBP_equipment("ERT Hardsuit x5",		/obj/item/clothing/suit/space/hardsuit/ert,							6000,	5),
 		new /datum/GBP_equipment("Portal Gun x5",			/obj/item/weapon/gun/energy/wormhole_projector,					8000,	5),
-		new /datum/GBP_equipment("Cloaking Belt x5",		/obj/item/device/shadowcloak,									8000,	5),
+		new /datum/GBP_equipment("Cloaking Belt x5",		/obj/item/device/shadowcloak,									15000,	5),
 		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				10000,	5),
-		new /datum/GBP_equipment("Chrono Suit x5",		/obj/item/clothing/suit/space/chronos,								15000,	5),
+		new /datum/GBP_equipment("Chrono Suit x5",		/obj/item/clothing/suit/space/chronos,								20000,	5),
 		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/speedwagon,				30000,	5),
 		)
 		
@@ -110,7 +110,7 @@
 			GBP -= prize.cost
 			for(var/i in 1 to prize.amount)
 				new prize.equipment_path(get_turf(src))
-			if(prize.cost== 15000) // Still a placeholder
+			if(prize.cost== 20000) // Still a placeholder
 				for(var/i in 1 to prize.amount)
 					new /obj/item/clothing/head/helmet/space/chronos(get_turf(src))
 			feedback_add_details("Engi_equipment_bought",
