@@ -127,7 +127,9 @@
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
-	LAZYADD(queued_announces, args.Copy())
+	var/L = args.Copy()
+	LAZYINITLIST(queued_announces)
+	queued_announces[queued_announces.len + 1] = L
 
 /obj/docking_port/mobile/arrivals/canDock(obj/docking_port/stationary/S)
 	if(docked && damaged)
