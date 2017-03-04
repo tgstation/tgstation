@@ -51,14 +51,14 @@
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
 
-				var/DBQuery/query = dbcon.NewQuery(SQLquery)
-				query.Execute()
-
-				while(query.NextRow())
-					var/author = query.item[1]
-					var/title = query.item[2]
-					var/category = query.item[3]
-					var/id = query.item[4]
+				var/DBQuery/query_library_list_books = dbcon.NewQuery(SQLquery)
+				if(!query_library_list_books.Execute())
+					dat += "<font color=red><b>ERROR</b>: Unable to retrieve book listings. Please contact your system administrator for assistance.</font><BR>"
+				while(query_library_list_books.NextRow())
+					var/author = query_library_list_books.item[1]
+					var/title = query_library_list_books.item[2]
+					var/category = query_library_list_books.item[3]
+					var/id = query_library_list_books.item[4]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
@@ -137,15 +137,15 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(!dbcon.Connect())
 		return
 	cachedbooks = list()
-	var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
-	query.Execute()
-
-	while(query.NextRow())
+	var/DBQuery/query_library_cache = dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
+	if(!query_library_cache.Execute())
+		return
+	while(query_library_cache.NextRow())
 		var/datum/cachedbook/newbook = new()
-		newbook.id = query.item[1]
-		newbook.author = query.item[2]
-		newbook.title = query.item[3]
-		newbook.category = query.item[4]
+		newbook.id = query_library_cache.item[1]
+		newbook.author = query_library_cache.item[2]
+		newbook.title = query_library_cache.item[3]
+		newbook.category = query_library_cache.item[4]
 		cachedbooks += newbook
 
 
@@ -419,9 +419,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 						var/sqlcategory = sanitizeSQL(upload_category)
-						var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
-						if(!query.Execute())
-							usr << query.ErrorMsg()
+						var/DBQuery/query_library_upload = dbcon.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
+						if(!query_library_upload.Execute())
+							alert("Database error encountered uploading to Archive")
+							return
 						else
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
@@ -454,13 +455,14 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			cooldown = world.time + PRINTER_COOLDOWN
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
-			query.Execute()
-
-			while(query.NextRow())
-				var/author = query.item[2]
-				var/title = query.item[3]
-				var/content = query.item[4]
+			var/DBQuery/query_library_print = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
+			if(!query_library_print.Execute())
+				say("PRINTER ERROR! Failed to print document (0x0000000F)"
+				return
+			while(query_library_print.NextRow())
+				var/author = query_library_print.item[2]
+				var/title = query_library_print.item[3]
+				var/content = query_library_print.item[4]
 				var/obj/item/weapon/book/B = new(get_turf(src))
 				B.name = "Book: [title]"
 				B.title = title
