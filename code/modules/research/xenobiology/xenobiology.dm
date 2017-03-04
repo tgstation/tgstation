@@ -556,6 +556,7 @@
 	var/list/stopped_atoms = list()
 	var/freezerange = 2
 	var/duration = 140
+	var/effectsound = 'sound/magic/TIMEPARADOX2.ogg'
 	alpha = 125
 
 /obj/effect/timestop/New()
@@ -567,7 +568,7 @@
 
 
 /obj/effect/timestop/proc/timestop()
-	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
+	playsound(get_turf(src), effectsound, 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
 			if(isliving(A))
@@ -613,6 +614,10 @@
 
 /obj/effect/timestop/wizard
 	duration = 100
+
+/obj/effect/timestop/wizard/guardian
+	effectsound = 'sound/magic/standotime.ogg'
+	freezerange = 5
 
 
 /obj/item/stack/tile/bluespace
