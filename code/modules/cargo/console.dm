@@ -8,6 +8,8 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
+	
+	light_color = "#E2853D"//orange
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
