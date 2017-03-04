@@ -159,12 +159,13 @@
 		user << "<span class='warning'>[H] is already implanted.</span>"
 		return
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
-	if((!HD || HD.status != BODYPART_ROBOTIC) && !H.getorgan(type))
+	if((!HD || HD.status != BODYPART_ROBOTIC) && !H.getorganslot("listener_bug"))
 		new /obj/item/organ/umbral_spawn(H)
 		user << "<span class='notice'>You silently implant [src] into [H]'s brain. The Mindlink will hear everything they say.</span>"
 		flags &= ~NODROP
 		user.drop_item()
-		linked_ability.active = 0
+		if(linked_ability)
+			linked_ability.active = 0
 		qdel(src)
 	return 1
 
