@@ -50,6 +50,7 @@ var/global/list/emote_list = list()
 	if(!msg)
 		return FALSE
 
+	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
 	msg = "<b>[user]</b> " + msg
 
 	for(var/mob/M in dead_mob_list)
@@ -64,7 +65,6 @@ var/global/list/emote_list = list()
 	else
 		user.visible_message(msg)
 	log_emote("[key_name(user)] : [msg]")
-	user.emote_log += "\[[time_stamp()]\] [msg]"
 
 /datum/emote/proc/select_message_type(mob/user)
 	. = message
