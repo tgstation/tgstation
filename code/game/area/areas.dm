@@ -41,7 +41,7 @@
 	var/static_environ
 
 	var/has_gravity = 0				//Has gravity innately/no matter what. Ignores gravity generator gravity direction.
-	var/list/contents_affected_by_gravity = list()
+	var/list/contents_affected_by_gravity
 	var/gravity_generator = FALSE	//Does it have gravity from a gravgen on the zlevel?
 	var/ignores_gravgens = FALSE
 	var/gravity_overriding = FALSE	//Still directionally move things despite not having gravity.
@@ -107,6 +107,7 @@ var/list/teleportlocs = list()
 
 
 /area/Initialize()
+	contents_affected_by_gravity = list()
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
