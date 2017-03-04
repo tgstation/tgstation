@@ -204,7 +204,8 @@
 	if(M.a_intent == INTENT_DISARM)
 		if(M.buckled_mobs && (src in M.buckled_mobs) && M.riding_datum)
 			M.riding_datum.force_dismount(src)
-	dna.species.spec_attack_hand(M, src)
+	if(istype(M))
+		dna.species.spec_attack_hand(M, src)
 
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
