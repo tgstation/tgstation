@@ -216,13 +216,17 @@
 	icon_state = "bsing"
 	put_on_delay = 50
 
-/obj/item/clothing/shoes/heels
-	name = "black thigh-high heels"
-	desc = "These look very hard to walk in."
-	icon_state = "bheels"
-	offset = 1
+/obj/item/clothing/shoes/stilt
+	name = "stilt shoes"
+	desc = "Honk! Don't trip."
+	alternate_worn_icon = 'icons/mob/large-worn-icons/128x128/feet.dmi'
+	icon_state = "stilt_shoes"
+	item_state = "stilt_shoes"
+	worn_x_dimension = 128
+	worn_y_dimension = 128
 
-/obj/item/clothing/shoes/heels/step_action() //the damascus steel slippery slope is lined with shards of byzantine glass
+
+/obj/item/clothing/shoes/stilt/step_action() //the damascus steel slippery slope is lined with shards of byzantine glass
 	var/mob/living/carbon/human/C = loc
 	var/obj/item/bodypart/right = C.get_bodypart("r_leg")
 	var/obj/item/bodypart/left = C.get_bodypart("l_leg")
