@@ -323,9 +323,8 @@
 					D = T
 					continue
 
-	character.forceMove(D)
-
-	SSparallax.UpdateForClient(character.client)
+	character.loc = D
+	character.update_parallax_teleport()
 
 	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
 	if(chair)

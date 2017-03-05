@@ -746,7 +746,7 @@
 					MAX_EX_FLASH_RANGE = BombCap
 					MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
-					config.arrivals_shuttle_dock_window = min(0, text2num(value))
+					config.arrivals_shuttle_dock_window = max(0, text2num(value))
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

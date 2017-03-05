@@ -479,4 +479,5 @@ LAVALAND_BUDGET 60
 Space_Budget 16
 
 #Time in ds from when a player latejoins till the arrival shuttle docks at the station
+#Must be at least 50 to not break parallax
 ARRIVALS_SHUTTLE_DOCK_WINDOW 50
