@@ -142,7 +142,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = russian_html2text(input("Reason:", name, "") as text|null)
+				reason = sanitize_russian((input("Reason:", name, "") as text|null)
 				if(isnull(reason) || ..())
 					return
 
