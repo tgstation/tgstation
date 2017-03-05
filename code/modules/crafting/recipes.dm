@@ -54,7 +54,7 @@
 	name = "Shiv"
 	result = /obj/item/weapon/melee/shiv
 	reqs = list(/obj/item/weapon/shard = 1,
-				/obj/item/weapon/bedsheet = 1)
+				/obj/item/stack/sheet/cloth = 1)
 	time = 10
 	category = CAT_WEAPON
 
@@ -350,25 +350,28 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_CLOTHES
 
-/datum/crafting_recipe/padded_grey_jumpsuit //Only grey jumpsuits can be armored, for obvious reasons.
-	name = "Padded Grey Jumpsuit"
-	result = /obj/item/clothing/under/color/grey/padded
+/datum/crafting_recipe/pad_jumpsuit
+	name = "Pad Jumpsuit"
+	result = /obj/item/clothing/under
 	time = 20
-	reqs = list(/obj/item/clothing/under/color/grey = 1, /obj/item/weapon/bedsheet = 3, /obj/item/stack/crafting/tape = 40)
+	reqs = list(/obj/item/clothing/under = 1, /obj/item/stack/sheet/cloth = 3, /obj/item/stack/crafting/tape = 40)
+	parts = list(/obj/item/clothing/under = 1, /obj/item/stack/sheet/cloth = 3)
 	category = CAT_CLOTHES
 
 /datum/crafting_recipe/reinforced_grey_jumpsuit
-	name = "Reinforced Grey Jumpsuit"
-	result = /obj/item/clothing/under/color/grey/reinforced
+	name = "Reinforce Jumpsuit"
+	result = /obj/item/clothing/under
 	time = 40
-	reqs = list(/obj/item/clothing/under/color/grey = 1, /obj/item/stack/sheet/metal = 2, /obj/item/stack/crafting/tape/electrical = 40)
+	reqs = list(/obj/item/clothing/under = 1, /obj/item/stack/sheet/metal = 2, /obj/item/stack/crafting/tape/electrical = 40)
+	parts = list(/obj/item/clothing/under = 1, /obj/item/stack/sheet/metal = 2)
 	category = CAT_CLOTHES
 
 /datum/crafting_recipe/plated_grey_jumpsuit
-	name = "Plated Grey Jumpsuit"
-	result = /obj/item/clothing/under/color/grey/plated
+	name = "Plate Jumpsuit"
+	result = /obj/item/clothing/under
 	time = 80
-	reqs = list(/obj/item/clothing/under/color/grey = 1, /obj/item/stack/sheet/plasteel = 2, /obj/item/stack/crafting/tape/duct = 40)
+	reqs = list(/obj/item/clothing/under = 1, /obj/item/stack/sheet/plasteel = 2, /obj/item/stack/crafting/tape/duct = 40)
+	parts = list(/obj/item/clothing/under = 1, /obj/item/stack/sheet/plasteel = 2)
 	category = CAT_CLOTHES
 
 //////////

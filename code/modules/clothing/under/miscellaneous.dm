@@ -1,3 +1,34 @@
+/obj/item/clothing/under/CheckParts(list/parts) //This exists for armoring existing jumpsuits
+	..()
+	var/cloth = 0
+	var/metals = 0
+	var/plasteels = 0
+	for(var/obj/item/stack/sheet/cloth/C in contents)
+		cloth += C.amount
+	for(var/obj/item/stack/sheet/metal/M in contents)
+		metals += M.amount
+	for(var/obj/item/stack/sheet/plasteel/P in contents)
+		plasteels += P.amount
+	var/obj/item/clothing/under/U = locate() in contents
+	if(U)
+		if(cloth >= 3)
+			U.name = "padded [U.name]"
+			U.desc = "[U.desc] It's been padded on the inside with cloth to cushion blows."
+			U.armor = list(melee = 5, bullet = 5, laser = 0, energy = 0, bomb = 10, bio = 5, rad = 0, fire = -10, acid = 0)
+		if(metals >= 2)
+			U.name = "armored [initial(U.name)]"
+			U.desc = "[initial(U.desc)] It's been reinforced on the inside with metal sheets to deflect blows."
+			U.armor = list(melee = 10, bullet = 10, laser = -10, energy = 0, bomb = 25, bio = 5, rad = 0, fire = 0, acid = 10)
+			slowdown = 0.5 //You're wearing unshaped sheets of metal.
+		if(plasteels >= 2)
+			U.name = "plated [initial(U.name)]"
+			U.desc = "[initial(U.desc)] It's been plated with plasteel, making it quite protective if incredibly heavy."
+			U.armor = list(melee = 20, bullet = 30, laser = -30, energy = 0, bomb = 30, bio = 5, rad = 0, fire = 0, acid = 25)
+			U.slowdown = 1
+		U.forceMove(loc)
+		qdel(src)
+	return
+
 /obj/item/clothing/under/pj/red
 	name = "red pj's"
 	desc = "Sleepwear."
