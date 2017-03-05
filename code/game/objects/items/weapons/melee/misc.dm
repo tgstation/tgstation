@@ -307,8 +307,21 @@
 	if(target.reagents)
 		target.reagents.add_reagent("heparin", 0.08) //Causes heavy bleeding! (one tick per hit)
 	if(prob(hits))
-		user.visible_message("<span class='warning'>[src] falls apart in [user]'s hands!</span>", "<span class='warning'>Your [name] tears through its cloth, leaving you with just the shard!</span>")
-		user.drop_item()
-		var/obj/item/weapon/shard/S = new(get_turf(user))
-		user.put_in_hands(S)
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			user.visible_message("<span class='warning'>[src] breaks and lodges in [C]!</span>", "<span class='warning'>[src] shatters and embeds itself in [C]'s body!</span>")
+			user.drop_item()
+			C << "<span class='userdanger'>The shiv breaks apart and lodges into your body!</span>"
+			playsound(C, 'sound/effects/hit_on_shattered_glass.ogg', 50, 1)
+			var/obj/item/weapon/shard/S = new(get_turf(user))
+			C.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+			var/obj/item/bodypart/L = pick(C.bodyparts)
+			L.embedded_objects |= S
+			S.add_mob_blood(C)
+			S.loc = C
+			L.receive_damage(S.w_class * S.embedded_impact_pain_multiplier)
+		else
+			user.visible_message("<span class='warning'>[src] breaks apart!</span>", "<span class='warning'>[src] comes apart in your hands!</span>")
+			user.drop_item()
+			playsound(target, 'sound/effects/hit_on_shattered_glass.ogg', 50, 1)
 		qdel(src)

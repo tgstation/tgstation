@@ -58,6 +58,15 @@
 	time = 10
 	category = CAT_WEAPON
 
+/datum/crafting_recipe/wrench_tomahawk
+	name = "Wrench Tomahawk"
+	result = /obj/item/weapon/hatchet/wrench_tomahawk
+	reqs = list(/obj/item/weapon/wrench = 1,
+				/obj/item/weapon/shard = 1,
+				/obj/item/stack/crafting/tape/electrical = 20)
+	time = 30
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/IED
 	name = "IED"
 	result = /obj/item/weapon/grenade/iedcasing
