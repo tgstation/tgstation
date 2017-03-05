@@ -222,7 +222,7 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
 	if (InCritical())
-		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
+		src.log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
 		src.adjustOxyLoss(src.health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)

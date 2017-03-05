@@ -976,6 +976,6 @@ var/next_mob_id = 0
 
 /mob/vv_get_var(var_name)
 	switch(var_name)
-		if ("attack_log")
-			return debug_variable(var_name, attack_log, 0, src, FALSE)
+		if("logging")
+			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()

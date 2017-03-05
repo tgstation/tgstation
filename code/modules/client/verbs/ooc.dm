@@ -13,7 +13,7 @@
 		src << "Guests may not use OOC."
 		return
 
-	msg = strip_html_properly(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
 	if(!msg)
@@ -52,6 +52,7 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
+	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
 	var/keyname = key
 	//if(prefs.unlock_content)
