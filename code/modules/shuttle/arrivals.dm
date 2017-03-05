@@ -17,6 +17,7 @@
 	var/damaged	//too damaged to undock?
 	var/list/areas	//areas in our shuttle
 	var/list/queued_announces	//people coming in that we have to announce
+	var/obj/machinery/requests_console/console
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	preferred_direction = dir
@@ -41,6 +42,8 @@
 	for(var/area/shuttle/arrival/A in sortedAreas)
 		for(var/obj/structure/chair/C in A)
 			latejoin += C
+		if(!console)
+			console = locate(/obj/machinery/requests_console) in A
 		areas += A
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
@@ -77,7 +80,7 @@
 			hyperspace_sound(HYPERSPACE_WARMUP, areas)
 			sound_played = TRUE
 	else if(!found_awake)
-		Launch()
+		Launch(FALSE)
 
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
@@ -90,6 +93,8 @@
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
 	var/dockTime = config.arrivals_shuttle_dock_window
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
+		if(console)
+			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [MAP_NAME].")
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
 
@@ -102,6 +107,7 @@
 			return
 	. = ..()
 	if(!. && !docked)
+		console.say("Welcome to your new life, employees!")
 		for(var/L in queued_announces)
 			var/datum/callback/C = L
 			C.Invoke()
@@ -118,15 +124,17 @@
 	if(. == SHUTTLE_ALREADY_DOCKED)
 		. = SHUTTLE_CAN_DOCK
 
-/obj/docking_port/mobile/arrivals/proc/Launch()
+/obj/docking_port/mobile/arrivals/proc/Launch(pickingup)
 	if(mode != SHUTTLE_CALL)
+		if(console)
+			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode != SHUTTLE_CALL || damaged)
 		return
-
-	Launch()
+	
+	Launch(TRUE)
 
 	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
 	while(mode != SHUTTLE_CALL && !damaged)

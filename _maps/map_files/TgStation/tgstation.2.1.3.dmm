@@ -13977,6 +13977,7 @@
 "aEw" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
 	pixel_y = 30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -73296,7 +73297,7 @@ aEr
 aCU
 azy
 auP
-cIj
+cIh
 ayl
 aRY
 awW
@@ -75085,7 +75086,7 @@ axh
 aIK
 azy
 auP
-cIi
+cIh
 aCU
 aEr
 aEr
@@ -75095,7 +75096,7 @@ aEr
 aCU
 azy
 auP
-cIk
+cIh
 ayl
 aRY
 awW

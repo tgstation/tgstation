@@ -1775,6 +1775,11 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = 30
+	},
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
 "adu" = (
@@ -116200,7 +116205,7 @@
 "ecc" = (
 /obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/electronic_marketing_den)
+/area/shuttle/arrival)
 "ecd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -155225,7 +155230,7 @@ acW
 acW
 ads
 aax
-egX
+egT
 aax
 abR
 aaD
@@ -155739,7 +155744,7 @@ aaa
 aaa
 aaf
 aax
-egY
+egW
 aax
 aaf
 aaf
@@ -156763,7 +156768,7 @@ aca
 acn
 acn
 acI
-eeu
+acI
 acI
 acI
 adN
@@ -158309,7 +158314,7 @@ aaa
 aaa
 aaf
 aax
-egZ
+egV
 aax
 aaf
 aaf
@@ -158823,7 +158828,7 @@ acY
 adi
 adr
 aax
-eha
+egU
 aax
 abT
 aaD

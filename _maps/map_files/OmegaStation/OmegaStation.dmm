@@ -38639,6 +38639,11 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = 30
+	},
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
 "bkG" = (
@@ -79665,7 +79670,7 @@ bkz
 bkC
 bkE
 bgU
-bmQ
+bmO
 bgU
 bjX
 bgP
@@ -80179,7 +80184,7 @@ aaa
 aaa
 aae
 bgU
-bmR
+bmP
 bgU
 aaa
 aaa
