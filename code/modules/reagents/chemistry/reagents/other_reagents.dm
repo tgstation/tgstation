@@ -1559,6 +1559,6 @@
 /datum/reagent/glitter/blue
 	name = "blue glitter"
 	id = "blue_glitter"
-	description = "pink sparkles that get everywhere"
+	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
