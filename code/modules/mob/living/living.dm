@@ -15,7 +15,7 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
-	faction |= "\ref[src]"
+	faction += "\ref[src]"
 
 
 /mob/living/prepare_huds()
@@ -31,6 +31,7 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in player_list)
 		for(var/image/I in staticOverlays)
@@ -188,7 +189,12 @@
 					return
 		if(pulling == AM)
 			stop_pulling()
+		var/current_dir
+		if(isliving(AM))
+			current_dir = AM.dir
 		step(AM, t)
+		if(current_dir)
+			AM.setDir(current_dir)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
@@ -598,7 +604,7 @@
 	if(!override)
 		float(!has_gravity)
 
-/mob/living/proc/float(on)
+/mob/living/float(on)
 	if(throwing)
 		return
 	var/fixed = 0
@@ -861,7 +867,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.AddLuminosity(3)
+		src.set_light(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
@@ -871,7 +877,7 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		src.AddLuminosity(-3)
+		src.set_light(0)
 		clear_alert("fire")
 		update_fire()
 
@@ -910,3 +916,8 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
+
+/mob/living/post_buckle_mob(mob/living/M)
+	if(riding_datum)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.handle_vehicle_layer()

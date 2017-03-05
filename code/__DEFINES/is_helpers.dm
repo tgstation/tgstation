@@ -128,6 +128,8 @@ var/list/static/global/pointed_types = typecacheof(list(
 
 #define is_pointed(W) (is_type_in_typecache(W, pointed_types))
 
+#define isbodypart(A) (istype(A, /obj/item/bodypart))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/device/assembly))
 

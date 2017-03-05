@@ -683,12 +683,15 @@ var/list/TYPES_SHORTCUTS = list(
 	set desc = "Displays a list of things that have failed to GC this round"
 
 	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
-
 	for(var/path in SSgarbage.didntgc)
 		dat += "[path] - [SSgarbage.didntgc[path]] times<BR>"
 
 	dat += "<B>List of paths that did not return a qdel hint in Destroy()</B><BR><BR>"
 	for(var/path in SSgarbage.noqdelhint)
+		dat += "[path]<BR>"
+
+	dat += "<B>List of paths that slept in Destroy()</B><BR><BR>"
+	for(var/path in SSgarbage.sleptDestroy)
 		dat += "[path]<BR>"
 
 	usr << browse(dat, "window=dellog")
@@ -759,3 +762,13 @@ var/list/TYPES_SHORTCUTS = list(
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
 	feedback_add_details("admin_verb","TMH") // If...
 	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
+
+/client/proc/view_runtimes()
+	set category = "Debug"
+	set name = "View Runtimes"
+	set desc = "Open the runtime Viewer"
+
+	if(!holder)
+		return
+
+	error_cache.show_to(src)

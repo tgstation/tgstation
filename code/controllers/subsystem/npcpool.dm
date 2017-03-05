@@ -3,7 +3,6 @@ var/datum/subsystem/npcpool/SSnpc
 /datum/subsystem/npcpool
 	name = "NPC Pool"
 	init_order = 17
-	display_order = 6
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_NO_TICK_CHECK
 	priority = 25
 

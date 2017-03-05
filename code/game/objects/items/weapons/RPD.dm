@@ -571,12 +571,12 @@ var/global/list/RPD_recipes=list(
 				new /obj/item/pipe_meter(A)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
-			if(!is_anchored_dense_turf(A))
+			if(is_anchored_dense_turf(A))
 				user << "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>"
 				return
 			user << "<span class='notice'>You start building a disposals pipe...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20, target = A))
+			if(do_after(user, 4, target = A))
 				var/obj/structure/disposalconstruct/C = new (A, queued_p_type ,queued_p_dir)
 
 				if(!C.can_place())

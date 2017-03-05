@@ -146,9 +146,7 @@
 /obj/item/areaeditor/proc/get_area()
 	var/turf/T = get_turf(usr)
 	var/area/A = T.loc
-	A = A.master
 	return A
-
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
 	if(A.outdoors)
@@ -220,13 +218,20 @@
 			turfs -= turfs[key]
 			turfs -= key
 	if(A)
-		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
+		
 	else
 		A = new
 		A.setup(str)
-		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
 	A.has_gravity = old_gravity
 
 	for(var/area/RA in old.related)

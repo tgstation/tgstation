@@ -13,7 +13,6 @@ var/datum/subsystem/air/SSair
 	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND
-	display_order = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -268,11 +267,11 @@ var/datum/subsystem/air/SSair
 	else
 		T.requires_activation = TRUE
 
-/datum/subsystem/air/proc/begin_map_load()
+/datum/subsystem/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)
 	map_loading = TRUE
 
-/datum/subsystem/air/proc/end_map_load()
+/datum/subsystem/air/StopLoadingMap()
 	map_loading = FALSE
 	for(var/T in queued_for_activation)
 		add_to_active(T)

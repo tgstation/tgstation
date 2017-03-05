@@ -151,12 +151,12 @@
 			// Lack of light hurts non-mushrooms
 			if(isturf(loc))
 				var/turf/currentTurf = loc
-				var/lightAmt = currentTurf.lighting_lumcount
+				var/lightAmt = currentTurf.get_lumcount()
 				if(myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-					if(lightAmt < 2)
+					if(lightAmt < 0.2)
 						adjustHealth(-1 / rating)
 				else // Non-mushroom
-					if(lightAmt < 4)
+					if(lightAmt < 0.4)
 						adjustHealth(-2 / rating)
 
 //Water//////////////////////////////////////////////////////////////////
@@ -259,8 +259,8 @@
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing")
-		SetLuminosity(3)
+			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing"))
+		set_light(3)
 
 	update_icon_hoses()
 
@@ -271,9 +271,9 @@
 	if(!self_sustaining)
 		if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
 			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-			SetLuminosity(G.get_lum(myseed))
+			set_light(G.get_lum(myseed))
 		else
-			SetLuminosity(0)
+			set_light(0)
 
 	return
 

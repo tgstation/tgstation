@@ -57,11 +57,11 @@
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
 
-	var/emitterhealth = 50
-	var/emittermaxhealth = 50
-	var/emitterregen = 0.5
-	var/emittercd = 20
-	var/emitteroverloadcd = 50
+	var/emitterhealth = 20
+	var/emittermaxhealth = 20
+	var/emitterregen = 0.25
+	var/emittercd = 50
+	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
@@ -70,7 +70,7 @@
 	canmove = FALSE
 	var/silent = 0
 	var/hit_slowdown = 0
-	var/light_power = 5
+	var/brightness_power = 5
 	var/slowdown = 0
 
 /mob/living/silicon/pai/movement_delay()

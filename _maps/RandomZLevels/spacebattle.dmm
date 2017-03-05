@@ -581,8 +581,8 @@
 /area/awaymission/spacebattle/cruiser)
 "bX" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l";
-	dir = 4
+	dir = 8;
+	icon_state = "burst_l"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
@@ -626,8 +626,8 @@
 /area/awaymission/spacebattle/cruiser)
 "cf" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
@@ -936,8 +936,8 @@
 /area/awaymission/spacebattle/cruiser)
 "df" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_r"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
@@ -1067,10 +1067,10 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dC" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "dD" = (
 /obj/effect/decal/cleanable/blood,
@@ -1189,10 +1189,10 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dW" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "dX" = (
 /obj/effect/mob_spawn/human/engineer/rig{
@@ -1287,10 +1287,10 @@
 /area/awaymission/spacebattle/cruiser)
 "ej" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "ek" = (
 /obj/structure/grille,
@@ -1872,7 +1872,7 @@
 /area/awaymission/spacebattle/cruiser)
 "gc" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gd" = (
@@ -2247,8 +2247,8 @@
 /area/awaymission/spacebattle/syndicate7)
 "hm" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion_r"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate7)
@@ -2273,10 +2273,10 @@
 /area/awaymission/spacebattle/cruiser)
 "hr" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "hs" = (
 /obj/structure/girder,
@@ -2297,8 +2297,8 @@
 /area/awaymission/spacebattle/syndicate7)
 "hv" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 8
+	dir = 4;
+	icon_state = "propulsion_l"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate7)
@@ -2387,10 +2387,10 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "hM" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "hN" = (
 /obj/structure/rack,
@@ -2596,8 +2596,8 @@
 /area/awaymission/spacebattle/cruiser)
 "iv" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r";
-	dir = 4
+	dir = 8;
+	icon_state = "burst_r"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)

@@ -91,7 +91,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	var/datum/riding/cyborg/riding_datum = null
+	can_ride_typecache = list(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -302,7 +302,6 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
-		stat("Station Time:", worldtime2text())
 		if(module)
 			for(var/datum/robot_energy_storage/st in module.storages)
 				stat("[st.name]:", "[st.energy]/[st.max_energy]")
@@ -598,6 +597,12 @@
 	update_fire()
 
 #define BORG_CAMERA_BUFFER 30
+
+/mob/living/silicon/robot/proc/do_camera_update(oldLoc)
+	if(oldLoc != src.loc)
+		cameranet.updatePortableCamera(src.camera)
+	updating = 0
+
 /mob/living/silicon/robot/Move(a, b, flag)
 	var/oldLoc = src.loc
 	. = ..()
@@ -605,10 +610,7 @@
 		if(src.camera)
 			if(!updating)
 				updating = 1
-				spawn(BORG_CAMERA_BUFFER)
-					if(oldLoc != src.loc)
-						cameranet.updatePortableCamera(src.camera)
-					updating = 0
+				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
 	if(module)
 		if(istype(module, /obj/item/weapon/robot_module/janitor))
 			var/turf/tile = loc
@@ -745,7 +747,7 @@
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
-	SetLuminosity(0)
+	set_light(0)
 
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
@@ -754,7 +756,7 @@
 		spawn(cooldown) //10 seconds by default, if the source of the deactivation does not keep stat that long.
 			lamp_recharging = 0
 	else
-		AddLuminosity(lamp_intensity)
+		set_light(lamp_intensity)
 
 	if(lamp_button)
 		lamp_button.icon_state = "lamp[lamp_intensity]"
@@ -1000,13 +1002,15 @@
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(!(M in buckled_mobs))
+	if(!(M in buckled_mobs) && isliving(M))
 		buckle_mob(M)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+	if(!is_type_in_typecache(M, can_ride_typecache))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		return
 	if(!riding_datum)
-		riding_datum = new /datum/riding/cyborg
-		riding_datum.ridden = src
+		riding_datum = new /datum/riding/cyborg(src)
 	if(buckled_mobs)
 		if(buckled_mobs.len >= max_buckled_mobs)
 			return
@@ -1018,69 +1022,18 @@
 		return
 	if(M.restrained())
 		return
-	if(iscyborg(M))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
-		return
-	if(isbot(M))
-		M.visible_message("<span class='boldwarning'>No. Just... no.</span>")
-		return
 	if(module)
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
-	if(iscarbon(M))
-		if(!equip_buckle_inhands(M))	//MAKE SURE THIS IS LAST!
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
-			return
+	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		return
 	. = ..(M, force, check_loc)
-	riding_datum.handle_vehicle_offsets()
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
 	if(iscarbon(user))
-		unequip_buckle_inhands(user)
+		if(riding_datum)
+			riding_datum.unequip_buckle_inhands(user)
+			riding_datum.restore_position(user)
 	. = ..(user)
-	riding_datum.restore_position(user)
-
-/mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
-	for(var/obj/item/cyborgride_offhand/O in user.contents)
-		if(O.ridden != src)
-			CRASH("RIDING OFFHAND ON WRONG MOB")
-			continue
-		if(O.selfdeleting)
-			continue
-		else
-			qdel(O)
-	return TRUE
-
-/mob/living/silicon/robot/proc/equip_buckle_inhands(mob/living/carbon/user)
-	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user)
-	inhand.rider = user
-	inhand.ridden = src
-	return user.put_in_hands(inhand, TRUE)
-
-/obj/item/cyborgride_offhand
-	name = "offhand"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "offhand"
-	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | DROPDEL | NOBLUDGEON
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/mob/living/carbon/rider
-	var/mob/living/silicon/robot/ridden
-	var/selfdeleting = FALSE
-
-/obj/item/cyborgride_offhand/dropped()
-	selfdeleting = TRUE
-	. = ..()
-
-/obj/item/cyborgride_offhand/equipped()
-	if(loc != rider)
-		selfdeleting = TRUE
-		qdel(src)
-	. = ..()
-
-/obj/item/cyborgride_offhand/Destroy()
-	if(selfdeleting)
-		if(rider in ridden.buckled_mobs)
-			ridden.unbuckle_mob(rider)
-	. = ..()

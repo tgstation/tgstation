@@ -20,6 +20,8 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		if(!user.drop_item())

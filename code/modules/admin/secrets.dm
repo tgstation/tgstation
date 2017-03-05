@@ -56,6 +56,7 @@
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
+			<A href='?src=\ref[src];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
 			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
@@ -529,7 +530,16 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OO")
 			usr.client.only_one()
+			send_to_playing_players('sound/misc/highlander.ogg')
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+
+		if("delayed_onlyone")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","OO")
+			usr.client.only_one_delayed()
+			send_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
@@ -567,11 +577,7 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			var/ctf_enabled = FALSE
-			for(var/obj/machinery/capture_the_flag/CTF in machines)
-				ctf_enabled = CTF.toggle_ctf()
-			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
-			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+			toggle_all_ctf(usr)
 		if("masspurrbation")
 			if(!check_rights(R_FUN))
 				return

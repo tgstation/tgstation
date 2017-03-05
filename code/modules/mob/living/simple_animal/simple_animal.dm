@@ -84,7 +84,6 @@
 
 	//domestication
 	var/tame = 0
-	var/datum/riding/riding_datum = null
 
 /mob/living/simple_animal/New()
 	..()
@@ -302,18 +301,17 @@
 		if(deathmessage || !del_on_death)
 			emote("deathgasp")
 	if(del_on_death)
-		ghostize()
+		..()
 		//Prevent infinite loops if the mob Destroy() is overriden in such
 		//a manner as to cause a call to death() again
 		del_on_death = FALSE
 		qdel(src)
-		return
 	else
 		health = 0
 		icon_state = icon_dead
 		density = 0
 		lying = 1
-	..()
+		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -363,7 +361,7 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -542,11 +540,10 @@
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
-/mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/mob/living/simple_animal/Moved()
 	. = ..()
 	if(riding_datum)
-		riding_datum.handle_vehicle_layer()
-		riding_datum.handle_vehicle_offsets()
+		riding_datum.on_vehicle_move()
 
 
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)

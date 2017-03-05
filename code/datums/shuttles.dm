@@ -172,6 +172,7 @@
 	Outside of admin intervention, it cannot explode. \
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
+	credit_cost = 100000
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
@@ -243,3 +244,10 @@
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
 	credit_cost = 7500
+
+/datum/map_template/shuttle/emergency/raven
+	suffix = "raven"
+	name = "Centcomm Raven Battlecruiser"
+	description = "The Centcomm Raven Battlecruiser is currently docked at the Centcomm ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The Centcomm Raven Battlecutiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range Centcomm Medical Bay."
+	admin_notes = "The long way home"
+	credit_cost = 12500

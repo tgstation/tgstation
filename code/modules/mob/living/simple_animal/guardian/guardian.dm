@@ -261,13 +261,14 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	I.plane = ABOVE_HUD_PLANE
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
-	var/image/I = guardian_overlays[cache_index]
+	var/I = guardian_overlays[cache_index]
 	if(I)
 		add_overlay(I)
 
 /mob/living/simple_animal/hostile/guardian/proc/remove_overlay(cache_index)
-	if(guardian_overlays[cache_index])
-		overlays -= guardian_overlays[cache_index]
+	var/I = guardian_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
 		guardian_overlays[cache_index] = null
 
 /mob/living/simple_animal/hostile/guardian/update_inv_hands()
@@ -340,10 +341,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
 		src << "<span class='notice'>You activate your light.</span>"
-		SetLuminosity(3)
+		set_light(3)
 	else
 		src << "<span class='notice'>You deactivate your light.</span>"
-		SetLuminosity(0)
+		set_light(0)
 
 /mob/living/simple_animal/hostile/guardian/verb/ShowType()
 	set name = "Check Guardian Type"

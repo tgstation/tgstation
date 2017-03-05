@@ -87,7 +87,7 @@
 				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
-				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
+				/obj/item/clothing/head/that{throwforce = 1;} = 1,
 				/obj/item/clothing/head/ushanka = 1,
 				/obj/item/clothing/head/welding = 1,
 				/obj/item/clothing/mask/gas = 15,
@@ -116,8 +116,8 @@
 				/obj/item/clothing/head/cone = 1,
 				/obj/item/weapon/coin/silver = 1,
 				/obj/item/weapon/coin/twoheaded = 1,
-				/obj/item/weapon/poster/contraband = 1,
-				/obj/item/weapon/poster/legit = 1,
+				/obj/item/weapon/poster/random_contraband = 1,
+				/obj/item/weapon/poster/random_official = 1,
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
@@ -169,3 +169,20 @@
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
+
+/obj/effect/spawner/lootdrop/organ_spawner
+	name = "organ spawner"
+	loot = list(
+		/obj/item/organ/heart/gland/bloody = 7,
+		/obj/item/organ/heart/gland/bodysnatch = 4,
+		/obj/item/organ/heart/gland/egg = 7,
+		/obj/item/organ/heart/gland/emp = 3,
+		/obj/item/organ/heart/gland/mindshock = 5,
+		/obj/item/organ/heart/gland/plasma = 7,
+		/obj/item/organ/heart/gland/pop = 5,
+		/obj/item/organ/heart/gland/slime = 4,
+		/obj/item/organ/heart/gland/spiderman = 5,
+		/obj/item/organ/heart/gland/ventcrawling = 1,
+		/obj/item/organ/body_egg/alien_embryo = 1,
+		/obj/item/organ/hivelord_core = 2)
+	lootcount = 3

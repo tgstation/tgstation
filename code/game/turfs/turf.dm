@@ -24,6 +24,7 @@
 
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
+	var/changing_turf = FALSE
 
 /turf/SDQL_update(const/var_name, new_value)
 	if(var_name == "x" || var_name == "y" || var_name == "z")
@@ -50,12 +51,16 @@
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
-/turf/Destroy()
+/turf/Destroy(force)
+	if(!changing_turf)
+		stack_trace("Incorrect turf deletion")
+	changing_turf = FALSE
+	SSair.remove_from_active(src)
 	visibilityChanged()
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return QDEL_HINT_IWILLGC
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -188,24 +193,14 @@
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-	var/old_blueprint_data = blueprint_data
 
-	SSair.remove_from_active(src)
-
-	var/list/old_checkers = proximity_checkers
-	var/old_ex_level = explosion_level
-	var/old_ex_id = explosion_id
-
-	Destroy()	//❄
+	changing_turf = TRUE
+	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
-
-	W.proximity_checkers = old_checkers
-	W.explosion_level = old_ex_level
-	W.explosion_id = old_ex_id
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
-	W.blueprint_data = old_blueprint_data
+
 	return W
 
 /turf/proc/AfterChange(ignore_air = FALSE) //called after a turf has been replaced in ChangeTurf()
@@ -284,11 +279,13 @@
 		usr << "<span class='notice'>You start dumping out the contents...</span>"
 		if(!do_after(usr,20,target=src_object))
 			return 0
-	for(var/obj/item/I in src_object)
-		if(user.s_active != src_object)
-			if(I.on_found(user))
-				return
-		src_object.remove_from_storage(I, src) //No check needed, put everything inside
+
+	var/list/things = src_object.contents.Copy()
+	var/datum/progressbar/progress = new(user, things.len, src)
+	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/weapon/storage.proc/mass_remove_from_storage, src, things, progress)))
+		sleep(1)
+	qdel(progress)
+
 	return 1
 
 //////////////////////////////
@@ -389,11 +386,12 @@
 			continue
 		if(istype(A, /obj/docking_port))
 			continue
+		if(A == T0)
+			continue
 		qdel(A, force=TRUE)
 
 	T0.ChangeTurf(turf_type)
 
-	T0.redraw_lighting()
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
@@ -462,5 +460,5 @@
 
 /turf/proc/remove_decal(group)
 	LAZYINITLIST(decals)
-	overlays -= decals[group]
+	cut_overlay(decals[group])
 	decals[group] = null

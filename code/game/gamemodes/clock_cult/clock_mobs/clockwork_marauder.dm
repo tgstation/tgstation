@@ -13,7 +13,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
-	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)
+	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/global/list/possible_true_names = list("Servant", "Warden", "Serf", "Page", "Usher", "Knave", "Vassal", "Escort")
 	var/mob/living/host //The mob that the marauder is living inside of
@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
 	true_name = pick(possible_true_names)
-	SetLuminosity(2,1)
+	set_light(2, 0.1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
@@ -278,7 +278,7 @@
 				counterchance = initial(counterchance)
 				var/previousattacktext = attacktext
 				attacktext = "counters"
-				target.attack_animal(src)
+				UnarmedAttack(target)
 				attacktext = previousattacktext
 			else
 				counterchance = min(counterchance + initial(counterchance), 100)
@@ -382,7 +382,7 @@
 		return FALSE
 	if(isliving(owner))
 		var/mob/living/L = owner
-		if(!L.can_speak_vocal())
+		if(!L.can_speak_vocal() || L.stat)
 			return FALSE
 	return ..()
 
@@ -424,5 +424,5 @@
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder][linked_marauder.get_alt_name()]</span><span class='sevtug_small'>):</span> [message]"
+			M << "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder] ([linked_marauder.true_name])</span><span class='sevtug_small'>):</span> [message]"
 	return TRUE

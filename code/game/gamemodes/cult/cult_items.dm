@@ -34,7 +34,7 @@
 			user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
 			user.Dizzy(120)
 		else
-			user << "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.gender == FEMALE ? "s" : ""]he shouldn't. Cute.\"</span>"
+			user << "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>"
 			user << "<span class='userdanger'>A horrible force yanks at your arm!</span>"
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
@@ -286,7 +286,7 @@
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
 		SSshuttle.emergency.setTimer(timer)
 		user << "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>"
-		playsound(user.loc, "sound/effects/Glassbr1.ogg", 50, 1)
+		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 50, 1)
 		qdel(src)
 		sleep(20)
 		var/global/list/curses

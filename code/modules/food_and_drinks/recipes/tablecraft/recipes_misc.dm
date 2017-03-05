@@ -316,3 +316,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/branrequests
+	name = "Bran Requests Cereal"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
+	category = CAT_MISCFOOD
