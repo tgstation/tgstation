@@ -17,4 +17,4 @@ spellcheck: fixed a few typos
 experiment: added an experimental thingy
 /:cl:
 
-[]: # (Please add a short description of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding:)
+[why]: # (Please add a short description [on the next line] of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding:) 
