@@ -264,9 +264,9 @@
 	gun = tentacle_gun
 	..()
 
-/obj/item/ammo_casing/magic/tentacle/Destroy()
+/obj/item/ammo_casing/magic/tentacle/Destroy(obj/item/weapon/gun/magic/tentacle/tentacle_gun)
 	gun = null
-	return ..()
+	..()
 
 /obj/item/projectile/tentacle
 	name = "tentacle"
