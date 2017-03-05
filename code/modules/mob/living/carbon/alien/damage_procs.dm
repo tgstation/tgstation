@@ -1,21 +1,32 @@
 
-
-/mob/living/carbon/alien/getToxLoss()
-	return 0
-
-/mob/living/carbon/alien/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE) //alien immune to tox damage
-	return FALSE
+/mob/living/carbon/alien/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+	var/hit_percent = (100-blocked)/100
+	if(!damage || (hit_percent <= 0))
+		return 0
+	switch(damagetype)
+		if(BRUTE)
+			adjustBruteLoss(damage * hit_percent)
+		if(BURN)
+			adjustFireLoss(damage * 2 * hit_percent) // Xenos take double burn damage, MUY IMPORTANTE
+		if(OXY)
+			if(damage < 0) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
+				adjustOxyLoss(damage * hit_percent)
+	return 1
 
 /mob/living/carbon/alien/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE) // Weak to Fire
 	if(amount > 0)
 		amount *= 2
 	. = ..()
 
-
-
-//aliens are immune to stamina damage.
+//aliens are immune to stamina and toxin damage.
 /mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
 /mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
 	return
+	
+/mob/living/carbon/alien/getToxLoss()
+	return FALSE
+
+/mob/living/carbon/alien/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE) //alien immune to tox damage
+	return FALSE
