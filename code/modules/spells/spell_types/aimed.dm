@@ -8,7 +8,7 @@
 	var/active_icon_state = "projectile"
 	var/list/projectile_var_overrides = list()
 	var/projectile_amount = 1	//Projectiles per cast.
-	var/current_amount = 1	//How many projectiles left.
+	var/current_amount = 0	//How many projectiles left.
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -36,7 +36,10 @@
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
-	if(!cast_check(0, ranged_ability_user))
+	var/ignore = TRUE
+	if(current_amount <= 0)
+		ignore = FALSE
+	if(!cast_check(passthrough, ranged_ability_user))
 		remove_ranged_ability()
 		return FALSE
 	var/list/targets = list(target)
@@ -51,8 +54,7 @@
 		return FALSE
 	fire_projectile(user, target)
 	user.newtonian_move(get_dir(U, T))
-	current_amount--
-	if(current_amount <= 0)
+	if(--current_amount <= 0)
 		remove_ranged_ability() //Auto-disable the ability once you run out of bullets.
 	return TRUE
 
