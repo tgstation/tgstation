@@ -39,7 +39,7 @@
 	var/ignore = TRUE
 	if(current_amount <= 0)
 		ignore = FALSE
-	if(!cast_check(passthrough, ranged_ability_user))
+	if(!cast_check(ignore, ranged_ability_user))
 		remove_ranged_ability()
 		return FALSE
 	var/list/targets = list(target)
