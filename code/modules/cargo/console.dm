@@ -83,7 +83,7 @@
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
-			"reason" = sanitize_russian(SO.reason, 1),
+			"reason" = "error", // Ugly fix for requests console breaking on russian letters.
 			"id" = SO.id
 		))
 
