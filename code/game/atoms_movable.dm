@@ -46,10 +46,11 @@
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
 	if(var_name == "force_gravity_processing")
-		if(var_value)
-			atoms_forced_gravity_processing[src] = src
-		else if(atoms_forced_gravity_processing[src])
-			atoms_forced_gravity_processing -= src
+		if(SSgravity)
+			if(var_value)
+				SSgravity.atoms_forced_gravity_processing[src] = src
+			else if(SSgravity.atoms_forced_gravity_processing[src])
+				SSgravity.atoms_forced_gravity_processing -= src
 
 /atom/movable/SDQL_update(const/var_name, new_value)
 	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
@@ -69,7 +70,7 @@
 	gravity_act()
 
 /atom/movable/proc/sync_gravity()
-	if(legacy_gravity)
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
 		return FALSE
 	if(gravity_ignores_area)
 		return FALSE
@@ -100,8 +101,7 @@
 		if(forced_gravity_by_turf)
 			forced_gravity_by_turf.reset_forced_gravity_atom(src)
 
-/atom/movable/Initialize()
-	..()
+/atom/movable/proc/init_gravity()
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		if(T.turf_gravity_overrides_area)
@@ -112,7 +112,7 @@
 
 /atom/movable/proc/gravity_act(moving = TRUE)
 	set waitfor = FALSE
-	if(legacy_gravity)
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
 		return FALSE	//KILLSWITCH!
 	if(!isturf(src.loc))	//Gravity was so strong it was pulling shards and rods out of windows!
 		if(!gravity_ignores_turfcheck)	//We don't need to process.

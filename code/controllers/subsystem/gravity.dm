@@ -4,7 +4,7 @@ var/datum/subsystem/gravity/SSgravity
 	name = "Gravity"
 	priority = 75
 	wait = 1
-	init_order = 1
+	init_order = -100
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
 
 	var/mob_base_gravity_slip_chance = 10
@@ -34,14 +34,23 @@ var/datum/subsystem/gravity/SSgravity
 /datum/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
 
+/datum/subsystem/gravity/proc/init_lists()
+	gravgens = list()
+	purging_atoms = list()
+	atoms_forced_gravity_processing = list()
+
 /datum/subsystem/gravity/Initialize()
-	LAZYINITLIST(gravgens)
-	LAZYINITILST(purging_atoms)
-	LAZYINITLIST(atoms_forced_gravity_processing)
+	init_lists()
+	var/inited_atoms = 0
+	for(var/atom/movable/A in world)
+		A.init_gravity()
+		inited_atoms++
+		CHECK_TICK
+	testing("Initialized gravity for [inited_atoms] movable atoms.")
 	. = ..()
 
 /datum/subsystem/gravity/Recover()
-	Initialize()	//Force init..
+	init_lists()
 	do_purge = SSgravity.do_purge
 	purge_interval = SSgravity.purge_interval
 	error_no_atom = SSgravity.error_no_atom
@@ -98,7 +107,7 @@ var/datum/subsystem/gravity/SSgravity
 			purging = FALSE
 			purge_tick++
 			if(purge_tick >= purge_interval)
-				LAZYCLEARLIST(purging_atoms)
+				LAZYCLEARLIST(src.purging_atoms)
 				purging = TRUE
 				purge_tick = 0
 	var/list/currentrun_manual = src.currentrun_manual

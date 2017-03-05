@@ -97,14 +97,12 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Generator which spawns with the station.
 //
 
-/obj/machinery/gravity_generator/main/station/Initialize()
+/obj/machinery/gravity_generator/main/station/init_gravity()
 	..()
 	setup_parts()
 	middle.add_overlay("activated")
-	if(legacy_gravity)
-		update_list()
-	else
-		resync_gravgen_areas()
+	update_list()
+	resync_gravgen_areas()
 
 //
 // Generator an admin can spawn
@@ -152,7 +150,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			qdel(O)
 	return ..()
 
-/obj/machinery/gravity_generator/main/Initialize()
+/obj/machinery/gravity_generator/main/init_gravity()
 	. = ..()
 	if(SSgravity)
 		SSgravity.gravgens += src
@@ -177,6 +175,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		part.main_part = src
 		parts += part
 		part.update_icon()
+
 /obj/machinery/gravity_generator/main/proc/connected_parts()
 	return parts.len == 8
 

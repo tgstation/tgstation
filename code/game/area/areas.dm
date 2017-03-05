@@ -107,7 +107,7 @@ var/list/teleportlocs = list()
 
 
 /area/Initialize()
-	LAZYINITLIST(contents_affected_by_gravity)
+	contents_affected_by_gravity = list()
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
@@ -441,7 +441,7 @@ var/list/teleportlocs = list()
 	gravity_stunning = FALSE
 
 /area/proc/update_gravity(atom/movable/AM, yes)
-	if(legacy_gravity)
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
 		return FALSE
 	if(yes)
 		AM.gravity_direction = gravity_direction
@@ -549,11 +549,13 @@ var/list/teleportlocs = list()
 	resync_gravgen_areas()
 
 /proc/resync_gravgen_areas()
+	if(!SSgravity)
+		return "NO GRAVITY SUBSYSTEM!"
 	for(var/I in sortedAreas)
 		var/area/A = I
 		A.gravity_generator = FALSE
 		CHECK_TICK
-	for(var/I in gravgens)
+	for(var/I in SSgravity.gravgens)
 		var/obj/machinery/gravity_generator/main/GG = I
 		if(GG.on)
 			for(var/S in sortedAreas)
