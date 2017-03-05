@@ -13,22 +13,23 @@
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
-	var/hinges = "single_hinge"
-	var/has_hinges = TRUE
+	var/latches = "single_latch"
+	var/has_latches = TRUE
 
 /obj/item/weapon/storage/toolbox/Initialize()
 	..()
-	if(has_hinges)
+	if(has_latches)
 		if(prob(10))
-			hinges = "double_hinge"
+			latches = "double_latch"
 		else if(prob(1))
-			hinges = "triple_hinge"
+			latches = "triple_latch"
 	update_icon()
 
 /obj/item/weapon/storage/toolbox/update_icon()
 	..()
 	cut_overlays()
-	add_overlay(image('icons/obj/storage.dmi', "[hinges]"))
+	if(has_latches)
+		add_overlay(image('icons/obj/storage.dmi', "[latches]"))
 
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
@@ -54,7 +55,7 @@
 /obj/item/weapon/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
-	has_hinges = FALSE
+	has_latches = FALSE
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -73,7 +74,7 @@
 /obj/item/weapon/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
-	has_hinges = FALSE
+	has_latches = FALSE
 
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
@@ -134,7 +135,7 @@
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
 	item_state = null
-	has_hinges = FALSE
+	has_latches = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	max_w_class = WEIGHT_CLASS_NORMAL
