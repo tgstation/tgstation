@@ -11693,6 +11693,7 @@
 /area/maintenance/electrical)
 "azy" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "Port Docking Bay 1"
 	},
 /turf/open/floor/plating,
@@ -14512,9 +14513,6 @@
 "aFE" = (
 /obj/structure/chair{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -17995,6 +17993,9 @@
 	},
 /area/hallway/primary/central)
 "aNx" = (
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -63640,6 +63641,34 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/arrival)
+"cIh" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIi" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIj" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIk" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
@@ -73257,7 +73286,7 @@ awZ
 ayl
 azy
 auP
-azy
+cIh
 aCU
 aEr
 aFE
@@ -73267,7 +73296,7 @@ aEr
 aCU
 azy
 auP
-azy
+cIj
 ayl
 aRY
 awW
@@ -74032,7 +74061,7 @@ awW
 aCV
 aEs
 aEr
-aHt
+aEr
 aEr
 aEr
 aCV
@@ -75056,7 +75085,7 @@ axh
 aIK
 azy
 auP
-azy
+cIi
 aCU
 aEr
 aEr
@@ -75066,7 +75095,7 @@ aEr
 aCU
 azy
 auP
-azy
+cIk
 ayl
 aRY
 awW

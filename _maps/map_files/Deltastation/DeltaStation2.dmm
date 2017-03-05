@@ -1431,7 +1431,6 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -1439,7 +1438,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -2276,12 +2274,12 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "aey" = (
-/obj/machinery/door/airlock/glass_command{
-	name = "Cockpit";
-	req_access_txt = "19"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrival Shuttle Airlock";
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (WEST)"
@@ -36490,6 +36488,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "Observer-Start"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
@@ -116668,7 +116669,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/transport)
@@ -118043,6 +118043,124 @@
 	dir = 8
 	},
 /area/chapel/office)
+"egS" = (
+/obj/docking_port/mobile/arrivals{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	name = "delta arrivals shuttle";
+	width = 9
+	},
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	id = "arrivals_stationary";
+	name = "delta arrivals";
+	width = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/arrival)
+"egT" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egU" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egX" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"eha" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
 
 (1,1,1) = {"
 aaa
@@ -155100,14 +155218,14 @@ aax
 aaD
 abT
 aax
-acj
+egT
 aax
 acG
 acW
 acW
 ads
 aax
-acj
+egX
 aax
 abR
 aaD
@@ -155614,14 +155732,14 @@ aaf
 aaf
 aaf
 aax
-acj
+egU
 aax
 aaf
 aaa
 aaa
 aaf
 aax
-ach
+egY
 aax
 aaf
 aaf
@@ -156895,7 +157013,7 @@ aaH
 aaf
 aaf
 aaa
-abq
+egS
 abq
 abU
 acb
@@ -156906,7 +157024,7 @@ acX
 adh
 adt
 acJ
-aeb
+acn
 ael
 aey
 aeO
@@ -158184,14 +158302,14 @@ aaf
 aaf
 aaf
 aax
-ach
+egV
 aax
 aaf
 aaa
 aaa
 aaf
 aax
-ach
+egZ
 aax
 aaf
 aaf
@@ -158698,14 +158816,14 @@ aax
 aaD
 abR
 aax
-ach
+egW
 aax
 acK
 acY
 adi
 adr
 aax
-acj
+eha
 aax
 abT
 aaD

@@ -6,7 +6,6 @@
 	width = 7
 	height = 15
 	dir = WEST
-	preferred_direction = WEST
 	port_angle = 180
 
 	callTime = INFINITY
@@ -20,6 +19,7 @@
 	var/list/queued_announces	//people coming in that we have to announce
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
+	preferred_direction = dir
 	if(mapload)
 		return TRUE	//late initialize to make sure the latejoin list is populated
 
