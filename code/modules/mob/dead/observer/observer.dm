@@ -100,7 +100,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	update_icon()
 
 	if(!T)
-		var/turfs = get_area_turfs(/area/shuttle/arrival)
+		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
 		if(turfs.len)
 			T = pick(turfs)
 		else
