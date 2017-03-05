@@ -38,7 +38,7 @@
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
 	latejoin = list()
-	for(var/area/shuttle/arrival/A in world)
+	for(var/area/shuttle/arrival/A in sortedAreas)
 		for(var/obj/structure/chair/C in A)
 			latejoin += C
 		areas += A
@@ -74,7 +74,7 @@
 		if(found_awake)
 			mode = SHUTTLE_IDLE
 		else if(!sound_played)
-			hyperspace_sound(1)
+			hyperspace_sound(HYPERSPACE_WARMUP, areas)
 			sound_played = TRUE
 	else if(!found_awake)
 		Launch()
@@ -90,21 +90,8 @@
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
 	var/dockTime = config.arrivals_shuttle_dock_window
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
+		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
-
-/obj/docking_port/mobile/arrivals/proc/hyperspace_sound(phase)
-	var/s
-	switch(phase)
-		if(1)
-			s = 'sound/effects/hyperspace_begin.ogg'
-		if(2)
-			s = 'sound/effects/hyperspace_progress.ogg'
-		if(3)
-			s = 'sound/effects/hyperspace_end.ogg'
-		else
-			CRASH("Invalid hyperspace sound phase: [phase]")
-	for(var/A in areas)
-		A << s
 
 /obj/docking_port/mobile/arrivals/dock(obj/docking_port/stationary/S1, force=FALSE)
 	var/docked = S1 == assigned_transit
@@ -112,15 +99,19 @@
 		if(PersonCheck())
 			mode = SHUTTLE_IDLE
 			return
-		hyperspace_sound(2)
+	sound_played = FALSE
 	. = ..()
 	if(!. && !docked)
-		hyperspace_sound(3)
 		for(var/L in queued_announces)
 			var/datum/callback/C = L
 			C.Invoke()
 		LAZYCLEARLIST(queued_announces)
 
+/obj/docking_port/mobile/arrivals/check_effects()
+	..()
+	if(!sound_played && timeLeft(1) <= HYPERSPACE_END_TIME)
+		sound_played = TRUE
+		hyperspace_sound(HYPERSPACE_END, areas)
 
 /obj/docking_port/mobile/arrivals/canDock(obj/docking_port/stationary/S)
 	. = ..()

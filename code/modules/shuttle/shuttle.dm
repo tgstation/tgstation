@@ -715,4 +715,19 @@
 			return S
 	return null
 
+/obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
+	var/s
+	switch(phase)
+		if(HYPERSPACE_WARMUP)
+			s = 'sound/effects/hyperspace_begin.ogg'
+		if(HYPERSPACE_LAUNCH)
+			s = 'sound/effects/hyperspace_progress.ogg'
+		if(HYPERSPACE_END)
+			s = 'sound/effects/hyperspace_end.ogg'
+		else
+			CRASH("Invalid hyperspace sound phase: [phase]")
+	for(var/A in areas)
+		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
+			playsound(E, s, 100, FALSE, max(width, height) - world.view)
+
 #undef DOCKING_PORT_HIGHLIGHT
