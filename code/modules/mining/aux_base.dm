@@ -273,14 +273,16 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 	if(landing_spot.z != ZLEVEL_MINING)
 		user << "<span class='warning'>This device is only to be used in a mining zone.</span>"
 		return
-	var/obj/machinery/computer/auxillary_base/aux_base_console = locate(/obj/machinery/computer/auxillary_base) in machines
-	if(!aux_base_console || get_dist(landing_spot, aux_base_console) > console_range)
+	var/obj/machinery/computer/auxillary_base/aux_base_console
+	for(var/obj/machinery/computer/auxillary_base/ABC in machines)
+		if(get_dist(landing_spot, ABC) <= console_range)
+			aux_base_console = ABC
+			break
+	if(!aux_base_console) //Needs to be near the base to serve as its dock and configure it to control the mining shuttle.
 		user << "<span class='warning'>The auxillary base's console must be within [console_range] meters in order to interface.</span>"
-		return //Needs to be near the base to serve as its dock and configure it to control the mining shuttle.
+		return
 
 //Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
-
-
 	for(var/S in SSshuttle.stationary)
 		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
 		if(SM.id == "mining_home" || SM.id == "mining_away")
