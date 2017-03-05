@@ -99,7 +99,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	update_icon()
 
-	loc = pick(get_area_turfs(/area/shuttle/arrival))
+	if(!T)
+		var/turfs = get_area_turfs(/area/shuttle/arrival)
+		if(turfs.len)
+			T = pick(turfs)
+		else
+			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION)	//middle of the station
+	loc = T
 
 	if(!name)							//To prevent nameless ghosts
 		name = random_unique_name(gender)
