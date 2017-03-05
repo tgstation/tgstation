@@ -95,11 +95,11 @@
 
 /obj/docking_port/mobile/arrivals/dock(obj/docking_port/stationary/S1, force=FALSE)
 	var/docked = S1 == assigned_transit
+	sound_played = FALSE
 	if(docked)	//about to launch
 		if(PersonCheck())
 			mode = SHUTTLE_IDLE
 			return
-	sound_played = FALSE
 	. = ..()
 	if(!. && !docked)
 		for(var/L in queued_announces)
