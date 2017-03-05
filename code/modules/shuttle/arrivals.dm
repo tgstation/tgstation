@@ -8,15 +8,16 @@
 	dir = WEST
 	preferred_direction = WEST
 	port_angle = 180
+
+	callTime = INFINITY
 	ignitionTime = 50
 
 	roundstart_move = TRUE	//force a call to dockRoundstart
 
-	var/docked	//docked at arrivals?
+	var/sound_played
 	var/damaged	//too damaged to undock?
 	var/list/areas	//areas in our shuttle
 	var/list/queued_announces	//people coming in that we have to announce
-	var/roundstart_docked
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	if(mapload)
@@ -44,13 +45,13 @@
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
 	SSshuttle.generate_transit_dock(src)
-	. = dock(assigned_transit)
-	roundstart_docked = TRUE
+	Launch()
+	timer = world.time
+	check()
+	return TRUE
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
-
-	var/docked = src.docked
 
 	if(damaged)
 		//TODO: repair checks
@@ -60,20 +61,24 @@
 		damaged = TRUE
 		var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 		announcer.announce("ARRIVALS_BROKEN", channels = list())
-		if(!docked)
+		if(mode == SHUTTLE_CALL)
 			SendToStation()
 		return
 
-	else if(mode != SHUTTLE_IGNITING)
-		mode = SHUTTLE_IDLE
 
-		var/found_awake = PersonCheck()
-
-		if(docked && !found_awake)
-			hyperspace_sound(1)
-			request(assigned_transit)
-		else if(!docked && found_awake)
+	var/found_awake = PersonCheck()
+	if(mode == SHUTTLE_CALL)
+		if(found_awake)
 			SendToStation()
+	else if(mode == SHUTTLE_IGNITING)
+		if(found_awake)
+			mode = SHUTTLE_IDLE
+		else if(!sound_played)
+			hyperspace_sound(1)
+			sound_played = TRUE
+	else if(!found_awake)
+		Launch()
+
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
 	for(var/A in areas)
@@ -83,10 +88,9 @@
 				return TRUE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
-	if(!docked && mode == SHUTTLE_IDLE)
-		request(SSshuttle.getDock("arrivals_stationary"))
-		setTimer(config.arrivals_shuttle_dock_window)
-		mode = SHUTTLE_CALL
+	var/dockTime = config.arrivals_shuttle_dock_window
+	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
+		setTimer(dockTime)
 
 /obj/docking_port/mobile/arrivals/proc/hyperspace_sound(phase)
 	var/s
@@ -103,43 +107,44 @@
 		A << s
 
 /obj/docking_port/mobile/arrivals/dock(obj/docking_port/stationary/S1, force=FALSE)
-	if(docked && PersonCheck())
-		return FALSE
-
-	docked = S1 != assigned_transit
-	if(!docked)
+	var/docked = S1 == assigned_transit
+	if(docked)	//about to launch
+		if(PersonCheck())
+			mode = SHUTTLE_IDLE
+			return
 		hyperspace_sound(2)
-	else
-		hyperspace_sound(3)
-
 	. = ..()
-		
-	for(var/L in queued_announces)
-		var/datum/callback/C = L
-		C.Invoke()
-	LAZYCLEARLIST(queued_announces)
+	if(!. && !docked)
+		hyperspace_sound(3)
+		for(var/L in queued_announces)
+			var/datum/callback/C = L
+			C.Invoke()
+		LAZYCLEARLIST(queued_announces)
+
+
+/obj/docking_port/mobile/arrivals/canDock(obj/docking_port/stationary/S)
+	. = ..()
+	if(. == SHUTTLE_ALREADY_DOCKED)
+		. = SHUTTLE_CAN_DOCK
+
+/obj/docking_port/mobile/arrivals/proc/Launch()
+	if(mode != SHUTTLE_CALL)
+		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
-	if(docked || damaged)
+	if(mode != SHUTTLE_CALL || damaged)
 		return
-	if(mode == SHUTTLE_IDLE)
-		request(assigned_transit)
+
+	Launch()
 
 	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
-	while(mode == SHUTTLE_IGNITING && docked && !damaged)
+	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
 	LAZYINITLIST(queued_announces)
 	queued_announces.Add(CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
 
-/obj/docking_port/mobile/arrivals/canDock(obj/docking_port/stationary/S)
-	if(docked && damaged)
-		return SHUTTLE_ALREADY_DOCKED
-	return SHUTTLE_CAN_DOCK
-
-/obj/docking_port/mobile/arrivals/get_docked()
-	var/at = assigned_transit
-	if(!at)
-		return ..()
-	return at	//prevent us from losing our spot in transitspace
+/obj/docking_port/mobile/arrivals/enterTransit()
+	testing("Arrivals entering transit")
+	..()
