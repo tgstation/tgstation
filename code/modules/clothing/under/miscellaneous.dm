@@ -27,7 +27,7 @@
 			U.slowdown = 1
 		U.forceMove(loc)
 		qdel(src)
-	return
+	return 1
 
 /obj/item/clothing/under/pj/red
 	name = "red pj's"

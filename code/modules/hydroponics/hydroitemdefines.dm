@@ -97,7 +97,7 @@
 
 /obj/item/weapon/hatchet/wrench_tomahawk
 	name = "wrench tomahawk"
-	desc = "A shard of glass taped to a wrench. Even though it's not very sharp, it's still very deadly."
+	desc = "A shard of glass taped to a wrench. Not very sharp, but still deadly."
 	icon_state = "wrench_tomahawk"
 	item_state = "wrench"
 	flags = null //Glass = non-conductive
