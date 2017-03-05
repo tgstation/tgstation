@@ -142,7 +142,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = sanitize_russian((input("Reason:", name, "") as text|null)
+				reason = sanitize_russian(input("Reason:", name, "") as text|null)
 				if(isnull(reason) || ..())
 					return
 
