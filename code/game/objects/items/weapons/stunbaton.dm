@@ -105,7 +105,7 @@
 
 				H.visible_message("<span class='danger'>[src] strikes [H] and stuns them!</span>")
 
-				user.log_message("<font color='orange'> Stunned by thrown [src.name] last touched by ([src.fingerprintslast])</font>", INDIVIDUAL_ATTACK_LOG)
+				H.log_message("<font color='orange'> Stunned by thrown [src.name] last touched by ([src.fingerprintslast])</font>", INDIVIDUAL_ATTACK_LOG)
 				log_attack("Flying [src.name], last touched by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])" )
 
 				return
