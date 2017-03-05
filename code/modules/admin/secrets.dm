@@ -577,11 +577,7 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			var/ctf_enabled = FALSE
-			for(var/obj/machinery/capture_the_flag/CTF in machines)
-				ctf_enabled = CTF.toggle_ctf()
-			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
-			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+			toggle_all_ctf(usr)
 		if("masspurrbation")
 			if(!check_rights(R_FUN))
 				return

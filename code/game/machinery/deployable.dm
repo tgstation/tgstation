@@ -97,16 +97,20 @@
 	proj_pass_rate = 20
 	armor = list(melee = 10, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 
+	var/deploy_time = 40
+	var/deploy_message = TRUE
+
 
 /obj/structure/barricade/security/New()
 	..()
-	addtimer(CALLBACK(src, .proc/deploy), 40)
+	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
 
 /obj/structure/barricade/security/proc/deploy()
 	icon_state = "barrier1"
 	density = 1
 	anchored = 1
-	visible_message("<span class='warning'>[src] deploys!</span>")
+	if(deploy_message)
+		visible_message("<span class='warning'>[src] deploys!</span>")
 
 
 /obj/item/weapon/grenade/barrier
