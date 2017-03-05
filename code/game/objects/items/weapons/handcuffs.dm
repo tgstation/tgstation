@@ -198,27 +198,15 @@
 								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
 			if(do_mob(user, C, 30))
 				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
+					C.handcuffed = new trashtype(C)
 					C.update_handcuffed()
 					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
 			else
 				user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/april_fools/attack(mob/living/carbon/C, mob/user)
-	if(iscyborg(user))
-		if(!C.handcuffed)
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-			if(do_mob(user, C, 30))
-				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used/april_fools(C)
-					C.update_handcuffed()
-					user << "<span class='notice'>You handcuff [C].</span>"
-					add_logs(user, C, "handcuffed")
-			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
+/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/april_fools
+	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used/april_fools
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
