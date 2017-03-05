@@ -50,7 +50,9 @@
 			/obj/item/trash/popcorn = 1,
 			/obj/item/trash/raisins = 1,
 			/obj/item/trash/sosjerky = 1,
-			/obj/item/trash/syndi_cakes = 1)
+			/obj/item/trash/syndi_cakes = 1,
+			/obj/item/stack/crafting/tape/random = 1,
+			/obj/item/stack/crafting/tape/electrical/random = 1)
 
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
@@ -158,6 +160,7 @@
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
 				/obj/item/weapon/storage/toolbox/artistic = 2,
+				/obj/item/stack/crafting/tape/duct/random = 3,
 				"" = 3
 				)
 

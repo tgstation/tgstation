@@ -283,3 +283,32 @@
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
 	..()
+
+/obj/item/weapon/melee/shiv //A bedsheet wrapped around a glass shard. Causes heavy bleeding but risks coming apart at any time.
+	name = "shiv"
+	desc = "A makeshift weapon made from soft linens wrapped around a glass shard."
+	icon_state = "shiv"
+	force = 4 //Worse than a regular shard
+	throwforce = 10
+	item_state = "shard-glass"
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	resistance_flags = ACID_PROOF
+	obj_integrity = 40
+	max_integrity = 40
+	sharpness = IS_SHARP
+	w_class = WEIGHT_CLASS_SMALL
+	var/hits = 0 //How many times the shiv has been used to attack
+
+/obj/item/weapon/melee/shiv/attack(mob/living/target, mob/living/user)
+	..()
+	hits++
+	if(target.reagents)
+		target.reagents.add_reagent("heparin", 0.8) //Causes heavy bleeding! (one tick per hit)
+	if(prob(hits))
+		user.visible_message("<span class='warning'>[src] falls apart in [user]'s hands!</span>", "<span class='warning'>Your [name] tears through its cloth, leaving you with just the shard!</span>")
+		user.drop_item()
+		var/obj/item/weapon/shard/S = new(get_turf(user))
+		user.put_in_hands(S)
+		qdel(src)

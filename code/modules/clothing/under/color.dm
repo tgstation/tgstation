@@ -31,6 +31,21 @@
 	owner.forcesay(hit_appends)
 	return 0
 
+/obj/item/clothing/under/color/grey/padded
+	desc = "A grey jumpsuit padded on the inside with bedsheets. Mildly less comfortable, and indicative of someone intensely paranoid."
+	armor = list(melee = 5, bullet = 5, laser = 0, energy = 0, bomb = 10, bio = 5, rad = 0, fire = -10, acid = 0)
+
+/obj/item/clothing/under/color/grey/reinforced
+	desc = "A tasteful grey jumpsuit that reminds you of the good old days. There's a sheet of metal lining the inside."
+	armor = list(melee = 10, bullet = 10, laser = -10, energy = 0, bomb = 25, bio = 5, rad = 0, fire = 0, acid = 10)
+	slowdown = 1 //You're wearing unshaped sheets of metal.
+
+/obj/item/clothing/under/color/grey/plated
+	name = "plated grey jumpsuit"
+	desc = "A grey jumpsuit lined with plasteel. Protective if incredibly heavy."
+	armor = list(melee = 20, bullet = 30, laser = -30, energy = 0, bomb = 30, bio = 5, rad = 0, fire = 0, acid = 25)
+	slowdown = 1
+
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
 	icon_state = "blue"
