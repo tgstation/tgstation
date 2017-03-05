@@ -52,6 +52,7 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
+	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
 	var/keyname = key
 	if(prefs.unlock_content)

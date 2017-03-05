@@ -79,12 +79,12 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		message = copytext(message, 3)
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
-	
+
 	if(message_mode == "admin")
 		if(client)
 			client.cmd_admin_say(message)
 		return
-	
+
 	if(message_mode == "deadmin")
 		if(client)
 			client.dsay(message)
@@ -116,7 +116,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	spans += get_spans()
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
-	say_log["[LAZYLEN(say_log) + 1]\[[time_stamp()]\]"] = message
+	log_message(message, INDIVIDUAL_SAY_LOG)
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)
