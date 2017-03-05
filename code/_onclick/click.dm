@@ -158,16 +158,17 @@
 		if(2 to INFINITY)
 			var/obj/dummy = new(get_turf(here)) //We'll try to move this every tick, failing if we can't
 			dummy.pass_flags |= PASSTABLE
-			QDEL_IN(dummy, 10) //1-second grace period for calculation
 			for(var/i in 1 to reach) //Limit it to that many tries
 				var/turf/T = get_step(dummy, get_dir(dummy, there))
 				if(dummy.loc == there.loc)
+					qdel(dummy)
 					return 1
-				if(there.density && dummy in range(1, there)) //For windows and whatnot
+				if(there.density && dummy in range(1, there)) //For windows and 
+					qdel(dummy)
 					return 1
 				if(!dummy.Move(T)) //we're blocked!
+					qdel(dummy)
 					return
-			return
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)
