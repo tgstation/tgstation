@@ -83,7 +83,7 @@
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
-			"reason" = "error", // Ugly fix for requests console breaking on russian letters.
+			"reason" = sanitize_russian(SO.reason, 1),
 			"id" = SO.id
 		))
 
@@ -142,7 +142,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = sanitize_russian(input("Reason:", name, "") as text|null)
+				reason = input("Reason:", name, "") as text|null
 				if(isnull(reason) || ..())
 					return
 
