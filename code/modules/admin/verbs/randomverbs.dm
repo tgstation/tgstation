@@ -664,16 +664,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	return
 
-/client/proc/cmd_admin_attack_log(mob/M in mob_list)
-	set category = "Special Verbs"
-	set name = "Attack Log"
-
-	usr << "<span class='boldannounce'>Attack Log for [mob]</span>"
-	for(var/t in M.attack_log)
-		usr << t
-	feedback_add_details("admin_verb","ATTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
 /client/proc/everyone_random()
 	set category = "Fun"
 	set name = "Make Everyone Random"
