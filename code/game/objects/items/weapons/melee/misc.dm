@@ -305,7 +305,7 @@
 	..()
 	hits++
 	if(target.reagents)
-		target.reagents.add_reagent("heparin", 0.8) //Causes heavy bleeding! (one tick per hit)
+		target.reagents.add_reagent("heparin", 0.08) //Causes heavy bleeding! (one tick per hit)
 	if(prob(hits))
 		user.visible_message("<span class='warning'>[src] falls apart in [user]'s hands!</span>", "<span class='warning'>Your [name] tears through its cloth, leaving you with just the shard!</span>")
 		user.drop_item()
