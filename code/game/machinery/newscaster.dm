@@ -192,6 +192,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/c_locked=0
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
+	luminosity = 0
 	anchored = 1
 
 /obj/machinery/newscaster/security_unit

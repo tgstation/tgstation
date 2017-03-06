@@ -183,9 +183,9 @@
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 
 	if(user.light_on)
-		user.set_light(0)
+		user.AddLuminosity(-6)
 	else
-		user.set_light(6)
+		user.AddLuminosity(6)
 	user.light_on = !user.light_on
 	user << "<span class='notice'>You toggle your light [user.light_on ? "on" : "off"].</span>"
 

@@ -392,6 +392,7 @@
 
 	T0.ChangeTurf(turf_type)
 
+	T0.redraw_lighting()
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)

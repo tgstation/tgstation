@@ -325,7 +325,7 @@
 		damage *= multiplier
 	duration = max(round(damage * 0.2), 1)
 	..()
-	set_light(3, 0.2)
+	SetLuminosity(3, 2)
 
 /obj/effect/overlay/temp/ratvar/volt_hit/true/New(loc, caster, multiplier)
 	..()
@@ -424,7 +424,7 @@
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 70
-	light_range = 6
+	luminosity = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()

@@ -5,9 +5,6 @@
 	blend_mode = BLEND_OVERLAY
 
 /obj/screen/plane_master/New()
-	// Yes because of course it's automatically implied that if a plane master uses blend multiply it ALWAYS needs a backdrop.
-	// Jesus christ this is 2012 SVN tier retardedness get your shit together TG.
-	/*
 	if(blend_mode == BLEND_MULTIPLY)
 		//What is this? Read http://www.byond.com/forum/?post=2141928
 		var/image/backdrop = image('icons/mob/screen_gen.dmi', "black")
@@ -15,7 +12,6 @@
 		backdrop.layer = BACKGROUND_LAYER
 		backdrop.blend_mode = BLEND_OVERLAY
 		add_overlay(backdrop)
-	*/
 	..()
 
 /obj/screen/plane_master/game_world
@@ -26,5 +22,7 @@
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
-	blend_mode = BLEND_MULTIPLY
+	blend_mode = BLEND_OVERLAY
+//	blend_mode = BLEND_MULTIPLY
+//	color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0.1,0.1,0.1,0)
 	mouse_opacity = 0

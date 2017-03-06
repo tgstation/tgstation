@@ -9,8 +9,6 @@
 	circuit = /obj/item/weapon/circuitboard/computer/crew
 	var/monitor = null	//For VV debugging purposes
 
-	light_color = LIGHT_COLOR_BLUE
-
 /obj/machinery/computer/crew/New()
 	monitor = crewmonitor
 	return ..()

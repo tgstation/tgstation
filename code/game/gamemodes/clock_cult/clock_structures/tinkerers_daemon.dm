@@ -130,10 +130,10 @@
 		component_glow.color = component_color
 		add_overlay(component_glow)
 		production_time = world.time + production_cooldown //don't immediately produce when turned on after being off
-		set_light(2, 0.1)
+		SetLuminosity(2, 1)
 	else
 		cut_overlays()
-		set_light(0)
+		SetLuminosity(0)
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/proc/get_component_cost(id)
 	return max(MIN_CLOCKCULT_POWER*2, (MIN_CLOCKCULT_POWER*2) * (1 + round(clockwork_component_cache[id] * 0.2)))

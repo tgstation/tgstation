@@ -14,8 +14,6 @@
 
 	var/global/datum/gas_mixture/space/space_gas = new
 	plane = PLANE_SPACE
-	light_power = 0.25
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
@@ -54,9 +52,10 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			set_light(2)
+			SetLuminosity(4,5)
+			light.mode = LIGHTING_STARLIGHT
 			return
-		set_light(0)
+		SetLuminosity(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)

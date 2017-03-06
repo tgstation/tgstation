@@ -10,7 +10,7 @@
 
 /obj/effect/light_emitter/New()
 	..()
-	set_light(set_luminosity, set_cap)
+	SetLuminosity(set_luminosity, set_cap)
 
 /**********************Miner Lockers**************************/
 

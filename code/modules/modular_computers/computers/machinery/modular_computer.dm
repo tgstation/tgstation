@@ -58,9 +58,9 @@ var/list/global_modular_computers = list()
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
-		set_light(0)
+		SetLuminosity(0)
 	else
-		set_light(light_strength)
+		SetLuminosity(light_strength)
 		if(cpu.active_program)
 			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 		else

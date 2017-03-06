@@ -234,13 +234,13 @@
 		return 0
 	operating = 1
 	do_animate("opening")
-	set_opacity(0)
+	SetOpacity(0)
 	sleep(5)
 	density = 0
 	sleep(5)
 	layer = OPEN_DOOR_LAYER
 	update_icon()
-	set_opacity(0)
+	SetOpacity(0)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -269,7 +269,7 @@
 	sleep(5)
 	update_icon()
 	if(visible && !glass)
-		set_opacity(1)
+		SetOpacity(1)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()

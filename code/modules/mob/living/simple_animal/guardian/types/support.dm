@@ -93,7 +93,7 @@
 	icon = 'icons/turf/floors.dmi'
 	desc = "A recieving zone for bluespace teleportations."
 	icon_state = "light_on-w"
-	light_range = 1
+	luminosity = 1
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER

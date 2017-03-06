@@ -32,10 +32,10 @@
 
 /obj/structure/firepit/proc/toggleFirepit()
 	if(active)
-		set_light(8)
+		SetLuminosity(8)
 		icon_state = "firepit-active"
 	else
-		set_light(0)
+		SetLuminosity(0)
 		icon_state = "firepit"
 
 /obj/structure/firepit/extinguish()

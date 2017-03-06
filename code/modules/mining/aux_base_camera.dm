@@ -54,8 +54,6 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 
-	light_color = LIGHT_COLOR_PINK
-
 /obj/machinery/computer/camera_advanced/base_construction/New()
 	..()
 	RCD = new /obj/item/weapon/rcd/internal(src)

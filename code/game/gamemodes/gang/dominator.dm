@@ -21,7 +21,7 @@
 
 /obj/machinery/dominator/New()
 	..()
-	set_light(2)
+	SetLuminosity(2)
 	poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, 1, src)
@@ -117,7 +117,7 @@
 
 		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
 
-	set_light(0)
+	SetLuminosity(0)
 	icon_state = "dominator-broken"
 	cut_overlays()
 	operating = 0
@@ -180,10 +180,14 @@
 		countdown.color = gang.color_hex
 		countdown.start()
 
-		set_light(3)
+		SetLuminosity(3)
 		START_PROCESSING(SSmachine, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in ticker.mode.gangs)
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
+
+
+
+

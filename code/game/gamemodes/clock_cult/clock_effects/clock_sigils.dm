@@ -94,7 +94,7 @@
 
 /obj/effect/clockwork/sigil/submission/New()
 	..()
-	set_light(glow_light, glow_falloff/10)
+	SetLuminosity(glow_light,glow_falloff)
 
 /obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
@@ -260,9 +260,10 @@
 	else
 		alpha = min(initial(alpha) + power_charge*0.02, 255)
 	if(!power_charge)
-		set_light(0)
+		SetLuminosity(0)
 	else
-		set_light(round(alpha*0.03, 1), round(alpha*0.002, 1))
+		SetLuminosity(round(alpha*0.03, 1), round(alpha*0.02, 1))
+
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality

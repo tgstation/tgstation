@@ -88,20 +88,20 @@
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)
-		set_light(0)
+		SetLuminosity(0)
 		return
 
 	switch(burn_time_remaining())
 		if(0 to 500)
-			set_light(1)
+			SetLuminosity(1)
 		if(500 to 1000)
-			set_light(2)
+			SetLuminosity(2)
 		if(1000 to 1500)
-			set_light(3)
+			SetLuminosity(3)
 		if(1500 to 2000)
-			set_light(4)
+			SetLuminosity(4)
 		if(2000 to MAXIMUM_BURN_TIMER)
-			set_light(6)
+			SetLuminosity(6)
 
 /obj/structure/fireplace/process()
 	if(!lit)
