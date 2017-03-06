@@ -1223,7 +1223,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/romerol
 	cost = 20
 	surplus = 0
-	Restricted_roles = list("viroglist")
+	Restricted_roles = list("Virologist")
 
 // Pointless
 /datum/uplink_item/badass
