@@ -57,17 +57,26 @@
 	. = ..()
 
 	if(damaged)
-		//TODO: repair checks
-		return
-	//TODO: check for damage
-	else if(FALSE)
-		damaged = TRUE
-		var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-		announcer.announce("ARRIVALS_BROKEN", channels = list())
-		if(mode == SHUTTLE_CALL)
-			SendToStation()
+		if(!CheckTurfsPressure())
+			damaged = FALSE
+			if(console)
+				console.say("Repairs complete, launching soon.") 
 		return
 
+//If this proc is high on the profiler add a cooldown to the stuff after this line
+
+	else if(CheckTurfsPressure())
+		damaged = TRUE
+		if(console)
+			console.say("Alert, hull breach detected!")
+		var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+		announcer.announce("ARRIVALS_BROKEN", channels = list())
+		if(mode != SHUTTLE_CALL)
+			sound_played = FALSE
+			mode = SHUTTLE_IDLE
+		else		
+			SendToStation()
+		return
 
 	var/found_awake = PersonCheck()
 	if(mode == SHUTTLE_CALL)
@@ -82,6 +91,13 @@
 	else if(!found_awake)
 		Launch(FALSE)
 
+/obj/docking_port/mobile/arrivals/proc/CheckTurfsPressure()
+	for(var/I in latejoin)
+		var/turf/open/T = get_turf(I)
+		var/pressure = T.air.return_pressure()
+		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE)	//simple safety check
+			return TRUE
+	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
 	for(var/A in areas)
@@ -89,6 +105,7 @@
 			//don't dock for braindead'
 			if(L.key && L.client && L.stat != DEAD)
 				return TRUE
+	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
 	var/dockTime = config.arrivals_shuttle_dock_window
@@ -104,9 +121,11 @@
 	if(docked)	//about to launch
 		if(PersonCheck())
 			mode = SHUTTLE_IDLE
+			if(console)
+				console.say("Launch cancelled, lifeform dectected on board.")
 			return
 	. = ..()
-	if(!. && !docked)
+	if(!. && !docked && !damaged)
 		console.say("Welcome to your new life, employees!")
 		for(var/L in queued_announces)
 			var/datum/callback/C = L
