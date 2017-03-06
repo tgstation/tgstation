@@ -105,6 +105,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 			T = pick(turfs)
 		else
 			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION)	//middle of the station
+
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts

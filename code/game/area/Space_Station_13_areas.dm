@@ -989,7 +989,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
+/area/chapel/asteroid
+	name = "Chapel Asteroid"
+	icon_state = "explored"
 
+/area/chapel/dock
+	name = "Chapel Dock"
+	icon_state = "construction"
 
 /////////////////////////////////////////////////////////////////////
 /*
