@@ -380,6 +380,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
 
+/area/chapel/asteroid
+	name = "Chapel Asteroid"
+	icon_state = "explored"
+
+/area/chapel/dock
+	name = "Chapel Dock"
+	icon_state = "construction"
+
 /area/lawoffice
 	name = "Law Office"
 	icon_state = "law"
@@ -988,7 +996,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
-
 
 
 /////////////////////////////////////////////////////////////////////
