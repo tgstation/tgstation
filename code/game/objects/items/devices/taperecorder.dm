@@ -207,7 +207,11 @@
 			break
 		var/x = mytape.storedinfo[i]
 		// Burrowed code from send_speech
+<<<<<<< HEAD
 		if ((x[8] && announce) || !x[8])
+=======
+		if (!x[8])
+>>>>>>> 55f192e162a28eb13ac015ed7abb33f424694d62
 			for(var/atom/movable/AM in get_hearers_in_view(7, src))
 				AM.Hear(x[1], src, x[3], x[4], x[5], x[6])
 		if(mytape.storedinfo.len < i + 1)
