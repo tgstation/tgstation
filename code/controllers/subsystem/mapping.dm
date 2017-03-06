@@ -4,7 +4,6 @@ var/datum/subsystem/mapping/SSmapping
 	name = "Mapping"
 	init_order = 12
 	flags = SS_NO_FIRE
-	display_order = 50
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()

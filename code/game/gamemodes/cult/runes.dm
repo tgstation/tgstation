@@ -233,7 +233,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
 	rune_in_use = 1
-	if(!do_after(user, 100, target = paper_to_imbue))
+	if(!do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
 		rune_in_use = 0
 		return
 	new talisman_type(get_turf(src))
@@ -862,7 +862,7 @@ var/list/wall_runes = list()
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
 	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
-	SetLuminosity(6)
+	set_light(6)
 	color = "#FC9B54"
 	for(var/M in invokers)
 		var/mob/living/L = M
