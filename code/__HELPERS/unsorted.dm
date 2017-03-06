@@ -843,7 +843,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 			if(id in hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
 				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
+		user << "<span class='notice'>Temperature: [round(air_contents.temperature)] &deg;K</span>"
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
 	return
