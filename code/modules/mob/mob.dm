@@ -116,7 +116,7 @@ var/next_mob_id = 0
 					msg = blind_message
 				else
 					continue
-			
+
 			else if(T.lighting_overlay)
 				if(T.lighting_overlay.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
@@ -1010,3 +1010,23 @@ var/next_mob_id = 0
 			return ..(facing_dir)
 	else
 		return ..()
+
+/mob/verb/northfaceperm()
+	set hidden = 1
+	facing_dir = null
+	set_face_dir(NORTH)
+
+/mob/verb/southfaceperm()
+	set hidden = 1
+	facing_dir = null
+	set_face_dir(SOUTH)
+
+/mob/verb/eastfaceperm()
+	set hidden = 1
+	facing_dir = null
+	set_face_dir(EAST)
+
+/mob/verb/westfaceperm()
+	set hidden = 1
+	facing_dir = null
+	set_face_dir(WEST)

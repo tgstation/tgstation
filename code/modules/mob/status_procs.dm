@@ -7,6 +7,7 @@
 
 /mob/proc/Stun(amount, updating = 1, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
+		facing_dir = null
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()
@@ -14,6 +15,7 @@
 
 /mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(status_flags & CANSTUN || ignore_canstun)
+		facing_dir = null
 		stunned = max(amount,0)
 		if(updating)
 			update_canmove()
@@ -21,6 +23,7 @@
 
 /mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
+		facing_dir = null
 		stunned = max(stunned + amount,0)
 		if(updating)
 			update_canmove()
@@ -30,6 +33,8 @@
 
 /mob/proc/Weaken(amount, updating = 1, ignore_canweaken = 0)
 	if((status_flags & CANWEAKEN) || ignore_canweaken)
+		facing_dir = null
+		facing_dir = null
 		weakened = max(max(weakened,amount),0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
@@ -37,6 +42,7 @@
 
 /mob/proc/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
 	if(status_flags & CANWEAKEN)
+		facing_dir = null
 		weakened = max(amount,0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
@@ -44,6 +50,7 @@
 
 /mob/proc/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
 	if((status_flags & CANWEAKEN) || ignore_canweaken)
+		facing_dir = null
 		weakened = max(weakened + amount,0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
@@ -53,6 +60,7 @@
 
 /mob/proc/Paralyse(amount, updating = 1, ignore_canparalyse = 0)
 	if(status_flags & CANPARALYSE || ignore_canparalyse)
+		facing_dir = null
 		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
@@ -62,6 +70,7 @@
 
 /mob/proc/SetParalysis(amount, updating = 1, ignore_canparalyse = 0)
 	if(status_flags & CANPARALYSE || ignore_canparalyse)
+		facing_dir = null
 		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
@@ -71,6 +80,7 @@
 
 /mob/proc/AdjustParalysis(amount, updating = 1, ignore_canparalyse = 0)
 	if(status_flags & CANPARALYSE || ignore_canparalyse)
+		facing_dir = null
 		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
@@ -82,6 +92,7 @@
 
 /mob/proc/Sleeping(amount, updating = 1, no_alert = FALSE)
 	var/old_sleeping = sleeping
+	facing_dir = null
 	sleeping = max(max(sleeping,amount),0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
@@ -95,6 +106,7 @@
 
 /mob/proc/SetSleeping(amount, updating = 1, no_alert = FALSE)
 	var/old_sleeping = sleeping
+	facing_dir = null
 	sleeping = max(amount,0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
@@ -108,6 +120,7 @@
 
 /mob/proc/AdjustSleeping(amount, updating = 1, no_alert = FALSE)
 	var/old_sleeping = sleeping
+	facing_dir = null
 	sleeping = max(sleeping + amount,0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
@@ -123,14 +136,17 @@
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
+	facing_dir = null
 	update_canmove()
 
 /mob/proc/SetResting(amount)
 	resting = max(amount,0)
+	facing_dir = null
 	update_canmove()
 
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
+	facing_dir = null
 	update_canmove()
 
 /////////////////////////////////// JITTERINESS ////////////////////////////////////
@@ -141,6 +157,7 @@
 /////////////////////////////////// DIZZINESS ////////////////////////////////////
 
 /mob/proc/Dizzy(amount)
+	facing_dir = null
 	dizziness = max(dizziness,amount,0)
 
 /////////////////////////////////// EAR DAMAGE ////////////////////////////////////
@@ -166,6 +183,7 @@
 
 /mob/proc/blind_eyes(amount)
 	if(amount>0)
+		facing_dir = null
 		var/old_eye_blind = eye_blind
 		eye_blind = max(eye_blind, amount)
 		if(!old_eye_blind)
@@ -176,6 +194,7 @@
 /mob/proc/adjust_blindness(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
+		facing_dir = null
 		eye_blind += amount
 		if(!old_eye_blind)
 			if(stat == CONSCIOUS)
@@ -192,6 +211,7 @@
 
 /mob/proc/set_blindness(amount)
 	if(amount>0)
+		facing_dir = null
 		var/old_eye_blind = eye_blind
 		eye_blind = amount
 		if(client && !old_eye_blind)

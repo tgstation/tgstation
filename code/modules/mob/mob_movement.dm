@@ -181,6 +181,8 @@
 	for(var/obj/O in mob)
 		O.on_mob_move(direct, src)
 
+	if(facing_dir)
+		setDir(facing_dir)
 	return .
 
 
@@ -211,7 +213,10 @@
 	switch(L.incorporeal_move)
 		if(1)
 			L.loc = get_step(L, direct)
-			L.setDir(direct)
+			if(!L.facing_dir)
+				L.setDir(direct)
+			else
+				L.setDir(L.facing_dir)
 		if(2)
 			if(prob(50))
 				var/locx
