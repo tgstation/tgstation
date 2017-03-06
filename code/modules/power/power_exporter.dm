@@ -23,8 +23,8 @@
 /obj/item/clothing/gloves/krav_maga/engi // a short lived meme
 	name = "fists of the singulo"
 	desc = "You have spent so much time managing power that your fists have become one with the powernet."
-	icon_state = "fightgloves"
-	item_state = "fightgloves"
+	icon_state = "yellow"
+	item_state = "yellow"
 	item_color="yellow"
 	permeability_coefficient = 0.05
 	cold_protection = HANDS
