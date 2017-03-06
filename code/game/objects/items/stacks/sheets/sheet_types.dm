@@ -85,10 +85,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
-	recipes = metal_recipes
-	return ..()
-
 /*
  * Plasteel
  */
@@ -110,10 +106,6 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-
-/obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-	recipes = plasteel_recipes
-	return ..()
 
 /obj/item/stack/sheet/plasteel/twenty
 	amount = 20
@@ -160,10 +152,6 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 
-/obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
-	recipes = wood_recipes
-	return ..()
-
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
 
@@ -205,10 +193,6 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
-	recipes = cloth_recipes
-	return ..()
-
 /obj/item/stack/sheet/cloth/ten
 	amount = 10
 
@@ -236,10 +220,6 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	origin_tech = "materials=1"
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/cardboard
-
-/obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
-		recipes = cardboard_recipes
-		return ..()
 
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
@@ -285,10 +265,6 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
 
-/obj/item/stack/sheet/runed_metal/New(var/loc, var/amount=null)
-	recipes = runed_metal_recipes
-	return ..()
-
 /*
  * Brass
  */
@@ -322,8 +298,7 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 		new /obj/item/stack/sheet/runed_metal(loc, amount)
 		qdel(src)
 
-/obj/item/stack/tile/brass/New(var/loc, var/amount=null)
-	recipes = brass_recipes
+/obj/item/stack/tile/brass/Initialize()
 	..()
 	pixel_x = 0
 	pixel_y = 0
@@ -378,7 +353,3 @@ var/global/list/datum/stack_recipe/plastic_recipes = list(
 
 /obj/item/stack/sheet/plastic/five
 	amount = 5
-
-/obj/item/stack/sheet/plastic/New()
-	recipes = plastic_recipes
-	. = ..()

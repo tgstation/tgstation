@@ -10,7 +10,6 @@
 /obj/item/stack
 	origin_tech = "materials=1"
 	gender = PLURAL
-	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
 	var/max_amount = 50 //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
@@ -19,13 +18,12 @@
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
-/obj/item/stack/New(var/loc, var/amount=null)
+/obj/item/stack/Initialize(mapload, amount)
 	..()
 	if (amount)
 		src.amount = amount
 	if(!merge_type)
-		merge_type = src.type
-	return
+		merge_type = type
 
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
@@ -60,6 +58,7 @@
 	interact(user)
 
 /obj/item/stack/interact(mob/user)
+	var/list/recipes = SSatoms.recipes_cache[merge_type]
 	if (!recipes)
 		return
 	if (!src || get_amount() <= 0)
@@ -109,7 +108,8 @@
 		return
 	if (href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
-
+		
+		var/list/recipes = SSatoms.recipes_cache[merge_type]
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
 		if (!multiplier ||(multiplier <= 0)) //href protection

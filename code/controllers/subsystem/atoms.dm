@@ -21,9 +21,9 @@ var/datum/subsystem/atoms/SSatoms
 /datum/subsystem/atoms/Initialize(timeofday)
 	fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
-	InitConstruction()
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
+	InitConstruction()
 	return ..()
 
 /datum/subsystem/atoms/proc/InitializeAtoms(list/atoms = null)
