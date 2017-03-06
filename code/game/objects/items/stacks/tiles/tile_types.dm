@@ -111,6 +111,18 @@
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
 
+/obj/item/stack/tile/fakepit
+	name = "fake pits"
+	singular_name = "fake pit"
+	desc = "A piece of carpet with a forced perspective illusion of a pit. No way this could fool anyone!"
+	icon_state = "tile_pit"
+	turf_type = /turf/open/floor/fakepit 
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakepit
+
+/obj/item/stack/tile/fakepit/loaded
+	amount = 30
+
 //High-traction
 /obj/item/stack/tile/noslip
 	name = "high-traction floor tile"
