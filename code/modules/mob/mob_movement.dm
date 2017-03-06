@@ -181,8 +181,8 @@
 	for(var/obj/O in mob)
 		O.on_mob_move(direct, src)
 
-	if(facing_dir)
-		setDir(facing_dir)
+	if(mob.facing_dir)
+		mob.setDir(mob.facing_dir)
 	return .
 
 

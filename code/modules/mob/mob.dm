@@ -994,15 +994,15 @@ var/next_mob_id = 0
 
 /mob/proc/set_face_dir(var/newdir)
 	if(newdir)
-		set_dir(newdir)
+		setDir(newdir)
 		facing_dir = newdir
 	else if(facing_dir)
 		facing_dir = null
 	else
-		set_dir(dir)
+		setDir(dir)
 		facing_dir = dir
 
-/mob/set_dir()
+/mob/setDir()
 	if(facing_dir)
 		if(!canface() || lying || buckled || restrained())
 			facing_dir = null
