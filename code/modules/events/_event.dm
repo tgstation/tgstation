@@ -49,7 +49,7 @@
 		return FALSE
 	if(gamemode_whitelist.len && !(gamemode in gamemode_whitelist))
 		return FALSE
-	if(holidayID && !holiday_active[holidayID])
+	if(holidayID && !holiday_active(holidayID))
 		return FALSE
 	return TRUE
 
