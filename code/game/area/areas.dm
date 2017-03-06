@@ -542,7 +542,7 @@ var/list/teleportlocs = list()
 		for(var/atom/movable/AM in T.atoms_with_forced_gravity)
 			T.reset_forced_gravity_atom(AM)
 			CHECK_TICK
-		T.update_all_gravity()
+		T.sync_all_gravity()
 		CHECK_TICK
 
 /proc/reset_all_area_gravity()
