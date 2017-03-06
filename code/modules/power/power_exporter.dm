@@ -10,6 +10,7 @@
 	var/power_drained = 0 		// has drained this much power
 	var/rating = ""
 	var/active = 0
+	var/rewarded = 0
 
 /obj/machinery/power/exporter/examine(mob/user)
 	..()
@@ -18,6 +19,19 @@
 	else
 		user << "<span class='notice'>The [src] is exporting [drain_rate] kilowatts of power, it has consumed [power_drained] kilowatts so far.</span>"
 
+
+/obj/item/clothing/gloves/krav_maga/engi // a short lived meme
+	name = "fists of the singulo"
+	desc = "You have spent so much time managing power that your fists have become one with the powernet."
+	icon_state = "fightgloves"
+	item_state = "fightgloves"
+	item_color="yellow"
+	permeability_coefficient = 0.05
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = 0
 
 /obj/machinery/power/exporter/attackby(obj/item/O, mob/user, params)
 	if(!active)
@@ -39,7 +53,14 @@
 	if (!anchored)
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
 		return
-
+	if (power_drained >= 4000000 && !rewarded) // 4 billion watts
+		visible_message("<span class='danger'>You have been blessed by the gods of engineering for your massive power exports!</span>")
+		new /obj/effect/overlay/temp/explosion/fast(get_turf(src))
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 100, 1)
+		for(var/i in 1 to 3)
+			new /obj/item/clothing/head/orange_beret(get_turf(src)
+			new /obj/item/clothing/head/engiponcho(get_turf(src)
+			new /obj/item/clothing/gloves/krav_maga/engi
 	interact(user)
 
 /obj/machinery/power/exporter/attack_ai(mob/user)
@@ -68,6 +89,7 @@
 	dat += text("Power consumption: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A><br>")
 	dat += text("Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
 	dat += text("Power exported: [power_drained] kilowatts<br>")
+	dat += text("Points earned from exports: [power_drained/200] points<br>")
 	switch(drain_rate)
 		if(0 to 200)
 			rating = "TERRIBLE"
