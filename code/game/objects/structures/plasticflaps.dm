@@ -4,53 +4,44 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
 	armor = list(melee = 100, bullet = 80, laser = 80, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 50, acid = 50)
-	density = 0
-	anchored = 1
+	density = 1	//we set this to zero later, it's like this to trick the stack_recipe builder
+	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
-	var/state = PLASTIC_FLAPS_NORMAL
 
-/obj/structure/plasticflaps/examine(mob/user)
-	. = ..()
-	switch(state)
-		if(PLASTIC_FLAPS_NORMAL)
-			user << "<span class='notice'>[src] are <b>screwed</b> to the floor.</span>"
-		if(PLASTIC_FLAPS_DETACHED)
-			user << "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>"
+/obj/structure/plasticflaps/Initialize()
+	density = 0
+	..()
 
-/obj/structure/plasticflaps/attackby(obj/item/W, mob/user, params)
-	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(state == PLASTIC_FLAPS_NORMAL)
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 100*W.toolspeed, target = src))
-				if(state != PLASTIC_FLAPS_NORMAL)
-					return
-				state = PLASTIC_FLAPS_DETACHED
-				anchored = FALSE
-				user << "<span class='notice'>You unscrew [src] from the floor.</span>"
-		else if(state == PLASTIC_FLAPS_DETACHED)
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 40*W.toolspeed, target = src))
-				if(state != PLASTIC_FLAPS_DETACHED)
-					return
-				state = PLASTIC_FLAPS_NORMAL
-				anchored = TRUE
-				user << "<span class='notice'>You screw [src] from the floor.</span>"
-	else if(istype(W, /obj/item/weapon/wirecutters))
-		if(state == PLASTIC_FLAPS_DETACHED)
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
-			if(do_after(user, 50*W.toolspeed, target = src))
-				if(state != PLASTIC_FLAPS_DETACHED)
-					return
-				user << "<span class='notice'>You cut apart [src].</span>"
-				var/obj/item/stack/sheet/plastic/five/P = new(loc)
-				P.add_fingerprint(user)
-				qdel(src)
-	else
-		. = ..()
+CONSTRUCTION_BLUEPRINT(/obj/structure/plasticflaps)
+	. = newlist(
+		/datum/construction_state/first{
+			//required_type_to_construct = /obj/item/stack/sheet/plastic
+			required_amount_to_construct = 5
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/weapon/screwdriver
+			required_type_to_deconstruct = /obj/item/weapon/wirecutters
+			construction_delay = 100
+			deconstruction_delay = 50
+			anchored = 0
+			construction_message = "screwing down"
+			deconstruction_message = "cutting apart"
+			examine_message = "They are unscrewed from the floor and can be cut apart."
+		},
+		/datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/weapon/screwdriver
+			deconstruction_delay = 100
+			deconstruction_message = "removing the floor screws from"
+			examine_message = "They are screwed to the floor."
+		}
+	)
+	
+	//This is here to work around a byond bug
+	//http://www.byond.com/forum/?post=2220240
+	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
+
+	var/datum/construction_state/first/X = .[1]
+	X.required_type_to_construct = /obj/item/stack/sheet/plastic
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
 	if(isliving(caller))
@@ -89,11 +80,6 @@
 		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
-
-/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		new /obj/item/stack/sheet/plastic/five(loc)
-	qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "airtight plastic flaps"

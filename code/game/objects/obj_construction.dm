@@ -168,7 +168,9 @@
 		our_steps = list()
 		if(construction_blueprint)
 			var/datum/construction_blueprint/BP = new construction_blueprint
-			var/temp = BP.GetBlueprint()	//get steps for the first time
+			var/temp
+			if(BP.owner_type == type)
+				temp = BP.GetBlueprint()	//get steps for the first time
 			if(!islist(temp))
 				WARNING("Invalid construction_blueprint for [type]!")
 				temp = -1
