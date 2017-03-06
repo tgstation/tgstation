@@ -65,11 +65,9 @@ var/datum/subsystem/mapping/SSmapping
 		if(!istype(d) || QDELETED(d))
 			nuke_threats -= d
 
-	var/threats = nuke_threats.len
-
 	for(var/N in nuke_tiles)
-		var/turf/open/floor/T = N
-		T.icon_state = (threats ? "rcircuitanim" : T.icon_regular_floor)
+		var/turf/open/floor/circuit/C = N
+		C.update_icon()
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
