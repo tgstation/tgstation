@@ -83,7 +83,7 @@ var/datum/subsystem/persistence/SSpersistence
 	if(!saved_json)
 		return
 
-	var/saved_messages = json_decode(saved_json)
+	var/saved_messages = saved_json
 
 	for(var/item in saved_messages)
 		var/turf/T = locate(item["x"], item["y"], ZLEVEL_STATION)
@@ -124,7 +124,7 @@ var/datum/subsystem/persistence/SSpersistence
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
-	chisel_messages_sav[MAP_NAME] << json_encode(saved_messages)
+	chisel_messages_sav[MAP_NAME] << saved_messages
 
 /datum/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
 	saved_messages += list(M.pack()) // dm eats one list.
