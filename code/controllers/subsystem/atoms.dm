@@ -112,12 +112,10 @@ var/datum/subsystem/atoms/SSatoms
 			not_good_mutations |= B
 		CHECK_TICK
 
-//OH GOD THE COLONS
-//THEY'RE FUCKING EVERYWHERE!!!!
-//Seriously though, this was 100% necessary to get type data without instanciating the object
 
 #define GET_CONSTRUCTION_BLUEPRINT(type, outlist)\
-	var/construction_blueprint_get_type = initial(type:construction_blueprint);\
+	var/obj/construction_blueprint_getter_type = type;\
+	var/construction_blueprint_get_type = initial(construction_blueprint_getter_type:construction_blueprint);\
 	var/datum/construction_blueprint/construction_blueprint_getter = new construction_blueprint_get_type;\
 	outlist = construction_blueprint_getter.GetBlueprint();
 
@@ -134,16 +132,17 @@ var/datum/subsystem/atoms/SSatoms
 		if(BP.len)
 			var/datum/construction_state/first/F = BP[1]
 			if(istype(F))
-				var/mat_type = F.required_type_to_construct
+				var/obj/item/stack/mat_type = F.required_type_to_construct
 				if(ispath(mat_type, /obj/item/stack))
-					mat_type = initial(mat_type:merge_type)
+					mat_type = initial(mat_type.merge_type)
 					var/list/t_recipes = recipes[mat_type]
 					if(!t_recipes)
 						t_recipes = list()
 						recipes[mat_type] += t_recipes
 					//TODO: Handle these snowflakes
 					var/is_glass = ispath(mat_type, /obj/item/stack/sheet/glass) || ispath(mat_type, /obj/item/stack/sheet/rglass)
-					t_recipes += new /datum/stack_recipe(initial(I:name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = initial(I:density), window_checks = is_glass)
+					var/obj/O = I
+					t_recipes += new /datum/stack_recipe(initial(O.name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = initial(O.density), window_checks = is_glass)
 		CHECK_TICK
 
 #undef GET_CONSTRUCTION_BLUEPRINT
