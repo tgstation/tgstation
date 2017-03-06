@@ -1006,7 +1006,13 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/beer)
+					/obj/item/weapon/reagent_containers/food/drinks/beer,
+					/obj/item/device/flashlight/glowstick,
+					/obj/item/device/flashlight/glowstick/red,
+					/obj/item/device/flashlight/glowstick/blue,
+					/obj/item/device/flashlight/glowstick/orange,
+					/obj/item/device/flashlight/glowstick/yellow,
+					/obj/item/device/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
 
 /datum/supply_pack/organic/critter
