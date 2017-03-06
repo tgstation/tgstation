@@ -174,6 +174,13 @@
 							EX.ship()
 						for(var/obj/machinery/engi_points_manager/EPM in machines)
 							EPM.GBP += price
+							EPM.GBPearned += price
+						if(export_target == "premium")
+							visible_message("<span class='danger'>You have been blessed by the atmos gods for exporting a premium canister!</span>")
+							var/prize = pick(/obj/item/clothing/under/rank/atmos_elite,/obj/item/clothing/head/atmos_hood,/obj/item/clothing/neck/cloak/atmos)
+							new /obj/effect/overlay/temp/explosion/fast(get_turf(src))
+							new prize(get_turf(src))
+							playsound(src, 'sound/effects/pray_chaplain.ogg', 100, 1)
 						quality.Remove(export_target)
 						reset()
 					else
