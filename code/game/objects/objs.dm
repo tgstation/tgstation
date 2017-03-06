@@ -38,11 +38,30 @@
 		else
 			T.add_blueprints_preround(src)
 
-/obj/Destroy()
+/obj/Destroy(force=FALSE)
+	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+	var/stationloving = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+
+	if(inform_admins && force)
+		var/turf/T = get_turf(src)
+		message_admins("[src] has been !!force deleted!! in [ADMIN_COORDJMP(T)].")
+		log_game("[src] has been !!force deleted!! in [COORD(T)].")
+
+	if(stationloving && !force)
+		var/turf/currentturf = get_turf(src)
+		var/turf/targetturf = relocate()
+		log_game("[src] has been destroyed in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
+		if(inform_admins)
+			message_admins("[src] has been destroyed in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+		return QDEL_HINT_LETMELIVE
+
+	if(stationloving && force)
+		STOP_PROCESSING(SSinbounds, src)
+
 	if(!istype(src, /obj/machinery))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
-	return ..()
+	. = ..()
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
@@ -225,3 +244,81 @@
 		return
 	else
 		return
+<<<<<<< HEAD
+=======
+
+/* Stationloving
+*
+* An stationloving object will always teleport back to the station
+* if it ever leaves the station z-levels or Centcom. It will also,
+* when Destroy() is called, will teleport to a random turf on the
+* station.
+*
+* The turf is guaranteed to be "safe" for normal humans, probably.
+* If the station is SUPER SMASHED UP, it might not work.
+*
+* Here are some important procs:
+* relocate()
+* moves the object to a safe turf on the station
+*
+* check_in_bounds()
+* regularly called and checks if `in_bounds()` returns true. If false, it
+* triggers a `relocate()`.
+*
+* in_bounds()
+* By default, checks that the object's z is the station z or centcom.
+*/
+
+/obj/proc/set_stationloving(state, inform_admins=FALSE)
+	var/currently = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+
+	if(inform_admins)
+		SET_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+	else
+		CLEAR_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+
+	if(state == currently)
+		return
+	else if(!state)
+		STOP_PROCESSING(SSinbounds, src)
+		CLEAR_SECONDARY_FLAG(src, STATIONLOVING)
+	else
+		START_PROCESSING(SSinbounds, src)
+		SET_SECONDARY_FLAG(src, STATIONLOVING)
+
+/obj/proc/relocate()
+	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	if(!targetturf)
+		if(blobstart.len > 0)
+			targetturf = get_turf(pick(blobstart))
+		else
+			throw EXCEPTION("Unable to find a blobstart landmark")
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
+	else if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src, targetturf)
+	else
+		forceMove(targetturf)
+	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
+	return targetturf
+
+/obj/check_in_bounds()
+	if(in_bounds())
+		return
+	else
+		var/turf/currentturf = get_turf(src)
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		var/turf/targetturf = relocate()
+		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
+		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
+			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+
+/obj/proc/in_bounds()
+	. = FALSE
+	var/turf/currentturf = get_turf(src)
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+		. = TRUE
+>>>>>>> Objects can now be stationloving
