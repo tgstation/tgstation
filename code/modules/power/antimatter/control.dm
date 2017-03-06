@@ -83,17 +83,10 @@
 	stored_power = (fuel/core_power)*fuel*200000
 	//Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
 	if(fuel > (2*core_power))//More fuel has been put in than the current cores can deal with
-		if(prob(50))
-			core_damage = 1//Small chance of damage
-		if((fuel-core_power) > 5)
-			core_damage = 5//Now its really starting to overload the cores
-		if((fuel-core_power) > 10)
-			core_damage = 20//Welp now you did it, they wont stand much of this
-		if(core_damage == 0)
-			return
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
-			AMS.stability -= core_damage
+			AMS.stability -= ((fuel - (2*core_power))/4)
 			AMS.check_stability(1)
+			AMS.on_damage()
 		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
 	return
 
