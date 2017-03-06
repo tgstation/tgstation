@@ -476,7 +476,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(timezoneOffset)
 	SearchVar(fileaccess_timer)
 	SearchVar(TAB)
-	SearchVar(map_ready)
 	SearchVar(data_core)
 	SearchVar(CELLRATE)
 	SearchVar(CHARGELEVEL)
