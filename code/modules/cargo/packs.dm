@@ -691,13 +691,13 @@
 
 /datum/supply_pack/engineering/engine/am_core
 	name = "Antimatter Control Crate"
-	cost = 5000
+	cost = 4000
 	contains = list(/obj/machinery/power/am_control_unit)
 	crate_name = "antimatter control crate"
 
 /datum/supply_pack/engineering/engine/am_jar
 	name = "Antimatter Containment Jar Crate"
-	cost = 2000
+	cost = 1000
 	contains = list(/obj/item/weapon/am_containment,
 					/obj/item/weapon/am_containment)
 	crate_name = "antimatter jar crate"
