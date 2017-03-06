@@ -69,6 +69,9 @@
 	var/produces_gas = 1
 	var/obj/effect/countdown/supermatter/countdown
 
+/obj/machinery/power/supermatter_shard/make_frozen_visual()
+	return
+
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
 	countdown = new(src)
