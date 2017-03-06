@@ -94,8 +94,8 @@
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
 
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
+	var/mob/living/carbon/C = target
+	if(istype(C))
 		if(C.status_flags & CANWEAKEN)
 			C.do_jitter_animation(500)
 			C.take_bodypart_damage(20, 0) //The process is extremely painful
@@ -103,7 +103,7 @@
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 	feedback_add_details("changeling_powers","TS")
 	. = TRUE
-	if(iscarbon(target))
+	if(istype(C))
 		sleep(10)
 		C.real_name = NewDNA.real_name
 		NewDNA.transfer_identity(C, transfer_SE=1)

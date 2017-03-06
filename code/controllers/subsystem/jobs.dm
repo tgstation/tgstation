@@ -500,7 +500,7 @@ var/datum/subsystem/job/SSjob
 	for (var/datum/job/J in oldjobs)
 		INVOKE_ASYNC(src, .proc/RecoverJob)
 
-/datum/subsystem/proc/RecoverJob(datum/job/J)
+/datum/subsystem/job/proc/RecoverJob(datum/job/J)
 	var/datum/job/newjob = GetJob(J.title)
 	if (!istype(newjob))
 		return
