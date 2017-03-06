@@ -350,9 +350,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
-	SearchVar(nextmap)
-	SearchVar(mapchanging)
-	SearchVar(rebootingpendingmapchange)
 	SearchVar(clockwork_construction_value)
 	SearchVar(clockwork_caches)
 	SearchVar(clockwork_daemons)
@@ -481,7 +478,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(CELLRATE)
 	SearchVar(CHARGELEVEL)
 	SearchVar(powernets)
-	SearchVar(map_name)
 	SearchVar(hair_styles_list)
 	SearchVar(hair_styles_male_list)
 	SearchVar(hair_styles_female_list)
