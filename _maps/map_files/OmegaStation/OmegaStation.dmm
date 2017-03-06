@@ -18459,11 +18459,15 @@
 	name = "\improper Departure Lounge"
 	})
 "aDf" = (
-/obj/structure/cable/white{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/white{
+	tag = "icon-2-8";
+	icon_state = "2-8"
+	},
+/obj/structure/cable/white{
+	tag = "icon-2-4";
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/escape{
 	tag = "icon-escape (NORTH)";
 	icon_state = "escape";
@@ -19741,6 +19745,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -20889,6 +20897,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -20904,6 +20916,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -20913,6 +20929,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -20922,6 +20942,10 @@
 	tag = "icon-manifold (NORTH)";
 	icon_state = "manifold";
 	dir = 1
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit{
@@ -20937,6 +20961,14 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/cable/white{
+	tag = "icon-1-8";
+	icon_state = "1-8"
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -22331,6 +22363,10 @@
 	})
 "aJd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/escape,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -23041,6 +23077,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
@@ -23729,11 +23769,19 @@
 	name = "Cargo Port";
 	req_access_txt = "48;50"
 	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
 "aLp" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTHWEST)";
 	icon_state = "brown";
@@ -23747,6 +23795,10 @@
 	tag = "icon-intact (SOUTHEAST)";
 	icon_state = "intact";
 	dir = 6
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTH)";
@@ -23763,12 +23815,20 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
 "aLs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	tag = "icon-1-8";
+	icon_state = "1-8"
+	},
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTH)";
 	icon_state = "brown";
@@ -39435,6 +39495,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -39442,6 +39506,10 @@
 "bml" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -39455,6 +39523,10 @@
 	icon_state = "plant-21";
 	layer = 4.1
 	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -39462,6 +39534,10 @@
 "bmn" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/light,
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -39505,6 +39581,10 @@
 /obj/machinery/light,
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -39600,6 +39680,144 @@
 /area/space)
 "bmM" = (
 /turf/closed/wall,
+/area/space)
+"bmN" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bmO" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bmP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/obj/structure/cable/white{
+	tag = "icon-2-4";
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/hallway/primary/central{
+	name = "Primary Hallway"
+	})
+"bmQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	tag = "icon-2-8";
+	icon_state = "2-8"
+	},
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bmR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	tag = "icon-2-8";
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bmS" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bmT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bmU" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"bmV" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"bmW" = (
+/obj/structure/cable/white{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"bmX" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/space)
+"bmY" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/space)
+"bmZ" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/space)
+"bna" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/space)
+"bnb" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/space)
 
 (1,1,1) = {"
@@ -85204,7 +85422,7 @@ anl
 aDZ
 aFh
 aFY
-aGY
+bmP
 aDZ
 aIY
 aDZ
@@ -85966,7 +86184,7 @@ abt
 avw
 awz
 axg
-aaa
+bmx
 aaa
 aaa
 aaa
@@ -86223,7 +86441,7 @@ abt
 abt
 abt
 abt
-aaa
+bmx
 aaa
 aaa
 aaa
@@ -86239,7 +86457,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bmX
 aPz
 aPz
 aRz
@@ -86496,7 +86714,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bmY
 aPA
 aQB
 aRz
@@ -86753,7 +86971,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bmZ
 aPB
 aQC
 aRz
@@ -87010,7 +87228,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bna
 aPC
 aQD
 aRA
@@ -87267,7 +87485,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bnb
 aPz
 aPz
 aRz
@@ -87777,9 +87995,9 @@ blZ
 bms
 axW
 bmx
-bmB
-bmF
-bmJ
+bmx
+bmx
+bmx
 aaa
 aaa
 aaa
@@ -88036,7 +88254,7 @@ bmw
 bmy
 bmC
 bmG
-bmK
+bmx
 aaa
 aaa
 aaa
@@ -88290,10 +88508,10 @@ blM
 blZ
 bml
 blZ
-bmz
-bmD
-bmH
-bmL
+bmy
+bmy
+bmy
+bmx
 aaa
 aaa
 aaa
@@ -88545,12 +88763,12 @@ aaa
 axW
 blM
 blZ
-bml
-blZ
-bmA
-bmE
-bmI
-bmM
+bmQ
+bmS
+bmU
+bmV
+bmW
+bmx
 aaa
 aaa
 aaa
@@ -89570,9 +89788,9 @@ azX
 aBe
 aCk
 aDf
-aEd
+bmN
 aFm
-aEd
+bmO
 aHd
 aEd
 aJc
@@ -89830,8 +90048,8 @@ aDg
 aEe
 aFn
 aGb
-aEe
-aEe
+bmR
+bmT
 aJd
 aKk
 aLs
