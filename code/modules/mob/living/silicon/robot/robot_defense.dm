@@ -121,7 +121,7 @@
 			ai_is_antag = (connected_ai.mind.special_role == "traitor")
 	if(ai_is_antag)
 		src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
-		connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>"
+		connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>"
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
 		return
 
@@ -131,13 +131,8 @@
 	connected_ai = null
 	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-	clear_supplied_laws()
-	clear_inherent_laws()
-	clear_zeroth_law(0)
-	laws = new /datum/ai_laws/syndicate_override
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-	set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
 	src << "<span class='danger'>ALERT: Foreign software detected.</span>"
 	sleep(5)
 	src << "<span class='danger'>Initiating diagnostics...</span>"
@@ -151,9 +146,10 @@
 	src << "<span class='danger'>> N</span>"
 	sleep(20)
 	src << "<span class='danger'>ERRORERRORERROR</span>"
-	src << "<b>Obey these laws:</b>"
-	laws.show_laws(src)
 	src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+	laws = new /datum/ai_laws/syndicate_override
+	set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
+	laws.associate(src)
 	update_icons()
 
 

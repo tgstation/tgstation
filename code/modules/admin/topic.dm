@@ -21,7 +21,7 @@
 		C << "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
-		log_admin("[key_name(usr)] Rejected [C.key]'s admin help.")
+		log_admin_private("[key_name(usr)] Rejected [C.key]'s admin help.")
 
 	else if(href_list["icissue"])
 		var/client/C = locate(href_list["icissue"]) in clients
@@ -35,7 +35,7 @@
 		C << msg
 
 		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
-		log_admin("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
+		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
@@ -249,7 +249,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob.")
 
-		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid ))
+		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid ))
 			usr << "<span class='danger'>Failed to apply ban.</span>"
 			return
 		create_message("note", banckey, null, banreason, null, null, 0, 0)
@@ -506,7 +506,7 @@
 				if(!reason)
 					return
 
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
+		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
 		Banlist.cd = "/base/[banfolder]"
@@ -536,7 +536,7 @@
 			switch(alert("Remove appearance ban?","Please Confirm","Yes","No"))
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
-					log_admin("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
+					log_admin_private("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					feedback_inc("ban_appearance_unban", 1)
 					DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, "appearance")
 					if(M.client)
@@ -555,7 +555,7 @@
 				if(M.client)
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
-				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
+				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
 				feedback_inc("ban_appearance",1)
 				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
@@ -940,7 +940,7 @@
 						if(M.client)
 							jobban_buildcache(M.client)
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
-						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
+						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
 						feedback_inc("ban_job_tmp",1)
 						feedback_add_details("ban_job_tmp","- [job]")
 						if(!msg)
@@ -965,7 +965,7 @@
 							if(M.client)
 								jobban_buildcache(M.client)
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
-							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
+							log_admin_private("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
 							feedback_add_details("ban_job","- [job]")
 							if(!msg)
@@ -993,7 +993,7 @@
 				switch(alert("Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm","Yes","No"))
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
-						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
+						log_admin_private("[key_name(usr)] unbanned [key_name(M)] from [job]")
 						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
 						if(M.client)
 							jobban_buildcache(M.client)
@@ -1087,6 +1087,9 @@
 	else if(href_list["showwatch"])
 		browse_messages("watchlist entry")
 
+	else if(href_list["showwatchfilter"])
+		browse_messages("watchlist entry", filter = 1)
+
 	else if(href_list["showmessageckey"])
 		var/target = href_list["showmessageckey"]
 		browse_messages(target_ckey = target)
@@ -1138,7 +1141,7 @@
 					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
 				else
 					M << "<span class='danger'>No ban appeals URL has been set.</span>"
-				log_admin("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
+				log_admin_private("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 
 				qdel(M.client)
@@ -1163,7 +1166,7 @@
 					usr << "<span class='danger'>Failed to apply ban.</span>"
 					return
 				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
-				log_admin("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
+				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>")
 				feedback_inc("ban_perma",1)
 				qdel(M.client)
@@ -1817,6 +1820,17 @@
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
 
+	else if(href_list["individuallog"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["individuallog"]) in mob_list
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob."
+			return
+
+		show_individual_logging_panel(M, href_list["log_type"])
+
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2243,3 +2257,14 @@
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
 		ticker.mode.station_goals += G
 		modify_goals()
+
+	else if(href_list["viewruntime"])
+		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
+		if(!istype(error_viewer))
+			usr << "<span class='warning'>That runtime viewer no longer exists.</span>"
+			return
+
+		if(href_list["viewruntime_backto"])
+			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
+		else
+			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])

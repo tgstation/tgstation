@@ -53,9 +53,10 @@ var/global/list/rad_collectors = list()
 			return
 ..()
 
-/obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user)
+/obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user, silent)
 	if(loaded_tank)
-		user << "<span class='warning'>Remove the plasma tank first!</span>"
+		if(!silent)
+			user << "<span class='warning'>Remove the plasma tank first!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -128,7 +129,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
 	if(loaded_tank && active)
 		var/power_produced = loaded_tank.air_contents.gases["plasma"] ? loaded_tank.air_contents.gases["plasma"][MOLES] : 0
-		power_produced *= pulse_strength*20
+		power_produced *= pulse_strength*10
 		add_avail(power_produced)
 		last_power = power_produced
 		return

@@ -150,7 +150,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 25
 	throwforce = 0 //Just to be on the safe side
@@ -203,7 +203,6 @@
 	..()
 	if(can_drop)
 		new /obj/item/weapon/melee/synthetic_arm_blade(get_turf(user))
-	qdel(src)
 
 /***************************************\
 |***********COMBAT TENTACLES*************|
@@ -303,11 +302,10 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.is_sharp())
 				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
-				C.apply_damage(I.force*2, BRUTE, "chest")
+				C.apply_damage(I.force, BRUTE, "chest")
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,1)
-				C.Weaken(4)
 				return
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
@@ -355,7 +353,6 @@
 
 					if(INTENT_HARM)
 						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
-						C.Weaken(3)
 						C.throw_at(get_step_towards(H,C), 8, 2, callback=CALLBACK(src, .proc/tentacle_stab, H, C))
 						return 1
 			else

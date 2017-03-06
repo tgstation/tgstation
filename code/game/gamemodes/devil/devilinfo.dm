@@ -59,7 +59,7 @@ var/global/list/lawlorify = list (
 			BAN_CHAPEL = "You must never attempt to enter the chapel.",
 			BAN_HURTPRIEST = "You must never attack a priest.",
 			BAN_AVOIDWATER = "You must never willingly touch a wet surface.",
-			BAN_STRIKEUNCONCIOUS = "You must never strike an unconcious person.",
+			BAN_STRIKEUNCONCIOUS = "You must never strike an unconscious person.",
 			BAN_HURTLIZARD = "You must never harm a lizardman outside of self defense.",
 			BAN_HURTANIMAL = "You must never harm a non-sentient creature or robot outside of self defense.",
 			BANE_SILVER = "Silver, in all of its forms shall be your downfall.",
@@ -310,7 +310,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/give_base_spells(give_summon_contract = 0)
 	remove_spells()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
 	if(give_summon_contract)
 		give_summon_contract()
@@ -322,13 +322,13 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/give_lizard_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 
 /datum/devilinfo/proc/give_true_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null))
 

@@ -82,7 +82,8 @@ var/global/BSACooldown = 0
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;traitor=\ref[M]'>Traitor panel</A> | "
 	body += "<A href='?_src_=holder;narrateto=\ref[M]'>Narrate to</A> | "
-	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A>"
+	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A> | "
+	body += "<A href='?_src_=holder;individuallog=\ref[M]'>Individual Round Logs</A>"
 
 	if (M.client)
 		if(!isnewplayer(M))
@@ -569,11 +570,11 @@ var/global/BSACooldown = 0
 	set desc="Delay the game start"
 	set name="Delay pre-game"
 
-	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.timeLeft/10)) as num|null
+	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.GetTimeLeft()/10)) as num|null
 	if(ticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
 	if(newtime)
-		ticker.timeLeft = newtime * 10
+		ticker.SetTimeLeft(newtime * 10)
 		if(newtime < 0)
 			world << "<b>The game start has been delayed.</b>"
 			log_admin("[key_name(usr)] delayed the round start.")

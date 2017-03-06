@@ -21,6 +21,10 @@
 		var/datum/disease/F = new spawned_disease(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", disease_amount, data)
+
+	add_initial_reagents()
+
+/obj/item/weapon/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
@@ -107,6 +111,10 @@
 		return
 
 	else
+		if(isturf(target) && reagents.reagent_list.len && thrownby)
+			add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
+			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [COORD(target)].")
+			message_admins("[key_name_admin(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))

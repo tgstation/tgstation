@@ -1,12 +1,13 @@
 /* Diffrent misc types of sheets
  * Contains:
- *		Metal
- *		Plasteel
- *		Wood
- *		Cloth
- *		Cardboard
- *		Runed Metal (cult)
- *		Brass (clockwork cult)
+ * Metal
+ * Plasteel
+ * Wood
+ * Cloth
+ * Plastic
+ * Cardboard
+ * Runed Metal (cult)
+ * Brass (clockwork cult)
  */
 
 /*
@@ -189,6 +190,8 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	null, \
 	new/datum/stack_recipe("fingerless gloves", /obj/item/clothing/gloves/fingerless, 1), \
 	new/datum/stack_recipe("black gloves", /obj/item/clothing/gloves/color/black, 3), \
+	null, \
+	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
 	)
 
 /obj/item/stack/sheet/cloth
@@ -355,3 +358,27 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
+
+var/global/list/datum/stack_recipe/plastic_recipes = list(
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40))
+
+/obj/item/stack/sheet/plastic
+	name = "plastic"
+	desc = "Compress dinosaur over millions of years, then refine, split and mold, and voila! You have plastic."
+	singular_name = "plastic sheet"
+	icon_state = "sheet-plastic"
+	throwforce = 7
+	flags = CONDUCT
+	origin_tech = "materials=1"
+	origin_tech = "materials=1;biotech=1"
+	merge_type = /obj/item/stack/sheet/plastic
+
+/obj/item/stack/sheet/plastic/fifty
+	amount = 50
+
+/obj/item/stack/sheet/plastic/five
+	amount = 5
+
+/obj/item/stack/sheet/plastic/New()
+	recipes = plastic_recipes
+	. = ..()

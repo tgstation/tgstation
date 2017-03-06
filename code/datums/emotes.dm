@@ -50,6 +50,7 @@ var/global/list/emote_list = list()
 	if(!msg)
 		return FALSE
 
+	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
 	msg = "<b>[user]</b> " + msg
 
 	for(var/mob/M in dead_mob_list)
@@ -97,6 +98,8 @@ var/global/list/emote_list = list()
 		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
 			return FALSE
 		if(restraint_check && user.restrained())
+			return FALSE
+		if(user.reagents && user.reagents.has_reagent("mimesbane"))
 			return FALSE
 
 

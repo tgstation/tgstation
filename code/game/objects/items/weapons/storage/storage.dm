@@ -45,7 +45,7 @@
 			show_to(M)
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 
@@ -54,14 +54,9 @@
 
 			playsound(loc, "rustle", 50, 1, -5)
 
-
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.temporarilyRemoveItemFromInventory(src))
-					return
-				if(!M.put_in_hand(src,H.held_index))
-					qdel(src)
-					return
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 			add_fingerprint(usr)
 
@@ -86,18 +81,34 @@
 
 //Object behaviour on storage dump
 /obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	for(var/obj/item/I in src_object)
-		if(user.s_active != src_object)
-			if(I.on_found(user))
-				return
-		if(can_be_inserted(I,0,user))
-			handle_item_insertion(I, TRUE, user)
+	var/list/things = src_object.contents.Copy()
+	var/datum/progressbar/progress = new(user, things.len, src)
+	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(src, .proc/handle_mass_item_insertion, things, src_object, user, progress)))
+		sleep(1)
+	qdel(progress)
 	orient2hud(user)
 	src_object.orient2hud(user)
 	if(user.s_active) //refresh the HUD to show the transfered contents
 		user.s_active.close(user)
 		user.s_active.show_to(user)
 	return 1
+
+/obj/item/weapon/storage/proc/handle_mass_item_insertion(list/things, obj/item/weapon/storage/src_object, mob/user, datum/progressbar/progress)
+	for(var/obj/item/I in things)
+		things -= I
+		if(I.loc != src_object)
+			continue
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				break
+		if(can_be_inserted(I,0,user))
+			handle_item_insertion(I, TRUE, user)
+		if (TICK_CHECK)
+			progress.update(progress.goal - things.len)
+			return TRUE
+
+	progress.update(progress.goal - things.len)
+	return FALSE
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list()
@@ -458,8 +469,25 @@
 
 	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained() ||!usr.canmove)
 		return
+	var/turf/T = get_turf(src)
+	var/list/things = contents.Copy()
+	var/datum/progressbar/progress = new(usr, things.len, T)
+	while (do_after(usr, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
+		sleep(1)
+	qdel(progress)
 
-	do_quick_empty()
+/obj/item/weapon/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
+	for(var/obj/item/I in things)
+		things -= I
+		if (I.loc != src)
+			continue
+		remove_from_storage(I, target)
+		if (TICK_CHECK)
+			progress.update(progress.goal - things.len)
+			return TRUE
+
+	progress.update(progress.goal - things.len)
+	return FALSE
 
 // Empty all the contents onto the current turf, without checking the user's status.
 /obj/item/weapon/storage/proc/do_quick_empty()
@@ -527,7 +555,7 @@
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)
 		usr = null
-		remove_from_storage(A, loc)
+		remove_from_storage(A, null)
 
 /obj/item/weapon/storage/contents_explosion(severity, target)
 	for(var/atom/A in contents)

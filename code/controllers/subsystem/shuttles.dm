@@ -23,6 +23,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
+	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
 	var/list/hostileEnvironments = list()
 

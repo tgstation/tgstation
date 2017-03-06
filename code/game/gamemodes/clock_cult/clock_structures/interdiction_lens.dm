@@ -8,8 +8,11 @@
 	active_icon = "interdiction_lens_active"
 	inactive_icon = "interdiction_lens"
 	unanchored_icon = "interdiction_lens_unwrenched"
-	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
+	break_message = "<span class='warning'>The lens flares a blinding violet before the totem beneath it shatters!</span>"
 	break_sound = 'sound/effects/Glassbr3.ogg'
+	debris = list(/obj/item/clockwork/alloy_shards/small = 2, \
+	/obj/item/clockwork/alloy_shards/large = 2, \
+	/obj/item/clockwork/component/belligerent_eye/lens_gem = 1)
 	var/recharging = 0 //world.time when the lens was last used
 	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
 	var/disabled = FALSE //if it's actually usable
@@ -26,9 +29,9 @@
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		SetLuminosity(4, 2)
+		set_light(4, 0.2)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
@@ -46,7 +49,7 @@
 	recharging = world.time + recharge_time
 	flick("interdiction_lens_discharged", src)
 	icon_state = "interdiction_lens_inactive"
-	SetLuminosity(2,1)
+	set_light(2, 0.1)
 	disabled = TRUE
 	return TRUE
 

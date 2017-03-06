@@ -29,7 +29,7 @@
 	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
 				/obj/item/weapon/staff)
 
-	var/obj/effect/proc_holder/spell/fireball/fireball = null
+	var/obj/effect/proc_holder/spell/aimed/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/wizard/New()
 	..()
-	fireball = new /obj/effect/proc_holder/spell/fireball
+	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
 	fireball.clothes_req = 0
 	fireball.human_req = 0
 	fireball.player_lock = 0

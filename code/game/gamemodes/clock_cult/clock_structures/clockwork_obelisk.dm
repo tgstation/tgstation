@@ -11,7 +11,8 @@
 	max_integrity = 150
 	obj_integrity = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
+	debris = list(/obj/item/clockwork/alloy_shards/small = 4, \
+	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
 	var/hierophant_cost = MIN_CLOCKCULT_POWER //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
@@ -25,9 +26,10 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='nzcrentr_small'>It requires <b>[hierophant_cost]W</b> to broadcast over the Hierophant Network, and <b>[gateway_cost]W</b> to open a Spatial Gateway.</span>"
 
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
-		user << "<span class='warning'>[src] is currently sustaining a gateway!</span>"
+		if(!silent)
+			user << "<span class='warning'>[src] is currently sustaining a gateway!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 

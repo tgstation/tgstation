@@ -12,6 +12,8 @@
 	var/name = "Reagent"
 	var/id = "reagent"
 	var/description = ""
+	var/taste_description = "metaphorical salt"
+	var/taste_mult = 1 //how this taste compares to others. Higher values means it is more noticable
 	var/datum/reagents/holder = null
 	var/reagent_state = LIQUID
 	var/list/data

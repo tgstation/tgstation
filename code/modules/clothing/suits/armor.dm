@@ -268,6 +268,11 @@
 /obj/item/clothing/suit/armor/reactive/tesla
 	name = "reactive tesla armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a huge capacitor grid, with emitters strutting out of it. Zap."
+	siemens_coefficient = -1
+	var/tesla_power = 25000
+	var/tesla_range = 20
+	var/tesla_boom = FALSE
+	var/tesla_stun = FALSE
 
 /obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(!active)
@@ -277,15 +282,10 @@
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
-			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive telsa armor are still recharging! The armor merely emits some sparks.</spawn>")
+			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</spawn>")
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
-		for(var/mob/living/M in view(6, owner))
-			if(M == owner)
-				continue
-			owner.Beam(M,icon_state="lightning[rand(1, 12)]",time=5)
-			M.adjustFireLoss(25)
-			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		tesla_zap(owner,tesla_range,tesla_power,tesla_boom, tesla_stun)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 

@@ -1,6 +1,6 @@
 //The base for clockwork mobs
 /mob/living/simple_animal/hostile/clockwork
-	faction = list("ratvar")
+	faction = list("neutral", "ratvar")
 	gender = NEUTER
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1
@@ -31,7 +31,7 @@
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
 
-/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
