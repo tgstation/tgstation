@@ -220,6 +220,10 @@
 		qdel(src)
 	return
 
+/obj/machinery/am_shielding/proc/on_damage()
+	color = "#ff0000"
+	spawn(1)
+		color = initial(color)
 
 /obj/machinery/am_shielding/proc/recalc_efficiency(new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
 	if(!control_unit || !processing)
