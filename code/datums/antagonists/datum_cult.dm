@@ -29,12 +29,14 @@
 /datum/antagonist/cultist/apply_innate_effects()
 	owner.faction |= "cult"
 	owner.verbs += /mob/living/proc/cult_help
+	owner.add_status_effect(STATUS_EFFECT_CULT_BUFF)
 	communion.Grant(owner)
 	..()
 
 /datum/antagonist/cultist/remove_innate_effects()
 	owner.faction -= "cult"
 	owner.verbs -= /mob/living/proc/cult_help
+	owner.remove_status_effect(STATUS_EFFECT_CULT_BUFF)
 	..()
 
 /datum/antagonist/cultist/on_remove()
