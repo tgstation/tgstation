@@ -40,7 +40,7 @@
 		new /datum/GBP_equipment("Portal Gun x5",			/obj/item/weapon/gun/energy/wormhole_projector,					8000,	5),
 		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				10000,	5),
 		new /datum/GBP_equipment("Chrono Suit x5",		/obj/item/clothing/suit/space/chronos,								20000,	5),
-//		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/memewagon,				30000,	5),
+		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/memewagon,				30000,	5),
 		)
 
 /datum/GBP_equipment
