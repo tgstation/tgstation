@@ -746,8 +746,7 @@ var/list/preferences_datums = list()
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
 		var/DBQuery/query_get_jobban = dbcon.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
-		if(!query_get_jobban.Execute())
-			user << "<span class='redtext'>A SQL error occured during this operation, please inform an admin to check server logs.</span>"
+		if(!query_get_jobban.warn_execute())
 			return
 		if(query_get_jobban.NextRow())
 			var/reason = query_get_jobban.item[1]

@@ -122,11 +122,15 @@ DBQuery
 
 DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connection_handler
 
+DBQuery/proc/warn_execute()
+	if(!Execute())
+		usr << "<span class='danger'>A SQL error occured during this operation, check the server logs.</span>"
+
 DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
 	Close()
 	. = _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
 	if(!.)
-		diary << "\[[time_stamp()]]SQLERROR: [ErrorMsg()] | type:[type] name:[name] | Query used: [sql]"
+		diary << "\[[time_stamp()]]SQLERROR: [ErrorMsg()] | Query used: [sql]"
 
 DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)
 

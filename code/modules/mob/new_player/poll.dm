@@ -7,8 +7,7 @@
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/query_poll_get = dbcon.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE Now() BETWEEN starttime AND endtime [(client.holder ? "" : "AND adminonly = false")]")
-	if(!query_poll_get.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_poll_get.warn_execute())
 		return
 	var/output = "<div align='center'><B>Player polls</B><hr><table>"
 	var/i = 0
@@ -27,8 +26,7 @@
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/query_poll_get_details = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
-	if(!query_poll_get_details.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_poll_get_details.warn_execute())
 		return
 	var/pollstarttime = ""
 	var/pollendtime = ""
@@ -44,16 +42,14 @@
 	switch(polltype)
 		if(POLLTYPE_OPTION)
 			var/DBQuery/query_option_get_votes = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
-			if(!voted_query.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_option_get_votes.warn_execute())
 				return
 			var/votedoptionid = 0
 			if(query_option_get_votes.NextRow())
 				votedoptionid = text2num(query_option_get_votes.item[1])
 			var/list/datum/polloption/options = list()
 			var/DBQuery/query_option_options = dbcon.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
-			if(!query_option_options.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_option_options.warn_execute())
 				return
 			while(query_option_options.NextRow())
 				var/datum/polloption/PO = new()
@@ -87,8 +83,7 @@
 			src << browse(output,"window=playerpoll;size=500x250")
 		if(POLLTYPE_TEXT)
 			var/DBQuery/query_text_get_votes = dbcon.NewQuery("SELECT replytext FROM [format_table_name("poll_textreply")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
-			if(!query_text_get_votes.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_text_get_votes.warn_execute())
 				return
 			var/vote_text = ""
 			if(query_text_get_votes.NextRow())
@@ -117,8 +112,7 @@
 			src << browse(output,"window=playerpoll;size=500x500")
 		if(POLLTYPE_RATING)
 			var/DBQuery/query_rating_get_votes = dbcon.NewQuery("SELECT o.text, v.rating FROM [format_table_name("poll_option")] o, [format_table_name("poll_vote")] v WHERE o.pollid = [pollid] AND v.ckey = '[ckey]' AND o.id = v.optionid")
-			if(!query_rating_get_votes.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_rating_get_votes.warn_execute())
 				return
 			var/output = "<div align='center'><B>Player poll</B><hr>"
 			output += "<b>Question: [pollquestion]</b><br>"
@@ -136,8 +130,7 @@
 				var/minid = 999999
 				var/maxid = 0
 				var/DBQuery/query_rating_options = dbcon.NewQuery("SELECT id, text, minval, maxval, descmin, descmid, descmax FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
-				if(!query_rating_options.Execute())
-					usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+				if(!query_rating_options.warn_execute())
 					return
 				while(query_rating_options.NextRow())
 					var/optionid = text2num(query_rating_options.item[1])
@@ -171,18 +164,16 @@
 			src << browse(output,"window=playerpoll;size=500x500")
 		if(POLLTYPE_MULTI)
 			var/DBQuery/query_multi_get_votes = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
-			if(!query_multi_get_votes.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_multi_get_votes.warn_execute())
 				return
 			var/list/votedfor = list()
-			while(voted_query.NextRow())
+			while(query_multi_get_votes.NextRow())
 				votedfor.Add(text2num(query_multi_get_votes.item[1]))
 			var/list/datum/polloption/options = list()
 			var/maxoptionid = 0
 			var/minoptionid = 0
 			var/DBQuery/query_multi_options = dbcon.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
-			if(!query_multi_options.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_multi_options.warn_execute())
 				return
 			while(query_multi_options.NextRow())
 				var/datum/polloption/PO = new()
@@ -224,8 +215,7 @@
 			irv_assets.send(src)
 
 			var/DBQuery/query_irv_get_votes = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
-			if(!query_irv_get_votes.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_irv_get_votes.warn_execute())
 				return
 
 			var/list/votedfor = list()
@@ -235,8 +225,7 @@
 			var/list/datum/polloption/options = list()
 
 			var/DBQuery/query_irv_options = dbcon.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
-			if(!query_irv_options.Execute())
-				usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+			if(!query_irv_options.warn_execute())
 				return
 			while(query_irv_options.NextRow())
 				var/datum/polloption/PO = new()
@@ -342,8 +331,7 @@
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM `[format_table_name(table)]` WHERE pollid = [pollid] AND ckey = '[ckey]'")
-	if(!query_hasvoted.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_hasvoted.warn_execute())
 		return
 	if(query_hasvoted.NextRow())
 		usr << "<span class='danger'>You've already replied to this poll.</span>"
@@ -375,8 +363,7 @@
 		return 0
 	//validate the poll is actually the right type of poll and its still active
 	var/DBQuery/query_validate_poll = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime AND polltype = '[type]' [(holder ? "" : "AND adminonly = false")]")
-	if(!query_validate_poll.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_validate_poll.warn_execute())
 		return 0
 	if (!query_validate_poll.NextRow())
 		return 0
@@ -409,8 +396,7 @@
 
 	//lets collect the options
 	var/DBQuery/query_irv_id = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
-	if(!query_irv_id.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_irv_id.warn_execute())
 		return 0
 	var/list/optionlist = list()
 	while (query_irv_id.NextRow())
@@ -441,14 +427,12 @@
 
 	//now lets delete their old votes (if any)
 	var/DBQuery/query_irv_del_old = dbcon.NewQuery("DELETE FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
-	if(!query_irv_del_old.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_irv_del_old.warn_execute())
 		return 0
 
 	//now to add the new ones.
 	var/DBQuery/query_irv_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES [sqlrowlist]")
-	if(!query_irv_vote.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_irv_vote.warn_execute())
 		return 0
 	src << browse(null,"window=playerpoll")
 	return 1
@@ -469,8 +453,7 @@
 	if(!adminrank)
 		return
 	var/DBQuery/query_option_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
-	if(!query_option_vote.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_option_vote.warn_execute())
 		return
 	usr << browse(null,"window=playerpoll")
 	return 1
@@ -497,8 +480,7 @@
 		usr << "The text you entered was invalid or too long. Please correct the text and submit again."
 		return
 	var/DBQuery/query_text_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', INET_ATON('[client.address]'), '[replytext]', '[adminrank]')")
-	if(!query_text_vote.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_text_vote.warn_execute())
 		return
 	usr << browse(null,"window=playerpoll")
 	return 1
@@ -515,8 +497,7 @@
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_RATING))
 		return 0
 	var/DBQuery/query_numval_hasvoted = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE optionid = [optionid] AND ckey = '[ckey]'")
-	if(!query_numval_hasvoted.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_numval_hasvoted.warn_execute())
 		return
 	if(query_numval_hasvoted.NextRow())
 		usr << "<span class='danger'>You've already replied to this poll.</span>"
@@ -526,8 +507,7 @@
 		adminrank = client.holder.rank.name
 	adminrank = sanitizeSQL(adminrank)
 	var/DBQuery/query_numval_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]', [(isnull(rating)) ? "null" : rating])")
-	if(!query_numval_vote.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_numval_vote.warn_execute())
 		return
 	usr << browse(null,"window=playerpoll")
 	return 1
@@ -544,18 +524,16 @@
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_MULTI))
 		return 0
 	var/DBQuery/query_multi_choicelen = dbcon.NewQuery("SELECT multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
-	if(!query_multi_choicelen.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_multi_choicelen.warn_execute())
 		return 1
 	var/i
 	if(query_multi_choicelen.NextRow())
 		i = text2num(query_multi_choicelen.item[1])
 	var/DBQuery/query_multi_hasvoted = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
-	if(!query_multi_hasvoted.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_multi_hasvoted.warn_execute())
 		return 1
 	while(i)
-		if(query_hasvoted.NextRow())
+		if(query_multi_hasvoted.NextRow())
 			i--
 		else
 			break
@@ -566,8 +544,7 @@
 		adminrank = client.holder.rank.name
 	adminrank = sanitizeSQL(adminrank)
 	var/DBQuery/query_multi_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
-	if(!query_multi_vote.Execute())
-		usr << "A SQL error occured during this operation, please inform an admin to check server logs."
+	if(!query_multi_vote.warn_execute())
 		return 1
 	usr << browse(null,"window=playerpoll")
 	return 0

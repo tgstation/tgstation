@@ -457,7 +457,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			cooldown = world.time + PRINTER_COOLDOWN
 			var/DBQuery/query_library_print = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
 			if(!query_library_print.Execute())
-				say("PRINTER ERROR! Failed to print document (0x0000000F)"
+				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return
 			while(query_library_print.NextRow())
 				var/author = query_library_print.item[2]
