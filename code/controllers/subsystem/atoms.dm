@@ -12,7 +12,7 @@ var/datum/subsystem/atoms/SSatoms
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
-	var/list/blueprints_cache
+	var/list/blueprints_cache = list()
 	var/list/recipes_cache	
 
 /datum/subsystem/atoms/New()
@@ -125,9 +125,7 @@ var/datum/subsystem/atoms/SSatoms
 //We need to link and verify blueprints before we cache them and for that we need an instance
 //So we won't do that here
 /datum/subsystem/atoms/proc/InitConstruction()
-	var/list/blueprints = list()
 	var/list/recipes = list()
-	blueprints_cache = blueprints
 	recipes_cache = recipes
 	var/list/objs = typesof(/obj)
 	for(var/I in objs)
