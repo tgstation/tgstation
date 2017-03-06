@@ -168,7 +168,7 @@
 		if(construction_blueprint)
 			var/datum/construction_blueprint/BP = new construction_blueprint
 			var/temp = BP.GetBlueprint()	//get steps for the first time
-			if(!temp)
+			if(!islist(temp))
 				WARNING("Invalid construction_blueprint for [type]!")
 				temp = -1
 			if(temp != -1)
@@ -181,10 +181,6 @@
 		current_construction_state = our_steps[stepslength]	//start fully constructed by default
 	return our_steps
 
-/obj/proc/InitConstruction() //null op, no construction steps
-	//derivatives return a proper newlist of construction steps
-	return -1
-	
 /proc/LinkConstructionSteps(list/steps)
 	var/offset = 0
 	for(var/I in 1 to steps.len)
