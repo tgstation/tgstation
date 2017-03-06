@@ -652,7 +652,7 @@
 /turf/open/space,
 /area/derelict/bridge/ai_upload)
 "bN" = (
-/turf/open/floor/plasteel/airless/circuit,
+/turf/open/floor/circuit/airless,
 /area/derelict/bridge/ai_upload)
 "bO" = (
 /turf/open/floor/plating/airless,
