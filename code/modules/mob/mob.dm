@@ -978,3 +978,35 @@ var/next_mob_id = 0
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/verb/face_direction()
+
+	set name = "Face Direction"
+	set category = "IC"
+	set src = usr
+
+	set_face_dir()
+
+	if(!facing_dir)
+		usr << "You are now not facing anything."
+	else
+		usr << "You are now facing [dir2text(facing_dir)]."
+
+/mob/proc/set_face_dir(var/newdir)
+	if(newdir)
+		set_dir(newdir)
+		facing_dir = newdir
+	else if(facing_dir)
+		facing_dir = null
+	else
+		set_dir(dir)
+		facing_dir = dir
+
+/mob/set_dir()
+	if(facing_dir)
+		if(!canface() || lying || buckled || restrained())
+			facing_dir = null
+		else if(dir != facing_dir)
+			return ..(facing_dir)
+	else
+		return ..()
