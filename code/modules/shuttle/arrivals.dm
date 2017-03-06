@@ -151,7 +151,7 @@
 		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
-	if(mode != SHUTTLE_CALL || damaged)
+	if(mode == SHUTTLE_CALL || damaged)
 		return
 	
 	Launch(TRUE)
