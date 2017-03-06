@@ -59,7 +59,7 @@
 		playsound(src, 'sound/effects/pray_chaplain.ogg', 100, 1)
 		for(var/i in 1 to 3)
 			new /obj/item/clothing/head/orange_beret(get_turf(src))
-			new /obj/item/clothing/head/engiponcho(get_turf(src))
+			new /obj/item/clothing/suit/engiponcho(get_turf(src))
 			new /obj/item/clothing/gloves/krav_maga/engi(get_turf(src))
 	interact(user)
 
