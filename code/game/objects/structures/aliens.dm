@@ -171,7 +171,7 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
-	luminosity = 1
+	light_range = 1
 	var/node_range = NODERANGE
 
 /obj/structure/alien/weeds/node/New()

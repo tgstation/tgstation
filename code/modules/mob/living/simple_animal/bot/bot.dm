@@ -103,14 +103,14 @@
 	if(stat)
 		return 0
 	on = 1
-	SetLuminosity(initial(luminosity))
+	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
 	return 1
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = 0
-	SetLuminosity(0)
+	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
 

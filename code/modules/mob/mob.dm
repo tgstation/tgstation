@@ -116,12 +116,14 @@ var/next_mob_id = 0
 					msg = blind_message
 				else
 					continue
-			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+			
+			else if(T.lighting_overlay)
+				if(T.lighting_overlay.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
 						msg = blind_message
 					else
 						continue
+
 		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
@@ -973,6 +975,6 @@ var/next_mob_id = 0
 
 /mob/vv_get_var(var_name)
 	switch(var_name)
-		if ("attack_log")
-			return debug_variable(var_name, attack_log, 0, src, FALSE)
+		if("logging")
+			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()

@@ -526,3 +526,12 @@ type/construction_blueprint = /datum/construction_blueprint##type;\
 	var/construction_blueprint_get_type = initial(construction_blueprint_get_parent_type:construction_blueprint);\
 	var/datum/construction_blueprint/construction_blueprint_getter = new construction_blueprint_get_type;\
 	outlist = construction_blueprint_getter.GetBlueprint();
+
+/proc/GetRedPart(const/hexa)
+	return hex2num(copytext(hexa, 2, 4))
+
+/proc/GetGreenPart(const/hexa)
+	return hex2num(copytext(hexa, 4, 6))
+
+/proc/GetBluePart(const/hexa)
+	return hex2num(copytext(hexa, 6, 8))
