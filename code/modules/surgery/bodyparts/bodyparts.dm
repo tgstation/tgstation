@@ -115,6 +115,10 @@
 		brute = max(0, brute - 5)
 		burn = max(0, burn - 4)
 
+	switch(animal_origin)
+		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
+			burn *= 2
+
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
 	if(!can_inflict)
 		return 0
