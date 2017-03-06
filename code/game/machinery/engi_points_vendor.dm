@@ -3,7 +3,7 @@
 	name = "Engineering Points Manager"
 	desc = "Who's a good boy?"
 	icon = 'icons/obj/machines/engi_points.dmi'
-	icon_state = "shop"
+	icon_state = "store"
 	verb_say = "states"
 	density = 1
 	anchored = 1
@@ -176,7 +176,7 @@
 /obj/machinery/engi_points_delivery
 	name = "Engineering Reward Fabricator"
 	desc = "Like a christmas tree for engineers"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "geardist"
 	density = 1
 	anchored = 1
