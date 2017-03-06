@@ -6016,7 +6016,7 @@
 "clJ" = (/obj/machinery/atmospherics/pipe/simple/green/visible,/obj/machinery/portable_atmospherics/pump,/turf/open/floor/plasteel,/area/atmos)
 "clK" = (/obj/machinery/atmospherics/pipe/simple/green/visible{dir = 4},/obj/machinery/atmospherics/pipe/simple/cyan/visible,/turf/open/floor/plasteel,/area/atmos)
 "clL" = (/obj/machinery/atmospherics/pipe/simple/green/visible{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,/turf/open/floor/plasteel,/area/atmos)
-"clM" = (/obj/machinery/atmospherics/components/trinary/filter{dir = 1; filter_type = "o2"; on = 1},/turf/open/floor/plasteel,/area/atmos)
+"clM" = (/obj/machinery/atmospherics/components/trinary/filter{dir = 4; filter_type = "o2"; on = 1},/turf/open/floor/plasteel,/area/atmos)
 "clN" = (/obj/machinery/atmospherics/pipe/simple/green/visible{dir = 4},/turf/open/floor/plasteel,/area/atmos)
 "clO" = (/obj/machinery/atmospherics/pipe/simple/green/visible{dir = 4; initialize_directions = 12},/turf/open/floor/plasteel,/area/atmos)
 "clP" = (/obj/machinery/atmospherics/pipe/simple/green/visible{dir = 9},/turf/open/floor/plasteel,/area/atmos)

@@ -1,0 +1,4 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - bugfix: "The missing Science Department access has been added to the Auxiliary Base Management Console."
