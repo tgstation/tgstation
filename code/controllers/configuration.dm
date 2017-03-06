@@ -903,3 +903,8 @@
 		statclick = new/obj/effect/statclick/debug("Edit", src)
 
 	stat("[name]:", statclick)
+
+/datum/configuration/vv_edit_var(var_name, var_value)
+	if(var_name == "cross_address" || var_name == "cross_allowed")
+		return FALSE
+	return ..()
