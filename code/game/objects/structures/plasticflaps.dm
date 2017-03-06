@@ -13,9 +13,9 @@
 	..()
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/plasticflaps)
-	return newlist(
+	. = newlist(
 		/datum/construction_state/first{
-			required_type_to_construct = /obj/item/stack/sheet/plastic
+			//required_type_to_construct = /obj/item/stack/sheet/plastic
 			required_amount_to_construct = 5
 		},
 		/datum/construction_state{
@@ -35,6 +35,13 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/plasticflaps)
 			examine_message = "They are screwed to the floor."
 		}
 	)
+	
+	//This is here to work around a byond bug
+	//http://www.byond.com/forum/?post=2220240
+	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
+
+	var/datum/construction_state/first/X = .[1]
+	X.required_type_to_construct = /obj/item/stack/sheet/plastic
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
 	if(isliving(caller))
