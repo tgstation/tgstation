@@ -61,6 +61,7 @@ var/datum/subsystem/events/SSevent
 
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/subsystem/events/proc/spawnEvent()
+	set waitfor = FALSE	//for the admin prompt
 	if(!config.allow_random_events)
 //		var/datum/round_event_control/E = locate(/datum/round_event_control/dust) in control
 //		if(E)	E.runEvent()
@@ -75,13 +76,8 @@ var/datum/subsystem/events/SSevent
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
 		if(E.weight < 0)						//for round-start events etc.
-			if(E.runEvent() == PROCESS_KILL)
-				E.max_occurrences = 0
-				continue
-			if (E.alertadmins)
-				message_admins("Random Event triggering: [E.name] ([E.typepath])")
-			log_game("Random Event triggering: [E.name] ([E.typepath])")
-			return
+			if(TriggerEvent(E))
+				return
 		sum_of_weights += E.weight
 
 	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
@@ -92,14 +88,15 @@ var/datum/subsystem/events/SSevent
 		sum_of_weights -= E.weight
 
 		if(sum_of_weights <= 0)				//we've hit our goal
-			if(E.runEvent() == PROCESS_KILL)//we couldn't run this event for some reason, set its max_occurrences to 0
-				E.max_occurrences = 0
-				continue
-			if (E.alertadmins)
-				message_admins("Random Event triggering: [E.name] ([E.typepath])")
-				deadchat_broadcast("<span class='deadsay'><b>[E.name]</b> has just been randomly triggered!</span>") //STOP ASSUMING IT'S BADMINS!
-			log_game("Random Event triggering: [E.name] ([E.typepath])")
-			return
+			if(TriggerEvent(E))
+				return
+
+/datum/subsystem/events/proc/TriggerEvent(datum/round_event_control/E)
+	. = E.preRunEvent()
+	if(!.)//we couldn't run this event for some reason, set its max_occurrences to 0
+		E.max_occurrences = 0
+	else
+		E.runEvent(TRUE)
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
 	var/list/safe_areas = list(
