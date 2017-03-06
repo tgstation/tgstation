@@ -54,6 +54,7 @@
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
 		return
 	if (power_drained >= 4000000 && !rewarded) // 4 billion watts
+		rewarded = 1
 		visible_message("<span class='danger'>You have been blessed by the gods of engineering for your massive power exports!</span>")
 		new /obj/effect/overlay/temp/explosion/fast(get_turf(src))
 		playsound(src, 'sound/effects/pray_chaplain.ogg', 100, 1)
