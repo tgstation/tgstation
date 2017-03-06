@@ -129,6 +129,7 @@
 			qdel(thing)
 		screenoverlays.Cut()
 	mymob = null
+
 	return ..()
 
 /mob/proc/create_mob_hud()
@@ -202,6 +203,7 @@
 
 	for(var/thing in plane_masters)
 		screenmob.client.screen += plane_masters[thing]
+
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	mymob.update_action_buttons(1)

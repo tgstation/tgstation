@@ -1,7 +1,7 @@
 var/datum/subsystem/parallax/SSparallax
 
 /datum/subsystem/parallax
-	name = "parallax"
+	name = "Parallax"
 	wait = 2
 	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
 	priority = 65

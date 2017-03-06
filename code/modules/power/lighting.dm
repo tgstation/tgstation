@@ -238,7 +238,7 @@
 
 	update_icon()
 	if(on)
-		if(!light || light.luminosity != brightness)
+		if(!light || light.light_range != brightness)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -248,10 +248,10 @@
 					burn_out()
 			else
 				use_power = 2
-				SetLuminosity(brightness)
+				set_light(brightness)
 	else
 		use_power = 1
-		SetLuminosity(0)
+		set_light(0)
 
 	active_power_usage = (brightness * 10)
 	if(on != on_gs)
@@ -268,7 +268,7 @@
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
 		on = 0
-		SetLuminosity(0)
+		set_light(0)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
