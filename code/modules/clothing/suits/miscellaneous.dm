@@ -214,6 +214,12 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 	flags = NODROP
+	
+/obj/item/clothing/suit/poncho/engiponcho
+	name = "elite engineering poncho"
+	desc = "Puts you on notice that you're not dealing with an ordinary engineer."
+	icon_state = "engiponcho"
+	item_state = "engiponcho"
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"
