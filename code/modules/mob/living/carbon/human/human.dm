@@ -720,8 +720,8 @@
 
 /mob/living/carbon/human/wash_cream()
 	//clean both to prevent a rare bug
-	overlays -=image('icons/effects/creampie.dmi', "creampie_lizard")
-	overlays -=image('icons/effects/creampie.dmi', "creampie_human")
+	cut_overlay(image('icons/effects/creampie.dmi', "creampie_lizard"))
+	cut_overlay(image('icons/effects/creampie.dmi', "creampie_human"))
 
 
 //Turns a mob black, flashes a skeleton overlay
@@ -740,7 +740,7 @@
 
 /mob/living/carbon/human/proc/end_electrocution_animation(image/I)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
-	overlays -= I
+	cut_overlay(I)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
@@ -781,11 +781,11 @@
 			var/health_amount = health - staminaloss
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
-					if(1)
+					if(SCREWYHUD_CRIT)
 						hud_used.healths.icon_state = "health6"
-					if(2)
+					if(SCREWYHUD_DEAD)
 						hud_used.healths.icon_state = "health7"
-					if(5)
+					if(SCREWYHUD_HEALTHY)
 						hud_used.healths.icon_state = "health0"
 		if(hud_used.healthdoll)
 			hud_used.healthdoll.cut_overlays()
@@ -806,7 +806,7 @@
 						icon_num = 4
 					if(damage > (comparison*4))
 						icon_num = 5
-					if(hal_screwyhud == 5)
+					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
 						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
@@ -820,6 +820,7 @@
 		regenerate_limbs()
 		regenerate_organs()
 	remove_all_embedded_objects()
+	set_heartattack(FALSE)
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
@@ -895,3 +896,38 @@
 	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
 	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
 	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
+
+/mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
+	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(target) || !isliving(user))	//Get consent first :^)
+		. = ..()
+		return
+	buckle_mob(target, FALSE, TRUE, TRUE)
+	. = ..()
+
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, yes = FALSE)
+	if(!yes)
+		return
+	if(!is_type_in_typecache(M, can_ride_typecache))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
+		return
+	if(!riding_datum)
+		riding_datum = new /datum/riding/human(src)
+	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
+		return
+	if(buckled)	//NO INFINITE STACKING!!
+		return
+	if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+		M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
+		return
+	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 2)))	//MAKE SURE THIS IS LAST!!
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+		return
+	. = ..(M, force, check_loc)
+	stop_pulling()
+
+/mob/living/carbon/human/unbuckle_mob(mob/living/M)
+	if(iscarbon(M))
+		if(riding_datum)
+			riding_datum.unequip_buckle_inhands(M)
+			riding_datum.restore_position(M)
+	. = ..(M)

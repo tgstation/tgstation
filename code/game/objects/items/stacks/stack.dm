@@ -156,10 +156,7 @@
 		//BubbleWrap END
 
 	if (src && usr.machine==src) //do not reopen closed window
-		spawn( 0 )
-			src.interact(usr)
-			return
-	return
+		addtimer(CALLBACK(src, /atom/.proc/interact, usr), 0)
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (src.get_amount() < R.req_amount*multiplier)
@@ -251,7 +248,7 @@
 		//get amount from user
 		var/min = 0
 		var/max = src.get_amount()
-		var/stackmaterial = input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max]") as num
+		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max]") as num)
 		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= src.get_amount())
 			return
 		else

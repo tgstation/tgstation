@@ -105,7 +105,7 @@ Code:
 			user << "You transfer the frequency and code of \the [signaler2.name] to \the [name]"
 	else
 		..()
-			
+
 /obj/item/device/assembly/signaler/proc/signal()
 	if(!radio_connection) return
 
@@ -193,4 +193,10 @@ Code:
 		A.anomalyNeutralize()
 
 /obj/item/device/assembly/signaler/anomaly/attack_self()
+	return
+
+/obj/item/device/assembly/signaler/cyborg
+	origin_tech = null
+
+/obj/item/device/assembly/signaler/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return

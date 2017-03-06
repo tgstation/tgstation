@@ -24,6 +24,7 @@
 
 	user << "<span class='notice'>You install \the [H] into \the [src].</span>"
 	H.holder = src
+	H.forceMove(src)
 	H.on_install(src, user)
 
 

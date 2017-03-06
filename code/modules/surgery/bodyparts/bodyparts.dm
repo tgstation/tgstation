@@ -115,6 +115,10 @@
 		brute = max(0, brute - 5)
 		burn = max(0, burn - 4)
 
+	switch(animal_origin)
+		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
+			burn *= 2
+
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
 	if(!can_inflict)
 		return 0
@@ -316,9 +320,9 @@
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 	else
 		if(should_draw_gender)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[initial(icon_state)]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[initial(icon_state)]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		standing += I
 		return standing
 

@@ -20,7 +20,7 @@ var/bomb_set
 	density = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	var/timer_set = 60
+	var/timer_set = 90
 	var/default_timer_set = 90
 	var/minimum_timer_set = 90
 	var/maximum_timer_set = 3600
@@ -196,7 +196,7 @@ var/bomb_set
 		update_icon_lights()
 
 /obj/machinery/nuclearbomb/proc/update_icon_interior()
-	overlays -= interior
+	cut_overlay(interior)
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
 			interior = image(icon,"panel-unscrewed")
@@ -213,7 +213,7 @@ var/bomb_set
 	add_overlay(interior)
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
-	overlays -= lights
+	cut_overlay(lights)
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
 			lights = null

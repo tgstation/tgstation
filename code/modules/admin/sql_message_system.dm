@@ -35,8 +35,8 @@
 	if(!timestamp)
 		timestamp = SQLtime()
 	if(!server)
-		if (config && config.server_name)
-			server = config.server_name
+		if (config && config.server_sql_name)
+			server = config.server_sql_name
 	server = sanitizeSQL(server)
 	if(isnull(secret))
 		switch(alert("Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
@@ -52,7 +52,7 @@
 		log_game("SQL ERROR creating new [type] in messages table. Error : \[[err]\]\n")
 		return
 	if(logged)
-		log_admin("[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]: [text]")
+		log_admin_private("[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]: [text]")
 		message_admins("[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]:<br>[text]")
 		if(browse)
 			browse_messages("[type]")
@@ -84,7 +84,7 @@
 		log_game("SQL ERROR deleting [type] from messages table. Error : \[[err]\]\n")
 		return
 	if(logged)
-		log_admin("[key_name(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]: [text]")
+		log_admin_private("[key_name(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]: [text]")
 		message_admins("[key_name_admin(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]:<br>[text]")
 		if(browse)
 			browse_messages("[type]")
@@ -119,7 +119,7 @@
 			var/err = query_edit_message.ErrorMsg()
 			log_game("SQL ERROR editing messages table. Error : \[[err]\]\n")
 			return
-		log_admin("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
+		log_admin_private("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
 		message_admins("[key_name_admin(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from<br>[old_text]<br>to<br>[new_text]")
 		if(browse)
 			browse_messages("[type]")
@@ -150,11 +150,11 @@
 			var/err = query_message_secret.ErrorMsg()
 			log_game("SQL ERROR toggling message secrecy. Error : \[[err]\]\n")
 			return
-		log_admin("[key_name(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
+		log_admin_private("[key_name(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
 		message_admins("[key_name_admin(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
 		browse_messages(target_ckey = target_ckey)
 
-/proc/browse_messages(type, target_ckey, index, linkless = 0)
+/proc/browse_messages(type, target_ckey, index, linkless = 0, filter)
 	if(!dbcon.IsConnected())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
@@ -176,7 +176,11 @@
 			output += "<a href='?_src_=holder;addmemo=1'>\[Add memo\]</a></center>"
 		else if(type == "watchlist entry")
 			output += "<h2><center>Watchlist entries</h2>"
-			output += "<a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a></center>"
+			output += "<a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a>"
+			if(filter)
+				output += "|<a href='?_src_=holder;showwatch=1'>\[Unfilter clients\]</a></center>"
+			else
+				output += "|<a href='?_src_=holder;showwatchfilter=1'>\[Filter offline clients\]</a></center>"
 		output += ruler
 		var/DBQuery/query_get_type_messages = dbcon.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'")
 		if(!query_get_type_messages.Execute())
@@ -186,6 +190,8 @@
 		while(query_get_type_messages.NextRow())
 			var/id = query_get_type_messages.item[1]
 			var/t_ckey = query_get_type_messages.item[2]
+			if(type == "watchlist entry" && filter && !(t_ckey in directory))
+				continue
 			var/admin_ckey = query_get_type_messages.item[3]
 			var/text = query_get_type_messages.item[4]
 			var/timestamp = query_get_type_messages.item[5]
@@ -229,12 +235,19 @@
 				data += " <a href='?_src_=holder;deletemessage=[id]'>\[Delete\]</a>"
 				if(type == "note")
 					data += " <a href='?_src_=holder;secretmessage=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not secret\]"]</a>"
-				data += " <a href='?_src_=holder;editmessage=[id]'>\[Edit\]</a>"
+				if(type == "message sent")
+					data += " <font size='2'>Message has been sent</font>"
+					if(editor_ckey)
+						data += "|"
+				else
+					data += " <a href='?_src_=holder;editmessage=[id]'>\[Edit\]</a>"
 				if(editor_ckey)
 					data += " <font size='2'>Last edit by [editor_ckey] <a href='?_src_=holder;messageedits=[id]'>(Click here to see edit log)</a></font>"
 			data += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
 			switch(type)
 				if("message")
+					messagedata += data
+				if("message sent")
 					messagedata += data
 				if("watchlist entry")
 					watchdata += data
@@ -242,9 +255,9 @@
 					notedata += data
 		output += "<h2><center>[target_ckey]</center></h2><center>"
 		if(!linkless)
-			output += "<a href='?_src_=holder;addmessage=[target_ckey]'>\[Add message\]</a>"
+			output += "<a href='?_src_=holder;addnote=[target_ckey]'>\[Add note\]</a>"
+			output += " <a href='?_src_=holder;addmessage=[target_ckey]'>\[Add message\]</a>"
 			output += " <a href='?_src_=holder;addwatch=[target_ckey]'>\[Add to watchlist\]</a>"
-			output += " <a href='?_src_=holder;addnote=[target_ckey]'>\[Add note\]</a>"
 			output += " <a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Refresh page\]</a></center>"
 		else
 			output += " <a href='?_src_=holder;showmessageckeylinkless=[target_ckey]'>\[Refresh page\]</a></center>"
@@ -303,7 +316,7 @@ proc/get_message_output(type, target_ckey)
 		log_game("SQL ERROR obtaining id, adminckey, text, timestamp, lasteditor from messages table. Error : \[[err]\]\n")
 		return
 	while(query_get_message_output.NextRow())
-		var/id = query_get_message_output.item[1]
+		var/message_id = query_get_message_output.item[1]
 		var/admin_ckey = query_get_message_output.item[2]
 		var/text = query_get_message_output.item[3]
 		var/timestamp = query_get_message_output.item[4]
@@ -311,15 +324,19 @@ proc/get_message_output(type, target_ckey)
 		switch(type)
 			if("message")
 				output += "<font color='red' size='3'><b>Admin message left by <span class='prefix'>[admin_ckey]</span> on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font>"
-				delete_message(id, 0)
+				output += "<br><font color='red'>[text]</font><br>"
+				var/DBQuery/query_message_read = dbcon.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = [message_id]")
+				if(!query_message_read.Execute())
+					var/err = query_message_read.ErrorMsg()
+					log_game("SQL ERROR updating message type. Error : \[[err]\]\n")
+					return
 			if("watchlist entry")
 				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] is on the watchlist and has just connected - Reason: [text]</font>")
 				send2irc_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "<span class='memo'>Memo by <span class='prefix'>[admin_ckey]</span> on [timestamp]"
 				if(editor_ckey)
-					output += "<br><span class='memoedit'>Last edit by [editor_ckey] <A href='?_src_=holder;messageedits=[id]'>(Click here to see edit log)</A></span>"
+					output += "<br><span class='memoedit'>Last edit by [editor_ckey] <A href='?_src_=holder;messageedits=[message_id]'>(Click here to see edit log)</A></span>"
 				output += "<br>[text]</span><br>"
 	return output
 
@@ -335,8 +352,8 @@ proc/get_message_output(type, target_ckey)
 		var/notetext
 		notesfile >> notetext
 		var/server
-		if(config && config.server_name)
-			server = config.server_name
+		if(config && config.server_sql_name)
+			server = config.server_sql_name
 		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
 		note.Find(notetext)
 		var/timestamp = note.group[1]

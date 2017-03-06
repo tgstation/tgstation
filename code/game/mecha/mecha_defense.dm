@@ -152,7 +152,7 @@
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
-			user << "[src]-[W] interface initialized successfuly"
+			user << "[src]-[W] interface initialized successfully."
 		else
 			user << "[src]-[W] interface initialization failed."
 		return

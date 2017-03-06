@@ -13,6 +13,8 @@
 	var/mob/living/carbon/human/prisoner = null
 	var/datum/data/record/temporary_record = null
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/gulag_teleporter_computer/New()
 	..()
 	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
@@ -144,7 +146,7 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/teleport(mob/user)
 	log_game("[user]([user.ckey] teleported [prisoner]([prisoner.ckey]) to the Labor Camp ([beacon.x], [beacon.y], [beacon.z]) for [id.goal] points.")
 	teleporter.handle_prisoner(id, temporary_record)
-	playsound(loc, "sound/weapons/emitter.ogg", 50, 1)
+	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Weaken(2) // small travel dizziness
 	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"
@@ -155,10 +157,3 @@
 	teleporter.toggle_open()
 	id = null
 	temporary_record = null
-
-
-
-
-
-
-

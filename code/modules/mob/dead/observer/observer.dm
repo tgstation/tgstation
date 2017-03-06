@@ -76,7 +76,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/turf/T
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
-		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
+		logging = body.logging			//preserve our logs by copying them to our ghost
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -158,13 +158,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		ghost_others = client.prefs.ghost_others
 
 	if(hair_image)
-		overlays -= hair_image
-		ghostimage.overlays -= hair_image
+		cut_overlay(hair_image)
+		ghostimage.add_overlay(hair_image)
 		hair_image = null
 
 	if(facial_hair_image)
-		overlays -= facial_hair_image
-		ghostimage.overlays -= facial_hair_image
+		cut_overlay(facial_hair_image)
+		ghostimage.add_overlay(facial_hair_image)
 		facial_hair_image = null
 
 
@@ -192,7 +192,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
 				add_overlay(facial_hair_image)
-				ghostimage.overlays += facial_hair_image
+				ghostimage.add_overlay(facial_hair_image)
 		if(hair_style)
 			S = hair_styles_list[hair_style]
 			if(S)
@@ -201,7 +201,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
 				add_overlay(hair_image)
-				ghostimage.overlays += hair_image
+				ghostimage.add_overlay(hair_image)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,
@@ -299,7 +299,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Station Time: [worldtime2text()]")
 		if(ticker && ticker.mode)
 			for(var/datum/gang/G in ticker.mode.gangs)
 				if(G.is_dominating)
@@ -328,7 +327,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
-/mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
+/mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
+	if(flashwindow)
+		window_flash(client)
 	if(message)
 		src << "<span class='ghostalert'>[message]</span>"
 		if(source)
@@ -598,14 +599,28 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Server Hop!"
 	set desc= "Jump to the other server"
+	if(notransform)
+		return
 	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
 	if (client && global.cross_allowed)
 		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+		new /obj/screen/splash(client)
+		notransform = TRUE
+		sleep(29)	//let the animation play
+		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(global.cross_address)
+		client << link(global.cross_address + "?server_hop=[key]")
 	else
 		src << "<span class='error'>There is no other server configured!</span>"
+
+/proc/show_server_hop_transfer_screen(expected_key)
+	//only show it to incoming ghosts
+	for(var/mob/dead/observer/O in player_list)
+		if(O.key == expected_key)
+			if(O.client)
+				new /obj/screen/splash(O.client, TRUE)
+			break
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -781,3 +796,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			SSpai.recruitWindow(src)
 	else
 		usr << "Can't become a pAI candidate while not dead!"
+
+/mob/dead/observer/CtrlShiftClick(mob/user)
+	if(isobserver(user) && check_rights(R_SPAWN))
+		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+

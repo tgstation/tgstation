@@ -16,7 +16,6 @@
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
-		lying_prev = lying	//so we don't try to animate until there's been another change.
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)
@@ -31,13 +30,14 @@
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
-	var/image/I = overlays_standing[cache_index]
+	var/I = overlays_standing[cache_index]
 	if(I)
 		add_overlay(I)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
-	if(overlays_standing[cache_index])
-		overlays -= overlays_standing[cache_index]
+	var/I = overlays_standing[cache_index]
+	if(I)
+		cut_overlay(I)
 		overlays_standing[cache_index] = null
 
 /mob/living/carbon/regenerate_icons()
@@ -107,9 +107,9 @@
 		var/obj/item/bodypart/BP = X
 		if(BP.dmg_overlay_type)
 			if(BP.brutestate)
-				standing.overlays	+= "[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
+				standing.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0")	//we're adding icon_states of the base image as overlays
 			if(BP.burnstate)
-				standing.overlays	+= "[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]"
+				standing.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]")
 
 	apply_overlay(DAMAGE_LAYER)
 

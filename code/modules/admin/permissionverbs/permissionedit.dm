@@ -60,9 +60,7 @@
 	if (!check_rights(R_PERMISSIONS))
 		return
 
-	establish_db_connection()
-
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 
@@ -109,8 +107,7 @@
 	if(check_rights(R_PERMISSIONS))
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 

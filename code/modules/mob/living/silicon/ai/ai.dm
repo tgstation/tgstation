@@ -242,7 +242,6 @@ var/list/ai_list = list()
 	if(statpanel("Status"))
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
-			stat(null, "Station Time: [worldtime2text()]")
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
 			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
@@ -698,14 +697,18 @@ var/list/ai_list = list()
 			var/list/icon_list = list(
 				"default" = 'icons/mob/AI.dmi',
 				"floating face" = 'icons/mob/AI.dmi',
-				"xeno queen" = 'icons/mob/AI.dmi',
+				"xeno queen" = 'icons/mob/alien.dmi',
 				"horror" = 'icons/mob/AI.dmi'
 				)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
-				holo_icon = getHologramIcon(icon(icon_list[input], input))
+				switch(input)
+					if("xeno queen")
+						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
+					else
+						holo_icon = getHologramIcon(icon(icon_list[input], input))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()
@@ -728,7 +731,7 @@ var/list/ai_list = list()
 		src << "Camera lights deactivated."
 
 		for (var/obj/machinery/camera/C in lit_cameras)
-			C.SetLuminosity(0)
+			C.set_light(0)
 			lit_cameras = list()
 
 		return

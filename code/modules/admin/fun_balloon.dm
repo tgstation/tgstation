@@ -100,44 +100,6 @@
 	qdel(src)
 
 
-//Luxury Shuttle Blockers
-
-/obj/effect/forcefield/luxury_shuttle
-	var/threshhold = 500
-	var/list/approved_passengers = list()
-
-/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
-	if(mover in approved_passengers)
-		return 1
-
-	if(!isliving(mover)) //No stowaways
-		return 0
-
-	var/total_cash = 0
-	var/list/counted_money = list()
-
-	for(var/obj/item/weapon/coin/C in mover)
-		total_cash += C.value
-		counted_money += C
-		if(total_cash >= threshhold)
-			break
-	for(var/obj/item/stack/spacecash/S in mover)
-		total_cash += S.value * S.amount
-		counted_money += S
-		if(total_cash >= threshhold)
-			break
-
-	if(total_cash >= threshhold)
-		for(var/obj/I in counted_money)
-			qdel(I)
-
-		mover << "Thank you for your payment! Please enjoy your flight."
-		approved_passengers += mover
-		return 1
-	else
-		mover << "You don't have enough money to enter the main shuttle. You'll have to fly coach."
-		return 0
-
 //Shuttle Build
 
 /obj/effect/shuttle_build
@@ -150,3 +112,68 @@
 /obj/effect/shuttle_build/New()
 	SSshuttle.emergency.dock(SSshuttle.getDock("emergency_home"))
 	qdel(src)
+
+//Arena
+
+/obj/effect/forcefield/arena_shuttle
+	name = "portal"
+	var/list/warp_points = list()
+
+
+/obj/effect/forcefield/arena_shuttle/Bumped(mob/M as mob|obj)
+	if(!warp_points.len)
+		warp_points = get_area_turfs(/area/shuttle/escape)
+		for(var/turf/T in warp_points)
+			for(var/atom/movable/AM in T)
+				if(AM.density && AM.anchored)
+					warp_points -= T
+					break
+	if(!isliving(M))
+		return
+	else
+		var/mob/living/L = M
+		if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
+			L << "Your offering is accepted. You may pass."
+			qdel(L.pulling)
+			var/turf/LA = pick(warp_points)
+			L.forceMove(LA)
+			L.hallucination = 0
+			L << "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>"
+			for(var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw in L)
+				qdel(chainsaw)
+		else
+			L << "You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions."
+
+/obj/effect/landmark/shuttle_arena_safe
+	name = "hall of champions"
+	desc = "For the winners."
+
+/obj/effect/landmark/shuttle_arena_entrance
+	name = "the arena"
+	desc = "A lava filled battlefield."
+
+
+/obj/effect/forcefield/arena_shuttle_entrance
+	name = "portal"
+	var/list/warp_points = list()
+
+/obj/effect/forcefield/arena_shuttle_entrance/Bumped(mob/M as mob|obj)
+	if(!warp_points.len)
+		for(var/obj/effect/landmark/shuttle_arena_entrance/S in landmarks_list)
+			warp_points |= S
+	if(!isliving(M))
+		return
+
+	var/obj/effect/landmark/LA = pick(warp_points)
+
+	M.forceMove(get_turf(LA))
+	M << "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>"
+	spawn()
+		var/obj/effect/mine/pickup/bloodbath/B = new(M)
+		B.mineEffect(M)
+
+
+/area/shuttle_arena
+	name = "arena"
+	has_gravity = 1
+	requires_power = 0

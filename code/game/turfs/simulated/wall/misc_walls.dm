@@ -8,7 +8,7 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
 
-/turf/closed/wall/mineral/cult/New()
+/turf/closed/wall/mineral/cult/Initialize()
 	new /obj/effect/overlay/temp/cult/turf(src)
 	..()
 
@@ -43,14 +43,14 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
-	slicing_duration = 120
+	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
-/turf/closed/wall/clockwork/New()
+/turf/closed/wall/clockwork/Initialize()
 	..()
 	new /obj/effect/overlay/temp/ratvar/wall(src)
 	new /obj/effect/overlay/temp/ratvar/beam(src)

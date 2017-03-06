@@ -43,7 +43,7 @@
 			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
-	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has been converted to the cult of Ratvar!</font>"
+	owner.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S) && !silent_update)
@@ -76,7 +76,10 @@
 			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
 			A.languages_spoken &= ~HUMAN
-			A.add_atom_colour(list("#B18B25", "#92661A", "#6D370F", rgb(0,0,0)), ADMIN_COLOUR_PRIORITY)
+			var/list/AI_frame = list(image('icons/mob/clockwork_mobs.dmi', A, "aiframe")) //make the AI's cool frame
+			for(var/d in cardinal)
+				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
+			A.add_overlay(AI_frame)
 			if(!A.lacks_power())
 				A.ai_restore_power()
 			if(A.eyeobj)
@@ -128,7 +131,7 @@
 			A.can_be_carded = initial(A.can_be_carded)
 			A.requires_power = initial(A.requires_power)
 			A.languages_spoken |= HUMAN
-			A.remove_atom_colour(ADMIN_COLOUR_PRIORITY, list("#B18B25", "#92661A", "#6D370F", rgb(0,0,0)))
+			A.cut_overlays()
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
@@ -151,7 +154,7 @@
 	if(owner.mind)
 		owner.mind.wipe_memory()
 		owner.mind.special_role = null
-	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has renounced the cult of Ratvar!</font>"
+	owner.log_message("<font color=#BE8700>Has renounced the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(iscyborg(owner))
 		owner << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 	..()

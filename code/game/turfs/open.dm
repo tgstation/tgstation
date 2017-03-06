@@ -29,21 +29,19 @@
 	baseturf = /turf/open/indestructible/necropolis
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
-/turf/open/indestructible/necropolis/New()
+/turf/open/indestructible/necropolis/Initialize()
 	..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
+
+/turf/open/indestructible/necropolis/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
-
-/turf/open/indestructible/hierophant/New()
-	..()
-	if(smooth)
-		queue_smooth(src)
 
 /turf/open/indestructible/hierophant/two
 
@@ -156,7 +154,7 @@
 				return 0
 		if(!(lube&SLIDE_ICE))
 			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
-			C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
@@ -188,7 +186,7 @@
 	wet = wet_setting
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
-			overlays -= wet_overlay
+			cut_overlay(wet_overlay)
 			wet_overlay = null
 		var/turf/open/floor/F = src
 		if(istype(F))
@@ -214,7 +212,7 @@
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
-				overlays -= wet_overlay
+				cut_overlay(wet_overlay)
 
 /turf/open/proc/HandleWet()
 	if(!wet)
