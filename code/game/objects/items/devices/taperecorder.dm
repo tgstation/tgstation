@@ -14,11 +14,12 @@
 	var/recording = FALSE
 	var/playing = 0
 	var/playsleepseconds = 0
-	var/loop = 0
+	var/loop = FALSE
 	var/obj/item/device/tape/mytape
 	var/open_panel = 0
 	var/canprint = 1
 	var/canRecordComms = FALSE // Record what comes out of the radio
+	var/announce = TRUE // Announce if the tape is playing or not playing
 
 
 /obj/item/device/taperecorder/New()
@@ -93,12 +94,11 @@
 	else
 		icon_state = "taperecorder_idle"
 
-
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
 		if ((canRecordComms && radio_freq) || !radio_freq)
 			mytape.timestamp += mytape.used_capacity
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+			mytape.addinfo(message, speaker, message_langs, raw_message, radio_freq, spans, FALSE)
 
 /obj/item/device/taperecorder/verb/toggleRecordComms()
 	set name = "Toggle radio record"
@@ -109,6 +109,26 @@
 	else
 		usr << "<span class='notice'>The [name] is set to <B>record</B> the radio.</span>"
 		canRecordComms = TRUE
+
+/obj/item/device/taperecorder/verb/toggleLoop()
+	set name = "Toggle loop"
+	set category = "Object"
+	if (loop)
+		usr << "<span class='notice'>The [name] is set to <B>not loop</B> any longer.</span>"
+		loop = FALSE
+	else
+		usr << "<span class='notice'>The [name] is set to <B>loop</B>.</span>"
+		loop = TRUE
+
+/obj/item/device/taperecorder/verb/toggleAnnounce()
+	set name = "Toggle announcements"
+	set category = "Object"
+	if (announce)
+		usr << "<span class='notice'>The [name] is set to <B>not announce</B> the tape playing.</span>"
+		announce = FALSE
+	else
+		usr << "<span class='notice'>The [name] is set to <B>announce</B> the tape playing.</span>"
+		announce = TRUE
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -128,7 +148,7 @@
 		recording = 1
 		update_icon()
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
+		mytape.addinfo("Recording started.", , , , , , TRUE)
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		for(used, used < max)
@@ -153,7 +173,7 @@
 	if(recording)
 		recording = 0
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
+		mytape.addinfo("Recording stopped.", , , , , , TRUE)
 		usr << "<span class='notice'>Recording stopped.</span>"
 		return
 	else if(playing)
@@ -178,21 +198,23 @@
 
 	playing = 1
 	update_icon()
-	usr << "<span class='notice'>Playing started.</span>"
+
+	if (announce) say("Playing started.")
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
-		if(!mytape)
+		if(!mytape || playing == 0 || mytape.storedinfo.len < i)
 			break
-		if(playing == 0)
-			break
-		if(mytape.storedinfo.len < i)
-			break
-		say(mytape.storedinfo[i])
+		var/x = mytape.storedinfo[i]
+		// Burrowed code from send_speech
+		if (!x[8])
+			for(var/atom/movable/AM in get_hearers_in_view(7, src))
+				AM.Hear(x[1], src, x[3], x[4], x[5], x[6])
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
-			say("End of recording.")
+			if (loop)
+				i = 0 // since i++ at end
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14)
@@ -200,6 +222,7 @@
 			say("Skipping [playsleepseconds] seconds of silence")
 			playsleepseconds = 1
 		i++
+	if (announce) say("End of recording.")
 
 	playing = 0
 	update_icon()
@@ -234,7 +257,9 @@
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
-		t1 += "[mytape.storedinfo[i]]<BR>"
+		if (mytape.storedinfo[i][8])
+			t1 += "** \[[mytape.storedinfo[i][7]]\] [mytape.storedinfo[i][1]]<BR>"
+		else t1 += "\[[mytape.storedinfo[i][7]]\] [mytape.storedinfo[i][1]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
@@ -284,6 +309,9 @@
 /obj/item/device/tape/proc/fix()
 	cut_overlay("ribbonoverlay")
 	ruined = 0
+
+/obj/item/device/tape/proc/addinfo(message, speaker, message_langs, raw_message, radio_freq, spans, announcement)
+	storedinfo[++storedinfo.len] = list(message, speaker, message_langs, raw_message, radio_freq, spans, time2text(used_capacity * 10,"mm:ss"), announcement)
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
