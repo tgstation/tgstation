@@ -514,9 +514,9 @@
 
 //See game/objects/obj_construction.dm
 #define CONSTRUCTION_BLUEPRINT(type)\
-type/construction_blueprint = /datum/construction_blueprint##type;\
+##type/construction_blueprint = /datum/construction_blueprint##type;\
 /datum/construction_blueprint##type{\
-	owner_type = type;\
+	owner_type = ##type;\
 }\
 /datum/construction_blueprint##type/GetBlueprint()
 
