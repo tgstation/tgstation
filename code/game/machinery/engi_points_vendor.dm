@@ -2,7 +2,7 @@
 /obj/machinery/engi_points_manager
 	name = "Engineering Points Manager"
 	desc = "Who's a good boy?"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/engi_points'
 	icon_state = "shop"
 	verb_say = "states"
 	density = 1
