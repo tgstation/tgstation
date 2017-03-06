@@ -20,9 +20,10 @@
 	var/obj/machinery/requests_console/console
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	preferred_direction = dir
 	if(mapload)
 		return TRUE	//late initialize to make sure the latejoin list is populated
+
+	preferred_direction = dir
 
 	..()
 
