@@ -48,6 +48,12 @@
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
 
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
+
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
