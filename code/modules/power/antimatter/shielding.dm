@@ -222,7 +222,7 @@
 
 /obj/machinery/am_shielding/proc/on_damage()
 	color = "#ff0000"
-	add_timer(CALLBACK(src, .proc/reset_color), 5)
+	addtimer(CALLBACK(src, .proc/reset_color), 5)
 
 /obj/machinery/am_shielding/proc/reset_color()
 	color = initial(color)

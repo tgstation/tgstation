@@ -77,7 +77,6 @@
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0)
 		return 0//Something is wrong
-	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
 	stored_power = (fuel/core_power)*fuel*200000
