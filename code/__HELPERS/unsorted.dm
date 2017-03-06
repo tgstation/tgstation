@@ -1416,3 +1416,5 @@ var/valid_HTTPSGet = FALSE
 	. = file2text(f)
 	f = null
 	fdel(temp_file)
+
+#define WAIT_FOR(X) while(!(X)) stoplag()
