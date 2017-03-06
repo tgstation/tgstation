@@ -1563,7 +1563,6 @@
 	name = "Arrivals"
 	})
 "acX" = (
-/obj/structure/extinguisher_cabinet,
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
 "acY" = (
@@ -1663,6 +1662,11 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/window/shuttle,
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = 30
+	},
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "adi" = (
@@ -1774,11 +1778,6 @@
 	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
-	},
-/obj/machinery/requests_console{
-	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 30
 	},
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
@@ -157536,7 +157535,7 @@ abp
 abF
 abW
 abZ
-eer
+acn
 acn
 acn
 acn

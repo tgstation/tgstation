@@ -26895,6 +26895,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -38552,7 +38555,6 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -38560,7 +38562,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -38589,7 +38590,6 @@
 	name = "Arrivals"
 	})
 "bkA" = (
-/obj/structure/extinguisher_cabinet,
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
 "bkB" = (
@@ -38617,6 +38617,11 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/window/shuttle,
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = 30
+	},
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "bkE" = (
@@ -38638,11 +38643,6 @@
 	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
-	},
-/obj/machinery/requests_console{
-	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 30
 	},
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
@@ -81469,7 +81469,7 @@ bkA
 bkD
 bkF
 bkx
-bkL
+bko
 bkP
 bkU
 bkZ
