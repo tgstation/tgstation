@@ -1,8 +1,8 @@
 /obj/machinery/computer/atmos_points
 	name = "atmospheric export computer"
 	desc = "used to monitor the galactic atmos markets"
-	icon_screen = "export"
-	icon_keyboard = "id_key"
+	icon = 'icons/obj/machines/engi_points.dmi'
+	icon_state = "atmos"
 	verb_say = "states"
 	density = 1
 	anchored = 1
