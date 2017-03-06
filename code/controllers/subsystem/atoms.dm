@@ -12,12 +12,16 @@ var/datum/subsystem/atoms/SSatoms
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
+	var/list/blueprints_cache
+	var/list/recipes_cache	
+
 /datum/subsystem/atoms/New()
 	NEW_SS_GLOBAL(SSatoms)
 
 /datum/subsystem/atoms/Initialize(timeofday)
 	fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
+	InitConstruction()
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	return ..()
@@ -84,6 +88,11 @@ var/datum/subsystem/atoms/SSatoms
 		InitializeAtoms()
 	old_initialized = SSatoms.old_initialized
 
+	blueprints_cache = SSatoms.blueprints_cache
+	recipes_cache = SSatoms.recipes_cache
+
+	flags |= SS_NO_INIT
+
 /datum/subsystem/atoms/proc/setupGenetics()
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
@@ -102,3 +111,41 @@ var/datum/subsystem/atoms/SSatoms
 		else if(B.quality == MINOR_NEGATIVE)
 			not_good_mutations |= B
 		CHECK_TICK
+
+//OH GOD THE COLONS
+//THEY'RE FUCKING EVERYWHERE!!!!
+//Seriously though, this was 100% necessary to get type data without instanciating the object
+
+#define GET_CONSTRUCTION_BLUEPRINT(type, outlist)\
+	var/construction_blueprint_get_type = initial(type:construction_blueprint);\
+	var/datum/construction_blueprint/construction_blueprint_getter = new construction_blueprint_get_type;\
+	outlist = construction_blueprint_getter.GetBlueprint();
+
+//This just builds the stack recipes list
+//We need to link and verify blueprints before we cache them and for that we need an instance
+//So we won't do that here
+/datum/subsystem/atoms/proc/InitConstruction()
+	var/list/blueprints = list()
+	var/list/recipes = list()
+	blueprints_cache = blueprints
+	recipes_cache = recipes
+	var/list/objs = typesof(/obj)
+	for(var/I in objs)
+		var/list/BP
+		GET_CONSTRUCTION_BLUEPRINT(I, BP)
+		if(BP.len)
+			var/datum/construction_state/first/F = BP[1]
+			if(istype(F))
+				var/mat_type = F.required_type_to_construct
+				if(ispath(mat_type, /obj/item/stack))
+					mat_type = initial(mat_type:merge_type)
+					var/list/t_recipes = recipes[mat_type]
+					if(!t_recipes)
+						t_recipes = list()
+						recipes[mat_type] += t_recipes
+					//TODO: Handle these snowflakes
+					var/is_glass = ispath(mat_type, /obj/item/stack/sheet/glass) || ispath(mat_type, /obj/item/stack/sheet/rglass)
+					t_recipes += new /datum/stack_recipe(initial(I:name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = initial(I:density), window_checks = is_glass)
+		CHECK_TICK
+
+#undef GET_CONSTRUCTION_BLUEPRINT

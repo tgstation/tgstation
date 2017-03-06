@@ -27,8 +27,7 @@
 	var/is_frozen = FALSE
 	var/unique_rename = 0 // can you customize the description/name of the thing?
 
-	var/static/list/construction_steps = list()
-	var/construction_blueprint	//if you change this, you also need to modify the colon accessor in __HELPERS/game.dm
+	var/construction_blueprint	//if you change this, you also need to modify the colon accessor in controllers/subsystem/atoms.dm
 	var/datum/construction_state/current_construction_state	//The current construction_state of the object, null means fully constructed
 
 /obj/New()

@@ -162,7 +162,8 @@
 //See __HELPERS/game.dm for CONSTRUCTION_BLUEPRINT macro
 
 /obj/proc/SetupConstruction()
-	var/list/our_steps = construction_steps[type]
+	var/list/bp_cache = SSatoms.blueprints_cache
+	var/list/our_steps = bp_cache[type]
 	if(isnull(our_steps))
 		our_steps = list()
 		if(construction_blueprint)
@@ -175,7 +176,7 @@
 				LinkConstructionSteps(temp)	//assign ids and stitch the linked list together
 				if(ValidateConstructionSteps(temp))
 					our_steps = temp
-		construction_steps[type] = our_steps	//cache it
+		bp_cache[type] = our_steps	//cache it
 	if(our_steps.len)
 		var/stepslength = our_steps.len
 		current_construction_state = our_steps[stepslength]	//start fully constructed by default
@@ -262,7 +263,7 @@
 /obj/proc/Construct(mob/user)
 	if(current_construction_state)
 		return
-	var/list/cached_construction_steps = construction_steps[type]
+	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
 	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
 		if(first_step.type == /datum/construction_state/first)
