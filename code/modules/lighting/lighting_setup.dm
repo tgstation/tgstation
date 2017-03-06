@@ -14,3 +14,4 @@
 			continue
 
 		new/atom/movable/lighting_overlay(T, TRUE)
+		CHECK_TICK
