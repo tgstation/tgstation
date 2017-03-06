@@ -432,7 +432,7 @@ var/list/teleportlocs = list()
 		update_all_gravity()
 
 /area/proc/update_all_gravity()
-	if(SSgravity && SSgravity.legacy_gravity)
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity || !initialized)
 		return FALSE
 	for(var/atom/movable/AM in contents)
 		update_gravity(AM, AM.is_affected_by_gravity)
@@ -441,7 +441,7 @@ var/list/teleportlocs = list()
 	gravity_stunning = FALSE
 
 /area/proc/update_gravity(atom/movable/AM, yes)
-	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity || !initialized)
 		return FALSE
 	if(yes)
 		AM.gravity_direction = gravity_direction
@@ -463,8 +463,13 @@ var/list/teleportlocs = list()
 		if(contents_affected_by_gravity[AM])
 			contents_affected_by_gravity -= AM
 
+/area/proc/init_gravity()
+	for(var/atom/movable/AM in contents)
+		if(AM.is_affected_by_gravity)
+			update_gravity(AM, TRUE)
+
 /area/Entered(A)
-	if(SSgravity && !SSgravity.legacy_gravity)
+	if(SSgravity && !SSgravity.legacy_gravity && initialized)
 		var/atom/movable/AM = A
 		if(AM.is_affected_by_gravity)
 			update_gravity(AM, TRUE)
@@ -537,6 +542,7 @@ var/list/teleportlocs = list()
 		for(var/atom/movable/AM in T.atoms_with_forced_gravity)
 			T.reset_forced_gravity_atom(AM)
 			CHECK_TICK
+		T.update_all_gravity()
 		CHECK_TICK
 
 /proc/reset_all_area_gravity()

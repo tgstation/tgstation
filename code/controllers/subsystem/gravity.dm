@@ -30,6 +30,9 @@ var/datum/subsystem/gravity/SSgravity
 	var/list/purging_atoms
 	var/list/atoms_forced_gravity_processing
 	var/static/list/area_blacklist_typecache = typecacheof(list(/area/lavaland, /area/mine, /area/centcom))
+	var/inited_atoms = 0
+	var/inited_areas = 0
+	var/init_state = 0
 
 /datum/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
@@ -40,13 +43,18 @@ var/datum/subsystem/gravity/SSgravity
 	atoms_forced_gravity_processing = list()
 
 /datum/subsystem/gravity/Initialize()
+	init_state = 1
 	init_lists()
-	var/inited_atoms = 0
+	inited_atoms = 0
 	for(var/atom/movable/A in world)
 		A.init_gravity()
 		inited_atoms++
 		CHECK_TICK
-	testing("Initialized gravity for [inited_atoms] movable atoms.")
+	for(var/area/A in world)
+		A.init_gravity()
+		inited_areas++
+		CHECK_TICK
+	testing("Initialized gravity for [inited_atoms] movable atoms and [inited_areas] areas!")
 	. = ..()
 
 /datum/subsystem/gravity/Recover()

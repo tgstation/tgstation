@@ -36,6 +36,7 @@
 	var/gravity_ignores_area = FALSE
 	var/gravity_tick = 0
 	var/gravity_speed = 2
+	var/gravity_initialized = FALSE
 	var/force_gravity_processing = FALSE
 	var/turf/open/forced_gravity_by_turf = null
 	var/area/current_gravity_area = null
@@ -109,6 +110,7 @@
 	sync_gravity()
 	if(force_gravity_processing && SSgravity)
 		SSgravity.atoms_forced_gravity_processing[src] = src
+	gravity_initialized = TRUE
 
 /atom/movable/proc/gravity_act(moving = TRUE)
 	set waitfor = FALSE
@@ -123,8 +125,6 @@
 		return FALSE
 	if(!gravity_direction)
 		return FALSE
-	if(!newturf.Enter(src, get_turf(src)))
-		return FALSE
 	if(!override && !has_gravity())
 		return FALSE
 	if(!moving)
@@ -132,8 +132,15 @@
 	if(gravity_throwing && !throwing)
 		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 20, gravity_strength * 2)
 		gravity_throwing = FALSE
+	if(!newturf.Enter(src, get_turf(src)))
+		return FALSE
 	else
 		step(src, gravity_direction)
+
+/atom/movable/Initialize()
+	..()
+	if(SSgravity && (SSgravity.init_state >= 1))
+		init_gravity()
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -221,7 +228,7 @@
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
-	if(SSgravity && SSgravity.atoms_forced_gravity_processing[src])
+	if(gravity_initialized && SSgravity && SSgravity.atoms_forced_gravity_processing[src])
 		SSgravity.atoms_forced_gravity_processing -= src
 	for(var/atom/movable/AM in contents)
 		qdel(AM)

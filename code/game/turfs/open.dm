@@ -15,20 +15,26 @@
 	var/turf_has_gravity_override = -1
 
 /turf/open/Initialize()
-	LAZYINITLIST(atoms_with_forced_gravity)
+	atoms_with_forced_gravity = list()
 	..()
 
 /turf/open/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(findtext(var_name, "gravity"))
-		for(var/atom/movable/AM in contents)
-			AM.sync_gravity()
+		sync_all_gravity()
 
 /turf/open/SDQL_update(var_name, new_value)
 	. = ..()
 	if(findtext(var_name, "gravity"))
-		for(var/atom/movable/AM in contents)
-			AM.sync_gravity()
+		sync_all_gravity()
+
+/turf/open/proc/sync_all_gravity()
+	if(!initialized)
+		return FALSE
+	for(var/atom/movable/AM in contents)
+		AM.sync_gravity()
+	turf_gravity_throwing = FALSE
+	turf_gravity_stunning = FALSE
 
 /turf/open/Entered(atom/movable/AM)
 	..()
@@ -64,11 +70,15 @@
 		reset_forced_gravity_atom(AM)
 
 /turf/open/Destroy()
-	for(var/atom/movable/AM in atoms_with_forced_gravity)
-		reset_forced_gravity_atom(AM)
+	if(initialized)
+		for(var/atom/movable/AM in atoms_with_forced_gravity)
+			reset_forced_gravity_atom(AM)
+			CHECK_TICK
 	. = ..()
 
 /turf/open/proc/force_gravity_on_atom(atom/movable/AM)
+	if(!initialized)
+		return FALSE
 	if(SSgravity)
 		if(!SSgravity.atoms_forced_gravity_processing[AM])
 			SSgravity.atoms_forced_gravity_processing[AM] = AM
@@ -79,11 +89,14 @@
 	AM.gravity_stunning = turf_gravity_stunning
 	AM.gravity_speed = turf_gravity_speed
 	AM.gravity_override = turf_gravity_override
+	atoms_with_forced_gravity[AM] = AM
 
 /turf/open/proc/reset_forced_gravity_atom(atom/movable/AM)
+	if(!initialized)
+		return FALSE
 	if(SSgravity)
 		if(SSgravity.atoms_forced_gravity_processing[AM])
-			LAZYREMOVE(SSgravity.atoms_forced_gravity_processing, AM)
+			SSgravity.atoms_forced_gravity_processing -= AM
 	AM.forced_gravity_by_turf = null
 	AM.gravity_strength = 0
 	AM.gravity_speed = 5
@@ -92,6 +105,7 @@
 	AM.gravity_stunning = 0
 	AM.gravity_override = 0
 	AM.sync_gravity()
+	atoms_with_forced_gravity -= AM
 
 /turf/open/indestructible
 	name = "floor"
