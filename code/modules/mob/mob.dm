@@ -1004,10 +1004,7 @@ var/next_mob_id = 0
 
 /mob/setDir()
 	if(facing_dir)
-		if(!canface() || lying || buckled || restrained())
-			facing_dir = null
-		else if(dir != facing_dir)
-			return ..(facing_dir)
+		return ..(facing_dir)
 	else
 		return ..()
 
