@@ -925,9 +925,9 @@
 	. = ..(M, force, check_loc)
 	stop_pulling()
 
-/mob/living/carbon/human/unbuckle_mob(mob/living/M)
+/mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
 	if(iscarbon(M))
 		if(riding_datum)
 			riding_datum.unequip_buckle_inhands(M)
 			riding_datum.restore_position(M)
-	. = ..(M)
+	. = ..(M, force)
