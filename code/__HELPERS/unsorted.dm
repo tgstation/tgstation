@@ -1417,4 +1417,4 @@ var/valid_HTTPSGet = FALSE
 	f = null
 	fdel(temp_file)
 
-#define WAIT_FOR(X) while(!(X)) stoplag()
+#define UNTIL(X) while(!(X)) stoplag()
