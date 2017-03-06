@@ -194,6 +194,10 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
 		WORLD_REBOOT(1)
+	var/static/IsRebooting = FALSE
+	if(IsRebooting)
+		return
+	IsRebooting = TRUE
 	var/delay
 	if(time)
 		delay = time
@@ -201,6 +205,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
+		IsRebooting = FALSE
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>"
 	var/round_end_sound_sent = FALSE
@@ -214,6 +219,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	sleep(delay)
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		IsRebooting = FALSE
 		return
 	if(mapchanging)
 		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
@@ -222,7 +228,12 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 			if(mapchanging)
 				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
 				Reboot("Map change timed out", time = 10)
+		IsRebooting = FALSE
 		return
+	if(fexists("updating.lk"))
+		world << "<span class='boldannounce'>Update operation detected, delaying reboot...</span>"
+		while(fexists("updating.lk"))
+			stoplag()
 	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	WORLD_REBOOT(0)
 #undef WORLD_REBOOT
