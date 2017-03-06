@@ -11,12 +11,14 @@
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
-	var/recording = 0
+	var/recording = FALSE
 	var/playing = 0
 	var/playsleepseconds = 0
+	var/loop = 0
 	var/obj/item/device/tape/mytape
 	var/open_panel = 0
 	var/canprint = 1
+	var/canRecordComms = FALSE // Record what comes out of the radio
 
 
 /obj/item/device/taperecorder/New()
@@ -94,8 +96,19 @@
 
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
-		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		if ((canRecordComms && radio_freq) || !radio_freq)
+			mytape.timestamp += mytape.used_capacity
+			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+
+/obj/item/device/taperecorder/verb/toggleRecordComms()
+	set name = "Toggle radio record"
+	set category = "Object"
+	if (canRecordComms)
+		usr << "<span class='notice'>The [name] is set to <B>not record</B> the radio.</span>"
+		canRecordComms = FALSE
+	else
+		usr << "<span class='notice'>The [name] is set to <B>record</B> the radio.</span>"
+		canRecordComms = TRUE
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -200,6 +213,8 @@
 	else
 		record()
 
+/obj/item/device/taperecorder/AltClick(mob/living/user)
+	attack_self(user)
 
 /obj/item/device/taperecorder/verb/print_transcript()
 	set name = "Print Transcript"
