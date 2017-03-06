@@ -115,6 +115,7 @@
 					playsound(D, 'sound/machines/Ding.ogg', 100, 1)
 					spawn(20)
 						new prize.equipment_path(get_turf(D))
+						D.icon_state = "geardist"
 					if(prize.cost == 20000) // Still a placeholder
 						new /obj/item/clothing/head/helmet/space/chronos(get_turf(src))
 					feedback_add_details("Engi_equipment_bought",
