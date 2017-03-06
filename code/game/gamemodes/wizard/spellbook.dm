@@ -399,18 +399,18 @@
 	log_name = "CT"
 	category = "Assistance"
 
-/datum/spellbook_entry/item/guardian
-	name = "Guardian Deck"
-	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
+/datum/spellbook_entry/item/sutando
+	name = "sutando Deck"
+	desc = "A deck of sutando tarot cards, capable of binding a personal sutando to your body. There are multiple types of sutando available, but all of them will transfer some amount of damage to you. \
 	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
-	item_path = /obj/item/weapon/guardiancreator/choose/wizard
+	item_path = /obj/item/weapon/sutandocreator/choose/wizard
 	log_name = "GU"
 	category = "Assistance"
 
-/datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/sutando/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
+		new /obj/item/weapon/paper/sutando/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"

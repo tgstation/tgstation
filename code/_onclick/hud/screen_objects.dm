@@ -500,9 +500,9 @@
 	screen_loc = ui_health
 	icon_state = "corehealth"
 
-/obj/screen/healths/guardian
+/obj/screen/healths/sutando
 	name = "summoner health"
-	icon = 'icons/mob/guardian.dmi'
+	icon = 'icons/mob/sutando.dmi'
 	icon_state = "base"
 	screen_loc = ui_health
 	mouse_opacity = 0

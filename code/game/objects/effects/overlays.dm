@@ -176,14 +176,14 @@
 	icon_state = "blspell"
 	duration = 5
 
-/obj/effect/overlay/temp/guardian
+/obj/effect/overlay/temp/sutando
 	randomdir = 0
 
-/obj/effect/overlay/temp/guardian/phase
+/obj/effect/overlay/temp/sutando/phase
 	duration = 5
 	icon_state = "phasein"
 
-/obj/effect/overlay/temp/guardian/phase/out
+/obj/effect/overlay/temp/sutando/phase/out
 	icon_state = "phaseout"
 
 /obj/effect/overlay/temp/decoy

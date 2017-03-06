@@ -847,7 +847,7 @@
 		new_mob.key = key
 
 	for(var/para in hasparasites())
-		var/mob/living/simple_animal/hostile/guardian/G = para
+		var/mob/living/simple_animal/hostile/sutando/G = para
 		G.summoner = new_mob
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
