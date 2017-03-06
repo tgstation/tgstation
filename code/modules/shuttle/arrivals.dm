@@ -161,9 +161,4 @@
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
-	LAZYINITLIST(queued_announces)
-	queued_announces.Add(CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
-
-/obj/docking_port/mobile/arrivals/enterTransit()
-	testing("Arrivals entering transit")
-	..()
+	LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
