@@ -24,15 +24,10 @@
 		return
 	if(!ishuman(user))
 		user.say("O bidai nabora se[pick("'","`")]sma!")
+		user.say(html_decode(message))
 	else
 		user.whisper("O bidai nabora se[pick("'","`")]sma!")
-	sleep(10)
-	if(!user)
-		return
-	if(!ishuman(user))
-		user.say(message)
-	else
-		user.whisper(message)
+		user.whisper(html_decode(message))
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [russian_html2text(message)]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))

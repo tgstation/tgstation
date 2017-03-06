@@ -613,7 +613,7 @@ var/datum/subsystem/ticker/ticker
 			queue_delay = 0
 
 /datum/subsystem/ticker/proc/check_maprotate()
-	if (!config.maprotation || !SERVERTOOLS)
+	if (!config.maprotation)
 		return
 	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
@@ -625,7 +625,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	INVOKE_ASYNC(GLOBAL_PROC, /.proc/maprotate)
+	INVOKE_ASYNC(SSmapping, /datum/subsystem/mapping/.proc/maprotate)
 
 
 /world/proc/has_round_started()

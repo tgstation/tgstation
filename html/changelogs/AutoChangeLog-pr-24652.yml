@@ -1,4 +1,0 @@
-author: "Gun Hog"
-delete-after: True
-changes: 
-  - bugfix: "The Aux Base Construction Console now directs to the correct Base Management Console."

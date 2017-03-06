@@ -99,7 +99,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	update_icon()
 
-	if(!T)
+	if(!T && latejoin.len)
 		T = pick(latejoin)			//Safety in case we cannot find the body's position
 	loc = T
 

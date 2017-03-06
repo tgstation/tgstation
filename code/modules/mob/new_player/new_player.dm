@@ -18,6 +18,10 @@
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 
+	if(client && ticker.state == GAME_STATE_STARTUP)
+		var/obj/screen/splash/S = new(client, TRUE, TRUE)
+		S.Fade(TRUE)
+
 	if(length(newplayer_start))
 		loc = pick(newplayer_start)
 	else
@@ -70,7 +74,7 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
-		stat("Map:", MAP_NAME)
+		stat("Map:", SSmapping.config.map_name)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = ticker.GetTimeLeft()
@@ -126,7 +130,7 @@
 			if (O)
 				observer.loc = O.loc
 			else
-				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
+				src << "<span class='notice'>Teleporting failed. The map is probably still loading...</span>"
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
