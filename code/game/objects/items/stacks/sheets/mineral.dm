@@ -24,8 +24,8 @@ Mineral Sheets
 
 /obj/item/stack/sheet/mineral/Initialize()
 	..()
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_x = rand(-4, 0)
+	pixel_y = rand(-4, 0)
 
 /*
  * Sandstone
