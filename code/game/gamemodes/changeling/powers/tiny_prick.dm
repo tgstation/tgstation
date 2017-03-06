@@ -88,6 +88,7 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
+	set waitfor = FALSE
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
@@ -100,13 +101,14 @@
 			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
-		spawn(10)
-			C.real_name = NewDNA.real_name
-			NewDNA.transfer_identity(C, transfer_SE=1)
-			C.updateappearance(mutcolor_update=1)
-			C.domutcheck()
 	feedback_add_details("changeling_powers","TS")
-	return 1
+	. = TRUE
+	if(iscarbon(target))
+		sleep(10)
+		C.real_name = NewDNA.real_name
+		NewDNA.transfer_identity(C, transfer_SE=1)
+		C.updateappearance(mutcolor_update=1)
+		C.domutcheck()
 
 
 /obj/effect/proc_holder/changeling/sting/false_armblade

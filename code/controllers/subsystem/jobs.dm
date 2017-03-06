@@ -494,13 +494,16 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/Recover()
+	set waitfor = FALSE
 	var/oldjobs = SSjob.occupations
-	spawn(20)
-		for (var/datum/job/J in oldjobs)
-			spawn(-1)
-				var/datum/job/newjob = GetJob(J.title)
-				if (!istype(newjob))
-					return
-				newjob.total_positions = J.total_positions
-				newjob.spawn_positions = J.spawn_positions
-				newjob.current_positions = J.current_positions
+	sleep(20)
+	for (var/datum/job/J in oldjobs)
+		INVOKE_ASYNC(src, .proc/RecoverJob)
+
+/datum/subsystem/proc/RecoverJob(datum/job/J)
+	var/datum/job/newjob = GetJob(J.title)
+	if (!istype(newjob))
+		return
+	newjob.total_positions = J.total_positions
+	newjob.spawn_positions = J.spawn_positions
+	newjob.current_positions = J.current_positions
