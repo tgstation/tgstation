@@ -295,14 +295,17 @@
 		src << alert("[rank] is not available. Please try another.")
 		return 0
 
+	if(SSshuttle.arrivals)
+		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
+			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
+			return FALSE
+		SSshuttle.arrivals.RequireUndocked(src)
+
 	//Remove the player from the join queue if he was in one and reset the timer
 	ticker.queued_players -= src
 	ticker.queue_delay = 4
 
 	SSjob.AssignRole(src, rank, 1)
-
-	if(SSshuttle.arrivals)
-		SSshuttle.arrivals.RequireUndocked(src)
 
 	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
