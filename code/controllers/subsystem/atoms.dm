@@ -115,7 +115,7 @@ var/datum/subsystem/atoms/SSatoms
 
 #define GET_CONSTRUCTION_BLUEPRINT(type, outlist)\
 	var/obj/construction_blueprint_getter_type = type;\
-	var/construction_blueprint_get_type = initial(construction_blueprint_getter_type:construction_blueprint);\
+	var/construction_blueprint_get_type = initial(construction_blueprint_getter_type.construction_blueprint);\
 	var/datum/construction_blueprint/construction_blueprint_getter = new construction_blueprint_get_type;\
 	outlist = construction_blueprint_getter.GetBlueprint();
 
