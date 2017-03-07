@@ -1967,6 +1967,7 @@
 #include "code\modules\spells\spell_types\shapeshift.dm"
 #include "code\modules\spells\spell_types\spacetime_distortion.dm"
 #include "code\modules\spells\spell_types\summonitem.dm"
+#include "code\modules\spells\spell_types\the_traps.dm"
 #include "code\modules\spells\spell_types\touch_attacks.dm"
 #include "code\modules\spells\spell_types\trigger.dm"
 #include "code\modules\spells\spell_types\turf_teleport.dm"
