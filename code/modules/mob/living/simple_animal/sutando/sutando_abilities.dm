@@ -7,12 +7,13 @@
 	var/cooldown = 0
 	var/value = 0 //VALUE SYSTEM:
 	var/battlecry = "ORA"
-	var/initial_coeff = list()
+	var/list/initial_coeff
 	//basically, the total value of abilities a stand can have is 10, and more powerful abilities have more value, this means that
 	//randomized-ability stands can only have a set number of abilities both in quantity and quality, maintaining some form of balance.
 	//CRUCIAL: only randomized stands are to use the value system.
 
 /datum/sutando_abilities/proc/handle_stats()
+	LAZYINITLIST(initial_coeff)
 	initial_coeff = stand.damage_coeff
 
 /datum/sutando_abilities/proc/life_act()
@@ -66,6 +67,7 @@
 
 
 /datum/sutando_abilities/punch/handle_stats()
+	. = ..()
 	stand.melee_damage_lower += 10
 	stand.melee_damage_upper += 10
 	stand.obj_damage += 80
@@ -89,6 +91,7 @@
 	value = 6
 
 /datum/sutando_abilities/bomb/handle_stats()
+	. = ..()
 	stand.melee_damage_lower += 7
 	stand.melee_damage_upper += 7
 	for(var/i in stand.damage_coeff)
@@ -134,14 +137,18 @@
 	value = 4
 	var/datum/action/innate/snare/plant/P = new
 	var/datum/action/innate/snare/remove/R = new
-	var/list/snares = list()
+	var/list/snares
 
 /datum/sutando_abilities/ranged/Destroy()
+	snares.Cut()
 	QDEL_NULL(P)
 	QDEL_NULL(R)
+	QDEL_NULL(snares)
 	return ..()
 
 /datum/sutando_abilities/ranged/handle_stats()
+	. = ..()
+	LAZYINITLIST(snares)
 	stand.has_mode = TRUE
 	stand.melee_damage_lower += 5
 	stand.melee_damage_upper += 5
@@ -272,6 +279,9 @@
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
+/datum/sutando_abilities/assassin/Destroy()
+	return ..()
+
 /datum/sutando_abilities/assassin/handle_stats()
 	stand.has_mode = TRUE
 	stand.melee_damage_lower += 7
@@ -349,10 +359,11 @@
 /datum/sutando_abilities/lightning
 	value = 7
 	var/datum/beam/userchain
-	var/list/enemychains = list()
+	var/list/enemychains
 	var/successfulshocks = 0
 
 /datum/sutando_abilities/lightning/handle_stats()
+
 	stand.melee_damage_lower += 4
 	stand.melee_damage_upper += 4
 	stand.attacktext = "shocks"
@@ -420,8 +431,7 @@
 /datum/sutando_abilities/lightning/proc/removechains()
 	QDEL_NULL(userchain)
 	if(enemychains.len)
-		for(var/chain in enemychains)
-			enemychains.Cut()
+		enemychains.Cut()
 
 /datum/sutando_abilities/lightning/proc/chainshock(datum/beam/B)
 	. = 0
@@ -857,6 +867,7 @@
 	var/bounce_distance = 5
 
 /datum/sutando_abilities/bounce/handle_stats()
+	. = ..()
 	stand.range += 3
 	stand.melee_damage_lower += 3
 	stand.melee_damage_upper += 3

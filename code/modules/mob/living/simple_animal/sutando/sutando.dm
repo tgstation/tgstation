@@ -6,7 +6,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando
 	name = "sutando Spirit"
-	real_name = "sutando Spirit"
+	real_name = "Sutando"
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
 	gender = NEUTER
@@ -46,8 +46,8 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 	var/obj/item/internal_storage //what we're storing within ourself
 
-	var/list/abilities = list()
-	var/list/current_abilities = list()
+	var/list/abilities
+	var/list/current_abilities
 
 	var/range = 0 //how far from the user the spirit can be
 	var/has_mode = FALSE
@@ -68,6 +68,8 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 			I.battlecry = input
 
 /mob/living/simple_animal/hostile/sutando/Initialize(loc, theme)
+	LAZYINITLIST(abilities)
+	LAZYINITLIST(current_abilities)
 	setthemename(theme)
 	for(var/type in abilities)
 		var/datum/sutando_abilities/G = new type
@@ -130,9 +132,10 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando/Destroy()
 	parasites -= src
-	for(var/datum/sutando_abilities/I in current_abilities)
+	for(var/datum/guardian_abilities/I in current_abilities)
 		qdel(I)
-		current_abilities.Cut()
+	current_abilities.Cut()
+	abilities.Cut()
 	return ..()
 
 /mob/living/simple_animal/hostile/sutando/proc/setthemename(pickedtheme) //set the sutando's theme to something cool!
