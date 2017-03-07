@@ -141,6 +141,8 @@
 					playsound(get_turf(base),'sound/magic/lightningbolt.ogg', 100, 1)
 					src.Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
 					cooldown = world.time + 210
+				else if (goal = 1)
+					new /obj/item/stack/sheet/metal(loc)
 	else
 		icon_state = "mini_off"
 
