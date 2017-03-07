@@ -231,6 +231,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDMAGE
 	light_color = LIGHT_COLOR_GREEN
+	brightness_on = 3
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -323,6 +324,7 @@
 	on = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	light_color = LIGHT_COLOR_FIRE
+	brightness_on = 3
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
@@ -686,6 +688,7 @@
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50, fire = 100, acid = 100)
 	light_color = LIGHT_COLOR_GREEN
+	brightness_on = 3
 
 ///SWAT version
 /obj/item/clothing/suit/space/hardsuit/shielded/swat
