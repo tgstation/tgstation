@@ -111,9 +111,6 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/proc/CreateSpace()
 	++world.maxz
 	CHECK_TICK
-	for(var/T in block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, world.maxz)))
-		CHECK_TICK
-		new /turf/open/space(T)
 
 #define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
 /datum/subsystem/mapping/proc/loadWorld()
