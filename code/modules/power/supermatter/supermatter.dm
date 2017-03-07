@@ -337,7 +337,7 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.mind && (H.(mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer")))
+			if(H.mind && ((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer")))
 				power += 200
 		user.dust()
 	else if(isobj(AM) && !istype(AM, /obj/effect))
