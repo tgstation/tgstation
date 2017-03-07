@@ -15,6 +15,9 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	var/static/list/modelCache = list()
 	var/static/space	// the world turf model key
+#ifdef TESTING
+	var/static/num_skipped
+#endif
 
 /**
  * Construct the model map and control the loading process
@@ -30,10 +33,13 @@ var/global/dmm_suite/preloader/_preloader = new
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	space = null	//different file, different keys
+	#ifdef TESTING
+	num_skipped = 0
+	#endif
 	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
 	#ifdef TESTING
-	if(. && !space)
-		testing("Did not find world default turf/area key in [dmm_file]")	//this is here form 
+	if(. && no_changeturf)
+		testing("Skipped loading [num_skipped] basic turfs.")
 	#endif
 	Master.StopLoadingMap()
 
@@ -136,7 +142,11 @@ var/global/dmm_suite/preloader/_preloader = new
 								if(!basic_turfs || model_key != space)
 									if(!grid_models[model_key])
 										throw EXCEPTION("Undefined model key in DMM.")
-									parse_grid(grid_models[model_key], xcrd, ycrd, zcrd, basic_turfs)
+									parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, basic_turfs)
+								#ifdef TESTING
+								else
+									++num_skipped
+								#endif
 								CHECK_TICK
 
 							maxx = max(maxx, xcrd)
@@ -174,7 +184,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
+/dmm_suite/proc/parse_grid(model as text, model_key, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -228,16 +238,24 @@ var/global/dmm_suite/preloader/_preloader = new
 			CHECK_TICK
 		while(dpos != 0)
 
-		var/L = list(members, members_attributes)
-		modelCache[model] = L
-
 		var/static/area_typecache = world.area ///area/space
 		var/static/turf_typecache = world.turf ///turf/open/space/basic
 
-		if(!space && members.len == 2 && members_attributes.len == 2 && (area_typecache in members) && (turf_typecache in members))
-			space = model
-			if(no_changeturf)
-				return
+		if(!space && members.len == 2 && members_attributes.len == 2 && (area_typecache in members))
+			if (turf_typecache in members)
+				space = model_key
+				if(no_changeturf)
+					#ifdef TESTING
+					++num_skipped
+					#endif
+					return
+			#ifdef TESTING
+			else if(/turf/open/space in members)
+				testing("WARNING: FOUND BAD SPACE TURF AT KEY [model]! USE /turf/open/space/basic TO ENABLE MAPLOADER OPTIMIZATIONS!")
+			#endif
+
+		var/L = list(members, members_attributes)
+		modelCache[model] = L
 
 	////////////////
 	//Instanciation
