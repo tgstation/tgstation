@@ -13,6 +13,7 @@ var/datum/subsystem/gravity/SSgravity
 	var/mob_handhold_gravity_fall_chance = 3
 	var/mob_gravity_strength_slip_mod = 3
 	var/mob_gravity_strength_fall_mod = 1.5
+	var/mob_slip_chance = 70
 	var/legacy_gravity = FALSE
 	var/list/currentrun = list()
 	var/list/currentrun_manual = list()
@@ -75,8 +76,7 @@ var/datum/subsystem/gravity/SSgravity
 		var/atom/movable/AM = atoms_forced_gravity_processing[atoms_forced_gravity_processing.len]
 		atoms_forced_gravity_processing.len--
 		if(!istype(AM))
-			if(SSgravity)
-				SSgravity.error_no_atom++
+			SSgravity.error_no_atom++
 			continue
 		else
 			AM.force_gravity_processing = FALSE

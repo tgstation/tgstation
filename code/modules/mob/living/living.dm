@@ -447,11 +447,11 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if(gravity_direction && (m_intent == MOVE_INTENT_RUN))
+	if(gravity_direction && (m_intent == MOVE_INTENT_RUN) && SSgravity && has_gravity())
 		if(get_dir(get_turf(src), newloc) == opposite_dir(gravity_direction))
-			if(prob(85))
+			if(prob(SSgravity.mob_slip_chance))
 				if(prob(10))
-					src << "<span class='warning'>You slip and fail to get anywhere!</span>"
+					src << "<span class='warning'>You slip and fail to get anywhere! Try walking!</span>"
 				return FALSE
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
