@@ -292,6 +292,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)
+	
+	var/turf/open/space/S = loc	//space transitions
+	if(istype(S))
+		S.Entered(src)
 
 /mob/dead/observer/is_active()
 	return 0
