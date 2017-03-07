@@ -2,6 +2,7 @@
 	var/busy
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/list/categories = list(CAT_WEAPON,
+				CAT_CLOTHES,
 				CAT_AMMO,
 				CAT_ROBOT,
 				CAT_MISC,

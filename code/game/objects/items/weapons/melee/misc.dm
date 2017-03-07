@@ -283,3 +283,45 @@
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
 	..()
+
+/obj/item/weapon/melee/shiv //A bedsheet wrapped around a glass shard. Causes heavy bleeding but risks coming apart at any time.
+	name = "shiv"
+	desc = "A makeshift weapon made from soft linens wrapped around a glass shard."
+	icon_state = "shiv"
+	force = 4 //Worse than a regular shard
+	throwforce = 10
+	item_state = "shard-glass"
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	resistance_flags = ACID_PROOF
+	obj_integrity = 40
+	max_integrity = 40
+	sharpness = IS_SHARP
+	w_class = WEIGHT_CLASS_SMALL
+	var/hits = 0 //How many times the shiv has been used to attack
+
+/obj/item/weapon/melee/shiv/attack(mob/living/target, mob/living/user)
+	..()
+	hits++
+	if(target.reagents)
+		target.reagents.add_reagent("heparin", 0.08) //Causes heavy bleeding! (one tick per hit)
+	if(prob(hits))
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			user.visible_message("<span class='warning'>[src] breaks and lodges in [C]!</span>", "<span class='warning'>[src] shatters and embeds itself in [C]'s body!</span>")
+			user.drop_item()
+			C << "<span class='userdanger'>The shiv breaks apart and lodges into your body!</span>"
+			playsound(C, 'sound/effects/hit_on_shattered_glass.ogg', 50, 1)
+			var/obj/item/weapon/shard/S = new(get_turf(user))
+			C.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+			var/obj/item/bodypart/L = pick(C.bodyparts)
+			L.embedded_objects |= S
+			S.add_mob_blood(C)
+			S.loc = C
+			L.receive_damage(S.w_class * S.embedded_impact_pain_multiplier)
+		else
+			user.visible_message("<span class='warning'>[src] breaks apart!</span>", "<span class='warning'>[src] comes apart in your hands!</span>")
+			user.drop_item()
+			playsound(target, 'sound/effects/hit_on_shattered_glass.ogg', 50, 1)
+		qdel(src)

@@ -883,6 +883,8 @@
 	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
+		if(H.w_uniform)
+			. += H.w_uniform.slowdown
 		if(H.shoes)
 			. += H.shoes.slowdown
 		if(H.back)

@@ -95,6 +95,16 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/hatchet/wrench_tomahawk
+	name = "wrench tomahawk"
+	desc = "A shard of glass taped to a wrench. Not very sharp, but still deadly."
+	icon_state = "wrench_tomahawk"
+	item_state = "wrench"
+	flags = null //Glass = non-conductive
+	force = 11
+	w_class = WEIGHT_CLASS_SMALL
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 7500)
+
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
 	name = "scythe"
