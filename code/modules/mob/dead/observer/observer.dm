@@ -610,7 +610,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		sleep(29)	//let the animation play
 		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(global.cross_address + "?server_hop=[SStitlescreen.path_string]")
+		client << link(global.cross_address + "?server_hop=[SStitle_screen.path_string]")
 	else
 		src << "<span class='error'>There is no other server configured!</span>"
 
