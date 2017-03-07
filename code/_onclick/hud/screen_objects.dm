@@ -786,7 +786,7 @@
 
 		//save the data
 		fdel("data/subsystem_average_init_times.json")
-		F = json_encode(asit)
+		var/F = json_encode(average_subsystem_init_time)
 		if(F)
 			text2file(F,"data/subsystem_average_init_times.json")
 
