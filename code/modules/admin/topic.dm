@@ -1775,12 +1775,28 @@
 		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
 		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
 
-	else if(href_list["reject_custom_name"])
+	else if(href_list["station_charter"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
-		if(istype(charter))
-			charter.reject_proposed(usr)
+		var/obj/item/station_charter/charter = locate(href_list["station_charter"])
+		if(!istype(charter))
+			return
+
+		var/action = href_list["action"]
+		var/msg
+		if(action == "reject")
+			msg = "[src.owner] rejected [key_name(charter.proposer)]'s rename of \"[charter.proposed_name]\""
+			charter.reject()
+		else if(action == "accept")
+			msg = "[src.owner] accepted [key_name(charter.proposer)]'s rename of \"[charter.proposed_name]\""
+			charter.accept()
+		else if(action == "dust")
+			msg = "[src.owner] turned the station charter to dust after [key_name(charter.proposer)] proposed the rename of \"[charter.proposed_name]\""
+			charter.burn()
+		if(msg)
+			log_admin(msg)
+			message_admins(msg)
+
 	else if(href_list["jumpto"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
