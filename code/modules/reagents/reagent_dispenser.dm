@@ -89,9 +89,9 @@
 			var/boom_message = "[key_name_admin(P.firer)] triggered a fueltank explosion via projectile."
 			bombers += boom_message
 			message_admins(boom_message)
-			var/log_message = "[key_name(P.firer)] triggered a fueltank explosion via projectile."
-			P.firer.attack_log += "\[[time_stamp()]\] [log_message]"
-			log_attack(log_message)
+			var/log_message = "triggered a fueltank explosion via projectile."
+			P.firer.log_message(log_message, INDIVIDUAL_ATTACK_LOG)
+			log_attack("[key_name(P.firer)] [log_message]")
 			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
@@ -113,9 +113,9 @@
 			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
 			bombers += message_admins
 			message_admins(message_admins)
-			var/message_log = "[key_name(user)] triggered a fueltank explosion via welding tool."
-			user.attack_log += "\[[time_stamp()]\] [message_log]"
-			log_attack(message_log)
+			var/message_log = "triggered a fueltank explosion via welding tool."
+			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
+			log_attack("[key_name(user)] [message_log]")
 			boom()
 		return
 	return ..()

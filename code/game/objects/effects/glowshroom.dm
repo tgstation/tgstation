@@ -35,7 +35,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 
 /obj/structure/glowshroom/New()
 	..()
-	SetLuminosity(round(potency/10))
+	set_light(round(potency/10))
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)

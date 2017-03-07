@@ -23,7 +23,7 @@
 	icon_state = "darkmatter_shard"
 	density = 1
 	anchored = 0
-	luminosity = 4
+	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	critical_machine = TRUE
@@ -69,6 +69,9 @@
 	var/produces_gas = 1
 	var/obj/effect/countdown/supermatter/countdown
 	is_affected_by_gravity = FALSE	//While this might be hilarious this wouldn't be balanced at all.
+
+/obj/machinery/power/supermatter_shard/make_frozen_visual()
+	return
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()

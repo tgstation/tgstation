@@ -18,7 +18,7 @@
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 	update_slab_info()
-	SetLuminosity(2,1)
+	set_light(2, 0.1)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
 	clockwork_caches--
