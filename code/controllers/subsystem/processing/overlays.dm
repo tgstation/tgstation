@@ -18,25 +18,29 @@ var/datum/subsystem/processing/overlays/SSoverlays
 
 /datum/subsystem/processing/overlays/Initialize()
 	initialized = TRUE
-	for(var/I in processing)
-		var/atom/A = I
-		A.compile_overlays()
-		CHECK_TICK
-	processing.Cut()
+	Flush()
 	..()
 
 /datum/subsystem/processing/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
 	processing = SSoverlays.processing
 
-/datum/subsystem/processing/overlays/fire()
+/datum/subsystem/processing/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	while(processing.len)
 		var/atom/thing = processing[processing.len]
 		processing.len--
 		if(thing)
 			thing.compile_overlays(FALSE)
-		if(MC_TICK_CHECK)
-			break
+		if(mc_check)
+			if(MC_TICK_CHECK)
+				break
+		else
+			CHECK_TICK
+
+/datum/subsystem/processing/overlays/proc/Flush()
+	if(processing.len)
+		testing("Flushing [processing.len] overlays")
+		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
 
 /atom/proc/compile_overlays()
 	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
