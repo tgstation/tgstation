@@ -34,6 +34,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
 	var/tfile = dmm_file//the map file we're creating
+	space = null	//different file, different keys
 	if(isfile(tfile))
 		tfile = file2text(tfile)
 
