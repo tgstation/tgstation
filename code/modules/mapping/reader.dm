@@ -251,7 +251,7 @@ var/global/dmm_suite/preloader/_preloader = new
 					return
 			#ifdef TESTING
 			else if(/turf/open/space in members)
-				testing("WARNING: FOUND BAD SPACE TURF AT KEY [model]! USE /turf/open/space/basic TO ENABLE MAPLOADER OPTIMIZATIONS!")
+				testing("WARNING: FOUND BAD SPACE TURF AT KEY [model_key]! USE /turf/open/space/basic TO ENABLE MAPLOADER OPTIMIZATIONS!")
 			#endif
 
 		var/L = list(members, members_attributes)
