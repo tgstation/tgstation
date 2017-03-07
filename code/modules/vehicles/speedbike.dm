@@ -58,5 +58,5 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
- 	. = ..()
-		riding_datum = new/datum/riding/space/speedbike/speedwagon
+	. = ..()
+	riding_datum = new/datum/riding/space/speedbike/speedwagon
