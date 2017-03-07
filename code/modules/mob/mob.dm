@@ -767,7 +767,7 @@ var/next_mob_id = 0
 	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, yes = FALSE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
 		return 0
 	var/turf/T = get_turf(src)
