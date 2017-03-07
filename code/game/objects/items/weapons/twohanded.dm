@@ -266,7 +266,17 @@
 
 /obj/item/weapon/twohanded/dualsaber/Initialize()
 	..()
-	item_color = pick("red", "blue", "green", "purple")
+	if(random_color && possible_colors.len)
+		item_color = pick(possible_colors)
+		switch(item_color)//Only run this check if the color was picked randomly, so that colors can be manually set for non-random colored energy weapons.
+			if("red")
+				light_color = "#ff0000"
+			if("green")
+				light_color = "#00ff00"
+			if("blue")
+				light_color = "#40ceff"
+			if("purple")
+				light_color = "#9b51ff"
 
 /obj/item/weapon/twohanded/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
