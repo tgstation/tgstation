@@ -179,7 +179,7 @@ var/datum/subsystem/mapping/SSmapping
 	var/datum/map_config/VM = global.config.maplist[pickedmap]
 	message_admins("Randomly rotating map to [VM.map_name]")
 	. = changemap(VM)
-	if (.)
+	if (. && VM.map_name != config.map_name)
 		world << "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>"
 
 /datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)	
