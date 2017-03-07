@@ -69,7 +69,7 @@
 	else if(banckey)
 		ckey = ckey(banckey)
 		computerid = bancid
-		ip = banip ? banip : 0
+		ip = banip
 
 	var/DBQuery/query_add_ban_get_id = dbcon.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
 	if(!query_add_ban_get_id.warn_execute())
