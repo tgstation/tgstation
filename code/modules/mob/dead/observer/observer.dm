@@ -610,17 +610,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		sleep(29)	//let the animation play
 		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(global.cross_address + "?server_hop=[key]")
+		client << link(global.cross_address + "?server_hop=[SStitlescreen.path_string]")
 	else
 		src << "<span class='error'>There is no other server configured!</span>"
-
-/proc/show_server_hop_transfer_screen(expected_key)
-	//only show it to incoming ghosts
-	for(var/mob/dead/observer/O in player_list)
-		if(O.key == expected_key)
-			if(O.client)
-				new /obj/screen/splash(O.client, TRUE)
-			break
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info

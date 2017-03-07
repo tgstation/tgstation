@@ -5,6 +5,7 @@ var/datum/subsystem/title/SStitle
 	init_order = 15
 	flags = SS_NO_FIRE
 	var/turf/closed/indestructible/splashscreen/title_screen
+	var/path_string
 
 /datum/subsystem/title/New()
 	NEW_SS_GLOBAL(SStitle)
@@ -32,7 +33,7 @@ var/datum/subsystem/title/SStitle
 					title_screens -= S
 					break
 
-			var/path_string = "config/title_screens/images/[pick(title_screens)]"
+			path_string = "config/title_screens/images/[pick(title_screens)]"
 			var/icon/screen_to_use = new(path_string)
 
 			title_screen.icon = screen_to_use

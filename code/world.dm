@@ -172,8 +172,6 @@
 			return "Bad Key"
 		else
 			return ircadminwho()
-	else if("server_hop" in input)
-		show_server_hop_transfer_screen(input["server_hop"])
 
 #define WORLD_REBOOT(X) log_world("World rebooted at [world.timeofday]"); ..(X); return;
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)

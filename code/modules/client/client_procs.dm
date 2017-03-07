@@ -195,6 +195,11 @@ var/next_external_rsc = 0
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
+
+	if("server_hop" in tdata)
+		var/obj/screen/splash/S = new(src, TRUE)
+		S.icon = new(tdata["server_hop"])
+		S.Fade(TRUE)
 	
 	connection_time = world.time
 	connection_realtime = world.realtime
