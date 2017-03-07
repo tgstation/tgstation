@@ -1,6 +1,7 @@
 
 
 /datum/game_mode/blob/send_intercept(report = 0)
+	intercept_sent = TRUE
 	var/intercepttext = ""
 	switch(report)
 		if(1)
