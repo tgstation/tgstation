@@ -281,6 +281,7 @@
 	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
 
 /datum/plant_gene/trait/glow/red
+	name = "Red Electrical Glow"
 	glow_color = LIGHT_COLOR_RED
 
 /datum/plant_gene/trait/glow/berry

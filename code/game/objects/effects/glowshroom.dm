@@ -41,7 +41,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	addtimer(CALLBACK(src, .proc/setup), 0) //run this on the next tick so we can set vars first
 
 /obj/structure/glowshroom/proc/setup()
-	set_light(1.4 + potency*0.03, max(potency*0.05, 0.1))
+	set_light(1.4 + potency*0.03, max(potency*0.04, 0.1))
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)
