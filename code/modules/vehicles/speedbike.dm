@@ -195,5 +195,5 @@
 		playsound(src, 'sound/items/carhorn.ogg', 100, 1)
 
 /obj/vehicle/space/speedbike/memewagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
- 	. = ..()
-	riding_datum = new/datum/riding/space/speedbike/speedwagon
+	. = ..()
+		riding_datum = new/datum/riding/space/speedbike/speedwagon
