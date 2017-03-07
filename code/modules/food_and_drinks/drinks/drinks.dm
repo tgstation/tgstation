@@ -394,6 +394,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/air
 	name = "Canned Air"
-	desc = "Their is no air shortage. Do not drink."
+	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list("nitrogen" = 24, "oxygen" = 6)
