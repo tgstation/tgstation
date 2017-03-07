@@ -437,6 +437,22 @@
 /obj/item/weapon/storage/backpack/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
+/obj/item/weapon/storage/belt/chameleon
+	name = "toolbelt"
+	desc = "Holds tools."
+	silent = 1 
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/weapon/storage/belt/chameleon/New()
+	..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/weapon/storage/belt
+	chameleon_action.chameleon_name = "Belt"
+	chameleon_action.initialize_disguises()
+
+/obj/item/weapon/storage/belt/chameleon/emp_act(severity)
+	chameleon_action.emp_randomise()
+
 /obj/item/device/radio/headset/chameleon
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
