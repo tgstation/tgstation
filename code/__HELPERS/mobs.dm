@@ -181,16 +181,12 @@ Proc for attack log creation, because really why not
 		living_target = target
 
 	if(is_mob_user)
-		var/message = "\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(is_mob_target && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
-		user.attack_log += message
-		if(user.mind)
-			user.mind.attack_log += message
+		var/message = "<font color='red'>has [what_done] [target ? "[target.name][(is_mob_target && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
 	if(is_mob_target)
-		var/message = "\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
-		target.attack_log += message
-		if(target.mind)
-			target.mind.attack_log += message
+		var/message = "<font color='orange'>has been [what_done] by [user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
 	log_attack("[user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(is_mob_target && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]")
 

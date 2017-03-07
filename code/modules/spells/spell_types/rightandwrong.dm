@@ -30,7 +30,7 @@
 			var/datum/objective/survive/survive = new
 			survive.owner = H.mind
 			H.mind.objectives += survive
-			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
+			H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
 			H.mind.announce_objectives()
 		var/randomizeguns 			= pick(gunslist)
 		var/randomizemagic 			= pick(magiclist)
