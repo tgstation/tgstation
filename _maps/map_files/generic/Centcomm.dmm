@@ -13020,7 +13020,9 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gi" = (
-/obj/effect/landmark/abductor/console,
+/obj/machinery/abductor/console{
+	team = 1
+	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gj" = (
@@ -13046,7 +13048,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gn" = (
-/obj/effect/landmark/abductor/console{
+/obj/machinery/abductor/console{
 	team = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -13331,7 +13333,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Ho" = (
-/obj/effect/landmark/abductor/console{
+/obj/machinery/abductor/console{
 	team = 2
 	},
 /turf/open/floor/plating/abductor,
@@ -13349,7 +13351,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hr" = (
-/obj/effect/landmark/abductor/console{
+/obj/machinery/abductor/console{
 	team = 3
 	},
 /turf/open/floor/plating/abductor,
