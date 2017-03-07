@@ -2,8 +2,23 @@
 //Please do not bother them with bugs from this port, however, as it has been modified quite a bit.
 //Modifications include removing the world-ending full supermatter variation, and leaving only the shard.
 
-#define NITROGEN_RETARDATION_FACTOR 2        //Higher == N2 slows reaction more
-#define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction
+#define PLASMA_HEAT_PENALTY 20     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
+#define OXYGEN_HEAT_PENALTY 1
+#define CO2_HEAT_PENALTY 0.5
+#define NITROGEN_HEAT_MODIFIER -1
+
+#define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
+#define PLASMA_TRANSMIT_MODIFIER 4
+
+#define N2O_HEAT_RESISTANCE 8          //Higher == Gas makes the crystal more resistant against heat damage.
+
+#define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.10     //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
+#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
+
+#define MOLE_PENALTY_THRESHOLD 1000            //Higher == Shard can absorb more moles before triggering the high mole penalties.
+#define POWER_PENALTY_THRESHOLD 6000          //Higher == Engine can generate more power before triggering the high power penalties.
+
+#define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750                //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
 #define REACTION_POWER_MODIFIER 0.55                //Higher == more overall power
@@ -43,12 +58,30 @@
 
 	var/emergency_issued = 0
 
-	var/explosion_power = 8
+	var/explosion_power = 12
+	var/temp_factor = 30
 
 	var/lastwarning = 0				// Time in 1/10th of seconds since the last sent warning
 	var/power = 0
 
-	var/oxygen = 0					// Moving this up here for easier debugging.
+	var/n2comp = 0					// raw composition of each gas in the chamber, ranges from 0 to 1
+	var/freoncomp = 0
+
+	var/plasmacomp = 0
+	var/o2comp = 0
+	var/co2comp = 0
+	var/n2ocomp = 0
+
+	var/combined_gas = 0
+	var/gasmix_power_ratio = 0
+	var/dynamic_heat_modifier = 1
+	var/dynamic_heat_resistance = 1
+	var/powerloss_inhibitor = 1
+	var/power_transmission_bonus = 0
+
+	var/mole_penalty = 0
+
+
 
 	//Temporary values so that we can optimize this
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
@@ -94,12 +127,20 @@
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()
-	investigate_log("has collapsed into a singularity.", "supermatter")
 	var/turf/T = get_turf(src)
-	qdel(src)
-	if(T)
-		var/obj/singularity/S = new(T)
-		S.energy = 800
+	if(combined_gas > MOLE_PENALTY_THRESHOLD)
+		investigate_log("has collapsed into a singularity.", "supermatter")
+		if(T)
+			var/obj/singularity/S = new(T)
+			S.energy = 800
+	else
+		investigate_log("has exploded.", "supermatter")
+		explosion(get_turf(T), max((explosion_power * gasmix_power_ratio), 0.205), max((explosion_power * gasmix_power_ratio), 0.205) + 2, max((explosion_power * gasmix_power_ratio), 0.205) + 4 , max((explosion_power * gasmix_power_ratio), 0.205) + 6, 1, 1)
+		if(power > POWER_PENALTY_THRESHOLD)
+			investigate_log("has spawned additional energy balls.", "supermatter")
+			var/obj/singularity/energy_ball/E = new(T)
+			E.energy = power
+		qdel(src)
 
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/T = loc
@@ -166,20 +207,36 @@
 
 	damage_archived = damage
 	if(takes_damage)
-		damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
-	//Ok, 100% oxygen atmosphere = best reaction
-	//Maxes out at 100% oxygen pressure
-	var/removed_nitrogen = 0
-	if(removed.gases["n2"])
-		removed_nitrogen = (removed.gases["n2"][MOLES] * NITROGEN_RETARDATION_FACTOR)
+		damage = max( damage + ( (removed.temperature - (800*dynamic_heat_resistance)) / 150 ) , 0 )
 
-	removed.assert_gases("o2", "plasma")
 
-	oxygen = max(min((removed.gases["o2"][MOLES] - removed_nitrogen) / MOLES_CELLSTANDARD, 1), 0)
+	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
+
+	combined_gas = max(removed.total_moles(), 0)
+
+	plasmacomp = max(removed.gases["plasma"][MOLES]/combined_gas, 0)
+	o2comp = max(removed.gases["o2"][MOLES]/combined_gas, 0)
+	co2comp = max(removed.gases["co2"][MOLES]/combined_gas, 0)
+
+	n2ocomp = max(removed.gases["n2o"][MOLES]/combined_gas, 0)
+	n2comp = max(removed.gases["n2"][MOLES]/combined_gas, 0)
+	freoncomp = max(removed.gases["freon"][MOLES]/combined_gas, 0)
+
+	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2ocomp - n2comp - freoncomp, 0), 1)
+
+	dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
+	dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
+
+	power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
+
+
+
+	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
+		powerloss_inhibitor = max(min(1-co2comp, 1), 0)
 
 	var/temp_factor = 50
 
-	if(oxygen > 0.8)
+	if(gasmix_power_ratio > 0.8)
 		// with a perfect gas mix, make the power less based on heat
 		icon_state = "[base_icon_state]_glow"
 	else
@@ -187,7 +244,7 @@
 		temp_factor = 30
 		icon_state = base_icon_state
 
-	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) //Total laser power plus an overload
+	power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
 	//We've generated power, now let's transfer it to the collectors for storing/usage
 	transfer_energy()
@@ -201,14 +258,16 @@
 
 	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-	removed.temperature += (device_energy / THERMAL_RELEASE_MODIFIER)
+	removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
 
-	removed.temperature = max(0, min(removed.temperature, 2500))
+	removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 	//Calculate how much gas to release
-	removed.gases["plasma"][MOLES] += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
+	removed.gases["plasma"][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
 
-	removed.gases["o2"][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+	removed.gases["o2"][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+
+	removed.gases["freon"][MOLES] += max(device_energy*freoncomp*10, 0)
 
 	if(produces_gas)
 		env.merge(removed)
@@ -223,7 +282,11 @@
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
 
-	power -= (power/500)**3
+	if(power > POWER_PENALTY_THRESHOLD)
+		tesla_zap(src, 8, power, FALSE)
+		power -=(power/200)**3 * powerloss_inhibitor
+
+	power -= ((power/500)**3) * powerloss_inhibitor
 
 	return 1
 
@@ -298,7 +361,7 @@
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
-			R.receive_pulse(power/10)
+			R.receive_pulse(power * (1 + power_transmission_bonus)/10)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
@@ -366,5 +429,5 @@
 	icon_state = "darkmatter"
 	anchored = 1
 	gasefficency = 0.15
-	explosion_power = 20
+	explosion_power = 35
 

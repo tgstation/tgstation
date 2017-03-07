@@ -391,6 +391,10 @@
 	name = "frosted window"
 	icon_state = "fwindow"
 
+/obj/structure/window/reinforced/highpressure
+	name = "high pressure window"
+	max_integrity = 1000
+	pressure_resistance = 100*ONE_ATMOSPHERE
 
 /* Full Tile Windows (more obj_integrity) */
 
@@ -401,7 +405,7 @@
 	max_integrity = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
@@ -414,7 +418,18 @@
 	max_integrity = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	level = 3
+	glass_amount = 2
+
+/obj/structure/window/reinforced/highpressure/fulltile
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon_state = "r_window"
+	dir = FULLTILE_WINDOW_DIR
+	max_integrity = 1000
+	fulltile = 1
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -427,7 +442,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
 	glass_amount = 2
 
