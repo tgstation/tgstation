@@ -4,8 +4,7 @@
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/random_color = 0
-	var/list/possible_colors = list()
+	var/list/possible_colors
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	var/w_class_on = WEIGHT_CLASS_BULKY
@@ -18,7 +17,7 @@
 
 /obj/item/weapon/melee/energy/Initialize()
 	..()
-	if(random_color && possible_colors.len)
+	if(LAZYLEN(possible_colors))
 		item_color = pick(possible_colors)
 		switch(item_color)//Only run this check if the color was picked randomly, so that colors can be manually set for non-random colored energy weapons.
 			if("red")
@@ -44,7 +43,7 @@
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
-	desc = "An energised battle axe."
+	desc = "An energized battle axe."
 	icon_state = "axe0"
 	force = 40
 	force_on = 150
@@ -60,6 +59,7 @@
 	origin_tech = "combat=4;magnets=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
+	light_color = "#40ceff"
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -80,7 +80,6 @@
 	armour_penetration = 35
 	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
-	random_color = 1
 	possible_colors = list("red", "blue", "green", "purple")
 	var/hacked = 0
 
@@ -182,7 +181,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
 	light_color = "#40ceff"
-	random_color = 0
+	possible_colors = null
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
 	..()
@@ -195,24 +194,16 @@
 /obj/item/weapon/melee/energy/sword/saber
 
 /obj/item/weapon/melee/energy/sword/saber/blue
-	item_color = "blue"
-	random_color = 0
-	light_color = "#40ceff"
+	possible_colors = list("blue")
 
 /obj/item/weapon/melee/energy/sword/saber/purple
-	item_color = "purple"
-	random_color = 0
-	light_color = "#9b51ff"
+	possible_colors = list("purple")
 
 /obj/item/weapon/melee/energy/sword/saber/green
-	item_color = "green"
-	random_color = 0
-	light_color = "#00ff00"
+	possible_colors = list("green")
 
 /obj/item/weapon/melee/energy/sword/saber/red
-	item_color = "red"
-	light_color = "#ff0000"
-	random_color = 0
+	possible_colors = list("red")
 
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)

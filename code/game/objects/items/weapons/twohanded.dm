@@ -261,14 +261,13 @@
 	resistance_flags = FIRE_PROOF
 	var/hacked = 0
 	var/brightness_on = 6//TWICE AS BRIGHT AS A REGULAR ESWORD
-	var/random_color = 1
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/Initialize()
 	..()
-	if(random_color && possible_colors.len)
+	if(LAZYLEN(possible_colors))
 		item_color = pick(possible_colors)
-		switch(item_color)//Only run this check if the color was picked randomly, so that colors can be manually set for non-random colored energy weapons.
+		switch(item_color)
 			if("red")
 				light_color = "#ff0000"
 			if("green")
@@ -375,14 +374,16 @@
 	INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/green
-	item_color = "green"
-	light_color = "#00ff00"
-	random_color = 0
+	possible_colors = list("green")
 
 /obj/item/weapon/twohanded/dualsaber/red
-	item_color = "red"
-	light_color = "#ff0000"
-	random_color = 0
+	possible_colors = list("red")
+
+/obj/item/weapon/twohanded/dualsaber/blue
+	possible_colors = list("blue")
+
+/obj/item/weapon/twohanded/dualsaber/purple
+	possible_colors = list("purple")
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
