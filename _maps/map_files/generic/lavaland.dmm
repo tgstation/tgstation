@@ -1609,7 +1609,7 @@
 	},
 /area/mine/living_quarters)
 "dm" = (
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/maintenance)
@@ -2329,7 +2329,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/maintenance)
@@ -2353,7 +2353,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/maintenance)
@@ -2363,7 +2363,7 @@
 	dir = 8;
 	network = list("MINE")
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/maintenance)
@@ -2747,7 +2747,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/maintenance)

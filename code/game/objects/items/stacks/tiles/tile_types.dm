@@ -124,6 +124,34 @@
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
 
+//Circuit
+/obj/item/stack/tile/circuit
+	name = "blue circuit tile"
+	singular_name = "blue circuit tile"
+	desc = "A blue circuit tile."
+	icon_state = "tile_bcircuit"
+	turf_type = /turf/open/floor/circuit
+
+/obj/item/stack/tile/circuit/green
+	name = "green circuit tile"
+	singular_name = "green circuit tile"
+	desc = "A green circuit tile."
+	icon_state = "tile_gcircuit"
+	turf_type = /turf/open/floor/circuit/green
+
+/obj/item/stack/tile/circuit/green/anim
+	turf_type = /turf/open/floor/circuit/green/anim
+
+/obj/item/stack/tile/circuit/red
+	name = "red circuit tile"
+	singular_name = "red circuit tile"
+	desc = "A red circuit tile."
+	icon_state = "tile_rcircuit"
+	turf_type = /turf/open/floor/circuit/red
+
+/obj/item/stack/tile/circuit/red/anim
+	turf_type = /turf/open/floor/circuit/red/anim
+
 //Pod floor
 /obj/item/stack/tile/pod
 	name = "pod floor tile"
