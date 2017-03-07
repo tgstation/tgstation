@@ -869,7 +869,7 @@ The _flatIcons list is a cache for generated icon files.
 	text_image.color = AverageColour(atom_icon)
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
-	del(atom_icon)
+	qdel(atom_icon)
 	return text_image
 
 var/global/list/friendly_animal_types = list()
