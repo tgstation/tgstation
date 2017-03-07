@@ -99,7 +99,6 @@
 	name = "Nutriment"
 	var/reagent_id = "nutriment"
 	var/rate = 0.04
-	var/list/blacklisted_reagents = list("potassium", "cornoil", "diethylamine", "stable_plasma", "welding_fuel", "glycerol")
 
 /datum/plant_gene/reagent/get_name()
 	return "[name] production [rate*100]%"
@@ -128,9 +127,6 @@
 /datum/plant_gene/reagent/can_add(obj/item/seeds/S)
 	if(!..())
 		return FALSE
-	for(var/V in blacklisted_reagents)
-		if(V == reagent_id)
-			return FALSE
 	for(var/datum/plant_gene/reagent/R in S.genes)
 		if(R.reagent_id == reagent_id)
 			return FALSE
