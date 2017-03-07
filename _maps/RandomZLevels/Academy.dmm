@@ -3992,7 +3992,7 @@
 /area/awaymission/academy/academycellar)
 "lg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/guardiancreator/choose,
+/obj/item/weapon/sutandocreator/choose,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lh" = (
