@@ -1,15 +1,4 @@
 /turf/open/space
-	//put define overrides in Initialize
-
-	var/destination_z
-	var/destination_x
-	var/destination_y
-
-	var/global/datum/gas_mixture/space/space_gas = new
-
-/turf/open/space/basic/New()
-
-/turf/open/space/Initialize()
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	name = "\proper space"
@@ -21,7 +10,15 @@
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
+	var/destination_z
+	var/destination_x
+	var/destination_y
 
+	var/global/datum/gas_mixture/space/space_gas = new
+
+/turf/open/space/basic/New()
+
+/turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
 	
