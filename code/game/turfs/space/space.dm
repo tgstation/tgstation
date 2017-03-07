@@ -17,6 +17,8 @@
 	var/global/datum/gas_mixture/space/space_gas = new
 
 /turf/open/space/basic/New()
+//THIS NEW IS TO REMAIN HERE AND REMAIN EMPTY
+//IT OPTIMIZES MAP LOADING
 
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
