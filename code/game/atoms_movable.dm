@@ -442,7 +442,7 @@
 
 /* Stationloving
 *
-* An stationloving atom will always teleport back to the station
+* A stationloving atom will always teleport back to the station
 * if it ever leaves the station z-levels or Centcom. It will also,
 * when Destroy() is called, will teleport to a random turf on the
 * station.
