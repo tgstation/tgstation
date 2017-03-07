@@ -6,7 +6,7 @@
 	cooldown_min = 100
 
 	clothes_req = 1
-	invocation = "THE TRAPS"
+	invocation = "CAVERE INSIDIAS"
 	invocation_type = "shout"
 	range = 3
 
