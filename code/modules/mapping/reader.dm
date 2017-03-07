@@ -14,6 +14,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		// /^[\s\n]+|[\s\n]+$/
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	var/static/list/modelCache = list()
+	var/static/space	// the world turf model key
 
 /**
  * Construct the model map and control the loading process
@@ -81,6 +82,7 @@ var/global/dmm_suite/preloader/_preloader = new
 					continue
 				else
 					world.maxz = zcrd //create a new z_level if needed
+			var/basic_turfs = no_changeturf || zexpansion
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
@@ -126,9 +128,10 @@ var/global/dmm_suite/preloader/_preloader = new
 
 							if(xcrd >= 1)
 								var/model_key = copytext(line, tpos, tpos + key_len)
-								if(!grid_models[model_key])
-									throw EXCEPTION("Undefined model key in DMM.")
-								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+								if(!basic_turfs || model_key != space)
+									if(!grid_models[model_key])
+										throw EXCEPTION("Undefined model key in DMM.")
+									parse_grid(grid_models[model_key], xcrd, ycrd, zcrd, basic_turfs)
 								CHECK_TICK
 
 							maxx = max(maxx, xcrd)
@@ -142,12 +145,11 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
-		if(!measureOnly)
-			if(!no_changeturf)
-				for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-					var/turf/T = t
-					//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-					T.AfterChange(TRUE)
+		if(!measureOnly && !no_changeturf)
+			for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+				var/turf/T = t
+				//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+				T.AfterChange(TRUE)
 		return bounds
 
 /**
@@ -176,12 +178,9 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
 	var/list/members_attributes //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
 	var/list/cached = modelCache[model]
-	var/list/static/space
 	var/index
 
 	if(cached)
-		if(no_changeturf && cached == space)
-			return	//nothing to do here
 		members = cached[1]
 		members_attributes = cached[2]
 	else
@@ -228,7 +227,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		modelCache[model] = L
 
 		if(!space && members.len == 2 && members_attributes.len == 2 && (world.area in members) && (world.turf in members))
-			space = L
+			space = model
 			if(no_changeturf)
 				return
 
