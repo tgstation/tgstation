@@ -1,4 +1,4 @@
-/obj/machinery/computer/atmos_points
+/obj/machinery/atmos_points
 	name = "atmospheric export computer"
 	desc = "used to monitor the galactic atmos markets"
 	icon = 'icons/obj/machines/engi_points.dmi'
@@ -67,7 +67,8 @@
 			icon_state = "floorflush_a2"
 			qdel(C)
 
-/obj/machinery/computer/atmos_points/Initialize()
+/obj/machinery/atmos_points/Initialize()
+	..()
 	e_gas += "Initializing"
 	s_gas += "Initializing"
 	s_gas += "Initializing"
@@ -75,7 +76,7 @@
 	p_gas += "Initializing"
 	p_gas += "Initializing"
 
-/obj/machinery/computer/atmos_points/interact(mob/user)
+/obj/machinery/atmos_points/interact(mob/user)
 	user.set_machine(src)
 	for(var/obj/machinery/atmos_points_exporter/AE in machines)
 		can_turf = get_turf(AE)
@@ -106,7 +107,7 @@
 	popup.open()
 	src.updateUsrDialog()
 
-/obj/machinery/computer/atmos_points/Topic(href, href_list)
+/obj/machinery/atmos_points/Topic(href, href_list)
 	if(..())
 		return
 	switch(href_list["action"])
@@ -192,7 +193,7 @@
 
 			src.updateUsrDialog()
 
-/obj/machinery/computer/atmos_points/proc/reset()
+/obj/machinery/atmos_points/proc/reset()
 	export_name = "------"
 	export_target = ""
 	gas.Cut()
@@ -202,7 +203,7 @@
 	utemp = 0
 	ltemp = 0
 
-/obj/machinery/computer/atmos_points/process()
+/obj/machinery/atmos_points/process()
 	if(market_cooldown < world.time)
 		reset()
 		economy_name = corp_name()
@@ -251,7 +252,7 @@
 
 
 
-/obj/machinery/computer/atmos_points/proc/corp_name()
+/obj/machinery/atmos_points/proc/corp_name()
 	var/name = ""
 
 	// Prefix
