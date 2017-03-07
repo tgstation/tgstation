@@ -125,7 +125,7 @@
 				playsound(get_turf(base),'sound/magic/lightningbolt.ogg', 100, 1)
 				src.Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
 				return
-				
+
 			if(istype(A,/obj/structure/girder))
 				var/goal = 0
 				var/sum = 0
@@ -141,7 +141,7 @@
 					playsound(get_turf(base),'sound/magic/lightningbolt.ogg', 100, 1)
 					src.Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
 					cooldown = world.time + 210
-				if(goal == 1)
+				if (goal == 1)
 					new /obj/item/stack/sheet/metal(loc)
 	else
 		icon_state = "mini_off"
@@ -172,7 +172,7 @@
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
  	. = ..()
 		riding_datum = new/datum/riding/space/speedbike/speedwagon
-	
+
 /obj/vehicle/space/speedbike/memewagon
 	name = "Engineering's Pinnacle X9"
 	desc = "The supreme department, manifest"
@@ -196,4 +196,4 @@
 
 /obj/vehicle/space/speedbike/memewagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
-		riding_datum = new/datum/riding/space/speedbike/speedwagon
+	riding_datum = new/datum/riding/space/speedbike/speedwagon
