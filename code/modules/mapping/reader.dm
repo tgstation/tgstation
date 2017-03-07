@@ -241,7 +241,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/static/area_typecache = world.area ///area/space
 		var/static/turf_typecache = world.turf ///turf/open/space/basic
 
-		if(!space && members.len == 2 && members_attributes.len == 2 && (area_typecache in members))
+		if(!space && members.len == 2 && members_attributes.len == 2 && (area_typecache in members) && length(members_attributes[1]) == 0 && length(members_attributes[2]) == 0)
 			if (turf_typecache in members)
 				space = model_key
 				if(no_changeturf)
