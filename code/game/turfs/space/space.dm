@@ -28,6 +28,12 @@
 	if(requires_activation)
 		SSair.add_to_active(src)
 
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
+
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
