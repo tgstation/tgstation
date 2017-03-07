@@ -16,7 +16,7 @@
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
 
 #define MOLE_PENALTY_THRESHOLD 1000            //Higher == Shard can absorb more moles before triggering the high mole penalties.
-#define POWER_PENALTY_THRESHOLD 6000          //Higher == Engine can generate more power before triggering the high power penalties.
+#define POWER_PENALTY_THRESHOLD 4000          //Higher == Engine can generate more power before triggering the high power penalties.
 
 #define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750                //Higher == less plasma released by reaction
@@ -159,13 +159,13 @@
 			var/stability = num2text(round((damage / explosion_point) * 100))
 
 			if(damage > emergency_point)
+
 				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
 				lastwarning = world.timeofday
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", "supermatter")
 					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 					has_reached_emergency = 1
-
 			else if(damage >= damage_archived) // The damage is still going up
 				radio.talk_into(src, "[warning_alert] Instability: [stability]%")
 				lastwarning = world.timeofday - 150
@@ -173,6 +173,11 @@
 			else                                                 // Phew, we're safe
 				radio.talk_into(src, "[safe_alert]")
 				lastwarning = world.timeofday
+
+			if(power > POWER_PENALTY_THRESHOLD)
+				radio.talk_into(src, "WARNING: CRITICAL POWER LEVELS.CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
+			if(combined_gas > MOLE_PENALTY_THRESHOLD)
+				radio.talk_into(src, "WARNING: CRITICAL COOLANT MASS REACHED.")
 
 		if(damage > explosion_point)
 			for(var/mob in living_mob_list)
@@ -284,8 +289,6 @@
 
 	if(power > POWER_PENALTY_THRESHOLD)
 		tesla_zap(src, 8, power, FALSE)
-		power -=(power/200)**3 * powerloss_inhibitor
-
 	power -= ((power/500)**3) * powerloss_inhibitor
 
 	return 1
