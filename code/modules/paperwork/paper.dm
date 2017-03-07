@@ -251,7 +251,9 @@
 	updateinfolinks()
 
 
-/obj/item/weapon/paper/proc/openhelp(mob/user)
+/obj/item/weapon/paper/verb/openhelp(mob/user)
+	set name = "View Pen Help"
+
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
 	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
