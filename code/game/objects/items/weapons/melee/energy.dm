@@ -89,9 +89,9 @@
 	. = ..()
 
 /obj/item/weapon/melee/energy/sword/process()
+	if(hacked)
+		light_color = pick("#ff0000", "#00ff00", "#40ceff", "#9b51ff")
 	if(active)
-		if(hacked)
-			light_color = pick("#ff0000", "#00ff00", "#40ceff", "#9b51ff")
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)

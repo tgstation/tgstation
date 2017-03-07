@@ -252,6 +252,7 @@
 	armour_penetration = 35
 	origin_tech = "magnets=4;syndicate=5"
 	item_color = "green"
+	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
 	obj_integrity = 200
@@ -259,8 +260,11 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/hacked = 0
+	var/brightness_on = 6//TWICE AS BRIGHT AS A REGULAR ESWORD
+	var/random_color = 1
+	var/list/possible_colors = list("red", "blue", "green", "purple")
 
-/obj/item/weapon/twohanded/dualsaber/New()
+/obj/item/weapon/twohanded/dualsaber/Initialize()
 	..()
 	item_color = pick("red", "blue", "green", "purple")
 
@@ -323,6 +327,7 @@
 		w_class = w_class_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		START_PROCESSING(SSobj, src)
+		set_light(brightness_on)
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
@@ -330,9 +335,12 @@
 	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
+	set_light(0)
 
 /obj/item/weapon/twohanded/dualsaber/process()
 	if(wielded)
+		if(hacked)
+			light_color = pick("#ff0000", "#00ff00", "#40ceff", "#9b51ff")
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -356,11 +364,15 @@
 	// Light your candles while spinning around the room
 	INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
-/obj/item/weapon/twohanded/dualsaber/green/New()
+/obj/item/weapon/twohanded/dualsaber/green
 	item_color = "green"
+	light_color = "#00ff00"
+	random_color = 0
 
-/obj/item/weapon/twohanded/dualsaber/red/New()
+/obj/item/weapon/twohanded/dualsaber/red
 	item_color = "red"
+	light_color = "#ff0000"
+	random_color = 0
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
