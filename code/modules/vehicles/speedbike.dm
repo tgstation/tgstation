@@ -181,7 +181,7 @@
 	layer = LYING_MOB_LAYER
 	overlay_state = "speedwagon_cover"
 
-/obj/vehicle/space/speedbike/speedwagon/Bump(mob/living/A)
+/obj/vehicle/space/speedbike/memewagon/Bump(mob/living/A)
 	. = ..()
 	if(A.density && has_buckled_mobs() && (istype(A, /mob/living/carbon/human) && has_buckled_mobs()))
 		var/atom/throw_target = get_edge_target_turf(A, pick(cardinal))
@@ -194,6 +194,6 @@
 		sleep(10)
 		playsound(src, 'sound/items/carhorn.ogg', 100, 1)
 
-/obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+/obj/vehicle/space/speedbike/memewagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
  	. = ..()
 riding_datum = new/datum/riding/space/speedbike/speedwagon
