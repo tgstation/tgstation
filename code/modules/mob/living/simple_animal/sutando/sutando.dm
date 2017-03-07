@@ -132,7 +132,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando/Destroy()
 	parasites -= src
-	for(var/datum/guardian_abilities/I in current_abilities)
+	for(var/datum/sutando_abilities/I in current_abilities)
 		qdel(I)
 	current_abilities.Cut()
 	abilities.Cut()

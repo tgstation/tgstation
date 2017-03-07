@@ -522,7 +522,7 @@
 
 /datum/sutando_abilities/charge/impact_act(atom/A)
 	if(!charging)
-		return . = stand.throw_impact(A)
+		return
 
 	else if(A)
 		if(isliving(A) && A != user)
