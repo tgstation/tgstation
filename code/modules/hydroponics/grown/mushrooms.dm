@@ -228,14 +228,9 @@
 	name = "glowshroom cluster"
 	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
 	icon_state = "glowshroom"
-	light_color = "#AAD84B"
 	filling_color = "#00FA9A"
 	var/effect_path = /obj/structure/glowshroom
 	origin_tech = "biotech=4;plasmatech=6"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/add_juice()
-	..()
-	set_light(max(seed.potency*0.025, 1.4), max(seed.potency*0.05, 0.1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
@@ -260,7 +255,7 @@
 	icon_dead = "glowshroom-dead"
 	plantname = "Glowcaps"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
-	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list()
 	reagents_add = list("teslium" = 0.1, "nutriment" = 0.04)
 	rarity = 30
@@ -270,7 +265,6 @@
 	name = "glowcap cluster"
 	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but isn't actually bioluminescent. They're warm to the touch..."
 	icon_state = "glowcap"
-	light_color = LIGHT_COLOR_RED
 	filling_color = "#00FA9A"
 	effect_path = /obj/structure/glowshroom/glowcap
 	origin_tech = "biotech=4;powerstorage=6;plasmatech=4"
