@@ -123,6 +123,8 @@
 	switch(mode)
 		if(1,2,4,5)
 			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+	if(mode == 1 && SSshuttle.emergency)
+		user << "Current Shuttle: [SSshuttle.emergency.name]"
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -151,8 +153,7 @@
 		maptext = new_text
 
 /obj/machinery/status_display/proc/remove_display()
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
 	if(maptext)
 		maptext = ""
 
@@ -275,8 +276,7 @@
 
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
 	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 #undef CHARS_PER_LINE

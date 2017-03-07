@@ -21,6 +21,7 @@
 
 /obj/screen/Destroy()
 	master = null
+	hud = null
 	return ..()
 
 /obj/screen/examine(mob/user)
@@ -664,3 +665,40 @@
 		if(word_messages.len && talk_cooldown < world.time)
 			talk_cooldown = world.time + 10
 			L.say(pick(word_messages))
+
+/obj/screen/splash
+	icon = 'config/title_screens/images/blank.png'
+	icon_state = ""
+	screen_loc = "1,1"
+	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
+	var/client/holder
+
+/obj/screen/splash/New(client/C, visible, use_previous_title)
+	holder = C
+
+	if(!visible)
+		alpha = 0
+	if(SStitle.title_screen)
+		icon = SStitle.title_screen.icon
+
+	holder.screen += src
+	if(use_previous_title && !SSmapping.previous_map_config.defaulted)
+		holder.screen -= src	//Yell at Cyberboss to finish this
+
+	..()
+
+/obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
+	if(out)
+		animate(src, alpha = 0, time = 30)
+	else
+		alpha = 0
+		animate(src, alpha = 255, time = 30)
+	if(qdel_after)
+		QDEL_IN(src, 30)
+
+/obj/screen/splash/Destroy()
+	if(holder)
+		holder.screen -= src
+		holder = null
+	return ..()

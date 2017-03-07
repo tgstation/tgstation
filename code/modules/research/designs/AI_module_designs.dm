@@ -84,6 +84,15 @@
 	build_path = /obj/item/weapon/aiModule/reset/purge
 	category = list("AI Modules")
 
+/datum/design/board/remove_module
+	name = "Module Design (Law Removal)"
+	desc = "Allows for the construction of a Law Removal AI Core Module."
+	id = "remove_module"
+	req_tech = list("programming" = 5, "materials" = 5)
+	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
+	build_path = /obj/item/weapon/aiModule/remove
+	category = list("AI Modules")
+
 /datum/design/board/freeformcore_module
 	name = "AI Core Module (Freeform)"
 	desc = "Allows for the construction of a Freeform AI Core Module."
@@ -130,11 +139,13 @@
 	build_path = /obj/item/weapon/aiModule/core/full/corp
 	category = list("AI Modules")
 
-/datum/design/board/custom_module
-	name = "Core Module Design (Custom)"
-	desc = "Allows for the construction of a Custom AI Core Module."
-	id = "custom_module"
+/datum/design/board/default_module
+	name = "Core Module Design (Default)"
+	desc = "Allows for the construction of a Default AI Core Module."
+	id = "default_module"
 	req_tech = list("programming" = 5, "materials" = 5)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
 	build_path = /obj/item/weapon/aiModule/core/full/custom
 	category = list("AI Modules")
+
+

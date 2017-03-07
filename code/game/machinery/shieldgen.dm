@@ -17,7 +17,6 @@
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()
-	opacity = 0
 	density = 0
 	air_update_turf(1)
 	return ..()
@@ -48,9 +47,9 @@
 /obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage was dealt
-		opacity = 1
+		set_opacity(1)
 		spawn(20)
-			opacity = 0
+			set_opacity(0)
 
 /obj/structure/emergency_shield/sanguine
 	name = "sanguine barrier"
@@ -438,7 +437,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	luminosity = 3
+	light_range = 3
 	var/needs_power = 0
 	var/active = 1
 	var/delay = 5

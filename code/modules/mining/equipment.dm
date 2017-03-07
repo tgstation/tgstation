@@ -586,11 +586,3 @@
 		charged = 1
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-
-/obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
-	..()
-	user.AddLuminosity(luminosity)
-
-/obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
-	..()
-	user.AddLuminosity(-luminosity)

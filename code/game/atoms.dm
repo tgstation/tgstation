@@ -2,7 +2,10 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+
 	var/flags = 0
+	var/list/secondary_flags
+
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
@@ -18,33 +21,52 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
-	//overlays that should remain on top and not normally be removed, like c4.
-	var/list/priority_overlays
-
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
 	var/initialized = FALSE
 
+	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
+	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
-/atom/New()
+/atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
+		
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
+
+	var/do_initialize = SSatoms.initialized
+	if(do_initialize > INITIALIZATION_INSSATOMS)
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		Initialize(arglist(args))
+
+//Called after New if the map is being loaded. mapload = TRUE
+//Called from base of New if the map is being loaded. mapload = FALSE
+//This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
+//Derivatives must not sleep
+//Returning TRUE while mapload is TRUE will cause the object to be initialized again with mapload = FALSE when everything else is done
+//(Useful for things that requires turfs to have air). This base may only be called once, however
+//Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+
+//Note: the following functions don't call the base for optimization and must copypasta:
+// /turf/Initialize
+// /turf/open/space/Initialize
+/atom/proc/Initialize(mapload, ...)
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	//lighting stuff
-	if(opacity && isturf(loc))
-		loc.UpdateAffectingLights()
+	if (light_power && light_range)
+		update_light()
 
-	if(luminosity)
-		light = new(src)
+	if (opacity && isturf(loc))
+		var/turf/T = loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
-	var/initialized = SSobj.initialized
-	if(initialized > INITIALIZATION_INSSOBJ)
-		Initialize(initialized == INITIALIZATION_INNEW_MAPLOAD)
-	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -59,6 +81,11 @@
 				AA.hide(list(src))
 	if(reagents)
 		qdel(reagents)
+
+	LAZYCLEARLIST(overlays)
+	LAZYCLEARLIST(priority_overlays)
+	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
+
 	return ..()
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
@@ -144,16 +171,6 @@
 /atom/proc/is_transparent()
 	return container_type & TRANSPARENT
 
-/*//Convenience proc to see whether a container can be accessed in a certain way.
-
-/atom/proc/can_subract_container()
-	return flags & EXTRACT_CONTAINER
-
-/atom/proc/can_add_container()
-	return flags & INSERT_CONTAINER
-*/
-
-
 /atom/proc/allow_drop()
 	return 1
 
@@ -164,7 +181,7 @@
 	return
 
 /atom/proc/emp_act(severity)
-	if(istype(wires))
+	if(istype(wires) && !HAS_SECONDARY_FLAG(src, NO_EMP_WIRES))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -435,17 +452,6 @@ var/list/blood_splatter_icons = list()
 	sleep(1)
 	stoplag()
 
-//Called after New if the world is not loaded with TRUE
-//Called from base of New if the world is loaded with FALSE
-//This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
-//Derivatives must not sleep
-/atom/proc/Initialize(mapload)
-#ifdef TESTING
-	if(initialized)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-#endif
-	initialized = TRUE
-
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
 /atom/proc/get_remote_view_fullscreens(mob/user)
 	return
@@ -541,10 +547,6 @@ var/list/blood_splatter_icons = list()
 /atom/vv_edit_var(var_name, var_value)
 	if(!Debug2)
 		admin_spawned = TRUE
-	switch(var_name)
-		if("luminosity")
-			src.SetLuminosity(var_value)
-			return//prevent normal setting of this value
 	. = ..()
 	switch(var_name)
 		if("color")
@@ -559,4 +561,3 @@ var/list/blood_splatter_icons = list()
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
-

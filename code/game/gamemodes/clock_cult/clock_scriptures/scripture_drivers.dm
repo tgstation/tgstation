@@ -183,9 +183,9 @@
 
 //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.
 /datum/clockwork_scripture/channeled/taunting_tirade
-	descname = "Channeled, Mobile Area Confusion"
+	descname = "Channeled, Mobile Confusion Trail"
 	name = "Taunting Tirade"
-	desc = "Weakens, confuses and dizzies all nearby non-servants with a short invocation, then allows movement for five seconds. Chanted every second for up to thirty seconds."
+	desc = "Allows movement for five seconds, leaving a confusing and weakening trail. Chanted every second for up to thirty seconds."
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
@@ -195,35 +195,30 @@
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Weakens, confuses, and dizzies nearby non-servants, then allows some movement.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows movement for five seconds, leaving a confusing and weakening trail.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
-	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && !L.null_rod_check())
-			L.confused = min(L.confused + 20, 100)
-			L.dizziness = min(L.dizziness + 20, 100)
-			L.Weaken(1)
 	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of purple smoke!</span>")
 	var/invoker_old_color = invoker.color
 	invoker.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
 	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
-	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
-		var/endtime = world.time + flee_time
-		progbar = new(invoker, flee_time, invoker)
-		progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
-		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime && can_recite())
-			sleep(1)
-			progbar.update(endtime - world.time)
-		qdel(progbar)
-		if(can_recite())
-			sleep(grace_period)
-		else
-			return FALSE
+	var/endtime = world.time + flee_time
+	progbar = new(invoker, flee_time, invoker)
+	progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
+	animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
+	while(world.time < endtime && can_recite())
+		sleep(1)
+		new/obj/structure/destructible/clockwork/taunting_trail(invoker.loc)
+		progbar.update(endtime - world.time)
+	qdel(progbar)
+	if(can_recite() && chant_number != chant_amount)
+		sleep(grace_period)
+	else
+		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
@@ -253,27 +248,33 @@
 /datum/clockwork_scripture/create_object/tinkerers_cache
 	descname = "Necessary Structure, Shares Components"
 	name = "Tinkerer's Cache"
-	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
+	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
+	Striking a cache with a slab will transfer that slab's components to the global cache."
 	invocations = list("Constructing...", "...a cache!")
 	channel_time = 50
 	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	object_path = /obj/structure/destructible/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches very efficient."
+	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
+	var/static/prev_cost = 0
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
 	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
-	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-	for(var/i in consumed_components)
-		if(i != REPLICANT_ALLOY)
-			consumed_components[i] += cache_cost_increase
+	if(cache_cost_increase != prev_cost)
+		prev_cost = cache_cost_increase
+		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
+		for(var/i in consumed_components)
+			if(i != REPLICANT_ALLOY)
+				consumed_components[i] += cache_cost_increase
+		return TRUE
+	return FALSE
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
@@ -299,17 +300,17 @@
 /datum/clockwork_scripture/create_object/sigil_of_transgression
 	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
-	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
-	invocations = list("Divinity, dazzle...", "...those who tresspass here!")
+	desc = "Wards a tile with a sigil, which will stun the next non-Servant to cross it."
+	invocations = list("Divinity, smite...", "...those who tresspass here!")
 	channel_time = 50
 	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
-	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-servant to cross it will be immobilized.</span>"
+	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be stunned.</span>"
 	usage_tip = "The sigil, while fairly powerful in its stun, does not induce muteness in its victim."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transgression, which will stun the first non-Servant to cross it."
+	quickbind_desc = "Creates a Sigil of Transgression, which will stun the next non-Servant to cross it."

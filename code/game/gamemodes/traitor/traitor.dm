@@ -115,6 +115,7 @@
 					var/datum/objective/maroon/yandere_two = new
 					yandere_two.owner = traitor
 					yandere_two.target = yandere_one.target
+					yandere_two.update_explanation_text() // normally called in find_target()
 					traitor.objectives += yandere_two
 					objective_count++
 
@@ -226,19 +227,15 @@
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	var/law_borg = "Accomplish your AI's objectives at all costs."
-	killer << "<b>Your laws have been changed!</b>"
 	killer.set_zeroth_law(law, law_borg)
 	give_codewords(killer)
 	killer.set_syndie_radio()
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
 	killer.add_malf_picker()
-	killer.show_laws()
 
 /datum/game_mode/proc/add_law_sixsixsix(mob/living/silicon/devil)
 	var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", lawlorify[LAW][devil.mind.devilinfo.ban], lawlorify[LAW][devil.mind.devilinfo.obligation], "Accomplish your objectives at all costs.")
 	devil.set_law_sixsixsix(laws)
-	devil << "<b>Your laws have been changed!</b>"
-	devil.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)

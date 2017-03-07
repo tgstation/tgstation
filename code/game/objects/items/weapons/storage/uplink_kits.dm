@@ -135,7 +135,8 @@
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
-	icon_state = "box_of_doom"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
@@ -306,3 +307,12 @@
 	..()
 	for(var/i in 1 to 3)
 		new/obj/item/weapon/grenade/chem_grenade/ez_clean(src)
+
+/obj/item/weapon/storage/box/hug/reverse_revolver/New()
+	..()
+	new /obj/item/weapon/gun/ballistic/revolver/reverse(src)
+
+/obj/item/weapon/storage/box/syndie_kit/mimery/New()
+	..()
+	new /obj/item/weapon/spellbook/oneuse/mimery_blockade(src)
+	new /obj/item/weapon/spellbook/oneuse/mimery_guns(src)

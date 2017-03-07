@@ -109,7 +109,7 @@
 		message = "<span class='brass'>You dispel the power of [visor].</span>"
 		remove_ranged_ability(message)
 	else
-		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judical marker!</b></span>"
+		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judicial marker!</b></span>"
 		add_ranged_ability(user, message)
 
 /obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/caller, params, atom/target)
@@ -158,7 +158,7 @@
 
 /obj/effect/clockwork/judicial_marker/New(loc, caster)
 	..()
-	SetLuminosity(4, 3)
+	set_light(4, 0.3)
 	user = caster
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
@@ -171,7 +171,7 @@
 	sleep(13)
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
-	SetLuminosity(0)
+	set_light(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
@@ -196,7 +196,7 @@
 		targetsjudged++
 		L.adjustBruteLoss(10)
 		add_logs(user, L, "struck with a judicial blast")
-	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
+	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>"
 	sleep(3) //so the animation completes properly
 	qdel(src)
 

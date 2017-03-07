@@ -44,8 +44,9 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
 	var/turf/T = get_turf(A)
+	if(T == loc)
+		T = get_step(A, A.dir) //please don't run into a window like a bird, ratvar
 	forceMove(T)
-	T.ratvar_act()
 
 /obj/structure/destructible/clockwork/massive/ratvar/Process_Spacemove()
 	return clashing
@@ -61,7 +62,7 @@
 		T.ratvar_act(1)
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
-		for(var/obj/singularity/narsie/N in poi_list)
+		for(var/obj/singularity/narsie/N in singularities)
 			if(N.z == z)
 				prey = N
 				break
@@ -76,7 +77,7 @@
 				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
 				prey << 'sound/effects/ratvar_reveal.ogg'
 	else
-		if(prob(10) || is_servant_of_ratvar(prey) || prey.z != z)
+		if((!istype(prey, /obj/singularity/narsie) && prob(10)) || is_servant_of_ratvar(prey) || prey.z != z)
 			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
 			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
 			prey = null

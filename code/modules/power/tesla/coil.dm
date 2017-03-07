@@ -87,17 +87,15 @@
 		..()
 
 /obj/machinery/power/tesla_coil/proc/zap()
-	if((last_zap + zap_cooldown) > world.time)
+	if((last_zap + zap_cooldown) > world.time || !powernet)
 		return FALSE
 	last_zap = world.time
-	var/coeff = (12 - (input_power_multiplier * 3))
-	coeff = max(coeff, 1)
-	var/shock_coeff = (5 - input_power_multiplier)
-	shock_coeff = max(shock_coeff, 1)
-	var/power = (powernet.avail/coeff)
+	var/coeff = (20 - ((input_power_multiplier - 1) * 3))
+	coeff = max(coeff, 10)
+	var/power = (powernet.avail/2)
 	add_load(power)
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
-	tesla_zap(src, 10, power/shock_coeff)
+	tesla_zap(src, 10, power/(coeff/2))
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"

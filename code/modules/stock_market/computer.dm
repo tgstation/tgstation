@@ -8,6 +8,8 @@
 	var/vmode = 1
 	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	clockwork = TRUE //it'd look weird
+	
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/stockexchange/New()
 	..()

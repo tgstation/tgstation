@@ -29,25 +29,18 @@
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
-	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
+	icon = 'config/title_screens/images/blank.png'
+	icon_state = ""
 	layer = FLY_LAYER
-	var/titlescreen = TITLESCREEN
 
 /turf/closed/indestructible/splashscreen/New()
+	SStitle.title_screen = src
 	..()
-	if(titlescreen)
-		icon_state = titlescreen
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
-
-/turf/closed/indestructible/New()
-	..()
-	if(smooth)
-		queue_smooth(src)
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -66,7 +59,7 @@
 	smooth = SMOOTH_TRUE
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
-/turf/closed/indestructible/fakeglass/New()
+/turf/closed/indestructible/fakeglass/Initialize()
 	..()
 	icon_state = null //set the icon state to null, so our base state isn't visible
 	var/image/I = image('icons/obj/structures.dmi', loc = src, icon_state = "grille")

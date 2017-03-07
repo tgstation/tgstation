@@ -110,6 +110,8 @@
 /datum/job/proc/config_check()
 	return 1
 
+/datum/job/proc/map_check()
+	return TRUE
 
 
 /datum/outfit/job

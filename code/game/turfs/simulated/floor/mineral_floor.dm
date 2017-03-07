@@ -16,7 +16,7 @@
 
 
 
-/turf/open/floor/mineral/New()
+/turf/open/floor/mineral/Initialize()
 	broken_states = list("[initial(icon_state)]_dam")
 	..()
 	if (!icons)
@@ -221,7 +221,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 
-/turf/open/floor/mineral/abductor/New()
+/turf/open/floor/mineral/abductor/Initialize()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
