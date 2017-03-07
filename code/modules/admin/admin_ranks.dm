@@ -195,7 +195,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(!ckey || !rank || (target && ckey != target))
 				continue
 
-			var/datum/admins/D = new(rank_names[rank], ckey)	//create the admin datum and store it for later use
+			var/datum/admins/D = new(rank, 65535, ckey)	//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
 			//if(D.rank.rights & R_DEBUG) //grant profile access
@@ -218,14 +218,14 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(target && ckey != target)
 				continue
 
-			if(rank_names[rank] == null)
+			if(rank == null)
 				WARNING("Admin rank ([rank]) does not exist.")
 				continue
 
-			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
+			var/datum/admins/D = new(rank, ckey)				//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
-			if(D.rank.rights & R_DEBUG) //grant profile access
+			if(D.rank & R_DEBUG) //grant profile access
 				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 /*
@@ -381,4 +381,4 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
 	var/DBQuery/query_admin_rank_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
-	query_admin_rank_update.Execute()
+	query_admin_rank_update.Execute()*/
