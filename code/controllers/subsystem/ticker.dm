@@ -412,7 +412,8 @@ var/datum/subsystem/ticker/ticker
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
-				new /obj/screen/splash(living.client, TRUE)	
+				var/obj/screen/splash/S = new(living.client, TRUE)	
+				S.Fade(TRUE)
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
