@@ -16,7 +16,7 @@
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 3
 
-/obj/item/weapon/melee/energy/New()
+/obj/item/weapon/melee/energy/Initialize()
 	..()
 	if(random_color && possible_colors.len)
 		item_color = pick(possible_colors)
