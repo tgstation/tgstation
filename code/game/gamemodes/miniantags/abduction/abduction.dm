@@ -296,15 +296,6 @@
 /obj/effect/landmark/abductor
 	var/team = 1
 
-/obj/effect/landmark/abductor/console/New()
-	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
-	c.team = team
-
-	spawn(5) // I'd do this properly when i got some time, temporary hack for mappers
-		c.Setup()
-	qdel(src)
-
-
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist
 

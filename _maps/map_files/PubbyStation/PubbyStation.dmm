@@ -59,7 +59,7 @@
 /turf/open/floor/plasteel/black,
 /area/wreck/ai)
 "aam" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aan" = (
 /obj/machinery/camera/motion{
@@ -73,7 +73,7 @@
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aao" = (
 /obj/effect/turf_decal/stripes/line{
@@ -144,7 +144,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aau" = (
 /obj/machinery/power/smes{
@@ -169,7 +169,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aav" = (
 /obj/structure/cable{
@@ -194,7 +194,7 @@
 	pixel_x = 27;
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaw" = (
 /obj/structure/bed,
@@ -228,7 +228,7 @@
 	icon_state = "2-4";
 	tag = ""
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaz" = (
 /obj/structure/cable/yellow{
@@ -323,7 +323,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaI" = (
 /obj/effect/landmark/start{
@@ -364,7 +364,7 @@
 	pixel_x = 28;
 	pixel_y = -28
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaJ" = (
 /turf/open/space,
@@ -375,7 +375,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaL" = (
 /obj/structure/cable/yellow{
@@ -383,17 +383,17 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaM" = (
 /obj/machinery/door/firedoor/heavy,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaN" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaO" = (
 /obj/machinery/camera/motion{
@@ -412,7 +412,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 37
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "aaP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
@@ -8017,7 +8017,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -8028,7 +8028,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -8043,7 +8043,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -8168,12 +8168,12 @@
 	pixel_y = 0;
 	tag = ""
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/maintenance/fpmaint2{
 	name = "Brig Maintenance"
 	})
 "aqg" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/maintenance/fpmaint2{
 	name = "Brig Maintenance"
 	})
@@ -8461,7 +8461,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -8480,7 +8480,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -8812,7 +8812,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -8823,7 +8823,7 @@
 /obj/effect/landmark{
 	name = "revenantspawn"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -8837,7 +8837,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -13120,7 +13120,7 @@
 	pixel_x = 0;
 	tag = ""
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aAe" = (
 /obj/machinery/holopad,
@@ -13140,10 +13140,10 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aAf" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aAg" = (
 /obj/machinery/porta_turret/ai{
@@ -13632,7 +13632,7 @@
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aAY" = (
 /obj/structure/cable{
@@ -13658,7 +13658,7 @@
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aBa" = (
 /obj/machinery/light,
@@ -26167,10 +26167,10 @@
 	pixel_y = 0;
 	tag = ""
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "bay" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "baz" = (
 /obj/structure/cable{
@@ -26188,7 +26188,7 @@
 	pixel_x = 27;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "baA" = (
 /obj/structure/cable{
@@ -26538,7 +26538,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bbf" = (
 /obj/structure/cable{
@@ -26550,7 +26550,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bbg" = (
 /obj/machinery/door/airlock/maintenance{
@@ -32351,11 +32351,11 @@
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bmJ" = (
-/turf/open/floor/plasteel/airless/circuit,
+/turf/open/floor/plating/airless,
 /area/toxins/xenobiology)
 "bmK" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/plasteel/airless/circuit,
+/turf/open/floor/plating/airless,
 /area/toxins/xenobiology)
 "bmL" = (
 /obj/structure/chair{
@@ -33068,7 +33068,7 @@
 	dir = 8;
 	network = list("SS13","RD")
 	},
-/turf/open/floor/plasteel/airless/circuit,
+/turf/open/floor/plating/airless,
 /area/toxins/xenobiology)
 "bnZ" = (
 /obj/structure/closet/crate,
@@ -36550,7 +36550,7 @@
 /area/toxins/server)
 "buj" = (
 /obj/machinery/r_n_d/server/core,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -37070,7 +37070,7 @@
 	on = 1;
 	pressure_checks = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -37679,7 +37679,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -38305,7 +38305,7 @@
 /area/toxins/server)
 "bxw" = (
 /obj/machinery/r_n_d/server/robotics,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -48804,7 +48804,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -48837,14 +48837,14 @@
 /area/tcommsat/computer)
 "bTq" = (
 /obj/machinery/blackbox_recorder,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTr" = (
 /obj/machinery/message_server,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -48873,42 +48873,42 @@
 /area/tcommsat/server)
 "bTv" = (
 /obj/machinery/telecomms/bus/preset_three,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTw" = (
 /obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTx" = (
 /obj/machinery/telecomms/processor/preset_three,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTy" = (
 /obj/machinery/telecomms/processor/preset_one,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTz" = (
 /obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTA" = (
 /obj/machinery/telecomms/bus/preset_one,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -48959,49 +48959,49 @@
 	})
 "bTH" = (
 /obj/machinery/telecomms/server/presets/security,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTI" = (
 /obj/machinery/telecomms/server/presets/science,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTJ" = (
 /obj/machinery/telecomms/hub/preset,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTK" = (
 /obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTL" = (
 /obj/machinery/telecomms/server/presets/service,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTM" = (
 /obj/machinery/telecomms/server/presets/medical,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTN" = (
 /obj/machinery/telecomms/server/presets/command,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -49009,21 +49009,21 @@
 "bTO" = (
 /obj/machinery/power/terminal,
 /obj/machinery/ntnet_relay,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTP" = (
 /obj/machinery/telecomms/server/presets/supply,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTQ" = (
 /obj/machinery/telecomms/server/presets/engineering,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -49057,42 +49057,42 @@
 /area/tcommsat/server)
 "bTV" = (
 /obj/machinery/telecomms/processor/preset_four,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTW" = (
 /obj/machinery/telecomms/broadcaster/preset_left,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTX" = (
 /obj/machinery/telecomms/bus/preset_four,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTY" = (
 /obj/machinery/telecomms/bus/preset_two,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTZ" = (
 /obj/machinery/telecomms/broadcaster/preset_right,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bUa" = (
 /obj/machinery/telecomms/processor/preset_two,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -49187,7 +49187,7 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/wreck/ai)
 "bUm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{

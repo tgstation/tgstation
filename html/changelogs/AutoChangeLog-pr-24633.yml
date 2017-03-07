@@ -1,0 +1,4 @@
+author: "LanCartwright"
+delete-after: True
+changes: 
+  - rscadd: "Adds scaling damage to buckshot."

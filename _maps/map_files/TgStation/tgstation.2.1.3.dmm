@@ -9081,7 +9081,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/maintenance/electrical)
 "atI" = (
 /turf/open/floor/plasteel/yellow/side{
@@ -12792,7 +12792,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aBT" = (
 /obj/machinery/computer/bank_machine,
@@ -12812,7 +12812,7 @@
 	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aBV" = (
 /obj/machinery/airalarm{
@@ -12821,7 +12821,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aBW" = (
 /obj/structure/filingcabinet,
@@ -13450,7 +13450,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aDs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -13472,7 +13472,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aDu" = (
 /obj/structure/table,
@@ -14134,7 +14134,7 @@
 	name = "\improper Garden"
 	})
 "aEM" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aEN" = (
 /obj/structure/closet/crate{
@@ -14162,7 +14162,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aEP" = (
 /obj/item/weapon/coin/silver{
@@ -23136,7 +23136,7 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "aZR" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aZS" = (
 /obj/machinery/porta_turret/ai{
@@ -24455,7 +24455,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bdh" = (
 /turf/open/floor/plasteel/vault{
@@ -24885,7 +24885,7 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bee" = (
 /obj/machinery/computer/upload/ai,
@@ -24894,7 +24894,7 @@
 	pixel_x = 0;
 	pixel_y = -21
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bef" = (
 /obj/machinery/computer/upload/borg,
@@ -24905,7 +24905,7 @@
 	name = "Station Intercom (AI Private)";
 	pixel_y = -29
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "beg" = (
 /obj/structure/table,
@@ -26459,7 +26459,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bhM" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bhN" = (
 /obj/structure/disposalpipe/segment{
@@ -26854,7 +26854,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "biJ" = (
 /obj/structure/cable{
@@ -26863,7 +26863,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "biK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -27541,11 +27541,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bkh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bki" = (
 /obj/structure/table/glass,
@@ -35071,14 +35071,14 @@
 	on = 1;
 	pressure_checks = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bzu" = (
 /obj/machinery/r_n_d/server/robotics,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -36305,14 +36305,14 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bBT" = (
 /obj/machinery/r_n_d/server/core,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -46054,7 +46054,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bWB" = (
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -46095,7 +46095,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -46618,7 +46618,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47329,7 +47329,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47340,7 +47340,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47356,7 +47356,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47752,7 +47752,7 @@
 	dir = 4
 	},
 /obj/machinery/ntnet_relay,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47763,7 +47763,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47776,7 +47776,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47787,7 +47787,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47826,7 +47826,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -49774,7 +49774,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -50315,7 +50315,7 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -50690,7 +50690,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cgi" = (
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -50719,7 +50719,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -51221,7 +51221,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -51239,7 +51239,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -51258,7 +51258,7 @@
 "chs" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -58017,7 +58017,7 @@
 	name = "AI Satellite Hallway"
 	})
 "cvp" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvq" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -58037,7 +58037,7 @@
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvs" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -58062,7 +58062,7 @@
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/ai)
 "cvw" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58095,7 +58095,7 @@
 	pixel_x = 0;
 	pixel_y = -25
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvy" = (
 /obj/structure/grille,
@@ -58145,7 +58145,7 @@
 	pixel_x = 0;
 	pixel_y = -25
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvB" = (
 /obj/structure/rack,
@@ -58198,7 +58198,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58238,7 +58238,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58274,7 +58274,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58332,7 +58332,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58369,7 +58369,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58402,7 +58402,7 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58414,7 +58414,7 @@
 	pixel_x = 27;
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58622,7 +58622,7 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cww" = (
 /obj/structure/cable{
@@ -58686,7 +58686,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cwC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -58706,7 +58706,7 @@
 	pixel_x = 5;
 	pixel_y = -24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cwE" = (
 /obj/structure/window/reinforced{
@@ -58735,7 +58735,7 @@
 	dir = 1;
 	network = list("MiniSat")
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cwF" = (
 /obj/structure/chair{
@@ -60460,7 +60460,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cAS" = (
 /obj/effect/landmark/start{
@@ -60501,7 +60501,7 @@
 	pixel_x = 28;
 	pixel_y = -28
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cAT" = (
 /obj/machinery/ai_slipper{
@@ -60598,7 +60598,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBb" = (
 /obj/machinery/camera/motion{
@@ -60606,7 +60606,7 @@
 	dir = 2;
 	network = list("MiniSat")
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBc" = (
 /obj/machinery/power/terminal{
@@ -60616,7 +60616,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBd" = (
 /obj/machinery/firealarm{
@@ -63475,7 +63475,7 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "cHO" = (
 /obj/machinery/conveyor_switch/oneway{
