@@ -449,20 +449,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+
+	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?") as message|null
 	if(!input)
 		return
 
-	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
-	if(confirm == "Yes")
-		priority_announce(input, null, 'sound/AI/commandreport.ogg')
-	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+	var/stealth_level = alert(usr, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
 
-	print_command_report(input,"[confirm=="Yes" ? "" : "Classified "][command_name()] Update")
-
-	log_admin("[key_name(src)] has created a command report: [input]")
-	message_admins("[key_name_admin(src)] has created a command report")
+	create_command_report(usr, input, stealth_level == "No" ? TRUE : FALSE)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_change_command_name()

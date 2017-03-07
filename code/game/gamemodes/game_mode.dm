@@ -41,6 +41,8 @@
 
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
+	var/intercept_sent = FALSE
+	var/send_no_threats_intercept = FALSE
 
 	var/list/datum/station_goal/station_goals = list()
 
@@ -88,8 +90,7 @@
 		feedback_set_details("revision","[revdata.commit]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
 	if(report)
-		spawn (rand(waittime_l, waittime_h))
-			send_intercept(0)
+		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
 	start_state = new /datum/station_state()
 	start_state.count(1)
@@ -266,6 +267,10 @@
 
 
 /datum/game_mode/proc/send_intercept()
+	intercept_sent = TRUE
+	if(send_no_threats_intercept)
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", 'sound/AI/commandreport.ogg')
+		return
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
