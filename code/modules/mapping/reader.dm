@@ -176,9 +176,12 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
 	var/list/members_attributes //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
 	var/list/cached = modelCache[model]
+	var/list/static/space
 	var/index
 
 	if(cached)
+		if(no_changeturf && cached == space)
+			return	//nothing to do here
 		members = cached[1]
 		members_attributes = cached[2]
 	else
@@ -221,8 +224,13 @@ var/global/dmm_suite/preloader/_preloader = new
 			CHECK_TICK
 		while(dpos != 0)
 
-		modelCache[model] = list(members, members_attributes)
+		var/L = list(members, members_attributes)
+		modelCache[model] = L
 
+		if(!space && members.len == 2 && members_attributes.len == 2 && (world.area in members) && (world.turf in members))
+			space = L
+			if(no_changeturf)
+				return
 
 	////////////////
 	//Instanciation
