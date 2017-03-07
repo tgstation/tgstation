@@ -65,7 +65,7 @@
 		sleep(100)
 
 	if(!triggering)
-		return FALSE
+		return TRUE	//admin cancelled
 	triggering = FALSE
 	return TRUE
 
