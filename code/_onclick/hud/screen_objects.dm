@@ -702,3 +702,98 @@
 		holder.screen -= src
 		holder = null
 	return ..()
+
+/obj/screen/loading
+	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
+	screen_loc = "5,5"
+	icon = 'icons/effects/progessbar.dmi'
+	alpha = 0
+	var/running
+	var/subsystem_count = 0
+	var/ss_starttime = 0
+	var/datum/subsystem/current_subsystem
+	var/list/average_subsystem_init_time
+
+/obj/screen/loading/New(number_of_ss)
+	set waitfor = FALSE
+	..()
+	
+	running = TRUE
+
+	for(var/I in clients)
+		var/client/C = I
+		C.screen += src
+
+	var/F = file("data/subsystem_average_init_times.json")
+	if(F)
+		F = file2text(F)
+		if(F)
+			average_subsystem_init_time = json_decode(F)
+	LAZYINITLIST(average_subsystem_init_time)
+	var/list/asit = average_subsystem_init_time
+
+	if(asit.len != number_of_ss)
+		asit.Cut()		//rebuild the cache
+
+	animate(src, alpha = 255, pixel_y = 30, time = 30)
+
+	var/goal = number_of_ss * 100
+	var/progress
+
+	while(running || progress < goal)
+		sleep(1)
+		var/old_progress = progress
+		var/old_average = asit[current_subsystem.name]
+		if(isnull(old_average))
+			//assume 5s
+			old_average = 50
+		else
+			old_average = min(1, old_average)
+		var/time_elapsed_this_init = REALTIMEOFDAY - ss_starttime
+
+		progress = (100 * subsystem_count) + max((time_elapsed_this_init / old_average) * 100, 100);
+		progress = min(old_progress + 10, progress)	//smooth it out
+
+		if(old_progress != progress)
+			testing("Loading bar progress: [progress] / [goal]")
+			icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
+
+	animate(src, alpha = 0, pixel_y = 0, time = 30)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30, TIMER_CLIENT_TIME)
+
+/obj/screen/loading/proc/NextSubsystem(datum/subsystem/SS)
+	current_subsystem = SS
+	ss_starttime = REALTIMEOFDAY
+
+/obj/screen/loading/proc/DoneSubsystem()
+	var/datum/subsystem/css = current_subsystem
+	var/cssn = css.name
+	var/old_average = average_subsystem_init_time[cssn]
+	var/time = css.init_length
+	if(isnull(old_average))
+		old_average = time
+	average_subsystem_init_time[cssn] = MC_AVERAGE_SLOW(old_average, time)
+	++subsystem_count
+
+/obj/screen/loading/proc/AddClient(client/C)
+	if(running)
+		C.screen += src
+
+/obj/screen/loading/Destroy()
+	if(running)
+		DoneSubsystem()	//finish the last one
+
+		//save the data
+		fdel("data/subsystem_average_init_times.json")
+		F = json_encode(asit)
+		if(F)
+			text2file(F,"data/subsystem_average_init_times.json")
+
+		running = FALSE
+		return QDEL_HINT_LETMELIVE
+
+	for(var/I in clients)
+		var/client/C = I
+		C.screen -= src
+	return ..()

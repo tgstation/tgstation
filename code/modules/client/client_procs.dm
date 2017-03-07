@@ -157,6 +157,8 @@ var/next_external_rsc = 0
 #endif
 
 	clients += src
+	if(Master.progress_bar)
+		Master.progress_bar.AddClient(src)
 	directory[ckey] = src
 
 	//Admin Authorisation
