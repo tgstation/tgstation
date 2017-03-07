@@ -250,31 +250,6 @@
 		fields++
 	updateinfolinks()
 
-
-/obj/item/weapon/paper/verb/openhelp(mob/user)
-	set name = "View Pen Help"
-
-	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
-	<BODY>
-		<b><center>Crayon&Pen commands</center></b><br>
-		<br>
-		\[br\] : Creates a linebreak.<br>
-		\[center\] - \[/center\] : Centers the text.<br>
-		\[b\] - \[/b\] : Makes the text <b>bold</b>.<br>
-		\[i\] - \[/i\] : Makes the text <i>italic</i>.<br>
-		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
-		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
-		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
-		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
-		<br>
-		<b><center>Pen exclusive commands</center></b><br>
-		\[small\] - \[/small\] : Decreases the <font size = \"1\">size</font> of the text.<br>
-		\[list\] - \[/list\] : A list.<br>
-		\[*\] : A dot used for lists.<br>
-		\[hr\] : Adds a horizontal rule.
-	</BODY></HTML>"}, "window=paper_help")
-
-
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
 	if(usr.stat || usr.restrained())
