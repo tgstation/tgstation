@@ -27,5 +27,18 @@ Last space-z level = empty
 #define EMPTY_AREA_7 "Empty Area 7"
 #define EMPTY_AREA_8 "Empty Area 8"
 #define AWAY_MISSION "Away Mission"
-#define AWAY_MISSION_LIST list(AWAY_MISSION = SELFLOOPING)
-#define DEFAULT_MAP_TRANSITION_CONFIG list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED, EMPTY_AREA_5 = CROSSLINKED, EMPTY_AREA_6 = CROSSLINKED, EMPTY_AREA_7 = CROSSLINKED, EMPTY_AREA_8 = CROSSLINKED)
+
+//for modifying jobs
+#define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
+#define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
+#define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
+
+//zlevel defines, can be overridden for different maps in the appropriate _maps file.
+#define ZLEVEL_STATION 1
+#define ZLEVEL_CENTCOM 2
+#define ZLEVEL_MINING 5
+#define ZLEVEL_LAVALAND 5
+#define ZLEVEL_EMPTY_SPACE 11
+
+#define ZLEVEL_SPACEMIN 3
+#define ZLEVEL_SPACEMAX 11

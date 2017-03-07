@@ -56641,8 +56641,6 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUm" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/glass/bucket,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -56651,16 +56649,18 @@
 	pixel_y = 29
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUn" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/glass/bucket,
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUo" = (

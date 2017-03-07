@@ -141,6 +141,9 @@
 	dust()
 
 /mob/living/simple_animal/drone/ratvar_act()
+	if(status_flags & GODMODE)
+		return
+
 	if(internal_storage)
 		dropItemToGround(internal_storage)
 	if(head)
