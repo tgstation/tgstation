@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - bugfix: "patched a hacky workaround for /vg/lights memory leaking crashing the server"

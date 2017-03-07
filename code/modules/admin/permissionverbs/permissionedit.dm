@@ -23,7 +23,7 @@
 <th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
 <th style='width:125px;'>RANK</th>
 <th style='width:375px;'>PERMISSIONS</th>
-
+<th style='width:100%;'>VERB-OVERRIDES</th>
 </tr>
 "}
 
@@ -48,10 +48,11 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=900x500")
+	usr << browse(output,"window=editrights;size=900x650")
 
-/datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
-	if(config.admin_legacy_system)	return
+/datum/admins/proc/log_admin_rank_modification(adm_ckey, new_rank)
+	if(config.admin_legacy_system)
+		return
 
 	if(!usr.client)
 		return
@@ -74,32 +75,42 @@
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
 
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT id FROM erro_admin WHERE ckey = '[adm_ckey]'")
-	select_query.Execute()
+	var/DBQuery/query_get_admin = dbcon.NewQuery("SELECT id FROM [format_table_name("erro_admin")] WHERE ckey = '[adm_ckey]'")
+	if(!query_get_admin.warn_execute())
+		return
 
 	var/new_admin = 1
 	var/admin_id
-	while(select_query.NextRow())
+	while(query_get_admin.NextRow())
 		new_admin = 0
-		admin_id = text2num(select_query.item[1])
+		admin_id = text2num(query_get_admin.item[1])
 
 	if(new_admin)
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_admin (ckey, rank, flags) VALUES ('[adm_ckey]', '[new_rank]', 0)")
-		insert_query.Execute()
-		message_admins("[key_name_admin(usr)] made [key_name_admin(adm_ckey)] an admin with the rank [new_rank]")
-		log_admin("[key_name(usr)] made [key_name(adm_ckey)] an admin with the rank [new_rank]")
+		var/DBQuery/query_add_admin = dbcon.NewQuery("INSERT INTO `[format_table_name("erro_admin")]` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
+		if(!query_add_admin.warn_execute())
+			return
+		var/DBQuery/query_add_admin_log = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
+		if(!query_add_admin_log.warn_execute())
+			return
+		usr << "<span class='adminnotice'>New admin added.</span>"
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
-			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE erro_admin SET rank = '[new_rank]' WHERE id = [admin_id]")
-			insert_query.Execute()
-			message_admins("[key_name_admin(usr)] changed [key_name_admin(adm_ckey)] admin rank to [new_rank]")
-			log_admin("[key_name(usr)] changed [key_name(adm_ckey)] admin rank to [new_rank]")
+			var/DBQuery/query_change_admin = dbcon.NewQuery("UPDATE `[format_table_name("erro_admin")]` SET rank = '[new_rank]' WHERE id = [admin_id]")
+			if(!query_change_admin.warn_execute())
+				return
+			var/DBQuery/query_change_admin_log = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
+			if(!query_change_admin_log.warn_execute())
+				return
+			usr << "<span class='adminnnotice'>Admin rank changed.</span>"
 
 
-/datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission, var/nominal)
-	if(config.admin_legacy_system)	return
-	if(!usr.client)					return
-	if(!check_rights(R_PERMISSIONS))	return
+/datum/admins/proc/log_admin_permission_modification(adm_ckey, new_permission)
+	if(config.admin_legacy_system)
+		return
+	if(!usr.client)
+		return
+	if(check_rights(R_PERMISSIONS))
+		return
 
 	if(!dbcon.Connect())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
@@ -108,25 +119,19 @@
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))
 		return
 
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT id, flags FROM erro_admin WHERE ckey = '[adm_ckey]'")
-	select_query.Execute()
+	var/DBQuery/query_get_perms = dbcon.NewQuery("SELECT id, flags FROM [format_table_name("erro_admin")] WHERE ckey = '[adm_ckey]'")
+	if(!query_get_perms.warn_execute())
+		return
 
 	var/admin_id
-	var/admin_rights
-	while(select_query.NextRow())
-		admin_id = text2num(select_query.item[1])
-		admin_rights = text2num(select_query.item[2])
+	while(query_get_perms.NextRow())
+		admin_id = text2num(query_get_perms.item[1])
 
 	if(!admin_id)
 		return
 
-	if(admin_rights & new_permission) //This admin already has this permission, so we are removing it.
-		var/DBQuery/insert_query = dbcon.NewQuery("UPDATE erro_admin SET flags = [admin_rights & ~new_permission] WHERE id = [admin_id]")
-		insert_query.Execute()
-		message_admins("[key_name_admin(usr)] removed the [nominal] permission of [key_name_admin(adm_ckey)]")
-		log_admin("[key_name(usr)] removed the [nominal] permission of [key_name(adm_ckey)]")
-	else //This admin doesn't have this permission, so we are adding it.
-		var/DBQuery/insert_query = dbcon.NewQuery("UPDATE erro_admin SET flags = [admin_rights | new_permission] WHERE id = [admin_id]")
-		insert_query.Execute()
-		message_admins("[key_name_admin(usr)] added the [nominal] permission of [key_name_admin(adm_ckey)]")
-		log_admin("[key_name(usr)] added the [nominal] permission of [key_name(adm_ckey)]")
+	var/DBQuery/query_change_perms = dbcon.NewQuery("UPDATE `[format_table_name("erro_admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
+	if(!query_change_perms.warn_execute())
+		return
+	var/DBQuery/query_change_perms_log = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edit permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
+	query_change_perms_log.warn_execute()
