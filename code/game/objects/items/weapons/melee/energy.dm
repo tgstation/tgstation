@@ -4,6 +4,8 @@
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/random_color = 0
+	var/list/possible_colors = list()
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	var/w_class_on = WEIGHT_CLASS_BULKY
@@ -12,6 +14,23 @@
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
+	var/brightness_on = 3
+
+/obj/item/weapon/melee/energy/New()
+	..()
+	if(random_color && possible_colors.len)
+		item_color = pick(possible_colors)
+		switch(item_color)//Only run this check if the color was picked randomly, so that colors can be manually set for non-random colored energy weapons.
+			if("red")
+				light_color = "#ff0000"
+			if("green")
+				light_color = "#00ff00"
+			if("blue")
+				light_color = "#40ceff"
+			if("purple")
+				light_color = "#9b51ff"
+	if(active)
+		set_light(brightness_on)
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
@@ -61,11 +80,9 @@
 	armour_penetration = 35
 	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
+	random_color = 1
+	possible_colors = list("red", "blue", "green", "purple")
 	var/hacked = 0
-
-/obj/item/weapon/melee/energy/sword/New()
-	if(item_color == null)
-		item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/melee/energy/sword/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -73,6 +90,8 @@
 
 /obj/item/weapon/melee/energy/sword/process()
 	if(active)
+		if(hacked)
+			light_color = pick("#ff0000", "#00ff00", "#40ceff", "#9b51ff")
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -102,6 +121,7 @@
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] is now active.</span>"
 		START_PROCESSING(SSobj, src)
+		set_light(brightness_on)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -114,6 +134,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 		STOP_PROCESSING(SSobj, src)
+		set_light(0)
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/is_hot()
@@ -160,6 +181,8 @@
 	item_color = null
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
+	light_color = "#40ceff"
+	random_color = 0
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
 	..()
@@ -173,15 +196,24 @@
 
 /obj/item/weapon/melee/energy/sword/saber/blue
 	item_color = "blue"
+	random_color = 0
+	light_color = "#40ceff"
 
 /obj/item/weapon/melee/energy/sword/saber/purple
 	item_color = "purple"
+	random_color = 0
+	light_color = "#9b51ff"
 
 /obj/item/weapon/melee/energy/sword/saber/green
 	item_color = "green"
+	random_color = 0
+	light_color = "#00ff00"
 
 /obj/item/weapon/melee/energy/sword/saber/red
 	item_color = "red"
+	light_color = "#ff0000"
+	random_color = 0
+
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
@@ -215,6 +247,7 @@
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
 	icon_state_on = "cutlass1"
+	light_color = "#ff0000"
 
 /obj/item/weapon/melee/energy/sword/pirate/New()
 	return
