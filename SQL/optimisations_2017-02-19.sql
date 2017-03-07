@@ -23,7 +23,7 @@ If you get this error there are steps you can take to deal with the invalid data
 To get a list of all unique fields that aren't valid ipv4 addresses, run the query:
 SELECT DISTINCT [column] FROM [table] WHERE [column] NOT REGEXP '^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
 Note this will only retrieve the first 1000 results, if you want more append to the query:
-LIMIT 1, [max result]
+LIMIT 0, [max result]
 Now inspect your results for any data that is invalid and correct them.
 If you prefer, you can also automatically replace invalid data with 0 using a similar query:
 UPDATE [table] SET [column] = '0' WHERE [column] NOT REGEXP '^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
