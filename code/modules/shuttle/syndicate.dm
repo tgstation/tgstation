@@ -5,6 +5,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/syndicate_shuttle
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
+	light_color = LIGHT_COLOR_RED
 	req_access = list(access_syndicate)
 	shuttleId = "syndicate"
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
@@ -42,6 +43,7 @@
 	name = "syndicate assault pod control"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	light_color = LIGHT_COLOR_BLUE
 	req_access = list(access_syndicate)
 	shuttleId = "steel_rain"
 	possible_destinations = null
