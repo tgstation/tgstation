@@ -232,7 +232,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		modelCache[model] = L
 
 		var/static/area_typecache = world.area ///area/space
-		var/static/turf_typecache = world.turf ///turf/space/basic
+		var/static/turf_typecache = world.turf ///turf/open/space/basic
 
 		if(!space && members.len == 2 && members_attributes.len == 2 && (area_typecache in members) && (turf_typecache in members))
 			space = model
