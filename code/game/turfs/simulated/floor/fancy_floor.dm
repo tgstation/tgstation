@@ -79,9 +79,7 @@
 	..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		switch(icon_state)
-			if("basalt1", "basalt2", "basalt3")
-				set_light(1, 0.1)
+		set_basalt_light(src)
 
 /turf/open/floor/carpet
 	name = "carpet"
