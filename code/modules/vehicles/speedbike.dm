@@ -53,7 +53,7 @@
 	. = ..()
 	riding_datum = new/datum/riding/space/repair
 
-/obj/vehicle/space/speedbike/Move(newloc,move_dir)
+/obj/vehicle/space/speedbike/repair/Move(newloc,move_dir)
 	if(has_buckled_mobs())
 		if(istype(newloc,/turf/open/space))
 			new/turf/open/floor/plating(newloc)
