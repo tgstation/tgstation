@@ -50528,7 +50528,7 @@
 /area/atmos)
 "cfR" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
+	dir = 4;
 	filter_type = "o2";
 	on = 1
 	},
