@@ -1216,13 +1216,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
-	surplus = 0
 	restricted_roles = list("Assistant")
+
+/datum/uplink_item/role_restricted/berserker_mask
+	name = "Berserker Mask"
+	desc = "A brilliantly designed mask that synchronizes biology with technology. It enhances the strength of the wearer and can generate beneficial stimulants and medicines."
+	item = /obj/item/clothing/mask/gas/berserker_mask
+	cost = 15
+	restricted_roles = list("Roboticist","Scientist","Research Director")
 
 // Pointless
 /datum/uplink_item/badass
