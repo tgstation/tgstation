@@ -36,6 +36,115 @@
 	icon_state = "speedbike_red"
 	overlay_state = "cover_red"
 
+// Engineer's repair-bike
+
+/obj/vehicle/space/speedbike/repair
+	desc = "An experimental prototype repair device mounted on a speederbike... what will they think of next."
+	icon_state = "engi_bike"
+	overlay_state = "cover_engi"
+	var/obj/machinery/repair_turret/turret = null
+
+/obj/vehicle/space/speedbike/repair/New()
+	. = ..()
+	turret = new(loc)
+	turret.base = src
+
+/obj/vehicle/space/speedbike/repair/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	. = ..()
+	riding_datum = new/datum/riding/space/repair
+
+/obj/vehicle/space/speedbike/Move(newloc,move_dir)
+	if(has_buckled_mobs())
+		if(istype(newloc,/turf/open/space))
+			new/turf/open/floor/plating(newloc)
+	. = ..()
+
+
+/obj/machinery/repair_turret
+	name = "mounted repair turret"
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "mini_off"
+	density = 0
+	anchored = 1
+	var/atom/base = null
+	var/cooldown = 0
+
+/obj/machinery/porta_turret/New(loc)
+	..()
+	if(!base)
+		base = src
+	update_icon()
+
+/obj/machinery/repair_turret/process()
+	var/turretview = view(7, base)
+	if(cooldown<=world.time)
+		icon_state = "mini_on"
+		for(var/obj/A in turretview)
+			var/loc = get_turf(A)
+			if(A.obj_integrity < A.max_integrity)
+				playsound(get_turf(base),'sound/magic/LightningShock.ogg', 50, 1)
+				src.Beam(A,icon_state="lightning[rand(1,12)]",time=20)
+				A.obj_integrity = A.max_integrity
+				A.update_icon()
+				cooldown = world.time + 50
+				return
+			if(istype(A,/obj/structure/grille/broken))
+				var/N = 0
+				var/list/C = list()
+				new /obj/effect/overlay/temp/small_smoke(loc)
+				for(var/obj/item/weapon/shard/S in range(1,loc))
+					C += S
+				if(C.len >= 2)
+					cooldown = world.time + 200
+					qdel(A)
+					qdel(C[1])
+					qdel(C[2])
+					for(var/obj/item/stack/rods/R in range(1,loc))
+						if (N >= 3)
+							break
+						var/T = min(3-N,R.amount)
+						N += T
+						R.use(T)
+					switch(N)
+						if(3 to 50) //should never be over 3 but hey
+							new /obj/structure/grille(loc)
+							new/obj/structure/window/reinforced/fulltile(loc)
+						if(2)
+							new/obj/structure/window/reinforced/fulltile(loc)
+						if(1)
+							new /obj/structure/grille(loc)
+							new/obj/structure/window/fulltile(loc)
+						if(0)
+							new /obj/item/stack/rods(loc)
+							new/obj/structure/window/fulltile(loc)
+				else
+					qdel(A)
+					new /obj/item/stack/rods(loc)
+					cooldown = world.time + 40
+				playsound(get_turf(base),'sound/magic/lightningbolt.ogg', 100, 1)
+				src.Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
+				return
+				
+			if(istype(A,/obj/structure/girder))
+				var/goal = 0
+				var/sum = 0
+				for(var/obj/item/stack/sheet/metal/wall_fodder in range(1,loc))
+					if(goal >= 2)
+						break
+					sum = min(2-goal,wall_fodder.amount)
+					goal += sum
+					wall_fodder.use(sum)
+				if(goal >= 2)
+					qdel(A)
+					new /turf/closed/wall(loc)
+					playsound(get_turf(base),'sound/magic/lightningbolt.ogg', 100, 1)
+					src.Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
+					cooldown = world.time + 210
+	else
+		icon_state = "mini_off"
+
+
+
 //BM SPEEDWAGON
 
 /obj/vehicle/space/speedbike/speedwagon
@@ -58,29 +167,5 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
- 	. = ..()
-		riding_datum = new/datum/riding/space/speedbike/speedwagon
-
-/obj/vehicle/space/speedbike/memewagon
-	name = "Engitopia's Magnum Opus"
-	desc = "The supreme department, manifest"
-	icon = 'icons/obj/bike.dmi'
-	icon_state = "speedwagon"
-	layer = LYING_MOB_LAYER
-	overlay_state = "speedwagon_cover"
-
-/obj/vehicle/space/speedbike/memewagon/Bump(mob/living/A)
-	. = ..()
-	if(A.density && has_buckled_mobs() && (istype(A, /mob/living/carbon/human) && has_buckled_mobs()))
-		var/atom/throw_target = get_edge_target_turf(A, pick(cardinal))
-		A.throw_at(throw_target, 10, 8)
-		A.Weaken(2)
-		A.adjustStaminaLoss(10)
-		A.apply_damage(rand(1,5), BRUTE)
-		visible_message("<span class='danger'>[src] crashes into [A]!</span>")
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		playsound(src, 'sound/items/carhorn.ogg', 50, 1)
-
-/obj/vehicle/space/speedbike/memewagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
  	. = ..()
 		riding_datum = new/datum/riding/space/speedbike/speedwagon
