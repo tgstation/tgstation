@@ -19,17 +19,14 @@ var/datum/controller/subsystem/objects/SSinbounds
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/atom/thing = currentrun[currentrun.len]
+		var/atom/movable/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing)
 			thing.check_in_bounds(wait)
 		else
-			SSobj.processing -= thing
+			SSinbounds.processing -= thing
 		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/inbounds/Recover()
 	processing = SSinbounds.processing
-
-/atom/proc/check_in_bounds()
-	. = TRUE
