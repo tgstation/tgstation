@@ -16,6 +16,8 @@
 
 #define WARNING_DELAY 30 		//seconds between warnings.
 
+#define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
+
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
@@ -95,7 +97,7 @@
 	if(!ishuman(user))
 		return
 
-	var/range = min(7, round(power ** 0.25))
+	var/range = HALLUCINATION_RANGE(power)
 	for(var/mob/living/carbon/human/H in viewers(range, src))
 		if(H != user)
 			continue
@@ -226,7 +228,7 @@
 	if(produces_gas)
 		env.merge(removed)
 
-	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
+	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
@@ -381,3 +383,5 @@
 	gasefficency = 0.15
 	explosion_power = 20
 
+
+#undef HALLUCINATION_RANGE
