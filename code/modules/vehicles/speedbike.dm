@@ -85,6 +85,7 @@
 				playsound(get_turf(base),'sound/magic/LightningShock.ogg', 50, 1)
 				src.Beam(A,icon_state="lightning[rand(1,12)]",time=20)
 				A.obj_integrity = A.max_integrity
+				A.icon_state = initial(A.icon_state)
 				A.update_icon()
 				cooldown = world.time + 50
 				return
