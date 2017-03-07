@@ -501,6 +501,8 @@
 /datum/spellbook_entry/summon/ghosts/IsAvailible()
 	if(!ticker.mode)
 		return FALSE
+	else
+		return TRUE
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned", log_name)
