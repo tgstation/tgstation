@@ -9,7 +9,7 @@
 	var/drain_rate = 0	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/rating = ""
-	var/active = 0
+	var/active = FALSE
 	var/rewarded = 0
 
 /obj/machinery/power/exporter/examine(mob/user)
@@ -54,7 +54,7 @@
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
 		return
 	if (power_drained >= 4000000 && !rewarded) // 4 billion watts
-		rewarded = 1
+		rewarded = TRUE
 		visible_message("<span class='danger'>You have been blessed by the gods of engineering for your massive power exports!</span>")
 		new /obj/effect/overlay/temp/explosion/fast(get_turf(src))
 		playsound(src, 'sound/effects/pray_chaplain.ogg', 100, 1)
@@ -76,7 +76,7 @@
 		user.unset_machine()
 		user << browse(null, "window=port_gen")
 		return
-	if (get_dist(src, user) > 1 )
+	if(Adj)
 		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
@@ -115,17 +115,17 @@
 /obj/machinery/power/exporter/Topic(href, href_list)
 	if(..())
 		return
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	switch(href_list["action"])
 		if("enable")
 			if(!active && !crit_fail)
-				active = 1
+				active = TRUE
 				src.updateUsrDialog()
 				if(active && !crit_fail && anchored && powernet && drain_rate)
 					icon_state = "dominator-yellow"
 		if("disable")
 			if (active)
-				active = 0
+				active = FALSE
 				drain_rate = 0
 				src.updateUsrDialog()
 		if("set_power")
@@ -144,10 +144,10 @@
 			power_drained += drain_rate
 		else
 			visible_message("Power export levels have exceeded energy surplus, shutting down")
-			active = 0
+			active = FALSE
 			drain_rate = 0
 			icon_state = "dominator"
 	else
-		active = 0
+		active = FALSE
 		drain_rate = 0
 		icon_state = "dominator"
