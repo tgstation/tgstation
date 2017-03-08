@@ -215,3 +215,4 @@
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
 	put_on_delay = 50
+
