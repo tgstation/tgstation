@@ -706,8 +706,9 @@
 /obj/screen/loading
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
-	screen_loc = "5,5"
-	icon = 'icons/effects/progessbar.dmi'
+	screen_loc = "1,1"
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "bsa_beam"
 	alpha = 0
 	var/running
 	var/subsystem_count = 0
@@ -733,6 +734,9 @@
 	LAZYINITLIST(average_subsystem_init_time)
 	var/list/asit = average_subsystem_init_time
 
+	var/matrix/Base = matrix(transform)
+	Base.Turn(90)
+	transform = Base
 	animate(src, alpha = 255, pixel_y = 30, time = 30)
 
 	var/goal = number_of_ss * 100
@@ -746,15 +750,19 @@
 			//assume 5s
 			old_average = 50
 		else
-			old_average = min(1, old_average)
+			old_average = max(1, old_average)
 		var/time_elapsed_this_init = REALTIMEOFDAY - ss_starttime
 
-		progress = (100 * subsystem_count) + max((time_elapsed_this_init / old_average) * 100, 100);
+		progress = (100 * subsystem_count) + min((time_elapsed_this_init / old_average) * 100, 100);
 		progress = min(old_progress + 10, progress)	//smooth it out
 
 		if(old_progress != progress)
+			var/matrix/M = matrix(Base)
+			var/dist = (progress / goal) * 15
+			M.Scale(dist, 1)
+			M.Translate(dist / 2, 0)
+			animate(src, transform = M, time = 1)
 			testing("Loading bar progress: [progress] / [goal]")
-			icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
 
 	animate(src, alpha = 0, pixel_y = 0, time = 30)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30, TIMER_CLIENT_TIME)
