@@ -2,13 +2,14 @@
 
 
 /client/proc/join_date_check(y,m,d)
-	var/DBQuery/query_datediff = dbcon.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
+	var/DBQuery/query = dbcon.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
 
-	if(!query_datediff.Execute())
+	if(!query.Execute())
+		log_world("SQL ERROR doing datediff. Error : \[[query.ErrorMsg()]\]\n")
 		return FALSE
 
-	if(query_datediff.NextRow())
-		var/diff = text2num(query_datediff.item[1])
+	if(query.NextRow())
+		var/diff = text2num(query.item[1])
 		if(config.use_account_age_for_jobs)
 			player_age = max(0,diff)	//So job code soesn't freak out if they are time traveling.
 		if(diff < YOUNG)
