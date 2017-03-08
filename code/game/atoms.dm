@@ -52,6 +52,8 @@
 // /turf/Initialize
 // /turf/open/space/Initialize
 // /mob/dead/new_player/Initialize
+
+//Do also note that this proc always runs in New for /mob/dead
 /atom/proc/Initialize(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
