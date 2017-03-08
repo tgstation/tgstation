@@ -1,5 +1,3 @@
-#define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE * 10)
-#define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE / 10)
 #define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
 
 /obj/machinery/portable_atmospherics/canister
@@ -16,6 +14,8 @@
 	var/filled = 0.5
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
+	var/CAN_MAX_RELEASE_PRESSURE = (ONE_ATMOSPHERE * 10)
+	var/CAN_MIN_RELEASE_PRESSURE = (ONE_ATMOSPHERE / 10)
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
 	obj_integrity = 250
@@ -352,3 +352,17 @@
 				holding = null
 				. = TRUE
 	update_icon()
+	
+	/obj/machinery/portable_atmospherics/canister/prototype
+	name = "prototype canister"
+	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
+	icon_state = "ultra"
+	volume = 1000
+
+	var/release_pressure = ONE_ATMOSPHERE
+	volume = 5000
+	obj_integrity = 300
+	max_integrity = 300
+	temperature_resistance = 2000 + T0C
+	CAN_MAX_RELEASE_PRESSURE = (ONE_ATMOSPHERE * 30)
+	CAN_MIN_RELEASE_PRESSURE = (ONE_ATMOSPHERE / 30)
