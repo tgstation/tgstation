@@ -175,7 +175,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.is_frozen)
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()

@@ -111,7 +111,7 @@
 
 /turf/open/freon_gas_act()
 	for(var/obj/I in contents)
-		if(!I.is_frozen) //let it go
+		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature >= 10)
@@ -225,7 +225,7 @@
 		wet_time = MAXIMUM_WET_TIME
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
 		for(var/obj/O in contents)
-			if(O.is_frozen)
+			if(HAS_SECONDARY_FLAG(O, FROZEN))
 				O.make_unfrozen()
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
