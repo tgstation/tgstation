@@ -46,7 +46,7 @@ var/datum/subsystem/atoms/SSatoms
 		var/count = 0
 		#endif
 		for(var/atom/A in world)
-			if(!A.initialized(TRUE) && !QDELETED(A))	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+			if(!A.initialized && !QDELETED(A))	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
 					LAZYADD(late_loaders, A)
