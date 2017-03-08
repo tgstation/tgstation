@@ -277,6 +277,14 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/the_traps
+	name = "The Traps!"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
+	log_name = "TT"
+	category = "Offensive"
+	cost = 1
+
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	refundable = 0
@@ -773,7 +781,7 @@
 		recoil(user)
 	else
 		user.mind.AddSpell(S)
-		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		user <<"<span class='notice'>You rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
 		user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 		onlearned(user)
 

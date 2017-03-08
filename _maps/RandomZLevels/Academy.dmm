@@ -996,7 +996,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/classrooms)
 "de" = (
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "df" = (
 /obj/structure/table/wood,
@@ -1064,7 +1064,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "dr" = (
 /obj/machinery/light{
@@ -1114,7 +1114,7 @@
 	pixel_y = 0
 	},
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "dA" = (
 /obj/structure/cable{
@@ -1134,7 +1134,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "dB" = (
 /obj/structure/cable{
@@ -1181,7 +1181,7 @@
 "dI" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable,
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "dJ" = (
 /obj/machinery/hydroponics/constructable,
@@ -3406,7 +3406,7 @@
 	icon_state = "2-4"
 	},
 /obj/item/weapon/weldingtool,
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "jq" = (
 /turf/open/floor/plasteel/yellow/side{

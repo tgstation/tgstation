@@ -13,6 +13,7 @@
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
+	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
@@ -48,12 +49,12 @@
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/DBQuery/query = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
-			query.Execute()
+			var/DBQuery/query_get_new_polls = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			if(!query_get_new_polls.Execute())
+				return
 			var/newpoll = 0
-			while(query.NextRow())
+			if(query_get_new_polls.NextRow())
 				newpoll = 1
-				break
 
 			if(newpoll)
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
@@ -305,9 +306,9 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
-	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
 
@@ -426,27 +427,33 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
-/mob/new_player/proc/create_character()
+/mob/new_player/proc/create_character(transfer_after)
 	spawning = 1
 	close_spawn_windows()
 
-	var/mob/living/carbon/human/new_character = new(loc)
+	var/mob/living/carbon/human/H = new(loc)
 
 	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-	client.prefs.copy_to(new_character)
-	new_character.dna.update_dna_identity()
+	client.prefs.copy_to(H)
+	H.dna.update_dna_identity()
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
-		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
-	new_character.name = real_name
+	H.name = real_name
 
-	new_character.key = key		//Manually transfer the key to log them in
-	new_character.stopLobbySound()
+	. = H
+	new_character = .
+	if(transfer_after)
+		transfer_character()
 
-	return new_character
+/mob/new_player/proc/transfer_character()
+	. = new_character
+	if(.)
+		new_character.key = key		//Manually transfer the key to log them in
+		new_character.stopLobbySound()
 
 /mob/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
