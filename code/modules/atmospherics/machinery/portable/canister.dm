@@ -357,9 +357,6 @@
 	name = "prototype canister"
 	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
 	icon_state = "ultra"
-	volume = 1000
-
-	var/release_pressure = ONE_ATMOSPHERE
 	volume = 5000
 	obj_integrity = 300
 	max_integrity = 300
