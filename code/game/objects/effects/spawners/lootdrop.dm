@@ -97,6 +97,7 @@
 				/obj/item/device/assembly/timer = 3,
 				/obj/item/device/flashlight = 4,
 				/obj/item/device/flashlight/pen = 1,
+				/obj/item/device/flashlight/glowstick/random = 4,
 				/obj/item/device/multitool = 2,
 				/obj/item/device/radio/off = 2,
 				/obj/item/device/t_scanner = 5,

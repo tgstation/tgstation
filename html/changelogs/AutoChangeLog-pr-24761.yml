@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Added glowsticks. Found in maintenance, emergency toolboxes and Party Crates."
