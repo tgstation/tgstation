@@ -124,7 +124,7 @@
 					if(prize.cost == 20000) // Still a placeholder
 						spawn_atom_to_turf(/obj/item/clothing/head/helmet/space/chronos, D, prize.amount, admin_spawn=FALSE)
 					if(prize.cost >= 1000)
-						radio.talk_into(src, "[user] has bought [prize.equipment_name] for [prize.cost] points")
+						radio.talk_into(src, "[usr] has bought [prize.equipment_name] for [prize.cost] points")
 					feedback_add_details("Engi_equipment_bought","[src.type]|[prize.equipment_path]")
 	updateUsrDialog()
 
