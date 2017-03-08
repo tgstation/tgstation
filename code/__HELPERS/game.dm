@@ -512,9 +512,6 @@
 		return
 	winset(C, "mainwindow", "flash=5")
 
-/proc/holiday_active(holiday)
-	return SSevent.holidays && SSevent.holidays[holiday]
-
 /proc/GetRedPart(const/hexa)
 	return hex2num(copytext(hexa, 2, 4))
 

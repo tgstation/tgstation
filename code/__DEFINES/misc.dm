@@ -29,6 +29,7 @@
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
 #define FRIDAY_13TH				"Friday the 13th"
+#define HOLIDAY_ACTIVE(holiday)  SSevent.holidays && SSevent.holidays[holiday]
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
