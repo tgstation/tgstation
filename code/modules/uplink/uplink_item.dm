@@ -1228,7 +1228,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Bloodhound upgrade modules"
 	desc = "A box containing three illegal cyborg upgrade modules that both hack the cyborg and activate its hidden security module."
 	item = /obj/item/weapon/storage/box/syndie_kit/traitorsec_boards
-	cost = 14
+	cost = 16
 	restricted_roles = list("Roboticist")
 	surplus = 5
 
