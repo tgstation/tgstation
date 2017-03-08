@@ -51,10 +51,10 @@
 	var/amount = 0
 
 /datum/GBP_equipment/New(name, path, cost, amount)
-	src.equipment_name = name
-	src.equipment_path = path
-	src.cost = cost
-	src.amount = amount
+	equipment_name = name
+	equipment_path = path
+	cost = cost
+	amount = amount
 
 /obj/machinery/engi_points_manager/Initialize()
 	radio = new(src)
@@ -146,7 +146,7 @@
 				limit++
 		switch(total_bonus)
 			if(0)
-				alarm_rating = "NOT WORTH THE AIR YOU'RE BREATHING, CONSIDER SUICIDE"
+				alarm_rating = "GREYTIDE IN YELLOW JUMPSUITS"
 				playsound(src, 'sound/misc/compiler-failure.ogg', 100, 1)
 			if(100 to 900)
 				alarm_rating = "COMPLICIT IN THE STATION'S DOWNFALL"
