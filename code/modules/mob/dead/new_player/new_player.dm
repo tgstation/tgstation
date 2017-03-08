@@ -15,7 +15,10 @@
 	anchored = 1	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
-/mob/dead/new_player/New()
+/mob/dead/new_player/Initialize()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 
