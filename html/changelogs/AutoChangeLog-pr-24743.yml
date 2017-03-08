@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Glowshrooms now have colored light."
-  - tweak: "Tweaked the potency scaling for glowshroom/glowberry light; high-potency plantss no longer light up a huge area, but are slightly brighter."
