@@ -13,7 +13,7 @@
 
 	var/obj/item/weapon/paper/internalPaper
 
-/obj/item/weapon/paperplane/New(loc, obj/item/weapon/paper/newPaper)
+/obj/item/weapon/paperplane/Initialize(mapload, obj/item/weapon/paper/newPaper)
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
@@ -49,7 +49,8 @@
 
 /obj/item/weapon/paperplane/attack_self(mob/user)
 	user << "<span class='notice'>You unfold [src].</span>"
-	var/internal_paper_tmp = internalPaper
+	var/atom/movable/internal_paper_tmp = internalPaper
+	internal_paper_tmp.forceMove(loc)
 	internalPaper = null
 	qdel(src)
 	user.put_in_hands(internal_paper_tmp)

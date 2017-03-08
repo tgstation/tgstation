@@ -15,7 +15,6 @@
 
 /world/New()
 	log_world("World loaded at [world.timeofday]")
-	map_ready = 1
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")

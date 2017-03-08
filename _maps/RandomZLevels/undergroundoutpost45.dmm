@@ -11451,7 +11451,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500,TEMP=80"
 	},
@@ -11992,7 +11992,7 @@
 	id_with_upload_string = "3";
 	req_access = null
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500,TEMP=80"
 	},

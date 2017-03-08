@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "People with mutant parts (cat ears) are no longer outright barred from selecting command roles in their preferences, but will have their mutant parts removed on spawning if they are selected for that role."

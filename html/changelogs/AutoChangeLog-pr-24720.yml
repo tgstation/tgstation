@@ -1,0 +1,4 @@
+author: "Francinum"
+delete-after: True
+changes: 
+  - bugfix: "Holopads now require power."
