@@ -9,6 +9,8 @@
 	var/market_cooldown = 0
 	var/export_target = ""
 	var/export_name = "------"
+	var/list/gas = list()
+	var/list/concentration = list()
 
 	// requirements of the canister we want to export
 	var/upressure = 0
@@ -18,6 +20,7 @@
 	var/price = 200	
 	var/can_turf
 	// requirements for the economy canister
+	var/list/e_gas = list() 
 	var/economy_name = ""
 	var/e_pressure = 0
 	var/e_temp = 0
@@ -25,6 +28,7 @@
 	var/e_concentration1 = 0
 	// requirements for the standard canister
 	var/standard_name = ""	
+	var/list/s_gas = list() 
 	var/s_pressure = 0
 	var/s_temp = 0
 	var/s_price = 600
@@ -32,6 +36,7 @@
 	var/s_concentration2 = 0
 	// requirements for the premium canister
 	var/premium_name = ""
+		var/list/p_gas = list() // premium stats
 	var/p_pressure = 0
 	var/p_temp = 0
 	var/p_price = 1000
@@ -77,11 +82,6 @@
 /obj/machinery/atmos_points/Initialize()
 	..()
 	quality = list("Economy","Standard","Premium")
-	var/list/gas = list()
-	var/list/concentration = list()
-	var/list/e_gas = list() // budget stats
-	var/list/s_gas = list() // standard stats
-	var/list/p_gas = list() // premium stats
 	e_gas += "Initializing"
 	s_gas += "Initializing"
 	s_gas += "Initializing"
