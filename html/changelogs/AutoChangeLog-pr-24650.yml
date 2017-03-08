@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Admins have a \"Rename Station Name\" option, under Secrets."
-  - rscadd: "A special admin station charter exists, that has unlimited uses and
-can be used at any time."
