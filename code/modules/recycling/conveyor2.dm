@@ -216,7 +216,7 @@
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	if(mapload)
 		return TRUE	//need machines list
-	..(newloc)
+	..()
 	if(!id)
 		id = newid
 	update()
