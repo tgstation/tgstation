@@ -7,36 +7,31 @@
 	density = 1
 	anchored = 1
 	var/market_cooldown = 0
-	var/list/quality = list("Economy","Standard","Premium")
 	var/export_target = ""
 	var/export_name = "------"
 
-	var/list/gas = list()
+	// requirements of the canister we want to export
 	var/upressure = 0
 	var/lpressure = 0
 	var/utemp = 0
 	var/ltemp = 0
-	var/price = 200
-	var/list/concentration = list()
+	var/price = 200	
 	var/can_turf
-
+	// requirements for the economy canister
 	var/economy_name = ""
-	var/list/e_gas = list() // budget stats
 	var/e_pressure = 0
 	var/e_temp = 0
 	var/e_price = 200
 	var/e_concentration1 = 0
-
-	var/standard_name = ""
-	var/list/s_gas = list() // standard stats
+	// requirements for the standard canister
+	var/standard_name = ""	
 	var/s_pressure = 0
 	var/s_temp = 0
 	var/s_price = 600
 	var/s_concentration1 = 0
 	var/s_concentration2 = 0
-
+	// requirements for the premium canister
 	var/premium_name = ""
-	var/list/p_gas = list() // premium stats
 	var/p_pressure = 0
 	var/p_temp = 0
 	var/p_price = 1000
@@ -52,23 +47,40 @@
 	verb_say = "states"
 	density = 0
 	anchored = 1
+	
+/obj/machinery/atmos_points_exporter/Initialize()
+	..()
+	atmos_exporter_list += src
 
-/obj/machinery/atmos_points_exporter/proc/ship()
+/obj/machinery/atmos_points_exporter/Destroy()
+	..()
+	atmos_exporter_list -= src
+
+/obj/machinery/atmos_points_exporter/proc/export()
 	for(var/obj/machinery/portable_atmospherics/canister/C in get_turf(src))
-		icon_state = "floorflush_a"
-		playsound(src, 'sound/machines/Ding.ogg', 100, 1)
-		spawn(20)
-			animate(C, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
-			for(var/t in 1 to 5)
-				if(!C || QDELETED(C))
-					return
-				C.pixel_y--
-				sleep(2)
-			icon_state = "floorflush_a2"
-			qdel(C)
+		animate(C, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
+		for(var/t in 1 to 5)
+			C.pixel_y--
+			sleep(2)
+			if(!C || QDELETED(C) || !src || QDELETED(src))
+				return
+		icon_state = "floorflush_a2"
+		qdel(C)
+			
+/obj/machinery/atmos_points_exporter/proc/ship()
+	icon_state = "floorflush_a"
+	playsound(src, 'sound/machines/Ding.ogg', 100, 1)
+	addtimer(CALLBACK(src, .proc/export), 20)
+
 
 /obj/machinery/atmos_points/Initialize()
 	..()
+	var/list/quality = list("Economy","Standard","Premium")
+	var/list/gas = list()
+	var/list/concentration = list()
+	var/list/e_gas = list() // budget stats
+	var/list/s_gas = list() // standard stats
+	var/list/p_gas = list() // premium stats
 	e_gas += "Initializing"
 	s_gas += "Initializing"
 	s_gas += "Initializing"
@@ -89,23 +101,23 @@
 	dat += text("Economy canister value: <b>[e_price] points</b><br>")
 	dat += text("Economy canister gas: <b>[e_gas[1]]</b><br>")
 	dat += text("Economy canister pressure range: <b>[e_pressure-200] to [e_pressure+200]kPa</b><br>")
-	dat += text("Economy canister temperature: <b>[e_temp-50] to [e_temp+50] kelvin</b><br>")
+	dat += text("Economy canister temperature: <b>[e_temp-50] to [e_temp+50]K</b><br>")
 	dat += "<br>"
 	dat += text("<u><b>Standard canister order for [standard_name]:</b></u><br>")
 	dat += text("Standard canister value: <b>[s_price] points</b><br>")
 	dat += text("Standard canister gas: <b>[s_gas[1]] at [(s_concentration1 - 5)]-[(s_concentration1 + 5)]%, [s_gas[2]] at [s_concentration2 - 5]-[s_concentration2 + 5]%</b><br>")
 	dat += text("Standard canister pressure range: <b>[s_pressure-100] to [s_pressure+100]kPa </b><br>")
-	dat += text("Standard canister temperature: <b>[s_temp-30] to [s_temp+30] kelvin</b><br>")
+	dat += text("Standard canister temperature: <b>[s_temp-30] to [s_temp+30]K</b><br>")
 	dat += "<br>"
 	dat += text("<u><b>Premium canister order for [premium_name]:</b></u><br>")
 	dat += text("Premium canister value: <b>[p_price] points</b><br>")
 	dat += text("Premium canister gas: <b>[p_gas[1]] at [(p_concentration1 - 5)]-[(p_concentration1 + 5)]%, [p_gas[2]] at [p_concentration2 - 5]-[p_concentration2 + 5]%, [p_gas[3]] at [p_concentration3 - 5]-[p_concentration3 + 5]%</b><br>")
 	dat += text("Premium canister pressure range: <b>[p_pressure-50] to [p_pressure+50] kPa </b><br>")
-	dat += text("Premium canister temperature: <b>[p_temp-15] to [p_temp+15] kelvin</b><br>")
+	dat += text("Premium canister temperature: <b>[p_temp-15] to [p_temp+15]K</b><br>")
 	var/datum/browser/popup = new(user, "vending", "Atmos Exporter", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/atmos_points/Topic(href, href_list)
 	if(..())
@@ -114,6 +126,8 @@
 		if ("choose")
 			reset()
 			export_target = input(usr, "Choose your export quality", "Quality:") as null|anything in quality
+			if (!src || QDELETED(src)
+				return
 			switch(export_target)
 				if("Economy")
 					export_name = economy_name
@@ -145,10 +159,10 @@
 					concentration += p_concentration2
 					concentration += p_concentration3
 					price = p_price
-			src.updateUsrDialog()
+			updateUsrDialog()
 		if ("scan")
 			for(var/obj/machinery/portable_atmospherics/canister/C in get_turf(can_turf))
-				src.visible_message("<span class='danger'> Canister contains [LAZYLEN(C.air_contents.gases)] gases at [C.air_contents.return_pressure()]kpa pressure and with an internal temperature of [C.air_contents.temperature] kelvin.</span>")
+				atmosanalyzer_scan(C.air_contents, usr, C)
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 100, 1)
 		if ("send")
 			for(var/obj/machinery/portable_atmospherics/canister/C in get_turf(can_turf))
@@ -171,16 +185,16 @@
 								return
 						visible_message("<span class='danger'>Valid [export_target] canister detected... exporting now. Your department will receive [price] points!</span>")
 						C.anchored = 1
-						for(var/obj/machinery/atmos_points_exporter/EX in machines)
+						for(var/obj/machinery/atmos_points_exporter/EX in atmos_exporter_list)
 							EX.ship()
-						for(var/obj/machinery/engi_points_manager/EPM in machines)
+						for(var/obj/machinery/engi_points_manager/EPM in engi_points_list)
 							EPM.GBP += price
 							EPM.GBPearned += price
 						if(export_target == "premium")
 							visible_message("<span class='danger'>You have been blessed by the atmos gods for exporting a premium canister!</span>")
 							var/prize = pick(/obj/item/clothing/under/rank/atmos_elite,/obj/item/clothing/head/atmos_hood,/obj/item/clothing/neck/cloak/atmos)
-							new /obj/effect/overlay/temp/explosion/fast(get_turf(src))
-							new prize(get_turf(src))
+							spawn_atom_to_turf(/obj/effect/overlay/temp/explosion/fast, src, 1, admin_spawn=FALSE)
+							spawn_atom_to_turf(prize, src, 1, admin_spawn=FALSE)
 							playsound(src, 'sound/effects/pray_chaplain.ogg', 100, 1)
 						quality.Remove(export_target)
 						reset()
@@ -191,7 +205,7 @@
 					visible_message("<span class='danger'>Invalid pressure detected!</span>")
 					playsound(src, 'sound/machines/defib_failed.ogg', 100, 1)
 
-			src.updateUsrDialog()
+			updateUsrDialog()
 
 /obj/machinery/atmos_points/proc/reset()
 	export_name = "------"
