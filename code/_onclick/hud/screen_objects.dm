@@ -733,9 +733,6 @@
 	LAZYINITLIST(average_subsystem_init_time)
 	var/list/asit = average_subsystem_init_time
 
-	if(asit.len != number_of_ss)
-		asit.Cut()		//rebuild the cache
-
 	animate(src, alpha = 255, pixel_y = 30, time = 30)
 
 	var/goal = number_of_ss * 100
