@@ -264,10 +264,7 @@
 	R = ridden
 	turret = R.turret
 	switch(ridden.dir)
-		if(NORTH)
-			ridden.pixel_x = -16
-			ridden.pixel_y = -16
-		if(SOUTH)
+		if(NORTH,SOUTH)
 			ridden.pixel_x = -16
 			ridden.pixel_y = -16
 		if(EAST,WEST)
