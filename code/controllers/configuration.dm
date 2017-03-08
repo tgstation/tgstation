@@ -905,6 +905,7 @@
 	stat("[name]:", statclick)
 
 /datum/configuration/vv_edit_var(var_name, var_value)
-	if(var_name == "cross_address" || var_name == "cross_allowed")
+	var/static/list/banned_edits = list("cross_address", "cross_allowed")
+	if(var_name in banned_edits)
 		return FALSE
 	return ..()
