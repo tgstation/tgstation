@@ -75,7 +75,7 @@
 		base = src
 	update_icon()
 	
-/obj/machinery/repair_turret/repair(target)
+/obj/machinery/repair_turret/proc/repair(target)
 	if(target.obj_integrity < target.max_integrity)
 		playsound(get_turf(src),'sound/magic/LightningShock.ogg', 50, 1)
 		Beam(target,icon_state="lightning[rand(1,12)]",time=20)
@@ -87,7 +87,7 @@
 	else
 		return FALSE
 	
-/obj/machinery/repair_turret/repair_grille(target, target_loc)
+/obj/machinery/repair_turret/proc/repair_grille(target, target_loc)
 	if(istype(A,/obj/structure/grille/broken))
 		var/N = 0
 		var/list/C = list()
@@ -128,7 +128,7 @@
 	else
 		return FALSE
 		
-/obj/machinery/repair_turret/repair_wall(target, target_loc)
+/obj/machinery/repair_turret/proc/repair_wall(target, target_loc)
 	if(istype(target,/obj/structure/girder))
 		var/goal = 0
 		var/sum = 0
@@ -150,7 +150,8 @@
 			return FALSE
 	else
 		return FALSE
-/obj/machinery/repair_turret/repair_floor(flooring)
+		
+/obj/machinery/repair_turret/proc/repair_floor(flooring)
 	if(!F.icon_state == initial(F.icon_state))
 		F.icon_state = initial(F.icon_state)
 		cooldown = world.time + 50
