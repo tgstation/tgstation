@@ -31,11 +31,11 @@
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
-	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."
+	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence. Has extra padding and thicker kevlar for slightly better overall protection"
 	icon_state = "hos"
 	item_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 70, acid = 90)
+	armor = list(melee = 40, bullet = 50, laser = 40, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 70, acid = 90)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
@@ -50,7 +50,7 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets. Has extra padding for melee protection."
 	icon_state = "warden_alt"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -59,6 +59,8 @@
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
+
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
