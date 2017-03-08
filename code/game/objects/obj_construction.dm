@@ -12,7 +12,7 @@
 												Should return a list of construction_state datums. See ai_core.dm or barsigns.dm for good examples
 
 	/obj/proc/OnConstruction(state_id, mob/user, obj/item/used) - Called when a construction step is completed on an object with the new state_id
-																If state_id is zero, the object has been fully constructed abd can't be deconstructed.
+																If state_id is zero, the object has been fully constructed and can't be deconstructed.
 																used is the material object if any used for construction and it will be deleted on return
 
 	/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced) - Called when a deconstruction step is completed on an object with the new state_id. 
