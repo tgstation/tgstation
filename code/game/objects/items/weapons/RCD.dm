@@ -627,9 +627,10 @@ ARCD
 /obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
 	proximity = 1
 	if(get_dist(get_turf(A),get_turf(user)) > 7)
-		user << "<span class='warning'>The \'Out of Range\' light on \
-		the RCD blinks red.</span>"
+		user << "<span class='warning'>The \'Out of Range\' light on the RCD blinks red.</span>"
 		return
-	user.Beam(A,icon_state="rped_upgrade",time=20)
 	..()
+	if(..())
+		user.Beam(A,icon_state="rped_upgrade",time=20)
+	
 
