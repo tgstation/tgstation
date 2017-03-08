@@ -76,7 +76,7 @@
 	if(!bloodthirst)
 		drowse()
 		return
-	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
+	if(bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
 		adjust_bloodthirst(1 + Floor(LAZYLEN(contents) * 0.5)) //Maybe adjust this?
 	else
 		adjust_bloodthirst(1) //don't cool off rapidly once we're at the point where His Grace consumes all.
