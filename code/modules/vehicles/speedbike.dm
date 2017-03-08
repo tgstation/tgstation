@@ -148,11 +148,13 @@
 	else
 		return FALSE
 		
-/obj/machinery/repair_turret/proc/repair_floor(turf/open/floor/flooring)
-	if(flooring.icon_state = initial(flooring.icon_state))
-		flooring.icon_state = initial(flooring.icon_state)
-		Beam(flooring,icon_state="lightning[rand(8,12)]",time=20)
-		sleep(5)
+/obj/machinery/repair_turret/proc/repair_floor()
+	for(var/turf/open/floor/flooring in view(7, src))
+		if(flooring.icon_state != initial(flooring.icon_state))
+			flooring.icon_state = initial(flooring.icon_state)
+			playsound(flooring,'sound/magic/LightningShock.ogg', 50, 1)
+			Beam(flooring,icon_state="lightning[rand(1,12)]",time=20)
+			sleep(10)
 
 /obj/machinery/repair_turret/process()
 	if(cooldown<=world.time)
@@ -167,8 +169,7 @@
 				return
 			if(repair_wall(target,target_loc))
 				return
-		for(var/turf/open/floor/flooring in view(7, src))
-			repair_floor(flooring)
+			repair_floor()
 	else
 		icon_state = "mini_off"
 
