@@ -1,0 +1,4 @@
+author: "TalkingCactus"
+delete-after: True
+changes: 
+  - rscadd: "Energy swords (and other energy melee weapons) now have a colored light effect when active."
