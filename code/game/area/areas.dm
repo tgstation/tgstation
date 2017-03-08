@@ -473,7 +473,7 @@ var/list/teleportlocs = list()
 
 /area/Entered(A)
 	set waitfor = FALSE
-  if(SSgravity && !SSgravity.legacy_gravity && initialized)
+	if(SSgravity && !SSgravity.legacy_gravity && initialized)
 		var/atom/movable/AM = A
 		if(AM.is_affected_by_gravity)
 			update_gravity(AM, TRUE)
