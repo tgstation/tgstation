@@ -127,7 +127,7 @@
 		if ("choose")
 			reset()
 			export_target = input(usr, "Choose your export quality", "Quality:") as null|anything in quality
-			if (!src || QDELETED(src)
+			if (!src || QDELETED(src))
 				return
 			switch(export_target)
 				if("Economy")
