@@ -194,11 +194,11 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(!ckey || !rank || (target && ckey != target))
 				continue
 
-			var/datum/admins/D = new /datum/admins(rank, 65535, ckey)	//create the admin datum and store it for later use
+			var/datum/admins/D = new(rank, 65535, ckey)	//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
-			//if(D.rank.rights & R_DEBUG) //grant profile access
-			//	world.SetConfig("APP/admin", ckey, "role=admin")
+			if(D.rank.rights & R_DEBUG) //grant profile access
+				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
 		if(!dbcon.Connect())
@@ -208,22 +208,28 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, flags FROM [format_table_name("admin")]")
-		query.Execute()
-		while(query.NextRow())
-			var/ckey = ckey(query.item[1])
-			var/rank = query.item[2]
+		var/DBQuery/query_load_admins = dbcon.NewQuery("SELECT ckey, rank, flags FROM [format_table_name("admin")]")
+		if(!query_load_admins.Execute())
+			return
+		while(query_load_admins.NextRow())
+			var/ckey = ckey(query_load_admins.item[1])
+			var/rank = query_load_admins.item[2]
 			if(target && ckey != target)
 				continue
 
-			if(rank == "Removed")	continue
-			var/rights = query.item[3]
-			if(istext(rights))	rights = text2num(rights)
+			if(rank_names[rank] == null)
+				WARNING("Admin rank ([rank]) does not exist.")
+				continue
 
-			var/datum/admins/D = new /datum/admins(rank, rights, ckey)				//create the admin datum and store it for later use
-
-									//will occur if an invalid rank is provided
+			var/datum/admins/D = new(rank, rights, ckey)				//create the admin datum and store it for later use
+			if(!D)
+				continue									//will occur if an invalid rank is provided
+			if(D.rank.rights & R_DEBUG) //grant profile access
+				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+
+
+
 /*
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
