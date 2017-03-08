@@ -82,23 +82,23 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		. = iconbro.appearance
 		icon_cache[icon] = .
 
-/atom/proc/build_appearance_list(overlays)
+/atom/proc/build_appearance_list(new_overlays)
 	var/static/image/appearance_bro = new()
-	if (!islist(overlays))
-		overlays = list(overlays)
+	if (!islist(new_overlays))
+		new_overlays = list(new_overlays)
 	else
-		listclearnulls(overlays)
-	for (var/i in 1 to length(overlays))
-		var/image/cached_overlay = overlays[i]
+		listclearnulls(new_overlays)
+	for (var/i in 1 to length(new_overlays))
+		var/image/cached_overlay = new_overlays[i]
 		if (istext(cached_overlay))
-			overlays[i] = iconstate2appearance(icon, cached_overlay)
+			new_overlays[i] = iconstate2appearance(icon, cached_overlay)
 		else if(istype(cached_overlay))
 			appearance_bro.appearance = cached_overlay
 			appearance_bro.dir = cached_overlay.dir
-			overlays[i] = appearance_bro.appearance
+			new_overlays[i] = appearance_bro.appearance
 		else	//icon probably
-			overlays[i] = icon2appearance(cached_overlay)
-	return overlays
+			new_overlays[i] = icon2appearance(cached_overlay)
+	return new_overlays
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
 #define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; 
