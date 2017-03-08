@@ -54,7 +54,7 @@
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 
 
-/mob/living/simple_animal/hostile/New()
+/mob/living/simple_animal/hostile/Initialize()
 	..()
 
 	if(!targets_from)

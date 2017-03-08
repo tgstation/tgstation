@@ -110,8 +110,8 @@ var/total_borer_hosts_needed = 10
 	var/datum/action/innate/borer/punish_victim/punish_victim_action = new
 	var/datum/action/innate/borer/jumpstart_host/jumpstart_host_action = new
 
-/mob/living/simple_animal/borer/New(atom/newloc, var/gen=1)
-	..(newloc)
+/mob/living/simple_animal/borer/Initialize(mapload, gen=1)
+	..()
 	generation = gen
 	notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	real_name = "Cortical Borer [rand(1000,9999)]"

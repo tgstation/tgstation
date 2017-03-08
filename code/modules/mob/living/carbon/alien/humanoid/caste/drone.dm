@@ -6,7 +6,7 @@
 	icon_state = "aliend"
 
 
-/mob/living/carbon/alien/humanoid/drone/New()
+/mob/living/carbon/alien/humanoid/drone/Initialize()
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	..()
 

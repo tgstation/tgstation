@@ -56,7 +56,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	// of the mob
 	var/deadchat_name
 
-/mob/dead/observer/New(mob/body)
+/mob/dead/observer/Initialize()
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	if(global.cross_allowed)
@@ -74,6 +74,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	updateallghostimages()
 
 	var/turf/T
+	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		logging = body.logging			//preserve our logs by copying them to our ghost

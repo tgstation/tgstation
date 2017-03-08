@@ -8,7 +8,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 
-/obj/item/device/unactivated_swarmer/New()
+/obj/item/device/unactivated_swarmer/Initialize()
 	if(!crit_fail)
 		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	..()
@@ -117,7 +117,7 @@
 	..()
 	src << login_text_dump
 
-/mob/living/simple_animal/hostile/swarmer/New()
+/mob/living/simple_animal/hostile/swarmer/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
