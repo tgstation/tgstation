@@ -993,7 +993,7 @@
 	del_on_death = 1
 	var/gps = null
 
-/mob/living/simple_animal/hostile/spawner/lavaland/Initializeq()
+/mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
 	..()
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))

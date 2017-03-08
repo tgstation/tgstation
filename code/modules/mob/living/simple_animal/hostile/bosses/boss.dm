@@ -88,7 +88,7 @@
 	var/mob/living/simple_animal/hostile/boss/boss
 
 
-/datum/boss_active_timed_battle/Initialize()
+/datum/boss_active_timed_battle/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
