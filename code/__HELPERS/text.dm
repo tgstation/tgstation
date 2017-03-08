@@ -368,11 +368,6 @@ var/list/binary = list("0","1")
 		temp1 = copytext(t,2,u+1)
 	return temp1
 
-//Returns text with all vowels removed
-/proc/consonants(text)
-	var/static/regex/consonants_regex = regex("\[aeiou]", "gi")
-	. = consonants_regex.Replace(text)
-
 //merges non-null characters (3rd argument) from "from" into "into". Returns result
 //e.g. into = "Hello World"
 //     from = "Seeya______"

@@ -190,11 +190,18 @@ var/global/list/used_voiceprints = list()
 			if(voice_print && voiceprint_cache_time >= (world.time - IDENTITY_EXPIRE_TIME))
 				voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
 				var/voiceprint_state
+				var/voiceprint_name
 				if(voiceprint_entry)
 					voiceprint_state = voiceprint_entry[1]
+					voiceprint_name = voiceprint_entry[3]
 					if(voiceprint_state >= IDENTITY_INTERACT)
 						voiceprint_entry[1] = IDENTITY_INTERACT
 						voiceprint_entry[3] = interact_identity
+					else
+						. = voiceprint_name
+						if(faceprint_entry)
+							faceprint_entry[1] = voiceprint_state
+							faceprint_entry[3] = voiceprint_name
 					if(faceprint_entry)
 						voiceprint_entry[4] = faceprint
 						faceprint_entry[4] = voice_print
@@ -435,23 +442,44 @@ var/global/list/used_voiceprints = list()
 /mob/living/carbon/human/default_identity_interact()
 	. = get_id_name("")
 	if(!.)
+		var/text_count = 0
+		var/see_face = can_see_face()
 		var/hair_text
-		var/seen_text = default_identity_seen(FALSE)
+		var/identity_text = default_identity_seen(FALSE)
 		var/accessory_text
-		// eyecolor, haircolor+hairstyle, hat or mask, jobname
+		var/eye_text
+		if(identity_text)
+			text_count++
+		else //since we didn't get an identity_name from clothing, don't count this towards the text count
+			var/temp_gender = gender
+			var/list/obscured = check_obscured_slots()
+			if((slot_w_uniform in obscured) && !see_face)
+				temp_gender = PLURAL
+			var/static/list/identity_text_genders = list(MALE, FEMALE)
+			if(temp_gender in identity_text_genders)
+				identity_text = temp_gender
+			else
+				identity_text = default_identity_heard()
 		if(!hair_covered() && hair_color && hair_style)
-			var/htext_color = consonants(color_hex2color(hair_color))
-			var/htext_style = consonants(hair_style)
+			var/htext_color = color_hex2color(hair_color)
+			var/htext_style = hair_style
 			var/datum/sprite_accessory/hair/tortoise = hair_styles_list[hair_style]
 			if(htext_color && tortoise && tortoise.icon_state)
-				hair_text = "[htext_color] [htext_style]"
-			else
-				hair_text = "[htext_style]"
-		if(head && head.name)
-			accessory_text = " [consonants(head.name)]"
-		else if(wear_mask && wear_mask.name)
-			accessory_text = " [consonants(wear_mask.name)]"
-		. = "[hair_text][seen_text ? " [seen_text]" : ""][accessory_text]"
+				hair_text = "[htext_color] [htext_style]ed "
+				text_count++
+		if(text_count < 2)
+			if(head && head.name)
+				accessory_text = " with [head.name]"
+				text_count++
+			else if(wear_mask && wear_mask.name)
+				accessory_text = " with [wear_mask.name]"
+				text_count++
+		if(text_count < 2 && eye_color && see_face && !(head && head.flags_inv & HIDEEYES))
+			var/color_eyes = color_hex2color(eye_color)
+			if(color_eyes)
+				eye_text = "[color_eyes] eyed "
+				text_count++
+		. = capitalize("[hair_text][eye_text][identity_text][accessory_text]")
 
 /mob/living/carbon/human/get_faceprint()
 	if(dna)
