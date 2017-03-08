@@ -434,10 +434,14 @@
 			src.war_cry = input
 
 /obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/weapon/twohanded/spear/S = locate() in parts_list
+	if(S)
+		if(S.explosive)
+			S.explosive.forceMove(get_turf(src))
+			S.explosive = null
+		parts_list -= S
+		qdel(S)
 	..()
-	if(explosive)
-		explosive.loc = get_turf(src.loc)
-		explosive = null
 	var/obj/item/weapon/grenade/G = locate() in contents
 	if(G)
 		explosive = G

@@ -35,7 +35,8 @@
 	result = /obj/item/weapon/twohanded/spear
 	reqs = list(/obj/item/weapon/twohanded/spear = 1,
 				/obj/item/weapon/grenade = 1)
-	parts = list(/obj/item/weapon/grenade = 1)
+	parts = list(/obj/item/weapon/twohanded/spear = 1,
+				/obj/item/weapon/grenade = 1)
 	time = 15
 	category = CAT_WEAPON
 
