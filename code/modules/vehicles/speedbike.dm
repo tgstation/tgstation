@@ -74,75 +74,107 @@
 	if(!base)
 		base = src
 	update_icon()
+	
+/obj/machinery/repair_turret/repair(target)
+	if(target.obj_integrity < target.max_integrity)
+		playsound(get_turf(src),'sound/magic/LightningShock.ogg', 50, 1)
+		Beam(target,icon_state="lightning[rand(1,12)]",time=20)
+		target.obj_integrity = target.max_integrity
+		target.icon_state = initial(A.icon_state)
+		target.update_icon()
+		cooldown = world.time + 50
+		return TRUE
+	else
+		return FALSE
+	
+/obj/machinery/repair_turret/repair_grille(target, target_loc)
+	if(istype(A,/obj/structure/grille/broken))
+		var/N = 0
+		var/list/C = list()
+		cooldown = world.time + 200
+		new /obj/effect/overlay/temp/small_smoke(target_loc)
+		for(var/obj/item/weapon/shard/S in range(1,target_loc))
+			C += S
+		if(C.len >= 2)
+			cooldown = world.time + 200
+			qdel(target)
+			qdel(C[1])
+			qdel(C[2])
+			for(var/obj/item/stack/rods/R in range(1,target_loc))
+				if (N >= 3)
+					break
+				var/T = min(3-N,R.amount)
+				N += T
+				R.use(T)
+			switch(N)
+				if(3 to 50) //should never be over 3 but hey
+					new /obj/structure/grille(target_loc)
+					new/obj/structure/window/reinforced/fulltile(target_loc)
+				if(2)
+					new/obj/structure/window/reinforced/fulltile(target_loc)
+				if(1)
+					new /obj/structure/grille(target_loc)
+					new/obj/structure/window/fulltile(target_loc)
+				if(0)
+					new /obj/item/stack/rods(target_loc)
+					new/obj/structure/window/fulltile(target_loc)
+		else
+			qdel(target)
+			new /obj/item/stack/rods(target_loc)
+			cooldown = world.time + 40
+		playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 100, 1)
+		Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
+		return TRUE
+	else
+		return FALSE
+		
+/obj/machinery/repair_turret/repair_wall(target, target_loc)
+	if(istype(target,/obj/structure/girder))
+		var/goal = 0
+		var/sum = 0
+		for(var/obj/item/stack/sheet/metal/wall_fodder in range(1,target_loc))
+			if(goal >= 2)
+				break
+			sum = min(2-goal,wall_fodder.amount)
+			goal += sum
+			wall_fodder.use(sum)
+		if(goal >= 2)
+			qdel(target)
+			new /turf/closed/wall(target_loc)
+			playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 100, 1)
+			Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
+			cooldown = world.time + 210
+			return TRUE
+		if (goal == 1)
+			new /obj/item/stack/sheet/metal(target_loc)
+			return FALSE
+	else
+		return FALSE
+/obj/machinery/repair_turret/repair_floor(flooring)
+	if(!F.icon_state == initial(F.icon_state))
+		F.icon_state = initial(F.icon_state)
+		cooldown = world.time + 50
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/repair_turret/process()
 	var/turretview = view(7, base)
 	if(cooldown<=world.time)
 		icon_state = "mini_on"
-		for(var/obj/A in turretview)
-			var/loc = get_turf(A)
-			if(A.obj_integrity < A.max_integrity)
-				playsound(get_turf(base),'sound/magic/LightningShock.ogg', 50, 1)
-				src.Beam(A,icon_state="lightning[rand(1,12)]",time=20)
-				A.obj_integrity = A.max_integrity
-				A.icon_state = initial(A.icon_state)
-				A.update_icon()
-				cooldown = world.time + 50
+		for(var/obj/target in turretview)
+			var/target_loc = get_turf(tar)
+			if(repair(target))
 				return
-			if(istype(A,/obj/structure/grille/broken))
-				var/N = 0
-				var/list/C = list()
-				new /obj/effect/overlay/temp/small_smoke(loc)
-				for(var/obj/item/weapon/shard/S in range(1,loc))
-					C += S
-				if(C.len >= 2)
-					cooldown = world.time + 200
-					qdel(A)
-					qdel(C[1])
-					qdel(C[2])
-					for(var/obj/item/stack/rods/R in range(1,loc))
-						if (N >= 3)
-							break
-						var/T = min(3-N,R.amount)
-						N += T
-						R.use(T)
-					switch(N)
-						if(3 to 50) //should never be over 3 but hey
-							new /obj/structure/grille(loc)
-							new/obj/structure/window/reinforced/fulltile(loc)
-						if(2)
-							new/obj/structure/window/reinforced/fulltile(loc)
-						if(1)
-							new /obj/structure/grille(loc)
-							new/obj/structure/window/fulltile(loc)
-						if(0)
-							new /obj/item/stack/rods(loc)
-							new/obj/structure/window/fulltile(loc)
-				else
-					qdel(A)
-					new /obj/item/stack/rods(loc)
-					cooldown = world.time + 40
-				playsound(get_turf(base),'sound/magic/lightningbolt.ogg', 100, 1)
-				src.Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
+			if(repair_grille(target,target_loc))
 				return
-
-			if(istype(A,/obj/structure/girder))
-				var/goal = 0
-				var/sum = 0
-				for(var/obj/item/stack/sheet/metal/wall_fodder in range(1,loc))
-					if(goal >= 2)
-						break
-					sum = min(2-goal,wall_fodder.amount)
-					goal += sum
-					wall_fodder.use(sum)
-				if(goal >= 2)
-					qdel(A)
-					new /turf/closed/wall(loc)
-					playsound(get_turf(base),'sound/magic/lightningbolt.ogg', 100, 1)
-					src.Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
-					cooldown = world.time + 210
-				if (goal == 1)
-					new /obj/item/stack/sheet/metal(loc)
+			if(repair_wall(target,target_loc))
+				return
+			if(repair_wall(target,target_loc))
+				return
+		for(var/turf/open/floor/flooring in turretview)
+			if(repair_floor(flooring))
+				return	
 	else
 		icon_state = "mini_off"
 
