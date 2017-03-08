@@ -353,7 +353,7 @@
 				. = TRUE
 	update_icon()
 	
-	/obj/machinery/portable_atmospherics/canister/prototype
+	/obj/machinery/portable_atmospherics/canister/proto
 	name = "prototype canister"
 	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
 	icon_state = "ultra"
