@@ -1,5 +1,4 @@
 var/datum/configuration/config = null
-var/datum/protected_configuration/protected_config = null
 
 var/host = null
 var/join_motd = null

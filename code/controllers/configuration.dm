@@ -5,22 +5,23 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
-//Not accessible from usual debug controller verb
-/datum/protected_configuration
-	var/autoadmin = 0
-	var/autoadmin_rank = "Game Admin"
-
-/datum/protected_configuration/SDQL_update()
-	return FALSE
-
-/datum/protected_configuration/vv_get_var(var_name)
-	return debug_variable(var_name, "SECRET", 0, src)
-
-/datum/protected_configuration/vv_edit_var(var_name, var_value)
-	return FALSE
+/datum/configuration/vv_get_var(var_name)
+	var/static/list/banned_views = list("autoadmin", "autoadmin_rank")
+	if(var_name in banned_views)
+		return debug_variable(var_name, "SECRET", 0, src)
+	return ..()
+	
+/datum/configuration/vv_edit_var(var_name, var_value)
+	var/static/list/banned_edits = list("cross_address", "cross_allowed")
+	if(var_name in banned_edits)
+		return FALSE
+	return ..()
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
+
+	var/autoadmin = 0
+	var/autoadmin_rank = "Game Admin"
 
 	var/server_name = null				// server name (the name of the game window)
 	var/server_sql_name = null			// short form server name used for the DB
@@ -493,9 +494,9 @@
 				if("maprotationchancedelta")
 					config.maprotatechancedelta = text2num(value)
 				if("autoadmin")
-					protected_config.autoadmin = 1
+					config.autoadmin = 1
 					if(value)
-						protected_config.autoadmin_rank = ckeyEx(value)
+						config.autoadmin_rank = ckeyEx(value)
 				if("generate_minimaps")
 					config.generate_minimaps = 1
 				if("client_warn_version")
@@ -901,9 +902,3 @@
 		statclick = new/obj/effect/statclick/debug("Edit", src)
 
 	stat("[name]:", statclick)
-
-/datum/configuration/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("cross_address", "cross_allowed")
-	if(var_name in banned_edits)
-		return FALSE
-	return ..()

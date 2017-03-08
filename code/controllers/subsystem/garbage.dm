@@ -394,7 +394,6 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(WALLITEMS_INVERSE)
 	SearchVar(sortInstance)
 	SearchVar(config)
-	SearchVar(protected_config)
 	SearchVar(host)
 	SearchVar(join_motd)
 	SearchVar(station_name)
