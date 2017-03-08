@@ -535,3 +535,10 @@
 	icon_state = "bedsheet"
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
+
+/obj/item/clothing/suit/nirvana
+	name = "grungy shirt"
+	desc = "An ancient shirt that smells like the spirit of teenagers."
+	icon_state = "nirvanashirt"
+	item_state = "bl_suit"
+	body_parts_covered = CHEST|ARMS|NECK
