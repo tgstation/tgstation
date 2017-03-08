@@ -108,14 +108,13 @@ var/datum/subsystem/mapping/SSmapping
 	if(last)
 		QDEL_NULL(loader)
 
-/datum/subsystem/mapping/proc/CreateSpace()
-	++world.maxz
-	CHECK_TICK
-
 #define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
 /datum/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
+
+	if(world.maxz != ZLEVEL_SPACEMAX)
+		WARNING("world.maxz does not match ZLEVEL_SPACEMAX!")
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
@@ -124,9 +123,6 @@ var/datum/subsystem/mapping/SSmapping
 	INIT_ANNOUNCE("Loading mining level...")
 	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
 	INIT_ANNOUNCE("Loaded mining level!")
-
-	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
-		CreateSpace()
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
