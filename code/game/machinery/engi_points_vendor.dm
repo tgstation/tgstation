@@ -159,7 +159,7 @@
 			if(2100 to 2400)
 				alarm_rating = "IMPRESSIVE"
 				playsound(src, 'sound/misc/compiler-stage2.ogg', 100, 1)
-			if(2500 to INF)
+			if(2500 to 9999999)
 				alarm_rating = "ABSOLUTELY FLAWLESS"
 				playsound(src, 'sound/misc/compiler-stage2.ogg', 100, 1)
 		radio.talk_into(src,"UPDATE: The engineering department has been awarded [air_alarm_bonus] points for the state of the station's air, [power_alarm_bonus] points for the state of the station's power, and [fire_alarm_bonus] points for the state of the station's fire alarms.")
