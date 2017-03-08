@@ -16,9 +16,11 @@
 
 #define WARNING_DELAY 30 		//seconds between warnings.
 
+#define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
+
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='danger'>You get headaches just from looking at it.</span>"
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter_shard"
 	density = 1
@@ -92,6 +94,22 @@
 		qdel(countdown)
 		countdown = null
 	. = ..()
+
+/obj/machinery/power/supermatter_shard/examine(mob/user)
+	..()
+	if(!ishuman(user))
+		return
+
+	var/range = HALLUCINATION_RANGE(power)
+	for(var/mob/living/carbon/human/H in viewers(range, src))
+		if(H != user)
+			continue
+		if(!istype(H.glasses, /obj/item/clothing/glasses/meson))
+			H << "<span class='danger'>You get headaches just from looking at it.</span>"
+		return
+
+/obj/machinery/power/supermatter_shard/get_spans()
+	return list(SPAN_ROBOT)
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	investigate_log("has collapsed into a singularity.", "supermatter")
@@ -213,7 +231,7 @@
 	if(produces_gas)
 		env.merge(removed)
 
-	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
+	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
@@ -361,10 +379,12 @@
 
 /obj/machinery/power/supermatter_shard/crystal
 	name = "supermatter crystal"
-	desc = "A strangely translucent and iridescent crystal. <span class='danger'>You get headaches just from looking at it.</span>"
+	desc = "A strangely translucent and iridescent crystal."
 	base_icon_state = "darkmatter"
 	icon_state = "darkmatter"
 	anchored = 1
 	gasefficency = 0.15
 	explosion_power = 20
 
+
+#undef HALLUCINATION_RANGE

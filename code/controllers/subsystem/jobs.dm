@@ -360,7 +360,15 @@ var/datum/subsystem/job/SSjob
 	return 1
 
 //Gives the player the stuff he should have with his rank
-/datum/subsystem/job/proc/EquipRank(mob/living/H, rank, joined_late=0)
+/datum/subsystem/job/proc/EquipRank(mob/M, rank, joined_late=0)
+	var/mob/new_player/N
+	var/mob/living/H
+	if(!joined_late)
+		N = M
+		H = N.new_character
+	else
+		H = M
+
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
@@ -401,17 +409,21 @@ var/datum/subsystem/job/SSjob
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))
 			H = new_mob
+			if(!joined_late)
+				N.new_character = H
+			else
+				M = H
 
-	H << "<b>You are the [rank].</b>"
-	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
-	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
+	M << "<b>You are the [rank].</b>"
+	M << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+	M << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
 	if(job.req_admin_notify)
-		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		M << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
-		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
+		M << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
 
 	if(job && H)
-		job.after_spawn(H)
+		job.after_spawn(H, M)
 
 	return H
 
@@ -497,13 +509,16 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/Recover()
+	set waitfor = FALSE
 	var/oldjobs = SSjob.occupations
-	spawn(20)
-		for (var/datum/job/J in oldjobs)
-			spawn(-1)
-				var/datum/job/newjob = GetJob(J.title)
-				if (!istype(newjob))
-					return
-				newjob.total_positions = J.total_positions
-				newjob.spawn_positions = J.spawn_positions
-				newjob.current_positions = J.current_positions
+	sleep(20)
+	for (var/datum/job/J in oldjobs)
+		INVOKE_ASYNC(src, .proc/RecoverJob)
+
+/datum/subsystem/job/proc/RecoverJob(datum/job/J)
+	var/datum/job/newjob = GetJob(J.title)
+	if (!istype(newjob))
+		return
+	newjob.total_positions = J.total_positions
+	newjob.spawn_positions = J.spawn_positions
+	newjob.current_positions = J.current_positions
