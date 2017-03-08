@@ -97,6 +97,7 @@
 				/obj/item/device/assembly/timer = 3,
 				/obj/item/device/flashlight = 4,
 				/obj/item/device/flashlight/pen = 1,
+				/obj/item/device/flashlight/glowstick/random = 4,
 				/obj/item/device/multitool = 2,
 				/obj/item/device/radio/off = 2,
 				/obj/item/device/t_scanner = 5,
@@ -158,6 +159,7 @@
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
 				/obj/item/weapon/storage/toolbox/artistic = 2,
+				/obj/item/toy/eightball = 1,
 				"" = 3
 				)
 

@@ -120,11 +120,8 @@
 	if(!C.stat)
 		C << "<span class='notice'>You're not dead yet!</span>"
 		return
-	C << "<span class='notice'>Death is not your end!</span>"
-
-	spawn(rand(80,120))
-		C.revive(full_heal = 1, admin_revive = 1)
-		C << "<span class='notice'>You have regenerated.</span>"
-		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
-		C.update_canmove()
+	if(C.has_status_effect(STATUS_EFFECT_WISH_GRANTERS_GIFT))
+		C << "<span class='warning'>You're already resurrecting!</span>"
+		return
+	C.apply_status_effect(STATUS_EFFECT_WISH_GRANTERS_GIFT)
 	return 1

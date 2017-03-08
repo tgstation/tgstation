@@ -30,7 +30,7 @@
 	var/construction_blueprint	//if you change this, you also need to modify the colon accessor in controllers/subsystem/atoms.dm
 	var/datum/construction_state/current_construction_state	//The current construction_state of the object, null means fully constructed
 
-/obj/New()
+/obj/Initialize()
 	..()
 	if (!armor)
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)

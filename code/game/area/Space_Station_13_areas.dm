@@ -921,22 +921,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/AIsatextFP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/NewAIMain
 	name = "AI Main New"
@@ -989,7 +985,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
+/area/chapel/asteroid
+	name = "Chapel Asteroid"
+	icon_state = "explored"
 
+/area/chapel/dock
+	name = "Chapel Dock"
+	icon_state = "construction"
 
 /////////////////////////////////////////////////////////////////////
 /*

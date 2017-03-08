@@ -10,9 +10,7 @@
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
-	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
-		return TRUE	//Pure humans are always allowed in all roles.
-	return ..()
+	return TRUE	//Pure humans are always allowed in all roles.
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)

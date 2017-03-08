@@ -1259,6 +1259,7 @@
 	item_color = "flight"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	brightness_on = 7
+	light_color = "#30ffff"
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)

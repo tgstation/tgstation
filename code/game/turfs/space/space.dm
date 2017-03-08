@@ -28,6 +28,12 @@
 	if(requires_activation)
 		SSair.add_to_active(src)
 
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
+
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
@@ -61,7 +67,7 @@
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, area/area_restriction)
+/turf/open/space/attackby(obj/item/C, mob/user, params, area/area_restriction)
 	..()
 	if(istype(C, /obj/item/stack/rods))
 		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
