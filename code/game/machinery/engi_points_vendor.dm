@@ -136,14 +136,13 @@
 	for(var/obj/machinery/power/exporter/PE in power_exporter_list)
 		power_export_bonus = PE.drain_rate/200 // basically controls the balance of the current point system
 	if(GBP_alarm_cooldown <= world.time)
-		var/limit = 0 // ugh, to stop it from checking the Centcom Computer
 		for(var/obj/machinery/computer/station_alert/SA in machines)
-			if(!limit)
+			if(SA.z == src.z)
 				air_alarm_bonus = max(0,(1000 - (SA.air_alarm_count * 200)))
 				power_alarm_bonus = max(0,(1000 - (SA.power_alarm_count * 200)))
 				fire_alarm_bonus = max(0,(500 - (SA.fire_alarm_count * 100)))
 				total_bonus = air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus
-				limit++
+				break
 		switch(total_bonus)
 			if(0)
 				alarm_rating = "GREYTIDE IN YELLOW JUMPSUITS"
