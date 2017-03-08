@@ -816,15 +816,14 @@ var/global/BSACooldown = 0
 /client/proc/adminGreet(logout)
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/string
-		if(logout && config)
+		if(logout && config && config.announce_admin_logout)
 			string = pick(
 				"Admin logout: [key_name(src)]")
-		else if(!logout && config)
+		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
 			string = pick(
 				"Admin login: [key_name(src)]")
 		if(string)
 			message_admins("[string]")
-
 
 /datum/admins/SDQL_update()
 	return FALSE	//No.
