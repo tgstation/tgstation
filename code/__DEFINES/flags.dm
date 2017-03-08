@@ -34,6 +34,7 @@
 
 #define NO_EMP_WIRES "no_emp_wires"
 #define HOLOGRAM "hologram"
+#define FROZEN "frozen"
 
 //turf-only flags
 #define NOJAUNT		1

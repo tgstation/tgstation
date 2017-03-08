@@ -24,7 +24,6 @@
 	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-	var/is_frozen = FALSE
 	var/unique_rename = 0 // can you customize the description/name of the thing?
 
 	var/construction_blueprint	//if you change this, you also need to modify the colon accessor in controllers/subsystem/atoms.dm
@@ -53,8 +52,8 @@
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
-	if(is_frozen)
-		visible_message("<span class = 'danger'><b>[src] shatters into a million pieces!</b></span>")
+	if(HAS_SECONDARY_FLAG(src, FROZEN))
+		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
 
 /obj/assume_air(datum/gas_mixture/giver)
