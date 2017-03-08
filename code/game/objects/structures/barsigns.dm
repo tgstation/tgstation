@@ -87,7 +87,9 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign)
 		},
 		/datum/construction_state/last{
 			required_type_to_deconstruct = /obj/item/weapon/screwdriver
+			required_type_to_repair = /obj/item/weapon/weldingtool
 			deconstruction_message = "open the maintenance panel of"
+			repair_message = "fixing the dents in"
 		}
 	)
 
@@ -113,7 +115,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign)
 	
 	if(state_id == BARSIGN_UNWIRED)
 		broken = FALSE
-		obj_integrity = max_integrity
 		return
 
 	. = broken	//delete wires if fried
