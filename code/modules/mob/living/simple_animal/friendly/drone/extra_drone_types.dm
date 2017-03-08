@@ -111,6 +111,7 @@
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
+	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
@@ -127,7 +128,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/New()
 	. = ..()
-	SetLuminosity(2,1)
+	set_light(2, 0.5)
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
@@ -182,3 +183,12 @@
 
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
+
+/obj/item/drone_shell/dusty
+	name = "derelict drone shell"
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	drone_type = /mob/living/simple_animal/drone/derelict
+
+/mob/living/simple_animal/drone/derelict
+	name = "derelict drone"
+	default_hatmask = /obj/item/clothing/head/ushanka

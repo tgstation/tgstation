@@ -474,6 +474,7 @@
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	glass_type = /obj/item/stack/tile/brass
 	glass_amount = 1
+	reinf = FALSE
 	var/made_glow = FALSE
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)

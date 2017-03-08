@@ -195,7 +195,7 @@ var/next_external_rsc = 0
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
-	
+
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
@@ -330,12 +330,12 @@ var/next_external_rsc = 0
 
 	var/sql_ckey = sanitizeSQL(src.ckey)
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	if (!query.Execute())
+	var/DBQuery/query_get_client_age = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	if(!query_get_client_age.Execute())
 		return
 
-	while (query.NextRow())
-		player_age = text2num(query.item[2])
+	while(query_get_client_age.NextRow())
+		player_age = text2num(query_get_client_age.item[2])
 		return
 
 	//no match mark it as a first connection for use in client/New()
@@ -351,17 +351,18 @@ var/next_external_rsc = 0
 
 	var/sql_ckey = sanitizeSQL(ckey)
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]' AND ckey != '[sql_ckey]'")
-	query_ip.Execute()
+	var/DBQuery/query_get_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
+	query_get_ip.Execute()
 	related_accounts_ip = ""
-	while(query_ip.NextRow())
-		related_accounts_ip += "[query_ip.item[1]], "
+	while(query_get_ip.NextRow())
+		related_accounts_ip += "[query_get_ip.item[1]], "
 
-	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
-	query_cid.Execute()
+	var/DBQuery/query_get_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
+	if(!query_get_cid.Execute())
+		return
 	related_accounts_cid = ""
-	while (query_cid.NextRow())
-		related_accounts_cid += "[query_cid.item[1]], "
+	while (query_get_cid.NextRow())
+		related_accounts_cid += "[query_get_cid.item[1]], "
 
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
@@ -375,13 +376,14 @@ var/next_external_rsc = 0
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
-	query_insert.Execute()
+	var/DBQuery/query_log_player = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	if(!query_log_player.Execute())
+		return
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+
+	var/DBQuery/query_log_connection = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	query_log_connection.Execute()
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
@@ -466,19 +468,14 @@ var/next_external_rsc = 0
 	//check to see if we noted them in the last day.
 	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
 	if(!query_get_notes.Execute())
-		var/err = query_get_notes.ErrorMsg()
-		log_game("SQL ERROR obtaining id from messages table. Error : \[[err]\]\n")
 		return
-	if (query_get_notes.NextRow())
+	if(query_get_notes.NextRow())
 		return
-
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
 	query_get_notes = dbcon.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
-		var/err = query_get_notes.ErrorMsg()
-		log_game("SQL ERROR obtaining adminckey from notes table. Error : \[[err]\]\n")
 		return
-	if (query_get_notes.NextRow())
+	if(query_get_notes.NextRow())
 		if (query_get_notes.item[1] == adminckey)
 			return
 	create_message("note", sql_ckey, adminckey, "Detected as using a cid randomizer.", null, null, 0, 0)

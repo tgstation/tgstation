@@ -12,7 +12,7 @@
 
 /datum/status_effect/freon/on_apply()
 	if(!owner.stat)
-		owner << "You become frozen in a cube!"
+		owner << "<span class='userdanger'>You become frozen in a cube!</span>"
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
 	owner.update_canmove()

@@ -29,7 +29,11 @@
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
-#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
+
+/* Secondary atom flags, access using the SECONDARY_FLAG macros */
+
+#define NO_EMP_WIRES "no_emp_wires"
+#define HOLOGRAM "hologram"
 
 //turf-only flags
 #define NOJAUNT		1
@@ -71,3 +75,12 @@
 
 // Flags for reagents
 #define REAGENT_NOREACT 1
+
+//Fire and Acid stuff, for resistance_flags
+#define LAVA_PROOF 1
+#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
+#define FLAMMABLE 4
+#define ON_FIRE 8
+#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 64 //doesn't take damage

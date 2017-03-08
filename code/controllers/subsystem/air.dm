@@ -13,7 +13,6 @@ var/datum/subsystem/air/SSair
 	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND
-	display_order = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0

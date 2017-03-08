@@ -25,7 +25,7 @@ var/datum/subsystem/persistence/SSpersistence
 /datum/subsystem/persistence/proc/LoadSatchels()
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
-	secret_satchels[MAP_NAME] >> old_secret_satchels
+	secret_satchels[SSmapping.config.map_name] >> old_secret_satchels
 
 	var/list/expanded_old_satchels = list()
 	var/placed_satchels = 0
@@ -51,7 +51,7 @@ var/datum/subsystem/persistence/SSpersistence
 		satchel_string = pick_n_take(expanded_old_satchels)
 
 	old_secret_satchels = jointext(expanded_old_satchels,"#")
-	secret_satchels[MAP_NAME] << old_secret_satchels
+	secret_satchels[SSmapping.config.map_name] << old_secret_satchels
 
 	var/list/chosen_satchel = splittext(satchel_string,"|")
 	if(!chosen_satchel || isemptylist(chosen_satchel) || chosen_satchel.len != 3) //Malformed
@@ -78,7 +78,7 @@ var/datum/subsystem/persistence/SSpersistence
 /datum/subsystem/persistence/proc/LoadChiselMessages()
 	chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
 	var/saved_json
-	chisel_messages_sav[MAP_NAME] >> saved_json
+	chisel_messages_sav[SSmapping.config.map_name] >> saved_json
 
 	if(!saved_json)
 		return
@@ -118,13 +118,13 @@ var/datum/subsystem/persistence/SSpersistence
 		if(isemptylist(savable_obj))
 			continue
 		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
-	secret_satchels[MAP_NAME] << old_secret_satchels
+	secret_satchels[SSmapping.config.map_name] << old_secret_satchels
 
 /datum/subsystem/persistence/proc/CollectChiselMessages()
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
-	chisel_messages_sav[MAP_NAME] << json_encode(saved_messages)
+	chisel_messages_sav[SSmapping.config.map_name] << json_encode(saved_messages)
 
 /datum/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
 	saved_messages += list(M.pack()) // dm eats one list.

@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
 	true_name = pick(possible_true_names)
-	SetLuminosity(2,1)
+	set_light(2, 1.1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
@@ -278,7 +278,7 @@
 				counterchance = initial(counterchance)
 				var/previousattacktext = attacktext
 				attacktext = "counters"
-				target.attack_animal(src)
+				UnarmedAttack(target)
 				attacktext = previousattacktext
 			else
 				counterchance = min(counterchance + initial(counterchance), 100)

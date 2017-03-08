@@ -6,6 +6,9 @@
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 	if(href_list["rejectadminhelp"])
+		if(world.time && (spamcooldown > world.time))
+			usr << "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds."
+			return
 		if(!check_rights(R_ADMIN))
 			return
 		var/client/C = locate(href_list["rejectadminhelp"]) in clients
@@ -22,8 +25,12 @@
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
 		log_admin_private("[key_name(usr)] Rejected [C.key]'s admin help.")
+		spamcooldown = world.time + 150 // 15 seconds
 
 	else if(href_list["icissue"])
+		if(world.time && spamcooldown > world.time)
+			usr << "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds."
+			return
 		var/client/C = locate(href_list["icissue"]) in clients
 		if(!C)
 			return
@@ -36,6 +43,7 @@
 
 		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
 		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
+		spamcooldown = world.time + 150 // 15 seconds
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
@@ -249,7 +257,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob.")
 
-		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid ))
+		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid ))
 			usr << "<span class='danger'>Failed to apply ban.</span>"
 			return
 		create_message("note", banckey, null, banreason, null, null, 0, 0)
@@ -1101,9 +1109,7 @@
 	else if(href_list["messageedits"])
 		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
 		var/DBQuery/query_get_message_edits = dbcon.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
-		if(!query_get_message_edits.Execute())
-			var/err = query_get_message_edits.ErrorMsg()
-			log_game("SQL ERROR obtaining edits from messages table. Error : \[[err]\]\n")
+		if(!query_get_message_edits.warn_execute())
 			return
 		if(query_get_message_edits.NextRow())
 			var/edit_log = query_get_message_edits.item[1]
@@ -1819,6 +1825,17 @@
 
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
+
+	else if(href_list["individuallog"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["individuallog"]) in mob_list
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob."
+			return
+
+		show_individual_logging_panel(M, href_list["log_type"])
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))

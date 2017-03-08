@@ -130,7 +130,7 @@
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
-	icon_state = "green_awakened"
+	icon_state = "his_grace_awakened"
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
 	if(!awakened || ascended)

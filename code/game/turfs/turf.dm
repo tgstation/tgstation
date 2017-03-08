@@ -48,10 +48,26 @@
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
 
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
+
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy(force)
+	. = QDEL_HINT_IWILLGC
+	if(force)
+		..()
+		//this will completely wipe turf state
+		var/turf/basic/B = new /turf/basic(src)
+		for(var/A in B.contents)
+			qdel(A)
+		for(var/I in B.vars)
+			B.vars[I] = null
+		return
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
@@ -60,7 +76,6 @@
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
-	return QDEL_HINT_IWILLGC
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -386,11 +401,12 @@
 			continue
 		if(istype(A, /obj/docking_port))
 			continue
+		if(A == T0)
+			continue
 		qdel(A, force=TRUE)
 
 	T0.ChangeTurf(turf_type)
 
-	T0.redraw_lighting()
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
