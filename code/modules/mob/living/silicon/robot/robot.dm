@@ -826,8 +826,8 @@
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
 /mob/living/silicon/robot/syndicate/proc/show_playstyle()
-		if(playstyle_string)
-			src << playstyle_string
+	if(playstyle_string)
+		src << playstyle_string
 
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
