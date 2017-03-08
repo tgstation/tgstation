@@ -29,6 +29,7 @@
 	var/datum/subsystem/queue_next
 	var/datum/subsystem/queue_prev
 
+	var/init_length			//How long it to for the SS to initialize, null for SS_NO_INIT
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
@@ -153,7 +154,8 @@
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday)
-	var/time = (REALTIMEOFDAY - start_timeofday) / 10
+	init_length = REALTIMEOFDAY - start_timeofday
+	var/time = init_length / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world << "<span class='boldannounce'>[msg]</span>"
 	log_world(msg)

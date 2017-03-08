@@ -702,3 +702,103 @@
 		holder.screen -= src
 		holder = null
 	return ..()
+
+/obj/screen/loading
+	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
+	screen_loc = "1,1"
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "bsa_beam"
+	alpha = 0
+	var/running
+	var/subsystem_count = 0
+	var/ss_starttime = 0
+	var/datum/subsystem/current_subsystem
+	var/list/average_subsystem_init_time
+
+/obj/screen/loading/New(number_of_ss)
+	set waitfor = FALSE
+	..()
+	
+	running = TRUE
+
+	for(var/I in clients)
+		var/client/C = I
+		C.screen += src
+
+	var/F = file("data/subsystem_average_init_times.json")
+	if(F)
+		F = file2text(F)
+		if(F)
+			average_subsystem_init_time = json_decode(F)
+	LAZYINITLIST(average_subsystem_init_time)
+	var/list/asit = average_subsystem_init_time
+
+	var/matrix/Base = matrix(transform)
+	Base.Turn(90)
+	transform = Base
+	animate(src, alpha = 255, pixel_y = 30, time = 30)
+
+	var/goal = number_of_ss * 100
+	var/progress
+
+	while(running || progress < goal)
+		sleep(1)
+		var/old_progress = progress
+		var/old_average = asit[current_subsystem.name]
+		if(isnull(old_average))
+			//assume 5s
+			old_average = 50
+		else
+			old_average = max(1, old_average)
+		var/time_elapsed_this_init = REALTIMEOFDAY - ss_starttime
+
+		progress = (100 * subsystem_count) + min((time_elapsed_this_init / old_average) * 100, 100);
+		progress = min(old_progress + 10, progress)	//smooth it out
+
+		if(old_progress != progress)
+			var/matrix/M = matrix(Base)
+			var/dist = (progress / goal) * 15
+			M.Scale(dist, 1)
+			M.Translate(dist / 2, 0)
+			animate(src, transform = M, time = 1)
+			testing("Loading bar progress: [progress] / [goal]")
+
+	animate(src, alpha = 0, pixel_y = 0, time = 30)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30, TIMER_CLIENT_TIME)
+
+/obj/screen/loading/proc/NextSubsystem(datum/subsystem/SS)
+	current_subsystem = SS
+	ss_starttime = REALTIMEOFDAY
+
+/obj/screen/loading/proc/DoneSubsystem()
+	var/datum/subsystem/css = current_subsystem
+	var/cssn = css.name
+	var/old_average = average_subsystem_init_time[cssn]
+	var/time = css.init_length
+	if(isnull(old_average))
+		old_average = time
+	average_subsystem_init_time[cssn] = MC_AVERAGE_SLOW(old_average, time)
+	++subsystem_count
+
+/obj/screen/loading/proc/AddClient(client/C)
+	if(running)
+		C.screen += src
+
+/obj/screen/loading/Destroy()
+	if(running)
+		DoneSubsystem()	//finish the last one
+
+		//save the data
+		fdel("data/subsystem_average_init_times.json")
+		var/F = json_encode(average_subsystem_init_time)
+		if(F)
+			text2file(F,"data/subsystem_average_init_times.json")
+
+		running = FALSE
+		return QDEL_HINT_LETMELIVE
+
+	for(var/I in clients)
+		var/client/C = I
+		C.screen -= src
+	return ..()

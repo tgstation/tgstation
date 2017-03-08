@@ -301,6 +301,8 @@ var/next_external_rsc = 0
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	if(Master.progress_bar)
+		Master.progress_bar.AddClient(src)
 
 //////////////
 //DISCONNECT//

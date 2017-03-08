@@ -52,6 +52,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
 
+	var/obj/screen/loading/progress_bar
+
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
@@ -131,14 +133,23 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Sort subsystems by init_order, so they initialize in the correct order.
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 
+	var/list/subsystems_to_init = subsystems.Copy()
+	for(var/I in subsystems_to_init)
+		var/datum/subsystem/SS = I
+		if(SS.flags & SS_NO_INIT)
+			subsystems_to_init -= SS
+
 	var/start_timeofday = REALTIMEOFDAY
+	
 	// Initialize subsystems.
 	CURRENT_TICKLIMIT = config.tick_limit_mc_init
-	for (var/datum/subsystem/SS in subsystems)
-		if (SS.flags & SS_NO_INIT)
-			continue
+	progress_bar = new(subsystems_to_init.len)
+	for (var/I in subsystems_to_init)
+		var/datum/subsystem/SS = I
+		progress_bar.NextSubsystem(SS)
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
+	qdel(progress_bar)
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
