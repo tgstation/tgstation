@@ -154,13 +154,14 @@
 			flooring.icon_state = initial(flooring.icon_state)
 			playsound(flooring,'sound/magic/LightningShock.ogg', 50, 1)
 			Beam(flooring,icon_state="lightning[rand(1,12)]",time=20)
-			sleep(10)
+			cooldown = world.time + 30
+			return
 
 /obj/machinery/repair_turret/process()
 	if(cooldown<=world.time)
 		icon_state = "mini_on"
 		for(var/obj/target in view(7, src))
-			var/target_loc = get_turf(tar)
+			var/target_loc = get_turf(target)
 			if(repair(target))
 				return
 			if(repair_grille(target,target_loc))
@@ -169,9 +170,10 @@
 				return
 			if(repair_wall(target,target_loc))
 				return
-			repair_floor()
+		repair_floor()
 	else
 		icon_state = "mini_off"
+
 
 
 
