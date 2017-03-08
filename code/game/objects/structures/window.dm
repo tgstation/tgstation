@@ -394,8 +394,8 @@
 /obj/structure/window/reinforced/highpressure
 	name = "high pressure window"
 	max_integrity = 1000
-	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 80, bio = 100, rad = 100, fire = 100, acid = 100)
+	pressure_resistance = 4*ONE_ATMOSPHERE
+	resistance_flags = FIRE_PROOF
 
 /* Full Tile Windows (more obj_integrity) */
 

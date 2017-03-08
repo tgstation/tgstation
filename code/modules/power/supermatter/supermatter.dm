@@ -16,7 +16,9 @@
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
 
 #define MOLE_PENALTY_THRESHOLD 1000            //Higher == Shard can absorb more moles before triggering the high mole penalties.
+#define MOLE_HEAT_PENALTY 400                     //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled linearly
 #define POWER_PENALTY_THRESHOLD 4000          //Higher == Engine can generate more power before triggering the high power penalties.
+#define HEAT_PENALTY_THRESHOLD 40                       //Higher == Crystal safe operational temperature is higher.
 
 #define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750                //Higher == less plasma released by reaction
@@ -79,6 +81,7 @@
 	var/dynamic_heat_resistance = 1
 	var/powerloss_inhibitor = 1
 	var/power_transmission_bonus = 0
+	var/mole_heat_penalty = 0
 
 
 
@@ -216,14 +219,13 @@
 	damage_archived = damage
 	if(takes_damage)
 		//causing damage
-		damage = max(damage + (max(removed.temperature - (800*dynamic_heat_resistance), 0) / 150 ), 0)
+		damage = max(damage + (max(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ), 0)
 		damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500), 0)
 		damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80), 0)
 
 		//healing damage
 		if(combined_gas < MOLE_PENALTY_THRESHOLD)
-			damage = max(damage + (min(removed.temperature - 800, 0) / 150 ), 0)
-
+			damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
 
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
 
@@ -244,6 +246,8 @@
 
 	power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
 
+	//more moles of gases are harder to heat than fewer, so let's scale damage around a value
+	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
 
 	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)

@@ -55720,7 +55720,6 @@
 	name = "Supermatter Chamber";
 	req_access_txt = "10"
 	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqF" = (
