@@ -213,17 +213,18 @@
 
 
 
-/obj/machinery/conveyor_switch/New(newloc, newid)
+/obj/machinery/conveyor_switch/Initialize(mapload, newid)
+	if(mapload)
+		return TRUE	//need machines list
 	..(newloc)
 	if(!id)
 		id = newid
 	update()
 
-	spawn(5)		// allow map load
-		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machines)
-			if(C.id == id)
-				conveyors += C
+	conveyors = list()
+	for(var/obj/machinery/conveyor/C in machines)
+		if(C.id == id)
+			conveyors += C
 
 // update the icon depending on the position
 
