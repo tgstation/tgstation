@@ -90644,10 +90644,7 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "daJ" = (
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/effect/decal/remains/xeno = 49, /obj/structure/alien/egg = 1);
-	name = "2% chance xeno egg spawner"
-	},
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "daK" = (
