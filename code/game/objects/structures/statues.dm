@@ -97,7 +97,7 @@
 
 /obj/structure/statue/uranium
 	obj_integrity = 300
-	luminosity = 2
+	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
 	var/active = null

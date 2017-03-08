@@ -368,7 +368,6 @@ var/global/list/datum/stack_recipe/plastic_recipes = list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	throwforce = 7
-	flags = CONDUCT
 	origin_tech = "materials=1"
 	origin_tech = "materials=1;biotech=1"
 	merge_type = /obj/item/stack/sheet/plastic

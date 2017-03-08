@@ -147,7 +147,7 @@
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
-	icon_state = "sterile"
+	illustration = "sterile"
 
 /obj/item/weapon/storage/box/masks/New()
 	..()
@@ -762,7 +762,7 @@
 
 /obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
-	icon_state = "donk_kit"
+	illustration = "donk_kit"
 	item_state = null
 
 /obj/item/weapon/storage/box/ingredients/wildcard

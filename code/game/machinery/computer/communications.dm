@@ -35,6 +35,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/stat_msg1
 	var/stat_msg2
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/communications/proc/checkCCcooldown()
 	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
 	if(CM.lastTimeUsed + 600 > world.time)

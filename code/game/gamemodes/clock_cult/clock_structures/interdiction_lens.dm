@@ -19,6 +19,10 @@
 	var/interdiction_range = 14 //how large an area it drains and disables in
 	var/static/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
 
+/obj/structure/destructible/clockwork/powered/interdiction_lens/New()
+	..()
+	set_light(1.4, 0.8, "#F42B9D")
+
 /obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
 	user << "<span class='[recharging > world.time ? "neovgre_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
@@ -29,9 +33,9 @@
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		SetLuminosity(4, 2)
+		set_light(2, 1.6, "#EE54EE")
 	else
-		SetLuminosity(0)
+		set_light(1.4, 0.8, "#F42B9D")
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
@@ -49,7 +53,7 @@
 	recharging = world.time + recharge_time
 	flick("interdiction_lens_discharged", src)
 	icon_state = "interdiction_lens_inactive"
-	SetLuminosity(2,1)
+	set_light(2, 1.6, "#151200")
 	disabled = TRUE
 	return TRUE
 

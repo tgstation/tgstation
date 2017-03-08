@@ -83,18 +83,19 @@
 	layer = LOW_SIGIL_LAYER
 	alpha = 125
 	color = "#FAE48C"
+	light_range = 2 //soft light
+	light_power = 0.9
+	light_color = "#FAE48C"
 	stat_affected = UNCONSCIOUS
 	resist_string = "glows faintly yellow"
 	var/convert_time = 70
-	var/glow_light = 2 //soft light
-	var/glow_falloff = 1
 	var/delete_on_finish = TRUE
 	sigil_name = "Sigil of Submission"
 	var/glow_type
 
 /obj/effect/clockwork/sigil/submission/New()
 	..()
-	SetLuminosity(glow_light,glow_falloff)
+	update_light()
 
 /obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
@@ -153,8 +154,9 @@
 	icon_state = "sigiltransgression"
 	alpha = 200
 	color = "#A97F1B"
-	glow_light = 4 //bright light
-	glow_falloff = 3
+	light_range = 3 //bright light
+	light_power = 1
+	light_color = "#A97F1B"
 	delete_on_finish = FALSE
 	sigil_name = "Sigil of Accession"
 	glow_type = /obj/effect/overlay/temp/ratvar/sigil/accession
@@ -177,6 +179,7 @@
 	icon_state = "sigiltransmission"
 	alpha = 50
 	color = "#EC8A2D"
+	light_color = "#EC8A2D"
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
@@ -260,10 +263,9 @@
 	else
 		alpha = min(initial(alpha) + power_charge*0.02, 255)
 	if(!power_charge)
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(round(alpha*0.03, 1), round(alpha*0.02, 1))
-
+		set_light(round(alpha*0.02, 1), round(alpha*0.005, 1))
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality

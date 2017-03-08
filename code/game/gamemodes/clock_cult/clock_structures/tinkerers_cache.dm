@@ -10,6 +10,7 @@
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	max_integrity = 80
 	obj_integrity = 80
+	light_color = "#C2852F"
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 
@@ -18,7 +19,7 @@
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 	update_slab_info()
-	SetLuminosity(2,1)
+	set_light(2, 0.7)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
 	clockwork_caches--
@@ -75,6 +76,13 @@
 		return 1
 	else
 		return ..()
+
+/obj/structure/destructible/clockwork/cache/update_anchored(mob/user, do_damage)
+	..()
+	if(anchored)
+		set_light(2, 0.7)
+	else
+		set_light(0)
 
 /obj/structure/destructible/clockwork/cache/attack_hand(mob/living/user)
 	..()

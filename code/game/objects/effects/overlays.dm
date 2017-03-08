@@ -325,7 +325,7 @@
 		damage *= multiplier
 	duration = max(round(damage * 0.2), 1)
 	..()
-	SetLuminosity(3, 2)
+	set_light(1.5, 2, LIGHT_COLOR_ORANGE)
 
 /obj/effect/overlay/temp/ratvar/volt_hit/true/New(loc, caster, multiplier)
 	..()
@@ -424,10 +424,13 @@
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 70
-	luminosity = 6
+	light_range = 5
+	light_power = 2
+	light_color = "#FAE48C"
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
+	update_light()
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 65)
@@ -436,6 +439,13 @@
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
 	layer = ABOVE_MOB_LAYER
+	light_range = 1.4
+	light_power = 0.5
+	light_color = "#1E8CE1"
+
+/obj/effect/overlay/temp/ratvar/sigil/vitality/New()
+	..()
+	update_light()
 
 /obj/effect/overlay/temp/ratvar/sigil/accession
 	color = "#AF0AAF"

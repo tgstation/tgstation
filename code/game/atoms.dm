@@ -32,22 +32,13 @@
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
-	//atom color stuff
-	if(color)
-		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-
-	//lighting stuff
-	if(opacity && isturf(src.loc))
-		src.loc.UpdateAffectingLights()
-
-	if(luminosity)
-		light = new(src)
+		
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
 		Initialize(arglist(args))
-	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
@@ -64,6 +55,18 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
+	//atom color stuff
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity && isturf(loc))
+		var/turf/T = loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -544,10 +547,6 @@ var/list/blood_splatter_icons = list()
 /atom/vv_edit_var(var_name, var_value)
 	if(!Debug2)
 		admin_spawned = TRUE
-	switch(var_name)
-		if("luminosity")
-			src.SetLuminosity(var_value)
-			return//prevent normal setting of this value
 	. = ..()
 	switch(var_name)
 		if("color")
@@ -562,4 +561,3 @@ var/list/blood_splatter_icons = list()
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
-

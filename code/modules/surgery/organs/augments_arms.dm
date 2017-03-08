@@ -70,7 +70,7 @@
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
 		var/obj/item/device/assembly/flash/F = holder
-		F.SetLuminosity(0)
+		F.set_light(0)
 
 	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
@@ -90,7 +90,7 @@
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
 		var/obj/item/device/assembly/flash/F = holder
-		F.SetLuminosity(7)
+		F.set_light(7)
 
 	var/obj/item/arm_item = owner.get_active_held_item()
 
