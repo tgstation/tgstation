@@ -76,6 +76,10 @@
 
 /datum/mind/Destroy()
 	ticker.minds -= src
+	if(idman)
+		idman.mind = null
+		qdel(idman)
+		idman = null
 	return ..()
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)

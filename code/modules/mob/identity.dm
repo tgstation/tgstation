@@ -499,6 +499,12 @@ var/global/list/used_voiceprints = list()
 	else
 		qdel(src)
 
+/datum/identity_manager/Destroy()
+	if(mind)
+		mind.idman = null
+		qdel(mind)
+		mind = null
+
 /datum/identity_manager/proc/done_selecting()
 	if(select_mode == IDMAN_MODE_LINK)
 		cat = mind.inverse_category(cat)
