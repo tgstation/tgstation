@@ -323,8 +323,6 @@
 	visor_flags = 0
 	on = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	light_color = LIGHT_COLOR_FIRE
-	brightness_on = 3
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
