@@ -66,29 +66,25 @@
 	icon_state = "mini_off"
 	density = 0
 	anchored = 1
-	var/atom/base = null
 	var/cooldown = 0
 
-/obj/machinery/porta_turret/New(loc)
+/obj/machinery/repair_turret/Initialize()
 	..()
-	if(!base)
-		base = src
 	update_icon()
 	
-/obj/machinery/repair_turret/proc/repair(/obj/target, /turf/target_loc)
+/obj/machinery/repair_turret/proc/repair(obj/target, turf/target_loc)
 	if(target.obj_integrity < target.max_integrity)
 		playsound(get_turf(src),'sound/magic/LightningShock.ogg', 50, 1)
 		Beam(target,icon_state="lightning[rand(1,12)]",time=20)
 		target.obj_integrity = target.max_integrity
-		target.icon_state = initial(A.icon_state)
 		target.update_icon()
 		cooldown = world.time + 50
 		return TRUE
 	else
 		return FALSE
 	
-/obj/machinery/repair_turret/proc/repair_grille(/obj/target, /turf/target_loc)
-	if(istype(A,/obj/structure/grille/broken))
+/obj/machinery/repair_turret/proc/repair_grille(obj/target, turf/target_loc)
+	if(istype(target,/obj/structure/grille/broken))
 		var/N = 0
 		var/list/C = list()
 		cooldown = world.time + 200
@@ -128,7 +124,7 @@
 	else
 		return FALSE
 		
-/obj/machinery/repair_turret/proc/repair_wall(/obj/target, /turf/target_loc)
+/obj/machinery/repair_turret/proc/repair_wall(obj/target, turf/target_loc)
 	if(istype(target,/obj/structure/girder))
 		var/goal = 0
 		var/sum = 0
@@ -151,19 +147,18 @@
 	else
 		return FALSE
 		
-/obj/machinery/repair_turret/proc/repair_floor(/turf/open/floor/flooring, /turf/target_loc)
-	if(!F.icon_state == initial(F.icon_state))
-		F.icon_state = initial(F.icon_state)
+/obj/machinery/repair_turret/proc/repair_floor(turf/open/floor/flooring, turf/target_loc)
+	if(!flooring.icon_state == initial(flooring.icon_state))
+		flooring.icon_state = initial(flooring.icon_state)
 		cooldown = world.time + 50
 		return TRUE
 	else
 		return FALSE
 
 /obj/machinery/repair_turret/process()
-	var/turretview = view(7, base)
 	if(cooldown<=world.time)
 		icon_state = "mini_on"
-		for(var/obj/target in turretview)
+		for(var/obj/target in view(7, src))
 			var/target_loc = get_turf(tar)
 			if(repair(target))
 				return
@@ -173,7 +168,7 @@
 				return
 			if(repair_wall(target,target_loc))
 				return
-		for(var/turf/open/floor/flooring in turretview)
+		for(var/turf/open/floor/flooring in view(7, src))
 			if(repair_floor(flooring))
 				return	
 	else
