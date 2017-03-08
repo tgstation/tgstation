@@ -38,6 +38,7 @@
 	var/p_concentration1 = 0
 	var/p_concentration2 = 0
 	var/p_concentration3 = 0
+	var/list/quality = list()
 
 /obj/machinery/atmos_points_exporter
 	name = "atmospheric canister exporter"
@@ -75,7 +76,7 @@
 
 /obj/machinery/atmos_points/Initialize()
 	..()
-	var/list/quality = list("Economy","Standard","Premium")
+	quality = list("Economy","Standard","Premium")
 	var/list/gas = list()
 	var/list/concentration = list()
 	var/list/e_gas = list() // budget stats
