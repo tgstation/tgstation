@@ -89,6 +89,10 @@
 	if (config.log_pda)
 		diary << "\[[time_stamp()]]CHAT: [text]"
 
+/proc/log_sql(text)
+	if(config.sql_enabled)
+		diary << "\[[time_stamp()]]SQL: [text]"
+
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)
 	if(config && config.log_runtimes)

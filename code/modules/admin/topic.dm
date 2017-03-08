@@ -1194,9 +1194,7 @@
 	else if(href_list["messageedits"])
 		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
 		var/DBQuery/query_get_message_edits = dbcon.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
-		if(!query_get_message_edits.Execute())
-			var/err = query_get_message_edits.ErrorMsg()
-			log_game("SQL ERROR obtaining edits from messages table. Error : \[[err]\]\n")
+		if(!query_get_message_edits.warn_execute())
 			return
 		if(query_get_message_edits.NextRow())
 			var/edit_log = query_get_message_edits.item[1]
