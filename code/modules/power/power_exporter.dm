@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = 1
-	anchored = 0
+	anchored = FALSE
 	verb_say = "states"
 	var/drain_rate = 0	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
@@ -46,11 +46,11 @@ obj/machinery/power/exporter/Destroy()
 			if(!anchored && !isinspace())
 				connect_to_network()
 				user << "<span class='notice'>You secure the [src] to the floor.</span>"
-				anchored = 1
+				anchored = TRUE
 			else if(anchored)
 				disconnect_from_network()
 				user << "<span class='notice'>You unsecure and disconnect the [src].</span>"
-				anchored = 0
+				anchored = FALSE
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
 	return ..()
