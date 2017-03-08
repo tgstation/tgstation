@@ -10,7 +10,7 @@
 	var/power_drained = 0 		// has drained this much power
 	var/rating = ""
 	var/active = FALSE
-	var/rewarded = 0
+	var/rewarded = FALSE
 
 /obj/machinery/power/exporter/examine(mob/user)
 	..()
@@ -19,8 +19,15 @@
 	else
 		user << "<span class='notice'>The [src] is exporting [drain_rate] kilowatts of power, it has consumed [power_drained] kilowatts so far.</span>"
 
+obj/machinery/power/exporter/Initialize()
+	..()
+	power_exporter_list += src
 
-/obj/item/clothing/gloves/krav_maga/engi // a short lived meme
+obj/machinery/power/exporter/Destroy()
+	..()
+	power_exporter_list -= src
+
+/obj/item/clothing/gloves/krav_maga/engi // a short lived meme until I come up with a more fitting reward
 	name = "fists of the singulo"
 	desc = "You have spent so much time managing power that your fists have become one with the powernet."
 	icon_state = "yellow"
@@ -98,13 +105,13 @@
 			rating = "BAD"
 		if(401 to 800)
 			rating = "SUBPAR"
-		if(801 to 1800)
+		if(801 to 2500)
 			rating = "DECENT"
-		if(1801 to 4000)
+		if(2501 to 6000)
 			rating = "ROBUST"
-		if(4001 to 7000)
+		if(6001 to 10000)
 			rating = "GOOD BOY"
-		if(7001 to 999999)
+		if(10001 to 9999999)
 			rating = "HOLY SHIT YOU ABSOLUTE MADMAN!"
 	dat += text("Current export rating: [rating]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
