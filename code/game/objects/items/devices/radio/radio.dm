@@ -250,6 +250,9 @@
 	var/mobkey = "none" // player key associated with mob
 	var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
 	var/voice_print = M.get_voiceprint()
+	var/accent
+	if(voice_print)
+		accent = M.accent_from_voiceprint(voice_print)
 	if(ismob(M))
 		var/mob/speaker = M
 		real_name = speaker.real_name
@@ -309,6 +312,7 @@
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"voiceprint" = voice_print, // the mob's voiceprint
+			"accent" = accent,		// the mob's accent
 
 			"compression" = 0,		// uncompressed radio signal
 			"message" = message, 	// the actual sent message
@@ -330,7 +334,7 @@
 		Broadcast_Message(M,
 				  src, message, voice, jobname, real_name,
 				  5, signal.data["compression"], list(position.z, 0), freq, spans,
-				  verb_say, verb_ask, verb_exclaim, verb_yell, voice_print)
+				  verb_say, verb_ask, verb_exclaim, verb_yell, voice_print, accent)
 		return
 
 	/* ###### Radio headsets can only broadcast through subspace ###### */
@@ -350,6 +354,7 @@
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"voiceprint" = voice_print, // the mob's voiceprint
+			"accent" = accent,		// the mob's accent
 
 			// We store things that would otherwise be kept in the actual mob
 			// so that they can be logged even AFTER the mob is deleted or something
@@ -404,6 +409,7 @@
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
 		"voiceprint" = voice_print, //the mob's voiceprint
+		"accent" = accent,		// the mob's accent
 
 		"compression" = 0,		// uncompressed radio signal
 		"message" = message, 	// the actual sent message
@@ -437,9 +443,9 @@
 		Broadcast_Message(M,
 						  src, message, voice, jobname, real_name,
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
-						  verb_say, verb_ask, verb_exclaim, verb_yell)
+						  verb_say, verb_ask, verb_exclaim, verb_yell, voiceprint, accent)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(radio_freq)
 		return
 	if(broadcasting)

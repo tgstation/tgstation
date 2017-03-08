@@ -718,8 +718,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		people += H
 	if(person) //Basic talk
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		var/voiceprint_name = target.get_voiceprint_name(person, person.get_voiceprint())
-		to_chat(target, target.compose_message(person, person.languages_understood, pick(speak_messages), null, person.get_spans(), voiceprint_name))
+		var/voice_print = person.get_voiceprint()
+		var/voiceprint_name = target.get_voiceprint_name(person, voice_print)
+		var/accent = person.accent_from_voiceprint(voice_print)
+		to_chat(target, target.compose_message(person, person.languages_understood, pick(speak_messages), null, person.get_spans(), voiceprint_name, accent))
 		if(target.client)
 			target.client.images |= speech_overlay
 			sleep(30)
@@ -729,8 +731,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		var/voiceprint_name = target.get_voiceprint_name(person, person.get_voiceprint())
-		to_chat(target, target.compose_message(person, person.languages_understood, pick(radio_messages), "1459", person.get_spans(), voiceprint_name))
+		var/voice_print = person.get_voiceprint()
+		var/voiceprint_name = target.get_voiceprint_name(person, voice_print)
+		var/accent = person.accent_from_voiceprint(voice_print)
+		to_chat(target, target.compose_message(person, person.languages_understood, pick(radio_messages), "1459", person.get_spans(), voiceprint_name, accent))
 	qdel(src)
 
 /obj/effect/hallucination/message

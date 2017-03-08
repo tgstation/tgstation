@@ -89,7 +89,7 @@ global procs
 	say_dead(message)
 		Sends a message to all dead people. Does not use Hear().
 
-	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, override_name, accent, message_mode)
 		Composes the message mobs see on their screen when they hear something.
 
 	hivecheck()

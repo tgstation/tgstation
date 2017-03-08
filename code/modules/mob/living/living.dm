@@ -89,10 +89,12 @@
 				return
 			var/VP_name = voiceprint_entry[3]
 			mind.set_print_manual(voice_print, VP_name, CATEGORY_VOICEPRINTS)
-			var/chosen_name = input(src, "Please enter a new name for this person.", "Rename Person", VP_name)
-			if(!chosen_name || stat == DEAD || QDELETED(mind))
+			var/chosen_name = input(src, "Please enter a new name for [VP_name].", "Rename [VP_name]", VP_name)
+			if(!chosen_name || stat == DEAD || chosen_name == VP_name || QDELETED(mind))
 				return
+			chosen_name = html_encode(chosen_name)
 			mind.set_print_manual(voice_print, chosen_name, CATEGORY_VOICEPRINTS)
+			src.show_message("<span class='notice'>You will now remember [VP_name]'s name as [chosen_name].</span>")
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)

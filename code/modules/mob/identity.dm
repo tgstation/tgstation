@@ -299,11 +299,12 @@ var/global/list/used_voiceprints = list()
 	var/list/tag_entry
 	var/edit_tag
 	var/generate = TRUE
-	if(voiceprint_entry)
-		edit_tag = voiceprint_entry[6]
-		tag_entry = identity_edit_tags[edit_tag]
-		if(tag_entry && tag_entry[2] >= world.time - IDENTITY_EXPIRE_TIME)
-			generate = FALSE
+	if(!voiceprint_entry)
+		return
+	edit_tag = voiceprint_entry[6]
+	tag_entry = identity_edit_tags[edit_tag]
+	if(tag_entry && tag_entry[2] >= world.time - IDENTITY_EXPIRE_TIME)
+		generate = FALSE
 	while(generate)
 		edit_tag = random_string(8, hex_characters)
 		tag_entry = identity_edit_tags[edit_tag]

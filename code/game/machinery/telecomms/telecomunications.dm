@@ -71,6 +71,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"realname" = signal.data["realname"],
 			"name" = signal.data["name"],
 			"voiceprint" = signal.data["voiceprint"],
+			"accent" = signal.data["accent"],
 			"job" = signal.data["job"],
 			"key" = signal.data["key"],
 			"compression" = signal.data["compression"],

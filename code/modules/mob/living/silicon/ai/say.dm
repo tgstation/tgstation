@@ -19,7 +19,7 @@
 		if(G)
 			record_id = G.fields["id"]
 			assignment = G.fields["rank"]
-		. = "<a href='?src=\ref[src][ai_track_href(M, record_id)]'>[namepart][radio_freq ? " ([assignment])" : ""]</a>"
+		. = "<a title='Track' href='?src=\ref[src][ai_track_href(M, record_id)]'>[namepart][radio_freq ? " ([assignment])" : ""]</a>"
 
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai

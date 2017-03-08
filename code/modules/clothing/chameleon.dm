@@ -585,7 +585,7 @@
 	if(user.fake_voiceprint == chosen_voiceprint)
 		user.fake_voiceprint = null
 
-/obj/item/device/radio/headset/chameleon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
+/obj/item/device/radio/headset/chameleon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(recording && voice_print)
 		message = languages_understood & message_langs ? raw_message : stars(raw_message)
 		var/list/voiceprint_ref = voiceprint_refs[voice_print]

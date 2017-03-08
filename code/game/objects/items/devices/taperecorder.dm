@@ -92,7 +92,7 @@
 		icon_state = "taperecorder_idle"
 
 
-/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, voice_print, message_mode)
+/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, voice_print, accent, message_mode)
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
 		var/reference = "\ref[speaker][voice_print]"
@@ -217,18 +217,21 @@
 	var/atom/movable/virtualspeaker/virt = mytape.storedvirts[recording[4]]
 	var/my_spans = get_spans()
 	var/rendered = compose_said_message(virt, timestamp, raw_message, my_spans, their_spans)
+	var/voice_print = virt.voiceprint
+	var/accent
+	if(voice_print)
+		accent = virt.accent_from_voiceprint(voice_print)
 	for(var/atom/movable/AM in get_hearers_in_view(6, src))
-		var/voice_print = virt.voiceprint
 		if(voice_print && isliving(AM))
 			var/voiceprint_name = AM.get_voiceprint_name(virt, voice_print)
-			rendered = compose_said_message(virt, timestamp, raw_message, my_spans, their_spans, AM, voiceprint_name)
+			rendered = compose_said_message(virt, timestamp, raw_message, my_spans, their_spans, AM, voiceprint_name, accent)
 		AM.Hear(rendered, src, virt.languages_spoken, raw_message, , my_spans)
 
-/obj/item/device/taperecorder/proc/compose_recorded_message(atom/movable/virtualspeaker/virt, timestamp, raw_message, list/my_spans, list/their_spans, atom/movable/hearer=src, voiceprint_name)
-	. = "[timestamp] [hearer.compose_message(virt, virt.languages_spoken, raw_message, , their_spans, voiceprint_name)]"
+/obj/item/device/taperecorder/proc/compose_recorded_message(atom/movable/virtualspeaker/virt, timestamp, raw_message, list/my_spans, list/their_spans, atom/movable/hearer=src, voiceprint_name, accent)
+	. = "[timestamp] [hearer.compose_message(virt, virt.languages_spoken, raw_message, , their_spans, voiceprint_name, accent)]"
 
-/obj/item/device/taperecorder/proc/compose_said_message(atom/movable/virtualspeaker/virt, timestamp, raw_message, list/my_spans, list/their_spans, atom/movable/hearer=src, voiceprint_name)
-	var/message = compose_recorded_message(virt, timestamp, raw_message, my_spans, their_spans, hearer, voiceprint_name)
+/obj/item/device/taperecorder/proc/compose_said_message(atom/movable/virtualspeaker/virt, timestamp, raw_message, list/my_spans, list/their_spans, atom/movable/hearer=src, voiceprint_name, accent)
+	var/message = compose_recorded_message(virt, timestamp, raw_message, my_spans, their_spans, hearer, voiceprint_name, accent)
 	. = compose_message(src, languages_spoken, message, , my_spans)
 
 /obj/item/device/taperecorder/attack_self(mob/user)

@@ -437,13 +437,11 @@ for(var/t in test_times)
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-var/global/list/colors_list = list("white" = "#FFFFFF", "black" = "#000000", "gray" = "#808080", "brown" = "#A52A2A", \
-									"red" = "#FF0000", "darkred" = "#8B0000", "crimson" = "#DC143C", "orange" = "#DC143C", \
-									"yellow" = "#FFFF00", "green" = "#008000", "lime" = "#00FF00", "darkgreen" = "#006400", \
-									"cyan" = "#00FFFF", "blue" = "#0000FF", "navy" = "#000080", "teal" = "#008080", \
+var/static/list/colors_list = list("white" = "#FFFFFF", "black" = "#000000", "gray" = "#808080", "brown" = "#A52A2A",
+									"red" = "#FF0000", "darkred" = "#8B0000", "crimson" = "#DC143C", "orange" = "#FFA500",
+									"yellow" = "#FFFF00", "green" = "#008000", "lime" = "#00FF00", "darkgreen" = "#006400",
+									"cyan" = "#00FFFF", "blue" = "#0000FF", "navy" = "#000080", "teal" = "#008080",
 									"purple" = "#800080", "indigo" = "#4B0082")
-
-var/global/list/colors_list_rgb = list()
 
 /proc/color2hex(color)	//web colors
 	if(!color)
@@ -456,6 +454,7 @@ var/global/list/colors_list_rgb = list()
 		. = "#FFFFFF"
 
 /proc/color_hex2color(hex) //returns the closest matching color in the colors_list list
+	var/static/list/colors_list_rgb = list()
 	. = "black"
 	if(!hex)
 		return

@@ -162,7 +162,7 @@ var/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
 
 	return 1
 
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
+/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(!client)
 		return
 	var/deaf_message
@@ -181,7 +181,7 @@ var/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 	if(voice || !(message_langs & languages_understood) || force_compose) //force_compose is so AIs don't end up without their hrefs.
-		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans, voice, message_mode, edit_print_ref)
+		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans, voice, accent, message_mode, edit_print_ref)
 		last_voiceprint_message(voice_print, remove_html_tags(message))
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
@@ -195,13 +195,16 @@ var/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
 			the_dead |= M
 
 	var/eavesdropping = stars(message)
-	var/eavesrendered = compose_message(src, languages_spoken, eavesdropping, , spans, , message_mode)
-	var/rendered = compose_message(src, languages_spoken, message, , spans, , message_mode)
+	var/accent
+	if(voice_print)
+		accent = accent_from_voiceprint(voice_print)
+	var/eavesrendered = compose_message(src, languages_spoken, eavesdropping, , spans, null, accent, message_mode)
+	var/rendered = compose_message(src, languages_spoken, message, , spans, null, accent, message_mode)
 	for(var/atom/movable/AM in listening)
 		if(get_dist(src, AM) > message_range && !(AM in the_dead))
-			AM.Hear(eavesrendered, src, languages_spoken, eavesdropping, , spans, voice_print, message_mode)
+			AM.Hear(eavesrendered, src, languages_spoken, eavesdropping, , spans, voice_print, accent, message_mode)
 		else
-			AM.Hear(rendered, src, languages_spoken, message, , spans, voice_print, message_mode)
+			AM.Hear(rendered, src, languages_spoken, message, , spans, voice_print, accent, message_mode)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -215,7 +218,7 @@ var/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
 
 /mob/living/compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
 	if(edit_tag)
-		namepart = "<a href='?src=\ref[src];voiceprint_edit=[edit_tag];t=[world.time]'>[namepart]</a>"
+		namepart = "<a title='Rename' href='?src=\ref[src];voiceprint_edit=[edit_tag];t=[world.time]'>[namepart]</a>"
 	. = namepart
 
 /mob/proc/binarycheck()

@@ -8,7 +8,7 @@
 
 	. = src.say_dead(message)
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
+/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 
@@ -19,7 +19,7 @@
 			speaker = V.source
 	if(ismob(speaker))
 		var/mob/M = speaker
-		message = compose_message(M, message_langs, raw_message, radio_freq, spans, M.real_name, message_mode)
+		message = compose_message(M, message_langs, raw_message, radio_freq, spans, M.real_name, accent, message_mode)
 	var/link = FOLLOW_LINK(src, speaker)
 	to_chat(src, "[link] [message]")
 

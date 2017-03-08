@@ -25,7 +25,7 @@ var/list/freqtospan = list(
 	var/voice_print = get_voiceprint()
 	send_speech(message, 6, src, , spans, voice_print)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	return
 
 /atom/movable/proc/can_speak()
@@ -40,7 +40,34 @@ var/list/freqtospan = list(
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, name, message_mode, edit_tag)
+/atom/movable/proc/accent_from_voiceprint(voice_print)
+	if(istext(voice_print) && length(voice_print))
+		. = ""
+		var/hash = 0
+		for(var/i = 1, i <= length(voice_print), i++)
+			hash += text2ascii(voice_print, i)
+		var/static/list/accent_colors = list("black", "brown", "darkgreen", "darkred", "navy", "purple")
+		var/static/list/accent_sizes = list("1.1em", "0.9em")
+		var/static/list/accent_fonts = list("Arial", "Georgia, Vernanda", "Cambria")
+		var/color_index = ((hash / 8) % accent_colors.len) + 1
+		var/accent_color = color2hex(accent_colors[color_index])
+		. += "color: [accent_color];"
+		var/size_index = (hash / 16) % (accent_sizes.len + 1)
+		if(size_index)
+			var/accent_size = accent_sizes[size_index]
+			. += " font-size: [accent_size];"
+		var/fonts_index = (hash / 24) % (accent_fonts.len + 1)
+		if(fonts_index)
+			var/accent_font = accent_fonts[fonts_index]
+			. += " font-family: [accent_font];"
+
+/atom/movable/proc/compose_accent(name, accent)
+	if(accent)
+		. = "<span style='[accent]'>[name]</span>"
+	else
+		. = name
+
+/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, name, accent, message_mode, edit_tag)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -55,7 +82,7 @@ var/list/freqtospan = list(
 	//Message
 	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message, spans, message_mode)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_namepart(speaker, namepart, edit_tag, radio_freq)][endspanpart][messagepart]"
+	return "[spanpart1][spanpart2][freqpart][compose_namepart(speaker, compose_accent(namepart, accent), edit_tag, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
 	return namepart
