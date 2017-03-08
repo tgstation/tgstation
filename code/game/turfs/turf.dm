@@ -54,6 +54,10 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	var/static/turf_typecache = /turf
+	if (type == turf_typecache)
+		stack_trace("Unpathed turf created!")
+
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
