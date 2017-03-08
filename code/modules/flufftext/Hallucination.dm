@@ -998,7 +998,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			var/area/area = get_area(src)
 			src << "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>"
 			if(prob(50))
-				var/list/dead_people
+				var/list/dead_people = list()
 				for(var/mob/dead/observer/G in player_list)
 					dead_people += G
 				var/mob/dead/observer/fakemob = pick(dead_people)
