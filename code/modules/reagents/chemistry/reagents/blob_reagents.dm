@@ -198,7 +198,7 @@
 	M.adjustToxLoss(1*REM)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 5 //fully healed, honest
+		N.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
 	..()
 
 /datum/reagent/blob/regenerative_materia/on_mob_delete(mob/living/M)

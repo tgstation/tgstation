@@ -186,15 +186,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return 1
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-/mob/proc/rename_self(role)
+/mob/proc/rename_self(role, client/C)
+	if(!C)
+		C = client
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
 	var/safety = 0
 
 	while(loop && safety < 5)
-		if(client && client.prefs.custom_names[role] && !safety)
-			newname = client.prefs.custom_names[role]
+		if(C && C.prefs.custom_names[role] && !safety)
+			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
 				if("clown")
@@ -919,19 +921,6 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 		return !QDELETED(D)
 	return 0
 
-
-
-//Get the dir to the RIGHT of dir if they were on a clock
-//NORTH --> NORTHEAST
-/proc/get_clockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)+45)
-
-//Get the dir to the LEFT of dir if they were on a clock
-//NORTH --> NORTHWEST
-/proc/get_anticlockwise_dir(dir)
-	. = angle2dir(dir2angle(dir)-45)
-
-
 //Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
 //To the opposite dir of the dir returned by get_dir(B,A)
 //If one of them is a match, then A is facing B
@@ -943,8 +932,8 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 		if(LA.lying)
 			return 0
 	var/goal_dir = angle2dir(dir2angle(get_dir(B,A)+180))
-	var/clockwise_A_dir = get_clockwise_dir(A.dir)
-	var/anticlockwise_A_dir = get_anticlockwise_dir(B.dir)
+	var/clockwise_A_dir = turn(A.dir, -45)
+	var/anticlockwise_A_dir = turn(B.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
 		return 1
@@ -1321,6 +1310,42 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		else
 			. = ""
 
+/var/mob/dview/dview_mob = new
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	dview_mob.loc = center
+
+	dview_mob.see_invisible = invis_flags
+
+	. = view(range, dview_mob)
+	dview_mob.loc = null
+
+/mob/dview
+	invisibility = 101
+	density = 0
+	see_in_dark = 1e6
+	anchored = 1
+
+/mob/dview/Destroy(force=0)
+	stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+
+	if (!force)
+		return QDEL_HINT_LETMELIVE
+
+	world.log << "EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS"
+	global.dview_mob = new
+	return QDEL_HINT_QUEUE
+
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center;           \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
+
 //can a window be here, or is there a window blocking it?
 /proc/valid_window_location(turf/T, dir_to_check)
 	if(!T)
@@ -1371,7 +1396,7 @@ var/valid_HTTPSGet = FALSE
 			\______(_______;;; __;;;
 		*/
 	var/temp_file = "HTTPSGetOutput.txt"
-	var/command 
+	var/command
 	if(world.system_type == MS_WINDOWS)
 		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
 	else if(world.system_type == UNIX)
@@ -1393,3 +1418,5 @@ var/valid_HTTPSGet = FALSE
 	. = file2text(f)
 	f = null
 	fdel(temp_file)
+
+#define UNTIL(X) while(!(X)) stoplag()

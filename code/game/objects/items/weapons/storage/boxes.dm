@@ -147,7 +147,7 @@
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
-	icon_state = "sterile"
+	illustration = "sterile"
 
 /obj/item/weapon/storage/box/masks/New()
 	..()
@@ -372,6 +372,7 @@
 	icon_state = "monkeycubebox"
 	storage_slots = 7
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	illustration = null
 
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
@@ -639,6 +640,7 @@
 	name = "box of rubber shots"
 	desc = "A box full of rubber shots, designed for riot shotguns."
 	icon_state = "rubbershot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/rubbershot/New()
 	..()
@@ -649,6 +651,7 @@
 	name = "box of lethal shotgun shots"
 	desc = "A box full of lethal shots, designed for riot shotguns."
 	icon_state = "lethalshot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/lethalshot/New()
 	..()
@@ -664,6 +667,7 @@
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
 	icon_state = "rubbershot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/beanbag/New()
 	..()
@@ -758,7 +762,7 @@
 
 /obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
-	icon_state = "donk_kit"
+	illustration = "donk_kit"
 	item_state = null
 
 /obj/item/weapon/storage/box/ingredients/wildcard

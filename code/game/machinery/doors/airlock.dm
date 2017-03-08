@@ -87,6 +87,7 @@ var/list/airlock_overlays = list()
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 
 	explosion_block = 1
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 /obj/machinery/door/airlock/New()
 	..()
@@ -107,6 +108,10 @@ var/list/airlock_overlays = list()
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/Initialize()
 	..()
@@ -216,10 +221,8 @@ var/list/airlock_overlays = list()
 					return
 			else /*if(src.justzap)*/
 				return
-		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
-			user << "<span class='userdanger'>You feel a powerful shock course through your body!</span>"
-			user.staminaloss += 50
-			user.stunned += 5
+		else if(user.hallucination > 50 && ishuman(user) && prob(10) && src.operating == 0)
+			hallucinate_shock(user)
 			return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
@@ -229,6 +232,34 @@ var/list/airlock_overlays = list()
 				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
 
+/obj/machinery/door/airlock/proc/hallucinate_shock(mob/living/user)
+	var/image/shock_image = image(user, user, dir = user.dir)
+	var/image/electrocution_skeleton_anim = image('icons/mob/human.dmi', user, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
+	shock_image.color = rgb(0,0,0)
+	shock_image.override = TRUE
+	electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+
+	user << "<span class='userdanger'>You feel a powerful shock course through your body!</span>"
+	if(user.client)
+		user.client.images |= shock_image
+		user.client.images |= electrocution_skeleton_anim
+	addtimer(CALLBACK(src, .proc/reset_hallucinate_shock_animation, user, shock_image, electrocution_skeleton_anim), 40)
+	user.playsound_local(get_turf(src), "sparks", 100, 1)
+	user.staminaloss += 50
+	user.Stun(2)
+	user.jitteriness += 1000
+	user.do_jitter_animation(user.jitteriness)
+	addtimer(CALLBACK(src, .proc/hallucinate_shock_drop, user), 20)
+
+/obj/machinery/door/airlock/proc/reset_hallucinate_shock_animation(mob/living/user, shock_image, electrocution_skeleton_anim)
+	if(user.client)
+		user.client.images.Remove(shock_image)
+		user.client.images.Remove(electrocution_skeleton_anim)
+
+/obj/machinery/door/airlock/proc/hallucinate_shock_drop(mob/living/user)
+	user.jitteriness = max(user.jitteriness - 990, 10) //Still jittery, but vastly less
+	user.Stun(3)
+	user.Weaken(3)
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != 0)
@@ -759,10 +790,10 @@ var/list/airlock_overlays = list()
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
 						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
-					else if(src.secondsElectrified==-1)
-						src.secondsElectrified = 0
-					else if(src.secondsElectrified>0)
-						src.secondsElectrified = 0
+					else if(secondsElectrified==-1)
+						set_electrified(0)
+					else if(secondsElectrified>0)
+						set_electrified(0)
 
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
@@ -845,12 +876,12 @@ var/list/airlock_overlays = list()
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
-						src.secondsElectrified = 30
+						set_electrified(30)
 						spawn(10)
 							while (src.secondsElectrified>0)
 								src.secondsElectrified-=1
 								if(src.secondsElectrified<0)
-									src.secondsElectrified = 0
+									set_electrified(0)
 								src.updateUsrDialog()
 								sleep(10)
 				if(6)
@@ -864,7 +895,7 @@ var/list/airlock_overlays = list()
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
-						src.secondsElectrified = -1
+						set_electrified(-1)
 
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
@@ -1232,13 +1263,13 @@ var/list/airlock_overlays = list()
 		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(5)
 	src.density = 0
 	sleep(9)
 	src.layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
-	SetOpacity(0)
+	set_opacity(0)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -1284,7 +1315,7 @@ var/list/airlock_overlays = list()
 	sleep(9)
 	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
-		SetOpacity(1)
+		set_opacity(1)
 	operating = 0
 	delayed_close_requested = FALSE
 	air_update_turf(1)
@@ -1417,7 +1448,7 @@ var/list/airlock_overlays = list()
 		safe = FALSE //DOOR CRUSH
 		close()
 		bolt() //Bolt it!
-		secondsElectrified = -1  //Shock it!
+		set_electrified(-1)  //Shock it!
 		if(origin)
 			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
 
@@ -1426,7 +1457,7 @@ var/list/airlock_overlays = list()
 	// Must be powered and have working AI wire.
 	if(canAIControl(src) && !stat)
 		unbolt()
-		secondsElectrified = 0
+		set_electrified(0)
 		open()
 		safe = TRUE
 
@@ -1439,6 +1470,9 @@ var/list/airlock_overlays = list()
 		wires.cut_all()
 		update_icon()
 
+/obj/machinery/door/airlock/proc/set_electrified(seconds)
+	secondsElectrified = seconds
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()

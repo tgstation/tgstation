@@ -2593,7 +2593,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "hr" = (
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "hs" = (

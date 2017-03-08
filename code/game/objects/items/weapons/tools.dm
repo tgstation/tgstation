@@ -44,6 +44,7 @@
 /obj/item/weapon/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "wrench_brass"
 	toolspeed = 0.5
 
@@ -167,6 +168,7 @@
 /obj/item/weapon/screwdriver/brass
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "screwdriver_brass"
 	toolspeed = 0.5
 
@@ -259,6 +261,7 @@
 /obj/item/weapon/wirecutters/brass
 	name = "brass wirecutters"
 	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "cutters_brass"
 	toolspeed = 0.5
 
@@ -426,7 +429,7 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 		if(get_fuel() <= 0)
-			user.AddLuminosity(-light_intensity)
+			set_light(0)
 
 		if(isliving(O))
 			var/mob/living/L = O
@@ -438,8 +441,8 @@
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	switched_on(user)
 	if(welding)
-		SetLuminosity(0)
-		user.AddLuminosity(light_intensity)
+		set_light(light_intensity)
+
 	update_icon()
 
 
@@ -503,31 +506,12 @@
 //Switches the welder off
 /obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	welding = 0
-	if(user == loc) //If player is holding the welder
-		user.AddLuminosity(-light_intensity)
-		SetLuminosity(0)
-	else
-		SetLuminosity(0)
+	set_light(0)
 
 	force = 3
 	damtype = "brute"
 	hitsound = "swing_hit"
 	update_icon()
-
-
-/obj/item/weapon/weldingtool/pickup(mob/user)
-	..()
-	if(welding)
-		SetLuminosity(0)
-		user.AddLuminosity(light_intensity)
-
-
-/obj/item/weapon/weldingtool/dropped(mob/user)
-	..()
-	if(welding)
-		if(user)
-			user.AddLuminosity(-light_intensity)
-		SetLuminosity(light_intensity)
 
 
 /obj/item/weapon/weldingtool/examine(mob/user)
@@ -644,6 +628,7 @@
 /obj/item/weapon/weldingtool/experimental/brass
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "brasswelder"
 	item_state = "brasswelder"
 
@@ -688,6 +673,7 @@
 /obj/item/weapon/crowbar/brass
 	name = "brass crowbar"
 	desc = "A brass crowbar. It feels faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "crowbar_brass"
 	toolspeed = 0.5
 

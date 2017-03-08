@@ -10,6 +10,9 @@
 	var/autoadmin = 0
 	var/autoadmin_rank = "Game Admin"
 
+/datum/protected_configuration/SDQL_update()
+	return FALSE
+
 /datum/protected_configuration/vv_get_var(var_name)
 	return debug_variable(var_name, "SECRET", 0, src)
 
@@ -215,8 +218,8 @@
 	var/announce_admin_logout = 0
 	var/announce_admin_login = 0
 
-	var/list/datum/votablemap/maplist = list()
-	var/datum/votablemap/defaultmap = null
+	var/list/datum/map_config/maplist = list()
+	var/datum/map_config/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
 
@@ -751,7 +754,7 @@
 /datum/configuration/proc/loadmaplist(filename)
 	var/list/Lines = file2list(filename)
 
-	var/datum/votablemap/currentmap = null
+	var/datum/map_config/currentmap = null
 	for(var/t in Lines)
 		if(!t)
 			continue
@@ -780,21 +783,19 @@
 
 		switch (command)
 			if ("map")
-				currentmap = new (data)
-			if ("friendlyname")
-				currentmap.friendlyname = data
+				currentmap = new ("_maps/[data].json")
+				if(currentmap.defaulted)
+					log_world("Failed to load map config for [data]!")
 			if ("minplayers","minplayer")
-				currentmap.minusers = text2num(data)
+				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
-				currentmap.maxusers = text2num(data)
-			if ("friendlyname")
-				currentmap.friendlyname = data
+				currentmap.config_max_users = text2num(data)
 			if ("weight","voteweight")
 				currentmap.voteweight = text2num(data)
 			if ("default","defaultmap")
 				config.defaultmap = currentmap
 			if ("endmap")
-				config.maplist[currentmap.name] = currentmap
+				config.maplist[currentmap.map_name] = currentmap
 				currentmap = null
 			else
 				diary << "Unknown command in map vote config: '[command]'"

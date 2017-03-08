@@ -781,11 +781,11 @@
 			var/health_amount = health - staminaloss
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
-					if(1)
+					if(SCREWYHUD_CRIT)
 						hud_used.healths.icon_state = "health6"
-					if(2)
+					if(SCREWYHUD_DEAD)
 						hud_used.healths.icon_state = "health7"
-					if(5)
+					if(SCREWYHUD_HEALTHY)
 						hud_used.healths.icon_state = "health0"
 		if(hud_used.healthdoll)
 			hud_used.healthdoll.cut_overlays()
@@ -806,7 +806,7 @@
 						icon_num = 4
 					if(damage > (comparison*4))
 						icon_num = 5
-					if(hal_screwyhud == 5)
+					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
 						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
@@ -911,8 +911,7 @@
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
 	if(!riding_datum)
-		riding_datum = new /datum/riding/human
-		riding_datum.ridden = src
+		riding_datum = new /datum/riding/human(src)
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
 		return
 	if(buckled)	//NO INFINITE STACKING!!

@@ -37,10 +37,10 @@
 	float(linked_minds.len)
 	if(linked_minds.len)
 		START_PROCESSING(SSobj, src)
-		SetLuminosity(lit_luminosity)
+		set_light(lit_luminosity)
 	else
 		STOP_PROCESSING(SSobj, src)
-		SetLuminosity(0)
+		set_light(0)
 
 /obj/structure/life_candle/update_icon()
 	if(linked_minds.len)

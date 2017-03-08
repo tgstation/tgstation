@@ -414,6 +414,7 @@
 	possible_destinations = "pod_asteroid"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	light_color = LIGHT_COLOR_BLUE
 	density = 0
 	clockwork = TRUE //it'd look weird
 

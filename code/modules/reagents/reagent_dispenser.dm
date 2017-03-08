@@ -89,7 +89,9 @@
 			var/boom_message = "[key_name_admin(P.firer)] triggered a fueltank explosion via projectile."
 			bombers += boom_message
 			message_admins(boom_message)
-			log_game("[key_name(P.firer)] triggered a fueltank explosion via projectile.")
+			var/log_message = "triggered a fueltank explosion via projectile."
+			P.firer.log_message(log_message, INDIVIDUAL_ATTACK_LOG)
+			log_attack("[key_name(P.firer)] [log_message]")
 			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
@@ -108,10 +110,12 @@
 			update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-			var/message = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
-			bombers += message
-			message_admins(message)
-			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
+			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
+			bombers += message_admins
+			message_admins(message_admins)
+			var/message_log = "triggered a fueltank explosion via welding tool."
+			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
+			log_attack("[key_name(user)] [message_log]")
 			boom()
 		return
 	return ..()

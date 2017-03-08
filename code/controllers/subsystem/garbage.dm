@@ -4,7 +4,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	name = "Garbage"
 	priority = 15
 	wait = 5
-	display_order = 2
 	flags = SS_FIRE_IN_LOBBY|SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 
 	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
@@ -351,9 +350,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
-	SearchVar(nextmap)
-	SearchVar(mapchanging)
-	SearchVar(rebootingpendingmapchange)
 	SearchVar(clockwork_construction_value)
 	SearchVar(clockwork_caches)
 	SearchVar(clockwork_daemons)
@@ -477,12 +473,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(timezoneOffset)
 	SearchVar(fileaccess_timer)
 	SearchVar(TAB)
-	SearchVar(map_ready)
 	SearchVar(data_core)
 	SearchVar(CELLRATE)
 	SearchVar(CHARGELEVEL)
 	SearchVar(powernets)
-	SearchVar(map_name)
 	SearchVar(hair_styles_list)
 	SearchVar(hair_styles_male_list)
 	SearchVar(hair_styles_female_list)
@@ -758,8 +752,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(fire_overlay)
 	SearchVar(acid_overlay)
 	SearchVar(BUMP_TELEPORTERS)
-	SearchVar(contrabandposters)
-	SearchVar(legitposters)
 	SearchVar(blacklisted_glowshroom_turfs)
 	SearchVar(PDAs)
 	SearchVar(rod_recipes)
@@ -943,7 +935,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(GALOSHES_DONT_HELP)
 	SearchVar(SLIDE_ICE)
 	SearchVar(limb_icon_cache)
-	SearchVar(ALIEN_AFK_BRACKET)
 	SearchVar(MIN_IMPREGNATION_TIME)
 	SearchVar(MAX_IMPREGNATION_TIME)
 	SearchVar(MIN_ACTIVE_TIME)

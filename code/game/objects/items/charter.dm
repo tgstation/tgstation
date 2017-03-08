@@ -61,7 +61,7 @@
 
 	user << "Your name has been sent to your employers for approval."
 	// Autoapproves after a certain time
-	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user), approval_time, TIMER_STOPPABLE)
+	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
 	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>"
 
 /obj/item/station_charter/proc/reject_proposed(user)
@@ -80,20 +80,20 @@
 	deltimer(response_timer_id)
 	response_timer_id = null
 
-/obj/item/station_charter/proc/rename_station(designation, mob/user)
-	if(config && config.server_name)
-		world.name = "[config.server_name]: [designation]"
-	else
-		world.name = designation
-	station_name = designation
-	minor_announce("[user.real_name] has designated your station as [station_name()]", "Captain's Charter", 0)
-	log_game("[key_name(user)] has renamed the station as [station_name()].")
+/obj/item/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
+	change_station_name(designation)
+	minor_announce("[ureal_name] has designated your station as [station_name()]", "Captain's Charter", 0)
+	log_game("[ukey] has renamed the station as [station_name()].")
 
 	name = "station charter for [station_name()]"
 	desc = "An official document entrusting the governance of \
-		[station_name()] and surrounding space to Captain [user]."
+		[station_name()] and surrounding space to Captain [uname]."
 
 	if(!unlimited_uses)
 		used = TRUE
+
+/obj/item/station_charter/admin
+	unlimited_uses = TRUE
+	ignores_timeout = TRUE
 
 #undef STATION_RENAME_TIME_LIMIT
