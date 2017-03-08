@@ -36,7 +36,7 @@
 	var/s_concentration2 = 0
 	// requirements for the premium canister
 	var/premium_name = ""
-		var/list/p_gas = list() // premium stats
+	var/list/p_gas = list() // premium stats
 	var/p_pressure = 0
 	var/p_temp = 0
 	var/p_price = 1000
