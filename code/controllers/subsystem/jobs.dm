@@ -2,10 +2,12 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	init_order = 5
+	init_order = 14
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
+	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
+	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
@@ -15,7 +17,8 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/Initialize(timeofday)
-	SetupOccupations()
+	if(!occupations.len)
+		SetupOccupations()
 	if(config.load_jobs_from_txt)
 		LoadJobs()
 	..()
@@ -36,7 +39,12 @@ var/datum/subsystem/job/SSjob
 			continue
 		if(!job.config_check())
 			continue
+		if(!job.map_check())	//Even though we initialize before mapping, this is fine because the config is loaded at new
+			testing("Removed [job.type] due to map config"); 
+			continue
 		occupations += job
+		name_occupations[job.title] = job
+		type_occupations[J] = job
 
 	return 1
 
@@ -49,14 +57,15 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/proc/GetJob(rank)
-	if(!rank)
-		return null
-	for(var/datum/job/J in occupations)
-		if(!J)
-			continue
-		if(J.title == rank)
-			return J
-	return null
+	if(!occupations.len)
+		SetupOccupations()
+	return name_occupations[rank]
+
+/datum/subsystem/job/proc/GetJobType(jobtype)
+	if(!occupations.len)
+		SetupOccupations()
+	return type_occupations[jobtype]
+
 
 /datum/subsystem/job/proc/AssignRole(mob/new_player/player, rank, latejoin=0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
@@ -351,7 +360,15 @@ var/datum/subsystem/job/SSjob
 	return 1
 
 //Gives the player the stuff he should have with his rank
-/datum/subsystem/job/proc/EquipRank(mob/living/H, rank, joined_late=0)
+/datum/subsystem/job/proc/EquipRank(mob/M, rank, joined_late=0)
+	var/mob/new_player/N
+	var/mob/living/H
+	if(!joined_late)
+		N = M
+		H = N.new_character
+	else
+		H = M
+
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
@@ -368,10 +385,10 @@ var/datum/subsystem/job/SSjob
 			S = sloc
 			break
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-			world.log << "Couldn't find a round start spawn point for [rank]"
+			log_world("Couldn't find a round start spawn point for [rank]")
 			S = pick(latejoin)
 		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
-			world.log << "Couldn't find a round start latejoin spawn point."
+			log_world("Couldn't find a round start latejoin spawn point.")
 			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 				if(!T.density)
 					var/clear = 1
@@ -392,15 +409,22 @@ var/datum/subsystem/job/SSjob
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))
 			H = new_mob
-		job.apply_fingerprints(H)
+			if(!joined_late)
+				N.new_character = H
+			else
+				M = H
 
-	H << "<b>You are the [rank].</b>"
-	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
-	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
+	M << "<b>You are the [rank].</b>"
+	M << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+	M << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
 	if(job.req_admin_notify)
-		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		M << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
-		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
+		M << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
+
+	if(job && H)
+		job.after_spawn(H, M)
+
 	return H
 
 
@@ -485,13 +509,16 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/Recover()
+	set waitfor = FALSE
 	var/oldjobs = SSjob.occupations
-	spawn(20)
-		for (var/datum/job/J in oldjobs)
-			spawn(-1)
-				var/datum/job/newjob = GetJob(J.title)
-				if (!istype(newjob))
-					return
-				newjob.total_positions = J.total_positions
-				newjob.spawn_positions = J.spawn_positions
-				newjob.current_positions = J.current_positions
+	sleep(20)
+	for (var/datum/job/J in oldjobs)
+		INVOKE_ASYNC(src, .proc/RecoverJob)
+
+/datum/subsystem/job/proc/RecoverJob(datum/job/J)
+	var/datum/job/newjob = GetJob(J.title)
+	if (!istype(newjob))
+		return
+	newjob.total_positions = J.total_positions
+	newjob.spawn_positions = J.spawn_positions
+	newjob.current_positions = J.current_positions

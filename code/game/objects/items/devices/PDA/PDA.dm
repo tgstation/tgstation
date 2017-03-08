@@ -57,26 +57,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
-/obj/item/device/pda/pickup(mob/user)
-	..()
-	if(fon)
-		SetLuminosity(0)
-		user.AddLuminosity(f_lum)
-
-/obj/item/device/pda/dropped(mob/user)
-	..()
-	if(fon)
-		user.AddLuminosity(-f_lum)
-		SetLuminosity(f_lum)
+	light_power = 0.35
 
 /obj/item/device/pda/New()
 	..()
 	if(fon)
-		if(!isturf(loc))
-			loc.AddLuminosity(f_lum)
-			SetLuminosity(0)
-		else
-			SetLuminosity(f_lum)
+		set_light(f_lum)
+
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
@@ -307,7 +294,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += cart
 
 	dat += "</body></html>"
-	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_minimize=0")
+	user << browse(dat, "window=pda;size=400x450;border=1;can_resize=1;can_minimize=0")
 	onclose(user, "pda", src)
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -338,6 +325,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
+				if(istype(id, /obj/item/weapon/card/id/syndicate))
+					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
@@ -370,16 +359,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Light")
 				if(fon)
 					fon = 0
-					if(src in U.contents)
-						U.AddLuminosity(-f_lum)
-					else
-						SetLuminosity(0)
+					set_light(0)
 				else
 					fon = 1
-					if(src in U.contents)
-						U.AddLuminosity(f_lum)
-					else
-						SetLuminosity(f_lum)
+					set_light(2.3)
 				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)
@@ -414,7 +397,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
 				if(A && alert_s)
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
-					_alert_drones(msg, 1)
+					_alert_drones(msg, TRUE)
 					U << msg
 
 
@@ -661,7 +644,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			M << russian_html2text("[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
-	if(!P || qdeleted(P) || P.toff)
+	if(!P || QDELETED(P) || P.toff)
 		return null
 
 	var/obj/machinery/message_server/useMS = null
@@ -674,7 +657,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/datum/signal/signal = src.telecomms_process()
 
-	if(!P || qdeleted(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
+	if(!P || QDELETED(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
 		return null
 
 	var/useTC = 0
@@ -759,10 +742,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				I = C
 
 	if(I && I.registered_name)
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return 0
 		var/obj/old_id = id
-		I.forceMove(src)
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
@@ -772,10 +754,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
 		cartridge = C
-		cartridge.loc = src
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
@@ -801,9 +782,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
-		C.loc = src
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		update_icon()
@@ -812,9 +792,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(inserted_item)
 			user << "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>"
 		else
-			if(!user.unEquip(C))
+			if(!user.transferItemToLoc(C, src))
 				return
-			C.forceMove(src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 			inserted_item = C
 			update_icon()
@@ -936,7 +915,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //AI verb and proc for sending PDA messages.
 
 /mob/living/silicon/ai/proc/cmd_send_pdamesg(mob/user)
-	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
@@ -953,15 +931,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else if (P == src.aiPDA)
 			continue
 
-		var/name = P.owner
-		if (name in names)
-			namecounts[name]++
-			name = text("[name] ([namecounts[name]])")
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		plist[text("[name]")] = P
+		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
 
 	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
 
@@ -1009,13 +979,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
 		user << "You do not have a PDA. You should make an issue report about this."
-
-//Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
-	name = "spare PDAs"
-	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "pda"
 
 /obj/item/weapon/storage/box/PDAs/New()
 	..()

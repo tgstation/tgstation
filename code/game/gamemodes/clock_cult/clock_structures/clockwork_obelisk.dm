@@ -11,7 +11,8 @@
 	max_integrity = 150
 	obj_integrity = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
+	debris = list(/obj/item/clockwork/alloy_shards/small = 4, \
+	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
 	var/hierophant_cost = MIN_CLOCKCULT_POWER //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
@@ -25,9 +26,10 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='nzcrentr_small'>It requires <b>[hierophant_cost]W</b> to broadcast over the Hierophant Network, and <b>[gateway_cost]W</b> to open a Spatial Gateway.</span>"
 
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
-		user << "<span class='warning'>[src] is currently sustaining a gateway!</span>"
+		if(!silent)
+			user << "<span class='warning'>[src] is currently sustaining a gateway!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -37,7 +39,7 @@
 		SG.ex_act(1)
 		affected++
 	if(bad_effects)
-		affected += try_use_power(MIN_CLOCKCULT_POWER*2)
+		affected += try_use_power(MIN_CLOCKCULT_POWER*4)
 	return affected
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
@@ -53,7 +55,7 @@
 			if(!user.can_speak_vocal())
 				user << "<span class='warning'>You cannot speak through the obelisk!</span>"
 				return
-			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
+			var/input = strip_html_properly(stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", ""))
 			if(!is_servant_of_ratvar(user) || !input || !user.canUseTopic(src, !issilicon(user)))
 				return
 			if(active)
@@ -65,8 +67,8 @@
 			if(!user.can_speak_vocal())
 				user << "<span class='warning'>You cannot speak through the obelisk!</span>"
 				return
-			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [html_decode(input)]"))
-			titled_hierophant_message(user, input, "big_brass", "large_brass")
+			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [russian_html2text(input)]"))
+			titled_hierophant_message(user, russian_html2text(input), "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(active)
 				user << "<span class='warning'>The obelisk is already sustaining a gateway!</span>"

@@ -1,0 +1,4 @@
+author: "Fun Police"
+delete-after: True
+changes: 
+  - tweak: "Reject Adminhelp and IC Issue buttons have a cooldown."

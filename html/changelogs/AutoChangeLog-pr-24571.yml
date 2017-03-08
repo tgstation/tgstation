@@ -1,0 +1,7 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Wizards now have a new spell \"The Traps\" in their spellbook.
+Summon an array of temporary and permanent hazards for your foes, but
+don't fall into your own trap(s)!"
+  - rscadd: "Permanent wizard traps can be triggered relatively safely by throwing objects across the trap, or examining it at close range. The trap will then be on cooldown for a minute."

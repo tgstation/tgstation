@@ -238,7 +238,7 @@
 
 	update_icon()
 	if(on)
-		if(!light || light.luminosity != brightness)
+		if(!light || light.light_range != brightness)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -248,10 +248,10 @@
 					burn_out()
 			else
 				use_power = 2
-				SetLuminosity(brightness)
+				set_light(brightness)
 	else
 		use_power = 1
-		SetLuminosity(0)
+		set_light(0)
 
 	active_power_usage = (brightness * 10)
 	if(on != on_gs)
@@ -268,7 +268,7 @@
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
 		on = 0
-		SetLuminosity(0)
+		set_light(0)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -302,7 +302,7 @@
 
 	// attempt to insert light
 	else if(istype(W, /obj/item/weapon/light))
-		if(status != LIGHT_EMPTY)
+		if(status == LIGHT_OK)
 			user << "<span class='warning'>There is a [fitting] already inserted!</span>"
 		else
 			src.add_fingerprint(user)
@@ -310,8 +310,14 @@
 			if(istype(L, light_type))
 				if(!user.drop_item())
 					return
+
+				src.add_fingerprint(user)
+				if(status != LIGHT_EMPTY)
+					drop_light_tube(user)
+					user << "<span class='notice'>You replace [L].</span>"
+				else
+					user << "<span class='notice'>You insert [L].</span>"
 				status = L.status
-				user << "<span class='notice'>You insert the [L.name].</span>"
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness
@@ -378,7 +384,7 @@
 
 /obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
-	if(. && !qdeleted(src))
+	if(. && !QDELETED(src))
 		if(prob(damage_amount * 5))
 			break_light_tube()
 
@@ -402,8 +408,8 @@
 // returns whether this light has power
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
-	var/area/A = src.loc.loc
-	return A.master.lightswitch && A.master.power_light
+	var/area/A = get_area(src)
+	return A.lightswitch && A.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 	set waitfor = 0
@@ -528,7 +534,6 @@
 // called when area power state changes
 /obj/machinery/light/power_change()
 	var/area/A = get_area(src)
-	A = A.master
 	seton(A.lightswitch && A.power_light)
 
 // called when on fire

@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
-			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
+			var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
@@ -98,7 +98,7 @@
 	del_on_death = 1
 	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
-	var/list/human_overlays = list()
+	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
 	gold_core_spawnable = 1
 
@@ -133,12 +133,12 @@
 	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
-	icon_state = "zombie_s"
+	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
-	human_overlays = H.overlays
 	update_icons()
 	H.forceMove(src)
+	oldguy = H
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
@@ -167,9 +167,9 @@
 	if(factory)
 		factory.spores -= src
 	factory = null
-	if(contents)
-		for(var/mob/M in contents)
-			M.loc = src.loc
+	if(oldguy)
+		oldguy.forceMove(get_turf(src))
+		oldguy = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
@@ -178,8 +178,7 @@
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
-		cut_overlays()
-		overlays = human_overlays
+		copy_overlays(oldguy, TRUE)
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
 		if(overmind)
 			I.color = overmind.blob_reagent_datum.complementary_color
@@ -240,15 +239,11 @@
 		if(damagesources)
 			for(var/i in 1 to damagesources)
 				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
-			var/list/viewing = list()
-			for(var/mob/M in viewers(src))
-				if(M.client)
-					viewing += M.client
 			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 			I.appearance_flags = RESET_COLOR
 			if(overmind)
 				I.color = overmind.blob_reagent_datum.complementary_color
-			flick_overlay(I, viewing, 8)
+			flick_overlay_view(I, src, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

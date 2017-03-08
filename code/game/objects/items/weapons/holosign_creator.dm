@@ -27,7 +27,7 @@
 			user << "<span class='notice'>You use [src] to deactivate [H].</span>"
 			qdel(H)
 		else
-			if(!is_blocked_turf(T)) //can't put holograms on a tile that has dense stuff
+			if(!is_blocked_turf(T, TRUE)) //can't put holograms on a tile that has dense stuff
 				if(holocreator_busy)
 					user << "<span class='notice'>[src] is busy creating a hologram.</span>"
 					return
@@ -41,7 +41,7 @@
 						holocreator_busy = 0
 						if(signs.len >= max_signs)
 							return
-						if(is_blocked_turf(T)) //don't try to sneak dense stuff on our tile during the wait.
+						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 							return
 					H = new holosign_type(get_turf(target), src)
 					user << "<span class='notice'>You create \a [H] with [src].</span>"

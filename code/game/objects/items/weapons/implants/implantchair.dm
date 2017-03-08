@@ -1,5 +1,3 @@
-
-
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
@@ -77,10 +75,10 @@
 		ready_implants--
 		if(!replenishing && auto_replenish)
 			replenishing = TRUE
-			addtimer(src,"replenish",replenish_cooldown)
+			addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
 		if(injection_cooldown > 0)
 			ready = FALSE
-			addtimer(src,"set_ready",injection_cooldown)
+			addtimer(CALLBACK(src,"set_ready"),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
 	update_icon()
@@ -106,7 +104,7 @@
 	if(ready_implants < max_implants)
 		ready_implants++
 	if(ready_implants < max_implants)
-		addtimer(src,"replenish",replenish_cooldown)
+		addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
 	else
 		replenishing = FALSE
 

@@ -399,7 +399,7 @@ var/list/advance_cures = 	list(
 		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
-		D.AssignName(new_name)
+		D.AssignName(russian_html2text(new_name))
 		D.Refresh()
 
 		for(var/datum/disease/advance/AD in SSdisease.processing)

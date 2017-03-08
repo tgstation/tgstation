@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -77,7 +77,7 @@
 		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			addtimer(reagents, "add_reagent", 600, TIMER_NORMAL, refill, trans)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 /obj/item/weapon/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot())
@@ -103,7 +103,8 @@
 	materials = list(MAT_METAL=100)
 	possible_transfer_amounts = list()
 	volume = 5
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	spillable = 1
 	resistance_flags = FIRE_PROOF
 
@@ -350,7 +351,7 @@
 	name = "Lemon-Lime Soda"
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up
-	name = "Space-Up"
+	name = "Space-Up!"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
 	list_reagents = list("space_up" = 30)
@@ -379,4 +380,14 @@
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game
+	name = "Pwr Game"
+	desc = "The only drink with the PWR that true gamers crave."
+	icon_state = "purple_can"
+	list_reagents = list("pwr_game" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers
+	name = "Shambler's Juice"
+	desc = "~Shake me up some of that Shambler's Juice!~"
+	icon_state = "shamblers"
+	list_reagents = list("shamblers" = 30)

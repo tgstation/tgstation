@@ -10,9 +10,6 @@
 	healths = new /obj/screen/healths/alien()
 	infodisplay += healths
 
-	nightvisionicon = new /obj/screen/alien/nightvision()
-	nightvisionicon.screen_loc = ui_alien_nightvision
-	infodisplay += nightvisionicon
 	alien_queen_finder = new /obj/screen/alien/alien_queen_finder()
 	infodisplay += alien_queen_finder
 	pull_icon = new /obj/screen/pull()

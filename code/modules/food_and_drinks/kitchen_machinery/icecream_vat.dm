@@ -17,7 +17,7 @@
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	obj_integrity = 300
 	max_integrity = 300
 

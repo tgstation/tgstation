@@ -32,9 +32,8 @@
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I,src))
 			return
-		I.loc = src
 		mytape = I
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		update_icon()
@@ -220,7 +219,7 @@
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
-		t1 += "[mytape.storedinfo[i]]<BR>"
+		t1 += "[russian_text2html(mytape.storedinfo[i])]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
@@ -268,17 +267,22 @@
 
 
 /obj/item/device/tape/proc/fix()
-	overlays -= "ribbonoverlay"
+	cut_overlay("ribbonoverlay")
 	ruined = 0
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120*I.toolspeed, target = src))
-			user << "<span class='notice'>You wound the tape back in.</span>"
-			fix()
-
+	if(ruined)
+		var/delay = -1
+		if (istype(I, /obj/item/weapon/screwdriver))
+			delay = 120*I.toolspeed
+		else if(istype(I, /obj/item/weapon/pen))
+			delay = 120*1.5
+		if (delay != -1)
+			user << "<span class='notice'>You start winding the tape back in...</span>"
+			if(do_after(user, delay, target = src))
+				user << "<span class='notice'>You wound the tape back in.</span>"
+				fix()
 
 //Random colour tapes
 /obj/item/device/tape/random/New()

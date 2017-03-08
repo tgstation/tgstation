@@ -36,7 +36,6 @@
 	var/active = 0
 
 	var/memory
-	var/attack_log
 
 	var/assigned_role
 	var/special_role
@@ -62,7 +61,7 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
-	
+
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
 /datum/mind/New(var/key)
@@ -89,7 +88,6 @@
 			var/datum/antagonist/D = i
 			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
-	leave_all_huds()									//leave all the huds in the old body, so it won't get huds if somebody else enters it
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 	if(iscarbon(new_character))
@@ -136,7 +134,6 @@
 		if(isAI(current))
 			var/mob/living/silicon/ai/A = current
 			A.set_zeroth_law("")
-			A.show_laws()
 			A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 			A.malf_picker.remove_verbs(A)
 			qdel(A.malf_picker)
@@ -248,8 +245,9 @@
 		for(var/datum/objective/objective in objectives)
 			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
 
-	if(window)	recipient << browse(sanitize_russian(output, 1),"window=memory")
-	else
+	if(window)
+		recipient << browse(sanitize_russian(output, 1),"window=memory")
+	else if(objectives.len || memory)
 		recipient << "<i>[output]</i>"
 
 /datum/mind/proc/edit_memory()
@@ -760,7 +758,7 @@
 					return
 				new_objective = new /datum/objective
 				new_objective.owner = src
-				new_objective.explanation_text = expl
+				new_objective.explanation_text = russian_html2text(expl)
 
 		if (!new_objective)
 			return
@@ -1112,7 +1110,7 @@
 					special_role = null
 					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-					RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
+					RemoveSpell(/obj/effect/proc_holder/spell/aimed/fireball/hellish)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
@@ -1237,7 +1235,7 @@
 		switch(href_list["common"])
 			if("undress")
 				for(var/obj/item/W in current)
-					current.unEquip(W, 1) //The 1 forces all items to drop, since this is an admin undress.
+					current.dropItemToGround(W, TRUE) //The 1 forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
 				memory = null//Remove any memory they may have had.
@@ -1495,7 +1493,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		addtimer(S, "start_recharge", 0)
+		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)
@@ -1530,8 +1528,7 @@
 		if(ticker)
 			ticker.minds += mind
 		else
-			spawn(0)
-				throw EXCEPTION("mind_initialize(): No ticker ready")
+			stack_trace("mind_initialize(): No ticker ready")
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src

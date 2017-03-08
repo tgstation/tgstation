@@ -61,7 +61,7 @@
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(30))
-				PoolOrNew(floor_tile, src)
+				new floor_tile(src)
 				make_plating()
 		else if(prob(30))
 			ReplaceWithLattice()
@@ -106,10 +106,10 @@
 	icon_state = "plating"
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
-/turf/open/floor/engine/cult/New()
+/turf/open/floor/engine/cult/Initialize()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor/bloodcult, src)
+	new /obj/effect/overlay/temp/cult/turf/floor(src)
+	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
 	realappearence.linked = src
 
 /turf/open/floor/engine/cult/Destroy()
@@ -134,7 +134,7 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/open/floor/engine/cult/airless
 	initial_gas_mix = "TEMP=2.7"

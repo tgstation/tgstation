@@ -93,7 +93,7 @@
 		if(uses >= max_uses)
 			user << "<span class='warning'>[src.name] is full.</span>"
 			return
-		if(!user.unEquip(W))
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		AddUses(round(increment*0.75))
 		user << "<span class='notice'>You insert a shard of glass into the [src.name]. You have [uses] light\s remaining.</span>"
@@ -104,12 +104,12 @@
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
-				if(!user.unEquip(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				AddUses(1)
 				qdel(L)
 		else
-			if(!user.unEquip(W))
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			user << "<span class='notice'>You insert the [L.name] into the [src.name]</span>"
 			AddShards(1, user)

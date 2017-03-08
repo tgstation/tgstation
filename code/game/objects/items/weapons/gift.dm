@@ -43,8 +43,8 @@
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,
 		/obj/item/weapon/grown/corncob,
-		/obj/item/weapon/poster/contraband,
-		/obj/item/weapon/poster/legit,
+		/obj/item/weapon/poster/random_contraband,
+		/obj/item/weapon/poster/random_official,
 		/obj/item/weapon/book/manual/barman_recipes,
 		/obj/item/weapon/book/manual/chef_recipes,
 		/obj/item/weapon/bikehorn,
@@ -75,9 +75,7 @@
 	if(!ispath(gift_type,/obj/item))
 		return
 
+	qdel(src)
 	var/obj/item/I = new gift_type(M)
-	M.unEquip(src, 1)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
-	qdel(src)
-	return

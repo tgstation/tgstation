@@ -21,14 +21,14 @@
 			return say_dead(message)
 
 		var/mob/living/simple_animal/borer/B = loc
-		src << "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>"
-		B.victim << "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>"
+		src << "<i><span class='alien'>You whisper silently, \"[russian_html2text(message)]\"</span></i>"
+		B.victim << "<i><span class='alien'>The captive mind of [src] whispers, \"[russian_html2text(message)]\"</span></i>"
 
 		for (var/mob/M in player_list)
 			if(isnewplayer(M))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
-				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>"
+				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [russian_html2text(message)]</i>"
 
 /mob/living/captive_brain/emote(var/message)
 	return
@@ -41,7 +41,7 @@
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
 	var/delay = rand(150,250) + B.victim.brainloss
-	addtimer(src, "return_control", delay, TIMER_NORMAL, src.loc)
+	addtimer(CALLBACK(src, .proc/return_control, src.loc), delay)
 
 /mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
     if(!B || !B.controlling)
@@ -147,7 +147,7 @@ var/total_borer_hosts_needed = 10
 	if(stat != CONSCIOUS)
 		return
 	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_borer == "No" || !src || qdeleted(src))
+	if(be_borer == "No" || !src || QDELETED(src))
 		return
 	if(key)
 		return
@@ -174,21 +174,21 @@ var/total_borer_hosts_needed = 10
 		src << "You cannot do that in your current state."
 		return
 
-	var/input = stripped_input(src, "Please enter a message to tell your host.", "Borer", null)
+	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell your host.", "Borer", null))
 	if(!input)
 		return
 
-	if(src && !qdeleted(src) && !qdeleted(victim))
+	if(src && !QDELETED(src) && !QDELETED(victim))
 		var/say_string = (docile) ? "slurs" :"states"
 		if(victim)
-			victim << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
-			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
+			victim << "<span class='changeling'><i>[truename] [say_string]:</i> [russian_html2text(input)]</span>"
+			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [russian_html2text(input)]")
 			for(var/M in dead_mob_list)
 				if(isobserver(M))
-					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [input]</i>"
+					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [russian_html2text(input)]</i>"
 					var/link = FOLLOW_LINK(M, src)
 					M << "[link] [rendered]"
-		src << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
+		src << "<span class='changeling'><i>[truename] [say_string]:</i> [russian_html2text(input)]</span>"
 		victim.verbs += /mob/living/proc/borer_comm
 		talk_to_borer_action.Grant(victim)
 
@@ -202,19 +202,19 @@ var/total_borer_hosts_needed = 10
 	if(!B)
 		return
 
-	var/input = stripped_input(src, "Please enter a message to tell the borer.", "Message", null)
+	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell the borer.", "Message", null))
 	if(!input)
 		return
 
-	B << "<span class='changeling'><i>[src] says:</i> [input]</span>"
-	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
+	B << "<span class='changeling'><i>[src] says:</i> [russian_html2text(input)]</span>"
+	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [russian_html2text(input)]")
 
 	for(var/M in dead_mob_list)
 		if(isobserver(M))
-			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [input]</i>"
+			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [russian_html2text(input)]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
-	src << "<span class='changeling'><i>[src] says:</i> [input]</span>"
+	src << "<span class='changeling'><i>[src] says:</i> [russian_html2text(input)]</span>"
 
 /mob/living/proc/trapped_mind_comm()
 	set name = "Converse with Trapped Mind"
@@ -226,19 +226,19 @@ var/total_borer_hosts_needed = 10
 	if(!B || !B.host_brain)
 		return
 	var/mob/living/captive_brain/CB = B.host_brain
-	var/input = stripped_input(src, "Please enter a message to tell the trapped mind.", "Message", null)
+	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell the trapped mind.", "Message", null))
 	if(!input)
 		return
 
-	CB << "<span class='changeling'><i>[B.truename] says:</i> [input]</span>"
-	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [input]")
+	CB << "<span class='changeling'><i>[B.truename] says:</i> [russian_html2text(input)]</span>"
+	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [russian_html2text(input)]")
 
 	for(var/M in dead_mob_list)
 		if(isobserver(M))
-			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [input]</i>"
+			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [russian_html2text(input)]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
-	src << "<span class='changeling'><i>[B.truename] says:</i> [input]</span>"
+	src << "<span class='changeling'><i>[B.truename] says:</i> [russian_html2text(input)]</span>"
 
 /mob/living/simple_animal/borer/Life()
 
@@ -272,7 +272,7 @@ var/total_borer_hosts_needed = 10
 					else
 						src << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
 
-					waketimerid = addtimer(src,"wakeup",10,TIMER_NORMAL)
+					waketimerid = addtimer(CALLBACK(src, "wakeup"), 10, TIMER_STOPPABLE)
 			if(controlling)
 
 				if(docile)
@@ -299,9 +299,9 @@ var/total_borer_hosts_needed = 10
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
-			borer << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
+			borer << "<span class='borer'>Cortical Link: [truename] sings, \"[russian_html2text(message)]\""
 		for(var/mob/dead in dead_mob_list)
-			dead << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
+			dead << "<span class='borer'>Cortical Link: [truename] sings, \"[russian_html2text(message)]\""
 		return
 	if(!victim)
 		src << "<span class='warning'>You cannot speak without a host!</span>"
@@ -509,10 +509,10 @@ var/total_borer_hosts_needed = 10
 
 	leaving = TRUE
 
-	addtimer(src, "release_host", 100, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/release_host), 100)
 
 /mob/living/simple_animal/borer/proc/release_host()
-	if(!victim || !src || qdeleted(victim) || qdeleted(src))
+	if(!victim || !src || QDELETED(victim) || QDELETED(src))
 		return
 	if(!leaving)
 		return
@@ -627,13 +627,13 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
-	if(qdeleted(src) || qdeleted(victim))
+	if(QDELETED(src) || QDELETED(victim))
 		return
 
 	bonding = TRUE
 
 	var/delay = 200+(victim.brainloss*5)
-	addtimer(src, "assume_control", delay, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/assume_control), delay)
 
 /mob/living/simple_animal/borer/proc/assume_control()
 	if(!victim || !src || controlling || victim.stat == DEAD)
@@ -798,7 +798,7 @@ var/total_borer_hosts_needed = 10
 	if(!candidate || !candidate.mob)
 		return
 
-	if(!qdeleted(candidate) || !qdeleted(candidate.mob))
+	if(!QDELETED(candidate) || !QDELETED(candidate.mob))
 		var/datum/mind/M = create_borer_mind(candidate.ckey)
 		M.transfer_to(src)
 

@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, frequency = null)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -6,7 +6,8 @@
 		throw EXCEPTION("playsound(): source is an area")
 		return
 
-	var/frequency = get_rand_frequency() // Same frequency for everybody
+	if(isnull(frequency))
+		frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
@@ -82,8 +83,8 @@
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 /client/proc/playtitlemusic()
-	if(!ticker || !ticker.login_music)
-		return
+	UNTIL(ticker.login_music) //wait for ticker init to set the login music
+	
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 

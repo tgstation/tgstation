@@ -8,8 +8,11 @@
 	active_icon = "interdiction_lens_active"
 	inactive_icon = "interdiction_lens"
 	unanchored_icon = "interdiction_lens_unwrenched"
-	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
+	break_message = "<span class='warning'>The lens flares a blinding violet before the totem beneath it shatters!</span>"
 	break_sound = 'sound/effects/Glassbr3.ogg'
+	debris = list(/obj/item/clockwork/alloy_shards/small = 2, \
+	/obj/item/clockwork/alloy_shards/large = 2, \
+	/obj/item/clockwork/component/belligerent_eye/lens_gem = 1)
 	var/recharging = 0 //world.time when the lens was last used
 	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
 	var/disabled = FALSE //if it's actually usable
@@ -21,17 +24,17 @@
 	user << "<span class='[recharging > world.time ? "neovgre_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
 	: "vibrates in place and thrums with power"].</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='neovgre_small'>If it fails to drain any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
+		user << "<span class='neovgre_small'>If it fails to drain any electronics or has nothing to return power to, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		SetLuminosity(4, 2)
+		set_light(4, 0.2)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)))
+	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
 		if(disabled)
 			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
 			return 0
@@ -46,7 +49,7 @@
 	recharging = world.time + recharge_time
 	flick("interdiction_lens_discharged", src)
 	icon_state = "interdiction_lens_inactive"
-	SetLuminosity(2,1)
+	set_light(2, 0.1)
 	disabled = TRUE
 	return TRUE
 
@@ -60,6 +63,9 @@
 		disabled = FALSE
 		toggle(0)
 	else
+		if(!check_apc_and_sigils())
+			forced_disable()
+			return
 		var/successfulprocess = FALSE
 		var/power_drained = 0
 		var/list/atoms_to_test = list()
@@ -81,9 +87,9 @@
 
 		for(var/M in atoms_to_test)
 			var/atom/movable/A = M
-			if(!A || qdeleted(A) || A == target_apc)
+			if(!A || QDELETED(A) || A == target_apc)
 				continue
-			power_drained += (A.power_drain(TRUE) * efficiency)
+			power_drained += Floor(A.power_drain(TRUE) * efficiency, MIN_CLOCKCULT_POWER)
 
 			if(prob(1 * rage_modifier))
 				A << "<span class='neovgre'>\"[text2ratvar(pick(rage_messages))]\"</span>"

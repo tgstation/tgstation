@@ -210,7 +210,7 @@
 	species = "glowshroom"
 	plantname = "Glowshrooms"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
-	lifespan = 120 //ten times that is the delay
+	lifespan = 100 //ten times that is the delay
 	endurance = 30
 	maturation = 15
 	production = 1

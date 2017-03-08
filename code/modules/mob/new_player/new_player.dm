@@ -13,10 +13,15 @@
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
+	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
+
+	if(client && ticker.state == GAME_STATE_STARTUP)
+		var/obj/screen/splash/S = new(client, TRUE, TRUE)
+		S.Fade(TRUE)
 
 	if(length(newplayer_start))
 		loc = pick(newplayer_start)
@@ -40,18 +45,16 @@
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 /*
 	if(!IsGuestKey(src.key))
-		establish_db_connection()
-
-		if(dbcon.IsConnected())
+		if (dbcon.Connect())
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/DBQuery/query = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
-			query.Execute()
+			var/DBQuery/query_get_new_polls = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			if(!query_get_new_polls.Execute())
+				return
 			var/newpoll = 0
-			while(query.NextRow())
+			if(query_get_new_polls.NextRow())
 				newpoll = 1
-				break
 
 			if(newpoll)
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
@@ -72,10 +75,13 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
-		stat("Map:", MAP_NAME)
+		stat("Map:", SSmapping.config.map_name)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+			var/time_remaining = ticker.GetTimeLeft()
+			if(time_remaining >= 0)
+				time_remaining /= 10
+			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
 
 			stat("Players: [ticker.totalPlayers]", "Players Ready: [ticker.totalPlayersReady]")
 			for(var/mob/new_player/player in player_list)
@@ -104,8 +110,6 @@
 	if(href_list["ready"])
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
 			ready = text2num(href_list["ready"])
-		else
-			ready = 0
 
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
@@ -127,7 +131,7 @@
 			if (O)
 				observer.loc = O.loc
 			else
-				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
+				src << "<span class='notice'>Teleporting failed. The map is probably still loading...</span>"
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
@@ -304,9 +308,9 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
-	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
 
@@ -376,7 +380,7 @@
 
 
 /mob/new_player/proc/LateChoices()
-	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
+	var/mills = world.time - round_start_time // 1/10 of a second, not real milliseconds but whatever
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000
@@ -425,27 +429,33 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
-/mob/new_player/proc/create_character()
+/mob/new_player/proc/create_character(transfer_after)
 	spawning = 1
 	close_spawn_windows()
 
-	var/mob/living/carbon/human/new_character = new(loc)
+	var/mob/living/carbon/human/H = new(loc)
 
 	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-	client.prefs.copy_to(new_character)
-	new_character.dna.update_dna_identity()
+	client.prefs.copy_to(H)
+	H.dna.update_dna_identity()
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
-		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
-	new_character.name = real_name
+	H.name = real_name
 
-	new_character.key = key		//Manually transfer the key to log them in
-	new_character.stopLobbySound()
+	. = H
+	new_character = .
+	if(transfer_after)
+		transfer_character()
 
-	return new_character
+/mob/new_player/proc/transfer_character()
+	. = new_character
+	if(.)
+		new_character.key = key		//Manually transfer the key to log them in
+		new_character.stopLobbySound()
 
 /mob/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

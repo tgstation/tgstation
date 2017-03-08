@@ -36,7 +36,7 @@ var/list/announcement_systems = list()
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/announcement_system
-	name = "circuit board (Announcement System)"
+	name = "Announcement System (Machine Board)"
 	build_path = /obj/machinery/announcement_system
 	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
@@ -53,18 +53,12 @@ var/list/announcement_systems = list()
 	cut_overlays()
 	if(arrivalToggle)
 		add_overlay(greenlight)
-	else
-		overlays -= greenlight
 
 	if(newheadToggle)
 		add_overlay(pinklight)
-	else
-		overlays -= pinklight
 
 	if(stat & BROKEN)
 		add_overlay(errorlight)
-	else
-		overlays -= errorlight
 
 /obj/machinery/announcement_system/Destroy()
 	qdel(radio)
@@ -102,10 +96,10 @@ var/list/announcement_systems = list()
 	var/message
 
 	if(message_type == "ARRIVAL" && arrivalToggle)
-		message = CompileText(arrival, user, rank)
+		message = russian_html2text(CompileText(arrival, user, rank))
 
 	else if(message_type == "NEWHEAD" && newheadToggle)
-		message = CompileText(newhead, user, rank)
+		message = russian_html2text(CompileText(newhead, user, rank))
 
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, list(SPAN_ROBOT))
@@ -126,7 +120,7 @@ var/list/announcement_systems = list()
 	contents += "Departmental Head Announcement:  <A href='?src=\ref[src];NewheadT-Topic=1'>([(newheadToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br><br>\n"
 
 	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 370, 220)
-	popup.set_content(contents)
+	popup.set_content(sanitize_russian(contents))
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
@@ -136,13 +130,13 @@ var/list/announcement_systems = list()
 		return
 
 	if(href_list["ArrivalTopic"])
-		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
+		var/NewMessage = strip_html_properly(stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival))
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
-		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
+		var/NewMessage = strip_html_properly(stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead))
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
@@ -158,8 +152,11 @@ var/list/announcement_systems = list()
 	add_fingerprint(usr)
 	interact(usr)
 
-/obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
-	if(!isAI(user))
+/obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
+	. = attack_ai(user)
+
+/obj/machinery/announcement_system/attack_ai(mob/living/silicon/user)
+	if(!issilicon(user))
 		return
 	if(stat & BROKEN)
 		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"

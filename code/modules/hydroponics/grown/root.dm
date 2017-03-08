@@ -26,10 +26,9 @@
 	if(I.is_sharp())
 		user << "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>"
 		var/obj/item/weapon/kitchen/knife/carrotshiv/Shiv = new /obj/item/weapon/kitchen/knife/carrotshiv
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		user.put_in_hands(Shiv)
+		remove_item_from_storage(user)
 		qdel(src)
+		user.put_in_hands(Shiv)
 	else
 		return ..()
 

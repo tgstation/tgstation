@@ -55,7 +55,7 @@
 				charge_counter = charge_max
 				return
 
-			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
+			if(!marked_item || QDELETED(marked_item)) //Wait nevermind
 				M << "<span class='warning'>Your phylactery is gone!</span>"
 				return
 
@@ -91,7 +91,7 @@
 				if(iscarbon(old_body))
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
-						C.unEquip(W)
+						C.dropItemToGround(W)
 					for(var/X in C.internal_organs)
 						var/obj/item/organ/I = X
 						I.Remove(C)
@@ -134,7 +134,7 @@
 			current_body = M.mind.current
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.unEquip(H.wear_suit)
-				H.unEquip(H.head)
+				H.dropItemToGround(H.wear_suit)
+				H.dropItemToGround(H.head)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), slot_head)

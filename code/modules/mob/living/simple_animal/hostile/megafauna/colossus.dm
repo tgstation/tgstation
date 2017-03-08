@@ -77,7 +77,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			addtimer(src, "spiral_shoot", 0, TIMER_NORMAL, rand(0, 1))
+			INVOKE_ASYNC(src, .proc/spiral_shoot, rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -88,7 +88,7 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			addtimer(src, "alternating_dir_shots", 0)
+			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -101,18 +101,18 @@ Difficulty: Very Hard
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
-	luminosity = 2
+	light_range = 2
 	duration = 8
 	var/target
 
 /obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
 	target = new_target
-	addtimer(src, "orbit", 0, TIMER_NORMAL, target, 0, FALSE, 0, 0, FALSE, TRUE)
+	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
-		var/obj/effect/overlay/temp/at_shield/AT = PoolOrNew(/obj/effect/overlay/temp/at_shield, src.loc, src)
+		var/obj/effect/overlay/temp/at_shield/AT = new /obj/effect/overlay/temp/at_shield(src.loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
 
@@ -139,8 +139,8 @@ Difficulty: Very Hard
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
-	addtimer(src, "spiral_shoot", 0)
-	addtimer(src, "spiral_shoot", 0, TIMER_NORMAL, 1)
+	INVOKE_ASYNC(src, .proc/spiral_shoot)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, 1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
 	var/counter = counter_start
@@ -272,7 +272,7 @@ Difficulty: Very Hard
 	icon_state = "blackbox"
 	icon_on = "blackbox"
 	icon_off = "blackbox"
-	luminosity = 8
+	light_range = 8
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
@@ -365,7 +365,7 @@ Difficulty: Very Hard
 	desc = "A strange chunk of crystal, being in the presence of it fills you with equal parts excitement and dread."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "anomaly_crystal"
-	luminosity = 8
+	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = 0
 	density = 1
@@ -438,7 +438,7 @@ Difficulty: Very Hard
 	if(..() && ishuman(user) && !(user in affected_targets))
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/W in H)
-			H.unEquip(W)
+			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
 		qdel(C)
@@ -501,7 +501,7 @@ Difficulty: Very Hard
 						if(O.air)
 							var/datum/gas_mixture/G = O.air
 							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O))
+						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
 						continue
@@ -526,7 +526,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/emitter/New()
 	..()
-	generated_projectile = pick(/obj/item/projectile/magic/fireball/infernal,/obj/item/projectile/magic/spellblade,
+	generated_projectile = pick(/obj/item/projectile/magic/aoe/fireball/infernal,/obj/item/projectile/magic/aoe/lightning,/obj/item/projectile/magic/spellblade,
 								 /obj/item/projectile/bullet/meteorshot, /obj/item/projectile/beam/xray, /obj/item/projectile/colossus)
 
 /obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
@@ -556,7 +556,7 @@ Difficulty: Very Hard
 	if(..())
 		for(var/i in range(1, src))
 			if(isturf(i))
-				PoolOrNew(/obj/effect/overlay/temp/cult/sparks, i)
+				new /obj/effect/overlay/temp/cult/sparks(i)
 				continue
 			if(ishuman(i))
 				var/mob/living/carbon/human/H = i
@@ -579,7 +579,7 @@ Difficulty: Very Hard
 	..()
 	if(ready_to_deploy)
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
-		if(be_helper == "Yes" && !qdeleted(src) && isobserver(user))
+		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
 			W.key = user.key
 
@@ -616,7 +616,7 @@ Difficulty: Very Hard
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	luminosity = 4
+	light_range = 4
 	faction = list("neutral")
 	languages_spoken = SLIME
 	languages_understood = ALL
@@ -644,7 +644,7 @@ Difficulty: Very Hard
 		var/mob/living/L = target
 		if(L.stat < DEAD)
 			L.heal_overall_damage(heal_power, heal_power)
-			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
+			new /obj/effect/overlay/temp/heal(get_turf(target), "#80F5FF")
 
 /mob/living/simple_animal/hostile/lightgeist/ghostize()
 	. = ..()
@@ -667,7 +667,7 @@ Difficulty: Very Hard
 	if(..())
 		var/list/L = list()
 		var/turf/T = get_step(src, dir)
-		PoolOrNew(/obj/effect/overlay/temp/emp/pulse,T)
+		new /obj/effect/overlay/temp/emp/pulse(T)
 		for(var/i in T)
 			if(istype(i, /obj/item) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
@@ -706,7 +706,7 @@ Difficulty: Very Hard
 
 /obj/structure/closet/stasis/process()
 	if(holder_animal)
-		if(holder_animal.stat == DEAD && !qdeleted(holder_animal))
+		if(holder_animal.stat == DEAD && !QDELETED(holder_animal))
 			dump_contents()
 			holder_animal.gib()
 			return
@@ -734,7 +734,7 @@ Difficulty: Very Hard
 		L.disabilities &= ~MUTE
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
-		if(holder_animal && !qdeleted(holder_animal))
+		if(holder_animal && !QDELETED(holder_animal))
 			holder_animal.mind.transfer_to(L)
 			L.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
 		if(kill || !isanimal(loc))

@@ -32,7 +32,7 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = sanitize_russian(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN))
+	heldname = sanitize_russian(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN),1)
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R)
 	if(..())
@@ -231,8 +231,8 @@
 	toggle_action.Grant(R)
 	return 1
 
-/obj/item/borg/uprgade/selfrepair/dropped()
-	addtimer(src, "check_dropped", 1)
+/obj/item/borg/upgrade/selfrepair/dropped()
+	addtimer(CALLBACK(src, .proc/check_dropped), 1)
 
 /obj/item/borg/upgrade/selfrepair/proc/check_dropped()
 	if(loc != cyborg)

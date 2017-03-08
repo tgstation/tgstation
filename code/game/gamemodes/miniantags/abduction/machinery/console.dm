@@ -154,7 +154,13 @@
 		user << "<span class='notice'>Location marked as test subject release point.</span>"
 
 
-/obj/machinery/abductor/console/proc/Initialize()
+/obj/machinery/abductor/console/Initialize(mapload)
+	if(mapload)
+		return TRUE //wait for machines list
+	..()
+
+	if(!team)
+		return
 
 	for(var/obj/machinery/abductor/pad/p in machines)
 		if(p.team == team)
@@ -176,7 +182,7 @@
 	entry.name = target.name
 	entry.icon = target.icon
 	entry.icon_state = target.icon_state
-	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER))
+	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER))	//ugh
 	for(var/i=1,i<=disguises.len,i++)
 		var/datum/icon_snapshot/temp = disguises[i]
 		if(temp.name == entry.name)

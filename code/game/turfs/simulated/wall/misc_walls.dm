@@ -8,8 +8,8 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
 
-/turf/closed/wall/mineral/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
+/turf/closed/wall/mineral/cult/Initialize()
+	new /obj/effect/overlay/temp/cult/turf(src)
 	..()
 
 /turf/closed/wall/mineral/cult/devastate_wall()
@@ -24,18 +24,18 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
 
 /turf/closed/wall/mineral/cult/artificer/break_wall()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf, get_turf(src))
+	new /obj/effect/overlay/temp/cult/turf(get_turf(src))
 	return null //excuse me we want no runed metal here
 
 /turf/closed/wall/mineral/cult/artificer/devastate_wall()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf, get_turf(src))
+	new /obj/effect/overlay/temp/cult/turf(get_turf(src))
 
 //Clockwork wall: Causes nearby tinkerer's caches to generate components.
 /turf/closed/wall/clockwork
@@ -43,25 +43,25 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
-	slicing_duration = 120
+	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
-/turf/closed/wall/clockwork/New()
+/turf/closed/wall/clockwork/Initialize()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/wall, src)
+	new /obj/effect/overlay/temp/ratvar/wall(src)
+	new /obj/effect/overlay/temp/ratvar/beam(src)
+	realappearence = new /obj/effect/clockwork/overlay/wall(src)
 	realappearence.linked = src
 	change_construction_value(5)
 
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
-		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
+		user << "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>"
 
 /turf/closed/wall/clockwork/Destroy()
 	if(linkedcache)
@@ -73,13 +73,18 @@
 		realappearence = null
 	return ..()
 
+/turf/closed/wall/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
+
 /turf/closed/wall/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)

@@ -138,7 +138,6 @@
 	qdel(wizard_mob.head)
 	qdel(wizard_mob.shoes)
 	for(var/obj/item/I in wizard_mob.held_items)
-		wizard_mob.unEquip(I)
 		qdel(I)
 	qdel(wizard_mob.r_store)
 	qdel(wizard_mob.l_store)

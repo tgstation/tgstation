@@ -9,7 +9,6 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
-			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			<BR>
 			"}
 
@@ -30,6 +29,7 @@
 			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
 			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
+			<A href='?src=\ref[src];secrets=set_name'>Rename Station Name</A><BR>
 			<A href='?src=\ref[src];secrets=reset_name'>Reset Station Name</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
@@ -58,6 +58,7 @@
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
+			<A href='?src=\ref[src];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
 			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
@@ -121,13 +122,6 @@
 					dat += "[ckey] - [D.rank] - [rights2text(D.rights," ")]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
 
-		if("show_current_watchlist")
-			var/dat = "<B>Watchlist: </B><HR>"
-			if(current_watchlist)
-				for(var/ckey in current_watchlist)
-					dat += "[ckey] - [current_watchlist[ckey]]"
-				usr << browse(dat, "window=showcurrentwatchlist;size=600x500")
-
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
 				return
@@ -156,14 +150,25 @@
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
 					D.cure(D)
+		if("set_name")
+			if(!check_rights(R_ADMIN))
+				return
+			var/new_name = input(usr, "Please input a new name for the station.", "What?", "") as text|null
+			if(!new_name)
+				return
+			change_station_name(new_name)
+			log_admin("[key_name(usr)] renamed the station to \"[new_name]\".")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the station to: [new_name].</span>")
+			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
 				return
-			world.name = new_station_name()
-			station_name = world.name
+			var/new_name = new_station_name()
+			change_station_name(new_name)
 			log_admin("[key_name(usr)] reset the station name.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
+			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 
 		if("list_bombers")
 			if(!check_rights(R_ADMIN))
@@ -420,7 +425,7 @@
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.unEquip(H.w_uniform)
+					H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
 				else
@@ -538,7 +543,16 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OO")
 			usr.client.only_one()
+			send_to_playing_players('sound/misc/highlander.ogg')
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+
+		if("delayed_onlyone")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","OO")
+			usr.client.only_one_delayed()
+			send_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
@@ -576,11 +590,7 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			var/ctf_enabled = FALSE
-			for(var/obj/machinery/capture_the_flag/CTF in machines)
-				ctf_enabled = CTF.toggle_ctf()
-			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
-			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+			toggle_all_ctf(usr)
 		if("masspurrbation")
 			if(!check_rights(R_FUN))
 				return

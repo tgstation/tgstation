@@ -147,16 +147,16 @@
 					break
 				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
 					if(isalienadult(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
-						temp_img = icon("icons/ass/assalien.png")
+						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
 						if(ass.gender == MALE)
-							temp_img = icon("icons/ass/assmale.png")
+							temp_img = icon('icons/ass/assmale.png')
 						else if(ass.gender == FEMALE)
-							temp_img = icon("icons/ass/assfemale.png")
+							temp_img = icon('icons/ass/assfemale.png')
 						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
-							temp_img = icon("icons/ass/assmale.png")
+							temp_img = icon('icons/ass/assmale.png')
 					else if(isdrone(ass)) //Drones are hot
-						temp_img = icon("icons/ass/assdrone.png")
+						temp_img = icon('icons/ass/assdrone.png')
 					else
 						break
 					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
@@ -301,7 +301,7 @@
 		playsound(loc, O.usesound, 50, 1)
 		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
 		if(do_after(user, 20*O.toolspeed, target = src))
-			if(qdeleted(src))
+			if(QDELETED(src))
 				return
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
@@ -325,7 +325,7 @@
 		user.visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>", "<span class='notice'>You start putting [target] onto the photocopier...</span>")
 
 	if(do_after(user, 20, target = src))
-		if(!target || qdeleted(target) || qdeleted(src) || !Adjacent(target)) //check if the photocopier/target still exists.
+		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
 		if(target == user)
@@ -363,7 +363,7 @@
 		return 1
 
 /obj/machinery/photocopier/proc/copier_blocked()
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(loc.density)
 		return 1

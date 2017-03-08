@@ -29,6 +29,7 @@
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_fluff_name
 	all_clockwork_objects += src
+	brainmob.languages_spoken = RATVAR
 
 /obj/item/device/mmi/posibrain/soul_vessel/Destroy()
 	all_clockwork_objects -= src
@@ -52,8 +53,12 @@
 	..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!is_servant_of_ratvar(user) || !ishuman(target) || used || (brainmob && brainmob.key))
+	if(!is_servant_of_ratvar(user) || !ishuman(target))
 		..()
+		return
+	if(used || (brainmob && brainmob.key))
+		user << "<span class='nezbere'>\"This vessel is filled, friend. Provide it with a body.\"</span>"
+		return
 	if(is_servant_of_ratvar(target))
 		user << "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>"
 		return
@@ -89,6 +94,7 @@
 	H.death()
 	if(!prev_fakedeath)
 		H.status_flags &= ~FAKEDEATH
+	H.apply_status_effect(STATUS_EFFECT_SIGILMARK) //let them be affected by vitality matrices
 	picked_fluff_name = "Slave"
 	braintype = picked_fluff_name
 	brainmob.timeofhostdeath = H.timeofdeath

@@ -24,7 +24,7 @@
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
 
-/turf/closed/mineral/New()
+/turf/closed/mineral/Initialize()
 	if (!canSmoothWith)
 		canSmoothWith = list(/turf/closed)
 	pixel_y = -4
@@ -76,8 +76,7 @@
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	ChangeTurf(turf_type, defer_change)
-	spawn(10)
-		AfterChange()
+	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	return
 
@@ -140,7 +139,7 @@
 	var/mineralChance = 13
 	var/display_icon_state = "rock"
 
-/turf/closed/mineral/random/New()
+/turf/closed/mineral/random/Initialize()
 	if (!mineralSpawnChanceList)
 		mineralSpawnChanceList = list(
 			/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
@@ -386,7 +385,7 @@
 	var/activated_name = null
 	var/activated_image = null
 
-/turf/closed/mineral/gibtonite/New()
+/turf/closed/mineral/gibtonite/Initialize()
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	..()
 
@@ -437,7 +436,7 @@
 
 /turf/closed/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
-		overlays -= activated_image
+		cut_overlay(activated_image)
 		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = ON_EDGED_TURF_LAYER)
 		add_overlay(I)
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
@@ -466,8 +465,7 @@
 			G.icon_state = "Gibtonite ore 2"
 
 	ChangeTurf(turf_type, defer_change)
-	spawn(10)
-		AfterChange()
+	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 
 
 /turf/closed/mineral/gibtonite/volcanic

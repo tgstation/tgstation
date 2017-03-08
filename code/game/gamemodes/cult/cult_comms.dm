@@ -12,11 +12,11 @@
 	return ..()
 
 /datum/action/innate/cultcomm/Activate()
-	var/input = sanitize_russian(stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", ""))
+	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
 
-	cultist_commune(usr, input)
+	cultist_commune(usr, strip_html_properly(input))
 	return
 
 /proc/cultist_commune(mob/living/user, message)
@@ -24,16 +24,11 @@
 		return
 	if(!ishuman(user))
 		user.say("O bidai nabora se[pick("'","`")]sma!")
-	else
-		user.whisper("O bidai nabora se[pick("'","`")]sma!")
-	sleep(10)
-	if(!user)
-		return
-	if(!ishuman(user))
 		user.say(html_decode(message))
 	else
+		user.whisper("O bidai nabora se[pick("'","`")]sma!")
 		user.whisper(html_decode(message))
-	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [russian_html2text(message)]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << my_message
@@ -41,7 +36,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [my_message]"
 
-	log_say("[user.real_name]/[user.key] : [message]")
+	log_say("[user.real_name]/[user.key] : [russian_html2text(message)]")
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"

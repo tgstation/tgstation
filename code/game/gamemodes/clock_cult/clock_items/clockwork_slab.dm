@@ -11,6 +11,7 @@
 	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
+	var/target_component_id //the target component ID to create, if any
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
@@ -44,47 +45,47 @@
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
-/obj/item/clockwork/slab/cyborg
+/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and proselytizer
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	nonhuman_usable = TRUE
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/sigil_of_transgression, /datum/clockwork_scripture/create_object/vitality_matrix)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
+	/datum/clockwork_scripture/create_object/tinkerers_cache)
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer
-	quickbound = list(/datum/clockwork_scripture/create_object/tinkerers_cache, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/tinkerers_daemon)
+/obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a proselytizer
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/cogscarab, \
+	/datum/clockwork_scripture/create_object/soul_vessel, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
 
-/obj/item/clockwork/slab/cyborg/medical
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, /datum/clockwork_scripture/fellowship_armory, \
-	/datum/clockwork_scripture/create_object/mending_motor)
+/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
+	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/mending_motor)
 
-/obj/item/clockwork/slab/cyborg/security
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/create_object/ocular_warden)
-
-/obj/item/clockwork/slab/cyborg/peacekeeper
+/obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/create_object/mania_motor)
+	/datum/clockwork_scripture/channeled/volt_void/cyborg)
 
-/obj/item/clockwork/slab/cyborg/janitor
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_void, /datum/clockwork_scripture/create_object/sigil_of_transmission, \
-	/datum/clockwork_scripture/create_object/interdiction_lens)
+/obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
+	/datum/clockwork_scripture/channeled/volt_void/cyborg)
 
-/obj/item/clockwork/slab/cyborg/service
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/spatial_gateway, \
-	/datum/clockwork_scripture/create_object/clockwork_obelisk)
+/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a proselytizer
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/tinkerers_daemon)
 
-/obj/item/clockwork/slab/cyborg/miner
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
-	/datum/clockwork_scripture/create_object/sigil_of_transgression, /datum/clockwork_scripture/spatial_gateway)
+/obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
+	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
+
+/obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	user << "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>"
 
 /obj/item/clockwork/slab/New()
 	..()
-	update_quickbind()
+	update_slab_info(src)
 	START_PROCESSING(SSobj, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
 
@@ -92,6 +93,7 @@
 	STOP_PROCESSING(SSobj, src)
 	if(slab_ability && slab_ability.ranged_ability_user)
 		slab_ability.remove_ranged_ability()
+	slab_ability = null
 	return ..()
 
 /obj/item/clockwork/slab/ratvar_act()
@@ -102,7 +104,7 @@
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
@@ -127,14 +129,16 @@
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
 	if(istype(L) && is_servant_of_ratvar(L) && (nonhuman_usable || ishuman(L)))
-		var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
+		var/component_to_generate = target_component_id
+		if(!component_to_generate)
+			component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
 		stored_components[component_to_generate]++
 		update_slab_info(src)
 		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
-			if(L == src)
+			if(S == src)
 				continue
 			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
-		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a new component.</span>"
+		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>"
 
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
@@ -224,11 +228,11 @@
 	if(!user.can_speak_vocal())
 		user << "<span class='warning'>You cannot speak into the slab!</span>"
 		return FALSE
-	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
+	var/message = strip_html_properly(stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant"))
 	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
 		return FALSE
-	clockwork_say(user, text2ratvar("Servants, hear my words. [html_decode(message)]"), TRUE)
-	titled_hierophant_message(user, message)
+	clockwork_say(user, text2ratvar("Servants, hear my words. [russian_html2text(message)]"), TRUE)
+	titled_hierophant_message(user, russian_html2text(message))
 	return TRUE
 
 //Scripture Recital
@@ -301,8 +305,8 @@
 		for(var/mob/living/M in living_mob_list)
 			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 				servants++
-		if(servants > 5)
-			servants -= 5
+		if(servants > SCRIPT_SERVANT_REQ)
+			servants -= SCRIPT_SERVANT_REQ
 			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
 		var/production_text_addon = ""
 		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
@@ -351,7 +355,7 @@
 		\
 		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
 		\
-		The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
+		The remaining functions are several buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
 		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>")
 		if(LAZYLEN(quickbound))
 			for(var/i in 1 to quickbound.len)
@@ -400,11 +404,15 @@
 
 	data["selected"] = selected_scripture
 
+	data["target_comp"] = "<font color=#B18B25>NONE</font>"
+	if(target_component_id)
+		data["target_comp"] = "<font color=[get_component_color_bright(target_component_id)]>[get_component_acronym(target_component_id)]</font>"
+
 	generate_all_scripture()
 
 	data["scripture"] = list()
 	for(var/s in all_scripture)
-		var/datum/clockwork_scripture/S = s
+		var/datum/clockwork_scripture/S = all_scripture[s]
 		if(S.tier == selected_scripture)
 			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
@@ -418,17 +426,24 @@
 				temp_info["bound"] = "<b>[found]</b>"
 			if(S.invokers_required > 1)
 				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
-			for(var/i in S.required_components)
-				temp_info["required"][i] += S.required_components[i]
-			var/list/really_temp_data = list()
-			for(var/i in temp_info["required"])
-				if(temp_info["required"][i])
-					really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
-			really_temp_data = really_temp_data.Join()
-			temp_info["required"] = really_temp_data
+			var/costs_components = FALSE
+			for(var/i in S.consumed_components)
+				if(S.consumed_components[i])
+					temp_info["required"][i] += S.consumed_components[i]
+					costs_components = TRUE
+			if(costs_components) //if we have a component cost, we'll need a : next to the recital button
+				var/list/really_temp_data = list(": ")
+				for(var/i in temp_info["required"])
+					if(temp_info["required"][i])
+						really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
+				really_temp_data = really_temp_data.Join()
+				temp_info["required"] = really_temp_data
+			else //and if we don't, we won't.
+				temp_info["required"] = ""
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
-	data["rec_text"] = recollection()
+	if(recollecting)
+		data["rec_text"] = recollection()
 	return data
 
 /obj/item/clockwork/slab/ui_act(action, params)
@@ -436,9 +451,19 @@
 		if("toggle")
 			recollecting = !recollecting
 		if("recite")
-			addtimer(src, "recite_scripture", 0, TIMER_NORMAL, text2path(params["category"]), usr, FALSE)
+			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE)
 		if("select")
 			selected_scripture = params["category"]
+		if("component")
+			var/list/components = list("Random Components")
+			for(var/i in clockwork_component_cache)
+				var/cache_components = 0
+				if(clockwork_caches)
+					cache_components = clockwork_component_cache[i]
+				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
+			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
+			if(input_component && !..())
+				target_component_id = components[input_component]
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["category"]) //we need a path and not a string
 			var/found_index = quickbound.Find(path)
@@ -449,7 +474,7 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				var/target_index = input("Position of [initial(path.name)], 1 to 5?", text("Input"))  as num|null
+				var/target_index = input("Position of [initial(path.name)], 1 to 5?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index < 6 && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)
@@ -475,10 +500,17 @@
 				continue
 			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
 			Q.scripture_index = i
-			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-			Q.name = "[initial(quickbind_slot.name)] ([Q.scripture_index])"
-			Q.desc = initial(quickbind_slot.quickbind_desc)
-			Q.button_icon_state = initial(quickbind_slot.name)
+			var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[i]]
+			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
+			var/list/temp_desc = list()
+			for(var/c in quickbind_slot.consumed_components)
+				if(quickbind_slot.consumed_components[c])
+					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_acronym(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
+			if(LAZYLEN(temp_desc))
+				temp_desc += "<br>"
+			temp_desc += "[quickbind_slot.quickbind_desc]"
+			Q.desc = temp_desc.Join()
+			Q.button_icon_state = quickbind_slot.name
 			Q.UpdateButtonIcon()
 			if(isliving(loc))
 				Q.Grant(loc)

@@ -2,11 +2,16 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+
 	var/flags = 0
+	var/list/secondary_flags
+
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
+	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
+	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -16,29 +21,52 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
-	//overlays that should remain on top and not normally be removed, like c4.
-	var/list/priority_overlays
-
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
+	var/initialized = FALSE
 
+	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
+	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
-/atom/New()
+/atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
+		
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
+
+	var/do_initialize = SSatoms.initialized
+	if(do_initialize > INITIALIZATION_INSSATOMS)
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		Initialize(arglist(args))
+
+//Called after New if the map is being loaded. mapload = TRUE
+//Called from base of New if the map is being loaded. mapload = FALSE
+//This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
+//Derivatives must not sleep
+//Returning TRUE while mapload is TRUE will cause the object to be initialized again with mapload = FALSE when everything else is done
+//(Useful for things that requires turfs to have air). This base may only be called once, however
+//Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+
+//Note: the following functions don't call the base for optimization and must copypasta:
+// /turf/Initialize
+// /turf/open/space/Initialize
+/atom/proc/Initialize(mapload, ...)
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	//lighting stuff
-	if(opacity && isturf(loc))
-		loc.UpdateAffectingLights()
+	if (light_power && light_range)
+		update_light()
 
-	if(luminosity)
-		light = new(src)
+	if (opacity && isturf(loc))
+		var/turf/T = loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
-	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -51,6 +79,13 @@
 			for(var/aa in viewing_alternate_appearances[aakey])
 				var/datum/alternate_appearance/AA = aa
 				AA.hide(list(src))
+	if(reagents)
+		qdel(reagents)
+
+	LAZYCLEARLIST(overlays)
+	LAZYCLEARLIST(priority_overlays)
+	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
+
 	return ..()
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
@@ -103,8 +138,9 @@
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
-				L.unEquip(M)
-			M.loc = src
+				L.transferItemToLoc(M, src)
+			else
+				M.forceMove(src)
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -130,17 +166,10 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return flags & OPENCONTAINER
+	return container_type & OPENCONTAINER
 
-/*//Convenience proc to see whether a container can be accessed in a certain way.
-
-/atom/proc/can_subract_container()
-	return flags & EXTRACT_CONTAINER
-
-/atom/proc/can_add_container()
-	return flags & INSERT_CONTAINER
-*/
-
+/atom/proc/is_transparent()
+	return container_type & TRANSPARENT
 
 /atom/proc/allow_drop()
 	return 1
@@ -152,7 +181,8 @@
 	return
 
 /atom/proc/emp_act(severity)
-	return
+	if(istype(wires) && !HAS_SECONDARY_FLAG(src, NO_EMP_WIRES))
+		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
@@ -200,14 +230,14 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	user << "\icon[src] That's [f_name]"
+	user << "\icon[src] That's [russian_html2text(f_name)]"
 
 	if(desc)
 		user << desc
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
-	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent
@@ -238,9 +268,11 @@
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
-		spawn(2) //very short wait, so we can actually see the impact.
-			if(AM && isturf(AM.loc))
-				step(AM, turn(AM.dir, 180))
+		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
+
+/atom/proc/hitby_react(atom/movable/AM)
+	if(AM && isturf(AM.loc))
+		step(AM, turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -420,14 +452,6 @@ var/list/blood_splatter_icons = list()
 	sleep(1)
 	stoplag()
 
-//This is called just before maps and objects are initialized, use it to spawn other mobs/objects
-//effects at world start up without causing runtimes
-/atom/proc/spawn_atom_to_world()
-
-//This will be called after the map and objects are loaded
-/atom/proc/initialize()
-	return
-
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
 /atom/proc/get_remote_view_fullscreens(mob/user)
 	return
@@ -438,7 +462,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 		// Make toxins vomit look different
 		if(toxvomit)
 			V.icon_state = "vomittox_[pick(1,4)]"
@@ -523,10 +547,6 @@ var/list/blood_splatter_icons = list()
 /atom/vv_edit_var(var_name, var_value)
 	if(!Debug2)
 		admin_spawned = TRUE
-	switch(var_name)
-		if("luminosity")
-			src.SetLuminosity(var_value)
-			return//prevent normal setting of this value
 	. = ..()
 	switch(var_name)
 		if("color")
@@ -541,4 +561,3 @@ var/list/blood_splatter_icons = list()
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
-

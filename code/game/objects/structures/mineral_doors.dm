@@ -97,7 +97,7 @@
 	isSwitchingStates = 0
 
 	if(close_delay != -1)
-		addtimer(src, "Close", close_delay)
+		addtimer(CALLBACK(src, .proc/Close), close_delay)
 
 /obj/structure/mineral_door/proc/Close()
 	if(isSwitchingStates || state != 1)
@@ -165,7 +165,7 @@
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 	obj_integrity = 300
 	max_integrity = 300
-	luminosity = 2
+	light_range = 2
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"

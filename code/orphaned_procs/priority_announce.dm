@@ -12,16 +12,16 @@
 			announcement += "<br><h2 class='alert'>[rhtml_encode(title)]</h2>"
 	else if(type == "Captain")
 		announcement += "<h1 class='alert'>Captain Announces</h1>"
-		news_network.SubmitArticle(text, "Captain's Announcement", "Station Announcements", null)
+		news_network.SubmitArticle(russian_text2html(text), "Captain's Announcement", "Station Announcements", null)
 
 	else
 		announcement += "<h1 class='alert'>[command_name()] Update</h1>"
 		if (title && length(title) > 0)
 			announcement += "<br><h2 class='alert'>[rhtml_encode(title)]</h2>"
 		if(title == "")
-			news_network.SubmitArticle(text, "Central Command Update", "Station Announcements", null)
+			news_network.SubmitArticle(russian_text2html(text), "Central Command Update", "Station Announcements", null)
 		else
-			news_network.SubmitArticle(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
+			news_network.SubmitArticle(russian_text2html(title) + "<br><br>" + russian_text2html(text), "Central Command", "Station Announcements", null)
 
 	announcement += "<br><span class='alert'>[rhtml_encode(text)]</span><br>"
 	announcement += "<br>"
@@ -49,7 +49,7 @@
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M) && !M.ear_deaf)
-			M << "<b><font size = 3><font color = red>[title]</font color><BR>[sanitize_russian(message)]</font size></b><BR>"
+			M << "<b><font size = 3><font color = red>[title]</font color><BR>[russian_html2text(message)]</font size></b><BR>"
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				continue
 			if(alert)

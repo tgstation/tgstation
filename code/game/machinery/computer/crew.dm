@@ -9,6 +9,8 @@
 	circuit = /obj/item/weapon/circuitboard/computer/crew
 	var/monitor = null	//For VV debugging purposes
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/crew/New()
 	monitor = crewmonitor
 	return ..()
@@ -79,8 +81,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 	src.jobs = jobs
 	src.interfaces = list()
 	src.data = list()
-//	register_asset("crewmonitor.js",'code/game/machinery/computer/crew.js')
-//	register_asset("crewmonitor.css",'code/game/machinery/computer/crew.css')
+	register_asset("crewmonitor.js",'crew.js')
+	register_asset("crewmonitor.css",'crew.css')
 
 /datum/crewmonitor/Destroy()
 	if (src.interfaces)
@@ -260,7 +262,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
-	addtimer(crewmonitor, "update", 5, TIMER_UNIQUE, z)
+	addtimer(CALLBACK(crewmonitor, .proc/update, z), 5, TIMER_UNIQUE)
 
 /datum/crewmonitor/proc/sendResources(var/client/client)
 	send_asset(client, "crewmonitor.js")

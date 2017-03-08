@@ -53,7 +53,7 @@
 
 	Mind.transfer_to(operative)
 
-	message_admins("[operative.key] has been made into lone operative by an event.")
-	log_game("[operative.key] was spawned as a lone operative by an event.")
+	message_admins("[key_name_admin(operative)] has been made into lone operative by an event.")
+	log_game("[key_name(operative)] was spawned as a lone operative by an event.")
 	spawned_mobs += operative
 	return SUCCESSFUL_SPAWN

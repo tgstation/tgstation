@@ -6,6 +6,9 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/list/adds
 	var/list/subs
 
+/datum/admin_rank/SDQL_update()
+	return FALSE	//Nice try trivialadmin!
+
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
 	name = init_name
 	switch(name)
@@ -124,15 +127,14 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			previous_rights = R.rights
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			world.log << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+		if(!dbcon.Connect())
+			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
 			diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admin_ranks()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
+		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("erro_admin_ranks")]")
 		query.Execute()
 		while(query.NextRow())
 			var/rank_name = ckeyEx(query.item[1])
@@ -199,9 +201,8 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			//	world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			world.log << "Failed to connect to database in load_admins(). Reverting to legacy system."
+		if(!dbcon.Connect())
+			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
@@ -370,8 +371,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	edit_admin_permissions()
 
 /datum/admins/proc/updateranktodb(ckey,newrank)
-	establish_db_connection()
-	if (!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_admin_rank = sanitizeSQL(newrank)

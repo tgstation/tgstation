@@ -77,7 +77,7 @@
 		G.loc = loc
 		qdel(G.pin)
 		G.pin = null
-		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.", null, null, 3)
+		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
 /obj/item/weapon/gun/examine(mob/user)
@@ -267,6 +267,7 @@
 	if(user)
 		user.update_inv_hands()
 	feedback_add_details("gun_fired","[src.type]")
+	return 1
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
@@ -279,13 +280,12 @@
 		if(istype(I, /obj/item/device/flashlight/seclite))
 			var/obj/item/device/flashlight/seclite/S = I
 			if(!gun_light)
-				if(!user.unEquip(I))
+				if(!user.transferItemToLoc(I, src))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
-					SetLuminosity(0)
+					set_light(0)
 				gun_light = S
-				I.loc = src
 				update_icon()
 				update_gunlight(user)
 				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
@@ -329,21 +329,12 @@
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(gun_light)
 		if(gun_light.on)
-			if(loc == user)
-				user.AddLuminosity(gun_light.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(gun_light.brightness_on)
+			set_light(gun_light.brightness_on)
 		else
-			if(loc == user)
-				user.AddLuminosity(-gun_light.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(0)
+			set_light(0)
 		update_icon()
 	else
-		if(loc == user)
-			user.AddLuminosity(-5)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -351,19 +342,11 @@
 
 /obj/item/weapon/gun/pickup(mob/user)
 	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(gun_light.brightness_on)
-			SetLuminosity(0)
 	if(azoom)
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(-gun_light.brightness_on)
-			SetLuminosity(gun_light.brightness_on)
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
@@ -410,9 +393,9 @@
 	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
 		if(user)
 			if(user == target)
-				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
+				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
 			else if(target && target.Adjacent(user))
-				target.visible_message("<span class='notice'>[user] has decided to spare [target]'s life.</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
 		semicd = 0
 		return
 
@@ -493,4 +476,3 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
-

@@ -6,7 +6,7 @@
 	icon_state = "bhole3"
 	density = 0
 	anchored = 1
-	luminosity = 3
+	light_range = 3
 	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 	var/area/impact_area
@@ -23,7 +23,6 @@
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
 
-	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
@@ -63,7 +62,7 @@
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
-	PoolOrNew(/obj/effect/particle_effect/smoke/bad, loc)
+	new /obj/effect/particle_effect/smoke/bad(loc)
 
 	for(var/atom/movable/O in src)
 		O.loc = src.loc
@@ -266,8 +265,8 @@
 	if(istype(T))
 		T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
 
-	var/mob/living/simple_animal/slime/S = new/mob/living/simple_animal/slime(T)
-	S.colour = pick("red", "orange")
+	var/new_colour = pick("red", "orange")
+	var/mob/living/simple_animal/slime/S = new(T, new_colour)
 	S.rabid = 1
 
 /////////////////////

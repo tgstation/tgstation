@@ -152,11 +152,11 @@
 	while(timer>0)
 		for(var/turf/turf in view(12,src))
 			if(prob(2))
-				PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(turf, src))
+				new /obj/effect/overlay/temp/drone/laser_beacon(turf, src)
 		for(var/mob/living/L in view(12,src) - caster)
 			if( L.stat == DEAD)
 				continue
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(get_turf(L), src))
+			new /obj/effect/overlay/temp/drone/laser_beacon(get_turf(L), src)
 		sleep(2)
 		timer--
 
@@ -166,11 +166,11 @@
 	while(timer>0)
 		for(var/turf/turf in view(12,src))
 			if(prob(1/3))
-				PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon/green_cross, list(turf, src))
+				new /obj/effect/overlay/temp/drone/laser_beacon/green_cross(turf, src)
 		for(var/mob/living/L in view(12,src) - caster)
 			if( L.stat == DEAD)
 				continue
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon/green, list(get_turf(L), src))
+			new /obj/effect/overlay/temp/drone/laser_beacon/green(get_turf(L), src)
 		sleep(2)
 		timer--
 
@@ -206,13 +206,13 @@
 	visible_message("<span class='boldwarning'>Laser rains from the sky!</span>")
 	for(var/turf/turf in view(12,src))
 		if(prob(50))
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(turf, src))
+			new /obj/effect/overlay/temp/drone/laser_beacon(turf, src)
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/laser_rain_green()
 	visible_message("<span class='boldwarning'>Laser rains from the sky!</span>")
 	for(var/turf/turf in view(12,src))
 		if(prob(7.5))
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon/green_cross, list(turf, src))
+			new /obj/effect/overlay/temp/drone/laser_beacon/green_cross(turf, src)
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/shoot_projectile(turf/marker)
 	if(!marker || marker == loc)
@@ -394,20 +394,20 @@ obj/effect/overlay/temp/drone/laser_beacon/New(loc, caster)
 	if(ismineralturf(loc)) //drill mineral turfs
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
-	addtimer(src, "fall", 0)
+	addtimer(CALLBACK(src, .proc/fall), 0)
 
 
 obj/effect/overlay/temp/drone/laser_beacon/proc/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Blind.ogg', 200, 1)
-	PoolOrNew(/obj/effect/overlay/temp/drone/laser,T)
+	new /obj/effect/overlay/temp/drone/laser(T)
 	sleep(12)
 	do_damage(T)
 
 obj/effect/overlay/temp/drone/laser_beacon/proc/do_damage(turf/T)
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
-		if((caster && caster.faction_check(L)) || L.stat == DEAD)
+		if((caster && caster.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
@@ -422,7 +422,7 @@ obj/effect/overlay/temp/drone/laser_beacon/proc/do_damage(turf/T)
 	for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
 		hit_things += M
 		if(M.occupant)
-			if(caster && caster.faction_check(M.occupant))
+			if(caster && caster.faction_check_mob(M.occupant))
 				continue
 			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
@@ -435,7 +435,7 @@ obj/effect/overlay/temp/drone/laser_beacon/green
 obj/effect/overlay/temp/drone/laser_beacon/green/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Blind.ogg', 200, 1)
-	PoolOrNew(/obj/effect/overlay/temp/drone/laser/green,T)
+	new /obj/effect/overlay/temp/drone/laser/green(T)
 	sleep(12)
 	do_damage(T)
 
@@ -459,7 +459,7 @@ obj/effect/overlay/temp/drone/laser_beacon/green_cross/proc/shoot_green_projecti
 obj/effect/overlay/temp/drone/laser_beacon/green_cross/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Blind.ogg', 200, 1)
-	PoolOrNew(/obj/effect/overlay/temp/drone/laser/green_cross,T)
+	new /obj/effect/overlay/temp/drone/laser/green_cross(T)
 	sleep(12)
 	for(var/mob/living/L in view(12,src) - hit_things)
 		if(L.stat == DEAD)
@@ -470,11 +470,11 @@ obj/effect/overlay/temp/drone/laser_beacon/green_cross/fall()
 /obj/item/weapon/gun/energy/white/cross_laser
 	name = "Laser staff"
 	desc = "A  energy-based heat laser gun that fires concentrated orbs of very hot light which pass through glass and thin metal end explode into laser shots."
-	icon = 'icons/obj/guns/white_only.dmi'
+	icon = 'icons/obj/guns/white_dev.dmi'
 	icon_state = "cross_staff"
 	item_state = "cross_staff"
-	lefthand_file = 'icons/mob/inhands/white_only_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/white_only_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/white_dev_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/white_dev_righthand.dmi'
 	fire_sound = 'sound/weapons/laser3.ogg'
 	w_class = 4
 	materials = list(MAT_METAL=5000)

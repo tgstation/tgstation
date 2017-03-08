@@ -317,7 +317,3 @@ var/global/chicken_count = 0
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
 		user << "<span class='danger'>The udder is dry. Wait a bit longer...</span>"
-
-/obj/item/udder/Destroy()
-	qdel(reagents)
-	return ..()

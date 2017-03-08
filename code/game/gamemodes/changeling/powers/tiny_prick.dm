@@ -88,25 +88,27 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
+	set waitfor = FALSE
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
 
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
+	var/mob/living/carbon/C = target
+	if(istype(C))
 		if(C.status_flags & CANWEAKEN)
 			C.do_jitter_animation(500)
 			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
-		spawn(10)
-			C.real_name = NewDNA.real_name
-			NewDNA.transfer_identity(C, transfer_SE=1)
-			C.updateappearance(mutcolor_update=1)
-			C.domutcheck()
 	feedback_add_details("changeling_powers","TS")
-	return 1
+	. = TRUE
+	if(istype(C))
+		sleep(10)
+		C.real_name = NewDNA.real_name
+		NewDNA.transfer_identity(C, transfer_SE=1)
+		C.updateappearance(mutcolor_update=1)
+		C.domutcheck()
 
 
 /obj/effect/proc_holder/changeling/sting/false_armblade
@@ -149,7 +151,7 @@
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-	addtimer(src, "remove_fake", 600, TIMER_NORMAL, target, blade)
+	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
@@ -224,7 +226,7 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-	addtimer(src, "hallucination_time", rand(300,600), TIMER_NORMAL, target)
+	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
 	feedback_add_details("changeling_powers","HS")
 	return 1
 

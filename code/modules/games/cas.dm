@@ -80,7 +80,7 @@ var/global/list/cards_against_space
 /obj/item/toy/cards/deck/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/cas))
 		var/obj/item/toy/cards/singlecard/cas/SC = I
-		if(!user.unEquip(SC))
+		if(!user.temporarilyRemoveItemFromInventory(SC))
 			user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
 			return
 		var/datum/playingcard/RC // replace null datum for the re-added card

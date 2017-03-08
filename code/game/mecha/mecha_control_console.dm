@@ -44,7 +44,7 @@
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
-		var/message = sanitize_russian(stripped_input(usr,"Input message","Transmit message"))
+		var/message = sanitize_russian(stripped_input(usr,"Input message","Transmit message"),1)
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
@@ -68,6 +68,7 @@
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "programming=2;magnets=2"
+	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
@@ -113,6 +114,13 @@
 		return 0
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()
+
+
+/obj/item/mecha_parts/mecha_tracking/ai_control
+	name = "exosuit AI control beacon"
+	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
+	origin_tech = "programming=3;magnets=2;engineering=2"
+	ai_beacon = TRUE
 
 
 /obj/item/weapon/storage/box/mechabeacons

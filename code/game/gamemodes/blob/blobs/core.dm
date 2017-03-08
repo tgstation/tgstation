@@ -60,7 +60,7 @@
 			overmind.update_health_hud()
 
 /obj/structure/blob/core/Life()
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(!overmind)
 		create_overmind()

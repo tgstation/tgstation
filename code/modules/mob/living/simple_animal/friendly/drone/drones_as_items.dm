@@ -20,7 +20,12 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+	poi_list |= src
+
+/obj/item/drone_shell/Destroy()
+	poi_list -= src
+	. = ..()
 
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))
@@ -35,7 +40,7 @@
 		user << "Can't become a drone before the game has started."
 		return
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_drone == "No" || qdeleted(src) || !isobserver(user))
+	if(be_drone == "No" || QDELETED(src) || !isobserver(user))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
 	D.admin_spawned = admin_spawned
@@ -60,7 +65,7 @@
 		L << "<span class='warning'>[drone] is trying to escape!</span>"
 		if(!do_after(drone, 50, target = L))
 			return
-		L.unEquip(src)
+		L.dropItemToGround(src)
 
 	contents -= drone
 	drone.loc = get_turf(src)

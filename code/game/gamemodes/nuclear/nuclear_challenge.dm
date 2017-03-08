@@ -38,13 +38,13 @@
 
 	if(custom_threat == "Yes")
 		declaring_war = TRUE
-		war_declaration = stripped_input(user, "Insert your custom declaration", "Declaration")
+		war_declaration = strip_html_properly(stripped_input(user, "Insert your custom declaration", "Declaration"))
 		declaring_war = FALSE
 
 	if(!check_allowed(user) || !war_declaration)
 		return
 
-	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
+	priority_announce(russian_html2text(war_declaration), title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
 
 	user << "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission."
 
@@ -55,8 +55,9 @@
 	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user))
 	U.hidden_uplink.owner = "[user.key]"
 	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
-	U.hidden_uplink.gamemode = /datum/game_mode/nuclear
+	U.hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
+	feedback_set("nuclear_challenge_mode",1)
 	qdel(src)
 
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)

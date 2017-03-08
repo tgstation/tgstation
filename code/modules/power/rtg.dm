@@ -23,10 +23,9 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
 	B.apply_default_parts(src)
-	connect_to_network()
 
 /obj/item/weapon/circuitboard/machine/rtg
-	name = "circuit board (RTG)"
+	name = "RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg
 	origin_tech = "programming=2;materials=4;powerstorage=3;engineering=2"
 	req_components = list(
@@ -34,7 +33,7 @@
 		/obj/item/weapon/stock_parts/capacitor = 1,
 		/obj/item/stack/sheet/mineral/uranium = 10) // We have no Pu-238, and this is the closest thing to it.
 
-/obj/machinery/power/rtg/initialize()
+/obj/machinery/power/rtg/Initialize()
 	..()
 	connect_to_network()
 
@@ -61,14 +60,9 @@
 	return ..()
 
 /obj/machinery/power/rtg/attack_hand(mob/user)
-	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
-		var/mob/living/L = user.pulling
-		if(L.buckled)
-			return
-		L.loc = src.loc
-		user_buckle_mob(L, user)
-	else
-		..()
+	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
+		return
+	..()
 
 
 /obj/machinery/power/rtg/advanced
@@ -77,7 +71,7 @@
 	board_path = /obj/item/weapon/circuitboard/machine/rtg/advanced
 
 /obj/item/weapon/circuitboard/machine/rtg/advanced
-	name = "circuit board (Advanced RTG)"
+	name = "Advanced RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg/advanced
 	origin_tech = "programming=3;materials=5;powerstorage=4;engineering=3;plasmatech=3"
 	req_components = list(
@@ -124,7 +118,7 @@
 		"<span class='italics'>You hear a loud electrical crack!</span>")
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)
-	addtimer(GLOBAL_PROC, "explosion", 100, TIMER_NORMAL, get_turf(src), 2, 3, 4, 8) // Not a normal explosion.
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, get_turf(src), 2, 3, 4, 8), 100) // Not a normal explosion.
 
 /obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
 	..()

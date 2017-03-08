@@ -19,7 +19,10 @@
 /obj/machinery/doorButtons/proc/findObjsByTag()
 	return
 
-/obj/machinery/doorButtons/initialize()
+/obj/machinery/doorButtons/Initialize(mapload)
+	if(mapload)
+		return TRUE	//wait for the machines list to init
+	..()
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
@@ -155,22 +158,22 @@
 		closeDoor(A)
 
 /obj/machinery/doorButtons/airlock_controller/proc/closeDoor(obj/machinery/door/airlock/A)
+	set waitfor = FALSE
 	if(A.density)
 		goIdle()
 		return 0
 	update_icon()
 	A.unbolt()
-	spawn()
-		if(A && A.close())
-			if(stat & NOPOWER || lostPower || !A || qdeleted(A))
-				goIdle(1)
-				return
-			A.bolt()
-			if(busy == CLOSING)
-				goIdle(1)
-		else
+	. = 1
+	if(A && A.close())
+		if(stat & NOPOWER || lostPower || !A || QDELETED(A))
 			goIdle(1)
-	return 1
+			return
+		A.bolt()
+		if(busy == CLOSING)
+			goIdle(1)
+	else
+		goIdle(1)
 
 /obj/machinery/doorButtons/airlock_controller/proc/cycleClose(obj/machinery/door/airlock/A)
 	if(!A || !exteriorAirlock || !interiorAirlock)
@@ -208,7 +211,7 @@
 	A.unbolt()
 	spawn()
 		if(A && A.open())
-			if(stat | (NOPOWER) && !lostPower && A && !qdeleted(A))
+			if(stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
 				A.bolt()
 		goIdle(1)
 

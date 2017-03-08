@@ -25,7 +25,7 @@
 	anchored = 1
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
-	var/obj/item/weapon/circuitboard/computer/camera_bug/bug = null
+	var/obj/item/device/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
 
 	//OTHER
@@ -54,8 +54,9 @@
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
 
-/obj/machinery/camera/initialize()
-	if(z == 1 && prob(3) && !start_active)
+/obj/machinery/camera/Initialize(mapload)
+	..()
+	if(mapload && z == 1 && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Move()
@@ -88,7 +89,7 @@
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
-			SetLuminosity(0)
+			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
@@ -102,7 +103,7 @@
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						addtimer(src, "cancelCameraAlarm", 100)
+						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -220,7 +221,7 @@
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
-	else if(istype(W, /obj/item/weapon/circuitboard/computer/camera_bug))
+	else if(istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
 			user << "<span class='notice'>Camera non-functional.</span>"
 			return
@@ -279,14 +280,14 @@
 	if(can_use())
 		cameranet.addCamera(src)
 	else
-		SetLuminosity(0)
+		set_light(0)
 		cameranet.removeCamera(src)
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(status)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
-		addtimer(src, "cancelCameraAlarm", 100)
+		addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
@@ -390,9 +391,9 @@
 			if(cam == src)
 				return
 	if(on)
-		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		set_light(AI_CAMERA_LUMINOSITY)
 	else
-		src.SetLuminosity(0)
+		set_light(0)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf

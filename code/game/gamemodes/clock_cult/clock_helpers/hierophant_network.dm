@@ -18,7 +18,7 @@
 	if(!user || !message)
 		return FALSE
 	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: \
-	</span><span class='[message_span]'>\"[message]\"</span>"
+	</span><span class='[message_span]'>\"[strip_html_properly(message)]\"</span>"
 	hierophant_message(parsed_message, FALSE, user)
 	return TRUE
 
@@ -40,7 +40,7 @@
 	return ..()
 
 /datum/action/innate/hierophant/Activate()
-	var/input = stripped_input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "")
+	var/input = strip_html_properly(sanitize_russian(input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "") as text|null))
 	if(!input || !IsAvailable())
 		return
 

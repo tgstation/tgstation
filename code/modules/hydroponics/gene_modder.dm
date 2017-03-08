@@ -27,7 +27,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/plantgenes
-	name = "circuit board (Plant DNA Manipulator)"
+	name = "Plant DNA Manipulator (Machine Board)"
 	build_path = /obj/machinery/plantgenes
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
@@ -420,16 +420,3 @@
 /obj/item/weapon/disk/plantgene/examine(mob/user)
 	..()
 	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
-
-
-/*
- *  Plant DNA Disks Box
- */
-/obj/item/weapon/storage/box/disks_plantgene
-	name = "plant data disks box"
-	icon_state = "disk_kit"
-
-/obj/item/weapon/storage/box/disks_plantgene/New()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/disk/plantgene(src)

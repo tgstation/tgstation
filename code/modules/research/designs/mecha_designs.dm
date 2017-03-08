@@ -115,6 +115,7 @@
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "materials" = 6, "plasmatech" = 5)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
 	category = list("Exosuit Modules")
@@ -123,6 +124,7 @@
 	name = "\"Phazon\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "bluespace" = 5, "plasmatech" = 5)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
 	category = list("Exosuit Modules")
@@ -131,6 +133,7 @@
 	name = "\"Phazon\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
 	id = "phazon_targ"
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "magnets" = 5, "plasmatech" = 5)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/targeting
 	category = list("Exosuit Modules")
@@ -169,6 +172,17 @@
 	req_tech = list("combat" = 6, "magnets" = 5, "materials" = 5)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	materials = list(MAT_METAL=20000,MAT_SILVER=6000,MAT_URANIUM=2000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_tesla
+	name = "Exosuit Weapon (MKI Tesla Cannon)"
+	desc = "Allows for the construction of MKI Tesla Cannon."
+	id = "mech_tesla"
+	build_type = MECHFAB
+	req_tech = list("combat" = 6, "magnets" = 5, "materials" = 5)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
+	materials = list(MAT_METAL=20000,MAT_SILVER=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -211,7 +225,7 @@
 	id = "mech_missile_rack"
 	build_type = MECHFAB
 	req_tech = list("combat" = 6, "materials" = 5, "engineering" = 5)
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")

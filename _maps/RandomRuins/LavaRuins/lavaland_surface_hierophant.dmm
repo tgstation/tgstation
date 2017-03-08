@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted/hierophant,
 /area/ruin/unpowered/hierophant)
@@ -16,14 +16,14 @@
 /mob/living/simple_animal/hostile/megafauna/hierophant,
 /turf/open/indestructible/hierophant/two,
 /area/ruin/unpowered/hierophant)
+"e" = (
+/turf/open/indestructible/hierophant/two,
+/area/ruin/unpowered/hierophant)
 "f" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 5
 	},
-/turf/open/indestructible/hierophant/two,
-/area/ruin/unpowered/hierophant)
-"e" = (
 /turf/open/indestructible/hierophant/two,
 /area/ruin/unpowered/hierophant)
 

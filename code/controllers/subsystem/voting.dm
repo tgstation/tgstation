@@ -108,7 +108,7 @@ var/datum/subsystem/vote/SSvote
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
 	remove_action_buttons()
-	world << "\n<font color='purple'>[text]</font>"
+	world << russian_html2text("\n<font color='purple'>[text]</font>")
 	return .
 
 /datum/subsystem/vote/proc/result()
@@ -192,7 +192,7 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+		world << russian_html2text("\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 		for(var/c in clients)
 			var/client/C = c
@@ -289,7 +289,7 @@ var/datum/subsystem/vote/SSvote
 /datum/subsystem/vote/proc/remove_action_buttons()
 	for(var/v in generated_actions)
 		var/datum/action/vote/V = v
-		if(!qdeleted(V))
+		if(!QDELETED(V))
 			V.Remove(V.owner)
 	generated_actions = list()
 

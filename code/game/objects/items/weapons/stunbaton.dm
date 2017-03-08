@@ -74,9 +74,8 @@
 			if(C.maxcharge < hitcost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
@@ -106,7 +105,7 @@
 
 				H.visible_message("<span class='danger'>[src] strikes [H] and stuns them!</span>")
 
-				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+				H.log_message("<font color='orange'> Stunned by thrown [src.name] last touched by ([src.fingerprintslast])</font>", INDIVIDUAL_ATTACK_LOG)
 				log_attack("Flying [src.name], last touched by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])" )
 
 				return

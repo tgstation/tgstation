@@ -198,7 +198,9 @@
 	jumping = TRUE
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
-	usr.throw_at(target,jumpdistance,1, spin=0, diagonals_first = 1)
+	usr.throw_at(target, jumpdistance, 1, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
+
+/obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE
 	recharging_time = world.time + recharging_rate
 

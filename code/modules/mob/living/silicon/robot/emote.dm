@@ -33,6 +33,7 @@
 	key = "honk"
 	key_third_person = "honks"
 	message = "honks."
+	vary = TRUE
 	sound = 'sound/items/bikehorn.ogg'
 
 /datum/emote/sound/silicon/ping

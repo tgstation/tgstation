@@ -9,6 +9,8 @@
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb = null
+	var/no_guns = FALSE
+	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -75,12 +77,14 @@
 	return 1
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
-	if(help_verb)
-		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
-	if(H.martial_art && temporary)
+	if(temporary && H.martial_art)
+		if(!H.martial_art.allow_temp_override)
+			return
 		base = H.martial_art
+	if(help_verb)
+		H.verbs += help_verb
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
@@ -173,13 +177,18 @@
 		return 1
 	return 0
 
+/datum/martial_art/plasma_fist/proc/TornadoAnimate(mob/living/carbon/human/A)
+	set waitfor = FALSE
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		if(!A)
+			break
+		A.setDir(i)
+		playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
+		sleep(1)
+
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("TORNADO SWEEP!")
-	spawn(0)
-		for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-			A.setDir(i)
-			playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
-			sleep(1)
+	TornadoAnimate(A)
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
 	var/list/turfs = list()
 	for(var/turf/T in range(1,A))
@@ -248,6 +257,8 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
+	no_guns = TRUE
+	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -471,7 +482,7 @@
 		D.adjustStaminaLoss(20)
 		D.Stun(5)
 		restraining = 1
-		addtimer(src, "drop_restraining", 50, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/drop_restraining), 50, TIMER_UNIQUE)
 	return 1
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)

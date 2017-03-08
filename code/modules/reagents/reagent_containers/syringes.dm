@@ -14,6 +14,7 @@
 	var/busy = 0		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
+	container_type = TRANSPARENT
 
 /obj/item/weapon/reagent_containers/syringe/New()
 	..()
@@ -59,6 +60,12 @@
 		L = target
 		if(!L.can_inject(user, 1))
 			return
+
+	// chance of monkey retaliation
+	if(istype(target, /mob/living/carbon/monkey) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
+		var/mob/living/carbon/monkey/M
+		M = target
+		M.retaliate(user)
 
 	switch(mode)
 		if(SYRINGE_DRAW)
@@ -135,7 +142,7 @@
 					add_logs(user, L, "injected", src, addition="which had [contained]")
 				else
 					log_attack("<font color='red'>[user.name] ([user.ckey]) injected [L.name] ([L.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
-					L.attack_log += "\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>"
+					L.log_message("<font color='orange'>Injected themselves ([contained]) with [src.name].</font>", INDIVIDUAL_ATTACK_LOG)
 
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 			reagents.reaction(L, INJECT, fraction)

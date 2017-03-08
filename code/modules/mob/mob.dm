@@ -28,6 +28,7 @@ var/next_mob_id = 0
 	else
 		living_mob_list += src
 	prepare_huds()
+	can_ride_typecache = typecacheof(can_ride_typecache)
 	..()
 
 /atom/proc/prepare_huds()
@@ -115,12 +116,14 @@ var/next_mob_id = 0
 					msg = blind_message
 				else
 					continue
-			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+			
+			else if(T.lighting_overlay)
+				if(T.lighting_overlay.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
 						msg = blind_message
 					else
 						continue
+
 		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
@@ -290,7 +293,7 @@ var/next_mob_id = 0
 	if (!tile)
 		return 0
 
-	PoolOrNew(/obj/effect/overlay/temp/point, list(A,invisibility))
+	new /obj/effect/overlay/temp/point(A,invisibility)
 
 	return 1
 
@@ -338,6 +341,23 @@ var/next_mob_id = 0
 			M.LAssailant = null
 		else
 			M.LAssailant = usr
+
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		setDir(D)
+		spintime -= speed
 
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
@@ -399,7 +419,7 @@ var/next_mob_id = 0
 	set category = "IC"
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-	msg = sanitize(msg)
+	msg = sanitize_russian(msg, 1)
 
 	if(mind)
 		mind.store_memory(msg)
@@ -446,6 +466,19 @@ var/next_mob_id = 0
 	set category = "OOC"
 	reset_perspective(null)
 	unset_machine()
+
+//suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
+/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+	set name = ".click"
+	set hidden = TRUE
+	set category = null
+	return
+
+/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+	set name = ".dblclick"
+	set hidden = TRUE
+	set category = null
+	return
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -521,12 +554,16 @@ var/next_mob_id = 0
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Map: [MAP_NAME]")
-		if(nextmap && istype(nextmap))
-			stat(null, "Next Map: [nextmap.friendlyname]")
-		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
+		if (client)
+			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
+		stat(null, "Map: [SSmapping.config.map_name]")
+		var/datum/map_config/cached = SSmapping.next_map_config
+		if(cached)
+			stat(null, "Next Map: [cached.map_name]")
+		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
+		stat(null, "Station Time: [worldtime2text()]")
+		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 		if(SSshuttle.emergency)
-			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
@@ -651,6 +688,9 @@ var/next_mob_id = 0
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
 			canmove = 0
+	if(!lying && lying_prev)
+		if(client)
+			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 	return canmove
 
@@ -714,10 +754,10 @@ var/next_mob_id = 0
 	if(mind)
 		return mind.grab_ghost(force = force)
 
-/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
+/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null, flashwindow)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
-		ghost.notify_cloning(message, sound, source)
+		ghost.notify_cloning(message, sound, source, flashwindow)
 		return ghost
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
@@ -793,11 +833,28 @@ var/next_mob_id = 0
 /mob/proc/canUseTopic()
 	return
 
-/mob/proc/faction_check(mob/target)
-	for(var/F in faction)
-		if(F in target.faction)
-			return 1
-	return 0
+/mob/proc/faction_check_mob(mob/target, exact_match)
+	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
+		var/list/faction_src = faction.Copy()
+		var/list/faction_target = target.faction.Copy()
+		if(!("\ref[src]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+			faction_src -= "\ref[src]" //if we don't do this, we'll never have an exact match.
+		if(!("\ref[target]" in faction_src))
+			faction_target -= "\ref[target]" //same thing here.
+		return faction_check(faction_src, faction_target, TRUE)
+	return faction_check(faction, target.faction, FALSE)
+
+/proc/faction_check(list/faction_A, list/faction_B, exact_match)
+	var/list/match_list
+	if(exact_match)
+		match_list = faction_A&faction_B //only items in both lists
+		var/length = LAZYLEN(match_list)
+		if(length)
+			return (length == LAZYLEN(faction_A)) //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
+	else
+		match_list = faction_A&faction_B
+		return LAZYLEN(match_list)
+	return FALSE
 
 
 //This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
@@ -920,6 +977,6 @@ var/next_mob_id = 0
 
 /mob/vv_get_var(var_name)
 	switch(var_name)
-		if ("attack_log")
-			return debug_variable(var_name, attack_log, 0, src, FALSE)
+		if("logging")
+			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()

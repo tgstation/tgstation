@@ -28,7 +28,7 @@
 	var/unique_rename = 0 // can you customize the description/name of the thing?
 
 
-/obj/New()
+/obj/Initialize()
 	..()
 	if (!armor)
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
@@ -45,7 +45,7 @@
 	SStgui.close_uis(src)
 	return ..()
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
 	if(is_frozen)
 		visible_message("<span class = 'danger'><b>[src] shatters into a million pieces!</b></span>")
@@ -71,7 +71,7 @@
 
 /obj/proc/rewrite(mob/user)
 	var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
-	if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
+	if(!QDELETED(src) && user.canUseTopic(src, BE_CLOSE))
 		if(penchoice == "Rename")
 			rename_obj(user)
 		if(penchoice == "Change description")
@@ -206,7 +206,7 @@
 	var/input = stripped_input(M,"What do you want to name \the [name]?", ,"", MAX_NAME_LEN)
 	var/oldname = name
 
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
+	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		if(oldname == input)
 			M << "You changed \the [name] to... well... \the [name]."
 			return
@@ -220,7 +220,7 @@
 /obj/proc/redesc_obj(mob/M)
 	var/input = stripped_input(M,"Describe \the [name] here", ,"", 100)
 
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
+	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		desc = input
 		M << "You have successfully changed \the [name]'s description."
 		return

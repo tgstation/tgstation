@@ -32,3 +32,9 @@ var/datum/subsystem/processing/SSprocessing
 			processing -= thing
 		if (MC_TICK_CHECK)
 			return
+
+/datum/var/isprocessing = 0
+/datum/proc/process()
+	set waitfor = 0
+	STOP_PROCESSING(SSobj, src)
+	return 0

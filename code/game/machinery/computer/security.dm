@@ -1,5 +1,3 @@
-
-
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
 	desc = "Used to view and edit personnel's security records"
@@ -23,6 +21,7 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id))
@@ -435,14 +434,14 @@ What a mess.*/
 								default_description += "\n[c.crimeName]\n"
 								default_description += "[c.crimeDetails]\n"
 
-						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
+						var/info = sanitize_russian(strip_html_properly(input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description)))
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 							printing = 1
 							sleep(30)
 							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-								new /obj/item/weapon/poster/legit/wanted(src.loc, photo.img, wanted_name, info)
+								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, strip_html_properly(russian_html2text(info)))
 							printing = 0
 
 //RECORD DELETE
@@ -463,7 +462,7 @@ What a mess.*/
 				if(!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = sanitize_russian(stripped_multiline_input("Add Comment:", "Secure. records", null, null))
+				var/t1 = strip_html_properly(sanitize_russian(stripped_multiline_input("Add Comment:", "Secure. records", null, null)))
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1
@@ -558,7 +557,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = strip_html_properly(copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN))
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -567,7 +566,7 @@ What a mess.*/
 								active2.fields["name"] = t1
 					if("id")
 						if(istype(active2,/datum/data/record) || istype(active1,/datum/data/record))
-							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
+							var/t1 = strip_html_properly(stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null))
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1,/datum/data/record))
@@ -576,7 +575,7 @@ What a mess.*/
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)
+							var/t1 = strip_html_properly(stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null))
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
@@ -620,8 +619,8 @@ What a mess.*/
 							active1.fields["photo_side"] = photo
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = sanitize_russian(stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null))
-							var/t2 = sanitize_russian(stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)))
+							var/t2 = strip_html_properly(sanitize_russian(stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)))
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -634,8 +633,8 @@ What a mess.*/
 								data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = sanitize_russian(stripped_input(usr, "Please input major crime names:", "Secure. records", "", null))
-							var/t2 = sanitize_russian(stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)))
+							var/t2 = strip_html_properly(sanitize_russian(stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)))
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -648,7 +647,7 @@ What a mess.*/
 								data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
-							var/t1 = sanitize_russian(stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null))
+							var/t1 = strip_html_properly(sanitize_russian(stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)))
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1
@@ -762,7 +761,7 @@ What a mess.*/
 				if(4)
 					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged")
 				if(5)
-					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+					R.fields["p_stat"] = pick("*Unconscious*", "Active", "Physically Unfit")
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				if(7)

@@ -33,10 +33,7 @@
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar-Sie"
 
-	msg = "<span class='adminnotice'>\icon[cross] \
-		<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>\
-		[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> \
-		[msg]</span>"
+	msg = "<span class='adminnotice'>\icon[cross]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)] [ADMIN_SMITE(src)]:</b> [msg]</span>"
 
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
@@ -49,13 +46,14 @@
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
+
 /proc/Centcomm_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'>\
 		<b><font color=orange>CENTCOM:</font>\
 		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
 		[ADMIN_CENTCOM_REPLY(Sender)]:</b> \
-		[msg]</span>"
+		[russian_html2text(msg)]</span>"
 	admins << msg
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
@@ -66,7 +64,7 @@
 		<font color=crimson>SYNDICATE:</font>\
 		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
 		[ADMIN_SYNDICATE_REPLY(Sender)]:</b> \
-		[msg]</span>"
+		[russian_html2text(msg)]</span>"
 	admins << msg
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
@@ -78,7 +76,7 @@
 		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
 		[ADMIN_CENTCOM_REPLY(Sender)] \
 		[ADMIN_SET_SD_CODE]:</b> \
-		[msg]</span>"
+		[russian_html2text(msg)]</span>"
 	admins << msg
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()

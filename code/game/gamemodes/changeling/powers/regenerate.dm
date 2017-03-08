@@ -26,6 +26,7 @@
 				and tearing!</span>")
 			C.emote("scream")
 			C.regenerate_limbs(1)
+			C.regenerate_organs()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.restore_blood()

@@ -14,8 +14,8 @@
  */
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
-/proc/sanitizeSQL(t as text)
-	var/sqltext = dbcon.Quote(t);
+/proc/sanitizeSQL(t)
+	var/sqltext = dbcon.Quote("[t]");
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
 /proc/format_table_name(table as text)
@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#", "\t"="#", "ÿ"="&#255;"))
+/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","ÿ"="&#255;"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -48,7 +48,7 @@
 proc/sanitize_russian(var/msg, var/html = 0)
     var/rep
     if(html)
-        rep = "&#1103;"
+        rep = "&#x44F;"
     else
         rep = "&#255;"
     var/index = findtext(msg, "ÿ")
@@ -58,31 +58,33 @@ proc/sanitize_russian(var/msg, var/html = 0)
     return msg
 
 proc/russian_html2text(msg)
-    return replacetext(msg, "&#1103;", "&#255;")
+    return replacetext(msg, "&#x44F;", "&#255;")
 
 proc/russian_text2html(msg)
-	return replacetext(msg, "&#255;", "&#1103;")
+	return replacetext(msg, "&#255;", "&#x44F;")
+
 
 //Runs byond's sanitization proc along-side sanitize_simple
-/proc/sanitize(var/t,var/list/repl_chars = null)
+/proc/sanitize(t,list/repl_chars = null)
 	t = replacetext(t, "\proper", "")
 	t = replacetext(t, "\improper", "")
 	return rhtml_encode(sanitize_simple(t,repl_chars))
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
-/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN)
+/proc/strip_html(t,limit=MAX_MESSAGE_LEN)
 	return copytext((sanitize(strip_html_simple(t))),1,limit)
 
 //Runs byond's sanitization proc along-side strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
-/proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
-	return copytext((sanitize(strip_html_simple(t))),1,limit)
+/proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
+	return copytext((rhtml_encode(strip_html_simple(t))),1,limit)
 
 
 //Returns null if there is any bad text in the string
-/proc/reject_bad_text(var/text, var/max_length=512)
-	if(length(text) > max_length)	return			//message too long
+/proc/reject_bad_text(text, max_length=512)
+	if(length(text) > max_length)
+		return			//message too long
 	var/non_whitespace = 0
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
@@ -93,17 +95,23 @@ proc/russian_text2html(msg)
 			else			non_whitespace = 1
 	if(non_whitespace)		return sanitize_russian(text)		//only accepts the text if it has some non-spaces
 
-// Used to get a sanitized input.
-/proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
-	var/name = sanitize(input(user, message, title, default))
-	return strip_html_simple(name, max_length)
 
+// Used to get a properly sanitized input, of max_length
+// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
+/proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
+	var/name = input(user, message, title, default) as text|null
+	if(no_trim)
+		return copytext(rhtml_encode(name, 1), 1, max_length)
+	else
+		return trim(rhtml_encode(name, 1), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
-/proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
+/proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as message|null
-	name = trim(name, max_length)
-	return rhtml_encode(name, 1)
+	if(no_trim)
+		return copytext(rhtml_encode(name, 1), 1, max_length)
+	else
+		return trim(rhtml_encode(name, 1), max_length)
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
@@ -431,8 +439,6 @@ var/list/binary = list("0","1")
 	for(var/i=1, i<=times, i++)
 		. += string
 
-
-
 /proc/random_short_color()
 	return random_string(3, hex_characters)
 
@@ -483,8 +489,6 @@ var/list/binary = list("0","1")
 		. += copytext(from, start, end)
 	else
 		. += copytext(into, start, end)
-
-
 
 //finds the first occurrence of one of the characters from needles argument inside haystack
 //it may appear this can be optimised, but it really can't. findtext() is so much faster than anything you can do in byondcode.
@@ -591,6 +595,97 @@ var/list/binary = list("0","1")
 			ca -= 13
 		result += ascii2text(ca)
 	return jointext(result, "")
+
+/proc/capitalize_uni(var/t as text)
+	var/s = 2
+	if (copytext(t,1,2) == ";")
+		s += 1
+	else if (copytext(t,1,2) == ":")
+		if(copytext(t,3,4) == " ")
+			s+=3
+		else
+			s+=2
+	return pointization(uppertext_uni(copytext(t, 1, s)) + copytext(t, s))
+
+/proc/pointization(text as text)
+	if (!text)
+		return
+	if (copytext(text,1,2) == "*") //Emotes allowed.
+		return text
+	if (copytext(text,-1) in list("!", "?", "."))
+		return text
+	text += "."
+	return text
+
+/proc/uppertext_uni(text as text)
+	var/rep = "ß"
+	var/index = findtext(text, "ÿ")
+	while(index)
+		text = copytext(text, 1, index) + rep + copytext(text, index + 1)
+		index = findtext(text, "ÿ")
+	var/t = ""
+	for(var/i = 1, i <= length(text), i++)
+		var/a = text2ascii(text, i)
+		if (a > 223)
+			t += ascii2text(a - 32)
+		else if (a == 184)
+			t += ascii2text(168)
+		else t += ascii2text(a)
+	return t
+
+/proc/lowertext_uni(text as text)
+	var/t = ""
+	for(var/i = 1, i <= length(text), i++)
+		var/a = text2ascii(text, i)
+		if (a > 191 && a < 224)
+			t += ascii2text(a + 32)
+		else if (a == 168)
+			t += ascii2text(184)
+		else t += ascii2text(a)
+	return t
+
+/proc/ruscapitalize(t as text)
+	var/s = 2
+	if (copytext(t,1,2) == ";")
+		s += 1
+	else if (copytext(t,1,2) == ":")
+		if(copytext(t,3,4) == " ")
+			s+=3
+		else
+			s+=2
+	return upperrustext(copytext(t, 1, s)) + copytext(t, s)
+
+/proc/intonation(text)
+	if (copytext(text,-1) == "!")
+		text = "<b>[text]</b>"
+	return text
+
+/proc/upperrustext(text as text)
+    var/rep = "&#223;"
+    var/index = findtext(text, "ÿ")
+    while(index)
+        text = copytext(text, 1, index) + rep + copytext(text, index + 1)
+        index = findtext(text, "ÿ")
+    var/t = ""
+    for(var/i = 1, i <= length(text), i++)
+        var/a = text2ascii(text, i)
+        if (a > 223)
+            t += ascii2text(a - 32)
+        else if (a == 184)
+            t += ascii2text(168)
+        else t += ascii2text(a)
+    return t
+
+/proc/lowerrustext(text as text)
+    var/t = ""
+    for(var/i = 1, i <= length(text), i++)
+        var/a = text2ascii(text, i)
+        if (a > 191 && a < 224)
+            t += ascii2text(a + 32)
+        else if (a == 168)
+            t += ascii2text(184)
+        else t += ascii2text(a)
+    return t
 
 //Takes a list of values, sanitizes it down for readability and character count,
 //then exports it as a json file at data/npc_saves/[filename].json.

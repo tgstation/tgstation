@@ -77,9 +77,10 @@ field_generator power level display
 	else
 		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 
-/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user)
+/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
 	if(state == FG_WELDED)
-		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		if(!silent)
+			user  << "<span class='warning'>[src] is welded to the floor!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -318,7 +319,7 @@ field_generator power level display
 	//I want to avoid using global variables.
 	spawn(1)
 		var/temp = 1 //stops spam
-		for(var/obj/singularity/O in world)
+		for(var/obj/singularity/O in singularities)
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0

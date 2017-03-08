@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -1982,22 +1982,26 @@
 /area/ruin/hotel/workroom)
 "eC" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eD" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/head/rice_hat,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eE" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/bedsheet/patriot,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eF" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/card/id/away/hotel,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eG" = (
 /turf/closed/wall,
@@ -4421,14 +4425,12 @@
 /area/ruin/hotel/security)
 "kO" = (
 /turf/open/floor/plasteel/darkyellow,
-/turf/open/floor/plasteel/warningline,
+/obj/effect/turf_decal/stripes/line,
 /area/ruin/hotel/security)
 "kP" = (
 /turf/open/floor/plasteel/darkyellow,
-/turf/open/floor/plasteel/warningline/corner{
-	tag = "icon-warninglinecorners (WEST)";
-	icon_state = "warninglinecorners";
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
 	},
 /area/ruin/hotel/security)
 "kQ" = (
@@ -4546,9 +4548,7 @@
 /area/ruin/hotel/security)
 "lf" = (
 /turf/open/floor/plasteel/darkyellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/ruin/hotel/security)
@@ -5174,6 +5174,64 @@
 /obj/structure/cable/yellow,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
+"mP" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/turf/open/floor/plasteel/black,
+/area/ruin/hotel/workroom)
+"mQ" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Hotel Staff Room";
+	req_access_txt = "200"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/ruin/hotel/workroom)
+"mR" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/carpet,
+/area/ruin/hotel)
+"mS" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/turf/open/floor/carpet,
+/area/ruin/hotel)
+"mT" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/turf/open/floor/carpet,
+/area/ruin/hotel)
+"mU" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/carpet,
+/area/ruin/hotel)
 "mV" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5192,64 +5250,6 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel)
-"mU" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/open/floor/carpet,
-/area/ruin/hotel)
-"mT" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/carpet,
-/area/ruin/hotel)
-"mS" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/carpet,
-/area/ruin/hotel)
-"mR" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/ruin/hotel)
-"mQ" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Hotel Staff Room";
-	req_access_txt = "200"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel/black,
-/area/ruin/hotel/workroom)
-"mP" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel/black,
-/area/ruin/hotel/workroom)
 
 (1,1,1) = {"
 aa
