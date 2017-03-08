@@ -30,7 +30,7 @@
 		new /datum/GBP_equipment("50 glass sheets",			/obj/item/stack/sheet/glass/fifty,								500,	1),
 		new /datum/GBP_equipment("50 cardboard sheets",			/obj/item/stack/sheet/cardboard/fifty,						500,	1),
 		new /datum/GBP_equipment("Hardsuit x3",			/obj/item/clothing/suit/space/hardsuit,								750,	3),
-		new /datum/GBP_equipment("Jetpack Upgrade x5",		/obj/item/weapon/tank/jetpack/suit,								1000,	5),
+		new /datum/GBP_equipment("Jetpack Upgrade x3",		/obj/item/weapon/tank/jetpack/suit,								1000,	3),
 		new /datum/GBP_equipment("Powertools x3",			/obj/item/weapon/storage/belt/utility/chief/full,				2000,	3),
 		new /datum/GBP_equipment("Advanced Magboot x3",			/obj/item/clothing/shoes/magboots/advance,					3000,	3),
 		new /datum/GBP_equipment("Reflector Box x3",			/obj/structure/reflector/box,								3500,	3),
@@ -41,7 +41,7 @@
 		new /datum/GBP_equipment("Prototype Repair Vehicle x2",		/obj/vehicle/space/speedbike/repair,					10000,	2),
 		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				12500,	5),
 		new /datum/GBP_equipment("Chrono Suit x5",		/obj/item/clothing/suit/space/chronos,								20000,	5),
-		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/memewagon,				30000,	5),
+		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/memewagon,					30000,	5),
 		)
 
 /datum/GBP_equipment
@@ -57,12 +57,14 @@
 	amount = amount
 
 /obj/machinery/engi_points_manager/Initialize()
+	engi_points_list += src
 	radio = new(src)
 	radio.listening = 0
 	radio.frequency = 1357
 	..()
 
 /obj/machinery/engi_points_manager/Destroy()
+	engi_points_list -= src
 	if(radio)
 		qdel(radio)
 		radio = null
@@ -110,22 +112,18 @@
 			return
 		else if(prize.cost <= GBP) // Placeholder spaghetti calm your shit
 			GBP -= prize.cost
-			for(var/i in 1 to prize.amount)
-				for(var/obj/machinery/engi_points_delivery/D in machines)
-					D.icon_state = "geardist-load"
-					playsound(D, 'sound/machines/Ding.ogg', 100, 1)
-					spawn(20)
-						new prize.equipment_path(get_turf(D))
-						D.icon_state = "geardist"
+			for(var/obj/machinery/engi_points_delivery/D in deliverer_list)
+				D.icon_state = "geardist-load"
+				playsound(D, 'sound/machines/Ding.ogg', 100, 1)
+				spawn(20)
+					if(!D || QDELETED(D))
+						return
+					spawn_atom_to_turf(new prize.equipment_path, D, prize.amount, admin_spawn=FALSE)
+					D.icon_state = "geardist"
 					if(prize.cost == 20000) // Still a placeholder
-						new /obj/item/clothing/head/helmet/space/chronos(get_turf(src))
-					feedback_add_details("Engi_equipment_bought",
-					"[src.type]|[prize.equipment_path]")
-		else
-			GBP -= prize.cost
-			new prize.equipment_path(src.loc)
-			feedback_add_details("Engi_equipment_bought",
-				"[src.type]|[prize.equipment_path]")
+						spawn_atom_to_turf(/obj/item/clothing/head/helmet/space/chronos, D, prize.amount, admin_spawn=FALSE)
+					if(prize.cost >radio.talk_into(src
+					feedback_add_details("Engi_equipment_bought","[src.type]|[prize.equipment_path]")
 	updateUsrDialog()
 
 /obj/machinery/engi_points_manager/attackby(obj/item/I, mob/user, params)
@@ -133,8 +131,8 @@
 
 /obj/machinery/engi_points_manager/process()
 	power_export_bonus = 0
-	for(var/obj/machinery/power/exporter/PE in machines)
-		power_export_bonus = PE.drain_rate/200
+	for(var/obj/machinery/power/exporter/PE in power_exporter_list)
+		power_export_bonus = PE.drain_rate/200 // basically controls the balance of the current point system
 	if(GBP_alarm_cooldown <= world.time)
 		var/limit = 0 // ugh, to stop it from checking the Centcom Computer
 		for(var/obj/machinery/computer/station_alert/SA in machines)
@@ -160,7 +158,7 @@
 			if(2100 to 2400)
 				alarm_rating = "IMPRESSIVE"
 				playsound(src, 'sound/misc/compiler-stage2.ogg', 100, 1)
-			if(2500)
+			if(2500 to INF)
 				alarm_rating = "ABSOLUTELY FLAWLESS"
 				playsound(src, 'sound/misc/compiler-stage2.ogg', 100, 1)
 		radio.talk_into(src,"UPDATE: The engineering department has been awarded [air_alarm_bonus] points for the state of the station's air, [power_alarm_bonus] points for the state of the station's power, and [fire_alarm_bonus] points for the state of the station's fire alarms.")
