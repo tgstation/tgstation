@@ -165,7 +165,7 @@
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 	obj_integrity = 300
 	max_integrity = 300
-	luminosity = 2
+	light_range = 2
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"

@@ -1567,7 +1567,7 @@
 	contraband = TRUE
 	cost = 3000
 	num_contained = 6
-	contains = list(/obj/item/weapon/poster/contraband,
+	contains = list(/obj/item/weapon/poster/random_contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
 					/obj/item/seeds/ambrosia/deus,
@@ -1577,6 +1577,7 @@
 /datum/supply_pack/misc/randomised/toys
 	name = "Toy Crate"
 	cost = 5000 // or play the arcade machines ya lazy bum
+	// TODO make this actually just use the arcade machine loot list
 	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
@@ -1591,7 +1592,8 @@
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
-	                /obj/item/toy/redbutton)
+	                /obj/item/toy/redbutton,
+					/obj/item/toy/eightball)
 	crate_name = "toy crate"
 
 /datum/supply_pack/misc/autodrobe
@@ -1696,7 +1698,12 @@
 	cost = 12000
 	special = TRUE
 	contains = list(
-					/obj/item/weapon/circuitboard/machine/dna_vault
+					/obj/item/weapon/circuitboard/machine/dna_vault,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
 					)
 	crate_name= "dna vault parts crate"
 

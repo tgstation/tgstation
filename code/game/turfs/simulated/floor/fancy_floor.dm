@@ -2,6 +2,8 @@
  * Wood floor
  * Grass floor
  * Carpet floor
+ * Fake pits
+ * Fake space
  */
 
 /turf/open/floor/wood
@@ -81,8 +83,7 @@
 		icon_state = "basalt[rand(0, 12)]"
 		switch(icon_state)
 			if("basalt1", "basalt2", "basalt3")
-				SetLuminosity(1, 1)
-
+				set_light(1, 0.1)
 
 /turf/open/floor/carpet
 	name = "carpet"
@@ -92,7 +93,7 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
 	flags = NONE
 
 /turf/open/floor/carpet/Initialize()
@@ -121,6 +122,13 @@
 	burnt = 1
 	update_icon()
 
+
+
+turf/open/floor/fakepit
+	desc = "A clever illusion designed to look like a bottomless pit."
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	icon = 'icons/turf/floors/Chasms.dmi'
+	icon_state = "smooth"
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'

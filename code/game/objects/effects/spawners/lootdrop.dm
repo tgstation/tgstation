@@ -116,8 +116,8 @@
 				/obj/item/clothing/head/cone = 1,
 				/obj/item/weapon/coin/silver = 1,
 				/obj/item/weapon/coin/twoheaded = 1,
-				/obj/item/weapon/poster/contraband = 1,
-				/obj/item/weapon/poster/legit = 1,
+				/obj/item/weapon/poster/random_contraband = 1,
+				/obj/item/weapon/poster/random_official = 1,
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
@@ -158,6 +158,7 @@
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
 				/obj/item/weapon/storage/toolbox/artistic = 2,
+				/obj/item/toy/eightball = 1,
 				"" = 3
 				)
 

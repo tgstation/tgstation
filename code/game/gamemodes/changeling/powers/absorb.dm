@@ -65,13 +65,15 @@
 		//Recent as opposed to all because rounds tend to have a LOT of text.
 		var/list/recent_speech = list()
 
-		if(target.say_log.len > LING_ABSORB_RECENT_SPEECH)
-			recent_speech = target.say_log.Copy(target.say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
+		var/list/say_log = target.logging[INDIVIDUAL_SAY_LOG]
+
+		if(say_log.len > LING_ABSORB_RECENT_SPEECH)
+			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
 		else
-			for(var/spoken_memory in target.say_log)
+			for(var/spoken_memory in say_log)
 				if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
 					break
-				recent_speech[spoken_memory] = target.say_log[spoken_memory]
+				recent_speech[spoken_memory] = say_log[spoken_memory]
 
 		if(recent_speech.len)
 			user.mind.store_memory("<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B>")

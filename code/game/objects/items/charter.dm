@@ -81,11 +81,7 @@
 	response_timer_id = null
 
 /obj/item/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
-	if(config && config.server_name)
-		world.name = "[config.server_name]: [designation]"
-	else
-		world.name = designation
-	station_name = designation
+	change_station_name(designation)
 	minor_announce("[ureal_name] has designated your station as [station_name()]", "Captain's Charter", 0)
 	log_game("[ukey] has renamed the station as [station_name()].")
 
@@ -95,5 +91,9 @@
 
 	if(!unlimited_uses)
 		used = TRUE
+
+/obj/item/station_charter/admin
+	unlimited_uses = TRUE
+	ignores_timeout = TRUE
 
 #undef STATION_RENAME_TIME_LIMIT

@@ -6,7 +6,7 @@
 	icon_state = "bhole3"
 	density = 0
 	anchored = 1
-	luminosity = 3
+	light_range = 3
 	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 	var/area/impact_area
@@ -23,7 +23,6 @@
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
 
-	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
