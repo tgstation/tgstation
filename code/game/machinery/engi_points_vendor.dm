@@ -18,7 +18,26 @@
 	var/prior_bonus = 2500
 	var/total_bonus = 0
 	var/GBP_alarm_cooldown = 4500
-	var/list/prize_list = list(
+	var/list/prize_list = list()
+
+/datum/GBP_equipment
+	var/equipment_name = "generic"
+	var/equipment_path = null
+	var/cost = 0
+	var/amount = 0
+
+/datum/GBP_equipment/New(name, path, cost, amount)
+	equipment_name = name
+	equipment_path = path
+	cost = cost
+	amount = amount
+
+/obj/machinery/engi_points_manager/Initialize()
+	engi_points_list += src
+	radio = new(src)
+	radio.listening = 0
+	radio.frequency = 1357
+	prize_list = list(
 		new /datum/GBP_equipment("Tendie",				/obj/item/weapon/reagent_containers/food/snacks/nugget,				50,		1),
 		new /datum/GBP_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,						50,		1),
 		new /datum/GBP_equipment("Soap",				/obj/item/weapon/soap/nanotrasen,									100,	1),
@@ -38,29 +57,11 @@
 		new /datum/GBP_equipment("Ranged RCD x3",			/obj/item/weapon/rcd/arcd,										6000,	3),
 		new /datum/GBP_equipment("ERT Hardsuit x5",		/obj/item/clothing/suit/space/hardsuit/ert/engi,					7000,	5),
 		new /datum/GBP_equipment("Portal Gun x5",			/obj/item/weapon/gun/energy/wormhole_projector,					8000,	5),
-		new /datum/GBP_equipment("Prototype Repair Vehicle x2",		/obj/vehicle/space/speedbike/repair,					10000,	2),
-		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				12500,	5),
-		new /datum/GBP_equipment("Chrono Suit x5",		/obj/item/clothing/suit/space/chronos,								20000,	5),
+		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				10000,	5),
+		new /datum/GBP_equipment("Prototype Repair Vehicle x3",		/obj/vehicle/space/speedbike/repair,					15000,	3),
+		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,							20000,	5),
 		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/memewagon,					30000,	5),
 		)
-
-/datum/GBP_equipment
-	var/equipment_name = "generic"
-	var/equipment_path = null
-	var/cost = 0
-	var/amount = 0
-
-/datum/GBP_equipment/New(name, path, cost, amount)
-	equipment_name = name
-	equipment_path = path
-	cost = cost
-	amount = amount
-
-/obj/machinery/engi_points_manager/Initialize()
-	engi_points_list += src
-	radio = new(src)
-	radio.listening = 0
-	radio.frequency = 1357
 	..()
 
 /obj/machinery/engi_points_manager/Destroy()
@@ -122,7 +123,8 @@
 					D.icon_state = "geardist"
 					if(prize.cost == 20000) // Still a placeholder
 						spawn_atom_to_turf(/obj/item/clothing/head/helmet/space/chronos, D, prize.amount, admin_spawn=FALSE)
-					if(prize.cost >radio.talk_into(src
+					if(prize.cost >= 1000)
+						radio.talk_into(src, "[user] has bought [prize.equipment_name] for [prize.cost] points")
 					feedback_add_details("Engi_equipment_bought","[src.type]|[prize.equipment_path]")
 	updateUsrDialog()
 
