@@ -13,13 +13,16 @@
 
 	/obj/proc/OnConstruction(state_id, mob/user, obj/item/used) - Called when a construction step is completed on an object with the new state_id
 																If state_id is zero, the object has been fully constructed and can't be deconstructed.
-																used is the material object if any used for construction and it will be deleted on return
+																used is the material object if any used for construction and it will be deleted/deducted from on return
 
 	/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced) - Called when a deconstruction step is completed on an object with the new state_id. 
 															 If state_id is zero, the object has been fully deconstructed
 															 created is the item that has been dropped, if any.
 															 forced is if the object was aggressively put into this state. If it's true, user MAY be null, created WILL be null.
 															 Returning TRUE from this function will cause created to be deleted before it is dropped
+
+	/obj/proc/OnRepair(mob/user, obj/item/used, old_integrity) - Called when an object is repaired (to it's max_integrity unless otherwise modified). It is safe to modify obj_integrity in this function
+																used is the material object if any used for repairing and it will be deleted/deducted from on return
 
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state. This will be called automatically if obj/var/always_construct is set to TRUE.
 									Calling this after a current_construction_state has been assigned (which this does) has no effect
@@ -42,14 +45,18 @@
 	*/
 	var/required_type_to_construct
 	var/required_type_to_deconstruct
+	var/required_type_to_repair	//null type does NOT mean hand here
 
 	var/required_amount_to_construct
+	var/required_amount_to_repair
 
 	var/construction_delay      //number multiplied by toolspeed, hands have a pseudo-toolspeed of 1
 	var/deconstruction_delay	//note if these are zero, the action will happen instantly and the messages should reflect that
+	var/repair_delay
 
 	var/construction_message    //message displayed in the format user.visible_message("[user] [message]", "You [message]")
 	var/deconstruction_message
+	var/repair_message	//this one defaults to "repairing"
 
 	var/construction_sound	//Sound played once construction step is complete
 	var/deconstruction_sound
@@ -248,6 +255,18 @@
 				WARNING(error + "Hand values for both construction and deconstruction types")
 				. = FALSE
 			
+			if(current_step.required_type_to_repair)
+				if(ispath(current_step.required_type_to_repair, /obj/item/stack))
+					if(!current_step.required_amount_to_repair)
+						WARNING(error +"No amount set for material repairs")
+						. = FALSE
+				else if(current_step.required_amount_to_repair > 1)
+					WARNING(error + "Invalid material amount for non stack repairs")
+					. = FALSE
+				if(!ispath(current_step.required_type_to_repair, /obj/item))
+					WARNING(error +"Invalid /obj/item type specified for repairs: '[current_step.required_type_to_construct]'")
+					. = FALSE
+			
 			if(current_step.required_type_to_deconstruct && !ispath(current_step.required_type_to_deconstruct, /obj/item))
 				WARNING("Invalid /obj/item type specified for deconstruction: '[current_step.required_type_to_deconstruct]'")
 				. = FALSE
@@ -260,6 +279,8 @@
 /obj/proc/OnConstruction(state_id, mob/user, obj/item/used)
 
 /obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created)
+
+/obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
 
 //called after Initialize if the obj was constructed from scratch
 /obj/proc/Construct(mob/user)
@@ -276,13 +297,31 @@
 	add_fingerprint(user)
 	feedback_add_details("obj_construction","[type]")
 
+/obj/proc/Repair(mob/user, obj/item/used, amount)
+	var/old_integrity = obj_integrity
+	var/max_integ = max_integrity
+	if(!amount)
+		amount = max_integ - old_integrity
+	obj_integrity += amount
+	OnRepair(user, used, old_integrity)
+	var/ratr = current_construction_state.required_amount_to_repair
+	if(ratr)
+		var/obj/item/stack/S = used
+		if(istype(S))
+			S.use(ratr)
+		else
+			qdel(used)
+
 /obj/examine(mob/user)
 	..()
 	if(current_construction_state && current_construction_state.examine_message)
 		user << current_construction_state.examine_message
 
 /obj/attack_hand(mob/user)	//obj/item doesn't call this so we're fine
-	HandConstruction(user)
+	if(user.a_intent == INTENT_HELP)
+		HandConstruction(user)
+	else
+		return ..()
 
 /obj/item/attack_self(mob/user)
 	. = ..()
@@ -316,11 +355,12 @@
 //construct by tool if possible
 /obj/attackby(obj/item/I, mob/living/user)
 	var/datum/construction_state/ccs = current_construction_state	
-	if(ccs)
+	if(ccs && user.a_intent == INTENT_HELP)
 		if(src in user.construction_tasks)
 			return
 
 		var/constructed
+		var/repairing
 		var/wait
 		var/message
 		if(istype(I, ccs.required_type_to_construct))
@@ -331,6 +371,15 @@
 			constructed = FALSE
 			wait = ccs.deconstruction_delay
 			message = ccs.deconstruction_message
+		else if(istype(I, ccs.required_type_to_repair))
+			if(obj_integrity == max_integrity)
+				user << "<span class='notice'>\The src isn't damaged!</span>"
+				return
+			repairing = TRUE
+			wait = ccs.repair_delay
+			message = ccs.repair_message
+			if(!message)
+				message = "repairing"
 		else
 			return ..()
 
@@ -344,9 +393,11 @@
 				WT.remove_fuel(M = user)
 
 		var/obj/item/stack/Mats = I
-		if(istype(Mats) && Mats.amount < ccs.required_amount_to_construct)
-			user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>"
-			return
+		if(istype(Mats))
+			var/check_against = repairing ? ccs.required_amount_to_repair : ccs.required_type_to_construct
+			if(Mats.amount < check_against)
+				user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>"
+				return
 
 		var/cont
 		LAZYADD(user.construction_tasks, src)	//prevent repeats
@@ -364,7 +415,10 @@
 
 		if(cont)
 			user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
-			ccs.OnLeft(src, user, I, constructed, FALSE)
+			if(!repairing)
+				ccs.OnLeft(src, user, I, constructed, FALSE)
+			else
+				Repair(user, I)
 	else
 		return ..()
 
