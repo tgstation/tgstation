@@ -629,7 +629,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	icon_state = "deck_syndicate_full"
 	var/used = FALSE
 	var/theme = "magic"
-	var/mob_name = "sutando Spirit"
+	var/mob_name = "Sutando"
 	var/use_message = "<span class='holoparasite'>You shuffle the deck...</span>"
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
