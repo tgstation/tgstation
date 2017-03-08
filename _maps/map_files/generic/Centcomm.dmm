@@ -2196,6 +2196,7 @@
 /area/tdome/arena_source)
 "fP" = (
 /obj/machinery/igniter,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fQ" = (
@@ -2209,7 +2210,10 @@
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/weapon/melee/baton/loaded,
 /obj/item/weapon/melee/energy/sword/saber/red,
-/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fS" = (
 /obj/machinery/door/poddoor{
@@ -2243,17 +2247,20 @@
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/weapon/melee/baton/loaded,
 /obj/item/weapon/melee/energy/sword/saber/green,
-/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fX" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit/green,
 /area/tdome/arena_source)
 "fY" = (
 /obj/machinery/flasher{
 	id = "tdomeflash";
 	name = "Thunderdome Flash"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit/green,
 /area/tdome/arena_source)
 "fZ" = (
 /obj/machinery/door/poddoor{
@@ -2269,7 +2276,10 @@
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
 /obj/item/weapon/gun/energy/laser,
-/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "gb" = (
 /obj/structure/rack,
@@ -2278,7 +2288,10 @@
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
 /obj/item/weapon/gun/energy/laser,
-/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "gc" = (
 /turf/closed/indestructible/riveted,
@@ -2349,7 +2362,7 @@
 /area/ctf)
 "gq" = (
 /obj/structure/barricade/security/ctf,
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "gr" = (
 /obj/structure/table/reinforced,
@@ -2370,7 +2383,7 @@
 /area/ctf)
 "gv" = (
 /obj/structure/barricade/security/ctf,
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "gw" = (
 /turf/open/floor/plasteel/darkred/side{
@@ -2595,19 +2608,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "hi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "hj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "hk" = (
 /turf/open/floor/plasteel/darkred,
@@ -2623,16 +2636,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "ho" = (
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "hp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "hq" = (
 /turf/open/floor/plating/asteroid/snow/atmosphere,
@@ -2642,21 +2655,21 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "hs" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "ht" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/ctf)
 "hu" = (
 /obj/structure/barricade/security/ctf,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "hv" = (
 /obj/structure/trap/ctf/red,
@@ -2693,7 +2706,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "hA" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2732,7 +2745,7 @@
 	},
 /area/ctf)
 "hE" = (
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "hF" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2744,26 +2757,26 @@
 	},
 /area/ctf)
 "hG" = (
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "hH" = (
-/turf/open/floor/plasteel/circuit/gcircuit/animated,
+/turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hI" = (
 /obj/machinery/capture_the_flag/blue,
-/turf/open/floor/plasteel/circuit/gcircuit/animated,
+/turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hJ" = (
 /obj/item/weapon/twohanded/ctf/blue,
-/turf/open/floor/plasteel/circuit/gcircuit/animated,
+/turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hK" = (
 /obj/item/weapon/twohanded/ctf/red,
-/turf/open/floor/plasteel/circuit/gcircuit/animated,
+/turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hL" = (
 /obj/machinery/capture_the_flag/red,
-/turf/open/floor/plasteel/circuit/gcircuit/animated,
+/turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hM" = (
 /obj/effect/landmark/shuttle_import,
@@ -2791,7 +2804,7 @@
 /area/ctf)
 "hQ" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "hR" = (
 /obj/effect/turf_decal/stripes/line,
@@ -2817,47 +2830,47 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "hV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "hW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "hX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "hY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "hZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "ia" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "ib" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/ctf)
 "ic" = (
 /obj/effect/turf_decal/stripes/line{
@@ -9256,10 +9269,10 @@
 /area/centcom/ferry)
 "xf" = (
 /obj/machinery/shuttle_manipulator,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/centcom/ferry)
 "xg" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/centcom/ferry)
 "xh" = (
 /obj/structure/table/reinforced,
@@ -12345,14 +12358,14 @@
 	},
 /area/tdome/arena)
 "Ew" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tdome/arena)
 "Ex" = (
 /obj/machinery/flasher{
 	id = "tdomeflash";
 	name = "Thunderdome Flash"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tdome/arena)
 "Ey" = (
 /turf/open/floor/plasteel/loadingarea{
@@ -12398,7 +12411,7 @@
 	network = list("thunder");
 	c_tag = "Arena"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tdome/arena)
 "EE" = (
 /turf/open/floor/plasteel/red/corner{
@@ -13007,7 +13020,9 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gi" = (
-/obj/effect/landmark/abductor/console,
+/obj/machinery/abductor/console{
+	team = 1
+	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gj" = (
@@ -13033,7 +13048,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gn" = (
-/obj/effect/landmark/abductor/console{
+/obj/machinery/abductor/console{
 	team = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -13318,7 +13333,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Ho" = (
-/obj/effect/landmark/abductor/console{
+/obj/machinery/abductor/console{
 	team = 2
 	},
 /turf/open/floor/plating/abductor,
@@ -13336,7 +13351,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hr" = (
-/obj/effect/landmark/abductor/console{
+/obj/machinery/abductor/console{
 	team = 3
 	},
 /turf/open/floor/plating/abductor,
@@ -13558,6 +13573,286 @@
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
 /area/centcom/evac)
+"Ij" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Ik" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Il" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Im" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"In" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Io" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Ip" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Iq" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Ir" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Is" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"It" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Iu" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/tdome/arena_source)
+"Iv" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Iw" = (
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/tdome/arena_source)
+"Ix" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Iy" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"Iz" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IA" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IB" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IC" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"ID" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IE" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IF" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IG" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/tdome/arena_source)
+"IH" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"II" = (
+/turf/open/floor/plasteel/green/corner{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"IJ" = (
+/turf/open/floor/plasteel/loadingarea{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"IK" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"IL" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"IM" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IN" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IO" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IP" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IQ" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/tdome/arena_source)
+"IR" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"IS" = (
+/turf/open/floor/plasteel/loadingarea{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 8
+	},
+/area/tdome/arena_source)
+"IT" = (
+/turf/open/floor/plasteel/loadingarea{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"IU" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"IV" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"IW" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IX" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"IY" = (
+/obj/machinery/camera{
+	pixel_x = 10;
+	network = list("thunder");
+	c_tag = "Arena"
+	},
+/turf/open/floor/circuit/green,
+/area/tdome/arena_source)
+"IZ" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Ja" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jb" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/tdome/arena_source)
+"Jc" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Jd" = (
+/turf/open/floor/plasteel/loadingarea{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 8
+	},
+/area/tdome/arena_source)
+"Je" = (
+/turf/open/floor/plasteel/red/corner{
+	dir = 8
+	},
+/area/tdome/arena_source)
+"Jf" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Jg" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"Jh" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Ji" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jj" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jk" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jl" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jm" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jn" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jo" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/tdome/arena_source)
+"Jp" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Jq" = (
+/turf/open/floor/plasteel/green/corner,
+/area/tdome/arena_source)
+"Jr" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"Js" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/tdome/arena_source)
+"Jt" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Ju" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jv" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jw" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jx" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jy" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"Jz" = (
+/turf/open/floor/plasteel/neutral,
+/area/tdome/arena_source)
+"JA" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/tdome/arena_source)
+"JB" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"JC" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
+"JD" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/tdome/arena_source)
 
 (1,1,1) = {"
 aa
@@ -72963,10 +73258,10 @@ fE
 fN
 fP
 fU
-fU
-fU
-fU
-fU
+Iw
+IJ
+IT
+Je
 fU
 fP
 ab
@@ -73475,14 +73770,14 @@ fo
 fA
 fF
 fN
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+Ij
+Il
+Ix
+IK
+IU
+Jf
+Jr
+JC
 ab
 aa
 aa
@@ -73733,12 +74028,12 @@ fA
 fF
 fN
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+Im
+Iy
+IL
+IV
+Jg
+Js
 fQ
 ab
 aa
@@ -73990,12 +74285,12 @@ fz
 fG
 fN
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+In
+Iz
+IM
+IW
+Jh
+Jt
 fQ
 ab
 aa
@@ -74247,12 +74542,12 @@ ag
 ag
 ab
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+Io
+IA
+IN
+IX
+Ji
+Ju
 fQ
 ab
 aa
@@ -74504,12 +74799,12 @@ eZ
 eD
 fN
 fQ
-fQ
-fQ
+Ip
+IB
 fX
 fX
-fQ
-fQ
+Jj
+Jv
 fQ
 ab
 aa
@@ -74761,12 +75056,12 @@ fa
 eB
 fN
 fQ
-fQ
-fQ
+Iq
+IC
 fY
-fX
-fQ
-fQ
+IY
+Jk
+Jw
 fQ
 ab
 aa
@@ -75018,12 +75313,12 @@ eQ
 eQ
 fN
 fQ
-fQ
-fQ
+Ir
+ID
 fX
 fX
-fQ
-fQ
+Jl
+Jx
 fQ
 ab
 aa
@@ -75275,12 +75570,12 @@ eZ
 eD
 fN
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+Is
+IE
+IO
+IZ
+Jm
+Jy
 fQ
 ab
 aa
@@ -75532,12 +75827,12 @@ fa
 eB
 fN
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+It
+IF
+IP
+Ja
+Jn
+Jz
 fQ
 ab
 aa
@@ -75789,12 +76084,12 @@ ag
 ag
 ab
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+Iu
+IG
+IQ
+Jb
+Jo
+JA
 fQ
 ab
 aa
@@ -76045,14 +76340,14 @@ ff
 ff
 fH
 fN
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
+Ik
+Iv
+IH
+IR
+Jc
+Jp
+JB
+JD
 ab
 aa
 aa
@@ -76561,10 +76856,10 @@ fI
 fN
 fP
 fV
-fV
-fV
-fV
-fV
+II
+IS
+Jd
+Jq
 fV
 fP
 ab
