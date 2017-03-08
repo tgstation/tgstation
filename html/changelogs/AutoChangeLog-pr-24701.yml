@@ -1,5 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - bugfix: "[All Maps] Fixes syndicate shuttles spawning too close to stations by moving their spawn further from the station"
-  - rscadd: "[Omegastation] This station now has a syndicate shuttle and syndicate shuttle spawn."
