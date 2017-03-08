@@ -102,6 +102,7 @@ var/list/admin_verbs_fun = list(
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
+	/datum/admins/proc/spawn_atom_no_init,
 	/client/proc/respawn_character
 	)
 var/list/admin_verbs_server = list(

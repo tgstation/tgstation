@@ -636,6 +636,36 @@ var/global/BSACooldown = 0
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/spawn_atom_no_init(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn an atom without calling its Initialize"
+	set name = "Spawn (No-Init)"
+	set waitfor = FALSE	//to make sure any sleeps in New don't hold us up
+
+	if(!check_rights(R_SPAWN))
+		return
+
+	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)
+		usr << "<span class='admin'>You can't use this right now, there is an atom initialization procedure in progress</span>"
+		return
+
+	var/chosen = pick_closest_path(object)
+	if(!chosen)
+		return
+
+	SSatoms.map_loader_begin()
+
+	if(ispath(chosen,/turf))
+		var/turf/T = get_turf(usr.loc)
+		T.ChangeTurf(chosen)
+	else
+		var/atom/A = new chosen(usr.loc)
+		A.admin_spawned = TRUE
+
+	SSatoms.map_loader_stop()
+
+	log_admin("[key_name(usr)] no-init spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	feedback_add_details("admin_verb","SANA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/show_traitor_panel(mob/M in mob_list)
 	set category = "Admin"
