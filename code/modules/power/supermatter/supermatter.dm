@@ -21,6 +21,7 @@
 #define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750                //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+#define FREON_BREEDING_MODIFIER 300        //Higher == less freon created
 #define REACTION_POWER_MODIFIER 0.55                //Higher == more overall power
 
 
@@ -79,8 +80,6 @@
 	var/powerloss_inhibitor = 1
 	var/power_transmission_bonus = 0
 
-	var/mole_penalty = 0
-
 
 
 	//Temporary values so that we can optimize this
@@ -133,9 +132,10 @@
 		if(T)
 			var/obj/singularity/S = new(T)
 			S.energy = 800
+			S.consume(src)
 	else
 		investigate_log("has exploded.", "supermatter")
-		explosion(get_turf(T), max((explosion_power * gasmix_power_ratio), 0.205), max((explosion_power * gasmix_power_ratio), 0.205) + 2, max((explosion_power * gasmix_power_ratio), 0.205) + 4 , max((explosion_power * gasmix_power_ratio), 0.205) + 6, 1, 1)
+		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
 		if(power > POWER_PENALTY_THRESHOLD)
 			investigate_log("has spawned additional energy balls.", "supermatter")
 			var/obj/singularity/energy_ball/E = new(T)
@@ -171,13 +171,16 @@
 				lastwarning = world.timeofday - 150
 
 			else                                                 // Phew, we're safe
-				radio.talk_into(src, "[safe_alert]")
+				radio.talk_into(src, "[safe_alert] Instability: [stability]%")
 				lastwarning = world.timeofday
 
 			if(power > POWER_PENALTY_THRESHOLD)
-				radio.talk_into(src, "WARNING: CRITICAL POWER LEVELS.CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
+				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.")
+				if(powerloss_inhibitor < 0.5)
+					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION DETECTED.")
+
 			if(combined_gas > MOLE_PENALTY_THRESHOLD)
-				radio.talk_into(src, "WARNING: CRITICAL COOLANT MASS REACHED.")
+				radio.talk_into(src, "Warning: Critical coolant mass reached.")
 
 		if(damage > explosion_point)
 			for(var/mob in living_mob_list)
@@ -212,7 +215,14 @@
 
 	damage_archived = damage
 	if(takes_damage)
-		damage = max( damage + ( (removed.temperature - (800*dynamic_heat_resistance)) / 150 ) , 0 )
+		//causing damage
+		damage = max(damage + (max(removed.temperature - (800*dynamic_heat_resistance), 0) / 150 ), 0)
+		damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500), 0)
+		damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80), 0)
+
+		//healing damage
+		if(combined_gas < MOLE_PENALTY_THRESHOLD)
+			damage = max(damage + (min(removed.temperature - 800, 0) / 150 ), 0)
 
 
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
@@ -272,7 +282,8 @@
 
 	removed.gases["o2"][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
-	removed.gases["freon"][MOLES] += max(device_energy*freoncomp*10, 0)
+	if(combined_gas < 50)
+		removed.gases["freon"][MOLES] = max(removed.gases["freon"][MOLES] * device_energy / FREON_BREEDING_MODIFIER, 0)
 
 	if(produces_gas)
 		env.merge(removed)
@@ -288,7 +299,8 @@
 		l.rad_act(rads)
 
 	if(power > POWER_PENALTY_THRESHOLD)
-		tesla_zap(src, 8, power, FALSE)
+		tesla_zap(src, power/750, power, FALSE)
+		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 10)
 	power -= ((power/500)**3) * powerloss_inhibitor
 
 	return 1
