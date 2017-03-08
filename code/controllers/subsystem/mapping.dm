@@ -118,13 +118,15 @@ var/datum/subsystem/mapping/SSmapping
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
+	var/start_time = REALTIMEOFDAY
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
-	INIT_ANNOUNCE("Loaded station!")
+	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 
+	start_time = REALTIMEOFDAY
 	INIT_ANNOUNCE("Loading mining level...")
 	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
-	INIT_ANNOUNCE("Loaded mining level!")
+	INIT_ANNOUNCE("Loaded mining level in [(REALTIMEOFDAY - start_time)/10]s!")
 
 	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
 		CreateSpace()
