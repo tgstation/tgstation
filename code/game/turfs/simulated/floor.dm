@@ -159,13 +159,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		if(!silent)
 			user << "<span class='danger'>You remove the broken plating.</span>"
 	else
-		if(istype(src, /turf/open/floor/wood) && !silent)
-			user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
-		else
-			if(!silent)
-				user << "<span class='danger'>You remove the floor tile.</span>"
-			if(floor_tile)
-				new floor_tile(src)
+		if(!silent)
+			user << "<span class='danger'>You remove the floor tile.</span>"
+		if(floor_tile)
+			new floor_tile(src)
 	playsound(src, C.usesound, 80, 1)
 	return make_plating()
 

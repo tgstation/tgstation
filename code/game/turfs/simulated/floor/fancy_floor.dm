@@ -21,6 +21,17 @@
 		playsound(src, C.usesound, 80, 1)
 		return
 
+/turf/open/floor/wood/pry_tile(obj/item/weapon/crowbar/C, mob/user, silent = FALSE)
+	if(broken || burnt)
+		broken = 0
+		burnt = 0
+		if(!silent)
+			user << "<span class='danger'>You remove the broken plating.</span>"
+	else if(!silent)
+		user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
+	playsound(src, C.usesound, 80, 1)
+	return make_plating()
+
 /turf/open/floor/wood/cold
 	temperature = 255.37
 
