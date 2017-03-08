@@ -12,6 +12,8 @@ var/datum/subsystem/job/SSjob
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
 
+	var/list/prioritized_jobs = list()
+
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
 

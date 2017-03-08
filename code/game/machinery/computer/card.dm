@@ -202,7 +202,7 @@ var/time_last_changed_position = 0
 					dat += "Denied"
 				else
 					if(ID)
-						if(job in ticker.prioritized_jobs)
+						if(job in SSjob.prioritized_jobs)
 							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
 							if(prioritycount < 5)
@@ -525,12 +525,12 @@ var/time_last_changed_position = 0
 				if(!j)
 					return 0
 				var/priority = TRUE
-				if(j in ticker.prioritized_jobs)
-					ticker.prioritized_jobs -= j
+				if(j in SSjob.prioritized_jobs)
+					SSjob.prioritized_jobs -= j
 					prioritycount--
 					priority = FALSE
 				else
-					ticker.prioritized_jobs += j
+					SSjob.prioritized_jobs += j
 					prioritycount++
 				usr << "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)

@@ -398,11 +398,11 @@
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
 
-	if(length(ticker.prioritized_jobs))
+	if(length(SSjob.prioritized_jobs))
 		dat += "<div class='notice red'>The Head of Personnel's office has flagged these jobs as high priority:<br>"
-		var/amt = length(ticker.prioritized_jobs)
+		var/amt = length(SSjob.prioritized_jobs)
 		var/amt_count
-		for(var/datum/job/a in ticker.prioritized_jobs)
+		for(var/datum/job/a in SSjob.prioritized_jobs)
 			amt_count++
 			if(amt_count != amt) // checks for the last job added.
 				dat += " [a.title], "

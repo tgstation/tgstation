@@ -56,8 +56,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/news_report
 
-	var/list/prioritized_jobs = list()
-
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -737,7 +735,7 @@ var/datum/subsystem/ticker/ticker
 		if(REVS_LOSE)
 			news_message = "[station_name()] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
 		if(WIZARD_KILLED)
-			news_message = "Tensions have flared within the Space Wizard Federation following the death of one of their members aboard [station_name()]."
+			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [station_name()]."
 		if(STATION_NUKED)
 			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
 		if(CLOCK_SUMMON)
