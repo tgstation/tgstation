@@ -89,12 +89,11 @@
 	if(istype(target,/obj/structure/grille/broken))
 		var/N = 0
 		var/list/C = list()
-		cooldown = world.time + 200
 		new /obj/effect/overlay/temp/small_smoke(target_loc)
 		for(var/obj/item/weapon/shard/S in range(1,target_loc))
 			C += S
 		if(C.len >= 2)
-			cooldown = world.time + 200
+			cooldown = world.time + 120
 			qdel(target)
 			qdel(C[1])
 			qdel(C[2])
@@ -121,7 +120,7 @@
 			new /obj/item/stack/rods(target_loc)
 			cooldown = world.time + 40
 		playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 100, 1)
-		Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
+		Beam(target,icon_state="lightning[rand(8,12)]",time=40)
 		return TRUE
 	else
 		return FALSE
@@ -140,8 +139,8 @@
 			qdel(target)
 			new /turf/closed/wall(target_loc)
 			playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 100, 1)
-			Beam(loc,icon_state="lightning[rand(8,12)]",time=40)
-			cooldown = world.time + 210
+			Beam(target,icon_state="lightning[rand(8,12)]",time=40)
+			cooldown = world.time + 180
 			return TRUE
 		if (goal == 1)
 			new /obj/item/stack/sheet/metal(target_loc)
@@ -149,13 +148,11 @@
 	else
 		return FALSE
 		
-/obj/machinery/repair_turret/proc/repair_floor(turf/open/floor/flooring, turf/target_loc)
-	if(!flooring.icon_state == initial(flooring.icon_state))
+/obj/machinery/repair_turret/proc/repair_floor(turf/open/floor/flooring)
+	if(flooring.icon_state = initial(flooring.icon_state))
 		flooring.icon_state = initial(flooring.icon_state)
-		cooldown = world.time + 50
-		return TRUE
-	else
-		return FALSE
+		Beam(flooring,icon_state="lightning[rand(8,12)]",time=20)
+		sleep(5)
 
 /obj/machinery/repair_turret/process()
 	if(cooldown<=world.time)
@@ -171,8 +168,7 @@
 			if(repair_wall(target,target_loc))
 				return
 		for(var/turf/open/floor/flooring in view(7, src))
-			if(repair_floor(flooring))
-				return	
+			repair_floor(flooring)
 	else
 		icon_state = "mini_off"
 
