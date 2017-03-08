@@ -47,7 +47,9 @@
 /obj/vehicle/space/speedbike/repair/New()
 	. = ..()
 	turret = new(loc)
-	turret.base = src
+	turret.pixel_x = 17
+	turret.pixel_y = 37
+	turret.layer = 4
 
 /obj/vehicle/space/speedbike/repair/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
