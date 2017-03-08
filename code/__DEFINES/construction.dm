@@ -103,6 +103,12 @@
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
 
+//barsign.dm
 #define BARSIGN_UNWIRED 1
 #define BARSIGN_OPEN 2
 #define BARSIGN_COMPLETE 3
+
+//displaycase.dm
+#define DISPLAY_CASE_NO_ELECTRONICS 1
+#define DISPLAY_CASE_NOGLASS 2
+#define DISPLAY_CASE_COMPLETE 3
