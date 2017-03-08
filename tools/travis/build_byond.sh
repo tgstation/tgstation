@@ -6,6 +6,7 @@ shopt -s globstar
 
 if [ "$BUILD_TOOLS" = false ]; then
     (! grep 'step_[xy]' _maps/**/*.dmm)
+	(! grep '/turf\s*[,\){]' _maps/**/*.dmm)
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
 		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
