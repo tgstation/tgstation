@@ -374,7 +374,9 @@
 
 /obj/machinery/clonepod/emp_act(severity)
 	if(prob(100/(severity*efficiency)))
-		malfunction()
+		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
+		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [occupant.real_name] prematurely." ,0))
+		go_out()
 	..()
 
 /obj/machinery/clonepod/ex_act(severity, target)
