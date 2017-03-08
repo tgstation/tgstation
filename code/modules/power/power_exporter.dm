@@ -83,7 +83,7 @@ obj/machinery/power/exporter/Destroy()
 		user.unset_machine()
 		user << browse(null, "window=port_gen")
 		return
-	if(Adj)
+	if(user.Adjacent(src))
 		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
