@@ -18,7 +18,7 @@
 		usr << "Invalid type path (new_type = [new_type]) in change_mob_type(). Contact a coder."
 		return
 
-	if(ispath(new_type, /mob/new_player))
+	if(ispath(new_type, /mob/dead/new_player))
 		usr << "<span class='danger'>Cannot convert into a new_player mob type.</span>"
 		return
 
