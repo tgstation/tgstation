@@ -4,23 +4,23 @@
 
 #define PLASMA_HEAT_PENALTY 20     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
 #define OXYGEN_HEAT_PENALTY 1
-#define CO2_HEAT_PENALTY 0.5
-#define NITROGEN_HEAT_MODIFIER -1
+#define CO2_HEAT_PENALTY 0.1
+#define NITROGEN_HEAT_MODIFIER -1.5
 
 #define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
 #define PLASMA_TRANSMIT_MODIFIER 4
 #define FREON_TRANSMIT_PENALTY 0.75   // Scales how much freon reduces total power transmission. 1 equals 1% per 1% of freon in the mix.
 
-#define N2O_HEAT_RESISTANCE 2.5          //Higher == Gas makes the crystal more resistant against heat damage.
+#define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.35     //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
-#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
+#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 30      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
 
 #define MOLE_PENALTY_THRESHOLD 1000            //Higher == Shard can absorb more moles before triggering the high mole penalties.
 #define MOLE_HEAT_PENALTY 400                     //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled linearly
 #define POWER_PENALTY_THRESHOLD 4000          //Higher == Engine can generate more power before triggering the high power penalties.
 #define HEAT_PENALTY_THRESHOLD 40                       //Higher == Crystal safe operational temperature is higher.
-#define DAMAGE_HARDCAP 0.1
+#define DAMAGE_HARDCAP 0.05
 
 
 #define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction, not to be confused with the above values
@@ -313,21 +313,17 @@
 		l.rad_act(rads)
 
 	if(power > POWER_PENALTY_THRESHOLD)
-		supermatter_zap(src, power/750, power*3)
-		supermatter_zap(src, power/750, power*3)
-		supermatter_zap(src, power/750, power*3)
+		supermatter_zap(src, 7, power*3)
+		supermatter_zap(src, 7, power*3)
 		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
-		if(prob(10))
+		if(prob(15))
 			supermatter_pull(src, power/750)
-
-		if(prob(3))
-			if(prob(70))
-
-				supermatter_anomaly_gen(src, 1, power/750)
-			else if(prob(15))
-				supermatter_anomaly_gen(src, 2, power/650)
-			else
-				supermatter_anomaly_gen(src, 3, min(power/750, 5))
+		if(prob(5))
+			supermatter_anomaly_gen(src, 1, power/750)
+		if(prob(2))
+			supermatter_anomaly_gen(src, 2, power/650)
+		if(prob(4))
+			supermatter_anomaly_gen(src, 3, min(power/750, 5))
 
 
 	power -= ((power/500)**3) * powerloss_inhibitor
@@ -504,68 +500,70 @@
 
 	return
 
-/proc/supermatter_zap(atom/source, range = 3, power)
-	. = source.dir
+/obj/machinery/power/supermatter_shard/proc/supermatter_zap(atom/src, range = 3, power)
+	. = src.dir
 	if(power < 1000)
 		return
 
-	var/closest_atom
-	var/mob/living/closest_mob
-	var/obj/machinery/closest_machine
-	var/obj/structure/closest_structure
+	var/target_atom
+	var/mob/living/target_mob
+	var/obj/machinery/target_machine
+	var/obj/structure/target_structure
+	var/list/arctargetsmob = list()
+	var/list/arctargetsmachine = list()
+	var/list/arctargetsstructure = list()
 
-	var/mob/living/H = pick(istype(oview(source, range+2), /mob/living))
-	if(H)
+	for(var/mob/living/Z in oview(src, range+2))
+		arctargetsmob += Z
+	if(arctargetsmob.len)
+		var/mob/living/H = pick(arctargetsmob)
 		var/atom/A = H
-		closest_mob = H
-		closest_atom = A
+		target_mob = H
+		target_atom = A
 
 	else
-		var/obj/machinery/M = pick(istype(oview(source, range+2), /obj/machinery))
-		if(M)
+		for(var/obj/machinery/X in oview(src, range+2))
+			arctargetsmachine += X
+		if(arctargetsmachine.len)
+			var/obj/machinery/M = pick(arctargetsmachine)
 			var/atom/A = M
-			closest_machine = M
-			closest_atom = A
+			target_machine = M
+			target_atom = A
 
 		else
-			var/obj/structure/O = pick(istype(oview(source, range+2), /obj/structure))
-			if(O)
+			for(var/obj/structure/Y in oview(src, range+2))
+				arctargetsstructure += Y
+			if(arctargetsstructure.len)
+				var/obj/structure/O = pick(arctargetsstructure)
 				var/atom/A = O
-				closest_structure = O
-				closest_atom = A
+				target_structure = O
+				target_atom = A
 
-	if(closest_atom)
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5)
-		var/zapdir = get_dir(source, closest_atom)
+	if(target_atom)
+		src.Beam(target_atom, icon_state="nzcrentrs_power", time=5)
+		var/zapdir = get_dir(src, target_atom)
 		if(zapdir)
 			. = zapdir
 
-	if(closest_mob)
+	if(target_mob)
 		var/shock_damage = Clamp(round(power/4000), 1, 3)
-		closest_mob.electrocute_act(shock_damage, source, 1, stun = 0)
-		if(ishuman(closest_mob))
-			var/mob/living/carbon/human/V = closest_mob
-			if(prob(10))
-				V.IgniteMob()
-		else if(issilicon(closest_mob))
-			var/mob/living/silicon/S = closest_mob
-			S.emp_act(2)
+		target_mob.electrocute_act(shock_damage, src, 1, stun = 0)
 		if(prob(15))
-			supermatter_zap(closest_mob, 5, power / 2)
-			supermatter_zap(closest_mob, 5, power / 2)
+			supermatter_zap(target_mob, 5, power / 2)
+			supermatter_zap(target_mob, 5, power / 2)
 		else
-			supermatter_zap(closest_mob, 5, power / 1.5)
+			supermatter_zap(target_mob, 5, power / 1.5)
 
-	else if(closest_machine)
+	else if(target_machine)
 		if(prob(15))
-			supermatter_zap(closest_machine, 5, power / 2)
-			supermatter_zap(closest_machine, 5, power / 2)
+			supermatter_zap(target_machine, 5, power / 2)
+			supermatter_zap(target_machine, 5, power / 2)
 		else
-			supermatter_zap(closest_machine, 5, power / 1.5)
+			supermatter_zap(target_machine, 5, power / 1.5)
 
-	else if(closest_structure)
+	else if(target_structure)
 		if(prob(15))
-			supermatter_zap(closest_structure, 5, power / 2)
-			supermatter_zap(closest_structure, 5, power / 2)
+			supermatter_zap(target_structure, 5, power / 2)
+			supermatter_zap(target_structure, 5, power / 2)
 		else
-			supermatter_zap(closest_structure, 5, power / 1.5)
+			supermatter_zap(target_structure, 5, power / 1.5)
