@@ -240,7 +240,7 @@
 	icon_state = "proto"
 	gas_type = "o2"
 	filled = 1
-	release_pressure = ONE_ATMOSPHERE*5
+	release_pressure = ONE_ATMOSPHERE*2
 
 /obj/item/weapon/extinguisher/vehicle
 	name = "extinguisher nozzle"
@@ -258,11 +258,12 @@
 /obj/item/weapon/extinguisher/vehicle/dropped(mob/user)
 	..()
 	user << "<span class='notice'>The fire hose snaps back into the [src]!</span>"
+	playsound(get_turf(src),'sound/items/change_jaws.ogg', 75, 1)
 	loc = vehicle
 
 /obj/vehicle/space/speedbike/atmos/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
-	riding_datum = new/datum/riding/space/speedbike
+	riding_datum = new/datum/riding/space/speedbike/atmos
 	var/datum/action/innate/atmos_bike/nanoice/N = new()
 	var/datum/action/innate/atmos_bike/scrub/S = new()
 	var/datum/action/innate/atmos_bike/extinguish/E = new()
@@ -320,8 +321,8 @@
 	
 		
 /datum/action/innate/atmos_bike/extinguish
-	name = "extinguish"
-	desc = "unleashes a powerful extinguisher blast"
+	name = "Arm the Extinguisher"
+	desc = "Unleashes a powerful fire extinguisher"
 	button_icon_state = "noflame"
 	var/out = FALSE
 
@@ -331,14 +332,22 @@
 			owner << "<span class='warning'>You need a free hand to hold the extinguisher!</span>"
 			return
 		VEX.loc = owner
-		owner << "<span class='warning'>The vehicle unwinds a fire hose into your hands!</span>"
 		out = TRUE
+		owner << "<span class='warning'>The vehicle unwinds a fire hose into your hands!</span>"
+		playsound(get_turf(owner),'sound/items/change_jaws.ogg', 75, 1)	
+		name = "Store the Extinguisher"
+		desc = "Dropping the extinguisher will also automatically store it"	
+		button_icon_state = "summons"
+		UpdateButtonIcon()
 		return
 	if(out)
 		VEX.loc = bike
-		owner << "<span class='notice'>The fire hose snaps back into the [src]!</span>"
+		owner.drop_item(VEX)
+		name = "Arm the Extinguisher"
+		desc = "Unleashes a powerful fire extinguisher"
+		button_icon_state = "noflame"
 		out = FALSE
-	
+		UpdateButtonIcon()
 	
 /datum/action/innate/atmos_bike/scrub
 	name = "Scrubber Control"
@@ -350,11 +359,13 @@
 		owner << "<span class='notice'>You have disabled the vehicle's massive air scrubbers</span>"
 		button_icon_state = "mech_internals_off"
 		IS.on = 0
+		UpdateButtonIcon()
 		return
 	if(!IS.on)
 		owner << "<span class='notice'>You have enabled the vehicle's massive air scrubbers</span>"
 		button_icon_state = "mech_internals_on"
 		IS.on = 1
+		UpdateButtonIcon()
 		return
 		
 /datum/action/innate/atmos_bike/flood
@@ -372,13 +383,17 @@
 		playsound(get_turf(owner),'sound/machines/buzz-two.ogg', 50, 1)
 		return
 	if(!bike.CAN.valve_open)
-		bike.CAN.valve_open = TRUE
+		owner << "<span class='notice'>Alert: You begin to dispense gas from the stored canister at [bike.CAN.release_pressure]kPa.</span>"
+		bike.CAN.valve_open = 1
 		button_icon_state = "flightpack_airbrake"
 		name = "Stop Gas Release"
+		UpdateButtonIcon()
 	if(bike.CAN.valve_open)
-		bike.CAN.valve_open = FALSE
+		owner << "<span class='notice'>Alert: You have stopped dispensing gas from your stored canister, it has [bike.CAN.air_contents.return_pressure()]kPa of gas remaining.</span>"
+		bike.CAN.valve_open = 0
 		name = "Release Stored Gas"
 		button_icon_state = "flightpack_stabilizer"
+		UpdateButtonIcon()
 	
 /datum/action/innate/atmos_bike/control
 	name = "eject canister"
@@ -392,10 +407,11 @@
 	if(bike.loaded)
 		owner << "<span class='notice'>You eject the vehicle's internal canister.</span>"
 		bike.CAN.loc = get_turf(bike)
-		bike.loaded = FALSE
 		button_icon_state = "mech_cycle_equip_off"
 		name = "load canister"
 		desc = "Loads the vehicle's internal canister"
+		bike.loaded = FALSE
+		UpdateButtonIcon()
 		return
 	if(!bike.loaded)
 		for(var/obj/machinery/portable_atmospherics/canister/C in range(1,owner))
@@ -415,6 +431,7 @@
 		name = "eject canister"
 		desc = "Ejects the vehicle's internal canister"
 		button_icon_state = "mech_eject"
+		UpdateButtonIcon()
 
 
 //BM SPEEDWAGON
