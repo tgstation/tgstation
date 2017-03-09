@@ -1,6 +1,6 @@
 /datum/surgery/implant_removal
 	name = "implant removal"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest")
 	requires_organic_bodypart = 0
