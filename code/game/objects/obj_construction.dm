@@ -146,9 +146,9 @@
 
 	if(!constructed && required_amount_to_construct)	//spawn loot
 		if(ispath(required_type_to_construct, /obj/item/stack))
-			. = new required_type_to_construct(parent.loc, required_amount_to_construct)
+			. = new required_type_to_construct(get_turf(parent), required_amount_to_construct)
 		else
-			. = new required_type_to_construct(parent.loc)
+			. = new required_type_to_construct(get_turf(parent))
 		parent.transfer_fingerprints_to(.)
 
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
