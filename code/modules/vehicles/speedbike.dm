@@ -55,7 +55,7 @@
 	EX.vehicle = src
 	CAN = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
 
-/obj/machinery/portable_atmospherics/canister/oxygen
+/obj/machinery/portable_atmospherics/canister/proto/oxygen
 	icon_state = "proto"
 	gas_type = "o2"
 	filled = 1
