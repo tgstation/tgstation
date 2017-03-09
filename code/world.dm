@@ -15,7 +15,7 @@
 #endif
 
 /world/New()
-	log_world("World loaded at [world.timeofday]")
+	log_world("World loaded at [time_stamp()]")
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
@@ -31,8 +31,8 @@
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	diary << "\n\nStarting up. [time_stamp()]\n---------------------"
+	diaryofmeanpeople << "\n\nStarting up. [time_stamp())]\n---------------------"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
@@ -175,7 +175,7 @@
 	else if("server_hop" in input)
 		show_server_hop_transfer_screen(input["server_hop"])
 
-#define WORLD_REBOOT(X) log_world("World rebooted at [world.timeofday]"); ..(X); return;
+#define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
