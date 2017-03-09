@@ -314,12 +314,9 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
 
 /obj/structure/door_assembly/door_assembly_pod
-	name = "pod airlock assembly"
 	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
-	anchored = 1
-	state = 1
 	mineral = "glass"
 	material = "glass"
 
