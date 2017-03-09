@@ -187,3 +187,11 @@
 	icon_state = "geardist"
 	density = 1
 	anchored = 1
+	
+/obj/machinery/engi_points_delivery/Initialize()
+	..()
+	deliverer_list += src
+	
+/obj/machinery/engi_points_delivery/Destrpy()
+	..()
+	deliverer_list += src
