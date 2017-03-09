@@ -410,7 +410,6 @@
 	new /obj/item/weapon/surgical_drapes(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
-	new /obj/item/device/mmi/syndie(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
