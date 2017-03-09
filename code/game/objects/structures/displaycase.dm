@@ -96,6 +96,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 				req_one_access = electronics.accesses
 			else
 				req_access = electronics.accesses
+			. = TRUE
 		else
 			update_icon()
 
