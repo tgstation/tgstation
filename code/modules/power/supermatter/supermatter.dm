@@ -321,15 +321,13 @@
 			supermatter_pull(src, power/750)
 
 		if(prob(3))
-			message_admins("1 OK")
 			if(prob(70))
 
-				supermatter_anomaly_gen(src, type = 1, power/750)
-				message_admins("21 OK")
+				supermatter_anomaly_gen(src, 1, power/750)
 			else if(prob(15))
-				supermatter_anomaly_gen(src, type = 2, power/650)
+				supermatter_anomaly_gen(src, 2, power/650)
 			else
-				supermatter_anomaly_gen(src, type = 3, min(power/750, 5))
+				supermatter_anomaly_gen(src, 3, min(power/750, 5))
 
 
 	power -= ((power/500)**3) * powerloss_inhibitor
@@ -491,19 +489,12 @@
 	return
 
 /obj/machinery/power/supermatter_shard/proc/supermatter_anomaly_gen(turf/anomalycenter, type = 1, anomalyrange = 5)
-	message_admins("4 OK")
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))
-	message_admins("5 OK")
 	if(L)
-		message_admins("6 OK")
 		if(type = 1)
-			message_admins("7 OK")
 			var/obj/effect/anomaly/flux/A = new(L)
-			message_admins("8 OK")
 			A.explosive = 0
-			message_admins("9 OK")
 			A.lifespan = 300
-			message_admins("10 OK")
 		else if(type = 2)
 			var/obj/effect/anomaly/grav/A = new(L)
 			A.lifespan = 250
@@ -518,42 +509,30 @@
 	if(power < 1000)
 		return
 
-	var/closest_dist = 0
 	var/closest_atom
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
 
-	for(var/A in oview(source, range+2))
-		if(isliving(A))
-			var/dist = get_dist(source, A)
-			var/mob/living/L = A
-			if(dist <= range && (dist < closest_dist || !closest_mob) && L.stat != DEAD)
-				closest_mob = L
+	var/mob/living/H = pick(istype(oview(source, range+2), /mob/living))
+	if(H)
+		var/atom/A = H
+		closest_mob = H
+		closest_atom = A
+
+	else
+		var/obj/machinery/M = pick(istype(oview(source, range+2), /obj/machinery))
+		if(M)
+			var/atom/A = M
+			closest_machine = M
+			closest_atom = A
+
+		else
+			var/obj/structure/O = pick(istype(oview(source, range+2), /obj/structure))
+			if(O)
+				var/atom/A = O
+				closest_structure = O
 				closest_atom = A
-				closest_dist = dist
-
-		else if(closest_mob)
-			continue
-
-		else if(istype(A, /obj/machinery))
-			var/obj/machinery/M = A
-			var/dist = get_dist(source, A)
-			if(dist <= range && (dist < closest_dist || !closest_machine) && !M.being_shocked)
-				closest_machine = M
-				closest_atom = A
-				closest_dist = dist
-
-		else if(closest_mob)
-			continue
-
-		else if(istype(A, /obj/structure))
-			var/obj/structure/S = A
-			var/dist = get_dist(source, A)
-			if(dist <= range && (dist < closest_dist))
-				closest_structure = S
-				closest_atom = A
-				closest_dist = dist
 
 	if(closest_atom)
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5)
@@ -562,19 +541,31 @@
 			. = zapdir
 
 	if(closest_mob)
-		var/shock_damage = Clamp(round(power/400), 10, 20) + rand(-5, 5)
+		var/shock_damage = Clamp(round(power/4000), 1, 3)
 		closest_mob.electrocute_act(shock_damage, source, 1, stun = 0)
 		if(ishuman(closest_mob))
-			var/mob/living/carbon/human/H = closest_mob
-			H.adjust_fire_stacks(5)
-			H.IgniteMob()
+			var/mob/living/carbon/human/V = closest_mob
+			if(prob(10))
+				V.IgniteMob()
 		else if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			S.emp_act(2)
-		supermatter_zap(closest_mob, 5, power / 1.5)
+		if(prob(15))
+			supermatter_zap(closest_mob, 5, power / 2)
+			supermatter_zap(closest_mob, 5, power / 2)
+		else
+			supermatter_zap(closest_mob, 5, power / 1.5)
 
 	else if(closest_machine)
-		supermatter_zap(closest_machine, 5, power / 1.5)
+		if(prob(15))
+			supermatter_zap(closest_machine, 5, power / 2)
+			supermatter_zap(closest_machine, 5, power / 2)
+		else
+			supermatter_zap(closest_machine, 5, power / 1.5)
 
 	else if(closest_structure)
-		supermatter_zap(closest_structure, 5, power / 1.5)
+		if(prob(15))
+			supermatter_zap(closest_structure, 5, power / 2)
+			supermatter_zap(closest_structure, 5, power / 2)
+		else
+			supermatter_zap(closest_structure, 5, power / 1.5)
