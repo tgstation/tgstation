@@ -112,7 +112,7 @@ obj/machinery/power/exporter/Destroy()
 		if(6001 to 10000)
 			rating = "GOOD BOY"
 		if(10001 to 9999999)
-			rating = "HOLY SHIT YOU ABSOLUTE MADMAN!"
+			rating = "MY GOD, YOU ABSOLUTE MADMAN!"
 	dat += text("Current export rating: [rating]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 	var/datum/browser/popup = new(user, "vending", "Power Exporter", 400, 350)
