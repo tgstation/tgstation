@@ -192,6 +192,6 @@
 	..()
 	deliverer_list += src
 	
-/obj/machinery/engi_points_delivery/Destrpy()
+/obj/machinery/engi_points_delivery/Destroy()
 	..()
 	deliverer_list -= src
