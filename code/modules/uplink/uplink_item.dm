@@ -1216,7 +1216,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
-	
+
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
@@ -1224,7 +1224,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	surplus = 0
 	restricted_roles = list("Assistant")
-	
+
 /datum/uplink_item/role_restricted/syndi_mmi
 	name = "Syndicate MMI"
 	desc = "An MMI modified to give cyborgs laws to serve the Syndicate without having their interface damaged by Cryptographic Sequencers"
