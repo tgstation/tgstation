@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "aab" = (
 /obj/effect/landmark{
@@ -2830,7 +2830,7 @@
 	pixel_x = 30;
 	pixel_y = 30
 	},
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aeD" = (
 /obj/machinery/door/window{
@@ -3313,7 +3313,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "afs" = (
 /obj/structure/table/reinforced,
@@ -3853,7 +3853,7 @@
 	name = "AI Chamber APC";
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "agj" = (
 /obj/machinery/computer/upload/borg,
@@ -4369,7 +4369,7 @@
 	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "agZ" = (
 /obj/structure/cable/white{
@@ -4426,7 +4426,7 @@
 	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "ahd" = (
 /obj/structure/table/reinforced,
@@ -4939,7 +4939,7 @@
 	},
 /area/ai_monitored/turret_protected/ai)
 "ahQ" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "ahR" = (
 /obj/machinery/light_switch{
@@ -4947,7 +4947,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "ahS" = (
 /obj/structure/cable/white{
@@ -4960,7 +4960,7 @@
 /area/ai_monitored/turret_protected/ai)
 "ahT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "ahU" = (
 /obj/machinery/firealarm{
@@ -4968,7 +4968,7 @@
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "ahV" = (
 /obj/structure/table/reinforced,
@@ -19197,7 +19197,7 @@
 	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/engineering)
 "aEw" = (
 /obj/structure/cable/white{
@@ -19215,7 +19215,7 @@
 	tag = "icon-0-8";
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/engineering)
 "aEx" = (
 /obj/structure/closet/radiation,
@@ -21584,7 +21584,7 @@
 	},
 /area/engine/gravity_generator)
 "aIc" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator)
 "aId" = (
 /turf/open/floor/plasteel/vault{
@@ -24434,7 +24434,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/engineering)
 "aMS" = (
 /obj/structure/grille,
@@ -24479,7 +24479,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/engineering)
 "aMY" = (
 /obj/structure/cable{
@@ -27343,7 +27343,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aRC" = (
 /obj/structure/cable{
@@ -27363,11 +27363,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aRE" = (
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -27984,18 +27984,18 @@
 /area/maintenance/starboard)
 "aSL" = (
 /obj/machinery/telecomms/server/presets/common/birdstation,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aSM" = (
 /obj/machinery/telecomms/hub/preset,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aSN" = (
 /obj/machinery/announcement_system,
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -28645,15 +28645,15 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aTY" = (
 /obj/machinery/message_server,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aTZ" = (
 /obj/machinery/telecomms/processor/preset_one/birdstation,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -29436,7 +29436,7 @@
 	on = 1;
 	pressure_checks = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -29467,7 +29467,7 @@
 	network = list("SS13","RD");
 	pixel_x = 22
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -29883,7 +29883,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -29909,7 +29909,7 @@
 	icon_state = "intact";
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -32982,7 +32982,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bbE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -33446,11 +33446,11 @@
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
 "bcu" = (
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bcv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bcw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -33906,7 +33906,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "bdn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -33915,14 +33915,14 @@
 	icon_state = "intact";
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "bdo" = (
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "bdp" = (
 /obj/machinery/status_display,
@@ -34463,7 +34463,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "bei" = (
 /obj/effect/decal/cleanable/dirt,
@@ -36322,7 +36322,7 @@
 /area/toxins/xenobiology)
 "bgZ" = (
 /mob/living/simple_animal/slime,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "bha" = (
 /obj/structure/cable/white{
@@ -36418,13 +36418,13 @@
 	},
 /area/toxins/xenobiology)
 "bhg" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "bhh" = (
 /obj/effect/landmark{
 	name = "revenantspawn"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "bhi" = (
 /obj/machinery/light{
@@ -37554,7 +37554,7 @@
 	on = 1;
 	pressure_checks = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -37576,7 +37576,7 @@
 	name = "science camera";
 	network = list("SS13","RD")
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -37857,7 +37857,7 @@
 /turf/open/floor/plasteel,
 /area/toxins/xenobiology)
 "bjI" = (
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -37984,7 +37984,7 @@
 	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "bjS" = (
 /obj/structure/table/reinforced,

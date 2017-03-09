@@ -26,8 +26,9 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-/turf/SDQL_update(const/var_name, new_value)
-	if(var_name == "x" || var_name == "y" || var_name == "z")
+/turf/vv_edit_var(var_name, new_value)
+	var/static/list/banned_edits = list("x", "y", "z")
+	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
 
@@ -62,7 +63,7 @@
 	if(force)
 		..()
 		//this will completely wipe turf state
-		var/turf/basic/B = new /turf/basic(src)
+		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
 		for(var/I in B.vars)
@@ -175,7 +176,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.is_frozen)
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()

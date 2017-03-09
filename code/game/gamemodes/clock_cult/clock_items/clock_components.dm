@@ -53,6 +53,13 @@
 	cultist_message = "The gem turns black and cold for a moment before its normal glow returns."
 	servant_of_ratvar_messages = list("\"Disgusting failure.\"" = TRUE, "You feel scrutinized." = FALSE, "\"Weaklings.\"" = TRUE, "\"Pathetic defenses.\"" = TRUE)
 	w_class = WEIGHT_CLASS_TINY
+	light_range = 1.4
+	light_power = 0.4
+	light_color = "#F42B9D"
+
+/obj/item/clockwork/component/belligerent_eye/lens_gem/New()
+	..()
+	update_light()
 
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"

@@ -391,3 +391,9 @@
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/air
+	name = "Canned Air"
+	desc = "There is no air shortage. Do not drink."
+	icon_state = "air"
+	list_reagents = list("nitrogen" = 24, "oxygen" = 6)

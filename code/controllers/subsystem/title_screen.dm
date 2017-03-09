@@ -1,16 +1,16 @@
-var/datum/subsystem/title/SStitle
+var/datum/controller/subsystem/title/SStitle
 
-/datum/subsystem/title
+/datum/controller/subsystem/title
 	name = "Title Screen"
 	init_order = 15
 	flags = SS_NO_FIRE
 	var/turf/closed/indestructible/splashscreen/title_screen
 	var/path_string
 
-/datum/subsystem/title/New()
+/datum/controller/subsystem/title/New()
 	NEW_SS_GLOBAL(SStitle)
 
-/datum/subsystem/title/Initialize()
+/datum/controller/subsystem/title/Initialize()
 	var/list/provisional_title_screens = flist("config/title_screens/images/")
 	var/list/title_screens = list()
 	var/use_rare_screens = FALSE
