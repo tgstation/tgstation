@@ -40,7 +40,7 @@
 	owner.faction -= "cult"
 	owner.verbs -= /mob/living/proc/cult_help
 	owner.verbs -= /mob/living/proc/cult_master
-	for(var/datum/action/innate/cultmast/H in usr.actions)
+	for(var/datum/action/innate/cultmast/H in owner.actions)
 		qdel(H)
 	owner.clear_alert("bloodsense")
 	..()
