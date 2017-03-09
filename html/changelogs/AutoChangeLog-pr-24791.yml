@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - tweak: "Lavaland will now load instantly when the game starts"

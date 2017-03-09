@@ -26,8 +26,9 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-/turf/SDQL_update(const/var_name, new_value)
-	if(var_name == "x" || var_name == "y" || var_name == "z")
+/turf/vv_edit_var(var_name, new_value)
+	var/static/list/banned_edits = list("x", "y", "z")
+	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
 
