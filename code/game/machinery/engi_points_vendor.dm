@@ -36,7 +36,7 @@
 /obj/machinery/engi_points_manager/Initialize()
 	engi_points_list += src
 	radio = new(src)
-	radio.listening = 0
+	radio.listening = FALSE
 	radio.frequency = 1357
 	prize_list = list(
 		new /datum/GBP_equipment("Tendie",				/obj/item/weapon/reagent_containers/food/snacks/nugget,				50,		1),
