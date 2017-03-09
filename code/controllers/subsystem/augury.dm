@@ -1,6 +1,6 @@
-var/datum/subsystem/augury/SSaugury
+var/datum/controller/subsystem/augury/SSaugury
 
-/datum/subsystem/augury
+/datum/controller/subsystem/augury
 	name = "Augury"
 	flags = SS_NO_INIT
 
@@ -9,16 +9,16 @@ var/datum/subsystem/augury/SSaugury
 
 	var/list/observers_given_action = list()
 
-/datum/subsystem/augury/New()
+/datum/controller/subsystem/augury/New()
 	NEW_SS_GLOBAL(SSaugury)
 
-/datum/subsystem/augury/stat_entry(msg)
+/datum/controller/subsystem/augury/stat_entry(msg)
 	..("W:[watchers.len]|D:[doombringers.len]")
 
-/datum/subsystem/augury/proc/register_doom(atom/A, severity)
+/datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
 	doombringers[A] = severity
 
-/datum/subsystem/augury/fire()
+/datum/controller/subsystem/augury/fire()
 	var/biggest_doom = null
 	var/biggest_threat = null
 

@@ -17,6 +17,9 @@ Clown
 	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
+/datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
+	H.rename_self("clown", M.client)
+
 /datum/outfit/job/clown
 	name = "Clown"
 	jobtype = /datum/job/clown
@@ -57,7 +60,6 @@ Clown
 		return
 
 	H.dna.add_mutation(CLOWNMUT)
-	H.rename_self("clown")
 
 /*
 Mime
@@ -77,6 +79,9 @@ Mime
 
 	access = list(access_theatre)
 	minimal_access = list(access_theatre)
+
+/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
+	H.rename_self("mime", M.client)
 
 /datum/outfit/job/mime
 	name = "Mime"
@@ -105,8 +110,6 @@ Mime
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
-
-	H.rename_self("mime")
 
 /*
 Librarian
