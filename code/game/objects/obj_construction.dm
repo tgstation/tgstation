@@ -434,6 +434,6 @@
 	
 	var/obj/item/stack/Mats = I
 	if(istype(Mats) && Mats.amount < current_construction_state.required_amount_to_construct)
-		user << "<span class='warning'>You no longer have enough of [Mats]!</span>"
+		user << "<span class='warning'>You no longer have enough [Mats]!</span>"
 		return FALSE
 	return TRUE
