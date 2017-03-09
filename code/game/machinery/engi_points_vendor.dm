@@ -1,12 +1,12 @@
 
 /obj/machinery/engi_points_manager
-	name = "Engineering Points Manager"
-	desc = "Who's a good boy?"
+	name = "Intergalatic Energy Point Exchange"
+	desc = "A cutting edge market that trades energy and simple matter on a FTL basis."
 	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "store"
 	verb_say = "states"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	req_access = list(access_engine)
 	var/obj/item/device/radio/radio
 	var/GBP = 0
@@ -182,11 +182,11 @@
 
 /obj/machinery/engi_points_delivery
 	name = "Engineering Reward Fabricator"
-	desc = "Like a christmas tree for engineers"
+	desc = "Tapping into an almost infinite network of energy that transcends space and time... for goodies"
 	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "geardist"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	
 /obj/machinery/engi_points_delivery/Initialize()
 	..()
