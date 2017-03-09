@@ -62026,10 +62026,10 @@
 /area/engine/engineering)
 "cEv" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cEw" = (
@@ -62049,11 +62049,11 @@
 /area/engine/engineering)
 "cEy" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	icon_state = "manifold";
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cEz" = (
@@ -62370,10 +62370,10 @@
 /area/engine/engineering)
 "cFe" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cFf" = (
@@ -62393,10 +62393,10 @@
 /area/engine/engineering)
 "cFh" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cFi" = (
@@ -63691,9 +63691,11 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cIu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
+/obj/structure/reflector/double{
+	anchored = 1;
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
 /area/engine/engineering)
 
 (1,1,1) = {"
@@ -91905,7 +91907,7 @@ ccw
 cFL
 cGf
 cGw
-cIq
+cIp
 ciZ
 cHc
 cHh
@@ -92419,7 +92421,7 @@ cFw
 cFN
 csH
 csR
-cIr
+cIq
 cGU
 cEj
 cEj
@@ -92672,11 +92674,11 @@ crt
 czE
 cAm
 czE
-cIm
+cqY
 cFO
 csC
 csQ
-cIs
+cIr
 cGV
 cEj
 cGV
@@ -92933,8 +92935,8 @@ cAP
 cFP
 csI
 cAt
-cIt
-cEj
+cIs
+cIu
 cEj
 cEj
 cHp
@@ -93447,7 +93449,7 @@ ccw
 cFR
 cGf
 cGz
-cIu
+cIt
 ciZ
 cHd
 cHj
@@ -95499,9 +95501,9 @@ ccw
 ccw
 ccw
 ccw
+cIm
 cIn
 cIo
-cIp
 ccw
 aaf
 aaf

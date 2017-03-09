@@ -505,14 +505,14 @@
 /obj/machinery/power/supermatter_shard/proc/supermatter_anomaly_gen(turf/anomalycenter, type = 1, anomalyrange = 5)
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))
 	if(L)
-		if(type = 1)
+		if(type == 1)
 			var/obj/effect/anomaly/flux/A = new(L)
 			A.explosive = 0
 			A.lifespan = 300
-		else if(type = 2)
+		else if(type == 2)
 			var/obj/effect/anomaly/grav/A = new(L)
 			A.lifespan = 250
-		else if(type = 3)
+		else if(type == 3)
 			var/obj/effect/anomaly/pyro/A = new(L)
 			A.lifespan = 200
 
