@@ -13,6 +13,7 @@
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
+	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
 /obj/structure/displaycase/New()
@@ -22,6 +23,9 @@
 	update_icon()
 
 /obj/structure/displaycase/Destroy()
+	if(electronics)
+		qdel(electronics)
+		electronics = null
 	if(showpiece)
 		qdel(showpiece)
 		showpiece = null
@@ -87,11 +91,11 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 /obj/structure/displaycase/OnConstruction(state_id, mob/user, obj/item/used)
 	switch(state_id)
 		if(DISPLAY_CASE_NOGLASS)
-			var/obj/item/weapon/electronics/airlock/electronics = used
+			electronics = used
 			if(electronics.one_access)
-				req_one_access = electronics.accesses.Copy()
+				req_one_access = electronics.accesses
 			else
-				req_access = electronics.accesses.Copy()
+				req_access = electronics.accesses
 		else
 			update_icon()
 
@@ -105,11 +109,9 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 				trigger_alarm()
 			open = FALSE
 		if(DISPLAY_CASE_NO_ELECTRONICS)
-			var/obj/item/weapon/electronics/airlock/electronics = created
-			if(LAZYLEN(req_one_access))
-				electronics.accesses = req_one_access.Copy()
-			else if(LAZYLEN(req_access))
-				electronics.accesses = req_access.Copy()
+			electronics = null
+			req_one_access = initial(req_one_access)
+			req_access = initial(req_access)
 		if(0)
 			dump()	
 	update_icon()

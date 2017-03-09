@@ -14,6 +14,8 @@
 	/obj/proc/OnConstruction(state_id, mob/user, obj/item/used) - Called when a construction step is completed on an object with the new state_id
 																If state_id is zero, the object has been fully constructed and can't be deconstructed.
 																used is the material object if any used for construction and it will be deleted/deducted from on return
+																user is always holding used
+																Returning TRUE will prevent used from being qdel()/use()'d
 
 	/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced) - Called when a deconstruction step is completed on an object with the new state_id. 
 															 If state_id is zero, the object has been fully deconstructed
@@ -100,12 +102,12 @@
 			playsound(parent, construction_sound, CONSTRUCTION_VOLUME, TRUE)
 		if(!required_amount_to_construct)
 			tool = null
-		parent.OnConstruction(id, user, tool)	//run event
-		var/obj/item/stack/S = tool
-		if(istype(S))
-			S.use(required_amount_to_construct)
-		else
-			qdel(tool)
+		if(!parent.OnConstruction(id, user, tool))	//run event
+			var/obj/item/stack/S = tool
+			if(istype(S))
+				S.use(required_amount_to_construct)
+			else
+				qdel(tool)
 	else
 		if(!forced && deconstruction_sound)	//forced implys hitsounds and stuff
 			playsound(parent, deconstruction_sound, CONSTRUCTION_VOLUME, TRUE)
