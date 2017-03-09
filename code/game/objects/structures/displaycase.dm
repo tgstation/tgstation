@@ -92,6 +92,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 	switch(state_id)
 		if(DISPLAY_CASE_NOGLASS)
 			electronics = used
+			user.transferItemToLoc(used, src)
 			if(electronics.one_access)
 				req_one_access = electronics.accesses
 			else
