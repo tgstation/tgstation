@@ -68,7 +68,7 @@
 	return
 
 /obj/item/weapon/circuitboard/machine/smes
-	name = "circuit board (SMES)"
+	name = "SMES (Machine Board)"
 	build_path = /obj/machinery/power/smes
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(

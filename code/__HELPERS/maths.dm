@@ -20,6 +20,9 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 /proc/Ceiling(x, y=1)
 	return -round(-x / y) * y
 
+/proc/Floor(x, y=1)
+	return round(x / y) * y
+
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 
 // cotangent

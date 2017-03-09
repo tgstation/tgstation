@@ -1,67 +1,78 @@
-#define START_TIMER reanimation_timer = world.time + rand(600,1200)
-
-/obj/item/organ/body_egg/zombie_infection
+/obj/item/organ/zombie_infection
 	name = "festering ooze"
 	desc = "A black web of pus and vicera."
 	zone = "head"
 	slot = "zombie_infection"
-	var/reanimation_timer
+	origin_tech = "biotech=5"
 	var/datum/species/old_species
-	var/living_transformation_time = 5
+	var/living_transformation_time = 3
 	var/converts_living = FALSE
 
-/obj/item/organ/body_egg/zombie_infection/New()
+	var/revive_time_min = 450
+	var/revive_time_max = 700
+	var/timer_id
+
+/obj/item/organ/zombie_infection/New(loc)
 	. = ..()
+	if(iscarbon(loc))
+		Insert(loc)
 	zombie_infection_list += src
 
-/obj/item/organ/body_egg/zombie_infection/Destroy()
+/obj/item/organ/zombie_infection/Destroy()
 	zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
+/obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = 0)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+	if(iszombie(M) && old_species)
+		M.set_species(old_species)
+	if(timer_id)
+		deltimer(timer_id)
+
+/obj/item/organ/zombie_infection/on_find(mob/living/finder)
 	finder << "<span class='warning'>Inside the head is a disgusting black \
 		web of pus and vicera, bound tightly around the brain like some \
 		biological harness.</span>"
 
-/obj/item/organ/body_egg/zombie_infection/egg_process()
-	if(!ishuman(owner)) // We do not support monkey or xeno zombies. Yet.
-		qdel(src)
+/obj/item/organ/zombie_infection/process()
+	if(!owner)
 		return
-	else if(reanimation_timer && (reanimation_timer < world.time))
-		zombify() // Rise and shine, Mr Romero... rise and shine.
-		reanimation_timer = null
-	else if(owner.stat == DEAD && (!reanimation_timer))
-		START_TIMER
-	else if(converts_living && !iszombie(owner) && !reanimation_timer)
-		START_TIMER
+	if(!(src in owner.internal_organs))
+		Remove(owner)
 
-/obj/item/organ/body_egg/zombie_infection/Remove(mob/living/carbon/M, special = 0)
-	. = ..()
-	CHECK_DNA_AND_SPECIES(M)
-	if(iszombie(M) && old_species)
-		M.set_species(old_species)
+	if(timer_id)
+		return
+	if(owner.stat != DEAD && !converts_living)
+		return
+	if(!iszombie(owner))
+		owner << "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
+		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
+		not even death can stop, you will rise again!</span>"
+	var/revive_time = rand(revive_time_min, revive_time_max)
+	var/flags = TIMER_STOPPABLE
+	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
 
-/obj/item/organ/body_egg/zombie_infection/proc/zombify()
-	CHECK_DNA_AND_SPECIES(owner)
+/obj/item/organ/zombie_infection/proc/zombify()
+	timer_id = null
+
 	if(!iszombie(owner))
 		old_species = owner.dna.species.type
 
+	if(!converts_living && owner.stat != DEAD)
+		return
+
+	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
+
 	owner.grab_ghost()
 	owner.set_species(/datum/species/zombie/infectious)
-	var/old_stat = owner.stat // Save for the message
 	owner.revive(full_heal = TRUE)
-	switch(old_stat)
-		if(DEAD, UNCONSCIOUS)
-			owner.visible_message("<span class='danger'>[owner] staggers to [owner.p_their()] feet!</span>")
-			owner << "<span class='danger'>You stagger to your feet!</span>"
-		// Conscious conversions will generally only happen for an event
-		// or for a converts_living=TRUE infection
-		if(CONSCIOUS)
-			owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()] gain a ravenous hunger in [owner.p_their()] eyes!</span>",
-				"<span class='alien'>You HUNGER!</span>")
-			playsound(owner.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
-			owner.do_jitter_animation(living_transformation_time)
-			owner.Stun(living_transformation_time)
-			owner << "<span class='alertalien'>You are now a zombie!</span>"
-
-#undef START_TIMER
+	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
+	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+	owner.do_jitter_animation(living_transformation_time * 10)
+	owner.Stun(living_transformation_time)
+	owner << "<span class='alertalien'>You are now a zombie!</span>"

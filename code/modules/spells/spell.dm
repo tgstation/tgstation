@@ -7,6 +7,7 @@
 	var/active = FALSE //Used by toggle based abilities.
 	var/ranged_mousepointer
 	var/mob/living/ranged_ability_user
+	var/ranged_clickcd_override = -1
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
@@ -20,7 +21,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		caller << "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled."
 		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
-	ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
+	if(ranged_clickcd_override >= 0)
+		ranged_ability_user.next_click = world.time + ranged_clickcd_override
+	else
+		ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
 	ranged_ability_user.face_atom(A)
 	return FALSE
 
@@ -241,7 +245,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	if(action)
 		action.UpdateButtonIcon()
-	while(charge_counter < charge_max && !qdeleted(src))
+	while(charge_counter < charge_max && !QDELETED(src))
 		sleep(1)
 		charge_counter++
 	if(action)
@@ -251,7 +255,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
-		user.attack_log += text("\[[time_stamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
+		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()

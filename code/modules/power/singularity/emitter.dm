@@ -33,9 +33,10 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
 	B.apply_default_parts(src)
 	RefreshParts()
+	wires = new /datum/wires/emitter(src)
 
 /obj/item/weapon/circuitboard/machine/emitter
-	name = "circuit board (Emitter)"
+	name = "Emitter (Machine Board)"
 	build_path = /obj/machinery/power/emitter
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
@@ -81,7 +82,7 @@
 	else
 		rotate()
 
-/obj/machinery/power/emitter/initialize()
+/obj/machinery/power/emitter/Initialize()
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
@@ -90,7 +91,7 @@
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -112,13 +113,13 @@
 				user << "<span class='notice'>You turn off \the [src].</span>"
 				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
-				investigate_log("turned <font color='red'>off</font> by [key_name(user)]","singulo")
+				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]","singulo")
 			else
 				src.active = 1
 				user << "<span class='notice'>You turn on \the [src].</span>"
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
-				investigate_log("turned <font color='green'>on</font> by [key_name(user)]","singulo")
+				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]","singulo")
 			update_icon()
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -127,7 +128,7 @@
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
-	if(ismegafauna(M))
+	if(ismegafauna(M) && anchored)
 		state = 0
 		anchored = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
@@ -153,60 +154,73 @@
 		src.active = 0
 		update_icon()
 		return
-	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
-
+	if(src.active == 1)
 		if(!active_power_usage || avail(active_power_usage))
 			add_load(active_power_usage)
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font>","singulo")
+				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]","singulo")
 		else
 			if(powered)
 				powered = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
-				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
+		if(!check_delay())
+			return FALSE
+		fire_beam()
 
-		src.last_shot = world.time
-		if(src.shot_number < 3)
-			src.fire_delay = 2
-			src.shot_number ++
-		else
-			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
-			src.shot_number = 0
+/obj/machinery/power/emitter/proc/check_delay()
+	if((src.last_shot + src.fire_delay) <= world.time)
+		return TRUE
+	return FALSE
 
-		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
+/obj/machinery/power/emitter/proc/fire_beam_pulse()
+	if(!check_delay())
+		return FALSE
+	if(state != 2)
+		return FALSE
+	if(avail(active_power_usage))
+		add_load(active_power_usage)
+		fire_beam()
 
-		A.setDir(src.dir)
-		playsound(src.loc, projectile_sound, 25, 1)
+/obj/machinery/power/emitter/proc/fire_beam()
+	src.last_shot = world.time
+	if(src.shot_number < 3)
+		src.fire_delay = 20
+		src.shot_number ++
+	else
+		src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+		src.shot_number = 0
+	var/obj/item/projectile/A = new projectile_type(src.loc)
+	A.setDir(src.dir)
+	playsound(src.loc, projectile_sound, 25, 1)
+	if(prob(35))
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+	switch(dir)
+		if(NORTH)
+			A.yo = 20
+			A.xo = 0
+		if(EAST)
+			A.yo = 0
+			A.xo = 20
+		if(WEST)
+			A.yo = 0
+			A.xo = -20
+		else // Any other
+			A.yo = -20
+			A.xo = 0
+	A.starting = loc
+	A.fire()
 
-		if(prob(35))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()
-
-		switch(dir)
-			if(NORTH)
-				A.yo = 20
-				A.xo = 0
-			if(EAST)
-				A.yo = 0
-				A.xo = 20
-			if(WEST)
-				A.yo = 0
-				A.xo = -20
-			else // Any other
-				A.yo = -20
-				A.xo = 0
-		A.starting = loc
-		A.fire()
-
-/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
+/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
-		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		if(!silent)
+			user  << "<span class='warning'>[src] is welded to the floor!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -268,6 +282,10 @@
 				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
+		return
+
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
 		return
 
 	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))

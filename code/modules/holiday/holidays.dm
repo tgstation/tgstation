@@ -141,6 +141,14 @@
 	end_day = 2
 	begin_month = APRIL
 
+/datum/holiday/april_fools/celebrate()
+	if(ticker)
+		ticker.login_music = 'sound/ambience/clown.ogg'
+		for(var/mob/new_player/P in mob_list)
+			if(P.client)
+				P.stopLobbySound()
+				P.client.playtitlemusic()
+
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
 	begin_day = 20

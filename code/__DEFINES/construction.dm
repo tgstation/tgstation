@@ -9,6 +9,7 @@
 #define GIRDER_DISPLACED 3
 #define GIRDER_DISASSEMBLED 4
 
+
 //rwall construction states
 #define INTACT 0
 #define SUPPORT_LINES 1
@@ -17,6 +18,10 @@
 #define BOLTS 4
 #define SUPPORT_RODS 5
 #define SHEATH 6
+
+//plastic flaps construction states
+#define PLASTIC_FLAPS_NORMAL 0
+#define PLASTIC_FLAPS_DETACHED 1
 
 //default_unfasten_wrench() return defines
 #define CANT_UNFASTEN 0
@@ -47,6 +52,10 @@
 #define EM_SECURED 1
 #define EM_WELDED 2
 
+//Construction defines for the pinion airlock
+#define GEAR_SECURE 1
+#define GEAR_LOOSE 2
+
 //other construction-related things
 
 //windows affected by nar-sie turn this color.
@@ -63,6 +72,7 @@
 #define MAT_DIAMOND		"$diamond"
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
+#define MAT_BLUESPACE	"$bluespace"
 #define MAT_BANANIUM	"$bananium"
 #define MAT_TITANIUM	"$titanium"
 #define MAT_BIOMASS		"$biomass"

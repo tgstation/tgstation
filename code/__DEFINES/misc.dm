@@ -168,8 +168,10 @@
 // Used by Paper and PhotoCopier (and PaperBin once a year).
 // Used by PDA's Notekeeper.
 // Used by NewsCaster and NewsPaper.
+// Used by Modular Computers
 #define PEN_FONT "Verdana"
 #define CRAYON_FONT "Comic Sans MS"
+#define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
 
 #define RESIZE_DEFAULT_SIZE 1
@@ -228,22 +230,13 @@ var/list/bloody_footprints_cache = list()
 #define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
 #define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
 #define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
-#define IS_DYNAMIC_LIGHTING(A) ( A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.lighting_use_dynamic )
+#define IS_DYNAMIC_LIGHTING(A) ( A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.dynamic_lighting )
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
-
-//Fire and Acid stuff, for resistance_flags
-#define LAVA_PROOF 1
-#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
-#define FLAMMABLE 4
-#define ON_FIRE 8
-#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
-#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
-#define INDESTRUCTIBLE 64 //doesn't take damage
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -274,6 +267,10 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 #define GHOST_OTHERS_THEIR_SETTING_NAME 	"their setting"
 
 #define GHOST_OTHERS_DEFAULT_OPTION			GHOST_OTHERS_THEIR_SETTING
+
+#define GHOST_MAX_VIEW_RANGE_DEFAULT 10
+#define GHOST_MAX_VIEW_RANGE_MEMBER 14
+
 
 var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
 
@@ -340,7 +337,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 //debug printing macros
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
-#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) log_world("DEBUG: [msg]")
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
@@ -399,3 +396,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
+
+#define TURF_DECAL_PAINT "paint"
+#define TURF_DECAL_DAMAGE "damage"
+#define TURF_DECAL_DIRT "dirt"
+
+//Error handler defines
+#define ERROR_USEFUL_LEN 2

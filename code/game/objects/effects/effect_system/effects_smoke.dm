@@ -27,7 +27,7 @@
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
 		if(alpha < 160)
-			opacity = 0 //if we were blocking view, we aren't now because we're fading out
+			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
@@ -42,7 +42,7 @@
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
 	STOP_PROCESSING(SSobj, src)
-	addtimer(CALLBACK(src, .proc/fade_out), 0)
+	INVOKE_ASYNC(src, .proc/fade_out)
 	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()
@@ -88,7 +88,7 @@
 		S.lifetime = lifetime
 		if(S.amount>0)
 			if(opaque)
-				S.opacity = 1
+				S.set_opacity(TRUE)
 			newsmokes.Add(S)
 
 	if(newsmokes.len)
@@ -255,7 +255,7 @@
 
 /datum/effect_system/smoke_spread/chem/New()
 	..()
-	chemholder = PoolOrNew(/obj)
+	chemholder = new /obj()
 	var/datum/reagents/R = new/datum/reagents(500)
 	chemholder.reagents = R
 	R.my_atom = chemholder

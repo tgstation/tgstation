@@ -76,7 +76,7 @@
 	AI.ai_alerts()
 
 /obj/screen/ai/announcement
-	name = "Make Announcement"
+	name = "Make Vox Announcement"
 	icon_state = "announcement"
 
 /obj/screen/ai/announcement/Click()

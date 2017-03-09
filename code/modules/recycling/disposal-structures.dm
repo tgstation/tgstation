@@ -150,7 +150,7 @@
 /obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
 
-	if(make_from && !qdeleted(make_from))
+	if(make_from && !QDELETED(make_from))
 		base_icon_state = make_from.base_state
 		setDir(make_from.dir)
 		dpdir = make_from.dpdir
@@ -254,7 +254,7 @@
 	if(isfloorturf(T)) //intact floor, pop the tile
 		floorturf = T
 		if(floorturf.floor_tile)
-			PoolOrNew(floorturf.floor_tile, T)
+			new floorturf.floor_tile(T)
 		floorturf.make_plating()
 
 	if(direction)		// direction is specified

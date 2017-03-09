@@ -13,7 +13,6 @@ var/datum/subsystem/air/SSair
 	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND
-	display_order = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -28,8 +27,8 @@ var/datum/subsystem/air/SSair
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
-	
-	
+
+
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -39,28 +38,34 @@ var/datum/subsystem/air/SSair
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
 
+	var/map_loading = TRUE
+	var/list/queued_for_activation
 
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "AT:[round(cost_turfs)]|"
-	msg += "EG:[round(cost_groups)]|"
-	msg += "HP:[round(cost_highpressure)]|"
-	msg += "HS:[round(cost_hotspots)]|"
-	msg += "SC:[round(cost_superconductivity)]|"
-	msg += "PN:[round(cost_pipenets)]|"
-	msg += "AM:[round(cost_atmos_machinery)]"
+	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "EG:[round(cost_groups,1)]|"
+	msg += "HP:[round(cost_highpressure,1)]|"
+	msg += "HS:[round(cost_hotspots,1)]|"
+	msg += "SC:[round(cost_superconductivity,1)]|"
+	msg += "PN:[round(cost_pipenets,1)]|"
+	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
-	msg +=  "AT:[active_turfs.len]|"
-	msg +=  "EG:[excited_groups.len]|"
-	msg +=  "HS:[hotspots.len]|"
-	msg +=  "AS:[active_super_conductivity.len]"
+	msg += "AT:[active_turfs.len]|"
+	msg += "EG:[excited_groups.len]|"
+	msg += "HS:[hotspots.len]|"
+	msg += "PN:[networks.len]|"
+	msg += "HP:[high_pressure_delta.len]|"
+	msg += "AS:[active_super_conductivity.len]|"
+	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	..(msg)
 
 
 /datum/subsystem/air/Initialize(timeofday)
+	map_loading = FALSE
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -73,7 +78,7 @@ var/datum/subsystem/air/SSair
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
@@ -82,7 +87,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_atmos_machinery(resumed)
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ACTIVETURFS
@@ -91,7 +96,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_active_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_EXCITEDGROUPS
@@ -100,7 +105,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_excited_groups(resumed)
 		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HIGHPRESSURE
@@ -109,7 +114,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_high_pressure_delta(resumed)
 		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HOTSPOTS
@@ -118,7 +123,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_hotspots(resumed)
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_SUPERCONDUCTIVITY
@@ -127,7 +132,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_super_conductivity(resumed)
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 	currentpart = SSAIR_PIPENETS
@@ -244,7 +249,6 @@ var/datum/subsystem/air/SSair
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
-
 /datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		T.excited = 1
@@ -253,10 +257,25 @@ var/datum/subsystem/air/SSair
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else
+	else if(T.initialized)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
+	else if(map_loading)
+		if(queued_for_activation)
+			queued_for_activation[T] = T
+		return
+	else
+		T.requires_activation = TRUE
 
+/datum/subsystem/air/StartLoadingMap()
+	LAZYINITLIST(queued_for_activation)
+	map_loading = TRUE
+
+/datum/subsystem/air/StopLoadingMap()
+	map_loading = FALSE
+	for(var/T in queued_for_activation)
+		add_to_active(T)
+	queued_for_activation.Cut()
 
 /datum/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
@@ -269,6 +288,7 @@ var/datum/subsystem/air/SSair
 		if (T.blocks_air)
 			continue
 		T.Initalize_Atmos(times_fired)
+		CHECK_TICK
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
@@ -284,6 +304,7 @@ var/datum/subsystem/air/SSair
 			var/list/new_turfs_to_check = list()
 			for(var/turf/open/T in turfs_to_check)
 				new_turfs_to_check += T.resolve_active_graph()
+			CHECK_TICK
 
 			active_turfs += new_turfs_to_check
 			turfs_to_check = new_turfs_to_check
@@ -294,6 +315,7 @@ var/datum/subsystem/air/SSair
 			var/datum/excited_group/EG = thing
 			EG.self_breakdown(space_is_all_consuming = 1)
 			EG.dismantle()
+			CHECK_TICK
 
 		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
 		world << "<span class='boldannounce'>[msg]</span>"

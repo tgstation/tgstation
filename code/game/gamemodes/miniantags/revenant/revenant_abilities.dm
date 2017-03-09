@@ -54,9 +54,8 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
-				var/datum/beam/B = Beam(target,icon_state="drain_life",time=46)
+				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
-					qdel(B)
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5
@@ -71,11 +70,11 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
-					qdel(B)
 					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+				qdel(B)
 			else
 				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
 	draining = 0
@@ -195,7 +194,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/overload, T, user), 0)
+			INVOKE_ASYNC(src, .proc/overload, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T)
@@ -205,7 +204,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(4, 0, L)
 		s.start()
-		PoolOrNew(/obj/effect/overlay/temp/revenant, L.loc)
+		new /obj/effect/overlay/temp/revenant(L.loc)
 		sleep(20)
 		if(!L.on) //wait, wait, don't shock me
 			return
@@ -235,24 +234,24 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/defile, T), 0)
+			INVOKE_ASYNC(src, .proc/defile, T)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
 	if(T.flags & NOJAUNT)
 		T.flags -= NOJAUNT
-		PoolOrNew(/obj/effect/overlay/temp/revenant, T)
+		new /obj/effect/overlay/temp/revenant(T)
 	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
-			PoolOrNew(floor.floor_tile, floor)
+			new floor.floor_tile(floor)
 		floor.broken = 0
 		floor.burnt = 0
 		floor.make_plating(1)
 	if(T.type == /turf/closed/wall && prob(15))
-		PoolOrNew(/obj/effect/overlay/temp/revenant, T)
+		new /obj/effect/overlay/temp/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/rust)
 	if(T.type == /turf/closed/wall/r_wall && prob(10))
-		PoolOrNew(/obj/effect/overlay/temp/revenant, T)
+		new /obj/effect/overlay/temp/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
 	for(var/obj/structure/closet/closet in T.contents)
 		closet.open()
@@ -264,7 +263,7 @@
 	for(var/obj/structure/window/window in T)
 		window.take_damage(rand(30,80))
 		if(window && window.fulltile)
-			PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, window.loc)
+			new /obj/effect/overlay/temp/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in T)
 		light.flicker(20) //spooky
 
@@ -282,12 +281,12 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/malfunction, T, user), 0)
+			INVOKE_ASYNC(src, .proc/malfunction, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
 		if(!bot.emagged)
-			PoolOrNew(/obj/effect/overlay/temp/revenant, bot.loc)
+			new /obj/effect/overlay/temp/revenant(bot.loc)
 			bot.locked = 0
 			bot.open = 1
 			bot.emag_act()
@@ -295,21 +294,21 @@
 		if(human == user)
 			continue
 		human << "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>"
-		PoolOrNew(/obj/effect/overlay/temp/revenant, human.loc)
+		new /obj/effect/overlay/temp/revenant(human.loc)
 		human.emp_act(1)
 	for(var/obj/thing in T)
 		if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 			continue
 		if(prob(20))
 			if(prob(50))
-				PoolOrNew(/obj/effect/overlay/temp/revenant, thing.loc)
+				new /obj/effect/overlay/temp/revenant(thing.loc)
 			thing.emag_act(null)
 		else
 			if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 				thing.emp_act(1)
 	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
 		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
-		PoolOrNew(/obj/effect/overlay/temp/revenant, S.loc)
+		new /obj/effect/overlay/temp/revenant(S.loc)
 		S.spark_system.start()
 		S.emp_act(1)
 
@@ -326,13 +325,13 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/blight, T, user), 0)
+			INVOKE_ASYNC(src, .proc/blight, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T, mob/user)
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
-		PoolOrNew(/obj/effect/overlay/temp/revenant, mob.loc)
+		new /obj/effect/overlay/temp/revenant(mob.loc)
 		if(iscarbon(mob))
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
@@ -353,14 +352,14 @@
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.
 		vine.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
-		PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
+		new /obj/effect/overlay/temp/revenant(vine.loc)
 		QDEL_IN(vine, 10)
 	for(var/obj/structure/glowshroom/shroom in T)
 		shroom.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
-		PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
+		new /obj/effect/overlay/temp/revenant(shroom.loc)
 		QDEL_IN(shroom, 10)
 	for(var/obj/machinery/hydroponics/tray in T)
-		PoolOrNew(/obj/effect/overlay/temp/revenant, tray.loc)
+		new /obj/effect/overlay/temp/revenant(tray.loc)
 		tray.pestlevel = rand(8, 10)
 		tray.weedlevel = rand(8, 10)
 		tray.toxic = rand(45, 55)

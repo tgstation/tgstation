@@ -137,7 +137,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(linked_reclaimer)
 		linked_reclaimer.stored_items[occupant] = list()
 	for(var/obj/item/W in occupant)
-		if(!is_type_in_typecache(W, required_items) && occupant.unEquip(W))
+		if(!is_type_in_typecache(W, required_items) && occupant.temporarilyRemoveItemFromInventory(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue
@@ -163,7 +163,7 @@ The console is located at computer/gulag_teleporter.dm
 		R.fields["criminal"] = "Incarcerated"
 
 /obj/item/weapon/circuitboard/machine/gulag_teleporter
-	name = "circuit board (labor camp teleporter)"
+	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(

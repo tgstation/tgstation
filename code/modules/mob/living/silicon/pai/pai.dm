@@ -6,7 +6,6 @@
 	icon_state = "repairbot"
 	mouse_opacity = 2
 	density = 0
-	ventcrawler = 2
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -58,11 +57,11 @@
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
 
-	var/emitterhealth = 50
-	var/emittermaxhealth = 50
-	var/emitterregen = 0.5
-	var/emittercd = 20
-	var/emitteroverloadcd = 50
+	var/emitterhealth = 20
+	var/emittermaxhealth = 20
+	var/emitterregen = 0.25
+	var/emittercd = 50
+	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
@@ -71,16 +70,12 @@
 	canmove = FALSE
 	var/silent = 0
 	var/hit_slowdown = 0
-	var/light_power = 5
+	var/brightness_power = 5
 	var/slowdown = 0
 
 /mob/living/silicon/pai/movement_delay()
 	. = ..()
 	. += slowdown
-
-/mob/living/silicon/pai/examine(mob/user)
-	..()
-	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Destroy()
 	pai_list -= src
@@ -214,3 +209,30 @@
 		return TRUE
 	slowdown = initial(slowdown)
 	return TRUE
+
+/mob/living/silicon/pai/examine(mob/user)
+	..()
+	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
+
+/mob/living/silicon/pai/Life()
+	if(stat == DEAD)
+		return
+	if(cable)
+		if(get_dist(src, cable) > 1)
+			var/turf/T = get_turf(src.loc)
+			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			qdel(src.cable)
+			cable = null
+	silent = max(silent - 1, 0)
+	. = ..()
+
+/mob/living/silicon/pai/updatehealth()
+	if(status_flags & GODMODE)
+		return
+	health = maxHealth - getBruteLoss() - getFireLoss()
+	update_stat()
+
+
+/mob/living/silicon/pai/process()
+	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
+	hit_slowdown = Clamp((hit_slowdown - 1), 0, 100)

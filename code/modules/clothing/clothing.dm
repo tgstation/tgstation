@@ -5,12 +5,14 @@
 	max_integrity = 200
 	integrity_failure = 80
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
-	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
-	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
-	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
-	var/visor_flags_cover = 0	// same as above, but for flags_cover
+	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+	var/up = 0					//but seperated to allow items to protect but not impair vision, like space helmets
+	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
+	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
+	var/visor_flags_cover = 0	//same as above, but for flags_cover
+//what to toggle when toggled with weldingvisortoggle()
+	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
@@ -44,12 +46,10 @@
 	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return
 
-	if(!M.restrained() && !M.stat && loc == M && istype(over_object, /obj/screen/inventory/hand))
+	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!M.unEquip(src))
-			return
-		M.put_in_hand(src, H.held_index)
-		add_fingerprint(usr)
+		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
+			add_fingerprint(usr)
 
 /obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(pockets)
@@ -79,9 +79,10 @@
 		user << "<span class='notice'>You fix the damages on [src] with [C].</span>"
 		return 1
 	if(pockets)
-		return pockets.attackby(W, user, params)
-	else
-		return ..()
+		var/i = pockets.attackby(W, user, params)
+		if(i)
+			return i
+	return ..()
 
 /obj/item/clothing/AltClick(mob/user)
 	if(pockets && pockets.quickdraw && pockets.contents.len && !user.incapacitated())
@@ -154,8 +155,7 @@ var/list/damaged_clothes_icons = list()
 		add_overlay(damaged_clothes_icon, 1)
 	else
 		damaged_clothes = 0
-		overlays -= damaged_clothes_icons[index]
-		priority_overlays -= damaged_clothes_icons[index]
+		cut_overlay(damaged_clothes_icons[index], TRUE)
 
 
 //Ears: currently only used for headsets and earmuffs
@@ -525,7 +525,7 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(hastie)
+	if(hastie && slot != slot_hands)
 		hastie.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)
@@ -716,8 +716,10 @@ BLIND     // can't see anything
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	flash_protect ^= initial(flash_protect)
-	tint ^= initial(tint)
+	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
+		flash_protect ^= initial(flash_protect)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		tint ^= initial(tint)
 
 
 /obj/item/clothing/proc/can_use(mob/user)

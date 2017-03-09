@@ -28,7 +28,6 @@ var/datum/subsystem/minimap/SSminimap
 		world << "<span class='boldannounce'>Minimap generation disabled. Loading from cache...</span>"
 		var/fileloc = 0
 		if(check_files(0))	//Let's first check if we have maps cached in the data folder. NOTE: This will override the backup files even if this map is older.
-			world.log << "cache"
 			if(hash != trim(file2text(hash_path())))
 				world << "<span class='boldannounce'>Loaded cached minimap is outdated. There may be minor discrepancies in layout.</span>"	//Disclaimer against players saying map is wrong.
 			fileloc = 0
@@ -46,7 +45,7 @@ var/datum/subsystem/minimap/SSminimap
 	for(var/z in z_levels)
 		if(!fexists(file(map_path(z,backup))))	//Let's make sure we have a file for this map
 			if(backup)
-				world.log << "Failed to find backup file for map [MAP_NAME] on zlevel [z]."
+				log_world("Failed to find backup file for map [MAP_NAME] on zlevel [z].")
 			return FALSE
 	return TRUE
 

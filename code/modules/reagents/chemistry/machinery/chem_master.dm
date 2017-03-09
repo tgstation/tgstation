@@ -15,6 +15,7 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
@@ -24,7 +25,7 @@
 	..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
-	name = "circuit board (ChemMaster 3000)"
+	name = "ChemMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master
 	origin_tech = "materials=3;programming=2;biotech=3"
 	req_components = list(
@@ -42,7 +43,7 @@
 			new_path = /obj/machinery/chem_master/condimaster
 
 		build_path = new_path
-		name = "circuit board ([new_name] 3000)"
+		name = "[new_name] 3000 (Machine Board)"
 		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
 	else
 		return ..()
@@ -233,7 +234,7 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/pill/P
 
@@ -248,7 +249,7 @@
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
@@ -270,7 +271,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 				return
 			var/obj/item/weapon/reagent_containers/pill/P
 
@@ -289,7 +290,7 @@
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new(src.loc)
 				P.originalname = name
@@ -302,7 +303,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 
 				var/obj/item/weapon/reagent_containers/glass/bottle/P
@@ -361,5 +362,5 @@
 	condi = 1
 
 /obj/item/weapon/circuitboard/machine/chem_master/condi
-	name = "circuit board (CondiMaster 3000)"
+	name = "CondiMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master/condimaster

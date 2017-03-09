@@ -70,7 +70,7 @@
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
 
 /obj/item/weapon/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
-	PoolOrNew(/obj/effect/particle_effect/smoke, T)
+	new /obj/effect/particle_effect/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
@@ -81,7 +81,7 @@
 	switch(type)
 		if("destruction")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
 		if("bluespace")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
@@ -137,7 +137,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
-	var/list/possible_types = list("Assault", "Medical")
 
 /obj/item/weapon/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -189,12 +188,13 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 
+/obj/item/weapon/antag_spawner/nuke_ops/borg_tele/assault
+	name = "syndicate assault cyborg teleporter"
+	borg_to_spawn = "Assault"
 
-/obj/item/weapon/antag_spawner/nuke_ops/borg_tele/attack_self(mob/user)
-	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
-	if(!borg_to_spawn)
-		return
-	..()
+/obj/item/weapon/antag_spawner/nuke_ops/borg_tele/medical
+	name = "syndicate medical teleporter"
+	borg_to_spawn = "Medical"
 
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T)
 	var/mob/living/silicon/robot/R
@@ -257,7 +257,7 @@
 
 /obj/item/weapon/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
 
-	var /obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,T)
+	var /obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key

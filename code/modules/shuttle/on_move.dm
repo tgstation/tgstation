@@ -11,6 +11,21 @@
 		return 0
 	. = ..()
 
+/obj/machinery/atmospherics/onShuttleMove()
+	. = ..()
+	for(DEVICE_TYPE_LOOP)
+		if(get_area(nodes[I]) != get_area(src))
+			nullifyNode(I)
+
+#define DIR_CHECK_TURF_AREA(X) (get_area(get_ranged_target_turf(src, X, 1)) != A)
+/obj/structure/cable/onShuttleMove()
+	. = ..()
+	var/A = get_area(src)
+	//cut cables on the edge
+	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
+		cut_cable_from_powernet()
+#undef DIR_CHECK_TURF_AREA
+
 /atom/movable/light/onShuttleMove()
 	return 0
 
@@ -18,10 +33,10 @@
 	. = ..()
 	if(!.)
 		return
-	addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
+	INVOKE_ASYNC(src, .proc/close)
 	// Close any attached airlocks as well
 	for(var/obj/machinery/door/D in orange(1, src))
-		addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
+		INVOKE_ASYNC(src, .proc/close)
 
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0

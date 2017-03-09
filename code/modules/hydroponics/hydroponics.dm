@@ -41,7 +41,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/hydroponics
-	name = "circuit board (Hydroponics Tray)"
+	name = "Hydroponics Tray (Machine Board)"
 	build_path = /obj/machinery/hydroponics/constructable
 	origin_tech = "programming=1;biotech=2"
 	req_components = list(
@@ -151,12 +151,12 @@
 			// Lack of light hurts non-mushrooms
 			if(isturf(loc))
 				var/turf/currentTurf = loc
-				var/lightAmt = currentTurf.lighting_lumcount
+				var/lightAmt = currentTurf.get_lumcount()
 				if(myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-					if(lightAmt < 2)
+					if(lightAmt < 0.2)
 						adjustHealth(-1 / rating)
 				else // Non-mushroom
-					if(lightAmt < 4)
+					if(lightAmt < 0.4)
 						adjustHealth(-2 / rating)
 
 //Water//////////////////////////////////////////////////////////////////
@@ -259,8 +259,8 @@
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing")
-		SetLuminosity(3)
+			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing"))
+		set_light(3)
 
 	update_icon_hoses()
 
@@ -271,9 +271,9 @@
 	if(!self_sustaining)
 		if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
 			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-			SetLuminosity(G.get_lum(myseed))
+			set_light(G.get_lum(myseed))
 		else
-			SetLuminosity(0)
+			set_light(0)
 
 	return
 
@@ -685,7 +685,7 @@
 			return
 		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
 			return
-		if(!O || qdeleted(O))
+		if(!O || QDELETED(O))
 			return
 		if(!Adjacent(user))
 			return
@@ -772,14 +772,14 @@
 		if(!myseed)
 			if(istype(O, /obj/item/seeds/kudzu))
 				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
-			user.unEquip(O)
+			if(!user.transferItemToLoc(O, src))
+				return
 			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
 			myseed = O
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
-			O.forceMove(src)
 			update_icon()
 		else
 			user << "<span class='warning'>[src] already has seeds in it!</span>"

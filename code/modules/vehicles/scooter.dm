@@ -13,50 +13,29 @@
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"
 			qdel(src)
 
-/obj/vehicle/scooter/handle_vehicle_layer()
-	if(dir == SOUTH)
-		layer = ABOVE_MOB_LAYER
-	else
-		layer = OBJ_LAYER
 
-/obj/vehicle/scooter/handle_vehicle_offsets()
-	..()
-	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			switch(buckled_mob.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = 0
-				if(EAST)
-					buckled_mob.pixel_x = -2
-				if(SOUTH)
-					buckled_mob.pixel_x = 0
-				if(WEST)
-					buckled_mob.pixel_x = 2
-			if(buckled_mob.get_num_legs() > 0)
-				buckled_mob.pixel_y = 5
-			else
-				buckled_mob.pixel_y = -4
-
-/obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0)
+/obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	riding_datum = new/datum/riding/scooter
 	if(!istype(M))
 		return 0
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
-		M << "<span class='warning'>Your limbless body can't use [src].</span>"
+		M << "<span class='warning'>Your limbless body can't ride \the [src].</span>"
 		return 0
 	. = ..()
 
 /obj/vehicle/scooter/post_buckle_mob(mob/living/M)
-	vehicle_move_delay = initial(vehicle_move_delay)
-	if(M.get_num_legs() < 2)
-		vehicle_move_delay ++
+	riding_datum.account_limbs(M)
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
-	vehicle_move_delay = 0//fast
+
 	density = 0
+
+/obj/vehicle/scooter/skateboard/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	. = ..()
+	riding_datum = new/datum/riding/scooter/skateboard
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	if(has_buckled_mobs())

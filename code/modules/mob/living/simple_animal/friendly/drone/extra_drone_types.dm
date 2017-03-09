@@ -105,7 +105,7 @@
 	density = TRUE
 	speed = 1
 	ventcrawler = VENTCRAWLER_NONE
-	faction = list("ratvar")
+	faction = list("neutral", "ratvar")
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
@@ -127,7 +127,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/New()
 	. = ..()
-	SetLuminosity(2,1)
+	set_light(2, 0.1)
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
@@ -140,12 +140,12 @@
 	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
 	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, <i>excluding a clockwork slab.</i></b>"
+	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>"
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
 
-/mob/living/simple_animal/drone/cogscarab/alert_drones(msg, dead_can_hear = 0)
+/mob/living/simple_animal/drone/cogscarab/alert_drones(msg, dead_can_hear = FALSE)
 	if(msg == DRONE_NET_CONNECT)
 		msg = "<span class='brass'><i>Hierophant Network:</i> [name] activated.</span>"
 	else if(msg == DRONE_NET_DISCONNECT)
@@ -182,3 +182,12 @@
 
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
+
+/obj/item/drone_shell/dusty
+	name = "derelict drone shell"
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	drone_type = /mob/living/simple_animal/drone/derelict
+
+/mob/living/simple_animal/drone/derelict
+	name = "derelict drone"
+	default_hatmask = /obj/item/clothing/head/ushanka

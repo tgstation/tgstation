@@ -7,16 +7,12 @@ env:
     - BYOND_MINOR="1346"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
-    - DM_MAPFILE=""
+    - BUILD_TESTING=false
+    - DM_MAPFILE="loadallmaps"
     matrix:
     - BUILD_TOOLS=true
-    - DM_MAPFILE="tgstation2"
-    - DM_MAPFILE="metastation"
-    - DM_MAPFILE="birdstation"
-    - DM_MAPFILE="pubbystation"
-    - DM_MAPFILE="templates"
-    - DM_MAPFILE="omegastation"
-    - DM_MAPFILE="deltastation"
+    - BUILD_TESTING=true
+    - BUILD_TESTING=false
 
 cache:
   directories:

@@ -64,6 +64,20 @@
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
 
+/obj/item/projectile/bullet/srmrocket
+	name ="SRM-8 Rocket"
+	desc = "Boom"
+	icon_state = "missile"
+	damage = 30
+
+/obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
+	..()
+	if(!isliving(target)) //if the target isn't alive, so is a wall or something
+		explosion(target, 0, 1, 2, 4)
+	else
+		explosion(target, 0, 0, 2, 4)
+	return 1
+
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
@@ -220,18 +234,25 @@
 	damage = 10
 	range = 6
 
+/obj/item/projectile/plasma/turret
+	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
+	name = "plasma beam"
+	damage = 6
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
 
 /obj/item/projectile/gravityrepulse
 	name = "repulsion bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
 /obj/item/projectile/gravityrepulse/New(var/obj/item/ammo_casing/energy/gravityrepulse/C)
 	..()
@@ -242,27 +263,26 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.throw_at(throwtarget,power+1,1)
+		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
-		F.overlays += gravfield
-		spawn(5)
-		F.overlays -= gravfield
+		new /obj/effect/overlay/temp/gravpush(F)
 
 /obj/item/projectile/gravityattract
 	name = "attraction bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	color = "#FF6600"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
 /obj/item/projectile/gravityattract/New(var/obj/item/ammo_casing/energy/gravityattract/C)
 	..()
@@ -273,26 +293,25 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		A.throw_at(T, power+1, 1)
+		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
-		F.overlays += gravfield
-		spawn(5)
-		F.overlays -= gravfield
+		new /obj/effect/overlay/temp/gravpush(F)
 
 /obj/item/projectile/gravitychaos
 	name = "gravitational blast"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	color = "#101010"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
 /obj/item/projectile/gravitychaos/New(var/obj/item/ammo_casing/energy/gravitychaos/C)
 	..()
@@ -303,12 +322,10 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored)
+		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		A.throw_at(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
+		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
-		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
-		Z.overlays += gravfield
-		spawn(5)
-		Z.overlays -= gravfield
+		new /obj/effect/overlay/temp/gravpush(Z)
 

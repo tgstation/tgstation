@@ -203,7 +203,7 @@ var/global/list/crematoriums = new/list()
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
-				user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+				user.log_message("Cremated <b>[M]/[M.ckey]</b>", INDIVIDUAL_ATTACK_LOG)
 				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			else
 				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
@@ -218,7 +218,7 @@ var/global/list/crematoriums = new/list()
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			locked = 0
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people

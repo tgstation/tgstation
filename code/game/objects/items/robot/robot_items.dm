@@ -66,6 +66,8 @@
 			user << "ERROR: ARM ACTUATORS OVERLOADED."
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
+	if(M == user)
+		return
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
@@ -396,6 +398,8 @@
 	candy--
 	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)
 	A.BB.damage = hitdamage
+	if(hitdamage)
+		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0)
@@ -409,6 +413,8 @@
 	candy--
 	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
 	A.BB.damage = hitdamage
+	if(hitdamage)
+		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
@@ -461,6 +467,7 @@
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
 	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
+	nodamage = TRUE
 
 /obj/item/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
@@ -481,6 +488,7 @@
 	icon_state = "lollipop_1"
 	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
 	var/color2 = rgb(0, 0, 0)
+	nodamage = TRUE
 
 /obj/item/projectile/bullet/reusable/lollipop/New()
 	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)

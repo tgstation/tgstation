@@ -86,13 +86,12 @@
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
+		var/repeal = (authorized.len < old_len)
 		var/remaining = auth_need - authorized.len
 		if(authorized.len && remaining)
-			minor_announce("[remaining] authorizations \
-				needed until shuttle is launched early", null, alert)
-		else
-			minor_announce("All authorizations to launch the shuttle \
-				early have been revoked.")
+			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
+		if(repeal)
+			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
@@ -212,6 +211,8 @@
 			setTimer(call_time)
 		else
 			return
+
+	SSshuttle.emergencyCallAmount++
 
 	if(prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
@@ -388,14 +389,20 @@
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request()
-	if((security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA) && launch_status == UNLAUNCHED)
-		launch_status = EARLY_LAUNCHED
-		return ..()
+	var/obj/machinery/computer/shuttle/S = getControlConsole()
+
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || (S && S.emagged))
+		if(launch_status == UNLAUNCHED)
+			launch_status = EARLY_LAUNCHED
+			return ..()
+	else
+		usr << "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>"
+		return 1
 
 /obj/docking_port/mobile/pod/New()
+	..()
 	if(id == "pod")
 		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
-	..()
 
 /obj/docking_port/mobile/pod/cancel()
 	return
@@ -413,6 +420,11 @@
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
+/obj/machinery/computer/shuttle/pod/emag_act(mob/user)
+	if(!emagged)
+		emagged = TRUE
+		user << "<span class='warning'>You fry the pod's alert level checking system.</span>"
+
 /obj/docking_port/stationary/random
 	name = "escape pod"
 	id = "pod"
@@ -420,12 +432,24 @@
 	width = 3
 	height = 4
 	var/target_area = /area/lavaland/surface/outdoors
+	var/edge_distance = 16
+	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
-/obj/docking_port/stationary/random/initialize()
+/obj/docking_port/stationary/random/Initialize(mapload)
 	..()
+	if(!mapload)
+		return
+
 	var/list/turfs = get_area_turfs(target_area)
 	var/turf/T = pick(turfs)
-	src.loc = T
+
+	while(turfs.len)
+		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
+			turfs -= T
+			T = pick(turfs)
+		else
+			src.loc = T
+			break
 
 //Pod suits/pickaxes
 
@@ -452,6 +476,7 @@
 	density = 0
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
+	var/unlocked = FALSE
 
 /obj/item/weapon/storage/pod/New()
 	..()
@@ -471,13 +496,18 @@
 	return
 
 /obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || unlocked)
 		. = ..()
 	else
 		usr << "The storage unit will only unlock during a Red or Delta security alert."
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
-	return
+	return MouseDrop(user)
+
+/obj/item/weapon/storage/pod/onShuttleMove()
+	unlocked = TRUE
+	// If the pod was launched, the storage will always open.
+	return ..()
 
 
 /obj/docking_port/mobile/emergency/backup

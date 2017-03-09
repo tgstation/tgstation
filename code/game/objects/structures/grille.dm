@@ -27,7 +27,15 @@
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user))
-		shock(user, 70)
+		var/tile_density = FALSE
+		for(var/atom/movable/AM in get_turf(src))
+			if(AM == src)
+				continue
+			if(AM.density && AM.layer >= layer)
+				tile_density = TRUE
+				break
+		if(!tile_density)
+			shock(user, 70)
 
 
 /obj/structure/grille/attack_paw(mob/user)
@@ -224,10 +232,10 @@
 	..()
 	change_construction_value(1)
 	if(broken)
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille/broken, get_turf(src))
+		new /obj/effect/overlay/temp/ratvar/grille/broken(get_turf(src))
 	else
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille, get_turf(src))
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/grille, get_turf(src))
+		new /obj/effect/overlay/temp/ratvar/grille(get_turf(src))
+		new /obj/effect/overlay/temp/ratvar/beam/grille(get_turf(src))
 
 /obj/structure/grille/ratvar/Destroy()
 	change_construction_value(-1)

@@ -26,16 +26,15 @@
 		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
 	if(istype(card.loc, /mob/living))
 		var/mob/living/L = card.loc
-		if(!L.unEquip(card))
+		if(!L.temporarilyRemoveItemFromInventory(card))
 			src << "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>"
 			return FALSE
-	var/turf/T = get_turf(card)
-	forceMove(T)
+	forceMove(get_turf(card))
 	card.forceMove(src)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
-	SetLuminosity(0)
+	set_light(0)
 	icon_state = "[chassis]"
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 	holoform = TRUE
@@ -63,7 +62,7 @@
 	forceMove(card)
 	canmove = FALSE
 	density = FALSE
-	SetLuminosity(0)
+	set_light(0)
 	holoform = FALSE
 	if(resting)
 		lay_down()
@@ -95,8 +94,12 @@
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
 	if(!luminosity)
-		SetLuminosity(light_power)
+		set_light(brightness_power)
 		src << "<span class='notice'>You enable your integrated light.</span>"
 	else
-		SetLuminosity(0)
+		set_light(0)
 		src << "<span class='notice'>You disable your integrated light.</span>"
+
+/mob/living/silicon/pai/movement_delay()
+	. = ..()
+	. += 1 //A bit slower than humans, so they're easier to smash

@@ -36,8 +36,7 @@
 			return
 		user << "<span class='notice'>You start adding [P] to [src]...</span>"
 		if(do_after(user, 50, target = src) && P.use(1))
-			new /obj/structure/table/reinforced(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/reinforced)
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.get_amount() < 1)
@@ -45,8 +44,7 @@
 			return
 		user << "<span class='notice'>You start adding [M] to [src]...</span>"
 		if(do_after(user, 20, target = src) && M.use(1))
-			new /obj/structure/table(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table)
 	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 1)
@@ -54,8 +52,7 @@
 			return
 		user << "<span class='notice'>You start adding [G] to [src]...</span>"
 		if(do_after(user, 20, target = src) && G.use(1))
-			new /obj/structure/table/glass(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/glass)
 	else if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		var/obj/item/stack/sheet/mineral/silver/S = I
 		if(S.get_amount() < 1)
@@ -63,8 +60,7 @@
 			return
 		user << "<span class='notice'>You start adding [S] to [src]...</span>"
 		if(do_after(user, 20, target = src) && S.use(1))
-			new /obj/structure/table/optable(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/optable)
 	else if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
 		if(C.get_amount() < 1)
@@ -72,10 +68,16 @@
 			return
 		user << "<span class='notice'>You start adding [C] to [src]...</span>"
 		if(do_after(user, 20, target = src) && C.use(1))
-			new /obj/structure/table/wood/fancy(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/wood/fancy)
 	else
 		return ..()
+
+/obj/structure/table_frame/proc/make_new_table(table_type) //makes sure the new table made retains what we had as a frame
+	var/obj/structure/table/T = new table_type(loc)
+	T.frame = type
+	T.framestack = framestack
+	T.framestackamount = framestackamount
+	qdel(src)
 
 /obj/structure/table_frame/deconstruct(disassembled = TRUE)
 	new framestack(get_turf(src), framestackamount)
@@ -110,8 +112,7 @@
 			return
 		user << "<span class='notice'>You start adding [W] to [src]...</span>"
 		if(do_after(user, 20, target = src) && W.use(1))
-			new /obj/structure/table/wood(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/wood)
 		return
 	else if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
@@ -120,8 +121,7 @@
 			return
 		user << "<span class='notice'>You start adding [C] to [src]...</span>"
 		if(do_after(user, 20, target = src) && C.use(1))
-			new /obj/structure/table/wood/poker(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/wood/poker)
 	else
 		return ..()
 
@@ -149,8 +149,7 @@
 			return
 		user << "<span class='notice'>You start adding [W] to [src]...</span>"
 		if(do_after(user, 20, target = src) && W.use(1))
-			new /obj/structure/table/reinforced/brass(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/reinforced/brass)
 	else
 		return ..()
 

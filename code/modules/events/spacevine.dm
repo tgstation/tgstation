@@ -119,7 +119,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
-		holder.SetLuminosity(severity, 3)
+		holder.set_light(severity, 0.3)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"
@@ -146,10 +146,10 @@
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
-		qdel(src)
+		qdel(holder)
 	else
 		. = 1
-		QDEL_IN(src, 5)
+		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/I)
 	explosion(holder.loc, 0, 0, severity, 0, 0)
@@ -196,7 +196,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
-	holder.SetOpacity(0)
+	holder.set_opacity(0)
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
@@ -352,10 +352,10 @@
 		if(!master.vines.len)
 			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
-			KZ.potency = min(100, master.mutativeness * 10)
-			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 5
+			KZ.set_potency(master.mutativeness * 10)
+			KZ.set_production((master.spread_cap / initial(master.spread_cap)) * 5)
 	mutations = list()
-	SetOpacity(0)
+	set_opacity(0)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
@@ -497,7 +497,7 @@
 	var/list/obj/structure/spacevine/queue_end = list()
 
 	for(var/obj/structure/spacevine/SV in growth_queue)
-		if(qdeleted(SV))
+		if(QDELETED(SV))
 			continue
 		i++
 		queue_end += SV
@@ -521,7 +521,7 @@
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		SetOpacity(1)
+		set_opacity(1)
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2

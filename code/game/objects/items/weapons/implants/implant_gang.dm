@@ -1,4 +1,3 @@
-
 /obj/item/weapon/implant/gang
 	name = "gang implant"
 	desc = "Makes you a gangster or such."
@@ -43,7 +42,7 @@
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 
 		qdel(src)
-		return -1
+		return 0
 
 /obj/item/weapon/implanter/gang
 	name = "implanter (gang)"

@@ -22,14 +22,14 @@
 			if(isliving(target))
 				var/mob/living/M = target
 				if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
+					new /obj/effect/overlay/temp/guardian/phase/out(get_turf(M))
 					do_teleport(M, M, 10)
 					for(var/mob/living/L in range(1, M))
 						if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 							continue
 						if(L != src && L != summoner)
 							L.apply_damage(15, BRUTE)
-					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
+					new /obj/effect/overlay/temp/explosion(get_turf(M))
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -76,7 +76,7 @@
 			var/turf/T = get_turf(src)
 			stored_obj.forceMove(T)
 			playsound(T,'sound/effects/Explosion2.ogg', 200, 1)
-			PoolOrNew(/obj/effect/overlay/temp/explosion, T)
+			new /obj/effect/overlay/temp/explosion(T)
 			user.ex_act(2)
 			qdel(src)
 		else

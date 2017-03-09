@@ -237,7 +237,10 @@
 		areaInstance = null
 	. = ..()
 
-/obj/docking_port/mobile/initialize()
+/obj/docking_port/mobile/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -342,6 +345,8 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
+	if(SSshuttle.lockdown && z == ZLEVEL_STATION)	//emp went off, no escape
+		return
 	previous = null
 //		if(!destination)
 //			return
@@ -391,7 +396,7 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
+		ripples += new /obj/effect/overlay/temp/ripple(t)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -458,7 +463,9 @@
 		if(!A0)
 			A0 = new area_type(null)
 		for(var/turf/T0 in L0)
+			var/area/old = T0.loc
 			A0.contents += T0
+			T0.change_area(old, A0)
 	if (istype(S1, /obj/docking_port/stationary/transit))
 		areaInstance.parallax_movedir = preferred_direction
 	else
@@ -478,7 +485,9 @@
 		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
 			T0.copyTurf(T1)
 			T1.baseturf = destination_turf_type
+			var/area/old = T1.loc
 			areaInstance.contents += T1
+			T1.change_area(old, areaInstance)
 
 			//copy over air
 			if(isopenturf(T1))
@@ -492,15 +501,12 @@
 		if(rotation)
 			T1.shuttleRotate(rotation)
 
-		//lighting stuff
-		T1.redraw_lighting()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 
 		T0.ChangeTurf(turf_type)
 
-		T0.redraw_lighting()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
@@ -694,4 +700,13 @@
 		else
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+
+
+// attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
+/obj/docking_port/mobile/proc/getControlConsole()
+	for(var/obj/machinery/computer/shuttle/S in areaInstance)
+		if(S.shuttleId == id)
+			return S
+	return null
+
 #undef DOCKING_PORT_HIGHLIGHT

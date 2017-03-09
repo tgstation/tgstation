@@ -1,5 +1,6 @@
 /var/list/sacrificed = list() //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+var/global/list/rune_types //Every rune that can be drawn by tomes
 
 /*
 
@@ -22,7 +23,7 @@ To draw a rune, use an arcane tome.
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = ABOVE_NORMAL_TURF_LAYER
+	layer = LOW_OBJ_LAYER
 	color = "#FF0000"
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
@@ -220,7 +221,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
 	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
 	talisman_type = possible_talismans[entered_talisman_name]
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || rune_in_use || !talisman_type)
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || rune_in_use || !talisman_type)
 		return
 	papers_on_rune = checkpapers()
 	if(!papers_on_rune.len)
@@ -232,7 +233,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
 	rune_in_use = 1
-	if(!do_after(user, 100, target = paper_to_imbue))
+	if(!do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
 		rune_in_use = 0
 		return
 	new talisman_type(get_turf(src))
@@ -290,13 +291,13 @@ var/list/teleport_runes = list()
 
 	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !actual_selected_rune)
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || !actual_selected_rune)
 		fail_invoke()
 		return
 
 	var/turf/T = get_turf(src)
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target))
+	if(is_blocked_turf(target, TRUE))
 		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		fail_invoke()
 		return
@@ -415,7 +416,7 @@ var/list/teleport_runes = list()
 	else
 		sacrificed += sacrificial
 
-	PoolOrNew(/obj/effect/overlay/temp/cult/sac, get_turf(src))
+	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
 	for(var/M in invokers)
 		if(sacrifice_fulfilled)
 			M << "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>"
@@ -498,9 +499,9 @@ var/list/teleport_runes = list()
 	sleep(40)
 	if(src)
 		color = "#FF0000"
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 	if(cult_mode)
 		cult_mode.eldergod = 0
+	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -557,7 +558,7 @@ var/list/teleport_runes = list()
 		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
 	else
 		mob_to_revive = potential_revive_mobs[1]
-	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_revive, user))
+	if(!src || QDELETED(src) || rune_in_use || !validness_checks(mob_to_revive, user))
 		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
@@ -762,7 +763,7 @@ var/list/wall_runes = list()
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
-	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900)
+	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900, TIMER_STOPPABLE)
 
 /obj/effect/rune/wall/proc/lose_density()
 	if(density)
@@ -809,7 +810,7 @@ var/list/wall_runes = list()
 		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(!cultist_to_summon)
 		user << "<span class='cultitalic'>You require a summoning target!</span>"
@@ -861,7 +862,7 @@ var/list/wall_runes = list()
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
 	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
-	SetLuminosity(6)
+	set_light(6)
 	color = "#FC9B54"
 	for(var/M in invokers)
 		var/mob/living/L = M
@@ -891,7 +892,7 @@ var/list/wall_runes = list()
 	if(!src)
 		return
 	do_area_burn(T, 1.5)
-	PoolOrNew(/obj/effect/hotspot, T)
+	new /obj/effect/hotspot(T)
 	qdel(src)
 
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
@@ -1004,5 +1005,5 @@ var/list/wall_runes = list()
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
-			new_human.unEquip(I)
+			new_human.dropItemToGround(I)
 		new_human.dust()

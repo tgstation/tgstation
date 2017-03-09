@@ -177,3 +177,31 @@
 				STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+
+/obj/item/weapon/gun/energy/ignition_effect(atom/A, mob/living/user)
+	if(!can_shoot() || !ammo_type[select])
+		shoot_with_empty_chamber()
+		. = ""
+	else
+		var/obj/item/ammo_casing/energy/E = ammo_type[select]
+		var/obj/item/projectile/energy/BB = E.BB
+		if(!BB)
+			. = ""
+		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)
+			user.visible_message("<span class='danger'>[user] tries to light their [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
+			playsound(user, E.fire_sound, 50, 1)
+			playsound(user, BB.hitsound, 50, 1)
+			power_supply.use(E.e_cost)
+			. = ""
+		else if(BB.damage_type != BURN)
+			user.visible_message("<span class='danger'>[user] tries to light their [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
+			playsound(user, E.fire_sound, 50, 1)
+			playsound(user, BB.hitsound, 50, 1)
+			power_supply.use(E.e_cost)
+			qdel(A)
+			. = ""
+		else
+			playsound(user, E.fire_sound, 50, 1)
+			playsound(user, BB.hitsound, 50, 1)
+			power_supply.use(E.e_cost)
+			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"

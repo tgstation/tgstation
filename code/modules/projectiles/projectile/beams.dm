@@ -3,7 +3,7 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
-	luminosity = 1
+	light_range = 1
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -23,6 +23,8 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.IgniteMob()
+	else if(isturf(target))
+		impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser/wall
 
 /obj/item/projectile/beam/weak
 	damage = 15
@@ -61,7 +63,7 @@
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
-	luminosity = 2
+	light_range = 2
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
@@ -88,16 +90,12 @@
 	icon_state = "emitter"
 	damage = 30
 	legacy = 1
-	luminosity = 2
+	light_range = 2
 	animate_movement = SLIDE_STEPS
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
-
-/obj/item/projectile/beam/emitter/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
 
 /obj/item/projectile/beam/lasertag
 	name = "laser tag beam"

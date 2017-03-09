@@ -1,7 +1,6 @@
 ##/tg/station v1.0.1
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
-
+[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
@@ -90,13 +89,13 @@ the new version.
 
 * [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
-* [MiniStation](http://tgstation13.org/wiki/MiniStation)
-* [AsteroidStation](https://tgstation13.org/wiki/AsteroidStation)
 * [BirdStation](https://tgstation13.org/wiki/BirdStation)
-* [DreamStation](https://tgstation13.org/wiki/Dreamstation)
-* [EfficiencyStation](https://tgstation13.org/wiki/Efficiency_Station)
+* [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
+* [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
+* [PubbyStation](https://tgstation13.org/wiki/PubbyStation)
 
-All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
+
+All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
 If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
 

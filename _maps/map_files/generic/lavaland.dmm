@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
@@ -720,7 +720,7 @@
 	icon_state = "1-4"
 	},
 /mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "Powered by tears and swet of laborer.";
+	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
 /turf/open/floor/plasteel{
@@ -1297,9 +1297,11 @@
 	id = "mining_internal"
 	},
 /obj/structure/plasticflaps,
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "cG" = (
@@ -1307,9 +1309,11 @@
 	dir = 8;
 	id = "mining_internal"
 	},
-/turf/open/floor/plating/warnplate{
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating{
 	tag = "icon-warnplate (NORTH)";
-	dir = 1;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -1329,9 +1333,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating/warnplate/corner{
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating{
 	tag = "icon-warnplatecorner (EAST)";
-	dir = 4;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2145,7 +2151,8 @@
 	frequency = 1439;
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel/bot{
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2166,12 +2173,14 @@
 /area/mine/production)
 "ev" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/bot{
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "ew" = (
-/turf/open/floor/plasteel/bot{
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2309,7 +2318,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery{
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2441,7 +2451,8 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/turf/open/floor/plasteel/bot{
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2477,9 +2488,11 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "fa" = (
@@ -2559,9 +2572,11 @@
 	dir = 2;
 	id = "mining_internal"
 	},
-/turf/open/floor/plating/warnplate{
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating{
 	tag = "icon-warnplate (WEST)";
-	dir = 8;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2663,9 +2678,11 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "fv" = (
@@ -2748,7 +2765,8 @@
 	},
 /area/mine/laborcamp)
 "fF" = (
-/turf/open/floor/plasteel/delivery{
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
@@ -2802,9 +2820,7 @@
 "fP" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/riveted,
-/area/ruin/unpowered{
-	name = "Necropolis Bridge"
-	})
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -12272,7 +12288,7 @@ fK
 fK
 fK
 dq
-fP
+dq
 fL
 fK
 dq
@@ -34693,8 +34709,8 @@ aj
 aj
 ab
 ab
-ah
-ah
+aa
+aa
 af
 af
 af
@@ -34706,8 +34722,8 @@ af
 af
 af
 af
-ah
-ah
+aa
+aa
 ab
 ab
 ab
@@ -34950,21 +34966,21 @@ aj
 aj
 aj
 aj
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ah
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aa
 ab
 ab
 ab
@@ -35207,21 +35223,21 @@ aj
 aj
 aj
 aj
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 ab
 ab
 ab
@@ -35464,21 +35480,21 @@ aj
 aj
 aj
 aj
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ah
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aa
 ab
 ab
 ab
@@ -35721,8 +35737,8 @@ aj
 aj
 ab
 ab
-ah
-ah
+aa
+aa
 af
 af
 af
@@ -35734,8 +35750,8 @@ af
 af
 af
 af
-ah
-ah
+aa
+aa
 ab
 ab
 ab

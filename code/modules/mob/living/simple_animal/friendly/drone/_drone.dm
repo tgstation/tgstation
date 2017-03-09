@@ -130,9 +130,9 @@
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)
 	if(internal_storage)
-		unEquip(internal_storage)
+		dropItemToGround(internal_storage)
 	if(head)
-		unEquip(head)
+		dropItemToGround(head)
 
 	alert_drones(DRONE_NET_DISCONNECT)
 
@@ -141,10 +141,13 @@
 	dust()
 
 /mob/living/simple_animal/drone/ratvar_act()
+	if(status_flags & GODMODE)
+		return
+
 	if(internal_storage)
-		unEquip(internal_storage)
+		dropItemToGround(internal_storage)
 	if(head)
-		unEquip(head)
+		dropItemToGround(head)
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new /mob/living/simple_animal/drone/cogscarab/ratvar(loc)
 	R.setDir(dir)
 	if(mind)
@@ -268,5 +271,5 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring

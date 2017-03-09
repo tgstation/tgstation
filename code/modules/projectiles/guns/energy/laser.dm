@@ -97,7 +97,7 @@
 /obj/item/projectile/beam/laser/accelerator/Range()
 	..()
 	damage += 7
-	transform *= TransformUsingVariable(20 , 100, 1)
+	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"

@@ -57,7 +57,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/receiver
-	name = "circuit board (Subspace Receiver)"
+	name = "Subspace Receiver (Machine Board)"
 	build_path = /obj/machinery/telecomms/receiver
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(

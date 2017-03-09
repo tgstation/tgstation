@@ -11,6 +11,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	clockwork = TRUE //it'd look weird, at least if ratvar ever got there
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+	light_color = LIGHT_COLOR_RED
+
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
 	name = "\improper Telecrystal upload/receive station"

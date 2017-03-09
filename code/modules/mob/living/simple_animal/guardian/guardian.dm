@@ -136,7 +136,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
 			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
 			for(var/obj/item/W in summoner)
-				if(!summoner.unEquip(W))
+				if(!summoner.dropItemToGround(W))
 					qdel(W)
 			summoner.dust()
 			death(TRUE)
@@ -175,9 +175,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
-				PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
+				new /obj/effect/overlay/temp/guardian/phase/out(loc)
 				forceMove(summoner.loc)
-				PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
+				new /obj/effect/overlay/temp/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -261,13 +261,14 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	I.plane = ABOVE_HUD_PLANE
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
-	var/image/I = guardian_overlays[cache_index]
+	var/I = guardian_overlays[cache_index]
 	if(I)
 		add_overlay(I)
 
 /mob/living/simple_animal/hostile/guardian/proc/remove_overlay(cache_index)
-	if(guardian_overlays[cache_index])
-		overlays -= guardian_overlays[cache_index]
+	var/I = guardian_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
 		guardian_overlays[cache_index] = null
 
 /mob/living/simple_animal/hostile/guardian/update_inv_hands()
@@ -320,7 +321,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
-		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
+		new /obj/effect/overlay/temp/guardian/phase(loc)
 		cooldown = world.time + 10
 		return TRUE
 	return FALSE
@@ -328,7 +329,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
 		return FALSE
-	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
+	new /obj/effect/overlay/temp/guardian/phase/out(loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10
@@ -340,10 +341,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
 		src << "<span class='notice'>You activate your light.</span>"
-		SetLuminosity(3)
+		set_light(3)
 	else
 		src << "<span class='notice'>You deactivate your light.</span>"
-		SetLuminosity(0)
+		set_light(0)
 
 /mob/living/simple_animal/hostile/guardian/verb/ShowType()
 	set name = "Check Guardian Type"

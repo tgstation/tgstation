@@ -67,14 +67,12 @@
 /obj/item/weapon/watertank/proc/remove_noz()
 	if(ismob(noz.loc))
 		var/mob/M = noz.loc
-		M.unEquip(noz, 1)
+		M.temporarilyRemoveItemFromInventory(noz, TRUE)
 	return
 
 /obj/item/weapon/watertank/Destroy()
 	if (on)
-		remove_noz()
 		qdel(noz)
-		noz = null
 	return ..()
 
 /obj/item/weapon/watertank/attack_hand(mob/user)
@@ -87,10 +85,7 @@
 	var/mob/M = src.loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!M.unEquip(src))
-			return
-		M.put_in_hand(src, H.held_index)
-
+		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
@@ -138,8 +133,7 @@
 
 /proc/check_tank_exists(parent_tank, mob/living/carbon/human/M, obj/O)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
-		M.unEquip(O)
-		qdel(0)
+		qdel(O)
 		return 0
 	else
 		return 1
@@ -300,7 +294,7 @@
 		if(!Adj|| !isturf(target))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/F = new /obj/effect/particle_effect/foam/metal(get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)

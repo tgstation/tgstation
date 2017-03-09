@@ -20,13 +20,13 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
-		addtimer(CALLBACK(src, .proc/do_jaunt, target), 0)
+		INVOKE_ASYNC(src, .proc/do_jaunt, target)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
 	target.notransform = 1
 	var/turf/mobloc = get_turf(target)
 	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
-	PoolOrNew(jaunt_out_type, list(mobloc, holder.dir))
+	new jaunt_out_type(mobloc, holder.dir)
 	target.ExtinguishMob()
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target,force=1)
@@ -51,10 +51,10 @@
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
-	PoolOrNew(jaunt_in_type, list(mobloc, holder.dir))
+	new jaunt_in_type(mobloc, holder.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
-	if(!qdeleted(target))
+	if(!QDELETED(target))
 		if(mobloc.density)
 			for(var/direction in alldirs)
 				var/turf/T = get_step(mobloc, direction)

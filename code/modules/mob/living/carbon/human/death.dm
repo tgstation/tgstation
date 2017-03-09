@@ -1,8 +1,8 @@
 /mob/living/carbon/human/gib_animation()
-	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-h"))
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-h")
 
 /mob/living/carbon/human/dust_animation()
-	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-h"))
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
@@ -21,7 +21,6 @@
 
 	dizziness = 0
 	jitteriness = 0
-	heart_attack = 0
 
 	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc
@@ -33,7 +32,7 @@
 	if(ticker && ticker.mode)
 		sql_report_death(src)
 	if(mind && mind.devilinfo)
-		addtimer(CALLBACK(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src), 0)
+		INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

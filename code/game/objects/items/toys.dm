@@ -249,8 +249,6 @@
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = 1
 				newSaber.item_color = "rainbow"
-			user.unEquip(W)
-			user.unEquip(src)
 			qdel(W)
 			qdel(src)
 	else if(istype(W, /obj/item/device/multitool))
@@ -733,7 +731,7 @@
 	if(istype(I, /obj/item/toy/cards/singlecard))
 		var/obj/item/toy/cards/singlecard/SC = I
 		if(SC.parentdeck == src)
-			if(!user.unEquip(SC))
+			if(!user.temporarilyRemoveItemFromInventory(SC))
 				user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
 				return
 			cards += SC.cardname
@@ -745,7 +743,7 @@
 	else if(istype(I, /obj/item/toy/cards/cardhand))
 		var/obj/item/toy/cards/cardhand/CH = I
 		if(CH.parentdeck == src)
-			if(!user.unEquip(CH))
+			if(!user.temporarilyRemoveItemFromInventory(CH))
 				user << "<span class='warning'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>"
 				return
 			cards += CH.currenthand
@@ -768,10 +766,8 @@
 
 		else if(istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!remove_item_from_storage(M))
-				M.unEquip(src)
-			M.put_in_hand(src, H.held_index)
-			usr << "<span class='notice'>You pick up the deck.</span>"
+			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
+				usr << "<span class='notice'>You pick up the deck.</span>"
 
 	else
 		usr << "<span class='warning'>You can't reach it from here!</span>"
@@ -834,20 +830,19 @@
 				N.parentdeck = src.parentdeck
 				N.cardname = src.currenthand[1]
 				N.apply_card_vars(N,O)
-				cardUser.unEquip(src)
+				qdel(src)
 				N.pickup(cardUser)
 				cardUser.put_in_hands(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
 				cardUser << browse(null, "window=cardhand")
-				qdel(src)
 		return
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.unEquip(C)
 			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
+			qdel(C)
 			interact(user)
 			if(currenthand.len > 4)
 				src.icon_state = "[deckstyle]_hand5"
@@ -855,7 +850,6 @@
 				src.icon_state = "[deckstyle]_hand4"
 			else if(currenthand.len > 2)
 				src.icon_state = "[deckstyle]_hand3"
-			qdel(C)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 	else
@@ -923,12 +917,11 @@
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
 			H.apply_card_vars(H,C)
-			user.unEquip(C)
-			H.pickup(user)
-			user.put_in_active_hand(H)
 			user << "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>"
 			qdel(C)
 			qdel(src)
+			H.pickup(user)
+			user.put_in_active_hand(H)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 
@@ -936,8 +929,8 @@
 		var/obj/item/toy/cards/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
-			user.unEquip(src)
 			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [cardname] to your hand.</span>")
+			qdel(src)
 			H.interact(user)
 			if(H.currenthand.len > 4)
 				H.icon_state = "[deckstyle]_hand5"
@@ -945,7 +938,6 @@
 				H.icon_state = "[deckstyle]_hand4"
 			else if(H.currenthand.len > 2)
 				H.icon_state = "[deckstyle]_hand3"
-			qdel(src)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 	else

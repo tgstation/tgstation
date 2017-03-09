@@ -74,9 +74,9 @@
 	anchored = 1
 
 /obj/effect/landmark/start/New()
+	start_landmarks_list += src
 	..()
 	tag = "start*[name]"
-	start_landmarks_list += src
 	return 1
 
 /obj/effect/landmark/start/Destroy()

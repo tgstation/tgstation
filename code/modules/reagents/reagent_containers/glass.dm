@@ -28,6 +28,10 @@
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
+			if(isturf(target) && reagents.reagent_list.len && thrownby)
+				add_logs(thrownby, target, "splashed [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
+				log_game("[key_name(thrownby)] splashed [english_list(reagents.reagent_list)] at [COORD(target)].")
+				message_admins("[key_name_admin(thrownby)] splashed [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
 			reagents.reaction(M, TOUCH)
 			add_logs(user, M, "splashed", R)
 			reagents.clear_reagents()
@@ -255,7 +259,6 @@
 	else if(isprox(O))
 		user << "<span class='notice'>You add [O] to [src].</span>"
 		qdel(O)
-		user.unEquip(src)
 		qdel(src)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else

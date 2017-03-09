@@ -51,6 +51,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
+	resistance_flags = FIRE_PROOF
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -128,7 +129,7 @@
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
 	if (building)
-		area = src.loc.loc:master
+		area = get_area(src)
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
@@ -169,7 +170,10 @@
 	terminal.setDir(tdir)
 	terminal.master = src
 
-/obj/machinery/power/apc/initialize()
+/obj/machinery/power/apc/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
@@ -272,12 +276,10 @@
 			icon_state = "apcewires"
 
 	if(!(update_state & UPSTATE_ALLGOOD))
-		if(overlays.len)
-			cut_overlays()
+		cut_overlays()
 
 	if(update & 2)
-		if(overlays.len)
-			cut_overlays()
+		cut_overlays()
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
 			var/list/O = list(
 				status_overlays_lock[locked+1],
@@ -842,7 +844,7 @@
 		return
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600)
+	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
 
 	var/obj/screen/alert/hackingapc/A
 	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
@@ -859,7 +861,7 @@
 		return
 	if(src.z != 1)
 		return
-	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?
+	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
@@ -868,7 +870,6 @@
 	else
 		occupier.parent = malf
 	malf.shunted = 1
-	malf.mind.transfer_to(occupier)
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
@@ -884,6 +885,7 @@
 		occupier.parent.shunted = 0
 		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
+		occupier.parent.verbs -= /mob/living/silicon/ai/proc/corereturn
 		qdel(occupier)
 	else
 		occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
@@ -1198,8 +1200,9 @@
 		spawn(0)
 			for(var/area/A in area.related)
 				for(var/obj/machinery/light/L in A)
-					L.on = 1
+					L.on = TRUE
 					L.break_light_tube()
+					L.on = FALSE
 					stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)

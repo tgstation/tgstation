@@ -59,7 +59,7 @@
 		if(!I.can_be_package_wrapped())
 			return
 		if(user.is_holding(I))
-			if(!user.unEquip(I))
+			if(!user.dropItemToGround(I))
 				return
 		else if(!isturf(I.loc))
 			return
@@ -97,7 +97,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
+	user.log_message("<font color='blue'>Has used [name] on [target]</font>", INDIVIDUAL_ATTACK_LOG)
 
 /obj/item/stack/packageWrap/Destroy()
 	if(!amount)

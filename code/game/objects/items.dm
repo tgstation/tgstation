@@ -99,8 +99,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/datum/dog_fashion/dog_fashion = null
 
 /obj/item/New()
-	if (!armor)
-		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	if (!materials)
 		materials = list()
 	..()
@@ -109,9 +107,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	actions_types = null
 
 /obj/item/Destroy()
+	flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
-		m.unEquip(src, 1)
+		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
@@ -235,9 +234,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
-	throwing = 0
+	if(throwing)
+		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.unEquip(src))
+		if(!user.dropItemToGround(src))
 			return
 
 	pickup(user)
@@ -256,9 +256,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
-	throwing = 0
+	if(throwing)
+		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.unEquip(src))
+		if(!user.dropItemToGround(src))
 			return
 
 	pickup(user)
@@ -271,7 +272,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.unEquip(src)
+			A.dropItemToGround(src)
 		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
 		return
 	attack_paw(A)
@@ -297,36 +298,50 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			var/obj/item/weapon/storage/S = W
 			if(S.use_to_pickup)
 				if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-					if(isturf(src.loc))
+					if(isturf(loc))
 						var/list/rejections = list()
-						var/success = 0
-						var/failure = 0
 
-						for(var/obj/item/I in src.loc)
-							if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
-								failure = 1
-								continue
-							if(I.type in rejections) // To limit bag spamming: any given type only complains once
-								continue
-							if(!S.can_be_inserted(I, stop_messages = 1))	// Note can_be_inserted still makes noise when the answer is no
-								if(S.contents.len >= S.storage_slots)
-									break
-								rejections += I.type	// therefore full bags are still a little spammy
-								failure = 1
-								continue
+						var/list/things = loc.contents.Copy()
+						if (S.collection_mode == 2)
+							things = typecache_filter_list(things, typecacheof(type))
 
-							success = 1
-							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-						if(success && !failure)
-							user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
-						else if(success)
-							user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
-						else
-							user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
+						var/len = things.len
+						if(!len)
+							user << "<span class='notice'>You failed to pick up anything with [S].</span>"
+							return
+						var/datum/progressbar/progress = new(user, len, loc)
+
+						while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
+							sleep(1)
+
+						qdel(progress)
+
+						user << "<span class='notice'>You put everything you could [S.preposition] [S].</span>"
 
 				else if(S.can_be_inserted(src))
 					S.handle_item_insertion(src)
 
+/obj/item/proc/handle_mass_pickup(obj/item/weapon/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
+	for(var/obj/item/I in things)
+		things -= I
+		if(I.loc != thing_loc)
+			continue
+		if(I.type in rejections) // To limit bag spamming: any given type only complains once
+			continue
+		if(!S.can_be_inserted(I, stop_messages = TRUE))	// Note can_be_inserted still makes noise when the answer is no
+			if(S.contents.len >= S.storage_slots)
+				break
+			rejections += I.type	// therefore full bags are still a little spammy
+			continue
+
+		S.handle_item_insertion(I, TRUE)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+
+		if (TICK_CHECK)
+			progress.update(progress.goal - things.len)
+			return TRUE
+
+	progress.update(progress.goal - things.len)
+	return FALSE
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -344,8 +359,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/datum/action/A = X
 		A.Remove(user)
 	if(DROPDEL & flags)
-		//Prevents infinite loops where Destroy() calls an objects dropped() function
-		flags &= ~DROPDEL
 		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
@@ -493,7 +506,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			var/index = blood_splatter_index()
 			var/icon/blood_splatter_icon = blood_splatter_icons[index]
 			if(blood_splatter_icon)
-				overlays -= blood_splatter_icon
+				cut_overlay(blood_splatter_icon)
 
 /obj/item/clothing/gloves/clean_blood()
 	. = ..()
@@ -506,10 +519,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else ..()
 
 /obj/item/throw_impact(atom/A)
-	var/itempush = 1
-	if(w_class < 4)
-		itempush = 0 //too light to push anything
-	return A.hitby(src, 0, itempush)
+	if(A && !QDELETED(A))
+		var/itempush = 1
+		if(w_class < 4)
+			itempush = 0 //too light to push anything
+		return A.hitby(src, 0, itempush)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	thrownby = thrower
@@ -584,17 +598,19 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return 0
 
 /obj/item/burn()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
-		var/obj/effect/decal/cleanable/ash/A = new()
-		A.desc = "Looks like this used to be a [name] some time ago."
-		A.forceMove(T) //so the ash decal is deleted if on top of lava.
+		var/ash_type = /obj/effect/decal/cleanable/ash
+		if(w_class == WEIGHT_CLASS_HUGE || w_class == WEIGHT_CLASS_GIGANTIC)
+			ash_type = /obj/effect/decal/cleanable/ash/large
+		var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
+		A.desc += "\nLooks like this used to be \an [name] some time ago."
 		..()
 
 /obj/item/acid_melt()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
-		var/obj/effect/decal/cleanable/molten_object/MO = new (T)
+		var/obj/effect/decal/cleanable/molten_object/MO = new(T)
 		MO.pixel_x = rand(-16,16)
 		MO.pixel_y = rand(-16,16)
 		MO.desc = "Looks like this was \an [src] some time ago."

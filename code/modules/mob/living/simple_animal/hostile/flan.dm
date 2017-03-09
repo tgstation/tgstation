@@ -48,7 +48,7 @@
 		casting = 1
 		icon_state = "[initial(icon_state)][casting]"
 		if(do_after_mob(src, A, spellcasttime, uninterruptible = 1, progress = 0))		//Break LOS to dodge.
-			if(qdeleted(src))
+			if(QDELETED(src))
 				return
 			if((A in view(src)))
 				A.do_attack_animation(A, spellanimation)

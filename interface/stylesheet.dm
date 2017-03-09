@@ -14,6 +14,8 @@ em						{font-style: normal;	font-weight: bold;}
 .bold					{					font-weight: bold;}
 .italics				{					font-style: italic;}
 
+.bold					{					font-weight: bold;}
+
 .prefix					{					font-weight: bold;}
 
 .ooc					{					font-weight: bold;}
@@ -29,7 +31,7 @@ em						{font-style: normal;	font-weight: bold;}
 .deadsay				{color: #5c00e6;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
-.comradio				{color: #193a7a;}
+.comradio				{color: #948f02;}
 .secradio				{color: #a30000;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}
@@ -132,12 +134,13 @@ h1.alert, h2.alert		{color: #000000;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
-.command_headset       {font-weight: bold; font-size: 3;}
+.command_headset		{font-weight: bold; font-size: 3;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
 .greentext				{color: #00FF00;	font-size: 3;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
+.his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 
 BIG IMG.icon 			{width: 32px; height: 32px;}
 

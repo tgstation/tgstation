@@ -61,12 +61,11 @@
 		if(IW.w_class > src.w_class)
 			user << "<span class='warning'>\The [IW] is too large to fit into \the [src]!</span>"
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
 		user << "<span class='notice'>You load \the [IW] into \the [src].</span>"
 		loadedItems.Add(IW)
 		loadedWeightClass += IW.w_class
-		IW.loc = src
 
 
 
@@ -78,10 +77,16 @@
 	Fire(user, target)
 
 
-/obj/item/weapon/pneumatic_cannon/proc/Fire(var/mob/living/carbon/human/user, var/atom/target)
+/obj/item/weapon/pneumatic_cannon/proc/Fire(mob/living/carbon/human/user, var/atom/target)
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
+	if(user.dna.check_mutation(HULK))
+		user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+		return
+	if(NOGUNS in user.dna.species.species_traits)
+		user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+		return
 	if(!loadedItems || !loadedWeightClass)
 		user << "<span class='warning'>\The [src] has nothing loaded.</span>"
 		return
@@ -147,11 +152,10 @@
 		if(src.tank)
 			user << "<span class='warning'>\The [src] already has a tank.</span>"
 			return
-		if(!user.unEquip(thetank))
+		if(!user.transferItemToLoc(thetank, src))
 			return
 		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
 		src.tank = thetank
-		thetank.loc = src
 	src.update_icons()
 
 /obj/item/weapon/pneumatic_cannon/proc/update_icons()

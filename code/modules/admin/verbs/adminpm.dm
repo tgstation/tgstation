@@ -102,6 +102,11 @@
 
 			if(!msg)
 				return
+
+			if(prefs.muted & MUTE_ADMINHELP)
+				src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+				return
+
 			if(!C)
 				if(holder)
 					src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
@@ -171,12 +176,12 @@
 				return
 
 	if(irc)
-		log_admin("PM: [key_name(src)]->IRC: [rawmsg]")
+		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
 		for(var/client/X in admins)
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" //inform X
 	else
-		window_flash(C)
-		log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
+		window_flash(C, ignorepref = TRUE)
+		log_admin_private("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in admins)
 			if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
@@ -203,13 +208,13 @@
 		return "No message"
 
 	message_admins("IRC message from [sender] to [key_name_admin(C)] : [msg]")
-	log_admin("IRC PM: [sender] -> [key_name(C)] : [msg]")
+	log_admin_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
 	msg = emoji_parse(msg)
 
 	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
 	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-	window_flash(C)
+	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'
 

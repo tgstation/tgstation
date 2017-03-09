@@ -132,7 +132,6 @@
 	myjob = new/datum/job/assistant()
 	job = myjob.title
 	myjob.equip(src)
-	myjob.apply_fingerprints(src)
 
 /mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
 	. = ..()
@@ -206,7 +205,6 @@
 						for(var/obj/item/W in T)
 							qdel(W)
 						T.myjob.equip(T)
-						T.myjob.apply_fingerprints(T)
 						T.doSetup()
 						break
 			if(choice == "Random")
@@ -215,7 +213,6 @@
 				for(var/obj/item/W in T)
 					qdel(W)
 				T.myjob.equip(T)
-				T.myjob.apply_fingerprints(T)
 				T.doSetup()
 				if(prob(25))
 					var/list/validchoices = list()
@@ -239,7 +236,6 @@
 					for(var/obj/item/W in T)
 						qdel(W)
 					T.myjob.equip(T)
-					T.myjob.apply_fingerprints(T)
 					T.doSetup()
 				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
 				if(shouldDoppel)
@@ -531,7 +527,7 @@
 		if(BP.can_be_inserted(I,0))
 			BP.handle_item_insertion(I,0)
 	else
-		unEquip(I,TRUE)
+		dropItemToGround(I,TRUE)
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/targetRange(towhere)
@@ -682,7 +678,7 @@
 					take_to_slot(C,1)
 					if(!equip_to_appropriate_slot(C))
 						var/obj/item/I = get_item_by_slot(C)
-						unEquip(I)
+						dropItemToGround(I)
 						spawn(5)
 							equip_to_appropriate_slot(C)
 				update_hands = 1

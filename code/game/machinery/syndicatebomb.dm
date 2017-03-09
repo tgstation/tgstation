@@ -1,4 +1,5 @@
-#define BUTTON_COOLDOWN 30
+#define BUTTON_COOLDOWN 60 // cant delay the bomb forever
+#define BUTTON_DELAY	50 //five seconds
 
 /obj/machinery/syndicatebomb
 	icon = 'icons/obj/assemblies.dmi'
@@ -11,8 +12,8 @@
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	var/minimum_timer = 60
-	var/timer_set = 60
+	var/minimum_timer = 90
+	var/timer_set = 90
 	var/maximum_timer = 60000
 
 	var/can_unanchor = TRUE
@@ -516,7 +517,7 @@
 
 /obj/item/device/syndicatedetonator
 	name = "big red button"
-	desc = "Nothing good can come of pressing a button this garish..."
+	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'"
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
@@ -530,7 +531,7 @@
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)
-				B.explode_now = TRUE
+				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
@@ -550,3 +551,4 @@
 
 
 #undef BUTTON_COOLDOWN
+#undef BUTTON_DELAY

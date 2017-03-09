@@ -30,6 +30,12 @@
 		apply_cuffs(user,user)
 		return
 
+	// chance of monkey retaliation
+	if(istype(C, /mob/living/carbon/monkey) && prob(MONKEY_CUFF_RETALIATION_PROB))
+		var/mob/living/carbon/monkey/M
+		M = C
+		M.retaliate(user)
+
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
@@ -159,8 +165,7 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-			if(!remove_item_from_storage(user))
-				user.unEquip(src)
+			remove_item_from_storage(user)
 			user.put_in_hands(W)
 			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 			qdel(src)
@@ -180,8 +185,7 @@
 			M.use(6)
 			user.put_in_hands(S)
 			user << "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>"
-			if(!remove_item_from_storage(user))
-				user.unEquip(src)
+			remove_item_from_storage(user)
 			qdel(src)
 	else
 		return ..()

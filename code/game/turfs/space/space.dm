@@ -14,16 +14,19 @@
 
 	var/global/datum/gas_mixture/space/space_gas = new
 	plane = PLANE_SPACE
+	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
-/turf/open/space/New()
+/turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 
-/turf/open/space/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
+	if(requires_activation)
+		SSair.add_to_active(src)
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
@@ -32,9 +35,6 @@
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
-
-/turf/open/space/ChangeTurf(path)
-	. = ..()
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -54,17 +54,18 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,5)
-			light.mode = LIGHTING_STARLIGHT
+			set_light(2)
 			return
-		SetLuminosity(0)
+		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, params)
+/turf/open/space/attackby(obj/item/C, mob/user, area/area_restriction)
 	..()
 	if(istype(C, /obj/item/stack/rods))
+		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
+			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
@@ -73,15 +74,14 @@
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>You begin constructing catwalk...</span>"
+				user << "<span class='notice'>You construct a catwalk.</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				qdel(L)
-				ReplaceWithCatwalk()
+				new/obj/structure/lattice/catwalk(src)
 			else
 				user << "<span class='warning'>You need two rods to build a catwalk!</span>"
 			return
 		if(R.use(1))
-			user << "<span class='notice'>Constructing support lattice...</span>"
+			user << "<span class='notice'>You construct a lattice.</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else

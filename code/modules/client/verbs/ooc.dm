@@ -52,6 +52,7 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
+	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
 	var/keyname = key
 	if(prefs.unlock_content)
@@ -152,7 +153,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
 		return
 
-	show_note(usr.ckey, null, 1)
+	browse_messages(null, usr.ckey, null, 1)
 
 /client/proc/ignore_key(client)
 	var/client/C = client

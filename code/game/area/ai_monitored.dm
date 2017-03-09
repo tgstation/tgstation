@@ -3,12 +3,13 @@
 	var/list/obj/machinery/camera/motioncameras = list()
 	var/list/motionTargets = list()
 
-/area/ai_monitored/initialize()
+/area/ai_monitored/Initialize(mapload)
 	..()
-	for (var/obj/machinery/camera/M in src)
-		if(M.isMotion())
-			motioncameras.Add(M)
-			M.area_motion = src
+	if(mapload)
+		for (var/obj/machinery/camera/M in src)
+			if(M.isMotion())
+				motioncameras.Add(M)
+				M.area_motion = src
 
 //Only need to use one camera
 

@@ -61,9 +61,8 @@
 			user << "<span class='warning'>You have already inserted a cell!</span>"
 			return
 		else
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			src.cell = W
 			user << "<span class='notice'>You insert the cell.</span>"
 	else if(istype(W, /obj/item/stack/cable_coil))
@@ -118,9 +117,8 @@
 			user << "<span class='warning'>You can't use a broken flash!</span>"
 			return
 		else
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(F, src))
 				return
-			F.loc = src
 			if(src.flash1)
 				src.flash2 = F
 			else
@@ -160,3 +158,34 @@
 		flash2.forceMove(user.loc)
 		flash2 = null
 	..()
+
+
+
+
+/obj/item/bodypart/l_arm/robot/surplus
+	name = "surplus prosthetic left arm"
+	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon = 'icons/mob/augments.dmi'
+	icon_state = "surplus_l_arm"
+	max_damage = 20
+
+/obj/item/bodypart/r_arm/robot/surplus
+	name = "surplus prosthetic right arm"
+	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon = 'icons/mob/augments.dmi'
+	icon_state = "surplus_r_arm"
+	max_damage = 20
+
+/obj/item/bodypart/l_leg/robot/surplus
+	name = "surplus prosthetic leg"
+	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon = 'icons/mob/augments.dmi'
+	icon_state = "surplus_l_leg"
+	max_damage = 20
+
+/obj/item/bodypart/r_leg/robot/surplus
+	name = "surplus prosthetic leg"
+	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon = 'icons/mob/augments.dmi'
+	icon_state = "surplus_r_leg"
+	max_damage = 20

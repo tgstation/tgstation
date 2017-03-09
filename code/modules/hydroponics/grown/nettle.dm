@@ -68,7 +68,6 @@
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
 		usr << "All the leaves have fallen off the nettle from violent whacking."
-		usr.unEquip(src)
 		qdel(src)
 
 /obj/item/weapon/grown/nettle/basic

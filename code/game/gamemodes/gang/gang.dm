@@ -174,12 +174,12 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gangster_mind.current << "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
 		gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>large, bright [G.color] \[G\] icon</b>.</font>"
 		gangster_mind.store_memory("You are a member of the [G.name] Gang!")
-	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [G.name] Gang!</font>"
+	gangster_mind.current.log_message("<font color='red'>Has been converted to the [G.name] Gang!</font>", INDIVIDUAL_ATTACK_LOG)
 	gangster_mind.special_role = "[G.name] Gangster"
 
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
-		addtimer(CALLBACK(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG), 0)
+		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
@@ -208,7 +208,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	gangster_mind.gang_datum = null
 
 	if(silent < 2)
-		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang.name] Gang!</font>"
+		gangster_mind.current.log_message("<font color='red'>Has reformed and defected from the [gang.name] Gang!</font>", INDIVIDUAL_ATTACK_LOG)
 
 		if(beingborged)
 			if(!silent)

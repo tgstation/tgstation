@@ -18,7 +18,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/chem_heater
-	name = "circuit board (Chemical Heater)"
+	name = "Chemical Heater (Machine Board)"
 	build_path = /obj/machinery/chem_heater
 	origin_tech = "programming=2;engineering=2;biotech=2"
 	req_components = list(

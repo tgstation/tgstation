@@ -96,7 +96,7 @@
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ripley0"
 	const_holder.density = 1
-	const_holder.overlays.len = 0
+	const_holder.cut_overlays(TRUE)
 	qdel(src)
 	return
 
@@ -481,8 +481,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -500,8 +499,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax13"
 			else
 				user.visible_message("[user] unfastens the  scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -1068,8 +1066,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -1087,8 +1084,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand13"
 			else
 				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -1375,8 +1371,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -1394,8 +1389,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon13"
 			else
 				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")

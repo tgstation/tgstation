@@ -12,13 +12,14 @@
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
-	link_power_station()
 	..()
-	return
 
-/obj/machinery/computer/teleporter/initialize()
+/obj/machinery/computer/teleporter/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -40,10 +41,9 @@
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			if(!user.unEquip(L))
+			if(!user.transferItemToLoc(L, src))
 				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return
-			L.loc = src
 			locked = L
 			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
 	else
@@ -235,12 +235,11 @@
 
 /obj/machinery/teleport/hub/New()
 	..()
-	link_power_station()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/teleporter_hub
-	name = "circuit board (Teleporter Hub)"
+	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
@@ -248,7 +247,8 @@
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/hub/initialize()
+/obj/machinery/teleport/hub/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
@@ -350,10 +350,9 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
 	B.apply_default_parts(src)
-	link_console_and_hub()
 
 /obj/item/weapon/circuitboard/machine/teleporter_station
-	name = "circuit board (Teleporter Station)"
+	name = "Teleporter Station (Machine Board)"
 	build_path = /obj/machinery/teleport/station
 	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
 	req_components = list(
@@ -362,7 +361,8 @@
 							/obj/item/weapon/stock_parts/console_screen = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/station/initialize()
+/obj/machinery/teleport/station/Initialize()
+	..()
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()

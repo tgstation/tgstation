@@ -16,8 +16,7 @@
 /obj/effect/clockwork/overlay/Destroy()
 	if(linked)
 		linked = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /obj/effect/clockwork/overlay/wall
 	name = "clockwork wall"

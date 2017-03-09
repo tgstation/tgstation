@@ -63,7 +63,7 @@
 		if(prob(martial_art.deflection_chance))
 			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
 				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
@@ -201,6 +201,9 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
 		return
+	if(M.a_intent == INTENT_DISARM)
+		if(M.buckled_mobs && (src in M.buckled_mobs) && M.riding_datum)
+			M.riding_datum.force_dismount(src)
 	dna.species.spec_attack_hand(M, src)
 
 
@@ -212,6 +215,18 @@
 	if(M.a_intent == INTENT_HELP)
 		..() //shaking
 		return 0
+
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
+		if(get_active_held_item() && drop_item())
+			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] disarmed [src]!</span>")
+		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			Weaken(5)
+			add_logs(M, src, "tackled")
+			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+				"<span class='userdanger'>[M] has tackled down [src]!</span>")
 
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
@@ -386,7 +401,7 @@
 			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(70))
+			if (prob(max(70 - (bomb_armor * 0.5), 0)))
 				Paralyse(10)
 
 		if(3)
@@ -396,7 +411,7 @@
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(50))
+			if (prob(max(50 - (bomb_armor * 0.5), 0)))
 				Paralyse(8)
 
 	take_overall_damage(b_loss,f_loss)
@@ -424,7 +439,7 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -435,19 +450,24 @@
 			var/obj/item/clothing/suit/S = wear_suit
 			if(S.siemens_coefficient <= 0)
 				total_coeff -= 0.95
+			else if(S.siemens_coefficient == (-1))
+				total_coeff -= 1
 		siemens_coeff = total_coeff
+		if(tesla_ignore)
+			siemens_coeff = 0
 	else if(!safety)
 		var/gloves_siemens_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
 		siemens_coeff = gloves_siemens_coeff
-	if(heart_attack && !illusion)
+	if(undergoing_cardiac_arrest() && !illusion)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			heart_attack = 0
+			var/obj/item/organ/heart/heart = getorganslot("heart")
+			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion)
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
 

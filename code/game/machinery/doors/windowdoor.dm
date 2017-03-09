@@ -3,6 +3,8 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
+	layer = ABOVE_WINDOW_LAYER
+	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
 	var/base_state = "left"
 	obj_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
@@ -93,6 +95,16 @@
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
+	if(istype(mover, /obj/structure/window))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/windoor_assembly/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
 	else
 		return 1
 
@@ -133,7 +145,7 @@
 	sleep(10)
 
 	src.density = 0
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 
@@ -318,7 +330,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
+		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
@@ -327,8 +339,13 @@
 	change_construction_value(-2)
 	return ..()
 
+/obj/machinery/door/window/clockwork/emp_act(severity)
+	if(prob(80/severity))
+		open()
+
 /obj/machinery/door/window/clockwork/ratvar_act()
-	obj_integrity = max_integrity
+	if(ratvar_awakens)
+		obj_integrity = max_integrity
 
 /obj/machinery/door/window/clockwork/hasPower()
 	return TRUE //yup that's power all right

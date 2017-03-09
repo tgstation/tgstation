@@ -44,7 +44,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
-		addtimer(CALLBACK(user, /mob/living.proc/unEquip), src, 1) //equipped happens before putting stuff on(but not before picking items up), 1). thus, we need to wait for it to be on before forcing it off.
+		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround), src, 1) //equipped happens before putting stuff on(but not before picking items up), 1). thus, we need to wait for it to be on before forcing it off.
 
 /obj/item/clothing/head/helmet/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -106,7 +106,7 @@
 			user.apply_damage(15, BURN, "chest")
 			user.adjust_fire_stacks(2)
 			user.IgniteMob()
-		addtimer(CALLBACK(user, /mob/living.proc/unEquip, src, 1), 1)
+		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
 
 /obj/item/clothing/gloves/clockwork
 	name = "clockwork gauntlets"
@@ -166,7 +166,7 @@
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
-		addtimer(CALLBACK(user, /mob/living.proc/unEquip, src, 1), 1)
+		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
@@ -186,6 +186,9 @@
 /obj/item/clothing/shoes/clockwork/Destroy()
 	all_clockwork_objects -= src
 	return ..()
+
+/obj/item/clothing/shoes/clockwork/negates_gravity()
+	return TRUE
 
 /obj/item/clothing/shoes/clockwork/ratvar_act()
 	if(ratvar_awakens)
@@ -213,4 +216,4 @@
 			user.emote("scream")
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
-		addtimer(CALLBACK(user, /mob/living.proc/unEquip, src, 1), 1)
+		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
