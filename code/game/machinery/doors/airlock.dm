@@ -1150,7 +1150,7 @@ var/list/airlock_overlays = list()
 										"<span class='notice'>You finish repairing the airlock.</span>")
 					update_icon()
 
-/obj/machinery/door/airlock/weld_checks(obj/item/weapon/weldingtool/W, mob/user)
+/obj/machinery/door/airlock/proc/weld_checks(obj/item/weapon/weldingtool/W, mob/user)
 	return !operating && density && user && W && W.isOn() && user.loc
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/user)
