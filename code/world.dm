@@ -32,7 +32,7 @@
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	diary << "\n\nStarting up. [time_stamp()]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time_stamp())]\n---------------------"
+	diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
