@@ -154,17 +154,17 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe)))
-		try_to_crowbar(I, user)
-		return 1
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		try_to_weld(I, user)
-		return 1
-	else if(!(I.flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
-		try_to_activate_door(user)
-		return 1
-	else
-		return ..()
+	if(user.a_intent != INTENT_HARM)
+		if((istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe)))
+			try_to_crowbar(I, user)
+			return 1
+		else if(istype(I, /obj/item/weapon/weldingtool))
+			try_to_weld(I, user)
+			return 1
+		else if(!(I.flags & NOBLUDGEON))
+			try_to_activate_door(user)
+			return 1
+	return ..()
 
 /obj/machinery/door/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < damage_deflection)
