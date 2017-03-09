@@ -344,11 +344,14 @@
 			message = ccs.deconstruction_message
 		else
 			return
+		
+		if(!ConstructionChecks(ccs.id, constructed, null, user, FALSE))
+			return
 			
 		if(wait)			
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
-			if(!do_after(user, wait, target = src))
+			if(!do_after(user, wait, target = src,, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, null, user, FALSE)))
 				return
 		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
 								"<span class='notice'>[user] [wait ? "finishes [message]" : message] \the [src].</span>")
@@ -401,19 +404,17 @@
 				user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>"
 				return
 
-		var/cont
 		LAZYADD(user.construction_tasks, src)	//prevent repeats
+		var/cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
+		if(!cont)
+			return
+		if(I.usesound)
+			playsound(src, I.usesound, 100, TRUE)	
 		if(wait)
-			if(I.usesound)
-				playsound(src, I.usesound, 100, TRUE)	
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
 			//Checks will always run because we've verified do_after will last at least 1 tick
 			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, I, user, FALSE))
-		else
-			cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
-			if(cont && I.usesound)
-				playsound(src, I.usesound, 100, TRUE)	
 		LAZYREMOVE(user.construction_tasks, src)
 
 		if(cont)
