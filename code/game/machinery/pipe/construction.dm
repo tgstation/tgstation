@@ -21,9 +21,11 @@ Buildable meters
 	level = 2
 	var/flipped = 0
 	var/is_bent = 0
+	var/piping_layer = PIPING_LAYER_DEFAULT
 
 	var/global/list/pipe_types = list(
 		PIPE_SIMPLE, \
+		PIPE_LAYER_MANIFOLD, \
 		PIPE_MANIFOLD, \
 		PIPE_4WAYMANIFOLD, \
 		PIPE_HE, \
@@ -59,6 +61,7 @@ Buildable meters
 
 		if(make_from.type in pipe_types)
 			src.pipe_type = make_from.type
+			setPipingLayer(make_from.piping_layer)
 		else //make pipe_type a value we can work with
 			for(var/P in pipe_types)
 				if(istype(make_from, P))
@@ -80,10 +83,23 @@ Buildable meters
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
+/obj/item/pipe/dropped()
+	..()
+	if(loc)
+		setPipingLayer(piping_layer)
+
+/obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+	piping_layer = new_layer
+	if(pipe_type != PIPE_LAYER_MANIFOLD)
+		pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+		pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+		layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
+
 //update the name and icon of the pipe item depending on the type
 var/global/list/pipeID2State = list(
 	"[PIPE_SIMPLE]"			 = "simple", \
 	"[PIPE_MANIFOLD]"		 = "manifold", \
+	"[PIPE_LAYER_MANIFOLD]"	 = "layer_manifold", \
 	"[PIPE_4WAYMANIFOLD]"	 = "manifold4w", \
 	"[PIPE_HE]"				 = "he", \
 	"[PIPE_HE_MANIFOLD]"	 = "he_manifold", \
@@ -110,6 +126,7 @@ var/global/list/pipeID2State = list(
 		"[PIPE_SIMPLE]" 		= "pipe", \
 		"[PIPE_SIMPLE]_b" 		= "bent pipe", \
 		"[PIPE_MANIFOLD]" 		= "manifold", \
+		"[PIPE_LAYER_MANIFOLD]" = "layer manifold", \
 		"[PIPE_4WAYMANIFOLD]" 	= "4-way manifold", \
 		"[PIPE_HE]" 			= "h/e pipe", \
 		"[PIPE_HE]_b" 			= "bent h/e pipe", \
@@ -217,6 +234,8 @@ var/global/list/pipeID2State = list(
 	A.SetInitDirections()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
+		if((M.piping_layer != piping_layer) && !((M.pipe_flags & ALL_LAYER) || (pipe_type == PIPE_LAYER_MANIFOLD)))
+			continue
 		if(M == A) //we don't want to check to see if it interferes with itself
 			continue
 		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
@@ -232,6 +251,7 @@ var/global/list/pipeID2State = list(
 	if(istype(T))
 		T.flipped = flipped
 	A.on_construction(pipe_type, color)
+	A.setPipingLayer(piping_layer)
 
 	playsound(src.loc, W.usesound, 50, 1)
 	user.visible_message( \
@@ -261,16 +281,33 @@ var/global/list/pipeID2State = list(
 	icon_state = "meter"
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_BULKY
+	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
+	var/obj/machinery/atmospherics/pipe/pipe
+	for(var/obj/machinery/atmospherics/pipe/P in src.loc)
+		if(P.piping_layer == piping_layer)
+			pipe = P
+			break
+	if(!pipe)
 		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
 		return 1
-	new/obj/machinery/meter( src.loc )
+	new/obj/machinery/meter( src.loc , pipe)
 	playsound(src.loc, W.usesound, 50, 1)
 	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
 	qdel(src)
+
+/obj/item/pipe_meter/dropped()
+	..()
+	if(loc)
+		setAttachLayer(piping_layer)
+
+/obj/item/pipe_meter/proc/setAttachLayer(var/new_layer = PIPING_LAYER_DEFAULT)
+	layer_to_make = new_layer
+	src.pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+	src.pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+

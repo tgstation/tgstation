@@ -5,6 +5,7 @@
 	density = 1
 	anchored = 1
 	var/wait = 0
+	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -14,6 +15,7 @@
 		return 1
 	var/dat = {"
 <b>Regular pipes:</b><BR>
+PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=\ref[src];layer_up=1'>++</A><BR>
 <A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_MANIFOLD];dir=1'>Manifold</A><BR>
@@ -67,6 +69,10 @@
 			wait = 1
 			spawn(15)
 				wait = 0
+	if(href_list["layer_up"])
+		piping_layer = Clamp(piping_layer++, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+	if(href_list["layer_down"])
+		piping_layer = Clamp(piping_layer--, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
