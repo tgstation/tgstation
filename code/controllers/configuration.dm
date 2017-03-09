@@ -12,7 +12,7 @@
 	return ..()
 	
 /datum/configuration/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("cross_address", "cross_allowed")
+	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank")
 	if(var_name in banned_edits)
 		return FALSE
 	return ..()

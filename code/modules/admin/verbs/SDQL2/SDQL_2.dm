@@ -18,10 +18,6 @@
 
 */
 
-/datum/proc/SDQL_update(const/var_name, new_value)
-	vars[var_name] = new_value
-	return TRUE
-
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
@@ -146,7 +142,7 @@
 								var/i = 0
 								for(var/v in sets)
 									if(++i == sets.len)
-										temp.SDQL_update(v, SDQL_expression(d, set_list[sets]))
+										temp.vv_edit_var(v, SDQL_expression(d, set_list[sets]))
 										break
 									if(temp.vars.Find(v) && (istype(temp.vars[v], /datum)))
 										temp = temp.vars[v]
