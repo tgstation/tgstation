@@ -35,6 +35,52 @@
 /obj/vehicle/space/speedbike/red
 	icon_state = "speedbike_red"
 	overlay_state = "cover_red"
+	
+// Atmos response bike
+
+/obj/vehicle/space/speedbike/atmos
+	icon_state = "atmo_bike"
+	overlay_state = "cover_atmo"
+	var/obj/machinery/portable_atmospherics/scrubber/huge/HS = null
+	var/nano_cooldown = 0
+
+/obj/vehicle/space/speedbike/atmos/New()
+	. = ..()
+	src.contents += new obj/machinery/portable_atmospherics/scrubber/huge/HS
+	HS.on = 1
+
+/obj/vehicle/space/speedbike/repair/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	. = ..()
+	riding_datum = new/datum/riding/space/speedbike
+	var/datum/action/nanoice = new()
+	NanoIce.Grant(M)
+	
+/obj/vehicle/space/speedbike/repair/unbuckle_mob(mob/living/M)
+	. = ..()
+	NanoIce.Remove(M)
+
+/datum/action/nanoice
+	name = "NanoIce"
+	desc = "A potent anti-fire gas sprayed from your vehicle"
+	button_icon_state = "nanofrost"
+	background_icon_state = "bg_tech_blue"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+
+/datum/action/nanoice/IsAvailable()
+	if(world.time >= nano_cooldown)
+		return 0
+	return ..()
+
+/datum/action/nanoice/Activate()
+	var/datum/effect_system/smoke_spread/freezing/S = new
+	S.set_up(2, src.loc, blasting=1)
+	S.start()
+	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
+	F.add_atom_colour("#B2FFFF", FIXED_COLOUR_PRIORITY)
+	F.name = "nanofrost residue"
+	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
+	playsound(src,'sound/effects/bamf.ogg',100,1)
+	nano_cooldown = world.time + 300
 
 // Engineer's repair-bike
 
@@ -69,10 +115,6 @@
 	density = 0
 	anchored = 1
 	var/cooldown = 0
-
-/obj/machinery/repair_turret/Initialize()
-	..()
-	update_icon()
 	
 /obj/machinery/repair_turret/proc/repair(obj/target, turf/target_loc)
 	if(target.obj_integrity < target.max_integrity)
