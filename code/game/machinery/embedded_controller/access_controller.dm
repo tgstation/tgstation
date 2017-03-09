@@ -21,9 +21,10 @@
 
 /obj/machinery/doorButtons/Initialize(mapload)
 	if(mapload)
-		return TRUE	//wait for the machines list to init
-	..()
-	findObjsByTag()
+		..()
+		return TRUE
+	else
+		findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
 	if(!emagged)
