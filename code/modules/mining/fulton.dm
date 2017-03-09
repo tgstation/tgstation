@@ -187,5 +187,5 @@ var/list/total_extraction_beacons = list()
 /obj/item/weapon/extraction_pack/advanced
 	name = "advanced fulton extraction pack"
 	desc = "Link the pack to a beacon by using the pack in hand. Nanotrasen could only trust engineer's with this advanced fulton kit, which is capable of being used indoors"
-	var/uses_left = 5
-	var/can_use_indoors = TRUE
+	uses_left = 5
+	can_use_indoors = TRUE
