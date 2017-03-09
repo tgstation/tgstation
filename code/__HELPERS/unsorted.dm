@@ -830,6 +830,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
+	var/list/available_gases = list("o2","n2","co2","plasma","water vapor","freon","n2o") 
 	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
@@ -842,7 +843,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
-			if(id in hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+			if(id in available_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
 				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature)] &deg;K</span>"
