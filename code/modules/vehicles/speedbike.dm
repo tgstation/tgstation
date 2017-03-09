@@ -42,18 +42,17 @@
 	desc = "This vehicle possesses unparalled utility for atmospherics containment and control"
 	icon_state = "atmo_bike"
 	overlay_state = "cover_atmo"
-	var/obj/machinery/portable_atmospherics/scrubber/huge/HS = null
-	var/obj/item/weapon/extinguisher/vehicle/EX = null
-	var/obj/machinery/portable_atmospherics/canister/CAN = null
+	var/obj/machinery/portable_atmospherics/scrubber/huge/internal_scubber = null
+	var/obj/item/weapon/extinguisher/vehicle/internal_extinguisher = null
+	var/obj/machinery/portable_atmospherics/canister/internal_canister = null
 	var/loaded = TRUE
 
 /obj/vehicle/space/speedbike/atmos/New()
 	. = ..()
-	HS = new /obj/machinery/portable_atmospherics/scrubber/huge(src)
-	HS.on = 1
-	EX = new /obj/item/weapon/extinguisher/vehicle(src)
-	EX.vehicle = src
-	CAN = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
+	internal_scubber = new /obj/machinery/portable_atmospherics/scrubber/huge(src)
+	internal_scubber.on = 1
+	internal_extinguisher = new /obj/item/weapon/extinguisher/vehicle(src)
+	internal_canister = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
 
 /obj/machinery/portable_atmospherics/canister/proto/oxygen
 	icon_state = "proto"
@@ -103,18 +102,18 @@
 /datum/action/innate/atmos_bike
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/space/speedbike/atmos/bike
-	var/obj/machinery/portable_atmospherics/scrubber/huge/IS
+	var/obj/machinery/portable_atmospherics/scrubber/huge/inner_scrubber
 	var/obj/item/weapon/extinguisher/vehicle/VEX
 
 /datum/action/innate/atmos_bike/Grant(mob/living/L, obj/vehicle/B)
 	bike = B
-	IS = bike.HS
-	VEX = bike.EX
+	inner_scrubber = bike.internal_scubber
+	VEX = bike.internal_extinguisher
 	..()
 
 /datum/action/innate/atmos_bike/Destroy()
 	bike = null
-	IS = null
+	inner_scrubber = null
 	VEX = null
 	return ..()
 
@@ -176,16 +175,16 @@
 	button_icon_state = "mech_internals_on"
 
 /datum/action/innate/atmos_bike/scrub/Activate()
-	if(IS.on)
+	if(inner_scrubber.on)
 		owner << "<span class='notice'>You have disabled the vehicle's massive air scrubbers</span>"
 		button_icon_state = "mech_internals_off"
-		IS.on = 0
+		inner_scrubber.on = 0
 		UpdateButtonIcon()
 		return
-	if(!IS.on)
+	if(!inner_scrubber.on)
 		owner << "<span class='notice'>You have enabled the vehicle's massive air scrubbers</span>"
 		button_icon_state = "mech_internals_on"
-		IS.on = 1
+		inner_scrubber.on = 1
 		UpdateButtonIcon()
 		return
 
