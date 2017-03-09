@@ -269,6 +269,12 @@
 				out += d
 			CHECK_TICK
 
+	if(ispath(type, /client))
+		for(var/client/C in location)
+			if(typecache[C.type])
+				out += C
+			CHECK_TICK
+
 	else if(ispath(type, /turf))
 		for(var/turf/d in location)
 			if(typecache[d.type])
