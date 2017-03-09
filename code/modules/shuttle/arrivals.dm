@@ -86,6 +86,7 @@
 	else if(mode == SHUTTLE_IGNITING)
 		if(found_awake)
 			mode = SHUTTLE_IDLE
+			sound_played = FALSE
 		else if(!sound_played)
 			hyperspace_sound(HYPERSPACE_WARMUP, areas)
 			sound_played = TRUE
