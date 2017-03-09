@@ -443,10 +443,10 @@ var/list/teleportlocs = list()
 	gravity_throwing = FALSE
 	gravity_stunning = FALSE
 
-/area/proc/update_gravity(atom/movable/AM, yes)
+/area/proc/update_gravity(atom/movable/AM, enable)
 	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity || !initialized)
 		return FALSE
-	if(yes)
+	if(enable)
 		AM.gravity_direction = gravity_direction
 		AM.gravity_strength = gravity_strength
 		AM.gravity_stunning = gravity_stunning
