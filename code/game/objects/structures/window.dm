@@ -27,11 +27,11 @@
 	..()
 	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
-/obj/structure/window/New(Loc,re=0)
+/obj/structure/window/New(Loc, direct)
 	..()
 	obj_integrity = max_integrity
-	if(re)
-		reinf = re
+	if(direct)
+		setDir(direct)
 	if(reinf)
 		state = 2*anchored
 
@@ -482,21 +482,15 @@
 	var/made_glow = FALSE
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)
+	if(fulltile)
+		made_glow = TRUE
 	..()
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
 	var/amount_of_gears = 2
-	if(!fulltile)
-		if(direct)
-			var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
-			setDir(direct)
-			ini_dir = direct
-			E.setDir(direct)
-			made_glow = TRUE
-	else
+	if(fulltile)
 		new /obj/effect/overlay/temp/ratvar/window(get_turf(src))
-		made_glow = TRUE
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
@@ -538,7 +532,6 @@
 	max_integrity = 120
 	level = 3
 	glass_amount = 2
-	made_glow = TRUE
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE
