@@ -80,13 +80,9 @@ obj/machinery/power/exporter/Destroy()
 /obj/machinery/power/exporter/interact(mob/user)
 	if (!anchored)
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
-		user.unset_machine()
-		user << browse(null, "window=port_gen")
 		return
 	if(!Adjacent(user))
 		if(!isAI(user))
-			user.unset_machine()
-			user << browse(null, "window=port_gen")
 			return
 	user.set_machine(src)
 	var/dat = text("<b>[name]</b><br>")
