@@ -1528,3 +1528,29 @@
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+
+/datum/reagent/shrinkserum
+	name = "Shrink serum"
+	id = "shrinkserum"
+	description = "A chemical to shrink you a few sizes down"
+	color = "#0000ff"//strong blue. rgb 0, 0, 255
+	var/current_size = 1
+	
+/datum/reagent/shrinkserum/on_mob_life(mob/living/carbon/H)
+	var/newsize = current_size
+	switch(volume)
+		if(20 to 49)
+			newsize = 0.75
+		if(50 to INFINITY)
+			newsize = 0.50
+		
+	H.resize = newsize/current_size
+	current_size = newsize
+	H.update_transform()
+	..()
+	
+/datum/reagent/shrinkserum/on_mob_delete(mob/living/M)
+	M.resize = 1/current_size
+	M.update_transform()
+	..()
+	
