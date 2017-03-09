@@ -274,7 +274,6 @@
 	join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
-	protected_config = new /datum/protected_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")

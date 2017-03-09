@@ -26733,6 +26733,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -38372,7 +38375,6 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -38380,7 +38382,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -38409,7 +38410,6 @@
 	name = "Arrivals"
 	})
 "bkA" = (
-/obj/structure/extinguisher_cabinet,
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
 "bkB" = (
@@ -38437,6 +38437,11 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/window/shuttle,
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = 30
+	},
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "bkE" = (
@@ -38562,12 +38567,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "bkU" = (
-/obj/machinery/door/airlock/glass_command{
-	name = "Cockpit";
-	req_access_txt = "19"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrival Shuttle Airlock";
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (WEST)"
@@ -41092,6 +41094,74 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/space)
+"btj" = (
+/obj/docking_port/mobile/arrivals{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	name = "delta arrivals shuttle";
+	width = 9
+	},
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	id = "arrivals_stationary";
+	name = "delta arrivals";
+	width = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/arrival)
+"btk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"btl" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"btm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"btn" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
 
 (1,1,1) = {"
 aaa
@@ -69653,16 +69723,16 @@ aaa
 aaa
 aaa
 aaa
-bpr
-bpI
-bpZ
-bqq
-bqH
+bmN
+bmO
+bmO
+bmO
+bmO
 bqY
-brp
-brG
-brW
-bsl
+bmO
+bmO
+bmO
+bnx
 aaa
 aaa
 aaa
@@ -69904,22 +69974,22 @@ aaa
 aaa
 aaa
 aaa
-bnS
-boc
-bom
-boA
-boO
-bpc
-bps
+bmN
+bmO
+bmO
+bmO
+bmO
+bmO
+bmO
 bpJ
 bqa
-bqr
-bqI
+bpJ
+bpK
 bqZ
 brq
 brH
-brX
-bsm
+brM
+bsc
 aaa
 aaa
 aaa
@@ -70161,22 +70231,22 @@ aaa
 aaa
 aaa
 aaa
-bnT
+bmO
 bod
-bon
-boB
-boP
-bpd
-bpt
+bod
+bod
+bod
+bod
+bmO
 bpK
-bqb
-bqs
-bqJ
+bpK
+bpK
+bpK
 bra
-brr
+bpK
 brI
-brY
-bsn
+brM
+bsd
 aaa
 aaa
 aaa
@@ -70418,22 +70488,22 @@ aaa
 aaa
 aaa
 aaa
-bnU
-boe
-boo
-boC
-boQ
-bpe
-bpu
+bmO
+bmY
+bmY
+bmY
+bmY
+bmY
+bmO
 bpL
-bqc
-bqt
-bqK
+bpK
+bpK
+bpK
 brb
 brs
 brJ
-brZ
-bso
+brM
+bse
 aaa
 aaa
 aaa
@@ -70669,27 +70739,27 @@ aaa
 aaa
 aaa
 bmN
-bmW
-bnf
-bno
+bmO
+bmO
+bmO
 bnx
 aaa
 aaa
-bnV
-bof
+bmO
+bmY
 bop
-boD
-boR
-bpf
-bpv
+bmY
+bmY
+bmY
+bmO
 bpM
-bqd
-bqu
-bqL
+bpK
+bpK
+bpK
 brc
-brt
-brK
-bsa
+bmO
+bmO
+bmO
 bsp
 aaa
 aaa
@@ -70929,22 +70999,22 @@ bmO
 bmX
 bng
 bnp
-bny
+bmO
 bnG
 aaa
-bnW
+bmO
 bog
 boq
 boE
-boS
-bpg
-bpw
+bmY
+bmY
+bmO
 bpN
-bqe
-bqv
-bqM
+bpK
+bpK
+bpK
 brd
-bru
+bmO
 aaa
 aaa
 aaa
@@ -71184,26 +71254,26 @@ aaa
 aaa
 bmP
 bmY
-bnh
-bnq
-bnz
-bnH
-bnN
-bnX
-boh
-bor
-boF
+bmY
+bmY
+bmO
+bmO
+bmO
+bmO
+bmO
+bmO
+bmO
 boT
 bph
-bpx
-bpO
+bmO
+bmO
 bqf
 bqw
 bqN
-bre
-brv
-brL
-bsb
+bmO
+bmO
+bmO
+bnx
 aaa
 aaa
 aaa
@@ -71439,26 +71509,26 @@ aaa
 aaa
 aaa
 aaa
-bmQ
+bmP
 bmZ
-bni
-bnr
-bnA
+bmY
+bmY
+bmO
 bnI
-bnO
-bnY
-boi
-bos
+bmY
+bmY
+bmY
+bmY
 boG
-boU
-bpi
+bmY
+bmY
 bpy
-bpP
-bqg
-bqx
-bqO
-brf
-brw
+bmY
+bmY
+bmY
+bmY
+bmY
+boG
 brM
 bsc
 aaa
@@ -71696,27 +71766,27 @@ aaa
 aaa
 aaa
 aaa
-bmR
+bmP
 bna
 bnj
-bns
+bmY
 bnB
-bnJ
-bnP
-bnZ
-boj
-bot
+bmY
+bmY
+bmY
+bmY
+bmY
 boH
-boV
-bpj
-bpz
-bpQ
-bqh
-bqy
-bqP
-brg
+bmY
+bmY
+bmY
+bmY
+bmY
+bmY
+bmY
+bmY
 brx
-brN
+brM
 bsd
 aaa
 aaa
@@ -71953,27 +72023,27 @@ aaa
 aaa
 aaa
 aaa
-bmS
+bmP
 bnb
-bnk
+bmY
 bnt
-bnC
+bmO
 bnK
 bnQ
-boa
-bok
-bou
-boI
-boW
-bpk
-bpA
-bpR
-bqi
-bqz
-bqQ
-brh
-bry
-brO
+bnQ
+bnQ
+bnQ
+boG
+bmY
+bmY
+bmY
+bmY
+bmY
+bmY
+bmY
+bmY
+boG
+brM
 bse
 aaa
 aaa
@@ -72210,28 +72280,28 @@ aaa
 aaa
 aaa
 aaa
-bmT
+bmP
 bnc
-bnl
-bnu
-bnD
-bnL
-bnR
+bmY
+bmY
+bmO
+bmO
+bmO
 bob
-bol
-bov
-boJ
+bmO
+bmO
+bmO
 boX
-bpl
-bpB
-bpS
-bqj
+boG
+bmO
+bmO
+bmO
 bqA
 bqR
-bri
-brz
-brP
-bsf
+bmO
+bmO
+bmO
+bnF
 aaa
 aaa
 aaa
@@ -72467,27 +72537,27 @@ aaa
 aaa
 aaa
 aaa
-bmU
-bnd
-bnm
+bmO
+bnc
+bmY
 bnv
-bnE
-bnM
+bmO
+bnF
 aaa
 aaa
 aaa
-bow
-boK
-boY
-bpm
-bpC
+bmO
+bmY
+bmY
+bmY
+bmO
 bpT
-bqk
-bqB
-bqS
+bmY
+bmY
+bmY
 brj
 brA
-brQ
+bmO
 aaa
 aaa
 aaa
@@ -72725,27 +72795,27 @@ aaa
 aaa
 aaa
 bmV
-bne
-bnn
-bnw
+bmO
+bmO
+bmO
 bnF
 aaa
 aaa
 aaa
 aaa
 box
-boL
-boZ
-bpn
-bpD
+bmY
+bmY
+bmY
+bmO
 bpU
-bql
-bqC
-bqT
+bmY
+bmY
+bmY
 brk
-brB
-brR
-bsg
+bmO
+bmO
+bmO
 bsq
 aaa
 aaa
@@ -72991,19 +73061,19 @@ aaa
 aaa
 aaa
 boy
-boM
-bpa
-bpo
-bpE
+bmY
+bmY
+bmY
+bmO
 bpV
-bqm
-bqD
-bqU
-brl
-brC
+bmY
+bmY
+bmY
+bmY
+bmY
 brS
-bsh
-bsr
+brM
+bsc
 aaa
 aaa
 aaa
@@ -73247,20 +73317,20 @@ aaa
 aaa
 aaa
 aaa
-boz
-boN
-bpb
-bpp
-bpF
+bmV
+bmO
+bmO
+bmO
+bmO
 bpW
 bqn
-bqE
-bqV
-brm
-brD
+bmY
+bmY
+bmY
+bmY
 brT
-bsi
-bss
+brM
+bsd
 aaa
 aaa
 aaa
@@ -73508,16 +73578,16 @@ aaa
 aaa
 aaa
 bpq
-bpG
+bmO
 bpX
 bqo
-bqF
+bmY
 bqW
-brn
-brE
+bqW
+bmY
 brU
-bsj
-bst
+brM
+bse
 aaa
 aaa
 aaa
@@ -73765,16 +73835,16 @@ aaa
 aaa
 aaa
 aaa
-bpH
-bpY
-bqp
-bqG
-bqX
-bro
-brF
-brV
-bsk
-bsu
+bmV
+bmO
+bmO
+bmO
+bmO
+bob
+bmO
+bmO
+bmO
+bnF
 aaa
 aaa
 aaa
@@ -81081,14 +81151,14 @@ bgU
 bgP
 bjY
 bgU
-bkh
+btk
 bgU
 bku
 bkz
 bkC
 bkE
 bgU
-bkh
+btk
 bgU
 bjX
 bgP
@@ -81595,14 +81665,14 @@ aaa
 aaa
 aaa
 bgU
-bkj
+btl
 bgU
 aae
 aaa
 aaa
 aae
 bgU
-bkj
+btl
 bgU
 aaa
 aaa
@@ -82876,7 +82946,7 @@ blv
 bgU
 aaa
 aaa
-bjO
+btj
 bjO
 bjZ
 bkf
@@ -82887,7 +82957,7 @@ bkA
 bkD
 bkF
 bkx
-bkL
+bko
 bkP
 bkU
 bkZ
@@ -87987,7 +88057,7 @@ aaa
 aaa
 aaa
 aaa
-btf
+bte
 aPA
 aQB
 aRz
@@ -88237,14 +88307,14 @@ aaa
 azb
 blM
 blZ
-bsF
+bsC
 azb
 aaa
 aaa
 aaa
 aaa
 aaa
-btg
+bte
 aPB
 aQC
 aRz
@@ -88494,14 +88564,14 @@ aaa
 azb
 blM
 blZ
-bsG
+bsC
 azb
 aaa
 aaa
 aaa
 aaa
 aaa
-bth
+bte
 aPC
 aQD
 aRA
@@ -88751,14 +88821,14 @@ aaa
 azb
 blM
 blZ
-bsH
+bsC
 azb
 aaa
 aaa
 aaa
 aaa
 aaa
-bti
+bte
 aPz
 aPz
 aRz
@@ -89008,7 +89078,7 @@ aaa
 azb
 blM
 blZ
-bsI
+bsC
 azb
 aaa
 aaa
@@ -89268,9 +89338,9 @@ blZ
 bsJ
 axW
 bmx
-bmB
-bmF
-bmJ
+bmx
+bmx
+bmx
 aaa
 aaa
 aaa
@@ -89522,12 +89592,12 @@ aaa
 axW
 blU
 bmh
-bsK
+bsC
 bmw
 bmy
 bmC
 bmG
-bmK
+bmx
 aaa
 aaa
 aaa
@@ -89779,12 +89849,12 @@ aaa
 axW
 blM
 blZ
-bsL
+bsC
 blZ
-bmz
-bmD
-bmH
-bmL
+bmy
+bmy
+bmy
+bmx
 aaa
 aaa
 aaa
@@ -90039,9 +90109,9 @@ blZ
 bsM
 bsS
 bsU
-bsW
+bsU
 bsY
-bmM
+bmx
 aaa
 aaa
 aaa
@@ -91063,7 +91133,7 @@ aCk
 bsv
 bsw
 bsx
-bsy
+bsw
 bsQ
 aEd
 aJc

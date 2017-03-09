@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Clicking on a tile with another tile and a crowbar in hand directly replaces the tile."
