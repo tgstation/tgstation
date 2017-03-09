@@ -70,11 +70,13 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 
 	var/spawn_spot
-	if(!found_aux_console)
-		found_aux_console = locate(/obj/machinery/computer/auxillary_base) in machines
+	for(var/obj/machinery/computer/auxillary_base/ABC in machines)
+		if(istype(get_area(ABC), /area/shuttle/auxillary_base))
+			found_aux_console = ABC
+			break
 
-		if(found_aux_console)
-			spawn_spot = found_aux_console
+	if(found_aux_console)
+		spawn_spot = found_aux_console
 	else
 		spawn_spot = src
 

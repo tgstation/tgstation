@@ -27,9 +27,9 @@ var/datum/controller/failsafe/Failsafe
 		if(istype(Failsafe))
 			qdel(Failsafe)
 	Failsafe = src
-	LaunchLoop()
+	Initialize()
 
-/datum/controller/failsafe/proc/LaunchLoop()
+/datum/controller/failsafe/Initialize()
 	set waitfor = 0
 	Failsafe.Loop()
 	qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
@@ -92,7 +92,7 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/proc/defcon_pretty()
 	return defcon
 
-/datum/controller/failsafe/proc/stat_entry()
+/datum/controller/failsafe/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 

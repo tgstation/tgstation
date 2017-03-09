@@ -889,7 +889,7 @@
 /turf/open/space,
 /area/space)
 "cn" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "co" = (
 /turf/open/floor/plasteel/vault{
@@ -985,20 +985,20 @@
 /area/awaymission/challenge/end)
 "cC" = (
 /obj/item/weapon/storage/toolbox/electrical,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cD" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cE" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cF" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
@@ -1009,7 +1009,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cH" = (
 /obj/structure/window/reinforced{
@@ -1095,7 +1095,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cR" = (
 /obj/machinery/gateway{
@@ -1125,7 +1125,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cV" = (
 /obj/machinery/gateway{
@@ -1178,7 +1178,7 @@
 /area/awaymission/challenge/end)
 "db" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dc" = (
 /obj/structure/cable{
@@ -1293,27 +1293,27 @@
 /area/awaymission/challenge/end)
 "do" = (
 /obj/machinery/light,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dp" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dq" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/magical,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dr" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "ds" = (
 /obj/structure/closet/l3closet,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 
 (1,1,1) = {"

@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "When someone dies, if their body is no longer present, the (F) link will instead jump to the turf they previously occupied."

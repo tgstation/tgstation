@@ -479,7 +479,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	else
 		return 0
 
-mob/proc/click_random_mob()
+/mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()
 	for(var/mob/living/L in range(1, src))
 		if(L!=src)
@@ -487,3 +487,14 @@ mob/proc/click_random_mob()
 	if(nearby_mobs.len)
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
+
+/mob/proc/log_message(message, message_type)
+	if(!LAZYLEN(message) || !message_type)
+		return
+
+	if(!islist(logging[message_type]))
+		logging[message_type] = list()
+
+	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
+
+	logging[message_type] += timestamped_message

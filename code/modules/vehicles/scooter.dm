@@ -8,9 +8,13 @@
 		user << "<span class='notice'>You begin to remove the handlebars...</span>"
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
-			new /obj/vehicle/scooter/skateboard(get_turf(src))
+			var/obj/vehicle/scooter/skateboard/S = new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"
+			if(has_buckled_mobs())
+				var/mob/living/carbon/H = buckled_mobs[1]
+				unbuckle_mob(H)
+				S.buckle_mob(H)
 			qdel(src)
 
 
@@ -106,6 +110,9 @@
 			user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
 			new /obj/item/stack/sheet/metal(get_turf(src),5)
 			new /obj/item/scooter_frame(get_turf(src))
+			if(has_buckled_mobs())
+				var/mob/living/carbon/H = buckled_mobs[1]
+				unbuckle_mob(H)
 			qdel(src)
 
 	else if(istype(I, /obj/item/stack/rods))
@@ -119,5 +126,9 @@
 				return
 			user << "<span class='notice'>You add the rods to [src], creating handlebars.</span>"
 			C.use(2)
-			new/obj/vehicle/scooter(get_turf(src))
+			var/obj/vehicle/scooter/S = new/obj/vehicle/scooter(get_turf(src))
+			if(has_buckled_mobs())
+				var/mob/living/carbon/H = buckled_mobs[1]
+				unbuckle_mob(H)
+				S.buckle_mob(H)
 			qdel(src)

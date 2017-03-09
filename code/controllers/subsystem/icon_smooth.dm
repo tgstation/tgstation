@@ -1,6 +1,6 @@
-var/datum/subsystem/icon_smooth/SSicon_smooth
+var/datum/controller/subsystem/icon_smooth/SSicon_smooth
 
-/datum/subsystem/icon_smooth
+/datum/controller/subsystem/icon_smooth
 	name = "Icon Smoothing"
 	init_order = -5
 	wait = 1
@@ -9,10 +9,10 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 
 	var/list/smooth_queue = list()
 
-/datum/subsystem/icon_smooth/New()
+/datum/controller/subsystem/icon_smooth/New()
 	NEW_SS_GLOBAL(SSicon_smooth)
 
-/datum/subsystem/icon_smooth/fire()
+/datum/controller/subsystem/icon_smooth/fire()
 	while(smooth_queue.len)
 		var/atom/A = smooth_queue[smooth_queue.len]
 		smooth_queue.len--
@@ -22,7 +22,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	if (!smooth_queue.len)
 		can_fire = 0
 
-/datum/subsystem/icon_smooth/Initialize()
+/datum/controller/subsystem/icon_smooth/Initialize()
 	smooth_zlevel(1,TRUE)
 	smooth_zlevel(2,TRUE)
 	var/queue = smooth_queue

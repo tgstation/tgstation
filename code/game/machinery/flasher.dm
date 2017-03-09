@@ -187,7 +187,7 @@
 	remove_from_proximity_list(src, range)
 	return ..()
 
-/obj/machinery/flasher/protable/Moved(oldloc)
+/obj/machinery/flasher/portable/Moved(oldloc)
 	remove_from_proximity_list(oldloc, range)
 	return ..()
 
