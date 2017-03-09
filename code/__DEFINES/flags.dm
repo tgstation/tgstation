@@ -19,11 +19,7 @@
 #define OVERLAY_QUEUED  256		//atom queued to SSoverlay
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
-#define EARBANGPROTECT		1024
-
-#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
-
-#define HEADBANGPROTECT		4096
+#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
@@ -37,6 +33,7 @@
 #define FROZEN "frozen"
 #define STATIONLOVING "stationloving"
 #define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
+#define BANG_PROTECT "bang_protect"
 
 //turf-only flags
 #define NOJAUNT		1
