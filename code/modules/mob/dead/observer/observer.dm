@@ -2,6 +2,9 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 var/list/image/ghost_images_full = list() //this is a list of full images of the ghosts themselves
 var/list/image/ghost_images_default = list() //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
 var/list/image/ghost_images_simple = list() //this is a list of all ghost images as the simple white ghost
+
+var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
+
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -57,6 +60,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
+	invisibility = observer_default_invisibility
+
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	if(global.cross_allowed)
@@ -805,3 +810,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
+/proc/set_observer_default_invisibility(amount, message=null)
+	for(var/mob/dead/observer/G in player_list)
+		G.invisibility = amount
+		if(message)
+			G << message
+	observer_default_invisibility = amount
