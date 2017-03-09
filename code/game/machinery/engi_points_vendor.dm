@@ -123,16 +123,16 @@
 			for(var/obj/machinery/engi_points_delivery/D in deliverer_list)
 				D.icon_state = "geardist-load"
 				playsound(D, 'sound/machines/Ding.ogg', 100, 1)
-				spawn(20)
-					if(!D || QDELETED(D))
-						return
-					spawn_atom_to_turf(new prize.equipment_path, D, prize.amount, admin_spawn=FALSE)
-					D.icon_state = "geardist"
-					if(prize.cost == 20000) // Still a placeholder
-						spawn_atom_to_turf(/obj/item/clothing/head/helmet/space/chronos, D, prize.amount, admin_spawn=FALSE)
-					if(prize.cost >= 1000)
-						radio.talk_into(src, "[usr] has bought [prize.equipment_name] for [prize.cost] points")
-					feedback_add_details("Engi_equipment_bought","[src.type]|[prize.equipment_path]")
+				sleep(20)
+				if(!D || QDELETED(D))
+					return
+				spawn_atom_to_turf(new prize.equipment_path, D, prize.amount, admin_spawn=FALSE)
+				D.icon_state = "geardist"
+				if(prize.cost == 20000) // Still a placeholder
+					spawn_atom_to_turf(/obj/item/clothing/head/helmet/space/chronos, D, prize.amount, admin_spawn=FALSE)
+				if(prize.cost >= 1000)
+					radio.talk_into(src, "[usr] has bought [prize.equipment_name] for [prize.cost] points")
+				feedback_add_details("Engi_equipment_bought","[src.type]|[prize.equipment_path]")
 	updateUsrDialog()
 
 /obj/machinery/engi_points_manager/attackby(obj/item/I, mob/user, params)
