@@ -289,6 +289,9 @@
 	set category = "IC"
 
 	resting = !resting
+	if(resting)//prevents wavedashing
+		src << "You start to get to your feet"
+		sleep(3)
 	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 	update_canmove()
 
