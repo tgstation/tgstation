@@ -343,6 +343,8 @@
 	if(out)
 		VEX.loc = bike
 		owner.drop_item(VEX)
+		owner.swap_hand()
+		owner.drop_item(VEX) // nozzles are finnicky
 		name = "Arm the Extinguisher"
 		desc = "Unleashes a powerful fire extinguisher"
 		button_icon_state = "noflame"
@@ -374,7 +376,7 @@
 	button_icon_state = "flightpack_stabilizer"
 	
 /datum/action/innate/atmos_bike/flood/Activate()
-	if(!bike.CAN)
+	if((!bike.CAN in bike.contents) || !bike.loaded)
 		owner << "<span class='notice'>Alert: You have no canister to release gas from.</span>"
 		playsound(get_turf(owner),'sound/machines/buzz-two.ogg', 50, 1)
 		return
@@ -388,6 +390,7 @@
 		button_icon_state = "flightpack_airbrake"
 		name = "Stop Gas Release"
 		UpdateButtonIcon()
+		return
 	if(bike.CAN.valve_open)
 		owner << "<span class='notice'>Alert: You have stopped dispensing gas from your stored canister, it has [bike.CAN.air_contents.return_pressure()]kPa of gas remaining.</span>"
 		bike.CAN.valve_open = 0
