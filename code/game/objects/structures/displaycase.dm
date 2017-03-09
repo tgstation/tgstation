@@ -109,9 +109,13 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 				trigger_alarm()
 			open = FALSE
 		if(DISPLAY_CASE_NO_ELECTRONICS)
-			electronics = null
-			req_one_access = initial(req_one_access)
-			req_access = initial(req_access)
+			qdel(created)
+			if(electronics)
+				if(!forced)
+					electronics.forceMove(get_turf(src))
+				else
+					qdel(electronics)
+				electronics = null
 		if(0)
 			dump()	
 	update_icon()
