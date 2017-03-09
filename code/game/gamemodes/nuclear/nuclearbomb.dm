@@ -53,6 +53,8 @@ var/bomb_set
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/Destroy()
+	safety = FALSE
+	set_safety() //turn that shit off, if we're gone we can't blow up and things should acknowledge this
 	poi_list -= src
 	nuke_list -= src
 	if(countdown)

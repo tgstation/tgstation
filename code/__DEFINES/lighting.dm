@@ -56,6 +56,7 @@
 #define LIGHT_COLOR_YELLOW     "#E1E17D" //Dimmed yellow, leaning kaki. rgb(225, 225, 125)
 #define LIGHT_COLOR_BROWN      "#966432" //Clear brown, mostly dim. rgb(150, 100, 50)
 #define LIGHT_COLOR_ORANGE     "#FA9632" //Mostly pure orange. rgb(250, 150, 50)
+#define LIGHT_COLOR_PURPLE     "#952CF4" //Light Purple. rgb(149, 44, 244)
 
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE       "#FAA019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
