@@ -224,7 +224,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 	cost = 22
 	surplus = 0
-
+	
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
@@ -729,6 +729,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_tools/spiderlingseed
+	name = "Spiderling seeds"
+	desc = "A new thing made by Syndicate researchers, although the stats are weak, this plant can grow spiderlings. It will grow more and faster the more potency it has."
+	item = /obj/item/seeds/spiderlings
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 40 //Enough players to fight off a swarm
+	
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
