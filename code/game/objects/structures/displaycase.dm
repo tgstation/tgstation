@@ -48,7 +48,7 @@
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
-	return newlist(
+	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/mineral/wood
 			required_amount_to_construct = 5
