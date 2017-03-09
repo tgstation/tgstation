@@ -629,7 +629,6 @@ ARCD
 	if(get_dist(get_turf(A),get_turf(user)) > 7)
 		user << "<span class='warning'>The \'Out of Range\' light on the RCD blinks red.</span>"
 		return
-	..()
 	if(..())
 		user.Beam(A,icon_state="rped_upgrade",time=20)
 	
