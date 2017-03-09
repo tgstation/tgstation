@@ -1,5 +1,4 @@
 var/datum/configuration/config = null
-var/datum/protected_configuration/protected_config = null
 
 var/host = null
 var/join_motd = null
@@ -25,10 +24,6 @@ var/Debug2 = 0
 //Server API key
 var/global/comms_key = "default_pwd"
 var/global/comms_allowed = 0 //By default, the server does not allow messages to be sent to it, unless the key is strong enough (this is to prevent misconfigured servers from becoming vulnerable)
-
-//Cross server communications
-var/global/cross_address = "byond://" //This needs to be global as the message sent contains the comms key.
-var/global/cross_allowed = 0 //Don't bother attempting to send if the address wasn't set.
 
 var/global/medal_hub = null
 var/global/medal_pass = " "
