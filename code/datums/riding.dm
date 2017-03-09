@@ -483,5 +483,5 @@
 /obj/item/riding_offhand/Destroy()
 	if(selfdeleting)
 		if(rider in ridden.buckled_mobs)
-			Unbuckle(rider)
+			ridden.unbuckle_mob(rider)
 	. = ..()
