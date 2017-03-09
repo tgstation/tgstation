@@ -132,12 +132,7 @@ var/datum/controller/subsystem/vote/SSvote
 			if(!C.is_afk() && check_rights_for(C, R_SERVER))
 				active_admins = 1
 				break
-		if(!active_admins)
-			world.Reboot("Restart vote successful.", "end_error", "restart vote")
-		else
-			world << "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>"
-			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
-
+		world.Reboot("Restart vote successful.", "end_error", "restart vote")
 	return .
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
