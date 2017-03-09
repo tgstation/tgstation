@@ -81,6 +81,30 @@
 	eject(usr)
 
 
+/obj/item/device/taperecorder/verb/rewind()
+	set name = "Rewind Tape"
+	set category = "Object"
+
+	if(mytape)
+		usr << "<span class='notice'>You begin rewinding the recorder's tape.</span>"
+		if(do_after(usr, 50) && !mytape.ruined)
+			usr << "<span class='notice'>You rewind the tape's contents. New content can be recorded over it.</span>"
+			reset_tape()
+		else if(mytape.ruined)
+			usr << "<span class='danger'>The tape in the recorder seems to be broken.</span>"
+		else
+			usr << "<span class='danger'>You fail to rewind the tape.</span>"
+	else if(!mytape)
+		usr << "<span class='notice'>You can't rewind a tape when there isn't a tape.</span>"
+		return
+
+
+/obj/item/device/taperecorder/proc/reset_tape()
+	mytape.used_capacity = 0
+	mytape.storedinfo = list()
+	mytape.timestamp = list()
+
+
 /obj/item/device/taperecorder/update_icon()
 	if(!mytape)
 		icon_state = "taperecorder_empty"
@@ -254,9 +278,10 @@
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
-		user << "<span class='notice'>You pull out all the tape!</span>"
-		ruin()
-
+		user << "<span class='notice'>You begin nonchalantly yanking out all the tape in fistfuls.</span>"
+		if(do_after(user, 20))
+			user << "<span class='notice'>You pull out all the tape!</span>"
+			ruin()
 
 /obj/item/device/tape/proc/ruin()
 	//Lets not add infinite amounts of overlays when our fireact is called
@@ -264,7 +289,6 @@
 	if(!ruined)
 		add_overlay("ribbonoverlay")
 	ruined = 1
-
 
 /obj/item/device/tape/proc/fix()
 	cut_overlay("ribbonoverlay")
