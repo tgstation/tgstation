@@ -1,4 +1,4 @@
-var/list/hardcoded_gases = list("o2","n2","co2","plasma","water vapor","freon","n2o") 
+var/list/hardcoded_gases = list("o2","n2","co2","plasma") 
 
 /proc/meta_gas_list()
 	. = new /list
