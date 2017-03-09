@@ -156,3 +156,11 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	icon_state = "salt_pile"
 	gender = NEUTER
+
+/obj/effect/decal/cleanable/filth
+	name = "filth"
+	desc = "Slime left behind by a particularly filthy animal."
+	icon = 'icons/effects/blood.dmi'
+	random_icon_states = list("xfloor2", "xfloor4", "xfloor5", "xfloor7")
+	gender = NEUTER
+

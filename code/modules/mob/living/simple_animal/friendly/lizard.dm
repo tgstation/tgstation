@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/lizard
-	name = "Lizard"
+	name = "lizard"
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
 	icon_living = "lizard"
@@ -7,6 +7,7 @@
 	speak_emote = list("hisses")
 	health = 5
 	maxHealth = 5
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard = 1)
 	faction = list("Lizard")
 	attacktext = "bites"
 	melee_damage_lower = 1
@@ -38,3 +39,15 @@
 		adjustBruteLoss(-2)
 	else
 		..()
+
+/mob/living/simple_animal/hostile/lizard/filthy
+	name = "lizard"
+	desc = "All lizards look alike, but this one somehow seems... filthier."
+	emote_taunt = list("hisses")
+	taunt_chance = 30
+
+/mob/living/simple_animal/hostile/lizard/filthy/Move()
+	..()
+	if (prob(15))	// same as mice chewing wires
+		var/turf/T = get_turf(src)
+		new /obj/effect/decal/cleanable/filth(T)
