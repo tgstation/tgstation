@@ -27,9 +27,13 @@
 	var/floating = FALSE
 
 /atom/movable/vv_edit_var(var_name, var_value)
-	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
+	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
+	var/static/list/careful_edits = list("bound_x", "bound_y", "bound_width", "bound_height")
+	if(var_name in banned_edits)
 		return FALSE	//PLEASE no.
-	. = ..()
+	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
+		return FALSE
+	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
