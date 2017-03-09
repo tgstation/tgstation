@@ -266,28 +266,3 @@
 		quality = list("Economy","Standard","Premium")
 
 
-
-/obj/machinery/atmos_points/proc/corp_name()
-	var/name = ""
-
-	// Prefix
-	name += pick("Clandestine", "Prima", "Blue Sigil", "Front", "Solar Mass", "Atmosia", "Shell", "North", "Omni", "Newton", "Cyber", "Red Harvest", "Gene", "Plasmatech", "Robustin", "Honkorp", "Scarborough", "Terminus", "Veritas", "Dark Mind", "Overmind", "Singulo", "Viva", "Grey Matter")
-
-	// Suffix
-	if (prob(80))
-		name += " "
-
-		// Full
-		if (prob(60))
-			name += pick("Consortium", "Collective", "Corporation", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Conglomerate")
-		// Broken
-		else
-			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
-			name += pick("", "-")
-			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
-	// Small
-	else
-		name += pick("-", "*", "")
-		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive", "LLC", "LLP")
-
-	return name
