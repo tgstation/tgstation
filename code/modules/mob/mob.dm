@@ -116,7 +116,7 @@ var/next_mob_id = 0
 					msg = blind_message
 				else
 					continue
-			
+
 			else if(T.lighting_overlay)
 				if(T.lighting_overlay.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
@@ -585,7 +585,7 @@ var/next_mob_id = 0
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
 				stat(null)
-				for(var/datum/subsystem/SS in Master.subsystems)
+				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			cameranet.stat_entry()
 
@@ -768,7 +768,7 @@ var/next_mob_id = 0
 	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
-/mob/buckle_mob(mob/living/M, force = 0)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
 		return 0
 	var/turf/T = get_turf(src)

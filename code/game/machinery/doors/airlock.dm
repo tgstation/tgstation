@@ -89,7 +89,7 @@ var/list/airlock_overlays = list()
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
-/obj/machinery/door/airlock/New()
+/obj/machinery/door/airlock/Initialize()
 	..()
 	wires = new /datum/wires/airlock(src)
 	if(src.closeOtherId != null)

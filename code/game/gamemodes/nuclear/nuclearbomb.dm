@@ -502,7 +502,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	START_PROCESSING(SSobj, src)
+	set_stationloving(TRUE, inform_admins=TRUE)
 
 /obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/claymore/highlander))
@@ -517,6 +517,12 @@ This is here to make the tiles around the station mininuke change when it's arme
 		H.nuke_disk = src
 		return 1
 	return ..()
+
+/obj/item/weapon/disk/nuclear/Destroy(force=FALSE)
+	// respawning is handled in /obj/Destroy()
+	if(force)
+		poi_list -= src
+	. = ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -535,56 +541,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS
-
-/obj/item/weapon/disk/nuclear/process()
-	var/turf/diskturf = get_turf(src)
-	if(diskturf && (diskturf.z == ZLEVEL_CENTCOM || diskturf.z == ZLEVEL_STATION))
-		return
-	else
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-		var/turf/targetturf = relocate()
-		message_admins("[src] has been moved out of bounds in \
-			[ADMIN_COORDJMP(diskturf)]. Moving it to \
-			[ADMIN_COORDJMP(targetturf)].")
-		log_game("[src] has been moved out of bounds in [COORD(diskturf)]. \
-			Moving it to [COORD(targetturf)].")
-
-/obj/item/weapon/disk/nuclear/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION)
-	if(!targetturf)
-		if(blobstart.len > 0)
-			targetturf = get_turf(pick(blobstart))
-		else
-			throw EXCEPTION("Unable to find a blobstart landmark")
-
-	if(ismob(loc))
-		var/mob/M = loc
-		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
-		S.remove_from_storage(src, targetturf)
-	else
-		forceMove(targetturf)
-	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
-	return targetturf
-
-/obj/item/weapon/disk/nuclear/Destroy(force)
-	var/turf/diskturf = get_turf(src)
-
-	if(force)
-		message_admins("[src] has been !!force deleted!! in \
-			[ADMIN_COORDJMP(diskturf)].")
-		log_game("[src] has been !!force deleted!! in [COORD(diskturf)].")
-		poi_list -= src
-		STOP_PROCESSING(SSobj, src)
-		return ..()
-
-	var/turf/targetturf = relocate()
-	message_admins("[src] has been destroyed in [ADMIN_COORDJMP(diskturf)]. \
-		Moving it to [ADMIN_COORDJMP(targetturf)].")
-	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to \
-		[COORD(targetturf)].")
-	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced
 
 /obj/item/weapon/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"

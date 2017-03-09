@@ -1,6 +1,6 @@
 /world
 	mob = /mob/new_player
-	turf = /turf/basic
+	turf = /turf/open/space/basic
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
@@ -9,6 +9,7 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+	maxz = 14
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
@@ -56,7 +57,7 @@
 
 	data_core = new /datum/datacore()
 
-	Master.Setup(10, FALSE)
+	Master.Initialize(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
@@ -273,7 +274,6 @@
 	join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
-	protected_config = new /datum/protected_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")

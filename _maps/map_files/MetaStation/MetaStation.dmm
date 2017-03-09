@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "aab" = (
 /obj/docking_port/stationary{
@@ -93982,7 +93982,7 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/paper,
 /obj/structure/sign/poster/official/random{
-	pixel_y = -32
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
