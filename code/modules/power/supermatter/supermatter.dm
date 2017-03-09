@@ -9,16 +9,19 @@
 
 #define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
 #define PLASMA_TRANSMIT_MODIFIER 4
+#define FREON_TRANSMIT_PENALTY 0.75   // Scales how much freon reduces total power transmission. 1 equals 1% per 1% of freon in the mix.
 
-#define N2O_HEAT_RESISTANCE 8          //Higher == Gas makes the crystal more resistant against heat damage.
+#define N2O_HEAT_RESISTANCE 2.5          //Higher == Gas makes the crystal more resistant against heat damage.
 
-#define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.10     //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
+#define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.35     //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
 
 #define MOLE_PENALTY_THRESHOLD 1000            //Higher == Shard can absorb more moles before triggering the high mole penalties.
 #define MOLE_HEAT_PENALTY 400                     //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled linearly
 #define POWER_PENALTY_THRESHOLD 4000          //Higher == Engine can generate more power before triggering the high power penalties.
 #define HEAT_PENALTY_THRESHOLD 40                       //Higher == Crystal safe operational temperature is higher.
+#define DAMAGE_HARDCAP 0.1
+
 
 #define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750                //Higher == less plasma released by reaction
@@ -82,6 +85,7 @@
 	var/powerloss_inhibitor = 1
 	var/power_transmission_bonus = 0
 	var/mole_heat_penalty = 0
+	var/freon_transmit_modifier = 1
 
 
 
@@ -227,6 +231,10 @@
 		if(combined_gas < MOLE_PENALTY_THRESHOLD)
 			damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
 
+		//capping damage
+		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
+
+
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
 
 	combined_gas = max(removed.total_moles(), 0)
@@ -246,12 +254,14 @@
 
 	power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
 
-	//more moles of gases are harder to heat than fewer, so let's scale damage around a value
-	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
+	freon_transmit_modifier = max(1-(freoncomp * FREON_TRANSMIT_PENALTY), 0)
 
+	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
+	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
 	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
 		powerloss_inhibitor = max(min(1-co2comp, 1), 0)
+
 
 	var/temp_factor = 50
 
@@ -303,13 +313,28 @@
 		l.rad_act(rads)
 
 	if(power > POWER_PENALTY_THRESHOLD)
-		tesla_zap(src, power/750, power, FALSE)
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 10)
+		supermatter_zap(src, power/750, power*3)
+		supermatter_zap(src, power/750, power*3)
+		supermatter_zap(src, power/750, power*3)
+		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
+		if(prob(10))
+			supermatter_pull(src, power/750)
+
+		if(prob(3))
+			message_admins("1 OK")
+			if(prob(70))
+
+				supermatter_anomaly_gen(src, type = 1, power/750)
+				message_admins("21 OK")
+			else if(prob(15))
+				supermatter_anomaly_gen(src, type = 2, power/650)
+			else
+				supermatter_anomaly_gen(src, type = 3, min(power/750, 5))
+
+
 	power -= ((power/500)**3) * powerloss_inhibitor
 
 	return 1
-
-/obj/machinery/power/supermatter_shard
 
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
@@ -380,7 +405,7 @@
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
-			R.receive_pulse(power * (1 + power_transmission_bonus)/10)
+			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
@@ -410,7 +435,6 @@
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
 	Consume(AM)
-
 
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
@@ -450,3 +474,107 @@
 	gasefficency = 0.15
 	explosion_power = 35
 
+/obj/machinery/power/supermatter_shard/proc/supermatter_pull(turf/center, pull_range = 10)
+	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
+	for(var/atom/P in orange(pull_range,center))
+		if(istype(P, /atom/movable))
+			var/atom/movable/pulled_object = P
+			if(ishuman(P))
+				var/mob/living/carbon/human/H = P
+				H.apply_effect(2, WEAKEN, 0)
+			if(pulled_object && !pulled_object.anchored && !ishuman(P))
+				step_towards(pulled_object,center)
+				step_towards(pulled_object,center)
+				step_towards(pulled_object,center)
+				step_towards(pulled_object,center)
+
+	return
+
+/obj/machinery/power/supermatter_shard/proc/supermatter_anomaly_gen(turf/anomalycenter, type = 1, anomalyrange = 5)
+	message_admins("4 OK")
+	var/turf/L = pick(orange(anomalyrange, anomalycenter))
+	message_admins("5 OK")
+	if(L)
+		message_admins("6 OK")
+		if(type = 1)
+			message_admins("7 OK")
+			var/obj/effect/anomaly/flux/A = new(L)
+			message_admins("8 OK")
+			A.explosive = 0
+			message_admins("9 OK")
+			A.lifespan = 300
+			message_admins("10 OK")
+		else if(type = 2)
+			var/obj/effect/anomaly/grav/A = new(L)
+			A.lifespan = 250
+		else if(type = 3)
+			var/obj/effect/anomaly/pyro/A = new(L)
+			A.lifespan = 200
+
+	return
+
+/proc/supermatter_zap(atom/source, range = 3, power)
+	. = source.dir
+	if(power < 1000)
+		return
+
+	var/closest_dist = 0
+	var/closest_atom
+	var/mob/living/closest_mob
+	var/obj/machinery/closest_machine
+	var/obj/structure/closest_structure
+
+	for(var/A in oview(source, range+2))
+		if(isliving(A))
+			var/dist = get_dist(source, A)
+			var/mob/living/L = A
+			if(dist <= range && (dist < closest_dist || !closest_mob) && L.stat != DEAD)
+				closest_mob = L
+				closest_atom = A
+				closest_dist = dist
+
+		else if(closest_mob)
+			continue
+
+		else if(istype(A, /obj/machinery))
+			var/obj/machinery/M = A
+			var/dist = get_dist(source, A)
+			if(dist <= range && (dist < closest_dist || !closest_machine) && !M.being_shocked)
+				closest_machine = M
+				closest_atom = A
+				closest_dist = dist
+
+		else if(closest_mob)
+			continue
+
+		else if(istype(A, /obj/structure))
+			var/obj/structure/S = A
+			var/dist = get_dist(source, A)
+			if(dist <= range && (dist < closest_dist))
+				closest_structure = S
+				closest_atom = A
+				closest_dist = dist
+
+	if(closest_atom)
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5)
+		var/zapdir = get_dir(source, closest_atom)
+		if(zapdir)
+			. = zapdir
+
+	if(closest_mob)
+		var/shock_damage = Clamp(round(power/400), 10, 20) + rand(-5, 5)
+		closest_mob.electrocute_act(shock_damage, source, 1, stun = 0)
+		if(ishuman(closest_mob))
+			var/mob/living/carbon/human/H = closest_mob
+			H.adjust_fire_stacks(5)
+			H.IgniteMob()
+		else if(issilicon(closest_mob))
+			var/mob/living/silicon/S = closest_mob
+			S.emp_act(2)
+		supermatter_zap(closest_mob, 5, power / 1.5)
+
+	else if(closest_machine)
+		supermatter_zap(closest_machine, 5, power / 1.5)
+
+	else if(closest_structure)
+		supermatter_zap(closest_structure, 5, power / 1.5)
