@@ -224,6 +224,7 @@
 /datum/riding/space/speedbike
 	keytype = null
 	vehicle_move_delay = 0
+	if(ridden = 
 
 /datum/riding/space/speedbike/handle_vehicle_layer()
 	switch(ridden.dir)
@@ -312,6 +313,11 @@
 				if(WEST)
 					buckled_mob.pixel_x = 10
 					buckled_mob.pixel_y = 5
+
+//ATMOBILE
+
+datum/riding/space/speedbike/atmos
+	vehicle_move_delay = 1
 
 //SPEEDUWAGON
 
