@@ -59,10 +59,10 @@ var/datum/controller/subsystem/ticker/ticker
 /datum/controller/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-/datum/subsystem/ticker/Initialize(timeofday)
-    var/list/music = list('sound/ambience/title1.ogg','sound/ambience/title3.ogg','sound/ambience/title4.ogg','sound/misc/i_did_not_grief_them.ogg','sound/ambience/miles.ogg','sound/ambience/viklund.ogg','sound/ambience/fingerspit.ogg')//file2list(ROUND_START_MUSIC_LIST, "\n")
+/datum/controller/subsystem/ticker/Initialize(timeofday)
+	var/list/music = list('sound/ambience/title1.ogg','sound/ambience/title3.ogg','sound/ambience/title4.ogg','sound/misc/i_did_not_grief_them.ogg','sound/ambience/miles.ogg','sound/ambience/viklund.ogg','sound/ambience/fingerspit.ogg')//file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
-	
+
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -207,7 +207,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
-	
+
 	current_state = GAME_STATE_PLAYING
 
 	if(SSevent.holidays)
@@ -404,7 +404,7 @@ var/datum/controller/subsystem/ticker/ticker
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
-				var/obj/screen/splash/S = new(living.client, TRUE)	
+				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
 			livings += living
 	if(livings.len)
@@ -413,7 +413,7 @@ var/datum/controller/subsystem/ticker/ticker
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
-		L.notransform = FALSE		
+		L.notransform = FALSE
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
@@ -760,4 +760,4 @@ var/datum/controller/subsystem/ticker/ticker
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
-		
+
