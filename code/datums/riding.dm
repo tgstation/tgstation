@@ -81,8 +81,8 @@
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [ridden.name].</span>"
 
-/datum/riding/proc/Unbuckle(mob/M)
-	addtimer(CALLBACK(ridden, .proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
+/datum/riding/proc/Unbuckle(atom/movable/M)
+	addtimer(CALLBACK(ridden, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
 
 /datum/riding/proc/Process_Spacemove(direction)
 	if(ridden.has_gravity())
