@@ -21,7 +21,6 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	flags = HANDSLOW
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/obj/effect/ctf/flag_reset/reset
@@ -35,6 +34,7 @@
 
 /obj/item/weapon/twohanded/ctf/Initialize()
 	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
