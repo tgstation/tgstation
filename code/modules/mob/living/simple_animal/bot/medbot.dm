@@ -6,7 +6,7 @@
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "medibot0"
 	density = 0
 	anchored = 0
@@ -91,7 +91,7 @@
 
 	spawn(4)
 		if(skin)
-			add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
+			add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
 
 		var/datum/job/doctor/J = new/datum/job/doctor
 		access_card.access += J.get_access()

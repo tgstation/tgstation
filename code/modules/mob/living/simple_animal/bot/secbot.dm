@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
 	desc = "A little security robot.  He looks less than thrilled."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "secbot0"
 	density = 0
 	anchored = 0

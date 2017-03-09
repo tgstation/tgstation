@@ -4,7 +4,7 @@
 /obj/item/weapon/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
 	name = "proxy bucket"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3
 	throwforce = 5
@@ -38,7 +38,7 @@
 /obj/item/weapon/ed209_assembly
 	name = "\improper ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "ed209_frame"
 	item_state = "ed209_frame"
 	var/build_step = 0
@@ -195,7 +195,7 @@
 /obj/item/weapon/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "toolbox_tiles"
 	force = 3
 	throwforce = 10
@@ -207,7 +207,7 @@
 /obj/item/weapon/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
 	name = "tiles, toolbox and sensor arrangement"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
 	force = 3
 	throwforce = 10
@@ -275,7 +275,7 @@
 /obj/item/weapon/firstaid_arm_assembly
 	name = "incomplete medibot assembly."
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "firstaid_arm"
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
@@ -286,7 +286,7 @@
 		..()
 		spawn(5)
 			if(skin)
-				add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
+				add_overlay(image('icons/mob/aibots.dmi', "kit_skin_[skin]"))
 
 /obj/item/weapon/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
 
@@ -333,7 +333,7 @@
 					build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
 					name = "First aid/robot arm/health analyzer assembly"
-					add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
+					add_overlay(image('icons/mob/aibots.dmi', "na_scanner"))
 
 			if(1)
 				if(isprox(W))
@@ -352,7 +352,7 @@
 /obj/item/weapon/secbot_assembly
 	name = "incomplete securitron assembly"
 	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
 	var/build_step = 0
