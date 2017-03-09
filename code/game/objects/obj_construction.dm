@@ -58,7 +58,7 @@
 	var/deconstruction_message
 	var/repair_message	//this one defaults to "repairing"
 
-	var/construction_sound	//Sound played once construction step is complete
+	var/construction_sound	//Sound played once construction step is complete, defaults to the toolsound
 	var/deconstruction_sound
 
 	var/examine_message	//null values do not adjust these
@@ -347,6 +347,11 @@
 		
 		if(!ConstructionChecks(ccs.id, constructed, null, user, FALSE))
 			return
+
+		if(constructing && ccs.construction_sound)
+			playsound(src, ccs.construction_sound, 100, TRUE)
+		else if(!constructing && ccs.deconstruction_sound)
+			playsound(src, ccs.deconstruction_sound, 100, TRUE)
 			
 		if(wait)			
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
@@ -408,8 +413,14 @@
 		var/cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
 		if(!cont)
 			return
-		if(I.usesound)
+
+		if(constructing && ccs.construction_sound)
+			playsound(src, ccs.construction_sound, 100, TRUE)
+		else if(!constructing && ccs.deconstruction_sound)
+			playsound(src, ccs.deconstruction_sound, 100, TRUE)
+		else if(I.usesound)
 			playsound(src, I.usesound, 100, TRUE)	
+
 		if(wait)
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
