@@ -345,11 +345,13 @@
 		else
 			return
 			
-		if(wait)
-			user << "<span class='notice'>You begin [message] \the [src]...</span>"
+		if(wait)			
+			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
+									"<span class='notice'>[user] begins [message] \the [src].</span>")
 			if(!do_after(user, wait, target = src))
 				return
-		user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
+		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
+								"<span class='notice'>[user] [wait ? "finishes [message]" : message] \the [src].</span>")
 		ccs.OnLeft(src, user, null, constructed, FALSE)
 
 //construct by tool if possible
@@ -404,7 +406,8 @@
 		if(wait)
 			if(I.usesound)
 				playsound(src, I.usesound, 100, TRUE)	
-			user << "<span class='notice'>You begin [message] \the [src].</span>"
+			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
+									"<span class='notice'>[user] begins [message] \the [src].</span>")
 			//Checks will always run because we've verified do_after will last at least 1 tick
 			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, I, user, FALSE))
 		else
@@ -414,7 +417,8 @@
 		LAZYREMOVE(user.construction_tasks, src)
 
 		if(cont)
-			user << "<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>"
+			user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
+									"<span class='notice'>[user] [wait ? "finishes [message]" : message] \the [src].</span>")
 			if(!repairing)
 				ccs.OnLeft(src, user, I, constructed, FALSE)
 			else
