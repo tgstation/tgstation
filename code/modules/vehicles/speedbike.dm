@@ -44,7 +44,7 @@
 	overlay_state = "cover_atmo"
 	var/obj/machinery/portable_atmospherics/scrubber/huge/internal_scubber = null
 	var/obj/item/weapon/extinguisher/vehicle/internal_extinguisher = null
-	var/obj/machinery/portable_atmospherics/canister/internal_canister = null
+	var/obj/machinery/portable_atmospherics/canister/CAN = null
 	var/loaded = TRUE
 
 /obj/vehicle/space/speedbike/atmos/New()
@@ -52,7 +52,7 @@
 	internal_scubber = new /obj/machinery/portable_atmospherics/scrubber/huge(src)
 	internal_scubber.on = 1
 	internal_extinguisher = new /obj/item/weapon/extinguisher/vehicle(src)
-	internal_canister = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
+	CAN = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
 
 /obj/machinery/portable_atmospherics/canister/proto/oxygen
 	icon_state = "proto"
