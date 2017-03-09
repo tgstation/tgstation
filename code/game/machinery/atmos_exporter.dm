@@ -91,7 +91,7 @@
 
 /obj/machinery/atmos_points/interact(mob/user)
 	user.set_machine(src)
-	for(var/obj/machinery/atmos_points_exporter/AE in machines)
+	for(var/obj/machinery/atmos_points_exporter/AE in atmos_exporter_list)
 		can_turf = get_turf(AE)
 	var/dat = ("Time until market update: [round((market_cooldown - world.time)/10)] seconds<br>")
 	dat += "</div>"
@@ -162,7 +162,7 @@
 					price = p_price
 			updateUsrDialog()
 		if ("scan")
-			for(var/obj/machinery/portable_atmospherics/canister/C in get_turf(can_turf))
+			for(var/obj/machinery/portable_atmospherics/canister/C in get_turf(can_turf)) // "for" efficiency, only 1 can possible
 				atmosanalyzer_scan(C.air_contents, usr, C)
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 100, 1)
 		if ("send")
