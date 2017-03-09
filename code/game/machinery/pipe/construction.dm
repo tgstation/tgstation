@@ -306,8 +306,8 @@ var/global/list/pipeID2State = list(
 	if(loc)
 		setAttachLayer(piping_layer)
 
-/obj/item/pipe_meter/proc/setAttachLayer(var/new_layer = PIPING_LAYER_DEFAULT)
-	layer_to_make = new_layer
+/obj/item/pipe_meter/proc/setAttachLayer(new_layer = PIPING_LAYER_DEFAULT)
+	piping_layer = new_layer
 	src.pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 	src.pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 

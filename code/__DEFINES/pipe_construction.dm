@@ -4,6 +4,9 @@ Update these any time a path is changed
 Construction breaks otherwise
 */
 
+//pipe_flags
+#define ALL_LAYER 1
+
 //Pipes
 #define PIPE_SIMPLE				/obj/machinery/atmospherics/pipe/simple
 #define PIPE_MANIFOLD			/obj/machinery/atmospherics/pipe/manifold
@@ -12,6 +15,7 @@ Construction breaks otherwise
 #define PIPE_HE_MANIFOLD		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold
 #define PIPE_HE_4WAYMANIFOLD	/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 #define PIPE_JUNCTION			/obj/machinery/atmospherics/pipe/heat_exchanging/junction
+#define PIPE_LAYER_MANIFOLD		/obj/machinery/atmospherics/pipe/layer_manifold
 //Unary
 #define PIPE_CONNECTOR			/obj/machinery/atmospherics/components/unary/portables_connector
 #define PIPE_UVENT				/obj/machinery/atmospherics/components/unary/vent_pump

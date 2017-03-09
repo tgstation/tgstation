@@ -87,6 +87,7 @@ var/global/list/RPD_recipes=list(
 		"Manual Valve"   = new /datum/pipe_info(PIPE_MVALVE, 			1, PIPE_BINARY),
 		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
 		"4-Way Manifold" = new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1, PIPE_QUAD),
+		"Layer Manifold" = new /datum/pipe_info(PIPE_LAYER_MANIFOLD,	2, PIPE_UNARY),
 	),
 	"Devices"=list(
 		"Connector"      = new /datum/pipe_info(PIPE_CONNECTOR,			1, PIPE_UNARY),
@@ -153,6 +154,7 @@ var/global/list/RPD_recipes=list(
 	)
 	var/paint_color="grey"
 	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
+	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/item/weapon/pipe_dispenser/New()
 	. = ..()
@@ -201,6 +203,11 @@ var/global/list/RPD_recipes=list(
 		dat += "<span class='linkOn'>Atmospherics</span> <A href='?src=\ref[src];screen=[CATEGORY_DISPOSALS];dmake=0;type=0'>Disposals</A><BR>"
 	else if(screen == CATEGORY_DISPOSALS)
 		dat += "<A href='?src=\ref[src];screen=[CATEGORY_ATMOS];makepipe=0;dir=1;type=0'>Atmospherics</A> <span class='linkOn'>Disposals</span><BR>"
+	var/generated_layer_list = ""
+	var/layers_total = PIPING_LAYER_MAX - PIPING_LAYER_MIN + 1
+	for(var/iter = PIPING_LAYER_MIN, iter <= layers_total, iter++)
+		generated_layer_list += "<A href='?src=\ref[src];setlayer=[iter]'>[iter]</A>"
+	dat += "<span class='linkOn'>Atmospherics Piping Layer: [generated_layer_list]</span><BR>"
 	dat += "</ul>"
 
 	var/icon/preview=null
@@ -469,6 +476,10 @@ var/global/list/RPD_recipes=list(
 		p_flipped = text2num(href_list["flipped"])
 		show_menu(usr)
 
+	if(href_list["setlayer"])
+		piping_layer = href_list["setlayer"]
+		show_menu(usr)
+
 	if(href_list["eatpipes"])
 		p_class = EATING_MODE
 		p_conntype=-1
@@ -522,6 +533,12 @@ var/global/list/RPD_recipes=list(
 	if(!user.IsAdvancedToolUser() || istype(A,/turf/open/space/transit))
 		return ..()
 
+	var/temp_piping_layer = null
+	if(istype(A, /obj/machinery/atmospherics))
+		var/obj/machinery/atmospherics/AM = A
+		temp_piping_layer = AM.piping_layer
+		A = get_turf(user)
+
 	//make sure what we're clicking is valid for the current mode
 	var/is_paintable = (p_class == PAINT_MODE && istype(A, /obj/machinery/atmospherics/pipe))
 	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
@@ -562,13 +579,21 @@ var/global/list/RPD_recipes=list(
 				P.flipped = queued_p_flipped
 				P.update()
 				P.add_fingerprint(usr)
+				if(!isnull(temp_piping_layer))
+					P.setPipingLayer(temp_piping_layer)
+				else
+					P.setPipingLayer(piping_layer)
 
 		if(METER_MODE) //Making pipe meters
 			user << "<span class='notice'>You start building a meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				new /obj/item/pipe_meter(A)
+				var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(A)
+				if(!isnull(temp_piping_layer))
+					PM.setAttachLayer(temp_piping_layer)
+				else
+					PM.setAttachLayer(piping_layer)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
 			if(is_anchored_dense_turf(A))
