@@ -93982,7 +93982,7 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/paper,
 /obj/structure/sign/poster/official/random{
-	pixel_y = -32
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)

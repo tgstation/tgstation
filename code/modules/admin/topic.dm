@@ -181,8 +181,9 @@
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
+		var/page = href_list["dbsearchpage"]
 
-		DB_ban_panel(playerckey, adminckey)
+		DB_ban_panel(playerckey, adminckey, page)
 		return
 
 	else if(href_list["dbbanedit"])
