@@ -1,6 +1,6 @@
 /obj/machinery/power/exporter
 	name = "power exporter"
-	desc = "It exports power for points, points get rewards.</span>"
+	desc = "It exports power for points, points get rewards."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = 1
