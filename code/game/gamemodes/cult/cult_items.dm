@@ -278,7 +278,7 @@
 		user.Weaken(5)
 		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
 		return
-	if(curselimit > 1)
+	if(curselimit > 2)
 		user << "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>"
 		return
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
