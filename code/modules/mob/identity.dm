@@ -3,33 +3,8 @@
 ** remember names
 ** change names
 ** manage internal identities
-*/
-
-/*
-00 mind.voiceprints entries are 5 entry lists indexed by the voiceprint, entries as follows
-00 [1] The state of the voiceprint, or where we got the name of it from. See /code/__DEFINES/identity.dm 
-00 [2] Timestamp as to when this voiceprint was entered into the voiceprints list. Mainly used so that
-00    -- IDENTITY_SEEN will expire if you don't hear the voiceprint for IDENTITY_EXPIRE_TIME (50)
-00    -- seconds.
-00 [3] Name associated with voiceprint. IDENTITY_INTERACT is semi-permanent and IDENTITY_MANUAL is permanent, wereas
-00    -- IDENTITY_HEARD and IDENTITY_SEEN are not.
-00 [4] Associated faceprint if available.
-00 [5] Last message heard.
-00 [6] Last edit ref
-00
-00 mind.faceprints are 4 entry lists indexed by the faceprint
-00 [1] The state of the faceprint, or where we got the name of it from. See /code/__DEFINES/identity.dm
-00 [2] Timestamp when you last examined this faceprint.
-00 [3] Name associated with the faceprint.
-00 [4] Associated voiceprint if available.
-00
-00 mind.identity_cache entries are 6 entry lists indexed by mob reference, entries as follows
-00 [1] Cached voiceprint
-00 [2] Timestamp of caching so that it can expire.
-00 [3] Cached faceprint
-00 [4] Timestamp of [3] so that it can expire.
-00 [5] Cached temporary name
-00 [6] Timestamp of [5] so that it can expire.
+**
+** see code/__DEFINES/identity.dm for information on the data structures
 */
 
 //TODO: If this gets in the game, and stays in the game, for a while, redistribute procs around to appropriate files, then delete this one.
@@ -76,29 +51,29 @@ var/global/list/used_voiceprints = list()
 		var/AM_temp
 		var/AM_temp_time
 		if(AM_identity)
-			AM_voiceprint = AM_identity[1]
-			AM_voiceprint_time = AM_identity[2]
-			AM_faceprint = AM_identity[3]
-			AM_faceprint_time = AM_identity[4]
-			AM_temp = AM_identity[5]
-			AM_temp_time = AM_identity[6]
+			AM_voiceprint = AM_identity[IDENTITY_CACHE_VOICEPRINT]
+			AM_voiceprint_time = AM_identity[IDENTITY_CACHE_VOICEPRINT_TIME]
+			AM_faceprint = AM_identity[IDENTITY_CACHE_FACEPRINT]
+			AM_faceprint_time = AM_identity[IDENTITY_CACHE_FACEPRINT_TIME]
+			AM_temp = AM_identity[IDENTITY_CACHE_TEMP]
+			AM_temp_time = AM_identity[IDENTITY_CACHE_TEMP_TIME]
 		else
 			AM_identity = new(IDENTITY_CACHE_LENGTH)
 		if(AM_faceprint && AM_faceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
 			var/list/AM_FP_entry = mind.get_print_entry(AM_faceprint, CATEGORY_FACEPRINTS)
 			if(AM_FP_entry)
-				AM_name = AM_FP_entry[3]
+				AM_name = AM_FP_entry[IDENTITY_PRINT_NAME]
 		if(!AM_name && AM_voiceprint && AM_voiceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
 			var/list/AM_VP_entry = mind.get_print_entry(AM_voiceprint, CATEGORY_VOICEPRINTS)
 			if(AM_VP_entry)
-				AM_name = AM_VP_entry[3]
+				AM_name = AM_VP_entry[IDENTITY_PRINT_NAME]
 		if(!AM_name)
 			if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
 				AM_name = AM_temp
 			else
 				AM_name = AM.default_identity_seen()
-				AM_identity[5] = AM_name
-				AM_identity[6] = world.time
+				AM_identity[IDENTITY_CACHE_TEMP] = AM_name
+				AM_identity[IDENTITY_CACHE_TEMP_TIME] = world.time
 		mind.identity_cache[AM] = AM_identity
 		. = AM_name
 
@@ -127,9 +102,9 @@ var/global/list/used_voiceprints = list()
 			var/voiceprint_time
 			var/voiceprint_name
 			if(voiceprint_entry)
-				voiceprint_state = voiceprint_entry[1]
-				voiceprint_time = voiceprint_entry[2]
-				voiceprint_name = voiceprint_entry[3]
+				voiceprint_state = voiceprint_entry[IDENTITY_PRINT_STATE]
+				voiceprint_time = voiceprint_entry[IDENTITY_PRINT_TIMESTAMP]
+				voiceprint_name = voiceprint_entry[IDENTITY_PRINT_NAME]
 			else
 				voiceprint_entry = new(VOICEPRINTS_LIST_LENGTH)
 				voiceprint_state = IDENTITY_HEARD
@@ -139,12 +114,12 @@ var/global/list/used_voiceprints = list()
 			if(voiceprint_state > IDENTITY_SEEN || (voiceprint_state == IDENTITY_SEEN && voiceprint_time >= (world.time - IDENTITY_EXPIRE_TIME)))
 				if(speaker in view(src))
 					voiceprint_name = speaker.default_identity_seen()
-					voiceprint_entry[1] = IDENTITY_SEEN
+					voiceprint_entry[IDENTITY_PRINT_STATE] = IDENTITY_SEEN
 				else
 					voiceprint_name = speaker.default_identity_heard()
-					voiceprint_entry[1] = IDENTITY_HEARD
-				voiceprint_entry[3] = voiceprint_name
-			voiceprint_entry[2] = world.time
+					voiceprint_entry[IDENTITY_PRINT_STATE] = IDENTITY_HEARD
+				voiceprint_entry[IDENTITY_PRINT_NAME] = voiceprint_name
+			voiceprint_entry[IDENTITY_PRINT_TIMESTAMP] = world.time
 			mind.set_print_entry(voice_print, voiceprint_entry, CATEGORY_VOICEPRINTS)
 			. = voiceprint_name
 		if(speaker == src)
@@ -167,17 +142,17 @@ var/global/list/used_voiceprints = list()
 				var/faceprint_name
 				mind.handle_faceprint_caching(target, faceprint)
 				if(faceprint_entry)
-					faceprint_state = faceprint_entry[1]
-					faceprint_name = faceprint_entry[3]
+					faceprint_state = faceprint_entry[IDENTITY_PRINT_STATE]
+					faceprint_name = faceprint_entry[IDENTITY_PRINT_NAME]
 				if(interact_identity == seen_identity && !faceprint_name)
 					faceprint_name = interact_identity
 				else if(!faceprint_name || faceprint_state > IDENTITY_INTERACT)
 					faceprint_state = IDENTITY_INTERACT
 					faceprint_name = interact_identity
 					faceprint_entry = new(FACEPRINTS_LIST_LENGTH)
-					faceprint_entry[1] = faceprint_state
-					faceprint_entry[2] = world.time
-					faceprint_entry[3] = faceprint_name
+					faceprint_entry[IDENTITY_PRINT_STATE] = faceprint_state
+					faceprint_entry[IDENTITY_PRINT_TIMESTAMP] = world.time
+					faceprint_entry[IDENTITY_PRINT_NAME] = faceprint_name
 				. = faceprint_name
 		else
 			. = interact_identity
@@ -185,26 +160,26 @@ var/global/list/used_voiceprints = list()
 		var/voice_print
 		var/list/voiceprint_entry
 		if(cache_entry)
-			voice_print = cache_entry[1]
-			var/voiceprint_cache_time = cache_entry[2]
+			voice_print = cache_entry[IDENTITY_CACHE_VOICEPRINT]
+			var/voiceprint_cache_time = cache_entry[IDENTITY_CACHE_VOICEPRINT_TIME]
 			if(voice_print && voiceprint_cache_time >= (world.time - IDENTITY_EXPIRE_TIME))
 				voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
 				var/voiceprint_state
 				var/voiceprint_name
 				if(voiceprint_entry)
-					voiceprint_state = voiceprint_entry[1]
-					voiceprint_name = voiceprint_entry[3]
+					voiceprint_state = voiceprint_entry[IDENTITY_PRINT_STATE]
+					voiceprint_name = voiceprint_entry[IDENTITY_PRINT_NAME]
 					if(voiceprint_state >= IDENTITY_INTERACT)
 						voiceprint_entry[1] = IDENTITY_INTERACT
-						voiceprint_entry[3] = interact_identity
+						voiceprint_entry[IDENTITY_PRINT_NAME] = interact_identity
 					else
 						. = voiceprint_name
 						if(faceprint_entry)
-							faceprint_entry[1] = voiceprint_state
-							faceprint_entry[3] = voiceprint_name
+							faceprint_entry[IDENTITY_PRINT_STATE] = voiceprint_state
+							faceprint_entry[IDENTITY_PRINT_NAME] = voiceprint_name
 					if(faceprint_entry)
-						voiceprint_entry[4] = faceprint
-						faceprint_entry[4] = voice_print
+						voiceprint_entry[IDENTITY_PRINT_LINKED] = faceprint
+						faceprint_entry[IDENTITY_PRINT_LINKED] = voice_print
 		if(faceprint_entry)
 			mind.set_print_entry(faceprint, faceprint_entry, CATEGORY_FACEPRINTS)
 		if(voiceprint_entry)
@@ -240,8 +215,8 @@ var/global/list/used_voiceprints = list()
 	var/AM_temp
 	var/AM_temp_time
 	if(AM_identity)
-		AM_temp = AM_identity[5]
-		AM_temp_time = AM_identity[6]
+		AM_temp = AM_identity[IDENTITY_CACHE_TEMP]
+		AM_temp_time = AM_identity[IDENTITY_CACHE_TEMP_TIME]
 	else
 		AM_identity = new(IDENTITY_CACHE_LENGTH)
 	if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
@@ -256,8 +231,8 @@ var/global/list/used_voiceprints = list()
 			AM_name = G_name ? G_name : "&lt;NAME MISSING{[G.fields["id"]]}&gt;"
 		else
 			AM_name = "&lt;NO RECORD&gt;"
-		AM_identity[5] = AM_name
-		AM_identity[6] = world.time
+		AM_identity[IDENTITY_CACHE_TEMP] = AM_name
+		AM_identity[IDENTITY_CACHE_TEMP_TIME] = world.time
 	mind.identity_cache[AM] = AM_identity
 	. = AM_name
 
@@ -283,20 +258,20 @@ var/global/list/used_voiceprints = list()
 	if(client && mind && voice_print && message)
 		var/list/voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
 		if(voiceprint_entry)
-			voiceprint_entry[5] = message
+			voiceprint_entry[IDENTITY_VOICEPRINT_MSG] = message
 			mind.set_print_entry(voice_print, voiceprint_entry, CATEGORY_VOICEPRINTS)
 
 /datum/mind/proc/remembered_faceprint_name(face_print)
 	var/list/faceprint_entry = get_print_entry(face_print, CATEGORY_FACEPRINTS)
 	if(faceprint_entry)
-		. = faceprint_entry[3]
+		. = faceprint_entry[IDENTITY_PRINT_NAME]
 
 /datum/mind/proc/handle_voiceprint_caching(atom/movable/speaker, voice_print)
 	var/list/cache_entry = identity_cache[speaker]
 	if(!cache_entry)
 		cache_entry = new(IDENTITY_CACHE_LENGTH)
-	cache_entry[1] = voice_print
-	cache_entry[2] = world.time
+	cache_entry[IDENTITY_CACHE_VOICEPRINT] = voice_print
+	cache_entry[IDENTITY_CACHE_VOICEPRINT_TIME] = world.time
 	identity_cache[speaker] = cache_entry
 
 /datum/mind/proc/voiceprint_edit_tag(voice_print)
@@ -308,21 +283,21 @@ var/global/list/used_voiceprints = list()
 	var/generate = TRUE
 	if(!voiceprint_entry)
 		return
-	edit_tag = voiceprint_entry[6]
+	edit_tag = voiceprint_entry[IDENTITY_VOICEPRINT_EDIT]
 	tag_entry = identity_edit_tags[edit_tag]
-	if(tag_entry && tag_entry[2] >= world.time - IDENTITY_EXPIRE_TIME)
+	if(tag_entry && tag_entry[IDENTITY_EDIT_TAG_TIMESTAMP] >= world.time - IDENTITY_EXPIRE_TIME)
 		generate = FALSE
 	while(generate)
 		edit_tag = random_string(8, hex_characters)
 		tag_entry = identity_edit_tags[edit_tag]
-		if(!tag_entry || tag_entry[2] < world.time - IDENTITY_EXPIRE_TIME)
+		if(!tag_entry || tag_entry[IDENTITY_EDIT_TAG_TIMESTAMP] < world.time - IDENTITY_EXPIRE_TIME)
 			generate = FALSE
-	voiceprint_entry[6] = edit_tag
+	voiceprint_entry[IDENTITY_VOICEPRINT_EDIT] = edit_tag
 	set_print_entry(voice_print, voiceprint_entry, CATEGORY_VOICEPRINTS)
 	if(!tag_entry)
 		tag_entry = new(IDENTITY_TAGS_LENGTH)
-	tag_entry[1] = voice_print
-	tag_entry[2] = world.time
+	tag_entry[IDENTITY_EDIT_TAG_PRINT] = voice_print
+	tag_entry[IDENTITY_EDIT_TAG_TIMESTAMP] = world.time
 	identity_edit_tags[edit_tag] = tag_entry
 	return edit_tag
 
@@ -358,17 +333,17 @@ var/global/list/used_voiceprints = list()
 					print_entry = new(VOICEPRINTS_LIST_LENGTH)
 				if(CATEGORY_FACEPRINTS)
 					print_entry = new(FACEPRINTS_LIST_LENGTH)
-		print_entry[1] = IDENTITY_MANUAL
-		print_entry[2] = world.time
-		print_entry[3] = manual_name
-		var/linked_print = print_entry[4]
+		print_entry[IDENTITY_PRINT_STATE] = IDENTITY_MANUAL
+		print_entry[IDENTITY_PRINT_TIMESTAMP] = world.time
+		print_entry[IDENTITY_PRINT_NAME] = manual_name
+		var/linked_print = print_entry[IDENTITY_PRINT_LINKED]
 		if(linked_print)
 			var/linked_category = inverse_category(category)
 			var/linked_print_entry = get_print_entry(linked_print, linked_category)
-			if(linked_print_entry && linked_print_entry[4] == print)
-				linked_print_entry[1] = IDENTITY_MANUAL
-				linked_print_entry[2] = world.time
-				linked_print_entry[3] = manual_name
+			if(linked_print_entry && linked_print_entry[IDENTITY_PRINT_LINKED] == print)
+				linked_print_entry[IDENTITY_PRINT_STATE] = IDENTITY_MANUAL
+				linked_print_entry[IDENTITY_PRINT_TIMESTAMP] = world.time
+				linked_print_entry[IDENTITY_PRINT_NAME] = manual_name
 				set_print_entry(linked_print, linked_print_entry, linked_category)
 		set_print_entry(print, print_entry, category)
 
@@ -391,9 +366,9 @@ var/global/list/used_voiceprints = list()
 	var/list/linked_print_entry = get_print_entry(linked_print, linked_category)
 	if(!(print_entry && linked_print_entry))
 		return FALSE
-	var/print_name = print_entry[3]
-	linked_print_entry[4] = print
-	print_entry[4] = linked_print
+	var/print_name = print_entry[IDENTITY_PRINT_NAME]
+	linked_print_entry[IDENTITY_PRINT_LINKED] = print
+	print_entry[IDENTITY_PRINT_LINKED] = linked_print
 	set_print_entry(linked_print, linked_print_entry, linked_category)
 	set_print_entry(print, print_entry, print_category)
 	set_print_manual(print, print_name, print_category)
@@ -404,21 +379,21 @@ var/global/list/used_voiceprints = list()
 	if(!print_entry)
 		return
 	var/linked_category = inverse_category(category)
-	var/linked_print = print_entry[4]
+	var/linked_print = print_entry[IDENTITY_PRINT_LINKED]
 	if(linked_print)
 		var/list/linked_print_entry = get_print_entry(linked_print, linked_category)
-		if(linked_print_entry && linked_print_entry[4] == print)
-			linked_print_entry[4] = null
+		if(linked_print_entry && linked_print_entry[IDENTITY_PRINT_LINKED] == print)
+			linked_print_entry[IDENTITY_PRINT_LINKED] = null
 			set_print_entry(linked_print, linked_print_entry, linked_category)
-	print_entry[4] = null
+	print_entry[IDENTITY_PRINT_LINKED] = null
 	set_print_entry(print, print_entry, category)
 
 /datum/mind/proc/handle_faceprint_caching(atom/movable/seen, faceprint)
 	var/list/cache_entry = identity_cache[seen]
 	if(!cache_entry)
 		cache_entry = new(IDENTITY_CACHE_LENGTH)
-	cache_entry[3] = faceprint
-	cache_entry[4] = world.time
+	cache_entry[IDENTITY_CACHE_FACEPRINT] = faceprint
+	cache_entry[IDENTITY_CACHE_FACEPRINT_TIME] = world.time
 	identity_cache[seen] = cache_entry
 
 /datum/mind/proc/open_idman()
@@ -551,9 +526,9 @@ var/global/list/used_voiceprints = list()
 	for(var/print in prints_to_parse)
 		var/list/print_send = list()
 		var/list/prints_entry = prints_to_parse[print]
-		var/print_state = prints_entry[1]
-		var/print_time = prints_entry[2]
-		var/print_name = prints_entry[3]
+		var/print_state = prints_entry[IDENTITY_PRINT_STATE]
+		var/print_time = prints_entry[IDENTITY_PRINT_TIMESTAMP]
+		var/print_name = prints_entry[IDENTITY_PRINT_NAME]
 		if(print_state > IDENTITY_INTERACT && print_time < (world.time - IDENTITY_EXPIRE_TIME))
 			var/oldref = refs_lookup[print]
 			if(oldref)
@@ -563,15 +538,15 @@ var/global/list/used_voiceprints = list()
 		print_send["timestamp"] = gameTimestamp(print_time, "hh:mm")
 		print_send["time"] = print_time
 		print_send["name"] = print_name
-		print_send["linked"] = prints_entry[4] ? "1" : ""
+		print_send["linked"] = prints_entry[IDENTITY_PRINT_LINKED] ? "1" : ""
 		switch(cat)
 			if(CATEGORY_VOICEPRINTS)
-				print_send["lastmsg"] = prints_entry[5]
+				print_send["lastmsg"] = prints_entry[IDENTITY_VOICEPRINT_MSG]
 			if(CATEGORY_FACEPRINTS)
-				var/voice_print = prints_entry[4]
+				var/voice_print = prints_entry[IDENTITY_PRINT_LINKED]
 				var/VP_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
 				if(VP_entry)
-					print_send["lastmsg"] = VP_entry[5]
+					print_send["lastmsg"] = VP_entry[IDENTITY_VOICEPRINT_MSG]
 		var/ref = refs_lookup[print]
 		if(!ref)
 			ref = random_string(8, hex_characters)
@@ -627,8 +602,8 @@ var/global/list/used_voiceprints = list()
 			var/list/print_entry = mind.get_print_entry(print, cat)
 			if(!(ref && print && print_entry))
 				return 0
-			if(print_entry[1] > IDENTITY_INTERACT)
-				mind.set_print_manual(print, print_entry[3], cat)
+			if(print_entry[IDENTITY_PRINT_STATE] > IDENTITY_INTERACT)
+				mind.set_print_manual(print, print_entry[IDENTITY_PRINT_NAME], cat)
 			if(select_mode != IDMAN_MODE_LINK)
 				selected_ref = ref
 				select_mode = IDMAN_MODE_LINK

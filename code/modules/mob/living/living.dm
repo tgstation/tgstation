@@ -80,14 +80,14 @@
 		var/href_timestamp = text2num(href_list["t"])
 		var/tag_entry = mind.identity_edit_tags[edit_tag]
 		if(tag_entry && href_timestamp >= world.time - IDENTITY_EXPIRE_TIME)
-			var/voice_print = tag_entry[1]
-			var/tag_timestamp = tag_entry[2]
+			var/voice_print = tag_entry[IDENTITY_EDIT_TAG_PRINT]
+			var/tag_timestamp = tag_entry[IDENTITY_EDIT_TAG_TIMESTAMP]
 			if(tag_timestamp < world.time - IDENTITY_EXPIRE_TIME)
 				return
 			var/voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
 			if(!voiceprint_entry)
 				return
-			var/VP_name = voiceprint_entry[3]
+			var/VP_name = voiceprint_entry[IDENTITY_PRINT_NAME]
 			mind.set_print_manual(voice_print, VP_name, CATEGORY_VOICEPRINTS)
 			var/chosen_name = input(src, "Please enter a new name for [VP_name].", "Rename [VP_name]", VP_name)
 			if(!chosen_name || stat == DEAD || chosen_name == VP_name || QDELETED(mind))
