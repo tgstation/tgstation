@@ -59,7 +59,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.is_frozen)
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
 			O.make_unfrozen()
 	if(turf_gravity_overrides_area)
 		force_gravity_on_atom(AM)
