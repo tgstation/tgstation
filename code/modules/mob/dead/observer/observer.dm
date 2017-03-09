@@ -657,6 +657,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/atom/movable/target = locate(href_list["follow"])
 			if(istype(target) && (target != src))
 				ManualFollow(target)
+		if(href_list["jump_to_turf"])
+			var/turf/target = locate(href_list["jump_to_turf"])
+			if(istype(target))
+				forceMove(target)
 		if(href_list["reenter"])
 			reenter_corpse()
 
