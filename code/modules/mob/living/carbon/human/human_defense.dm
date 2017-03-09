@@ -201,7 +201,7 @@
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
 		return
-	if(ishuman(user)
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.a_intent == INTENT_DISARM)
 			if(H.buckled_mobs && (src in H.buckled_mobs) && H.riding_datum)
