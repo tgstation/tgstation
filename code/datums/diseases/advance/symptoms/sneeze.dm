@@ -20,8 +20,8 @@ Bonus
 
 	name = "Sneezing"
 	stealth = -2
-	resistance = 3
-	stage_speed = 0
+	resistance = 2
+	stage_speed = -1
 	transmittable = 4
 	level = 1
 	severity = 1
@@ -36,4 +36,6 @@ Bonus
 			else
 				M.emote("sneeze")
 				A.spread(A.holder, 5)
+				M.Stun(1)
+				M.blur_eyes(5)
 	return
