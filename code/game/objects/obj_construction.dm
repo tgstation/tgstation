@@ -112,6 +112,8 @@
 
 		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot)	//no loot for vandals or if we're told not to
 			qdel(loot)
+		else
+			loot.forceMove(get_turf(parent))
 		
 		if(!id)
 			qdel(parent)	//deconstructed fully
@@ -146,9 +148,9 @@
 
 	if(!constructed && required_amount_to_construct)	//spawn loot
 		if(ispath(required_type_to_construct, /obj/item/stack))
-			. = new required_type_to_construct(get_turf(parent), required_amount_to_construct)
+			. = new required_type_to_construct(null, required_amount_to_construct)
 		else
-			. = new required_type_to_construct(get_turf(parent))
+			. = new required_type_to_construct()
 		parent.transfer_fingerprints_to(.)
 
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
