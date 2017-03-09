@@ -95,7 +95,7 @@
 	interact(user)
 
 /obj/machinery/engi_points_manager/interact(mob/user)
-	var/dat
+	var/list/dat = list()
 	dat +="<div class='statusDisplay'>"
 	dat += "You currently have <td>[round(GBP)]</td> engineering voucher points<br>"
 	dat += "You have earned a total of <td>[round(GBPearned)]</td> this shift<br>"
@@ -106,7 +106,7 @@
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "vending", "Engineering Point Redemption", 400, 350)
-	popup.set_content(dat)
+	set_content(dat.Join())
 	popup.open()
 
 /obj/machinery/engi_points_manager/Topic(href, href_list)
