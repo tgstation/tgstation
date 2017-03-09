@@ -162,7 +162,7 @@
 	if(out)
 		VEX.loc = bike
 		owner.drop_item(VEX)
-		owner.swap_hands
+		owner.swap_hand()
 		owner.drop_item(VEX)
 		name = "Arm the Extinguisher"
 		desc = "Unleashes a powerful fire extinguisher"
