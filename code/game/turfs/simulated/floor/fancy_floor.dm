@@ -13,24 +13,13 @@
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/screwdriver))
-		if(broken || burnt)
-			return
-		user << "<span class='danger'>You unscrew the planks.</span>"
-		new floor_tile(src)
-		make_plating()
-		playsound(src, C.usesound, 80, 1)
+		pry_tile(C, user)
 		return
 
-/turf/open/floor/wood/pry_tile(obj/item/weapon/crowbar/C, mob/user, silent = FALSE)
-	if(broken || burnt)
-		broken = 0
-		burnt = 0
-		if(!silent)
-			user << "<span class='danger'>You remove the broken plating.</span>"
-	else if(!silent)
-		user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
+/turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	playsound(src, C.usesound, 80, 1)
-	return make_plating()
+	var/is_screwdriver = istype(C, /obj/item/weapon/screwdriver)
+	return remove_tile(user, silent, make_tile = is_screwdriver)
 
 /turf/open/floor/wood/cold
 	temperature = 255.37

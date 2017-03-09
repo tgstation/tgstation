@@ -152,18 +152,21 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		P.attackby(T, user, params)
 	return 0
 
-/turf/open/floor/proc/pry_tile(obj/item/weapon/crowbar/C, mob/user, silent = FALSE)
+/turf/open/floor/proc/pry_tile(obj/item/C, mob/user, silent = FALSE)
+	playsound(src, C.usesound, 80, 1)
+	return remove_tile(user, silent)
+
+/turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
 	if(broken || burnt)
 		broken = 0
 		burnt = 0
-		if(!silent)
+		if(user && !silent)
 			user << "<span class='danger'>You remove the broken plating.</span>"
 	else
-		if(!silent)
+		if(user && !silent)
 			user << "<span class='danger'>You remove the floor tile.</span>"
-		if(floor_tile)
+		if(floor_tile && make_tile)
 			new floor_tile(src)
-	playsound(src, C.usesound, 80, 1)
 	return make_plating()
 
 /turf/open/floor/singularity_pull(S, current_size)
