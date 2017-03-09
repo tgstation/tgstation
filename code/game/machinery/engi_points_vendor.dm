@@ -106,7 +106,7 @@
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "vending", "Engineering Point Redemption", 400, 350)
-	set_content(dat.Join())
+	popup.set_content(dat.Join())
 	popup.open()
 
 /obj/machinery/engi_points_manager/Topic(href, href_list)
