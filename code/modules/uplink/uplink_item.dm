@@ -1226,8 +1226,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	restricted_roles = list("Assistant")
 	
 /datum/uplink_item/role_restricted/syndi_mmi
-	name = "Syndie MMI
-	desc = "A mmi modified to give cyborgs laws to serve the syndiecate without having their interface damaged by emaggs"
+	name = "Syndicate MMI"
+	desc = "An MMI modified to give cyborgs laws to serve the syndicate without having their interface damaged by Cryptographic Sequencers"
 	item = /obj/item/device/mmi/syndie
 	cost = 5
 	surplus = 0
