@@ -298,7 +298,7 @@
 		Beam(target,icon_state="lightning[rand(1,12)]",time=20)
 		target.obj_integrity = target.max_integrity
 		target.update_icon()
-		cooldown = world.time + 50
+		cooldown = world.time + 40
 		return TRUE
 	else
 		return FALSE
@@ -307,12 +307,11 @@
 	if(istype(target,/obj/structure/grille/broken))
 		var/N = 0
 		var/list/C = list()
-		cooldown = world.time + 200
 		new /obj/effect/overlay/temp/small_smoke(target_loc)
 		for(var/obj/item/weapon/shard/S in range(1,target_loc))
 			C += S
 		if(C.len >= 2)
-			cooldown = world.time + 200
+			cooldown = world.time + 120
 			qdel(target)
 			qdel(C[1])
 			qdel(C[2])
@@ -359,7 +358,7 @@
 			new /turf/closed/wall(target_loc)
 			playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 100, 1)
 			Beam(target_loc,icon_state="lightning[rand(8,12)]",time=40)
-			cooldown = world.time + 210
+			cooldown = world.time + 150
 			return TRUE
 		if (goal == 1)
 			new /obj/item/stack/sheet/metal(target_loc)
@@ -373,7 +372,7 @@
 			flooring.icon_state = initial(flooring.icon_state)
 			playsound(flooring,'sound/magic/LightningShock.ogg', 50, 1)
 			Beam(flooring,icon_state="lightning[rand(1,12)]",time=20)
-			cooldown = world.time + 30
+			sleep(10)
 
 /obj/machinery/repair_turret/process()
 	if(cooldown<=world.time)
