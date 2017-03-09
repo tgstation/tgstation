@@ -65,7 +65,7 @@ var/list/holopads = list()
 	holopads -= src
 	return ..()
 
-/obj/machinery/holo_pad/power_change()
+/obj/machinery/holopad/power_change()
 	if (powered())
 		stat &= ~NOPOWER
 	else

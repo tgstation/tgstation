@@ -1,0 +1,4 @@
+author: "fludd12"
+delete-after: True
+changes: 
+  - bugfix: "Modifying/deconstructing skateboards while riding them no longer nails you to the sky."

@@ -235,3 +235,10 @@ var/syndicate_code_response//Code response for traitors.
 			code_phrase += ", "
 
 	return code_phrase
+
+/proc/change_station_name(designation)
+	if(config && config.server_name)
+		world.name = "[config.server_name]: [designation]"
+	else
+		world.name = designation
+	station_name = designation

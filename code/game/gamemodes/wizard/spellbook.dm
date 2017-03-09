@@ -277,6 +277,14 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/the_traps
+	name = "The Traps!"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
+	log_name = "TT"
+	category = "Offensive"
+	cost = 1
+
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	refundable = 0
@@ -492,6 +500,25 @@
 	if(active)
 		dat += "<b>Already cast!</b><br>"
 	return dat
+
+/datum/spellbook_entry/summon/ghosts
+	name = "Summon Ghosts"
+	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilties to frustrate you."
+	log_name = "SGH"
+
+/datum/spellbook_entry/summon/ghosts/IsAvailible()
+	if(!ticker.mode)
+		return FALSE
+	else
+		return TRUE
+
+/datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	feedback_add_details("wizard_spell_learned", log_name)
+	new /datum/round_event/wizard/ghost()
+	active = TRUE
+	user << "<span class='notice'>You have cast summon ghosts!</span>"
+	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
+	return TRUE
 
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
@@ -773,7 +800,7 @@
 		recoil(user)
 	else
 		user.mind.AddSpell(S)
-		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		user <<"<span class='notice'>You rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
 		user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 		onlearned(user)
 

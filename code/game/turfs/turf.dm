@@ -48,6 +48,12 @@
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
 
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
+
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
@@ -56,7 +62,7 @@
 	if(force)
 		..()
 		//this will completely wipe turf state
-		var/turf/basic/B = new /turf/basic(src)
+		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
 		for(var/I in B.vars)
@@ -169,7 +175,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.is_frozen)
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
