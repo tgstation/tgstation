@@ -1,6 +1,6 @@
-var/datum/subsystem/gravity/SSgravity
+var/datum/controller/subsystem/gravity/SSgravity
 
-/datum/subsystem/gravity
+/datum/controller/subsystem/gravity
 	name = "Gravity"
 	priority = 75
 	wait = 1
@@ -35,15 +35,15 @@ var/datum/subsystem/gravity/SSgravity
 	var/inited_areas = 0
 	var/init_state = 0
 
-/datum/subsystem/gravity/New()
+/datum/controller/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
 
-/datum/subsystem/gravity/proc/init_lists()
+/datum/controller/subsystem/gravity/proc/init_lists()
 	gravgens = list()
 	purging_atoms = list()
 	atoms_forced_gravity_processing = list()
 
-/datum/subsystem/gravity/Initialize()
+/datum/controller/subsystem/gravity/Initialize()
 	init_state = 1
 	init_lists()
 	inited_atoms = 0
@@ -58,7 +58,7 @@ var/datum/subsystem/gravity/SSgravity
 	testing("Initialized gravity for [inited_atoms] movable atoms and [inited_areas] areas!")
 	. = ..()
 
-/datum/subsystem/gravity/Recover()
+/datum/controller/subsystem/gravity/Recover()
 	init_lists()
 	do_purge = SSgravity.do_purge
 	purge_interval = SSgravity.purge_interval
@@ -68,7 +68,7 @@ var/datum/subsystem/gravity/SSgravity
 	error_no_area = SSgravity.error_no_area
 	error_no_turf = SSgravity.error_no_turf
 
-/datum/subsystem/gravity/proc/reset_gravity_processing()
+/datum/controller/subsystem/gravity/proc/reset_gravity_processing()
 	var/count = 0
 	var/can_fire_old = can_fire
 	can_fire = FALSE
@@ -89,7 +89,7 @@ var/datum/subsystem/gravity/SSgravity
 	can_fire = can_fire_old
 	return "[count] atoms purged from forced processing! [atoms_not_found] things found so far that were not atoms!"
 
-/datum/subsystem/gravity/proc/recalculate_atoms()
+/datum/controller/subsystem/gravity/proc/recalculate_atoms()
 	currentrun = list()
 	currentrun_manual = list()
 	var/tempcost = REALTIMEOFDAY
@@ -105,7 +105,7 @@ var/datum/subsystem/gravity/SSgravity
 	currentrun_manual = atoms_forced_gravity_processing.Copy()
 	recalculation_cost = REALTIMEOFDAY - tempcost
 
-/datum/subsystem/gravity/fire(resumed = FALSE)
+/datum/controller/subsystem/gravity/fire(resumed = FALSE)
 	if(!resumed)
 		if(legacy_gravity)
 			can_fire = FALSE
