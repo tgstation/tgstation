@@ -6,6 +6,8 @@
 	icon_state = "spatial_gateway"
 	density = 1
 	light_range = 2
+	light_power = 3
+	light_color = "#6A4D2F"
 	var/sender = TRUE //If this gateway is made for sending, not receiving
 	var/both_ways = FALSE
 	var/lifetime = 25 //How many deciseconds this portal will last
@@ -15,6 +17,7 @@
 
 /obj/effect/clockwork/spatial_gateway/New()
 	..()
+	update_light()
 	addtimer(CALLBACK(src, .proc/check_setup), 1)
 
 /obj/effect/clockwork/spatial_gateway/Destroy()

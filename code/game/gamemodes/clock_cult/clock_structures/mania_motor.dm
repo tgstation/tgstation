@@ -8,9 +8,10 @@
 	inactive_icon = "mania_motor_inactive"
 	unanchored_icon = "mania_motor_unwrenched"
 	construction_value = 20
+	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	max_integrity = 100
 	obj_integrity = 100
-	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
+	light_color = "#AF0AAF"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
 	/obj/item/clockwork/alloy_shards/small = 2, \
 	/obj/item/clockwork/component/geis_capacitor/antennae = 1)
@@ -51,7 +52,7 @@
 /obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		set_light(2, 0.1)
+		set_light(2, 0.9)
 	else
 		set_light(0)
 

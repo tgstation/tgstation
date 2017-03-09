@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
 	true_name = pick(possible_true_names)
-	set_light(2, 0.1)
+	set_light(2, 1.1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()

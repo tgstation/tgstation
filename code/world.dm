@@ -1,6 +1,6 @@
 /world
 	mob = /mob/new_player
-	turf = /turf/basic
+	turf = /turf/open/space/basic
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
@@ -9,13 +9,13 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+	maxz = 14
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
 
 /world/New()
 	log_world("World loaded at [world.timeofday]")
-	map_ready = 1
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
@@ -57,7 +57,7 @@
 
 	data_core = new /datum/datacore()
 
-	Master.Setup(10, FALSE)
+	Master.Initialize(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)

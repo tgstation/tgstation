@@ -585,7 +585,7 @@ var/next_mob_id = 0
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
 				stat(null)
-				for(var/datum/subsystem/SS in Master.subsystems)
+				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			cameranet.stat_entry()
 

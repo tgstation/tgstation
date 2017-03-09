@@ -34,11 +34,11 @@
 	var/polltype = ""
 	var/multiplechoiceoptions = 0
 	if(query_poll_get_details.NextRow())
-		pollstarttime = query_poll_get_details[1]
-		pollendtime = query_poll_get_details[2]
-		pollquestion = query_poll_get_details[3]
-		polltype = query_poll_get_details[4]
-		multiplechoiceoptions = text2num(query_poll_get_details[5])
+		pollstarttime = query_poll_get_details.item[1]
+		pollendtime = query_poll_get_details.item[2]
+		pollquestion = query_poll_get_details.item[3]
+		polltype = query_poll_get_details.item[4]
+		multiplechoiceoptions = text2num(query_poll_get_details.item[5])
 	switch(polltype)
 		if(POLLTYPE_OPTION)
 			var/DBQuery/query_option_get_votes = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
