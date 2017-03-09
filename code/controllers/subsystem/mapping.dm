@@ -118,9 +118,8 @@ var/datum/controller/subsystem/mapping/SSmapping
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station!")
 
-	INIT_ANNOUNCE("Loading mining level...")
-	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
-	INIT_ANNOUNCE("Loaded mining level!")
+	if(config.minetype != "lavaland")
+		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"

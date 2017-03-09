@@ -9,6 +9,9 @@
 	pixel_y = -248
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = 0
+	light_power = 0.7
+	light_range = 15
+	light_color = rgb(190, 135, 0)
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10

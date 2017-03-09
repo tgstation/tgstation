@@ -19,18 +19,20 @@
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
-/obj/item/stack/New(var/loc, var/amount=null)
+/obj/item/stack/Initialize(mapload, new_amount=null)
 	..()
-	if (amount)
-		src.amount = amount
+	if(new_amount)
+		amount = new_amount
 	if(!merge_type)
-		merge_type = src.type
-	return
+		merge_type = type
+	for(var/obj/item/stack/S in loc)
+		if(S.merge_type == merge_type)
+			merge(S)
 
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
-	return ..()
+	. = ..()
 
 /obj/item/stack/examine(mob/user)
 	..()
@@ -51,10 +53,10 @@
 		user << "There is [src.get_amount()] in the stack."
 
 /obj/item/stack/proc/get_amount()
-	if (is_cyborg)
-		return round(source.energy / cost)
+	if(is_cyborg)
+		. = round(source.energy / cost)
 	else
-		return (amount)
+		. = (amount)
 
 /obj/item/stack/attack_self(mob/user)
 	interact(user)
@@ -101,7 +103,6 @@
 	t1 += "</TT></body></HTML>"
 	user << browse(t1, "window=stack")
 	onclose(user, "stack")
-	return
 
 /obj/item/stack/Topic(href, href_list)
 	..()
@@ -204,7 +205,7 @@
 	update_icon()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
-	if(QDELETED(S) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
+	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
@@ -220,12 +221,12 @@
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
 		merge(o)
-	return ..()
+	. = ..()
 
 /obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
 	if(istype(AM, merge_type))
 		merge(AM)
-	return ..()
+	. = ..()
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_held_item() == src)
@@ -234,7 +235,6 @@
 		change_stack(user,1)
 	else
 		..()
-	return
 
 /obj/item/stack/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src))
@@ -272,7 +272,7 @@
 		merge(S)
 		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
 	else
-		return ..()
+		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA
