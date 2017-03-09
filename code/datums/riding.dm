@@ -224,7 +224,6 @@
 /datum/riding/space/speedbike
 	keytype = null
 	vehicle_move_delay = 0
-	if(ridden = 
 
 /datum/riding/space/speedbike/handle_vehicle_layer()
 	switch(ridden.dir)
