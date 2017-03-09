@@ -513,7 +513,7 @@ var/datum/controller/subsystem/job/SSjob
 	var/oldjobs = SSjob.occupations
 	sleep(20)
 	for (var/datum/job/J in oldjobs)
-		INVOKE_ASYNC(src, .proc/RecoverJob)
+		INVOKE_ASYNC(src, .proc/RecoverJob, J)
 
 /datum/controller/subsystem/job/proc/RecoverJob(datum/job/J)
 	var/datum/job/newjob = GetJob(J.title)
