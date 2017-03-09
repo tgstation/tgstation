@@ -42,8 +42,8 @@
 		new /datum/GBP_equipment("Tendie",				/obj/item/weapon/reagent_containers/food/snacks/nugget,				50,		1),
 		new /datum/GBP_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,						50,		1),
 		new /datum/GBP_equipment("Fulton Beacon",		/obj/item/fulton_core,												50,		1),
-		new /datum/GBP_equipment("Fulton Pack",			/obj/item/weapon/extraction_pack,									200,	1),
 		new /datum/GBP_equipment("Soap",				/obj/item/weapon/soap/nanotrasen,									250,	1),
+		new /datum/GBP_equipment("Advanced Indoor Fulton Pack",			/obj/item/weapon/extraction_pack/advanced,			300,	1),
 		new /datum/GBP_equipment("Insulated Gloves",				/obj/item/clothing/gloves/color/yellow,					400,	1),
 		new /datum/GBP_equipment("50 metal sheets",			/obj/item/stack/sheet/metal/fifty,								500,	1),
 		new /datum/GBP_equipment("50 glass sheets",			/obj/item/stack/sheet/glass/fifty,								500,	1),
@@ -194,4 +194,4 @@
 	
 /obj/machinery/engi_points_delivery/Destrpy()
 	..()
-	deliverer_list += src
+	deliverer_list -= src
