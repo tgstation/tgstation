@@ -1227,7 +1227,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	
 /datum/uplink_item/role_restricted/syndi_mmi
 	name = "Syndicate MMI"
-	desc = "An MMI modified to give cyborgs laws to serve the syndicate without having their interface damaged by Cryptographic Sequencers"
+	desc = "An MMI modified to give cyborgs laws to serve the Syndicate without having their interface damaged by Cryptographic Sequencers"
 	item = /obj/item/device/mmi/syndie
 	cost = 5
 	surplus = 0
