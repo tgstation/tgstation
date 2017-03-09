@@ -35,7 +35,7 @@
 	icon_state = "hos"
 	item_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 70, acid = 90)
+	armor = list(melee = 1000, bullet = 1000, laser = 1000, energy = 1000, bomb = 1000, bio = 1000, rad = 1000, fire = 1000, acid = 1000)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
@@ -54,6 +54,7 @@
 	icon_state = "warden_alt"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list(melee = 1000, bullet = 1000, laser = 1000, energy = 1000, bomb = 1000, bio = 1000, rad = 1000, fire = 1000, acid = 1000)
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	strip_delay = 70
@@ -81,7 +82,7 @@
 	icon_state = "capcarapace"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
-	armor = list(melee = 50, bullet = 40, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 100, acid = 90)
+	armor = list(melee = 1000, bullet = 1000, laser = 1000, energy = 1000, bomb = 1000, bio = 1000, rad = 1000, fire = 1000, acid = 1000)
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
 
@@ -158,7 +159,7 @@
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 1000, bullet = 1000, laser = 1000, energy = 1000, bomb = 1000, bio = 1000, rad = 1000, fire = 1000, acid = 1000)
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hit_reaction_chance = 50
