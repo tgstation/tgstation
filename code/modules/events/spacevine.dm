@@ -268,8 +268,11 @@
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
 		var/mob/living/M = crosser
-		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		if(!("vines" in M.faction))
+			M.adjustBruteLoss(5)
+			M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		else if(("vines" in M.faction))
+			return
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
