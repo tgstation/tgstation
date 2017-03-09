@@ -2377,7 +2377,7 @@
 "aTK" = (/obj/machinery/vending/cigarette,/turf/open/floor/plasteel,/area/crew_quarters/locker)
 "aTL" = (/obj/machinery/firealarm{dir = 2; pixel_y = 24},/turf/open/floor/plasteel,/area/crew_quarters/locker)
 "aTM" = (/obj/structure/closet/secure_closet/personal,/turf/open/floor/plasteel,/area/crew_quarters/locker)
-"aTN" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 8; on = 1},/obj/structure/table,/obj/item/stack/cable_coil/random,/obj/item/stack/cable_coil/random,/turf/open/floor/plasteel,/area/storage/art)
+"aTN" = (/obj/structure/table,/obj/item/stack/cable_coil/random,/obj/item/stack/cable_coil/random,/turf/open/floor/plasteel,/area/storage/art)
 "aTO" = (/turf/open/floor/plasteel,/area/storage/art)
 "aTP" = (/obj/machinery/light/small{dir = 4},/obj/machinery/light_switch{pixel_x = 27},/turf/open/floor/plasteel,/area/storage/art)
 "aTQ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plating,/area/maintenance/port)

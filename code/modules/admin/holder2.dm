@@ -18,8 +18,7 @@ var/list/admin_datums = list()
 
 /datum/admins/New(R = "Pedal", new_rights = 0, ckey)
 	if(!ckey)
-		spawn(0)
-			del(src)
+		QDEL_IN(src, 0)
 		throw EXCEPTION("Admin datum created without a ckey")
 		return
 //	if(!istype(R))
