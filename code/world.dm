@@ -1,6 +1,6 @@
 /world
 	mob = /mob/dead/new_player
-	turf = /turf/basic
+	turf = /turf/open/space/basics
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
@@ -9,6 +9,7 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+	maxz = 14
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
@@ -56,7 +57,7 @@
 
 	data_core = new /datum/datacore()
 
-	Master.Setup(10, FALSE)
+	Master.Initialize(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
