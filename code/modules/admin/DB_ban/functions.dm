@@ -329,7 +329,7 @@
 	holder.DB_ban_panel()
 
 
-/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null)
+/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, page = 0)
 	if(!usr.client)
 		return
 
@@ -390,7 +390,30 @@
 	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
 	if(adminckey || playerckey)
-
+		playerckey = sanitizeSQL(ckey(playerckey))
+		adminckey = sanitizeSQL(ckey(adminckey))
+		var/playersearch = ""
+		var/adminsearch = ""
+		if(playerckey)
+			playersearch = "AND ckey = '[playerckey]' "
+		if(adminckey)
+			adminsearch = "AND a_ckey = '[adminckey]' "
+		var/bancount = 0
+		var/bansperpage = 15
+		var/pagecount = 0
+		page = text2num(page)
+		var/DBQuery/query_count_bans = dbcon.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch]")
+		if(!query_count_bans.warn_execute())
+			return
+		if(query_count_bans.NextRow())
+			bancount = text2num(query_count_bans.item[1])
+		if(bancount > bansperpage)
+			output += "<br><b>Page: </b>"
+			while(bancount > 0)
+				output+= "|<a href='?_src_=holder;dbsearchckey=[playerckey];dbsearchadmin=[adminckey];dbsearchpage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+				bancount -= bansperpage
+				pagecount++
+			output += "|"
 		var/blcolor = "#ffeeee" //banned light
 		var/bdcolor = "#ffdddd" //banned dark
 		var/ulcolor = "#eeffee" //unbanned light
@@ -404,17 +427,8 @@
 		output += "<th width='20%'><b>ADMIN</b></th>"
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
-
-		adminckey = ckey(adminckey)
-		playerckey = ckey(playerckey)
-		var/adminsearch = ""
-		var/playersearch = ""
-		if(adminckey)
-			adminsearch = "AND a_ckey = '[adminckey]' "
-		if(playerckey)
-			playersearch = "AND ckey = '[playerckey]' "
-
-		var/DBQuery/query_search_bans = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC")
+		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
+		var/DBQuery/query_search_bans = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 
