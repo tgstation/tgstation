@@ -92677,14 +92677,14 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "deE" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chapelprivacy";
-	name = "Chapel Privacy Shutters"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -92948,16 +92948,16 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dfx" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chapelprivacy";
-	name = "Chapel Privacy Shutters"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/item/weapon/crowbar,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfz" = (
@@ -94784,6 +94784,13 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/toxins/xenobiology)
+"djt" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -138316,7 +138323,7 @@ aBQ
 dee
 aEr
 aKL
-deE
+djt
 daY
 deS
 dbb
