@@ -516,7 +516,6 @@
 			var/obj/effect/anomaly/pyro/A = new(L)
 			A.lifespan = 200
 
-<<<<<<< HEAD
 	return
 
 /obj/machinery/power/supermatter_shard/proc/supermatter_zap(atom/src, range = 3, power)
