@@ -204,8 +204,7 @@
 		else if(M.getFireLoss())
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your burns healing! It stings like hell!</span>"
-			M.emote("scream")
+				M << "<span class='danger'>You feel your burns healing!</span>"
 	..()
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/M)
