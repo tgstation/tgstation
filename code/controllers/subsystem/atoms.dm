@@ -33,7 +33,10 @@ var/datum/subsystem/atoms/SSatoms
 	if(atoms)
 		for(var/I in atoms)
 			var/atom/A = I
-			if(!A.initialized && !QDELETED(A))	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				if(QDELETED(A))
+					stack_trace("Found new qdeletion in type [A.type]!")
+					continue
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
 					LAZYADD(late_loaders, A)
@@ -46,7 +49,10 @@ var/datum/subsystem/atoms/SSatoms
 		var/count = 0
 		#endif
 		for(var/atom/A in world)
-			if(!A.initialized && !QDELETED(A))	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				if(QDELETED(A))
+					stack_trace("Found new qdeletion in type [A.type]!")
+					continue
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
 					LAZYADD(late_loaders, A)
