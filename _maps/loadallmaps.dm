@@ -7,9 +7,9 @@
 #include "map_files\TgStation\tgstation.2.1.3.dmm"
 
 #include "map_files\generic\Centcomm.dmm"
-#include "map_files\generic\Fastload.dmm"
 #include "map_files\generic\Lavaland.dmm"
 #include "map_files\generic\Space.dmm"
+#include "map_files\generic\SpaceDupe.dmm"
 #include "map_files\generic\SpaceDock.dmm"
 
 #ifdef TRAVISBUILDING
