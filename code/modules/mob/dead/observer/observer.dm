@@ -64,7 +64,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	if(global.cross_allowed)
+	if(config.cross_allowed)
 		verbs += /mob/dead/observer/proc/server_hop
 
 	ghostimage = image(src.icon,src,src.icon_state)
@@ -606,16 +606,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
+	if(!config.cross_allowed)
+		verbs -= /mob/dead/observer/proc/server_hop
+		src << "<span class='notice'>Server Hop has been disabled.</span>"
+		return
+	if (alert(src, "Jump to server running at [config.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
-	if (client && global.cross_allowed)
-		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+	if (client && config.cross_allowed)
+		src << "<span class='notice'>Sending you to [config.cross_address].</span>"
 		new /obj/screen/splash(client)
 		notransform = TRUE
 		sleep(29)	//let the animation play
 		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(global.cross_address + "?server_hop=[key]")
+		client << link(config.cross_address + "?server_hop=[key]")
 	else
 		src << "<span class='error'>There is no other server configured!</span>"
 

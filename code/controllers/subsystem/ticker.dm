@@ -513,7 +513,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 	CHECK_TICK
 
-	if(cross_allowed)
+	if(config.cross_allowed)
 		send_news_report()
 
 	CHECK_TICK
