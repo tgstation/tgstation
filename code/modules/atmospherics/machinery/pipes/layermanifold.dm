@@ -2,6 +2,7 @@
 	name = "pipe-layer manifold"
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifoldlayer"
+	item_state = "manifoldlayer"
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH

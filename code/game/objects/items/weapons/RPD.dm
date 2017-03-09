@@ -206,8 +206,11 @@ var/global/list/RPD_recipes=list(
 	var/generated_layer_list = ""
 	var/layers_total = PIPING_LAYER_MAX - PIPING_LAYER_MIN + 1
 	for(var/iter = PIPING_LAYER_MIN, iter <= layers_total, iter++)
-		generated_layer_list += "<A href='?src=\ref[src];setlayer=[iter]'>[iter]</A>"
-	dat += "<span class='linkOn'>Atmospherics Piping Layer: [generated_layer_list]</span><BR>"
+		if(iter == piping_layer)
+			generated_layer_list += "<span class='linkOn'><A href='?src=\ref[src];setlayer=[iter]'>[iter]</A></span>"
+		else
+			generated_layer_list += "<A href='?src=\ref[src];setlayer=[iter]'>[iter]</A>"
+	dat += "Atmospherics Piping Layer: [generated_layer_list]<BR>"
 	dat += "</ul>"
 
 	var/icon/preview=null
@@ -477,7 +480,10 @@ var/global/list/RPD_recipes=list(
 		show_menu(usr)
 
 	if(href_list["setlayer"])
-		piping_layer = href_list["setlayer"]
+		if(!isnum(href_list["setlayer"]))
+			piping_layer = text2num(href_list["setlayer"])
+		else
+			piping_layer = href_list["setlayer"]
 		show_menu(usr)
 
 	if(href_list["eatpipes"])

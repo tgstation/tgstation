@@ -80,8 +80,6 @@ Buildable meters
 		is_bent = 1
 
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
 
 /obj/item/pipe/dropped()
 	..()
