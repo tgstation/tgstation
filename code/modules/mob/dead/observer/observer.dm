@@ -382,13 +382,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.loc = pick(L)
 	update_parallax_contents()
 
-/mob/dead/observer/verb/follow()
+/mob/dead/observer/verb/follow() // [F]
 	set category = "Ghost"
-	set name = "Orbit" // "Haunt"
-	set desc = "Follow and orbit a mob."
+	set name = "Pay Respects" // "Haunt"
+	set desc = "Press F."
 
 	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
+	var/input = input("Please, select a mob!", "Pay Respects", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
 	ManualFollow(target)
 
