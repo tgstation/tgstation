@@ -704,6 +704,8 @@
 	return 0
 
 /mob/living/carbon/regenerate_organs()
+	CHECK_DNA_AND_SPECIES(src)
+
 	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
 		var/obj/item/organ/lungs/L = new()
 		L.Insert(src)
