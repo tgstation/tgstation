@@ -13,6 +13,6 @@
 
 	duration = 3 * SHUTTLE_RIPPLE_TIME
 
-/obj/effect/overlay/temp/ripple/New()
+/obj/effect/overlay/temp/ripple/New(loc, time_left)
 	. = ..()
-	animate(src, alpha=255, time=SHUTTLE_RIPPLE_TIME)
+	animate(src, alpha=255, time=time_left)
