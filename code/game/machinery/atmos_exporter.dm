@@ -55,12 +55,12 @@
 	anchored = TRUE
 	
 /obj/machinery/atmos_points_exporter/Initialize()
-	atmos_exporter_list += src
 	..()
+	atmos_exporter_list += src
 
 /obj/machinery/atmos_points_exporter/Destroy()
 	atmos_exporter_list -= src
-	..()
+	return ..()
 
 /obj/machinery/atmos_points_exporter/proc/export()
 	for(var/obj/machinery/portable_atmospherics/canister/C in get_turf(src))
