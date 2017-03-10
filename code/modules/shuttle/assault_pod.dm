@@ -53,6 +53,6 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	user << "Landing zone set."
+	to_chat(user, "Landing zone set.")
 
 	qdel(src)

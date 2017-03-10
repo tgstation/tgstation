@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			src<<"Icon is: \icon[getFlatIcon(src)]"
+			to_chat(src, "Icon is: \icon[getFlatIcon(src)]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -869,7 +869,7 @@ The _flatIcons list is a cache for generated icon files.
 	text_image.color = AverageColour(atom_icon)
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
-	del(atom_icon)
+	qdel(atom_icon)
 	return text_image
 
 var/global/list/friendly_animal_types = list()
@@ -954,6 +954,8 @@ var/global/list/humanoid_icon_cache = list()
 		if(outfit)
 			body.equipOutfit(outfit, TRUE)
 
+		SSoverlays.Flush()
+
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		body.setDir(NORTH)
@@ -993,7 +995,7 @@ var/list/freeze_item_icons = list()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
 
 /obj/proc/make_frozen_visual()
-	if(!is_frozen && (initial(icon) && initial(icon_state)))
+	if(!HAS_SECONDARY_FLAG(src, FROZEN) && (initial(icon) && initial(icon_state)))
 		var/index = freeze_icon_index()
 		var/icon/IC
 		var/icon/P = freeze_item_icons[index]
@@ -1007,10 +1009,10 @@ var/list/freeze_item_icons = list()
 			freeze_item_icons[index] = P
 		icon = P
 		name = "frozen [name]"
-		is_frozen = TRUE
+		SET_SECONDARY_FLAG(src, FROZEN)
 
 //Assumes already frozed
 obj/proc/make_unfrozen()
 	icon = initial(icon)
 	name = replacetext(name, "frozen ", "")
-	is_frozen = FALSE
+	CLEAR_SECONDARY_FLAG(src, FROZEN)

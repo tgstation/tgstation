@@ -46,7 +46,7 @@
 	if(!foldable)
 		return
 	if(contents.len)
-		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
+		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
 		return
 	if(!ispath(foldable))
 		return
@@ -54,7 +54,7 @@
 	//Close any open UI windows first
 	close_all()
 
-	user << "<span class='notice'>You fold [src] flat.</span>"
+	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 	var/obj/item/I = new foldable(get_turf(src))
 	user.drop_item()
 	user.put_in_hands(I)
@@ -147,7 +147,7 @@
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
-	icon_state = "sterile"
+	illustration = "sterile"
 
 /obj/item/weapon/storage/box/masks/New()
 	..()
@@ -714,17 +714,17 @@
 	if(istype(W, /obj/item/weapon/pen))
 		//if a pen is used on the sack, dialogue to change its design appears
 		if(contents.len)
-			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
+			to_chat(user, "<span class='warning'>You can't modify this [src] with items still inside!</span>")
 			return
 		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
 		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
 		if(get_dist(usr, src) > 1)
-			usr << "<span class='warning'>You have moved too far away!</span>"
+			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 			return
 		var/choice = designs.Find(switchDesign)
 		if(design == designs[choice] || designs[choice] == "Cancel")
 			return 0
-		usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+		to_chat(usr, "<span class='notice'>You make some modifications to the [src] using your pen.</span>")
 		design = designs[choice]
 		icon_state = "paperbag_[design]"
 		item_state = "paperbag_[design]"
@@ -762,7 +762,7 @@
 
 /obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
-	icon_state = "donk_kit"
+	illustration = "donk_kit"
 	item_state = null
 
 /obj/item/weapon/storage/box/ingredients/wildcard

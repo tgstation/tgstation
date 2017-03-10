@@ -16,7 +16,7 @@
 
 	var/needs_update = FALSE
 
-/atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
+/atom/movable/lighting_overlay/Initialize(mapload, var/no_update = FALSE)
 	. = ..()
 	verbs.Cut()
 	global.all_lighting_overlays += src
@@ -43,9 +43,7 @@
 			T.lighting_overlay = null
 			T.luminosity = 1
 
-		..()
-		return QDEL_HINT_QUEUE
-
+		return ..()
 	else
 		return QDEL_HINT_LETMELIVE
 

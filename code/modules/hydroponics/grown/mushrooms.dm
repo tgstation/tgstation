@@ -172,7 +172,7 @@
 	M.move_to_delay -= round(seed.production / 50)
 	M.health = M.maxHealth
 	qdel(src)
-	user << "<span class='notice'>You plant the walking mushroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
 
 
 // Chanterelle
@@ -241,7 +241,7 @@
 	planted.max_integrity = seed.endurance
 	planted.yield = seed.yield
 	planted.potency = seed.potency
-	user << "<span class='notice'>You plant [src].</span>"
+	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	qdel(src)
 
 
@@ -255,7 +255,7 @@
 	icon_dead = "glowshroom-dead"
 	plantname = "Glowcaps"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
-	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list()
 	reagents_add = list("teslium" = 0.1, "nutriment" = 0.04)
 	rarity = 30
@@ -263,7 +263,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	seed = /obj/item/seeds/glowshroom/glowcap
 	name = "glowcap cluster"
-	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but aren't bioluminescent. They're warm to the touch..."
+	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but isn't actually bioluminescent. They're warm to the touch..."
 	icon_state = "glowcap"
 	filling_color = "#00FA9A"
 	effect_path = /obj/structure/glowshroom/glowcap

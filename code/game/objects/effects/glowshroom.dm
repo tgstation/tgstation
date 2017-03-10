@@ -12,6 +12,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	density = 0
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
+	light_color = "#AAD84B"
 	layer = ABOVE_NORMAL_TURF_LAYER
 	obj_integrity = 30
 	max_integrity = 30
@@ -24,18 +25,23 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
+	desc = "Mycena Ruthenia, a species of mushroom that, while it does glow in the dark, is not actually bioluminescent."
 	icon_state = "glowcap"
+	light_color = LIGHT_COLOR_RED
 
 /obj/structure/glowshroom/single
 	yield = 0
 
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
-	user << "This is a [generation]\th generation [name]!"
+	to_chat(user, "This is a [generation]\th generation [name]!")
 
 /obj/structure/glowshroom/New()
 	..()
-	set_light(round(potency/10))
+	addtimer(CALLBACK(src, .proc/setup), 0) //run this on the next tick so we can set vars first
+
+/obj/structure/glowshroom/proc/setup()
+	set_light(1.4 + potency*0.03, max(potency*0.04, 0.1))
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)

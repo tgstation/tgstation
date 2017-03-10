@@ -33,9 +33,9 @@
 		if(istype(O,/obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
-	
+
 	if(holoitem)
-		O.flags |= HOLOGRAM
+		SET_SECONDARY_FLAG(O, HOLOGRAM)
 	return O
 
 

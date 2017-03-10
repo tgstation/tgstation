@@ -8,6 +8,7 @@
 	smooth = SMOOTH_TRUE | SMOOTH_BORDER
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
+	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1

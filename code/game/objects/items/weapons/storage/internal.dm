@@ -29,9 +29,9 @@
 	. = ..()
 	if(. && silent && !prevent_warning)
 		if(quickdraw)
-			user << "<span class='notice'>You discreetly slip [W] into [src]. Alt-click [src] to remove it.</span>"
+			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src]. Alt-click [src] to remove it.</span>")
 		else
-			user << "<span class='notice'>You discreetly slip [W] into [src]."
+			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src].")
 
 /obj/item/weapon/storage/internal/pocket/big
 	max_w_class = WEIGHT_CLASS_NORMAL

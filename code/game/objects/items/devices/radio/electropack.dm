@@ -30,7 +30,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
-			user << "<span class='warning'>You need help taking this off!</span>"
+			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
 
@@ -40,7 +40,7 @@
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.transferItemToLoc(W, A))
-			user << "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>"
+			to_chat(user, "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>")
 			return
 		W.master = A
 		A.part1 = W
@@ -109,7 +109,7 @@
 		var/mob/M = loc
 		step(M, pick(cardinal))
 
-		M << "<span class='danger'>You feel a sharp shock!</span>"
+		to_chat(M, "<span class='danger'>You feel a sharp shock!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, M)
 		s.start()

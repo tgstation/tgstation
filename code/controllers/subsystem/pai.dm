@@ -1,7 +1,7 @@
-var/datum/subsystem/pai/SSpai
+var/datum/controller/subsystem/pai/SSpai
 var/list/obj/item/device/paicard/pai_card_list = list()
 
-/datum/subsystem/pai
+/datum/controller/subsystem/pai
 	name = "pAI"
 
 	flags = SS_NO_INIT|SS_NO_FIRE
@@ -10,10 +10,10 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
 
-/datum/subsystem/pai/New()
+/datum/controller/subsystem/pai/New()
 	NEW_SS_GLOBAL(SSpai)
 
-/datum/subsystem/pai/Topic(href, href_list[])
+/datum/controller/subsystem/pai/Topic(href, href_list[])
 	if(href_list["download"])
 		var/datum/paiCandidate/candidate = locate(href_list["candidate"])
 		var/obj/item/device/paicard/card = locate(href_list["device"])
@@ -84,7 +84,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 				return
 		recruitWindow(usr)
 
-/datum/subsystem/pai/proc/recruitWindow(mob/M)
+/datum/controller/subsystem/pai/proc/recruitWindow(mob/M)
 	var/datum/paiCandidate/candidate
 	for(var/datum/paiCandidate/c in candidates)
 		if(c.key == M.key)
@@ -135,10 +135,10 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 
 	M << browse(dat, "window=paiRecruit")
 
-/datum/subsystem/pai/proc/spam_again()
+/datum/controller/subsystem/pai/proc/spam_again()
 	ghost_spam = FALSE
 
-/datum/subsystem/pai/proc/check_ready(var/datum/paiCandidate/C)
+/datum/controller/subsystem/pai/proc/check_ready(var/datum/paiCandidate/C)
 	if(!C.ready)
 		return FALSE
 	for(var/mob/dead/observer/O in player_list)
@@ -146,7 +146,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 			return C
 	return FALSE
 
-/datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
+/datum/controller/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	if(!ghost_spam)
 		ghost_spam = TRUE
 		for(var/mob/dead/observer/G in player_list)
@@ -155,7 +155,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
 			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
-			G << "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>"
+			to_chat(G, "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
