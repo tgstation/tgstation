@@ -16,7 +16,8 @@
 
 /datum/action/innate/umbrage/tagalong/process()
 	if(!tagging_along)
-		return STOP_PROCESSING(SSprocessing, src)
+		STOP_PROCESSING(SSprocessing, src)
+		return
 	var/turf/T = get_turf(tagging_along)
 	if(T.get_lumcount() < 2)
 		owner.forceMove(get_turf(tagging_along))
