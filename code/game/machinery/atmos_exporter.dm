@@ -4,8 +4,8 @@
 	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "atmos"
 	verb_say = "states"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/market_cooldown = 0
 	var/export_target = ""
 	var/export_name = "------"
@@ -51,16 +51,16 @@
 	icon = 'icons/obj/machines/teleporter.dmi'
 	icon_state = "floorflush_c"
 	verb_say = "states"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	
 /obj/machinery/atmos_points_exporter/Initialize()
-	..()
 	atmos_exporter_list += src
+	..()
 
 /obj/machinery/atmos_points_exporter/Destroy()
-	..()
 	atmos_exporter_list -= src
+	..()
 
 /obj/machinery/atmos_points_exporter/proc/export()
 	for(var/obj/machinery/portable_atmospherics/canister/C in get_turf(src))
