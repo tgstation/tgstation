@@ -562,10 +562,10 @@
 							a hyperspace ripple!</span>",
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
-					if(M.key)
+					if(M.ckey)
 						feedback_add_details("shuttle_gib", "[type]")
 					else
-						feedback_add_details("shuttle_gib_no_key", "[type]")
+						feedback_add_details("shuttle_gib_no_ckey", "[type]")
 					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
