@@ -84,6 +84,7 @@ var/list/ai_list = list()
 	var/obj/machinery/camera/portable/builtInCamera
 
 	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
+	var/mob/living/silicon/robot/deployed_shell = null
 
 /mob/living/silicon/ai/New(loc, datum/ai_laws/L, mob/target_ai)
 	..()
@@ -909,6 +910,37 @@ var/list/ai_list = list()
 		src << "Hack complete. \The [apc] is now under your \
 			exclusive control."
 		apc.update_icon()
+
+/mob/living/silicon/ai/verb/deploy_to_shell()
+	set category = "AI Commands"
+	set name = "Deploy to Shell"
+
+	if(stat == DEAD)
+		return
+
+	var/list/possible = list()
+
+	for(var/mob/living/silicon/robot/R in available_ai_shells)
+		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
+			possible += R
+
+	var/mob/living/silicon/robot/target = input(usr, "Which body to control?") as null|anything in possible
+
+	if (!target || target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
+		return
+
+	else if(mind)
+		soullink(/datum/soullink/sharedbody, src, target)
+		deployed_shell = target
+		mind.transfer_to(target)
+		target.deploy_init(src)
+		return
+
+/mob/living/silicon/ai/proc/return_to(var/mob/living/silicon/robot/target)
+	target.mind.transfer_to(src)
+	target.deployed = FALSE
+	deployed_shell = null
+	target.mainframe = null
 
 /mob/living/silicon/ai/resist()
 	return
