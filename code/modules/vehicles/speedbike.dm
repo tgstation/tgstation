@@ -35,8 +35,8 @@
 /obj/vehicle/space/speedbike/red
 	icon_state = "speedbike_red"
 	overlay_state = "cover_red"
-	
-	
+
+
 
 // ATMOBILE AND ATMOBILE UNIQUE INTERNAL ITEMS
 
@@ -88,9 +88,9 @@
 	if(vehicle)
 		loc = vehicle
 		vehicle.ex_out = FALSE
-		
-		
-		
+
+
+
 
 // ATMOBILE DATUMS
 
@@ -182,7 +182,7 @@
 		button_icon_state = "noflame"
 		bike.ex_out = FALSE
 		UpdateButtonIcon()
-		
+
 
 /datum/action/innate/atmos_bike/scrub
 	name = "Scrubber Control"
@@ -318,13 +318,13 @@
 /datum/action/innate/atmos_bike/Destroy()
 	bike = null
 	return ..()
-	
+
 /datum/action/innate/repair_bike/foam_wall
 	name = "Metal Foam Dispenser"
 	desc = "Dispenses metal foam to help contain and control breaches"
 	button_icon_state = "mech_phasing_off"
 	var/metal_synth = 3
-	
+
 /datum/action/innate/repair_bike/foam_wall/Activate()
 	if(metal_synth >= 1)
 		var/obj/effect/particle_effect/foam/metal/iron/S = new /obj/effect/particle_effect/foam/metal/iron(get_turf(owner))
@@ -357,6 +357,9 @@
 
 /obj/machinery/repair_turret/Initialize()
 	..()
+	pixel_x = 17
+	pixel_y = 37
+	layer = 4
 	update_icon()
 
 /obj/machinery/repair_turret/proc/repair(obj/target, turf/target_loc)

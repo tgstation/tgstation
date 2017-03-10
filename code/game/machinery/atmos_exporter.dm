@@ -17,18 +17,18 @@
 	var/lpressure = 0
 	var/utemp = 0
 	var/ltemp = 0
-	var/price = 200	
+	var/price = 200
 	var/can_turf
 	// requirements for the economy canister
-	var/list/e_gas = list() 
+	var/list/e_gas = list()
 	var/economy_name = ""
 	var/e_pressure = 0
 	var/e_temp = 0
 	var/e_price = 200
 	var/e_concentration1 = 0
 	// requirements for the standard canister
-	var/standard_name = ""	
-	var/list/s_gas = list() 
+	var/standard_name = ""
+	var/list/s_gas = list()
 	var/s_pressure = 0
 	var/s_temp = 0
 	var/s_price = 600
@@ -53,7 +53,7 @@
 	verb_say = "states"
 	density = FALSE
 	anchored = TRUE
-	
+
 /obj/machinery/atmos_points_exporter/Initialize()
 	..()
 	atmos_exporter_list += src
@@ -72,7 +72,7 @@
 				return
 		icon_state = "floorflush_a2"
 		qdel(C)
-			
+
 /obj/machinery/atmos_points_exporter/proc/ship()
 	icon_state = "floorflush_a"
 	playsound(src, 'sound/machines/Ding.ogg', 100, 1)
@@ -152,10 +152,10 @@
 				if("Premium")
 					export_name = premium_name
 					gas = p_gas.Copy()
-					upressure = s_pressure + 50
-					lpressure = s_pressure - 50
-					utemp = s_temp + 15
-					ltemp = s_temp - 15
+					upressure = p_pressure + 50
+					lpressure = p_pressure - 50
+					utemp = p_temp + 15
+					ltemp = p_temp - 15
 					concentration += p_concentration1
 					concentration += p_concentration2
 					concentration += p_concentration3
@@ -191,7 +191,7 @@
 						for(var/obj/machinery/engi_points_manager/EPM in engi_points_list)
 							EPM.GBP += price
 							EPM.GBPearned += price
-						if(export_target == "premium")
+						if(export_target == "Premium")
 							visible_message("<span class='danger'>You have been blessed by the atmos gods for exporting a premium canister!</span>")
 							var/prize = pick(/obj/item/clothing/under/rank/atmos_elite,/obj/item/clothing/head/atmos_hood,/obj/item/clothing/neck/cloak/atmos)
 							spawn_atom_to_turf(/obj/effect/overlay/temp/explosion/fast, src, 1, admin_spawn=FALSE)

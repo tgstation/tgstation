@@ -99,6 +99,37 @@
 	gas_type = "water_vapor"
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/proto
+	name = "prototype canister"
+
+
+/obj/machinery/portable_atmospherics/canister/proto/oxygen
+	name = "prototype canister"
+	desc = "A prototype canister for a prototype bike, what could go wrong?"
+	icon_state = "proto"
+	gas_type = "o2"
+	filled = 1
+	icon_state = "proto"
+	volume = 5000
+	obj_integrity = 300
+	max_integrity = 300
+	temperature_resistance = 2000 + T0C
+	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
+	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
+	release_pressure = ONE_ATMOSPHERE*2
+
+/obj/machinery/portable_atmospherics/canister/proto/default
+	name = "prototype canister"
+	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
+	icon_state = "proto"
+	icon_state = "proto"
+	volume = 5000
+	obj_integrity = 300
+	max_integrity = 300
+	temperature_resistance = 2000 + T0C
+	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
+	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
+
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
 	if(existing_mixture)
@@ -352,15 +383,5 @@
 				holding = null
 				. = TRUE
 	update_icon()
-	
-	
-	/obj/machinery/portable_atmospherics/canister/proto
-	name = "prototype canister"
-	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
-	icon_state = "proto"
-	volume = 5000
-	obj_integrity = 300
-	max_integrity = 300
-	temperature_resistance = 2000 + T0C
-	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
-	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
+
+

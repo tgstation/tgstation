@@ -19,26 +19,7 @@
 	var/prior_bonus = 2500
 	var/total_bonus = 0
 	var/GBP_alarm_cooldown = 4500
-	var/list/prize_list = list()
-
-/datum/GBP_equipment
-	var/equipment_name = "generic"
-	var/equipment_path = null
-	var/cost = 0
-	var/amount = 0
-
-/datum/GBP_equipment/New(name, path, cost, amount)
-	equipment_name = name
-	equipment_path = path
-	cost = cost
-	amount = amount
-
-/obj/machinery/engi_points_manager/Initialize()
-	engi_points_list += src
-	radio = new(src)
-	radio.listening = FALSE
-	radio.frequency = 1357
-	prize_list = list(
+	var/static/list/prize_list = list(
 		new /datum/GBP_equipment("Tendie",				/obj/item/weapon/reagent_containers/food/snacks/nugget,				50,		1),
 		new /datum/GBP_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,						50,		1),
 		new /datum/GBP_equipment("Fulton Beacon",		/obj/item/fulton_core,												50,		1),
@@ -51,9 +32,10 @@
 		new /datum/GBP_equipment("Space Cash",			/obj/item/stack/spacecash/c1000,									600,	1),
 		new /datum/GBP_equipment("Hardsuit x3",			/obj/item/clothing/suit/space/hardsuit,								750,	3),
 		new /datum/GBP_equipment("Jetpack Upgrade x3",		/obj/item/weapon/tank/jetpack/suit,								1000,	3),
+		new /datum/GBP_equipment("Forcefield Projector x3",		/obj/item/device/forcefield,								1500,	3),
 		new /datum/GBP_equipment("Powertools x4",			/obj/item/weapon/storage/belt/utility/chief/full,				2000,	4),
 		new /datum/GBP_equipment("Freon Canister",			/obj/machinery/portable_atmospherics/canister/freon,			2500,	1),
-		new /datum/GBP_equipment("Prototype Canister",			/obj/machinery/portable_atmospherics/canister/proto,		2500,	1),
+		new /datum/GBP_equipment("Prototype Canister",		/obj/machinery/portable_atmospherics/canister/proto/default,	2500,	1),
 		new /datum/GBP_equipment("Advanced Magboot x3",			/obj/item/clothing/shoes/magboots/advance,					3000,	3),
 		new /datum/GBP_equipment("Reflector Box x3",			/obj/structure/reflector/box,								3500,	3),
 		new /datum/GBP_equipment("Radiation Collector x3",			/obj/machinery/power/rad_collector,						4000,	3),
@@ -66,6 +48,24 @@
 		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,							20000,	5),
 		new /datum/GBP_equipment("WHAT HAVE YOU DONE... x5",		/obj/vehicle/space/speedbike/memewagon,					30000,	5),
 		)
+
+/datum/GBP_equipment
+	var/equipment_name = "generic"
+	var/equipment_path = null
+	var/cost = 0
+	var/amount = 0
+
+/datum/GBP_equipment/New(name, path, cost, amount)
+	equipment_name = name
+	equipment_path = path
+	src.cost = cost
+	src.amount = amount
+
+/obj/machinery/engi_points_manager/Initialize()
+	engi_points_list += src
+	radio = new(src)
+	radio.listening = FALSE
+	radio.frequency = 1357
 	..()
 
 /obj/machinery/engi_points_manager/Destroy()
@@ -89,12 +89,12 @@
 /obj/machinery/engi_points_manager/attack_hand(mob/user)
 	if(..())
 		return
-	if(!allowed(user))
-		user << "<span class='warning'>The shopping interface logs out with a message: Insufficient Access.</span>"
-		return
 	interact(user)
 
 /obj/machinery/engi_points_manager/interact(mob/user)
+	if(!allowed(user))
+		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+		return
 	var/list/dat = list()
 	dat +="<div class='statusDisplay'>"
 	dat += "You currently have <td>[round(GBP)]</td> engineering voucher points<br>"
@@ -117,19 +117,20 @@
 		if (!prize || !(prize in prize_list))
 			return
 		if(prize.cost > GBP)
+			playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 			return
-		else if(prize.cost <= GBP) // Placeholder spaghetti calm your shit
+		else if(prize.cost <= GBP)
 			GBP -= prize.cost
 			for(var/obj/machinery/engi_points_delivery/D in deliverer_list)
 				D.icon_state = "geardist-load"
 				playsound(D, 'sound/machines/Ding.ogg', 100, 1)
-				sleep(20)
+				sleep(10)
 				if(!D || QDELETED(D))
 					return
-				spawn_atom_to_turf(new prize.equipment_path, D, prize.amount, admin_spawn=FALSE)
+				spawn_atom_to_turf(prize.equipment_path, D, prize.amount, FALSE)
 				D.icon_state = "geardist"
-				if(prize.cost == 20000) // Still a placeholder
-					spawn_atom_to_turf(/obj/item/clothing/head/helmet/space/chronos, D, prize.amount, admin_spawn=FALSE)
+				if(prize.equipment_path == /obj/item/clothing/suit/space/chronos)
+					spawn_atom_to_turf(/obj/item/clothing/head/helmet/space/chronos, D, prize.amount, FALSE)
 				if(prize.cost >= 1000)
 					radio.talk_into(src, "[usr] has bought [prize.equipment_name] for [prize.cost] points")
 				feedback_add_details("Engi_equipment_bought","[src.type]|[prize.equipment_path]")
@@ -144,7 +145,7 @@
 			if(SA.z == src.z)
 				air_alarm_bonus = max(0,(1000 - (LAZYLEN(SA.alarms["Atmosphere"])) * 200))
 				power_alarm_bonus = max(0,(1000 - (LAZYLEN(SA.alarms["Power"])) * 200))
-				fire_alarm_bonus = max(0,(1000 - (LAZYLEN(SA.alarms["Fire"])) * 200))
+				fire_alarm_bonus = max(0,(500 - (LAZYLEN(SA.alarms["Fire"])) * 200))
 				total_bonus = air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus
 				break
 		switch(total_bonus)
@@ -172,7 +173,7 @@
 			radio.talk_into(src,"Congratulations! Due to the significant repairs made by the engineering team, your bonus has been doubled this cycle!")
 			total_bonus = total_bonus*2
 		prior_bonus = total_bonus
-		GBP_alarm_cooldown = world.time + 3000
+		GBP_alarm_cooldown = world.time + 4000
 		power_export_bonus += (air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus)
 	GBP += power_export_bonus
 	GBPearned += power_export_bonus
@@ -184,11 +185,11 @@
 	icon_state = "geardist"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/machinery/engi_points_delivery/Initialize()
 	..()
 	deliverer_list += src
-	
+
 /obj/machinery/engi_points_delivery/Destroy()
 	deliverer_list -= src
 	return ..()

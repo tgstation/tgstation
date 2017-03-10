@@ -600,7 +600,7 @@ ARCD
 	origin_tech = "materials=4"
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
-	
+
 /obj/item/weapon/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
 	max_matter = 300
@@ -618,14 +618,17 @@ ARCD
 	deconfloordelay = 30
 	deconwindowdelay = 20
 	deconairlockdelay = 20
-	
-	
+
+
 /obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
 	proximity = 1
 	if(get_dist(get_turf(A),get_turf(user)) > 7)
 		user << "<span class='warning'>The \'Out of Range\' light on the RCD blinks red.</span>"
 		return
-	if(..())
+	if(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window) || istype(A, /obj/structure/girder))
 		user.Beam(A,icon_state="rped_upgrade",time=20)
-	
+		..()
+	else
+		return
+
 
