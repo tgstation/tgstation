@@ -51,7 +51,7 @@
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			user << "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>"
+			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>")
 		return 0
 	return 1
 
@@ -102,7 +102,7 @@
 
 		if(!I && !C && !D)
 			if(loud)
-				user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
+				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
 			return 0
 
 		if(I)
@@ -115,7 +115,7 @@
 			if(access_to_check in D.GetAccess())
 				return 1
 		if(loud)
-			user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
+			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
 	return 0
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones

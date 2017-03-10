@@ -6,7 +6,7 @@
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
 	if( !ismob(M) || !M.client )
 		return
@@ -18,7 +18,7 @@
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -37,7 +37,7 @@
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	var/client/C
 	if(istext(whom))
@@ -48,7 +48,7 @@
 		C = whom
 	if(!C)
 		if(holder)
-			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
 	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
@@ -61,7 +61,7 @@
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 
 	var/client/C
@@ -84,14 +84,14 @@
 		if(!msg)
 			return
 		if(holder)
-			src << "<font color='red'>Error: Use the admin IRC channel, nerd.</font>"
+			to_chat(src, "<font color='red'>Error: Use the admin IRC channel, nerd.</font>")
 			return
 
 
 	else
 		if(!C)
 			if(holder)
-				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 			else
 				adminhelp(msg)	//admin we are replying to left. adminhelp instead
 			return
@@ -104,12 +104,12 @@
 				return
 
 			if(prefs.muted & MUTE_ADMINHELP)
-				src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+				to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 				return
 
 			if(!C)
 				if(holder)
-					src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+					to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 				else
 					adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 				return
@@ -131,18 +131,18 @@
 	var/keywordparsedmsg = keywords_lookup(msg)
 
 	if(irc)
-		src << "<font color='blue'>PM to-<b>Admins</b>: [rawmsg]</font>"
+		to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: [rawmsg]</font>")
 		ircreplyamount--
 		send2irc("Reply: [ckey]",rawmsg)
 	else
 		if(C.holder)
 			if(holder)	//both are admins
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
-				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [keywordparsedmsg]</font>"
+				to_chat(C, "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>")
+				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [keywordparsedmsg]</font>")
 
 			else		//recipient is an admin but sender is not
-				C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
-				src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
+				to_chat(C, "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>")
+				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>")
 
 			//play the recieving admin the adminhelp sound (if they have them enabled)
 			if(C.prefs.toggles & SOUND_ADMINHELP)
@@ -150,10 +150,10 @@
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
-				C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
-				C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+				to_chat(C, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+				to_chat(C, "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>")
+				to_chat(C, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
+				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>")
 
 				//always play non-admin recipients the adminhelp sound
 				C << 'sound/effects/adminhelp.ogg'
@@ -172,20 +172,20 @@
 						return
 
 			else		//neither are admins
-				src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
+				to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
 				return
 
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
 		for(var/client/X in admins)
-			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" //inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" )
 	else
 		window_flash(C, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in admins)
 			if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
-				X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [keywordparsedmsg]</font>" //inform X
+				to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [keywordparsedmsg]</font>" )
 
 
 
@@ -211,9 +211,9 @@
 	log_admin_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
 	msg = emoji_parse(msg)
 
-	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
-	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+	to_chat(C, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+	to_chat(C, "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>")
+	to_chat(C, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'

@@ -152,7 +152,7 @@
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
-		user << "AI control has been disabled."
+		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)
 		return ..()
 	return UI_CLOSE
@@ -404,7 +404,7 @@
 	signal.data["sigtype"] = "command"
 
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
-//			world << text("Signal [] Broadcasted to []", command, target)
+//			to_chat(world, text("Signal [] Broadcasted to []", command, target))
 
 	return 1
 
@@ -631,7 +631,7 @@
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
 				playsound(src.loc, W.usesound, 50, 1)
-				user << "<span class='notice'>You cut the final wires.</span>"
+				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
@@ -639,18 +639,18 @@
 			else if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
 				playsound(src.loc, W.usesound, 50, 1)
 				panel_open = !panel_open
-				user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
+				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
 				return
 			else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
-					user << "<span class='warning'>It does nothing!</span>"
+					to_chat(user, "<span class='warning'>It does nothing!</span>")
 				else
 					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 						locked = !locked
-						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>"
+						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 					else
-						user << "<span class='danger'>Access denied.</span>"
+						to_chat(user, "<span class='danger'>Access denied.</span>")
 				return
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
@@ -672,14 +672,14 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>"
+					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>")
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
 				if (do_after(user, 20, target = src))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
-						user << "<span class='notice'>You wire the air alarm.</span>"
+						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
 						aidisabled = 0
 						locked = 1
@@ -692,14 +692,14 @@
 		if(0)
 			if(istype(W, /obj/item/weapon/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
-					user << "<span class='notice'>You insert the circuit.</span>"
+					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					buildstage = 1
 					update_icon()
 					qdel(W)
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
+				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 				playsound(src.loc, W.usesound, 50, 1)
 				new /obj/item/wallframe/airalarm( user.loc )
 				qdel(src)

@@ -167,6 +167,6 @@ UI Stuff
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
-	user << "<span class='danger'>Access denied.</span>"
+	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
 
