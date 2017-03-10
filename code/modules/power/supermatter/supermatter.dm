@@ -17,7 +17,7 @@
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 30      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
 
 #define MOLE_PENALTY_THRESHOLD 1000            //Higher == Shard can absorb more moles before triggering the high mole penalties.
-#define MOLE_HEAT_PENALTY 400                     //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled linearly
+#define MOLE_HEAT_PENALTY 350                     //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
 #define POWER_PENALTY_THRESHOLD 4000          //Higher == Engine can generate more power before triggering the high power penalties.
 #define HEAT_PENALTY_THRESHOLD 40                       //Higher == Crystal safe operational temperature is higher.
 #define DAMAGE_HARDCAP 0.05
@@ -315,7 +315,7 @@
 	removed.gases["o2"][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 	if(combined_gas < 50)
-		removed.gases["freon"][MOLES] = max(removed.gases["freon"][MOLES] * device_energy / FREON_BREEDING_MODIFIER, 0)
+		removed.gases["freon"][MOLES] = max((removed.gases["freon"][MOLES] + device_energy) * freoncomp / FREON_BREEDING_MODIFIER, 0)
 
 	if(produces_gas)
 		env.merge(removed)
@@ -531,8 +531,9 @@
 	var/list/arctargetsmachine = list()
 	var/list/arctargetsstructure = list()
 
-	for(var/mob/living/Z in oview(src, range+2))
-		arctargetsmob += Z
+	if(prob(20)) //let's not hit all the engineers with every beam and/or segment of the arc
+		for(var/mob/living/Z in oview(src, range+2))
+			arctargetsmob += Z
 	if(arctargetsmob.len)
 		var/mob/living/H = pick(arctargetsmob)
 		var/atom/A = H
@@ -564,8 +565,7 @@
 			. = zapdir
 
 	if(target_mob)
-		var/shock_damage = Clamp(round(power/4000), 1, 3)
-		target_mob.electrocute_act(shock_damage, src, 1, stun = 0)
+		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, stun = 0)
 		if(prob(15))
 			supermatter_zap(target_mob, 5, power / 2)
 			supermatter_zap(target_mob, 5, power / 2)
