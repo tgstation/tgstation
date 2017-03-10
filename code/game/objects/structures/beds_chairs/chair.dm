@@ -14,12 +14,115 @@
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
+	var/build_type = /obj/stack/sheet/metal
+	var/can_electrify = FALSE
+	var/obj/item/assembly/shock_kit/part
+	var/last_shock_time
 
-/obj/structure/chair/deconstruct()
-	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(buildstacktype && (!(flags & NODECONSTRUCT)))
-		new buildstacktype(loc,buildstackamount)
+/obj/structure/chair/e_chair/Initialize()
+	part = new(src)
 	..()
+
+/obj/structure/chair/Initialize()
+	..()
+	if(!part)
+		Construct()
+		if(type == /obj/structure/chair)
+			can_electrify = TRUE
+	else
+		can_electrify = TRUE
+	update_icon()
+
+/obj/structure/chair/Destroy()
+	QDEL_NULL(part)
+	return ..()
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
+	. = newlist(
+		/datum/construction_state/first{
+			one_per_turf = 1
+			on_floor = 1
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/assembly/shock_kit
+			required_amount_to_construct = 1
+			required_type_to_deconstruct = /obj/item/wrench
+			required_type_to_repair = /obj/item/weapong/weldingtool
+			damage_reachable = 1
+		},
+		/datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/wrench
+		}
+	)
+	
+	var/datum/construction_state/first = .[1]
+	first.required_type_to_construct = buildstacktype
+	first.required_amount_to_construct = buildstackamount
+
+/obj/structure/chair/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
+	. = ..()
+	if(!. || skip)
+		return
+
+	if(state_started_id)	//not just constructed, must try to be making an echair
+		return can_electrify
+
+/obj/structure/chair/OnConstruction(state_id, mob/user, obj/item/used)
+	..()
+	if(state_id == CHAIR_ELECTRIC)
+		user.transferItemToLoc(used, src)
+		part = used
+		. = TRUE
+	update_icon()
+
+/obj/structure/chair/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
+	..()
+	if(state_id == CHAIR_REGULAR)
+		if(!forced)
+			part.forceMove(get_turf(src))
+		else
+			qdel(part)
+		part = null
+		. = TRUE
+	update_icon()
+
+/obj/structure/chair/update_icon()
+	cut_overlays()
+	if(part)
+		icon_state = "echair0"
+		add_overlay(image('icons/obj/chairs.dmi', src, "echair_over", MOB_LAYER + 1))
+		name = "electric [initial(name)]"
+		desc = "Looks absolutely SHOCKING!\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
+	else
+		icon_state = initial(icon_state)
+		name = initial(name)
+		desc = initial(desc)
+
+/obj/structure/chair/proc/shock()
+	if(current_construction_state.id != CHAIR_ELECTRIC)
+		return
+
+	if(last_shock_time + 50 > world.time)
+		return
+	last_shock_time = world.time
+
+	// special power handling
+	var/area/A = get_area(src)
+	if(!A || !A.powered(EQUIP))
+		return
+	A.use_power(EQUIP, 5000)
+
+	flick("echair_shock", src)
+	var/datum/effect_system/spark_spread/s = new
+	s.set_up(12, 1, src)
+	s.start()
+	if(has_buckled_mobs())
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.electrocute_act(85, src, 1)
+			to_chat(buckled_mob, "<span class='userdanger'>You feel a deep shock course through your body!</span>")
+			addtimer(CALLBACK(buckled_mob, /mob/living/.proc/electrocute_act, 85, src 1), 1)
+	visible_message("<span class='danger'>The [src] went off!</span>", "<span class='italics'>You hear a deep sharp shock!</span>")
 
 /obj/structure/chair/attack_paw(mob/user)
 	return attack_hand(user)
@@ -29,24 +132,6 @@
 		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
 		W.setDir(dir)
 		qdel(src)
-
-/obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, W.usesound, 50, 1)
-		deconstruct()
-	else if(istype(W, /obj/item/assembly/shock_kit))
-		if(!user.drop_item())
-			return
-		var/obj/item/assembly/shock_kit/SK = W
-		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		E.setDir(dir)
-		E.part = SK
-		SK.loc = E
-		SK.master = E
-		qdel(src)
-	else
-		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
 	if(has_buckled_mobs())
