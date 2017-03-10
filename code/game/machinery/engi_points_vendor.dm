@@ -70,7 +70,9 @@
 
 /obj/machinery/engi_points_manager/Destroy()
 	engi_points_list -= src
-	QDEL_NULL radio
+	if(radio)
+		qdel(radio)
+		radio = null
 	return ..()
 
 
