@@ -641,7 +641,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			var/link = FOLLOW_LINK(M, user)
-			to_chat(russian_html2text(M, "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"))
+			to_chat(M, russian_html2text("[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"))
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
 	if(!P || QDELETED(P) || P.toff)
