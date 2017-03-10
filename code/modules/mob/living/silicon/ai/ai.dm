@@ -383,22 +383,13 @@ var/list/ai_list = list()
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
 	if(href_list["track"])
-		var/string = href_list["track"]
-		trackable_mobs()
-		var/list/trackeable = list()
-		trackeable += track.humans + track.others
-		var/list/target = list()
-		for(var/I in trackeable)
-			var/mob/M = trackeable[I]
-			if(M.name == string)
-				target += M
-		if(name == string)
-			target += src
-		if(target.len)
-			ai_actual_track(pick(target))
+		var/list/targets = camera_lock_by_name(href_list["track"])
+		if(targets.len)
+			var/mob/M = pick(targets)
+			if(M)
+				ai_actual_track(M)
 		else
 			src << "Target is not on or near any active cameras on the station."
-		return
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
 		if(call_bot_cooldown > world.time)
 			src << "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>"
@@ -417,8 +408,7 @@ var/list/ai_list = list()
 	if(href_list["botrefresh"]) //Refreshes the bot control panel.
 		botcall()
 		return
-
-	if (href_list["ai_take_control"]) //Mech domination
+	if(href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
 			src << "<span class='warning'>You are already loaded into an onboard computer!</span>"
@@ -434,7 +424,67 @@ var/list/ai_list = list()
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
+	if(href_list["opennear"])
+		var/mob/M = pick(camera_lock_by_name(href_list["opennear"]))
+		if(M)
+			open_nearest_door(M)
+		else
+			src << "<span class='warning'>Target not found or not on active cameras!</span>"
 
+/mob/living/silicon/ai/proc/camera_lock_by_name(namestring)
+	trackable_mobs()
+	var/list/trackeable = list()
+	trackeable += track.humans + track.others
+	var/list/targets = list()
+	for(var/I in trackeable)
+		var/mob/M = trackeable[I]
+		if(M.name == namestring)
+			targets += M
+	if(name == namestring)
+		targets += src
+	return targets
+
+/mob/living/silicon/ai/proc/open_nearest_door(mob/M)
+	if(stat == DEAD)
+		src << "You are dead!"
+		return
+	if(control_disabled)
+		src << "Wireless control is disabled!"
+		return
+	var/obj/machinery/door/airlock/D = null
+	var/found = FALSE
+	var/search_range = 0
+	for(search_range = 0, search_range < 6, search_range++)
+		for(var/obj/machinery/door/airlock/A in range(search_range,get_turf(M)))
+			if(!cameranet.checkTurfVis(get_turf(A)))
+				continue
+			if(!A.density)
+				continue
+			D = A
+			found = TRUE
+			break
+		if(found)
+			break
+	if(!istype(D))
+		src << "<span class='warning'>No closed airlock that is on cameras have been found!</span>"
+		return
+	if(!D.canAIControl(src))
+		src << "<span class='warning'>Airlock control blocked by remote interface. Manual hacking required!</span>"
+		return
+	if(D.emagged)
+		src << "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>"
+		return
+	if(D.detonated)
+		src << "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>"
+		return
+	if(D.locked)
+		src << "<span class='warning'>Warning: Airlock bolted. Manual control necessary.</span>"
+		return
+	if(D.welded)
+		src << "<span class='warning'>Unable to open airlock: Airlock is physically constrained!</span>"
+		return
+	src << "<span class='boldnotice'>Opening [D.name] for [M.name]!</span>"
+	D.open()
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
