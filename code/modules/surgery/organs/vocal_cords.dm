@@ -101,7 +101,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	. = ..()
 	if(!IsAvailable())
 		if(world.time < cords.next_command)
-			owner << "<span class='notice'>You must wait [(cords.next_command - world.time)/10] seconds before Speaking again.</span>"
+			to_chat(owner, "<span class='notice'>You must wait [(cords.next_command - world.time)/10] seconds before Speaking again.</span>")
 		return
 	var/command = input(owner, "Speak with the Voice of God", "Command")
 	if(QDELETED(src) || QDELETED(owner))
@@ -112,12 +112,12 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 
 /obj/item/organ/vocal_cords/colossus/can_speak_with()
 	if(world.time < next_command)
-		owner << "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>"
+		to_chat(owner, "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>")
 		return FALSE
 	if(!owner)
 		return FALSE
 	if(!owner.can_speak())
-		owner << "<span class='warning'>You are unable to speak!</span>"
+		to_chat(owner, "<span class='warning'>You are unable to speak!</span>")
 		return FALSE
 	return TRUE
 

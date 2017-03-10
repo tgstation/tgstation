@@ -76,7 +76,8 @@
 /obj/effect/landmark/start/New()
 	start_landmarks_list += src
 	..()
-	tag = "start*[name]"
+	if(name != initial(name))
+		tag = "start*[name]"
 	return 1
 
 /obj/effect/landmark/start/Destroy()

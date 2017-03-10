@@ -137,21 +137,37 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(..())
 		return 1
 	if(intact && istype(C, /obj/item/weapon/crowbar))
-		if(broken || burnt)
-			broken = 0
-			burnt = 0
-			user << "<span class='danger'>You remove the broken plating.</span>"
-		else
-			if(istype(src, /turf/open/floor/wood))
-				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
-			else
-				user << "<span class='danger'>You remove the floor tile.</span>"
-				if(floor_tile)
-					new floor_tile(src)
-		make_plating()
-		playsound(src, C.usesound, 80, 1)
+		pry_tile(C, user)
 		return 1
+	if(intact && istype(C, /obj/item/stack/tile))
+		var/obj/item/stack/tile/T = C
+		if(T.turf_type == type)
+			return
+		var/obj/item/weapon/crowbar/CB = user.is_holding_item_of_type(/obj/item/weapon/crowbar)
+		if(!CB)
+			return
+		var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)
+		if(!istype(P))
+			return
+		P.attackby(T, user, params)
 	return 0
+
+/turf/open/floor/proc/pry_tile(obj/item/C, mob/user, silent = FALSE)
+	playsound(src, C.usesound, 80, 1)
+	return remove_tile(user, silent)
+
+/turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+	if(broken || burnt)
+		broken = 0
+		burnt = 0
+		if(user && !silent)
+			to_chat(user, "<span class='danger'>You remove the broken plating.</span>")
+	else
+		if(user && !silent)
+			to_chat(user, "<span class='danger'>You remove the floor tile.</span>")
+		if(floor_tile && make_tile)
+			new floor_tile(src)
+	return make_plating()
 
 /turf/open/floor/singularity_pull(S, current_size)
 	if(current_size == STAGE_THREE)

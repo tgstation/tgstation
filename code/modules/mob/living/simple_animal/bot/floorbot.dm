@@ -101,12 +101,12 @@
 
 /mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
 	if(istype(W, /obj/item/stack/tile/plasteel))
-		user << "<span class='notice'>The floorbot can produce normal tiles itself.</span>"
+		to_chat(user, "<span class='notice'>The floorbot can produce normal tiles itself.</span>")
 		return
 	if(specialtiles && istype(W, /obj/item/stack/tile))
 		var/obj/item/stack/tile/usedtile = W
 		if(usedtile.type != tiletype)
-			user << "<span class='warning'>Different custom tiles are already inside the floorbot.</span>"
+			to_chat(user, "<span class='warning'>Different custom tiles are already inside the floorbot.</span>")
 			return
 	if(istype(W, /obj/item/stack/tile))
 		if(specialtiles >= maxtiles)
@@ -117,9 +117,9 @@
 		tiles.use(loaded)
 		specialtiles += loaded
 		if(loaded > 0)
-			user << "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>"
+			to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>")
 		else
-			user << "<span class='warning'>You need at least one floor tile to put into [src]!</span>"
+			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
 	else
 		..()
 
@@ -127,7 +127,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>[src] buzzes and beeps.</span>"
+			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
 /mob/living/simple_animal/bot/floorbot/Topic(href, href_list)
 	if(..())

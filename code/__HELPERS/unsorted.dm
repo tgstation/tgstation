@@ -830,7 +830,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	var/list/available_gases = list("o2","n2","co2","plasma","water vapor","freon","n2o") 
+	var/list/available_gases = list("o2","n2","co2","plasma","water vapor","freon","n2o")
 	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
@@ -1421,3 +1421,6 @@ var/valid_HTTPSGet = FALSE
 	fdel(temp_file)
 
 #define UNTIL(X) while(!(X)) stoplag()
+
+/proc/to_chat(target, message)
+	target << message
