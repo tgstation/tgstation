@@ -18,6 +18,7 @@
 	var/list/areas	//areas in our shuttle
 	var/list/queued_announces	//people coming in that we have to announce
 	var/obj/machinery/requests_console/console
+	var/force_depart = FALSE
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	if(mapload)
@@ -84,7 +85,7 @@
 		if(found_awake)
 			SendToStation()
 	else if(mode == SHUTTLE_IGNITING)
-		if(found_awake)
+		if(found_awake && !force_depart)
 			mode = SHUTTLE_IDLE
 			sound_played = FALSE
 		else if(!sound_played)
@@ -121,11 +122,12 @@
 	var/docked = S1 == assigned_transit
 	sound_played = FALSE
 	if(docked)	//about to launch
-		if(PersonCheck())
+		if(!force_depart && PersonCheck())
 			mode = SHUTTLE_IDLE
 			if(console)
 				console.say("Launch cancelled, lifeform dectected on board.")
 			return
+		force_depart = FALSE
 	. = ..()
 	if(!. && !docked && !damaged)
 		console.say("Welcome to your new life, employees!")
@@ -147,6 +149,8 @@
 
 /obj/docking_port/mobile/arrivals/proc/Launch(pickingup)
 	if(mode != SHUTTLE_CALL)
+		if(pickingup)
+			force_depart = TRUE
 		if(console)
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
