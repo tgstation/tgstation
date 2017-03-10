@@ -108,12 +108,9 @@
 		ridden.layer = OBJ_LAYER
 
 /datum/riding/atv/turret
-	var/obj/machinery/porta_turret/syndicate/vehicle_turret/turret = null
 	var/obj/vehicle/atv/turret/R = null
 
 /datum/riding/atv/turret/handle_vehicle_layer()
-	R = ridden
-	turret = R.turret
 	if(ridden.dir == SOUTH)
 		ridden.layer = ABOVE_MOB_LAYER
 	else
@@ -121,17 +118,16 @@
 
 	if(turret)
 		if(ridden.dir == NORTH)
-			turret.layer = ABOVE_MOB_LAYER
+			R.turret.layer = ABOVE_MOB_LAYER
 		else
-			turret.layer = OBJ_LAYER
+			R.turret.layer = OBJ_LAYER
 
 
 /datum/riding/atv/turret/handle_vehicle_offsets()
 	..()
 	R = ridden
-	turret = R.turret
-	if(turret)
-		turret.forceMove(get_turf(ridden))
+	if(R.turret)
+		R.turret.forceMove(get_turf(ridden))
 		switch(ridden.dir)
 			if(NORTH)
 				turret.pixel_x = 0
