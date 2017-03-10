@@ -702,7 +702,6 @@ What a mess.*/
 					if("Delete Record (Security) Execute")
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
 						if(active2)
-							data_core.security -= active2
 							qdel(active2)
 							active2 = null
 
@@ -711,15 +710,12 @@ What a mess.*/
 							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
 							for(var/datum/data/record/R in data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
-									data_core.medical -= R
 									qdel(R)
 									break
-							data_core.general -= active1
 							qdel(active1)
 							active1 = null
 
 						if(active2)
-							data_core.security -= active2
 							qdel(active2)
 							active2 = null
 					else
@@ -773,7 +769,6 @@ What a mess.*/
 			continue
 
 		else if(prob(1))
-			data_core.security -= R
 			qdel(R)
 			continue
 
