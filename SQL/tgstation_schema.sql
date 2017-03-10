@@ -145,6 +145,9 @@ CREATE TABLE `death` (
   `brainloss` smallint(5) unsigned NOT NULL,
   `fireloss` smallint(5) unsigned NOT NULL,
   `oxyloss` smallint(5) unsigned NOT NULL,
+  `toxloss` smallint(5) unsigned NOT NULL,
+  `cloneloss` smallint(5) unsigned NOT NULL,
+  `staminaloss` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
