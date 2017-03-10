@@ -186,8 +186,8 @@ var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT
 /datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
 	// Assign department security
 	var/department
-	if(H && H.client && H.client.prefs)
-		department = H.client.prefs.prefered_security_department
+	if(M && M.client && M.client.prefs)
+		department = M.client.prefs.prefered_security_department
 		if(!LAZYLEN(available_depts) || department == "None")
 			return
 		else if(department in available_depts)
