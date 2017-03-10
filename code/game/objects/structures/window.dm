@@ -27,7 +27,7 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/structure/window/New(Loc, direct)
+/obj/structure/window/Initialize(mapload, direct)
 	..()
 	obj_integrity = max_integrity
 	if(direct)
@@ -477,7 +477,7 @@
 	reinf = FALSE
 	var/made_glow = FALSE
 
-/obj/structure/window/reinforced/clockwork/New(loc, direct)
+/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(fulltile)
 		made_glow = TRUE
 	..()
