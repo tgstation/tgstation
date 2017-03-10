@@ -46,7 +46,7 @@ var/list/admin_ranks = list()
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
 		if(!dbcon.Connect())
-			world.log << "Failed to connect to database in load_admins(). Reverting to legacy system."
+			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()

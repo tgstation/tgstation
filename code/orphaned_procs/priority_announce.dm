@@ -28,9 +28,8 @@
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M) && !M.ear_deaf)
-			M << announcement
+			to_chat(M, announcement)
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				continue
 			M << sound(sound)
 
 /proc/print_command_report(text = "", title = "Central Command Update")
@@ -49,10 +48,10 @@
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M) && !M.ear_deaf)
-			M << "<b><font size = 3><font color = red>[title]</font color><BR>[russian_html2text(message)]</font size></b><BR>"
+			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[russian_html2text(message)]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				continue
-			if(alert)
-				M << sound('sound/misc/notice1.ogg')
-			else
-				M << sound('sound/misc/notice2.ogg')
+				if(alert)
+					M << sound('sound/misc/notice1.ogg')
+				else
+					M << sound('sound/misc/notice2.ogg')

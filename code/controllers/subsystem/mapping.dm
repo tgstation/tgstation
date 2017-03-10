@@ -34,7 +34,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	if(config.defaulted)
-		world << "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>"
+		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
 	loadWorld()
 	SortAreas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
@@ -113,7 +113,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 		CHECK_TICK
 		new /turf/open/space(T)
 
-#define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
+#define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
@@ -179,9 +179,9 @@ var/datum/controller/subsystem/mapping/SSmapping
 	message_admins("Randomly rotating map to [VM.map_name]")
 	. = changemap(VM)
 	if (. && VM.map_name != config.map_name)
-		world << "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>"
+		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
 
-/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)	
+/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = new(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")

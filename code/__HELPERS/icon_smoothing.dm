@@ -259,7 +259,7 @@
 		A.cut_overlay(A.bottom_left_corner)
 		A.bottom_left_corner = se
 		LAZYADD(New, se)
-	
+
 	if(New)
 		A.add_overlay(New)
 

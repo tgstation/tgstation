@@ -42,5 +42,5 @@
 			qdel(I)
 
 	else
-		user << "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>"
+		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
 	return 1

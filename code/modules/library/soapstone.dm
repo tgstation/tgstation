@@ -43,7 +43,7 @@
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
 	if(remaining_uses != -1)
-		user << "It has [remaining_uses] uses left."
+		to_chat(user, "It has [remaining_uses] uses left.")
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	var/turf/T = get_turf(target)
@@ -53,11 +53,11 @@
 	var/obj/structure/chisel_message/existing_message = locate() in T
 
 	if(!remaining_uses && !existing_message)
-		user << "<span class='warning'>[src] is too worn out to use.</span>"
+		to_chat(user, "<span class='warning'>[src] is too worn out to use.</span>")
 		return
 
 	if(!good_chisel_message_location(T))
-		user << "<span class='warning'>It's not appropriate to [w_engrave] on [T].</span>"
+		to_chat(user, "<span class='warning'>It's not appropriate to [w_engrave] on [T].</span>")
 		return
 
 	if(existing_message)
@@ -74,11 +74,11 @@
 
 	var/message = stripped_input(user, "What would you like to [w_engrave]?", "Leave a message")
 	if(!message)
-		user << "<span class='notice'>You decide not to [w_engrave] anything.</span>"
+		to_chat(user, "<span class='notice'>You decide not to [w_engrave] anything.</span>")
 		return
 
 	if(!target.Adjacent(user) && locate(/obj/structure/chisel_message) in T)
-		user << "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>"
+		to_chat(user, "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>")
 		return
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 	user.visible_message("<span class='notice'>[user] starts [w_engraving] a message into [T]...</span>", "<span class='notice'>You start [w_engraving] a message into [T]...</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
@@ -215,7 +215,7 @@
 
 /obj/structure/chisel_message/examine(mob/user)
 	..()
-	user << "<span class='warning'>[russian_html2text(hidden_message)]</span>"
+	to_chat(user, "<span class='warning'>[russian_html2text(hidden_message)]</span>")
 
 /obj/structure/chisel_message/Destroy()
 	if(persists)

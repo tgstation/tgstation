@@ -69,7 +69,7 @@
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(!H.client || !istype(H))
 			return
-		H << "<span class='danger'>Honk...</span>"
+		to_chat(H, "<span class='danger'>Honk...</span>")
 		H << 'sound/spookoween/scary_clown_appear.ogg'
 		var/turf/T = get_turf(H)
 		if(T)
