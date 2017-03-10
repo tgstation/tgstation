@@ -37,11 +37,11 @@
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
-			user << "<span class='notice'>Name protocols successfully updated.</span>"
+			to_chat(user, "<span class='notice'>Name protocols successfully updated.</span>")
 		else
 			name = "Food Processor (Machine Board)"
 			build_path = /obj/machinery/processor
-			user << "<span class='notice'>Defaulting name protocols.</span>"
+			to_chat(user, "<span class='notice'>Defaulting name protocols.</span>")
 	else
 		return ..()
 
@@ -191,7 +191,7 @@
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
 	if(src.processing)
-		user << "<span class='warning'>The processor is in the process of processing!</span>"
+		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
@@ -218,9 +218,9 @@
 				loaded++
 
 		if(loaded)
-			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 		return
-		
+
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
@@ -230,7 +230,7 @@
 		return 1
 	else
 		if(user.a_intent != INTENT_HARM)
-			user << "<span class='warning'>That probably won't blend!</span>"
+			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
 			return 1
 		else
 			return ..()
@@ -239,11 +239,11 @@
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		user << "<span class='warning'>The processor is in the process of processing!</span>"
+		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(user.a_intent == INTENT_GRAB && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/pushed_mob = user.pulling
 		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
@@ -251,7 +251,7 @@
 		user.stop_pulling()
 		return
 	if(src.contents.len == 0)
-		user << "<span class='warning'>The processor is empty!</span>"
+		to_chat(user, "<span class='warning'>The processor is empty!</span>")
 		return 1
 	src.processing = 1
 	user.visible_message("[user] turns on [src].", \

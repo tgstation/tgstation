@@ -21,8 +21,8 @@
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
-	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
-	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
+	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
+	to_chat(user, "<font color='red'>You have <b>BANNED</b> [M]</font>")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
 /obj/item/weapon/sord
@@ -98,7 +98,7 @@
 
 
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
-	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"
+	to_chat(user, "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>")
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 	user.status_flags += IGNORESLOWDOWN
 
@@ -108,9 +108,9 @@
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
-	user << "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
+	to_chat(user, "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade.")
 	if(nuke_disk)
-		user << "<span class='boldwarning'>It's holding the nuke disk!</span>"
+		to_chat(user, "<span class='boldwarning'>It's holding the nuke disk!</span>")
 
 /obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -127,9 +127,9 @@
 		if(H.client && H.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = H
 	if(!closest_victim)
-		user << "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>"
+		to_chat(user, "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>")
 		return
-	user << "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>"
+	to_chat(user, "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>")
 
 /obj/item/weapon/claymore/highlander/IsReflect()
 	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?
@@ -140,39 +140,39 @@
 	var/new_name = name
 	switch(notches)
 		if(1)
-			user << "<span class='notice'>Your first kill - hopefully one of many. You scratch a notch into [src]'s blade.</span>"
-			user << "<span class='warning'>You feel your fallen foe's soul entering your blade, restoring your wounds!</span>"
+			to_chat(user, "<span class='notice'>Your first kill - hopefully one of many. You scratch a notch into [src]'s blade.</span>")
+			to_chat(user, "<span class='warning'>You feel your fallen foe's soul entering your blade, restoring your wounds!</span>")
 			new_name = "notched claymore"
 		if(2)
-			user << "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>"
+			to_chat(user, "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>")
 			new_name = "double-notched claymore"
 			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
 		if(3)
-			user << "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>"
+			to_chat(user, "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>")
 			new_name = "triple-notched claymore"
 			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
 		if(4)
-			user << "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>"
+			to_chat(user, "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>")
 			new_name = "many-notched claymore"
 			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
 		if(5)
-			user << "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>"
+			to_chat(user, "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>")
 			new_name = "battle-tested claymore"
 			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
 		if(6)
-			user << "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>"
+			to_chat(user, "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>")
 			new_name = "battle-scarred claymore"
 			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
 		if(7)
-			user << "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>"
+			to_chat(user, "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>")
 			new_name = "vicious claymore"
 			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
 		if(8)
-			user << "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>"
+			to_chat(user, "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>")
 			new_name = "bloodthirsty claymore"
 			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
 		if(9)
-			user << "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>"
+			to_chat(user, "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>")
 			new_name = "gore-stained claymore"
 			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)
@@ -234,14 +234,14 @@
 		qdel(src)
 
 		user.put_in_hands(S)
-		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
+		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
 	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
 
-		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
+		to_chat(user, "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>")
 
 		qdel(I)
 		qdel(src)
@@ -470,13 +470,13 @@
 		..()
 		return
 	if(homerun_ready)
-		user << "<span class='notice'>You're already ready to do a home run!</span>"
+		to_chat(user, "<span class='notice'>You're already ready to do a home run!</span>")
 		..()
 		return
-	user << "<span class='warning'>You begin gathering strength...</span>"
+	to_chat(user, "<span class='warning'>You begin gathering strength...</span>")
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, 1)
 	if(do_after(user, 90, target = src))
-		user << "<span class='userdanger'>You gather power! Time for a home run!</span>"
+		to_chat(user, "<span class='userdanger'>You gather power! Time for a home run!</span>")
 		homerun_ready = 1
 	..()
 
@@ -538,7 +538,7 @@
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
 			new /obj/effect/decal/cleanable/deadcockroach(get_turf(target))
-			user << "<span class='warning'>You easily splat the [target].</span>"
+			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target
 				bug.death(1)

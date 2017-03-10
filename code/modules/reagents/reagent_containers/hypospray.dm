@@ -18,14 +18,14 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 	if(!iscarbon(M))
 		return
 
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
-		M << "<span class='warning'>You feel a tiny prick!</span>"
-		user << "<span class='notice'>You inject [M] with [src].</span>"
+		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
+		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, INJECT, fraction)
@@ -39,7 +39,7 @@
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 
-			user << "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>"
+			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
 
 			var/contained = english_list(injected)
 
@@ -78,7 +78,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 	..()
 	if(!iscyborg(user))
@@ -102,9 +102,9 @@
 /obj/item/weapon/reagent_containers/hypospray/medipen/examine()
 	..()
 	if(reagents && reagents.reagent_list.len)
-		usr << "<span class='notice'>It is currently loaded.</span>"
+		to_chat(usr, "<span class='notice'>It is currently loaded.</span>")
 	else
-		usr << "<span class='notice'>It is spent.</span>"
+		to_chat(usr, "<span class='notice'>It is spent.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"

@@ -156,3 +156,21 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	icon_state = "salt_pile"
 	gender = NEUTER
+
+/obj/effect/decal/cleanable/glitter
+	name = "generic glitter pile"
+	desc = "the herpes of arts and crafts"
+	icon = 'icons/effects/tile_effects.dmi'
+	gender = NEUTER
+
+/obj/effect/decal/cleanable/glitter/pink
+	name = "pink glitter"
+	icon_state = "plasma"
+
+/obj/effect/decal/cleanable/glitter/white
+	name = "white glitter"
+	icon_state = "nitrous_oxide"
+
+/obj/effect/decal/cleanable/glitter/blue
+	name = "blue glitter"
+	icon_state = "freon"

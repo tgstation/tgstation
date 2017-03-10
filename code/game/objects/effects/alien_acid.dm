@@ -71,7 +71,7 @@
 			if(L.acid_act(10, acid_used, "feet"))
 				acid_level = max(0, acid_level - acid_used*10)
 				playsound(L, 'sound/weapons/sear.ogg', 50, 1)
-				L << "<span class='userdanger'>[src] burns you!</span>"
+				to_chat(L, "<span class='userdanger'>[src] burns you!</span>")
 
 //xenomorph corrosive acid
 /obj/effect/acid/alien

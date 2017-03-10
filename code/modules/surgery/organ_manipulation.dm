@@ -58,7 +58,7 @@
 		current_type = "insert"
 		I = tool
 		if(target_zone != I.zone || target.getorganslot(I.slot))
-			user << "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>"
+			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 
 		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
@@ -73,7 +73,7 @@
 					"<span class='notice'>You begin to extract [B] from [target]'s [parse_zone(target_zone)]...</span>")
 			return TRUE
 		if(!organs.len)
-			user << "<span class='notice'>There is no removeable organs in [target]'s [parse_zone(target_zone)]!</span>"
+			to_chat(user, "<span class='notice'>There is no removeable organs in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		else
 			for(var/obj/item/organ/O in organs)
@@ -96,7 +96,7 @@
 			"<span class='notice'>You begin to mend the incision in [target]'s [parse_zone(target_zone)]...</span>")
 
 	else if(istype(tool, /obj/item/weapon/reagent_containers/food/snacks/organ))
-		user << "<span class='warning'>[tool] was biten by someone! It's too damaged to use!</span>"
+		to_chat(user, "<span class='warning'>[tool] was biten by someone! It's too damaged to use!</span>")
 		return -1
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
