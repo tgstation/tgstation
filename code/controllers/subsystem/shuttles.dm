@@ -18,6 +18,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
+	var/obj/docking_port/mobile/arrivals/arrivals
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
 	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
@@ -51,6 +52,8 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
+		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
@@ -65,11 +68,12 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			continue
 		supply_packs[P.type] = P
 
-	initial_move()
 	setup_transit_zone()
+	initial_move()
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
+	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	if(transit_markers.len == 0)
@@ -505,4 +509,3 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
-
