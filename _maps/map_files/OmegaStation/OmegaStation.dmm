@@ -38567,8 +38567,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "bkU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrival Shuttle Airlock";
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (WEST)"
@@ -81157,7 +81158,7 @@ bkz
 bkC
 bkE
 bgU
-btm
+btk
 bgU
 bjX
 bgP
@@ -81671,7 +81672,7 @@ aaa
 aaa
 aae
 bgU
-btn
+btl
 bgU
 aaa
 aaa
