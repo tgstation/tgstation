@@ -375,7 +375,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/new_player/P in player_list)
-		if(P.character && P.character.mind)
+		if(P.new_character && P.new_character.mind)
 			ticker.minds += P.character.mind
 		CHECK_TICK
 
