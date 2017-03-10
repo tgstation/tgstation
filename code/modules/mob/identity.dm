@@ -285,8 +285,11 @@ var/global/list/used_voiceprints = list()
 		return
 	edit_tag = voiceprint_entry[IDENTITY_VOICEPRINT_EDIT]
 	tag_entry = identity_edit_tags[edit_tag]
-	if(tag_entry && tag_entry[IDENTITY_EDIT_TAG_TIMESTAMP] >= world.time - IDENTITY_EXPIRE_TIME)
-		generate = FALSE
+	if(tag_entry)
+		if(tag_entry[IDENTITY_EDIT_TAG_TIMESTAMP] >= world.time - IDENTITY_EXPIRE_TIME)
+			generate = FALSE
+		else
+			identity_edit_tags -= edit_tag
 	while(generate)
 		edit_tag = random_string(8, hex_characters)
 		tag_entry = identity_edit_tags[edit_tag]
