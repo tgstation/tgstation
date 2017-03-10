@@ -44,7 +44,7 @@
 				continue
 			targets += L
 		if(!targets.len)
-			owner << "<span class='warning'>There are no nearby targets in lit areas!</span>"
+			to_chat(owner, "<span class='warning'>There are no nearby targets in lit areas!</span>")
 			return
 		if(targets.len == 1)
 			target = targets[1] //To prevent the prompt from appearing with just one person
@@ -52,7 +52,7 @@
 			target = input(owner, "Select a target to tag along with.", name) as null|anything in targets
 			if(!target)
 				return
-		owner << "<span class='velvet bold'>iahz</span><br><span class='notice'>You meld with [target]'s shadow.</span>"
+		to_chat(owner, "<span class='velvet bold'>iahz</span><br><span class='notice'>You meld with [target]'s shadow.</span>")
 		owner.forceMove(target)
 		tagging_along = target
 		START_PROCESSING(SSprocessing, src)

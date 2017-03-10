@@ -40,5 +40,5 @@
 	if(!L || !victims[L.real_name])
 		return
 	victims[L.real_name] = null
-	owner << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
+	to_chat(owner, "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>")
 	return TRUE

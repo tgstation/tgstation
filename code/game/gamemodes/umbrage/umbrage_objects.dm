@@ -17,7 +17,7 @@
 
 /obj/item/weapon/dark_bead/Destroy(force)
 	if(isliving(loc) && !eating && !force)
-		loc << "<span class='warning'>You were too slow! [src] faded away...</span>"
+		to_chat(loc, "<span class='warning'>You were too slow! [src] faded away...</span>")
 	if(!eating || force)
 		. = ..()
 	else
@@ -28,23 +28,23 @@
 		return
 	var/datum/umbrage/U = linked_ability.linked_umbrage
 	if(!L.health || L.stat)
-		user << "<span class='warning'>[L] is too weak to drain.</span>"
+		to_chat(user, "<span class='warning'>[L] is too weak to drain.</span>")
 		return
 	if(linked_ability.victims[L.real_name])
-		user << "<span class='warning'>[L] must be given time to recover from their last draining.</span>"
+		to_chat(user, "<span class='warning'>[L] must be given time to recover from their last draining.</span>")
 		return
 	if(!L.mind || is_umbrage_or_veil(L.mind))
-		user << "<span class='warning'>You cannot drain allies or the mindless.</span>"
+		to_chat(user, "<span class='warning'>You cannot drain allies or the mindless.</span>")
 		return
 	eating = 1
 	user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class='velvet bold'>cera qo...</span><br>\
 	<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
-	L << "<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>"
+	to_chat(L, "<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>")
 	L.Stun(3)
 	playsound(L, 'sound/magic/devour_will.ogg', 100, 0) //T A S T Y   S O U L S
 	if(!do_mob(user, L, 30))
 		user.Weaken(3)
-		L << "<span class='boldwarning'>All right. You're all right.</span>"
+		to_chat(L, "<span class='boldwarning'>All right. You're all right.</span>")
 		L.Weaken(3)
 		qdel(src)
 		return
@@ -58,7 +58,7 @@
 	U.lucidity_drained++
 	LAZYADD(U.drained_minds, L.mind)
 	linked_ability.victims[L.real_name] = L
-	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
+	to_chat(L, "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>")
 	L << sound('sound/magic/devour_will_end.ogg', volume = 75)
 	L.Paralyse(30)
 	L.stuttering += 40
@@ -98,7 +98,7 @@
 
 /obj/item/weapon/umbral_tendrils/proc/disable_victim(mob/living/user, mob/living/target)
 	if(!linked_umbrage.has_psi(40))
-		user << "<span class='warning'>You need at least 40 psi to disable someone!</span>"
+		to_chat(user, "<span class='warning'>You need at least 40 psi to disable someone!</span>")
 		return
 	user.visible_message("<span class='warning'>[user] swings \his [src] in an arc towards [target]!</span>", "<span class='notice'>You swing your tendrils towards [target]!</span>")
 	playsound(user, 'sound/magic/Tail_swing.ogg', 50, 1)
@@ -151,17 +151,17 @@
 		return
 	var/mob/living/carbon/human/H = target
 	if(H.mind && is_umbrage_or_veil(H.mind))
-		user << "<span class='warning'>You can't implant allies.</span>"
+		to_chat(user, "<span class='warning'>You can't implant allies.</span>")
 		return
 	if(H.stat)
 		return
 	if(H.getorgan(type))
-		user << "<span class='warning'>[H] is already implanted.</span>"
+		to_chat(user, "<span class='warning'>[H] is already implanted.</span>")
 		return
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 	if((!HD || HD.status != BODYPART_ROBOTIC) && !H.getorganslot("listener_bug"))
 		new /obj/item/organ/umbral_spawn(H)
-		user << "<span class='notice'>You silently implant [src] into [H]'s brain. The Mindlink will hear everything they say.</span>"
+		to_chat(user, "<span class='notice'>You silently implant [src] into [H]'s brain. The Mindlink will hear everything they say.</span>")
 		flags &= ~NODROP
 		user.drop_item()
 		if(linked_ability)
@@ -180,7 +180,7 @@
 
 /obj/item/organ/umbral_spawn/on_find(mob/living/finder)
 	..()
-	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
+	to_chat(finder, "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>")
 
 /obj/item/organ/umbral_spawn/Initialize()
 	..()

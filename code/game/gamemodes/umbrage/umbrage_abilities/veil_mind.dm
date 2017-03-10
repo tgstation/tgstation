@@ -12,7 +12,7 @@
 /datum/action/innate/umbrage/veil_mind/Activate()
 	var/mob/living/carbon/human/H = owner
 	if(!H.can_speak_vocal())
-		H << "<span class='warning'>You can't speak!</span>"
+		to_chat(H, "<span class='warning'>You can't speak!</span>")
 		return
 	owner.visible_message("<span class='warning'>[owner]'s sigils flare as they inhale...</span>", "<span class='velvet bold'>dawn kqn okjc...</span><br>\
 	<span class='notice'>You take a deep breath...</span>")
@@ -26,7 +26,7 @@
 		if(L == owner)
 			continue
 		if(issilicon(L))
-			L << "<span class='ownerdanger'>$@!) ERR: RECEPTOR OVERLOAD ^!</</span>"
+			to_chat(L, "<span class='ownerdanger'>$@!) ERR: RECEPTOR OVERLOAD ^!</</span>")
 			L << sound('sound/misc/interference.ogg', volume = 50)
 			L.emote("alarm")
 			L.Stun(2)
@@ -34,13 +34,13 @@
 			L.clear_fullscreen("flash", 10)
 		else
 			if(L.ear_deaf)
-				L << "<span class='warning'>...but you can't hear it!</span>"
+				to_chat(L, "<span class='warning'>...but you can't hear it!</span>")
 			else
 				if(L.status_flags & FAKEDEATH)
 					if(ticker.mode.antag_veil(L))
-						owner << "<span class='velvet'><b>[L.real_name]</b> has become a veil!</span>"
+						to_chat(owner, "<span class='velvet'><b>[L.real_name]</b> has become a veil!</span>")
 				else
-					L << "<span class='boldwarning'>...and it scrambles your thoughts!</span>"
+					to_chat(L, "<span class='boldwarning'>...and it scrambles your thoughts!</span>")
 					L.dir = pick(cardinal)
 					L.confused += 2
 	return TRUE

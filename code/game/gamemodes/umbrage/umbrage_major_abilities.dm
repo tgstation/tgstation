@@ -33,7 +33,7 @@
 /datum/action/innate/umbrage/divulge/Activate()
 	if(alert(usr, "Are you sure? You cannot change back into a human!", name, "Yes", "No") == "No")
 		return
-	usr << "<span class='warning'>If this attempt fails, you may not try again for another minute.</span>"
+	to_chat(usr, "<span class='warning'>If this attempt fails, you may not try again for another minute.</span>")
 	active = 1
 	addtimer(CALLBACK(src, .proc/refresh), 600)
 	var/mob/living/carbon/human/user = usr
@@ -77,7 +77,7 @@
 	animate(user, pixel_y = user.pixel_y + 5, time = 60)
 	sleep(45)
 	for(var/i in 1 to 20)
-		user << "<span class='velvet bold'>[pick("I- I- I-", "Mind-", "Sigils-", "Can't think-", "<i>POWER-</i>", "W-EE--EEE-", "<i>TAKE-</i>", "M-M-MOOORE-")]</span>"
+		to_chat(user, "<span class='velvet bold'>[pick("I- I- I-", "Mind-", "Sigils-", "Can't think-", "<i>POWER-</i>", "W-EE--EEE-", "<i>TAKE-</i>", "M-M-MOOORE-")]</span>")
 		sleep(1.1) //Spooky flavor message spam
 	user.visible_message("<span class='userdanger'>A tremendous shockwave emanates from [user]!</span>", "<span class='velvet big'><b>YOU ARE FREE!!</b></span>")
 	playsound(user, 'sound/magic/divulge_end.ogg', 100, 0)
@@ -96,13 +96,13 @@
 	var/processed_message = "<span class='velvet'><b>\[Mindlink\] [user.real_name] has removed their human disguise and is now [umbrage_name].</b></span>"
 	for(var/V in ticker.mode.umbrages_and_veils)
 		var/datum/mind/M = V
-		M.current << processed_message
+		to_chat(M.current, processed_message)
 	for(var/mob/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
-		M << "[link] [processed_message]"
+		to_chat(M, "[link] [processed_message]")
 	user.real_name = umbrage_name
 	user.name = umbrage_name
-	user << "<span class='velvet bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
+	to_chat(user, "<span class='velvet bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>")
 	linked_umbrage.give_ability("psi_web")
 	linked_umbrage.give_ability("devour_will")
 	Remove(user) //Take the action away

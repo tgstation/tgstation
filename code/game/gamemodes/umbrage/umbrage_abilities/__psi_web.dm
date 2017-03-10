@@ -9,7 +9,7 @@
 	psi_cost = 0
 
 /datum/action/innate/umbrage/psi_web/Activate()
-	usr << "<span class='velvet bold'>You retreat inwards and touch the Mindlink...</span>"
+	to_chat(usr, "<span class='velvet bold'>You retreat inwards and touch the Mindlink...</span>")
 	if(!linked_umbrage)
 		return
 	linked_umbrage.ui_interact(usr)

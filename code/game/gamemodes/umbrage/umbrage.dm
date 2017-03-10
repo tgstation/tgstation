@@ -91,24 +91,24 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 /datum/game_mode/proc/greet_umbrage(mob/living/U) //Announcement and direction to the tutorial
 	if(!U)
 		return FALSE
-	U << "<span class='velvet big'><b>You are an umbrage!</b></span>"
-	U << "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>"
-	U << "<i>Look for the info button in the top left of your screen if you need help.</i>"
+	to_chat(U, "<span class='velvet big'><b>You are an umbrage!</b></span>")
+	to_chat(U, "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>")
+	to_chat(U, "<i>Look for the info button in the top left of your screen if you need help.</i>")
 	return TRUE
 
 /datum/game_mode/proc/greet_veil(mob/living/V)
 	if(!V)
 		return FALSE
-	V << "<span class='velvet big'><b>ukq wna ieja jks</b></span>" //"you are mine now"
-	V << "<b>Your mind goes numb. Your thoughts go blank. You feel utterly empty. \n\
+	to_chat(V, "<span class='velvet big'><b>ukq wna ieja jks</b></span>" )
+	to_chat(V, "<b>Your mind goes numb. Your thoughts go blank. You feel utterly empty. \n\
 	A mind brushes against your own. You dream.\n\
 	Of a vast, empty Void in the deep of space.\n\
 	Something lies in the Void. Ancient. Unknowable. It watches you with hungry eyes. \n\
 	Eyes filled with stars.\n\
 	You feel a vast consciousness slowly consume your own and the veil falls away.\n\
-	Serve the umbrages above all else. Your former allegiances are now forfeit. Their goal is yours, and yours is theirs.</b>"
-	V << "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>"
-	V << "<i>Ask for help from your masters or fellows if you're new to this role.</i>"
+	Serve the umbrages above all else. Your former allegiances are now forfeit. Their goal is yours, and yours is theirs.</b>")
+	to_chat(V, "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>")
+	to_chat(V, "<i>Ask for help from your masters or fellows if you're new to this role.</i>")
 	V << sound('sound/magic/become_veil.ogg', volume = 50)
 	flash_color(V, flash_color = "#21007F", flash_time = 100)
 

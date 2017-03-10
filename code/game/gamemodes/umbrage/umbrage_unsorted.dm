@@ -10,7 +10,7 @@
 	var/lumcount = T.get_lumcount()
 	if(H.loc == T)
 		if(lumcount >= 0.2) //If it's light, we die very quickly
-			H << "<span class='userdanger'>The light burns you!</span>"
+			to_chat(H, "<span class='userdanger'>The light burns you!</span>")
 			H << sound('sound/weapons/sear.ogg', volume = 75) //Spam text and a sound to aggressively say "hey, you're dying"
 			H.adjustFireLoss(UMBRAGE_LIGHT_BURN)
 		else if(lumcount < 0.2) //But if it's dark, we heal, albeit slowly
@@ -26,7 +26,7 @@
 /mob/living/proc/umbrage_say(message)
 	var/processed_message
 	if(is_umbrage(mind))
-		src << "<span class='velvet bold'>saa'teo</span>"
+		to_chat(src, "<span class='velvet bold'>saa'teo</span>")
 		if(!is_umbrage_progenitor(usr.mind))
 			processed_message = "<span class='velvet'><b>\[Mindlink\] Umbrage [real_name]:</b> \"[message]\"</span>"
 		else
@@ -40,10 +40,10 @@
 		var/datum/mind/M = V
 		if(M.current.z != z || M.current.stat)
 			if(prob(10))
-				M.current << "<span class='warning'>Your mindlink trembles with words, but you can't make them out...</span>"
+				to_chat(M.current, "<span class='warning'>Your mindlink trembles with words, but you can't make them out...</span>")
 			continue
 		else
-			M.current << processed_message
+			to_chat(M.current, processed_message)
 	for(var/mob/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
-		M << "[link] [processed_message]"
+		to_chat(M, "[link] [processed_message]")

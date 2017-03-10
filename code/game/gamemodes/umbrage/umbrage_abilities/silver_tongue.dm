@@ -28,10 +28,10 @@
 /datum/action/innate/umbrage/silver_tongue/Activate()
 	var/obj/machinery/computer/communications/C = locate() in range(1, owner)
 	if(!C)
-		owner << "<span class='warning'>There are no communications consoles nearby.</span>"
+		to_chat(owner, "<span class='warning'>There are no communications consoles nearby.</span>")
 		return
 	if(C.stat)
-		owner << "<span class='warning'>[C] is depowered.</span>"
+		to_chat(owner, "<span class='warning'>[C] is depowered.</span>")
 		return
 	owner.visible_message("<span class='warning'>[owner] presses \his hand against [src]'s keys, and they begin to move by themselves!</span>", \
 	"<span class='velvet bold'>[pick("Oknnu. Pda ywlpwej swo hkccaz ej.", "Pda aiancajyu eo kran. Oknnu bkn swopejc ukqn peia.", "We swo knzanaz xu Hws Psk. Whh ckkz jks.")]</span>\n\
@@ -40,9 +40,9 @@
 	if(!do_after(owner, 30, target = C))
 		return
 	if(C.stat)
-		owner << "<span class='warning'>[C] has lost power.</span>"
+		to_chat(owner, "<span class='warning'>[C] has lost power.</span>")
 		return
-	owner << "<span class='notice'>The ruse was a success. The shuttle is on its way back.</span>"
+	to_chat(owner, "<span class='notice'>The ruse was a success. The shuttle is on its way back.</span>")
 	SSshuttle.cancelEvac(owner)
 	return TRUE
 
@@ -62,4 +62,4 @@
 	if(!C || C.stat)
 		return
 	playsound(C, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-	owner << "<span class='notice'>Recall initiated...</span>"
+	to_chat(owner, "<span class='notice'>Recall initiated...</span>")

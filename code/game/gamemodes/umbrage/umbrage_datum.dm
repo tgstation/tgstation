@@ -79,7 +79,7 @@
 	linked_abilities[ability.id] = ability
 	LAZYADD(linked_ability_types, ability.type)
 	if(!silent)
-		linked_body << "<span class='velvet italic'>You have learned the \"[ability.name]\" ability.</span>"
+		to_chat(linked_body, "<span class='velvet italic'>You have learned the \"[ability.name]\" ability.</span>")
 	if(consume_lucidity)
 		lucidity = max(0, lucidity - initial(ability.lucidity_cost))
 	return TRUE
@@ -93,7 +93,7 @@
 	linked_abilities[id] = null
 	LAZYREMOVE(linked_ability_types, ability.type)
 	if(!silent)
-		linked_body << "<span class='warning'>You have lost the \"[ability.name]\" ability.</span>"
+		to_chat(linked_body, "<span class='warning'>You have lost the \"[ability.name]\" ability.</span>")
 	qdel(ability)
 	return TRUE
 
