@@ -266,7 +266,7 @@ var/datum/sortInstance/sortInstance = new()
 			var/maxOffset = len - hint
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) > 0)
 				lastOffset = offset
-				offset = (to_chat(offset, 1) + 1)
+				offset = (offset << 1) + 1
 
 			if(offset > maxOffset)
 				offset = maxOffset
@@ -278,7 +278,7 @@ var/datum/sortInstance/sortInstance = new()
 			var/maxOffset = hint + 1
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) <= 0)
 				lastOffset = offset
-				offset = (to_chat(offset, 1) + 1)
+				offset = (offset << 1) + 1
 
 			if(offset > maxOffset)
 				offset = maxOffset
@@ -325,7 +325,7 @@ var/datum/sortInstance/sortInstance = new()
 			var/maxOffset = hint + 1	//therefore we want to insert somewhere in the range [base,base+hint] = [base+,base+(hint+1))
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) < 0)	//we are iterating backwards
 				lastOffset = offset
-				offset = (to_chat(offset, 1) + 1	)
+				offset = (offset << 1) + 1	//1 3 7 15
 				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
 				//	offset = maxOffset
 
@@ -340,7 +340,7 @@ var/datum/sortInstance/sortInstance = new()
 			var/maxOffset = len - hint	//therefore we want to insert somewhere in the range (base+hint,base+len) = [base+hint+1, base+hint+(len-hint))
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) >= 0)
 				lastOffset = offset
-				offset = (to_chat(offset, 1) + 1)
+				offset = (offset << 1) + 1
 				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
 				//	offset = maxOffset
 

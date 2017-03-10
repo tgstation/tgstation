@@ -71,9 +71,9 @@
 		AM = find_type_in_direction(A, direction)
 		if(AM == NULLTURF_BORDER)
 			if((A.smooth & SMOOTH_BORDER))
-				adjacencies |= to_chat(1, direction)
+				adjacencies |= 1 << direction
 		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
-			adjacencies |= to_chat(1, direction)
+			adjacencies |= 1 << direction
 
 	if(adjacencies & N_NORTH)
 		if(adjacencies & N_WEST)

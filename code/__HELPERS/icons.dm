@@ -333,26 +333,26 @@ world
 		--digits
 		switch(which)
 			if(0)
-				r = (to_chat(r, 4) | ch)
+				r = (r << 4) | ch
 				if(single)
-					r |= to_chat(r, 4)
+					r |= r << 4
 					++which
 				else if(!(digits & 1)) ++which
 			if(1)
-				g = (to_chat(g, 4) | ch)
+				g = (g << 4) | ch
 				if(single)
-					g |= to_chat(g, 4)
+					g |= g << 4
 					++which
 				else if(!(digits & 1)) ++which
 			if(2)
-				b = (to_chat(b, 4) | ch)
+				b = (b << 4) | ch
 				if(single)
-					b |= to_chat(b, 4)
+					b |= b << 4
 					++which
 				else if(!(digits & 1)) ++which
 			if(3)
-				alpha = (to_chat(alpha, 4) | ch)
-				if(single) alpha |= to_chat(alpha, 4)
+				alpha = (alpha << 4) | ch
+				if(single) alpha |= alpha << 4
 
 	. = list(r, g, b)
 	if(usealpha) . += alpha
@@ -382,16 +382,16 @@ world
 		--digits
 		switch(which)
 			if(0)
-				hue = (to_chat(hue, 4) | ch)
+				hue = (hue << 4) | ch
 				if(digits == (usealpha ? 6 : 4)) ++which
 			if(1)
-				sat = (to_chat(sat, 4) | ch)
+				sat = (sat << 4) | ch
 				if(digits == (usealpha ? 4 : 2)) ++which
 			if(2)
-				val = (to_chat(val, 4) | ch)
+				val = (val << 4) | ch
 				if(digits == (usealpha ? 2 : 0)) ++which
 			if(3)
-				alpha = (to_chat(alpha, 4) | ch)
+				alpha = (alpha << 4) | ch
 
 	. = list(hue, sat, val)
 	if(usealpha) . += alpha
