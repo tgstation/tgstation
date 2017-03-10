@@ -127,11 +127,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 
-	start_time = REALTIMEOFDAY
-	INIT_ANNOUNCE("Loading mining level...")
-	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
-	INIT_ANNOUNCE("Loaded mining level in [(REALTIMEOFDAY - start_time)/10]s!")
-
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
 
