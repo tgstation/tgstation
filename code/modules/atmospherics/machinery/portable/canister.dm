@@ -14,8 +14,8 @@
 	var/filled = 0.5
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
-	var/CAN_MAX_RELEASE_PRESSURE = (ONE_ATMOSPHERE * 10)
-	var/CAN_MIN_RELEASE_PRESSURE = (ONE_ATMOSPHERE / 10)
+	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
+	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
 	obj_integrity = 250
@@ -267,8 +267,8 @@
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
 	data["defaultReleasePressure"] = round(CAN_DEFAULT_RELEASE_PRESSURE)
-	data["minReleasePressure"] = round(CAN_MIN_RELEASE_PRESSURE)
-	data["maxReleasePressure"] = round(CAN_MAX_RELEASE_PRESSURE)
+	data["minReleasePressure"] = round(can_min_release_pressure)
+	data["maxReleasePressure"] = round(can_max_release_pressure)
 	data["valveOpen"] = valve_open ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
@@ -299,20 +299,20 @@
 				pressure = CAN_DEFAULT_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "min")
-				pressure = CAN_MIN_RELEASE_PRESSURE
+				pressure = can_min_release_pressure
 				. = TRUE
 			else if(pressure == "max")
-				pressure = CAN_MAX_RELEASE_PRESSURE
+				pressure = can_max_release_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New release pressure ([CAN_MIN_RELEASE_PRESSURE]-[CAN_MAX_RELEASE_PRESSURE] kPa):", name, release_pressure) as num|null
+				pressure = input("New release pressure ([can_min_release_pressure]-[can_max_release_pressure] kPa):", name, release_pressure) as num|null
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = Clamp(round(pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+				release_pressure = Clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", "atmos")
 		if("valve")
 			var/logmsg
@@ -353,13 +353,14 @@
 				. = TRUE
 	update_icon()
 	
+	
 	/obj/machinery/portable_atmospherics/canister/proto
 	name = "prototype canister"
 	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
-	icon_state = "ultra"
+	icon_state = "proto"
 	volume = 5000
 	obj_integrity = 300
 	max_integrity = 300
 	temperature_resistance = 2000 + T0C
-	CAN_MAX_RELEASE_PRESSURE = (ONE_ATMOSPHERE * 30)
-	CAN_MIN_RELEASE_PRESSURE = (ONE_ATMOSPHERE / 30)
+	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
+	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
