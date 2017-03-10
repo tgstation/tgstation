@@ -83,6 +83,9 @@
 	//reaching this state deletes the object
 	required_type_to_deconstruct = NO_DECONSTRUCT
 
+	var/one_per_turf = FALSE
+	var/on_floor = FALSE
+
 /datum/construction_state/last	//this should only contain deconstruction parameters
 	required_type_to_construct = NO_DECONSTRUCT
 

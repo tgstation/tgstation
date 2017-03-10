@@ -17,6 +17,8 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/plasticflaps)
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/plastic
 			required_amount_to_construct = 5
+			one_per_turf = 1
+			on_floor = 1
 		},
 		/datum/construction_state{
 			required_type_to_construct = /obj/item/weapon/screwdriver

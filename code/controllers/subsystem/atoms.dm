@@ -147,7 +147,7 @@ var/datum/controller/subsystem/atoms/SSatoms
 					//TODO: Handle these snowflakes
 					var/is_glass = ispath(mat_type, /obj/item/stack/sheet/glass) || ispath(mat_type, /obj/item/stack/sheet/rglass)
 					var/obj/O = I
-					t_recipes += new /datum/stack_recipe(initial(O.name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = initial(O.density), window_checks = is_glass)
+					t_recipes += new /datum/stack_recipe(initial(O.name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = F.one_per_turf, on_floor = F.on_floor, window_checks = is_glass)
 		CHECK_TICK
 
 #undef GET_CONSTRUCTION_BLUEPRINT

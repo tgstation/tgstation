@@ -155,7 +155,7 @@
 	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
 		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return 0
-	if(!isfloorturf(usr.loc))
+	if(R.on_floor && !isfloorturf(usr.loc))
 		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return 0
 	return 1
@@ -279,13 +279,17 @@
 	var/max_res_amount = 1
 	var/time = 0
 	var/one_per_turf = FALSE
+ 	var/one_per_turf = FALSE
+-	var/on_floor = FALSE
 	var/window_checks = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, window_checks = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
 	src.res_amount = res_amount
 	src.max_res_amount = max_res_amount
 	src.time = time
+	src.one_per_turf = one_per_turf
+	src.on_floor = on_floor
 	src.window_checks = window_checks
