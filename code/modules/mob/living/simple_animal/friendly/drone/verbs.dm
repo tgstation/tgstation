@@ -9,8 +9,8 @@
 	set category = "Drone"
 	set name = "Check Laws"
 
-	src << "<b>Drone Laws</b>"
-	src << laws
+	to_chat(src, "<b>Drone Laws</b>")
+	to_chat(src, laws)
 
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
@@ -22,7 +22,7 @@
 
 	light_on = !light_on
 
-	src << "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>"
+	to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
 
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
@@ -43,7 +43,7 @@
 	set category = "Drone"
 
 	if(!seeStatic)
-		src << "<span class='warning'>You have no vision filter to change!</span>"
+		to_chat(src, "<span class='warning'>You have no vision filter to change!</span>")
 		return
 
 	var/selectedStatic = input("Select a vision filter", "Vision Filter") as null|anything in staticChoices

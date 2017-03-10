@@ -420,7 +420,7 @@
 
 			if(mineral && mineral != "glass")
 				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
-			user << "<span class='notice'>You change the paintjob on the airlock assembly.</span>"
+			to_chat(user, "<span class='notice'>You change the paintjob on the airlock assembly.</span>")
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
 	return newlist(
@@ -499,17 +499,17 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
 			if(constructing)
 				for(var/obj/machinery/door/D in loc)
 					if(!D.sub_door)
-						user << "<span class='warning'>There is another door here!</span>"
+						to_chat(user, "<span class='warning'>There is another door here!</span>")
 						return FALSE
 		if(AIRLOCK_ASSEMBLY_ELECTRONICS)
 			var/static/list/valid_subtypes = typecacheof(list(/obj/item/stack/sheet/rglass, /obj/item/stack/sheet/glass, /obj/item/stack/sheet/mineral))
 			if(!is_type_in_typecache(I, valid_subtypes))
-				user << "<span class='warning'>This material cannot be used as a finish!</span>"
+				to_chat(user, "<span class='warning'>This material cannot be used as a finish!</span>")
 				return FALSE
 		if(0)
 			//disallow if broken
 			if(obj_integrity <= integrity_failure)
-				user << "<span class='warning'>[src] is too damaged to complete!</span>"
+				to_chat(user, "<span class='warning'>[src] is too damaged to complete!</span>")
 				return FALSE
 
 /obj/structure/door_assembly/OnConstruction(state_id, mob/user, obj/item/used)
@@ -599,7 +599,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
 /obj/structure/door_assembly/examine(mob/user)
 	..()
 	if(mineral)
-		user << "It has a [mineral] finish."
+		to_chat(user, "It has a [mineral] finish.")
 
 /obj/structure/door_assembly/update_icon()
 	cut_overlays()

@@ -41,7 +41,7 @@ Contents:
 	set popup_menu = 0
 
 	if(!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(!ticker.mode)
 		alert("The game hasn't started yet!")

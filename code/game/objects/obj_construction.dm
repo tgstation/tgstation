@@ -319,7 +319,7 @@
 /obj/examine(mob/user)
 	..()
 	if(current_construction_state && current_construction_state.examine_message)
-		user << current_construction_state.examine_message
+		to_chat(user, current_construction_state.examine_message)
 
 /obj/attack_hand(mob/user)	//obj/item doesn't call this so we're fine
 	if(user.a_intent == INTENT_HELP)
@@ -384,7 +384,7 @@
 			message = ccs.deconstruction_message
 		else if(istype(I, ccs.required_type_to_repair))
 			if(obj_integrity == max_integrity)
-				user << "<span class='notice'>\The src isn't damaged!</span>"
+				to_chat(user, "<span class='notice'>\The src isn't damaged!</span>")
 				return
 			repairing = TRUE
 			wait = ccs.repair_delay
@@ -398,7 +398,7 @@
 		if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(!WT.isOn())
-				user << "<span class='warning'>The welder must be on for this task!</span>"
+				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 				return
 			else
 				WT.remove_fuel(M = user)
@@ -407,7 +407,7 @@
 		if(istype(Mats))
 			var/check_against = repairing ? ccs.required_amount_to_repair : ccs.required_type_to_construct
 			if(Mats.amount < check_against)
-				user << "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>"
+				to_chat(user, "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>")
 				return
 
 		LAZYADD(user.construction_tasks, src)	//prevent repeats
@@ -437,16 +437,16 @@
 
 /obj/proc/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip) 
 	if(current_construction_state.id != state_started_id)
-		user << "<span class='warning'>You were interrupted!</span>"
+		to_chat(user, "<span class='warning'>You were interrupted!</span>")
 		return FALSE
 	
 	var/obj/item/weapon/weldingtool/WT = I
 	if(istype(WT) && !WT.isOn())
-		user << "<span class='warning'>\The [WT] runs out of fuel!</span>"
+		to_chat(user, "<span class='warning'>\The [WT] runs out of fuel!</span>")
 		return FALSE
 	
 	var/obj/item/stack/Mats = I
 	if(istype(Mats) && Mats.amount < current_construction_state.required_amount_to_construct)
-		user << "<span class='warning'>You no longer have enough [Mats]!</span>"
+		to_chat(user, "<span class='warning'>You no longer have enough [Mats]!</span>")
 		return FALSE
 	return TRUE

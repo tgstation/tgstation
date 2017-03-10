@@ -34,9 +34,9 @@
 /obj/structure/displaycase/examine(mob/user)
 	..()
 	if(showpiece)
-		user << "<span class='notice'>There's [showpiece] inside.</span>"
+		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
 	if(alert)
-		user << "<span class='notice'>Hooked up with an anti-theft system.</span>"
+		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
 
 
 /obj/structure/displaycase/proc/dump()
@@ -168,23 +168,23 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 	if(current_construction_state.id == DISPLAY_CASE_COMPLETE)
 		if(W.GetID())
 			if(allowed(user))
-				user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
+				to_chat(user, "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 				toggle_lock(user)
 			else
-				user <<  "<span class='warning'>Access denied.</span>"
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 
 		else if(!alert && istype(W,/obj/item/weapon/crowbar) && !(src in user.construction_tasks)) //Only applies to the lab cage and player made display cases
-			user << "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>"
+			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>")
 			LAZYADD(user.construction_tasks, src)
 			if(do_after(user, 20*W.toolspeed, target = src))
-				user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
+				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 				toggle_lock(user)
 			LAZYREMOVE(user.construction_tasks, src)
 	
 	else if((current_construction_state.id == DISPLAY_CASE_NOGLASS || open) && !showpiece)
 		if(user.transferItemToLoc(W, src))
 			showpiece = W
-			user << "<span class='notice'>You put [W] on display</span>"
+			to_chat(user, "<span class='notice'>You put [W] on display</span>")
 			update_icon()
 	else
 		return ..()
@@ -200,8 +200,8 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && ((current_construction_state.id == DISPLAY_CASE_NOGLASS) || open))
 		dump()
-		user << "<span class='notice'>You deactivate the hover field built into the case.</span>"
-		add_fingerprint(user)
+		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
+		src.add_fingerprint(user)
 		update_icon()
 		return
 	else

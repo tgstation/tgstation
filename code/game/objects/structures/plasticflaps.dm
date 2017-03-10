@@ -4,12 +4,12 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
 	armor = list(melee = 100, bullet = 80, laser = 80, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 50, acid = 50)
-	density = 1	//we set this to zero later, it's like this to trick the stack_recipe builder
+	density = TRUE	//we set this to FALSE in Initialize, it's like this to trick the stack_recipe builder
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/plasticflaps/Initialize()
-	density = 0
+	density = FALSE
 	..()
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/plasticflaps)

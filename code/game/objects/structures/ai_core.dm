@@ -102,7 +102,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore)
 	if(!. || skip)
 		return
 	if(state_started_id == CABLED_CORE && !constructing && brain)
-		user << "<span class='warning'>Get that [brain.name] out of there first!</span>"
+		to_chat(user, "<span class='warning'>Get that [brain.name] out of there first!</span>")
 		return FALSE
 
 /obj/structure/AIcore/OnConstruction(state_id, mob/user, obj/item/used)
@@ -129,13 +129,13 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore)
 /obj/structure/AIcore/examine(mob/user)
 	..()
 	if(current_construction_state.id == CABLED_CORE && brain)
-		user << "There is a brain inside."
+		to_chat(user, "There is a brain inside.")
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	if(current_construction_state.id == CABLED_CORE)
 		if(istype(P, /obj/item/weapon/aiModule))
 			if(brain && brain.laws.id != DEFAULT_AI_LAWID)
-				user << "<span class='warning'>The installed [brain.name] already has set laws!</span>"
+				to_chat(user, "<span class='warning'>The installed [brain.name] already has set laws!</span>")
 				return
 			var/obj/item/weapon/aiModule/module = P
 			module.install(laws, user)
@@ -144,22 +144,22 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore)
 		if(istype(P, /obj/item/device/mmi) && !brain)
 			var/obj/item/device/mmi/M = P
 			if(!M.brainmob)
-				user << "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>"
+				to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
 				return
 			if(M.brainmob.stat == DEAD)
-				user << "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>"
+				to_chat(user, "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>")
 				return
 
 			if(!M.brainmob.client)
-				user << "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>"
+				to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 				return
 
 			if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI"))
-				user << "<span class='warning'>This [M.name] does not seem to fit!</span>"
+				to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
 
 			if(!M.brainmob.mind)
-				user << "<span class='warning'>This [M.name] is mindless!</span>"
+				to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
 				return
 
 			if(!user.drop_item())
@@ -167,13 +167,13 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore)
 
 			M.forceMove(src)
 			brain = M
-			user << "<span class='notice'>You add [M.name] to the frame.</span>"
+			to_chat(user, "<span class='notice'>You add [M.name] to the frame.</span>")
 			update_icon()
 			return
 
 		if(istype(P, /obj/item/weapon/crowbar) && brain)
 			playsound(loc, P.usesound, 50, 1)
-			user << "<span class='notice'>You remove the brain.</span>"
+			to_chat(user, "<span class='notice'>You remove the brain.</span>")
 			brain.forceMove(loc)
 			brain = null
 			update_icon()
@@ -197,7 +197,7 @@ That prevents a few funky behaviors.
 /atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(istype(card))
 		if(card.flush)
-			user << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
+			to_chat(user, "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol.")
 			return 0
 	return 1
 
@@ -210,12 +210,12 @@ That prevents a few funky behaviors.
 		AI.control_disabled = 0
 		AI.radio_enabled = 1
 		AI.forceMove(loc) // to replace the terminal.
-		AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
-		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
-		user << "There is no AI loaded on this terminal!"
+		to_chat(user, "There is no AI loaded on this terminal!")
 
 
 /obj/item/weapon/circuitboard/aicore

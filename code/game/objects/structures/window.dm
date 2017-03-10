@@ -25,7 +25,7 @@
 
 /obj/structure/window/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/New(Loc, direct)
 	..()
@@ -144,15 +144,15 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
-					user << "<span class='notice'>You repair [src].</span>"
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
-			user << "<span class='warning'>[src] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
 
@@ -160,39 +160,39 @@
 		if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(loc, I.usesound, 75, 1)
 			if(reinf && (state == 2 || state == 1))
-				user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>")
+				to_chat(user, (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>"))
 			else if(reinf && state == 0)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
+				to_chat(user, (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>"))
 			else if(!reinf)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
+				to_chat(user, (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>"))
 
 			if(do_after(user, 30*I.toolspeed, target = src))
 				if(reinf && (state == 1 || state == 2))
 					//If state was unfastened, fasten it, else do the reverse
 					state = (state == 1 ? 2 : 1)
-					user << (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>")
+					to_chat(user, (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>"))
 				else if(reinf && state == 0)
 					anchored = !anchored
 					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
+					to_chat(user, (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>"))
 				else if(!reinf)
 					anchored = !anchored
 					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
+					to_chat(user, (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>"))
 			return
 
 		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
-			user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
+			to_chat(user, (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>"))
 			playsound(loc, I.usesound, 75, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
 				//If state was out of frame, put into frame, else do the reverse
 				state = (state == 0 ? 1 : 0)
-				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
+				to_chat(user, (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>"))
 			return
 
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 			playsound(loc, I.usesound, 75, 1)
-			user << "<span class='notice'> You begin to disassemble [src]...</span>"
+			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 			if(do_after(user, 40*I.toolspeed, target = src))
 				if(QDELETED(src))
 					return
@@ -201,7 +201,7 @@
 				G.add_fingerprint(user)
 
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "<span class='notice'>You successfully disassemble [src].</span>"
+				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
 	return ..()
@@ -261,13 +261,13 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 90)
 
 	if(!valid_window_location(loc, target_dir))
-		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
 	setDir(target_dir)
@@ -286,13 +286,13 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 270)
 
 	if(!valid_window_location(loc, target_dir))
-		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
 	setDir(target_dir)
@@ -304,7 +304,7 @@
 /obj/structure/window/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return

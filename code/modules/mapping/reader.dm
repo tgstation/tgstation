@@ -14,10 +14,6 @@ var/global/dmm_suite/preloader/_preloader = new
 		// /^[\s\n]+|[\s\n]+$/
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	var/static/list/modelCache = list()
-	var/static/space	// the world turf model key
-#ifdef TESTING
-	var/static/num_skipped
-#endif
 
 /**
  * Construct the model map and control the loading process
@@ -32,15 +28,7 @@ var/global/dmm_suite/preloader/_preloader = new
 /dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	space = null	//different file, different keys
-	#ifdef TESTING
-	num_skipped = 0
-	#endif
 	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
-	#ifdef TESTING
-	if(. && no_changeturf)
-		testing("Skipped loading [num_skipped] basic turfs.")
-	#endif
 	Master.StopLoadingMap()
 
 /dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
@@ -93,7 +81,6 @@ var/global/dmm_suite/preloader/_preloader = new
 					continue
 				else
 					world.maxz = zcrd //create a new z_level if needed
-			var/basic_turfs = no_changeturf || zexpansion
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
@@ -139,14 +126,9 @@ var/global/dmm_suite/preloader/_preloader = new
 
 							if(xcrd >= 1)
 								var/model_key = copytext(line, tpos, tpos + key_len)
-								if(!basic_turfs || model_key != space)
-									if(!grid_models[model_key])
-										throw EXCEPTION("Undefined model key in DMM.")
-									parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, basic_turfs)
-								#ifdef TESTING
-								else
-									++num_skipped
-								#endif
+								if(!grid_models[model_key])
+									throw EXCEPTION("Undefined model key in DMM.")
+								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd, no_changeturf || zexpansion)
 								CHECK_TICK
 
 							maxx = max(maxx, xcrd)
@@ -160,11 +142,12 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
-		if(!measureOnly && !no_changeturf)
-			for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-				var/turf/T = t
-				//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-				T.AfterChange(TRUE)
+		if(!measureOnly)
+			if(!no_changeturf)
+				for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+					var/turf/T = t
+					//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+					T.AfterChange(TRUE)
 		return bounds
 
 /**
@@ -184,7 +167,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text, model_key, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
+/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -238,24 +221,8 @@ var/global/dmm_suite/preloader/_preloader = new
 			CHECK_TICK
 		while(dpos != 0)
 
-		var/static/area_typecache = world.area ///area/space
-		var/static/turf_typecache = world.turf ///turf/open/space/basic
+		modelCache[model] = list(members, members_attributes)
 
-		if(!space && members.len == 2 && members_attributes.len == 2 && (area_typecache in members) && length(members_attributes[1]) == 0 && length(members_attributes[2]) == 0)
-			if (turf_typecache in members)
-				space = model_key
-				if(no_changeturf)
-					#ifdef TESTING
-					++num_skipped
-					#endif
-					return
-			#ifdef TESTING
-			else if(/turf/open/space in members)
-				testing("WARNING: FOUND BAD SPACE TURF AT KEY [model_key]! USE /turf/open/space/basic TO ENABLE MAPLOADER OPTIMIZATIONS!")
-			#endif
-
-		var/L = list(members, members_attributes)
-		modelCache[model] = L
 
 	////////////////
 	//Instanciation
@@ -436,6 +403,8 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/value = attributes[attribute]
 		if(islist(value))
 			value = deepCopyList(value)
+		if(istext(value))
+			value = apply_text_macros(value)
 		what.vars[attribute] = value
 	use_preloader = FALSE
 

@@ -62,10 +62,10 @@
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
 	if (!src.allowed(user))
-		user << "<span class='info'>Access denied.</span>"
+		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if (broken)
-		user << "<span class ='danger'>The controls seem unresponsive.</span>"
+		to_chat(user, "<span class ='danger'>The controls seem unresponsive.</span>")
 		return
 	pick_sign()
 
@@ -99,11 +99,11 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign)
 		return
 	
 	if (state_started_id == BARSIGN_COMPLETE && !allowed(user))
-		user << "<span class='info'>Access denied.</span>"
+		to_chat(user, "<span class='info'>Access denied.</span>")
 		return FALSE
 	
 	if (state_started_id == BARSIGN_OPEN && emagged)
-		user << "<span class='warning'>The wires are fried beyond repair.</span>"
+		to_chat(user, "<span class='warning'>The wires are fried beyond repair.</span>")
 		return FALSE
 
 /obj/structure/sign/barsign/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
@@ -141,9 +141,9 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign)
 
 /obj/structure/sign/barsign/emag_act(mob/user)
 	if(broken || emagged)
-		user << "<span class='warning'>Nothing interesting happens!</span>"
+		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
-	user << "<span class='notice'>You emag the barsign. Takeover in progress...</span>"
+	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
 	sleep(100) //10 seconds
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	emagged = 1

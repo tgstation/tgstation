@@ -160,7 +160,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else
 		pronoun = "It is"
 	var/size = weightclass2text(src.w_class)
-	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
+	to_chat(user, "[pronoun] a [size] item." )
 
 	if(user.research_scanner) //Mob has a research scanner active.
 		var/msg = "*--------* <BR>"
@@ -181,7 +181,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
 		msg += "*--------*"
-		user << msg
+		to_chat(user, msg)
 
 
 /obj/item/attack_self(mob/user)
@@ -209,9 +209,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(istype(C))
 			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 				extinguish()
-				user << "<span class='notice'>You put out the fire on [src].</span>"
+				to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
 			else
-				user << "<span class='warning'>You burn your hand on [src]!</span>"
+				to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
 				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
@@ -223,7 +223,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
-				user << "<span class='warning'>The acid on [src] burns your hand!</span>"
+				to_chat(user, "<span class='warning'>The acid on [src] burns your hand!</span>")
 				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
@@ -273,7 +273,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.dropItemToGround(src)
-		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
+		to_chat(user, "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 	attack_paw(A)
 
@@ -307,7 +307,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 						var/len = things.len
 						if(!len)
-							user << "<span class='notice'>You failed to pick up anything with [S].</span>"
+							to_chat(user, "<span class='notice'>You failed to pick up anything with [S].</span>")
 							return
 						var/datum/progressbar/progress = new(user, len, loc)
 
@@ -316,7 +316,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 						qdel(progress)
 
-						user << "<span class='notice'>You put everything you could [S.preposition] [S].</span>"
+						to_chat(user, "<span class='notice'>You put everything you could [S.preposition] [S].</span>")
 
 				else if(S.can_be_inserted(src))
 					S.handle_item_insertion(src)
@@ -438,22 +438,22 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
 			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
 		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
 			return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
+		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
 	if(isbrain(M))
-		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
+		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
 	src.add_fingerprint(user)
@@ -484,20 +484,20 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(M.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
-			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
+			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
 		if(!(M.disabilities & (NEARSIGHT | BLIND)))
 			if(M.become_nearsighted())
-				M << "<span class='danger'>You become nearsighted!</span>"
+				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_item())
-					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
+					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Paralyse(1)
 			M.Weaken(2)
 		if (prob(M.eye_damage - 10 + 1))
 			if(M.become_blind())
-				M << "<span class='danger'>You go blind!</span>"
+				to_chat(M, "<span class='danger'>You go blind!</span>")
 
 /obj/item/clean_blood()
 	. = ..()
