@@ -135,9 +135,6 @@
 				feedback_add_details("Engi_equipment_bought","[src.type]|[prize.equipment_path]")
 	updateUsrDialog()
 
-/obj/machinery/engi_points_manager/attackby(obj/item/I, mob/user, params)
-	return ..()
-
 /obj/machinery/engi_points_manager/process()
 	power_export_bonus = 0
 	for(var/obj/machinery/power/exporter/PE in power_exporter_list)
