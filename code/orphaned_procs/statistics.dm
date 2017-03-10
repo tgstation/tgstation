@@ -206,7 +206,7 @@ var/datum/feedback/blackbox = new()
 	return list(variable,value,details)
 
 //sql reporting procs
-/proc/sql_poll_players()
+/proc/sql_poll_population()
 	if(!config.sql_enabled)
 		return
 	if(!dbcon.Connect())
