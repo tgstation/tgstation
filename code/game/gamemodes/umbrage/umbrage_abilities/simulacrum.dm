@@ -3,6 +3,8 @@
 	name = "Simulacrum"
 	id = "simulacrum"
 	desc = "Creates an illusion that closely resembles you. The illusion will run forward for ten seconds."
+	fluff_text = "Old fantasy books speak of \"displacer beasts\" that bend light rays around them to form illusions. In this case, you're doing the exact same thing - only, you bend certain colors \
+	very, very minutely to cause the illusion of an actual person splitting away from you."
 	button_icon_state = "umbrage_simulacrum"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	psi_cost = 30

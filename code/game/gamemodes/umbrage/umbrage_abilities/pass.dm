@@ -3,6 +3,7 @@
 	name = "Pass"
 	id = "pass"
 	desc = "Twists an active arm into tendrils with many uses."
+	fluff_text = "This is like a miniature version of Sacrament. You're turning part of yourself into a progenitor, but it takes much less energy than doing it all at once."
 	button_icon_state = "umbrage_pass"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	psi_cost = 0

@@ -3,6 +3,7 @@
 	name = "Demented Outburst"
 	id = "demented_outburst"
 	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Very loud."
+	fluff_text = "There's nothing special or psi-related about this. You just scream really loud."
 	button_icon_state = "umbrage_demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 60 //big boom = big cost

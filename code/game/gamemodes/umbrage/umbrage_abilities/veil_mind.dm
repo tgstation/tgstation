@@ -3,6 +3,9 @@
 	name = "Veil Mind"
 	id = "veil_mind"
 	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will."
+	fluff_text = "The shout you make is at multiple, wildly-varying pitches throughout. The intensity of the sound causes the mind to go completely blank from the information overload. The \
+	rest is just basic psychological principles: when a baby sees another person, it assumes that the person is its mother, and forms an attachment. You're like a mommy duck leading around \
+	baby ducklings! (Except the ducklings are slaves.) Mindshield implants prevent against that confusion, and causes the owner to just forget that the sound ever happened."
 	button_icon_state = "umbrage_veil_mind"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	psi_cost = 30

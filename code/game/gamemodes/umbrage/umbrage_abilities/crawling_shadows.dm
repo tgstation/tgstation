@@ -3,6 +3,8 @@
 	name = "Crawling Shadows"
 	id = "crawling_shadows"
 	desc = "Assumes a shadowy form that can crawl through vents and squeeze through the cracks in doors. You can also knock people out by attacking them."
+	fluff_text = "This isn't changing or morphing into another creature. Instead, it's you simply devolving into your true form for a time. You just keep the human-like form \
+	because it's very convenient to work with!"
 	button_icon_state = "umbrage_crawling_shadows"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	psi_cost = 75

@@ -3,6 +3,8 @@
 	name = "Listener Bug"
 	id = "listener_bug"
 	desc = "Spawns a tiny parasite in the host's brain cavity that relays everything they say over the Mindlink."
+	fluff_text = "The bug doesn't teleport into its host. Instead, it transfers a tiny parasite through way of projectile that burrows into their brain and causes their tongue to minutely vibrate \
+	when speaking, relaying spoken words to the Mindlink, which in itself is just vibrations passed through the air."
 	button_icon_state = "umbrage_listening_bug"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 10

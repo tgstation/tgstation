@@ -2,6 +2,7 @@
 	name = "umbrage ability"
 	var/id //The ability's ID, for giving, taking and such
 	desc = "This probably shouldn't exist."
+	var/fluff_text = "No, I'm not kidding, this shouldn't exist." //Defines how the ability works or some fun fact about it idk
 	background_icon_state = "bg_alien"
 	buttontooltipstyle = "alien"
 	var/psi_cost = 0

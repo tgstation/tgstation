@@ -3,6 +3,7 @@
 	name = "Silver Tongue"
 	id = "silver_tongue"
 	desc = "When used near a communications console, allows you to forcefully transmit a message to Central Command, initiating a shuttle recall."
+	fluff_text = "Psi is just electricity, and with the ability to manipulate electricity, you can make a simple machine do what you want."
 	button_icon_state = "umbrage_silver_tongue"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
 	psi_cost = 100

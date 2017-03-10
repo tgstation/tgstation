@@ -3,6 +3,7 @@
 	name = "Tagalong"
 	id = "tagalong"
 	desc = "Melds with a target's shadow, allowing you to accompany them into lit areas. Only works on targets not in darkness."
+	fluff_text = "Your real form is just a mass of crawling shadows, thus making it easy to grab someone's ankles and hold on."
 	button_icon_state = "umbrage_tagalong"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 50

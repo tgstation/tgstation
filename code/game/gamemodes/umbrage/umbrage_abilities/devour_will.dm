@@ -3,6 +3,8 @@
 	name = "Devour Will"
 	id = "devour_will"
 	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out."
+	fluff_text = "Dark beads are an intense amount of energy coalesced into a tiny form. When someone makes contact with it, it overloads their body's muscles and paralyzes them, giving you \
+	time to \"drain their lucidity\" which is the equivalent of just sapping the electrical activity of their brain, which handily has their thoughts attached."
 	button_icon_state = "umbrage_devour_will"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	psi_cost = 20
