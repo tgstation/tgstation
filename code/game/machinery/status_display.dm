@@ -45,6 +45,7 @@
 	// register for radio system
 
 /obj/machinery/status_display/Initialize()
+	..()
 	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
