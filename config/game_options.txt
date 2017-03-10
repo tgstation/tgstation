@@ -475,12 +475,12 @@ BOMBCAP 20
 # of ruins.
 LAVALAND_BUDGET 60
 
-## Space Ruin Budged
+## Space Ruin Budget
 Space_Budget 16
 
 #Time in ds from when a player latejoins till the arrival shuttle docks at the station
-#Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
-ARRIVALS_SHUTTLE_DOCK_WINDOW 55
+#Must be at least 30 to not break parallax I recommended at least 100 to be visually/aurally appropriate, and to let the hyperspace ripple animation play out.
+ARRIVALS_SHUTTLE_DOCK_WINDOW 100
 
 #Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
 ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0

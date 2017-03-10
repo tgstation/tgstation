@@ -7,6 +7,7 @@
 	height = 15
 	dir = WEST
 	port_angle = 180
+	preferred_direction = WEST
 
 	callTime = INFINITY
 	ignitionTime = 50
@@ -62,7 +63,7 @@
 		if(!CheckTurfsPressure())
 			damaged = FALSE
 			if(console)
-				console.say("Repairs complete, launching soon.") 
+				console.say("Repairs complete, launching soon.")
 		return
 
 //If this proc is high on the profiler add a cooldown to the stuff after this line
@@ -76,7 +77,7 @@
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
-		else		
+		else
 			SendToStation()
 		return
 
@@ -158,7 +159,7 @@
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)
 		return
-	
+
 	Launch(TRUE)
 
 	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
