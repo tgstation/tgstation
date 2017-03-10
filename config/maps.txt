@@ -24,7 +24,6 @@ map metastation
 endmap
 
 map pubbystation
-	minplayers 10
 endmap
 
 map omegastation
