@@ -79,7 +79,7 @@
 			update_icon()
 		else
 			user << "<span class='warning'>[src] can't hold any more signs!</span>"
-	else if(mybag)
+	else if(mybag && !istype(I, /obj/item/weapon/reagent_containers))
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
