@@ -127,7 +127,7 @@
 
 	for (var/TT in masters)
 		var/turf/T = TT
-		var/lo = T.lighting_overlay
+		var/atom/movable/lighting_overlay/lo = T.lighting_overlay
 		if (lo && !lo.needs_update)
 			lo.needs_update = TRUE
 			lighting_update_overlays += lo
