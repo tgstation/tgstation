@@ -62,6 +62,9 @@
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/item/projectile/beam/disabler/laser_tag
+	damage = 0.0000000000000000000000000000000000000000000000000000000001
+
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"

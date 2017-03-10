@@ -368,6 +368,23 @@
 	can_be_pushed = FALSE
 	hat_offset = -2
 
+/obj/item/weapon/robot_module/peacekeeper/Initialize()
+	if(!SSevent.holidays || !SSevent.holidays[APRIL_FOOLS]) //If it's April Fool's, peacekeepers become "security" cyborgs!
+		return 1
+	name = "Security"
+	basic_modules = list(
+		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/april_fools,
+		/obj/item/weapon/melee/baton/loaded/inflatable,
+		/obj/item/weapon/gun/energy/disabler/cyborg/laser_tag,
+		/obj/item/clothing/mask/gas/sechailer/cyborg)
+	cyborg_base_icon = "sec"
+	moduleselect_icon = "security"
+	feedback_key = "cyborg_security"
+	can_be_pushed = FALSE
+	hat_offset = 3
+	..()
+
 /obj/item/weapon/robot_module/peacekeeper/do_transform_animation()
 	..()
 	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \

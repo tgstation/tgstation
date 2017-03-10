@@ -190,20 +190,11 @@
 	else
 		return ..()
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(iscyborg(user))
-		if(!C.handcuffed)
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-			if(do_mob(user, C, 30))
-				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-					C.update_handcuffed()
-					user << "<span class='notice'>You handcuff [C].</span>"
-					add_logs(user, C, "handcuffed")
-			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
+/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/apply_cuffs(mob/living/carbon/target, mob/user, dispense = TRUE)
+	..(target, user, TRUE)
+
+/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/april_fools
+	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used/april_fools
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
@@ -221,6 +212,11 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties/used/attack()
 	return
 
+/obj/item/weapon/restraints/handcuffs/cable/zipties/used/april_fools
+	name = "fuzzy pink handcuffs"
+	desc = "A pair of plastic pink handcuffs with no lock. Only an idiot would actually use these."
+	icon_state = "handcuffGag"
+	breakouttime = 0 //Deciseconds = 0s... but you knew that already, right?
 
 //Legcuffs
 
