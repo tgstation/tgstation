@@ -773,6 +773,7 @@ What a mess.*/
 			continue
 
 		else if(prob(1))
+			data_core.security -= R
 			qdel(R)
 			continue
 
