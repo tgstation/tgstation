@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/open/space/basic,
+/turf/open/space,
 /area/space)
 "aab" = (
 /obj/docking_port/stationary{
@@ -11693,6 +11693,7 @@
 /area/maintenance/electrical)
 "azy" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "Port Docking Bay 1"
 	},
 /turf/open/floor/plating,
@@ -13976,6 +13977,7 @@
 "aEw" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
 	pixel_y = 30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -14512,9 +14514,6 @@
 "aFE" = (
 /obj/structure/chair{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -17995,6 +17994,9 @@
 	},
 /area/hallway/primary/central)
 "aNx" = (
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -50933,13 +50935,13 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
@@ -50947,7 +50949,7 @@
 	dir = 9
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgL" = (
@@ -51415,7 +51417,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chG" = (
@@ -51830,7 +51832,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -54798,7 +54800,7 @@
 	pixel_y = 0
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "coL" = (
@@ -55439,10 +55441,10 @@
 /area/engine/engineering)
 "cqa" = (
 /obj/structure/grille,
+/obj/structure/window/fulltile,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqb" = (
@@ -55534,7 +55536,7 @@
 	name = "Radiation Shutters Control";
 	pixel_x = 0;
 	pixel_y = -24;
-	req_access_txt = "10"
+	req_access_txt = "24"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -56312,8 +56314,8 @@
 /area/space)
 "csa" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "csb" = (
@@ -61485,7 +61487,7 @@
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -62913,19 +62915,19 @@
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGF" = (
@@ -62939,10 +62941,10 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGI" = (
@@ -62973,18 +62975,18 @@
 /area/engine/engineering)
 "cGK" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGL" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGM" = (
@@ -63621,82 +63623,49 @@
 	},
 /area/assembly/robotics)
 "cIg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cIu" = (
-/obj/structure/reflector/double{
-	anchored = 1;
-	dir = 1
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion"
+	},
+/obj/docking_port/mobile/arrivals,
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 15;
+	id = "arrivals_stationary";
+	name = "arrivals";
+	width = 7
 	},
 /turf/open/floor/plasteel/black,
-/area/engine/engineering)
+/area/shuttle/arrival)
+"cIh" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIi" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIj" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIk" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
@@ -73314,17 +73283,17 @@ awZ
 ayl
 azy
 auP
-azy
+cIh
 aCU
 aEr
 aFE
 aFE
 aFE
 aEr
-aLs
+aCU
 azy
 auP
-azy
+cIh
 ayl
 aRY
 awW
@@ -74089,7 +74058,7 @@ awW
 aCV
 aEs
 aEr
-aHt
+aEr
 aEr
 aEr
 aCV
@@ -75113,7 +75082,7 @@ axh
 aIK
 azy
 auP
-azy
+cIh
 aCU
 aEr
 aEr
@@ -75123,7 +75092,7 @@ aEr
 aCU
 azy
 auP
-azy
+cIh
 ayl
 aRY
 awW
@@ -75631,7 +75600,7 @@ aaa
 aCS
 aEx
 aFF
-aFF
+cIg
 aFF
 aKi
 aCS
@@ -90611,7 +90580,7 @@ cfG
 cgw
 coK
 cpu
-cIk
+clJ
 ccw
 ccw
 ccw
@@ -91907,7 +91876,7 @@ ccw
 cFL
 cGf
 cGw
-cIp
+cqY
 ciZ
 cHc
 cHh
@@ -92421,7 +92390,7 @@ cFw
 cFN
 csH
 csR
-cIq
+cqY
 cGU
 cEj
 cEj
@@ -92664,7 +92633,7 @@ ckK
 clJ
 cmL
 cnv
-cIg
+clJ
 chX
 cDq
 cqg
@@ -92678,7 +92647,7 @@ cqY
 cFO
 csC
 csQ
-cIr
+cqY
 cGV
 cEj
 cGV
@@ -92935,8 +92904,8 @@ cAP
 cFP
 csI
 cAt
-cIs
-cIu
+cqY
+cEj
 cEj
 cEj
 cHp
@@ -93449,7 +93418,7 @@ ccw
 cFR
 cGf
 cGz
-cIt
+cqY
 ciZ
 cHd
 cHj
@@ -93692,7 +93661,7 @@ ceq
 clQ
 cmQ
 cgR
-cIh
+clJ
 chX
 cpD
 cDw
@@ -93949,7 +93918,7 @@ ckP
 ckH
 cja
 cgR
-cIi
+clJ
 cDj
 cDs
 cql
@@ -94463,7 +94432,7 @@ ckR
 clR
 cgR
 cgR
-cIj
+clJ
 cir
 cDt
 cDy
@@ -94982,7 +94951,7 @@ cis
 cjN
 cDz
 cDH
-cIl
+clJ
 cEj
 crM
 crV
@@ -95501,9 +95470,9 @@ ccw
 ccw
 ccw
 ccw
-cIm
-cIn
-cIo
+cqY
+cqY
+cqY
 ccw
 aaf
 aaf

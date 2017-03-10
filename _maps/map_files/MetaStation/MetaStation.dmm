@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/open/space/basic,
+/turf/open/space,
 /area/space)
 "aab" = (
 /obj/docking_port/stationary{
@@ -13788,7 +13788,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "axZ" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "aya" = (
@@ -15950,8 +15950,8 @@
 /area/engine/engineering)
 "aBO" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aBQ" = (
@@ -16595,19 +16595,19 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCW" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
 	pixel_y = 0
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCX" = (
@@ -16630,7 +16630,7 @@
 /area/engine/engineering)
 "aCZ" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aDa" = (
@@ -19681,11 +19681,11 @@
 /area/engine/engineering)
 "aIc" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aIe" = (
@@ -21074,7 +21074,7 @@
 	name = "Radiation Shutters Control";
 	pixel_x = 24;
 	pixel_y = 0;
-	req_access_txt = "10"
+	req_access_txt = "24"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -26705,10 +26705,10 @@
 /area/engine/engineering)
 "aVh" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aVk" = (
@@ -28633,6 +28633,7 @@
 	})
 "aYD" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "Arrival Airlock"
 	},
 /turf/open/floor/plating,
@@ -29020,6 +29021,9 @@
 	icon_state = "1-4";
 	d1 = 1;
 	d2 = 4
+	},
+/obj/effect/landmark{
+	name = "Observer-Start"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
@@ -33284,9 +33288,6 @@
 "bgr" = (
 /obj/structure/chair{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -37759,22 +37760,6 @@
 "bnJ" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
-	},
-/obj/docking_port/mobile{
-	dwidth = 5;
-	height = 7;
-	id = "arrival";
-	name = "arrival shuttle";
-	port_angle = -90;
-	preferred_direction = 8;
-	width = 15
-	},
-/obj/docking_port/stationary{
-	dwidth = 5;
-	height = 7;
-	id = "arrival_home";
-	name = "port bay 1";
-	width = 15
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
@@ -90778,10 +90763,10 @@
 /area/engine/engineering)
 "daZ" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dbb" = (
@@ -92413,19 +92398,19 @@
 /area/engine/engineering)
 "ded" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
 	initialize_directions = 11
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dee" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "def" = (
@@ -92436,11 +92421,11 @@
 /area/engine/engineering)
 "deh" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dei" = (
@@ -92745,12 +92730,12 @@
 /area/engine/engineering)
 "deS" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
 	pixel_x = 0;
 	initialize_directions = 10
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "deT" = (
@@ -92894,16 +92879,16 @@
 /area/engine/engineering)
 "dfk" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfm" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfp" = (
@@ -94785,13 +94770,57 @@
 /turf/open/space,
 /area/toxins/xenobiology)
 "djt" = (
-/obj/structure/closet/secure_closet/engineering_welding,
-/turf/open/floor/plasteel/black,
-/area/engine/engineering)
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
 "dju" = (
-/obj/structure/reflector/double,
-/turf/open/floor/plasteel/black,
-/area/engine/engineering)
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"djv" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion"
+	},
+/obj/docking_port/mobile/arrivals,
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 15;
+	id = "arrivals_stationary";
+	name = "arrivals";
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"djw" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"djx" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
 
 (1,1,1) = {"
 aaa
@@ -105444,7 +105473,7 @@ aVu
 aWU
 aYD
 aZZ
-aYD
+djt
 bcT
 beC
 bgr
@@ -105454,7 +105483,7 @@ beC
 bnJ
 aYD
 bsk
-aYD
+djw
 aVu
 bxu
 aRA
@@ -105704,9 +105733,9 @@ aWS
 aWS
 bcS
 beD
-bgs
-bgs
-bgs
+beC
+beC
+beC
 blO
 bcS
 aWS
@@ -106218,9 +106247,9 @@ baa
 aWS
 bcS
 beF
-bgs
-bit
-bgs
+beC
+beC
+beC
 blP
 bcS
 aWS
@@ -106732,9 +106761,9 @@ bac
 aWS
 bcU
 beH
-bgs
-bgs
-bgs
+beC
+beC
+beC
 beC
 bcU
 aWS
@@ -107243,7 +107272,7 @@ cZq
 aWZ
 aYD
 aZZ
-aYD
+dju
 bcT
 beC
 beC
@@ -107253,7 +107282,7 @@ beC
 bcT
 aYD
 bsk
-aYD
+djx
 bvH
 bMw
 aRA
@@ -107761,7 +107790,7 @@ aaa
 bcR
 beJ
 bgu
-bgu
+djv
 bgu
 blS
 bcR
@@ -137806,7 +137835,7 @@ atm
 ddO
 bUw
 ddT
-djt
+ddZ
 ded
 del
 des
@@ -139612,7 +139641,7 @@ dex
 aJu
 ddZ
 ddZ
-dju
+ddZ
 aMo
 dff
 ddZ

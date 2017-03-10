@@ -3,22 +3,19 @@
 	icon_state = "0"
 	name = "\proper space"
 	intact = 0
+
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-	plane = PLANE_SPACE
-	light_power = 0.25
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	var/destination_z
 	var/destination_x
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
-
-/turf/open/space/basic/New()
-//THIS NEW IS TO REMAIN HERE AND REMAIN EMPTY
-//IT OPTIMIZES MAP LOADING
+	plane = PLANE_SPACE
+	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
