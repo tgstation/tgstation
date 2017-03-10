@@ -138,7 +138,7 @@
 
 /obj/docking_port/mobile/arrivals/check_effects()
 	..()
-	if(!sound_played && timeLeft(1) <= HYPERSPACE_END_TIME)
+	if(mode == SHUTTLE_CALL && !sound_played && timeLeft(1) <= HYPERSPACE_END_TIME)
 		sound_played = TRUE
 		hyperspace_sound(HYPERSPACE_END, areas)
 
