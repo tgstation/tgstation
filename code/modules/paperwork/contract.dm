@@ -186,7 +186,7 @@
 					to_chat(user, "<span class='notice'>You are already alive, this contract would do nothing.</span>")
 				else
 					if(signed)
-						user<< "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>"
+						to_chat(user, "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>")
 					else
 						to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract</span>")
 						if(FulfillContract(target.current, blood)<=0)

@@ -275,7 +275,7 @@
 		I.access |= access_mining_station
 		I.access |= access_mineral_storeroom
 		I.access |= access_cargo
-		user  << "You upgrade [I] with mining access."
+		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 	..()
 

@@ -220,7 +220,7 @@
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
 		if(!silent)
-			user  << "<span class='warning'>[src] is welded to the floor!</span>"
+			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
 		return FAILED_UNFASTEN
 	return ..()
 
