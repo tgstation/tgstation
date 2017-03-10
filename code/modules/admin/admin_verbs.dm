@@ -678,17 +678,17 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","DAS")
 
 /client/proc/readmin()
- 	set name = "Readmin"
- 	set category = "Admin"
- 	set desc = "Regain your admin powers."
+	set name = "Readmin"
+	set category = "Admin"
+	set desc = "Regain your admin powers."
 
- 	load_admins(ckey)
+	load_admins(ckey)
 
- 	if(!holder) // Something went wrong...
- 			return
+	if(!holder) // Something went wrong...
+		return
 
- 	deadmins -= ckey
- 	verbs -= /client/proc/readmin
+	deadmins -= ckey
+	verbs -= /client/proc/readmin
 
 	to_chat(src, "<span class='interface'>You are now an admin.</span>")
 	message_admins("[src] re-adminned themselves.")

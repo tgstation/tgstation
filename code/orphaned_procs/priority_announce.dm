@@ -30,7 +30,7 @@
 		if(!isnewplayer(M) && !M.ear_deaf)
 			to_chat(M, announcement)
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-			M << sound(sound)
+				M << sound(sound)
 
 /proc/print_command_report(text = "", title = "Central Command Update")
 	for (var/obj/machinery/computer/communications/C in machines)

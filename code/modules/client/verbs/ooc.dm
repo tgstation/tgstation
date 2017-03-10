@@ -101,8 +101,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+//		if(!is_content_unlocked())
+		return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
@@ -117,8 +117,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+//		if(!is_content_unlocked())
+		return
 
 		prefs.ooccolor = initial(prefs.ooccolor)
 		prefs.save_preferences()
