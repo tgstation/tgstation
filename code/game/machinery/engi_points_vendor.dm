@@ -142,9 +142,9 @@
 	if(GBP_alarm_cooldown <= world.time)
 		for(var/obj/machinery/computer/station_alert/SA in machines)
 			if(SA.z == src.z)
-				air_alarm_bonus = max(0,(1000 - (SA.air_alarm_count * 200)))
-				power_alarm_bonus = max(0,(1000 - (SA.power_alarm_count * 200)))
-				fire_alarm_bonus = max(0,(500 - (SA.fire_alarm_count * 100)))
+				air_alarm_bonus = max(0,(1000 - (LAZYLEN(SA.alarms["Atmosphere"])) * 200))
+				power_alarm_bonus = max(0,(1000 - (LAZYLEN(SA.alarms["Power"])) * 200))
+				fire_alarm_bonus = max(0,(1000 - (LAZYLEN(SA.alarms["Fire"])) * 200))
 				total_bonus = air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus
 				break
 		switch(total_bonus)
