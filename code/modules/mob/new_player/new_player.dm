@@ -317,8 +317,9 @@
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-
-	var/D = get_turf(pick(latejoin))
+	var/D
+	if(latejoin.len)
+		D = get_turf(pick(latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 			if(!T.density)
