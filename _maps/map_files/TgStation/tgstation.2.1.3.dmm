@@ -46824,10 +46824,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bYb" = (
-/obj/machinery/vending/cigarette{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/machinery/engi_points_manager,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bYc" = (
@@ -47405,14 +47402,10 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bZw" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/closet/firecloset,
+/obj/machinery/engi_points_delivery,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bZx" = (
@@ -63666,6 +63659,18 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"cIl" = (
+/obj/machinery/atmos_points,
+/turf/open/floor/plasteel,
+/area/atmos)
+"cIm" = (
+/obj/machinery/atmos_points_exporter,
+/turf/open/floor/plasteel,
+/area/atmos)
+"cIn" = (
+/obj/machinery/power/exporter,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -91087,7 +91092,7 @@ ccw
 cic
 cBO
 cjN
-cgR
+cIn
 ceu
 clQ
 cgR
@@ -97240,8 +97245,8 @@ bSJ
 bTQ
 bUO
 bVY
-bOd
-bOd
+cIl
+cIm
 bOd
 bOd
 bOd

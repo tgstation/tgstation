@@ -25865,6 +25865,7 @@
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/power/exporter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aTI" = (
@@ -36327,6 +36328,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/machinery/engi_points_manager,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bls" = (
@@ -37375,6 +37377,7 @@
 	dir = 8;
 	network = list("SS13")
 	},
+/obj/machinery/engi_points_delivery,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bnh" = (
@@ -52924,6 +52927,7 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
+/obj/machinery/atmos_points,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNU" = (
@@ -94821,6 +94825,10 @@
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
+"djy" = (
+/obj/machinery/atmos_points_exporter,
+/turf/open/floor/plasteel,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -105483,7 +105491,7 @@ beC
 bnJ
 aYD
 bsk
-djw
+djt
 aVu
 bxu
 aRA
@@ -107272,7 +107280,7 @@ cZq
 aWZ
 aYD
 aZZ
-dju
+djt
 bcT
 beC
 beC
@@ -107282,7 +107290,7 @@ beC
 bcT
 aYD
 bsk
-djx
+djt
 bvH
 bMw
 aRA
@@ -137877,7 +137885,7 @@ bIU
 bKB
 bMh
 bNT
-bCi
+djy
 bKD
 bCi
 bCi

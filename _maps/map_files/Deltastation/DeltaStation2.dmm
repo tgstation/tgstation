@@ -47782,9 +47782,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/break_room)
 "bHP" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 26
-	},
+/obj/machinery/engi_points_manager,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -48969,9 +48967,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/break_room)
 "bJT" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/machinery/engi_points_delivery,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -59006,6 +59002,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/power/exporter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cbo" = (
@@ -118165,6 +118162,15 @@
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
+"ehb" = (
+/obj/machinery/atmos_points_exporter,
+/turf/open/floor/plasteel/neutral,
+/area/atmos)
+"ehc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmos_points,
+/turf/open/floor/plasteel/neutral,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -141911,8 +141917,8 @@ aUp
 aWj
 aXP
 aZq
-aZq
-aWj
+ehb
+ehc
 bdp
 bfh
 bgW

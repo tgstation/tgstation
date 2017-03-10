@@ -44082,6 +44082,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/engi_points_delivery,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bJx" = (
@@ -44878,10 +44879,7 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
 "bKY" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
+/obj/machinery/engi_points_manager,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bKZ" = (
@@ -46455,6 +46453,7 @@
 	network = list("SS13")
 	},
 /obj/machinery/light,
+/obj/machinery/power/exporter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bOb" = (
@@ -55519,6 +55518,14 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"cip" = (
+/obj/machinery/atmos_points,
+/turf/open/floor/plasteel,
+/area/atmos)
+"ciq" = (
+/obj/machinery/atmos_points_exporter,
+/turf/open/floor/plasteel,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -92937,8 +92944,8 @@ bEY
 bDz
 bEo
 bEW
-bEY
-bEY
+cip
+ciq
 bHb
 bEY
 bZX
