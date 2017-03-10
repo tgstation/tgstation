@@ -332,6 +332,14 @@
 	can_be_pushed = FALSE
 	hat_offset = 3
 
+/obj/item/weapon/robot_module/security/traitorsec
+	name = "Bloodhound"
+	cyborg_base_icon = "synd_sec"
+	moduleselect_icon = "malf"
+	feedback_key = "cyborg_traitorsec"
+	can_be_pushed = FALSE
+	hat_offset = 3
+	
 /obj/item/weapon/robot_module/security/do_transform_animation()
 	..()
 	loc << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \

@@ -1224,6 +1224,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	surplus = 0
 	restricted_roles = list("Assistant")
+	
+/datum/uplink_item/role_restricted/traitorsec
+	name = "Bloodhound upgrade modules"
+	desc = "A box containing three illegal cyborg upgrade modules that both hack the cyborg and activate its hidden security module."
+	item = /obj/item/weapon/storage/box/syndie_kit/traitorsec_boards
+	cost = 16
+	restricted_roles = list("Roboticist")
+	surplus = 5
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
