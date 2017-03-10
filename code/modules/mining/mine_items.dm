@@ -454,7 +454,7 @@
 	. = ..()
 	T.air_update_turf(1)
 
-//Inivisible, indestrucctible fans
+//Inivisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
