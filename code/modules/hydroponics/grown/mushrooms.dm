@@ -172,7 +172,7 @@
 	M.move_to_delay -= round(seed.production / 50)
 	M.health = M.maxHealth
 	qdel(src)
-	user << "<span class='notice'>You plant the walking mushroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
 
 
 // Chanterelle
@@ -236,7 +236,7 @@
 	if(isspaceturf(user.loc))
 		return
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You need more space to plant [src].</span>"
+		to_chat(user, "<span class='warning'>You need more space to plant [src].</span>")
 		return
 	var/count = 0
 	var/maxcount = 1
@@ -247,10 +247,10 @@
 	for(var/obj/structure/glowshroom/G in user.loc)
 		count++
 	if(count >= maxcount)
-		user << "<span class='warning'>There are too many shrooms here to plant [src].</span>"
+		to_chat(user, "<span class='warning'>There are too many shrooms here to plant [src].</span>")
 		return
 	new effect_path(user.loc, seed)
-	user << "<span class='notice'>You plant [src].</span>"
+	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	qdel(src)
 
 

@@ -44,8 +44,8 @@
 						charged_item = I
 						break
 				else
-					L << "<span class='caution'>Glowing red letters appear on the front cover...</span>"
-					L << "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>"
+					to_chat(L, "<span class='caution'>Glowing red letters appear on the front cover...</span>")
+					to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
 					burnt_out = 1
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
@@ -91,9 +91,9 @@
 						charged_item = item
 						break
 		if(!charged_item)
-			L << "<span class='notice'>You feel magical power surging through your hands, but the feeling rapidly fades...</span>"
+			to_chat(L, "<span class='notice'>You feel magical power surging through your hands, but the feeling rapidly fades...</span>")
 		else if(burnt_out)
-			L << "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>"
+			to_chat(L, "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>")
 		else
 			playsound(get_turf(L), 'sound/magic/Charge.ogg', 50, 1)
-			L << "<span class='notice'>[charged_item] suddenly feels very warm!</span>"
+			to_chat(L, "<span class='notice'>[charged_item] suddenly feels very warm!</span>")

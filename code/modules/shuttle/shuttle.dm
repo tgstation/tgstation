@@ -1,5 +1,7 @@
 //use this define to highlight docking port bounding boxes (ONLY FOR DEBUG USE)
-// #define DOCKING_PORT_HIGHLIGHT
+#ifdef TESTING
+#define DOCKING_PORT_HIGHLIGHT
+#endif
 
 //NORTH default dir
 /obj/docking_port
@@ -119,6 +121,7 @@
 	var/turf/T1 = locate(L[3],L[4],z)
 	for(var/turf/T in block(T0,T1))
 		T.color = _color
+		LAZYINITLIST(T.atom_colours)
 		T.maptext = null
 	if(_color)
 		var/turf/T = locate(L[1], L[2], z)
@@ -239,8 +242,7 @@
 
 /obj/docking_port/mobile/Initialize(mapload)
 	..()
-	if(!mapload)
-		return
+
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -312,6 +314,10 @@
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	if(!check_dock(S))
+		testing("check_dock failed on request for [src]")
+		return
+	
+	if(mode == SHUTTLE_IGNITING && destination == S)
 		return
 
 	switch(mode)
@@ -708,5 +714,20 @@
 		if(S.shuttleId == id)
 			return S
 	return null
+
+/obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
+	var/s
+	switch(phase)
+		if(HYPERSPACE_WARMUP)
+			s = 'sound/effects/hyperspace_begin.ogg'
+		if(HYPERSPACE_LAUNCH)
+			s = 'sound/effects/hyperspace_progress.ogg'
+		if(HYPERSPACE_END)
+			s = 'sound/effects/hyperspace_end.ogg'
+		else
+			CRASH("Invalid hyperspace sound phase: [phase]")
+	for(var/A in areas)
+		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
+			playsound(E, s, 100, FALSE, max(width, height) - world.view)
 
 #undef DOCKING_PORT_HIGHLIGHT
