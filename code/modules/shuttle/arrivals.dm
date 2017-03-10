@@ -148,9 +148,9 @@
 		. = SHUTTLE_CAN_DOCK
 
 /obj/docking_port/mobile/arrivals/proc/Launch(pickingup)
-	if(mode != SHUTTLE_CALL)
-		if(pickingup)
-			force_depart = TRUE
+	if(pickingup)
+		force_depart = TRUE
+	if(mode == SHUTTLE_IDLE)
 		if(console)
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
