@@ -37,10 +37,10 @@
 
 		var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
 		msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
-		msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
-
+		msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font><br>"
+		msg += "<font color='red'>We have opened the admin complaints subforum for you to save you some time in creating your ban request.</font>"
 		C << msg
-
+		C << link("https://tgstation13.org/phpBB/viewforum.php?f=23")
 		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
 		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
 		spamcooldown = world.time + 150 // 15 seconds
