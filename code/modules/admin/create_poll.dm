@@ -4,7 +4,7 @@
 	if(!check_rights(R_PERMISSIONS))
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/returned = create_poll_function()
 	if(returned)
@@ -22,7 +22,7 @@
 				log_admin("[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]")
 				message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
 		else
-			src << "Poll question created without any options, poll will be deleted."
+			to_chat(src, "Poll question created without any options, poll will be deleted.")
 			var/DBQuery/query_del_poll = dbcon.NewQuery("DELETE FROM [format_table_name("poll_question")] WHERE id = [returned]")
 			if(!query_del_poll.warn_execute())
 				return
@@ -57,7 +57,7 @@
 	if(query_validate_time.NextRow())
 		endtime = query_validate_time.item[1]
 		if(!endtime)
-			src << "Datetime entered is invalid."
+			to_chat(src, "Datetime entered is invalid.")
 			return
 	var/DBQuery/query_time_later = dbcon.NewQuery("SELECT TIMESTAMP('[endtime]') < NOW()")
 	if(!query_time_later.warn_execute())
@@ -65,7 +65,7 @@
 	if(query_time_later.NextRow())
 		var/checklate = text2num(query_time_later.item[1])
 		if(checklate)
-			src << "Datetime entered is not later than current server time."
+			to_chat(src, "Datetime entered is not later than current server time.")
 			return
 	var/adminonly
 	switch(alert("Admin only poll?",,"Yes","No","Cancel"))
@@ -129,7 +129,7 @@
 			if(!maxval)
 				return pollid
 			if(minval >= maxval)
-				src << "Minimum rating value can't be more than maximum rating value"
+				to_chat(src, "Minimum rating value can't be more than maximum rating value")
 				return pollid
 			descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
 			if(descmin)

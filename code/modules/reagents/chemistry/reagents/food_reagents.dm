@@ -99,7 +99,7 @@
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
+	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
 	M.AdjustSleeping(30, 0)
 	. = 1
 

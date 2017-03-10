@@ -8,7 +8,7 @@
 
 //Heals the things that the other regenerative abilities don't.
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
-	user << "<span class='notice'>We cleanse impurities from our form.</span>"
+	to_chat(user, "<span class='notice'>We cleanse impurities from our form.</span>")
 
 	var/mob/living/simple_animal/borer/B = user.has_brain_worms()
 	if(B)
@@ -18,7 +18,7 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.vomit(0)
-			user << "<span class='notice'>A parasite exits our form.</span>"
+			to_chat(user, "<span class='notice'>A parasite exits our form.</span>")
 	var/list/bad_organs = list(
 		user.getorgan(/obj/item/organ/body_egg),
 		user.getorgan(/obj/item/organ/zombie_infection))

@@ -59,7 +59,7 @@
 					playsound(src, pshoom, 40, 1)
 				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
 				return 1
-		user << "The [src.name] buzzes."
+		to_chat(user, "The [src.name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	return 0
 
@@ -69,7 +69,7 @@
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
 		investigate_log("has become a singularity. Caused by [user.key]","singulo")
-		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
+		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
 		singulo.energy = 300 //should make it a bit bigger~

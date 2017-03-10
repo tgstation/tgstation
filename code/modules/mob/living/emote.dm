@@ -9,7 +9,7 @@
 
 	var/datum/emote/E = emote_list[act]
 	if(!E)
-		src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 		return
 	E.run_emote(src, param, m_type)
 
@@ -380,22 +380,22 @@
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	. = TRUE
 	if(copytext(input,1,5) == "says")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else if(copytext(input,1,9) == "exclaims")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else if(copytext(input,1,6) == "yells")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else if(copytext(input,1,5) == "asks")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else
 		. = FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
-		user << "You cannot send custom emotes (banned)."
+		to_chat(user, "You cannot send custom emotes (banned).")
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		user << "You cannot send IC messages (muted)."
+		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
 		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
@@ -444,7 +444,7 @@
 
 	message = jointext(message, "")
 
-	user << message
+	to_chat(user, message)
 
 /datum/emote/sound/beep
 	key = "beep"
