@@ -46,14 +46,14 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/examine()
 	..()
 	if(frying)
-		usr << "You can make out [frying] in the oil."
+		to_chat(usr, "You can make out [frying] in the oil.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!reagents.total_volume)
-		user << "There's nothing to fry with in [src]!"
+		to_chat(user, "There's nothing to fry with in [src]!")
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
-		user << "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>"
+		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
 		return
@@ -65,7 +65,7 @@ insert ascii eagle on american flag background here
 		if(is_type_in_typecache(I, blacklisted_items))
 			. = ..()
 		else if(user.drop_item() && !frying)
-			user << "<span class='notice'>You put [I] into [src].</span>"
+			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = I
 			frying.forceMove(src)
 			icon_state = "fryer_on"
@@ -86,7 +86,7 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
 		if(frying.loc == src)
-			user << "<span class='notice'>You eject [frying] from [src].</span>"
+			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
 			var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
 			if(istype(frying, /obj/item/weapon/reagent_containers/))
 				var/obj/item/weapon/reagent_containers/food = frying
@@ -124,7 +124,7 @@ insert ascii eagle on american flag background here
 			return
 	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")

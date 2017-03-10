@@ -18,6 +18,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
+	var/obj/docking_port/mobile/arrivals/arrivals
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
 	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
@@ -51,6 +52,8 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
+		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
@@ -65,11 +68,12 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			continue
 		supply_packs[P.type] = P
 
-	initial_move()
 	setup_transit_zone()
+	initial_move()
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
+	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	if(transit_markers.len == 0)
@@ -176,33 +180,33 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 		emergency = backup_shuttle
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			user << "The emergency shuttle may not be called while returning to Centcom."
+			to_chat(user, "The emergency shuttle may not be called while returning to Centcom.")
 			return
 		if(SHUTTLE_CALL)
-			user << "The emergency shuttle is already on its way."
+			to_chat(user, "The emergency shuttle is already on its way.")
 			return
 		if(SHUTTLE_DOCKED)
-			user << "The emergency shuttle is already here."
+			to_chat(user, "The emergency shuttle is already here.")
 			return
 		if(SHUTTLE_IGNITING)
-			user << "The emergency shuttle is firing its engines to leave."
+			to_chat(user, "The emergency shuttle is firing its engines to leave.")
 			return
 		if(SHUTTLE_ESCAPE)
-			user << "The emergency shuttle is moving away to a safe distance."
+			to_chat(user, "The emergency shuttle is moving away to a safe distance.")
 			return
 		if(SHUTTLE_STRANDED)
-			user << "The emergency shuttle has been disabled by Centcom."
+			to_chat(user, "The emergency shuttle has been disabled by Centcom.")
 			return
 
 	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
-		user << "You must provide a reason."
+		to_chat(user, "You must provide a reason.")
 		return
 
 	var/area/signal_origin = get_area(user)
@@ -368,7 +372,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			transit_width += M.height
 			transit_height += M.width
 /*
-	world << "The attempted transit dock will be [transit_width] width, and \
+	to_chat(world, "The attempted transit dock will be [transit_width] width, and \)
 		[transit_height] in height. The travel dir is [travel_dir]."
 */
 
@@ -398,17 +402,17 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 					continue base
 				if(!(T.flags & UNUSED_TRANSIT_TURF))
 					continue base
-			//world << "[COORD(topleft)] and [COORD(bottomright)]"
+			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
 			break base
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		return FALSE
 
 	var/turf/topleft = proposed_zone[1]
-	//world << "[COORD(topleft)] is TOPLEFT"
+	//to_chat(world, "[COORD(topleft)] is TOPLEFT")
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
-	//world << json_encode(coords)
+	//to_chat(world, json_encode(coords))
 	/*  0------2
         |      |
         |      |
@@ -429,7 +433,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 	var/turf/low_point = locate(lowx, lowy, topleft.z)
 	new /obj/effect/landmark/stationary(low_point)
-	world << "Starting at the low point, we go [x2],[y2]"
+	to_chat(world, "Starting at the low point, we go [x2],[y2]")
 */
 	// Then invert the numbers
 	var/transit_x = topleft.x + SHUTTLE_TRANSIT_BORDER + abs(x2)
@@ -446,11 +450,11 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
 
-	//world << "Docking port at [transit_x], [transit_y], [topleft.z]"
+	//to_chat(world, "Docking port at [transit_x], [transit_y], [topleft.z]")
 	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
 	if(!midpoint)
 		return FALSE
-	//world << "Making transit dock at [COORD(midpoint)]"
+	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
@@ -505,4 +509,3 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
-

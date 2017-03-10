@@ -63,7 +63,7 @@
 		return 0
 	var/turf/T = get_turf(user.loc)
 	if(T.z != current.z || !current.can_use())
-		user << "<span class='danger'>[src] has lost the signal.</span>"
+		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
 		user.unset_machine()
 		return 0
@@ -233,11 +233,11 @@
 		var/obj/machinery/camera/C = locate(href_list["view"]) in cameras
 		if(C && istype(C))
 			if(!C.can_use())
-				usr << "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>"
+				to_chat(usr, "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>")
 				return
 			var/turf/T = get_turf(loc)
 			if(!T || C.z != T.z)
-				usr << "<span class='warning'>You can't get a signal!</span>"
+				to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
 				return
 			current = C
 			spawn(6)

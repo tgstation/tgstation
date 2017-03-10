@@ -67,7 +67,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (src.anchored)
-		usr << "<span class='warning'>It is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
 	src.setDir(turn(src.dir, 270))
 	return 1
@@ -75,7 +75,7 @@
 /obj/machinery/power/emitter/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -105,26 +105,26 @@
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)
-			user << "<span class='warning'>The emitter isn't connected to a wire!</span>"
+			to_chat(user, "<span class='warning'>The emitter isn't connected to a wire!</span>")
 			return 1
 		if(!src.locked)
 			if(src.active==1)
 				src.active = 0
-				user << "<span class='notice'>You turn off \the [src].</span>"
+				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
 				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]","singulo")
 			else
 				src.active = 1
-				user << "<span class='notice'>You turn on \the [src].</span>"
+				to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
 				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]","singulo")
 			update_icon()
 		else
-			user << "<span class='warning'>The controls are locked!</span>"
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
-		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
+		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
@@ -220,7 +220,7 @@
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
 		if(!silent)
-			user  << "<span class='warning'>[src] is welded to the floor!</span>"
+			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -235,7 +235,7 @@
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "<span class='warning'>Turn \the [src] off first!</span>"
+			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
 		default_unfasten_wrench(user, W, 0)
 		return
@@ -243,11 +243,11 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
-			user << "Turn \the [src] off first."
+			to_chat(user, "Turn \the [src] off first.")
 			return
 		switch(state)
 			if(EM_UNSECURED)
-				user << "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>"
+				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
 			if(EM_SECURED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
@@ -256,7 +256,7 @@
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
 						state = EM_WELDED
-						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
+						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 						connect_to_network()
 			if(EM_WELDED)
 				if(WT.remove_fuel(0,user))
@@ -266,22 +266,22 @@
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
 						state = EM_SECURED
-						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
+						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 						disconnect_from_network()
 		return
 
 	if(W.GetID())
 		if(emagged)
-			user << "<span class='warning'>The lock seems to be broken!</span>"
+			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
 		if(allowed(user))
 			if(active)
 				locked = !locked
-				user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
+				to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
 			else
-				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
+				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online!</span>")
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 
 	if(is_wire_tool(W) && panel_open)

@@ -46,24 +46,24 @@
 /obj/vehicle/janicart/examine(mob/user)
 	..()
 	if(floorbuffer)
-		user << "It has been upgraded with a floor buffer."
+		to_chat(user, "It has been upgraded with a floor buffer.")
 
 
 /obj/vehicle/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		if(mybag)
-			user << "<span class='warning'>[src] already has a trashbag hooked!</span>"
+			to_chat(user, "<span class='warning'>[src] already has a trashbag hooked!</span>")
 			return
 		if(!user.drop_item())
 			return
-		user << "<span class='notice'>You hook the trashbag onto \the [name].</span>"
+		to_chat(user, "<span class='notice'>You hook the trashbag onto \the [name].</span>")
 		I.loc = src
 		mybag = I
 		update_icon()
 	else if(istype(I, /obj/item/janiupgrade))
 		floorbuffer = 1
 		qdel(I)
-		user << "<span class='notice'>You upgrade \the [name] with the floor buffer.</span>"
+		to_chat(user, "<span class='notice'>You upgrade \the [name] with the floor buffer.</span>")
 		update_icon()
 	else
 		return ..()

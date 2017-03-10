@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			src<<"Icon is: \icon[getFlatIcon(src)]"
+			to_chat(src, "Icon is: \icon[getFlatIcon(src)]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -869,7 +869,7 @@ The _flatIcons list is a cache for generated icon files.
 	text_image.color = AverageColour(atom_icon)
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
-	del(atom_icon)
+	qdel(atom_icon)
 	return text_image
 
 var/global/list/friendly_animal_types = list()

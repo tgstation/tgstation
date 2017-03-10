@@ -255,9 +255,9 @@ var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT
 				else
 					break
 	if(department)
-		M << "<b>You have been assigned to [department]!</b>"
+		to_chat(M, "<b>You have been assigned to [department]!</b>")
 	else
-		M << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
+		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
 
 
