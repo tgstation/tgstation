@@ -90,10 +90,10 @@
 	if(istype(I, /obj/item/weapon/wirecutters))
 		playsound(loc, I.usesound, 100, 1)
 		if(ruined)
-			user << "<span class='notice'>You remove the remnants of the poster.</span>"
+			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
 			qdel(src)
 		else
-			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
+			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user)
@@ -118,20 +118,20 @@
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.poster_structure)
-		user << "<span class='warning'>[P] has no poster... inside it? Inform a coder!</span>"
+		to_chat(user, "<span class='warning'>[P] has no poster... inside it? Inform a coder!</span>")
 		return
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O,/obj/structure/sign/poster))
-			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
 			return
 
-	user << "<span class='notice'>You start placing the poster on the wall...</span>"	//Looks like it's uncluttered enough. Place the poster.
+	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>"	)
 
 	var/obj/structure/sign/poster/D = P.poster_structure
 
@@ -146,10 +146,10 @@
 			return
 
 		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
-			user << "<span class='notice'>You place the poster!</span>"
+			to_chat(user, "<span class='notice'>You place the poster!</span>")
 			return
 
-	user << "<span class='notice'>The poster falls down!</span>"
+	to_chat(user, "<span class='notice'>The poster falls down!</span>")
 	D.roll_and_drop(temp_loc)
 
 // Various possible posters follow

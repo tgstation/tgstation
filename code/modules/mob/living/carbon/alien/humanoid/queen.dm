@@ -84,7 +84,7 @@
 
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
-		user << "There's already an egg here."
+		to_chat(user, "There's already an egg here.")
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
 	new /obj/structure/alien/egg(user.loc)
@@ -103,20 +103,20 @@
 /obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/alien/user)
 	var/obj/item/queenpromote/prom
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
-		user << "<span class='noticealien'>You already have a Praetorian!</span>"
+		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
 		return 0
 	else
 		for(prom in user)
-			user << "<span class='noticealien'>You discard [prom].</span>"
+			to_chat(user, "<span class='noticealien'>You discard [prom].</span>")
 			qdel(prom)
 			return 0
 
 		prom = new (user.loc)
 		if(!user.put_in_active_hand(prom, 1))
-			user << "<span class='warning'>You must empty your hands before preparing the parasite.</span>"
+			to_chat(user, "<span class='warning'>You must empty your hands before preparing the parasite.</span>")
 			return 0
 		else //Just in case telling the player only once is not enough!
-			user << "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>"
+			to_chat(user, "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>")
 	return 0
 
 /obj/item/queenpromote
@@ -128,19 +128,19 @@
 
 /obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
 	if(!isalienadult(M) || istype(M, /mob/living/carbon/alien/humanoid/royal))
-		user << "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>"
+		to_chat(user, "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>")
 		return
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
-		user << "<span class='noticealien'>You already have a Praetorian!</span>"
+		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
 		return
 
 	var/mob/living/carbon/alien/humanoid/A = M
 	if(A.stat == CONSCIOUS && A.mind && A.key)
 		if(!user.usePlasma(500))
-			user << "<span class='noticealien'>You must have 500 plasma stored to use this!</span>"
+			to_chat(user, "<span class='noticealien'>You must have 500 plasma stored to use this!</span>")
 			return
 
-		A << "<span class='noticealien'>The queen has granted you a promotion to Praetorian!</span>"
+		to_chat(A, "<span class='noticealien'>The queen has granted you a promotion to Praetorian!</span>")
 		user.visible_message("<span class='alertalien'>[A] begins to expand, twist and contort!</span>")
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_prae = new (A.loc)
 		A.mind.transfer_to(new_prae)
@@ -148,10 +148,10 @@
 		qdel(src)
 		return
 	else
-		user << "<span class='warning'>This child must be alert and responsive to become a Praetorian!</span>"
+		to_chat(user, "<span class='warning'>This child must be alert and responsive to become a Praetorian!</span>")
 
 /obj/item/queenpromote/attack_self(mob/user)
-	user << "<span class='noticealien'>You discard [src].</span>"
+	to_chat(user, "<span class='noticealien'>You discard [src].</span>")
 	qdel(src)
 
 //:^)

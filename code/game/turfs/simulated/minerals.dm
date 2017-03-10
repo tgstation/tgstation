@@ -46,7 +46,7 @@
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 
 	if (!user.IsAdvancedToolUser())
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	if (istype(P, /obj/item/weapon/pickaxe))
@@ -57,12 +57,12 @@
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		user << "<span class='notice'>You start picking...</span>"
+		to_chat(user, "<span class='notice'>You start picking...</span>")
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
 			if(ismineralturf(src))
-				user << "<span class='notice'>You finish cutting into the rock.</span>"
+				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
 	else
@@ -86,10 +86,10 @@
 	..()
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/M)
-	M << "<span class='notice'>You start digging into the rock...</span>"
+	to_chat(M, "<span class='notice'>You start digging into the rock...</span>")
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
 	if(do_after(M,40, target = src))
-		M << "<span class='notice'>You tunnel into the rock.</span>"
+		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(M)
 
 /turf/closed/mineral/Bumped(AM as mob|obj)

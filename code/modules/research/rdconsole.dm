@@ -117,7 +117,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
-			user << "A disk is already loaded into the machine."
+			to_chat(user, "A disk is already loaded into the machine.")
 			return
 
 		if(istype(D, /obj/item/weapon/disk/tech_disk))
@@ -125,12 +125,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else if (istype(D, /obj/item/weapon/disk/design_disk))
 			d_disk = D
 		else
-			user << "<span class='danger'>Machine cannot accept disks in that format.</span>"
+			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
 			return
 		if(!user.drop_item())
 			return
 		D.loc = src
-		user << "<span class='notice'>You add the disk to the machine!</span>"
+		to_chat(user, "<span class='notice'>You add the disk to the machine!</span>")
 	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
 		. = ..()
 	updateUsrDialog()
@@ -153,7 +153,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'>You disable the security protocols</span>"
+		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
@@ -273,7 +273,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
+				to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
 
 			else if(linked_destroy.loaded_item)
 				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
@@ -340,12 +340,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(src.allowed(usr))
 			screen = text2num(href_list["lock"])
 		else
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 		screen = 0.0
 		if(!sync)
-			usr << "<span class='danger'>You must connect to the network first!</span>"
+			to_chat(usr, "<span class='danger'>You must connect to the network first!</span>")
 		else
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
@@ -392,7 +392,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 
 		if(linked_lathe.busy)
-			usr << "<span class='danger'>Protolathe is busy at the moment.</span>"
+			to_chat(usr, "<span class='danger'>Protolathe is busy at the moment.</span>")
 			return
 
 		var/coeff = linked_lathe.efficiency_coeff
@@ -469,7 +469,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 
 		if(linked_imprinter.busy)
-			usr << "<span class='danger'>Circuit Imprinter is busy at the moment.</span>"
+			to_chat(usr, "<span class='danger'>Circuit Imprinter is busy at the moment.</span>")
 			updateUsrDialog()
 			return
 

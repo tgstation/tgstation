@@ -122,8 +122,8 @@
 	throw_range = 3
 
 /obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>"
+	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
+	to_chat(user, "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>")
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
@@ -180,7 +180,7 @@
 	if(!..())
 		return
 	if(isliving(M))
-		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
+		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
 		M.adjust_fire_stacks(seed.potency / 20)
 		if(M.IgniteMob())
 			message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
@@ -191,11 +191,11 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else
-		usr << "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>"
+		to_chat(usr, "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>")
 		qdel(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
 	if(!user.gloves)
-		user << "<span class='danger'>The [name] burns your bare hand!</span>"
+		to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
 		user.adjustFireLoss(rand(1, 5))

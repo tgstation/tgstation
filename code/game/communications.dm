@@ -245,12 +245,12 @@ var/list/pointers = list()
 	if(!holder)
 		return
 
-	src << "There are [pointers.len] pointers:"
+	to_chat(src, "There are [pointers.len] pointers:")
 	for(var/p in pointers)
-		src << p
+		to_chat(src, p)
 		var/datum/signal/S = locate(p)
 		if(istype(S))
-			src << S.debug_print()
+			to_chat(src, S.debug_print())
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
 	return
