@@ -1,0 +1,7 @@
+{
+    "map_name": "CereStation",
+    "map_path": "map_files/Cerestation",
+    "map_file": "cerestation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default"
+}
