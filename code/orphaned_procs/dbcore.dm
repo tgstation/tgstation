@@ -123,7 +123,8 @@ DBQuery
 DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connection_handler
 
 DBQuery/proc/warn_execute()
-	if(!Execute())
+	. = Execute()
+	if(!.)
 		usr << "<span class='danger'>A SQL error occured during this operation, check the server logs.</span>"
 
 DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor, log_error = 1)

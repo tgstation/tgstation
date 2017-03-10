@@ -167,7 +167,7 @@
 	return
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
-	if(global.cross_allowed)
+	if(config.cross_allowed)
 		var/list/message = list()
 		message["message_sender"] = source
 		message["message"] = msg
@@ -175,7 +175,7 @@
 		message["key"] = global.comms_key
 		message["crossmessage"] = type
 
-		world.Export("[global.cross_address]?[list2params(message)]")
+		world.Export("[config.cross_address]?[list2params(message)]")
 
 
 /proc/ircadminwho()

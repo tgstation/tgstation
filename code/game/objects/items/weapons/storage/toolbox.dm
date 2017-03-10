@@ -46,10 +46,13 @@
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/weldingtool/mini(src)
 	new /obj/item/weapon/extinguisher/mini(src)
-	if(prob(50))
-		new /obj/item/device/flashlight(src)
-	else
-		new /obj/item/device/flashlight/flare(src)
+	switch(rand(1,3))
+		if(1)
+			new /obj/item/device/flashlight(src)
+		if(2)
+			new /obj/item/device/flashlight/glowstick(src)
+		if(3)
+			new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/toolbox/emergency/old

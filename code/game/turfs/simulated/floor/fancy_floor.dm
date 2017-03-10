@@ -15,13 +15,30 @@
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/screwdriver))
-		if(broken || burnt)
-			return
-		user << "<span class='danger'>You unscrew the planks.</span>"
-		new floor_tile(src)
-		make_plating()
-		playsound(src, C.usesound, 80, 1)
+		pry_tile(C, user)
 		return
+
+/turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
+	var/is_screwdriver = istype(C, /obj/item/weapon/screwdriver)
+	playsound(src, C.usesound, 80, 1)
+	return remove_tile(user, silent, make_tile = is_screwdriver)
+
+/turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+	if(broken || burnt)
+		broken = 0
+		burnt = 0
+		if(user && !silent)
+			user << "<span class='danger'>You remove the broken planks.</span>"
+	else
+		if(make_tile)
+			if(user && !silent)
+				user << "<span class='danger'>You unscrew the planks.</span>"
+			if(floor_tile)
+				new floor_tile(src)
+		else
+			if(user && !silent)
+				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
+	return make_plating()
 
 /turf/open/floor/wood/cold
 	temperature = 255.37
@@ -81,9 +98,7 @@
 	..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		switch(icon_state)
-			if("basalt1", "basalt2", "basalt3")
-				set_light(1, 0.1)
+		set_basalt_light(src)
 
 /turf/open/floor/carpet
 	name = "carpet"

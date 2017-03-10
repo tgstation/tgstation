@@ -2,6 +2,9 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 var/list/image/ghost_images_full = list() //this is a list of full images of the ghosts themselves
 var/list/image/ghost_images_default = list() //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
 var/list/image/ghost_images_simple = list() //this is a list of all ghost images as the simple white ghost
+
+var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
+
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -57,9 +60,11 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
+	invisibility = observer_default_invisibility
+
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	if(global.cross_allowed)
+	if(config.cross_allowed)
 		verbs += /mob/dead/observer/proc/server_hop
 
 	ghostimage = image(src.icon,src,src.icon_state)
@@ -99,8 +104,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	update_icon()
 
-	if(!T && latejoin.len)
-		T = pick(latejoin)			//Safety in case we cannot find the body's position
+	if(!T)
+		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
+		if(turfs.len)
+			T = pick(turfs)
+		else
+			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION)	//middle of the station
+
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
@@ -601,16 +611,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
+	if(!config.cross_allowed)
+		verbs -= /mob/dead/observer/proc/server_hop
+		src << "<span class='notice'>Server Hop has been disabled.</span>"
+		return
+	if (alert(src, "Jump to server running at [config.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
-	if (client && global.cross_allowed)
-		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+	if (client && config.cross_allowed)
+		src << "<span class='notice'>Sending you to [config.cross_address].</span>"
 		new /obj/screen/splash(client)
 		notransform = TRUE
 		sleep(29)	//let the animation play
 		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(global.cross_address + "?server_hop=[key]")
+		client << link(config.cross_address + "?server_hop=[key]")
 	else
 		src << "<span class='error'>There is no other server configured!</span>"
 
@@ -657,6 +671,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/atom/movable/target = locate(href_list["follow"])
 			if(istype(target) && (target != src))
 				ManualFollow(target)
+		if(href_list["jump_to_turf"])
+			var/turf/target = locate(href_list["jump_to_turf"])
+			if(istype(target))
+				forceMove(target)
 		if(href_list["reenter"])
 			reenter_corpse()
 
@@ -801,3 +819,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
+/proc/set_observer_default_invisibility(amount, message=null)
+	for(var/mob/dead/observer/G in player_list)
+		G.invisibility = amount
+		if(message)
+			G << message
+	observer_default_invisibility = amount
