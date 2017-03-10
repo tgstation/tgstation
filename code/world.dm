@@ -9,6 +9,7 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+	maxz = 11
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
