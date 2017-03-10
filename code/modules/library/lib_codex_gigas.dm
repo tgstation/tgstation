@@ -15,17 +15,17 @@
 
 /obj/item/weapon/book/codex_gigas/attack_self(mob/user)
 	if(is_blind(user))
-		user << "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>"
+		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>")
 		return
 	if(ismonkey(user))
-		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
+		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
 		return
 	if(inUse)
-		user << "<span class='notice'>Someone else is reading it.</span>"
+		to_chat(user, "<span class='notice'>Someone else is reading it.</span>")
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.check_acedia())
-			user << "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>"
+			to_chat(user, "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>")
 			return
 		inUse = 1
 		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null)  as text),1,MAX_MESSAGE_LEN)

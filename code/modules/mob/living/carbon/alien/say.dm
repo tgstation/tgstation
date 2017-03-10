@@ -7,10 +7,10 @@
 	var/rendered = "<i><span class='alien'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/S in player_list)
 		if(!S.stat && S.hivecheck())
-			S << rendered
+			to_chat(S, rendered)
 		if(S in dead_mob_list)
 			var/link = FOLLOW_LINK(S, src)
-			S << "[link] [rendered]"
+			to_chat(S, "[link] [rendered]")
 
 /mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
 	shown_name = "<FONT size = 3>[shown_name]</FONT>"

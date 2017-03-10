@@ -23,4 +23,4 @@
 	for(var/mob/dead/observer/G in player_list)
 		G.verbs += /mob/dead/observer/verb/boo
 		G.verbs += /mob/dead/observer/verb/possess
-		G << "You suddenly feel a welling of new spooky powers..."
+		to_chat(G, "You suddenly feel a welling of new spooky powers...")

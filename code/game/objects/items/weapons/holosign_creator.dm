@@ -24,12 +24,12 @@
 		var/turf/T = get_turf(target)
 		var/obj/structure/holosign/H = locate(holosign_type) in T
 		if(H)
-			user << "<span class='notice'>You use [src] to deactivate [H].</span>"
+			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
 			qdel(H)
 		else
 			if(!is_blocked_turf(T, TRUE)) //can't put holograms on a tile that has dense stuff
 				if(holocreator_busy)
-					user << "<span class='notice'>[src] is busy creating a hologram.</span>"
+					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
 					return
 				if(signs.len < max_signs)
 					playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
@@ -44,9 +44,9 @@
 						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 							return
 					H = new holosign_type(get_turf(target), src)
-					user << "<span class='notice'>You create \a [H] with [src].</span>"
+					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
 				else
-					user << "<span class='notice'>[src] is projecting at max capacity!</span>"
+					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
 
 /obj/item/weapon/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -55,7 +55,7 @@
 	if(signs.len)
 		for(var/H in signs)
 			qdel(H)
-		user << "<span class='notice'>You clear all active holograms.</span>"
+		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 
 
 /obj/item/weapon/holosign_creator/security
@@ -108,9 +108,9 @@
 			if(signs.len)
 				for(var/H in signs)
 					qdel(H)
-				user << "<span class='notice'>You clear all active holograms.</span>"
+				to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 	if(signs.len)
 		for(var/H in signs)
 			qdel(H)
-		user << "<span class='notice'>You clear all active holograms.</span>"
+		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 

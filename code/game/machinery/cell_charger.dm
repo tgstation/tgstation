@@ -28,27 +28,27 @@
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	user << "There's [charging ? "a" : "no"] cell in the charger."
+	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 	if(charging)
-		user << "Current charge: [round(charging.percent(), 1)]%"
+		to_chat(user, "Current charge: [round(charging.percent(), 1)]%")
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(stat & BROKEN)
-			user << "<span class='warning'>[src] is broken!</span>"
+			to_chat(user, "<span class='warning'>[src] is broken!</span>")
 			return
 		if(!anchored)
-			user << "<span class='warning'>[src] isn't attached to the ground!</span>"
+			to_chat(user, "<span class='warning'>[src] isn't attached to the ground!</span>")
 			return
 		if(charging)
-			user << "<span class='warning'>There is already a cell in the charger!</span>"
+			to_chat(user, "<span class='warning'>There is already a cell in the charger!</span>")
 			return
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>"
+				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
 				return
 			if(!user.drop_item())
 				return
@@ -60,11 +60,11 @@
 			updateicon()
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(charging)
-			user << "<span class='warning'>Remove the cell first!</span>"
+			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
 
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>")
 		playsound(src.loc, W.usesound, 75, 1)
 	else
 		return ..()
@@ -92,7 +92,7 @@
 		return
 
 	charging.forceMove(loc)
-	user << "<span class='notice'>You telekinetically remove [charging] from [src].</span>"
+	to_chat(user, "<span class='notice'>You telekinetically remove [charging] from [src].</span>")
 
 	removecell()
 
