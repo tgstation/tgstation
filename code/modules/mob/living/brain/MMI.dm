@@ -47,10 +47,10 @@
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
-			user << "<span class='warning'>There's already a brain in the MMI!</span>"
+			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")
 			return
 		if(!newbrain.brainmob)
-			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
+			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>")
 			return
 
 		if(!user.transferItemToLoc(O, src))
@@ -86,9 +86,9 @@
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
 		radio.on = !radio.on
-		user << "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>"
+		to_chat(user, "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>")
 	else
-		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
+		to_chat(user, "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>")
 		eject_brain(user)
 		update_icon()
 		name = "Man-Machine Interface"
@@ -146,13 +146,13 @@
 	set popup_menu = 0
 
 	if(brainmob.stat)
-		brainmob << "<span class='warning'>Can't do that while incapacitated or dead!</span>"
+		to_chat(brainmob, "<span class='warning'>Can't do that while incapacitated or dead!</span>")
 	if(!radio.on)
-		brainmob << "<span class='warning'>Your radio is disabled!</span>"
+		to_chat(brainmob, "<span class='warning'>Your radio is disabled!</span>")
 		return
 
 	radio.listening = radio.listening==1 ? 0 : 1
-	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
+	to_chat(brainmob, "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob || iscyborg(loc))
@@ -195,13 +195,13 @@
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			user << "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
+			to_chat(user, "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
 
 		else if(!B.client)
-			user << "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
+			to_chat(user, "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
 
 		else
-			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
+			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
 
 
 /obj/item/device/mmi/syndie

@@ -257,7 +257,7 @@
 				C.update_icon()
 				batteries_recharged = 1
 		if(batteries_recharged)
-			target << "<span class='notice'>Your batteries are recharged!</span>"
+			to_chat(target, "<span class='notice'>Your batteries are recharged!</span>")
 
 
 
@@ -307,7 +307,7 @@
 /datum/plant_gene/trait/teleport/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/teleport_radius = max(round(G.seed.potency / 10), 1)
 	var/turf/T = get_turf(C)
-	C << "<span class='warning'>You slip through spacetime!</span>"
+	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
 	do_teleport(C, T, teleport_radius)
 	if(prob(50))
 		do_teleport(G, T, teleport_radius)
@@ -355,7 +355,7 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
 		if(C.use(5))
-			user << "<span class='notice'>You add some cable to [G] and slide it inside the battery encasing.</span>"
+			to_chat(user, "<span class='notice'>You add some cable to [G] and slide it inside the battery encasing.</span>")
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.icon_state = G.icon_state
 			pocell.maxcharge = G.seed.potency * 20
@@ -373,7 +373,7 @@
 
 			qdel(G)
 		else
-			user << "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>"
+			to_chat(user, "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>")
 
 
 /datum/plant_gene/trait/stinging
@@ -387,7 +387,7 @@
 			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
 			G.reagents.reaction(L, INJECT, fraction)
 			G.reagents.trans_to(L, injecting_amount)
-			target << "<span class='danger'>You are pricked by [G]!</span>"
+			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 
 /datum/plant_gene/trait/smoke
 	name = "gaseous decomposition"

@@ -154,7 +154,7 @@
 								contents += "  [get_access_desc(A)]"
 
 						if(!printer.print_text(contents,"access report"))
-							usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
+							to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 							return
 						else
 							computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
@@ -164,7 +164,7 @@
 									[data_core ? data_core.get_manifest(0) : ""]
 									"}
 					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
-						usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
+						to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 						return
 					else
 						computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
@@ -235,7 +235,7 @@
 								jobdatum = J
 								break
 						if(!jobdatum)
-							usr << "<span class='warning'>No log exists for this job: [t1]</span>"
+							to_chat(usr, "<span class='warning'>No log exists for this job: [t1]</span>")
 							return
 
 						access = jobdatum.get_access()

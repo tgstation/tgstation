@@ -90,8 +90,8 @@
 			src.take_bodypart_damage(20)
 		if(2)
 			src.take_bodypart_damage(10)
-	src << "<span class='userdanger'>*BZZZT*</span>"
-	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
+	to_chat(src, "<span class='userdanger'>*BZZZT*</span>")
+	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)

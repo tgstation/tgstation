@@ -174,7 +174,7 @@
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
-		M << "<font color='red' size='7'>HONK</font>"
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)

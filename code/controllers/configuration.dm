@@ -10,7 +10,7 @@
 	if(var_name in banned_views)
 		return debug_variable(var_name, "SECRET", 0, src)
 	return ..()
-	
+
 /datum/configuration/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank")
 	if(var_name in banned_edits)
@@ -861,7 +861,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
@@ -874,7 +874,7 @@
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)

@@ -71,9 +71,9 @@
 		AM = find_type_in_direction(A, direction)
 		if(AM == NULLTURF_BORDER)
 			if((A.smooth & SMOOTH_BORDER))
-				adjacencies |= 1 << direction
+				adjacencies |= to_chat(1, direction)
 		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
-			adjacencies |= 1 << direction
+			adjacencies |= to_chat(1, direction)
 
 	if(adjacencies & N_NORTH)
 		if(adjacencies & N_WEST)
@@ -259,7 +259,7 @@
 		A.cut_overlay(A.bottom_left_corner)
 		A.bottom_left_corner = se
 		LAZYADD(New, se)
-	
+
 	if(New)
 		A.add_overlay(New)
 

@@ -38,19 +38,19 @@
 	..()
 	if (is_cyborg)
 		if(src.singular_name)
-			user << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
+			to_chat(user, "There is enough energy for [src.get_amount()] [src.singular_name]\s.")
 		else
-			user << "There is enough energy for [src.get_amount()]."
+			to_chat(user, "There is enough energy for [src.get_amount()].")
 		return
 	if(src.singular_name)
 		if(src.get_amount()>1)
-			user << "There are [src.get_amount()] [src.singular_name]\s in the stack."
+			to_chat(user, "There are [src.get_amount()] [src.singular_name]\s in the stack.")
 		else
-			user << "There is [src.get_amount()] [src.singular_name] in the stack."
+			to_chat(user, "There is [src.get_amount()] [src.singular_name] in the stack.")
 	else if(src.get_amount()>1)
-		user << "There are [src.get_amount()] in the stack."
+		to_chat(user, "There are [src.get_amount()] in the stack.")
 	else
-		user << "There is [src.get_amount()] in the stack."
+		to_chat(user, "There is [src.get_amount()] in the stack.")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -162,18 +162,18 @@
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (src.get_amount() < R.req_amount*multiplier)
 		if (R.req_amount*multiplier>1)
-			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
-			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return 0
 	if(R.window_checks && !valid_window_location(usr.loc, usr.dir))
-		usr << "<span class='warning'>The [R.title] won't fit here!</span>"
+		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return 0
 	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
-		usr << "<span class='warning'>There is another [R.title] here!</span>"
+		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return 0
 	if(R.on_floor && !isfloorturf(usr.loc))
-		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
+		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return 0
 	return 1
 
@@ -238,7 +238,7 @@
 
 /obj/item/stack/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src))
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -253,7 +253,7 @@
 			return
 		else
 			change_stack(user,stackmaterial)
-			user << "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>"
+			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
 /obj/item/stack/proc/change_stack(mob/user,amount)
 	var/obj/item/stack/F = new src.type(user, amount)
@@ -270,7 +270,7 @@
 	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
 		merge(S)
-		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
+		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
 		. = ..()
 

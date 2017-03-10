@@ -72,7 +72,7 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	src << S
+	to_chat(src, S)
 
 /mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!client || ear_deaf > 0)
@@ -84,7 +84,7 @@
 
 /client/proc/playtitlemusic()
 	UNTIL(ticker.login_music) //wait for ticker init to set the login music
-	
+
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 

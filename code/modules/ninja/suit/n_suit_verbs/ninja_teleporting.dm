@@ -46,7 +46,7 @@ Contents:
 			destination.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
 			s_coold = 1
 		else
-			H << "<span class='danger'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>"
+			to_chat(H, "<span class='danger'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>")
 	return
 
 
@@ -75,7 +75,7 @@ Contents:
 			T.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
 			s_coold = 1
 		else
-			H << "<span class='danger'>You cannot teleport into solid walls or from solid matter</span>"
+			to_chat(H, "<span class='danger'>You cannot teleport into solid walls or from solid matter</span>")
 	return
 
 

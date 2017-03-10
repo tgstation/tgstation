@@ -28,16 +28,16 @@
 		broken = 0
 		burnt = 0
 		if(user && !silent)
-			user << "<span class='danger'>You remove the broken planks.</span>"
+			to_chat(user, "<span class='danger'>You remove the broken planks.</span>")
 	else
 		if(make_tile)
 			if(user && !silent)
-				user << "<span class='danger'>You unscrew the planks.</span>"
+				to_chat(user, "<span class='danger'>You unscrew the planks.</span>")
 			if(floor_tile)
 				new floor_tile(src)
 		else
 			if(user && !silent)
-				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
+				to_chat(user, "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
 	return make_plating()
 
 /turf/open/floor/wood/cold

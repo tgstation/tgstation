@@ -105,7 +105,7 @@
 		if(H != user)
 			continue
 		if(!istype(H.glasses, /obj/item/clothing/glasses/meson))
-			H << "<span class='danger'>You get headaches just from looking at it.</span>"
+			to_chat(H, "<span class='danger'>You get headaches just from looking at it.</span>")
 		return
 
 /obj/machinery/power/supermatter_shard/get_spans()
@@ -272,7 +272,7 @@
 	for(var/mob/M in mob_list)
 		if(M.z == z)
 			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
-			M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
+			to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
 	qdel(src)
 	return(gain)
 
@@ -297,10 +297,10 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+		to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user)
-	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+	to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))

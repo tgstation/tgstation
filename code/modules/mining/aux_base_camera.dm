@@ -133,12 +133,12 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	var/area/build_area = get_area(build_target)
 
 	if(!istype(build_area, /area/shuttle/auxillary_base))
-		owner << "<span class='warning'>You can only build within the mining base!</span>"
+		to_chat(owner, "<span class='warning'>You can only build within the mining base!</span>")
 		return FALSE
 
 
 	if(build_target.z != ZLEVEL_STATION)
-		owner << "<span class='warning'>The mining base has launched and can no longer be modified.</span>"
+		to_chat(owner, "<span class='warning'>The mining base has launched and can no longer be modified.</span>")
 		return FALSE
 
 	return TRUE
@@ -204,7 +204,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	var/list/buildlist = list("Walls and Floors" = 1,"Airlocks" = 2,"Deconstruction" = 3,"Windows and Grilles" = 4)
 	var/buildmode = input("Set construction mode.", "Base Console", null) in buildlist
 	B.RCD.mode = buildlist[buildmode]
-	owner << "Build mode is now [buildmode]."
+	to_chat(owner, "Build mode is now [buildmode].")
 
 /datum/action/innate/aux_base/airlock_type
 	name = "Select Airlock Type"
@@ -237,19 +237,19 @@ datum/action/innate/aux_base/place_fan/Activate()
 	var/turf/fan_turf = get_turf(remote_eye)
 
 	if(!B.fans_remaining)
-		owner << "<span class='warning'>[B] is out of fans!</span>"
+		to_chat(owner, "<span class='warning'>[B] is out of fans!</span>")
 		return
 
 	if(!check_spot())
 		return
 
 	if(fan_turf.density)
-		owner << "<span class='warning'>Fans may only be placed on a floor.</span>"
+		to_chat(owner, "<span class='warning'>Fans may only be placed on a floor.</span>")
 		return
 
 	new /obj/structure/fans/tiny(fan_turf)
 	B.fans_remaining--
-	owner << "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>"
+	to_chat(owner, "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>")
 	playsound(fan_turf, 'sound/machines/click.ogg', 50, 1)
 
 datum/action/innate/aux_base/install_turret
@@ -264,13 +264,13 @@ datum/action/innate/aux_base/install_turret/Activate()
 		return
 
 	if(!B.turret_stock)
-		owner << "<span class='warning'>Unable to construct additional turrets.</span>"
+		to_chat(owner, "<span class='warning'>Unable to construct additional turrets.</span>")
 		return
 
 	var/turf/turret_turf = get_turf(remote_eye)
 
 	if(is_blocked_turf(turret_turf))
-		owner << "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>"
+		to_chat(owner, "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>")
 		return
 
 	var/obj/machinery/porta_turret/aux_base/T = new /obj/machinery/porta_turret/aux_base(turret_turf)
@@ -278,5 +278,5 @@ datum/action/innate/aux_base/install_turret/Activate()
 		B.found_aux_console.turrets += T //Add new turret to the console's control
 
 	B.turret_stock--
-	owner << "<span class='notice'>Turret installation complete!</span>"
+	to_chat(owner, "<span class='notice'>Turret installation complete!</span>")
 	playsound(turret_turf, 'sound/items/drill_use.ogg', 65, 1)

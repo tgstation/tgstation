@@ -577,7 +577,7 @@
 				return 0
 			if(DIGITIGRADE in species_traits)
 				if(!disable_warning)
-					H << "<span class='warning'>The footwear around here isn't compatible with your feet!</span>"
+					to_chat(H, "<span class='warning'>The footwear around here isn't compatible with your feet!</span>")
 				return 0
 			return 1
 		if(slot_belt)
@@ -585,7 +585,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
@@ -625,7 +625,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
@@ -637,7 +637,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -650,7 +650,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -664,15 +664,15 @@
 				return 0
 			if(!H.wear_suit)
 				if(!disable_warning)
-					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
+					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I.name]!</span>")
 				return 0
 			if(!H.wear_suit.allowed)
 				if(!disable_warning)
-					H << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+					to_chat(H, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
 				return 0
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
-					H << "The [I.name] is too big to attach."  //should be src?
+					to_chat(H, "The [I.name] is too big to attach."  )
 				return 0
 			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return 1
@@ -733,13 +733,13 @@
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)
 		if(H.overeatduration < 100)
-			H << "<span class='notice'>You feel fit again!</span>"
+			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			H.disabilities &= ~FAT
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration > 500)
-			H << "<span class='danger'>You suddenly feel blubbery!</span>"
+			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			H.disabilities |= FAT
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
@@ -771,15 +771,15 @@
 		H.metabolism_efficiency = 1
 	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
 		if(H.metabolism_efficiency != 1.25 && (H.dna && H.dna.species && !(NOHUNGER in H.dna.species.species_traits)))
-			H << "<span class='notice'>You feel vigorous.</span>"
+			to_chat(H, "<span class='notice'>You feel vigorous.</span>")
 			H.metabolism_efficiency = 1.25
 	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		if(H.metabolism_efficiency != 0.8)
-			H << "<span class='notice'>You feel sluggish.</span>"
+			to_chat(H, "<span class='notice'>You feel sluggish.</span>")
 		H.metabolism_efficiency = 0.8
 	else
 		if(H.metabolism_efficiency == 1.25)
-			H << "<span class='notice'>You no longer feel vigorous.</span>"
+			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
 		H.metabolism_efficiency = 1
 
 	switch(H.nutrition)
@@ -803,24 +803,23 @@
 				if(!H.weakened)
 					H.emote("collapse")
 				H.Weaken(10)
-				H << "<span class='danger'>You feel weak.</span>"
+				to_chat(H, "<span class='danger'>You feel weak.</span>")
 			switch(H.radiation)
 				if(50 to 75)
 					if(prob(5))
 						if(!H.weakened)
 							H.emote("collapse")
 						H.Weaken(3)
-						H << "<span class='danger'>You feel weak.</span>"
+						to_chat(H, "<span class='danger'>You feel weak.</span>")
 
 					if(prob(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-							H << "<span class='danger'>Your hair starts to \
-								fall out in clumps...<span>"
+							to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...<span>")
 							addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 				if(75 to 100)
 					if(prob(1))
-						H << "<span class='danger'>You mutate!</span>"
+						to_chat(H, "<span class='danger'>You mutate!</span>")
 						H.randmutb()
 						H.emote("gasp")
 						H.domutcheck()
@@ -926,9 +925,9 @@
 		if(we_breathe && we_lung)
 			user.do_cpr(target)
 		else if(we_breathe && !we_lung)
-			user << "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>"
+			to_chat(user, "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>")
 		else
-			user << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
+			to_chat(user, "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>")
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
@@ -1036,7 +1035,7 @@
 		if(randn <= 60)
 			//BubbleWrap: Disarming breaks a pull
 			if(target.pulling)
-				target << "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>"
+				to_chat(target, "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
 				talked = 1
 				target.stop_pulling()
 			//End BubbleWrap

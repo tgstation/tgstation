@@ -36,7 +36,7 @@ dmm_suite{
 			fdel("[map_name].dmm")
 			}
 		var/saved_map = file("[map_name].dmm")
-		saved_map << file_text
+		to_chat(saved_map, file_text)
 		return saved_map
 		}
 	write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num){

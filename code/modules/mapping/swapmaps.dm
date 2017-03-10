@@ -383,7 +383,7 @@ swapmap
 	proc/Save()
 		if(id==src) return 0
 		var/savefile/S=mode?(new):new("map_[id].sav")
-		S << src
+		to_chat(S, src)
 		while(locked) sleep(1)
 		if(mode)
 			fdel("map_[id].txt")

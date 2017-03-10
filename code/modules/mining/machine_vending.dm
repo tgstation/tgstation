@@ -126,7 +126,7 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else usr << "<span class='danger'>No valid ID.</span>"
+			else to_chat(usr, "<span class='danger'>No valid ID.</span>")
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
@@ -252,15 +252,15 @@
 		if(points)
 			var/obj/item/weapon/card/id/C = I
 			C.mining_points += points
-			user << "<span class='info'>You transfer [points] points to [C].</span>"
+			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
 			points = 0
 		else
-			user << "<span class='info'>There's no points left on [src].</span>"
+			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
 	..()
 
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	user << "There's [points] point\s on the card."
+	to_chat(user, "There's [points] point\s on the card.")
 
 ///Conscript kit
 /obj/item/weapon/card/mining_access_card

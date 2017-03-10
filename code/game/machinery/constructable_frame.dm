@@ -11,7 +11,7 @@
 /obj/structure/frame/examine(user)
 	..()
 	if(circuit)
-		user << "It has \a [circuit] installed."
+		to_chat(user, "It has \a [circuit] installed.")
 
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
@@ -45,9 +45,9 @@
 			hasContent = 1
 
 		if(hasContent)
-			user << requires + "."
+			to_chat(user, requires + ".")
 		else
-			user << "It does not require any more components."
+			to_chat(user, "It does not require any more components.")
 
 /obj/structure/frame/machine/proc/update_namelist()
 	if(!req_components)
@@ -76,24 +76,24 @@
 	switch(state)
 		if(1)
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
-				user << "<span class='warning'>The frame needs wiring first!</span>"
+				to_chat(user, "<span class='warning'>The frame needs wiring first!</span>")
 				return
 			else if(istype(P, /obj/item/weapon/circuitboard))
-				user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
+				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You start to add cables to the frame...</span>"
+					to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 					if(do_after(user, 20*P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 1)
 							C.use(5)
-							user << "<span class='notice'>You add cables to the frame.</span>"
+							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 							state = 2
 							icon_state = "box_1"
 				else
-					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
+					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 				return
 			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
 				playsound(src.loc, P.usesound, 50, 1)
@@ -101,38 +101,38 @@
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
 				if(do_after(user, 40*P.toolspeed, target = src))
 					if(state == 1)
-						user << "<span class='notice'>You disassemble the frame.</span>"
+						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
 						M.add_fingerprint(user)
 						qdel(src)
 				return
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
 					if(state == 1)
-						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 				return
 
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
-					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 				return
 
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
 				if(!anchored)
-					user << "<span class='warning'>The frame needs to be secured first!</span>"
+					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
 				var/obj/item/weapon/circuitboard/machine/B = P
 				if(!user.drop_item())
 					return
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "<span class='notice'>You add the circuit board to the frame.</span>"
+				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
 				B.loc = src
 				icon_state = "box_2"
@@ -143,12 +143,12 @@
 				return
 
 			else if(istype(P, /obj/item/weapon/circuitboard))
-				user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
+				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, P.usesound, 50, 1)
-				user << "<span class='notice'>You remove the cables.</span>"
+				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
@@ -163,9 +163,9 @@
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
-					user << "<span class='notice'>You remove the circuit board.</span>"
+					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				else
-					user << "<span class='notice'>You remove the circuit board and other components.</span>"
+					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
 					for(var/atom/movable/A in components)
 						A.loc = src.loc
 				desc = initial(desc)
@@ -216,7 +216,7 @@
 
 				for(var/obj/item/weapon/stock_parts/part in added_components)
 					components += part
-					user << "<span class='notice'>[part.name] applied.</span>"
+					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 				if(added_components.len)
 					replacer.play_rped_sound()
 				return
@@ -238,16 +238,16 @@
 									NS.add(used_amt)
 
 								req_components[I] -= used_amt
-								user << "<span class='notice'>You add [P] to [src].</span>"
+								to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
 							return
 						if(!user.drop_item())
 							break
-						user << "<span class='notice'>You add [P] to [src].</span>"
+						to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
 						P.forceMove(src)
 						components += P
 						req_components[I]--
 						return 1
-				user << "<span class='warning'>You cannot add that to the machine!</span>"
+				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
 				return 0
 	if(user.a_intent == INTENT_HARM)
 		return ..()

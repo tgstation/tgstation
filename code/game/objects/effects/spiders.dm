@@ -41,7 +41,7 @@
 		return 1
 	else if(isliving(mover))
 		if(prob(50))
-			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -198,7 +198,7 @@
 	var/breakout_time = 1
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>"
+	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>")
 	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time*60*10), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)

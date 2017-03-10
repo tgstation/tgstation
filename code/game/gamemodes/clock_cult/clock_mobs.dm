@@ -27,7 +27,7 @@
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	src << playstyle_string
+	to_chat(src, playstyle_string)
 
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
@@ -49,4 +49,4 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)

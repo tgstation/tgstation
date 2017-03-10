@@ -64,7 +64,7 @@
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
 					if(GM.buckled || GM.has_buckled_mobs())
-						user << "<span class='warning'>[GM] is attached to something!</span>"
+						to_chat(user, "<span class='warning'>[GM] is attached to something!</span>")
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
