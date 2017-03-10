@@ -428,6 +428,10 @@ var/global/list/lawlorify = list (
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_hands)
+		H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_l_store)
 		if(SOULVALUE >= BLOOD_THRESHOLD)
 			H.set_species(/datum/species/lizard, 1)
 			H.underwear = "Nude"
