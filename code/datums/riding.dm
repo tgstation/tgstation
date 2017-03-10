@@ -130,17 +130,17 @@
 		R.turret.forceMove(get_turf(ridden))
 		switch(ridden.dir)
 			if(NORTH)
-				turret.pixel_x = 0
+				R.turret.pixel_x = 0
 				turret.pixel_y = 4
 			if(EAST)
-				turret.pixel_x = -12
-				turret.pixel_y = 4
+				R.turret.pixel_x = -12
+				R.turret.pixel_y = 4
 			if(SOUTH)
-				turret.pixel_x = 0
-				turret.pixel_y = 4
+				R.turret.pixel_x = 0
+				R.turret.pixel_y = 4
 			if(WEST)
-				turret.pixel_x = 12
-				turret.pixel_y = 4
+				R.turret.pixel_x = 12
+				R.turret.pixel_y = 4
 
 //pimpin ride
 /datum/riding/janicart
