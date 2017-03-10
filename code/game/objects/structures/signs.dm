@@ -241,6 +241,11 @@
 	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
 
+/obj/structure/sign/enginesafety
+	name = "\improper ENGINEERING SAFETY"
+	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
+	icon_state = "safety"
+
 /obj/structure/sign/directions/science
 	name = "science department"
 	desc = "A direction sign, pointing out which way the Science department is."
