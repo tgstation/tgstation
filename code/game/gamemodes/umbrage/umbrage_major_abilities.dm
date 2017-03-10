@@ -46,7 +46,7 @@
 	user.visible_message("<span class='danger'>[user] slowly rises into the air, their belongings falling away, and begins to shimmer...</span>", \
 						"<span class='velvet big'><b>You begin the removal of your human disguise. You will be completely vulnerable during this time.</b></span>")
 	for(var/obj/item/I in user)
-		user.unEquip(I)
+		user.dropItemToGround(I)
 	for(var/turf/T in RANGE_TURFS(1, user))
 		new/obj/structure/psionic_barrier(T)
 	new/obj/structure/fluff/psionic_vortex(get_turf(user))

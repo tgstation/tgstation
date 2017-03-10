@@ -13,6 +13,6 @@
 	owner.visible_message("<span class='warning'>[owner] falls to the ground and transforms into a shadowy creature!</span>", "<span class='velvet bold'>sa iahz sepd zwng</span>\n\
 	<span class='notice'>You assume a stealthier form.</span>")
 	playsound(owner, 'sound/magic/devour_will_end.ogg', 50, 1)
-	var/mob/living/simple_animal/hostile/crawling_shadows/CS = new(get_turf(owner))
+	var/mob/living/simple_animal/hostile/crawling_shadows/CS = New(get_turf(owner))
 	CS.umbrage_mob = owner
 	return TRUE

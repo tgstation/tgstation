@@ -10,7 +10,7 @@
 	var/eating = 0 //If we're devouring someone's will
 	var/datum/action/innate/umbrage/devour_will/linked_ability //The ability that keeps data for us
 
-/obj/item/weapon/dark_bead/New()
+/obj/item/weapon/dark_bead/Initialize()
 	..()
 	animate(src, alpha = 30, time = 30)
 	QDEL_IN(src, 30)
@@ -133,7 +133,7 @@
 	flags = NODROP | CONDUCT
 	var/datum/action/innate/umbrage/linked_ability
 
-/obj/item/weapon/umbral_spawn/New()
+/obj/item/weapon/umbral_spawn/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 
@@ -176,12 +176,13 @@
 	origin_tech = "biotech=5"
 	zone = "head"
 	slot = "listener_bug"
+	light_color = "#21007F"
 
 /obj/item/organ/umbral_spawn/on_find(mob/living/finder)
 	..()
 	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
 
-/obj/item/organ/umbral_spawn/New()
+/obj/item/organ/umbral_spawn/Initialize()
 	..()
 	if(iscarbon(loc))
 		Insert(loc)
@@ -202,10 +203,9 @@
 	anchored = 1
 	opacity = 0
 	density = 1
-	luminosity = 1
 	mouse_opacity = 2
 
-/obj/structure/psionic_barrier/New()
+/obj/structure/psionic_barrier/Initialize()
 	..()
 	START_PROCESSING(SSprocessing, src)
 	QDEL_IN(src, 500)
@@ -214,7 +214,7 @@
 	if(!obj_integrity)
 		visible_message("<span class='warning'>[src] vanishes in a burst of violet energy!</span>")
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 50, 1)
-		PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, get_turf(src))
+		new/obj/effect/overlay/temp/revenant/cracks get_turf(src)
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
@@ -231,7 +231,7 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	deconstructible = FALSE
 
-/obj/structure/fluff/psionic_vortex/New()
+/obj/structure/fluff/psionic_vortex/Initialize()
 	..()
 	QDEL_IN(src, 520)
 
@@ -243,7 +243,7 @@
 	icon_state = "static"
 	density = 0
 
-/obj/effect/simulacrum/New()
+/obj/effect/simulacrum/Initialize()
 	..()
 	START_PROCESSING(SSfastprocess, src)
 	QDEL_IN(src, 100)
