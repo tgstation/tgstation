@@ -398,7 +398,7 @@
 			available_job_count++;
 
 	if(length(SSjob.prioritized_jobs))
-		dat += "<div class='notice red'>The Head of Personnel's office has flagged these jobs as high priority:<br>"
+		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
 		var/amt = length(SSjob.prioritized_jobs)
 		var/amt_count
 		for(var/datum/job/a in SSjob.prioritized_jobs)
