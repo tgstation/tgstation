@@ -13,7 +13,6 @@ Format:
 endmap
 
 map tgstation2
-	minplayers 0
 	default
 	#voteweight 1.5
 endmap
