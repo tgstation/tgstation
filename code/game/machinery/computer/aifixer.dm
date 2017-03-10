@@ -12,9 +12,9 @@
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
 		if(stat & (NOPOWER|BROKEN))
-			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
+			to_chat(user, "<span class='warning'>The screws on [name]'s screen won't budge.</span>")
 		else
-			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
+			to_chat(user, "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>")
 	else
 		return ..()
 
@@ -94,7 +94,7 @@
 	if(..())
 		return
 	if(href_list["fix"])
-		usr << "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>"
+		to_chat(usr, "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>")
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = TRUE
 		add_fingerprint(usr)
@@ -121,26 +121,26 @@
 	//Downloading AI from card to terminal.
 	if(interaction == AI_TRANS_FROM_CARD)
 		if(stat & (NOPOWER|BROKEN))
-			user << "[src] is offline and cannot take an AI at this time!"
+			to_chat(user, "[src] is offline and cannot take an AI at this time!")
 			return
 		AI.forceMove(src)
 		occupier = AI
 		AI.control_disabled = 1
 		AI.radio_enabled = 0
-		AI << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		to_chat(AI, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		update_icon()
 
 	else //Uploading AI from terminal to card
 		if(occupier && !active)
-			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
-			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			to_chat(occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 			occupier.loc = card
 			card.AI = occupier
 			occupier = null
 			update_icon()
 		else if (active)
-			user << "<span class='boldannounce'>ERROR</span>: Reconstruction in progress."
+			to_chat(user, "<span class='boldannounce'>ERROR</span>: Reconstruction in progress.")
 		else if (!occupier)
-			user << "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence."
+			to_chat(user, "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence.")

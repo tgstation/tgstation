@@ -125,7 +125,7 @@ DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connec
 DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
-		usr << "<span class='danger'>A SQL error occured during this operation, check the server logs.</span>"
+		to_chat(usr, "<span class='danger'>A SQL error occured during this operation, check the server logs.</span>")
 
 DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor, log_error = 1)
 	Close()

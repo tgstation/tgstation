@@ -28,14 +28,14 @@
 
 		if(sortTag != O.currTag)
 			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "<span class='notice'>*[tag]*</span>"
+			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='warning'>Invalid text!</span>"
+			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
 		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
@@ -47,7 +47,7 @@
 			giftwrapped = 1
 			icon_state = "gift[icon_state]"
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 	else
 		return ..()
 
@@ -56,17 +56,17 @@
 		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
 		AM.relay_container_resist(user, O)
 		return
-	user << "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>")
 	if(do_after(user, 50, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != O || O.loc != src )
 			return
-		user << "<span class='notice'>You successfully removed [O]'s wrapping !</span>"
+		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
 		O.loc = loc
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			user << "<span class='warning'>You fail to remove [O]'s wrapping!</span>"
+			to_chat(user, "<span class='warning'>You fail to remove [O]'s wrapping!</span>")
 
 
 /obj/item/smallDelivery
@@ -109,14 +109,14 @@
 
 		if(sortTag != O.currTag)
 			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "<span class='notice'>*[tag]*</span>"
+			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='warning'>Invalid text!</span>"
+			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
 		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
@@ -128,7 +128,7 @@
 			giftwrapped = 1
 			user.visible_message("[user] wraps the package in festive paper!")
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
 
 /obj/item/device/destTagger
