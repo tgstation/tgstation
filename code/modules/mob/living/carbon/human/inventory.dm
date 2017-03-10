@@ -133,7 +133,7 @@
 			s_store = I
 			update_inv_s_store()
 		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)

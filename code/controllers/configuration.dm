@@ -10,7 +10,7 @@
 	if(var_name in banned_views)
 		return debug_variable(var_name, "SECRET", 0, src)
 	return ..()
-	
+
 /datum/configuration/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank")
 	if(var_name in banned_edits)
@@ -253,6 +253,9 @@
 	var/error_limit = 50 // How many occurrences before the next will silence them
 	var/error_silence_time = 6000 // How long a unique error will be silenced for
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
+
+	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
@@ -746,6 +749,10 @@
 					MAX_EX_LIGHT_RANGE = BombCap
 					MAX_EX_FLASH_RANGE = BombCap
 					MAX_EX_FLAME_RANGE = BombCap
+				if("arrivals_shuttle_dock_window")
+					config.arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
+				if("arrivals_shuttle_require_safe_latejoin")
+					config.arrivals_shuttle_require_safe_latejoin = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -861,7 +868,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
@@ -874,7 +881,7 @@
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)

@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Stacks of materials will automatically merge together when created.
-You may notice differences when ejecting metal, glass or using the cash
-machine in the vault."

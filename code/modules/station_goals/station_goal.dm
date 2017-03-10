@@ -28,9 +28,9 @@
 
 /datum/station_goal/proc/print_result()
 	if(check_completion())
-		world << "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>"
+		to_chat(world, "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>")
 	else
-		world << "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>"
+		to_chat(world, "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>")
 
 /datum/station_goal/Destroy()
 	ticker.mode.station_goals -= src

@@ -13,7 +13,7 @@
 
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
@@ -36,7 +36,7 @@
 
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
@@ -47,7 +47,7 @@
 
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
@@ -58,7 +58,7 @@
 
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
@@ -69,7 +69,7 @@
 
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
@@ -80,7 +80,7 @@
 
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
@@ -93,7 +93,7 @@
 
 /obj/item/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
-		user << "<span class='notice'>You reabsorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()

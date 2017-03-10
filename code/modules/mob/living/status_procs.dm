@@ -46,7 +46,7 @@
 				else if(priority_absorb_key["visible_message"])
 					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
 				else if(priority_absorb_key["self_message"])
-					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+					to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
 	return ..()
@@ -68,7 +68,7 @@
 				else if(priority_absorb_key["visible_message"])
 					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
 				else if(priority_absorb_key["self_message"])
-					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+					to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
 	return ..()
