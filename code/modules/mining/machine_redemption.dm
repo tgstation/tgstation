@@ -13,7 +13,7 @@
 	req_access = list(access_mineral_storeroom)
 	var/stk_types = list()
 	var/stk_amt   = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stack_list = list() //Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
@@ -234,6 +234,7 @@
 				unload_mineral(out)
 			if(inp.amount < 1)
 				stack_list -= text2path(href_list["release"])
+				qdel(inp)
 		else
 			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
