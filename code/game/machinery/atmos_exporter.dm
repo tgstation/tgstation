@@ -93,7 +93,8 @@
 	user.set_machine(src)
 	for(var/obj/machinery/atmos_points_exporter/AE in atmos_exporter_list)
 		can_turf = get_turf(AE)
-	var/dat = ("Time until market update: [round((market_cooldown - world.time)/10)] seconds<br>")
+	var/list/dat = list()
+	dat += ("Time until market update: [round((market_cooldown - world.time)/10)] seconds<br>")
 	dat += "</div>"
 	dat += ("<A href='?src=\ref[src];action=send'>Export Canister</A> to <A href='?src=\ref[src];action=choose'> [export_name]</A><br>")
 	dat += ("<A href='?src=\ref[src];action=scan'>Scan Canister Contents</A><br><br>")
@@ -116,7 +117,7 @@
 	dat += ("Premium canister pressure range: <b>[p_pressure-50] to [p_pressure+50] kPa </b><br>")
 	dat += ("Premium canister temperature: <b>[p_temp-15] to [p_temp+15]K</b><br>")
 	var/datum/browser/popup = new(user, "vending", "Atmos Exporter", 400, 500)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.open()
 	updateUsrDialog()
 

@@ -85,15 +85,16 @@ obj/machinery/power/exporter/Destroy()
 		if(!isAI(user))
 			return
 	user.set_machine(src)
-	var/dat = text("<b>[name]</b><br>")
+	var/list/dat = list()
+	dat += ("<b>[name]</b><br>")
 	if (active)
-		dat += text("Exporter: <A href='?src=\ref[src];action=disable'>On</A><br>")
+		dat += ("Exporter: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
-		dat += text("Exporter: <A href='?src=\ref[src];action=enable'>Off</A><br>")
-	dat += text("Power consumption: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A></u></b><br><br>")
-	dat += text("<b><u>Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
-	dat += text("Power exported: [power_drained] kilowatts<br>")
-	dat += text("Points earned from exports: [power_drained/200] points<br>")
+		dat += ("Exporter: <A href='?src=\ref[src];action=enable'>Off</A><br>")
+	dat += ("Power consumption: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A></u></b><br><br>")
+	dat += ("<b><u>Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
+	dat += ("Power exported: [power_drained] kilowatts<br>")
+	dat += ("Points earned from exports: [power_drained/200] points<br>")
 	switch(drain_rate)
 		if(0 to 200)
 			rating = "TERRIBLE"
@@ -106,13 +107,14 @@ obj/machinery/power/exporter/Destroy()
 		if(2501 to 6000)
 			rating = "ROBUST"
 		if(6001 to 10000)
-			rating = "GOOD BOY"
+			rating = "THE 1%"
 		if(10001 to 9999999)
-			rating = "MY GOD, YOU ABSOLUTE MADMAN!"
-	dat += text("Current export rating: [rating]<br>")
+			rating = "UNFATHOMABLE!"
+	dat += ("Current export rating: [rating]<br><br><br>")
+	dat += ("<b><u>Warning: Setting export rate above the initial surplus is feasible but will exhaust the SMES</b></u>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 	var/datum/browser/popup = new(user, "vending", "Power Exporter", 400, 350)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.open()
 
 /obj/machinery/power/exporter/Topic(href, href_list)

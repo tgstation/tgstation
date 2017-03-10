@@ -118,9 +118,14 @@ var/datum/controller/subsystem/mapping/SSmapping
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
+	if(world.maxz != ZLEVEL_SPACEMAX)
+		WARNING("world.maxz does not match ZLEVEL_SPACEMAX!")
+    
+	var/start_time = REALTIMEOFDAY
+  
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
-	INIT_ANNOUNCE("Loaded station!")
+	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")

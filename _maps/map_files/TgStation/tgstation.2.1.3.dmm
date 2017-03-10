@@ -25273,10 +25273,18 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/stack/packageWrap{
+	pixel_x = -1;
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -25615,12 +25623,15 @@
 /area/quartermaster/office)
 "bfR" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+/obj/item/weapon/hand_labeler{
+	pixel_y = 8
 	},
-/obj/item/weapon/pen,
+/obj/item/weapon/hand_labeler{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box,
+/obj/item/weapon/storage/box,
+/obj/item/weapon/storage/box,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bfS" = (
@@ -30579,6 +30590,9 @@
 	dir = 1;
 	layer = 2.9
 	},
+/obj/structure/table/reinforced,
+/obj/item/device/destTagger,
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -40621,14 +40635,14 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKF" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/hand_labeler,
-/obj/item/weapon/hand_labeler,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -40766,6 +40780,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bKQ" = (
@@ -41163,10 +41178,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "bLF" = (
-/obj/structure/table/reinforced,
-/obj/item/device/destTagger,
-/obj/item/device/destTagger,
-/obj/machinery/computer/stockexchange,
+/obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bLG" = (
@@ -42051,17 +42063,18 @@
 /area/toxins/test_area)
 "bNH" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/wrapping_paper{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/stack/packageWrap{
-	pixel_x = -1;
-	pixel_y = -1
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -26
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -3
+	},
+/obj/item/weapon/pen{
+	pixel_x = -3
+	},
+/obj/item/weapon/folder/yellow{
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -87448,7 +87461,7 @@ apd
 beA
 bqp
 bbR
-aqU
+boU
 bLF
 aZK
 bnJ

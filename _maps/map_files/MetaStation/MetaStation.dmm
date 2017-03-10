@@ -28632,15 +28632,6 @@
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
-"aYD" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	name = "Arrival Airlock"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
 "aYE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -29010,24 +29001,6 @@
 	},
 /turf/open/floor/plasteel{
 	icon_state = "L6"
-	},
-/area/hallway/primary/central)
-"aZj" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4";
-	d1 = 1;
-	d2 = 4
-	},
-/obj/effect/landmark{
-	name = "Observer-Start"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "L8"
 	},
 /area/hallway/primary/central)
 "aZk" = (
@@ -33286,18 +33259,6 @@
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
-"bgr" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"bgs" = (
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "bgt" = (
 /obj/structure/shuttle/engine/heater{
 	icon_state = "heater";
@@ -34533,12 +34494,6 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
-"bit" = (
-/obj/effect/landmark{
-	name = "Observer-Start"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "biu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	req_access_txt = 1
@@ -37760,12 +37715,6 @@
 /area/ai_monitored/storage/secure{
 	name = "MiniSat Maintenance"
 	})
-"bnJ" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Arrivals Shuttle Airlock"
-	},
-/turf/open/floor/plating,
-/area/shuttle/arrival)
 "bnK" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -92665,18 +92614,6 @@
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
-"deE" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chapelprivacy";
-	name = "Chapel Privacy Shutters"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "deI" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
@@ -92935,19 +92872,6 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
-"dfx" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chapelprivacy";
-	name = "Chapel Privacy Shutters"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/item/weapon/crowbar,
-/turf/open/floor/plating,
 /area/engine/engineering)
 "dfz" = (
 /obj/effect/turf_decal/stripes/line{
@@ -93966,15 +93890,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
-"dhY" = (
-/obj/structure/table/wood,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/paper,
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/security/vacantoffice)
 "dhZ" = (
 /obj/structure/urinal{
 	pixel_y = 29
@@ -93986,10 +93901,6 @@
 /area/crew_quarters/toilet{
 	name = "\improper Auxiliary Restrooms"
 	})
-"dia" = (
-/obj/structure/sign/poster/random,
-/turf/closed/wall,
-/area/crew_quarters/bar)
 "dib" = (
 /obj/structure/table/wood,
 /obj/item/weapon/lipstick{
@@ -94036,10 +93947,6 @@
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
-"die" = (
-/obj/structure/sign/poster/random,
-/turf/closed/wall,
-/area/crew_quarters/bar)
 "dif" = (
 /obj/item/weapon/soap/nanotrasen,
 /obj/machinery/light/small{
@@ -94506,25 +94413,6 @@
 /area/medical/medbay3{
 	name = "Medbay Aft"
 	})
-"diO" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
 "diP" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -94655,38 +94543,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/space,
 /area/toxins/xenobiology)
-"diY" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"diZ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"dja" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djc" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"dje" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djf" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
 "djg" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -94705,10 +94561,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/toxins/xenobiology)
-"dji" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
 /area/toxins/xenobiology)
 "djj" = (
 /obj/machinery/light/small{
@@ -94738,30 +94590,6 @@
 	},
 /turf/closed/wall,
 /area/chapel/main)
-"djl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djm" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djo" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djp" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
-"djq" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/toxins/xenobiology)
 "djr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/black,
@@ -94774,15 +94602,110 @@
 /turf/open/space,
 /area/toxins/xenobiology)
 "djt" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
-	name = "Arrival Airlock"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/engine/engineering)
 "dju" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"djv" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"djw" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"djx" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/weapon/crowbar,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"djy" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"djz" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"djA" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"djB" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "L8"
+	},
+/area/hallway/primary/central)
+"djC" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 1;
 	name = "Arrival Airlock"
@@ -94791,7 +94714,64 @@
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
-"djv" = (
+"djD" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"djE" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djF" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djG" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djH" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djI" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djJ" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djK" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djL" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djM" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "propulsion"
@@ -94807,7 +94787,55 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
-"djw" = (
+"djN" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djO" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djP" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djQ" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"djR" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Arrivals Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"djS" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"djT" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"djU" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 1;
 	name = "Arrival Airlock"
@@ -94816,7 +94844,7 @@
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
-"djx" = (
+"djV" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 1;
 	name = "Arrival Airlock"
@@ -94825,7 +94853,16 @@
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
-"djy" = (
+"djW" = (
+/obj/structure/table/wood,
+/obj/item/weapon/clipboard,
+/obj/item/weapon/paper,
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/security/vacantoffice)
+"djX" = (
 /obj/machinery/atmos_points_exporter,
 /turf/open/floor/plasteel,
 /area/atmos)
@@ -105479,19 +105516,19 @@ aDb
 aDb
 aVu
 aWU
-aYD
+djz
 aZZ
-djt
+djC
 bcT
 beC
-bgr
-bgr
-bgr
+djE
+djE
+djE
 beC
-bnJ
-aYD
+djR
+djz
 bsk
-djt
+djC
 aVu
 bxu
 aRA
@@ -105998,9 +106035,9 @@ baa
 aWS
 bcU
 beE
-bgr
-bgr
-bgr
+djE
+djE
+djE
 beC
 bcU
 aWS
@@ -106512,9 +106549,9 @@ bab
 aWS
 bcS
 beG
-bgr
-bgr
-bgr
+djE
+djE
+djE
 blQ
 bcS
 aWS
@@ -107026,9 +107063,9 @@ aWS
 aWS
 bcS
 beI
-bgr
-bgr
-bgr
+djE
+djE
+djE
 blR
 bcS
 aWS
@@ -107278,9 +107315,9 @@ aSL
 aDb
 cZq
 aWZ
-aYD
+djz
 aZZ
-djt
+djC
 bcT
 beC
 beC
@@ -107288,9 +107325,9 @@ beC
 beC
 beC
 bcT
-aYD
+djz
 bsk
-djt
+djC
 bvH
 bMw
 aRA
@@ -107798,7 +107835,7 @@ aaa
 bcR
 beJ
 bgu
-djv
+djM
 bgu
 blS
 bcR
@@ -110635,7 +110672,7 @@ baE
 bvN
 bxK
 bzx
-dhY
+djW
 bCN
 bBg
 bBg
@@ -122184,7 +122221,7 @@ aTj
 aUD
 aWf
 aXN
-aZj
+djB
 baS
 bci
 aaf
@@ -137847,7 +137884,7 @@ ddZ
 ded
 del
 des
-deE
+djt
 daY
 daZ
 dbb
@@ -137855,7 +137892,7 @@ aMk
 aNv
 dfk
 dfq
-deE
+djt
 dfG
 dfQ
 dfZ
@@ -137885,7 +137922,7 @@ bIU
 bKB
 bMh
 bNT
-djy
+djX
 bKD
 bCi
 bCi
@@ -138104,7 +138141,7 @@ aBQ
 dee
 aEr
 det
-deE
+djt
 daY
 daZ
 dbb
@@ -138112,7 +138149,7 @@ dfa
 aNv
 dfk
 dfq
-dfx
+djx
 dfG
 cXz
 aVe
@@ -138361,7 +138398,7 @@ aBQ
 dee
 aEr
 aKL
-deE
+djv
 daY
 deS
 dbb
@@ -138369,7 +138406,7 @@ aMk
 aNv
 dfm
 dfq
-deE
+djt
 dbg
 dfR
 dga

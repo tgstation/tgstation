@@ -1,0 +1,7 @@
+author: "Penguaro"
+delete-after: True
+changes: 
+  - tweak: "Adjusted table locations"
+  - tweak: "Moved chair and Cargo Tech start location"
+  - tweak: "Moved filing cabinet"
+  - rscdel: "Removed Stock Computer"
