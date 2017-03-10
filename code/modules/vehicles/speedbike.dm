@@ -35,6 +35,11 @@
 /obj/vehicle/space/speedbike/red
 	icon_state = "speedbike_red"
 	overlay_state = "cover_red"
+	
+	
+
+// ATMOBILE AND ATMOBILE UNIQUE INTERNAL ITEMS
+
 
 
 /obj/vehicle/space/speedbike/atmos
@@ -44,15 +49,18 @@
 	overlay_state = "cover_atmo"
 	var/obj/machinery/portable_atmospherics/scrubber/huge/internal_scubber = null
 	var/obj/item/weapon/extinguisher/vehicle/internal_extinguisher = null
+	var/ex_out = FALSE
 	var/obj/machinery/portable_atmospherics/canister/CAN = null
 	var/loaded = TRUE
+	light_range = 7
 
 /obj/vehicle/space/speedbike/atmos/New()
 	. = ..()
 	internal_scubber = new /obj/machinery/portable_atmospherics/scrubber/huge(src)
 	internal_scubber.on = 1
 	internal_extinguisher = new /obj/item/weapon/extinguisher/vehicle(src)
-	CAN = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
+	internal_extinguisher.vehicle = src
+	CAN = new /obj/machinery/portable_atmospherics/canister/proto/oxygen(src)
 
 /obj/machinery/portable_atmospherics/canister/proto/oxygen
 	icon_state = "proto"
@@ -65,19 +73,28 @@
 	desc = "A heavy duty nozzle attached to a massive reserve tank."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "atmos_nozzle"
+	item_state = "nozzleatmos"
 	w_class = WEIGHT_CLASS_BULKY
-	safety = 0
+	safety = FALSE
 	max_water = 1000
-	power = 10
-	precision = 1
-	cooling_power = 7
-	var/vehicle = null
+	power = 8
+	cooling_power = 10
+	var/obj/vehicle/space/speedbike/atmos/vehicle = null
 
 /obj/item/weapon/extinguisher/vehicle/dropped(mob/user)
 	..()
 	user << "<span class='notice'>The fire hose snaps back into the [src]!</span>"
 	playsound(get_turf(src),'sound/items/change_jaws.ogg', 75, 1)
-	loc = vehicle
+	if(vehicle)
+		loc = vehicle
+		vehicle.ex_out = FALSE
+		
+		
+		
+
+// ATMOBILE DATUMS
+
+
 
 /obj/vehicle/space/speedbike/atmos/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
@@ -96,6 +113,7 @@
 
 /obj/vehicle/space/speedbike/atmos/unbuckle_mob(mob/living/M)
 	. = ..()
+	internal_extinguisher.forceMove(src)
 	for(var/datum/action/innate/atmos_bike/H in M.actions)
 		qdel(H)
 
@@ -134,7 +152,7 @@
 	F.add_atom_colour("#B2FFFF", FIXED_COLOUR_PRIORITY)
 	F.name = "nanofrost residue"
 	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
-	playsound(src,'sound/effects/bamf.ogg',100,1)
+	playsound(owner.loc,'sound/effects/bamf.ogg',100,1)
 	nano_cooldown = world.time + 300
 
 
@@ -142,15 +160,14 @@
 	name = "Arm the Extinguisher"
 	desc = "Unleashes a powerful fire extinguisher"
 	button_icon_state = "noflame"
-	var/out = FALSE
 
 /datum/action/innate/atmos_bike/extinguish/Activate()
-	if(!out)
+	if(!bike.ex_out)
 		if(!owner.put_in_hands(VEX))
 			owner << "<span class='warning'>You need a free hand to hold the extinguisher!</span>"
 			return
 		VEX.loc = owner
-		out = TRUE
+		bike.ex_out = TRUE
 		owner << "<span class='warning'>The vehicle unwinds a fire hose into your hands!</span>"
 		playsound(get_turf(owner),'sound/items/change_jaws.ogg', 75, 1)
 		name = "Store the Extinguisher"
@@ -158,16 +175,14 @@
 		button_icon_state = "summons"
 		UpdateButtonIcon()
 		return
-	if(out)
-		VEX.loc = bike
-		owner.drop_item(VEX)
-		owner.swap_hand()
-		owner.drop_item(VEX)
+	if(bike.ex_out)
+		owner.transferItemToLoc(VEX,bike)
 		name = "Arm the Extinguisher"
 		desc = "Unleashes a powerful fire extinguisher"
 		button_icon_state = "noflame"
-		out = FALSE
+		bike.ex_out = FALSE
 		UpdateButtonIcon()
+		
 
 /datum/action/innate/atmos_bike/scrub
 	name = "Scrubber Control"
@@ -194,13 +209,17 @@
 	button_icon_state = "flightpack_stabilizer"
 
 /datum/action/innate/atmos_bike/flood/Activate()
-	if(!bike.CAN)
-		owner << "<span class='notice'>Alert: You have no canister to release gas from.</span>"
+	if(!bike.CAN || !bike.loaded)
+		owner << "<span class='warning'>Alert: You have no canister to release gas from.</span>"
 		playsound(get_turf(owner),'sound/machines/buzz-two.ogg', 50, 1)
 		return
 	if(bike.CAN.air_contents.return_pressure() < ONE_ATMOSPHERE)
-		owner << "<span class='notice'>Alert: You have have exhausted your gas supply, refill or replace your canister.</span>"
+		owner << "<span class='warning'>Alert: You have have exhausted your gas supply, refill or replace your canister.</span>"
 		playsound(get_turf(owner),'sound/machines/buzz-two.ogg', 50, 1)
+		bike.CAN.valve_open = 0
+		name = "Release Stored Gas"
+		button_icon_state = "flightpack_stabilizer"
+		UpdateButtonIcon()
 		return
 	if(!bike.CAN.valve_open)
 		owner << "<span class='notice'>Alert: You begin to dispense gas from the stored canister at [bike.CAN.release_pressure]kPa.</span>"
@@ -238,15 +257,16 @@
 		for(var/obj/machinery/portable_atmospherics/canister/C in range(1,owner))
 			canisters_to_load += C
 		if(canisters_to_load.len==0)
-			owner << "<span class='notice'>There are no nearby canisters to load into the vehicle!</span>"
+			owner << "<span class='warning'>There are no nearby canisters to load into the vehicle!</span>"
 			playsound(get_turf(owner),'sound/machines/buzz-two.ogg', 50, 1)
 			return
 		else
 			bike.CAN = input(owner, "Choose which canister to load", "Canisters:") as null|anything in canisters_to_load
-		if (!owner || QDELETED(owner) || !bike.CAN || QDELETED(bike.CAN))
+		if (!owner || QDELETED(owner) || !bike.CAN || QDELETED(bike.CAN) || bike.loaded || !owner.Adjacent(bike.CAN))
 			return
 		bike.CAN.loc = bike
 		owner << "<span class='notice'>The vehicle scoops up the [bike.CAN] and locks it into position.</span>"
+		playsound(get_turf(owner),'sound/mecha/mechmove03.ogg', 50, 1)
 		canisters_to_load.Cut()
 		bike.loaded = TRUE
 		name = "eject canister"
@@ -255,7 +275,12 @@
 		UpdateButtonIcon()
 
 
-// Engineer's repair-bike
+
+
+// Engineer's repair-bike and unique repair turret
+
+
+
 
 /obj/vehicle/space/speedbike/repair
 	name = "prototype repair vehicle"
@@ -263,6 +288,9 @@
 	icon_state = "engi_bike"
 	overlay_state = "cover_engi"
 	var/obj/machinery/repair_turret/turret = null
+	light_range = 7
+
+/obj/vehicle/space/speedbike/repair/proc/recharge()
 
 /obj/vehicle/space/speedbike/repair/Initialize()
 	. = ..()
@@ -271,12 +299,52 @@
 /obj/vehicle/space/speedbike/repair/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/space/repair
+	var/datum/action/innate/repair_bike/foam_wall/F = new()
+	F.Grant(M, src)
+
+/obj/vehicle/space/speedbike/repair/unbuckle_mob(mob/living/M)
+	. = ..()
+	for(var/datum/action/innate/repair_bike/H in M.actions)
+		qdel(H)
+
+/datum/action/innate/repair_bike
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
+	var/obj/vehicle/space/speedbike/repair/bike
+
+/datum/action/innate/atmos_bike/Grant(mob/living/L, obj/vehicle/B)
+	bike = B
+	..()
+
+/datum/action/innate/atmos_bike/Destroy()
+	bike = null
+	return ..()
+	
+/datum/action/innate/repair_bike/foam_wall
+	name = "Metal Foam Dispenser"
+	desc = "Dispenses metal foam to help contain and control breaches"
+	button_icon_state = "mech_phasing_off"
+	var/metal_synth = 3
+	
+/datum/action/innate/repair_bike/foam_wall/Activate()
+	if(metal_synth >= 1)
+		var/obj/effect/particle_effect/foam/metal/iron/S = new /obj/effect/particle_effect/foam/metal/iron(get_turf(owner))
+		S.amount = 0
+		metal_synth--
+		sleep(150)
+		if(!owner || QDELETED(owner))
+			return
+		metal_synth++
+	else
+		owner << "<span class='warning'>Metal foam mix is still being synthesized...</span>"
 
 /obj/vehicle/space/speedbike/repair/Move(newloc,move_dir)
 	if(has_buckled_mobs())
 		if(istype(newloc,/turf/open/space))
 			new/turf/open/floor/plating(newloc)
 	. = ..()
+
+
+// Unique repair turret
 
 
 /obj/machinery/repair_turret
