@@ -44,25 +44,32 @@
 	icon = 'icons/obj/car.dmi'
 	icon_state = "speedwagon"
 	layer = LYING_MOB_LAYER
-	overlay_state = null
-	pixel_y = -32
+	overlay_state = "speedwagon_cover"
+	var/crash_all = FALSE //CHAOS
+	pixel_y = -48 //to fix the offset when Initialized()
+	pixel_x = -48
 
 /obj/vehicle/space/speedbike/speedwagon/Bump(atom/movable/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/atom/throw_target = get_edge_target_turf(A, src.dir)
-		A.throw_at(throw_target, 4, 3)
-		visible_message("<span class='danger'>[src] crashes into [A]!</span>")
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		if(crash_all)
+			A.throw_at(throw_target, 4, 3)
+			visible_message("<span class='danger'>[src] crashes into [A]!</span>")
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
 			H.Weaken(5)
 			H.adjustStaminaLoss(30)
 			H.apply_damage(rand(20,35), BRUTE)
+			if(!crash_all)
+				H.throw_at(throw_target, 4, 3)
+				visible_message("<span class='danger'>[src] crashes into [H]!</span>")
+				playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
  	. = ..()
-		riding_datum = new/datum/riding/space/speedbike/speedwagon
+		riding_datum = new/datum/riding/space/speedwagon
 
 /obj/vehicle/space/speedbike/speedwagon/Moved()
 	. = ..()
