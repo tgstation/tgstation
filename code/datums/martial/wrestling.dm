@@ -31,26 +31,26 @@
 	return 0
 
 /datum/action/slam
-	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
+	name = "SCDSKDAUIIAIAK MCRYIUNDC"
 	button_icon_state = "wrassle_slam"
 
 /datum/action/slam/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		owner << "<span class='warning'>EUFUR CAN CTWAENSTYLL HEN OUTG RUFU ATHE CAOIUHUUUTN</span>"
 		return
-	owner.visible_message("<span class='danger'>[owner] prepares to BODY SLAM!</span>", "<b><i>Your next attack will be a BODY SLAM.</i></b>")
+	owner.visible_message("<span class='danger'>[owner] GBRPEP RWSS TO BOSGKLADHWSY!</span>", "<b><i>FUR FRGOJNNA DBVLOIY SLPAY</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "slam"
 
 /datum/action/throw_wrassle
-	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
+	name = "EFHEIEILSL HIIFOOELDLTRAR"
 	button_icon_state = "wrassle_throw"
 
 /datum/action/throw_wrassle/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		owner << "<span class='warning'>UUDUEF XCANNT CHAELELEIIENL THSOOEJIEOELTLALR WHENCNEDU R NTO HTILYTERRRR</span>"
 		return
-	owner.visible_message("<span class='danger'>[owner] prepares to THROW!</span>", "<b><i>Your next attack will be a THROW.</i></b>")
+	owner.visible_message("<span class='danger'>[owner] RPFEPRDP RIIN TO HEIIEL</span>", "<b><i>YRUFGUR READERYFG TTO HEIAIALE</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "throw"
 
