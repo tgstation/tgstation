@@ -219,7 +219,6 @@
 	item_state = "toolbox_gold"
 	ascended = TRUE
 	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)
-	bloodthirst = HIS_GRACE_CONSUME_OWNER
 	if(istype(master))
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>God will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
