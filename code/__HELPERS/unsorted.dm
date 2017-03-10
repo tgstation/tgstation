@@ -1421,6 +1421,3 @@ var/valid_HTTPSGet = FALSE
 	fdel(temp_file)
 
 #define UNTIL(X) while(!(X)) stoplag()
-
-/proc/to_chat(target, message)
-	target << message
