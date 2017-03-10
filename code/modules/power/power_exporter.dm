@@ -24,8 +24,8 @@ obj/machinery/power/exporter/Initialize()
 	power_exporter_list += src
 
 obj/machinery/power/exporter/Destroy()
-	..()
 	power_exporter_list -= src
+	return ..()
 
 /obj/item/clothing/gloves/krav_maga/engi // a short lived meme until I come up with a more fitting reward
 	name = "fists of the singulo"
