@@ -291,7 +291,7 @@
 
 //called after Initialize if the obj was constructed from scratch
 /obj/proc/Construct(mob/user)
-	if(current_construction_state)
+	if(!current_construction_state || current_construction_state.id == 1)	//already done
 		return
 	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
 	if(cached_construction_steps.len)
@@ -363,7 +363,7 @@
 				return
 
 		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
-								"<span class='notice'>[user] [wait ? "finishes [message]" : message] \the [src].</span>")
+								"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
 		ccs.OnLeft(src, user, null, constructed, FALSE)
 
 //construct by tool if possible
@@ -430,7 +430,7 @@
 
 		if(cont)
 			user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
-									"<span class='notice'>[user] [wait ? "finishes [message]" : message] \the [src].</span>")
+									"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
 			if(!repairing)
 				ccs.OnLeft(src, user, I, constructed, FALSE)
 			else
