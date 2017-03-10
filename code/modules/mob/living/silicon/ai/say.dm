@@ -160,9 +160,9 @@ var/const/VOX_DELAY = 600
 				if(M.client && !M.ear_deaf && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
-						to_chat(M, voice)
+						M << voice
 		else
-			to_chat(only_listener, voice)
+			only_listener << voice
 		return 1
 	return 0
 

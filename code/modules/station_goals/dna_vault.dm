@@ -87,7 +87,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
-			to_chat(user, "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>" )
+			to_chat(user, "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
 			to_chat(user, "<span class='notice'>Plant data already present in local storage.<span>")

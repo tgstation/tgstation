@@ -446,7 +446,7 @@
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
-				to_chat(user, "<span class='warning'>Close the APC first!</span>" )
+				to_chat(user, "<span class='warning'>Close the APC first!</span>") //Less hints more mystery!
 				return
 			else
 				if (has_electronics==1)

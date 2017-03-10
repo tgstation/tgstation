@@ -72,7 +72,7 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	to_chat(src, S)
+	src << S
 
 /mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!client || ear_deaf > 0)

@@ -267,7 +267,7 @@
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	to_chat(F, the_mode)
+	F << the_mode
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
