@@ -24108,6 +24108,7 @@
 	})
 "aWl" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "Port Docking Bay 1"
 	},
 /turf/open/floor/plating,
@@ -25897,6 +25898,7 @@
 "aZW" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
 	pixel_y = 30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -26228,9 +26230,6 @@
 "baE" = (
 /obj/structure/chair{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -55458,6 +55457,68 @@
 /obj/structure/sign/poster/official/random,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"cij" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"cik" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cil" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cim" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion"
+	},
+/obj/docking_port/mobile/arrivals{
+	height = 13;
+	name = "pubby arrivals shuttle";
+	width = 6
+	},
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 13;
+	id = "arrivals_stationary";
+	name = "pubby arrivals";
+	width = 6
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/arrival)
+"cin" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cio" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
@@ -74339,16 +74400,16 @@ aUh
 aVm
 aWl
 aXj
-aWl
+cik
 aYX
 aZS
 baE
 baE
 aZS
-bct
+aYX
 aWl
 aXj
-aWl
+cik
 aVm
 bhz
 aTr
@@ -74598,7 +74659,7 @@ aTr
 aTr
 aTr
 aYW
-bWO
+aZS
 aZS
 aZS
 bXj
@@ -75113,8 +75174,8 @@ aXl
 aTr
 aYY
 aZV
-baF
-bbt
+aZS
+aZS
 aZS
 aYY
 aTr
@@ -75369,8 +75430,8 @@ aWn
 aXm
 aTr
 aYY
-bWP
-bXd
+aZS
+baE
 baE
 aZS
 aYY
@@ -75881,7 +75942,7 @@ aUj
 aVp
 aWl
 aXj
-aWl
+cik
 aYX
 aZS
 aZS
@@ -75890,7 +75951,7 @@ aZS
 aYX
 aWl
 aXj
-aWl
+cik
 aXs
 bhz
 aTr
@@ -76396,12 +76457,12 @@ aVp
 aWm
 aWm
 aTs
+aYW
 aYZ
-aYZ
-baG
+cim
 baG
 bbR
-aYZ
+aYW
 aTs
 aWm
 aWm
@@ -86141,7 +86202,7 @@ awZ
 aad
 aDl
 aDW
-aEN
+cij
 aFC
 aGH
 aGE
