@@ -116,7 +116,7 @@
 	else
 		ridden.layer = OBJ_LAYER
 
-	if(turret)
+	if(R.turret)
 		if(ridden.dir == NORTH)
 			R.turret.layer = ABOVE_MOB_LAYER
 		else
@@ -131,7 +131,7 @@
 		switch(ridden.dir)
 			if(NORTH)
 				R.turret.pixel_x = 0
-				turret.pixel_y = 4
+				R.turret.pixel_y = 4
 			if(EAST)
 				R.turret.pixel_x = -12
 				R.turret.pixel_y = 4
