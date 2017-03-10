@@ -395,44 +395,13 @@
 
 
 /datum/admins/proc/makeOfficial()
-	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered to be a Centcom Official?", "deathsquad")
+	var/datum/round_event/ghost_role/inspector/event = new(FALSE)
 
-	if(candidates.len)
-		var/mob/dead/observer/chosen_candidate = pick(candidates)
+	var/mission = input("Assign a task for the official", "Assign Task", event.mission)
+	event.mission = mission
 
-		//Create the official
-		var/mob/living/carbon/human/newmob = new (pick(emergencyresponseteamspawn))
-		chosen_candidate.client.prefs.copy_to(newmob)
-		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
-		newmob.dna.update_dna_identity()
-		newmob.key = chosen_candidate.key
-		newmob.mind.assigned_role = "Centcom Official"
-		newmob.equipOutfit(/datum/outfit/centcom_official)
-
-		//Assign antag status and the mission
-		ticker.mode.traitors += newmob.mind
-		newmob.mind.special_role = "official"
-		var/datum/objective/missionobj = new
-		missionobj.owner = newmob.mind
-		missionobj.explanation_text = mission
-		missionobj.completed = 1
-		newmob.mind.objectives += missionobj
-
-		if(config.enforce_human_authority)
-			newmob.set_species(/datum/species/human)
-
-		//Greet the official
-		newmob << "<B><font size=3 color=red>You are a Centcom Official.</font></B>"
-		newmob << "<BR>Central Command is sending you to [station_name()] with the task: [mission]"
-
-		//Logging and cleanup
-		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
-		log_game("[key_name(newmob)] has been selected as a Centcom Official")
-
-		return 1
-
-	return 0
+	event.processing = TRUE
+	. = TRUE
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
