@@ -70,14 +70,14 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(AM.flags & HOLOGRAM)
+				if(HAS_SECONDARY_FLAG(AM, HOLOGRAM))
 					continue
 				. += AM
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	for(var/obj/item/I in get_environment(user))
-		if(I.flags & HOLOGRAM)
+		if(HAS_SECONDARY_FLAG(I, HOLOGRAM))
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I

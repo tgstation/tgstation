@@ -15,7 +15,7 @@
 
 	volume = 1000
 
-/obj/machinery/portable_atmospherics/pump/New()
+/obj/machinery/portable_atmospherics/pump/Initialize()
 	..()
 	pump = new(src, FALSE)
 	pump.on = TRUE

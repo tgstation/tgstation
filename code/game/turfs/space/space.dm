@@ -3,19 +3,22 @@
 	icon_state = "0"
 	name = "\proper space"
 	intact = 0
-
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
+	plane = PLANE_SPACE
+	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	var/destination_z
 	var/destination_x
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
-	plane = PLANE_SPACE
-	light_power = 0.25
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/turf/open/space/basic/New()
+//THIS NEW IS TO REMAIN HERE AND REMAIN EMPTY
+//IT OPTIMIZES MAP LOADING
 
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
@@ -27,6 +30,12 @@
 
 	if(requires_activation)
 		SSair.add_to_active(src)
+
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
@@ -61,7 +70,7 @@
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, area/area_restriction)
+/turf/open/space/attackby(obj/item/C, mob/user, params, area/area_restriction)
 	..()
 	if(istype(C, /obj/item/stack/rods))
 		if(istype(area_restriction) && !istype(get_area(src), area_restriction))

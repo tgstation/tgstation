@@ -1530,8 +1530,7 @@
 		if(ticker)
 			ticker.minds += mind
 		else
-			spawn(0)
-				throw EXCEPTION("mind_initialize(): No ticker ready")
+			stack_trace("mind_initialize(): No ticker ready")
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src

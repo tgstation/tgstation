@@ -29,11 +29,14 @@
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
-#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 /* Secondary atom flags, access using the SECONDARY_FLAG macros */
 
 #define NO_EMP_WIRES "no_emp_wires"
+#define HOLOGRAM "hologram"
+#define FROZEN "frozen"
+#define STATIONLOVING "stationloving"
+#define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
 
 //turf-only flags
 #define NOJAUNT		1
