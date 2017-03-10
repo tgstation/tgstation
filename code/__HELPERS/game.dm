@@ -512,6 +512,21 @@
 		return
 	winset(C, "mainwindow", "flash=5")
 
+/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+	if(ticker.current_state != GAME_STATE_PLAYING || !character)
+		return
+	var/area/A = get_area(character)
+	var/message = "<span class='game deadsay'><span class='name'>\
+		[character.real_name]</span> ([rank]) has arrived at the station at \
+		<span class='name'>[A.name]</span>.</span>"
+	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if((!announcement_systems.len) || (!character.mind))
+		return
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+		return
+
+	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /proc/GetRedPart(const/hexa)
 	return hex2num(copytext(hexa, 2, 4))

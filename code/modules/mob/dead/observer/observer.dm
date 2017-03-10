@@ -104,8 +104,13 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 
 	update_icon()
 
-	if(!T && latejoin.len)
-		T = pick(latejoin)			//Safety in case we cannot find the body's position
+	if(!T)
+		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
+		if(turfs.len)
+			T = pick(turfs)
+		else
+			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION)	//middle of the station
+
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts

@@ -322,8 +322,10 @@
 
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_begin.ogg'
+				var/list/areas = list()
+				for(var/area/shuttle/escape/E in sortedAreas)
+					areas += E
+				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
@@ -334,8 +336,10 @@
 						M.enterTransit()
 
 				//now move the actual emergency shuttle to its transit dock
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_progress.ogg'
+				var/list/areas = list()
+				for(var/area/shuttle/escape/E in sortedAreas)
+					areas += E
+				hyperspace_sound(HYPERSPACE_LAUNCH, areas)
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
@@ -346,10 +350,13 @@
 			SSshuttle.checkHostileEnvironment()
 
 		if(SHUTTLE_ESCAPE)
+			if(sound_played && time_left <= HYPERSPACE_END_TIME)
+				var/list/areas = list()
+				for(var/area/shuttle/escape/E in sortedAreas)
+					areas += E
+				hyperspace_sound(HYPERSPACE_END, areas)
 			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)
 				parallax_slowdown()
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_end.ogg'
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
 					if(M.launch_status == ENDGAME_LAUNCHED)

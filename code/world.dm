@@ -1,6 +1,6 @@
 /world
 	mob = /mob/new_player
-	turf = /turf/open/space/basic
+	turf = /turf/basic
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
@@ -9,7 +9,6 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
-	maxz = 14
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif

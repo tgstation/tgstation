@@ -300,6 +300,12 @@
 		to_chat(src, alert("[rank] is not available. Please try another."))
 		return 0
 
+	if(SSshuttle.arrivals)
+		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
+			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
+			return FALSE
+		SSshuttle.arrivals.RequireUndocked(src)
+
 	//Remove the player from the join queue if he was in one and reset the timer
 	ticker.queued_players -= src
 	ticker.queue_delay = 4
@@ -312,7 +318,7 @@
 		character = equip
 
 
-	var/D = pick(latejoin)
+	var/D = get_turf(pick(latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 			if(!T.density)
@@ -326,6 +332,12 @@
 					continue
 
 	character.loc = D
+	character.update_parallax_teleport()
+
+	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
+	if(chair)
+		chair.buckle_mob(character)
+
 	ticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc
@@ -334,7 +346,10 @@
 
 	if(humanc)	//These procs all expect humans
 		data_core.manifest_inject(humanc)
-		AnnounceArrival(humanc, rank)
+		if(SSshuttle.arrivals)
+			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
+		else
+			AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
 		if(highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
@@ -351,22 +366,6 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						ticker.mode.make_antag_chance(humanc)
 	qdel(src)
-
-/mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if(ticker.current_state != GAME_STATE_PLAYING)
-		return
-	var/area/A = get_area(character)
-	var/message = "<span class='game deadsay'><span class='name'>\
-		[character.real_name]</span> ([rank]) has arrived at the station at \
-		<span class='name'>[A.name]</span>.</span>"
-	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
-	if((!announcement_systems.len) || (!character.mind))
-		return
-	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
-		return
-
-	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.

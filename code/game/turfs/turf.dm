@@ -63,7 +63,7 @@
 	if(force)
 		..()
 		//this will completely wipe turf state
-		var/turf/B = new world.turf(src)
+		var/turf/basic/B = new /turf/basic(src)
 		for(var/A in B.contents)
 			qdel(A)
 		for(var/I in B.vars)

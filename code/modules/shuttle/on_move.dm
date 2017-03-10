@@ -42,6 +42,7 @@
 	shuttledocked = 0
 	for(var/obj/machinery/door/airlock/A in orange(1, src))
 		A.shuttledocked = 0
+		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 	. = ..()
 	shuttledocked =  1
 	for(var/obj/machinery/door/airlock/A in orange(1, src))
