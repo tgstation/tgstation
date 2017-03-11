@@ -69,13 +69,13 @@
 		CtrlShiftClickOn(A)
 		return
 	if(modifiers["middle"])
-		MiddleClickOn(A)
+		MiddleClickOn(A, params)
 		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
+		AltClickOn(A, params)
 		return
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
@@ -189,10 +189,10 @@
 	Middle click
 	Only used for swapping hands
 */
-/mob/proc/MiddleClickOn(atom/A)
+/mob/proc/MiddleClickOn(atom/A, params)
 	return
 
-/mob/living/carbon/MiddleClickOn(atom/A)
+/mob/living/carbon/MiddleClickOn(atom/A, params)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
@@ -250,11 +250,22 @@
 	A.AltClick(src)
 	return
 
-/mob/living/carbon/AltClickOn(atom/A)
+/mob/living/carbon/AltClickOn(atom/A, params)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
+	var/checkstring = null
+	var/bypass = FALSE
+	switch(active_hand_index)
+		if(1)
+			checkstring = "l_arm_device"
+		if(2)
+			checkstring = "r_arm_device"
+	if(!isnull(checkstring))
+		var/obj/item/organ/cyberimp/arm/CI = internal_organs_slot[checkstring]
+		if(CI && istype(CI))
+			bypass = CI.clickIntercept(A, params)
+	if(!bypass)
 		..()
 
 /atom/proc/AltClick(mob/user)

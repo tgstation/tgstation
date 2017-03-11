@@ -53,6 +53,10 @@
 /obj/item/organ/cyberimp/arm/emag_act()
 	return 0
 
+/obj/item/organ/cyberimp/arm/proc/clickIntercept(atom/A, params)
+	world << "Intercepting click on [A] with params [english_list(params2list(params))]!"
+	return FALSE
+
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	if(prob(15/severity) && owner)
 		owner << "<span class='warning'>[src] is hit by EMP!</span>"
@@ -134,7 +138,6 @@
 				Extend(choise)
 	else
 		Retract()
-
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	if(prob(30/severity) && owner && !crit_fail)
