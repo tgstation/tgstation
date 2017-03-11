@@ -322,6 +322,7 @@
 #include "code\game\area\areas\holodeck.dm"
 #include "code\game\area\areas\mining.dm"
 #include "code\game\area\areas\misc.dm"
+#include "hippiestation\code\game\area\areas\misc.dm"
 #include "code\game\area\areas\ruins.dm"
 #include "code\game\area\areas\shuttles.dm"
 #include "code\game\area\areas\space_content.dm"
