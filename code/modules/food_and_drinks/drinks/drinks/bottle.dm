@@ -196,6 +196,12 @@
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	list_reagents = list("hell_water" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/unholy
+	name = "dark flask"
+	desc = "An inscription on the side of the flask reads: QUIA VISUS ADESSE BIBENDUM."
+	list_reagents = list("unholy_water" = 100)
+	color = "#7D1919"
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
