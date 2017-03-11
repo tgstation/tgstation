@@ -547,14 +547,14 @@ var/global/list/RPD_recipes=list(
 			return
 
 		if(EATING_MODE) //Eating pipes
-			user << "<span class='notice'>You start destroying a pipe...</span>"
+			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
 				qdel(A)
 
 		if(ATMOS_MODE) //Making pipes
-			user << "<span class='notice'>You start building a pipe...</span>"
+			to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
@@ -564,7 +564,7 @@ var/global/list/RPD_recipes=list(
 				P.add_fingerprint(usr)
 
 		if(METER_MODE) //Making pipe meters
-			user << "<span class='notice'>You start building a meter...</span>"
+			to_chat(user, "<span class='notice'>You start building a meter...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
@@ -572,15 +572,15 @@ var/global/list/RPD_recipes=list(
 
 		if(DISPOSALS_MODE) //Making disposals pipes
 			if(is_anchored_dense_turf(A))
-				user << "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>"
+				to_chat(user, "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>")
 				return
-			user << "<span class='notice'>You start building a disposals pipe...</span>"
+			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 4, target = A))
 				var/obj/structure/disposalconstruct/C = new (A, queued_p_type ,queued_p_dir)
 
 				if(!C.can_place())
-					user << "<span class='warning'>There's not enough room to build that here!</span>"
+					to_chat(user, "<span class='warning'>There's not enough room to build that here!</span>")
 					qdel(C)
 					return
 

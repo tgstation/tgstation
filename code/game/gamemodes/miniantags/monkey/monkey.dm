@@ -40,17 +40,17 @@
 
 
 /datum/game_mode/monkey/announce()
-	world << "<B>The current game mode is - Monkey!</B>"
-	world << "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to Centcom. \
-				Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>"
+	to_chat(world, "<B>The current game mode is - Monkey!</B>")
+	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to Centcom. \
+				Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
 
 
 /datum/game_mode/monkey/proc/greet_carrier(datum/mind/carrier)
-	carrier.current << "<B><span class='notice'>You are the Jungle Fever patient zero!!</B>"
-	carrier.current << "<b>You have been planted onto this station by the Animal Rights Consortium.</b>"
-	carrier.current << "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>"
-	carrier.current << "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>"
-	carrier.current << "<b>Your mission will be deemed a success if any of the live infected monkeys reach Centcom.</b>"
+	to_chat(carrier.current, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B>")
+	to_chat(carrier.current, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
+	to_chat(carrier.current, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
+	to_chat(carrier.current, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
+	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach Centcom.</b>")
 	return
 
 /datum/game_mode/monkey/post_setup()
@@ -109,8 +109,8 @@
 	if(check_monkey_victory())
 		feedback_set_details("round_end_result","win - monkey win")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
+		to_chat(world, "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>")
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the monkeys")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>"
+		to_chat(world, "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>")

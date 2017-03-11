@@ -99,7 +99,7 @@
 		if(valid_territories.len)
 			num_territories = valid_territories.len //Add them all up to make the total number of area types
 		else
-			world << "ERROR: NO VALID TERRITORIES"
+			to_chat(world, "ERROR: NO VALID TERRITORIES")
 
 /datum/station_state/proc/score(datum/station_state/result)
 	if(!result)

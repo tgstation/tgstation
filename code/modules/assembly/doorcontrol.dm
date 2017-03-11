@@ -11,7 +11,7 @@
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
 	if(id)
-		user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
 
 /obj/item/device/assembly/control/activate()

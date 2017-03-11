@@ -16,7 +16,7 @@
 		value = C.value
 	if(value)
 		SSshuttle.points += value
-		user << "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>"
+		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>")
 		qdel(I)
 		return
 	return ..()

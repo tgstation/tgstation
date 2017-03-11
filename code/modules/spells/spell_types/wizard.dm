@@ -264,13 +264,13 @@
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
-				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(stun_amt)
-				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
