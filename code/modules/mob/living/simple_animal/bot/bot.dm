@@ -2,7 +2,7 @@
 
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/simple_animal/bot
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
 	luminosity = 3

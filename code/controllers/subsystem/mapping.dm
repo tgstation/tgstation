@@ -28,7 +28,11 @@ var/datum/controller/subsystem/mapping/SSmapping
 		if(previous_map_config.defaulted)
 			previous_map_config = null
 	if(!config)
+#ifdef FORCE_MAP
+		config = new(FORCE_MAP)
+#else
 		config = new
+#endif
 	return ..()
 
 
@@ -106,10 +110,8 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(last)
 		QDEL_NULL(loader)
 
-/datum/controller/subsystem/mapping/proc/CreateSpace()
-	++world.maxz
-	CHECK_TICK
-	for(var/T in block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, world.maxz)))
+/datum/controller/subsystem/mapping/proc/CreateSpace(zlevel)
+	for(var/T in block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, zlevel)))
 		CHECK_TICK
 		new /turf/open/space(T)
 
@@ -131,7 +133,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
 
 	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
-		CreateSpace()
+		CreateSpace(I)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
