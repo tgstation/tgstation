@@ -53,7 +53,7 @@
 
 		sleep(max(0, projectile_delay))
 
-	chassis.log_message("Fired from [src.name], targeting [target].")
+	chassis.log_message("Fired from [src.name], targeting [target]/([key_name(target)]).")
 	return 1
 
 
@@ -188,7 +188,7 @@
 	log_message("Honked from [src.name]. HONK!")
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Mecha Honker in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Mecha Honker in [COORD(T)]")
+	log_game("[chassis.occupant.ckey]([chassis.occupant.real_name]) used a Mecha Honker in [COORD(T)]")
 	return 1
 
 
@@ -311,7 +311,7 @@
 		return
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, 1)
-	log_message("Launched a [O.name] from [name], targeting [target].")
+	log_message("Launched a [O.name] from [name], targeting [target]/([key_name(target)]).")
 	projectiles--
 	proj_init(O)
 	O.throw_at(target, missile_range, missile_speed, spin = 0, diagonals_first = diags_first)

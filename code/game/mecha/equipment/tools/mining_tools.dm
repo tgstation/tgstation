@@ -28,7 +28,7 @@
 			var/turf/T = target
 			T.drill_act(src)
 		else
-			log_message("Drilled through [target]")
+			log_message("Drilled through [target]/([key_name(target)])")
 			if(isliving(target))
 				if(istype(src , /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
 					drill_mob(target, chassis.occupant, 120)

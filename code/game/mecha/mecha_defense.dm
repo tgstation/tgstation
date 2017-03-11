@@ -57,7 +57,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
-	log_message("Attack by hand/paw. Attacker - [user].",1)
+	log_message("Attack by hand/paw. Attacker - [user.real_name]/([key_name(user)]).",1)
 	log_append_to_last("Armor saved.")
 
 /obj/mecha/attack_paw(mob/user as mob)
@@ -65,12 +65,12 @@
 
 
 /obj/mecha/attack_alien(mob/living/user)
-	log_message("Attack by alien. Attacker - [user].",1)
+	log_message("Attack by alien. Attacker - [user.real_name]/([key_name(user)]).",1)
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	attack_generic(user, 15, BRUTE, "melee", 0)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
-	log_message("Attack by simple animal. Attacker - [user].",1)
+	log_message("Attack by simple animal. Attacker - [user.real_name]/([key_name(user)]).",1)
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly] [src]")
 		return 0
@@ -94,7 +94,7 @@
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(.)
-		log_message("Attack by hulk. Attacker - [user].",1)
+		log_message("Attack by hulk. Attacker - [user.real_name]/([key_name(user)]).",1)
 		add_logs(user, src, "punched", "hulk powers")
 
 /obj/mecha/blob_act(obj/structure/blob/B)
@@ -269,7 +269,7 @@
 		return ..()
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
-	log_message("Attacked by [I]. Attacker - [user]")
+	log_message("Attacked by [I]. Attacker - [user.real_name]/([key_name(user)])")
 	..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)

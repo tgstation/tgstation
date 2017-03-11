@@ -87,10 +87,10 @@
 		src.target = AM
 		forceMove(null)
 
-		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
+		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name]/([key_name(target)]) at [ADMIN_COORDJMP(target)] with [timer] second fuse"
 		bombers += message
 		message_admins(message,0,1)
-		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
+		log_game("[key_name(user)] planted [name] on [target.name]/([key_name(target)]) at [COORD(target)] with [timer] second fuse")
 
 		target.add_overlay(image_overlay, 1)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")

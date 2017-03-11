@@ -835,25 +835,25 @@
 	var/datum/objective/sintouched/O
 	switch(rand(1,7))//traditional seven deadly sins... except lust.
 		if(1) // acedia
-			log_game("[src] was influenced by the sin of Acedia.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of Acedia.")
 			O = new /datum/objective/sintouched/acedia
 		if(2) // Gluttony
-			log_game("[src] was influenced by the sin of gluttony.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of gluttony.")
 			O = new /datum/objective/sintouched/gluttony
 		if(3) // Greed
-			log_game("[src] was influenced by the sin of greed.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of greed.")
 			O = new /datum/objective/sintouched/greed
 		if(4) // sloth
-			log_game("[src] was influenced by the sin of sloth.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of sloth.")
 			O = new /datum/objective/sintouched/sloth
 		if(5) // Wrath
-			log_game("[src] was influenced by the sin of wrath.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of wrath.")
 			O = new /datum/objective/sintouched/wrath
 		if(6) // Envy
-			log_game("[src] was influenced by the sin of envy.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of envy.")
 			O = new /datum/objective/sintouched/envy
 		if(7) // Pride
-			log_game("[src] was influenced by the sin of pride.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
 	ticker.mode.sintouched += src.mind
 	src.mind.objectives += O

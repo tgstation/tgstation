@@ -802,7 +802,7 @@
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
 		return
-	log_message("[user] tries to move in.")
+	log_message("[user.real_name]/([key_name(user)]) tries to move in.")
 	if (occupant)
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
 		log_append_to_last("Permission denied.")
@@ -851,7 +851,7 @@
 		add_fingerprint(H)
 		GrantActions(H, human_occupant=1)
 		forceMove(loc)
-		log_append_to_last("[H] moved in as pilot.")
+		log_append_to_last("[H.real_name]/([key_name(H)]) moved in as pilot.")
 		icon_state = initial(icon_state)
 		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -908,7 +908,7 @@
 	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
-	log_message("[mmi_as_oc] moved in as pilot.")
+	log_message("[mmi_as_oc]/([key_name(brainmob)]) moved in as pilot.")
 	if(!internal_damage)
 		occupant << sound('sound/mecha/nominal.ogg',volume=50)
 	GrantActions(brainmob)
@@ -959,7 +959,7 @@
 	var/mob/living/L = occupant
 	occupant = null //we need it null when forceMove calls Exited().
 	if(mob_container.forceMove(newloc))//ejecting mob container
-		log_message("[mob_container] moved out.")
+		log_message("[mob_container]/([L.real_name] : [key_name(occupant)]) moved out.")
 		L << browse(null, "window=exosuit")
 
 		if(istype(mob_container, /obj/item/device/mmi))
