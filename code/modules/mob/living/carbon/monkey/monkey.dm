@@ -45,6 +45,7 @@
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
 	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/butt
 	..()
 
 /mob/living/carbon/monkey/movement_delay()

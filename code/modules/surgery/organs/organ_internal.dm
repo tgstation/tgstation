@@ -23,7 +23,7 @@
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
-	loc = null
+	loc = M
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -724,6 +724,8 @@
 		if(!T)
 			T = new()
 			T.Insert(src)
+
+	src.regeneratebutt()
 
 	if(!getorganslot("eye_sight"))
 		var/obj/item/organ/eyes/E

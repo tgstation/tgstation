@@ -50,6 +50,7 @@
 
 	internal_organs += new dna.species.mutanteyes()
 	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/butt
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
