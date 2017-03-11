@@ -1,6 +1,6 @@
 10 March 2017, by Jordie0608
 
-Modified table 'death', adding the columns 'toxloss', 'cloneloss', and 'staminaloss'.
+Modified table 'death', adding the columns 'toxloss', 'cloneloss', and 'staminaloss' and table 'legacy_population', adding the columns 'server_ip' and 'server_port'.
 
 ALTER TABLE `feedback`.`death` ADD COLUMN `toxloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `oxyloss`, ADD COLUMN `cloneloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `toxloss`, ADD COLUMN `staminaloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `cloneloss`;
 
