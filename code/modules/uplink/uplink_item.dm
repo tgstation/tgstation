@@ -1222,7 +1222,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
-	surplus = 0
 	restricted_roles = list("Assistant")
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
