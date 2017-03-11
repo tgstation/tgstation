@@ -10,7 +10,7 @@
 
 /datum/action/neck_chop/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
+		to_chat(owner, "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -22,7 +22,7 @@
 
 /datum/action/leg_sweep/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
+		to_chat(owner, "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -34,7 +34,7 @@
 
 /datum/action/lung_punch/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
+		to_chat(owner, "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -42,15 +42,15 @@
 
 /datum/martial_art/krav_maga/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
 	..()
-	H << "<span class = 'userdanger'>You know the arts of Krav Maga!</span>"
-	H << "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>"
+	to_chat(H, "<span class = 'userdanger'>You know the arts of Krav Maga!</span>")
+	to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
 	neckchop.Grant(H)
 	legsweep.Grant(H)
 	lungpunch.Grant(H)
 
 /datum/martial_art/krav_maga/remove(var/mob/living/carbon/human/H)
 	..()
-	H << "<span class = 'userdanger'>You suddenly forget the arts of Krav Maga...</span>"
+	to_chat(H, "<span class = 'userdanger'>You suddenly forget the arts of Krav Maga...</span>")
 	neckchop.Remove(H)
 	legsweep.Remove(H)
 	lungpunch.Remove(H)

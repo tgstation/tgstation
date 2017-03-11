@@ -87,19 +87,19 @@ Bonus
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		switch(A.stage)
 			if(1)
-				M << "<span class='warning'>You can't feel anything.</span>"
+				to_chat(M, "<span class='warning'>You can't feel anything.</span>")
 			if(2)
-				M << "<span class='warning'>You feel absolutely hammered.</span>"
+				to_chat(M, "<span class='warning'>You feel absolutely hammered.</span>")
 				if(prob(10))
 					sleepy_ticks += rand(10,14)
 			if(3)
 				M.reagents.add_reagent("ethanol",rand(5,7))
-				M << "<span class='warning'>You try to focus on not dying.</span>"
+				to_chat(M, "<span class='warning'>You try to focus on not dying.</span>")
 				if(prob(15))
 					sleepy_ticks += rand(10,14)
 			if(4)
 				M.reagents.add_reagent("ethanol",rand(6,10))
-				M << "<span class='warning'>u can count 2 potato!</span>"
+				to_chat(M, "<span class='warning'>u can count 2 potato!</span>")
 				if(prob(20))
 					sleepy_ticks += rand(10,14)
 			if(5)
@@ -122,7 +122,7 @@ Bonus
 
 	switch(sleepy) //Works like morphine
 		if(11)
-			M << "<span class='warning'>You start to feel tired...</span>"
+			to_chat(M, "<span class='warning'>You start to feel tired...</span>")
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)

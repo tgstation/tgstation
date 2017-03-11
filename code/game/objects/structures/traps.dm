@@ -34,7 +34,7 @@
 	if(!isliving(user))
 		return
 	if(get_dist(user, src) <= 1)
-		user << "<span class='notice'>You reveal [src]!</span>"
+		to_chat(user, "<span class='notice'>You reveal [src]!</span>")
 		flare()
 
 /obj/structure/trap/proc/flare()
@@ -74,7 +74,7 @@
 	icon_state = "trap-fire"
 
 /obj/structure/trap/fire/trap_effect(mob/living/L)
-	L << "<span class='danger'><B>Spontaneous combustion!</B></span>"
+	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
 	L.Weaken(1)
 
 /obj/structure/trap/fire/flare()
@@ -88,7 +88,7 @@
 	icon_state = "trap-frost"
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
-	L << "<span class='danger'><B>You're frozen solid!</B></span>"
+	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
 	L.Weaken(1)
 	L.bodytemperature -= 300
 	L.apply_status_effect(/datum/status_effect/freon)
@@ -101,7 +101,7 @@
 
 
 /obj/structure/trap/damage/trap_effect(mob/living/L)
-	L << "<span class='danger'><B>The ground quakes beneath your feet!</B></span>"
+	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
 	L.Weaken(5)
 	L.adjustBruteLoss(35)
 

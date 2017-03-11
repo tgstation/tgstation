@@ -62,34 +62,34 @@
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
 			update_icon()
 		else
-			user << "<span class='danger'>Maintenance Access Denied</span>"
+			to_chat(user, "<span class='danger'>Maintenance Access Denied</span>")
 			flick("[skin]-denied", src)
 		return
 
 	if(panel_open)
 		if(!device && istype(W, /obj/item/device/assembly))
 			if(!user.transferItemToLoc(W, src))
-				user << "<span class='warning'>\The [W] is stuck to you!</span>"
+				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
 				return
 			device = W
-			user << "<span class='notice'>You add [W] to the button.</span>"
+			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
 		if(!board && istype(W, /obj/item/weapon/electronics/airlock))
 			if(!user.transferItemToLoc(W, src))
-				user << "<span class='warning'>\The [W] is stuck to you!</span>"
+				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
 				return
 			board = W
 			if(board.one_access)
 				req_one_access = board.accesses
 			else
 				req_access = board.accesses
-			user << "<span class='notice'>You add [W] to the button.</span>"
+			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
 		if(!device && !board && istype(W, /obj/item/weapon/wrench))
-			user << "<span class='notice'>You start unsecuring the button frame...</span>"
+			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
-				user << "<span class='notice'>You unsecure the button frame.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				qdel(src)
@@ -132,14 +132,14 @@
 				req_one_access = list()
 				board = null
 			update_icon()
-			user << "<span class='notice'>You remove electronics from the button frame.</span>"
+			to_chat(user, "<span class='notice'>You remove electronics from the button frame.</span>")
 
 		else
 			if(skin == "doorctrl")
 				skin = "launcher"
 			else
 				skin = "doorctrl"
-			user << "<span class='notice'>You change the button frame's front panel.</span>"
+			to_chat(user, "<span class='notice'>You change the button frame's front panel.</span>")
 		return
 
 	if((stat & (NOPOWER|BROKEN)))
@@ -149,7 +149,7 @@
 		return
 
 	if(!allowed(user))
-		user << "<span class='danger'>Access Denied</span>"
+		to_chat(user, "<span class='danger'>Access Denied</span>")
 		flick("[skin]-denied", src)
 		return
 

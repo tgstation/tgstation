@@ -5,6 +5,7 @@
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
 	faction = list("hostile","stickman")
 	del_on_death = TRUE
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "paperwizard"
 	ranged = 1
 	environment_smash = 0

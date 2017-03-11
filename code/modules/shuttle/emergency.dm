@@ -60,12 +60,11 @@
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
 
 	if(!ID)
-		user << "<span class='warning'>You don't have an ID.</span>"
+		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
 		return
 
 	if(!(access_heads in ID.access))
-		user << "<span class='warning'>The access level of \
-			your card is not high enough.</span>"
+		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
 	var/old_len = authorized.len
@@ -137,7 +136,7 @@
 		return
 
 	if(emagged || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
-		user << "<span class='warning'>The shuttle is already about to launch!</span>"
+		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 		return
 
 	var/time = TIME_LEFT
@@ -403,7 +402,7 @@
 			launch_status = EARLY_LAUNCHED
 			return ..()
 	else
-		usr << "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>"
+		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
 		return 1
 
 /obj/docking_port/mobile/pod/New()
@@ -431,7 +430,7 @@
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	if(!emagged)
 		emagged = TRUE
-		user << "<span class='warning'>You fry the pod's alert level checking system.</span>"
+		to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
@@ -507,7 +506,7 @@
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || unlocked)
 		. = ..()
 	else
-		usr << "The storage unit will only unlock during a Red or Delta security alert."
+		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return MouseDrop(user)
