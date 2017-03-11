@@ -52206,6 +52206,7 @@
 	on = 1;
 	pressure_checks = 1
 	},
+/obj/structure/chair/office/dark,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cjj" = (
@@ -61842,7 +61843,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/closet/radiation,
+/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cEa" = (

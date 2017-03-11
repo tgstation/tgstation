@@ -681,7 +681,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = lastused_total,
 		"coverLocked" = coverlocked,
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = user.has_unlimited_silicon_privilege || locate(/obj/machinery/computer/apc_control) in range(1, user),
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(

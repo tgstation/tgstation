@@ -213,9 +213,12 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/interact(mob/user)
+/obj/machinery/interact(mob/user, special_state)
 	add_fingerprint(user)
-	ui_interact(user)
+	if(special_state)
+		ui_interact(user, state = special_state)
+	else
+		ui_interact(user)
 
 /obj/machinery/ui_status(mob/user)
 	if(is_interactable())
