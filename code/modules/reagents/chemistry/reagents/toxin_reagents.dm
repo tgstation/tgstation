@@ -879,4 +879,4 @@
 	taste_description = "horror"
 
 /datum/reagent/toxin/unholy_water/on_mob_life(mob/living/M)
-	 M.cultslurring = min(M.cultslurring, 3)
+	 M.cultslurring = min(M.cultslurring + 3, 3)
