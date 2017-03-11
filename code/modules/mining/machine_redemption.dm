@@ -13,7 +13,7 @@
 	req_access = list(access_mineral_storeroom)
 	var/stk_types = list()
 	var/stk_amt   = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stack_list = list() //Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
@@ -56,7 +56,7 @@
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
+			var/obj/item/stack/sheet/s = new processed_sheet(src,0,merge=FALSE)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
@@ -226,7 +226,7 @@
 		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
-			var/obj/item/stack/sheet/out = new inp.type()
+			var/obj/item/stack/sheet/out = new inp.type(src,merge=FALSE)
 			var/desired = input("How much?", "How much to eject?", 1) as num
 			out.amount = round(min(desired,50,inp.amount))
 			if(out.amount >= 1)
@@ -234,6 +234,7 @@
 				unload_mineral(out)
 			if(inp.amount < 1)
 				stack_list -= text2path(href_list["release"])
+				qdel(inp)
 		else
 			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
