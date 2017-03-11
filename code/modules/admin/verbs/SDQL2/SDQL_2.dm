@@ -361,7 +361,7 @@
 
 	else if(expression[i] == "\[")
 		var/list/expressions_list = expression[++i]
-		var/list/val2 = list()
+		val = list()
 		for(var/list/expression_list in expressions_list)
 			var/result = SDQL_expression(object, expression_list)
 			var/assoc
@@ -371,11 +371,8 @@
 				// Need to insert the key like this to prevent duplicate keys fucking up.
 				var/list/dummy = list()
 				dummy[result] = assoc
-			result = dummy
-			if(isnull(val))
-				val = result
-			else
-				val += result
+				result = dummy
+			val += result
 	else
 		val = SDQL_var(object, expression, i, object)
 		i = expression.len
@@ -421,7 +418,7 @@
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")
- 			return SDQL_var(v, expression[start + 2], source = source)
+			return SDQL_var(v, expression[start + 2], source = source)
 		else if(expression[start + 1] == ":")
 			return SDQL_function(object, v, expression[start + 2], source)
 		else if(expression[start + 1] == "\[" && islist(v))

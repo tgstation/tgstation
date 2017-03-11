@@ -149,7 +149,6 @@
 	i = variable(i + 1, func) // Yes technically does anything variable() matches but I don't care, if admins fuck up this badly then they shouldn't be allowed near SDQL.
 	node += "call"
 	node["call"] = func
-	node["args"] = arguments
 	if(tokenl(i) != "on")
 		return i
 	var/list/select = list()
@@ -261,7 +260,7 @@
 		L += "\["
 		L[++L.len] = expression
 		i++
- 	else
+	else
 		i++
 	return i
 
