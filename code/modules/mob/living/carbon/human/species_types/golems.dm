@@ -445,3 +445,11 @@
 
 /datum/species/golem/bananium/get_spans()
 	return list(SPAN_CLOWN)
+
+
+/datum/species/golem/runic
+	name = "Runic Golem"
+	id = "runic"
+	limbs_id = "runic_golem"
+	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted the Elder God Nar'Sie.\
+	 Should you meet cultists that share your alignment, you must not disrupt their work, but you are not otherwise bound to follow their orders."
