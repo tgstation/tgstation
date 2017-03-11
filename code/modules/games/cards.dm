@@ -145,7 +145,7 @@
 	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
 		var/datum/playingcard/P = cards[1]
 		if(!blank)
-			user << "You cannot write on that card."
+			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
 		if(!cardtext)

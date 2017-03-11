@@ -1431,7 +1431,6 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -1439,7 +1438,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -1565,7 +1563,6 @@
 	name = "Arrivals"
 	})
 "acX" = (
-/obj/structure/extinguisher_cabinet,
 /turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/arrival)
 "acY" = (
@@ -1665,6 +1662,11 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/window/shuttle,
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = 30
+	},
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "adi" = (
@@ -2276,12 +2278,12 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "aey" = (
-/obj/machinery/door/airlock/glass_command{
-	name = "Cockpit";
-	req_access_txt = "19"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrival Shuttle Airlock";
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (WEST)"
@@ -6909,7 +6911,7 @@
 	name = "Theatre Stage";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/shuttle/syndicate)
 "anZ" = (
 /obj/structure/cable,
@@ -7219,13 +7221,13 @@
 /area/shuttle/syndicate)
 "aoE" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/shuttle/syndicate)
 "aoF" = (
 /obj/machinery/telecomms/allinone{
 	intercept = 1
 	},
-/turf/open/floor/plasteel/circuit/rcircuit,
+/turf/open/floor/circuit/red,
 /area/shuttle/syndicate)
 "aoG" = (
 /obj/structure/lattice/catwalk,
@@ -7246,7 +7248,7 @@
 	dir = 1;
 	state = 2
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
@@ -7832,7 +7834,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
@@ -8658,7 +8660,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
@@ -9349,7 +9351,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
@@ -10600,7 +10602,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
@@ -10652,7 +10654,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
@@ -18217,7 +18219,7 @@
 	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
@@ -36491,6 +36493,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -39013,7 +39018,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/security/nuke_storage)
 "bth" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -39021,10 +39026,10 @@
 	icon_state = "intact";
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/security/nuke_storage)
 "bti" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/security/nuke_storage)
 "btj" = (
 /turf/open/floor/plasteel/vault{
@@ -39688,7 +39693,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/security/nuke_storage)
 "buw" = (
 /obj/machinery/nuclearbomb/selfdestruct{
@@ -39712,7 +39717,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/security/nuke_storage)
 "buy" = (
 /obj/structure/cable/white{
@@ -39952,7 +39957,7 @@
 	icon_state = "intact";
 	dir = 6
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "buV" = (
 /obj/structure/cable/white{
@@ -39960,7 +39965,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "buW" = (
 /obj/structure/cable/white{
@@ -39974,7 +39979,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "buX" = (
 /obj/structure/cable/white{
@@ -39995,7 +40000,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "buY" = (
 /obj/structure/cable/white{
@@ -40009,7 +40014,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "buZ" = (
 /obj/structure/cable/white{
@@ -40020,7 +40025,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bva" = (
 /obj/structure/cable/white{
@@ -40032,7 +40037,7 @@
 	icon_state = "intact";
 	dir = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bvb" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -40591,7 +40596,7 @@
 /area/security/nuke_storage)
 "bvY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/security/nuke_storage)
 "bvZ" = (
 /obj/item/clothing/suit/hazardvest{
@@ -40975,7 +40980,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bwB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -41017,7 +41022,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bwF" = (
 /obj/structure/chair/office/dark{
@@ -41958,7 +41963,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "byq" = (
 /turf/open/floor/plasteel/vault{
@@ -41979,7 +41984,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "byt" = (
 /turf/open/floor/plasteel/vault{
@@ -43222,7 +43227,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bAd" = (
 /obj/machinery/holopad,
@@ -43239,7 +43244,7 @@
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bAf" = (
 /obj/machinery/turretid{
@@ -43301,7 +43306,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bAj" = (
 /obj/item/device/radio/intercom{
@@ -43341,7 +43346,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bAk" = (
 /obj/machinery/light{
@@ -43355,7 +43360,7 @@
 	},
 /area/engine/gravity_generator)
 "bAl" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/gravity_generator)
 "bAm" = (
 /obj/machinery/door/firedoor,
@@ -44331,7 +44336,7 @@
 /obj/effect/landmark/start{
 	name = "AI"
 	},
-/turf/open/floor/greengrid,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bBO" = (
 /obj/machinery/light{
@@ -46374,7 +46379,7 @@
 	icon_state = "manifold";
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bFx" = (
 /obj/machinery/airalarm{
@@ -46428,7 +46433,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bFC" = (
 /obj/structure/chair/office/dark{
@@ -47410,14 +47415,14 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bHp" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bHq" = (
 /obj/structure/cable/white{
@@ -47427,7 +47432,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bHr" = (
 /obj/structure/cable/white{
@@ -47439,14 +47444,14 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bHs" = (
 /obj/structure/cable/white{
 	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bHt" = (
 /obj/structure/window/reinforced,
@@ -54047,7 +54052,7 @@
 	},
 /area/tcommsat/server)
 "bSE" = (
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -54055,7 +54060,7 @@
 /area/tcommsat/server)
 "bSF" = (
 /obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -54074,7 +54079,7 @@
 /area/tcommsat/server)
 "bSH" = (
 /obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -56958,7 +56963,7 @@
 /obj/machinery/power/smes/engineering{
 	charge = 2e+006
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/engineering)
 "bXJ" = (
 /obj/structure/cable/white{
@@ -56968,7 +56973,7 @@
 /obj/machinery/power/smes/engineering{
 	charge = 2e+006
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/engine/engineering)
 "bXK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -57230,7 +57235,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -58150,7 +58155,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -58184,7 +58189,7 @@
 	icon_state = "manifold";
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -58227,7 +58232,7 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -58244,7 +58249,7 @@
 	icon_state = "manifold";
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -58261,7 +58266,7 @@
 	icon_state = "intact";
 	dir = 9
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -58819,7 +58824,7 @@
 	},
 /area/ai_monitored/turret_protected/ai_upload)
 "caX" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "caY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -58827,7 +58832,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "caZ" = (
 /obj/structure/cable/white{
@@ -58846,7 +58851,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "cbb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -58854,7 +58859,7 @@
 	icon_state = "intact";
 	dir = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "cbc" = (
 /obj/structure/table/reinforced,
@@ -59257,7 +59262,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -59878,7 +59883,7 @@
 	icon_state = "intact";
 	dir = 6
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "ccL" = (
 /obj/structure/cable/white{
@@ -59933,7 +59938,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "ccP" = (
 /obj/structure/cable/white{
@@ -60275,7 +60280,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	initial_gas_mix = "n2=100;TEMP=80";
 	name = "Mainframe Base";
 	temperature = 80
@@ -60740,7 +60745,7 @@
 	icon_state = "manifold";
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "ces" = (
 /obj/machinery/computer/upload/ai,
@@ -60769,7 +60774,7 @@
 	icon_state = "manifold";
 	dir = 8
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "cew" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -61433,7 +61438,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "cfP" = (
 /obj/structure/cable/white{
@@ -61443,11 +61448,11 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "cfQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "cfR" = (
 /obj/machinery/status_display{
@@ -62147,7 +62152,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "chm" = (
 /obj/machinery/flasher{
@@ -78057,10 +78062,10 @@
 /area/toxins/xenobiology)
 "cJG" = (
 /mob/living/simple_animal/slime,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "cJH" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "cJI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -78070,13 +78075,13 @@
 	on = 1;
 	pressure_checks = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "cJJ" = (
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	initial_gas_mix = "n2=500;TEMP=80";
 	name = "Mainframe Base"
 	},
@@ -78092,7 +78097,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -80599,7 +80604,7 @@
 "cOr" = (
 /obj/effect/decal/remains/xeno,
 /obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "cOs" = (
 /obj/structure/sign/electricshock,
@@ -82709,7 +82714,7 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/toxins/xenobiology)
 "cSa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -92404,7 +92409,7 @@
 /area/assembly/chargebay)
 "djF" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "djG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -93409,7 +93414,7 @@
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
 "dlt" = (
-/turf/open/floor/plasteel/circuit,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "dlu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -94645,10 +94650,10 @@
 /area/assembly/chargebay)
 "dnX" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "dnY" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "dnZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -95432,7 +95437,7 @@
 /area/assembly/chargebay)
 "dpx" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/assembly/chargebay)
 "dpy" = (
 /obj/machinery/mech_bay_recharge_port{
@@ -96972,13 +96977,13 @@
 	name = "Abandoned Research Lab"
 	})
 "dsh" = (
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/medical/research{
 	name = "Abandoned Research Lab"
 	})
 "dsi" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/plasteel/circuit/gcircuit,
+/turf/open/floor/circuit/green,
 /area/medical/research{
 	name = "Abandoned Research Lab"
 	})
@@ -103050,7 +103055,7 @@
 	on = 1;
 	pressure_checks = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -103084,7 +103089,7 @@
 	name = "science camera";
 	network = list("SS13","RD")
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -103850,7 +103855,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -103874,7 +103879,7 @@
 	icon_state = "intact";
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit/gcircuit{
+/turf/open/floor/circuit/green{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -116199,7 +116204,7 @@
 "ecc" = (
 /obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/electronic_marketing_den)
+/area/shuttle/arrival)
 "ecd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -116668,7 +116673,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/transport)
@@ -118043,6 +118047,124 @@
 	dir = 8
 	},
 /area/chapel/office)
+"egS" = (
+/obj/docking_port/mobile/arrivals{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	name = "delta arrivals shuttle";
+	width = 9
+	},
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	id = "arrivals_stationary";
+	name = "delta arrivals";
+	width = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/arrival)
+"egT" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egU" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egX" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"egZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
+"eha" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry{
+	name = "Arrivals"
+	})
 
 (1,1,1) = {"
 aaa
@@ -120657,16 +120779,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adm
+adn
+adn
+adn
+adn
+adn
+adn
+adn
+adn
+aes
 aaa
 aaa
 aaa
@@ -120908,22 +121030,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adm
+adn
+adn
+adn
+adn
+adn
+adn
+aiN
+ajI
+aiN
+alK
+amN
+anW
+aoz
+aoC
+apA
 aaa
 aaa
 aaa
@@ -121165,22 +121287,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adn
+afv
+afK
+afK
+afK
+aho
+adn
+agG
+aeh
+aeG
+aeG
+amO
+aeG
+aoA
+aoC
+apB
 aaa
 aaa
 aaa
@@ -121422,22 +121544,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adn
+aeG
+aeG
+aeG
+aeG
+aeG
+aia
+agG
+aeh
+akK
+alL
+amP
+anX
+aoB
+aoC
+apC
 aaa
 aaa
 aaa
@@ -121672,29 +121794,29 @@ aaa
 aaa
 aaa
 aaa
+adm
+adn
+adn
+adn
+aes
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adn
+aeG
+aeG
+aeG
+aeG
+aeG
+adn
+aiO
+aeh
+akL
+age
+amQ
+adn
+adn
+adn
+aeI
 aaa
 aaa
 aaa
@@ -121929,26 +122051,26 @@ aaa
 aaa
 aaa
 aaa
+adn
+adA
+adT
+aeh
+adn
+aeE
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adn
+afw
+afL
+afw
+agG
+ahp
+adn
+aiP
+aeh
+akL
+age
+amR
+adn
 aaa
 aaa
 aaa
@@ -122186,28 +122308,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ado
+adB
+adU
+aeh
+adn
+adn
+adn
+adn
+adn
+adn
+adn
+agH
+agb
+adn
+adn
+adn
+akM
+agb
+adn
+adn
+adn
+aes
 aaa
 aaa
 aaa
@@ -122443,28 +122565,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ado
+adC
+adV
+aeh
+aet
+aeF
+aeT
+aeT
+aeT
+aeT
+agb
+aeG
+aeG
+aeG
+aeG
+aeG
+akL
+age
+aeh
+agb
+aoC
+apA
 aaa
 aaa
 aaa
@@ -122700,28 +122822,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ado
+adD
+adW
+aeh
+aeu
+aeG
+adV
+adV
+adV
+aeG
+agc
+aeG
+adV
+adV
+adV
+adV
+akL
+age
+aeh
+anY
+aoC
+apB
 aaa
 aaa
 aaa
@@ -122957,28 +123079,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ado
+adE
+adV
+aeh
+adn
+aeH
+aeU
+aeU
+aeU
+aeU
+agb
+aeG
+aeG
+aeG
+aeG
+aeG
+akL
+age
+aeh
+agb
+aoC
+apC
 aaa
 aaa
 aaa
@@ -123214,28 +123336,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ado
+adF
+adX
+aeh
+adn
+adn
+adn
+afk
+adn
+adn
+adn
+agI
+agb
+adn
+adn
+adn
+akM
+agb
+adn
+adn
+adn
+aev
 aaa
 aaa
 aaa
@@ -123471,27 +123593,27 @@ aaa
 aaa
 aaa
 aaa
+adn
+adG
+adY
+aeh
+adn
+aeI
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adn
+agd
+aeG
+ahq
+adn
+aiQ
+aeh
+akL
+age
+amS
+adn
+aoD
 aaa
 aaa
 aaa
@@ -123728,29 +123850,29 @@ aaa
 aaa
 aaa
 aaa
+adp
+adn
+adn
+adn
+aev
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+afM
+age
+aeG
+ahq
+adn
+aiR
+aeh
+akL
+age
+amT
+adn
+adn
+adn
+aeE
 aaa
 aaa
 aaa
@@ -123994,6 +124116,20 @@ aaa
 aaa
 aaa
 aaa
+afN
+agf
+aeG
+ahr
+aet
+aiS
+aeh
+akN
+alM
+amP
+aeG
+aoE
+aoC
+apA
 aaa
 aaa
 aaa
@@ -124017,20 +124153,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-adm
-adn
-adn
-adn
-adn
-adn
-adn
-adn
-adn
-aes
 aaa
 aaa
 aaa
@@ -124251,43 +124373,43 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-adm
+adp
 adn
 adn
 adn
 adn
-adn
-adn
-aiN
-ajI
-aiN
-alK
-amN
-anW
-aoz
+aiT
+aeh
+aeG
+aeG
+amU
+aeG
+aoF
 aoC
-apA
+apB
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -124511,40 +124633,40 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ahs
 adn
-afv
-afK
-afK
-afK
-aho
-adn
-agG
+aiU
 aeh
+akO
+alN
+amV
 aeG
-aeG
-amO
-aeG
-aoA
+aoE
 aoC
-apB
+apC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -124769,39 +124891,39 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adp
 adn
-aeG
-aeG
-aeG
-aeG
-aeG
-aia
-agG
-aeh
-akK
-alL
-amP
-anX
-aoB
-aoC
-apC
+adn
+adn
+adn
+adn
+adn
+adn
+adn
+aev
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -125036,29 +125158,29 @@ aaa
 aaa
 aaa
 aaa
-adm
-adn
-adn
-adn
-aes
 aaa
 aaa
-adn
-aeG
-aeG
-aeG
-aeG
-aeG
-adn
-aiO
-aeh
-akL
-age
-amQ
-adn
-adn
-adn
-aeI
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -125293,26 +125415,26 @@ aaa
 aaa
 aaa
 aaa
-adn
-adA
-adT
-aeh
-adn
-aeE
 aaa
-adn
-afw
-afL
-afw
-agG
-ahp
-adn
-aiP
-aeh
-akL
-age
-amR
-adn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -125550,28 +125672,28 @@ aaa
 aaa
 aaa
 aaa
-ado
-adB
-adU
-aeh
-adn
-adn
-adn
-adn
-adn
-adn
-adn
-agH
-agb
-adn
-adn
-adn
-akM
-agb
-adn
-adn
-adn
-aes
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -125807,28 +125929,28 @@ aaa
 aaa
 aaa
 aaa
-ado
-adC
-adV
-aeh
-aet
-aeF
-aeT
-aeT
-aeT
-aeT
-agb
-aeG
-aeG
-aeG
-aeG
-aeG
-akL
-age
-aeh
-agb
-aoC
-apA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126064,28 +126186,28 @@ aaa
 aaa
 aaa
 aaa
-ado
-adD
-adW
-aeh
-aeu
-aeG
-adV
-adV
-adV
-aeG
-agc
-aeG
-adV
-adV
-adV
-adV
-akL
-age
-aeh
-anY
-aoC
-apB
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126321,28 +126443,28 @@ aaa
 aaa
 aaa
 aaa
-ado
-adE
-adV
-aeh
-adn
-aeH
-aeU
-aeU
-aeU
-aeU
-agb
-aeG
-aeG
-aeG
-aeG
-aeG
-akL
-age
-aeh
-agb
-aoC
-apC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126578,28 +126700,28 @@ aaa
 aaa
 aaa
 aaa
-ado
-adF
-adX
-aeh
-adn
-adn
-adn
-afk
-adn
-adn
-adn
-agI
-agb
-adn
-adn
-adn
-akM
-agb
-adn
-adn
-adn
-aev
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126835,27 +126957,27 @@ aaa
 aaa
 aaa
 aaa
-adn
-adG
-adY
-aeh
-adn
-aeI
 aaa
 aaa
 aaa
-adn
-agd
-aeG
-ahq
-adn
-aiQ
-aeh
-akL
-age
-amS
-adn
-aoD
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127092,29 +127214,29 @@ aaa
 aaa
 aaa
 aaa
-adp
-adn
-adn
-adn
-aev
 aaa
 aaa
 aaa
 aaa
-afM
-age
-aeG
-ahq
-adn
-aiR
-aeh
-akL
-age
-amT
-adn
-adn
-adn
-aeE
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127358,20 +127480,20 @@ aaa
 aaa
 aaa
 aaa
-afN
-agf
-aeG
-ahr
-aet
-aiS
-aeh
-akN
-alM
-amP
-aeG
-aoE
-aoC
-apA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127615,20 +127737,20 @@ aaa
 aaa
 aaa
 aaa
-adp
-adn
-adn
-adn
-adn
-aiT
-aeh
-aeG
-aeG
-amU
-aeG
-aoF
-aoC
-apB
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127875,17 +127997,17 @@ aaa
 aaa
 aaa
 aaa
-ahs
-adn
-aiU
-aeh
-akO
-alN
-amV
-aeG
-aoE
-aoC
-apC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -128133,16 +128255,16 @@ aaa
 aaa
 aaa
 aaa
-adp
-adn
-adn
-adn
-adn
-adn
-adn
-adn
-adn
-aev
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -155100,14 +155222,14 @@ aax
 aaD
 abT
 aax
-acj
+egT
 aax
 acG
 acW
 acW
 ads
 aax
-acj
+egT
 aax
 abR
 aaD
@@ -155614,14 +155736,14 @@ aaf
 aaf
 aaf
 aax
-acj
+egU
 aax
 aaf
 aaa
 aaa
 aaf
 aax
-ach
+egW
 aax
 aaf
 aaf
@@ -156645,7 +156767,7 @@ aca
 acn
 acn
 acI
-eeu
+acI
 acI
 acI
 adN
@@ -156895,7 +157017,7 @@ aaH
 aaf
 aaf
 aaa
-abq
+egS
 abq
 abU
 acb
@@ -156906,7 +157028,7 @@ acX
 adh
 adt
 acJ
-aeb
+acn
 ael
 aey
 aeO
@@ -157413,7 +157535,7 @@ abp
 abF
 abW
 abZ
-eer
+acn
 acn
 acn
 acn
@@ -158184,14 +158306,14 @@ aaf
 aaf
 aaf
 aax
-ach
+egV
 aax
 aaf
 aaa
 aaa
 aaf
 aax
-ach
+egV
 aax
 aaf
 aaf
@@ -158698,14 +158820,14 @@ aax
 aaD
 abR
 aax
-ach
+egW
 aax
 acK
 acY
 adi
 adr
 aax
-acj
+egU
 aax
 abT
 aaD

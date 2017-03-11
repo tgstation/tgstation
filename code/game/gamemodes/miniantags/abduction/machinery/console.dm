@@ -36,7 +36,7 @@
 	if(..())
 		return
 	if(!isabductor(user))
-		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
+		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100, target = src))
 			TeleporterSend()
 		return
@@ -146,15 +146,21 @@
 
 /obj/machinery/abductor/console/proc/SetDroppoint(turf/open/location,user)
 	if(!istype(location))
-		user << "<span class='warning'>That place is not safe for the specimen.</span>"
+		to_chat(user, "<span class='warning'>That place is not safe for the specimen.</span>")
 		return
 
 	if(pad)
 		pad.teleport_target = location
-		user << "<span class='notice'>Location marked as test subject release point.</span>"
+		to_chat(user, "<span class='notice'>Location marked as test subject release point.</span>")
 
 
-/obj/machinery/abductor/console/proc/Setup()
+/obj/machinery/abductor/console/Initialize(mapload)
+	if(mapload)
+		return TRUE //wait for machines list
+	..()
+
+	if(!team)
+		return
 
 	for(var/obj/machinery/abductor/pad/p in machines)
 		if(p.team == team)
@@ -187,12 +193,12 @@
 /obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/device/abductor/gizmo))
 		var/obj/item/device/abductor/gizmo/G = O
-		user << "<span class='notice'>You link the tool to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
 		gizmo = G
 		G.console = src
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
-		user << "<span class='notice'>You link the vest to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		if(istype(vest))
 			if(vest.flags & NODROP)
 				toggle_vest()
@@ -216,5 +222,4 @@
 	vest.flags ^= NODROP
 	var/mob/M = vest.loc
 	if(istype(M))
-		M << "<span class='notice'>[src] is now \
-			[vest.flags & NODROP ? "locked" : "unlocked"].</span>"
+		to_chat(M, "<span class='notice'>[src] is now [vest.flags & NODROP ? "locked" : "unlocked"].</span>")

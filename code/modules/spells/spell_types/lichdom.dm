@@ -51,19 +51,19 @@
 
 		if(stat_allowed) //Death is not my end!
 			if(M.stat == CONSCIOUS && iscarbon(M))
-				M << "<span class='notice'>You aren't dead enough to revive!</span>" //Usually a good problem to have
+				to_chat(M, "<span class='notice'>You aren't dead enough to revive!</span>" )
 				charge_counter = charge_max
 				return
 
 			if(!marked_item || QDELETED(marked_item)) //Wait nevermind
-				M << "<span class='warning'>Your phylactery is gone!</span>"
+				to_chat(M, "<span class='warning'>Your phylactery is gone!</span>")
 				return
 
 			var/turf/user_turf = get_turf(M)
 			var/turf/item_turf = get_turf(marked_item)
 
 			if(user_turf.z != item_turf.z)
-				M << "<span class='warning'>Your phylactery is out of range!</span>"
+				to_chat(M, "<span class='warning'>Your phylactery is out of range!</span>")
 				return
 
 			if(isobserver(M))
@@ -80,7 +80,7 @@
 			lich.real_name = M.mind.name
 			M.mind.transfer_to(lich)
 			lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton)
-			lich << "<span class='warning'>Your bones clatter and shutter as you are pulled back into this world!</span>"
+			to_chat(lich, "<span class='warning'>Your bones clatter and shutter as you are pulled back into this world!</span>")
 			charge_max += 600
 			var/mob/old_body = current_body
 			var/turf/body_turf = get_turf(old_body)
@@ -108,14 +108,14 @@
 				if(ABSTRACT in item.flags || NODROP in item.flags)
 					continue
 				marked_item = item
-				M << "<span class='warning'>You begin to focus your very being into the [item.name]...</span>"
+				to_chat(M, "<span class='warning'>You begin to focus your very being into the [item.name]...</span>")
 				break
 
 			if(!marked_item)
-				M << "<span class='caution'>You must hold an item you wish to make your phylactery...</span>"
+				to_chat(M, "<span class='caution'>You must hold an item you wish to make your phylactery...</span>")
 				return
 			if(!do_after(M, 50, needhand=FALSE, target=marked_item))
-				M << "<span class='warning'>Your soul snaps back to your body as you stop ensouling [marked_item.name]!</span>"
+				to_chat(M, "<span class='warning'>Your soul snaps back to your body as you stop ensouling [marked_item.name]!</span>")
 				marked_item = null
 				return
 
@@ -129,7 +129,7 @@
 			marked_item.add_atom_colour("#003300", ADMIN_COLOUR_PRIORITY)
 			poi_list |= marked_item
 
-			M << "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>"
+			to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
 			M.set_species(/datum/species/skeleton)
 			current_body = M.mind.current
 			if(ishuman(M))

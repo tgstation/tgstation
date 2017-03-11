@@ -14,7 +14,7 @@
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/eyes/E = target.getorganslot("eye_sight")
 	if(!E)
-		user << "It's hard to do surgery on someones eyes when they don't have any."
+		to_chat(user, "It's hard to do surgery on someones eyes when they don't have any.")
 		return FALSE
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

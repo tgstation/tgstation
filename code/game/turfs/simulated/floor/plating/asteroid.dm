@@ -53,15 +53,15 @@
 			return
 
 		if (dug)
-			user << "<span class='warning'>This area has already been dug!</span>"
+			to_chat(user, "<span class='warning'>This area has already been dug!</span>")
 			return
 
-		user << "<span class='notice'>You start digging...</span>"
+		to_chat(user, "<span class='notice'>You start digging...</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 
 		if(do_after(user, digging_speed, target = src))
 			if(istype(src, /turf/open/floor/plating/asteroid))
-				user << "<span class='notice'>You dig a hole.</span>"
+				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				gets_dug()
 				feedback_add_details("pick_used_mining","[W.type]")
 
@@ -119,9 +119,14 @@
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	..()
-	switch(icon_state)
-		if("basalt1", "basalt2", "basalt3") //5 and 9 are too dark to glow and make the amount of glows in tunnels too high
-			set_light(1, 0.1)
+	set_basalt_light(src)
+
+/proc/set_basalt_light(turf/open/floor/B)
+	switch(B.icon_state)
+		if("basalt1", "basalt2", "basalt3")
+			B.set_light(2, 0.6, "#c48a18") //more light
+		if("basalt5", "basalt9")
+			B.set_light(1.4, 0.6, "#c48a18") //barely anything!
 
 /turf/open/floor/plating/asteroid/basalt/gets_dug()
 	if(!dug)
