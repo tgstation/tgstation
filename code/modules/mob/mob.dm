@@ -117,8 +117,8 @@ var/next_mob_id = 0
 				else
 					continue
 
-			else if(T.lighting_overlay)
-				if(T.lighting_overlay.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
+			else if(T.lighting_object)
+				if(T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
 						msg = blind_message
 					else
