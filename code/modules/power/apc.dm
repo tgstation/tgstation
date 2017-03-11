@@ -754,21 +754,15 @@
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
-	if(IsAdminGhost(user))
+	if(user.can_AI_interact(src) == AI_INTERACTION_ADMIN)
 		return TRUE
-	if(user.has_unlimited_silicon_privilege)
+	else if(user.can_AI_interact(src) >= AI_INTERACTION_LIMITED)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
-		if (                                                             \
-			src.aidisabled ||                                            \
-			malfhack && istype(malfai) &&                                \
-			(                                                            \
-				(istype(AI) && (malfai!=AI && malfai != AI.parent)) ||   \
-				(istype(robot) && (robot in malfai.connected_robots))    \
-			)                                                            \
-		)
+		var/mob/living/carbon/C = user
+		if(aidisabled || malfhack&&istype(malfai) && ((istype(AI) && (malfai != AI && malfai != AI.parent)) || istype(C) || (istype(robot) && (robot in malfai.connected_robots))))	//What the fuck.
 			if(!loud)
-				to_chat(user, "<span class='danger'>\The [src] has eee disabled!</span>")
+				to_chat(user, "<span class='danger'>\The [src] has AI interaction disabled!</span>")
 			return FALSE
 	return TRUE
 

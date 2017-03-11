@@ -16,7 +16,8 @@
 		add_overlay(overlay)
 	return ..()
 
-
+/obj/item/organ/cyberimp/proc/AI_hack(atom/A)	//Welcome to Deus Ex.
+	return AI_INTERACTION_FORBIDDEN
 
 //[[[[BRAIN]]]]
 

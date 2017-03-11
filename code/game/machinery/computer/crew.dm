@@ -212,7 +212,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
 
-	if(hclient.client.mob && IsAdminGhost(hclient.client.mob))
+	if(hclient.client.mob && can_AI_interact(hclient.client.mob))
 		return TRUE
 
 	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))

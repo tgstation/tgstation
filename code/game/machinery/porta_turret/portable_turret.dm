@@ -707,14 +707,14 @@
 			attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
-	if(!ailock || IsAdminGhost(user))
+	if(!ailock || (user.can_AI_interact(src) <= AI_INTERACTION_MINIMAL))
 		return attack_hand(user)
 	else
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
-		if ( !(issilicon(user) || IsAdminGhost(user)) )
+		if ( !(issilicon(user) || (user.can_AI_interact(src) <= AI_INTERACTION_LIMITED) )))
 			to_chat(user, "<span class='notice'>You are too far away.</span>")
 			user.unset_machine()
 			user << browse(null, "window=turretid")
@@ -724,10 +724,10 @@
 	var/area/area = get_area(src)
 	var/t = ""
 
-	if(locked && !(issilicon(user) || IsAdminGhost(user)))
+	if(locked && !(issilicon(user) || user.can_AI_interact(src)))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if(!issilicon(user) && !IsAdminGhost(user))
+		if(!issilicon(user) && !user.can_AI_interact(src))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=\ref[src];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
 		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=\ref[src];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
@@ -741,7 +741,7 @@
 	if(..())
 		return
 	if (locked)
-		if(!(issilicon(usr) || IsAdminGhost(usr)))
+		if(!(issilicon(usr) || user.can_AI_interact(src)))
 			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])

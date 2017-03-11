@@ -793,3 +793,10 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+
+/mob/living/carbon/can_AI_interact(atom/A)
+	for(var/obj/item/organ/O in organs)
+		var/hack_level = O.AI_hack(A))
+		if(hack_level > AI_INTERACTION_FORBIDDEN)
+			return hack_level
+	return AI_INTERACTION_FORBIDDEN

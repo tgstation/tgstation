@@ -5,16 +5,19 @@
 	slot = "r_arm_device"
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_NORMAL
-	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
 	var/list/items_list = list()
 	// Used to store a list of all items inside, for multi-item implants.
 	// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
 
+	var/retractable_items = TRUE
 	var/obj/item/holder = null
 	// You can use this var for item path, it would be converted into an item on New()
 
 /obj/item/organ/cyberimp/arm/New()
+	actoin_types = list()
+	if(retractable_items)
+		action_types += /datum/action/item_action/organ_action/toggle
 	..()
 	if(ispath(holder))
 		holder = new holder(src)
@@ -239,3 +242,26 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
 	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)
 	origin_tech = "materials=3;engineering=3;biotech=3;programming=2;magnets=3"
+
+/obj/item/organ/cyberimp/arm/hacktool
+	name = "cryptographic interface"
+	desc = "Hidden in a user's arm, this gives the user the ability to hack into almost anything they have physical contact with by using their fingers as electrical conduits."
+	icon_state = ""
+	var/range = 1
+	var/hack_level = AI_INTERACTION_MINIMAL
+	var/cooldown = 10
+	var/initial_hack_delay = 50
+	var/initial_hack_move = TRUE
+
+/obj/item/organ/cyberimp/arm/hacktool/AI_hack(atom/A)
+
+/obj/item/organ/cyberimp/arm/hacktool/clickIntercept(atom/A)
+
+/obj/item/organ/cyberimp/arm/hacktool/
+
+/obj/item/organ/cyberimp/arm/hacktool/badmin
+	desc = "Seems to have a quantum chip mounted on it!"
+	range = INFINITE
+	hack_level = AI_INTERACTION_ADMIN
+	cooldown = 0
+	initial_hack_delay = 0

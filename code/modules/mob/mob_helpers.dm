@@ -425,20 +425,6 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
-
-/proc/IsAdminGhost(var/mob/user)
-	if(!user)		//Are they a mob? Auto interface updates call this with a null src
-		return
-	if(!user.client) // Do they have a client?
-		return
-	if(!isobserver(user)) // Are they a ghost?
-		return
-	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
-		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
-		return
-	return TRUE
-
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)

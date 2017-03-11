@@ -825,3 +825,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(message)
 			to_chat(G, message)
 	observer_default_invisibility = amount
+
+/mob/dead/observer/can_AI_interact(atom/A)
+	if(check_rights_for(user.client, R_ADMIN) && client.AI_Interact)
+		return AI_INTERACTION_ADMIN

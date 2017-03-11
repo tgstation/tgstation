@@ -703,7 +703,7 @@ var/list/airlock_overlays = list()
 	return src.attack_hand(user)
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
-	if(!(issilicon(user) || IsAdminGhost(user)))
+	if(!(issilicon(user) || (user.can_AI_interact(src) >= AI_INTERACTION_LIMITED)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
@@ -737,7 +737,7 @@ var/list/airlock_overlays = list()
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if(usr.incapacitated() && !IsAdminGhost(usr))
+	if(usr.incapacitated() && (user.can_AI_interact(src) <= AI_INTERACTION_MINIMAL))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -751,7 +751,7 @@ var/list/airlock_overlays = list()
 
 
 
-	if((issilicon(usr) && src.canAIControl(usr)) || IsAdminGhost(usr))
+	if((issilicon(usr) && src.canAIControl(usr)) || (user.can_AI_interact(src) >= AI_INTERACTION_MINIMAL))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 emergency access
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 emergency access
@@ -950,7 +950,7 @@ var/list/airlock_overlays = list()
 		updateUsrDialog()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
-	if(!issilicon(user) && !IsAdminGhost(user))
+	if(!issilicon(user) && (user.can_AI_interact(src) <= AI_INTERACTION_MINIMAL))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return

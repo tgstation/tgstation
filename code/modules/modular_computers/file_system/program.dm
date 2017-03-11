@@ -80,7 +80,7 @@
 	if(!transfer && computer && computer.emagged)	//emags can bypass the execution locks but not the download ones.
 		return 1
 
-	if(IsAdminGhost(user))
+	if(user.can_AI_interact(src) >= AI_INTERACTION_FULL)
 		return 1
 
 	if(issilicon(user))

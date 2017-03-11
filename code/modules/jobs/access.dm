@@ -111,7 +111,7 @@
 		if(ispAI(M))
 			return FALSE
 		return TRUE	//AI can do whatever it wants
-	if(IsAdminGhost(M))
+	if(can_AI_interact(M))
 		//Access can't stop the abuse
 		return TRUE
 	else if(ishuman(M))

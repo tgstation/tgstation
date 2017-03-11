@@ -1041,3 +1041,7 @@
 		lawupdate = 1
 		return TRUE
 	return FALSE
+
+/mob/living/silicon/robot/can_AI_interact(atom/A)
+	return AI_INTERACTION_FULL
+
