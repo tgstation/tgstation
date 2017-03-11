@@ -138,7 +138,7 @@
 
 /obj/docking_port/mobile/arrivals/check_effects()
 	..()
-	if(!sound_played && timeLeft(1) <= HYPERSPACE_END_TIME)
+	if(mode == SHUTTLE_CALL && !sound_played && timeLeft(1) <= HYPERSPACE_END_TIME)
 		sound_played = TRUE
 		hyperspace_sound(HYPERSPACE_END, areas)
 
@@ -148,9 +148,9 @@
 		. = SHUTTLE_CAN_DOCK
 
 /obj/docking_port/mobile/arrivals/proc/Launch(pickingup)
-	if(mode != SHUTTLE_CALL)
-		if(pickingup)
-			force_depart = TRUE
+	if(pickingup)
+		force_depart = TRUE
+	if(mode == SHUTTLE_IDLE)
 		if(console)
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
