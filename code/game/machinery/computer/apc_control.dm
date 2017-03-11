@@ -17,7 +17,8 @@
 
 /obj/machinery/computer/apc_control/process()
 	apcs = list() //Clear the list every tick
-	for(var/obj/machinery/power/apc/APC in apcs_list)
+	for(var/V in apcs_list)
+		var/obj/machinery/power/apc/APC = V
 		if(check_apc(APC))
 			apcs[APC.name] = APC
 	if(operator)
@@ -59,7 +60,7 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
+	return TRUE
 
 /obj/machinery/computer/apc_control/Topic(href, href_list)
 	if(..())
