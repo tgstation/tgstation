@@ -50,7 +50,6 @@
 		if(!isnewplayer(M) && !M.ear_deaf)
 			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[russian_html2text(message)]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				continue
 				if(alert)
 					M << sound('sound/misc/notice1.ogg')
 				else

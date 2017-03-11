@@ -44,7 +44,7 @@
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
-			new /obj/item/weapon/guardiancreator(src)
+			new /obj/item/weapon/nullrod/armblade(src)
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
