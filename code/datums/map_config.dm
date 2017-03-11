@@ -15,13 +15,7 @@
                                     CENTCOMM = SELFLOOPING,
                                     EMPTY_AREA_1 = CROSSLINKED,
                                     EMPTY_AREA_2 = CROSSLINKED,
-                                    MINING = SELFLOOPING,
-                                    EMPTY_AREA_3 = CROSSLINKED,
-                                    EMPTY_AREA_4 = CROSSLINKED,
-                                    EMPTY_AREA_5 = CROSSLINKED,
-                                    EMPTY_AREA_6 = CROSSLINKED,
-                                    EMPTY_AREA_7 = CROSSLINKED,
-                                    EMPTY_AREA_8 = CROSSLINKED)
+                                    MINING = SELFLOOPING)
     var/defaulted = TRUE    //if New failed
 
     var/config_max_users = 0
