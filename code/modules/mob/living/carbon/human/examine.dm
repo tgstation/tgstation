@@ -279,7 +279,7 @@
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] suddenly fallen asleep, suffering from Space Sleep Disorder.\n"
-				msg += "Find somewhere safe for [t_him], [p_He] may wake up soon.\n"
+				msg += "Find somewhere safe for [t_him], [t_He] may wake up soon.\n"
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
