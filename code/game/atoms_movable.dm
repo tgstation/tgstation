@@ -1,4 +1,3 @@
-
 /atom/movable
 	layer = OBJ_LAYER
 	var/is_affected_by_gravity = FALSE	//Set to FALSE if this item should never be moved by gravity no matter what. Don't varedit before it has initialized!
