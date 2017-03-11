@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Window construction steps are slightly faster; normal windows now take 6 seconds with standard tools, from 7 and reinforced windows now take 12 seconds with standard tools, from 14."
-  - tweak: "Brass windows take 8 seconds with standard tools, from 7."

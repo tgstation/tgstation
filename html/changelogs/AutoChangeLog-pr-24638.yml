@@ -1,5 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - tweak: "Cryoxadone's ability to heal cloneloss has been greatly reduced."
-  - rscadd: "Clonexadone has been readded. It functions exactly like cryoxadone, but only heals cloneloss, and at a decent rate. Brew it with 1 part cryoxadone, 1 part sodium, and 5 units of plasma for a catalyst."
