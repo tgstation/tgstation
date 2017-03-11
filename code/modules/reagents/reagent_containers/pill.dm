@@ -64,80 +64,80 @@
 		qdel(src)
 
 /obj/item/weapon/reagent_containers/pill/tox
-	name = "toxins pill (50u)"
+	name = "toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
 	list_reagents = list("toxin" = 50)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/cyanide
-	name = "cyanide pill (50u)"
+	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	list_reagents = list("cyanide" = 50)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/adminordrazine
-	name = "adminordrazine pill (50u)"
+	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
 	list_reagents = list("adminordrazine" = 50)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/morphine
-	name = "morphine pill (30u)"
+	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
 	list_reagents = list("morphine" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/stimulant
-	name = "stimulant pill (50u)"
+	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
 	list_reagents = list("ephedrine" = 10, "antihol" = 10, "coffee" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/salbutamol
-	name = "salbutamol pill (30u)"
+	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
 	list_reagents = list("salbutamol" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/charcoal
-	name = "charcoal pill (10u)"
+	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 	list_reagents = list("charcoal" = 10)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/epinephrine
-	name = "epinephrine pill (15u)"
+	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill5"
 	list_reagents = list("epinephrine" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/mannitol
-	name = "mannitol pill (15u)"
+	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
 	list_reagents = list("mannitol" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/mutadone
-	name = "mutadone pill (10u)"
+	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
 	list_reagents = list("mutadone" = 10)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/salicyclic
-	name = "salicylic acid pill (24u)"
+	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill9"
 	list_reagents = list("sal_acid" = 24)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/oxandrolone
-	name = "oxandrolone pill (24u)"
+	name = "oxandrolone pill"
 	desc = "Used to stimulate burn healing."
 	icon_state = "pill11"
 	list_reagents = list("oxandrolone" = 24)
 	roundstart = 1
 
 /obj/item/weapon/reagent_containers/pill/insulin
-	name = "insulin pill (50u)"
+	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
