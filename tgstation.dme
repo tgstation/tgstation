@@ -13,8 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemap.dm"
-#include "_maps\loadallmaps.dm"
+#include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
@@ -557,7 +556,6 @@
 #include "code\game\machinery\computer\law.dm"
 #include "code\game\machinery\computer\medical.dm"
 #include "code\game\machinery\computer\message.dm"
-#include "code\game\machinery\computer\monastery_shuttle.dm"
 #include "code\game\machinery\computer\Operating.dm"
 #include "code\game\machinery\computer\pod.dm"
 #include "code\game\machinery\computer\prisoner.dm"
@@ -697,7 +695,6 @@
 #include "code\game\objects\items\devices\chameleonproj.dm"
 #include "code\game\objects\items\devices\doorCharge.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
-#include "code\game\objects\items\devices\forcefieldprojector.dm"
 #include "code\game\objects\items\devices\geiger_counter.dm"
 #include "code\game\objects\items\devices\instruments.dm"
 #include "code\game\objects\items\devices\laserpointer.dm"
@@ -1354,7 +1351,6 @@
 #include "code\modules\jobs\job_types\science.dm"
 #include "code\modules\jobs\job_types\security.dm"
 #include "code\modules\jobs\job_types\silicon.dm"
-#include "code\modules\jobs\map_changes\map_changes.dm"
 #include "code\modules\library\lib_codex_gigas.dm"
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
