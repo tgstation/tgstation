@@ -49,25 +49,12 @@
 		return FALSE	//PLEASE no.
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
-  . = ..()
-  if(var_name == "is_affected_by_gravity")
-    sync_gravity()
-	if(var_name == "force_gravity_processing")
-		if(SSgravity)
-			if(var_value)
-				SSgravity.atoms_forced_gravity_processing[src] = src
-			else if(SSgravity.atoms_forced_gravity_processing[src])
-				SSgravity.atoms_forced_gravity_processing -= src
-
-/atom/movable/SDQL_update(const/var_name, new_value)
-	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
-		return FALSE	//PLEASE no.
 	. = ..()
 	if(var_name == "is_affected_by_gravity")
 		sync_gravity()
 	if(var_name == "force_gravity_processing")
 		if(SSgravity)
-			if(new_value)
+			if(var_value)
 				SSgravity.atoms_forced_gravity_processing[src] = src
 			else if(SSgravity.atoms_forced_gravity_processing[src])
 				SSgravity.atoms_forced_gravity_processing -= src
