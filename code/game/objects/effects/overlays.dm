@@ -582,7 +582,6 @@
 	icon_state = "shieldsparkles"
 	duration = 6
 
-
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'

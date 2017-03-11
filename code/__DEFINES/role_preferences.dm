@@ -24,6 +24,8 @@
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
 #define ROLE_BORER				"borer"
+#define ROLE_UMBRAGE			"umbrage"
+#define ROLE_UMBRAGE_VEIL		"veil"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough

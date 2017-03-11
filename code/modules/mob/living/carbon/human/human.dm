@@ -87,6 +87,8 @@
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
+			if(mind.umbrage_psionics)
+				stat("Psi", "[mind.umbrage_psionics.psi]/[mind.umbrage_psionics.max_psi]")
 
 
 	//NINJACODE
