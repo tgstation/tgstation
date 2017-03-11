@@ -163,7 +163,7 @@
 				if(dummy.loc == there.loc)
 					qdel(dummy)
 					return 1
-				if(there.density && dummy in range(1, there)) //For windows and 
+				if(there.density && dummy in range(1, there)) //For windows and
 					qdel(dummy)
 					return 1
 				if(!dummy.Move(T)) //we're blocked!
@@ -277,19 +277,7 @@
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
-	var/checkstring = null
-	var/bypass = FALSE
-	switch(active_hand_index)
-		if(1)
-			checkstring = "l_arm_device"
-		if(2)
-			checkstring = "r_arm_device"
-	if(!isnull(checkstring))
-		var/obj/item/organ/cyberimp/arm/CI = internal_organs_slot[checkstring]
-		if(CI && istype(CI))
-			bypass = CI.clickIntercept(A, params)
-	if(!bypass)
-		..()
+	..()
 
 /atom/proc/AltClick(mob/user)
 	var/turf/T = get_turf(src)
