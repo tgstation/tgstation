@@ -83,7 +83,7 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	if(!saved_json)
 		return
 
-	var/saved_messages = saved_json
+	var/saved_messages = json_decode(saved_json)
 
 	for(var/item in saved_messages)
 		var/turf/T = locate(item["x"], item["y"], ZLEVEL_STATION)

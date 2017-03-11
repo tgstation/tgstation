@@ -25,7 +25,7 @@
 	var/efficiency
 
 	var/datum/mind/clonemind
-	var/grab_ghost_when = CLONER_FRESH_CLONE
+	var/grab_ghost_when = CLONER_MATURE_CLONE
 
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med

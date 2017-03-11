@@ -170,7 +170,7 @@
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
-	force = 4
+	force = 4.13
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
