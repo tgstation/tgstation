@@ -2,6 +2,11 @@
 //
 // consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/weapon/light)
 
+#define LIGHT_TUBE "tube"
+#define LIGHT_BULB "bulb"
+
+#define LIGHT_TUBE_BREAK_CHANCE 2
+#define LIGHT_BULB_BREAK_CHANCE 5
 
 // status values shared between lighting fixtures and items
 #define LIGHT_OK 0
@@ -38,7 +43,7 @@
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
 
 	var/stage = 1
-	var/fixture_type = "tube"
+	var/fixture_type = LIGHT_TUBE
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
@@ -77,9 +82,9 @@
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.use(1))
 					switch(fixture_type)
-						if ("tube")
+						if(LIGHT_TUBE)
 							icon_state = "tube-construct-stage2"
-						if("bulb")
+						if(LIGHT_BULB)
 							icon_state = "bulb-construct-stage2"
 					stage = 2
 					user.visible_message("[user.name] adds wires to [src].", \
@@ -95,9 +100,9 @@
 			if(istype(W, /obj/item/weapon/wirecutters))
 				stage = 1
 				switch(fixture_type)
-					if ("tube")
+					if(LIGHT_TUBE)
 						icon_state = "tube-construct-stage1"
-					if("bulb")
+					if(LIGHT_BULB)
 						icon_state = "bulb-construct-stage1"
 				new /obj/item/stack/cable_coil(get_turf(loc), 1, "red")
 				user.visible_message("[user.name] removes the wiring from [src].", \
@@ -110,9 +115,9 @@
 					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
 				playsound(loc, W.usesound, 75, 1)
 				switch(fixture_type)
-					if("tube")
+					if(LIGHT_TUBE)
 						newlight = new /obj/machinery/light/built(loc)
-					if ("bulb")
+					if(LIGHT_BULB)
 						newlight = new /obj/machinery/light/small/built(loc)
 				newlight.setDir(dir)
 				transfer_fingerprints_to(newlight)
@@ -133,7 +138,7 @@
 /obj/structure/light_construct/small
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-stage1"
-	fixture_type = "bulb"
+	fixture_type = LIGHT_BULB
 	sheets_refunded = 1
 
 
@@ -155,12 +160,14 @@
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
+
+	var/l_range = 2
+
 	var/static_power_used = 0
-	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
-	var/light_type = /obj/item/weapon/light/tube		// the type of light item
-	var/fitting = "tube"
+	var/obj/item/weapon/light/light_type = /obj/item/weapon/light/tube
+	var/fitting = LIGHT_TUBE
 	var/switchcount = 0			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
 
@@ -171,8 +178,7 @@
 /obj/machinery/light/small
 	icon_state = "bulb1"
 	base_state = "bulb"
-	fitting = "bulb"
-	brightness = 4
+	fitting = LIGHT_BULB
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
 
@@ -181,44 +187,31 @@
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN)
 		break_light_tube(1)
-	return ..()
+	. = ..()
 
-/obj/machinery/light/built/New()
+/obj/machinery/light/built
 	status = LIGHT_EMPTY
-	update(0)
-	..()
 
-/obj/machinery/light/small/built/New()
+/obj/machinery/light/small/built
 	status = LIGHT_EMPTY
-	update(0)
-	..()
 
 
 // create a new lighting fixture
-/obj/machinery/light/New()
+/obj/machinery/light/Initialize(mapload)
 	..()
-	spawn(2)
-		switch(fitting)
-			if("tube")
-				brightness = 8
-				if(prob(2))
-					break_light_tube(1)
-			if("bulb")
-				brightness = 4
-				if(prob(5))
-					break_light_tube(1)
-		spawn(1)
-			update(0)
+	if(mapload)
+		if(fitting == LIGHT_TUBE && prob(LIGHT_TUBE_BREAK_CHANCE))
+			break_light_tube(skip_sound_and_sparks=TRUE)
+		if(fitting == LIGHT_BULB && prob(LIGHT_BULB_BREAK_CHANCE))
+			break_light_tube(skip_sound_and_sparks=TRUE)
 
-/obj/machinery/light/Destroy()
-	var/area/A = get_area(src)
-	if(A)
-		on = 0
-//		A.update_lights()
-	return ..()
+	l_range = initial(light_type.l_range)
+	light_power = initial(light_type.l_power)
+	light_color = initial(light_type.l_color)
+
+	update(0)
 
 /obj/machinery/light/update_icon()
-
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			icon_state = "[base_state][on]"
@@ -231,14 +224,12 @@
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
 			on = 0
-	return
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = 1)
-
 	update_icon()
 	if(on)
-		if(!light || light.light_range != brightness)
+		if(!light || light.light_range != l_range)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -248,16 +239,18 @@
 					burn_out()
 			else
 				use_power = 2
-				set_light(brightness)
+				set_light(l_range)
 	else
 		use_power = 1
 		set_light(0)
 
-	active_power_usage = (brightness * 10)
+	// XXX You may wish to change the power consumption based on l_power
+	// as well.
+	active_power_usage = (l_range * 10)
 	if(on != on_gs)
 		on_gs = on
 		if(on)
-			static_power_used = brightness * 20 //20W per unit luminosity
+			static_power_used = l_range * 20 //20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
@@ -267,7 +260,7 @@
 	if(status == LIGHT_OK)
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
-		on = 0
+		on = FALSE
 		set_light(0)
 
 // attempt to set the light's on/off status
@@ -320,7 +313,9 @@
 				status = L.status
 				switchcount = L.switchcount
 				rigged = L.rigged
-				brightness = L.brightness
+				l_range = L.l_range
+				light_power = L.l_power
+				light_color = L.l_color
 				on = has_power()
 				update()
 
@@ -347,7 +342,7 @@
 				if (prob(75))
 					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
 	else
-		return ..()
+		. = ..()
 
 /obj/machinery/light/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -356,11 +351,11 @@
 		if(!disassembled)
 			cur_stage = 1
 		switch(fitting)
-			if("tube")
+			if(LIGHT_TUBE)
 				newlight = new /obj/structure/light_construct(src.loc)
 				newlight.icon_state = "tube-construct-stage[cur_stage]"
 
-			if("bulb")
+			if(LIGHT_BULB)
 				newlight = new /obj/structure/light_construct/small(src.loc)
 				newlight.icon_state = "bulb-construct-stage[cur_stage]"
 		newlight.setDir(src.dir)
@@ -429,7 +424,6 @@
 
 /obj/machinery/light/attack_ai(mob/user)
 	src.flicker(1)
-	return
 
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
@@ -476,11 +470,14 @@
 	var/obj/item/weapon/light/L = new light_type()
 	L.status = status
 	L.rigged = rigged
-	L.brightness = brightness
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
 	switchcount = 0
+
+	L.l_range = l_range
+	L.l_power = light_power
+	L.l_color = light_color
 
 	L.update()
 	L.forceMove(loc)
@@ -498,7 +495,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
-	// create a light tube/bulb item and put it in the user's hand
+	// create a light tube/bulb item and drop it on the floor
 	drop_light_tube()
 
 
@@ -522,8 +519,7 @@
 	if(status == LIGHT_OK)
 		return
 	status = LIGHT_OK
-	brightness = initial(brightness)
-	on = 1
+	on = TRUE
 	update()
 
 /obj/machinery/light/tesla_act(power, explosive = FALSE)
@@ -567,7 +563,10 @@
 	var/switchcount = 0	// number of times switched
 	materials = list(MAT_GLASS=100)
 	var/rigged = 0		// true if rigged to explode
-	var/brightness = 2 //how much light it gives off
+
+	var/l_range = 2
+	var/l_power = 1
+	var/l_color
 
 /obj/item/weapon/light/tube
 	name = "light tube"
@@ -575,7 +574,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	brightness = 8
+	l_range = 8
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"
@@ -583,7 +582,7 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	item_state = "contvapour"
-	brightness = 4
+	l_range = 4
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	if(!..()) //not caught by a mob
@@ -604,7 +603,7 @@
 			desc = "A broken [name]."
 
 
-/obj/item/weapon/light/New()
+/obj/item/weapon/light/Initialize(mapload)
 	..()
 	update()
 
@@ -619,13 +618,11 @@
 		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
 		if(S.reagents.has_reagent("plasma", 5))
-
-			rigged = 1
+			rigged = TRUE
 
 		S.reagents.clear_reagents()
 	else
 		..()
-	return
 
 /obj/item/weapon/light/attack(mob/living/M, mob/living/user, def_zone)
 	..()
@@ -642,3 +639,14 @@
 		force = 5
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()
+
+#undef LIGHT_TUBE
+#undef LIGHT_BULB
+
+#undef LIGHT_TUBE_BREAK_CHANCE
+#undef LIGHT_BULB_BREAK_CHANCE
+
+#undef LIGHT_OK
+#undef LIGHT_EMPTY
+#undef LIGHT_BROKEN
+#undef LIGHT_BURNED
