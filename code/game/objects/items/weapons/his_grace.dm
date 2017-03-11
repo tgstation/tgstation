@@ -20,15 +20,20 @@
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
 
-/obj/item/weapon/his_grace/New()
+/obj/item/weapon/his_grace/Initialize(mapload)
 	..()
 	START_PROCESSING(SSprocessing, src)
+	set_stationloving(TRUE, inform_admins=TRUE)
+	poi_list += src
 
 /obj/item/weapon/his_grace/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
+	// even if stationloving, his grace spits out corpses if "destroyed"
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
-	return ..()
+	. = ..()
+	if(. != QDEL_HINT_LETMELIVE)
+		poi_list -= src
+		STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/weapon/his_grace/attack_self(mob/living/user)
 	if(!awakened)
