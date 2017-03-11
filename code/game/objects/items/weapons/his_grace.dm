@@ -53,19 +53,19 @@
 	if(awakened)
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				user << "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>"
+				to_chat(user, "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>")
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				user << "<span class='his_grace'>[src] would like a snack.</span>"
+				to_chat(user, "<span class='his_grace'>[src] would like a snack.</span>")
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				user << "<span class='his_grace'>[src] is quite hungry now.</span>"
+				to_chat(user, "<span class='his_grace'>[src] is quite hungry now.</span>")
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				user << "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>"
+				to_chat(user, "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>")
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				user << "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>"
+				to_chat(user, "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>")
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				user << "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
+				to_chat(user, "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>")
 	else
-		user << "<span class='his_grace'>[src] is latched closed.</span>"
+		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
 
 /obj/item/weapon/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
