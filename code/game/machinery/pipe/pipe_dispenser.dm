@@ -80,7 +80,7 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		usr << "<span class='notice'>You put [W] back into [src].</span>"
+		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
 		if(!user.drop_item())
 			return
 		qdel(W)
@@ -88,7 +88,7 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, W.usesound, 50, 1)
-			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
+			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
 			if (do_after(user, 40*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
@@ -101,7 +101,7 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 					usr << browse(null, "window=pipedispenser")
 		else if(anchored)
 			playsound(src.loc, W.usesound, 50, 1)
-			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
+			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
 			if (do_after(user, 20*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
@@ -178,7 +178,7 @@ Nah
 			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
 
 			if(!C.can_place())
-				usr << "<span class='warning'>There's not enough room to build that here!</span>"
+				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
 				qdel(C)
 				return
 

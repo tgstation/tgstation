@@ -1,19 +1,19 @@
+var/datum/controller/subsystem/lighting/SSlighting
+
 #define STAGE_SOURCES  1
 #define STAGE_CORNERS  2
 #define STAGE_OVERLAYS 3
-
-var/datum/subsystem/lighting/SSlighting
 
 var/list/lighting_update_lights    = list() // List of lighting sources  queued for update.
 var/list/lighting_update_corners   = list() // List of lighting corners  queued for update.
 var/list/lighting_update_overlays  = list() // List of lighting overlays queued for update.
 
 
-/datum/subsystem/lighting
+/datum/controller/subsystem/lighting
 	name = "Lighting"
-	wait = 1
-	init_order = 1
-	priority = 25
+	wait = 2
+	init_order = -20
+	priority = 35
 	flags = SS_TICKER
 
 	var/initialized = FALSE
@@ -24,15 +24,15 @@ var/list/lighting_update_overlays  = list() // List of lighting overlays queued 
 	var/resuming_stage = 0
 
 
-/datum/subsystem/lighting/New()
+/datum/controller/subsystem/lighting/New()
 	NEW_SS_GLOBAL(SSlighting)
 
 
-/datum/subsystem/lighting/stat_entry()
+/datum/controller/subsystem/lighting/stat_entry()
 	..("L:[lighting_update_lights.len]|C:[lighting_update_corners.len]|O:[lighting_update_overlays.len]")
 
 
-/datum/subsystem/lighting/Initialize(timeofday)
+/datum/controller/subsystem/lighting/Initialize(timeofday)
 	if (config.starlight)
 		for(var/area/A in world)
 			if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
@@ -43,8 +43,7 @@ var/list/lighting_update_overlays  = list() // List of lighting overlays queued 
 
 	..()
 
-
-/datum/subsystem/lighting/fire(resumed=FALSE)
+/datum/controller/subsystem/lighting/fire(resumed=FALSE)
 	if (resuming_stage == 0 || !resumed)
 		currentrun_lights   = lighting_update_lights
 		lighting_update_lights   = list()
@@ -106,7 +105,7 @@ var/list/lighting_update_overlays  = list() // List of lighting overlays queued 
 	resuming_stage = 0
 
 
-/datum/subsystem/lighting/Recover()
+/datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
 	..()
 

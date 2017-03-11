@@ -3,6 +3,7 @@
 	desc = "You are dead. Insert quarter to continue."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
+	light_color = LIGHT_COLOR_FIRE
 
 	var/icon_state_active = "candle1_lit"
 	var/icon_state_inactive = "candle1"
@@ -51,9 +52,9 @@
 /obj/structure/life_candle/examine(mob/user)
 	. = ..()
 	if(linked_minds.len)
-		user << "[src] is active, and linked to [linked_minds.len] souls."
+		to_chat(user, "[src] is active, and linked to [linked_minds.len] souls.")
 	else
-		user << "It is static, still, unmoving."
+		to_chat(user, "It is static, still, unmoving.")
 
 /obj/structure/life_candle/process()
 	if(!linked_minds.len)

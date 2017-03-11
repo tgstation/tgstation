@@ -112,9 +112,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
-			H << "[A] materializes into your hands!"
+			to_chat(H, "[A] materializes into your hands!")
 		else
-			H << "\The [A] materializes onto the floor."
+			to_chat(H, "\The [A] materializes onto the floor.")
 	return 1
 
 //Discounts (dynamically filled above)
@@ -1079,6 +1079,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Twenty telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
 	item = /obj/item/stack/telecrystal/twenty
 	cost = 20
+
+/datum/uplink_item/device_tools/jammer
+	name = "Radio jammer"
+	desc = "This device will disrupt any nearby outgoing radio communication when activated."
+	item = /obj/item/device/jammer
+	cost = 10
 
 // Implants
 /datum/uplink_item/implants

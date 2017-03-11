@@ -26,8 +26,9 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-/turf/SDQL_update(const/var_name, new_value)
-	if(var_name == "x" || var_name == "y" || var_name == "z")
+/turf/vv_edit_var(var_name, new_value)
+	var/static/list/banned_edits = list("x", "y", "z")
+	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
 
@@ -175,7 +176,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.is_frozen)
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -291,7 +292,7 @@
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(src_object.contents.len)
-		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
 			return 0
 

@@ -58,14 +58,14 @@
 /datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath,/datum/round_event))
 		return FALSE
-	
+
 	triggering = TRUE
 	if (alertadmins)
 		message_admins("Random Event triggering in 10 seconds: [name] ([typepath]) (<a href='?src=\ref[src];cancel=1'>CANCEL</a>)")
 		sleep(100)
 
 	if(!triggering)
-		return FALSE
+		return TRUE	//admin cancelled
 	triggering = FALSE
 	return TRUE
 
@@ -73,11 +73,12 @@
 	..()
 	if(href_list["cancel"])
 		if(!triggering)
-			usr << "<span class='admin'>You are too late to cancel that event</span>"
+			to_chat(usr, "<span class='admin'>You are too late to cancel that event</span>")
 			return
 		triggering = FALSE
 		message_admins("[key_name_admin(usr)] cancelled event [name].")
 		log_admin_private("[key_name(usr)] cancelled event [name].")
+		feedback_add_details("admin_verb","CancelEvent: [typepath]")
 
 /datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()

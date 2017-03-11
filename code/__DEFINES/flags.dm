@@ -34,6 +34,9 @@
 
 #define NO_EMP_WIRES "no_emp_wires"
 #define HOLOGRAM "hologram"
+#define FROZEN "frozen"
+#define STATIONLOVING "stationloving"
+#define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
 
 //turf-only flags
 #define NOJAUNT		1

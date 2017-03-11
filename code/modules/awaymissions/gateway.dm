@@ -126,10 +126,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!powered())
 		return
 	if(!awaygate)
-		user << "<span class='notice'>Error: No destination found.</span>"
+		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
-		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
+		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -166,10 +166,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
-			user << "\black The gate is already calibrated, there is no work for you to do here."
+			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return
 		else
-			user << "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target."
+			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = TRUE
 			return
 
@@ -200,7 +200,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!detect())
 		return
 	if(!stationgate)
-		user << "<span class='notice'>Error: No destination found.</span>"
+		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -219,7 +219,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/C = AM
 		for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
-			AM << "\black The station gate has detected your exile implant and is blocking your entry."
+			to_chat(AM, "\black The station gate has detected your exile implant and is blocking your entry.")
 			return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.setDir(SOUTH)
