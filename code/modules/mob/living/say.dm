@@ -96,11 +96,11 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	var/original_message = message
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
-		message = copytext(message, 2)
+		message = copytext(sanitize(capitalize_uni(message)), 2)
 	else if(message_mode)
-		message = copytext(message, 3)
+		message = copytext(sanitize(capitalize_uni(message)), 3)
 	if(findtext(message, " ", 1, 2))
-		message = copytext(message, 2)
+		message = copytext(sanitize(capitalize_uni(message)), 2)
 
 	if(message_mode == "admin")
 		if(client)
