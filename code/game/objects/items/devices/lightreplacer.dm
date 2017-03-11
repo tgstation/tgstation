@@ -203,6 +203,11 @@
 			target.status = L2.status
 			target.switchcount = L2.switchcount
 			target.rigged = emagged
+
+			target.l_range = L2.l_range
+			target.light_power = L2.l_power
+			target.light_color = L2.l_color
+
 			target.on = target.has_power()
 			target.update()
 			qdel(L2)
