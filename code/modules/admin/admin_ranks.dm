@@ -41,8 +41,8 @@ var/list/admin_ranks = list()
 			var/datum/admins/D = new /datum/admins(rank, 65535, ckey)	//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
-			//if(D.rank.rights & R_DEBUG) //grant profile access
-			//	world.SetConfig("APP/admin", ckey, "role=admin")
+			if(D.rights & R_DEBUG) //grant profile access
+				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
 		if(!dbcon.Connect())
