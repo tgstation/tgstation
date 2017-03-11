@@ -28,7 +28,11 @@ var/datum/controller/subsystem/mapping/SSmapping
 		if(previous_map_config.defaulted)
 			previous_map_config = null
 	if(!config)
+#ifdef FORCE_MAP
+		config = new(FORCE_MAP)
+#else
 		config = new
+#endif
 	return ..()
 
 
