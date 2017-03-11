@@ -12,6 +12,7 @@
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0
+	var/heat_resistance = 800
 	var/wtype = "glass"
 	var/fulltile = 0
 	var/glass_type = /obj/item/stack/sheet/glass
@@ -352,7 +353,7 @@
 		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
+	if(exposed_temperature > T0C + (heat_resistance))
 		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
 
@@ -374,6 +375,7 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
+	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	max_integrity = 50
 	explosion_block = 1
@@ -394,8 +396,8 @@
 /obj/structure/window/reinforced/highpressure
 	name = "high pressure window"
 	max_integrity = 1000
+	heat_resistance = 50000
 	pressure_resistance = 4*ONE_ATMOSPHERE
-	resistance_flags = FIRE_PROOF
 
 /* Full Tile Windows (more obj_integrity) */
 
@@ -465,6 +467,7 @@
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
+	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
