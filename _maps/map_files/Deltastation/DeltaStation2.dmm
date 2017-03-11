@@ -6342,6 +6342,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -123886,7 +123891,7 @@ akL
 age
 amS
 adn
-aoD
+aaa
 aaa
 aaa
 aaa
@@ -124913,7 +124918,7 @@ aeh
 akO
 alN
 amV
-ehh
+ehg
 aoE
 aoC
 apC
@@ -159510,7 +159515,7 @@ dMZ
 dNT
 dNT
 dNT
-ehu
+ehr
 dOS
 dKT
 dXU
@@ -161039,7 +161044,7 @@ aaa
 dJk
 dJk
 dKT
-ehq
+ehp
 dNa
 dNU
 dNU

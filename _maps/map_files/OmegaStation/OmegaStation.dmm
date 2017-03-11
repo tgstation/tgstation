@@ -39165,7 +39165,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
 "bmD" = (
 /turf/open/floor/plasteel,
 /area/space)
@@ -39177,7 +39179,9 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
 "bmH" = (
 /turf/open/floor/plasteel,
 /area/space)
@@ -40369,6 +40373,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -41110,7 +41119,9 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
 "bsZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_mining{
@@ -41189,7 +41200,7 @@
 /obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/starboard)
 "btf" = (
 /obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/grille,
@@ -70771,16 +70782,16 @@ aaa
 bmO
 bod
 btF
-btI
-btM
+btF
+btF
 btO
 bmO
-bpK
+btN
 bnp
-bop
-bop
+btv
+btv
 bra
-bop
+btv
 brI
 brM
 bsd
@@ -71026,11 +71037,11 @@ aaa
 aaa
 aaa
 bmO
-btB
-btG
-bop
-bop
-bop
+btv
+btv
+btv
+btv
+btv
 btU
 bpL
 bnp
@@ -71283,16 +71294,16 @@ bnx
 aaa
 aaa
 bmO
-btC
-bop
-bop
-bop
-bop
+btv
+btv
+btv
+btv
+btv
 bmO
 bpM
 bnp
 buc
-bun
+btK
 brc
 bmO
 bmO
@@ -71548,8 +71559,8 @@ btP
 bmO
 bpN
 bnp
-bud
-buo
+buc
+btK
 brd
 bmO
 aaa
@@ -72054,16 +72065,16 @@ btu
 bnI
 btw
 bty
-btD
-btH
+btw
+btw
 boG
-bop
-bop
-bop
-bop
+btv
+btv
+btv
+btv
 btY
-bue
-bup
+buc
+btK
 bnp
 boG
 brM
@@ -72309,18 +72320,18 @@ bnj
 bnp
 bnB
 btv
-btx
-btz
-btE
-bop
+btq
+btq
+btq
+btv
 boH
-bop
-btQ
-btV
-btX
-btZ
-buf
-buq
+btv
+btq
+btq
+btq
+btq
+buc
+btK
 bnp
 brx
 brM
@@ -72562,7 +72573,7 @@ aaa
 aaa
 bmP
 bnb
-btr
+btq
 bnp
 bmO
 bnK
@@ -72571,13 +72582,13 @@ btA
 bnQ
 bnQ
 boG
-bop
-bop
-bop
-bop
+btv
+btv
+btv
+btv
 bua
-bug
-bur
+buc
+btK
 bnp
 boG
 brM
@@ -73085,16 +73096,16 @@ aaa
 aaa
 bmO
 btJ
-bop
+btv
 btR
 bmO
 bpT
 bnp
-buh
-bus
+buc
+btK
 brj
 bmO
-bnG
+aaa
 aaa
 aaa
 aaa
@@ -73342,13 +73353,13 @@ aaa
 aaa
 box
 btK
-bop
-btS
+btv
+btR
 bmO
 bpU
 bnp
-bui
-but
+buc
+btK
 brk
 bmO
 bmO
@@ -73599,15 +73610,15 @@ aaa
 aaa
 boy
 btL
-bop
+btv
 btT
-btW
+btu
 bpV
 bnp
 buj
 buu
 brb
-bop
+btv
 brS
 brM
 bsc
@@ -73861,10 +73872,10 @@ bmO
 bmO
 bpW
 bnp
-bop
-bop
+btv
+btv
 buv
-bop
+btv
 brT
 brM
 bsd
@@ -74121,7 +74132,7 @@ bnp
 buk
 bqW
 buw
-bux
+bua
 brS
 brM
 bse
@@ -88064,7 +88075,7 @@ abt
 avw
 awz
 axg
-bmx
+abt
 aaa
 aaa
 aaa
@@ -88321,7 +88332,7 @@ abt
 abt
 abt
 abt
-bmx
+abt
 aaa
 aaa
 aaa
@@ -89874,10 +89885,10 @@ blO
 blZ
 bsJ
 axW
-bmx
-bmx
-bmx
-bmx
+axW
+axW
+axW
+axW
 aaa
 aaa
 aaa
@@ -90131,10 +90142,10 @@ blU
 bmh
 bsC
 bmw
-bmy
+blZ
 bmC
 bmG
-bmx
+axW
 aaa
 aaa
 aaa
@@ -90388,10 +90399,10 @@ blM
 blZ
 bsC
 blZ
-bmy
-bmy
-bmy
-bmx
+blZ
+blZ
+blZ
+axW
 aaa
 aaa
 aaa
@@ -90645,10 +90656,10 @@ blM
 blZ
 bsM
 bsS
-bsU
-bsU
+bsS
+bsS
 bsY
-bmx
+axW
 aaa
 aaa
 aaa
