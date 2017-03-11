@@ -80,7 +80,7 @@
 		idman.mind = null
 		qdel(idman)
 		idman = null
-	return ..()
+	. = ..()
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
