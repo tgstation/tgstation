@@ -67,4 +67,6 @@ var/list/admin_ranks = list()
 			var/datum/admins/D = new /datum/admins(rank, rights, ckey)				//create the admin datum and store it for later use
 
 									//will occur if an invalid rank is provided
+			if(D.rights & R_DEBUG) //grant profile access
+				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with
