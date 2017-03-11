@@ -328,4 +328,4 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)

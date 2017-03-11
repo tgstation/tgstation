@@ -67,7 +67,7 @@
 	if(istype(W, /obj/item/device/multitool))
 		mode %= modes.len
 		mode++
-		user << "You set [src] into a [modes[mode]] mode."
+		to_chat(user, "You set [src] into a [modes[mode]] mode.")
 		listening = 0
 		recorded = ""
 	else

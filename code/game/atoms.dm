@@ -32,15 +32,15 @@
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
-	//atom color stuff
-	if(color)
-		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSATOMS)
+		if(QDELETED(src))
+			CRASH("Found new qdeletion in type [type]!")
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
 		Initialize(arglist(args))
-	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
@@ -57,6 +57,18 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
+	//atom color stuff
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity && isturf(loc))
+		var/turf/T = loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -220,26 +232,26 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	user << "\icon[src] That's [f_name]"
+	to_chat(user, "\icon[src] That's [f_name]")
 
 	if(desc)
-		user << desc
+		to_chat(user, desc)
 	// *****RM
-	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+	//to_chat(user, "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]")
 
 	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
-		user << "It contains:"
+		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent
 				for(var/datum/reagent/R in reagents.reagent_list)
-					user << "[R.volume] units of [R.name]"
+					to_chat(user, "[R.volume] units of [R.name]")
 			else //Otherwise, just show the total volume
 				var/total_volume = 0
 				for(var/datum/reagent/R in reagents.reagent_list)
 					total_volume += R.volume
-				user << "[total_volume] units of various reagents"
+				to_chat(user, "[total_volume] units of various reagents")
 		else
-			user << "Nothing."
+			to_chat(user, "Nothing.")
 
 /atom/proc/relaymove()
 	return
@@ -392,7 +404,7 @@ var/list/blood_splatter_icons = list()
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)
 			break
-//	world << "X = [cur_x]; Y = [cur_y]"
+//	to_chat(world, "X = [cur_x]; Y = [cur_y]")
 	if(cur_x && cur_y)
 		return list("x"=cur_x,"y"=cur_y)
 	else

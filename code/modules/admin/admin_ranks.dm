@@ -6,9 +6,6 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/list/adds
 	var/list/subs
 
-/datum/admin_rank/SDQL_update()
-	return FALSE	//Nice try trivialadmin!
-
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
 	name = init_name
 	switch(name)
@@ -134,11 +131,12 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admin_ranks()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
-		query.Execute()
-		while(query.NextRow())
-			var/rank_name = ckeyEx(query.item[1])
-			var/flags = query.item[2]
+		var/DBQuery/query_load_admin_ranks = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
+		if(!query_load_admin_ranks.Execute())
+			return
+		while(query_load_admin_ranks.NextRow())
+			var/rank_name = ckeyEx(query_load_admin_ranks.item[1])
+			var/flags = query_load_admin_ranks.item[2]
 			if(istext(flags))
 				flags = text2num(flags)
 			var/datum/admin_rank/R = new(rank_name, flags)
@@ -208,11 +206,12 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
-		query.Execute()
-		while(query.NextRow())
-			var/ckey = ckey(query.item[1])
-			var/rank = ckeyEx(query.item[2])
+		var/DBQuery/query_load_admins = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		if(!query_load_admins.Execute())
+			return
+		while(query_load_admins.NextRow())
+			var/ckey = ckey(query_load_admins.item[1])
+			var/rank = ckeyEx(query_load_admins.item[2])
 			if(target && ckey != target)
 				continue
 
@@ -268,14 +267,14 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(!new_ckey)
 				return
 			if(new_ckey in admin_datums)
-				usr << "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>"
+				to_chat(usr, "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>")
 				return
 			adm_ckey = new_ckey
 			task = "rank"
 		else
 			adm_ckey = ckey(href_list["ckey"])
 			if(!adm_ckey)
-				usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
+				to_chat(usr, "<font color='red'>Error: Topic 'editrights': No valid ckey</font>")
 				return
 
 	var/datum/admins/D = admin_datums[adm_ckey]
@@ -378,5 +377,5 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
-	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
-	query_update.Execute()
+	var/DBQuery/query_admin_rank_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+	query_admin_rank_update.Execute()

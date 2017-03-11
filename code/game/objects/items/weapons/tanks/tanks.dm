@@ -25,24 +25,24 @@
 		return
 
 	if(H.internal == src)
-		H << "<span class='notice'>You close [src] valve.</span>"
+		to_chat(H, "<span class='notice'>You close [src] valve.</span>")
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot("breathing_tube"))
 			if(!H.wear_mask)
-				H << "<span class='warning'>You need a mask!</span>"
+				to_chat(H, "<span class='warning'>You need a mask!</span>")
 				return
 			if(H.wear_mask.mask_adjusted)
 				H.wear_mask.adjustmask(H)
 			if(!(H.wear_mask.flags & MASKINTERNALS))
-				H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
+				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
 				return
 
 		if(H.internal)
-			H << "<span class='notice'>You switch your internals to [src].</span>"
+			to_chat(H, "<span class='notice'>You switch your internals to [src].</span>")
 		else
-			H << "<span class='notice'>You open [src] valve.</span>"
+			to_chat(H, "<span class='notice'>You open [src] valve.</span>")
 		H.internal = src
 		H.update_internals_hud_icon(1)
 	H.update_action_buttons_icon()
@@ -69,10 +69,10 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user))
-		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
+		if (icon == src) to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
-	user << "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>"
+	to_chat(user, "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>")
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -90,7 +90,7 @@
 	else
 		descriptive = "furiously hot"
 
-	user << "<span class='notice'>It feels [descriptive].</span>"
+	to_chat(user, "<span class='notice'>It feels [descriptive].</span>")
 
 /obj/item/weapon/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -234,7 +234,7 @@
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
-		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
+		//to_chat(world, "\blue[x],[y] tank is exploding: [pressure] kPa")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
@@ -243,7 +243,7 @@
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
 
-		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
+		//to_chat(world, "\blue Exploding Pressure: [pressure] kPa, intensity: [range]")
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		if(istype(src.loc,/obj/item/device/transfer_valve))
@@ -252,7 +252,7 @@
 			qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
-		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
+		//to_chat(world, "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]")
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)
@@ -264,7 +264,7 @@
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		//world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
+		//to_chat(world, "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]")
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)

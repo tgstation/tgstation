@@ -35,9 +35,9 @@
 		deltimer(timer_id)
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
-	finder << "<span class='warning'>Inside the head is a disgusting black \
+	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
 		web of pus and vicera, bound tightly around the brain like some \
-		biological harness.</span>"
+		biological harness.</span>")
 
 /obj/item/organ/zombie_infection/process()
 	if(!owner)
@@ -50,9 +50,9 @@
 	if(owner.stat != DEAD && !converts_living)
 		return
 	if(!iszombie(owner))
-		owner << "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
+		to_chat(owner, "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
-		not even death can stop, you will rise again!</span>"
+		not even death can stop, you will rise again!</span>")
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
@@ -75,4 +75,4 @@
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 	owner.do_jitter_animation(living_transformation_time * 10)
 	owner.Stun(living_transformation_time)
-	owner << "<span class='alertalien'>You are now a zombie!</span>"
+	to_chat(owner, "<span class='alertalien'>You are now a zombie!</span>")

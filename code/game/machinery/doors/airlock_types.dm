@@ -448,7 +448,7 @@
 			gear_text = "<span class='brass'>The cogwheel is solidly <b>wrenched</b> to the brass around it.</span>"
 		if(GEAR_LOOSE)
 			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
-	user << gear_text
+	to_chat(user, gear_text)
 
 /obj/machinery/door/airlock/clockwork/emp_act(severity)
 	if(prob(80/severity))
@@ -517,7 +517,7 @@
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(construction_state == GEAR_SECURE)
-			user << "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>"
+			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>")
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")

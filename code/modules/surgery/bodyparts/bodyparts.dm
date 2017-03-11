@@ -43,9 +43,9 @@
 /obj/item/bodypart/examine(mob/user)
 	..()
 	if(brute_dam > 0)
-		user << "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>"
+		to_chat(user, "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>")
 	if(burn_dam > 0)
-		user << "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
+		to_chat(user, "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>")
 
 /obj/item/bodypart/blob_act()
 	take_damage(max_damage)
@@ -76,7 +76,7 @@
 	if(W.sharpness)
 		add_fingerprint(user)
 		if(!contents.len)
-			user << "<span class='warning'>There is nothing left inside [src]!</span>"
+			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")
 			return
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("<span class='warning'>[user] begins to cut open [src].</span>",\
@@ -114,6 +114,10 @@
 	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
 		brute = max(0, brute - 5)
 		burn = max(0, burn - 4)
+
+	switch(animal_origin)
+		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
+			burn *= 2
 
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
 	if(!can_inflict)

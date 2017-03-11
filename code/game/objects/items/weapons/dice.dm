@@ -179,7 +179,7 @@
 	if(istype(H) && !H.shoes)
 		if(PIERCEIMMUNE in H.dna.species.species_traits)
 			return 0
-		H << "<span class='userdanger'>You step on the D4!</span>"
+		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
 

@@ -246,7 +246,7 @@
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
-				usr << "<span class='warning'>You can't reach that! Something is covering it.</span>"
+				to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 				return
 
 		if(href_list["pockets"])
@@ -258,10 +258,10 @@
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
-					usr << "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
-				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
+					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
+				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
 			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags&ABSTRACT))
-				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
+				to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
 				delay_denominator = 4
 			else
 				return
@@ -282,7 +282,7 @@
 					show_inv(usr)
 			else
 				// Display a warning if the user mocks up
-				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
+				to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
 		..()
 
@@ -332,12 +332,12 @@
 							return
 						if(href_list["evaluation"])
 							if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
-								usr << "<span class='notice'>No external injuries detected.</span><br>"
+								to_chat(usr, "<span class='notice'>No external injuries detected.</span><br>")
 								return
 							var/span = "notice"
 							var/status = ""
 							if(getBruteLoss())
-								usr << "<b>Physical trauma analysis:</b>"
+								to_chat(usr, "<b>Physical trauma analysis:</b>")
 								for(var/X in bodyparts)
 									var/obj/item/bodypart/BP = X
 									var/brutedamage = BP.brute_dam
@@ -351,9 +351,9 @@
 										status = "sustained major trauma!"
 										span = "userdanger"
 									if(brutedamage)
-										usr << "<span class='[span]'>[BP] appears to have [status]</span>"
+										to_chat(usr, "<span class='[span]'>[BP] appears to have [status]</span>")
 							if(getFireLoss())
-								usr << "<b>Analysis of skin burns:</b>"
+								to_chat(usr, "<b>Analysis of skin burns:</b>")
 								for(var/X in bodyparts)
 									var/obj/item/bodypart/BP = X
 									var/burndamage = BP.burn_dam
@@ -367,11 +367,11 @@
 										status = "major burns!"
 										span = "userdanger"
 									if(burndamage)
-										usr << "<span class='[span]'>[BP] appears to have [status]</span>"
+										to_chat(usr, "<span class='[span]'>[BP] appears to have [status]</span>")
 							if(getOxyLoss())
-								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>"
+								to_chat(usr, "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>")
 							if(getToxLoss() > 20)
-								usr << "<span class='danger'>Gathered data is inconsistent with the analysis, possible cause: poisoning.</span>"
+								to_chat(usr, "<span class='danger'>Gathered data is inconsistent with the analysis, possible cause: poisoning.</span>")
 
 				if(href_list["hud"] == "s")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
@@ -390,7 +390,7 @@
 
 
 						if(!allowed_access)
-							H << "<span class='warning'>ERROR: Invalid Access</span>"
+							to_chat(H, "<span class='warning'>ERROR: Invalid Access</span>")
 							return
 
 						if(perpname)
@@ -413,20 +413,20 @@
 											return
 										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 											return
-										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
-										usr << "<b>Minor Crimes:</b>"
+										to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]")
+										to_chat(usr, "<b>Minor Crimes:</b>")
 										for(var/datum/data/crime/c in R.fields["mi_crim"])
-											usr << "<b>Crime:</b> [c.crimeName]"
-											usr << "<b>Details:</b> [c.crimeDetails]"
-											usr << "Added by [c.author] at [c.time]"
-											usr << "----------"
-										usr << "<b>Major Crimes:</b>"
+											to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+											to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
+											to_chat(usr, "Added by [c.author] at [c.time]")
+											to_chat(usr, "----------")
+										to_chat(usr, "<b>Major Crimes:</b>")
 										for(var/datum/data/crime/c in R.fields["ma_crim"])
-											usr << "<b>Crime:</b> [c.crimeName]"
-											usr << "<b>Details:</b> [c.crimeDetails]"
-											usr << "Added by [c.author] at [c.time]"
-											usr << "----------"
-										usr << "<b>Notes:</b> [R.fields["notes"]]"
+											to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+											to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
+											to_chat(usr, "Added by [c.author] at [c.time]")
+											to_chat(usr, "----------")
+										to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
 									return
 
 								if(href_list["add_crime"])
@@ -444,7 +444,7 @@
 														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMinorCrime(R.fields["id"], crime)
-													usr << "<span class='notice'>Successfully added a minor crime.</span>"
+													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
 													return
 										if("Major Crime")
 											if(R)
@@ -459,7 +459,7 @@
 														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMajorCrime(R.fields["id"], crime)
-													usr << "<span class='notice'>Successfully added a major crime.</span>"
+													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
 
 								if(href_list["view_comment"])
@@ -468,11 +468,11 @@
 											return
 										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 											return
-										usr << "<b>Comments/Log:</b>"
+										to_chat(usr, "<b>Comments/Log:</b>")
 										var/counter = 1
 										while(R.fields[text("com_[]", counter)])
-											usr << R.fields[text("com_[]", counter)]
-											usr << "----------"
+											to_chat(usr, R.fields[text("com_[]", counter)])
+											to_chat(usr, "----------")
 											counter++
 										return
 
@@ -490,9 +490,9 @@
 											while(R.fields[text("com_[]", counter)])
 												counter++
 											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
-											usr << "<span class='notice'>Successfully added comment.</span>"
+											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
-							usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
+							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
@@ -513,7 +513,7 @@
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
-		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>"
+		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
 
 /mob/living/carbon/human/proc/check_obscured_slots()
 	var/list/obscured = list()
@@ -631,7 +631,7 @@
 		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
-				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
+				to_chat(src, "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
 	rad_act(current_size * 3)
 	if(mob_negates_gravity())
 		return
@@ -641,20 +641,20 @@
 	CHECK_DNA_AND_SPECIES(C)
 
 	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
-		src << "<span class='warning'>[C.name] is dead!</span>"
+		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
 		return
 	if(is_mouth_covered())
-		src << "<span class='warning'>Remove your mask first!</span>"
+		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
 		return 0
 	if(C.is_mouth_covered())
-		src << "<span class='warning'>Remove [p_their()] mask first!</span>"
+		to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
 		return 0
 
 	if(C.cpr_time < world.time + 30)
 		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
 						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
 		if(!do_mob(src, C))
-			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
+			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
 			return 0
 
 		var/they_breathe = (!(NOBREATH in C.dna.species.species_traits))
@@ -671,13 +671,11 @@
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
+			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
 		else if(they_breathe && !they_lung)
-			C << "<span class='unconscious'>You feel a breath of fresh air... \
-				but you don't feel any better...</span>"
+			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
 		else
-			C << "<span class='unconscious'>You feel a breath of fresh air... \
-				which is a sensation you don't recognise...</span>"
+			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
 
 /mob/living/carbon/human/generateStaticOverlay()
 	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
@@ -898,14 +896,14 @@
 	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
-	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(target) || !isliving(user))	//Get consent first :^)
+	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(user) || stat || user.stat)//Get consent first :^)
 		. = ..()
 		return
-	buckle_mob(target, FALSE, TRUE, TRUE)
+	buckle_mob(target, TRUE, TRUE)
 	. = ..()
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, yes = FALSE)
-	if(!yes)
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
@@ -925,9 +923,9 @@
 	. = ..(M, force, check_loc)
 	stop_pulling()
 
-/mob/living/carbon/human/unbuckle_mob(mob/living/M)
+/mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
 	if(iscarbon(M))
 		if(riding_datum)
 			riding_datum.unequip_buckle_inhands(M)
 			riding_datum.restore_position(M)
-	. = ..(M)
+	. = ..(M, force)

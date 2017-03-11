@@ -12,7 +12,7 @@
 
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
-#define testing(msg) log_world("## TESTING: [msg]"); world << "## TESTING: [msg]"
+#define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
 #else
 #define testing(msg)
 #endif
@@ -88,6 +88,10 @@
 /proc/log_chat(text)
 	if (config.log_pda)
 		diary << "\[[time_stamp()]]CHAT: [text]"
+
+/proc/log_sql(text)
+	if(config.sql_enabled)
+		diary << "\[[time_stamp()]]SQL: [text]"
 
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)

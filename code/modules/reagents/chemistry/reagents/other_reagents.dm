@@ -171,7 +171,7 @@
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
-		M << "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>"
+		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
@@ -190,8 +190,8 @@
 				if("speech")
 					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
 				if("message")
-					M << "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
-					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>"
+					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
+					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
@@ -344,7 +344,7 @@
 
 		if(method == INGEST)
 			if(show_message)
-				M << "<span class='notice'>That tasted horrible.</span>"
+				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
 			M.AdjustStunned(2)
 			M.AdjustWeakened(2)
 	..()
@@ -384,7 +384,7 @@
 
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
-	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
+	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
@@ -394,10 +394,10 @@
 		var/current_species = H.dna.species.type
 		var/datum/species/mutation = race
 		if(mutation && mutation != current_species)
-			H << mutationtext
+			to_chat(H, mutationtext)
 			H.set_species(mutation)
 		else
-			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+			to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
 
 	return 1
 
@@ -535,7 +535,7 @@
 	taste_description = "slime"
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
-	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
+	to_chat(H, "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
 	..()
@@ -855,7 +855,7 @@
 
 /datum/reagent/bluespace/on_mob_life(mob/living/M)
 	if(current_cycle > 10 && prob(15))
-		M << "<span class='warning'>You feel unstable...</span>"
+		to_chat(M, "<span class='warning'>You feel unstable...</span>")
 		M.Jitter(2)
 		current_cycle = 1
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/do_teleport, M, get_turf(M), 5, asoundin = 'sound/effects/phasein.ogg'), 30)
@@ -1528,3 +1528,37 @@
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+
+/datum/reagent/glitter
+	name = "generic glitter"
+	id = "glitter"
+	description = "if you can see this description, contact a coder."
+	color = "#FFFFFF" //pure white
+	taste_description = "plastic"
+	reagent_state = SOLID
+	var/glitter_type = /obj/effect/decal/cleanable/glitter
+
+/datum/reagent/glitter/reaction_turf(turf/T, reac_volume)
+	if(!istype(T))
+		return
+	new glitter_type(T)
+
+/datum/reagent/glitter/pink
+	name = "pink glitter"
+	id = "pink_glitter"
+	description = "pink sparkles that get everywhere"
+	color = "#ff8080" //A light pink color
+	glitter_type = /obj/effect/decal/cleanable/glitter/pink
+
+/datum/reagent/glitter/white
+	name = "white glitter"
+	id = "white_glitter"
+	description = "white sparkles that get everywhere"
+	glitter_type = /obj/effect/decal/cleanable/glitter/white
+
+/datum/reagent/glitter/blue
+	name = "blue glitter"
+	id = "blue_glitter"
+	description = "blue sparkles that get everywhere"
+	color = "#4040FF" //A blueish color
+	glitter_type = /obj/effect/decal/cleanable/glitter/blue

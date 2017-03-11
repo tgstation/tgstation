@@ -200,7 +200,7 @@
 					M = M.loc
 					count++
 					if(count >= 6)
-						src << "You are not being carried by anyone!"
+						to_chat(src, "You are not being carried by anyone!")
 						return 0
 				spawn CheckDNA(M, src)
 
@@ -376,15 +376,15 @@
 						"<span class='notice'>You press your thumb against [P].</span>",\
 						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
 		if(!M.has_dna())
-			P << "<b>No DNA detected</b>"
+			to_chat(P, "<b>No DNA detected</b>")
 			return
-		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
+		to_chat(P, "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>")
 		if(M.dna.unique_enzymes == P.master_dna)
-			P << "<b>DNA is a match to stored Master DNA.</b>"
+			to_chat(P, "<b>DNA is a match to stored Master DNA.</b>")
 		else
-			P << "<b>DNA does not match stored Master DNA.</b>"
+			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		P << "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly."
+		to_chat(P, "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly.")
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -565,7 +565,7 @@
 	dat += "<font color=#55FF55>Connected</font> <br>"
 
 	if(!istype(machine, /obj/machinery/camera))
-		src << "DERP"
+		to_chat(src, "DERP")
 	return dat
 
 // Door Jack
@@ -601,9 +601,9 @@
 	var/turf/T = get_turf(src.loc)
 	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 		else
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(src.hackprogress < 100)
 		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
 			hackprogress += rand(1, 10)

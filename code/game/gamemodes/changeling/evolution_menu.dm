@@ -8,27 +8,27 @@
 			thepower = S
 
 	if(thepower == null)
-		user << "This is awkward. Changeling power purchase failed, please report this bug to a coder!"
+		to_chat(user, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
 		return
 
 	if(absorbedcount < thepower.req_dna)
-		user << "We lack the energy to evolve this ability!"
+		to_chat(user, "We lack the energy to evolve this ability!")
 		return
 
 	if(has_sting(thepower))
-		user << "We have already evolved this ability!"
+		to_chat(user, "We have already evolved this ability!")
 		return
 
 	if(thepower.dna_cost < 0)
-		user << "We cannot evolve this ability."
+		to_chat(user, "We cannot evolve this ability.")
 		return
 
 	if(geneticpoints < thepower.dna_cost)
-		user << "We have reached our capacity for abilities."
+		to_chat(user, "We have reached our capacity for abilities.")
 		return
 
 	if(user.status_flags & FAKEDEATH)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
-		user << "We lack the energy to evolve new abilities right now."
+		to_chat(user, "We lack the energy to evolve new abilities right now.")
 		return
 
 	geneticpoints -= thepower.dna_cost
@@ -38,16 +38,16 @@
 //Reselect powers
 /datum/changeling/proc/lingRespec(mob/user)
 	if(!ishuman(user))
-		user << "<span class='danger'>We can't remove our evolutions in this form!</span>"
+		to_chat(user, "<span class='danger'>We can't remove our evolutions in this form!</span>")
 		return
 	if(canrespec)
-		user << "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>"
+		to_chat(user, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		user.remove_changeling_powers(1)
 		canrespec = 0
 		user.make_changeling()
 		return 1
 	else
-		user << "<span class='danger'>You lack the power to readapt your evolutions!</span>"
+		to_chat(user, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
 		return 0
 
 /mob/proc/make_changeling()
