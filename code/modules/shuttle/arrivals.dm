@@ -102,11 +102,22 @@
 			return TRUE
 	return FALSE
 
+/obj/docking_port/mobile/arrivals/proc/CheckPeopleIn(atom/A)
+	for(var/mob/living/L in A)
+		//don't dock for braindead'
+		if(L.key && L.client && L.stat != DEAD)
+			return TRUE
+
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
 	for(var/A in areas)
-		for(var/mob/living/L in A)
-			//don't dock for braindead'
-			if(L.key && L.client && L.stat != DEAD)
+		if(CheckPeopleIn(A))
+			return TRUE
+		//fucking powergaming scum
+		for(var/obj/structure/closet/C in A)
+			if(CheckPeopleIn(C))
+				return TRUE
+		for(var/obj/item/bodybag/B in A)
+			if(CheckPeopleIn(B))
 				return TRUE
 	return FALSE
 
