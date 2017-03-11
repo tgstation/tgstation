@@ -86,7 +86,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
-	user << "It is[!active?"n't":""] running."
+	to_chat(user, "It is[!active?"n't":""] running.")
 
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
@@ -154,8 +154,8 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
-	user << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
-	if(crit_fail) user << "<span class='danger'>The generator seems to have broken down.</span>"
+	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>")
+	if(crit_fail) to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -217,9 +217,9 @@ display round(lastgen) and plasmatank amount
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			user << "<span class='notice'>The [src.name] is full!</span>"
+			to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
 			return
-		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()
@@ -233,13 +233,13 @@ display round(lastgen) and plasmatank amount
 
 			if(!anchored && !isinspace())
 				connect_to_network()
-				user << "<span class='notice'>You secure the generator to the floor.</span>"
-				is_affected_by_gravity = FALSE
-				sync_gravity()
+				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
 				anchored = 1
+        is_affected_by_gravity = FALSE
+				sync_gravity()
 			else if(anchored)
 				disconnect_from_network()
-				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				is_affected_by_gravity = TRUE
 				sync_gravity()
 				anchored = 0
@@ -250,9 +250,9 @@ display round(lastgen) and plasmatank amount
 			panel_open = !panel_open
 			playsound(src.loc, O.usesound, 50, 1)
 			if(panel_open)
-				user << "<span class='notice'>You open the access panel.</span>"
+				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
-				user << "<span class='notice'>You close the access panel.</span>"
+				to_chat(user, "<span class='notice'>You close the access panel.</span>")
 			return
 		else if(default_deconstruction_crowbar(O))
 			return

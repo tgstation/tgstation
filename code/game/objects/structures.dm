@@ -88,19 +88,19 @@
 				user.Stun(climb_stun)
 				. = 1
 			else
-				user << "<span class='warning'>You fail to climb onto [src].</span>"
+				to_chat(user, "<span class='warning'>You fail to climb onto [src].</span>")
 	structureclimber = null
 
 /obj/structure/examine(mob/user)
 	..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			user << "<span class='warning'>It's on fire!</span>"
+			to_chat(user, "<span class='warning'>It's on fire!</span>")
 		if(broken)
-			user << "<span class='notice'>It looks broken.</span>"
+			to_chat(user, "<span class='notice'>It looks broken.</span>")
 		var/examine_status = examine_status(user)
 		if(examine_status)
-			user << examine_status
+			to_chat(user, examine_status)
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100

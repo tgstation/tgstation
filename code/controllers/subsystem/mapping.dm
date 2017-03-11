@@ -28,13 +28,17 @@ var/datum/controller/subsystem/mapping/SSmapping
 		if(previous_map_config.defaulted)
 			previous_map_config = null
 	if(!config)
+#ifdef FORCE_MAP
+		config = new(FORCE_MAP)
+#else
 		config = new
+#endif
 	return ..()
 
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	if(config.defaulted)
-		world << "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>"
+		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
 	loadWorld()
 	SortAreas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
@@ -106,20 +110,30 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(last)
 		QDEL_NULL(loader)
 
-#define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; log_world(X)
+/datum/controller/subsystem/mapping/proc/CreateSpace(zlevel)
+	for(var/T in block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, zlevel)))
+		CHECK_TICK
+		new /turf/open/space(T)
+
+#define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
 	if(world.maxz != ZLEVEL_SPACEMAX)
 		WARNING("world.maxz does not match ZLEVEL_SPACEMAX!")
-
+    
+	var/start_time = REALTIMEOFDAY
+  
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
-	INIT_ANNOUNCE("Loaded station!")
+	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
+
+	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
+		CreateSpace(I)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
@@ -172,9 +186,9 @@ var/datum/controller/subsystem/mapping/SSmapping
 	message_admins("Randomly rotating map to [VM.map_name]")
 	. = changemap(VM)
 	if (. && VM.map_name != config.map_name)
-		world << "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>"
+		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
 
-/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)	
+/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = new(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")

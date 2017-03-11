@@ -63,7 +63,7 @@
 	if(force)
 		..()
 		//this will completely wipe turf state
-		var/turf/B = new world.turf(src)
+		var/turf/basic/B = new /turf/basic(src)
 		for(var/A in B.contents)
 			qdel(A)
 		for(var/I in B.vars)
@@ -266,7 +266,7 @@
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(src_object.contents.len)
-		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
 			return 0
 

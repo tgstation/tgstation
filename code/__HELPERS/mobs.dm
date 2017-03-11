@@ -402,7 +402,8 @@ Proc for attack log creation, because really why not
 				else
 					F = FOLLOW_LINK(M, follow_target)
 				message = "[F] [message]"
+				to_chat(M, "[message]")
 			else if(turf_target)
 				var/turf_link = TURF_LINK(M, turf_target)
 				message = "[turf_link] [message]"
-		M << "[message]"
+				to_chat(M, "[message]")

@@ -46,9 +46,9 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
-	user << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	user << "The safety-mode light is [safety_mode ? "on" : "off"]."
-	user << "The safety-sensors status light is [emagged ? "off" : "on"]."
+	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
+	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
+	to_chat(user, "The safety-sensors status light is [emagged ? "off" : "on"].")
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -79,7 +79,7 @@ var/const/SAFETY_COOLDOWN = 100
 			safety_mode = FALSE
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
 
 /obj/machinery/recycler/update_icon()
 	..()
