@@ -5976,6 +5976,9 @@
 "pq" = (
 /obj/item/weapon/soap/syndie,
 /obj/structure/mopbucket,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
@@ -7506,6 +7509,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "sG" = (
@@ -8071,6 +8075,9 @@
 /area/syndicate_mothership)
 "tV" = (
 /obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "tW" = (
@@ -8462,6 +8469,9 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership)
 "uY" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mech_bay_recharge_floor,
 /area/syndicate_mothership)
 "uZ" = (
@@ -13382,6 +13392,7 @@
 "Hw" = (
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Hx" = (
@@ -13853,6 +13864,125 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
+"JE" = (
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/syndicate_mothership)
+"JF" = (
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/syndicate_mothership)
+"JG" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/syndicate_mothership)
+"JH" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar{
+	dir = 2
+	},
+/area/syndicate_mothership)
+"JI" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar{
+	dir = 2
+	},
+/area/syndicate_mothership)
+"JJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership)
+"JK" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/syndicate_mothership)
+"JL" = (
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/syndicate_mothership)
+"JM" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/bar{
+	dir = 2
+	},
+/area/syndicate_mothership)
+"JN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership)
+"JO" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/evac)
+"JP" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/evac)
+"JQ" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
+"JR" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
+"JS" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/centcom/evac)
+"JT" = (
+/obj/structure/bed,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
+"JU" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
+"JV" = (
+/obj/structure/table,
+/obj/item/device/radio/off,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -29958,7 +30088,7 @@ mz
 hq
 hq
 re
-kI
+JK
 re
 pk
 pk
@@ -31241,12 +31371,12 @@ kl
 kl
 pl
 pz
-oJ
+JI
 oJ
 oJ
 sD
 th
-tS
+JL
 kl
 kl
 hq
@@ -31484,7 +31614,7 @@ hq
 jX
 km
 ku
-kI
+JE
 kl
 hq
 hq
@@ -32260,13 +32390,13 @@ kI
 kI
 kI
 kI
-kI
+JG
 kI
 kI
 kI
 kI
 om
-oJ
+JH
 oJ
 pB
 pA
@@ -33026,7 +33156,7 @@ hq
 hq
 km
 ku
-kI
+JF
 kl
 hq
 lG
@@ -33045,7 +33175,7 @@ ri
 ri
 sE
 oJ
-oJ
+JM
 kl
 uW
 uW
@@ -35610,7 +35740,7 @@ hq
 hm
 aa
 kl
-qt
+JJ
 rm
 sb
 sc
@@ -35618,7 +35748,7 @@ sd
 sc
 sb
 rm
-vq
+JN
 kl
 aa
 aa
@@ -38745,11 +38875,11 @@ aa
 aa
 aa
 aa
-FH
 FN
 FN
 FN
-FH
+FN
+FN
 aa
 aa
 aa
@@ -39006,8 +39136,8 @@ FI
 FO
 FR
 FR
-FR
-FH
+FN
+FN
 aa
 aa
 aa
@@ -39261,7 +39391,7 @@ aa
 aa
 FJ
 FO
-FR
+JO
 FR
 FR
 FN
@@ -39531,7 +39661,7 @@ FN
 FN
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -39773,10 +39903,10 @@ aa
 aa
 aa
 aa
-FH
+FN
 FN
 FT
-FZ
+JQ
 FZ
 Gp
 GB
@@ -39785,11 +39915,11 @@ GU
 FN
 Hj
 Hj
-Hj
+JT
 Hj
 Hj
 FN
-FH
+FN
 aa
 aa
 aa
@@ -40049,7 +40179,7 @@ FN
 FN
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -40304,7 +40434,7 @@ Hj
 Hj
 FN
 HD
-Hx
+JU
 HH
 Hk
 aa
@@ -40810,7 +40940,7 @@ FV
 FV
 FV
 FV
-FV
+JS
 FV
 FV
 FV
@@ -41332,7 +41462,7 @@ FZ
 Hw
 FN
 HF
-HD
+JV
 HL
 Hk
 aa
@@ -41591,7 +41721,7 @@ FN
 FN
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -41829,10 +41959,10 @@ aa
 aa
 aa
 aa
-FH
+FN
 FN
 FT
-FZ
+JR
 FZ
 Gu
 Gu
@@ -41845,7 +41975,7 @@ FV
 FZ
 FU
 FN
-FH
+FN
 aa
 aa
 aa
@@ -42101,7 +42231,7 @@ FN
 FP
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -42345,7 +42475,7 @@ aa
 aa
 FJ
 FO
-FR
+JP
 FR
 FR
 FN
@@ -42604,8 +42734,8 @@ FK
 FO
 FR
 FR
-FR
-FH
+FN
+FN
 aa
 aa
 aa
@@ -42857,11 +42987,11 @@ aa
 aa
 aa
 aa
-FH
 FN
 FN
 FN
-FH
+FN
+FN
 aa
 aa
 aa
@@ -73260,7 +73390,7 @@ fP
 fU
 Iw
 IJ
-IT
+IJ
 Je
 fU
 fP
@@ -73772,12 +73902,12 @@ fF
 fN
 Ij
 Il
-Ix
-IK
-IU
-Jf
-Jr
-JC
+Il
+Il
+Il
+Il
+Il
+Ij
 ab
 aa
 aa
@@ -74029,11 +74159,11 @@ fF
 fN
 fQ
 Im
-Iy
-IL
-IV
-Jg
-Js
+Im
+Im
+Im
+Im
+Im
 fQ
 ab
 aa
@@ -74286,11 +74416,11 @@ fG
 fN
 fQ
 In
-Iz
-IM
-IW
-Jh
-Jt
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -74542,12 +74672,12 @@ ag
 ag
 ab
 fQ
-Io
-IA
-IN
-IX
-Ji
-Ju
+In
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -74799,12 +74929,12 @@ eZ
 eD
 fN
 fQ
-Ip
-IB
+In
+In
 fX
 fX
-Jj
-Jv
+In
+In
 fQ
 ab
 aa
@@ -75056,12 +75186,12 @@ fa
 eB
 fN
 fQ
-Iq
-IC
+In
+In
 fY
 IY
-Jk
-Jw
+In
+In
 fQ
 ab
 aa
@@ -75313,12 +75443,12 @@ eQ
 eQ
 fN
 fQ
-Ir
-ID
+In
+In
 fX
 fX
-Jl
-Jx
+In
+In
 fQ
 ab
 aa
@@ -75570,12 +75700,12 @@ eZ
 eD
 fN
 fQ
-Is
-IE
-IO
-IZ
-Jm
-Jy
+In
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -75827,12 +75957,12 @@ fa
 eB
 fN
 fQ
-It
-IF
-IP
-Ja
-Jn
-Jz
+In
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -76085,11 +76215,11 @@ ag
 ab
 fQ
 Iu
-IG
-IQ
-Jb
-Jo
-JA
+Iu
+Iu
+Iu
+Iu
+Iu
 fQ
 ab
 aa
@@ -76340,14 +76470,14 @@ ff
 ff
 fH
 fN
-Ik
-Iv
-IH
-IR
-Jc
-Jp
-JB
-JD
+Ij
+Il
+Il
+Il
+Il
+Il
+Il
+Ij
 ab
 aa
 aa
@@ -76858,7 +76988,7 @@ fP
 fV
 II
 IS
-Jd
+IS
 Jq
 fV
 fP

@@ -84,6 +84,7 @@
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
