@@ -1134,6 +1134,8 @@
 				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
 				announce_objectives()
+				message_admins("[key_name_admin(usr)] has devil'ed [current].")
+				log_admin("[key_name(usr)] has devil'ed [current].")
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src
