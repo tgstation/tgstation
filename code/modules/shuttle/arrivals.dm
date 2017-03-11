@@ -103,8 +103,9 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/M in living_mob_list)
-		if(get_area(M) in areas)
+	for(var/M in (living_mob_list & player_list))
+		var/mob/living/L = M
+		if((get_area(M) in areas) && L.stat != DEAD)
 			return TRUE
 	return FALSE
 
