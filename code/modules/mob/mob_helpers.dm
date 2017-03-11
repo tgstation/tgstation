@@ -380,6 +380,8 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	return 1
 
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
+	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
+		return
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")

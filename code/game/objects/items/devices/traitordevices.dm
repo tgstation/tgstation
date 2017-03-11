@@ -223,3 +223,22 @@ effective or pretty fucking useless.
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
 		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)
+
+
+/obj/item/device/jammer
+	name = "radio jammer"
+	desc = "Device used to disrupt nearby radio communication."
+	icon_state = "jammer"
+	var/active = FALSE
+	var/range = 7
+
+/obj/item/device/jammer/attack_self(mob/user)
+	user << "<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>"
+	active = !active
+	if(active)
+		active_jammers |= src
+	else
+		active_jammers -= src
+	update_icon()
+
+	

@@ -57,8 +57,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
-	light_power = 0.35
-
 /obj/item/device/pda/New()
 	..()
 	if(fon)
