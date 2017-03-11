@@ -41,8 +41,11 @@ var/global/list/used_voiceprints = list()
 	. = target.default_identity_interact()
 
 /mob/proc/identity_subject_name(atom/movable/AM)
-	if(mind)
+	if(AM == src)
+		. = real_name
+	else if(mind)
 		var/list/AM_identity = mind.identity_cache[AM]
+		var/list/AM_FP_entry
 		var/AM_name
 		var/AM_voiceprint
 		var/AM_voiceprint_time
@@ -60,9 +63,14 @@ var/global/list/used_voiceprints = list()
 		else
 			AM_identity = new(IDENTITY_CACHE_LENGTH)
 		if(AM_faceprint && AM_faceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
-			var/list/AM_FP_entry = mind.get_print_entry(AM_faceprint, CATEGORY_FACEPRINTS)
-			if(AM_FP_entry)
-				AM_name = AM_FP_entry[IDENTITY_PRINT_NAME]
+			AM_FP_entry = mind.get_print_entry(AM_faceprint, CATEGORY_FACEPRINTS)
+		else if(AM.can_see_face())
+			var/AM_faceprint_new = AM.get_faceprint()
+			if(AM_faceprint_new)
+				mind.handle_faceprint_caching(AM, AM_faceprint_new)
+				AM_FP_entry = mind.get_print_entry(AM_faceprint_new, CATEGORY_FACEPRINTS)
+		if(AM_FP_entry)
+			AM_name = AM_FP_entry[IDENTITY_PRINT_NAME]
 		if(!AM_name && AM_voiceprint && AM_voiceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
 			var/list/AM_VP_entry = mind.get_print_entry(AM_voiceprint, CATEGORY_VOICEPRINTS)
 			if(AM_VP_entry)
@@ -210,31 +218,34 @@ var/global/list/used_voiceprints = list()
 			. = "&lt;NO RECORD&gt;"
 
 /mob/living/silicon/identity_subject_name(atom/movable/AM)
-	var/list/AM_identity = mind.identity_cache[AM]
-	var/AM_name
-	var/AM_temp
-	var/AM_temp_time
-	if(AM_identity)
-		AM_temp = AM_identity[IDENTITY_CACHE_TEMP]
-		AM_temp_time = AM_identity[IDENTITY_CACHE_TEMP_TIME]
-	else
-		AM_identity = new(IDENTITY_CACHE_LENGTH)
-	if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
-		AM_name = AM_temp
-	else
-		var/faceprint = AM.get_faceprint()
-		var/datum/data/record/G
-		if(faceprint)
-			G = find_record("faceprint", faceprint, data_core.general)
-		if(G)
-			var/G_name = G.fields["name"]
-			AM_name = G_name ? G_name : "&lt;NAME MISSING{[G.fields["id"]]}&gt;"
+	if(AM == src)
+		. = real_name
+	else if(mind)
+		var/list/AM_identity = mind.identity_cache[AM]
+		var/AM_name
+		var/AM_temp
+		var/AM_temp_time
+		if(AM_identity)
+			AM_temp = AM_identity[IDENTITY_CACHE_TEMP]
+			AM_temp_time = AM_identity[IDENTITY_CACHE_TEMP_TIME]
 		else
-			AM_name = "&lt;NO RECORD&gt;"
-		AM_identity[IDENTITY_CACHE_TEMP] = AM_name
-		AM_identity[IDENTITY_CACHE_TEMP_TIME] = world.time
-	mind.identity_cache[AM] = AM_identity
-	. = AM_name
+			AM_identity = new(IDENTITY_CACHE_LENGTH)
+		if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
+			AM_name = AM_temp
+		else
+			var/faceprint = AM.get_faceprint()
+			var/datum/data/record/G
+			if(faceprint)
+				G = find_record("faceprint", faceprint, data_core.general)
+			if(G)
+				var/G_name = G.fields["name"]
+				AM_name = G_name ? G_name : "&lt;NAME MISSING{[G.fields["id"]]}&gt;"
+			else
+				AM_name = "&lt;NO RECORD&gt;"
+			AM_identity[IDENTITY_CACHE_TEMP] = AM_name
+			AM_identity[IDENTITY_CACHE_TEMP_TIME] = world.time
+		mind.identity_cache[AM] = AM_identity
+		. = AM_name
 
 /mob/dead/observer/get_voiceprint_name(atom/movable/speaker, voice_print)
 	. = speaker.name
