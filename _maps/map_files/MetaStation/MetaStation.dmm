@@ -21074,7 +21074,7 @@
 	name = "Radiation Shutters Control";
 	pixel_x = 24;
 	pixel_y = 0;
-	req_access_txt = "24"
+	req_access_txt = "10"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -105514,13 +105514,13 @@ djC
 bcT
 beC
 djE
-djI
-djN
+djE
+djE
 beC
 djR
-djS
+djz
 bsk
-djU
+djC
 aVu
 bxu
 aRA
@@ -106027,9 +106027,9 @@ baa
 aWS
 bcU
 beE
-djF
-djJ
-djO
+djE
+djE
+djE
 beC
 bcU
 aWS
@@ -106541,9 +106541,9 @@ bab
 aWS
 bcS
 beG
-djG
-djK
-djP
+djE
+djE
+djE
 blQ
 bcS
 aWS
@@ -107055,9 +107055,9 @@ aWS
 aWS
 bcS
 beI
-djH
-djL
-djQ
+djE
+djE
+djE
 blR
 bcS
 aWS
@@ -107307,9 +107307,9 @@ aSL
 aDb
 cZq
 aWZ
-djA
+djz
 aZZ
-djD
+djC
 bcT
 beC
 beC
@@ -107317,9 +107317,9 @@ beC
 beC
 beC
 bcT
-djT
+djz
 bsk
-djV
+djC
 bvH
 bMw
 aRA
@@ -137884,7 +137884,7 @@ aMk
 aNv
 dfk
 dfq
-djw
+djt
 dfG
 dfQ
 dfZ
@@ -138133,7 +138133,7 @@ aBQ
 dee
 aEr
 det
-dju
+djt
 daY
 daZ
 dbb
@@ -138398,7 +138398,7 @@ aMk
 aNv
 dfm
 dfq
-djy
+djt
 dbg
 dfR
 dga
