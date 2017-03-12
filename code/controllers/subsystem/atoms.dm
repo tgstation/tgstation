@@ -118,11 +118,6 @@ var/datum/controller/subsystem/atoms/SSatoms
 			not_good_mutations |= B
 		CHECK_TICK
 
-#define GET_CONSTRUCTION_BLUEPRINT(type, outlist)\
-	var/obj/construction_blueprint_getter_type = type;\
-	var/construction_blueprint_get_type = initial(construction_blueprint_getter_type.construction_blueprint);\
-	var/datum/construction_blueprint/construction_blueprint_getter = new construction_blueprint_get_type;\
-	outlist = construction_blueprint_getter.GetBlueprint();
 
 //This just builds the stack recipes list
 //We need to link and verify blueprints before we cache them and for that we need an instance
@@ -132,8 +127,14 @@ var/datum/controller/subsystem/atoms/SSatoms
 	recipes_cache = recipes
 	var/list/objs = typesof(/obj)
 	for(var/I in objs)
-		var/list/BP
-		GET_CONSTRUCTION_BLUEPRINT(I, BP)
+		var/obj/construction_blueprint_getter_type = type;
+		var/construction_blueprint_get_type = initial(construction_blueprint_getter_type.construction_blueprint);
+		var/datum/construction_blueprint/CBP = new construction_blueprint_get_type;
+		var/obj/O = I
+
+		if(!((initial(O.blueprint_root_only) && CBP.owner_type == type) || (!initial(O.blueprint_root_only) && istype(type, CBP.owner_type))))
+			continue
+		var/list/BP = CBP.GetBlueprint(type);
 		if(BP.len)
 			var/datum/construction_state/first/F = BP[1]
 			if(istype(F))
@@ -146,8 +147,5 @@ var/datum/controller/subsystem/atoms/SSatoms
 						recipes[mat_type] += t_recipes
 					//TODO: Handle these snowflakes
 					var/is_glass = ispath(mat_type, /obj/item/stack/sheet/glass) || ispath(mat_type, /obj/item/stack/sheet/rglass)
-					var/obj/O = I
 					t_recipes += new /datum/stack_recipe(initial(O.name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = F.one_per_turf, on_floor = F.on_floor, window_checks = is_glass)
 		CHECK_TICK
-
-#undef GET_CONSTRUCTION_BLUEPRINT

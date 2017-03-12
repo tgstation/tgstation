@@ -10,11 +10,11 @@
 	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 25
+	blueprint_root_only = FALSE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
-	var/build_type = /obj/stack/sheet/metal
 	var/can_electrify = FALSE
 	var/obj/item/assembly/shock_kit/part
 	var/last_shock_time
@@ -46,18 +46,19 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
 		/datum/construction_state{
 			required_type_to_construct = /obj/item/assembly/shock_kit
 			required_amount_to_construct = 1
-			required_type_to_deconstruct = /obj/item/wrench
-			required_type_to_repair = /obj/item/weapong/weldingtool
+			required_type_to_deconstruct = /obj/item/weapon/wrench
+			required_type_to_repair = /obj/item/weapon/weldingtool
 			damage_reachable = 1
 		},
 		/datum/construction_state/last{
-			required_type_to_deconstruct = /obj/item/wrench
+			required_type_to_deconstruct = /obj/item/weapon/wrench
 		}
 	)
 	
-	var/datum/construction_state/first = .[1]
-	first.required_type_to_construct = buildstacktype
-	first.required_amount_to_construct = buildstackamount
+	var/datum/construction_state/F = .[1]
+	var/obj/structure/chair/O = obj_type
+	F.required_type_to_construct = initial(O.buildstacktype)
+	F.required_amount_to_construct = initial(O.buildstacktype)
 
 /obj/structure/chair/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
 	. = ..()
@@ -117,11 +118,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
 	s.set_up(12, 1, src)
 	s.start()
 	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act(85, src, 1)
-			to_chat(buckled_mob, "<span class='userdanger'>You feel a deep shock course through your body!</span>")
-			addtimer(CALLBACK(buckled_mob, /mob/living/.proc/electrocute_act, 85, src 1), 1)
+		return 
 	visible_message("<span class='danger'>The [src] went off!</span>", "<span class='italics'>You hear a deep sharp shock!</span>")
 
 /obj/structure/chair/attack_paw(mob/user)

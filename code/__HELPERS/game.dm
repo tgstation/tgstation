@@ -518,7 +518,7 @@
 /datum/construction_blueprint##type{\
 	owner_type = ##type;\
 }\
-/datum/construction_blueprint##type/GetBlueprint()
+/datum/construction_blueprint##type/GetBlueprint(obj/obj_type)
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(ticker.current_state != GAME_STATE_PLAYING || !character)

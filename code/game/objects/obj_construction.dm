@@ -170,7 +170,7 @@
 /datum/construction_blueprint
 	var/owner_type
 
-/datum/construction_blueprint/proc/GetBlueprint()
+/datum/construction_blueprint/proc/GetBlueprint(obj/obj_type)
 	return list()
 
 //See __HELPERS/game.dm for CONSTRUCTION_BLUEPRINT macro
@@ -183,8 +183,8 @@
 		if(construction_blueprint)
 			var/datum/construction_blueprint/BP = new construction_blueprint
 			var/temp
-			if(BP.owner_type == type)
-				temp = BP.GetBlueprint()	//get steps for the first time
+			if((blueprint_root_only && BP.owner_type == type) || (!blueprint_root_only && istype(type, BP.owner_type)))
+				temp = BP.GetBlueprint(type)	//get steps for the first time
 			if(!islist(temp))
 				WARNING("Invalid construction_blueprint for [type]!")
 				temp = -1
