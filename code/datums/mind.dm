@@ -68,6 +68,9 @@
 	src.key = key
 	soulOwner = src
 
+/datum/mind/Destroy()
+	ticker.minds -= src
+	return ..()
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
