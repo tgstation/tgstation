@@ -101,16 +101,16 @@
 		APC.update_icon()
 		active_apc = APC
 	if(href_list["name_filter"])
-		var/new_filter = stripped_input(usr, "What name are you looking for?", name) as null|text
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+		var/new_filter = stripped_input(usr, "What name are you looking for?", name) as null|text
 		log_activity("changed name filter to \"[new_filter]\"")
 		if(!src || !usr.Adjacent(src))
 			return
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		filters["Name"] = new_filter
 	if(href_list["above_filter"])
-		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (greater than).", name) as null|num
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (greater than).", name) as null|num
 		log_activity("changed greater than charge filter to \"[new_filter]\"")
 		if(!src || !usr.Adjacent(src))
 			return
@@ -119,9 +119,9 @@
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		filters["Charge Above"] = new_filter
 	if(href_list["below_filter"])
+		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (lesser than).", name) as null|num
 		log_activity("changed lesser than charge filter to \"[new_filter]\"")
-		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		if(!src || !usr.Adjacent(src))
 			return
 		if(new_filter)
