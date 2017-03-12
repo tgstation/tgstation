@@ -578,6 +578,9 @@
 	force_unwielded = 19
 	force_wielded = 25
 
+/obj/item/weapon/twohanded/pitchfork/demonic/Initialize()
+	set_light(3,6,LIGHT_COLOR_RED)
+
 /obj/item/weapon/twohanded/pitchfork/demonic/greater
 	force = 24
 	throwforce = 50
@@ -613,6 +616,17 @@
 	if(user.mind && !user.mind.devilinfo && (user.mind.soulOwner != user.mind))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+	..()
+
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+	if(!proximity || !wielded)
+		return
+	if(istype(target, /turf/closed/wall))
+		var/turf/closed/wall/W = target
+		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
+		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		W.break_wall()
+		return 1
 	..()
 
 //HF blade
