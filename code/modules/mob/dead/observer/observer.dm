@@ -673,9 +673,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				ManualFollow(target)
 				return
 		if(href_list["x"] && href_list["y"] && href_list["z"])
-			var/tx = href_list["x"]
-			var/ty = href_list["y"]
-			var/tz = href_list["z"]
+			var/tx = text2num(href_list["x"])
+			var/ty = text2num(href_list["y"])
+			var/tz = text2num(href_list["z"])
 			var/turf/target = locate(tx, ty, tz)
 			if(istype(target))
 				forceMove(target)
