@@ -2,7 +2,6 @@
 	name = "pipe-layer manifold"
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifoldlayer"
-	item_state = "manifoldlayer"
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
@@ -62,7 +61,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
-	overlays.len = 0
+	/*overlays.len = 0
 	alpha = invisibility ? 128 : 255
 	icon_state = initial(icon_state)
 	if(other_node)
@@ -71,10 +70,11 @@
 	for(var/pipelayer = PIPING_LAYER_MIN; pipelayer <= PIPING_LAYER_MAX; pipelayer += 1)
 		if(layer_nodes[pipelayer]) //we are connected at this layer
 			var/layer_diff = pipelayer - PIPING_LAYER_DEFAULT
-			var/image/con = image(icon(src.icon,"manifoldl_con",src.dir))
+			var/image/con = image(icon(icon,"manifoldl_con",dir))
 			con.pixel_x = layer_diff * PIPING_LAYER_P_X
 			con.pixel_y = layer_diff * PIPING_LAYER_P_Y
-			overlays += con
+			overlays += con*/
+	..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize(mapload)
 	findAllConnections(initialize_directions)
