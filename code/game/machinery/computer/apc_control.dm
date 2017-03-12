@@ -69,6 +69,9 @@
 				[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
 			dat += "<a href='?src=\ref[src];check_logs=1'>Check Logs</a><br>"
 			dat += "<a href='?src=\ref[src];log_out=1'>Log Out</a><br>"
+			if(emagged)
+				dat += "<font color='#FF0000'>WARNING: Logging functionality partially disabled from outside source.</font><br>"
+				dat += "<a href='?src=\ref[src];restore_logging=1'>Restore logging functionality?</a><br>"
 		else
 			if(logs.len)
 				for(var/entry in logs)
@@ -101,7 +104,7 @@
 				log_activity("logged in")
 		if(!authenticated) //Check for emags
 			var/obj/item/weapon/card/emag/E = usr.get_active_held_item()
-			if(E)
+			if(E && istype(E))
 				usr << "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>"
 				authenticated = TRUE
 				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit
@@ -109,6 +112,10 @@
 		log_activity("logged out")
 		authenticated = FALSE
 		auth_id = "\[NULL\]"
+	if(href_list["restore_logging"])
+		to_chat(usr, "<span class='robot notice'>\icon[I] Logging functionality restored from backup data.</span>")
+		emagged = FALSE
+		LAZYADD(logs, "<b>-=- Logging restored to full functionality at this point -=-</b>")
 	if(href_list["access_apc"])
 		playsound(src, "terminal_type", 50, 0)
 		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in apcs_list
