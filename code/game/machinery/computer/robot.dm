@@ -61,10 +61,10 @@
 			dat += " Slaved to [R.connected_ai.name] |"
 		else
 			dat += " Independent from AI |"
-		if(issilicon(user) || IsAdminGhost(user))
+		if(issilicon(user) || user.can_AI_interact(src))
 			if(is_servant_of_ratvar(user) && user != R)
 				dat += "<A href='?src=\ref[src];convert=\ref[R]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
-			else if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
+			else if(((issilicon(user) && is_special_character(user)) || user.can_AI_interact(src)) && !R.emagged && (user != R || R.syndicate))
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
@@ -138,9 +138,9 @@
 			to_chat(usr, "<span class='danger'>Access Denied.</span>")
 
 	else if (href_list["magbot"])
-		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
+		if((issilicon(usr) && is_special_character(usr)) || can_AI_interact(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in silicon_mobs
-			if(istype(R) && !R.emagged && ((R.syndicate && R == usr) || R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
+			if(istype(R) && !R.emagged && ((R.syndicate && R == usr) || R.connected_ai == usr || can_AI_interact(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 				R.SetEmagged(1)

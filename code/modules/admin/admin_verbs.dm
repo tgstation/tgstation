@@ -734,7 +734,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
-	if(mob && IsAdminGhost(mob))
+	if(mob && can_AI_interact(mob))
 		mob.has_unlimited_silicon_privilege = AI_Interact
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")

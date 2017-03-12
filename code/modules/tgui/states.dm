@@ -20,11 +20,10 @@
 	if(!state)
 		return
 
-	if(isobserver(user))
-		// If they turn on ghost AI control, admins can always interact.
-		if(IsAdminGhost(user))
+	switch(user.can_AI_interact(src_object))
+		if(AI_INTERACTION_LIMITED to AI_INTERACTION_ADMIN)	//No disadvantages for limited yet.
 			. = max(., UI_INTERACTIVE)
-
+	if(isobserver(user))
 		// Regular ghosts can always at least view if in range.
 		if(get_dist(src_object, user) < user.client.view)
 			. = max(., UI_UPDATE)

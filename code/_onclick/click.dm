@@ -69,13 +69,13 @@
 		CtrlShiftClickOn(A)
 		return
 	if(modifiers["middle"])
-		MiddleClickOn(A)
+		MiddleClickOn(A, params)
 		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
+		AltClickOn(A, params)
 		return
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
@@ -163,7 +163,7 @@
 				if(dummy.loc == there.loc)
 					qdel(dummy)
 					return 1
-				if(there.density && dummy in range(1, there)) //For windows and 
+				if(there.density && dummy in range(1, there)) //For windows and
 					qdel(dummy)
 					return 1
 				if(!dummy.Move(T)) //we're blocked!
@@ -212,10 +212,10 @@
 	Middle click
 	Only used for swapping hands
 */
-/mob/proc/MiddleClickOn(atom/A)
+/mob/proc/MiddleClickOn(atom/A, params)
 	return
 
-/mob/living/carbon/MiddleClickOn(atom/A)
+/mob/living/carbon/MiddleClickOn(atom/A, params)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
@@ -273,12 +273,11 @@
 	A.AltClick(src)
 	return
 
-/mob/living/carbon/AltClickOn(atom/A)
+/mob/living/carbon/AltClickOn(atom/A, params)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	..()
 
 /atom/proc/AltClick(mob/user)
 	var/turf/T = get_turf(src)

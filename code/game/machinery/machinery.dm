@@ -263,9 +263,9 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
 	if(..())// unbuckling etc
 		return 1
-	if((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat) && !user.can_AI_interact(src))
 		return 1
-	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
+	if(!user.IsAdvancedToolUser() && !user.can_AI_interact(src))
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	if(!is_interactable())
@@ -459,8 +459,8 @@ Class Procs:
 
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
 /obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	if (hclient.client.mob && (hclient.client.mob.stat == 0 || IsAdminGhost(hclient.client.mob)))
-		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob)) return TRUE
+	if (hclient.client.mob && (hclient.client.mob.stat == 0 || can_AI_interact(hclient.client.mob)))
+		if (isAI(hclient.client.mob) || can_AI_interact(hclient.client.mob)) return TRUE
 		else                          return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
 	else
 		return FALSE

@@ -266,7 +266,7 @@ What a mess.*/
 		active1 = null
 	if(!( data_core.security.Find(active2) ))
 		active2 = null
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || (user.can_AI_interact(src) >= AI_INTERACTION_FULL))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -319,7 +319,7 @@ What a mess.*/
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
-				else if(IsAdminGhost(usr))
+				else if(user.can_AI_interact(src) >= AI_INTERACTION_FULL)
 					active1 = null
 					active2 = null
 					authenticated = usr.client.holder.admin_signature

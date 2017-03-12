@@ -979,3 +979,6 @@ var/next_mob_id = 0
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/proc/can_AI_interact(atom/A)
+	return AI_INTERACTION_FORBIDDEN

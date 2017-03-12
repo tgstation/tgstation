@@ -87,3 +87,10 @@
 #define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
 #define ACID_PROOF 32 //acid stuck on it doesn't melt it.
 #define INDESTRUCTIBLE 64 //doesn't take damage
+
+//MOB AI INTERACTION
+#define AI_INTERACTION_FORBIDDEN 1
+#define AI_INTERACTION_MINIMAL 2
+#define AI_INTERACTION_LIMITED 3
+#define AI_INTERACTION_FULL 4
+#define AI_INTERACTION_ADMIN 5

@@ -213,7 +213,7 @@ var/list/wire_name_directory = list()
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
-			"wire" = (IsAdminGhost(user) || (user.is_holding_item_of_type(/obj/item/device/multitool/abductor)) ? get_wire(color) : null),
+			"wire" = (user.can_AI_interact(src) || (user.is_holding_item_of_type(/obj/item/device/multitool/abductor)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
 		)))
@@ -229,14 +229,14 @@ var/list/wire_name_directory = list()
 	var/obj/item/I = L.get_active_held_item()
 	switch(action)
 		if("cut")
-			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))
+			if(istype(I, /obj/item/weapon/wirecutters) || can_AI_interact(usr))
 				playsound(holder, I.usesound, 20, 1)
 				cut_color(target_wire)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
+			if(istype(I, /obj/item/device/multitool) || can_AI_interact(usr))
 				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
 				pulse_color(target_wire)
 				. = TRUE

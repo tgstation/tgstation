@@ -4,6 +4,7 @@
 
 	Otherwise pretty standard.
 */
+
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
 
 	if(!has_active_hand()) //can't attack without a hand.
@@ -202,3 +203,21 @@
 */
 /mob/new_player/ClickOn()
 	return
+
+
+//Carbon mob cybernetic implant handling.
+
+/mob/living/carbon/ClickOn(atom/A, params)
+	var/checkstring = null
+	var/bypass = FALSE
+	switch(active_hand_index)	//Best I can do until cyberimplants are tied to arms instead of mobs.
+		if(1)
+			checkstring = "l_arm_device"
+		if(2)
+			checkstring = "r_arm_device"
+	if(!isnull(checkstring))
+		var/obj/item/organ/cyberimp/arm/CI = internal_organs_slot[checkstring]
+		if(CI && istype(CI))
+			bypass = CI.clickIntercept(A, params)
+	if(!bypass)
+		. = ..()

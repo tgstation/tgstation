@@ -246,7 +246,7 @@
 	desc = "Cuban Pete is in the house!"
 
 /obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
-	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
+	if((user.stat && !user.can_AI_interact(src)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)

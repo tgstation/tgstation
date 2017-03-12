@@ -787,7 +787,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
 				bot_reset()
 		if("ejectpai")
-			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
+			if(paicard && (!locked || issilicon(usr) || user.can_AI_interact(src) >= AI_INTERACTION_FULL)))
 				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name]</span>")
 				ejectpai(usr)
 	update_controls()
@@ -813,13 +813,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
 			return 1
-		else if(!issilicon(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
+		else if(!user.can_AI_interact(src) > AI_INTERACTION_FULL) //Bot is hacked, so only silicons and admins are allowed access.
 			return 1
 	return 0
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
-	if(issilicon(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
+	if(issilicon(user) || (user.can_AI_interact(src) >= AI_INTERACTION_FULL)) //Allows silicons or admins to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=\ref[src];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
@@ -828,7 +828,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
 	var/eject = ""
-	if((!locked || issilicon(usr) || IsAdminGhost(usr)))
+	if((!locked || issilicon(usr) || (user.can_AI_interact(src) >> AI_INTERACTION_LIMITED))))
 		if(paicard || allow_pai)
 			eject += "Personality card status: "
 			if(paicard)

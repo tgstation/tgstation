@@ -276,7 +276,7 @@
 Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"})
-	if(!locked || issilicon(user)|| IsAdminGhost(user))
+	if(!locked || issilicon(user)|| (user.can_AI_interact(src) >= AI_INTERACTION_LIMITED))
 		dat += "<BR>Clean Blood: <A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=\ref[src];operation=trash'>[trash ? "Yes" : "No"]</A>"
 		dat += "<BR>Exterminate Pests: <A href='?src=\ref[src];operation=pests'>[pests ? "Yes" : "No"]</A>"

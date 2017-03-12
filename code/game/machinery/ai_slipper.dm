@@ -59,7 +59,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if ( (get_dist(src, user) > 1 ))
-		if (!(issilicon(user) || IsAdminGhost(user)))
+		if (!(issilicon(user) || user.can_AI_interact(src)))
 			to_chat(user, text("Too far away."))
 			user.unset_machine()
 			user << browse(null, "window=ai_slipper")
@@ -69,7 +69,7 @@
 	var/area/A = get_area(src)
 	var/t = "<TT><B>AI Liquid Dispenser</B> ([format_text(A.name)])<HR>"
 
-	if(locked && (!(issilicon(user) || IsAdminGhost(user))))
+	if(locked && (!(issilicon(user) || user.can_AI_interact(src))))
 		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 	else
 		t += "Dispenser [disabled?"deactivated":"activated"] - <A href='?src=\ref[src];toggleOn=1'>[disabled?"Enable":"Disable"]?</a><br>\n"
@@ -81,7 +81,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if(!(issilicon(usr)|| IsAdminGhost(usr)))
+		if(!(issilicon(usr)|| can_AI_interact(usr)))
 			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
