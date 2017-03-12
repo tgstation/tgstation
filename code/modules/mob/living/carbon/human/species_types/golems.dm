@@ -450,6 +450,44 @@
 /datum/species/golem/runic
 	name = "Runic Golem"
 	id = "runic"
-	limbs_id = "runic_golem"
+	limbs_id = "cultgolem"
+	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted the Elder God Nar'Sie.\
-	 Should you meet cultists that share your alignment, you must not disrupt their work, but you are not otherwise bound to follow their orders."
+	 Should you meet cultists that share your alignment, you must not disrupt their work, but you are not otherwise bound \
+	 to follow their orders, if you're not part of their cult."
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER) //no mutcolors
+
+	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
+	var/obj/effect/proc_holder/spell/targeted/abyssal_gaze/abyssal_gaze
+	var/obj/effect/proc_holder/spell/targeted/dominate/dominate
+
+/datum/species/golem/runic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.faction |= "cult"
+	phase_shift = new
+	C.AddSpell(phase_shift)
+	abyssal_gaze = new
+	C.AddSpell(abyssal_gaze)
+	dominate = new
+	C.AddSpell(dominate)
+
+/datum/species/golem/runic/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.faction -= "cult"
+	if(phase_shift)
+		C.RemoveSpell(phase_shift)
+	if(abyssal_gaze)
+		C.RemoveSpell(abyssal_gaze)
+	if(dominate)
+		C.RemoveSpell(dominate)
+
+/datum/species/golem/runic/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "holywater")
+		H.adjustFireLoss(4)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+	if(chem.id == "unholywater")
+		H.adjustBruteLoss(-4)
+		H.adjustFireLoss(-4)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
