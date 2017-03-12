@@ -30,30 +30,30 @@
 		return 1
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(anchored)
-			user << "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>"
+			to_chat(user, "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>")
 		else
 			playsound(src, I.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>")
 			if(do_after(user, 30*I.toolspeed, target = src) && !anchored)
-				user << "<span class='notice'>You disassemble [src].</span>"
+				to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 				deconstruct(TRUE)
 		return 1
 	else if(istype(I, /obj/item/stack/tile/brass))
 		var/obj/item/stack/tile/brass/W = I
 		if(W.get_amount() < 1)
-			user << "<span class='warning'>You need one brass sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one brass sheet to do this!</span>")
 			return
 		var/turf/T = get_turf(src)
 		if(iswallturf(T))
-			user << "<span class='warning'>There is already a wall present!</span>"
+			to_chat(user, "<span class='warning'>There is already a wall present!</span>")
 			return
 		if(!isfloorturf(T))
-			user << "<span class='warning'>A floor must be present to build a [anchored ? "false ":""]wall!</span>"
+			to_chat(user, "<span class='warning'>A floor must be present to build a [anchored ? "false ":""]wall!</span>")
 			return
 		if(locate(/obj/structure/falsewall) in T.contents)
-			user << "<span class='warning'>There is already a false wall present!</span>"
+			to_chat(user, "<span class='warning'>There is already a false wall present!</span>")
 			return
-		user << "<span class='notice'>You start adding [W] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			var/brass_floor = FALSE
 			if(istype(T, /turf/open/floor/clockwork)) //if the floor is already brass, costs less to make(conservation of masssssss)
@@ -66,7 +66,7 @@
 					new /obj/structure/falsewall/brass(T)
 				qdel(src)
 			else
-				user << "<span class='warning'>You need more brass to make a [anchored ? "false ":""]wall!</span>"
+				to_chat(user, "<span class='warning'>You need more brass to make a [anchored ? "false ":""]wall!</span>")
 		return 1
 	return ..()
 

@@ -77,7 +77,7 @@
 //whether the machine can have an item inserted in its current state.
 /obj/machinery/r_n_d/proc/is_insertion_ready(mob/user)
 	if(panel_open)
-		user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
+		to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened!</span>")
 		return
 	if (disabled)
 		return
@@ -87,19 +87,19 @@
 				console.SyncRDevices()
 
 		if(!linked_console)
-			user << "<span class='warning'>The [name] must be linked to an R&D console first!</span>"
+			to_chat(user, "<span class='warning'>The [name] must be linked to an R&D console first!</span>")
 			return
 	if (busy)
-		user << "<span class='warning'>The [src.name] is busy right now.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] is busy right now.</span>")
 		return
 	if(stat & BROKEN)
-		user << "<span class='warning'>The [src.name] is broken.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] is broken.</span>")
 		return
 	if(stat & NOPOWER)
-		user << "<span class='warning'>The [src.name] has no power.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] has no power.</span>")
 		return
 	if(loaded_item)
-		user << "<span class='warning'>The [src] is already loaded.</span>"
+		to_chat(user, "<span class='warning'>The [src] is already loaded.</span>")
 		return
 	return 1
 

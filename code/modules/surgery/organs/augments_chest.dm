@@ -22,7 +22,7 @@
 
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
-		owner << "<span class='notice'>You feel less hungry...</span>"
+		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
 		owner.nutrition += 50
 		sleep(50)
 		synthesizing = FALSE
@@ -31,7 +31,7 @@
 	if(!owner)
 		return
 	owner.reagents.add_reagent("bad_food", poison_amount / severity)
-	owner << "<span class='warning'>You feel like your insides are burning.</span>"
+	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
 
 
 /obj/item/organ/cyberimp/chest/nutriment/plus
@@ -61,7 +61,7 @@
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
-			owner << "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [revive_cost/10] seconds.</span>"
+			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [revive_cost/10] seconds.</span>")
 		return
 
 	if(cooldown > world.time)
@@ -73,7 +73,7 @@
 
 	revive_cost = 0
 	reviving = TRUE
-	owner << "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>"
+	to_chat(owner, "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>")
 
 /obj/item/organ/cyberimp/chest/reviver/proc/heal()
 	if(owner.getOxyLoss())
@@ -102,7 +102,7 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity) && H.can_heartattack())
 			H.set_heartattack(TRUE)
-			H << "<span class='userdanger'>You feel a horrible agony in your chest!</span>"
+			to_chat(H, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
@@ -111,7 +111,7 @@
 		return
 	H.set_heartattack(FALSE)
 	if(H.stat == CONSCIOUS)
-		H << "<span class='notice'>You feel your heart beating again!</span>"
+		to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
 
 
 /obj/item/organ/cyberimp/chest/thrusters
@@ -146,17 +146,17 @@
 	if(!on)
 		if(crit_fail)
 			if(!silent)
-				owner << "<span class='warning'>Your thrusters set seems to be broken!</span>"
+				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
 			return 0
 		on = 1
 		if(allow_thrust(0.01))
 			ion_trail.start()
 			if(!silent)
-				owner << "<span class='notice'>You turn your thrusters set on.</span>"
+				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
 	else
 		ion_trail.stop()
 		if(!silent)
-			owner << "<span class='notice'>You turn your thrusters set off.</span>"
+			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
 		on = 0
 	update_icon()
 

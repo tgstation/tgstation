@@ -11693,6 +11693,7 @@
 /area/maintenance/electrical)
 "azy" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "Port Docking Bay 1"
 	},
 /turf/open/floor/plating,
@@ -13976,6 +13977,7 @@
 "aEw" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
 	pixel_y = 30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -14512,9 +14514,6 @@
 "aFE" = (
 /obj/structure/chair{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -17995,6 +17994,9 @@
 	},
 /area/hallway/primary/central)
 "aNx" = (
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -19402,10 +19404,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
@@ -25275,10 +25273,18 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/stack/packageWrap{
+	pixel_x = -1;
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -25617,12 +25623,15 @@
 /area/quartermaster/office)
 "bfR" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+/obj/item/weapon/hand_labeler{
+	pixel_y = 8
 	},
-/obj/item/weapon/pen,
+/obj/item/weapon/hand_labeler{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box,
+/obj/item/weapon/storage/box,
+/obj/item/weapon/storage/box,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bfS" = (
@@ -30581,6 +30590,9 @@
 	dir = 1;
 	layer = 2.9
 	},
+/obj/structure/table/reinforced,
+/obj/item/device/destTagger,
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -40623,14 +40635,14 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKF" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/hand_labeler,
-/obj/item/weapon/hand_labeler,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -40768,6 +40780,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bKQ" = (
@@ -41165,10 +41178,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "bLF" = (
-/obj/structure/table/reinforced,
-/obj/item/device/destTagger,
-/obj/item/device/destTagger,
-/obj/machinery/computer/stockexchange,
+/obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bLG" = (
@@ -42053,17 +42063,18 @@
 /area/toxins/test_area)
 "bNH" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/wrapping_paper{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/stack/packageWrap{
-	pixel_x = -1;
-	pixel_y = -1
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -26
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -3
+	},
+/obj/item/weapon/pen{
+	pixel_x = -3
+	},
+/obj/item/weapon/folder/yellow{
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -63624,6 +63635,50 @@
 	dir = 1
 	},
 /area/assembly/robotics)
+"cIg" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion"
+	},
+/obj/docking_port/mobile/arrivals,
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 15;
+	id = "arrivals_stationary";
+	name = "arrivals";
+	width = 7
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/arrival)
+"cIh" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIi" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIj" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIk" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
@@ -73241,17 +73296,17 @@ awZ
 ayl
 azy
 auP
-azy
+cIh
 aCU
 aEr
 aFE
 aFE
 aFE
 aEr
-aLs
+aCU
 azy
 auP
-azy
+cIh
 ayl
 aRY
 awW
@@ -74016,7 +74071,7 @@ awW
 aCV
 aEs
 aEr
-aHt
+aEr
 aEr
 aEr
 aCV
@@ -75040,7 +75095,7 @@ axh
 aIK
 azy
 auP
-azy
+cIh
 aCU
 aEr
 aEr
@@ -75050,7 +75105,7 @@ aEr
 aCU
 azy
 auP
-azy
+cIh
 ayl
 aRY
 awW
@@ -75558,7 +75613,7 @@ aaa
 aCS
 aEx
 aFF
-aFF
+cIg
 aFF
 aKi
 aCS
@@ -87401,7 +87456,7 @@ apd
 beA
 bqp
 bbR
-aqU
+boU
 bLF
 aZK
 bnJ

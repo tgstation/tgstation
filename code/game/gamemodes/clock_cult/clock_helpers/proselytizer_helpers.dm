@@ -50,7 +50,7 @@
 	if(locate(/obj/structure/table) in src)
 		return FALSE
 	if(is_blocked_turf(src, TRUE))
-		user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
+		to_chat(user, "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
 		return TRUE
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
@@ -80,7 +80,7 @@
 	if(proselytizer.metal_to_power)
 		var/no_delete = FALSE
 		if(amount_temp < 2)
-			user << "<span class='warning'>You need at least <b>2</b> floor tiles to convert into power.</span>"
+			to_chat(user, "<span class='warning'>You need at least <b>2</b> floor tiles to convert into power.</span>")
 			return TRUE
 		if(IsOdd(amount_temp))
 			amount_temp--
@@ -98,7 +98,7 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>20</b> floor tiles to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>20</b> floor tiles to convert into brass.</span>")
 	return TRUE
 
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -116,7 +116,7 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>10</b> rods to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>10</b> rods to convert into brass.</span>")
 	return TRUE
 
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -134,7 +134,7 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>5</b> sheets of metal to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>5</b> sheets of metal to convert into brass.</span>")
 	return TRUE
 
 /obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -152,7 +152,7 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>2</b> sheets of plasteel to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>2</b> sheets of plasteel to convert into brass.</span>")
 	return TRUE
 
 //Brass directly to power
@@ -342,7 +342,7 @@
 		if(proselytizer)
 			proselytizer.repairing = null
 	else
-		user << "<span class='warning'>[src == user ? "You" : "[src]"] [src == user ? "are" : "is"] at maximum health!</span>"
+		to_chat(user, "<span class='warning'>[src == user ? "You" : "[src]"] [src == user ? "are" : "is"] at maximum health!</span>")
 
 //Convert shards and gear bits directly to power
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

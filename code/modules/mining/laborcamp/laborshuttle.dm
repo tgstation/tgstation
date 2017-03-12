@@ -18,10 +18,10 @@
 	if(href_list["move"])
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
 		if(!M)
-			usr << "<span class='warning'>Cannot locate shuttle!</span>"
+			to_chat(usr, "<span class='warning'>Cannot locate shuttle!</span>")
 			return 0
 		var/obj/docking_port/stationary/S = M.get_docked()
 		if(S && S.name == "laborcamp_away")
-			usr << "<span class='warning'>Shuttle is already at the outpost!</span>"
+			to_chat(usr, "<span class='warning'>Shuttle is already at the outpost!</span>")
 			return 0
 	..()
