@@ -50974,7 +50974,6 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cgM" = (
-/obj/machinery/computer/atmos_alert,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
@@ -50983,6 +50982,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
+/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
