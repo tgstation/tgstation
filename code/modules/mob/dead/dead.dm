@@ -2,8 +2,11 @@
 /mob/dead/New()
 	..()
 	if(!initialized)
-		args[1] = FALSE
-		Initialize(arglist(args))	//EXIST DAMN YOU!!!
+		if(args.len)
+			args[1] = FALSE
+			Initialize(arglist(args))	//EXIST DAMN YOU!!!
+		else
+			Initialize(FALSE)
 
 /mob/dead/dust()	//ghosts can't be vaporised.
 	return
