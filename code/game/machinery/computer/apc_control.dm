@@ -26,17 +26,16 @@
 		var/obj/machinery/power/apc/APC = V
 		if(check_apc(APC))
 			apcs[APC.name] = APC
-	if(operator)
-		if(!operator.Adjacent(src))
-			operator = null
-			if(active_apc)
-				if(!active_apc.locked)
-					active_apc.say("Remote access canceled. Interface locked.")
-					playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
-					playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
-				active_apc.locked = TRUE
-				active_apc.update_icon()
-				active_apc = null
+	if(operator && (!operator.Adjacent(src) || stat))
+		operator = null
+		if(active_apc)
+			if(!active_apc.locked)
+				active_apc.say("Remote access canceled. Interface locked.")
+				playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
+				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
+			active_apc.locked = TRUE
+			active_apc.update_icon()
+			active_apc = null
 
 /obj/machinery/computer/apc_control/attack_ai(mob/living/AI) //You already have APC access, cheater!
 	AI << "<span class='warning'>[src] does not support AI control.</span>"
@@ -99,7 +98,15 @@
 			if(check_access(ID))
 				authenticated = TRUE
 				auth_id = "[ID.registered_name] ([ID.assignment])"
+				log_activity("logged in")
+		if(!authenticated) //Check for emags
+			var/obj/item/weapon/card/emag/E = usr.get_active_held_item()
+			if(E)
+				usr << "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>"
+				authenticated = TRUE
+				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit
 	if(href_list["log_out"])
+		log_activity("logged out")
 		authenticated = FALSE
 		auth_id = "\[NULL\]"
 	if(href_list["access_apc"])
@@ -189,6 +196,6 @@
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))
-		if(A.operator && A.operator == src)
+		if(A.operator && A.operator == src && !A.stat)
 			return TRUE
 	return
