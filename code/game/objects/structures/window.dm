@@ -410,7 +410,6 @@
 	max_integrity = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
-
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
 
@@ -449,7 +448,6 @@
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
 	smooth = SMOOTH_TRUE
-
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
 	glass_amount = 2
