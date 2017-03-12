@@ -269,9 +269,9 @@
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
-		if (mytape.storedinfo[i][8])
-			t1 += "** \[[mytape.storedinfo[i][7]]\] [mytape.storedinfo[i][1]]<BR>"
-		else t1 += "\[[mytape.storedinfo[i][7]]\] [mytape.storedinfo[i][1]]<BR>"
+		if (mytape.storedinfo[i]["announce"])
+			t1 += "** \[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
+		else t1 += "\[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
@@ -283,10 +283,15 @@
 	if (mytape.storedinfo[i] == null)
 		return
 	var/x = mytape.storedinfo[i]
-	if (!x[8]) // Is it an announcement?
-		var/atom/movable/iObj = x[2] // Because apparently byond cannot do x[2]/GetVoice()
+	var/list/span = x["spans"]
+	span = span.Copy() // hur durrr I am byond and I cannot do chaining hurrr durrr
+	if (!x["announce"])
+		var/atom/movable/iObj = x["speaker"]
 		myVoice = iObj.GetVoice() // Make the recorder disguise itself as the recorded voice
-	send_speech(x[4],, x[2], , x[6])
+	if (announce)
+		span += "abductor" // So people see easier that the tape is talking
+	if ((announce && x["announce"]) || !x["announce"])
+		send_speech(x["raw_message"],, x["speaker"], , span)
 	myVoice = name
 
 //empty tape recorders
@@ -332,13 +337,31 @@
 	ruined = 0
 
 /obj/item/device/tape/proc/addInfo(message, speaker, message_langs, raw_message, radio_freq, spans)
-	// remove radio_freq but keep it as a placeholder
-	storedinfo[++storedinfo.len] = list(message, speaker, message_langs, raw_message, , spans, time2text(used_capacity * 10,"mm:ss"), FALSE)
+	// remove radio_freq
+	// storedinfo[++storedinfo.len] = list(message, speaker, message_langs, raw_message, , spans, time2text(used_capacity * 10,"mm:ss"), FALSE) // OLD
+	var/x[0]
+	x["message"] = message
+	x["speaker"] = speaker
+	x["message_langs"] = message_langs
+	x["raw_message"] = raw_message
+	x["spans"] = spans
+	x["time_stamp"] = time2text(used_capacity * 10,"mm:ss")
+	x["announce"] = FALSE
+	storedinfo[++storedinfo.len] = x
 
 /obj/item/device/tape/proc/addInfoAnnounce(src, message)
 	var/spans = get_spans()
 	var/rendered = compose_message(src, languages_spoken, message, , spans)
-	storedinfo[++storedinfo.len] = list(rendered, src, languages_spoken, message, , spans, time2text(used_capacity * 10,"mm:ss"), TRUE)
+	// storedinfo[++storedinfo.len] = list(rendered, src, languages_spoken, message, , spans, time2text(used_capacity * 10,"mm:ss"), TRUE) // OLD
+	var/x[0]
+	x["message"] = rendered
+	x["speaker"] = src
+	x["message_langs"] = languages_spoken
+	x["raw_message"] = message
+	x["spans"] = spans
+	x["time_stamp"] = time2text(used_capacity * 10,"mm:ss")
+	x["announce"] = TRUE
+	storedinfo[++storedinfo.len] = x
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
