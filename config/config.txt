@@ -199,7 +199,7 @@ TICK_LIMIT_MC_INIT 98
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.3
 
-FPS 25
+##FPS 25
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
