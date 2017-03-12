@@ -1,0 +1,5 @@
+author: "JStheguy"
+delete-after: True
+changes: 
+  - imageadd: "Changed Desert Eagle sprites, changed .50 AE magazine sprites, added Desert Eagle magazine overlay to icons/obj/guns/projectile.dmi."
+  - tweak: "The empty Desert Eagle sprite now only displays on an empty chamber. The existence or lack thereof of the magazine is rendered using an overlay instead."

@@ -301,6 +301,7 @@
 		return 0
 
 	if(SSshuttle.arrivals)
+		close_spawn_windows()	//In case we get held up
 		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
