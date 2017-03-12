@@ -73,6 +73,4 @@
 	filling_color = rgb(255, 175, 0)
 	origin_tech = "biotech=6;materials=5"
 	light_range = 3
-	light_power = 0.5
-	light_color = "#FFD32D"
 	seed = /obj/item/seeds/ambrosia/gaia

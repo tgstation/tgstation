@@ -260,9 +260,7 @@
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
 			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing"))
-		set_light(3, l_color = "#FFD32D")
-	else
-		set_light(0, l_color = "#FFFFFF")
+		set_light(3)
 
 	update_icon_hoses()
 
