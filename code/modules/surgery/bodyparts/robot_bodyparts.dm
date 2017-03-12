@@ -177,14 +177,14 @@
 	max_damage = 20
 
 /obj/item/bodypart/l_leg/robot/surplus
-	name = "surplus prosthetic leg"
+	name = "surplus prosthetic left leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon = 'icons/mob/augments.dmi'
 	icon_state = "surplus_l_leg"
 	max_damage = 20
 
 /obj/item/bodypart/r_leg/robot/surplus
-	name = "surplus prosthetic leg"
+	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon = 'icons/mob/augments.dmi'
 	icon_state = "surplus_r_leg"

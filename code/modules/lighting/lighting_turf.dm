@@ -15,8 +15,9 @@
 		L.vis_update()
 
 /turf/proc/lighting_clear_overlay()
-	if (lighting_overlay)
-		qdel(lighting_overlay, TRUE)
+	var/lo = lighting_overlay
+	if (lo)
+		qdel(lo, TRUE)
 
 	for (var/datum/lighting_corner/C in corners)
 		C.update_active()
@@ -88,8 +89,9 @@
 		reconsider_lights()
 
 /turf/proc/change_area(var/area/old_area, var/area/new_area)
-	if (new_area.dynamic_lighting != old_area.dynamic_lighting)
-		if (new_area.dynamic_lighting)
+	var/nadl = new_area.dynamic_lighting
+	if (nadl != old_area.dynamic_lighting)
+		if (nadl)
 			lighting_build_overlay()
 
 		else
@@ -103,14 +105,16 @@
 
 /turf/proc/generate_missing_corners()
 	lighting_corners_initialised = TRUE
-	if (!corners)
-		corners = list(null, null, null, null)
+	var/ccorners = corners
+	if (!ccorners)
+		ccorners = list(null, null, null, null)
+		corners = ccorners
 
 	for (var/i = 1 to 4)
-		if (corners[i]) // Already have a corner on this direction.
+		if (ccorners[i]) // Already have a corner on this direction.
 			continue
 
-		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
+		ccorners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
 
 
 /turf/ChangeTurf(path)
