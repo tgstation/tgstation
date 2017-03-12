@@ -225,12 +225,9 @@ display round(lastgen) and plasmatank amount
 		updateUsrDialog()
 		return
 	else if(!active)
-
 		if(exchange_parts(user, O))
 			return
-
 		if(istype(O, /obj/item/weapon/wrench))
-
 			if(!anchored && !isinspace())
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
@@ -243,7 +240,6 @@ display round(lastgen) and plasmatank amount
 				is_affected_by_gravity = TRUE
 				sync_gravity()
 				anchored = 0
-
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
 		else if(istype(O, /obj/item/weapon/screwdriver))
