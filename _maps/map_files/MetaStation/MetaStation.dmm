@@ -23766,6 +23766,7 @@
 	},
 /area/maintenance/starboard)
 "aPU" = (
+/obj/machinery/computer/atmos_alert,
 /obj/structure/sign/map/left{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
 	icon_state = "map-left-MS";
@@ -23776,7 +23777,6 @@
 	pixel_x = -26;
 	pixel_y = 0
 	},
-/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "aPV" = (
@@ -105514,13 +105514,13 @@ djC
 bcT
 beC
 djE
-djE
-djE
+djI
+djN
 beC
 djR
-djz
+djS
 bsk
-djC
+djU
 aVu
 bxu
 aRA
@@ -106027,9 +106027,9 @@ baa
 aWS
 bcU
 beE
-djE
-djE
-djE
+djF
+djJ
+djO
 beC
 bcU
 aWS
@@ -106541,9 +106541,9 @@ bab
 aWS
 bcS
 beG
-djE
-djE
-djE
+djG
+djK
+djP
 blQ
 bcS
 aWS
@@ -107055,9 +107055,9 @@ aWS
 aWS
 bcS
 beI
-djE
-djE
-djE
+djH
+djL
+djQ
 blR
 bcS
 aWS
@@ -107307,9 +107307,9 @@ aSL
 aDb
 cZq
 aWZ
-djz
+djA
 aZZ
-djC
+djD
 bcT
 beC
 beC
@@ -107317,9 +107317,9 @@ beC
 beC
 beC
 bcT
-djz
+djT
 bsk
-djC
+djV
 bvH
 bMw
 aRA
@@ -137884,7 +137884,7 @@ aMk
 aNv
 dfk
 dfq
-djt
+djw
 dfG
 dfQ
 dfZ
@@ -138133,7 +138133,7 @@ aBQ
 dee
 aEr
 det
-djt
+dju
 daY
 daZ
 dbb
@@ -138398,7 +138398,7 @@ aMk
 aNv
 dfm
 dfq
-djt
+djy
 dbg
 dfR
 dga

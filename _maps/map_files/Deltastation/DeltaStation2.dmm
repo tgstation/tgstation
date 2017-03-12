@@ -60122,11 +60122,11 @@
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "cdg" = (
+/obj/machinery/computer/atmos_alert,
 /obj/structure/sign/nosmoking_1{
 	pixel_x = 28;
 	pixel_y = -28
 	},
-/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "cdh" = (
