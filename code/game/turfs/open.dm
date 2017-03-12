@@ -79,6 +79,8 @@
 	. = ..()
 
 /turf/open/proc/force_gravity_on_atom(atom/movable/AM)
+	if(!AM.is_affected_by_gravity)
+		return FALSE
 	if(!initialized)
 		return FALSE
 	if(SSgravity)
