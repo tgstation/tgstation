@@ -104,11 +104,10 @@
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
 		if ((canRecordComms && radio_freq) || !radio_freq)
-			mytape.timestamp += mytape.used_capacity
 			mytape.addInfo(message, speaker, message_langs, raw_message, radio_freq, spans)
 
 
-/obj/item/device/taperecorder/verb/toggleRecordComms()
+/obj/item/device/taperecorder/proc/toggleRecordComms()
 	set name = "Toggle radio record"
 	set category = "Object"
 	if (canRecordComms)
@@ -130,7 +129,7 @@
 		loop = TRUE
 */
 
-/obj/item/device/taperecorder/verb/toggleAnnounce()
+/obj/item/device/taperecorder/proc/toggleAnnounce()
 	set name = "Toggle announcements"
 	set category = "Object"
 	if (announce)
@@ -158,7 +157,6 @@
 		recording = TRUE
 		playPosition = 1
 		update_icon()
-		mytape.timestamp += mytape.used_capacity
 		mytape.addInfoAnnounce(src, "Recording started.")
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
@@ -184,14 +182,8 @@
 	playPosition = 1
 	if(recording)
 		recording = FALSE
-		mytape.timestamp += mytape.used_capacity
-<<<<<<< HEAD
 		mytape.addInfoAnnounce(src, "Recording stopped.")
-		usr << "<span class='notice'>Recording stopped.</span>"
-=======
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
->>>>>>> master
 		return
 	else if(playing)
 		playing = FALSE
@@ -213,13 +205,8 @@
 
 	playing = TRUE
 	update_icon()
-<<<<<<< HEAD
-
 	if (announce)
 		say("Playing started.")
-=======
-	to_chat(usr, "<span class='notice'>Playing started.</span>")
->>>>>>> master
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	while (used < max)
@@ -237,7 +224,7 @@
 			//if (loop)
 				//playPosition = 0 // since playPosition++ at end
 		else
-			playsleepseconds = mytape.timestamp[playPosition + 1] - mytape.timestamp[playPosition]
+			playsleepseconds = mytape.timestampInSeconds[playPosition + 1] - mytape.timestampInSeconds[playPosition]
 		if(playsleepseconds > 14)
 			sleep(10)
 			say("Skipping [playsleepseconds] seconds of silence")
@@ -249,16 +236,122 @@
 	update_icon()
 
 
+// Make a menu for the player to seek through the tape and do other actions
 /obj/item/device/taperecorder/attack_self(mob/user)
+
+	var/dat = "<html><head><title>Universal Recorder</title></head><body><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style><br>"
+	var/form_id = "seek"
+	dat += get_javascript_header(form_id)
+
+	var/timeStamp = "00:00"
+	var/progress = 0
+	var/max = 1
+	if (mytape && mytape.storedinfo && mytape.timestampInSeconds && playPosition <= mytape.storedinfo.len && mytape.timestampInSeconds[playPosition] && mytape.storedinfo[playPosition]["time_stamp"])
+		timeStamp = mytape.storedinfo[playPosition]["time_stamp"]
+		max = mytape.used_capacity
+		progress = mytape.timestampInSeconds[playPosition]
+	var/percent = (progress/max)*100
+	dat += {"<div id="container" style="width:100%; height:50px; border:1px solid black;">
+			  <div id="progress-bar" style="width:[percent]%;
+			  	background-color:grey;
+			       height:50px;">
+			  </div>
+			</div>"}
+	dat += "Current Time: \[[timeStamp]\]<br>"
+	dat += "<form name='seek' id='seek' action='?src=\ref[src]' method='get' style='display: inline'>"
+	dat += "<input type='hidden' name='src' value='\ref[src]'>"
+	dat += "<input type='hidden' name='operation' value='seek'>"
+	dat += "<input type='text' id='seekfield' name='seekfield' style='width:50px; background-color:#FFDDDD;' onkeyup='process()'>"
+	dat += " \[<a href='#' onclick='submit()'>Seek</a>\] (Format: XX:XX)<br><br>"
+	dat += "\[<a href='byond://?src=\ref[src];operation=playPause'>Play/Pause</a>\]<br><br>"
+	dat += "\[<a href='byond://?src=\ref[src];operation=stopRewind'>Stop/Rewind</a>\]<br><br>"
+	dat += "\[<a href='byond://?src=\ref[src];operation=record'>Record</a>\]<br><br>"
+	dat += "\[<a href='byond://?src=\ref[src];operation=toggleRecordComms'>Toggle radio record</a>\]<br><br>"
+	dat += "\[<a href='byond://?src=\ref[src];operation=toggleAnnounce'>Toggle announcements</a>\]<br><br>"
+	dat += "\[<a href='byond://?src=\ref[src];operation=print_transcript'>Print Transcript</a>\]"
+	dat += "</body></html>"
+	user << browse(dat, "window=universalrecorder;size=400x450;border=1;can_resize=1;can_minimize=0")
+	onclose(user, "universalrecorder", src)
+
+/obj/item/device/taperecorder/Topic(href, href_list)
+	..()
+	var/mob/living/U = usr
+
+	if(usr.canUseTopic(src) && !href_list["close"])
+		add_fingerprint(U)
+		U.set_machine(src)
+
+	if(!href_list["operation"])
+		return
+
+	switch(href_list["operation"])
+		if("seek")
+			if (!mytape || !mytape.storedinfo)
+				return
+			var/seekfield = href_list["seekfield"]
+			// Grab the minutes and seconds
+			var/regex/re = new("(^\\d{1,2}):(\\d{1,2})$")
+			if (re.Find(seekfield) == 0)
+				return
+			var/mins = round(text2num(re.group[1]))
+			var/secs = round(text2num(re.group[2]))
+			secs += (mins * 60) // Needed for easier comparison
+			var/lastIter = 1
+			for (var/iter=1; iter <= mytape.timestampInSeconds.len; iter++)
+				var/iterTimestamp = mytape.timestampInSeconds[iter]
+				if (iterTimestamp > secs)
+					break
+				lastIter = iter
+			if (playing)
+				say("*tape winding noise*")
+			playPosition = lastIter
+		if ("playPause")
+			play()
+		if ("stopRewind")
+			stop()
+		if ("record")
+			record()
+		if ("toggleRecordComms")
+			toggleRecordComms()
+		if ("toggleAnnounce")
+			toggleAnnounce()
+		if ("print_transcript")
+			print_transcript()
+
+	if(U.machine == src)//Final safety.
+		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
+	else
+		U.unset_machine()
+		U << browse(null, "window=universalrecorder")
+	return
+
+
+// Taken from communications.dm, checks if the user put the right format for seeking
+/obj/item/device/taperecorder/proc/get_javascript_header(form_id)
+	var/dat = {"<script type="text/javascript">
+					var re = /^\\d{1,2}:\\d{1,2}$/;
+						function submit() {
+							document.getElementById('[form_id]').submit();
+						}
+						function process(){
+							var seekfield = document.getElementById('seekfield');
+							if(re.test(seekfield.value)){
+								seekfield.style.backgroundColor = "#DDFFDD";
+							}
+							else {
+								seekfield.style.backgroundColor = "#FFDDDD";
+							}
+						}
+					</script>"}
+	return dat
+
+/obj/item/device/taperecorder/AltClick(mob/living/user)
 	if(!mytape || mytape.ruined)
 		return
 	if(recording)
 		stop()
 	else
 		record()
-
-/obj/item/device/taperecorder/AltClick(mob/living/user)
-	attack_self(user)
 
 /obj/item/device/taperecorder/verb/print_transcript()
 	set name = "Print Transcript"
@@ -320,7 +413,7 @@
 	var/max_capacity = 600
 	var/used_capacity = 0
 	var/list/storedinfo = list()
-	var/list/timestamp = list()
+	var/list/timestampInSeconds = list()
 	var/ruined = 0
 
 /obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
@@ -346,6 +439,7 @@
 	ruined = 0
 
 /obj/item/device/tape/proc/addInfo(message, speaker, message_langs, raw_message, radio_freq, spans)
+	timestampInSeconds += used_capacity
 	// remove radio_freq
 	// storedinfo[++storedinfo.len] = list(message, speaker, message_langs, raw_message, , spans, time2text(used_capacity * 10,"mm:ss"), FALSE) // OLD
 	var/x[0]
@@ -359,6 +453,7 @@
 	storedinfo[++storedinfo.len] = x
 
 /obj/item/device/tape/proc/addInfoAnnounce(src, message)
+	timestampInSeconds += used_capacity
 	var/spans = get_spans()
 	var/rendered = compose_message(src, languages_spoken, message, , spans)
 	// storedinfo[++storedinfo.len] = list(rendered, src, languages_spoken, message, , spans, time2text(used_capacity * 10,"mm:ss"), TRUE) // OLD
