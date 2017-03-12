@@ -1,6 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - tweak: "The DNA Vault has 2 new powers"
-  - tweak: "The DNA Vault requires super capacitors instead of quadratic"
-  - tweak: "Cargo's Vault Pack now includes DNA probes"
