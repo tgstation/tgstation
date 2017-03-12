@@ -11,7 +11,7 @@
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
 	var/brightness_on = 4 //range of light when on
-	var/flashlight_power//strength of the light when on. optional
+	var/flashlight_power //strength of the light when on. optional
 
 /obj/item/device/flashlight/Initialize()
 	..()
@@ -403,4 +403,5 @@
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
 	icon_state = "flashdark"
 	item_state = "flashdark"
-	flashlight_power = -1.5
+	brightness_on = 2.5
+	flashlight_power = -3
