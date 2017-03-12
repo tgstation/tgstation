@@ -27,7 +27,7 @@ obj/machinery/power/exporter/Destroy()
 	power_exporter_list -= src
 	return ..()
 
-/obj/item/clothing/gloves/krav_maga/engi // a short lived meme until I come up with a more fitting reward
+/obj/item/clothing/gloves/krav_maga/engi 
 	name = "fists of the singulo"
 	desc = "You have spent so much time managing power that your fists have become one with the powernet."
 	icon_state = "yellow"
@@ -51,7 +51,7 @@ obj/machinery/power/exporter/Destroy()
 				disconnect_from_network()
 				user << "<span class='notice'>You unsecure and disconnect the [src].</span>"
 				anchored = FALSE
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
 	return ..()
 
