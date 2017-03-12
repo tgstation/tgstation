@@ -905,7 +905,7 @@
 		to_chat(user, "<span class='warning'>There's nothing in [src] to transfer!</span>")
 		return
 	if(!occupier.mind || !occupier.client)
-		to_chat(user, "<span class='warning'>[occupier] is either inactive, destroyed, or braindead!</span>")
+		to_chat(user, "<span class='warning'>[occupier] is either inactive or destroyed!</span>")
 		return
 	if(!occupier.parent.stat)
 		to_chat(user, "<span class='warning'>[occupier] is refusing all attempts at transfer!</span>" )
