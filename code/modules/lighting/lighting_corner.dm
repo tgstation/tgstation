@@ -1,5 +1,4 @@
 /var/list/datum/lighting_corner/all_lighting_corners = list()
-/var/datum/lighting_corner/dummy/dummy_lighting_corner = new
 // Because we can control each corner of every lighting overlay.
 // And corners get shared between multiple turfs (unless you're on the corners of the map, then 1 corner doesn't).
 // For the record: these should never ever ever be deleted, even if the turf doesn't have dynamic lighting.
@@ -8,8 +7,8 @@
 /var/list/LIGHTING_CORNER_DIAGONAL = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
 
 /datum/lighting_corner
-	var/list/turf/masters                 = list()
-	var/list/datum/light_source/affecting = list() // Light sources affecting us.
+	var/list/turf/masters
+	var/list/datum/light_source/affecting// Light sources affecting us.
 	var/active                            = FALSE  // TRUE if one of our masters has dynamic lighting.
 
 	var/x     = 0
@@ -30,8 +29,8 @@
 	var/update_gen = 0
 
 /datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
-	. = ..()
-
+	masters = list()
+	affecting = list()
 	all_lighting_corners += src
 
 	masters[new_turf] = turn(diagonal, 180)
@@ -51,33 +50,40 @@
 
 	// Diagonal one is easy.
 	T = get_step(new_turf, diagonal)
-	if (T) // In case we're on the map's border.
-		if (!T.corners)
-			T.corners = list(null, null, null, null)
+	var/corners
+	if (T) // In case we're on the map's border. 
+		corners = T.corners
+		if (!corners)
+			corners = list(null, null, null, null)
+			T.corners = corners
 
 		masters[T]   = diagonal
 		i            = LIGHTING_CORNER_DIAGONAL.Find(turn(diagonal, 180))
-		T.corners[i] = src
+		corners[i] = src
 
 	// Now the horizontal one.
 	T = get_step(new_turf, horizontal)
 	if (T) // Ditto.
+		corners = T.corners
 		if (!T.corners)
-			T.corners = list(null, null, null, null)
+			corners = list(null, null, null, null)
+			T.corners = corners
 
 		masters[T]   = ((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH) // Get the dir based on coordinates.
 		i            = LIGHTING_CORNER_DIAGONAL.Find(turn(masters[T], 180))
-		T.corners[i] = src
+		corners[i] = src
 
 	// And finally the vertical one.
 	T = get_step(new_turf, vertical)
 	if (T)
+		corners = T.corners
 		if (!T.corners)
-			T.corners = list(null, null, null, null)
+			corners = list(null, null, null, null)
+			T.corners = corners
 
 		masters[T]   = ((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH) // Get the dir based on coordinates.
 		i            = LIGHTING_CORNER_DIAGONAL.Find(turn(masters[T], 180))
-		T.corners[i] = src
+		corners[i] = src
 
 	update_active()
 
@@ -86,6 +92,7 @@
 	for (var/turf/T in masters)
 		if (T.lighting_overlay)
 			active = TRUE
+			break
 
 // God that was a mess, now to do the rest of the corner code! Hooray!
 /datum/lighting_corner/proc/update_lumcount(var/delta_r, var/delta_g, var/delta_b)
@@ -120,10 +127,10 @@
 
 	for (var/TT in masters)
 		var/turf/T = TT
-		if (T.lighting_overlay)
-			if (!T.lighting_overlay.needs_update)
-				T.lighting_overlay.needs_update = TRUE
-				lighting_update_overlays += T.lighting_overlay
+		var/atom/movable/lighting_overlay/lo = T.lighting_overlay
+		if (lo && !lo.needs_update)
+			lo.needs_update = TRUE
+			lighting_update_overlays += lo
 
 
 /datum/lighting_corner/dummy/New()
@@ -131,9 +138,6 @@
 
 
 /datum/lighting_corner/Destroy(var/force)
-	if (!force)
-		return QDEL_HINT_LETMELIVE
-
 	stack_trace("Ok, Look, TG, I need you to find whatever fucker decided to call qdel on a fucking lighting overlay, then tell him very nicely and politely that he is 100% retarded and needs his head checked. Thanks. Send them my regards by the way.")
 	// Yeah fuck you anyways.
 	return QDEL_HINT_LETMELIVE
