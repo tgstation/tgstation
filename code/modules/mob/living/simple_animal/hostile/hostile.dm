@@ -111,7 +111,6 @@
 		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
 
 		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
-			sleep(60)
 			if(can_see(targets_from, HM, vision_range))
 				. += HM
 	else
