@@ -137,9 +137,13 @@
 	var/image/armrest = null
 	item_chair = null
 
-/obj/structure/chair/comfy/New()
+/obj/structure/chair/comfy/Initialize()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
+	return ..()
+
+/obj/structure/chair/comfy/Destroy()
+	QDEL_NULL(armrest)
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
