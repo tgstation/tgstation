@@ -883,6 +883,6 @@
 	if(method == INJECT|method == INGEST)
 		if(M.has_brain_worms())
 			var/mob/living/simple_animal/borer/B = M.has_brain_worms()
+			to_chat(B, "<span class='warning'>Sudenly everything burns! You try to craw out!</span>")
 			B.leave_victim()
 			B.adjustBruteLoss(5)
-
