@@ -23,11 +23,6 @@
 	if(findtext(var_name, "gravity"))
 		sync_all_gravity()
 
-/turf/open/SDQL_update(var_name, new_value)
-	. = ..()
-	if(findtext(var_name, "gravity"))
-		sync_all_gravity()
-
 /turf/open/proc/sync_all_gravity()
 	if(!initialized)
 		return FALSE

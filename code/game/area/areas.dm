@@ -429,11 +429,6 @@ var/list/teleportlocs = list()
 	if(findtext(var_name, "gravity"))
 		update_all_gravity()
 
-/area/SDQL_update(var_name, new_value)
-	. = ..()
-	if(findtext(var_name, "gravity"))
-		update_all_gravity()
-
 /area/proc/update_all_gravity()
 	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity || !initialized)
 		return FALSE
