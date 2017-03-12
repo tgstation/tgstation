@@ -7,6 +7,7 @@
 	density = TRUE
 	anchored = TRUE
 	req_access = list(access_engine)
+	var/restricted_access = FALSE
 	var/obj/item/device/radio/radio
 	var/GBP = 0
 	var/GBPearned = 0
@@ -95,6 +96,7 @@
 	dat += "You currently have <td>[round(GBP)]</td> engineering voucher points<br>"
 	dat += "You have earned a total of <td>[round(GBPearned)]</td> this shift<br>"
 	dat += "</div>"
+	dat += 	"<b><A href='?src=\ref[src];choice=restrict'>[restricted_access ? "Open Access to all Engineering Personnel" : "Restrict Access to Chief Engineer"]</A></b><br>"
 	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
 	for(var/datum/GBP_equipment/prize in prize_list)
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
@@ -107,6 +109,14 @@
 /obj/machinery/engi_points_manager/Topic(href, href_list)
 	if(..())
 		return
+	if(href_list["choice"])
+		playsound(loc, 'sound/machines/terminal_prompt.ogg', 75, 1)
+		restricted_access = !restricted_access
+		if(restricted_access)
+			req_access = list(access_ce)
+		else
+			req_access = list(access_engine)
+		updateUsrDialog()
 	if(href_list["purchase"])
 		var/datum/GBP_equipment/prize = locate(href_list["purchase"])
 		if (!prize || !(prize in prize_list))
@@ -252,12 +262,14 @@
 /obj/machinery/construction_nuke/interact(mob/user)
 	user.set_machine(src)
 	var/list/dat = list()
-	dat += ("<b><u>Detonation Payload</u>:<A href='?src=\ref[src];action=payload'>[payload]</A></b><br><br>")
-	dat += ("Timer: [get_time_left()] seconds<br>")
-	dat += ("<A href='?src=\ref[src];action=set'>Set Timer</A><br>")
-	dat += ("<A href='?src=\ref[src];action=anchor'>[anchored ? "Anchored" : "Not Anchored"]</A><br>")
-	dat += ("<A href='?src=\ref[src];action=safety'>[safety ? "Safety On" : "Safety Off"]</A><br><br>")
-	dat += ("<b><A href='?src=\ref[src];action=activate'>[bomb_set ? "DEACTIVATE" : "ACTIVATE"]</A><b><br>")
+	dat +="<div class='statusDisplay'>"
+	dat += "Timer: [get_time_left()] seconds<br>"
+	dat += "</div>"
+	dat += "<b><u>Detonation Payload</u>:<A href='?src=\ref[src];action=payload'> [payload]</A></b><br><br>"
+	dat += "<A href='?src=\ref[src];action=set'>Set Timer</A><br>"
+	dat += "<A href='?src=\ref[src];action=anchor'>[anchored ? "Anchored" : "Not Anchored"]</A><br>"
+	dat += "<A href='?src=\ref[src];action=safety'>[safety ? "Safety On" : "Safety Off"]</A><br><br>"
+	dat += "<b><A href='?src=\ref[src];action=activate'>[bomb_set ? "DEACTIVATE" : "ACTIVATE"]</A><b><br>"
 	var/datum/browser/popup = new(user, "vending", "Construction Nuke", 300, 275)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -285,6 +297,10 @@
 
 /obj/machinery/construction_nuke/proc/set_payload()
 	playsound(loc, 'sound/machines/terminal_prompt.ogg', 75, 1)
+	if(timing || bomb_set)
+		to_chat(usr, "<span class='danger'>Error: Payload cannot be altered while the device is armed.</span>")
+		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+		return
 	payload = input(usr, "Choose your Payload", "Payload:") as null|anything in possible_payloads
 	if (!src || QDELETED(src))
 		return
@@ -329,6 +345,10 @@
 	else
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 /obj/machinery/construction_nuke/proc/set_safety()
+	if(!anchored)
+		to_chat(usr, "<span class='danger'>Error: Safety cannot be altered on an unanchored device.</span>")
+		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+		return
 	safety = !safety
 	if(safety)
 		if(timing)
@@ -344,8 +364,13 @@
 	update_icon()
 
 /obj/machinery/construction_nuke/proc/set_active()
+	var/area/A = get_area(src)
 	if(safety && !bomb_set)
-		to_chat(usr, "<span class='danger'>Error:The safety is still on.</span>")
+		to_chat(usr, "<span class='danger'>Error: The safety is still on.</span>")
+		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+		return
+	if(!A.blob_allowed)
+		to_chat(usr, "<span class='danger'>Error: The device's safety countermeasures flash red: you cannot arm this device outside of the station.</span>")
 		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	timing = !timing
@@ -355,7 +380,6 @@
 			playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
 			return
 		bomb_set = TRUE
-		var/area/A = get_area(src)
 		priority_announce("We are detecting a massive spike of radioactive energy originating from [A.map_name]. If this is not a scheduled occurrence, please investigate immediately.","Nanotrasen Nuclear Safety Division", 'sound/machines/engine_alert2.ogg')
 		cooldown = world.time + 1200
 		detonation_timer = world.time + (timer_set * 10)
@@ -382,8 +406,8 @@
 	update_icon()
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	sleep(10)
 	var/turf/startpoint = get_turf(src)
+	sleep(100)
 	for(var/mob/M in player_list)
 		M << 'sound/effects/explosionfar.ogg'
 	spawn_atom_to_turf(/obj/effect/overlay/temp/big_explosion, startpoint, 1, FALSE)

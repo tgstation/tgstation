@@ -79,6 +79,7 @@
 	max_water = 1000
 	power = 8
 	cooling_power = 10
+	recoil = 0
 	var/obj/vehicle/space/speedbike/atmos/vehicle = null
 
 /obj/item/weapon/extinguisher/vehicle/dropped(mob/user)
@@ -113,7 +114,7 @@
 
 /obj/vehicle/space/speedbike/atmos/unbuckle_mob(mob/living/M)
 	. = ..()
-	internal_extinguisher.forceMove(src)
+	M.transferItemToLoc(internal_extinguisher,src)
 	for(var/datum/action/innate/atmos_bike/H in M.actions)
 		qdel(H)
 
@@ -246,6 +247,7 @@
 		bike.loaded = FALSE
 	if(bike.loaded)
 		owner << "<span class='notice'>You eject the vehicle's internal canister.</span>"
+		playsound(get_turf(owner),'sound/mecha/mechmove03.ogg', 50, 1)
 		bike.CAN.loc = get_turf(bike)
 		button_icon_state = "mech_cycle_equip_off"
 		name = "load canister"
