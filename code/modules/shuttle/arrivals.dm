@@ -26,14 +26,14 @@
 
 	preferred_direction = dir
 
-	..()
-
 	if(SSshuttle.arrivals)
 		WARNING("More than one arrivals docking_port placed on map!")
 		qdel(src)
 		return
 
 	SSshuttle.arrivals = src
+
+	..()
 
 	areas = list()
 
