@@ -200,13 +200,15 @@
 		damage_clothes(15, BRUTE, "melee")
 		return 1
 
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
 		return
-	if(M.a_intent == INTENT_DISARM)
-		if(M.buckled_mobs && (src in M.buckled_mobs) && M.riding_datum)
-			M.riding_datum.force_dismount(src)
-	dna.species.spec_attack_hand(M, src)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.a_intent == INTENT_DISARM)
+			if(H.buckled_mobs && (src in H.buckled_mobs) && H.riding_datum)
+				H.riding_datum.force_dismount(src)
+		dna.species.spec_attack_hand(H, src)
 
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
