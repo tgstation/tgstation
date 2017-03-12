@@ -358,7 +358,11 @@ var/total_borer_hosts_needed = 10
 
 	if(!H || !src)
 		return
-
+	
+	if(H.reagents.has_reagent("nuroxanide"))
+		src << "<span class='warning'>As you taste [H]'s blood you suddenly feel sick! You release your grip and fall to the ground.</span>"
+		return
+		
 	Infect(H)
 
 /mob/living/simple_animal/borer/proc/Infect(mob/living/carbon/C)
