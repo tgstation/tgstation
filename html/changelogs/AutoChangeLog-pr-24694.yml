@@ -1,9 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - rscadd: "The arrivals shuttle will now ferry new arrivals to the station. It will not depart if any intelligent living being is on board. It will remain docked if it is depressurized."
-  - tweak: "You now late-join spawn buckled to arrivals shuttle chairs"
-  - tweak: "Ghost spawn points have been moved to the center of the station"
-  - tweak: "Departing shuttles will now try and shut their docking airlocks"
-  - bugfix: "The arrivals shuttle airlocks are now properly cycle-linked"
-  - bugfix: "You can now hear hyperspace sounds outside of shuttles"

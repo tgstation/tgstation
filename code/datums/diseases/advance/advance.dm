@@ -163,7 +163,7 @@ var/list/advance_cures = 	list(
 	return generated
 
 /datum/disease/advance/proc/Refresh(new_name = 0)
-	//world << "[src.name] \ref[src] - REFRESH!"
+	//to_chat(world, "[src.name] \ref[src] - REFRESH!")
 	GenerateProperties()
 	AssignProperties()
 	id = null
@@ -255,7 +255,7 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		//world << "Res = [res]"
+		//to_chat(world, "Res = [res]")
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
@@ -327,7 +327,7 @@ var/list/advance_cures = 	list(
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(var/list/D_list)
 
-	//world << "Mixing!!!!"
+	//to_chat(world, "Mixing!!!!")
 
 	var/list/diseases = list()
 
@@ -352,7 +352,7 @@ var/list/advance_cures = 	list(
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
-	//world << "END MIXING!!!!!"
+	//to_chat(world, "END MIXING!!!!!")
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(1)
 	return to_return
@@ -421,7 +421,7 @@ var/list/advance_cures = 	list(
 /mob/verb/test()
 
 	for(var/datum/disease/D in SSdisease.processing)
-		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
+		to_chat(src, "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>")
 */
 
 

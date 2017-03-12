@@ -14,6 +14,8 @@
 
 /obj/item/ammo_casing/energy/chameleon/ready_proj()
 	. = ..()
+	if(!BB)
+		newshot()
 	for(var/V in projectile_vars)
 		if(BB.vars[V])
 			BB.vars[V] = projectile_vars[V]

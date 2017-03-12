@@ -33,15 +33,13 @@
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	if(used)
-		user << "This charter has already been used to name the station."
+		to_chat(user, "This charter has already been used to name the station.")
 		return
 	if(!ignores_timeout && (world.time-round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
-		user << "The crew has already settled into the shift. \
-			It probably wouldn't be good to rename the station right now."
+		to_chat(user, "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now.")
 		return
 	if(response_timer_id)
-		user << "You're still waiting for approval from your employers about \
-			your proposed name change, it'd be best to wait for now."
+		to_chat(user, "You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now.")
 		return
 
 	var/new_name = stripped_input(user, message="What do you want to name \
@@ -55,14 +53,14 @@
 		[new_name]")
 
 	if(standard_station_regex.Find(new_name))
-		user << "Your name has been automatically approved."
+		to_chat(user, "Your name has been automatically approved.")
 		rename_station(new_name, user)
 		return
 
-	user << "Your name has been sent to your employers for approval."
+	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>"
+	to_chat(admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>")
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)

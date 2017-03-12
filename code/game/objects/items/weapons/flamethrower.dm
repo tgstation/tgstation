@@ -61,15 +61,15 @@
 	return
 
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
-	if(flag) 
-		return // too close  
+	if(flag)
+		return // too close
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.dna.check_mutation(HULK))
-			user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			to_chat(user, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
 		if(NOGUNS in H.dna.species.species_traits)
-			user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+			to_chat(user, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
@@ -96,7 +96,7 @@
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && igniter && !lit)
 		status = !status
-		user << "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>"
+		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
 		return
 
@@ -114,7 +114,7 @@
 
 	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
-			user << "<span class='notice'>There is already a plasma tank loaded in [src]!</span>"
+			to_chat(user, "<span class='notice'>There is already a plasma tank loaded in [src]!</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
@@ -133,7 +133,7 @@
 		return
 	user.set_machine(src)
 	if(!ptank)
-		user << "<span class='notice'>Attach a plasma tank first!</span>"
+		to_chat(user, "<span class='notice'>Attach a plasma tank first!</span>")
 		return
 	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove plasmatank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
 	user << browse(dat, "window=flamethrower;size=600x300")

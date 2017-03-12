@@ -17,13 +17,13 @@
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if(!isfloorturf(loc))
-		usr << "<span class='warning'>You cannot place [src] on this spot!</span>"
+		to_chat(usr, "<span class='warning'>You cannot place [src] on this spot!</span>")
 		return
 	if(A.requires_power == 0 || istype(A, /area/space))
-		usr << "<span class='warning'>You cannot place [src] in this area!</span>"
+		to_chat(usr, "<span class='warning'>You cannot place [src] in this area!</span>")
 		return
 	if(gotwallitem(loc, ndir, inverse*2))
-		usr << "<span class='warning'>There's already an item on this wall!</span>"
+		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
 	return 1
@@ -58,7 +58,7 @@
 	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
 
 	if(istype(W, /obj/item/weapon/wrench) && (metal_amt || glass_amt))
-		user << "<span class='notice'>You dismantle [src].</span>"
+		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
 			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)
 		if(glass_amt)
@@ -83,16 +83,16 @@
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (A.get_apc())
-		usr << "<span class='warning'>This area already has APC!</span>"
+		to_chat(usr, "<span class='warning'>This area already has APC!</span>")
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)
-			usr << "<span class='warning'>There is another network terminal here!</span>"
+			to_chat(usr, "<span class='warning'>There is another network terminal here!</span>")
 			return
 		else
 			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(loc)
 			C.amount = 10
-			usr << "<span class='notice'>You cut the cables and disassemble the unused power terminal.</span>"
+			to_chat(usr, "<span class='notice'>You cut the cables and disassemble the unused power terminal.</span>")
 			qdel(T)
 	return 1
 

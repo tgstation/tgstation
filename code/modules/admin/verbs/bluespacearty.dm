@@ -8,7 +8,7 @@
 	var/mob/living/target = M
 
 	if(!isliving(target))
-		usr << "This can only be used on instances of type /mob/living"
+		to_chat(usr, "This can only be used on instances of type /mob/living")
 		return
 
 	if(alert(usr, "Are you sure you wish to hit [key_name(target)] with Blue Space Artillery?",  "Confirm Firing?" , "Yes" , "No") != "Yes")
@@ -23,7 +23,7 @@
 		else
 			T.break_tile()
 
-	target << "<span class='userdanger'>You're hit by bluespace artillery!</span>"
+	to_chat(target, "<span class='userdanger'>You're hit by bluespace artillery!</span>")
 	log_admin("[key_name(target)] has been hit by Bluespace Artillery fired by [key_name(usr)]")
 	message_admins("[ADMIN_LOOKUPFLW(target)] has been hit by Bluespace Artillery fired by [ADMIN_LOOKUPFLW(usr)]")
 
