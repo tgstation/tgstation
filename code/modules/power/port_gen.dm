@@ -235,8 +235,8 @@ display round(lastgen) and plasmatank amount
       			is_affected_by_gravity = FALSE
 				sync_gravity()
 			else if(anchored)
-				disconnect_from_network()
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
+				disconnect_from_network()
 				is_affected_by_gravity = TRUE
 				sync_gravity()
 				anchored = 0
