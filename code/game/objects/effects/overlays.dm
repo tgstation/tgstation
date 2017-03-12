@@ -210,6 +210,16 @@
 	icon_state = "smoke"
 	duration = 50
 
+/obj/effect/overlay/temp/fire
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "3"
+	duration = 10
+
+/obj/effect/overlay/temp/big_explosion
+	icon = 'icons/effects/explosion.dmi'
+	icon_state = "explosion"
+	randomdir = 0
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
