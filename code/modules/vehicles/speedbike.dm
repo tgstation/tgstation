@@ -114,7 +114,8 @@
 
 /obj/vehicle/space/speedbike/atmos/unbuckle_mob(mob/living/M)
 	. = ..()
-	M.transferItemToLoc(internal_extinguisher,src)
+	if(ex_out)
+		M.transferItemToLoc(internal_extinguisher,src)
 	for(var/datum/action/innate/atmos_bike/H in M.actions)
 		qdel(H)
 

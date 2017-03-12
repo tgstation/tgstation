@@ -1,5 +1,5 @@
 /obj/machinery/engi_points_manager
-	name = "Intergalatic Energy Point Exchange"
+	name = "Intergalactic Energy Point Exchange"
 	desc = "A cutting edge market that trades energy and simple matter on a FTL basis."
 	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "store"
@@ -265,7 +265,7 @@
 	dat +="<div class='statusDisplay'>"
 	dat += "Timer: [get_time_left()] seconds<br>"
 	dat += "</div>"
-	dat += "<b><u>Detonation Payload</u>:<A href='?src=\ref[src];action=payload'> [payload]</A></b><br><br>"
+	dat += "<b><u>Detonation Payload</u>: <A href='?src=\ref[src];action=payload'>[payload]</A></b><br><br>"
 	dat += "<A href='?src=\ref[src];action=set'>Set Timer</A><br>"
 	dat += "<A href='?src=\ref[src];action=anchor'>[anchored ? "Anchored" : "Not Anchored"]</A><br>"
 	dat += "<A href='?src=\ref[src];action=safety'>[safety ? "Safety On" : "Safety Off"]</A><br><br>"
