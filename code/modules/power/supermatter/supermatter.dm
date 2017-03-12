@@ -159,7 +159,7 @@
 	for(var/mob/M in mob_list)
 		if(M.z == z)
 			M << 'sound/magic/Charge.ogg'
-			M to_chat "<span class='boldannounce'>You feel reality distort for a moment...</span>"
+			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", "supermatter")
 		if(T)

@@ -10,7 +10,6 @@
 	max_integrity = 25
 	obj_integrity = 25
 	var/ini_dir = null
-
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = 0
 	var/heat_resistance = 800
@@ -35,8 +34,6 @@
 	obj_integrity = max_integrity
 	if(direct)
 		setDir(direct)
-
-
 	if(reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
 
@@ -145,24 +142,20 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
-
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
-
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
-
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(loc, I.usesound, 75, 1)
-
 			if(reinf)
 				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
 					to_chat(user, "<span class='notice'>You begin to [state == WINDOW_SCREWED_TO_FRAME ? "unscrew the window from":"screw the window to"] the frame...</span>")
@@ -180,7 +173,6 @@
 				if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 					anchored = !anchored
 					update_nearby_icons()
-
 					to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 
@@ -195,13 +187,11 @@
 
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 			playsound(loc, I.usesound, 75, 1)
-
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
 				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
@@ -253,11 +243,9 @@
 	if(!disassembled)
 		playsound(src, "shatter", 70, 1)
 		var/turf/T = loc
-
 		if(!(flags & NODECONSTRUCT))
 			for(var/i in debris)
 				var/obj/item/I = i
-
 				I.loc = T
 				transfer_fingerprints_to(I)
 	qdel(src)
@@ -272,14 +260,12 @@
 		return
 
 	if(anchored)
-
 		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 90)
 
 	if(!valid_window_location(loc, target_dir))
-
 		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
@@ -288,7 +274,6 @@
 	ini_dir = dir
 	add_fingerprint(usr)
 	return TRUE
-
 
 /obj/structure/window/verb/revrotate()
 	set name = "Rotate Window Clockwise"
@@ -299,14 +284,12 @@
 		return
 
 	if(anchored)
-
 		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 270)
 
 	if(!valid_window_location(loc, target_dir))
-
 		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
@@ -319,7 +302,6 @@
 /obj/structure/window/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
