@@ -101,7 +101,8 @@
 	AM.gravity_stunning = 0
 	AM.gravity_override = 0
 	AM.sync_gravity()
-	atoms_with_forced_gravity -= AM
+	if(islist(atoms_with_forced_gravity))
+		atoms_with_forced_gravity -= AM
 
 /turf/open/indestructible
 	name = "floor"

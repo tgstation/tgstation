@@ -22,11 +22,11 @@ var/datum/controller/subsystem/gravity/SSgravity
 	var/purge_interval = 600
 	var/purge_tick = 0
 	var/purging = FALSE
-	var/error_no_atom = 0
-	var/error_mismatched_area = 0
-	var/error_mismatched_turf = 0
-	var/error_no_area = 0
-	var/error_no_turf = 0
+	var/error_no_atom
+	var/list/error_mismatched_area
+	var/list/error_mismatched_turf
+	var/list/error_no_area
+	var/list/error_no_turf
 	var/list/gravgens
 	var/list/purging_atoms
 	var/list/atoms_forced_gravity_processing
@@ -38,14 +38,19 @@ var/datum/controller/subsystem/gravity/SSgravity
 /datum/controller/subsystem/gravity/New()
 	NEW_SS_GLOBAL(SSgravity)
 
-/datum/controller/subsystem/gravity/proc/init_lists()
+/datum/controller/subsystem/gravity/proc/init_lists(full = FALSE)
 	gravgens = list()
 	purging_atoms = list()
 	atoms_forced_gravity_processing = list()
+	if(full)
+		error_no_turf = list()
+		error_no_area = list()
+		error_mismatched_turf = list()
+		error_mismatched_area = list()
 
 /datum/controller/subsystem/gravity/Initialize()
 	init_state = 1
-	init_lists()
+	init_lists(TRUE)
 	inited_atoms = 0
 	for(var/atom/movable/A in world)
 		A.init_gravity()
@@ -155,13 +160,13 @@ var/datum/controller/subsystem/gravity/SSgravity
 				var/current_area = get_area(AM)
 				if(AM.current_gravity_area)
 					if(AM.current_gravity_area != current_area)
-						error_mismatched_area++
+						error_mismatched_area["[AM.type]-[AM.current_gravity_area]-[current_area]"]++
 						AM.sync_gravity()
 				else
-					error_no_area++
+					error_no_area["[current_area]-[AM]"]++
 					AM.sync_gravity()
 			else
-				error_no_turf++
+				error_no_turf["[AM.type]-[AM.loc.type]"]++
 				if(AM.current_gravity_area)
 					AM.current_gravity_area.update_gravity(AM, FALSE)
 				AM.sync_gravity()

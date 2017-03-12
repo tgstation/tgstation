@@ -72,7 +72,7 @@
 		return FALSE
 	if(current_gravity_area && (A != current_gravity_area))
 		if(SSgravity)
-			SSgravity.error_mismatched_turf++
+			SSgravity.error_mismatched_area["[type]-[current_gravity_area]-[A]"]++
 		current_gravity_area.update_gravity(src, FALSE)
 		current_gravity_area = null
 		A.update_gravity(src, TRUE)
@@ -82,7 +82,7 @@
 		if(forced_gravity_by_turf)
 			if(T != forced_gravity_by_turf)
 				if(SSgravity)
-					SSgravity.error_mismatched_turf++
+					SSgravity.error_mismatched_turf["[type]-[T.type]-[forced_gravity_by_turf.type]"]++
 				forced_gravity_by_turf.reset_forced_gravity_atom(src)
 				forced_gravity_by_turf = null
 		if(istype(T, /turf/open))
