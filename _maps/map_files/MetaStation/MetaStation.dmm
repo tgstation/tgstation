@@ -26646,14 +26646,9 @@
 /turf/closed/wall,
 /area/engine/engineering)
 "aVb" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/pen,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/structure/closet/secure_closet/engineering_welding,
 /turf/open/floor/plasteel{
 	name = "floor"
 	},
@@ -26674,14 +26669,11 @@
 	},
 /area/engine/engineering)
 "aVd" = (
-/obj/structure/table,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/storage/firstaid/fire,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plasteel{
 	name = "floor"
 	},
@@ -34260,6 +34252,9 @@
 	pixel_y = 32
 	},
 /obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -94858,6 +94853,14 @@
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
+"djX" = (
+/obj/structure/closet/coffin,
+/obj/machinery/door/window/eastleft{
+	name = "Coffin Storage";
+	req_access_txt = "22"
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
 
 (1,1,1) = {"
 aaa
@@ -105514,13 +105517,13 @@ djC
 bcT
 beC
 djE
-djI
-djN
+djE
+djE
 beC
 djR
-djS
+djz
 bsk
-djU
+djC
 aVu
 bxu
 aRA
@@ -106027,9 +106030,9 @@ baa
 aWS
 bcU
 beE
-djF
-djJ
-djO
+djE
+djE
+djE
 beC
 bcU
 aWS
@@ -106541,9 +106544,9 @@ bab
 aWS
 bcS
 beG
-djG
-djK
-djP
+djE
+djE
+djE
 blQ
 bcS
 aWS
@@ -107055,9 +107058,9 @@ aWS
 aWS
 bcS
 beI
-djH
-djL
-djQ
+djE
+djE
+djE
 blR
 bcS
 aWS
@@ -107307,9 +107310,9 @@ aSL
 aDb
 cZq
 aWZ
-djA
+djz
 aZZ
-djD
+djC
 bcT
 beC
 beC
@@ -107317,9 +107320,9 @@ beC
 beC
 beC
 bcT
-djT
+djz
 bsk
-djV
+djC
 bvH
 bMw
 aRA
@@ -115092,7 +115095,7 @@ cTf
 cNt
 cMI
 cPC
-cPC
+djX
 cPC
 cMI
 cRF
@@ -137884,7 +137887,7 @@ aMk
 aNv
 dfk
 dfq
-djw
+djt
 dfG
 dfQ
 dfZ
@@ -138133,7 +138136,7 @@ aBQ
 dee
 aEr
 det
-dju
+djt
 daY
 daZ
 dbb
@@ -138398,7 +138401,7 @@ aMk
 aNv
 dfm
 dfq
-djy
+djt
 dbg
 dfR
 dga
