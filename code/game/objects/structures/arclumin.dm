@@ -13,8 +13,8 @@ This memorial has been designed for him and any future coders to perish.
 */
 
 /obj/structure/arc
-	name = "Tomb of the Unknown Spaceman"
-	desc = "Here rests an unknown spaceman\nUnknown by name or rank\nWhose acts will not be forgotten"
+	name = "Tomb of the Unknown Employee"
+	desc = "Here rests an unknown employee\nUnknown by name or rank\nWhose acts will not be forgotten"
 	icon = 'icons/obj/tomb.dmi'
 	icon_state = "memorial"
 	density = 1
