@@ -22,15 +22,15 @@
 		return
 
 	if(istype(I, /obj/item/weapon/evidencebag))
-		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
+		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return 1 //now this is podracing
 
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
-		user << "<span class='notice'>[I] won't fit in [src].</span>"
+		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
 
 	if(contents.len)
-		user << "<span class='notice'>[src] already has something inside it.</span>"
+		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
@@ -75,7 +75,7 @@
 		desc = "An empty evidence bag."
 
 	else
-		user << "[src] is empty."
+		to_chat(user, "[src] is empty.")
 		icon_state = "evidenceobj"
 	return
 

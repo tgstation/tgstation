@@ -4,7 +4,7 @@
 
 /mob/dead/new_player/proc/handle_player_polling()
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/DBQuery/query_poll_get = dbcon.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE Now() BETWEEN starttime AND endtime [(client.holder ? "" : "AND adminonly = false")]")
 	if(!query_poll_get.warn_execute())
@@ -23,7 +23,7 @@
 	if(!pollid)
 		return
 	if (!dbcon.Connect())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/DBQuery/query_poll_get_details = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
 	if(!query_poll_get_details.warn_execute())
@@ -328,13 +328,13 @@
 	if (text)
 		table = "poll_textreply"
 	if (!dbcon.Connect())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM `[format_table_name(table)]` WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_hasvoted.warn_execute())
 		return
 	if(query_hasvoted.NextRow())
-		usr << "<span class='danger'>You've already replied to this poll.</span>"
+		to_chat(usr, "<span class='danger'>You've already replied to this poll.</span>")
 		return
 	. = "Player"
 	if(client.holder)
@@ -349,14 +349,14 @@
 		//we gots ourselfs a dirty cheater on our hands!
 		log_game("[key_name(usr)] attempted to rig the vote by voting as [ckey]")
 		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [ckey]")
-		usr << "<span class='danger'>You don't seem to be [ckey].</span>"
-		src << "<span class='danger'>Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this</span>"
+		to_chat(usr, "<span class='danger'>You don't seem to be [ckey].</span>")
+		to_chat(src, "<span class='danger'>Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this</span>")
 		return 0
 	return 1
 
 /mob/dead/new_player/proc/vote_valid_check(pollid, holder, type)
 	if (!dbcon.Connect())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	pollid = text2num(pollid)
 	if (!pollid || pollid < 0)
@@ -371,7 +371,7 @@
 
 /mob/dead/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
 	if (!dbcon.Connect())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
 		return 0
@@ -408,13 +408,13 @@
 		vote = text2num(vote)
 		numberedvotelist += vote
 		if (!vote) //this is fine because voteid starts at 1, so it will never be 0
-			src << "<span class='danger'>Error: Invalid (non-numeric) votes in the vote data.</span>"
+			to_chat(src, "<span class='danger'>Error: Invalid (non-numeric) votes in the vote data.</span>")
 			return 0
 		if (!(vote in optionlist))
-			src << "<span class='danger'>Votes for choices that do not appear to be in the poll detected<span>"
+			to_chat(src, "<span class='danger'>Votes for choices that do not appear to be in the poll detected<span>")
 			return 0
 	if (!numberedvotelist.len)
-		src << "<span class='danger'>Invalid vote data</span>"
+		to_chat(src, "<span class='danger'>Invalid vote data</span>")
 		return 0
 
 	//lets add the vote, first we generate a insert statement.
@@ -440,7 +440,7 @@
 
 /mob/dead/new_player/proc/vote_on_poll(pollid, optionid)
 	if (!dbcon.Connect())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
 		return 0
@@ -460,7 +460,7 @@
 
 /mob/dead/new_player/proc/log_text_poll_reply(pollid, replytext)
 	if (!dbcon.Connect())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
 		return 0
@@ -470,14 +470,14 @@
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_TEXT))
 		return 0
 	if(!replytext)
-		usr << "The text you entered was blank. Please correct the text and submit again."
+		to_chat(usr, "The text you entered was blank. Please correct the text and submit again.")
 		return
 	var/adminrank = sanitizeSQL(poll_check_voted(pollid, TRUE))
 	if(!adminrank)
 		return
 	replytext = sanitizeSQL(replytext)
 	if(!(length(replytext) > 0) || !(length(replytext) <= 8000))
-		usr << "The text you entered was invalid or too long. Please correct the text and submit again."
+		to_chat(usr, "The text you entered was invalid or too long. Please correct the text and submit again.")
 		return
 	var/DBQuery/query_text_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', INET_ATON('[client.address]'), '[replytext]', '[adminrank]')")
 	if(!query_text_vote.warn_execute())
@@ -487,7 +487,7 @@
 
 /mob/dead/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
 	if (!dbcon.Connect())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
 		return 0
@@ -500,7 +500,7 @@
 	if(!query_numval_hasvoted.warn_execute())
 		return
 	if(query_numval_hasvoted.NextRow())
-		usr << "<span class='danger'>You've already replied to this poll.</span>"
+		to_chat(usr, "<span class='danger'>You've already replied to this poll.</span>")
 		return
 	var/adminrank = "Player"
 	if(client.holder)
@@ -514,7 +514,7 @@
 
 /mob/dead/new_player/proc/vote_on_multi_poll(pollid, optionid)
 	if (!dbcon.Connect())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
 		return 0

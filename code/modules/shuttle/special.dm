@@ -126,9 +126,7 @@
 
 /obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
 	if(sleeper in sleepers)
-		sleeper << "<span class='revennotice'>While you slumber, you have \
-			the strangest dream, like you can see yourself from the outside.\
-			</span>"
+		to_chat(sleeper, "<span class='revennotice'>While you slumber, you have the strangest dream, like you can see yourself from the outside.</span>")
 		sleeper.ghostize(TRUE)
 
 /obj/structure/table/abductor/wabbajack/left
@@ -198,7 +196,7 @@
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Weaken(2)
 		M.throw_at(throwtarget, 5, 1,src)
-		M << "<span class='notice'>No climbing on the bar please.</span>"
+		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
 
@@ -248,11 +246,11 @@
 		for(var/obj/I in counted_money)
 			qdel(I)
 
-		mover << "Thank you for your payment! Please enjoy your flight."
+		to_chat(mover, "Thank you for your payment! Please enjoy your flight.")
 		approved_passengers += mover
 		return 1
 	else
-		mover << "You don't have enough money to enter the main shuttle. You'll have to fly coach."
+		to_chat(mover, "You don't have enough money to enter the main shuttle. You'll have to fly coach.")
 		return 0
 
 /mob/living/simple_animal/hostile/bear/fightpit

@@ -7,7 +7,7 @@
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
 
 	if(!has_active_hand()) //can't attack without a hand.
-		src << "<span class='notice'>You look at your arm and sigh.</span>"
+		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
 		return
 
 	// Special glove functions:

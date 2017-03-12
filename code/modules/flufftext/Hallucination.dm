@@ -204,10 +204,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
 		sleep(10)
 		var/xeno_name = xeno.name
-		target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
+		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
 		sleep(10)
 		qdel(xeno)
-		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
+		to_chat(target, "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>")
 	qdel(src)
 
 /obj/effect/hallucination/simple/clown
@@ -243,12 +243,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		for(var/i=0, i<11, i++)
 			walk_to(borer, get_step(borer, get_cardinal_dir(borer, T)))
 			if(borer.Adjacent(T))
-				T << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
+				to_chat(T, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
 				T.Stun(4)
 				sleep(50)
 				qdel(borer)
 				sleep(rand(60, 90))
-				T << "<span class='changeling'><i>Primary [rand(1000,9999)] states:</i> [pick("Hello","Hi","You're my slave now!","Don't try to get rid of me...")]</span>"
+				to_chat(T, "<span class='changeling'><i>Primary [rand(1000,9999)] states:</i> [pick("Hello","Hi","You're my slave now!","Don't try to get rid of me...")]</span>")
 				break
 			sleep(4)
 		if(!QDELETED(borer))
@@ -501,7 +501,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			A = image(custom_icon_file, target, custom_icon)
 	A.override = 1
 	if(target.client)
-		target << "<span class='italics'>...wabbajack...wabbajack...</span>"
+		to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
 		target.playsound_local(target,'sound/magic/Staff_Change.ogg', 50, 1, -1)
 		delusion = A
 		target.client.images |= A
@@ -584,7 +584,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				O << "<span class='danger'>[my_target] stumbles around.</span>"
+				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
 
 /obj/effect/fake_attacker/Initialize(mapload, var/mob/living/carbon/T)
 	..()
@@ -608,7 +608,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	else if(src.dir == WEST)
 		del src.currentimage
 		src.currentimage = new /image(left,src)
-	my_target << currentimage
+	to_chat(my_target, currentimage)
 
 
 /obj/effect/fake_attacker/proc/attack_loop()
@@ -652,7 +652,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	target << I
+	to_chat(target, I)
 	QDEL_IN(O, 300)
 
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
@@ -718,7 +718,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		people += H
 	if(person) //Basic talk
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		target << target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans())
+		to_chat(target, target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans()))
 		if(target.client)
 			target.client.images |= speech_overlay
 			sleep(30)
@@ -728,7 +728,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		target << target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans())
+		to_chat(target, target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans()))
 	qdel(src)
 
 /obj/effect/hallucination/message
@@ -747,7 +747,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		"<span class='warning'>You feel faint.</span>", \
 		"<span class='noticealien'>You hear a strange, alien voice in your head...</span>[pick("Hiss","Ssss")]", \
 		"<span class='notice'>You can see...everything!</span>")
-	target << chosen
+	to_chat(target, chosen)
 	qdel(src)
 
 /mob/living/carbon/proc/hallucinate(hal_type, specific) // specific is used to specify a particular hallucination
@@ -783,7 +783,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			new /obj/effect/hallucination/items_other(src.loc,src)
 		if("sounds")
 			//Strange audio
-			//src << "Strange Audio"
+			//to_chat(src, "Strange Audio")
 			switch(rand(1,20))
 				if(1) playsound_local(null,'sound/machines/airlock.ogg', 15, 1)
 				if(2)
@@ -829,8 +829,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					sleep(150)
 					playsound_local(null, 'sound/effects/ratvar_reveal.ogg', 100)
 				if(14)
-					src << "<h1 class='alert'>Priority Announcement</h1>"
-					src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
+					to_chat(src, "<h1 class='alert'>Priority Announcement</h1>")
+					to_chat(src, "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
 					playsound_local(null, 'sound/AI/shuttledock.ogg', 100)
 				//Deconstructing a wall
 				if(15)
@@ -850,8 +850,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				if(17)
 					playsound_local(null, 'sound/weapons/saberon.ogg',35,1)
 				if(18)
-					src << "<h1 class='alert'>Biohazard Alert</h1>"
-					src << "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>"
+					to_chat(src, "<h1 class='alert'>Biohazard Alert</h1>")
+					to_chat(src, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>")
 					playsound_local(null, 'sound/AI/outbreak5.ogg')
 				if(19) //Tesla loose!
 					playsound_local(null, 'sound/magic/lightningbolt.ogg', 35, 1)
@@ -860,12 +860,12 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					sleep(20)
 					playsound_local(null, 'sound/magic/lightningbolt.ogg', 100, 1)
 				if(20) //AI is doomsdaying!
-					src << "<h1 class='alert'>Anomaly Alert</h1>"
-					src << "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>"
+					to_chat(src, "<h1 class='alert'>Anomaly Alert</h1>")
+					to_chat(src, "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>")
 					playsound_local(null, 'sound/AI/aimalf.ogg', 100)
 		if("hudscrew")
 			//Screwy HUD
-			//src << "Screwy HUD"
+			//to_chat(src, "Screwy HUD")
 			hal_screwyhud = pick(SCREWYHUD_NONE,SCREWYHUD_CRIT,SCREWYHUD_DEAD,SCREWYHUD_HEALTHY)
 			sleep(rand(100,250))
 			hal_screwyhud = 0
@@ -920,7 +920,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 		if("items")
 			//Strange items
-			//src << "Traitor Items"
+			//to_chat(src, "Traitor Items")
 			if(!halitem)
 				halitem = new
 				var/obj/item/l_hand = get_item_for_held_index(1)
@@ -970,7 +970,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 					QDEL_IN(halitem, rand(100, 250))
 		if("dangerflash")
 			//Flashes of danger
-			//src << "Danger Flash"
+			//to_chat(src, "Danger Flash")
 			if(!halimage)
 				var/list/possible_points = list()
 				for(var/turf/open/floor/F in view(src,world.view))
@@ -980,16 +980,16 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 					switch(rand(1,4))
 						if(1)
-							//src << "Space"
+							//to_chat(src, "Space")
 							halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
 						if(2)
-							//src << "Lava"
+							//to_chat(src, "Lava")
 							halimage = image('icons/turf/floors/lava.dmi',target,"smooth",TURF_LAYER)
 						if(3)
-							//src << "Chasm"
+							//to_chat(src, "Chasm")
 							halimage = image('icons/turf/floors/Chasms.dmi',target,"smooth",TURF_LAYER)
 						if(4)
-							//src << "C4"
+							//to_chat(src, "C4")
 							halimage = image('icons/obj/grenade.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
@@ -1002,16 +1002,16 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			hal_screwyhud = SCREWYHUD_DEAD
 			SetSleeping(20, no_alert = TRUE)
 			var/area/area = get_area(src)
-			src << "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>"
+			to_chat(src, "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>")
 			if(prob(50))
-				var/list/dead_people
+				var/list/dead_people = list()
 				for(var/mob/dead/observer/G in player_list)
 					dead_people += G
 				var/mob/dead/observer/fakemob = pick(dead_people)
 				if(fakemob)
 					sleep(rand(30, 60))
-					src << "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","welcome [first_name()]","you too?","is the AI malf?",\
-					 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>"
+					to_chat(src, "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","welcome [first_name()]","you too?","is the AI malf?",\
+					 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>")
 			sleep(rand(50,70))
 			hal_screwyhud = SCREWYHUD_NONE
 			SetSleeping(0)

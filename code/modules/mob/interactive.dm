@@ -178,7 +178,7 @@
 		if(T)
 			T.alternateProcessing = !T.alternateProcessing
 			T.forceProcess = 1
-			usr << "[T]'s processing has been switched to [T.alternateProcessing ? "High Profile" : "Low Profile"]"
+			to_chat(usr, "[T]'s processing has been switched to [T.alternateProcessing ? "High Profile" : "Low Profile"]")
 
 /client/proc/customiseSNPC(var/mob/A in SSnpc.botPool_l)
 	set name = "Customize SNPC"

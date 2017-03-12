@@ -81,7 +81,7 @@
 	..()
 
 	if(!beehome)
-		user << "<span class='warning'>This bee is homeless!</span>"
+		to_chat(user, "<span class='warning'>This bee is homeless!</span>")
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
@@ -270,7 +270,7 @@
 				user.put_in_active_hand(qb)
 				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class ='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
 			else
-				user << "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>"
+				to_chat(user, "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>")
 		else
 			var/datum/reagent/R = chemical_reagents_list[S.reagents.get_master_reagent_id()]
 			if(R && S.reagents.has_reagent(R.id, 5))
@@ -279,7 +279,7 @@
 				user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating it's DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating it's DNA!</span>")
 				name = queen.name
 			else
-				user << "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>"
+				to_chat(user, "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>")
 	..()
 
 

@@ -21,7 +21,7 @@
 		if(affected_mob.dna && affected_mob.dna.species)
 			affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
 			affected_mob.dna.species.handle_hair(affected_mob)
-		affected_mob << "<span class='notice'>You feel better.</span>"
+		to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 	..()
 
 /datum/disease/revblight/stage_act()
@@ -30,7 +30,7 @@
 			cure()
 			return
 		if(prob(stage*3))
-			affected_mob << "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>"
+			to_chat(affected_mob, "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>")
 			affected_mob.confused += 8
 			affected_mob.adjustStaminaLoss(8)
 			new /obj/effect/overlay/temp/revenant(affected_mob.loc)
@@ -54,7 +54,7 @@
 		if(5)
 			if(!finalstage)
 				finalstage = 1
-				affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>"
+				to_chat(affected_mob, "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>")
 				affected_mob.adjustStaminaLoss(45)
 				new /obj/effect/overlay/temp/revenant(affected_mob.loc)
 				if(affected_mob.dna && affected_mob.dna.species)

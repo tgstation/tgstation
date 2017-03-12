@@ -20,7 +20,7 @@
 	if(istype(target, /obj/structure/projected_forcefield))
 		var/obj/structure/projected_forcefield/F = target
 		if(F.generator == src)
-			user << "<span class='notice'>You deactivate [F].</span>"
+			to_chat(user, "<span class='notice'>You deactivate [F].</span>")
 			qdel(F)
 			return
 	var/turf/T = get_turf(target)
@@ -29,7 +29,7 @@
 	if(get_dist(T,src) > field_distance_limit)
 		return
 	if(LAZYLEN(current_fields) >= max_fields)
-		user << "<span class='notice'>[src] cannot sustain any more forcefields!</span>"
+		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
 		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
@@ -40,14 +40,14 @@
 
 /obj/item/device/forcefield/attack_self(mob/user)
 	if(LAZYLEN(current_fields))
-		user << "<span class='notice'>You deactivate [src], disabling all active forcefields.</span>"
+		to_chat(user, "<span class='notice'>You deactivate [src], disabling all active forcefields.</span>")
 		for(var/obj/structure/projected_forcefield/F in current_fields)
 			qdel(F)
 
 /obj/item/device/forcefield/examine(mob/user)
 	..()
 	var/percent_charge = round((shield_integrity/max_shield_integrity)*100)
-	user << "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>"
+	to_chat(user, "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>")
 
 /obj/item/device/forcefield/Initialize(mapload)
 	..()

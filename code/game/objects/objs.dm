@@ -199,7 +199,7 @@
 /obj/examine(mob/user)
 	..()
 	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
+		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
 
 /obj/proc/rename_obj(mob/M)
 	var/input = stripped_input(M,"What do you want to name \the [name]?", ,"", MAX_NAME_LEN)
@@ -207,11 +207,11 @@
 
 	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		if(oldname == input)
-			M << "You changed \the [name] to... well... \the [name]."
+			to_chat(M, "You changed \the [name] to... well... \the [name].")
 			return
 		else
 			name = input
-			M << "\The [oldname] has been successfully been renamed to \the [input]."
+			to_chat(M, "\The [oldname] has been successfully been renamed to \the [input].")
 			return
 	else
 		return
@@ -221,7 +221,7 @@
 
 	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		desc = input
-		M << "You have successfully changed \the [name]'s description."
+		to_chat(M, "You have successfully changed \the [name]'s description.")
 		return
 	else
 		return

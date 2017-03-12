@@ -318,7 +318,7 @@ var/datum/controller/subsystem/air/SSair
 			CHECK_TICK
 
 		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
-		world << "<span class='boldannounce'>[msg]</span>"
+		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 
 /turf/open/proc/resolve_active_graph()

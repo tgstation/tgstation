@@ -24,11 +24,11 @@
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 4)
-			user << "<span class='warning'>You need at least four tiles to do this!</span>"
+			to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")
 			return
 
 		if(WT.is_hot() && !mineralType)
-			user << "<span class='warning'>You can not reform this!</span>"
+			to_chat(user, "<span class='warning'>You can not reform this!</span>")
 			return
 
 		if(WT.remove_fuel(0,user))
@@ -116,7 +116,7 @@
 	singular_name = "fake pit"
 	desc = "A piece of carpet with a forced perspective illusion of a pit. No way this could fool anyone!"
 	icon_state = "tile_pit"
-	turf_type = /turf/open/floor/fakepit 
+	turf_type = /turf/open/floor/fakepit
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fakepit
 
