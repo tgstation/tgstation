@@ -26,8 +26,6 @@
 
 	preferred_direction = dir
 
-	..()
-
 	if(SSshuttle.arrivals)
 		WARNING("More than one arrivals docking_port placed on map!")
 		qdel(src)
@@ -35,18 +33,28 @@
 
 	SSshuttle.arrivals = src
 
+	..()
+
 	areas = list()
+
+	var/list/new_latejoin = list()
+	for(var/area/shuttle/arrival/A in sortedAreas)
+		for(var/obj/structure/chair/C in A)
+			new_latejoin += C
+		if(!console)
+			console = locate(/obj/machinery/requests_console) in A
+		areas += A
 
 	if(latejoin.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
-	latejoin = list()
-	for(var/area/shuttle/arrival/A in sortedAreas)
-		for(var/obj/structure/chair/C in A)
-			latejoin += C
-		if(!console)
-			console = locate(/obj/machinery/requests_console) in A
-		areas += A
+	if(!new_latejoin.len)
+		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
+		if(!latejoin.len)
+			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
+		return
+
+	latejoin = new_latejoin
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
 	SSshuttle.generate_transit_dock(src)
