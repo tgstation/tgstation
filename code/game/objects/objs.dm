@@ -24,7 +24,6 @@
 	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-	var/is_frozen = FALSE
 	var/unique_rename = 0 // can you customize the description/name of the thing?
 
 
@@ -39,16 +38,16 @@
 		else
 			T.add_blueprints_preround(src)
 
-/obj/Destroy()
+/obj/Destroy(force=FALSE)
 	if(!istype(src, /obj/machinery))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
-	return ..()
+	. = ..()
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
-	if(is_frozen)
-		visible_message("<span class = 'danger'><b>[src] shatters into a million pieces!</b></span>")
+	if(HAS_SECONDARY_FLAG(src, FROZEN))
+		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
 
 /obj/assume_air(datum/gas_mixture/giver)
@@ -200,7 +199,7 @@
 /obj/examine(mob/user)
 	..()
 	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
+		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
 
 /obj/proc/rename_obj(mob/M)
 	var/input = stripped_input(M,"What do you want to name \the [name]?", ,"", MAX_NAME_LEN)
@@ -208,11 +207,11 @@
 
 	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		if(oldname == input)
-			M << "You changed \the [name] to... well... \the [name]."
+			to_chat(M, "You changed \the [name] to... well... \the [name].")
 			return
 		else
 			name = input
-			M << "\The [oldname] has been successfully been renamed to \the [input]."
+			to_chat(M, "\The [oldname] has been successfully been renamed to \the [input].")
 			return
 	else
 		return
@@ -222,7 +221,7 @@
 
 	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		desc = input
-		M << "You have successfully changed \the [name]'s description."
+		to_chat(M, "You have successfully changed \the [name]'s description.")
 		return
 	else
 		return

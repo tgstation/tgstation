@@ -6,9 +6,6 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/list/adds
 	var/list/subs
 
-/datum/admin_rank/SDQL_update()
-	return FALSE	//Nice try trivialadmin!
-
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
 	name = init_name
 	switch(name)
@@ -270,14 +267,14 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(!new_ckey)
 				return
 			if(new_ckey in admin_datums)
-				usr << "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>"
+				to_chat(usr, "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>")
 				return
 			adm_ckey = new_ckey
 			task = "rank"
 		else
 			adm_ckey = ckey(href_list["ckey"])
 			if(!adm_ckey)
-				usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
+				to_chat(usr, "<font color='red'>Error: Topic 'editrights': No valid ckey</font>")
 				return
 
 	var/datum/admins/D = admin_datums[adm_ckey]

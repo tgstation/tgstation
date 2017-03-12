@@ -220,7 +220,7 @@
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	user << "<span class='warning'>You hit the metal foam but bounce off it!</span>"
+	to_chat(user, "<span class='warning'>You hit the metal foam but bounce off it!</span>")
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)

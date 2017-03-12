@@ -74,10 +74,10 @@
 				return
 			qdel(DG)
 			glasses++
-			user << "<span class='notice'>The [src] accepts the drinking glass, sterilizing it.</span>"
+			to_chat(user, "<span class='notice'>The [src] accepts the drinking glass, sterilizing it.</span>")
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
 		if(isFull())
-			user << "<span class='warning'>The [src] is at full capacity.</span>"
+			to_chat(user, "<span class='warning'>The [src] is at full capacity.</span>")
 		else
 			var/obj/item/weapon/reagent_containers/food/snacks/S = O
 			if(!user.drop_item())
@@ -92,12 +92,12 @@
 		if(G.get_amount() >= 1)
 			G.use(1)
 			glasses += 4
-			user << "<span class='notice'>The [src] accepts a sheet of glass.</span>"
+			to_chat(user, "<span class='notice'>The [src] accepts a sheet of glass.</span>")
 	else if(istype(O, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = O
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if(isFull())
-				user << "<span class='warning'>The [src] is at full capacity.</span>"
+				to_chat(user, "<span class='warning'>The [src] is at full capacity.</span>")
 				break
 			else
 				T.remove_from_storage(S, src)
@@ -132,7 +132,7 @@
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)
-			usr << "<span class='warning'>There are no glasses left!</span>"
+			to_chat(usr, "<span class='warning'>There are no glasses left!</span>")
 			glasses = 0
 		else
 			var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
@@ -143,11 +143,11 @@
 
 	if(href_list["mix"])
 		if(reagents.trans_id_to(mixer, href_list["mix"], portion) == 0)
-			usr << "<span class='warning'>The [mixer] is full!</span>"
+			to_chat(usr, "<span class='warning'>The [mixer] is full!</span>")
 
 	if(href_list["transfer"])
 		if(mixer.reagents.trans_id_to(src, href_list["transfer"], portion) == 0)
-			usr << "<span class='warning'>The [src] is full!</span>"
+			to_chat(usr, "<span class='warning'>The [src] is full!</span>")
 
 	updateDialog()
 

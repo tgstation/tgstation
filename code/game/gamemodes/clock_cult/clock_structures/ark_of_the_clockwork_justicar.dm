@@ -128,11 +128,11 @@
 		var/obj/item/clockwork/component/C = I
 		if(required_components[C.component_id])
 			required_components[C.component_id]--
-			user << "<span class='notice'>You add [C] to [src].</span>"
+			to_chat(user, "<span class='notice'>You add [C] to [src].</span>")
 			user.drop_item()
 			qdel(C)
 		else
-			user << "<span class='notice'>[src] has enough [get_component_name(C.component_id)][C.component_id != REPLICANT_ALLOY ? "s":""].</span>"
+			to_chat(user, "<span class='notice'>[src] has enough [get_component_name(C.component_id)][C.component_id != REPLICANT_ALLOY ? "s":""].</span>")
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
@@ -173,34 +173,34 @@
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(still_needs_components())
-			user << "<span class='big'><b>Components required until activation:</b></span>"
+			to_chat(user, "<span class='big'><b>Components required until activation:</b></span>")
 			for(var/i in required_components)
 				if(required_components[i])
-					user << "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
-					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>"
+					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
+					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
-			user << "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>"
+			to_chat(user, "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>")
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
-					user << "<span class='heavy_brass'>It's still opening.</span>"
+					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")
 				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-					user << "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>"
+					to_chat(user, "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
 				if(GATEWAY_RATVAR_COMING to INFINITY)
-					user << "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>"
+					to_chat(user, "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>")
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
-				user << "<span class='warning'>It's a swirling mass of blackness.</span>"
+				to_chat(user, "<span class='warning'>It's a swirling mass of blackness.</span>")
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-				user << "<span class='warning'>It seems to be leading somewhere.</span>"
+				to_chat(user, "<span class='warning'>It seems to be leading somewhere.</span>")
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>"
+				to_chat(user, "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!first_sound_played || prob(7))
 		for(var/M in player_list)
 			if(M && !isnewplayer(M))
-				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
+				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 	if(!obj_integrity)
 		return 0
 	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
@@ -315,3 +315,10 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = BELOW_OPEN_DOOR_LAYER
+	light_range = 2
+	light_power = 4
+	light_color = "#6A4D2F"
+
+/obj/effect/clockwork/overlay/gateway_glow/New()
+	..()
+	update_light()

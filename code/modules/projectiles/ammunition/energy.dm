@@ -8,6 +8,18 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
 
+/obj/item/ammo_casing/energy/chameleon
+	e_cost = 0
+	var/list/projectile_vars = list()
+
+/obj/item/ammo_casing/energy/chameleon/ready_proj()
+	. = ..()
+	if(!BB)
+		newshot()
+	for(var/V in projectile_vars)
+		if(BB.vars[V])
+			BB.vars[V] = projectile_vars[V]
+
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"

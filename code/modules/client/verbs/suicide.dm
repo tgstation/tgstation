@@ -124,7 +124,7 @@
 		 "<span class='notice'>[src] bleeps electronically.</span>")
 		death(0)
 	else
-		src << "Aborting suicide attempt."
+		to_chat(src, "Aborting suicide attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = 1
@@ -160,18 +160,18 @@
 	if(stat == CONSCIOUS)
 		return TRUE
 	else if(stat == DEAD)
-		src << "You're already dead!"
+		to_chat(src, "You're already dead!")
 	else if(stat == UNCONSCIOUS)
-		src << "You need to be conscious to suicide!"
+		to_chat(src, "You need to be conscious to suicide!")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
+		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 	if(has_brain_worms())
-		src << "You can't bring yourself to commit suicide!"
+		to_chat(src, "You can't bring yourself to commit suicide!")
 		return
 	return TRUE
