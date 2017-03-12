@@ -29,7 +29,8 @@
 		turf_steps[pick_n_take(turfs)] = pick_n_take(turfs)
 	if(turfs.len > 0)
 		var/turf/loner = pick(turfs)
-		turf_steps[loner] = pick(Z_TURFS(user.z))
+		var/area/A = get_area(user)
+		turf_steps[loner] = get_turf(pick(A.contents))
 
 	perform(turf_steps,user=user)
 
@@ -44,7 +45,10 @@
 		var/obj/effect/cross_action/spacetime_dist/STD0 = new /obj/effect/cross_action/spacetime_dist(T0)
 		var/obj/effect/cross_action/spacetime_dist/STD1 = new /obj/effect/cross_action/spacetime_dist(T1)
 		STD0.linked_dist = STD1
+		STD0.overlays += T1.photograph()
 		STD1.linked_dist = STD0
+		STD1.overlays += T0.photograph()
+		STD1.set_light(4, 30, "#c9fff5")
 		effects += STD0
 		effects += STD1
 
@@ -63,8 +67,7 @@
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"
 	desc = "A distortion in spacetime. You can hear faint music..."
-	icon_state = "wave1"
-	color = "#8A2BE2"
+	icon_state = ""
 	var/obj/effect/cross_action/spacetime_dist/linked_dist
 	var/busy = FALSE
 	var/sound
@@ -73,6 +76,7 @@
 /obj/effect/cross_action/spacetime_dist/New()
 	..()
 	sound = "sound/guitar/[safepick(guitar_notes)]"
+	dir = pick(cardinal)
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(linked_dist && walks_left > 0)
