@@ -155,6 +155,7 @@
 			//textindex = istart+26
 			textindex = iend
 			break
+		CHECK_TICK
 
 	if(links)
 		var/before = copytext(info_links, 1, textindex)
@@ -301,9 +302,10 @@
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
-			i.on_write(src,usr)
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
-			update_icon()
+			if(usr)
+				i.on_write(src,usr)
+				usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
+				update_icon()
 
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
