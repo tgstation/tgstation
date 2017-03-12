@@ -84,7 +84,8 @@
 	AM.gravity_stunning = turf_gravity_stunning
 	AM.gravity_speed = turf_gravity_speed
 	AM.gravity_override = turf_gravity_override
-	atoms_with_forced_gravity[AM] = AM
+	if(islist(atoms_with_forced_gravity))
+		atoms_with_forced_gravity[AM] = AM
 
 /turf/open/proc/reset_forced_gravity_atom(atom/movable/AM)
 	if(!initialized)

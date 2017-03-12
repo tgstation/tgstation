@@ -124,7 +124,7 @@
 	if(gravity_throwing && !throwing)
 		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 20, gravity_strength * 2)
 		gravity_throwing = FALSE
-	if(!newturf.Enter(src, get_turf(src)))
+	if(!(newturf && newturf.Enter(src, get_turf(src))))
 		return FALSE
 	else
 		step(src, gravity_direction)
