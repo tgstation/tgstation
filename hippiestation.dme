@@ -2074,6 +2074,8 @@
 #include "hippiestation\code\modules\pool\sharks.dm"
 #include "hippiestation\code\modules\reagents\drug_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\machinery\reagentgrinder.dm"
+#include "hippiestation\code\modules\teeth\misc.dm"
+#include "hippiestation\code\modules\teeth\teeth.dm"
 #include "hippiestation\code\objects\items\butts\fart.dm"
 #include "hippiestation\code\objects\items\butts\main.dm"
 #include "hippiestation\code\objects\items\butts\misc.dm"

@@ -34,6 +34,7 @@
 	martial_art = default_martial_art
 
 	handcrafting = new()
+	update_teeth()
 
 	..()
 

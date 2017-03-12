@@ -274,6 +274,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
 
+	if(lisp)
+		message = lisp(message, lisp)
+
 	if(stuttering)
 		message = stutter(message)
 
