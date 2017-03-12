@@ -27,6 +27,10 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
 	piping_layer = PIPING_LAYER_DEFAULT
 
+/obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
+	findAllConnections(dir)
+	..()
+
 /obj/machinery/atmospherics/pipe/layer_manifold/on_construction()
 	findAllConnections(dir)
 	for(var/obj/machinery/atmospherics/node in (front_nodes + back_nodes))
@@ -36,6 +40,7 @@
 	. = ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
+	findAllConnections(dir)
 	return front_nodes + back_nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Destroy()
@@ -68,16 +73,16 @@
 			switch(dir)
 				if(NORTH)
 					I.pixel_x = layer_diff * PIPING_LAYER_P_X
-					I.pixel_y = 8
+					I.pixel_y = 4
 				if(SOUTH)
 					I.pixel_x = layer_diff * PIPING_LAYER_P_X
-					I.pixel_y = -8
+					I.pixel_y = -4
 				if(EAST)
 					I.pixel_y = layer_diff * PIPING_LAYER_P_Y
-					I.pixel_x = 8
+					I.pixel_x = 4
 				if(WEST)
 					I.pixel_y = layer_diff * PIPING_LAYER_P_Y
-					I.pixel_x = -8
+					I.pixel_x = -4
 			add_overlay(I)
 		if(back_nodes[pipelayer])
 			var/layer_diff = pipelayer - PIPING_LAYER_DEFAULT
@@ -85,16 +90,16 @@
 			switch(dir)
 				if(NORTH)
 					I.pixel_x = layer_diff * PIPING_LAYER_P_X
-					I.pixel_y = -8
+					I.pixel_y = -4
 				if(SOUTH)
 					I.pixel_x = layer_diff * PIPING_LAYER_P_X
-					I.pixel_y = 8
+					I.pixel_y = 4
 				if(EAST)
 					I.pixel_y = layer_diff * PIPING_LAYER_P_Y
-					I.pixel_x = -8
+					I.pixel_x = -4
 				if(WEST)
 					I.pixel_y = layer_diff * PIPING_LAYER_P_Y
-					I.pixel_x = 8
+					I.pixel_x = 4
 			add_overlay(I)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize(mapload)
@@ -110,6 +115,7 @@
 		foundback = findConnecting(turn(dir, 180), iter)
 		front_nodes[iter] = foundfront
 		back_nodes[iter] = foundback
+	update_icon
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
 	if(initialize_directions & dir)
