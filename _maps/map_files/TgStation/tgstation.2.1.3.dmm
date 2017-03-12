@@ -9081,7 +9081,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/maintenance/electrical)
 "atI" = (
 /turf/open/floor/plasteel/yellow/side{
@@ -11693,6 +11693,7 @@
 /area/maintenance/electrical)
 "azy" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "Port Docking Bay 1"
 	},
 /turf/open/floor/plating,
@@ -12791,7 +12792,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aBT" = (
 /obj/machinery/computer/bank_machine,
@@ -12811,7 +12812,7 @@
 	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aBV" = (
 /obj/machinery/airalarm{
@@ -12820,7 +12821,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aBW" = (
 /obj/structure/filingcabinet,
@@ -13449,7 +13450,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aDs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -13471,7 +13472,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aDu" = (
 /obj/structure/table,
@@ -13976,6 +13977,7 @@
 "aEw" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
 	pixel_y = 30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -14132,7 +14134,7 @@
 	name = "\improper Garden"
 	})
 "aEM" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aEN" = (
 /obj/structure/closet/crate{
@@ -14160,7 +14162,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aEP" = (
 /obj/item/weapon/coin/silver{
@@ -14512,9 +14514,6 @@
 "aFE" = (
 /obj/structure/chair{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -17995,6 +17994,9 @@
 	},
 /area/hallway/primary/central)
 "aNx" = (
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -19402,10 +19404,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
@@ -23134,7 +23132,7 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "aZR" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aZS" = (
 /obj/machinery/porta_turret/ai{
@@ -24453,7 +24451,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bdh" = (
 /turf/open/floor/plasteel/vault{
@@ -24883,7 +24881,7 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bee" = (
 /obj/machinery/computer/upload/ai,
@@ -24892,7 +24890,7 @@
 	pixel_x = 0;
 	pixel_y = -21
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bef" = (
 /obj/machinery/computer/upload/borg,
@@ -24903,7 +24901,7 @@
 	name = "Station Intercom (AI Private)";
 	pixel_y = -29
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "beg" = (
 /obj/structure/table,
@@ -25275,10 +25273,18 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/stack/packageWrap{
+	pixel_x = -1;
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -25617,12 +25623,15 @@
 /area/quartermaster/office)
 "bfR" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+/obj/item/weapon/hand_labeler{
+	pixel_y = 8
 	},
-/obj/item/weapon/pen,
+/obj/item/weapon/hand_labeler{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box,
+/obj/item/weapon/storage/box,
+/obj/item/weapon/storage/box,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bfS" = (
@@ -26457,7 +26466,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bhM" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bhN" = (
 /obj/structure/disposalpipe/segment{
@@ -26852,7 +26861,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "biJ" = (
 /obj/structure/cable{
@@ -26861,7 +26870,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "biK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -27539,11 +27548,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bkh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "bki" = (
 /obj/structure/table/glass,
@@ -30581,6 +30590,9 @@
 	dir = 1;
 	layer = 2.9
 	},
+/obj/structure/table/reinforced,
+/obj/item/device/destTagger,
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -35069,14 +35081,14 @@
 	on = 1;
 	pressure_checks = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bzu" = (
 /obj/machinery/r_n_d/server/robotics,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -36303,14 +36315,14 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bBT" = (
 /obj/machinery/r_n_d/server/core,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -40623,14 +40635,14 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKF" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/hand_labeler,
-/obj/item/weapon/hand_labeler,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -40768,6 +40780,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bKQ" = (
@@ -41165,10 +41178,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "bLF" = (
-/obj/structure/table/reinforced,
-/obj/item/device/destTagger,
-/obj/item/device/destTagger,
-/obj/machinery/computer/stockexchange,
+/obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bLG" = (
@@ -42053,17 +42063,18 @@
 /area/toxins/test_area)
 "bNH" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/wrapping_paper{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/stack/packageWrap{
-	pixel_x = -1;
-	pixel_y = -1
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -26
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -3
+	},
+/obj/item/weapon/pen{
+	pixel_x = -3
+	},
+/obj/item/weapon/folder/yellow{
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -46052,7 +46063,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bWB" = (
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -46093,7 +46104,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -46616,7 +46627,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47327,7 +47338,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47338,7 +47349,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47354,7 +47365,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47750,7 +47761,7 @@
 	dir = 4
 	},
 /obj/machinery/ntnet_relay,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47761,7 +47772,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47774,7 +47785,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47785,7 +47796,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -47824,7 +47835,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -49772,7 +49783,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
@@ -50313,7 +50324,7 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -50528,7 +50539,7 @@
 /area/atmos)
 "cfR" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
+	dir = 4;
 	filter_type = "o2";
 	on = 1
 	},
@@ -50688,7 +50699,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cgi" = (
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -50717,7 +50728,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -51219,7 +51230,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -51237,7 +51248,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -51256,7 +51267,7 @@
 "chs" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/bluegrid{
+/turf/open/floor/circuit{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
 	},
@@ -58015,7 +58026,7 @@
 	name = "AI Satellite Hallway"
 	})
 "cvp" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvq" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -58035,7 +58046,7 @@
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvs" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -58060,7 +58071,7 @@
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/ai)
 "cvw" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58093,7 +58104,7 @@
 	pixel_x = 0;
 	pixel_y = -25
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvy" = (
 /obj/structure/grille,
@@ -58143,7 +58154,7 @@
 	pixel_x = 0;
 	pixel_y = -25
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cvB" = (
 /obj/structure/rack,
@@ -58196,7 +58207,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58236,7 +58247,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58272,7 +58283,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58330,7 +58341,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58367,7 +58378,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58400,7 +58411,7 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58412,7 +58423,7 @@
 	pixel_x = 27;
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/AIsatextFS{
 	name = "AI Satellite Hallway"
 	})
@@ -58620,7 +58631,7 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cww" = (
 /obj/structure/cable{
@@ -58684,7 +58695,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cwC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -58704,7 +58715,7 @@
 	pixel_x = 5;
 	pixel_y = -24
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cwE" = (
 /obj/structure/window/reinforced{
@@ -58733,7 +58744,7 @@
 	dir = 1;
 	network = list("MiniSat")
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cwF" = (
 /obj/structure/chair{
@@ -60458,7 +60469,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cAS" = (
 /obj/effect/landmark/start{
@@ -60499,7 +60510,7 @@
 	pixel_x = 28;
 	pixel_y = -28
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cAT" = (
 /obj/machinery/ai_slipper{
@@ -60596,7 +60607,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBb" = (
 /obj/machinery/camera/motion{
@@ -60604,7 +60615,7 @@
 	dir = 2;
 	network = list("MiniSat")
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBc" = (
 /obj/machinery/power/terminal{
@@ -60614,7 +60625,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBd" = (
 /obj/machinery/firealarm{
@@ -63473,7 +63484,7 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/circuit,
 /area/assembly/chargebay)
 "cHO" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -63624,6 +63635,50 @@
 	dir = 1
 	},
 /area/assembly/robotics)
+"cIg" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion"
+	},
+/obj/docking_port/mobile/arrivals,
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 15;
+	id = "arrivals_stationary";
+	name = "arrivals";
+	width = 7
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/arrival)
+"cIh" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIi" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIj" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"cIk" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
@@ -67000,16 +67055,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amO
+aac
+aac
+aac
+aac
+czq
+aac
+aac
+aac
+clO
 aaa
 aaa
 aaa
@@ -67251,22 +67306,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amO
+aac
+aac
+aac
+aac
+aac
+aac
+cmM
+cnV
+cmM
+cmP
+con
+coU
+cpr
+cpH
+cqI
 aaa
 aaa
 aaa
@@ -67508,22 +67563,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+cmT
+cmT
+cmT
+cmT
+cmT
+aac
+cmP
+cmP
+cmP
+cmP
+coP
+cmP
+cpF
+cpH
+crg
 aaa
 aaa
 aaa
@@ -67765,22 +67820,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+aTp
+aTp
+aTp
+aTp
+aTp
+aac
+cmO
+cmP
+cmP
+cmP
+coI
+coV
+cpw
+cpH
+crf
 aaa
 aaa
 aaa
@@ -68015,29 +68070,29 @@ aaa
 aaa
 aaa
 aaa
+amO
+aac
+aac
+aac
+clO
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+aTp
+cHC
+aTp
+aTp
+aTp
+aac
+cnz
+cmP
+cmP
+cmP
+coQ
+aac
+aac
+aac
+czv
 aaa
 aaa
 aaa
@@ -68272,26 +68327,26 @@ aaa
 aaa
 aaa
 aaa
+aac
+aDu
+bwP
+bBM
+aac
+czo
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+cns
+cnu
+cnI
+aTp
+aTp
+aac
+cmS
+cmP
+cmP
+cmP
+cod
+aac
 aaa
 aaa
 aaa
@@ -68529,28 +68584,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amP
+aTp
+aTp
+aTp
+aac
+aac
+aac
+aac
+aac
+aac
+aac
+coe
+cog
+aac
+aac
+cnT
+col
+com
+aac
+aac
+aac
+clO
 aaa
 aaa
 aaa
@@ -68786,28 +68841,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amP
+aDJ
+aTp
+aTp
+aac
+cmH
+aTp
+aTp
+aTp
+aTp
+coh
+aTp
+aTp
+coj
+aTp
+aTp
+aTp
+aTp
+aTp
+coh
+cpH
+cqI
 aaa
 aaa
 aaa
@@ -69043,28 +69098,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amP
+biZ
+apT
+aTp
+cma
+aTp
+aTp
+aTp
+aTp
+aTp
+cdP
+aTp
+aTp
+aTp
+aTp
+aTp
+aTp
+aTp
+aTp
+coY
+cpH
+crg
 aaa
 aaa
 aaa
@@ -69300,28 +69355,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amP
+aXH
+aTp
+clK
+aac
+cmJ
+cmm
+cmm
+cmm
+cmm
+coh
+aTp
+aTp
+aTp
+aTp
+aTp
+aTp
+aTp
+aTp
+coh
+cpH
+crf
 aaa
 aaa
 aaa
@@ -69557,28 +69612,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amP
+buA
+aTp
+aTp
+aac
+aac
+aac
+cmp
+aac
+aac
+aac
+cof
+coh
+aac
+aac
+aac
+coN
+coR
+aac
+aac
+aac
+cmE
 aaa
 aaa
 aaa
@@ -69814,27 +69869,27 @@ aaa
 aaa
 aaa
 aaa
+aac
+buA
+aTp
+clL
+aac
+cmE
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+aTp
+aTp
+aTp
+aac
+coo
+aTp
+aTp
+aTp
+coW
+cpf
+aac
 aaa
 aaa
 aaa
@@ -70071,29 +70126,29 @@ aaa
 aaa
 aaa
 aaa
+bJS
+aac
+aac
+aac
+cmE
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bxh
+aTp
+aTp
+aTp
+aac
+coE
+aTp
+aTp
+aTp
+coX
+aac
+aac
+aac
+czz
 aaa
 aaa
 aaa
@@ -70337,20 +70392,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cni
+aTp
+aTp
+aTp
+aac
+coD
+aTp
+aTp
+aTp
+aTp
+aTp
+bsB
+cpH
+cqI
 aaa
 aaa
 aaa
@@ -70594,20 +70649,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bJS
+aac
+aac
+aac
+aac
+coG
+cnh
+aTp
+aTp
+aTp
+aTp
+cut
+cpH
+crg
 aaa
 aaa
 aaa
@@ -70854,17 +70909,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnW
+aac
+coF
+coO
+aTp
+cok
+cok
+aTp
+coi
+cpH
+crf
 aaa
 aaa
 aaa
@@ -71112,16 +71167,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bJS
+aac
+aac
+aac
+aac
+cmp
+aac
+aac
+aac
+cmE
 aaa
 aaa
 aaa
@@ -72677,16 +72732,16 @@ aaa
 aaa
 aaa
 aaa
-amO
-aac
-aac
-aac
-aac
-czq
-aac
-aac
-aac
-clO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -72928,22 +72983,22 @@ aaa
 aaa
 aaa
 aaa
-amO
-aac
-aac
-aac
-aac
-aac
-aac
-cmM
-cnV
-cmM
-cmP
-con
-coU
-cpr
-cpH
-cqI
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73185,22 +73240,22 @@ aaa
 aaa
 aaa
 aaa
-aac
-cmT
-cmT
-cmT
-cmT
-cmT
-aac
-cmP
-cmP
-cmP
-cmP
-coP
-cmP
-cpF
-cpH
-crg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73241,17 +73296,17 @@ awZ
 ayl
 azy
 auP
-azy
+cIh
 aCU
 aEr
 aFE
 aFE
 aFE
 aEr
-aLs
+aCU
 azy
 auP
-azy
+cIh
 ayl
 aRY
 awW
@@ -73442,22 +73497,22 @@ aaa
 aaa
 aaa
 aaa
-aac
-aTp
-aTp
-aTp
-aTp
-aTp
-aac
-cmO
-cmP
-cmP
-cmP
-coI
-coV
-cpw
-cpH
-crf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73692,29 +73747,29 @@ aaa
 aaa
 aaa
 aaa
-amO
-aac
-aac
-aac
-clO
 aaa
 aaa
-aac
-aTp
-cHC
-aTp
-aTp
-aTp
-aac
-cnz
-cmP
-cmP
-cmP
-coQ
-aac
-aac
-aac
-czv
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73949,26 +74004,26 @@ aaa
 aaa
 aaa
 aaa
-aac
-aDu
-bwP
-bBM
-aac
-czo
 aaa
-aac
-cns
-cnu
-cnI
-aTp
-aTp
-aac
-cmS
-cmP
-cmP
-cmP
-cod
-aac
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74016,7 +74071,7 @@ awW
 aCV
 aEs
 aEr
-aHt
+aEr
 aEr
 aEr
 aCV
@@ -74206,28 +74261,28 @@ aaa
 aaa
 aaa
 aaa
-amP
-aTp
-aTp
-aTp
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-coe
-cog
-aac
-aac
-cnT
-col
-com
-aac
-aac
-aac
-clO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74463,28 +74518,28 @@ aaa
 aaa
 aaa
 aaa
-amP
-aDJ
-aTp
-aTp
-aac
-cmH
-aTp
-aTp
-aTp
-aTp
-coh
-aTp
-aTp
-coj
-aTp
-aTp
-aTp
-aTp
-aTp
-coh
-cpH
-cqI
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74720,28 +74775,28 @@ aaa
 aaa
 aaa
 aaa
-amP
-biZ
-apT
-aTp
-cma
-aTp
-aTp
-aTp
-aTp
-aTp
-cdP
-aTp
-aTp
-aTp
-aTp
-aTp
-aTp
-aTp
-aTp
-coY
-cpH
-crg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74977,28 +75032,28 @@ aaa
 aaa
 aaa
 aaa
-amP
-aXH
-aTp
-clK
-aac
-cmJ
-cmm
-cmm
-cmm
-cmm
-coh
-aTp
-aTp
-aTp
-aTp
-aTp
-aTp
-aTp
-aTp
-coh
-cpH
-crf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -75040,7 +75095,7 @@ axh
 aIK
 azy
 auP
-azy
+cIh
 aCU
 aEr
 aEr
@@ -75050,7 +75105,7 @@ aEr
 aCU
 azy
 auP
-azy
+cIh
 ayl
 aRY
 awW
@@ -75234,28 +75289,28 @@ aaa
 aaa
 aaa
 aaa
-amP
-buA
-aTp
-aTp
-aac
-aac
-aac
-cmp
-aac
-aac
-aac
-cof
-coh
-aac
-aac
-aac
-coN
-coR
-aac
-aac
-aac
-cmE
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -75491,27 +75546,27 @@ aaa
 aaa
 aaa
 aaa
-aac
-buA
-aTp
-clL
-aac
-cmE
 aaa
 aaa
 aaa
-aac
-aTp
-aTp
-aTp
-aac
-coo
-aTp
-aTp
-aTp
-coW
-cpf
-aac
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -75558,7 +75613,7 @@ aaa
 aCS
 aEx
 aFF
-aFF
+cIg
 aFF
 aKi
 aCS
@@ -75748,29 +75803,29 @@ aaa
 aaa
 aaa
 aaa
-bJS
-aac
-aac
-aac
-cmE
 aaa
 aaa
 aaa
 aaa
-bxh
-aTp
-aTp
-aTp
-aac
-coE
-aTp
-aTp
-aTp
-coX
-aac
-aac
-aac
-czz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -76014,20 +76069,20 @@ aaa
 aaa
 aaa
 aaa
-cni
-aTp
-aTp
-aTp
-aac
-coD
-aTp
-aTp
-aTp
-aTp
-aTp
-bsB
-cpH
-cqI
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -76271,20 +76326,20 @@ aaa
 aaa
 aaa
 aaa
-bJS
-aac
-aac
-aac
-aac
-coG
-cnh
-aTp
-aTp
-aTp
-aTp
-cut
-cpH
-crg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -76531,17 +76586,17 @@ aaa
 aaa
 aaa
 aaa
-cnW
-aac
-coF
-coO
-aTp
-cok
-cok
-aTp
-coi
-cpH
-crf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -76789,16 +76844,16 @@ aaa
 aaa
 aaa
 aaa
-bJS
-aac
-aac
-aac
-aac
-cmp
-aac
-aac
-aac
-cmE
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -78563,7 +78618,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aaa
 aaa
@@ -87401,7 +87456,7 @@ apd
 beA
 bqp
 bbR
-aqU
+boU
 bLF
 aZK
 bnJ
@@ -112507,7 +112562,7 @@ aaa
 aaa
 aaa
 aaa
-avT
+aaa
 aaa
 aaa
 aaa
@@ -115837,7 +115892,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+avT
 aaa
 aaa
 aaa

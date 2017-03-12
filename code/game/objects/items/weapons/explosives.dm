@@ -52,7 +52,7 @@
 /obj/item/weapon/c4/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
+		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 	else if(is_wire_tool(I))
 		wires.interact(user)
 	else
@@ -63,7 +63,7 @@
 	if(user.get_active_held_item() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		timer = newtime
-		user << "Timer set for [timer] seconds."
+		to_chat(user, "Timer set for [timer] seconds.")
 
 /obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
@@ -79,7 +79,7 @@
 		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
 			return
 
-	user << "<span class='notice'>You start planting the bomb...</span>"
+	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 
 	if(do_after(user, 50, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
@@ -93,7 +93,7 @@
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
 
 		target.add_overlay(image_overlay, 1)
-		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
+		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")
 		addtimer(CALLBACK(src, .proc/explode), timer * 10)
 
 /obj/item/weapon/c4/proc/explode()

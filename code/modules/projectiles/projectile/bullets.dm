@@ -35,6 +35,12 @@
 	name = "pellet"
 	damage = 12.5
 
+/obj/item/projectile/bullet/pellet/Range()
+	..()
+	damage += -0.75
+	if(damage < 0)
+		qdel(src)
+
 /obj/item/projectile/bullet/pellet/weak
 	damage = 6
 

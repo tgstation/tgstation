@@ -17,29 +17,29 @@
 	if(lawupdate)
 		if (connected_ai)
 			if(connected_ai.stat || connected_ai.control_disabled)
-				src << "<b>AI signal lost, unable to sync laws.</b>"
+				to_chat(src, "<b>AI signal lost, unable to sync laws.</b>")
 
 			else
 				lawsync()
-				src << "<b>Laws synced with AI, be sure to note any changes.</b>"
+				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 				if(is_special_character(src))
-					src << "<b>Remember, your AI does NOT share or know about your law 0.</b>"
+					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.</b>")
 					if(src.connected_ai.laws.zeroth)
-						src << "<b>While you are free to disregard it, your AI has a law 0 of its own.</b>"
+						to_chat(src, "<b>While you are free to disregard it, your AI has a law 0 of its own.</b>")
 		else
-			src << "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>"
+			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
 			lawupdate = 0
 
-	who << "<b>Obey these laws:</b>"
+	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)
 	if (is_special_character(src) && connected_ai)
-		who << "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>"
+		to_chat(who, "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>")
 	else if (connected_ai)
-		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
+		to_chat(who, "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>")
 	else if (emagged)
-		who << "<b>Remember, you are not required to listen to the AI.</b>"
+		to_chat(who, "<b>Remember, you are not required to listen to the AI.</b>")
 	else
-		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
+		to_chat(who, "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>")
 
 
 /mob/living/silicon/robot/proc/lawsync()

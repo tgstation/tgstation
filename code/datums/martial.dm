@@ -98,11 +98,11 @@
 	name = "Boxing"
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	A << "<span class='warning'>Can't disarm while boxing!</span>"
+	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
 	return 1
 
 /datum/martial_art/boxing/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	A << "<span class='warning'>Can't grab while boxing!</span>"
+	to_chat(A, "<span class='warning'>Can't grab while boxing!</span>")
 	return 1
 
 /datum/martial_art/boxing/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -148,10 +148,10 @@
 	set desc = "Remember how to wrestle."
 	set category = "Wrestling"
 
-	usr << "<b><i>You flex your muscles and have a revelation...</i></b>"
-	usr << "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful."
-	usr << "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor."
-	usr << "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone."
+	to_chat(usr, "<b><i>You flex your muscles and have a revelation...</i></b>")
+	to_chat(usr, "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful.")
+	to_chat(usr, "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor.")
+	to_chat(usr, "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone.")
 
 #define TORNADO_COMBO "HHD"
 #define THROWBACK_COMBO "DHD"
@@ -177,13 +177,18 @@
 		return 1
 	return 0
 
+/datum/martial_art/plasma_fist/proc/TornadoAnimate(mob/living/carbon/human/A)
+	set waitfor = FALSE
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		if(!A)
+			break
+		A.setDir(i)
+		playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
+		sleep(1)
+
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("TORNADO SWEEP!")
-	spawn(0)
-		for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-			A.setDir(i)
-			playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
-			sleep(1)
+	TornadoAnimate(A)
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
 	var/list/turfs = list()
 	for(var/turf/T in range(1,A))
@@ -238,10 +243,10 @@
 	set desc = "Remember the martial techniques of the Plasma Fist."
 	set category = "Plasma Fist"
 
-	usr << "<b><i>You clench your fists and have a flashback of knowledge...</i></b>"
-	usr << "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses target and everyone back."
-	usr << "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them."
-	usr << "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body."
+	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
+	to_chat(usr, "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses target and everyone back.")
+	to_chat(usr, "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them.")
+	to_chat(usr, "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body.")
 
 //Used by the gang of the same name. Uses combos. Basic attacks bypass armor and never miss
 #define WRIST_WRENCH_COMBO "DD"
@@ -391,13 +396,13 @@
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"
 
-	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
+	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>")
 
-	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
-	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
-	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
-	usr << "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand."
-	usr << "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition."
+	to_chat(usr, "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand.")
+	to_chat(usr, "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down.")
+	to_chat(usr, "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns.")
+	to_chat(usr, "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand.")
+	to_chat(usr, "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition.")
 
 //CQC
 #define SLAM_COMBO "GH"
@@ -573,15 +578,15 @@
 	set desc = "You try to remember some of the basics of CQC."
 	set category = "CQC"
 
-	usr << "<b><i>You try to remember some of the basics of CQC.</i></b>"
+	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
-	usr << "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, weakens and knocks down."
-	usr << "<span class='notice'>CQC Kick</span>: Harm Disarm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
-	usr << "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
-	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage."
-	usr << "<span class='notice'>Consecutive CQC</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
+	to_chat(usr, "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, weakens and knocks down.")
+	to_chat(usr, "<span class='notice'>CQC Kick</span>: Harm Disarm Harm. Knocks opponent away. Knocks out stunned or weakened opponents.")
+	to_chat(usr, "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold.")
+	to_chat(usr, "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage.")
+	to_chat(usr, "<span class='notice'>Consecutive CQC</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage.")
 
-	usr << "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>"
+	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 
 //ITEMS
 
@@ -638,7 +643,7 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/martial_art/plasma_fist/F = new/datum/martial_art/plasma_fist(null)
 		F.teach(H)
-		H << "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist.</span>"
+		to_chat(H, "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist.</span>")
 		used = 1
 		desc = "It's completely blank."
 		name = "empty scroll"
@@ -670,8 +675,9 @@
 /obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
-	user << "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
+	var/message = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
 	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
+	to_chat(user, message)
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)
 	user.drop_item()
@@ -701,7 +707,7 @@
 /obj/item/weapon/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
-		user << "<span class ='warning'>You club yourself over the head with [src].</span>"
+		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
 		user.Weaken(3)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -715,7 +721,7 @@
 		return ..()
 	var/mob/living/carbon/C = target
 	if(C.stat)
-		user << "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>"
+		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
 		return
 	if(user.a_intent == INTENT_DISARM)
 		if(!wielded)

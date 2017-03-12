@@ -24,7 +24,7 @@
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
 	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(OCULAR_WARDEN_EXCLUSION_RANGE, invoker))
-		invoker << "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
+		to_chat(invoker, "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" )
 		return FALSE
 	return ..()
 
@@ -146,7 +146,7 @@
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
 	for(var/datum/action/innate/function_call/F in invoker.actions)
-		invoker << "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>"
+		to_chat(invoker, "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
 		return FALSE
 	return invoker.can_hold_items()
 
@@ -175,13 +175,13 @@
 
 /datum/action/innate/function_call/Activate()
 	if(!owner.get_empty_held_indexes())
-		usr << "<span class='warning'>You need an empty hand to call forth your spear!</span>"
+		to_chat(usr, "<span class='warning'>You need an empty hand to call forth your spear!</span>")
 		return FALSE
 	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
 	if(!ratvar_awakens)
-		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
+		to_chat(owner, "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>")
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
 	addtimer(CALLBACK(src, .proc/update_actions), base_cooldown)
@@ -212,7 +212,7 @@
 
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
 	if(!isturf(invoker.loc))
-		invoker << "<span class='warning'>You must not be inside an object to use this scripture!</span>"
+		to_chat(invoker, "<span class='warning'>You must not be inside an object to use this scripture!</span>")
 		return FALSE
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
@@ -221,7 +221,7 @@
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		other_servants++
 	if(!other_servants)
-		invoker << "<span class='warning'>There are no other servants or clockwork obelisks!</span>"
+		to_chat(invoker, "<span class='warning'>There are no other servants or clockwork obelisks!</span>")
 		return FALSE
 	return TRUE
 
@@ -284,7 +284,7 @@
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
 				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
-			invoker << "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>"
+			to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>")
 		else
 			return FALSE
 	return TRUE
