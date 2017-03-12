@@ -3,6 +3,7 @@
 	desc = "Used to remotely control the flow of power to different parts of the station."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
+	req_access = list(access_engine)
 	circuit = /obj/item/weapon/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/list/apcs //APCs the computer has access to
@@ -11,6 +12,8 @@
 	var/list/filters //For sorting the results
 	var/checking_logs = 0
 	var/list/logs
+	var/authenticated = 0
+	var/auth_id = "\[NULL\]"
 
 /obj/machinery/computer/apc_control/Initialize()
 	apcs = list() //To avoid BYOND making the list run through a ton of procs
@@ -35,41 +38,50 @@
 				active_apc.update_icon()
 				active_apc = null
 
+/obj/machinery/computer/apc_control/attack_ai(mob/living/AI) //You already have APC access, cheater!
+	AI << "<span class='warning'>[src] does not support AI control.</span>"
+	return
+
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !APC.emagged && !APC.stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
 
 /obj/machinery/computer/apc_control/interact(mob/living/user)
 	var/dat
-	if(!checking_logs)
-		dat += "<i>Filters</i><br>"
-		dat += "<b>Name:</b> <a href='?src=\ref[src];name_filter=1'>[filters["Name"] ? filters["Name"] : "None set"]</a><br>"
-		dat += "<b>Charge:</b> <a href='?src=\ref[src];above_filter=1'>\>[filters["Charge Above"] ? filters["Charge Above"] : "NaN"]%</a> and <a href='?src=\ref[src];below_filter=1'>\<[filters["Charge Below"] ? filters["Charge Below"] : "NaN"]%</a><br>"
-		dat += "<b>Accessible:</b> <a href='?src=\ref[src];access_filter=1'>[filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
-		for(var/A in apcs)
-			var/obj/machinery/power/apc/APC = apcs[A]
-			if(filters["Name"] && !findtext(APC.name, filters["Name"]) && !findtext(APC.area.name, filters["Name"]))
-				continue
-			if(filters["Charge Above"] && (APC.cell.charge / APC.cell.maxcharge) < filters["Charge Above"] / 100)
-				continue
-			if(filters["Charge Below"] && (APC.cell.charge / APC.cell.maxcharge) > filters["Charge Below"] / 100)
-				continue
-			if(filters["Responsive"] && !APC.aidisabled)
-				continue
-			dat += "<a href='?src=\ref[src];access_apc=\ref[APC]'>[A]</a><br>\
-			<b>Charge:</b> [APC.cell.charge] / [APC.cell.maxcharge] W ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
-			<b>Area:</b> [APC.area]<br>\
-			[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
-		dat += "<a href='?src=\ref[src];check_logs=1'>Check Logs</a>"
-	else
-		if(logs.len)
-			for(var/entry in logs)
-				dat += "[entry]<br>"
+	if(authenticated)
+		if(!checking_logs)
+			dat += "Logged in as [auth_id].<br><br>"
+			dat += "<i>Filters</i><br>"
+			dat += "<b>Name:</b> <a href='?src=\ref[src];name_filter=1'>[filters["Name"] ? filters["Name"] : "None set"]</a><br>"
+			dat += "<b>Charge:</b> <a href='?src=\ref[src];above_filter=1'>\>[filters["Charge Above"] ? filters["Charge Above"] : "NaN"]%</a> and <a href='?src=\ref[src];below_filter=1'>\<[filters["Charge Below"] ? filters["Charge Below"] : "NaN"]%</a><br>"
+			dat += "<b>Accessible:</b> <a href='?src=\ref[src];access_filter=1'>[filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
+			for(var/A in apcs)
+				var/obj/machinery/power/apc/APC = apcs[A]
+				if(filters["Name"] && !findtext(APC.name, filters["Name"]) && !findtext(APC.area.name, filters["Name"]))
+					continue
+				if(filters["Charge Above"] && (APC.cell.charge / APC.cell.maxcharge) < filters["Charge Above"] / 100)
+					continue
+				if(filters["Charge Below"] && (APC.cell.charge / APC.cell.maxcharge) > filters["Charge Below"] / 100)
+					continue
+				if(filters["Responsive"] && !APC.aidisabled)
+					continue
+				dat += "<a href='?src=\ref[src];access_apc=\ref[APC]'>[A]</a><br>\
+				<b>Charge:</b> [APC.cell.charge] / [APC.cell.maxcharge] W ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
+				<b>Area:</b> [APC.area]<br>\
+				[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
+			dat += "<a href='?src=\ref[src];check_logs=1'>Check Logs</a><br>"
+			dat += "<a href='?src=\ref[src];log_out=1'>Log Out</a><br>"
 		else
-			dat += "<i>No activity has been recorded at this time.</i><br>"
-		if(emagged)
-			dat += "<a href='?src=\ref[src];clear_logs=1'><font color='#FF0000'>@#%! CLEAR LOGS</a>"
-		dat += "<a href='?src=\ref[src];check_apcs=1'>Return</a>"
-	operator = user
+			if(logs.len)
+				for(var/entry in logs)
+					dat += "[entry]<br>"
+			else
+				dat += "<i>No activity has been recorded at this time.</i><br>"
+			if(emagged)
+				dat += "<a href='?src=\ref[src];clear_logs=1'><font color='#FF0000'>@#%! CLEAR LOGS</a>"
+			dat += "<a href='?src=\ref[src];check_apcs=1'>Return</a>"
+		operator = user
+	else
+		dat = "<a href='?src=\ref[src];authenticate=1'>Please swipe a valid ID to log in...</a>"
 	var/datum/browser/popup = new(user, "apc_control", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -79,6 +91,17 @@
 	if(..())
 		return
 	var/image/I = image(src) //For feedback message flavor
+	if(href_list["authenticate"])
+		var/obj/item/weapon/card/id/ID = usr.get_active_held_item()
+		if(!istype(ID))
+			ID = usr.get_idcard()
+		if(ID && istype(ID))
+			if(check_access(ID))
+				authenticated = TRUE
+				auth_id = "[ID.registered_name] ([ID.assignment])"
+	if(href_list["log_out"])
+		authenticated = FALSE
+		auth_id = "\[NULL\]"
 	if(href_list["access_apc"])
 		playsound(src, "terminal_type", 50, 0)
 		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in apcs_list
@@ -87,12 +110,18 @@
 			return
 		if(active_apc)
 			to_chat(usr, "<span class='robot danger'>\icon[I] Disconnected from [active_apc].</span>")
+			active_apc.say("Remote access canceled. Interface locked.")
+			playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
+			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
+			active_apc.update_icon()
 			active_apc = null
 		to_chat(usr, "<span class='robot notice'>\icon[I] Connected to APC in [get_area(APC)]. Interface request sent.</span>")
 		log_activity("remotely accessed APC in [get_area(APC)]")
 		APC.interact(usr, not_incapacitated_state)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
+		log_game("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
 		if(APC.locked)
 			APC.say("Remote access detected. Interface unlocked.")
 			playsound(APC, 'sound/machines/BoltsUp.ogg', 25, 0)
@@ -150,6 +179,7 @@
 	if(emagged)
 		return
 	user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
+	log_game("[key_name_admin(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
 	playsound(src, "sparks", 50, 1)
 	emagged = 1
 
