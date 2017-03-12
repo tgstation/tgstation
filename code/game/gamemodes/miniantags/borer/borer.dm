@@ -360,7 +360,7 @@ var/total_borer_hosts_needed = 10
 		return
 	
 	if(H.reagents.has_reagent("nuroxanide"))
-		src << "<span class='warning'>As you taste [H]'s blood you suddenly feel sick! You release your grip and fall to the ground.</span>"
+		to_chat(src, "<span class='warning'>As you taste [H]'s blood you suddenly feel sick! You release your grip and fall to the ground.</span>")
 		return
 		
 	Infect(H)
