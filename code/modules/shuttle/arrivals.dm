@@ -37,16 +37,24 @@
 
 	areas = list()
 
-	if(latejoin.len)
-		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
-
-	latejoin = list()
+	var/list/new_latejoin = list()
 	for(var/area/shuttle/arrival/A in sortedAreas)
 		for(var/obj/structure/chair/C in A)
-			latejoin += C
+			new_latejoin += C
 		if(!console)
 			console = locate(/obj/machinery/requests_console) in A
 		areas += A
+
+	if(latejoin.len)
+		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
+
+	if(!new_latejoin.len)
+		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
+		if(!latejoin.len)
+			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
+		return
+
+	latejoin = new_latejoin
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
 	SSshuttle.generate_transit_dock(src)

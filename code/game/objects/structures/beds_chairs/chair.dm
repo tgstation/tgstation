@@ -15,6 +15,10 @@
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
 
+/obj/structure/chair/Destroy()
+	latejoin -= src	//These may be here due to the arrivals shuttle
+	return ..()
+
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(buildstacktype && (!(flags & NODECONSTRUCT)))
