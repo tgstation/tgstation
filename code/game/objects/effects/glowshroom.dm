@@ -27,12 +27,6 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	icon_state = "glowcap"
 	myseed = /obj/item/seeds/glowshroom/glowcap
 
-/obj/structure/glowshroom/shadowshroom
-	name = "shadowshroom"
-	desc = "Mycena Umbra, a species of mushroom that emits shadow instead of light."
-	icon_state = "shadowshroom"
-	myseed = /obj/item/seeds/glowshroom/shadowshroom
-
 /obj/structure/glowshroom/single/Spread()
 	return
 
