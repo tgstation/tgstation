@@ -8,11 +8,14 @@ but we are all coders together.
 
 Goodbye, man. We'll miss you.
 
+This memorial has been designed for him and any future coders to perish.
+
 */
 
 /obj/structure/arc
-	name = "ArcLumin's Grave"
-	desc = "Rest in peace, you glorious bastard."
+	name = "Tomb of the Unknown Spaceman"
+	desc = "Here rests an unknown spaceman\nUnknown by name or rank\nWhose acts will not be forgotten"
 	icon = 'icons/obj/tomb.dmi'
-	icon_state = "tombstone"
+	icon_state = "memorial"
 	density = 1
+	anchored = 1
