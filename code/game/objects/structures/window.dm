@@ -13,6 +13,7 @@
 	var/state = 0
 	var/reinf = 0
 	var/heat_resistance = 800
+	var/decon_speed = 30
 	var/wtype = "glass"
 	var/fulltile = 0
 	var/glass_type = /obj/item/stack/sheet/glass
@@ -353,7 +354,7 @@
 		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + (heat_resistance))
+	if(exposed_temperature > (T0C + heat_resistance))
 		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
 

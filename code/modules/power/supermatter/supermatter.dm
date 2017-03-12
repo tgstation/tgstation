@@ -9,25 +9,28 @@
 
 #define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
 #define PLASMA_TRANSMIT_MODIFIER 4
-#define FREON_TRANSMIT_PENALTY 0.75   // Scales how much freon reduces total power transmission. 1 equals 1% per 1% of freon in the mix.
+#define FREON_TRANSMIT_PENALTY 0.75    // Scales how much freon reduces total power transmission. 1 equals 1% per 1% of freon in the mix.
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 
-#define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.35     //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
-#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 30      //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
+#define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
+#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 100        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
+#define POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
 
-#define MOLE_PENALTY_THRESHOLD 1000            //Higher == Shard can absorb more moles before triggering the high mole penalties.
-#define MOLE_HEAT_PENALTY 350                     //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
+#define MOLE_PENALTY_THRESHOLD 1200           //Higher == Shard can absorb more moles before triggering the high mole penalties.
+#define MOLE_HEAT_PENALTY 350                 //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
 #define POWER_PENALTY_THRESHOLD 4000          //Higher == Engine can generate more power before triggering the high power penalties.
-#define HEAT_PENALTY_THRESHOLD 40                       //Higher == Crystal safe operational temperature is higher.
+#define SEVERE_POWER_PENALTY_THRESHOLD 6000   //Same as above, but causes more dangerous effects
+#define CRITICAL_POWER_PENALTY_THRESHOLD 8000 //Even more dangerous effects, threshold for tesla delamination
+#define HEAT_PENALTY_THRESHOLD 40             //Higher == Crystal safe operational temperature is higher.
 #define DAMAGE_HARDCAP 0.05
 
 
-#define THERMAL_RELEASE_MODIFIER 5                //Higher == less heat released during reaction, not to be confused with the above values
-#define PLASMA_RELEASE_MODIFIER 750                //Higher == less plasma released by reaction
+#define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
+#define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
-#define FREON_BREEDING_MODIFIER 300        //Higher == less freon created
-#define REACTION_POWER_MODIFIER 0.55                //Higher == more overall power
+#define FREON_BREEDING_MODIFIER 100        //Higher == less freon created
+#define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
 
 //These would be what you would get at point blank, decreases with distance
@@ -85,6 +88,7 @@
 	var/dynamic_heat_modifier = 1
 	var/dynamic_heat_resistance = 1
 	var/powerloss_inhibitor = 1
+	var/powerloss_dynamic_scaling= 0
 	var/power_transmission_bonus = 0
 	var/mole_heat_penalty = 0
 	var/freon_transmit_modifier = 1
@@ -152,6 +156,10 @@
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	var/turf/T = get_turf(src)
+	for(var/mob/M in mob_list)
+		if(M.z == z)
+			M << 'sound/magic/Charge.ogg'
+			M << "<span class='boldannounce'>You feel reality distort for a moment...</span>"
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", "supermatter")
 		if(T)
@@ -161,7 +169,7 @@
 	else
 		investigate_log("has exploded.", "supermatter")
 		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
-		if(power > POWER_PENALTY_THRESHOLD)
+		if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
 			investigate_log("has spawned additional energy balls.", "supermatter")
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power
@@ -176,8 +184,7 @@
 	if(!istype(T)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-	if(isspaceturf(T))	// Stop processing this stuff if we've been ejected.
-		return
+
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
@@ -202,7 +209,7 @@
 			if(power > POWER_PENALTY_THRESHOLD)
 				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.")
 				if(powerloss_inhibitor < 0.5)
-					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION DETECTED.")
+					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
 
 			if(combined_gas > MOLE_PENALTY_THRESHOLD)
 				radio.talk_into(src, "Warning: Critical coolant mass reached.")
@@ -232,10 +239,9 @@
 		// Pass all the gas related code an empty gas container
 		removed = new()
 
-	if(!removed || !removed.total_moles())
+	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
 			damage += max((power-1600)/10, 0)
-		power = min(power, 1600)
 		return 1
 
 	damage_archived = damage
@@ -251,10 +257,11 @@
 
 		//capping damage
 		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
-
+		if(damage > damage_archived && prob(10))
+			playsound(get_turf(src), 'sound/effects/EMPulse.ogg', 50, 1)
 
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
-
+	//calculating gas related values
 	combined_gas = max(removed.total_moles(), 0)
 
 	plasmacomp = max(removed.gases["plasma"][MOLES]/combined_gas, 0)
@@ -277,8 +284,12 @@
 	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
+
 	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
-		powerloss_inhibitor = max(min(1-co2comp, 1), 0)
+		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling + Clamp(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
+	else
+		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling - 0.10,0, 1)
+	powerloss_inhibitor = Clamp(1-(powerloss_dynamic_scaling * Clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
 
 
 	var/temp_factor = 50
@@ -331,17 +342,22 @@
 		l.rad_act(rads)
 
 	if(power > POWER_PENALTY_THRESHOLD)
-		supermatter_zap(src, 7, power*3)
-		supermatter_zap(src, 7, power*3)
 		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
+		supermatter_zap(src, 5, min(power*2, 20000))
+		supermatter_zap(src, 5, min(power*2, 20000))
+		if(power > SEVERE_POWER_PENALTY_THRESHOLD)
+			supermatter_zap(src, 5, min(power*2, 20000))
+			if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
+				supermatter_zap(src, 5, min(power*2, 20000))
+
 		if(prob(15))
 			supermatter_pull(src, power/750)
 		if(prob(5))
-			supermatter_anomaly_gen(src, 1, power/750)
-		if(prob(2))
-			supermatter_anomaly_gen(src, 2, power/650)
-		if(prob(4))
-			supermatter_anomaly_gen(src, 3, min(power/750, 5))
+			supermatter_anomaly_gen(src, 1, rand(5, 10))
+		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(2))
+			supermatter_anomaly_gen(src, 2, rand(5, 10))
+		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3))
+			supermatter_anomaly_gen(src, 3, rand(5, 10))
 
 
 	power -= ((power/500)**3) * powerloss_inhibitor
