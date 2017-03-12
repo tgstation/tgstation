@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/objects/SSinbounds
+var/datum/controller/subsystem/inbounds/SSinbounds
 /datum/controller/subsystem/inbounds
 	name = "Inbounds"
 	priority = 40

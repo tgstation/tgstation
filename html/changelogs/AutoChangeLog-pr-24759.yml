@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Slimes can now properly latch onto humans."
-  - bugfix: "Slimes won't aggro neutral mobs anymore. This includes blood-spawned gold slime mobs."

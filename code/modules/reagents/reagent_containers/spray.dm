@@ -27,19 +27,19 @@
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
-			user << "<span class='notice'>\The [A] is empty.</span>"
+			to_chat(user, "<span class='notice'>\The [A] is empty.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='notice'>\The [src] is full.</span>"
+			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return
 
 		var/trans = A.reagents.trans_to(src, 50) //transfer 50u , using the spray's transfer amount would take too long to refill
-		user << "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>"
+		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>")
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		user << "<span class='warning'>\The [src] is empty!</span>"
+		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 
 	spray(A)
@@ -115,7 +115,7 @@
 	else
 		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 		current_range = spray_range
-	user << "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>"
+	to_chat(user, "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/weapon/reagent_containers/spray/verb/empty()
 	set name = "Empty Spray Bottle"
@@ -126,7 +126,7 @@
 	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return
 	if(isturf(usr.loc) && src.loc == usr)
-		usr << "<span class='notice'>You empty \the [src] onto the floor.</span>"
+		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		src.reagents.clear_reagents()
 

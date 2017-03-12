@@ -208,7 +208,7 @@
 	alert_type = /obj/screen/alert/status_effect/wish_granters_gift
 
 /datum/status_effect/wish_granters_gift/on_apply()
-	owner << "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>"
+	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
 
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = 1, admin_revive = 1)

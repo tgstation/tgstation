@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/StartChargeup(mob/user = usr)
 	ready = 1
-	user << "<span class='notice'>You start gathering the power.</span>"
+	to_chat(user, "<span class='notice'>You start gathering the power.</span>")
 	Snd = new/sound('sound/magic/lightning_chargeup.ogg',channel = 7)
 	halo = image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = EFFECTS_LAYER)
 	user.add_overlay(halo)
@@ -43,7 +43,7 @@
 
 /obj/effect/proc_holder/spell/targeted/tesla/revert_cast(mob/user = usr, message = 1)
 	if(message)
-		user << "<span class='notice'>No target found in range.</span>"
+		to_chat(user, "<span class='notice'>No target found in range.</span>")
 	Reset(user)
 	..()
 
@@ -53,7 +53,7 @@
 	Snd=sound(null, repeat = 0, wait = 1, channel = Snd.channel) //byond, why you suck?
 	playsound(get_turf(user),Snd,50,0)// Sorry MrPerson, but the other ways just didn't do it the way i needed to work, this is the only way.
 	if(get_dist(user,target)>range)
-		user << "<span class='notice'>They are too far away!</span>"
+		to_chat(user, "<span class='notice'>They are too far away!</span>")
 		Reset(user)
 		return
 
