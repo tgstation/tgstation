@@ -103,10 +103,9 @@
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
-	. = list()
 	if(!search_objects)
 		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
-		. += Mobs
+		. = Mobs
 
 		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
 
@@ -115,7 +114,7 @@
 				. += HM
 	else
 		var/list/Objects = oview(vision_range, targets_from)
-		. += Objects
+		. = Objects
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
