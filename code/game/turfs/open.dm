@@ -26,6 +26,13 @@
 /turf/open/proc/sync_all_gravity()
 	if(!initialized)
 		return FALSE
+	if(!turf_gravity_overrides_area)
+		for(var/atom/movable/AM in atoms_with_forced_gravity)
+			reset_forced_gravity_atom(AM)
+	else
+		for(var/atom/movable/AM in contents)
+			if(!atoms_with_forced_gravity[AM])
+				force_gravity_on_atom(AM)
 	for(var/atom/movable/AM in contents)
 		AM.sync_gravity()
 	turf_gravity_throwing = FALSE

@@ -157,6 +157,10 @@ var/datum/controller/subsystem/gravity/SSgravity
 			var/atom/movable/AM = purging_atoms[purging_atoms.len]
 			purging_atoms.len--
 			if(AM.gravity_ignores_turfcheck || isturf(AM.loc))
+				if(AM.forced_gravity_by_turf != AM.loc)
+					error_mismatched_turf["[AM.type]-[AM.loc.type]-[AM.forced_gravity_by_turf.type]"]++
+					AM.forced_gravity_by_turf.reset_forced_gravity_atom(AM)
+					AM.sync_gravity()
 				var/current_area = get_area(AM)
 				if(AM.current_gravity_area)
 					if(AM.current_gravity_area != current_area)

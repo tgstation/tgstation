@@ -77,7 +77,6 @@
 		current_gravity_area = null
 		A.update_gravity(src, TRUE)
 	if(isturf(loc) || gravity_ignores_turfcheck)
-		A.update_gravity(src, is_affected_by_gravity)
 		var/turf/T = loc
 		if(forced_gravity_by_turf)
 			if(T != forced_gravity_by_turf)
@@ -85,10 +84,14 @@
 					SSgravity.error_mismatched_turf["[type]-[T.type]-[forced_gravity_by_turf.type]"]++
 				forced_gravity_by_turf.reset_forced_gravity_atom(src)
 				forced_gravity_by_turf = null
-		if(istype(T, /turf/open))
+				sync_gravity()
+				return FALSE
+		else if(istype(T, /turf/open))
 			var/turf/open/O = T
-			if(O.turf_gravity_overrides_area)
+			if(O.turf_gravity_overrides_area && (O != forced_gravity_by_turf))
 				O.force_gravity_on_atom(src)
+			else
+				A.update_gravity(src, is_affected_by_gravity)
 	else
 		A.update_gravity(src, FALSE)	//We're not on a turf and we don't need to be included in processing.
 		if(forced_gravity_by_turf)
