@@ -7,6 +7,8 @@
 
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 
+#define HOLIDAY_ACTIVE(holiday)  SSevent.holidays && SSevent.holidays[##holiday]
+
 /proc/get_area(atom/A)
 	if (!istype(A))
 		return
