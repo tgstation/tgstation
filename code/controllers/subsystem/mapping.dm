@@ -123,9 +123,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
-
-	if(world.maxz != ZLEVEL_SPACEMAX)
-		WARNING("world.maxz does not match ZLEVEL_SPACEMAX!")
     
 	var/start_time = REALTIMEOFDAY
   
