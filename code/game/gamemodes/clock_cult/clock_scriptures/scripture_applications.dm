@@ -108,7 +108,7 @@
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
 	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in all_clockwork_mobs)
 		if(M.host == invoker)
-			invoker << "<span class='warning'>You can only house one marauder at a time!</span>"
+			to_chat(invoker, "<span class='warning'>You can only house one marauder at a time!</span>")
 			return FALSE
 	return TRUE
 
@@ -134,7 +134,7 @@
 	slab.busy = "Marauder Selection in progress"
 	if(!check_special_requirements())
 		return FALSE
-	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"
+	to_chat(invoker, "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>")
 	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50)
 	if(!check_special_requirements())
 		return FALSE
@@ -285,10 +285,10 @@
 		if(is_servant_of_ratvar(L))
 			servants++
 	if(servants * 0.2 < clockwork_daemons)
-		invoker << "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>"
+		to_chat(invoker, "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>")
 		return FALSE
 	if(servants * 0.2 < clockwork_daemons+1)
-		invoker << "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>"
+		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
 		return FALSE
 	return ..()
 

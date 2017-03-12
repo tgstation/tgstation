@@ -25,10 +25,10 @@
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
-		user << "<span class='warning'>This spawner is out of charges!</span>"
+		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
 		return
 	if(jobban_isbanned(user, "lavaland"))
-		user << "<span class='warning'>You are jobanned!</span>"
+		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -71,7 +71,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		M << "[flavour_text]"
+		to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
 			for(var/objective in objectives)

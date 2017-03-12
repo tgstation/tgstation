@@ -9,6 +9,9 @@
 	pixel_y = -248
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = 0
+	light_power = 0.7
+	light_range = 15
+	light_color = rgb(190, 135, 0)
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
@@ -73,13 +76,13 @@
 					meals += L
 			if(meals.len)
 				prey = pick(meals)
-				prey << "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
-				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
+				to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
+				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>")
 				prey << 'sound/effects/ratvar_reveal.ogg'
 	else
 		if((!istype(prey, /obj/singularity/narsie) && prob(10)) || is_servant_of_ratvar(prey) || prey.z != z)
-			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
-			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
+			to_chat(prey, "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
+			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>")
 			prey = null
 		else
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
@@ -89,8 +92,8 @@
 	if(clashing)
 		return FALSE
 	clashing = TRUE
-	world << "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>"
-	world << "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>"
+	to_chat(world, "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>")
+	to_chat(world, "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>")
 	for(var/obj/singularity/narsie/N in range(15, src))
 		if(N.clashing)
 			continue

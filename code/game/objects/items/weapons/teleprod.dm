@@ -34,7 +34,7 @@
 			qdel(src)
 			qdel(I)
 			user.put_in_hands(S)
-			user << "<span class='notice'>You place the bluespace crystal firmly into the igniter.</span>"
+			to_chat(user, "<span class='notice'>You place the bluespace crystal firmly into the igniter.</span>")
 		else
 			user.visible_message("<span class='warning'>You can't put the crystal onto the stunprod while it has a power cell installed!</span>")
 	else

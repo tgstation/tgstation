@@ -204,11 +204,11 @@
 			if(!WT.remove_fuel(0, user))
 				return
 			playsound(loc, WT.usesound, 40, 1)
-			user << "<span class='notice'>You begin cutting [src] apart...</span>"
+			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
 			if(do_after(user, 30, target = src))
 				deconstruct(TRUE)
 		else
-			user << "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>"
+			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
 		return 1
 	else
 		return ..()

@@ -13,7 +13,7 @@ var/sound/admin_sound
 	var/freq = 1
 	if(HOLIDAY_ACTIVE(APRIL_FOOLS))
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
-		src << "You feel the Honkmother messing with your song..."
+		to_chat(src, "You feel the Honkmother messing with your song...")
 
 	var/sound/admin_sound = new()
 	admin_sound.file = S

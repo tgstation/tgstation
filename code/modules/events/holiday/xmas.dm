@@ -157,4 +157,4 @@
 				telespell.clothes_req = 0 //santa robes aren't actually magical.
 				santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
 
-				santa << "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"
+				to_chat(santa, "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>")
