@@ -96,7 +96,7 @@ var/list/preferences_datums = list()
 
 	var/list/ignoring = list()
 
-	var/clientfps = 40
+	var/clientfps = 30
 
 	var/parallax
 
