@@ -1,0 +1,4 @@
+author: "Cyberboss, Bgobandit, and Yogstation"
+delete-after: True
+changes: 
+  - rscadd: "The HoP can now prioritze roles for late-joiners"

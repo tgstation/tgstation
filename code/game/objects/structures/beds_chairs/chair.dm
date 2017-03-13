@@ -21,7 +21,6 @@
 
 /obj/structure/chair/e_chair/Initialize()
 	part = new(src)
-	..()
 
 /obj/structure/chair/Initialize()
 	..()
@@ -35,6 +34,7 @@
 
 /obj/structure/chair/Destroy()
 	QDEL_NULL(part)
+	latejoin -= src	//These may be here due to the arrivals shuttle
 	return ..()
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
