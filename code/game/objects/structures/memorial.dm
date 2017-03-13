@@ -8,7 +8,7 @@ but we are all contributors together.
 
 Goodbye, man. We'll miss you.
 
-This memorial has been designed for him and any future coders to perish.
+This memorial has been designed for him and any future contributors to perish.
 
 */
 

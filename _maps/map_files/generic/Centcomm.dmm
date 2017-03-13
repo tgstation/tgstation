@@ -6772,13 +6772,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "qU" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/evac)
 "qV" = (
 /obj/structure/closet/crate/bin,
@@ -13913,6 +13907,12 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
+/area/centcom/evac)
+"JL" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/evac)
+"JM" = (
+/turf/closed/indestructible/fakeglass,
 /area/centcom/evac)
 
 (1,1,1) = {"
@@ -63683,7 +63683,7 @@ ks
 oA
 it
 lW
-qk
+JL
 qU
 rU
 sv
@@ -63940,15 +63940,15 @@ ks
 oB
 it
 pw
-ql
-qV
+JH
+qU
 rU
 sv
 sY
 tK
-JE
-JG
-vm
+tK
+tK
+tM
 tM
 wd
 sv
@@ -64197,15 +64197,15 @@ ks
 oC
 it
 lW
-qk
-qW
+JM
+qU
 rU
 sv
 sZ
 sY
-JF
-JH
-JJ
+vn
+tK
+tJ
 vF
 sZ
 sv
@@ -64460,9 +64460,9 @@ rU
 sv
 sW
 tL
-uo
-JI
-JK
+tL
+tK
+tK
 tK
 vF
 sv
