@@ -1,5 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - tweak: "You must now be on any intent EXCEPT help to weld an airlock shut"
-  - rscadd: "You can now repair airlocks with welding tools on help intent (broken airlocks still need their wires mended though)"
