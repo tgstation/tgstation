@@ -1750,7 +1750,7 @@
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
-	cost = 1000000
+	cost = 10000
 	contains = list(/obj/vehicle/bicycle)
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
