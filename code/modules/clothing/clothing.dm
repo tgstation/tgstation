@@ -360,7 +360,7 @@ BLIND     // can't see anything
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
-	var/dropped_twice = FALSE
+	var/equipped_before = FALSE
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -382,15 +382,15 @@ BLIND     // can't see anything
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
 		user.update_inv_shoes()
-		dropped_twice = TRUE
+		equipped_before = TRUE
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
-	dropped_twice = FALSE
+	equipped_before = FALSE
 	user.pixel_y -= offset
 	worn_y_dimension = world.icon_size
 
 /obj/item/clothing/shoes/dropped(mob/user)
-	if(offset && dropped_twice)
+	if(offset && equipped_before)
 		restore_offsets(user)
 	. = ..()
 
