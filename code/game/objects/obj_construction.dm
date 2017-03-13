@@ -144,7 +144,7 @@
 		//If OnDeconstruction returns TRUE or we were force deconstructed and there is loot, qdel it. Only if always_drop_loot is FALSE
 		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot && (!next || next.always_drop_loot))
 			qdel(loot)
-		else if(user)
+		else if(user && user.Adjacent(parent))	//adjacency check for telekinetics
 			user.put_in_hands(loot)
 		else
 			loot.forceMove(get_turf(parent))
