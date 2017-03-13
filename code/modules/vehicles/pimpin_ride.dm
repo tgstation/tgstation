@@ -50,6 +50,9 @@
 		mybag = I
 		update_icon()
 	else if(istype(I, /obj/item/janiupgrade))
+		if(floorbuffer)
+			to_chat(user, "<span class='warning'>[src] already has a floor buffer!</span>")
+			return
 		floorbuffer = TRUE
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
