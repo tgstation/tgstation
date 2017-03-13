@@ -1,5 +1,7 @@
+#define TAPE_RECORDER_NAME "universal recorder"
+
 /obj/item/device/taperecorder
-	name = "universal recorder"
+	name = TAPE_RECORDER_NAME
 	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
@@ -28,9 +30,22 @@
 /obj/item/device/taperecorder/New()
 	myVoice = name
 	mytape = new /obj/item/device/tape/random(src)
+	// mytape = new("{John}Hi{Bob}Hello{wait=2}{John}How are you?{Bob}<b>I am fine</b>{wait=5}{John}Yep") // DELETEME
 	update_icon()
 	..()
 
+/*
+/obj/item/device/taperecorder/proc/New(txt, color="white")
+	myVoice = name
+	mytape = new(txt,color)
+	update_icon()
+	..()
+*/
+
+// DELETEME
+/obj/item/device/taperecorder/verb/setDialogue(txt as text)
+	if (mytape)
+		mytape.setDialogue(txt)
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()
@@ -144,13 +159,7 @@
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(!can_use(usr))
-		return
-	if(!mytape || mytape.ruined)
-		return
-	if(recording)
-		return
-	if(playing)
+	if(!can_use(usr) || !mytape || mytape.ruined || recording || playing || mytape.premade)
 		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
@@ -159,7 +168,7 @@
 		playPosition = 1
 		refreshBrowseMenu()
 		update_icon()
-		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
+		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape // I have no idea what this comment means - Davidj361
 		var/max = mytape.max_capacity
 		for(used, used < max)
 			if(!recording)
@@ -221,7 +230,7 @@
 				announce("Playing ended.")
 			playPosition = 1 // automatically rewind the tape
 			break
-		tapeSay(playPosition)
+		recorderSay(playPosition)
 		if(mytape.storedinfo.len < playPosition + 1)
 			playsleepseconds = 1
 			sleep(10)
@@ -407,7 +416,11 @@
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
 		if (mytape.storedinfo[i]["announce"])
 			t1 += "** \[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
-		else t1 += "\[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
+		else
+			if (mytape.premade)
+				t1 += "\[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["nosrc_speaker"]] says, \"[mytape.storedinfo[i]["raw_message"]]\"<BR>"
+			else
+				t1 += "\[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
 	return t1
 
 // copy pasted code from paper.dm
@@ -459,23 +472,31 @@
 	spans += recorderTalkSpan
 	send_speech(message,, src,, spans)
 
-/obj/item/device/taperecorder/proc/tapeSay(i)
-	if (!mytape.storedinfo[i])
+
+/obj/item/device/taperecorder/proc/recorderSay(i)
+	if (!mytape || !mytape.storedinfo[i])
 		return
 	var/x = mytape.storedinfo[i]
 	var/list/span = x["spans"]
 	span = span.Copy() // hur durrr I am byond and I cannot do chaining hurrr durrr
 	if (!x["announce"])
-		var/atom/movable/iObj = x["speaker"]
-		myVoice = iObj.GetVoice() // Make the recorder disguise itself as the recorded voice
+		if (mytape.premade)
+			myVoice = x["nosrc_speaker"]
+		else
+			var/atom/movable/iObj = x["speaker"]
+			myVoice = iObj.GetVoice() // Make the recorder disguise itself as the recorded voice
 	if (announce)
 		span += recorderTalkSpan // So people see easier that the tape is talking
 	if (announce && x["announce"])
 		var/timestamp = x["time_stamp"]
 		send_speech("\[[timestamp]\] " + x["raw_message"],, x["speaker"],, span) // Add a timestamp at the beginning
 	else if (!x["announce"])
-		send_speech(x["raw_message"],, x["speaker"],, span)
+		if (mytape.premade)
+			send_speech(x["raw_message"],, src,, span) // This will make the tape recorder show as the universal recorder's name on radios, but oh well
+		else
+			send_speech(x["raw_message"],, x["speaker"],, span)
 	myVoice = name
+
 
 //empty tape recorders
 /obj/item/device/taperecorder/empty/New()
@@ -496,6 +517,7 @@
 	var/list/storedinfo = list()
 	var/list/timestampInSeconds = list()
 	var/ruined = 0
+	var/premade = FALSE
 
 /obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
@@ -548,6 +570,21 @@
 	x["announce"] = TRUE
 	storedinfo[++storedinfo.len] = x
 
+// A helper function for setDialogue
+/obj/item/device/tape/proc/addInfoNoSrc(message, speaker)
+	if (!premade)
+		return
+	timestampInSeconds += used_capacity
+	var/spans = list()
+	var/x[0]
+	x["nosrc_speaker"] = speaker
+	x["message_langs"] = languages_spoken
+	x["raw_message"] = message
+	x["spans"] = spans
+	x["time_stamp"] = time2text(used_capacity * 10,"mm:ss")
+	x["announce"] = FALSE
+	storedinfo[++storedinfo.len] = x
+
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined)
@@ -566,3 +603,54 @@
 /obj/item/device/tape/random/New()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
 	..()
+
+/*
+// A constructor for map-makers to make tapes with messages
+/obj/item/device/tape/proc/New(txt, color="white")
+	icon_state = "tape_[color]"
+	// setDialogue(txt) // FIXME
+	premade = TRUE
+	..()
+	*/
+
+// FIXME: change back to proc
+/obj/item/device/tape/verb/setDialogue(txt as text)
+	premade = TRUE
+	// Reset everything
+	used_capacity = 1
+	max_capacity = 600
+	storedinfo = list()
+	timestampInSeconds = list()
+
+	var/start = 1
+	// For reference: https://regex101.com/r/0jjDGb/6
+	// Our regex: \[([^\]]*)\]([^[]*)
+	var str = "\\\[(\[^\\]]*)\\](\[^\[]*)"
+	var/regex/re = new(str,"g")
+	var/regex/re2 = new("^(.*);$")
+	var/regex/re3 = new("^wait=(\\d+)$")
+	while(re.Find(txt, start))
+		start = re.next // Get our next match
+		var/speaker = ""
+		var/message = ""
+		var/wait = 0
+		if (re3.Find(re.group[1])) // Is this a [wait] command?
+			wait = re3.group[1] // Add silence
+			used_capacity += round(text2num(wait))
+		else
+			if (length(re.group[1]) != 0) // Is it a blank []?
+				if (re.group[1] == ";") // Quick announcement?
+					speaker = TAPE_RECORDER_NAME
+				else if (!re2.Find(re.group[1])) // is there a ; in our square brackets?
+					wait = 1
+					speaker = re.group[1]
+				else
+					speaker = re2.group[1]
+			else
+				wait = 1
+				speaker = TAPE_RECORDER_NAME
+			message = re.group[2]
+			used_capacity += round(text2num(wait))
+			// Add the dialogue
+			addInfoNoSrc(message, speaker)
+	max_capacity = used_capacity + 1
