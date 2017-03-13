@@ -305,3 +305,22 @@ ANNOUNCE_ADMIN_LOGOUT
 #CLIENT_WARN_MESSAGE Byond is really close to releasing 511 beta as the stable release, please take this time to try it out. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 510
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+
+## TOPIC RATE LIMITING
+## This allows you to limit how many topic calls (clicking on a interface window) the client can do in any given game second and/or game minute.
+## Admins are exempt from these limits.
+## Hitting the minute limit notifies admins.
+## Set to 0 or comment out to disable.
+SECOND_TOPIC_LIMIT 10
+
+MINUTE_TOPIC_LIMIT 100
+
+##Error handling related options
+## The "cooldown" time for each occurence of an unique error
+#ERROR_COOLDOWN 600
+## How many occurences before the next will silence them
+#ERROR_LIMIT 90
+## How long an unique error will be silenced for
+#ERROR_SILENCE_TIME 6000
+##How long to wait between messaging admins about occurences of an unique error
+#ERROR_MSG_DELAY 50

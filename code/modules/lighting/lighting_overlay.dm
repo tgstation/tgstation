@@ -12,7 +12,7 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
-	blend_mode       = BLEND_OVERLAY
+	blend_mode       = BLEND_ADD
 
 	var/needs_update = FALSE
 

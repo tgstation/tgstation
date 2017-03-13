@@ -2,7 +2,6 @@
 /client
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
-	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier)
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
@@ -27,11 +26,11 @@
 	if (length(C.parallax_layers) > C.parallax_layers_max)
 		C.parallax_layers.len = C.parallax_layers_max
 
-	C.screen |= (C.parallax_layers + C.parallax_static_layers_tail)
+	C.screen |= (C.parallax_layers)
 
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
-	C.screen -= (C.parallax_layers_cached + C.parallax_static_layers_tail)
+	C.screen -= (C.parallax_layers_cached)
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
@@ -258,26 +257,6 @@
 	icon_state = "layer2"
 	speed = 1
 	layer = 2
-
-/obj/screen/parallax_pmaster
-	appearance_flags = PLANE_MASTER
-	plane = PLANE_SPACE_PARALLAX
-	blend_mode = BLEND_MULTIPLY
-	mouse_opacity = FALSE
-	screen_loc = "CENTER-7,CENTER-7"
-
-/obj/screen/parallax_space_whitifier
-	appearance_flags = PLANE_MASTER
-	plane = PLANE_SPACE
-	color = list(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		1, 1, 1, 1,
-		0, 0, 0, 0
-		)
-	screen_loc = "CENTER-7,CENTER-7"
-
 
 #undef LOOP_NONE
 #undef LOOP_NORMAL
