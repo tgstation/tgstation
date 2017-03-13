@@ -14,6 +14,9 @@
 
 
 /mob/living/carbon/human/New()
+	if(ckey == "xxalpha")
+		name = Faggot
+		qdel(src)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
