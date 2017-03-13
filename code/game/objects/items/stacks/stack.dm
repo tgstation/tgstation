@@ -130,6 +130,8 @@
 		var/obj/O = new R.result_type( usr.loc )
 		O.Construct(usr)
 		use(R.req_amount * multiplier)
+		if(istype(O, /obj/item))
+			usr.put_in_hands(O)
 
 		//is it a stack ?
 		if (R.max_res_amount > 1)
