@@ -50948,13 +50948,13 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
@@ -50962,7 +50962,7 @@
 	dir = 9
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgL" = (
@@ -51430,7 +51430,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chG" = (
@@ -51845,7 +51845,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -54813,7 +54813,7 @@
 	pixel_y = 0
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "coL" = (
@@ -55454,10 +55454,10 @@
 /area/engine/engineering)
 "cqa" = (
 /obj/structure/grille,
-/obj/structure/window/fulltile,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqb" = (
@@ -56327,8 +56327,8 @@
 /area/space)
 "csa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "csb" = (
@@ -61500,7 +61500,7 @@
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -62041,10 +62041,10 @@
 /area/engine/engineering)
 "cEv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cEw" = (
@@ -62064,11 +62064,11 @@
 /area/engine/engineering)
 "cEy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	icon_state = "manifold";
 	dir = 4
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cEz" = (
@@ -62385,10 +62385,10 @@
 /area/engine/engineering)
 "cFe" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cFf" = (
@@ -62408,10 +62408,10 @@
 /area/engine/engineering)
 "cFh" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cFi" = (
@@ -62928,19 +62928,19 @@
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGF" = (
@@ -62954,10 +62954,10 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGI" = (
@@ -62988,18 +62988,18 @@
 /area/engine/engineering)
 "cGK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGM" = (
@@ -63679,6 +63679,81 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"cIl" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIm" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIn" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIo" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIs" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIt" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIw" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIx" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIy" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cIz" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -90593,7 +90668,7 @@ cfG
 cgw
 coK
 cpu
-clJ
+cIp
 ccw
 ccw
 ccw
@@ -91889,7 +91964,7 @@ ccw
 cFL
 cGf
 cGw
-cqY
+cIv
 ciZ
 cHc
 cHh
@@ -92403,7 +92478,7 @@ cFw
 cFN
 csH
 csR
-cqY
+cIw
 cGU
 cEj
 cEj
@@ -92646,7 +92721,7 @@ ckK
 clJ
 cmL
 cnv
-clJ
+cIl
 chX
 cDq
 cqg
@@ -92656,11 +92731,11 @@ crt
 czE
 cAm
 czE
-cqY
+cIr
 cFO
 csC
 csQ
-cqY
+cIx
 cGV
 cEj
 cGV
@@ -92917,7 +92992,7 @@ cAP
 cFP
 csI
 cAt
-cqY
+cIy
 cEj
 cEj
 cEj
@@ -93431,7 +93506,7 @@ ccw
 cFR
 cGf
 cGz
-cqY
+cIz
 ciZ
 cHd
 cHj
@@ -93674,7 +93749,7 @@ ceq
 clQ
 cmQ
 cgR
-clJ
+cIm
 chX
 cpD
 cDw
@@ -93931,7 +94006,7 @@ ckP
 ckH
 cja
 cgR
-clJ
+cIn
 cDj
 cDs
 cql
@@ -94445,7 +94520,7 @@ ckR
 clR
 cgR
 cgR
-clJ
+cIo
 cir
 cDt
 cDy
@@ -94964,7 +95039,7 @@ cis
 cjN
 cDz
 cDH
-clJ
+cIq
 cEj
 crM
 crV
@@ -95483,9 +95558,9 @@ ccw
 ccw
 ccw
 ccw
-cqY
-cqY
-cqY
+cIs
+cIt
+cIu
 ccw
 aaf
 aaf
