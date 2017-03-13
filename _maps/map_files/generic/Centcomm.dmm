@@ -8267,15 +8267,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "uo" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/window/reinforced{
-	dir = 4
+/turf/open/floor/plasteel/blue/side{
+	tag = "icon-blue (SOUTHEAST)";
+	icon_state = "blue";
+	dir = 6
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/grass,
 /area/centcom/evac)
 "up" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -8618,13 +8614,11 @@
 	},
 /area/centcom/control)
 "vm" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/turf/open/floor/plasteel/blue/side{
+	tag = "icon-blue (NORTHWEST)";
+	icon_state = "blue";
+	dir = 9
 	},
-/turf/open/floor/grass,
 /area/centcom/evac)
 "vn" = (
 /turf/open/floor/plasteel/blue/side{
@@ -10110,7 +10104,6 @@
 /area/centcom/evac)
 "yK" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/handcuffs,
 /obj/item/weapon/crowbar/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -14544,13 +14537,9 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
+/obj/machinery/light,
 /turf/open/floor/grass,
 /area/centcom/evac)
 "La" = (
@@ -14842,6 +14831,96 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
+/area/centcom/evac)
+"LJ" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
+"LK" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/space)
+"LL" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/space)
+"LM" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/space)
+"LN" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/centcom/control)
+"LO" = (
+/obj/structure/fluff/arc,
+/turf/open/floor/grass,
+/area/centcom/control)
+"LP" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/centcom/control)
+"LQ" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"LR" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"LS" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"LT" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"LU" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
+"LV" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"LW" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/handcuffs,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/centcom/evac)
 
 (1,1,1) = {"
@@ -62546,14 +62625,14 @@ iM
 iv
 iF
 iq
-it
 ms
 mP
+oj
 iH
 kq
 iH
-oj
 ox
+it
 it
 it
 it
@@ -62803,7 +62882,6 @@ iq
 iq
 iq
 iq
-ir
 kd
 ks
 ks
@@ -62811,7 +62889,8 @@ ks
 ks
 ks
 oy
-iz
+is
+it
 pe
 iz
 qP
@@ -63052,7 +63131,6 @@ aa
 aa
 aa
 aa
-aa
 it
 jZ
 kq
@@ -63067,8 +63145,9 @@ ks
 ks
 ks
 ks
-oz
-ir
+LJ
+it
+it
 it
 qk
 qQ
@@ -63309,7 +63388,6 @@ aa
 aa
 aa
 aa
-aa
 it
 ka
 kr
@@ -63326,7 +63404,8 @@ ks
 ks
 oy
 it
-Kp
+it
+pw
 qk
 qR
 rT
@@ -63342,7 +63421,7 @@ su
 rT
 xo
 qk
-KY
+xW
 qk
 yJ
 yS
@@ -63566,7 +63645,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kb
 kr
@@ -63583,8 +63661,9 @@ iH
 iH
 kk
 it
+it
 lW
-ql
+qk
 qS
 rU
 sv
@@ -63598,11 +63677,11 @@ sv
 sv
 wW
 xp
-ql
+qk
 xW
-ql
+qk
 yK
-Le
+yC
 qk
 aa
 aa
@@ -63823,7 +63902,6 @@ aa
 aa
 aa
 aa
-aa
 it
 it
 jc
@@ -63840,9 +63918,10 @@ jc
 jc
 is
 it
-pw
-qm
-qT
+it
+Kq
+ql
+qU
 rU
 sv
 sW
@@ -63854,12 +63933,12 @@ sv
 sv
 sv
 wW
-xq
-qm
-xX
+xs
+ql
+LV
 qk
-yJ
-yS
+LW
+Le
 qk
 aa
 aa
@@ -64080,7 +64159,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kc
 iH
@@ -64097,9 +64175,10 @@ iH
 iH
 ly
 it
-iz
-qk
-KD
+it
+pw
+qm
+qT
 rU
 sv
 sX
@@ -64111,12 +64190,12 @@ sv
 sv
 sv
 wW
-KT
+xq
+qm
+xX
 qk
-ql
-qk
-qk
-qQ
+yJ
+yS
 qk
 aa
 aa
@@ -64337,7 +64416,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 ks
@@ -64354,6 +64432,7 @@ kr
 kr
 kq
 it
+it
 pw
 qk
 qT
@@ -64369,11 +64448,11 @@ sv
 sv
 wW
 xq
+qk
 ql
-xY
-yB
-yL
-yT
+qk
+qk
+qQ
 qk
 aa
 aa
@@ -64594,7 +64673,6 @@ aa
 aa
 aa
 aa
-aa
 iu
 ke
 ks
@@ -64610,10 +64688,11 @@ nB
 mw
 ks
 oA
+ab
 it
-lW
+iz
 qk
-qU
+KD
 rU
 sv
 sW
@@ -64625,12 +64704,12 @@ tL
 vF
 sv
 wW
-xp
-xP
-xZ
-yC
-yC
-yS
+KT
+qk
+xY
+yB
+yL
+yT
 qk
 aa
 aa
@@ -64851,7 +64930,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 kr
@@ -64868,26 +64946,27 @@ mw
 ks
 oB
 it
-Kq
-ql
+LK
+LN
+LQ
 qV
 rU
 sv
 sY
 tK
-LC
-LE
+tK
+tK
 vm
 tM
 wd
 sv
 wW
-xr
-xQ
+xp
+xP
 xZ
 yC
 yC
-yU
+yS
 qk
 aa
 aa
@@ -65108,7 +65187,6 @@ aa
 aa
 aa
 aa
-aa
 is
 kf
 kr
@@ -65125,26 +65203,27 @@ mw
 ks
 oC
 it
-lW
-qk
-qW
+LL
+LO
+LH
+qS
 rU
 sv
 sZ
 sY
-LD
-LF
-LH
+tK
+tK
+tK
 vF
 sZ
 sv
 wW
-xp
-xR
+xt
+xQ
 xZ
 yC
 yC
-yV
+yU
 qk
 aa
 aa
@@ -65365,7 +65444,6 @@ aa
 aa
 aa
 aa
-aa
 ir
 kg
 kr
@@ -65382,26 +65460,27 @@ mw
 ks
 oD
 it
-pw
-qk
-qT
+LM
+LP
+LR
+qS
 rU
 sv
 sW
 tL
 uo
-LG
-LI
+tK
+tK
 tK
 vF
 sv
 wW
-xq
-ql
-ya
-yD
-yM
-yW
+xp
+xR
+xZ
+yC
+yC
+yV
 qk
 aa
 aa
@@ -65622,7 +65701,6 @@ aa
 aa
 aa
 aa
-aa
 is
 kh
 kr
@@ -65638,7 +65716,8 @@ lk
 ks
 ks
 oE
-is
+it
+it
 iz
 qk
 KD
@@ -65655,10 +65734,10 @@ sv
 wW
 KT
 qk
-ql
-qk
-qk
-qk
+ya
+yD
+yM
+yW
 qk
 aa
 aa
@@ -65879,7 +65958,6 @@ aa
 aa
 aa
 aa
-aa
 ir
 ki
 kr
@@ -65895,9 +65973,10 @@ nC
 mw
 ks
 oF
+is
 it
-pw
-qm
+lW
+qk
 qT
 rU
 sv
@@ -65911,12 +65990,12 @@ we
 sv
 wW
 xq
-qm
-xW
 qk
-aa
-aa
-aa
+ql
+qk
+ab
+ab
+ab
 aa
 aa
 aa
@@ -66136,7 +66215,6 @@ aa
 aa
 aa
 aa
-aa
 is
 kj
 kr
@@ -66153,9 +66231,10 @@ mw
 ks
 oC
 it
+it
 pw
-ql
-qX
+qm
+qT
 rU
 sv
 sv
@@ -66167,9 +66246,9 @@ vn
 we
 sv
 wW
-xs
-ql
-xX
+xq
+qm
+xW
 qk
 aa
 aa
@@ -66393,7 +66472,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 kr
@@ -66410,9 +66488,10 @@ mw
 ks
 oB
 it
-Kr
-qk
-qY
+it
+Kq
+ql
+qX
 rU
 sv
 sv
@@ -66424,8 +66503,8 @@ uQ
 wd
 sv
 wW
-xt
-qk
+LT
+ql
 KZ
 qk
 aa
@@ -66650,7 +66729,6 @@ aa
 aa
 aa
 aa
-aa
 iu
 ke
 ks
@@ -66668,8 +66746,9 @@ ks
 kd
 it
 it
+lW
 qk
-KF
+qS
 rU
 sv
 sv
@@ -66681,9 +66760,9 @@ sv
 sv
 sv
 wW
-KV
+xp
 qk
-qk
+xX
 qk
 aa
 aa
@@ -66907,7 +66986,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 ks
@@ -66924,8 +67002,9 @@ kr
 kr
 oG
 it
-Ks
-ql
+it
+lW
+qk
 qZ
 rV
 rV
@@ -66939,8 +67018,8 @@ rV
 rV
 rV
 Ih
-ql
-yb
+qk
+xW
 qk
 aa
 aa
@@ -67164,7 +67243,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kk
 kt
@@ -67182,7 +67260,9 @@ ok
 kh
 it
 it
+it
 qk
+LS
 HV
 HV
 HV
@@ -67194,8 +67274,7 @@ HV
 HV
 HV
 HV
-HV
-HV
+LU
 qk
 qk
 qk
@@ -67421,7 +67500,6 @@ aa
 aa
 aa
 aa
-aa
 it
 it
 it
@@ -67432,6 +67510,7 @@ iu
 it
 it
 ir
+it
 it
 it
 it
