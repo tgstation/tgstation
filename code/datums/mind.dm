@@ -541,11 +541,14 @@
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if(src in ticker.mode.devils)
-		text += "<b>DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
+		if(devilinfo && !devilinfo.ascendable)
+			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
+		else
+			text += "<a href='?src=\ref[src];devil=devil'>DEVIL</a>|<b>ASCENDABLE DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
 	else if(src in ticker.mode.sintouched)
-		text += "devil|<b>SINTOUCHED</b>|<a href='?src=\ref[src];devil=clear'>human</a>"
+		text += "devil|Ascendable Devil|<b>SINTOUCHED</b>|<a href='?src=\ref[src];devil=clear'>human</a>"
 	else
-		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
+		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
 
 	if(current && current.client && (ROLE_DEVIL in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
@@ -1114,6 +1117,11 @@
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
 					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
 					devilinfo = null
 					if(issilicon(current))
@@ -1125,15 +1133,39 @@
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
 			if("devil")
+				if(devilinfo)
+					devilinfo.ascendable = FALSE
+					message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+					return
+				if(!ishuman(current) && !iscyborg(current))
+					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
+					return
+				ticker.mode.devils += src
+				special_role = "devil"
+				ticker.mode.finalize_devil(src, FALSE)
+				ticker.mode.add_devil_objectives(src, 2)
+				announceDevilLaws()
+				announce_objectives()
+				message_admins("[key_name_admin(usr)] has devil'ed [current].")
+				log_admin("[key_name(usr)] has devil'ed [current].")
+			if("ascendable_devil")
+				if(devilinfo)
+					devilinfo.ascendable = TRUE
+					message_admins("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+					log_admin("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+					return
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
-				ticker.mode.finalize_devil(src)
+				ticker.mode.finalize_devil(src, TRUE)
 				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
 				announce_objectives()
+				message_admins("[key_name_admin(usr)] has devil'ed [current].  The devil has been marked as ascendable.")
+				log_admin("[key_name(usr)] has devil'ed [current]. The devil has been marked as ascendable.")
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src
@@ -1512,7 +1544,7 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
-/mob/new_player/sync_mind()
+/mob/dead/new_player/sync_mind()
 	return
 
 /mob/dead/observer/sync_mind()

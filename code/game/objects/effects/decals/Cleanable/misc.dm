@@ -40,8 +40,12 @@
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
-	light_range = 1
+	light_color = LIGHT_COLOR_GREEN
 	icon_state = "greenglow"
+
+/obj/effect/decal/cleanable/greenglow/Initialize(mapload)
+	..()
+	set_light(1)
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return

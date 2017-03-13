@@ -12,18 +12,13 @@
 #define NOBLUDGEON		4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define MASKINTERNALS	8		// mask allows internals
 #define HEAR 			16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define HANDSLOW        32		// If an item has this flag, it will slow you to carry it
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define OVERLAY_QUEUED  256		//atom queued to SSoverlay
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
-#define EARBANGPROTECT		1024
-
-#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
-
-#define HEADBANGPROTECT		4096
+#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
@@ -32,11 +27,13 @@
 
 /* Secondary atom flags, access using the SECONDARY_FLAG macros */
 
+#define SLOWS_WHILE_IN_HAND "slows_while_in_hand"
 #define NO_EMP_WIRES "no_emp_wires"
 #define HOLOGRAM "hologram"
 #define FROZEN "frozen"
 #define STATIONLOVING "stationloving"
 #define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
+#define BANG_PROTECT "bang_protect"
 
 //turf-only flags
 #define NOJAUNT		1
