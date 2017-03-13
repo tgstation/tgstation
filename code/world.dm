@@ -1,4 +1,5 @@
 /world
+	name = "quack?"
 	mob = /mob/new_player
 	turf = /turf/basic
 	area = /area/space
