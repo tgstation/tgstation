@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	name = "tinkerer's daemon"
 	desc = "A strange machine with three small brass obelisks attached to it."
-	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if outnumbered by servants at a rate to 5:1."
+	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if outnumbered by servants at a rate to 4:1."
 	icon_state = "tinkerers_daemon"
 	active_icon = "tinkerers_daemon"
 	inactive_icon = "tinkerers_daemon"
@@ -18,7 +18,7 @@
 	var/image/component_glow
 	var/component_id_to_produce
 	var/production_time = 0 //last time we produced a component
-	var/production_cooldown = 120
+	var/production_cooldown = 90
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/New()
 	..()
@@ -53,7 +53,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*4)
+			try_use_power(MIN_CLOCKCULT_POWER*2)
 			visible_message("<span class='warning'>[src] shuts down with a horrible grinding noise!</span>")
 			playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, 1)
 		else
@@ -75,7 +75,7 @@
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-		if(servants * 0.2 < clockwork_daemons)
+		if(servants * 0.25 < clockwork_daemons)
 			to_chat(user, "<span class='nezbere'>\"There are too few servants for this daemon to work.\"</span>")
 			return
 		if(!clockwork_caches)

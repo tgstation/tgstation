@@ -14,7 +14,7 @@
 	var/repairing = null //what we're currently repairing, if anything
 	var/speed_multiplier = 1 //how fast this proselytizer works
 	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
-	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
+	var/charge_delay = 1 //how many proccess ticks remain before we can start to charge
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
 	stored_power = POWER_WALL_MINUS_FLOOR+POWER_WALL_TOTAL
@@ -26,7 +26,7 @@
 	item_state = "nothing"
 	w_class = WEIGHT_CLASS_TINY
 	speed_multiplier = 0.5
-	charge_rate = MIN_CLOCKCULT_POWER * 2
+	charge_rate = MIN_CLOCKCULT_POWER * 4
 	var/debug = FALSE
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/proselytize(atom/target, mob/living/user)
