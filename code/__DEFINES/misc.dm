@@ -22,7 +22,7 @@
 
 //Select holiday names -- If you test for a holiday in the code, make the holiday's name a define and test for that instead
 #define NEW_YEAR				"New Year"
-#define VALENTINES				"Valentine's Day"
+#define METAFRIENDS				"Metafriend's Day"
 #define APRIL_FOOLS				"April Fool's Day"
 #define EASTER					"Easter"
 #define HALLOWEEN				"Halloween"

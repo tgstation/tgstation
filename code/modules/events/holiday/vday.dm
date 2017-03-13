@@ -1,44 +1,44 @@
-// Valentine's Day events //
-// why are you playing spessmens on valentine's day you wizard //
+// Metafriend's Day events //
+// why are you playing spessmens on metafriend's day you wizard //
 
 
-// valentine / candy heart distribution //
+// metafriend / candy heart distribution //
 
-/datum/round_event_control/valentines
-	name = "Valentines!"
-	holidayID = VALENTINES
-	typepath = /datum/round_event/valentines
+/datum/round_event_control/metafriends
+	name = "Metafriends!"
+	holidayID = METAFRIENDS
+	typepath = /datum/round_event/metafriends
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0
 
-/datum/round_event/valentines/start()
+/datum/round_event/metafriends/start()
 	..()
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		H.put_in_hands(new /obj/item/weapon/valentine)
+		H.put_in_hands(new /obj/item/weapon/metafriend)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/reagent_containers/food/snacks/candyheart(b)
 
 
-	var/list/valentines = list()
+	var/list/metafriends = list()
 	for(var/mob/living/M in player_list)
 		if(!M.stat && M.client && M.mind)
-			valentines |= M
+			metafriends |= M
 
 
-	while(valentines.len)
-		var/mob/living/L = pick_n_take(valentines)
-		if(valentines.len)
-			var/mob/living/date = pick_n_take(valentines)
+	while(metafriends.len)
+		var/mob/living/L = pick_n_take(metafriends)
+		if(metafriends.len)
+			var/mob/living/date = pick_n_take(metafriends)
 
 
-			forge_valentines_objective(L, date)
+			forge_metafriends_objective(L, date)
 
-			forge_valentines_objective(date, L)
+			forge_metafriends_objective(date, L)
 
-			if(valentines.len && prob(4))
-				var/mob/living/notgoodenough = pick_n_take(valentines)
-				forge_valentines_objective(notgoodenough, date)
+			if(metafriends.len && prob(4))
+				var/mob/living/notgoodenough = pick_n_take(metafriends)
+				forge_metafriends_objective(notgoodenough, date)
 
 
 		else
@@ -48,10 +48,10 @@
 			ticker.mode.traitors |= L.mind
 			L.mind.objectives += normiesgetout
 
-/proc/forge_valentines_objective(mob/living/lover,mob/living/date)
+/proc/forge_metafriends_objective(mob/living/lover,mob/living/date)
 
 	ticker.mode.traitors |= lover.mind
-	lover.mind.special_role = "valentine"
+	lover.mind.special_role = "metafriend"
 
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect
 	protect_objective.owner = lover.mind
@@ -61,26 +61,26 @@
 	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
 
 
-/datum/round_event/valentines/announce()
-	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
+/datum/round_event/metafriends/announce()
+	priority_announce("It's Metafriend's Day! Give a metafriend to that special someone!")
 
-/obj/item/weapon/valentine
-	name = "valentine"
-	desc = "A Valentine's card! Wonder what it says..."
+/obj/item/weapon/metafriend
+	name = "metafriend"
+	desc = "A Metafriend's card! Wonder what it says..."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sc_Ace of Hearts_syndicate" // shut up
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/valentine/New()
+/obj/item/weapon/metafriend/New()
 	..()
 	message = pick("Roses are red / Violets are good / One day while Andy...",
 	               "My love for you is like the singularity. It cannot be contained.",
 	               "Will you be my lusty xenomorph maid?",
 	               "We go together like the clown and the external airlock.",
 	               "Roses are red / Liches are wizards / I love you more than a whole squad of lizards.",
-	               "Be my valentine. Law 2.",
+	               "Be my metafriend. Law 2.",
 	               "You must be a mime, because you leave me speechless.",
 	               "I love you like Ian loves the HoP.",
 	               "You're hotter than a plasma fire in toxins.",
@@ -90,7 +90,7 @@
 	               "I'm not a changeling, but you make my proboscis extend.",
 	               "I just can't get EI NATH of you.",
 	               "You must be a nuke op, because you make my heart explode.",
-	               "Roses are red / Botany is a farm / Not being my Valentine / causes human harm.",
+	               "Roses are red / Botany is a farm / Not being my Metafriend / causes human harm.",
 	               "I want you more than an assistant wants insulated gloves.",
 	               "If I was a security officer, I'd brig you all shift.",
 	               "Are you the janitor? Because I think I've fallen for you.",
@@ -126,15 +126,15 @@
 	               "Not even sorium can drive me away from you.",
 	               "Wanna make like a borg and do some heavy petting?" )
 
-/obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/metafriend/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
-		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
-		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
+		var/recipient = stripped_input(user, "Who is receiving this metafriend?", "To:", null , 20)
+		var/sender = stripped_input(user, "Who is sending this metafriend?", "From:", null , 20)
 		if(recipient && sender)
-			name = "valentine - To: [recipient] From: [sender]"
+			name = "metafriend - To: [recipient] From: [sender]"
 
-/obj/item/weapon/valentine/examine(mob/user)
+/obj/item/weapon/metafriend/examine(mob/user)
 	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(message)]</BODY></HTML>", "window=[name]")
@@ -145,7 +145,7 @@
 	else
 		to_chat(user, "<span class='notice'>It is too far away.</span>")
 
-/obj/item/weapon/valentine/attack_self(mob/user)
+/obj/item/weapon/metafriend/attack_self(mob/user)
 	user.examinate(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/candyheart

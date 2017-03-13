@@ -68,13 +68,13 @@
 	begin_day = 2
 	begin_month = FEBRUARY
 
-/datum/holiday/valentines
-	name = VALENTINES
+/datum/holiday/metafriends
+	name = METAFRIENDS
 	begin_day = 13
 	end_day = 15
 	begin_month = FEBRUARY
 
-/datum/holiday/valentines/getStationPrefix()
+/datum/holiday/metafriends/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
 
 /datum/holiday/birthday
