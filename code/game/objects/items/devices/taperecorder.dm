@@ -22,6 +22,8 @@
 	var/announce = TRUE // Announce if the tape is playing or not playing
 	var/playPosition = 1
 	var/myVoice = "" // Define in New()
+	var/recorderTalkSpan = "abductor"
+	var/browserWindowName = "universalrecorder"
 
 /obj/item/device/taperecorder/New()
 	myVoice = name
@@ -65,7 +67,6 @@
 			eject(user)
 			return
 	..()
-
 
 /obj/item/device/taperecorder/proc/can_use(mob/user)
 	if(user && ismob(user))
@@ -156,17 +157,20 @@
 		to_chat(usr, "<span class='notice'>Recording started.</span>")
 		recording = TRUE
 		playPosition = 1
+		refreshBrowseMenu()
 		update_icon()
-		mytape.addInfoAnnounce(src, "Recording started.")
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		for(used, used < max)
-			if(recording == 0)
+			if(!recording)
 				break
 			mytape.used_capacity++
 			used++
+			if (mytape && mytape.storedinfo && mytape.storedinfo.len != 0)
+				playPosition = mytape.storedinfo.len // Make browser menu show it's recording
+			refreshBrowseMenu()
 			sleep(10)
-		recording = 0
+		recording = FALSE
 		update_icon()
 	else
 		to_chat(usr, "<span class='notice'>The tape is full.</span>")
@@ -182,13 +186,13 @@
 	playPosition = 1
 	if(recording)
 		recording = FALSE
-		mytape.addInfoAnnounce(src, "Recording stopped.")
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
+		mytape.addInfoAnnounce(src, "*an audible cut in the recording is heard*")
 		return
 	else if(playing)
 		playing = FALSE
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
+		// T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>") // OLD
+		to_chat(usr, "<span class='notice'>Playback stopped.</span>")
 	update_icon()
 
 
@@ -199,14 +203,14 @@
 	if(!can_use(usr) || !mytape || mytape.ruined || recording)
 		return
 	if(playing)
-		say("Playing paused.")
+		announce("Playing paused.")
 		playing = FALSE
 		return
 
 	playing = TRUE
 	update_icon()
 	if (announce)
-		say("Playing started.")
+		announce("Playing started.")
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	while (used < max)
@@ -214,7 +218,7 @@
 			break
 		else if (mytape.storedinfo.len < playPosition)
 			if (announce)
-				say("Playing ended.")
+				announce("Playing ended.")
 			playPosition = 1 // automatically rewind the tape
 			break
 		tapeSay(playPosition)
@@ -227,104 +231,145 @@
 			playsleepseconds = mytape.timestampInSeconds[playPosition + 1] - mytape.timestampInSeconds[playPosition]
 		if(playsleepseconds > 14)
 			sleep(10)
-			say("Skipping [playsleepseconds] seconds of silence")
+			announce("Skipping [playsleepseconds] seconds of silence")
 			playsleepseconds = 1
 		playPosition++
+		refreshBrowseMenu()
 		sleep(10 * playsleepseconds)
 
 	playing = FALSE
 	update_icon()
 
+// Taken from browser.dm
+// For some fucking reason all the shit for browser.dm is commented out, so I'll just copy paste this
+/obj/item/device/taperecorder/proc/browse_rsc_icon(icon, icon_state, dir = -1)
+	var/icon/I
+	if (dir >= 0)
+		I = new /icon(icon, icon_state, dir)
+	else
+		I = new /icon(icon, icon_state)
+		setDir("default")
+
+	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
+	src << browse_rsc(I, filename)
+	return filename
 
 // Make a menu for the player to seek through the tape and do other actions
 /obj/item/device/taperecorder/attack_self(mob/user)
-
-	var/dat = "<html><head><title>Universal Recorder</title></head><body><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style><br>"
+	user.set_machine(src)
 	var/form_id = "seek"
-	dat += get_javascript_header(form_id)
-
+	var/dat = get_javascript_header(form_id)
 	var/timeStamp = "00:00"
+	var/length = "00:00"
 	var/progress = 0
 	var/max = 1
-	if (mytape && mytape.storedinfo && mytape.timestampInSeconds && playPosition <= mytape.storedinfo.len && mytape.timestampInSeconds[playPosition] && mytape.storedinfo[playPosition]["time_stamp"])
+	if (mytape && mytape.storedinfo && mytape.timestampInSeconds && playPosition <= mytape.storedinfo.len && mytape.timestampInSeconds[playPosition] && mytape.storedinfo[playPosition])
 		timeStamp = mytape.storedinfo[playPosition]["time_stamp"]
 		max = mytape.used_capacity
 		progress = mytape.timestampInSeconds[playPosition]
+		length = mytape.storedinfo[mytape.storedinfo.len]["time_stamp"]
 	var/percent = (progress/max)*100
-	dat += {"<div id="container" style="width:100%; height:50px; border:1px solid black;">
-			  <div id="progress-bar" style="width:[percent]%;
-			  	background-color:grey;
-			       height:50px;">
-			  </div>
-			</div>"}
-	dat += "Current Time: \[[timeStamp]\]<br>"
+
+	setDir("default")
+	var/filename = ""
+	if(icon_state == "taperecorder_recording")
+		filename = "taperecorder_recording.gif"
+		usr << browse_rsc('icons/obj/taperecorder/taperecorder_recording.gif',filename)
+	else if(icon_state == "taperecorder_playing")
+		filename = "taperecorder_playing.gif"
+		usr << browse_rsc('icons/obj/taperecorder/taperecorder_playing.gif',filename)
+	else
+		var/icon/I = new /icon(icon, icon_state)
+		filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
+		user << browse_rsc(I, filename)
+
+	// Rotate the image as well, sorry boys IE only :^)
+	dat += "<center><IMG src='[filename]' style='height: 200px; -ms-transform-origin: top left; -ms-transform: rotate(90deg) translateY(-100%);'></center>"
+
+	dat += {"<center><div style="width:80%; height:50px; border:1px solid black;background-color:gainsboro;position:relative;">
+				<div style="width:100%; height:50px; border:1px solid black;background-color:gainsboro;position:relative;">
+				        <div style="top:15px;width:100%;position:absolute;z-index: 10;color:black;"><center>\[[timeStamp]\] / \[[length]\]</center></div>
+							  <div style="position:absolute;width:[percent]%; background-color:grey; height:50px;top:0;left:0;"></div>
+							</div>
+				</div>
+				</center><br><br>"}
 	dat += "<form name='seek' id='seek' action='?src=\ref[src]' method='get' style='display: inline'>"
 	dat += "<input type='hidden' name='src' value='\ref[src]'>"
 	dat += "<input type='hidden' name='operation' value='seek'>"
 	dat += "<input type='text' id='seekfield' name='seekfield' style='width:50px; background-color:#FFDDDD;' onkeyup='process()'>"
-	dat += " \[<a href='#' onclick='submit()'>Seek</a>\] (Format: XX:XX)<br><br>"
-	dat += "\[<a href='byond://?src=\ref[src];operation=playPause'>Play/Pause</a>\]<br><br>"
-	dat += "\[<a href='byond://?src=\ref[src];operation=stopRewind'>Stop/Rewind</a>\]<br><br>"
-	dat += "\[<a href='byond://?src=\ref[src];operation=record'>Record</a>\]<br><br>"
-	dat += "\[<a href='byond://?src=\ref[src];operation=toggleRecordComms'>Toggle radio record</a>\]<br><br>"
-	dat += "\[<a href='byond://?src=\ref[src];operation=toggleAnnounce'>Toggle announcements</a>\]<br><br>"
-	dat += "\[<a href='byond://?src=\ref[src];operation=print_transcript'>Print Transcript</a>\]"
-	dat += "</body></html>"
-	user << browse(dat, "window=universalrecorder;size=400x450;border=1;can_resize=1;can_minimize=0")
-	onclose(user, "universalrecorder", src)
+	dat += " <a href='#' onclick='submit()'>Seek</a> (Format: XX:XX)<br><br>"
+	dat += "<a href='byond://?src=\ref[src];operation=playPause'>Play/Pause</a><br><br>"
+	dat += "<a href='byond://?src=\ref[src];operation=stopRewind'>Stop/Rewind</a><br><br>"
+	dat += "<a href='byond://?src=\ref[src];operation=record'>Record</a><br><br>"
+	dat += "<a href='byond://?src=\ref[src];operation=toggleRecordComms'>Toggle radio record</a><br><br>"
+	dat += "<a href='byond://?src=\ref[src];operation=toggleAnnounce'>Toggle announcements</a><br><br>"
+	dat += "<a href='byond://?src=\ref[src];operation=viewTranscript'>View Transcript</a><br><br>"
+	dat += "<a href='byond://?src=\ref[src];operation=print_transcript'>Print Transcript</a>"
+
+	var/datum/browser/popup = new(user, browserWindowName, name, 400, 700)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/item/device/taperecorder/Topic(href, href_list)
 	..()
-	var/mob/living/U = usr
-
-	if(usr.canUseTopic(src) && !href_list["close"])
-		add_fingerprint(U)
-		U.set_machine(src)
-
 	if(!href_list["operation"])
 		return
 
-	switch(href_list["operation"])
-		if("seek")
-			if (!mytape || !mytape.storedinfo)
-				return
-			var/seekfield = href_list["seekfield"]
-			// Grab the minutes and seconds
-			var/regex/re = new("(^\\d{1,2}):(\\d{1,2})$")
-			if (re.Find(seekfield) == 0)
-				return
-			var/mins = round(text2num(re.group[1]))
-			var/secs = round(text2num(re.group[2]))
-			secs += (mins * 60) // Needed for easier comparison
-			var/lastIter = 1
-			for (var/iter=1; iter <= mytape.timestampInSeconds.len; iter++)
-				var/iterTimestamp = mytape.timestampInSeconds[iter]
-				if (iterTimestamp > secs)
-					break
-				lastIter = iter
-			if (playing)
-				say("*tape winding noise*")
-			playPosition = lastIter
-		if ("playPause")
-			play()
-		if ("stopRewind")
-			stop()
-		if ("record")
-			record()
-		if ("toggleRecordComms")
-			toggleRecordComms()
-		if ("toggleAnnounce")
-			toggleAnnounce()
-		if ("print_transcript")
-			print_transcript()
+	var/mob/living/U = usr
+	if(usr.canUseTopic(src) && !href_list["close"])
+		src.add_fingerprint(U)
+		U.set_machine(src)
+		switch(href_list["operation"])
+			if("seek")
+				if (!mytape || !mytape.storedinfo)
+					return
+				var/seekfield = href_list["seekfield"]
+				// Grab the minutes and seconds
+				var/regex/re = new("(^\\d{1,2}):(\\d{1,2})$")
+				if (re.Find(seekfield) == 0)
+					return
+				var/mins = round(text2num(re.group[1]))
+				var/secs = round(text2num(re.group[2]))
+				secs += (mins * 60) // Needed for easier comparison
+				var/lastIter = 1
+				for (var/iter=1; iter <= mytape.timestampInSeconds.len; iter++)
+					var/iterTimestamp = mytape.timestampInSeconds[iter]
+					if (iterTimestamp > secs)
+						break
+					lastIter = iter
+				if (playing)
+					announce("*tape winding noise*")
+				playPosition = lastIter
+			if ("playPause")
+				play()
+			if ("stopRewind")
+				stop()
+			if ("record")
+				record()
+			if ("toggleRecordComms")
+				toggleRecordComms()
+			if ("toggleAnnounce")
+				toggleAnnounce()
+			if ("viewTranscript")
+				viewTranscript()
+			if ("print_transcript")
+				print_transcript()
+	else // If not in range, can't interact or not using the pda.
+		U.unset_machine()
+		U << browse(null, "window=[browserWindowName]") // Might be needed
+		return
 
+	refreshBrowseMenu()
+	return
+
+/obj/item/device/taperecorder/proc/refreshBrowseMenu()
+	var/mob/living/U = usr
 	if(U.machine == src)//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
 	else
 		U.unset_machine()
-		U << browse(null, "window=universalrecorder")
-	return
-
+		U << browse(null, "window=[browserWindowName]") // Might be needed
 
 // Taken from communications.dm, checks if the user put the right format for seeking
 /obj/item/device/taperecorder/proc/get_javascript_header(form_id)
@@ -353,6 +398,38 @@
 	else
 		record()
 
+/obj/item/device/taperecorder/proc/createPaperData()
+	if(!can_use(usr))
+		return
+	if(!mytape)
+		return
+	var/t1 = "<B>Transcript:</B><BR><BR>"
+	for(var/i = 1, mytape.storedinfo.len >= i, i++)
+		if (mytape.storedinfo[i]["announce"])
+			t1 += "** \[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
+		else t1 += "\[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
+	return t1
+
+// copy pasted code from paper.dm
+/obj/item/device/taperecorder/proc/viewTranscript()
+	if(!can_use(usr))
+		return
+	if(!mytape)
+		return
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	var/info = createPaperData()
+	var/paperName = "Transcript"
+	assets.send(usr)
+	if(in_range(usr, src) || isobserver(usr))
+		if(usr.is_literate())
+			usr << browse("<HTML><HEAD><TITLE>[paperName]</TITLE></HEAD><BODY>[info]<HR></BODY></HTML>", "window=[paperName]")
+			onclose(usr, "[paperName]")
+		else
+			usr << browse("<HTML><HEAD><TITLE>[paperName]</TITLE></HEAD><BODY>[stars(info)]<HR></BODY></HTML>", "window=[paperName]")
+			onclose(usr, "[paperName]")
+	else
+		to_chat(usr, "<span class='notice'>It is too far away.</span>")
+
 /obj/item/device/taperecorder/verb/print_transcript()
 	set name = "Print Transcript"
 	set category = "Object"
@@ -369,20 +446,21 @@
 
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
-	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i = 1, mytape.storedinfo.len >= i, i++)
-		if (mytape.storedinfo[i]["announce"])
-			t1 += "** \[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
-		else t1 += "\[[mytape.storedinfo[i]["time_stamp"]]\] [mytape.storedinfo[i]["message"]]<BR>"
-	P.info = t1
+	P.info = createPaperData()
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
 	canprint = 0
 	sleep(300)
 	canprint = 1
 
+/obj/item/device/taperecorder/proc/announce(message)
+	var/list/spans = get_spans()
+	spans = spans.Copy() // hur durrr I am byond and I cannot do chaining hurrr durrr
+	spans += recorderTalkSpan
+	send_speech(message,, src,, spans)
+
 /obj/item/device/taperecorder/proc/tapeSay(i)
-	if (mytape.storedinfo[i] == null)
+	if (!mytape.storedinfo[i])
 		return
 	var/x = mytape.storedinfo[i]
 	var/list/span = x["spans"]
@@ -391,9 +469,12 @@
 		var/atom/movable/iObj = x["speaker"]
 		myVoice = iObj.GetVoice() // Make the recorder disguise itself as the recorded voice
 	if (announce)
-		span += "abductor" // So people see easier that the tape is talking
-	if ((announce && x["announce"]) || !x["announce"])
-		send_speech(x["raw_message"],, x["speaker"], , span)
+		span += recorderTalkSpan // So people see easier that the tape is talking
+	if (announce && x["announce"])
+		var/timestamp = x["time_stamp"]
+		send_speech("\[[timestamp]\] " + x["raw_message"],, x["speaker"],, span) // Add a timestamp at the beginning
+	else if (!x["announce"])
+		send_speech(x["raw_message"],, x["speaker"],, span)
 	myVoice = name
 
 //empty tape recorders
