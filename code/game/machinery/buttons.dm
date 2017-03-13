@@ -16,18 +16,18 @@
 	idle_power_usage = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-
-/obj/machinery/button/New(loc, ndir = 0, built = 0)
+/obj/machinery/button/Construct(mob/user, ndir)
 	..()
-	if(built)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
-		panel_open = 1
-		update_icon()
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+	pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+	panel_open = 1
+	QDEL_NULL(device)
+	update_icon()
 
+/obj/machinery/button/Initialize()
+	..()
 
-	if(!built && !device && device_type)
+	if(!device && device_type)
 		device = new device_type(src)
 
 	src.check_access(null)

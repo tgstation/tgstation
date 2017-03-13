@@ -25,8 +25,9 @@
 	/obj/proc/OnRepair(mob/user, obj/item/used, old_integrity) - Called when an object is repaired (to it's max_integrity unless otherwise modified). It is safe to modify obj_integrity in this function
 																used is the material object if any used for repairing and it will be deleted/deducted from on return
 
-	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state. This will be called automatically if obj/var/always_construct is set to TRUE.
-									Calling this after a current_construction_state has been assigned (which this does) has no effect
+	/obj/proc/Construct(mob/user, ndir) - Call this after creating an obj to have it appear in it's first construction_state. This will be called automatically if obj/var/always_construct is set to TRUE.
+										Calling this after a current_construction_state has been assigned (which this does) has no effect
+										ndir is the direction of the new object. Set in the base proc
 	
 	/datum/construction_state/proc/DamageDeconstruct(obj/parent) - Call this on current_construction_state if you want to forcefully deconstruct an object.
 																	Will be called automatically in obj_break. Will only work if the previous state has damage_reachable set to TRUE
@@ -336,7 +337,7 @@
 /obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
 
 //called after Initialize if the obj was constructed from scratch
-/obj/proc/Construct(mob/user, nDir)
+/obj/proc/Construct(mob/user, ndir)
 	if(!current_construction_state || current_construction_state.id == 1)	//already done
 		return
 	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
@@ -346,9 +347,9 @@
 			first_step = first_step.next_state
 		if(first_step)
 			first_step.OnReached(src, user, TRUE)
-	if(!nDir)
-		nDir = user.dir
-	setDir(nDir)
+	if(!ndir)
+		ndir = user.dir
+	setDir(ndir)
 	add_fingerprint(user)
 	feedback_add_details("obj_construction","[type]")
 

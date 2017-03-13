@@ -42,11 +42,6 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/structure/light_construct/New(loc, ndir, building)
-	..()
-	if(building)
-		setDir(ndir)
-
 /obj/structure/light_construct/examine(mob/user)
 	..()
 	switch(src.stage)

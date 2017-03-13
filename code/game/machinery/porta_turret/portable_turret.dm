@@ -636,14 +636,15 @@
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/machinery/turretid/New(loc, ndir = 0, built = 0)
+/obj/machinery/turretid/Initialize()
 	..()
-	if(built)
-		setDir(ndir)
-		locked = 0
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
+
+/obj/machinery/turretid/Construct(mob/user, ndir)
+	..()
+	locked = 0
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+	pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()

@@ -121,23 +121,21 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
-/obj/machinery/airalarm/New(loc, ndir, nbuild)
+/obj/machinery/airalarm/Initialize()
 	..()
 	wires = new /datum/wires/airalarm(src)
-	if(ndir)
-		setDir(ndir)
-
-	if(nbuild)
-		buildstage = 0
-		panel_open = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
 	var/area/A = get_area(src)
 	if(name == initial(name))
 		name = "[A.name] Air Alarm"
 
 	update_icon()
+
+/obj/machinery/airalarm/Construct(mob/user, ndir)
+	buildstage = 0
+	panel_open = TRUE
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+	pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
 /obj/machinery/airalarm/Destroy()
 	if(SSradio)

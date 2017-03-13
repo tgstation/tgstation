@@ -26,11 +26,6 @@
 			4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-/obj/structure/camera_assembly/New(loc, ndir, building)
-	..()
-	if(building)
-		setDir(ndir)
-
 /obj/structure/camera_assembly/Destroy()
 	for(var/I in upgrades)
 		qdel(I)

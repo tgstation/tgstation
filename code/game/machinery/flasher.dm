@@ -25,14 +25,15 @@
 	base_state = "pflash"
 	density = 1
 
-/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
+/obj/machinery/flasher/Initialize()
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	if(built)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
-		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
-	else
-		bulb = new /obj/item/device/assembly/flash/handheld(src)
+			//^ Coming across this comment months/years later, I feel like there's a story behind it...
+	bulb = new /obj/item/device/assembly/flash/handheld(src)
+
+/obj/machinery/flasher/Construct(mob/user, ndir)
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
+	pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
+	QDEL_NULL(bulb)
 
 /obj/machinery/flasher/Destroy()
 	if(bulb)

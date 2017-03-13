@@ -198,17 +198,17 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New(loc, ndir, building)
+/obj/machinery/newscaster/Initialize()
 	..()
-	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
-
 	allCasters += src
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 		unit_no++
 	update_icon()
+
+/obj/machinery/newscaster/Construct(mob/user, ndir)
+	..()
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
+	pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 /obj/machinery/newscaster/Destroy()
 	allCasters -= src

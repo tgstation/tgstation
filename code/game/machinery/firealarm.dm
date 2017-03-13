@@ -28,15 +28,12 @@
 	resistance_flags = FIRE_PROOF
 
 
-/obj/machinery/firealarm/New(loc, dir, building)
+/obj/machinery/firealarm/Construct(mob/user, ndir)
 	..()
-	if(dir)
-		src.setDir(dir)
-	if(building)
-		buildstage = 0
-		panel_open = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+	buildstage = 0
+	panel_open = 1
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+	pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
 
 /obj/machinery/firealarm/power_change()

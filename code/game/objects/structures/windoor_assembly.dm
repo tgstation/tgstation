@@ -39,7 +39,7 @@
 	ini_dir = dir
 	air_update_turf(1)
 
-/obj/structure/windoor_assembly/Construct(mob/user)
+/obj/structure/windoor_assembly/Construct(mob/user, ndir)
 	..()
 	ini_dir = dir
 
