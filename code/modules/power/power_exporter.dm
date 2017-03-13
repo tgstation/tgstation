@@ -27,19 +27,6 @@ obj/machinery/power/exporter/Destroy()
 	power_exporter_list -= src
 	return ..()
 
-/obj/item/clothing/gloves/krav_maga/engi 
-	name = "fists of the singulo"
-	desc = "You have spent so much time managing power that your fists have become one with the powernet."
-	icon_state = "yellow"
-	item_state = "yellow"
-	item_color="yellow"
-	permeability_coefficient = 0.05
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = 0
-
 /obj/machinery/power/exporter/attackby(obj/item/O, mob/user, params)
 	if(!active)
 		if(istype(O, /obj/item/weapon/wrench))
@@ -156,3 +143,17 @@ obj/machinery/power/exporter/Destroy()
 		active = FALSE
 		drain_rate = 0
 		icon_state = "dominator"
+
+
+/obj/item/clothing/gloves/krav_maga/engi  // unique bonus
+	name = "fists of the singulo"
+	desc = "You have spent so much time managing power that your fists have become one with the powernet."
+	icon_state = "yellow"
+	item_state = "yellow"
+	item_color="yellow"
+	permeability_coefficient = 0.05
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = 0

@@ -303,7 +303,7 @@
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
 /obj/item/device/flashlight/glowstick
-	name = "green glowstick"
+	name = "glowstick"
 	desc = "A military-grade glowstick."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
@@ -359,7 +359,11 @@
 	. = ..()
 	if(.)
 		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
-		START_PROCESSING(SSobj, src)
+		activate()
+
+/obj/item/device/flashlight/glowstick/proc/activate()
+	on = TRUE
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/glowstick/red
 	name = "red glowstick"

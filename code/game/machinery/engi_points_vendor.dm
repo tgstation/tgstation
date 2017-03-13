@@ -144,7 +144,7 @@
 /obj/machinery/engi_points_manager/process()
 	power_export_bonus = 0
 	for(var/obj/machinery/power/exporter/PE in power_exporter_list)
-		power_export_bonus = PE.drain_rate/200 // basically controls the balance of the current point system
+		power_export_bonus = sqrt(PE.drain_rate)/3 // basically controls the balance of the current point system
 	if(GBP_alarm_cooldown <= world.time)
 		for(var/obj/machinery/computer/station_alert/SA in machines)
 			if(SA.z == src.z)
@@ -174,10 +174,10 @@
 				playsound(src, 'sound/misc/compiler-stage2.ogg', 100, 1)
 		radio.talk_into(src,"UPDATE: The engineering department has been awarded [air_alarm_bonus] points for the state of the station's air, [power_alarm_bonus] points for the state of the station's power, and [fire_alarm_bonus] points for the state of the station's fire alarms.")
 		radio.talk_into(src,"This bonus represents [((total_bonus)/2500)*100]% of the total possible bonus. Your rating is: [alarm_rating]. Consult the station alert console for details.")
-		if((total_bonus - prior_bonus) >= 1600)
-			radio.talk_into(src,"Congratulations! Due to the significant repairs made by the engineering team, your bonus has been doubled this cycle!")
-			total_bonus = total_bonus*2
-		prior_bonus = total_bonus
+		if(total_bonus > prior_bonus)
+			radio.talk_into(src,"Congratulations! Your team has been awarded an extra [total_bonus - prior_bonus] points for improvements from the previous evaluation.")
+			total_bonus = (total_bonus * 2 - prior_bonus)
+		prior_bonus = air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus
 		GBP_alarm_cooldown = world.time + 4000
 		power_export_bonus += (air_alarm_bonus + power_alarm_bonus + fire_alarm_bonus)
 	GBP += power_export_bonus
@@ -228,7 +228,7 @@
 	var/payload = "plasteel"
 	var/payload_wall = /turf/closed/wall/r_wall
 	var/payload_floor = /turf/open/floor/engine
-	var/static/list/possible_payloads = list("wood", "sand", "ice", "silver","gold","bananium", "abductor", "plasma","uranium","diamond", "plasteel", "titanium", "plastitanium", )
+	var/static/list/possible_payloads = list("wood", "sand", "ice", "mining", "silver","gold","bananium", "abductor", "plasma","uranium","diamond", "plasteel", "titanium", "plastitanium", )
 
 /obj/machinery/nuclearbomb/Initialize()
 	..()
@@ -318,6 +318,9 @@
 		if("ice")
 			payload_wall = /turf/closed/wall/ice
 			payload_floor = /turf/open/floor/plating/ice
+		if("mining")
+			payload_wall = /turf/closed/wall/shuttle/survival/pod
+			payload_floor = /turf/open/floor/plating/asteroid/basalt/lava
 		else
 			payload_wall = text2path("/turf/closed/wall/mineral/[payload]")
 			payload_floor = text2path("/turf/open/floor/mineral/[payload]")
@@ -376,11 +379,12 @@
 	timing = !timing
 	if(timing)
 		if(cooldown > world.time)
-			to_chat(usr, "<span class='danger'>Error: The device is still resetting from the last activation, it will be ready again in [(cooldown-world.time)/10] seconds.</span>")
+			to_chat(usr, "<span class='danger'>Error: The device is still resetting from the last activation, it will be ready again in [round((cooldown-world.time)/10)] seconds.</span>")
 			playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+			timing = FALSE
 			return
 		bomb_set = TRUE
-		priority_announce("We are detecting a massive spike of radioactive energy originating from [A.map_name]. If this is not a scheduled occurrence, please investigate immediately.","Nanotrasen Nuclear Safety Division", 'sound/machines/engine_alert2.ogg')
+		priority_announce("We are detecting a massive spike of radioactive energy originating from [A.map_name]. If this is not a scheduled occurrence, please investigate immediately.","Nanotrasen Nuclear Safety Division", 'sound/misc/airraid.ogg')
 		cooldown = world.time + 1200
 		detonation_timer = world.time + (timer_set * 10)
 		icon_state = "nuclearbombc"
@@ -423,3 +427,288 @@
 			T.ChangeTurf(payload_wall)
 			spawn_atom_to_turf(/obj/effect/overlay/temp/fire, T, 1, FALSE)
 		CHECK_TICK
+
+
+// DISCO BALL
+
+
+/obj/machinery/disco
+	name = "disco ball"
+	desc = "Funky."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "disco0"
+	density = TRUE
+	anchored = FALSE
+	verb_say = "states"
+	density = TRUE
+	req_access = list(access_engine)
+	var/active = FALSE
+	var/cooldown = 0
+	var/list/rangers = list()
+	var/list/listeners = list()
+	var/stop = 0
+	req_access = list(access_engine)
+	var/static/list/colors = list("red","green","#0000ff","purple")
+	var/list/spotlights = list()
+
+/obj/machinery/disco
+
+/obj/machinery/disco/attackby(obj/item/O, mob/user, params)
+	if(!active)
+		if(istype(O, /obj/item/weapon/wrench))
+			if(!anchored && !isinspace())
+				user << "<span class='notice'>You secure the [src] to the floor.</span>"
+				anchored = TRUE
+			else if(anchored)
+				user << "<span class='notice'>You unsecure and disconnect the [src].</span>"
+				anchored = FALSE
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			return
+	return ..()
+
+
+/
+/mob/living/proc/dance_fucker_dance(time = 20, speed = 1)
+        set waitfor = 0
+        while(time)
+                sleep(speed)
+                for(var/i in 1 to speed)
+                        setDir(pick(cardinal))
+                        lay_down()
+                time--
+
+/obj/machinery/disco/Destroy()
+	lights_off()
+	return ..()
+
+/obj/machinery/disco/attack_hand(mob/user)
+	..()
+	interact(user)
+
+/obj/machinery/disco/interact(mob/user)
+	if (!anchored)
+		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
+		return
+	if(!allowed(user))
+		user << "<span class='warning'>You stare at the complex interface and are overwhelmed by the raw amount of data being displayed... only an engineer could operate such a sophisticated device.</span>"
+		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+		return
+	if(!Adjacent(user))
+		if(!isAI(user))
+			return
+	user.set_machine(src)
+	var/list/dat = list()
+	dat += ("<b>Basic Funk</b><br>")
+	dat +="<div class='statusDisplay'>"
+	dat += ("<A href='?src=\ref[src];action=toggle1'>[!active ? "Enable Funk" : "Disable Funk"]</A><br>")
+	dat +="</div ><br>"
+	var/datum/browser/popup = new(user, "vending", "Disco Ball", 400, 350)
+	popup.set_content(dat.Join())
+	popup.open()
+
+
+/obj/machinery/disco/Topic(href, href_list)
+	if(..())
+		return
+	add_fingerprint(usr)
+	switch(href_list["action"])
+		if("toggle1")
+			if(!active && !crit_fail)
+				if(cooldown > world.time)
+					to_chat(usr, "<span class='danger'>Error: The device is still resetting from the last activation, it will be ready again in [round((cooldown-world.time)/10)] seconds.</span>")
+					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+					return
+				active = TRUE
+				icon_state = "disco1"
+				lights_on()
+				cooldown = world.time + 1200
+				stop = world.time + 590
+				START_PROCESSING(SSobj, src)
+				lights_spin()
+				src.updateUsrDialog()
+			else if(active)
+				active = FALSE
+				playsound(src,'sound/machines/terminal_off.ogg',50,1)
+				icon_state = "disco0"
+				lights_off()
+				STOP_PROCESSING(SSobj, src)
+				dance_over()
+				src.updateUsrDialog()
+
+
+
+/obj/machinery/disco/proc/bless(var/mob/living/carbon/human/blessed)
+	set waitfor = 0
+	var/time = 50
+	while(time)
+		sleep(1)
+		for(var/i in rand(1,3))
+			blessed.setDir(pick(cardinal))
+			blessed.lay_down()
+		time--
+/*	switch(rand(0,9))
+		if(0)
+			set waitfor = 0
+			for(var/i = 1, i < 10, i++)
+				blessed.SpinAnimation(7,1)
+				blessed.setDir(pick(cardinal))
+				sleep(10)
+				continue
+
+		if(1)
+			blessed.orbit(src, radius = 50, clockwise = FALSE, rotation_speed = 6, rotation_segments = 36, pre_rotation = FALSE, lockinorbit = FALSE)
+			blessed.SpinAnimation(7,1)
+			sleep(100)
+			blessed.stop_orbit()
+
+		if(2)
+			blessed.setDir(get_dir(blessed, src))
+
+			for (var/i = 0, i < 25, i++)
+				var/delay = 5
+				switch (i)
+					if (17 to INFINITY)
+						delay = 0.25
+					if (14 to 16)
+						delay = 0.5
+					if (9 to 13)
+						delay = 1
+					if (5 to 8)
+						delay = 2
+					if (0 to 4)
+						delay = 3
+
+				if (blessed)
+					src.setDir(turn(src.dir, 90))
+					var/turf/T = get_step(src, src.dir)
+					var/turf/S = blessed.loc
+					if ((S && isturf(S) && S.Exit(blessed)) && (T && isturf(T) && T.Enter(src)))
+						blessed.forceMove(T)
+						blessed.setDir(get_dir(blessed, src))
+						if(i>17)
+							blessed.SpinAnimation(2,1)
+				else
+					return 0
+				sleep(delay)
+			blessed.throw_at(get_edge_target_turf(src,pick(blessed.dir)), 3,6)
+*/
+
+
+/*		if(10 to 11)
+			blessed.setDir(get_dir(blessed, src))
+			spawn (0)
+				if (blessed)
+					animate(blessed, transform = matrix(180, MATRIX_ROTATE), time = 2, loop = 5)
+				sleep (60)
+				if (blessed)
+					animate(blessed, transform = null, time = 2, loop = 0)
+
+			for (var/i = 0, i < 30, i++)
+				if (blessed)
+					blessed.pixel_y += 3
+					blessed.setDir(turn(blessed.dir, 90))
+
+					switch (blessed.dir)
+						if (NORTH)
+							blessed.pixel_y += 3
+						if (SOUTH)
+							blessed.pixel_y -= 3
+						if (EAST)
+							blessed.pixel_x -= 3
+						if (WEST)
+							blessed.pixel_x += 3
+				sleep (1)
+			blessed.pixel_x = 0
+			blessed.pixel_y = 0*/
+
+/obj/machinery/disco/proc/lights_on()
+	for(var/q in 1 to 2)
+		if(q==1)
+			var/c = 1
+			for(var/direction in cardinal)
+				var/obj/machinery/light/floor/spotlight/S = new /obj/machinery/light/floor/spotlight(get_step(src, direction))
+				S.light_color = colors[c]
+				visible_message("<span class='danger'>Spawned [S] to the [get_dir(S,src)] of the [src] with the color [S.light_color]!</span>")
+				c++
+				spotlights+=S
+		if(q==2)
+			var/x = 1
+			for(var/direction in cardinal)
+				var/obj/machinery/light/floor/spotlight/S = new /obj/machinery/light/floor/spotlight(get_step(src, direction))
+				S.loc = get_step(S, direction)
+				S.loc = get_step(S, direction)
+				S.brightness = 3
+				S.light_range = 3
+				S.light_color = colors[x]
+				x++
+				spotlights+=S
+
+
+/obj/machinery/disco/proc/lights_spin()
+	for(var/z in 1 to 4)
+		var/obj/H = spotlights[z]
+		var/obj/V = spotlights[z+4]
+		H.orbit(src, 95, FALSE, 60, 36, FALSE, FALSE)
+		V.orbit(src, 30, FALSE, 60, 36, FALSE, FALSE)
+		sleep(15)
+	sleep(100)
+	for(var/y in 2 to 4)
+		var/obj/machinery/light/offone = spotlights[y]
+		var/obj/machinery/light/offtwo = spotlights[y+4]
+		offone.on = FALSE
+		offtwo.on = FALSE
+	for(var/spot in 1 to 4)
+		var/obj/machinery/light/test = spotlights[spot]
+		var/obj/machinery/light/pair = spotlights[spot+4]
+		if(test.on)
+			test.on = FALSE
+			pair.on = FALSE
+			test = spotlights[spot+1]
+			pair = spotlights[spot+5]
+			test.on = TRUE
+			pair.on = TRUE
+		else
+			continue
+
+
+/obj/machinery/disco/proc/lights_off()
+	for(var/obj/machinery/light/floor/spotlight/S in spotlights)
+		qdel(S)
+
+/obj/machinery/disco/proc/dance_over()
+	for(var/mob/living/L in listeners)
+		if(!L)
+			continue
+		L.client.stop_client_sounds()
+	listeners.Cut()
+	rangers.Cut()
+
+/obj/machinery/disco/process()
+	if(world.time < stop && active)
+		rangers = list()
+		for(var/mob/living/M in range(9,src))
+			rangers += M
+			if(!(M in listeners))
+				M << 'sound/misc/disco.ogg'
+				listeners += M
+			if(prob(5))
+				bless(M)
+			else if(allowed(M))
+				if(prob(7))
+					bless(M)
+		for(var/mob/living/L in listeners)
+			if(!(L in rangers))
+				listeners -= L
+				if(!L)
+					continue
+				L.client.stop_client_sounds()
+
+	else if(active)
+		playsound(src,'sound/machines/terminal_off.ogg',50,1)
+		sleep(15)
+		dance_over()
+		lights_off()
+		active = FALSE
+		icon_state = "disco0"
+		STOP_PROCESSING(SSobj, src)
+

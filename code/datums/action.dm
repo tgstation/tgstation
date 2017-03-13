@@ -198,6 +198,9 @@
 			if(target == C.internal)
 				button.icon_state = "template_active"
 
+/datum/action/item_action/pick_color
+	name = "Choose A Color"
+
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
 

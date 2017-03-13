@@ -642,3 +642,23 @@
 		force = 5
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()
+
+
+/obj/machinery/light/floor
+	name = "floor light"
+	icon = 'icons/obj/lighting.dmi'
+	base_state = "floor"		// base description and icon_state
+	icon_state = "floor1"
+	brightness = 4
+	layer = 2.5
+	light_type = /obj/item/weapon/light/bulb
+	fitting = "bulb"
+
+/obj/machinery/light/floor/spotlight //invisible lighting source
+ //	invisibility = 1
+	brightness = 2
+	light_range = 2
+	light_power = 99
+//	alpha = 0
+//	layer = 0
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
