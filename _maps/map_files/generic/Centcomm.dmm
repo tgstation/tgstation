@@ -13888,7 +13888,7 @@
 /turf/open/floor/grass,
 /area/centcom/evac)
 "JH" = (
-/obj/structure/arc,
+/obj/structure/fluff/arc,
 /turf/open/floor/grass,
 /area/centcom/evac)
 "JI" = (
