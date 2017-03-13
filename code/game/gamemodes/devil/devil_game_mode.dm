@@ -51,7 +51,7 @@
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
 		spawn(rand(10,100))
-			finalize_devil(devil, objective_count)
+			finalize_devil(devil, TRUE)
 			spawn(100)
 				add_devil_objectives(devil, objective_count) //This has to be in a separate loop, as we need devil names to be generated before we give objectives in devil agent.
 				devil.announceDevilLaws()

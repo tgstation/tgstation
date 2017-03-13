@@ -1,0 +1,5 @@
+author: "Every coder, player, and admin in Space Station 13"
+delete-after: True
+changes: 
+  - rscadd: "Adds the Tomb Of The Unknown Employee to Central Command,"
+  - rscadd: "Rest in peace, those who died after contributing to Space Station 13."
