@@ -86,7 +86,7 @@ var/datum/controller/subsystem/ticker/ticker
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
 			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
+			for(var/mob/dead/new_player/player in player_list)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
@@ -364,7 +364,7 @@ var/datum/controller/subsystem/ticker/ticker
 			M.gib()
 
 /datum/controller/subsystem/ticker/proc/create_characters()
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
 			player.create_character(FALSE)
@@ -373,7 +373,7 @@ var/datum/controller/subsystem/ticker/ticker
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
-	for(var/mob/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in player_list)
 		if(P.new_character && P.new_character.mind)
 			ticker.minds += P.new_character.mind
 		CHECK_TICK
@@ -381,7 +381,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
-	for(var/mob/new_player/N in player_list)
+	for(var/mob/dead/new_player/N in player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
@@ -390,14 +390,14 @@ var/datum/controller/subsystem/ticker/ticker
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 		CHECK_TICK
 	if(captainless)
-		for(var/mob/new_player/N in player_list)
+		for(var/mob/dead/new_player/N in player_list)
 			if(N.new_character)
 				to_chat(N, "Captainship not forced on anyone.")
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -624,7 +624,7 @@ var/datum/controller/subsystem/ticker/ticker
 		return
 
 	queue_delay++
-	var/mob/new_player/next_in_line = queued_players[1]
+	var/mob/dead/new_player/next_in_line = queued_players[1]
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
@@ -723,19 +723,19 @@ var/datum/controller/subsystem/ticker/ticker
 		if(CULT_SUMMON)
 			news_message = "Company officials would like to clarify that [station_name()] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
 		if(NUKE_MISS)
-			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space near by."
+			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space nearby."
 		if(OPERATIVES_KILLED)
 			news_message = "Repairs to [station_name()] are underway after an elite Syndicate death squad was wiped out by the crew."
 		if(OPERATIVE_SKIRMISH)
 			news_message = "A skirmish between security forces and Syndicate agents aboard [station_name()] ended with both sides bloodied but intact."
 		if(REVS_WIN)
-			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] that there will be no wage increases for workers."
+			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] there will be no wage increases for workers."
 		if(REVS_LOSE)
 			news_message = "[station_name()] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
 		if(WIZARD_KILLED)
-			news_message = "Tensions have flared with the Wizard's Federation following the death of one of their members aboard [station_name()]."
+			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [station_name()]."
 		if(STATION_NUKED)
-			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are under way."
+			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
 		if(CLOCK_SUMMON)
 			news_message = "The garbled messages about hailing a mouse and strange energy readings from [station_name()] have been discovered to be an ill-advised, if thorough, prank by a clown."
 		if(CLOCK_SILICONS)
@@ -758,4 +758,3 @@ var/datum/controller/subsystem/ticker/ticker
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
-

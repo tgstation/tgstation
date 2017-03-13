@@ -39,7 +39,7 @@
 
 	var/law_change_counter = 0
 
-/mob/living/silicon/New()
+/mob/living/silicon/Initialize()
 	..()
 	silicon_mobs += src
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]

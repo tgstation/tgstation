@@ -99,7 +99,7 @@
 	var/obj/item/held_item = null
 
 
-/mob/living/simple_animal/parrot/New()
+/mob/living/simple_animal/parrot/Initialize()
 	..()
 	if(!ears)
 		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
@@ -876,7 +876,7 @@
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
 
-/mob/living/simple_animal/parrot/Poly/New()
+/mob/living/simple_animal/parrot/Poly/Initialize()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
 	Read_Memory()
@@ -949,7 +949,7 @@
 	incorporeal_move = 1
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 
-/mob/living/simple_animal/parrot/Poly/ghost/New()
+/mob/living/simple_animal/parrot/Poly/ghost/Initialize()
 	memory_saved = 1 //At this point nothing is saved
 	..()
 

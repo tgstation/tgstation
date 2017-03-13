@@ -13,7 +13,7 @@
 
 
 
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
