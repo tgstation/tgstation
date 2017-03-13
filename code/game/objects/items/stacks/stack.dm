@@ -18,11 +18,7 @@
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
-<<<<<<< HEAD
-/obj/item/stack/Initialize(mapload, new_amount)
-=======
-/obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
->>>>>>> master
+/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 	if(new_amount)
 		amount = new_amount
