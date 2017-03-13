@@ -3,7 +3,7 @@
 /turf/open/space,
 /area/space)
 "b" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "c" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -13,16 +13,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "d" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
-	dir = 2
-	},
-/area/shuttle/escape)
-"e" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"f" = (
 /obj/structure/shuttle/engine/heater{
 	icon_state = "heater";
 	dir = 1
@@ -30,13 +20,7 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"g" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/shuttle/escape)
-"h" = (
+"e" = (
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 6
@@ -45,34 +29,43 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/structure/table,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"i" = (
+"f" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"j" = (
+"g" = (
 /obj/machinery/sleeper{
 	dir = 8;
 	icon_state = "sleeper-open"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"k" = (
+"h" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"l" = (
+"i" = (
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"m" = (
+"j" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"n" = (
+"k" = (
+/obj/machinery/light/small{
+	tag = "icon-bulb1 (WEST)";
+	icon_state = "bulb1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"l" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = 28;
@@ -80,18 +73,30 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"o" = (
-/obj/effect/spawner/structure/window/reinforced,
+"m" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	tag = "icon-bulb1 (EAST)";
+	icon_state = "bulb1";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"p" = (
+"o" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Escape Shuttle Cell";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"q" = (
+"p" = (
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
@@ -99,15 +104,21 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"r" = (
+"q" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"s" = (
+"r" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"t" = (
+"s" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"t" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/door/airlock/titanium{
@@ -134,9 +145,15 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "y" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light{
+	tag = "icon-tube1 (EAST)";
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "z" = (
 /obj/machinery/vending/wallmed{
@@ -147,10 +164,12 @@
 /area/shuttle/escape)
 "A" = (
 /obj/structure/chair{
-	dir = 8
+	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	pixel_x = 25
+/obj/machinery/light{
+	tag = "icon-tube1 (WEST)";
+	icon_state = "tube1";
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -184,33 +203,41 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "E" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"F" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall7";
 	dir = 2
 	},
-/area/shuttle/escape)
-"F" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
 	},
+/obj/item/weapon/crowbar,
+/obj/item/weapon/extinguisher,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "G" = (
-/obj/machinery/status_display,
+/turf/closed/wall/shuttle{
+	icon_state = "swallc1";
+	dir = 2
+	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "H" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"I" = (
 /obj/machinery/door/airlock/glass_command{
 	name = "Escape Shuttle Cockpit";
 	req_access_txt = "19"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"I" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
 /area/shuttle/escape)
 "J" = (
 /obj/machinery/computer/atmos_alert,
@@ -236,6 +263,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "N" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
 /obj/machinery/computer/security,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -248,33 +279,20 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Q" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/shuttle/escape)
-"R" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1";
-	dir = 2
-	},
-/area/shuttle/escape)
-"S" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/extinguisher,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"T" = (
+"R" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"U" = (
+"S" = (
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"V" = (
+"T" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 2;
@@ -283,224 +301,211 @@
 /obj/item/weapon/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"W" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2";
-	dir = 2
-	},
-/area/shuttle/escape)
-"X" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
-/area/shuttle/escape)
 
 (1,1,1) = {"
 a
-e
-e
-e
-e
-e
-e
-e
-y
-y
-y
-e
-e
-e
-e
-e
-e
-e
-e
-e
+b
+b
+b
+b
+b
+b
+b
+n
+n
+n
+b
+b
+b
+b
+b
+b
+b
+b
+b
 a
 "}
 (2,1,1) = {"
+b
+b
 e
-e
-h
-i
-i
-q
-s
+k
+f
+p
+r
 v
 v
 v
 v
 v
-s
+r
 v
 v
 D
-e
+b
 J
 O
-r
-e
+q
+b
 "}
 (3,1,1) = {"
 c
+d
 f
-i
-i
-i
-y
-s
-s
-s
-s
-s
-s
-s
-s
-s
-i
-e
+f
+f
+n
+r
+r
+r
+r
+r
+r
+r
+r
+r
+f
+b
 K
 K
-S
-y
+Q
+n
 "}
 (4,1,1) = {"
 c
-f
-j
+d
+g
+l
+g
 n
-j
+r
+w
+w
+w
 y
-s
 w
 w
 w
-w
-w
-w
-w
-s
-i
-G
-s
-s
-T
-y
+r
+f
+H
+t
+r
+R
+n
 "}
 (5,1,1) = {"
 c
-f
-e
-e
-e
-r
-s
+d
+b
+b
+b
+q
+t
 x
-y
-y
+n
+n
 z
-y
-y
+n
+n
 C
-s
-s
-H
-s
-s
-U
-y
+r
+r
+I
+r
+r
+S
+n
 "}
 (6,1,1) = {"
 c
+d
+h
+h
+n
 f
-k
-k
-y
-i
-s
+r
 v
 v
 v
+A
 v
 v
 v
-v
-s
-i
-e
+r
+E
+b
 L
-s
-T
-y
+r
+R
+n
 "}
 (7,1,1) = {"
 c
-f
-l
-l
-p
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
+d
 i
-e
+i
+o
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+f
+b
 M
 M
-V
-y
+T
+n
 "}
 (8,1,1) = {"
-e
-e
+b
+b
+j
 m
-m
-y
-t
+n
 s
+r
 w
 w
 w
-A
-w
-s
 w
 w
-D
-e
+r
+w
+w
+F
+b
 N
 P
-r
-e
+q
+b
 "}
 (9,1,1) = {"
 a
-e
-e
-e
-e
-e
+b
+b
+b
+b
+b
 u
-e
-e
-y
-e
-e
+b
+b
+n
+b
+b
 B
-e
-e
-e
-e
-e
-e
-e
+b
+b
+G
+b
+b
+b
+b
 a
 "}

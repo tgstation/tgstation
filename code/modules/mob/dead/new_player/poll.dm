@@ -2,7 +2,7 @@
 	var/optionid
 	var/optiontext
 
-/mob/new_player/proc/handle_player_polling()
+/mob/dead/new_player/proc/handle_player_polling()
 	if(!dbcon.IsConnected())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
@@ -19,7 +19,7 @@
 	output += "</table>"
 	src << browse(output,"window=playerpolllist;size=500x300")
 
-/mob/new_player/proc/poll_player(pollid)
+/mob/dead/new_player/proc/poll_player(pollid)
 	if(!pollid)
 		return
 	if (!dbcon.Connect())
@@ -323,7 +323,7 @@
 			src << browse(output,"window=playerpoll;size=500x500")
 	return
 
-/mob/new_player/proc/poll_check_voted(pollid, text = FALSE)
+/mob/dead/new_player/proc/poll_check_voted(pollid, text = FALSE)
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
@@ -342,7 +342,7 @@
 	return .
 
 
-/mob/new_player/proc/vote_rig_check()
+/mob/dead/new_player/proc/vote_rig_check()
 	if (usr != src)
 		if (!usr || !src)
 			return 0
@@ -354,7 +354,7 @@
 		return 0
 	return 1
 
-/mob/new_player/proc/vote_valid_check(pollid, holder, type)
+/mob/dead/new_player/proc/vote_valid_check(pollid, holder, type)
 	if (!dbcon.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -369,7 +369,7 @@
 		return 0
 	return 1
 
-/mob/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
+/mob/dead/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
 	if (!dbcon.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -438,7 +438,7 @@
 	return 1
 
 
-/mob/new_player/proc/vote_on_poll(pollid, optionid)
+/mob/dead/new_player/proc/vote_on_poll(pollid, optionid)
 	if (!dbcon.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -458,7 +458,7 @@
 	usr << browse(null,"window=playerpoll")
 	return 1
 
-/mob/new_player/proc/log_text_poll_reply(pollid, replytext)
+/mob/dead/new_player/proc/log_text_poll_reply(pollid, replytext)
 	if (!dbcon.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -485,7 +485,7 @@
 	usr << browse(null,"window=playerpoll")
 	return 1
 
-/mob/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
+/mob/dead/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
 	if (!dbcon.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -512,7 +512,7 @@
 	usr << browse(null,"window=playerpoll")
 	return 1
 
-/mob/new_player/proc/vote_on_multi_poll(pollid, optionid)
+/mob/dead/new_player/proc/vote_on_multi_poll(pollid, optionid)
 	if (!dbcon.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0

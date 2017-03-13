@@ -110,8 +110,8 @@ var/total_borer_hosts_needed = 10
 	var/datum/action/innate/borer/punish_victim/punish_victim_action = new
 	var/datum/action/innate/borer/jumpstart_host/jumpstart_host_action = new
 
-/mob/living/simple_animal/borer/New(atom/newloc, var/gen=1)
-	..(newloc)
+/mob/living/simple_animal/borer/Initialize(mapload, gen=1)
+	..()
 	generation = gen
 	notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	real_name = "Cortical Borer [rand(1000,9999)]"
@@ -300,8 +300,8 @@ var/total_borer_hosts_needed = 10
 		message = copytext(message,2)
 		for(var/borer in borers)
 			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
-		for(var/mob/dead in dead_mob_list)
-			to_chat(dead, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
+		for(var/mob/D in dead_mob_list)
+			to_chat(D, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
 		return
 	if(!victim)
 		to_chat(src, "<span class='warning'>You cannot speak without a host!</span>")

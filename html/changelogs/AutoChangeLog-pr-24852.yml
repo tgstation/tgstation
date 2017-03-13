@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "The egg spawner on Metastation will generate a station message and
-inform the admins if an egg is spawned. (It's only a two percent chance,
-but live in hope.)"
