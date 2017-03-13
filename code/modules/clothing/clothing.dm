@@ -171,10 +171,13 @@ var/list/damaged_clothes_icons = list()
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
-	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
 	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/ears/earmuffs/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 //Glasses
 /obj/item/clothing/glasses

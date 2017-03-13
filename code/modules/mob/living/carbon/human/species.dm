@@ -887,7 +887,7 @@
 		if(H.back)
 			. += H.back.slowdown
 		for(var/obj/item/I in H.held_items)
-			if(I.flags & HANDSLOW)
+			if(HAS_SECONDARY_FLAG(I, SLOWS_WHILE_IN_HAND))
 				. += I.slowdown
 		var/health_deficiency = (100 - H.health + H.staminaloss)
 		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
