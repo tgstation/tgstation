@@ -19,3 +19,15 @@ This memorial has been designed for him and any future coders to perish.
 	icon_state = "memorial"
 	density = 1
 	anchored = 1
+	max_integrity = INFINITY
+	obj_integrity = INFINITY
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | INDESTRUCTIBLE
+
+/obj/structure/fluff/arc/ex_act(severity)
+	return FALSE
+
+/obj/structure/fluff/arc/singularity_act(severity)
+	return FALSE
+
+/obj/structure/fluff/arc/singularity_pull()
+	return FALSE
