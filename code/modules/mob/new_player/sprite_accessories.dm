@@ -27,8 +27,12 @@
 	for(var/path in typesof(prototype))
 		if(path == prototype)
 			continue
+
+		var/datum/sprite_accessory/P = path
+		if(config && (lowertext(initial(P.name)) in config.br_parts))
+			continue
+
 		if(roundstart)
-			var/datum/sprite_accessory/P = path
 			if(initial(P.locked))
 				continue
 		var/datum/sprite_accessory/D = new path()
@@ -1298,7 +1302,6 @@
 	dimension_x = 46
 	center = TRUE
 	dimension_y = 34
-	locked = TRUE
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'

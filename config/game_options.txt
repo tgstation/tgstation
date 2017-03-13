@@ -425,6 +425,10 @@ ROUNDSTART_RACES plasmaman
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS
 
+## List of any mutant parts you want to blacklist. Place their name after BLACKLIST_MUTANT_PARTS
+## BLACKLIST_MUTANT_PARTS
+
+
 ## Assistant slot cap. Set to -1 for unlimited.
 ASSISTANT_CAP -1
 

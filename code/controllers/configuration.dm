@@ -148,6 +148,7 @@
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
 	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
 	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
+	var/list/br_parts = list()			//what mutant part types are allowed to be chosen.
 
 	var/no_summon_guns		//No
 	var/no_summon_magic		//Fun
@@ -719,6 +720,9 @@
 							roundstart_species[species_id] = species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
+				if("blacklist_mutant_parts")
+					var/part_id = lowertext(value)
+					br_parts += part_id
 				if("assistant_cap")
 					config.assistant_cap			= text2num(value)
 				if("starlight")

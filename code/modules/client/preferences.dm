@@ -262,7 +262,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("tail_lizard" in pref_species.mutant_bodyparts)
+				if("tail_lizard" in pref_species.mutant_bodyparts && tails_list_lizard.len)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
@@ -271,7 +271,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("snout" in pref_species.mutant_bodyparts)
+				if("snout" in pref_species.mutant_bodyparts && snouts_list.len)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Snout</h3>"
@@ -280,7 +280,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("horns" in pref_species.mutant_bodyparts)
+				if("horns" in pref_species.mutant_bodyparts && horns_list > 1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Horns</h3>"
@@ -289,7 +289,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("frills" in pref_species.mutant_bodyparts)
+				if("frills" in pref_species.mutant_bodyparts && frills_list.len > 1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Frills</h3>"
@@ -298,7 +298,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("spines" in pref_species.mutant_bodyparts)
+				if("spines" in pref_species.mutant_bodyparts && spines_list.len > 1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Spines</h3>"
@@ -307,7 +307,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("body_markings" in pref_species.mutant_bodyparts)
+				if("body_markings" in pref_species.mutant_bodyparts && body_markings_list.len > 1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Body Markings</h3>"
@@ -315,7 +315,7 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
 					dat += "</td>"
-				if("legs" in pref_species.mutant_bodyparts)
+				if("legs" in pref_species.mutant_bodyparts && legs_list.len > 1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Legs</h3>"
@@ -325,7 +325,7 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 			if(config.mutant_humans)
 
-				if("tail_human" in pref_species.mutant_bodyparts)
+				if("tail_human" in pref_species.mutant_bodyparts && tails_list_human.len > 1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
@@ -334,7 +334,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("ears" in pref_species.mutant_bodyparts)
+				if("ears" in pref_species.mutant_bodyparts && ears_list.len > 1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Ears</h3>"
