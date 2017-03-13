@@ -85,7 +85,7 @@
 
 	var/examine_message	//null values do not adjust these
 	var/icon/icon
-	var/icon_state
+	var/icon_state	//having this be null will trigger calls to update_icon
 	var/anchored
 
 	var/max_integrity   //null values do not adjust these, these should always be smaller for earlier construction steps
@@ -104,6 +104,7 @@
 /datum/construction_state/first	//this should only contain construction parameters
 	//reaching this state deletes the object
 	required_type_to_deconstruct = NO_DECONSTRUCT
+	always_drop_loot = 1
 
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
@@ -167,6 +168,8 @@
 
 	if(icon_state)
 		parent.icon_state = icon_state
+	else
+		parent.update_icon()
 
 	if(!constructed && damage_reachable)
 		var/cached_max_integrity = max_integrity
