@@ -25,6 +25,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/wallframe/extinguisher_cabinet
+			required_amount_to_construct = 1
 			always_drop_loot = 0
 		},
 		/datum/construction_state{
@@ -49,7 +50,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet)
 	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
 
 	var/datum/construction_state/first/X = .[1]
-	X.required_type_to_construct = /obj/item/wallframe/extinguisher_cabine
+	X.required_type_to_construct = /obj/item/wallframe/extinguisher_cabinet
 
 /obj/structure/extinguisher_cabinet/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
 	. = ..()
@@ -109,3 +110,22 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet)
 	icon = 'icons/obj/apc_repair.dmi'
 	icon_state = "extinguisher_frame"
 	result_path = /obj/structure/extinguisher_cabinet
+
+CONSTRUCTION_BLUEPRINT(/obj/item/wallframe/extinguisher_cabinet)
+	. = newlist(
+		/datum/construction_state/first{
+			//required_type_to_construct = /obj/item/stack/sheet/metal
+			required_amount_to_construct = 2
+		},
+		/datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/weapon/wrench
+			deconstruction_message = "dismantle"
+		}
+	)
+	
+	//This is here to work around a byond bug
+	//http://www.byond.com/forum/?post=2220240
+	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
+
+	var/datum/construction_state/first/X = .[1]
+	X.required_type_to_construct = /obj/item/stack/sheet/metal
