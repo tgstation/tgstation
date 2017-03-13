@@ -31,6 +31,9 @@
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
 	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
 
+	// THE VEIL IS TORN
+	new /datum/round_event/wizard/ghost()
+
 	var/area/A = get_area(src)
 	if(A)
 		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
