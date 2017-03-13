@@ -192,17 +192,16 @@
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
 	..()
-	if(!mapload)
-		return FALSE
-	switch(fitting)
-		if("tube")
-			brightness = 8
-			if(prob(2))
-				break_light_tube(1)
-		if("bulb")
-			brightness = 4
-			if(prob(5))
-				break_light_tube(1)
+	if(mapload)
+		switch(fitting)
+			if("tube")
+				brightness = 8
+				if(prob(2))
+					break_light_tube(1)
+			if("bulb")
+				brightness = 4
+				if(prob(5))
+					break_light_tube(1)
 	update(0)
 
 /obj/machinery/light/Destroy()
