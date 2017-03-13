@@ -31,7 +31,7 @@
 			reset_forced_gravity_atom(AM)
 	else
 		for(var/atom/movable/AM in contents)
-			if(!atoms_with_forced_gravity[AM])
+			if(islist(atoms_with_forced_gravity) && !atoms_with_forced_gravity[AM])
 				force_gravity_on_atom(AM)
 	for(var/atom/movable/AM in contents)
 		AM.sync_gravity()
