@@ -5,8 +5,8 @@
 
 /datum/round_event/mice_migration
 	announceWhen = 0
-	var/minimum_mice = 5
-	var/maximum_mice = 15
+	var/minimum_mice = 25
+	var/maximum_mice = 50
 
 /datum/round_event/mice_migration/announce()
 	var/cause = pick("space-winter", "budget-cuts", "Ragnarok",

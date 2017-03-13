@@ -7,7 +7,7 @@
 	alertadmins = 0
 
 /datum/round_event/electrical_storm
-	var/lightsoutAmount	= 1
+	var/lightsoutAmount	= 20
 	var/lightsoutRange	= 25
 	announceWhen	= 1
 

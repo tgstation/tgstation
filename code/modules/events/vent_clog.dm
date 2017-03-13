@@ -1,7 +1,7 @@
 /datum/round_event_control/vent_clog
 	name = "Clogged Vents"
 	typepath = /datum/round_event/vent_clog
-	weight = 35
+	weight = 55
 
 /datum/round_event/vent_clog
 	announceWhen	= 1
@@ -9,9 +9,6 @@
 	endWhen			= 35
 	var/interval 	= 2
 	var/list/vents  = list()
-	var/list/gunk = list("water","carbon","flour","radium","toxin","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube",
-								 "plantbgone","banana","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","sacid")
-
 /datum/round_event/vent_clog/announce()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
 
@@ -33,15 +30,13 @@
 			vent = pick_n_take(vents)
 
 		if(vent && vent.loc)
-			var/datum/reagents/R = new/datum/reagents(50)
+			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
-			R.add_reagent(pick(gunk), 50)
+			R.add_reagent(pick(get_random_reagent_id()), 1000)
 
-			var/datum/effect_system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 1, vent, silent = 1)
-			playsound(vent.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
-			smoke.start()
-			qdel(R)
+			var/datum/effect_system/foam_spread/foam = new
+			foam.set_up(100, get_turf(vent), R)
+			foam.start()
 
 			var/cockroaches = prob(33) ? 3 : 0
 			while(cockroaches)
