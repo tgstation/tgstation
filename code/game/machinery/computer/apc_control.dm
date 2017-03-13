@@ -146,17 +146,17 @@
 	if(href_list["name_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		var/new_filter = stripped_input(usr, "What name are you looking for?", name) as null|text
-		log_activity("changed name filter to \"[new_filter]\"")
-		if(!src || !usr.Adjacent(src))
+		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 			return
+		log_activity("changed name filter to \"[new_filter]\"")
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		filters["Name"] = new_filter
 	if(href_list["above_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (greater than).", name) as null|num
-		log_activity("changed greater than charge filter to \"[new_filter]\"")
-		if(!src || !usr.Adjacent(src))
+		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 			return
+		log_activity("changed greater than charge filter to \"[new_filter]\"")
 		if(new_filter)
 			new_filter = Clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -164,9 +164,9 @@
 	if(href_list["below_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (lesser than).", name) as null|num
-		log_activity("changed lesser than charge filter to \"[new_filter]\"")
-		if(!src || !usr.Adjacent(src))
+		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 			return
+		log_activity("changed lesser than charge filter to \"[new_filter]\"")
 		if(new_filter)
 			new_filter = Clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
