@@ -83,7 +83,10 @@
 
 /datum/lighting_corner/proc/update_active()
 	active = FALSE
-	for (var/turf/T in masters)
+	var/turf/T
+	var/thing
+	for (thing in masters)
+		T = thing
 		if (T.lighting_object)
 			active = TRUE
 

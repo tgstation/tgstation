@@ -2,10 +2,12 @@
 	for (var/zlevel = 1 to world.maxz)
 		create_lighting_objects_zlevel(zlevel)
 
-/proc/create_lighting_objects_zlevel(var/zlevel)
+/proc/create_lighting_objects_zlevel(zlevel)
 	ASSERT(zlevel)
-
-	for (var/turf/T in block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel)))
+	var/turf/T
+	var/thing
+	for (thing in block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel)))
+		T = thing
 		if (!IS_DYNAMIC_LIGHTING(T))
 			continue
 

@@ -11,14 +11,20 @@
 
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	for (var/datum/light_source/L in affecting_lights)
+	var/datum/light_source/L
+	var/thing
+	for (thing in affecting_lights)
+		L = thing
 		L.vis_update()
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
 		qdel(lighting_object, TRUE)
 
-	for (var/datum/lighting_corner/C in corners)
+	var/datum/lighting_corner/C
+	var/thing
+	for (thing in corners)
+		C = thing
 		C.update_active()
 
 // Builds a lighting object for us, but only if our area is dynamic.
@@ -27,18 +33,24 @@
 		return
 
 	var/area/A = loc
-	if (IS_DYNAMIC_LIGHTING(A))
-		if (!lighting_corners_initialised)
-			generate_missing_corners()
+	if (!IS_DYNAMIC_LIGHTING(A))
+		return
 
-		new/atom/movable/lighting_object(src)
+	if (!lighting_corners_initialised)
+		generate_missing_corners()
 
-		for (var/datum/lighting_corner/C in corners)
-			if (!C.active) // We would activate the corner, calculate the lighting for it.
-				for (var/datum/light_source/S in C.affecting)
-					S.recalc_corner(C)
+	new/atom/movable/lighting_object(src)
 
-				C.active = TRUE
+	var/thing
+	var/datum/lighting_corner/C
+	var/datum/light_source/S
+	for (thing in corners)
+		C = thing
+		if (!C.active) // We would activate the corner, calculate the lighting for it.
+			for (thing in C.affecting)
+				S = thing
+				S.recalc_corner(C)
+			C.active = TRUE
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
@@ -46,7 +58,10 @@
 		return 1
 
 	var/totallums = 0
-	for (var/datum/lighting_corner/L in corners)
+	var/thing
+	var/datum/lighting_corner/L
+	for (thing in corners)
+		L = thing
 		totallums += L.lum_r + L.lum_b + L.lum_g
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
