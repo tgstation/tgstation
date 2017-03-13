@@ -129,24 +129,25 @@ var/datum/controller/subsystem/atoms/SSatoms
 	for(var/I in objs)
 		var/obj/construction_blueprint_getter_type = type;
 		var/construction_blueprint_get_type = initial(construction_blueprint_getter_type.construction_blueprint);
-		var/datum/construction_blueprint/CBP = new construction_blueprint_get_type;
-		var/obj/O = I
+		if(construction_blueprint_get_type)
+			var/datum/construction_blueprint/CBP = new construction_blueprint_get_type;
+			var/obj/O = I
 
-		if(!((initial(O.blueprint_root_only) && CBP.owner_type == type) || (!initial(O.blueprint_root_only) && istype(type, CBP.owner_type))))
-			continue
-		var/list/BP = CBP.GetBlueprint(type);
-		if(BP.len)
-			var/datum/construction_state/first/F = BP[1]
-			if(istype(F))
-				var/obj/item/stack/mat_type = F.required_type_to_construct
-				if(ispath(mat_type, /obj/item/stack))
-					mat_type = initial(mat_type.merge_type)
-					var/list/t_recipes = recipes[mat_type]
-					if(!t_recipes)
-						t_recipes = list()
-						recipes[mat_type] += t_recipes
-					//TODO: Handle these snowflakes
-					var/is_glass = ispath(mat_type, /obj/item/stack/sheet/glass) || ispath(mat_type, /obj/item/stack/sheet/rglass)
-					t_recipes += new /datum/stack_recipe(initial(O.name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = F.one_per_turf, on_floor = F.on_floor, window_checks = is_glass)
+			if(!((initial(O.blueprint_root_only) && CBP.owner_type == type) || (!initial(O.blueprint_root_only) && istype(type, CBP.owner_type))))
+				continue
+			var/list/BP = CBP.GetBlueprint(type)
+			if(BP.len)
+				var/datum/construction_state/first/F = BP[1]
+				if(istype(F))
+					var/obj/item/stack/mat_type = F.required_type_to_construct
+					if(ispath(mat_type, /obj/item/stack))
+						mat_type = initial(mat_type.merge_type)
+						var/list/t_recipes = recipes[mat_type]
+						if(!t_recipes)
+							t_recipes = list()
+							recipes[mat_type] = t_recipes
+						//TODO: Handle these snowflakes
+						var/is_glass = ispath(mat_type, /obj/item/stack/sheet/glass) || ispath(mat_type, /obj/item/stack/sheet/rglass)
+						t_recipes += new /datum/stack_recipe(initial(O.name), I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = F.one_per_turf, on_floor = F.on_floor, window_checks = is_glass)
 		CHECK_TICK
 	testing("Compiled [recipes.len] stack construction recipes")

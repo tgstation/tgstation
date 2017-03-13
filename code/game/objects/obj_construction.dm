@@ -220,12 +220,12 @@
 		our_steps = list()
 		if(construction_blueprint)
 			var/datum/construction_blueprint/BP = new construction_blueprint
-			var/temp
+			var/temp = -1
 			if((blueprint_root_only && BP.owner_type == type) || (!blueprint_root_only && istype(type, BP.owner_type)))
 				temp = BP.GetBlueprint(type)	//get steps for the first time
-			if(!islist(temp))
-				WARNING("Invalid construction_blueprint for [type]!")
-				temp = -1
+				if(!islist(temp))
+					WARNING("Invalid construction_blueprint for [type]!")
+					temp = -1
 			if(temp != -1)
 				LinkConstructionSteps(temp)	//assign ids and stitch the linked list together
 				if(ValidateConstructionSteps(temp))
@@ -422,6 +422,8 @@
 
 //construct by hand
 /obj/proc/HandConstruction(mob/user)
+	if(src in user.construction_tasks)
+		return
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs)
 		var/constructed
@@ -441,11 +443,13 @@
 		if(!ConstructionChecks(ccs.id, constructed, null, user, FALSE))
 			return
 
-			
 		if(wait)			
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
-			if(!do_after(user, wait, target = src,, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, null, user, FALSE)))
+			LAZYADD(user.construction_tasks, src)	//prevent repeats
+			var/result = do_after(user, wait, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, null, user, FALSE))
+			LAZYREMOVE(user.construction_tasks, src)	//prevent repeats
+			if(!result)
 				return
 
 		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
@@ -499,7 +503,6 @@
 				to_chat(user, "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>")
 				return
 
-		LAZYADD(user.construction_tasks, src)	//prevent repeats
 		var/cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
 		if(!cont)
 			return
@@ -510,9 +513,10 @@
 		if(wait)
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
+			LAZYADD(user.construction_tasks, src)	//prevent repeats
 			//Checks will always run because we've verified do_after will last at least 1 tick
 			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, I, user, FALSE))
-		LAZYREMOVE(user.construction_tasks, src)
+			LAZYREMOVE(user.construction_tasks, src)
 
 		if(cont)
 			user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
