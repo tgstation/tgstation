@@ -5,13 +5,13 @@
 	icon_state = "pussywagon"
 
 	var/obj/item/weapon/storage/bag/trash/mybag = null
-	var/floorbuffer = 0
+	var/floorbuffer = FALSE
 
 /obj/vehicle/janicart/Destroy()
 	if(mybag)
 		qdel(mybag)
 		mybag = null
-	return ..()
+	. = ..()
 
 /obj/vehicle/janicart/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 0)
 	. = ..()
@@ -32,17 +32,6 @@
 	origin_tech = "materials=3;engineering=4"
 
 
-/obj/vehicle/janicart/Moved(atom/OldLoc, Dir)
-	if(floorbuffer)
-		var/turf/tile = loc
-		if(isturf(tile))
-			tile.clean_blood()
-			for(var/A in tile)
-				if(is_cleanable(A))
-					qdel(A)
-	. = ..()
-
-
 /obj/vehicle/janicart/examine(mob/user)
 	..()
 	if(floorbuffer)
@@ -56,14 +45,15 @@
 			return
 		if(!user.drop_item())
 			return
-		to_chat(user, "<span class='notice'>You hook the trashbag onto \the [name].</span>")
+		to_chat(user, "<span class='notice'>You hook the trashbag onto [src].</span>")
 		I.loc = src
 		mybag = I
 		update_icon()
 	else if(istype(I, /obj/item/janiupgrade))
-		floorbuffer = 1
+		floorbuffer = TRUE
 		qdel(I)
-		to_chat(user, "<span class='notice'>You upgrade \the [name] with the floor buffer.</span>")
+		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
+		flags |= CLEAN_ON_MOVE
 		update_icon()
 	else
 		return ..()

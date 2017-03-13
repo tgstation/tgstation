@@ -103,7 +103,39 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+
+	if(flags & CLEAN_ON_MOVE)
+		clean_on_move()
 	return 1
+
+/atom/movable/proc/clean_on_move()
+	var/turf/tile = loc
+	if(isturf(tile))
+		tile.clean_blood()
+		for(var/A in tile)
+			if(is_cleanable(A))
+				qdel(A)
+			else if(istype(A, /obj/item))
+				var/obj/item/cleaned_item = A
+				cleaned_item.clean_blood()
+			else if(ishuman(A))
+				var/mob/living/carbon/human/cleaned_human = A
+				if(cleaned_human.lying)
+					if(cleaned_human.head)
+						cleaned_human.head.clean_blood()
+						cleaned_human.update_inv_head()
+					if(cleaned_human.wear_suit)
+						cleaned_human.wear_suit.clean_blood()
+						cleaned_human.update_inv_wear_suit()
+					else if(cleaned_human.w_uniform)
+						cleaned_human.w_uniform.clean_blood()
+						cleaned_human.update_inv_w_uniform()
+					if(cleaned_human.shoes)
+						cleaned_human.shoes.clean_blood()
+						cleaned_human.update_inv_shoes()
+					cleaned_human.clean_blood()
+					cleaned_human.wash_cream()
+					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
 	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
