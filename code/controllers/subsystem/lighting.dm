@@ -1,9 +1,5 @@
 var/datum/controller/subsystem/lighting/SSlighting
 
-#define STAGE_SOURCES  1
-#define STAGE_CORNERS  2
-#define STAGE_OVERLAYS 3
-
 var/list/lighting_update_lights    = list() // List of lighting sources  queued for update.
 var/list/lighting_update_corners   = list() // List of lighting corners  queued for update.
 var/list/lighting_update_objects  = list() // List of lighting objects queued for update.
@@ -17,11 +13,6 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 	flags = SS_TICKER
 
 	var/initialized = FALSE
-	var/list/currentrun_lights
-	var/list/currentrun_corners
-	var/list/currentrun_objects
-
-	var/resuming_stage = 0
 
 
 /datum/controller/subsystem/lighting/New()
@@ -43,16 +34,12 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 
 	..()
 
-/datum/controller/subsystem/lighting/fire(resumed=FALSE)
-	if (resuming_stage == 0 || !resumed)
-		currentrun_lights   = lighting_update_lights
-		lighting_update_lights   = list()
-
-		resuming_stage = STAGE_SOURCES
-
-	while (currentrun_lights.len)
-		var/datum/light_source/L = currentrun_lights[currentrun_lights.len]
-		currentrun_lights.len--
+/datum/controller/subsystem/lighting/fire()
+	var/real_tick_limit = CURRENT_TICKLIMIT
+	CURRENT_TICKLIMIT = (real_tick_limit - world.tick_usage)/3
+	var/i = 0
+	for (i in 1 to lighting_update_lights.len)
+		var/datum/light_source/L = lighting_update_lights[i]
 
 		if (L.check() || L.destroyed || L.force_update)
 			L.remove_lum()
@@ -67,32 +54,29 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 		L.needs_update = FALSE
 
 		if (MC_TICK_CHECK)
-			return
+			break
+	if (i)
+		lighting_update_lights.Cut(1, i+1)
+		i = 0
 
-	if (resuming_stage == STAGE_SOURCES || !resumed)
-		currentrun_corners  = lighting_update_corners
-		lighting_update_corners  = list()
+	CURRENT_TICKLIMIT = ((real_tick_limit - world.tick_usage)/2)+world.tick_usage
 
-		resuming_stage = STAGE_CORNERS
-
-	while (currentrun_corners.len)
-		var/datum/lighting_corner/C = currentrun_corners[currentrun_corners.len]
-		currentrun_corners.len--
+	for (i in 1 to lighting_update_corners.len)
+		var/datum/lighting_corner/C = lighting_update_corners[i]
 
 		C.update_objects()
 		C.needs_update = FALSE
 		if (MC_TICK_CHECK)
-			return
+			break
+	if (i)
+		lighting_update_corners.Cut(1, i+1)
+		i = 0
 
-	if (resuming_stage == STAGE_CORNERS || !resumed)
-		currentrun_objects = lighting_update_objects
-		lighting_update_objects = list()
 
-		resuming_stage = STAGE_OVERLAYS
+	CURRENT_TICKLIMIT = real_tick_limit
 
-	while (currentrun_objects.len)
-		var/atom/movable/lighting_object/O = currentrun_objects[currentrun_objects.len]
-		currentrun_objects.len--
+	for (i in 1 to lighting_update_objects.len)
+		var/atom/movable/lighting_object/O = lighting_update_objects[i]
 
 		if (QDELETED(O))
 			continue
@@ -100,16 +84,11 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 		O.update()
 		O.needs_update = FALSE
 		if (MC_TICK_CHECK)
-			return
-
-	resuming_stage = 0
+			break
+	if (i)
+		lighting_update_objects.Cut(1, i+1)
 
 
 /datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
 	..()
-
-
-#undef STAGE_SOURCES
-#undef STAGE_CORNERS
-#undef STAGE_OVERLAYS
