@@ -480,7 +480,7 @@
 			if("pumpkin_latte")
 				icon_state = "pumpkin_latte"
 				name = "Pumpkin Latte"
-				desc = "A mix of coffee and pumpkin juice."
+				desc = "You better drink it..."
 			if("gibbfloats")
 				icon_state = "gibbfloats"
 				name = "Gibbfloat"
