@@ -32,7 +32,7 @@
 	return TRUE
 
 /datum/riding/proc/force_dismount(mob/living/M)
-	ridden.unbuckle_mob(user)
+	ridden.unbuckle_mob(M)
 
 //Override this to set your vehicle's various pixel offsets
 //if they differ between directions, otherwise use the
@@ -424,7 +424,7 @@
 						M.pixel_y = 3
 
 /datum/riding/cyborg/force_dismount(mob/living/M)
-	ridden.unbuckle_mob(user)
+	ridden.unbuckle_mob(M)
 	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 	M.Move(targetm)
