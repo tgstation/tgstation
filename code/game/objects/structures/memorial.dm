@@ -19,3 +19,17 @@ This memorial has been designed for him and any future coders to perish.
 	icon_state = "memorial"
 	density = 1
 	anchored = 1
+	obj_integrity = INFINITY
+	max_integrity = INFINITY
+	deconstructible = FALSE
+
+/obj/structure/fluff/arc/Destroy(force)
+	if(!force)
+		return
+	return ..()
+
+/obj/structure/fluff/arc/attackby(obj/item/I, mob/living/user, params) //People were destroying this. Sadly. This is meant to prevent that.
+	return
+
+/obj/structure/fluff/arc/attack_animal(mob/living/user)
+	return
