@@ -402,6 +402,17 @@
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
 
+	if(length(SSjob.prioritized_jobs))
+		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
+		var/amt = length(SSjob.prioritized_jobs)
+		var/amt_count
+		for(var/datum/job/a in SSjob.prioritized_jobs)
+			amt_count++
+			if(amt_count != amt) // checks for the last job added.
+				dat += " [a.title], "
+			else
+				dat += " [a.title]. </div>"
+
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0

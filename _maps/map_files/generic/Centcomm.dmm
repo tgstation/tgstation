@@ -8207,11 +8207,15 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "uo" = (
-/turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (SOUTHEAST)";
-	icon_state = "blue";
-	dir = 6
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/grass,
 /area/centcom/evac)
 "up" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -8550,11 +8554,13 @@
 	},
 /area/centcom/control)
 "vm" = (
-/turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (NORTHWEST)";
-	icon_state = "blue";
-	dir = 9
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/turf/open/floor/grass,
 /area/centcom/evac)
 "vn" = (
 /turf/open/floor/plasteel/blue/side{
@@ -13853,6 +13859,61 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
+"JE" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
+"JF" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
+"JG" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
+"JH" = (
+/obj/structure/fluff/arc,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"JI" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
+"JJ" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/turf/open/floor/grass,
+/area/centcom/evac)
+"JK" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -63885,8 +63946,8 @@ rU
 sv
 sY
 tK
-tK
-tK
+JE
+JG
 vm
 tM
 wd
@@ -64142,9 +64203,9 @@ rU
 sv
 sZ
 sY
-tK
-tK
-tK
+JF
+JH
+JJ
 vF
 sZ
 sv
@@ -64400,8 +64461,8 @@ sv
 sW
 tL
 uo
-tK
-tK
+JI
+JK
 tK
 vF
 sv
@@ -73260,7 +73321,7 @@ fP
 fU
 Iw
 IJ
-IT
+IJ
 Je
 fU
 fP
@@ -73772,12 +73833,12 @@ fF
 fN
 Ij
 Il
-Ix
-IK
-IU
-Jf
-Jr
-JC
+Il
+Il
+Il
+Il
+Il
+Ij
 ab
 aa
 aa
@@ -74029,11 +74090,11 @@ fF
 fN
 fQ
 Im
-Iy
-IL
-IV
-Jg
-Js
+Im
+Im
+Im
+Im
+Im
 fQ
 ab
 aa
@@ -74286,11 +74347,11 @@ fG
 fN
 fQ
 In
-Iz
-IM
-IW
-Jh
-Jt
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -74542,12 +74603,12 @@ ag
 ag
 ab
 fQ
-Io
-IA
-IN
-IX
-Ji
-Ju
+In
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -74799,12 +74860,12 @@ eZ
 eD
 fN
 fQ
-Ip
-IB
+In
+In
 fX
 fX
-Jj
-Jv
+In
+In
 fQ
 ab
 aa
@@ -75056,12 +75117,12 @@ fa
 eB
 fN
 fQ
-Iq
-IC
+In
+In
 fY
 IY
-Jk
-Jw
+In
+In
 fQ
 ab
 aa
@@ -75313,12 +75374,12 @@ eQ
 eQ
 fN
 fQ
-Ir
-ID
+In
+In
 fX
 fX
-Jl
-Jx
+In
+In
 fQ
 ab
 aa
@@ -75570,12 +75631,12 @@ eZ
 eD
 fN
 fQ
-Is
-IE
-IO
-IZ
-Jm
-Jy
+In
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -75827,12 +75888,12 @@ fa
 eB
 fN
 fQ
-It
-IF
-IP
-Ja
-Jn
-Jz
+In
+In
+In
+In
+In
+In
 fQ
 ab
 aa
@@ -76085,11 +76146,11 @@ ag
 ab
 fQ
 Iu
-IG
-IQ
-Jb
-Jo
-JA
+Iu
+Iu
+Iu
+Iu
+Iu
 fQ
 ab
 aa
@@ -76340,14 +76401,14 @@ ff
 ff
 fH
 fN
-Ik
-Iv
-IH
-IR
-Jc
-Jp
-JB
-JD
+Ij
+Il
+Il
+Il
+Il
+Il
+Il
+Ij
 ab
 aa
 aa
@@ -76858,7 +76919,7 @@ fP
 fV
 II
 IS
-Jd
+IS
 Jq
 fV
 fP

@@ -10,7 +10,7 @@
 	return number
 
 /mob/living/carbon/get_ear_protection()
-	if(head && (head.flags & HEADBANGPROTECT))
+	if(head && HAS_SECONDARY_FLAG(head, BANG_PROTECT))
 		return 1
 
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
