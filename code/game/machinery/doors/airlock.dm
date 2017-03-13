@@ -1126,19 +1126,32 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	if(!operating && density)
 		if(W.remove_fuel(0,user))
-			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
-							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
-							"<span class='italics'>You hear welding.</span>")
-			playsound(loc, W.usesound, 40, 1)
-			if(do_after(user,40*W.toolspeed, 1, target = src))
-				if(density && !operating)//Door must be closed to weld.
-					if(!user || !W || !W.isOn() || !user.loc )
-						return
+			if(user.a_intent != INTENT_HELP)
+				user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
+								"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
+								"<span class='italics'>You hear welding.</span>")
+				playsound(loc, W.usesound, 40, 1)
+				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
 					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
 					update_icon()
+			else if(obj_integrity < max_integrity)
+				user.visible_message("[user] is welding the airlock.", \
+								"<span class='notice'>You begin repairing the airlock...</span>", \
+								"<span class='italics'>You hear welding.</span>")
+				playsound(loc, W.usesound, 40, 1)
+				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					obj_integrity = max_integrity
+					stat &= ~BROKEN
+					user.visible_message("[user.name] has repaired [src].", \
+										"<span class='notice'>You finish repairing the airlock.</span>")
+					update_icon()
+
+/obj/machinery/door/airlock/proc/weld_checks(obj/item/weapon/weldingtool/W, mob/user)
+	return !operating && density && user && W && W.isOn() && user.loc
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/user)
 	var/beingcrowbarred = null
