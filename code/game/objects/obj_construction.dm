@@ -142,6 +142,8 @@
 		//If OnDeconstruction returns TRUE or we were force deconstructed and there is loot, qdel it
 		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot)	//no loot for vandals or if we're told not to
 			qdel(loot)
+		else if(user)
+			user.put_in_hands(loot)
 		else
 			loot.forceMove(get_turf(parent))
 		
@@ -329,7 +331,7 @@
 /obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
 
 //called after Initialize if the obj was constructed from scratch
-/obj/proc/Construct(mob/user)
+/obj/proc/Construct(mob/user, nDir)
 	if(!current_construction_state || current_construction_state.id == 1)	//already done
 		return
 	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
@@ -339,8 +341,9 @@
 			first_step = first_step.next_state
 		if(first_step)
 			first_step.OnReached(src, user, TRUE)
-
-	setDir(user.dir)
+	if(!nDir)
+		nDir = user.dir
+	setDir(nDir)
 	add_fingerprint(user)
 	feedback_add_details("obj_construction","[type]")
 
