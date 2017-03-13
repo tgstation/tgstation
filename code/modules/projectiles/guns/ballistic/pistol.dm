@@ -82,6 +82,5 @@
 	name = "stiletto pistol"
 	desc = "A semi-automatic law enforcement pistol with a larger ammo capacity. Uses .38-special ammo."
 	icon_state = "secpistol"
-	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m38auto
 	can_suppress = 0
