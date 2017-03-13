@@ -216,7 +216,7 @@
 				continue
 
 			C.update_gen = update_gen
-			C.affecting += src
+			LAZYADD(C.affecting,src)
 
 			if (!C.active)
 				effect_str[C] = 0
@@ -234,7 +234,7 @@
 	var/thing
 	for (thing in affecting_turfs)
 		var/turf/T = thing
-		T.affecting_lights -= src
+		LAZYREMOVE(T.affecting_lights, src)
 
 	affecting_turfs.Cut()
 
@@ -243,7 +243,7 @@
 		C = thing
 		REMOVE_CORNER(C)
 
-		C.affecting -= src
+		LAZYREMOVE(C.affecting, src)
 
 	effect_str.Cut()
 
@@ -257,33 +257,31 @@
 	var/list/datum/lighting_corner/corners = list()
 	var/list/turf/turfs                    = list()
 	var/thing
+	var/datum/lighting_corner/C
+	var/turf/T
 
-	FOR_DVIEW(var/turf/T, light_range+1, source_turf, 0)
+	FOR_DVIEW(T, light_range+1, source_turf, 0)
 		if (!T.lighting_corners_initialised)
 			T.generate_missing_corners()
-		corners |= T.get_corners(source_turf)
-		turfs   += T
-
-
-	var/turf/T
+		for (thing in T.get_corners(source_turf))
+			C = thing
+			corners[C] = 0
+		turfs += T
 
 	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
 	affecting_turfs += L
 	for (thing in L)
 		T = thing
-		if (!T.affecting_lights)
-			T.affecting_lights = list(src)
-		else
-			T.affecting_lights += src
+		LAZYADD(T.affecting_lights, src)
 
 	L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
 	affecting_turfs -= L
 	for (thing in L)
 		T = thing
-		T.affecting_lights -= src
+		LAZYREMOVE(T.affecting_lights, src)
 
 
-	var/datum/lighting_corner/C
+
 	for (thing in corners - effect_str) // New corners
 		C = thing
 		LAZYADD(C.affecting, src)
@@ -296,7 +294,7 @@
 	for (thing in effect_str - corners) // Old, now gone, corners.
 		C = thing
 		REMOVE_CORNER(C)
-		C.affecting -= src
+		LAZYREMOVE(C.affecting, src)
 		effect_str -= C
 
 #undef EFFECT_UPDATE
