@@ -551,17 +551,27 @@
 
 /datum/supply_pack/engineering/engine/spacesuit
 	name = "Space Suit Crate"
-	cost = 3000
+	cost = 4000
 	access = access_eva
 	contains = list(/obj/item/clothing/suit/space,
 					/obj/item/clothing/suit/space,
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/mask/breath,
-					/obj/item/clothing/mask/breath)
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/jetpack/oxygen)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
-
+	
+/datum/supply_pack/engineering/engine/spacesuitupgrade
+	name = "Hardsuit Integrated Jetpack upgrade"
+	cost = 4000
+	access = access_eva
+	contains = list(/obj/item/weapon/tank/jetpack/suit)
+	crate_name = "integrated jetpack crate"
+	crate_type = /obj/structure/closet/crate/secure
+	
+	
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"
 	cost = 2500
