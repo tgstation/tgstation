@@ -2,7 +2,7 @@
 //Please do not bother them with bugs from this port, however, as it has been modified quite a bit.
 //Modifications include removing the world-ending full supermatter variation, and leaving only the shard.
 
-#define PLASMA_HEAT_PENALTY 20     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
+#define PLASMA_HEAT_PENALTY 15     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
 #define OXYGEN_HEAT_PENALTY 1
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_MODIFIER -1.5
@@ -17,7 +17,7 @@
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 100        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
 #define POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
 
-#define MOLE_PENALTY_THRESHOLD 1200           //Higher == Shard can absorb more moles before triggering the high mole penalties.
+#define MOLE_PENALTY_THRESHOLD 1800           //Higher == Shard can absorb more moles before triggering the high mole penalties.
 #define MOLE_HEAT_PENALTY 350                 //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
 #define POWER_PENALTY_THRESHOLD 5000          //Higher == Engine can generate more power before triggering the high power penalties.
 #define SEVERE_POWER_PENALTY_THRESHOLD 7000   //Same as above, but causes more dangerous effects
@@ -32,6 +32,7 @@
 #define FREON_BREEDING_MODIFIER 100        //Higher == less freon created
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
+#define MATTER_POWER_CONVERSION 10         //Crystal converts 1/this value of stored matter into energy.
 
 //These would be what you would get at point blank, decreases with distance
 #define DETONATION_RADS 200
@@ -93,7 +94,7 @@
 	var/mole_heat_penalty = 0
 	var/freon_transmit_modifier = 1
 
-
+	var/matter_power = 0
 
 	//Temporary values so that we can optimize this
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
@@ -184,49 +185,6 @@
 	if(!istype(T)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-
-
-	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
-		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
-			var/stability = num2text(round((damage / explosion_point) * 100))
-
-			if(damage > emergency_point)
-
-				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
-				lastwarning = world.timeofday
-				if(!has_reached_emergency)
-					investigate_log("has reached the emergency point for the first time.", "supermatter")
-					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
-					has_reached_emergency = 1
-			else if(damage >= damage_archived) // The damage is still going up
-				radio.talk_into(src, "[warning_alert] Instability: [stability]%")
-				lastwarning = world.timeofday - 150
-
-			else                                                 // Phew, we're safe
-				radio.talk_into(src, "[safe_alert] Instability: [stability]%")
-				lastwarning = world.timeofday
-
-			if(power > POWER_PENALTY_THRESHOLD)
-				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.")
-				if(powerloss_inhibitor < 0.5)
-					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
-
-			if(combined_gas > MOLE_PENALTY_THRESHOLD)
-				radio.talk_into(src, "Warning: Critical coolant mass reached.")
-
-		if(damage > explosion_point)
-			for(var/mob in living_mob_list)
-				var/mob/living/L = mob
-				if(istype(L) && L.z == z)
-					if(ishuman(mob))
-						//Hilariously enough, running into a closet should make you get hit the hardest.
-						var/mob/living/carbon/human/H = mob
-						H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-					var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(L, src) + 1) )
-					L.rad_act(rads)
-
-			explode()
-
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
 
@@ -284,13 +242,16 @@
 	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
-
 	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
 		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling + Clamp(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 	else
 		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling - 0.10,0, 1)
 	powerloss_inhibitor = Clamp(1-(powerloss_dynamic_scaling * Clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
 
+	if(matter_power)
+		var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
+		power = max(power + removed_matter, 0)
+		matter_power = max(matter_power - removed_matter, 0)
 
 	var/temp_factor = 50
 
@@ -358,6 +319,49 @@
 			supermatter_anomaly_gen(src, 2, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3))
 			supermatter_anomaly_gen(src, 3, rand(5, 10))
+
+
+
+	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
+		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
+			var/stability = num2text(round((damage / explosion_point) * 100))
+
+			if(damage > emergency_point)
+
+				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
+				lastwarning = world.timeofday
+				if(!has_reached_emergency)
+					investigate_log("has reached the emergency point for the first time.", "supermatter")
+					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+					has_reached_emergency = 1
+			else if(damage >= damage_archived) // The damage is still going up
+				radio.talk_into(src, "[warning_alert] Instability: [stability]%")
+				lastwarning = world.timeofday - 150
+
+			else                                                 // Phew, we're safe
+				radio.talk_into(src, "[safe_alert] Instability: [stability]%")
+				lastwarning = world.timeofday
+
+			if(power > POWER_PENALTY_THRESHOLD)
+				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.")
+				if(powerloss_inhibitor < 0.5)
+					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
+
+			if(combined_gas > MOLE_PENALTY_THRESHOLD)
+				radio.talk_into(src, "Warning: Critical coolant mass reached.")
+
+		if(damage > explosion_point)
+			for(var/mob in living_mob_list)
+				var/mob/living/L = mob
+				if(istype(L) && L.z == z)
+					if(ishuman(mob))
+						//Hilariously enough, running into a closet should make you get hit the hardest.
+						var/mob/living/carbon/human/H = mob
+						H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
+					var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(L, src) + 1) )
+					L.rad_act(rads)
+
+			explode()
 
 
 	power -= ((power/500)**3) * powerloss_inhibitor
@@ -470,12 +474,12 @@
 		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
-		power += 200
+		matter_power += 200
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 
-	power += 200
+	matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(get_turf(src), 4, 10, 500, 1)
