@@ -92,12 +92,12 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 		var/image/cached_overlay = new_overlays[i]
 		if (istext(cached_overlay))
 			new_overlays[i] = iconstate2appearance(icon, cached_overlay)
-		else if(istype(cached_overlay))
+		else if(isicon(cached_overlay))
+			new_overlays[i] = icon2appearance(cached_overlay)
+		else	//image probable
 			appearance_bro.appearance = cached_overlay
 			appearance_bro.dir = cached_overlay.dir
 			new_overlays[i] = appearance_bro.appearance
-		else	//icon probably
-			new_overlays[i] = icon2appearance(cached_overlay)
 	return new_overlays
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
