@@ -605,7 +605,22 @@
 		"I'm a fighter, not a liver.",
 		"How can I see without eyeballs?",
 		"Ask your parents about 'boning', before you get pregnant.",
-		"Remember, a dog is for life, not just for christmas.")
+		"Remember, a dog is for life, not just for christmas.",
+
+		"I must possess all, or I possess nothing!",
+		"I am not nice, I am not kind, and I am *not* wonderful!",
+		"Books are the real treasures of the world.",
+		"How unpleasant it is to see you, you snivelling coward!",
+		"Everything comes to he who waits, and I have waited so very long for \
+			this moment!",
+		"I am the Alpha and the Omega. Death and rebirth. And, as you die, so \
+			will I be reborn.",
+		"I help no one but myself!",
+		"I'm so powerful, I even impress myself!",
+		"Never mind what I said, just do what I said.",
+		"I'll turn you into a suitcase!",
+		"Everything I do is for the sake of evil.",
+		"Myaaah.")
 
 /obj/item/toy/talking/skeleton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to commit suicide with [src].</span>")
