@@ -78,3 +78,6 @@
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()
+
+/obj/vehicle/janicart/upgraded
+	floorbuffer = TRUE
