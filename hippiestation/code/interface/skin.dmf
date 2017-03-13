@@ -121,7 +121,7 @@ macro "default"
 		is-disabled = false
 	elem 
 		name = "CTRL+S+REP"
-		command = ".movedown"
+		command = "say *scream"
 		is-disabled = false
 	elem 
 		name = "CTRL+W+REP"
@@ -411,7 +411,7 @@ macro "hotkeys"
 		is-disabled = false
 	elem 
 		name = "CTRL+S+REP"
-		command = ".movedown"
+		command = "say *scream"
 		is-disabled = false
 	elem 
 		name = "T"
@@ -645,7 +645,7 @@ macro "robot-default"
 		is-disabled = false
 	elem 
 		name = "CTRL+S+REP"
-		command = ".movedown"
+		command = "say *scream"
 		is-disabled = false
 	elem 
 		name = "CTRL+W+REP"
@@ -899,7 +899,7 @@ macro "robot-hotkeys"
 		is-disabled = false
 	elem 
 		name = "CTRL+S+REP"
-		command = ".movedown"
+		command = "say *scream"
 		is-disabled = false
 	elem 
 		name = "T"
