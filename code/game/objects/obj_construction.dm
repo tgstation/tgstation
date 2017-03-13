@@ -487,7 +487,7 @@
 		if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(!WT.isOn())
-				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
+				to_chat(user, "<span class='warning'>\The [WT] must be on for this task!</span>")
 				return
 			else
 				WT.remove_fuel(M = user)
