@@ -87,7 +87,7 @@
 			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
 
 			stat("Players: [ticker.totalPlayers]", "Players Ready: [ticker.totalPlayersReady]")
-			for(var/mob/new_player/player in player_list)
+			for(var/mob/dead/new_player/player in player_list)
 				stat("[player.key]", "[player.ready ? "(Playing)" : ""]")
 
 

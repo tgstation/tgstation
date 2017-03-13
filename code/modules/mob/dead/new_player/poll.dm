@@ -338,7 +338,7 @@
 		return
 	. = "Player"
 	if(client.holder)
-		. = client.holder.rank.name
+		. = client.holder.rank
 	return .
 
 
@@ -386,7 +386,7 @@
 	var/datum/admins/holder = client.holder
 	var/rank = "Player"
 	if (holder)
-		rank = holder.rank.name
+		rank = holder.rank
 	var/ckey = client.ckey
 	var/address = client.address
 
@@ -504,7 +504,7 @@
 		return
 	var/adminrank = "Player"
 	if(client.holder)
-		adminrank = client.holder.rank.name
+		adminrank = client.holder.rank
 	adminrank = sanitizeSQL(adminrank)
 	var/DBQuery/query_numval_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]', [(isnull(rating)) ? "null" : rating])")
 	if(!query_numval_vote.warn_execute())
@@ -541,7 +541,7 @@
 		return 2
 	var/adminrank = "Player"
 	if(client.holder)
-		adminrank = client.holder.rank.name
+		adminrank = client.holder.rank
 	adminrank = sanitizeSQL(adminrank)
 	var/DBQuery/query_multi_vote = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
 	if(!query_multi_vote.warn_execute())
