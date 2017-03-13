@@ -51,10 +51,10 @@
 	var/turf/T = loc
 	if (!istype(T)) // Erm...
 		if (loc)
-			warning("A lighting overlay realised its loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay()!")
+			WARNING("A lighting overlay realised its loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay()!")
 
 		else
-			warning("A lighting overlay realised it was in nullspace in update_overlay()!")
+			WARNING("A lighting overlay realised it was in nullspace in update_overlay()!")
 
 		qdel(src, TRUE)
 		return
@@ -69,10 +69,12 @@
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	// No I seriously cannot think of a more efficient method, fuck off Comic.
-	var/datum/lighting_corner/cr  = T.corners[3] || dummy_lighting_corner
-	var/datum/lighting_corner/cg  = T.corners[2] || dummy_lighting_corner
-	var/datum/lighting_corner/cb  = T.corners[4] || dummy_lighting_corner
-	var/datum/lighting_corner/ca  = T.corners[1] || dummy_lighting_corner
+	var/list/corners = T.corners
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
+	var/datum/lighting_corner/cr  = corners[3] || dummy_lighting_corner
+	var/datum/lighting_corner/cg  = corners[2] || dummy_lighting_corner
+	var/datum/lighting_corner/cb  = corners[4] || dummy_lighting_corner
+	var/datum/lighting_corner/ca  = corners[1] || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 

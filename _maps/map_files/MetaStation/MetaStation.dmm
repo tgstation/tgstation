@@ -12582,7 +12582,6 @@
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
-/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "avW" = (
@@ -26650,14 +26649,9 @@
 /turf/closed/wall,
 /area/engine/engineering)
 "aVb" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/pen,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/structure/closet/secure_closet/engineering_welding,
 /turf/open/floor/plasteel{
 	name = "floor"
 	},
@@ -26678,14 +26672,11 @@
 	},
 /area/engine/engineering)
 "aVd" = (
-/obj/structure/table,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/storage/firstaid/fire,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plasteel{
 	name = "floor"
 	},
@@ -34270,6 +34261,9 @@
 	pixel_y = 32
 	},
 /obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -87846,9 +87840,6 @@
 	pixel_x = 24;
 	pixel_y = -8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "cUZ" = (
@@ -88248,9 +88239,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cVY" = (
@@ -88294,6 +88282,9 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/light_construct/small{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cWb" = (
@@ -88362,9 +88353,6 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/light_construct/small{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cWe" = (
@@ -88581,7 +88569,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/light/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -88662,6 +88650,9 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cWC" = (
@@ -88671,7 +88662,6 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/light_construct/small,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cWD" = (
@@ -88681,6 +88671,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cWE" = (
@@ -88793,7 +88784,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/light{
+/obj/structure/light_construct{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -88879,10 +88870,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cWY" = (
-/obj/machinery/vending/coffee{
-	pixel_x = 0;
-	use_power = 0
-	},
+/obj/machinery/vending/coffee,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cWZ" = (
@@ -89139,7 +89127,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/light/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -89364,7 +89352,7 @@
 /area/shuttle/abandoned)
 "cXU" = (
 /obj/machinery/vending/hydroseeds{
-	pixel_x = 2;
+	pixel_x = 0;
 	use_power = 0
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -89381,6 +89369,9 @@
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/structure/light_construct/small{
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -89525,7 +89516,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/light/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -89866,6 +89857,10 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cYN" = (
@@ -89976,9 +89971,6 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cYS" = (
@@ -90299,7 +90291,6 @@
 /obj/structure/table/optable,
 /obj/item/weapon/surgical_drapes,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -90442,6 +90433,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/light{
+	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -95049,6 +95041,14 @@
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "djX" = (
+/obj/structure/closet/coffin,
+/obj/machinery/door/window/eastleft{
+	name = "Coffin Storage";
+	req_access_txt = "22"
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
+"djY" = (
 /obj/machinery/computer/secure_data{
 	icon_keyboard = "syndi_key"
 	},
@@ -95056,27 +95056,27 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"djY" = (
+"djZ" = (
 /obj/structure/chair/office/dark{
 	dir = 8;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"djZ" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
 "dka" = (
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
 "dkb" = (
+/turf/open/floor/plasteel/black,
+/area/shuttle/syndicate)
+"dkc" = (
 /obj/structure/chair/office/dark{
 	dir = 4;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"dkc" = (
+"dkd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/ai_status_display{
 	pixel_x = 32
@@ -95089,16 +95089,16 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"dkd" = (
+"dke" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
-"dke" = (
+"dkf" = (
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dkf" = (
+"dkg" = (
 /obj/structure/chair{
 	dir = 4;
 	name = "tactical chair"
@@ -95107,10 +95107,10 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dkg" = (
+"dkh" = (
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"dkh" = (
+"dki" = (
 /obj/structure/chair{
 	dir = 4;
 	name = "tactical chair"
@@ -95123,10 +95123,10 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dki" = (
+"dkj" = (
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"dkj" = (
+"dkk" = (
 /obj/structure/chair{
 	dir = 8;
 	name = "tactical chair"
@@ -95138,42 +95138,17 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dkk" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
 "dkl" = (
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate)
 "dkm" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate)
 "dkn" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dko" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
-	dir = 4
-	},
-/area/shuttle/syndicate)
-"dkp" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkq" = (
 /obj/structure/chair{
 	dir = 4;
 	name = "tactical chair"
@@ -95182,7 +95157,10 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dkr" = (
+"dko" = (
+/turf/open/floor/plasteel/black,
+/area/shuttle/syndicate)
+"dkp" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
 	tag = "icon-podhatch (EAST)";
@@ -95190,7 +95168,29 @@
 	dir = 4
 	},
 /area/shuttle/syndicate)
+"dkq" = (
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/syndicate)
+"dkr" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/syndicate)
 "dks" = (
+/obj/machinery/suit_storage_unit/syndicate,
+/turf/open/floor/plasteel/podhatch{
+	tag = "icon-podhatch (EAST)";
+	icon_state = "podhatch";
+	dir = 4
+	},
+/area/shuttle/syndicate)
+"dkt" = (
 /obj/item/weapon/storage/toolbox/syndicate,
 /obj/item/weapon/crowbar/red,
 /obj/structure/table/reinforced,
@@ -95202,10 +95202,10 @@
 	dir = 10
 	},
 /area/shuttle/syndicate)
-"dkt" = (
+"dku" = (
 /turf/open/floor/plasteel/podhatch,
 /area/shuttle/syndicate)
-"dku" = (
+"dkv" = (
 /obj/structure/chair{
 	name = "tactical chair"
 	},
@@ -95215,7 +95215,7 @@
 	dir = 6
 	},
 /area/shuttle/syndicate)
-"dkv" = (
+"dkw" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
 	tag = "icon-podhatch (EAST)";
@@ -95223,12 +95223,12 @@
 	dir = 4
 	},
 /area/shuttle/syndicate)
-"dkw" = (
+"dkx" = (
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"dkx" = (
+"dky" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
 	tag = "icon-podhatch (SOUTHEAST)";
@@ -95236,23 +95236,14 @@
 	dir = 6
 	},
 /area/shuttle/syndicate)
-"dky" = (
+"dkz" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"dkz" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
 "dkA" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
 "dkB" = (
 /obj/structure/chair{
@@ -95264,6 +95255,15 @@
 	},
 /area/shuttle/syndicate)
 "dkC" = (
+/obj/structure/chair{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/shuttle/syndicate)
+"dkD" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/black/red,
 /obj/item/clothing/head/helmet/space/syndicate/black/red,
@@ -95271,21 +95271,21 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"dkD" = (
+"dkE" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
-"dkE" = (
+"dkF" = (
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"dkF" = (
+"dkG" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
-"dkG" = (
+"dkH" = (
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"dkH" = (
+"dkI" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
@@ -95294,10 +95294,10 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dkI" = (
+"dkJ" = (
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"dkJ" = (
+"dkK" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -95305,16 +95305,9 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dkK" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 9
-	},
-/area/shuttle/syndicate)
 "dkL" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
-	dir = 1
+	dir = 9
 	},
 /area/shuttle/syndicate)
 "dkM" = (
@@ -95361,16 +95354,23 @@
 /area/shuttle/syndicate)
 "dkS" = (
 /turf/open/floor/plasteel/podhatch{
-	dir = 5
+	tag = "icon-podhatch (NORTH)";
+	icon_state = "podhatch";
+	dir = 1
 	},
 /area/shuttle/syndicate)
 "dkT" = (
+/turf/open/floor/plasteel/podhatch{
+	dir = 5
+	},
+/area/shuttle/syndicate)
+"dkU" = (
 /obj/structure/closet/syndicate/personal,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"dkU" = (
+"dkV" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/glass/beaker,
@@ -95379,13 +95379,10 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"dkV" = (
+"dkW" = (
 /turf/open/floor/plasteel/podhatch{
 	dir = 10
 	},
-/area/shuttle/syndicate)
-"dkW" = (
-/turf/open/floor/plasteel/podhatch,
 /area/shuttle/syndicate)
 "dkX" = (
 /turf/open/floor/plasteel/podhatch,
@@ -95406,13 +95403,16 @@
 /turf/open/floor/plasteel/podhatch,
 /area/shuttle/syndicate)
 "dld" = (
+/turf/open/floor/plasteel/podhatch,
+/area/shuttle/syndicate)
+"dle" = (
 /turf/open/floor/plasteel/podhatch{
 	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
-"dle" = (
+"dlf" = (
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Technological Storage";
@@ -95420,7 +95420,7 @@
 	},
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate)
-"dlf" = (
+"dlg" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -95428,7 +95428,7 @@
 /obj/item/device/aicard,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate)
-"dlg" = (
+"dlh" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -95436,125 +95436,59 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"dlh" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
 "dli" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
+/obj/structure/chair,
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/mining)
+/area/shuttle/arrival)
 "dlj" = (
-/obj/machinery/light{
+/obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
+/area/shuttle/arrival)
 "dlk" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/light_construct/small{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
+/area/shuttle/abandoned)
 "dll" = (
-/obj/structure/chair,
-/obj/machinery/light/small{
-	dir = 4
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/light_construct{
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
+/area/shuttle/abandoned)
 "dlm" = (
-/obj/structure/chair{
-	dir = 1
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/light_construct,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
+/area/shuttle/abandoned)
 "dln" = (
-/obj/machinery/light{
-	dir = 1
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"dlo" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"dlp" = (
 /obj/machinery/light,
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"dlq" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/light_construct/small{
-	dir = 4
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"dlr" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/light_construct{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"dls" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/light_construct{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"dlt" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/light_construct,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"dlu" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/light_construct,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"dlv" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/light_construct/small{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"dlw" = (
+"dlo" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -95564,7 +95498,7 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
-"dlx" = (
+"dlp" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -95574,141 +95508,78 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
-"dly" = (
+"dlq" = (
 /obj/structure/chair,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"dlz" = (
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
+"dlr" = (
+/obj/machinery/light{
+	dir = 8
 	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"dls" = (
+/obj/machinery/holopad,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"dlt" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
 	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"dlu" = (
+/obj/machinery/light{
+	dir = 8
 	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
-	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
-	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
-	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
-	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/structure/closet/crate{
-	name = "lifejackets"
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"dlv" = (
+/obj/structure/table,
+/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/ointment,
+/obj/machinery/status_display{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
 	},
 /obj/machinery/light{
+	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"dlA" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"dlB" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"dlC" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"dlD" = (
+"dlw" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"dlE" = (
+"dlx" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"dlF" = (
+"dly" = (
 /obj/machinery/light{
+	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
-"dlG" = (
+"dlz" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/machinery/light{
+	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -100367,7 +100238,7 @@ aae
 cUb
 cUm
 cUb
-dkU
+dkV
 cUz
 cUF
 dby
@@ -100616,17 +100487,17 @@ aaa
 aaa
 aae
 cTV
-dko
-dko
-dko
-dkx
-aae
+dkp
+dks
 dkw
+dky
+aae
+cTZ
 cTJ
-dke
-dke
+dhm
+dhm
 cUy
-dke
+dhm
 dbx
 cUK
 cUO
@@ -100872,16 +100743,16 @@ aaa
 aaa
 aaa
 aae
-dke
-dke
-dke
-dke
-dke
-dkD
+dkl
+dkq
+dhm
+dhm
+dhm
+dkE
 cUk
 cTJ
-dkK
-dkV
+dkL
+dkW
 cUB
 cUI
 dbz
@@ -101129,16 +101000,16 @@ cTM
 aaa
 aaa
 aae
-dke
-dke
-dke
-dke
-dke
+dkm
+dhm
+dhm
+dhm
+dhm
 aae
 cUc
 cTJ
-dkL
-dkt
+dkM
+dkX
 cUA
 aae
 aae
@@ -101389,13 +101260,13 @@ aae
 cTW
 cTY
 cTI
-dkw
-dky
+dkx
+dkz
 aae
 cUl
 cTJ
-dkL
-dkt
+dkN
+dkY
 cUE
 aae
 aaa
@@ -101637,7 +101508,7 @@ aaa
 aaa
 aPc
 bRb
-djY
+djZ
 cTJ
 aae
 aae
@@ -101894,22 +101765,22 @@ aaa
 aaa
 aPc
 cTE
-djZ
+dka
 cTJ
-dkd
+dke
 cTP
-dkf
-dkh
-dkf
-dkf
+dkg
+dki
+dkn
+dkr
 cUg
-dke
-dke
-dke
-dke
-dkH
-dkL
-dkt
+dhm
+dhm
+dhm
+dhm
+dkI
+dkO
+dkZ
 cTJ
 cUg
 cUK
@@ -102154,19 +102025,19 @@ cRQ
 bPB
 cTJ
 cTN
-dke
-djZ
-djZ
-djZ
-dke
+dkf
+dkh
+dkj
+dko
+dhm
 cTU
-dke
-djZ
-djZ
-djZ
-djZ
-dkL
-dkt
+dhm
+dkA
+dkF
+dkH
+dkJ
+dkP
+dla
 cTJ
 cUJ
 cUK
@@ -102408,22 +102279,22 @@ aaa
 aaa
 aPc
 cTG
-djZ
+dkb
 cTJ
 aae
 cTQ
 cTS
-dkj
+dkk
 cTS
 cTS
 cUg
-dke
-dke
-dke
-dke
-dkJ
-dkL
-dkt
+dhm
+dhm
+dhm
+dhm
+dkK
+dkQ
+dlb
 cTJ
 cUg
 cUK
@@ -102665,7 +102536,7 @@ aaa
 aaa
 aPc
 cTF
-dkb
+dkc
 cTJ
 aae
 aae
@@ -102921,8 +102792,8 @@ aaa
 aaa
 aaa
 aae
-djX
-dkc
+djY
+dkd
 cTJ
 aae
 daT
@@ -102930,14 +102801,14 @@ aaa
 aaa
 aaa
 aae
-dks
-dke
-dkA
+dkt
+dhm
+dkB
 aae
 cUo
 cTJ
-dkL
-dkt
+dkR
+dlc
 cUD
 aae
 aaa
@@ -103187,14 +103058,14 @@ aaa
 aaa
 aaa
 cTl
-dkt
-dke
-dkA
+dku
+dhm
+dkC
 aae
 cUn
 cTJ
-dkL
-dkt
+dkS
+dld
 cUC
 aae
 aae
@@ -103315,7 +103186,7 @@ cWR
 cWZ
 cXk
 cXy
-dlt
+dlm
 cVF
 cXU
 cYf
@@ -103444,16 +103315,16 @@ aaa
 aaa
 aaa
 cTv
-dku
-dke
-dkC
-dkd
+dkv
+dhm
+dkD
+dkG
 cUq
 cTJ
-dkS
-dld
+dkT
+dle
 cUB
-dke
+dhm
 abd
 cUK
 cUP
@@ -103707,10 +103578,10 @@ aae
 aae
 cUp
 cTJ
-dke
-dke
-dle
-dke
+dhm
+dhm
+dlf
+dhm
 dbA
 cUK
 cUO
@@ -103831,7 +103702,7 @@ cXl
 cXa
 cWo
 cXN
-dlv
+cWo
 cYg
 cYu
 cVF
@@ -103964,10 +103835,10 @@ cUa
 aae
 cUr
 cTJ
-dkT
+dkU
 cUj
-dlf
-dkJ
+dlg
+dlh
 abd
 cUK
 cUQ
@@ -104853,7 +104724,7 @@ cVX
 cWo
 cWB
 cVF
-dlr
+cWo
 cXa
 cXo
 cXa
@@ -105110,14 +104981,14 @@ cVW
 cWn
 cVF
 cVF
-cWo
+dll
 cXb
 cXn
 cXb
 cXG
 cVF
 cXY
-dlw
+dlo
 cYx
 cVF
 aaa
@@ -105353,7 +105224,7 @@ aWU
 aRA
 aaa
 cVn
-dlo
+cVv
 cVn
 aaa
 aRA
@@ -105597,9 +105468,9 @@ aaf
 aaf
 aaa
 bcS
-dll
+dli
 beC
-dlm
+dlj
 bcS
 aaa
 aaf
@@ -105620,18 +105491,18 @@ bOd
 aZZ
 bOd
 cVI
-dlq
+cVY
 cWp
-cWo
+dlk
 cWL
 cVY
 cWo
 cXp
 cVY
-dlt
+cWo
 cVF
 cXa
-dlx
+dlp
 cYy
 cVF
 aaa
@@ -105885,7 +105756,7 @@ cWo
 cXa
 cXs
 cXa
-cWo
+dln
 cVF
 cVF
 cVF
@@ -106138,7 +106009,7 @@ cWa
 cWq
 cWC
 cVF
-dlr
+cWo
 cXa
 cXr
 cXb
@@ -106380,7 +106251,7 @@ aVu
 bxu
 aRA
 cVn
-dln
+cVv
 cVv
 cVv
 cVn
@@ -106896,7 +106767,7 @@ aWS
 cVn
 cVv
 cVv
-dlp
+cVv
 cVn
 aWS
 bKU
@@ -110457,7 +110328,7 @@ aaa
 awN
 ayg
 azh
-dli
+azh
 azi
 aDe
 awN
@@ -110467,7 +110338,7 @@ cUV
 cUV
 cUV
 cUV
-dlk
+cUV
 cUV
 cUV
 cUV
@@ -110977,7 +110848,7 @@ aDg
 awN
 aaa
 cUS
-dlj
+cUV
 cUV
 cUV
 cUV
@@ -115947,7 +115818,7 @@ cTf
 cNt
 cMI
 cPC
-cPC
+djX
 cPC
 cMI
 cRF
@@ -118936,7 +118807,7 @@ atJ
 auS
 avV
 auQ
-dlh
+ayt
 ayt
 ayt
 aCi
@@ -119046,7 +118917,7 @@ cYO
 cZy
 cZe
 cYV
-dlF
+dly
 cYV
 cYV
 dae
@@ -119556,10 +119427,10 @@ cZS
 cYO
 cYO
 cYO
-dlB
+dlt
 cYO
 cZV
-dlE
+dlx
 cZe
 dad
 dad
@@ -120066,11 +119937,11 @@ cRr
 cMI
 cZe
 cZK
-dlA
+dlr
 cYO
 cYO
 cYO
-dlA
+dlu
 cZK
 cZe
 cZD
@@ -120845,8 +120716,8 @@ cYO
 cZo
 cZe
 cZF
-dlG
 cZY
+dlz
 cZE
 cZe
 aaa
@@ -121093,7 +120964,7 @@ cPv
 cPv
 cPv
 cZe
-dly
+dlq
 cYO
 cZo
 cYF
@@ -122641,7 +122512,7 @@ cZo
 cYF
 cZi
 cYO
-dlD
+dlw
 cZe
 cZO
 dac
@@ -123148,7 +123019,7 @@ cQO
 cPv
 cPv
 cPv
-cZe
+cYF
 cZi
 cYO
 cZo
@@ -123920,13 +123791,13 @@ aaa
 aaa
 aaf
 cZe
-dlz
-cYM
 cYN
+cYM
 cYO
-cZu
+dls
 cYO
-cYR
+dlv
+cYN
 cZg
 cZX
 cZW
@@ -124178,11 +124049,11 @@ aaf
 aaf
 cZe
 cZe
-cYF
 cZe
 cYF
-cZe
 cYF
+cYF
+cZe
 cZe
 cZe
 cZe
