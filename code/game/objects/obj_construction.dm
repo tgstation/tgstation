@@ -96,6 +96,8 @@
 							//when constructed from or deconstructed into this state. The change will be purely additive
 							//Having this be TRUE also means that OnConstruction and OnDeconstruction may have null user parameters
 
+	var/always_drop_loot	//Always drop required_type_to_construct, even if damaged
+
 	var/datum/construction_state/next_state		//the state that will be next once constructed
 	var/datum/construction_state/prev_state		//the state that will be next once deconstructed
 
@@ -139,8 +141,8 @@
 
 		//Explanation for the following shitty inline checks:
 		//If there is loot, and we have not been force deconstructed, pass loot as a parameter to OnDeconstruction
-		//If OnDeconstruction returns TRUE or we were force deconstructed and there is loot, qdel it
-		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot)	//no loot for vandals or if we're told not to
+		//If OnDeconstruction returns TRUE or we were force deconstructed and there is loot, qdel it. Only if always_drop_loot is FALSE
+		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot && (!next || next.always_drop_loot))
 			qdel(loot)
 		else if(user)
 			user.put_in_hands(loot)
