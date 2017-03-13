@@ -16,15 +16,15 @@
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
 	var/can_electrify = FALSE
-	var/obj/item/assembly/shock_kit/part
 	var/last_shock_time
 
 /obj/structure/chair/e_chair/Initialize()
-	part = new(src)
+	SetItemToReachConstructionState(CHAIR_ELECTRIC, new /obj/item/assembly/shock_kit(src))
+	..()
 
 /obj/structure/chair/Initialize()
 	..()
-	if(!part)
+	if(!GetItemUsedToReachConstructionState(CHAIR_ELECTRIC))
 		Construct()
 		if(type == /obj/structure/chair)
 			can_electrify = TRUE
@@ -33,7 +33,6 @@
 	update_icon()
 
 /obj/structure/chair/Destroy()
-	QDEL_NULL(part)
 	latejoin -= src	//These may be here due to the arrivals shuttle
 	return ..()
 
@@ -46,6 +45,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
 		/datum/construction_state{
 			required_type_to_construct = /obj/item/assembly/shock_kit
 			required_amount_to_construct = 1
+			stash_construction_item = 1
 			required_type_to_deconstruct = /obj/item/weapon/wrench
 			required_type_to_repair = /obj/item/weapon/weldingtool
 			damage_reachable = 1
@@ -70,26 +70,15 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
 
 /obj/structure/chair/OnConstruction(state_id, mob/user, obj/item/used)
 	..()
-	if(state_id == CHAIR_ELECTRIC)
-		user.transferItemToLoc(used, src)
-		part = used
-		. = TRUE
 	update_icon()
 
 /obj/structure/chair/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
 	..()
-	if(state_id == CHAIR_REGULAR)
-		if(!forced)
-			part.forceMove(get_turf(src))
-		else
-			qdel(part)
-		part = null
-		. = TRUE
 	update_icon()
 
 /obj/structure/chair/update_icon()
 	cut_overlays()
-	if(part)
+	if(current_construction_state.id >= CHAIR_ELECTRIC)
 		icon_state = "echair0"
 		add_overlay(image('icons/obj/chairs.dmi', src, "echair_over", MOB_LAYER + 1))
 		name = "electric [initial(name)]"
@@ -100,7 +89,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
 		desc = initial(desc)
 
 /obj/structure/chair/proc/shock()
-	if(current_construction_state.id != CHAIR_ELECTRIC)
+	if(current_construction_state.id < CHAIR_ELECTRIC)
 		return
 
 	if(last_shock_time + 50 > world.time)

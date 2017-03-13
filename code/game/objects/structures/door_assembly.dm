@@ -11,7 +11,6 @@
 	var/mineral = null
 	var/typetext = ""
 	var/icontext = ""
-	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
@@ -21,10 +20,6 @@
 /obj/structure/door_assembly/New()
 	update_icon()
 	..()
-
-/obj/structure/door_assembly/Destroy()
-	QDEL_NULL(electronics)
-	return ..()
 
 /obj/structure/door_assembly/door_assembly_0
 	airlock_type = /obj/machinery/door/airlock
@@ -454,6 +449,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
 		/datum/construction_state{
 			required_type_to_construct = /obj/item/weapon/electronics/airlock
 			required_amount_to_construct = 1
+			stash_construction_item = 1
 			required_type_to_deconstruct = /obj/item/weapon/wirecutters
 			construction_delay = 40
 			deconstruction_delay = 40
@@ -541,11 +537,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
 				airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
 				glass_type = /obj/machinery/door/airlock/glass
 			else
-				stack_trace("door_assembly construction: How the hell did we get here? Blame Cyberboss!")
-		if(AIRLOCK_ASSEMBLY_ELECTRONICS)
-			electronics = used
-			user.transferItemToLoc(used, src)
-			. = TRUE
+				stack_trace("door_assembly construction: How the hell did we get here? Blame [var_edited ? "whoever var_edited this" : "Cyberboss"]!")
 		if(0)	//locked in, create airlock
 			var/obj/machinery/door/airlock/door
 
@@ -555,6 +547,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
 				door = new airlock_type(loc)
 
 			door.heat_proof = heat_proof_finished
+			var/obj/item/weapon/electronics/airlock/electronics = GetItemUsedToReachConstructionState(AIRLOCK_ASSEMBLY_ELECTRONICS)
 			if(electronics.one_access)
 				door.req_one_access = electronics.accesses
 			else
@@ -573,14 +566,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
 
 /obj/structure/door_assembly/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
 	switch(state_id)
-		if(AIRLOCK_ASSEMBLY_WIRED)
-			if(electronics)
-				if(!forced)
-					electronics.forceMove(get_turf(src))
-				else
-					qdel(electronics)
-				electronics = null
-			. = TRUE
 		if(AIRLOCK_ASSEMBLY_ELECTRONICS)
 			var/T = get_turf(src)
 			if (mineral == "glass")

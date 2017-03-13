@@ -13,9 +13,8 @@
 
 	/obj/proc/OnConstruction(state_id, mob/user, obj/item/used) - Called when a construction step is completed on an object with the new state_id
 																If state_id is zero, the object has been fully constructed and can't be deconstructed.
-																used is the material object if any used for construction and it will be deleted/deducted from on return
-																user is always holding used
-																Returning TRUE will prevent used from being qdel()/use()'d
+																used is the material object if any used for construction and it will be deleted/deducted/stashed from on return
+																user is always holding used.
 
 	/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced) - Called when a deconstruction step is completed on an object with the new state_id. 
 															 If state_id is zero, the object has been fully deconstructed
@@ -28,9 +27,27 @@
 
 	/obj/proc/Construct(mob/user) - Call this after creating an obj to have it appear in it's first construction_state. This will be called automatically if obj/var/always_construct is set to TRUE.
 									Calling this after a current_construction_state has been assigned (which this does) has no effect
+	
+	/datum/construction_state/proc/DamageDeconstruct(obj/parent) - Call this on current_construction_state if you want to forcefully deconstruct an object.
+																	Will be called automatically in obj_break
 
 	/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
 																							Setting skip to TRUE for parent calls requests that no further checks other than the base be made. 
+
+	/obj/var/stored_construction_items - A list of items stored during construction, this list must be populated on obj Initialization before calling the base.
+											Items in the list will be in the parent object's contents as well
+											construction_states with stash_construction_item set to TRUE will store the used items in here
+											This list is keyed by the stringized id of the construction state ("[construction_state.id]" => item reference)
+											items within it will be deleted under certain circumstances so only reference them through this list. 
+											They are guaranteed to exist if the current_construction_state's id is higher than the id that stored them
+											items will be moved from the parent obj to its turf with regular deconstruction
+
+	The following helpers are for easier manipulation of stored_construction_items
+
+	/obj/proc/GetItemStoredInConstructionState(id)
+	/obj/proc/GetItemUsedToReachConstructionState(id)
+	/obj/proc/SetItemToLeaveConstructionState(id, obj/item/I)
+	/obj/proc/SetItemToReachConstructionState(id, obj/item/I)
 */
 
 /datum/construction_state
@@ -51,6 +68,9 @@
 
 	var/required_amount_to_construct
 	var/required_amount_to_repair
+	
+	var/stash_construction_item	//boolean: instead of deleting an item when it's used for construction, it'll instead be stored in obj/var/construction items
+								//only works for non-stack items
 
 	var/construction_delay      //number multiplied by toolspeed, hands have a pseudo-toolspeed of 1
 	var/deconstruction_delay	//note if these are zero, the action will happen instantly and the messages should reflect that
@@ -64,7 +84,7 @@
 	var/deconstruction_sound
 
 	var/examine_message	//null values do not adjust these
-	var/icon
+	var/icon/icon
 	var/icon_state
 	var/anchored
 
@@ -103,18 +123,23 @@
 	if(constructed)
 		if(construction_sound)
 			playsound(parent, construction_sound, CONSTRUCTION_VOLUME, TRUE)
-		if(!required_amount_to_construct)
-			tool = null
-		if(!parent.OnConstruction(id, user, tool))	//run event
-			var/obj/item/stack/S = tool
-			if(istype(S))
-				S.use(required_amount_to_construct)
-			else
-				qdel(tool)
+		parent.OnConstruction(id, user, tool)	//run event
+		var/obj/item/stack/S = tool
+		if(istype(S))
+			S.use(required_amount_to_construct)
+		else if(stash_construction_item)
+			user.transferItemToLoc(tool, parent)
+			LAZYINITLIST(parent.stored_construction_items)
+			parent.stored_construction_items["[id]"] = parent
+		else
+			qdel(tool)
 	else
 		if(!forced && deconstruction_sound)	//forced implys hitsounds and stuff
 			playsound(parent, deconstruction_sound, CONSTRUCTION_VOLUME, TRUE)
 
+		//Explanation for the following shitty inline checks:
+		//If there is loot, and we have not been force deconstructed, pass loot as a parameter to OnDeconstruction
+		//If OnDeconstruction returns TRUE or we were force deconstructed and there is loot, qdel it
 		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot)	//no loot for vandals or if we're told not to
 			qdel(loot)
 		else
@@ -152,10 +177,15 @@
 		parent.modify_max_integrity(max_integrity ? max_integrity : parent.max_integrity, FALSE, new_failure_integrity = failure_integrity)
 
 	if(!constructed && required_amount_to_construct)	//spawn loot
-		if(ispath(required_type_to_construct, /obj/item/stack))
-			. = new required_type_to_construct(null, required_amount_to_construct)
+		if(stash_construction_item)	//The treasure was inside you all along!
+			var/id_str = "[id]"
+			. = parent.stored_construction_items[id_str]
+			LAZYREMOVE(parent.stored_construction_items, id_str)
 		else
-			. = new required_type_to_construct()
+			if(ispath(required_type_to_construct, /obj/item/stack))
+				. = new required_type_to_construct(null, required_amount_to_construct)
+			else
+				. = new required_type_to_construct()
 		parent.transfer_fingerprints_to(.)
 
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
@@ -250,28 +280,37 @@
 			if(current_step.required_type_to_construct)
 				if(ispath(current_step.required_type_to_construct, /obj/item/stack))
 					if(!current_step.required_amount_to_construct)
-						WARNING(error +"No amount set for material construction")
+						WARNING(error + "No amount set for material construction")
+						. = FALSE
+					if(current_step.stash_construction_item)
+						WARNING(error + "Trying to stash item of type /obj/item/stack: [current_step.required_type_to_construct]")
 						. = FALSE
 				else if(current_step.required_amount_to_construct > 1)
 					WARNING(error + "Invalid material amount for non stack construction")
 					. = FALSE
 				if(!ispath(current_step.required_type_to_construct, /obj/item) && !istype(current_step, /datum/construction_state/last))
-					WARNING(error +"Invalid /obj/item type specified for construction: '[current_step.required_type_to_construct]'")
+					WARNING(error + "Invalid /obj/item type specified for construction: '[current_step.required_type_to_construct]'")
 					. = FALSE
-			else if(!current_step.required_type_to_deconstruct)
-				WARNING(error + "Hand values for both construction and deconstruction types")
-				. = FALSE
-			
+			else 
+				if(current_step.stash_construction_item)
+					WARNING(error + "Supposed to stash construction item, but no item is set")
+					. = FALSE
+				if(!current_step.required_type_to_deconstruct)
+					WARNING(error + "Hand values for both construction and deconstruction types")
+					. = FALSE
+				else if(!ispath(current_step.required_type_to_deconstruct, /obj/item))
+					WARNING(error + "Invalid deconstruction type: [current_step.required_type_to_deconstruct]")
+					. = FALSE			
 			if(current_step.required_type_to_repair)
 				if(ispath(current_step.required_type_to_repair, /obj/item/stack))
 					if(!current_step.required_amount_to_repair)
-						WARNING(error +"No amount set for material repairs")
+						WARNING(error + "No amount set for material repairs")
 						. = FALSE
 				else if(current_step.required_amount_to_repair > 1)
 					WARNING(error + "Invalid material amount for non stack repairs")
 					. = FALSE
 				if(!ispath(current_step.required_type_to_repair, /obj/item))
-					WARNING(error +"Invalid /obj/item type specified for repairs: '[current_step.required_type_to_construct]'")
+					WARNING(error + "Invalid /obj/item type specified for repairs: '[current_step.required_type_to_construct]'")
 					. = FALSE
 			
 			if(current_step.required_type_to_deconstruct && !ispath(current_step.required_type_to_deconstruct, /obj/item))
@@ -300,6 +339,7 @@
 			first_step = first_step.next_state
 		if(first_step)
 			first_step.OnReached(src, user, TRUE)
+
 	setDir(user.dir)
 	add_fingerprint(user)
 	feedback_add_details("obj_construction","[type]")
@@ -318,6 +358,43 @@
 			S.use(ratr)
 		else
 			qdel(used)
+
+//Stash helpers
+
+/obj/proc/GetItemStoredInConstructionState(id)
+	if(!stored_construction_items)
+		return
+	return stored_construction_items["[id]"]
+
+/obj/proc/GetItemUsedToReachConstructionState(id)
+	if(!isnum(id))
+		CRASH("Cannot use GetItemUsedToReachConstructionState with text ids!")
+	if(!stored_construction_items)
+		return
+	return stored_construction_items["[id - 1]"]
+
+/obj/proc/SetItemToLeaveConstructionState(id, obj/item/I)
+	if(!istype(I))
+		CRASH("Invalid type in SetConstructionItemToLeaveState: [I.type]")
+	if(I.loc != src)
+		CRASH("SetItemToLeaveConstructionState: Item not inside src: [I.loc]")
+	LAZYINITLIST(stored_construction_items)
+	stored_construction_items["[id]"] = I
+
+/obj/proc/SetItemToReachConstructionState(id, obj/item/I)
+	if(!isnum(id))
+		CRASH("Cannot use SetItemToReachConstructionState with text ids!")
+	if(!istype(I))
+		CRASH("Invalid type in SetItemToReachConstructionState: [I.type]")
+	if(I.loc != src)
+		CRASH("SetItemToReachConstructionState: Item not inside src: [I.loc]")
+	LAZYINITLIST(stored_construction_items)
+	stored_construction_items["[id - 1]"] = I
+
+/obj/proc/ClearStoredConstructionItems()
+	for(var/I in stored_construction_items)
+		qdel(stored_construction_items[I])
+	LAZYCLEARLIST(stored_construction_items)
 
 /obj/examine(mob/user)
 	..()

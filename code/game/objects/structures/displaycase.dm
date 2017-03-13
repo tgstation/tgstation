@@ -13,7 +13,6 @@
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
-	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
 /obj/structure/displaycase/New()
@@ -23,9 +22,6 @@
 	update_icon()
 
 /obj/structure/displaycase/Destroy()
-	if(electronics)
-		qdel(electronics)
-		electronics = null
 	if(showpiece)
 		qdel(showpiece)
 		showpiece = null
@@ -62,6 +58,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 		/datum/construction_state{
 			required_type_to_construct = /obj/item/weapon/electronics/airlock
 			required_amount_to_construct = 1
+			stash_construction_item = 1
 			required_type_to_deconstruct = /obj/item/weapon/wrench
 			deconstruction_delay = 30
 			construction_message = "install the electronics into"
@@ -93,13 +90,11 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 /obj/structure/displaycase/OnConstruction(state_id, mob/user, obj/item/used)
 	switch(state_id)
 		if(DISPLAY_CASE_NOGLASS)
-			electronics = used
-			user.transferItemToLoc(used, src)
+			var/obj/item/weapon/electronics/airlock/electronics = used
 			if(electronics.one_access)
 				req_one_access = electronics.accesses
 			else
 				req_access = electronics.accesses
-			. = TRUE
 		else
 			update_icon()
 
@@ -112,14 +107,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 				playsound(src, "shatter", 70, 1)
 				trigger_alarm()
 			open = FALSE
-		if(DISPLAY_CASE_NO_ELECTRONICS)
-			if(electronics)
-				if(!forced)
-					electronics.forceMove(get_turf(src))
-				else
-					qdel(electronics)
-				electronics = null
-			. = TRUE
 		if(0)
 			dump()	
 	update_icon()

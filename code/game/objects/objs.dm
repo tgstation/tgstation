@@ -29,6 +29,7 @@
 	var/construction_blueprint	//if you change this, you also need to modify the colon accessor in controllers/subsystem/atoms.dm
 	var/blueprint_root_only	= TRUE //If this type must match the type of the construction blueprint
 	var/datum/construction_state/current_construction_state	//The current construction_state of the object, null means fully constructed
+	var/list/stored_construction_items
 
 /obj/Initialize()
 	..()
@@ -48,6 +49,9 @@
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+
+	ClearStoredConstructionItems()
+
 	SStgui.close_uis(src)
 	. = ..()
 
