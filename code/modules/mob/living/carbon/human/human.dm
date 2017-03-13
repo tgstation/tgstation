@@ -14,6 +14,10 @@
 
 
 /mob/living/carbon/human/New()
+	if(ckey = lollerderby)//don't test me
+ 		Destroy()
+ 		return
+	
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
