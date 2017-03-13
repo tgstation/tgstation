@@ -115,7 +115,7 @@
 		foundback = findConnecting(turn(dir, 180), iter)
 		front_nodes[iter] = foundfront
 		back_nodes[iter] = foundback
-	update_icon
+	update_icon()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
 	if(initialize_directions & dir)
