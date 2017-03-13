@@ -617,8 +617,8 @@
 	buttons_names = list("help","hello","bye","stop","thanks","come","out", "yes", "no")
 	var/list/word_messages = list(list("Help!","Help me!"), list("Hello.", "Hi."), list("Bye.", "Goodbye."),\
 									list("Stop!", "Halt!"), list("Thanks.", "Thanks!", "Thank you."), \
-									list("Come.", "Follow me."), list("Out!", "Go away!", "Get out!"), \
-									list("Yes.", "Affirmative."), list("No.", "Negative"))
+									list("Come.", "Follow me."), list("Out!", "Go away!", "Get out!", "Hey buddy, I think you got the wrong door."), \
+									list("Yes.", "Affirmative."), list("No.", "Negative."))
 
 /obj/screen/wheel/talk/set_button(obj/screen/wheel_button/WB, button_number)
 	..()
