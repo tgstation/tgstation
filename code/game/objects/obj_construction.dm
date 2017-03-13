@@ -479,7 +479,7 @@
 			wait = ccs.repair_delay
 			message = ccs.repair_message
 			if(!message)
-				message = "repairing"
+				message = wait ? "repairing" : "repair"
 		else
 			return ..()
 
