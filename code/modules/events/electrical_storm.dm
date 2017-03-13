@@ -7,8 +7,7 @@
 	alertadmins = 0
 
 /datum/round_event/electrical_storm
-	var/lightsoutAmount	= 20
-	var/lightsoutRange	= 25
+	var/lightsoutAmount	= 55
 	announceWhen	= 1
 
 /datum/round_event/electrical_storm/announce()
@@ -17,20 +16,20 @@
 
 /datum/round_event/electrical_storm/start()
 	var/list/epicentreList = list()
+	var/list/all_APCs = list()
 
-	for(var/i=1, i <= lightsoutAmount, i++)
-		var/list/possibleEpicentres = list()
-		for(var/obj/effect/landmark/newEpicentre in landmarks_list)
-			if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
-				possibleEpicentres += newEpicentre
-		if(possibleEpicentres.len)
-			epicentreList += pick(possibleEpicentres)
-		else
+	for(var/obj/machinery/power/apc/apc in world)
+		all_APCs += apc
+		CHECK_TICK
+
+	shuffle(all_APCs)
+
+	for(var/obj/machinery/power/apc/apc2 in all_APCs)
+		epicentreList += apc2
+		lightsoutAmount--
+		if(lightsoutAmount == 0)
 			break
+		CHECK_TICK
 
-	if(!epicentreList.len)
-		return
-
-	for(var/obj/effect/landmark/epicentre in epicentreList)
-		for(var/obj/machinery/power/apc/apc in urange(lightsoutRange, epicentre))
-			apc.overload_lighting()
+	for(var/obj/machinery/power/apc/apc3 in epicentreList)
+		apc3.overload_lighting()
