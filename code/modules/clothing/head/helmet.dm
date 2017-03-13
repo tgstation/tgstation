@@ -45,7 +45,7 @@
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
 	flags = HEADBANGPROTECT
-	armor = list(melee = 45, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0, fire = 50, acid = 50)
+	armor = list(melee = 60, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0, fire = 50, acid = 50)
 	flags_inv = HIDEEARS|HIDEFACE
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
