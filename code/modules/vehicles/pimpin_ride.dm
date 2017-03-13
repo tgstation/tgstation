@@ -7,6 +7,10 @@
 	var/obj/item/weapon/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 
+/obj/vehicle/janicart/Initialize(mapload)
+	..()
+	update_icon()
+
 /obj/vehicle/janicart/Destroy()
 	if(mybag)
 		qdel(mybag)
