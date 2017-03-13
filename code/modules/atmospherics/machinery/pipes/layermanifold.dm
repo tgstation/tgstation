@@ -60,7 +60,6 @@
 				var/obj/machinery/atmospherics/pipe/PL = back_nodes[pipelayer]
 				qdel(PL.parent)
 			back_nodes[pipelayer] = null
-	..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
 	var/invis = invisibility ? "-f" : ""
