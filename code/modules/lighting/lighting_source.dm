@@ -45,6 +45,8 @@
 		top_atom.light_sources += src
 
 	source_turf = top_atom
+	pixel_turf = get_turf_pixel(top_atom) || source_turf
+
 	light_power = source_atom.light_power
 	light_range = source_atom.light_range
 	light_color = source_atom.light_color
