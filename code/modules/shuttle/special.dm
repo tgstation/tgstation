@@ -150,7 +150,7 @@
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 
-/mob/living/simple_animal/drone/snowflake/bardrone/New()
+/mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
 	access_card.access |= access_cent_bar
 
@@ -166,7 +166,7 @@
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid/New()
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain

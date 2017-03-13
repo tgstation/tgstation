@@ -86,7 +86,7 @@ var/datum/controller/subsystem/ticker/ticker
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
 			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
+			for(var/mob/dead/new_player/player in player_list)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
@@ -364,7 +364,7 @@ var/datum/controller/subsystem/ticker/ticker
 			M.gib()
 
 /datum/controller/subsystem/ticker/proc/create_characters()
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
 			player.create_character(FALSE)
@@ -373,7 +373,7 @@ var/datum/controller/subsystem/ticker/ticker
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
-	for(var/mob/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in player_list)
 		if(P.new_character && P.new_character.mind)
 			ticker.minds += P.new_character.mind
 		CHECK_TICK
@@ -381,7 +381,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
-	for(var/mob/new_player/N in player_list)
+	for(var/mob/dead/new_player/N in player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
@@ -390,14 +390,14 @@ var/datum/controller/subsystem/ticker/ticker
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 		CHECK_TICK
 	if(captainless)
-		for(var/mob/new_player/N in player_list)
+		for(var/mob/dead/new_player/N in player_list)
 			if(N.new_character)
 				to_chat(N, "Captainship not forced on anyone.")
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -624,7 +624,7 @@ var/datum/controller/subsystem/ticker/ticker
 		return
 
 	queue_delay++
-	var/mob/new_player/next_in_line = queued_players[1]
+	var/mob/dead/new_player/next_in_line = queued_players[1]
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
