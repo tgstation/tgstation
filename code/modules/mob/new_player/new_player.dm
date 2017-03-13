@@ -128,7 +128,7 @@
 			var/obj/O = locate("landmark*Observer-Start")
 			to_chat(src, "<span class='notice'>Now teleporting.</span>")
 			if (O)
-				observer.loc = O.loc
+				observer.forceMove(get_turf(O))
 			else
 				to_chat(src, "<span class='notice'>Teleporting failed. The map is probably still loading...</span>")
 			observer.key = key
@@ -139,6 +139,8 @@
 				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stopLobbySound()
+			var/message = "<span class='game deadsay'><span class='name'>[observer.real_name]</span> has started observing the round.</span>"
+			deadchat_broadcast(message, follow_target = observer, message_type=DEADCHAT_ARRIVALRATTLE)
 			qdel(mind)
 
 			qdel(src)
