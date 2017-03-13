@@ -473,7 +473,7 @@
 			message = ccs.deconstruction_message
 		else if(istype(I, ccs.required_type_to_repair))
 			if(obj_integrity == max_integrity)
-				to_chat(user, "<span class='notice'>\The src isn't damaged!</span>")
+				to_chat(user, "<span class='notice'>\The [src] isn't damaged!</span>")
 				return
 			repairing = TRUE
 			wait = ccs.repair_delay
