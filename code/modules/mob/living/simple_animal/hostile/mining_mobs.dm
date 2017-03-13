@@ -221,6 +221,7 @@
 	pass_flags = PASSTABLE
 	loot = list(/obj/item/organ/hivelord_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
+	var/override_attack = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
@@ -232,7 +233,10 @@
 		ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
-	OpenFire()
+	if(override_attack)
+		OpenFire()
+	else
+		..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = 1
@@ -762,6 +766,7 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	override_attack = FALSE
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
@@ -786,7 +791,7 @@
 	icon_gib = "syndicate_gib"
 	friendly = "buzzes near"
 	vision_range = 10
-	maxHealth = 1
+	maxHealth = 5
 	health = 5
 	harm_intent_damage = 5
 	melee_damage_lower = 12
