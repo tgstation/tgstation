@@ -364,10 +364,6 @@
 	name = "Short Braid"
 	icon_state = "hair_shortbraid"
 
-/datum/sprite_accessory/hair/braid
-	name = "Floorlength Braid"
-	icon_state = "hair_braid"
-
 /datum/sprite_accessory/hair/odango
 	name = "Odango"
 	icon_state = "hair_odango"
