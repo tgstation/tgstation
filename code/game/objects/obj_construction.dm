@@ -29,7 +29,7 @@
 									Calling this after a current_construction_state has been assigned (which this does) has no effect
 	
 	/datum/construction_state/proc/DamageDeconstruct(obj/parent) - Call this on current_construction_state if you want to forcefully deconstruct an object.
-																	Will be called automatically in obj_break
+																	Will be called automatically in obj_break. Will only work if the previous state has damage_reachable set to TRUE
 
 	/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip) - Called in the do_after of a construction step. Must check the base. Returning FALSE will cancel the step.
 																							Setting skip to TRUE for parent calls requests that no further checks other than the base be made. 
