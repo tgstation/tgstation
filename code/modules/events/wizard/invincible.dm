@@ -9,4 +9,4 @@
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		H.reagents.add_reagent("adminordrazine", 40) //100 ticks of absolute invinciblity (barring gibs)
-		H << "<span class='notice'>You feel invincible, nothing can hurt you!</span>"
+		to_chat(H, "<span class='notice'>You feel invincible, nothing can hurt you!</span>")

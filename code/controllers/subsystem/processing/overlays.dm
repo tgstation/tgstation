@@ -1,6 +1,6 @@
-var/datum/subsystem/processing/overlays/SSoverlays
+var/datum/controller/subsystem/processing/overlays/SSoverlays
 
-/datum/subsystem/processing/overlays
+/datum/controller/subsystem/processing/overlays
 	name = "Overlay"
 	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1
@@ -13,22 +13,22 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	var/list/overlay_icon_cache
 	var/initialized = FALSE
 
-/datum/subsystem/processing/overlays/New()
+/datum/controller/subsystem/processing/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
 	LAZYINITLIST(overlay_icon_state_caches)
 	LAZYINITLIST(overlay_icon_cache)
 
-/datum/subsystem/processing/overlays/Initialize()
+/datum/controller/subsystem/processing/overlays/Initialize()
 	initialized = TRUE
 	Flush()
 	..()
 
-/datum/subsystem/processing/overlays/Recover()
+/datum/controller/subsystem/processing/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	processing = SSoverlays.processing
 
-/datum/subsystem/processing/overlays/fire(resumed = FALSE, mc_check = TRUE)
+/datum/controller/subsystem/processing/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	while(processing.len)
 		var/atom/thing = processing[processing.len]
 		processing.len--
@@ -40,7 +40,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		else
 			CHECK_TICK
 
-/datum/subsystem/processing/overlays/proc/Flush()
+/datum/controller/subsystem/processing/overlays/proc/Flush()
 	if(processing.len)
 		testing("Flushing [processing.len] overlays")
 		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time

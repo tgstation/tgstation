@@ -153,7 +153,7 @@ Credit where due:
 	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
-	M << greeting_text
+	to_chat(M, greeting_text)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
@@ -171,10 +171,10 @@ Credit where due:
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
 	if(S && !QDELETED(S))
-		L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
+		to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
 		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
-		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
-		L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
+		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>")
+		to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>")
 		return TRUE
 	return FALSE
 
@@ -182,7 +182,7 @@ Credit where due:
 	if(!L || !istype(L) || !L.mind)
 		return 0
 	var/datum/mind/M = L.mind
-	M.current << "<b>This is Ratvar's will:</b> [clockwork_explanation]"
+	to_chat(M.current, "<b>This is Ratvar's will:</b> [clockwork_explanation]")
 	M.memory += "<b>Ratvar's will:</b> [clockwork_explanation]<br>"
 	return 1
 
@@ -233,7 +233,7 @@ Credit where due:
 		text += "<br><b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
 			text += printplayer(M)
-	world << text
+	to_chat(world, text)
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
 	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_CLOCKWORK]

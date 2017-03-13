@@ -10,8 +10,9 @@
 	max_integrity = 25
 	obj_integrity = 25
 	var/ini_dir = null
-	var/state = 0
+	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = 0
+	var/decon_speed = 30
 	var/wtype = "glass"
 	var/fulltile = 0
 	var/glass_type = /obj/item/stack/sheet/glass
@@ -27,13 +28,13 @@
 	..()
 	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
-/obj/structure/window/New(Loc,re=0)
+/obj/structure/window/Initialize(mapload, direct)
 	..()
 	obj_integrity = max_integrity
-	if(re)
-		reinf = re
-	if(reinf)
-		state = 2*anchored
+	if(direct)
+		setDir(direct)
+	if(reinf && anchored)
+		state = WINDOW_SCREWED_TO_FRAME
 
 	ini_dir = dir
 	air_update_turf(1)
@@ -140,73 +141,75 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
-					user << "<span class='notice'>You repair [src].</span>"
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
-			user << "<span class='warning'>[src] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-
 
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(loc, I.usesound, 75, 1)
-			if(reinf && (state == 2 || state == 1))
-				user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>")
-			else if(reinf && state == 0)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
-			else if(!reinf)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
-
-			if(do_after(user, 30*I.toolspeed, target = src))
-				if(reinf && (state == 1 || state == 2))
-					//If state was unfastened, fasten it, else do the reverse
-					state = (state == 1 ? 2 : 1)
-					user << (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>")
-				else if(reinf && state == 0)
+			if(reinf)
+				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
+					to_chat(user, "<span class='notice'>You begin to [state == WINDOW_SCREWED_TO_FRAME ? "unscrew the window from":"screw the window to"] the frame...</span>")
+					if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+						state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
+						to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
+				else if(state == WINDOW_OUT_OF_FRAME)
+					to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the frame from":"screw the frame to"] the floor...</span>")
+					if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+						anchored = !anchored
+						update_nearby_icons()
+						to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
+			else //if we're not reinforced, we don't need to check or update state
+				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
+				if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 					anchored = !anchored
 					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
-				else if(!reinf)
-					anchored = !anchored
-					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
+					to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 
-		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
-			user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
+		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
+			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
 			playsound(loc, I.usesound, 75, 1)
-			if(do_after(user, 40*I.toolspeed, target = src))
-				//If state was out of frame, put into frame, else do the reverse
-				state = (state == 0 ? 1 : 0)
-				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
+			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
+				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 			return
 
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 			playsound(loc, I.usesound, 75, 1)
-			user << "<span class='notice'> You begin to disassemble [src]...</span>"
-			if(do_after(user, 40*I.toolspeed, target = src))
-				if(QDELETED(src))
-					return
-
+			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
+			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
-
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "<span class='notice'>You successfully disassemble [src].</span>"
+				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
 	return ..()
+
+/obj/structure/window/proc/check_state(checked_state)
+	if(state == checked_state)
+		return TRUE
+
+/obj/structure/window/proc/check_anchored(checked_anchored)
+	if(anchored == checked_anchored)
+		return TRUE
+
+/obj/structure/window/proc/check_state_and_anchored(checked_state, checked_anchored)
+	return check_state(checked_state) && check_anchored(checked_anchored)
 
 /obj/structure/window/mech_melee_attack(obj/mecha/M)
 	if(!can_be_reached())
 		return
 	..()
-
 
 /obj/structure/window/proc/can_be_reached(mob/user)
 	if(!fulltile)
@@ -257,13 +260,13 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 90)
 
 	if(!valid_window_location(loc, target_dir))
-		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
 	setDir(target_dir)
@@ -282,13 +285,13 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
 	var/target_dir = turn(dir, 270)
 
 	if(!valid_window_location(loc, target_dir))
-		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 
 	setDir(target_dir)
@@ -300,7 +303,7 @@
 /obj/structure/window/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -400,6 +403,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = 1
+	flags = NONE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
@@ -413,6 +417,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	fulltile = 1
+	flags = NONE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
@@ -426,6 +431,7 @@
 	icon_state = "tinted_window"
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
+	flags = NONE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
@@ -448,6 +454,7 @@
 	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
+	flags = NONE
 	reinf = 1
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	smooth = SMOOTH_TRUE
@@ -472,27 +479,22 @@
 	max_integrity = 80
 	armor = list(melee = 60, bullet = 25, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+	decon_speed = 40
 	glass_type = /obj/item/stack/tile/brass
 	glass_amount = 1
 	reinf = FALSE
 	var/made_glow = FALSE
 
-/obj/structure/window/reinforced/clockwork/New(loc, direct)
+/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
+	if(fulltile)
+		made_glow = TRUE
 	..()
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
 	var/amount_of_gears = 2
-	if(!fulltile)
-		if(direct)
-			var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
-			setDir(direct)
-			ini_dir = direct
-			E.setDir(direct)
-			made_glow = TRUE
-	else
+	if(fulltile)
 		new /obj/effect/overlay/temp/ratvar/window(get_turf(src))
-		made_glow = TRUE
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
@@ -530,11 +532,11 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
+	flags = NONE
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 120
 	level = 3
 	glass_amount = 2
-	made_glow = TRUE
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE

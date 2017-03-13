@@ -85,7 +85,7 @@
 	//domestication
 	var/tame = 0
 
-/mob/living/simple_animal/New()
+/mob/living/simple_animal/Initialize()
 	..()
 	handcrafting = new()
 	if(gender == PLURAL)
@@ -235,7 +235,7 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
+			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
@@ -377,7 +377,7 @@
 		if(be_close && !in_range(M, src))
 			return 0
 	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	return 1
 
@@ -486,7 +486,7 @@
 		if(istype(held_item, /obj/item/weapon/twohanded))
 			var/obj/item/weapon/twohanded/T = held_item
 			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index

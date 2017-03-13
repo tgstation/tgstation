@@ -1,4 +1,4 @@
-/mob/new_player/Login()
+/mob/dead/new_player/Login()
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = 1
@@ -7,13 +7,13 @@
 	..()
 
 	if(join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
+		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if(admin_notice)
-		src << "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>"
+		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>")
 
 	if(config.soft_popcap && living_player_count() >= config.soft_popcap)
-		src << "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>"
+		to_chat(src, "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>")
 
 	sight |= SEE_TURFS
 
@@ -29,4 +29,4 @@
 	new_player_panel()
 	client.playtitlemusic()
 	if(ticker.current_state < GAME_STATE_SETTING_UP)
-		src << "Please set up your character and select \"Ready\". The game will start in about [round(ticker.GetTimeLeft()/10)] seconds."
+		to_chat(src, "Please set up your character and select \"Ready\". The game will start in about [round(ticker.GetTimeLeft(), 1)/10] seconds.")

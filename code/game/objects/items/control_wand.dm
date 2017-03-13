@@ -26,16 +26,16 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	user << "Now in mode: [mode]."
+	to_chat(user, "Now in mode: [mode].")
 
 /obj/item/weapon/door_remote/afterattack(obj/machinery/door/airlock/D, mob/user)
 	if(!istype(D))
 		return
 	if(!(D.hasPower()))
-		user << "<span class='danger'>[D] has no power!</span>"
+		to_chat(user, "<span class='danger'>[D] has no power!</span>")
 		return
 	if(!D.requiresID())
-		user << "<span class='danger'>[D]'s ID scan is disabled!</span>"
+		to_chat(user, "<span class='danger'>[D]'s ID scan is disabled!</span>")
 		return
 	if(D.check_access(ID) && D.canAIControl(user))
 		switch(mode)
@@ -56,7 +56,7 @@
 					D.emergency = 1
 				D.update_icon()
 	else
-		user << "<span class='danger'>[src] does not have access to this door.</span>"
+		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")
 
 /obj/item/weapon/door_remote/omni
 	name = "omni door remote"

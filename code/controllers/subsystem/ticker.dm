@@ -2,9 +2,9 @@
 
 var/round_start_time = 0
 
-var/datum/subsystem/ticker/ticker
+var/datum/controller/subsystem/ticker/ticker
 
-/datum/subsystem/ticker
+/datum/controller/subsystem/ticker
 	name = "Ticker"
 	init_order = 13
 
@@ -56,13 +56,13 @@ var/datum/subsystem/ticker/ticker
 
 	var/news_report
 
-/datum/subsystem/ticker/New()
+/datum/controller/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-/datum/subsystem/ticker/Initialize(timeofday)
+/datum/controller/subsystem/ticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
-	
+
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -70,14 +70,14 @@ var/datum/subsystem/ticker/ticker
 	..()
 	start_at = world.time + (config.lobby_countdown * 10)
 
-/datum/subsystem/ticker/fire()
+/datum/controller/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			if(Master.initializations_finished_with_no_players_logged_in)
 				start_at = world.time + (config.lobby_countdown * 10)
 			for(var/client/C in clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
+			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			current_state = GAME_STATE_PREGAME
 			fire()
 		if(GAME_STATE_PREGAME)
@@ -86,7 +86,7 @@ var/datum/subsystem/ticker/ticker
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
 			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
+			for(var/mob/dead/new_player/player in player_list)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
@@ -124,8 +124,8 @@ var/datum/subsystem/ticker/ticker
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 
-/datum/subsystem/ticker/proc/setup()
-	world << "<span class='boldannounce'>Starting game...</span>"
+/datum/controller/subsystem/ticker/proc/setup()
+	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
 		//Create and announce mode
 	var/list/datum/game_mode/runnable_modes
@@ -143,14 +143,14 @@ var/datum/subsystem/ticker/ticker
 
 		if(!mode)
 			if(!runnable_modes.len)
-				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 				return 0
 			mode = pickweight(runnable_modes)
 
 	else
 		mode = config.pick_mode(master_mode)
 		if(!mode.can_start())
-			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
+			to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby.")
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()
@@ -168,7 +168,7 @@ var/datum/subsystem/ticker/ticker
 		if(!can_continue)
 			qdel(mode)
 			mode = null
-			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+			to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return 0
 	else
@@ -180,8 +180,7 @@ var/datum/subsystem/ticker/ticker
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
-		world << "<b>The gamemode is: secret!\n\
-		Possibilities:</B> [english_list(modes)]"
+		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
 	else
 		mode.announce()
 
@@ -205,22 +204,22 @@ var/datum/subsystem/ticker/ticker
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
 
-	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
+	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
 	world << sound('sound/AI/welcome.ogg')
-	
+
 	current_state = GAME_STATE_PLAYING
 
 	if(SSevent.holidays)
-		world << "<font color='blue'>and...</font>"
+		to_chat(world, "<font color='blue'>and...</font>")
 		for(var/holidayname in SSevent.holidays)
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
-			world << "<h4>[holiday.greet()]</h4>"
+			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
 
 	return 1
 
-/datum/subsystem/ticker/proc/PostSetup()
+/datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = 0
 	mode.post_setup()
 	//Cleanup some stuff
@@ -233,7 +232,7 @@ var/datum/subsystem/ticker/ticker
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
-/datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
+/datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
 		var/turf/epi = bomb.loc
 		qdel(bomb)
@@ -241,7 +240,7 @@ var/datum/subsystem/ticker/ticker
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
+/datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
 	if( cinematic )
 		return	//already a cinematic in progress!
 
@@ -350,12 +349,12 @@ var/datum/subsystem/ticker/ticker
 
 		if(mode)
 			mode.explosion_in_progress = 0
-			world << "<B>The station was destoyed by the nuclear blast!</B>"
+			to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
 			mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
 
 	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up), 300)
 
-/datum/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up)
+/datum/controller/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up)
 	if(cinematic)
 		qdel(cinematic)		//end the cinematic
 		cinematic = null
@@ -364,8 +363,8 @@ var/datum/subsystem/ticker/ticker
 		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
 			M.gib()
 
-/datum/subsystem/ticker/proc/create_characters()
-	for(var/mob/new_player/player in player_list)
+/datum/controller/subsystem/ticker/proc/create_characters()
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
 			player.create_character(FALSE)
@@ -373,16 +372,16 @@ var/datum/subsystem/ticker/ticker
 			player.new_player_panel()
 		CHECK_TICK
 
-/datum/subsystem/ticker/proc/collect_minds()
-	for(var/mob/living/player in player_list)
-		if(player.mind)
-			ticker.minds += player.mind
+/datum/controller/subsystem/ticker/proc/collect_minds()
+	for(var/mob/dead/new_player/P in player_list)
+		if(P.new_character && P.new_character.mind)
+			ticker.minds += P.new_character.mind
 		CHECK_TICK
 
 
-/datum/subsystem/ticker/proc/equip_characters()
+/datum/controller/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
-	for(var/mob/new_player/N in player_list)
+	for(var/mob/dead/new_player/N in player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
@@ -391,38 +390,38 @@ var/datum/subsystem/ticker/ticker
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 		CHECK_TICK
 	if(captainless)
-		for(var/mob/new_player/N in player_list)
+		for(var/mob/dead/new_player/N in player_list)
 			if(N.new_character)
-				N << "Captainship not forced on anyone."
+				to_chat(N, "Captainship not forced on anyone.")
 			CHECK_TICK
 
-/datum/subsystem/ticker/proc/transfer_characters()
+/datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
-				var/obj/screen/splash/S = new(living.client, TRUE)	
+				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
 
-/datum/subsystem/ticker/proc/release_characters(list/livings)
+/datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
-		L.notransform = FALSE		
+		L.notransform = FALSE
 
-/datum/subsystem/ticker/proc/declare_completion()
+/datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/num_survivors = 0
 	var/num_escapees = 0
 	var/num_shuttle_escapees = 0
 
-	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
 	for(var/mob/Player in mob_list)
@@ -434,16 +433,16 @@ var/datum/subsystem/ticker/ticker
 					if(SSshuttle && SSshuttle.emergency)
 						shuttle_area = SSshuttle.emergency.areaInstance
 					if(!Player.onCentcom() && !Player.onSyndieBase())
-						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
+						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
 						num_escapees++
-						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
 						if(get_area(Player) == shuttle_area)
 							num_shuttle_escapees++
 				else
-					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
 			else
-				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
+				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
 
 		CHECK_TICK
 
@@ -452,50 +451,50 @@ var/datum/subsystem/ticker/ticker
 	end_state.count()
 	var/station_integrity = min(PERCENT(start_state.score(end_state)), 100)
 
-	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
-	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
+	to_chat(world, "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(mode.station_was_nuked)
 		ticker.news_report = STATION_DESTROYED_NUKE
 	var/total_players = joined_player_list.len
 	if(joined_player_list.len)
-		world << "<BR>[TAB]Total Population: <B>[total_players]</B>"
+		to_chat(world, "<BR>[TAB]Total Population: <B>[total_players]</B>")
 		if(station_evacuated)
-			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>"
-			world << "<BR>[TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>"
+			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>")
+			to_chat(world, "<BR>[TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>")
 			news_report = STATION_EVACUATED
 			if(SSshuttle.emergency.is_hijacked())
 				news_report = SHUTTLE_HIJACK
-		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>"
-	world << "<BR>"
+		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>")
+	to_chat(world, "<BR>")
 
 	CHECK_TICK
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
+			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
+			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>")
 			aiPlayer.show_laws(1)
 
-		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
+		to_chat(world, "<b>Total law changes: [aiPlayer.law_change_counter]</b>")
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if(robo.mind)
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
-			world << "[robolist]"
+			to_chat(world, "[robolist]")
 
 	CHECK_TICK
 
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
-				world << "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
+				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
 			else
-				world << "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
+				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
@@ -513,7 +512,7 @@ var/datum/subsystem/ticker/ticker
 
 	CHECK_TICK
 
-	if(cross_allowed)
+	if(config.cross_allowed)
 		send_news_report()
 
 	CHECK_TICK
@@ -552,7 +551,7 @@ var/datum/subsystem/ticker/ticker
 				else
 					borertext += "failed"
 				borertext += ")"
-		world << borertext
+		to_chat(world, borertext)
 
 		var/total_borers = 0
 		for(var/mob/living/simple_animal/borer/B in borers)
@@ -567,12 +566,12 @@ var/datum/subsystem/ticker/ticker
 					total_borer_hosts++
 			if(total_borer_hosts_needed <= total_borer_hosts)
 				borerwin = TRUE
-			world << "<b>There were [total_borers] borers alive at round end!</b>"
-			world << "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [total_borer_hosts_needed] hosts to escape.</b>"
+			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
+			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [total_borer_hosts_needed] hosts to escape.</b>")
 			if(borerwin)
-				world << "<b><font color='green'>The borers were successful!</font></b>"
+				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
 			else
-				world << "<b><font color='red'>The borers have failed!</font></b>"
+				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
 
 	CHECK_TICK
 
@@ -605,7 +604,7 @@ var/datum/subsystem/ticker/ticker
 	else
 		world.Reboot("Round ended.", "end_proper", "proper completion")
 
-/datum/subsystem/ticker/proc/send_tip_of_the_round()
+/datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
 	if(selected_tip)
 		m = selected_tip
@@ -618,35 +617,34 @@ var/datum/subsystem/ticker/ticker
 			m = pick(memetips)
 
 	if(m)
-		world << "<font color='purple'><b>Tip of the round: \
-			</b>[html_encode(m)]</font>"
+		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
 
-/datum/subsystem/ticker/proc/check_queue()
+/datum/controller/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return
 
 	queue_delay++
-	var/mob/new_player/next_in_line = queued_players[1]
+	var/mob/dead/new_player/next_in_line = queued_players[1]
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
 			if(living_player_count() < config.hard_popcap)
 				if(next_in_line && next_in_line.client)
-					next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>"
+					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
 					next_in_line << sound('sound/misc/notice1.ogg')
 					next_in_line.LateChoices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
+			to_chat(next_in_line, "<span class='danger'>No response recieved. You have been removed from the line.</span>")
 			queued_players -= next_in_line
 			queue_delay = 0
 
-/datum/subsystem/ticker/proc/check_maprotate()
+/datum/controller/subsystem/ticker/proc/check_maprotate()
 	if (!config.maprotation)
 		return
-	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
+	if (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
 	if (maprotatechecked)
 		return
@@ -656,7 +654,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	INVOKE_ASYNC(SSmapping, /datum/subsystem/mapping/.proc/maprotate)
+	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
 
 /world/proc/has_round_started()
@@ -664,7 +662,7 @@ var/datum/subsystem/ticker/ticker
 		return TRUE
 	return FALSE
 
-/datum/subsystem/ticker/Recover()
+/datum/controller/subsystem/ticker/Recover()
 	current_state = ticker.current_state
 	force_ending = ticker.force_ending
 	hide_mode = ticker.hide_mode
@@ -698,7 +696,7 @@ var/datum/subsystem/ticker/ticker
 	maprotatechecked = ticker.maprotatechecked
 
 
-/datum/subsystem/ticker/proc/send_news_report()
+/datum/controller/subsystem/ticker/proc/send_news_report()
 	var/news_message
 	var/news_source = "Nanotrasen News Network"
 	switch(news_report)
@@ -725,19 +723,19 @@ var/datum/subsystem/ticker/ticker
 		if(CULT_SUMMON)
 			news_message = "Company officials would like to clarify that [station_name()] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
 		if(NUKE_MISS)
-			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space near by."
+			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space nearby."
 		if(OPERATIVES_KILLED)
 			news_message = "Repairs to [station_name()] are underway after an elite Syndicate death squad was wiped out by the crew."
 		if(OPERATIVE_SKIRMISH)
 			news_message = "A skirmish between security forces and Syndicate agents aboard [station_name()] ended with both sides bloodied but intact."
 		if(REVS_WIN)
-			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] that there will be no wage increases for workers."
+			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] there will be no wage increases for workers."
 		if(REVS_LOSE)
 			news_message = "[station_name()] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
 		if(WIZARD_KILLED)
-			news_message = "Tensions have flared with the Wizard's Federation following the death of one of their members aboard [station_name()]."
+			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [station_name()]."
 		if(STATION_NUKED)
-			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are under way."
+			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
 		if(CLOCK_SUMMON)
 			news_message = "The garbled messages about hailing a mouse and strange energy readings from [station_name()] have been discovered to be an ill-advised, if thorough, prank by a clown."
 		if(CLOCK_SILICONS)
@@ -750,14 +748,13 @@ var/datum/subsystem/ticker/ticker
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
 
-/datum/subsystem/ticker/proc/GetTimeLeft()
+/datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(ticker.timeLeft))
 		return max(0, start_at - world.time)
 	return timeLeft
 
-/datum/subsystem/ticker/proc/SetTimeLeft(newtime)
+/datum/controller/subsystem/ticker/proc/SetTimeLeft(newtime)
 	if(newtime >= 0 && isnull(timeLeft))	//remember, negative means delayed
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
-		

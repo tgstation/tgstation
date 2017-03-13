@@ -4,11 +4,11 @@ var/global/BSACooldown = 0
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	admins << msg
+	to_chat(admins, msg)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	admins << msg
+	to_chat(admins, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -25,7 +25,7 @@ var/global/BSACooldown = 0
 		log_game("[key_name_admin(usr)] checked the player panel while in game.")
 
 	if(!M)
-		usr << "You seem to be selecting a mob that doesn't exist anymore."
+		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
 		return
 
 	var/body = "<html><head><title>Options for [M.key]</title></head>"
@@ -178,7 +178,7 @@ var/global/BSACooldown = 0
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 	var/dat
 	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
@@ -374,8 +374,8 @@ var/global/BSACooldown = 0
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
-	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
-	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
+	//to_chat(world, "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]")
+	//to_chat(world, "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]")
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
@@ -449,7 +449,7 @@ var/global/BSACooldown = 0
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		world << "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]"
+		to_chat(world, "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -471,7 +471,7 @@ var/global/BSACooldown = 0
 	else
 		message_admins("[key_name(usr)] set the admin notice.")
 		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
-		world << "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>"
+		to_chat(world, "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>")
 	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	admin_notice = new_admin_notice
 	return
@@ -520,7 +520,7 @@ var/global/BSACooldown = 0
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
 	else
-		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
+		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
 
 	return 0
 
@@ -530,9 +530,9 @@ var/global/BSACooldown = 0
 	set name="Toggle Entering"
 	enter_allowed = !( enter_allowed )
 	if (!( enter_allowed ))
-		world << "<B>New players may no longer enter the game.</B>"
+		to_chat(world, "<B>New players may no longer enter the game.</B>")
 	else
-		world << "<B>New players may now enter the game.</B>"
+		to_chat(world, "<B>New players may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
@@ -544,9 +544,9 @@ var/global/BSACooldown = 0
 	set name="Toggle AI"
 	config.allow_ai = !( config.allow_ai )
 	if (!( config.allow_ai ))
-		world << "<B>The AI job is no longer chooseable.</B>"
+		to_chat(world, "<B>The AI job is no longer chooseable.</B>")
 	else
-		world << "<B>The AI job is chooseable now.</B>"
+		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
 	feedback_add_details("admin_verb","TAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -557,9 +557,9 @@ var/global/BSACooldown = 0
 	set name="Toggle Respawn"
 	abandon_allowed = !( abandon_allowed )
 	if (abandon_allowed)
-		world << "<B>You may now respawn.</B>"
+		to_chat(world, "<B>You may now respawn.</B>")
 	else
-		world << "<B>You may no longer respawn :(</B>"
+		to_chat(world, "<B>You may no longer respawn :(</B>")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
@@ -576,10 +576,10 @@ var/global/BSACooldown = 0
 	if(newtime)
 		ticker.SetTimeLeft(newtime * 10)
 		if(newtime < 0)
-			world << "<b>The game start has been delayed.</b>"
+			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
-			world << "<b>The game will start in [newtime] seconds.</b>"
+			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
 			world << 'sound/ai/attention.ogg'
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
 		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -643,10 +643,10 @@ var/global/BSACooldown = 0
 	set name = "Show Traitor Panel"
 
 	if(!istype(M))
-		usr << "This can only be used on instances of type /mob"
+		to_chat(usr, "This can only be used on instances of type /mob")
 		return
 	if(!M.mind)
-		usr << "This mob has no mind!"
+		to_chat(usr, "This mob has no mind!")
 		return
 
 	M.mind.edit_memory()
@@ -659,9 +659,9 @@ var/global/BSACooldown = 0
 	set name="Toggle tinted welding helmes"
 	tinted_weldhelh = !( tinted_weldhelh )
 	if (tinted_weldhelh)
-		world << "<B>The tinted_weldhelh has been enabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
 	else
-		world << "<B>The tinted_weldhelh has been disabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
 	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -672,9 +672,9 @@ var/global/BSACooldown = 0
 	set name="Toggle guests"
 	guests_allowed = !( guests_allowed )
 	if (!( guests_allowed ))
-		world << "<B>Guests may no longer enter the game.</B>"
+		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else
-		world << "<B>Guests may now enter the game.</B>"
+		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -684,35 +684,35 @@ var/global/BSACooldown = 0
 	for(var/mob/living/silicon/S in mob_list)
 		ai_number++
 		if(isAI(S))
-			usr << "<b>AI [key_name(S, usr)]'s laws:</b>"
+			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
 		else if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
+			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
 		else if (ispAI(S))
-			usr << "<b>pAI [key_name(S, usr)]'s laws:</b>"
+			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>")
 		else
-			usr << "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
+			to_chat(usr, "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>")
 
 		if (S.laws == null)
-			usr << "[key_name(S, usr)]'s laws are null?? Contact a coder."
+			to_chat(usr, "[key_name(S, usr)]'s laws are null?? Contact a coder.")
 		else
 			S.laws.show_laws(usr)
 	if(!ai_number)
-		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
+		to_chat(usr, "<b>No AIs located</b>" )
 
 /datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
 	for(var/D in ticker.mode.devils)
 		devil_number++
-		usr << "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D)
+		to_chat(usr, "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D))
 	if(!devil_number)
-		usr << "<b>No Devils located</b>" //Just so you know the thing is actually working and not just ignoring you.
+		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(istype(M) && M.mind && M.mind.devilinfo)
-		usr << ticker.mode.printdevilinfo(M.mind)
+		to_chat(usr, ticker.mode.printdevilinfo(M.mind))
 	else
-		usr << "<b>[M] is not a devil."
+		to_chat(usr, "<b>[M] is not a devil.")
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
@@ -774,7 +774,7 @@ var/global/BSACooldown = 0
 			if(kick_only_afk && !C.is_afk()) //Ignore clients who are not afk
 				continue
 			if(message)
-				C << message
+				to_chat(C, message)
 			kicked_client_names.Add("[C.ckey]")
 			qdel(C)
 	return kicked_client_names
@@ -824,7 +824,3 @@ var/global/BSACooldown = 0
 				"Admin login: [key_name(src)]")
 		if(string)
 			message_admins("[string]")
-
-
-/datum/admins/SDQL_update()
-	return FALSE	//No.

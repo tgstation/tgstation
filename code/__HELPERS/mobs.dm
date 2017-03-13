@@ -368,7 +368,7 @@ Proc for attack log creation, because really why not
 			for(var/i in 1 to step_count)
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
-/proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+/proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)
@@ -394,8 +394,19 @@ Proc for attack log creation, because really why not
 				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
 					continue
 
-		if(isobserver(M) && follow_target)
-			var/link = FOLLOW_LINK(M, follow_target)
-			M << "[link] [message]"
+		if(isobserver(M))
+			var/rendered_message
+			if(follow_target)
+				var/F
+				if(turf_target)
+					F = FOLLOW_OR_TURF_LINK(M, follow_target, turf_target)
+				else
+					F = FOLLOW_LINK(M, follow_target)
+				rendered_message = "[F] [message]"
+				to_chat(M, rendered_message)
+			else if(turf_target)
+				var/turf_link = TURF_LINK(M, turf_target)
+				rendered_message = "[turf_link] [message]"
+				to_chat(M, rendered_message)
 		else
-			M << "[message]"
+			to_chat(M, message)

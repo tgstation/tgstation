@@ -41,12 +41,12 @@
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
-			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
 		if(ishuman(M) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
-			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
+			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 			return
 
 		if(M == user)	//they're using it on themselves
@@ -60,12 +60,12 @@
 			var/mob/living/carbon/C = M
 			if(istype(C))
 				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
-					user << "<span class='warning'>[C] pupils don't react to the light!</span>"
+					to_chat(user, "<span class='warning'>[C] pupils don't react to the light!</span>")
 				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
-					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
+					to_chat(user, "<span class='danger'>[C] pupils give an eerie glow!</span>")
 				else //they're okay!
 					if(C.flash_act(visual = 1))
-						user << "<span class='notice'>[C]'s pupils narrow.</span>"
+						to_chat(user, "<span class='notice'>[C]'s pupils narrow.</span>")
 	else
 		return ..()
 
@@ -81,7 +81,7 @@
 /obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
 		if(holo_cooldown > world.time)
-			user << "<span class='warning'>[src] is not ready yet!</span>"
+			to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
@@ -205,10 +205,10 @@
 
 	// Usual checks
 	if(!fuel)
-		user << "<span class='warning'>[src] is out of fuel!</span>"
+		to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 		return
 	if(on)
-		user << "<span class='notice'>[src] is already on.</span>"
+		to_chat(user, "<span class='notice'>[src] is already on.</span>")
 		return
 
 	. = ..()
@@ -294,10 +294,10 @@
 								"<span class='userdanger'>[user] blinks \the [src] at you.")
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
-		user << "\The [src] now has [emp_cur_charges] charge\s."
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
 		A.emp_act(1)
 	else
-		user << "<span class='warning'>\The [src] needs time to recharge!</span>"
+		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return
 
 // Glowsticks, in the uncomfortable range of similar to flares,
@@ -350,10 +350,10 @@
 
 /obj/item/device/flashlight/glowstick/attack_self(mob/user)
 	if(!fuel)
-		user << "<span class='notice'>[src] is spent.</span>"
+		to_chat(user, "<span class='notice'>[src] is spent.</span>")
 		return
 	if(on)
-		user << "<span class='notice'>[src] is already lit.</span>"
+		to_chat(user, "<span class='notice'>[src] is already lit.</span>")
 		return
 
 	. = ..()
@@ -368,6 +368,10 @@
 /obj/item/device/flashlight/glowstick/blue
 	name = "blue glowstick"
 	color = LIGHT_COLOR_BLUE
+
+/obj/item/device/flashlight/glowstick/cyan
+	name = "cyan glowstick"
+	color = LIGHT_COLOR_CYAN
 
 /obj/item/device/flashlight/glowstick/orange
 	name = "orange glowstick"

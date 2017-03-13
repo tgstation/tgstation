@@ -1,6 +1,6 @@
 
 
-/mob/new_player
+/mob/dead/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 
@@ -15,7 +15,10 @@
 	anchored = 1	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
-/mob/new_player/New()
+/mob/dead/new_player/Initialize()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 
@@ -28,7 +31,7 @@
 	else
 		loc = locate(1,1,1)
 
-/mob/new_player/proc/new_player_panel()
+/mob/dead/new_player/proc/new_player_panel()
 
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -70,7 +73,7 @@
 	popup.open(0)
 	return
 
-/mob/new_player/Stat()
+/mob/dead/new_player/Stat()
 	..()
 
 	if(statpanel("Lobby"))
@@ -88,7 +91,7 @@
 				stat("Players Ready:", "[ticker.totalPlayersReady]")
 
 
-/mob/new_player/Topic(href, href_list[])
+/mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
 		return 0
 
@@ -126,11 +129,11 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "<span class='notice'>Now teleporting.</span>"
+			to_chat(src, "<span class='notice'>Now teleporting.</span>")
 			if (O)
 				observer.loc = O.loc
 			else
-				src << "<span class='notice'>Teleporting failed. The map is probably still loading...</span>"
+				to_chat(src, "<span class='notice'>Teleporting failed. The map is probably still loading...</span>")
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
@@ -146,7 +149,7 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(href_list["late_join"] == "override")
@@ -154,16 +157,16 @@
 			return
 
 		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
-			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
+			to_chat(usr, "<span class='danger'>[config.hard_popcap_message]</span>")
 
 			var/queue_position = ticker.queued_players.Find(usr)
 			if(queue_position == 1)
-				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
+				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
 			else if(queue_position)
-				usr << "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>"
+				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
 			else
 				ticker.queued_players += usr
-				usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
+				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>")
 			return
 		LateChoices()
 
@@ -173,12 +176,12 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
-				usr << "<span class='warning'>Server is full.</span>"
+				to_chat(usr, "<span class='warning'>Server is full.</span>")
 				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -211,22 +214,22 @@
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				if(vote_on_poll(pollid, optionid))
-					usr << "<span class='notice'>Vote successful.</span>"
+					to_chat(usr, "<span class='notice'>Vote successful.</span>")
 				else
-					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				if(log_text_poll_reply(pollid, replytext))
-					usr << "<span class='notice'>Feedback logging successful.</span>"
+					to_chat(usr, "<span class='notice'>Feedback logging successful.</span>")
 				else
-					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
+					to_chat(usr, "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
 					                            //(protip, this stops no exploits)
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -240,15 +243,15 @@
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
-							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 							return
-				usr << "<span class='notice'>Vote successful.</span>"
+				to_chat(usr, "<span class='notice'>Vote successful.</span>")
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -258,22 +261,22 @@
 							if(0)
 								continue
 							if(1)
-								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 								return
 							if(2)
-								usr << "<span class='danger'>Maximum replies reached.</span>"
+								to_chat(usr, "<span class='danger'>Maximum replies reached.</span>")
 								break
-				usr << "<span class='notice'>Vote successful.</span>"
+				to_chat(usr, "<span class='notice'>Vote successful.</span>")
 			if(POLLTYPE_IRV)
 				if (!href_list["IRVdata"])
-					src << "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>"
+					to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
 				var/list/votelist = splittext(href_list["IRVdata"], ",")
 				if (!vote_on_irv_poll(pollid, votelist))
-					src << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 					return
-				src << "<span class='notice'>Vote successful.</span>"
+				to_chat(src, "<span class='notice'>Vote successful.</span>")
 
-/mob/new_player/proc/IsJobAvailable(rank)
+/mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return 0
@@ -295,10 +298,17 @@
 	return 1
 
 
-/mob/new_player/proc/AttemptLateSpawn(rank)
+/mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
-		src << alert("[rank] is not available. Please try another.")
+		to_chat(src, alert("[rank] is not available. Please try another."))
 		return 0
+
+	if(SSshuttle.arrivals)
+		close_spawn_windows()	//In case we get held up
+		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
+			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
+			return FALSE
+		SSshuttle.arrivals.RequireUndocked(src)
 
 	//Remove the player from the join queue if he was in one and reset the timer
 	ticker.queued_players -= src
@@ -311,8 +321,9 @@
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-
-	var/D = pick(latejoin)
+	var/D
+	if(latejoin.len)
+		D = get_turf(pick(latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 			if(!T.density)
@@ -326,6 +337,12 @@
 					continue
 
 	character.loc = D
+	character.update_parallax_teleport()
+
+	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
+	if(chair)
+		chair.buckle_mob(character)
+
 	ticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc
@@ -334,10 +351,13 @@
 
 	if(humanc)	//These procs all expect humans
 		data_core.manifest_inject(humanc)
-		AnnounceArrival(humanc, rank)
+		if(SSshuttle.arrivals)
+			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
+		else
+			AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
 		if(highlander)
-			humanc << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
+			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
 	joined_player_list += character.ckey
@@ -352,23 +372,7 @@
 						ticker.mode.make_antag_chance(humanc)
 	qdel(src)
 
-/mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if(ticker.current_state != GAME_STATE_PLAYING)
-		return
-	var/area/A = get_area(character)
-	var/message = "<span class='game deadsay'><span class='name'>\
-		[character.real_name]</span> ([rank]) has arrived at the station at \
-		<span class='name'>[A.name]</span>.</span>"
-	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
-	if((!announcement_systems.len) || (!character.mind))
-		return
-	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
-		return
-
-	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
-
-/mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
+/mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	sleep(30)
 	for(var/C in employmentCabinets)
@@ -377,7 +381,7 @@
 			employmentCabinet.addFile(employee)
 
 
-/mob/new_player/proc/LateChoices()
+/mob/dead/new_player/proc/LateChoices()
 	var/mills = world.time - round_start_time // 1/10 of a second, not real milliseconds but whatever
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
@@ -397,6 +401,17 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
+
+	if(length(SSjob.prioritized_jobs))
+		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
+		var/amt = length(SSjob.prioritized_jobs)
+		var/amt_count
+		for(var/datum/job/a in SSjob.prioritized_jobs)
+			amt_count++
+			if(amt_count != amt) // checks for the last job added.
+				dat += " [a.title], "
+			else
+				dat += " [a.title]. </div>"
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
@@ -427,7 +442,7 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
-/mob/new_player/proc/create_character(transfer_after)
+/mob/dead/new_player/proc/create_character(transfer_after)
 	spawning = 1
 	close_spawn_windows()
 
@@ -449,24 +464,24 @@
 	if(transfer_after)
 		transfer_character()
 
-/mob/new_player/proc/transfer_character()
+/mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stopLobbySound()
 
-/mob/new_player/proc/ViewManifest()
+/mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest(OOC = 1)
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
-/mob/new_player/Move()
+/mob/dead/new_player/Move()
 	return 0
 
 
-/mob/new_player/proc/close_spawn_windows()
+/mob/dead/new_player/proc/close_spawn_windows()
 
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window

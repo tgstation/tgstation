@@ -13,7 +13,7 @@
 	req_access = list(access_mineral_storeroom)
 	var/stk_types = list()
 	var/stk_amt   = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stack_list = list() //Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
@@ -56,7 +56,7 @@
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
+			var/obj/item/stack/sheet/s = new processed_sheet(src,0,merge=FALSE)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
@@ -113,7 +113,7 @@
 	if(istype(W, /obj/item/device/multitool) && panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
-		user << "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>"
+		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
 		return
 
 	if(exchange_parts(user, W))
@@ -213,7 +213,7 @@
 					inserted_id.mining_points += points
 					points = 0
 				else
-					usr << "<span class='warning'>Required access not found.</span>"
+					to_chat(usr, "<span class='warning'>Required access not found.</span>")
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 			if(istype(I))
@@ -221,12 +221,12 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else usr << "<span class='warning'>No valid ID.</span>"
+			else to_chat(usr, "<span class='warning'>No valid ID.</span>")
 	if(href_list["release"])
 		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
-			var/obj/item/stack/sheet/out = new inp.type()
+			var/obj/item/stack/sheet/out = new inp.type(src,merge=FALSE)
 			var/desired = input("How much?", "How much to eject?", 1) as num
 			out.amount = round(min(desired,50,inp.amount))
 			if(out.amount >= 1)
@@ -234,8 +234,9 @@
 				unload_mineral(out)
 			if(inp.amount < 1)
 				stack_list -= text2path(href_list["release"])
+				qdel(inp)
 		else
-			usr << "<span class='warning'>Required access not found.</span>"
+			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
 		var/alloytype1 = text2path(href_list["alloytype1"])
 		var/alloytype2 = text2path(href_list["alloytype2"])
@@ -253,7 +254,7 @@
 				stack2.amount -= alloyout.amount
 				unload_mineral(alloyout)
 		else
-			usr << "<span class='warning'>Required access not found.</span>"
+			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 	updateUsrDialog()
 	return
 
