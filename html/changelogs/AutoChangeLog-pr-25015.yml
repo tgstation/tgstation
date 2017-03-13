@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Glowsticks can now be found in \"Swarmer Cyan\" colors."
