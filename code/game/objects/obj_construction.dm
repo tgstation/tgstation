@@ -221,11 +221,14 @@
 		if(construction_blueprint)
 			var/datum/construction_blueprint/BP = new construction_blueprint
 			var/temp = -1
-			if((blueprint_root_only && BP.owner_type == type) || (!blueprint_root_only && istype(type, BP.owner_type)))
+			testing("Creating blueprint for [type]")
+			if((blueprint_root_only && BP.owner_type == type) || (!blueprint_root_only && istype(src, BP.owner_type)))
 				temp = BP.GetBlueprint(type)	//get steps for the first time
 				if(!islist(temp))
 					WARNING("Invalid construction_blueprint for [type]!")
 					temp = -1
+			else
+				testing("Aborted: [blueprint_root_only]")
 			if(temp != -1)
 				LinkConstructionSteps(temp)	//assign ids and stitch the linked list together
 				if(ValidateConstructionSteps(temp))
