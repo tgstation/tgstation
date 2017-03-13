@@ -41,9 +41,6 @@
 			T.add_blueprints(src)
 		else
 			T.add_blueprints_preround(src)
-
-/obj/Initialize()
-	..()
 	SetupConstruction()
 
 /obj/Destroy()
