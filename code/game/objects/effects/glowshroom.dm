@@ -124,8 +124,8 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 			CHECK_TICK
 		else
 			shrooms_planted++ //if we failed due to generation, don't try to plant one later
+	myseed.yield -= shrooms_planted
 	if(shrooms_planted < myseed.yield) //if we didn't get all possible shrooms planted, try again later
-		myseed.yield -= shrooms_planted
 		addtimer(CALLBACK(src, .proc/Spread), delay)
 
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
