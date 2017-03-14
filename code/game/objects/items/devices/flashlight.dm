@@ -397,3 +397,14 @@
 	name = initial(glowtype.name)
 	color = initial(glowtype.color)
 	. = ..()
+
+
+/obj/machinery/light/floor/spotlight //invisible lighting source
+	light_color = "null"
+	brightness = 2
+	light_range = 2
+	light_power = 10
+	alpha = 255
+	layer = 3
+	light_type = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
