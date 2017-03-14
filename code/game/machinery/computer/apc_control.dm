@@ -104,7 +104,7 @@
 				log_activity("logged in")
 		if(!authenticated) //Check for emags
 			var/obj/item/weapon/card/emag/E = usr.get_active_held_item()
-			if(E && istype(E))
+			if(E && istype(E) && usr.Adjacent(src))
 				usr << "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>"
 				authenticated = TRUE
 				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit
@@ -119,7 +119,7 @@
 	if(href_list["access_apc"])
 		playsound(src, "terminal_type", 50, 0)
 		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in apcs_list
-		if(!APC || APC.aidisabled || APC.panel_open)
+		if(!APC || APC.aidisabled || APC.panel_open || QDELETED(APC))
 			to_chat(usr, "<span class='robot danger'>\icon[I] APC does not return interface request. Remote access may be disabled.</span>")
 			return
 		if(active_apc)
