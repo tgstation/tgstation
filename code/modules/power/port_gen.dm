@@ -104,7 +104,7 @@ display round(lastgen) and plasmatank amount
 	if(anchored)
 		connect_to_network()
 
-/obj/machinery/power/port_gen/pacman/New()
+/obj/machinery/power/port_gen/pacman/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
 	B.apply_default_parts(src)

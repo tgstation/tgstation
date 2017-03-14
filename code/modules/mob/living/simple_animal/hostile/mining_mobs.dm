@@ -488,7 +488,8 @@
 	var/latched = 0
 	anchored = 1
 
-/obj/effect/goliath_tentacle/New()
+/obj/effect/goliath_tentacle/Initialize()
+	..()
 	var/turftype = get_turf(src)
 	if(ismineralturf(turftype))
 		var/turf/closed/mineral/M = turftype
@@ -497,7 +498,8 @@
 
 /obj/effect/goliath_tentacle/original
 
-/obj/effect/goliath_tentacle/original/New()
+/obj/effect/goliath_tentacle/original/Initialize()
+	..()
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
@@ -823,7 +825,7 @@
 		healing properties will soon become inert if not used quickly."
 	icon_state = "legion_soul"
 
-/obj/item/organ/hivelord_core/legion/New()
+/obj/item/organ/hivelord_core/legion/Initialize()
 	..()
 	update_icon()
 
@@ -930,7 +932,8 @@
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
 
-/obj/item/udder/gutlunch/New()
+/obj/item/udder/gutlunch/Initialize()
+	..()
 	reagents = new(50)
 	reagents.my_atom = src
 
@@ -1035,7 +1038,7 @@
 	icon_state = "tendril"
 	anchored = TRUE
 
-/obj/effect/collapse/New()
+/obj/effect/collapse/Initialize()
 	..()
 	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
 	visible_message("<span class='warning'>Something falls free of the tendril!</span>")

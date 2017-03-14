@@ -68,7 +68,7 @@
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/power/compressor/New()
+/obj/machinery/power/compressor/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/power_compressor(null)
 	B.apply_default_parts(src)
@@ -186,7 +186,7 @@
 #define TURBGENQ 100000
 #define TURBGENG 0.5
 
-/obj/machinery/power/turbine/New()
+/obj/machinery/power/turbine/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/power_turbine(null)
 	B.apply_default_parts(src)

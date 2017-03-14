@@ -11,7 +11,7 @@
 	var/codelen = 4
 	tamperproof = 90
 
-/obj/structure/closet/crate/secure/loot/New()
+/obj/structure/closet/crate/secure/loot/Initialize()
 	..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""

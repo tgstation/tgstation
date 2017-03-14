@@ -15,7 +15,7 @@
 	speed_process = 1
 
 
-/obj/machinery/mineral/mint/New()
+/obj/machinery/mineral/mint/Initialize()
 	..()
 	materials = new /datum/material_container(src,
 		list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM),

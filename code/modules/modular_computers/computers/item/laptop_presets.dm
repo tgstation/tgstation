@@ -1,5 +1,5 @@
-/obj/item/device/modular_computer/laptop/preset/New()
-	. = ..()
+/obj/item/device/modular_computer/laptop/preset/Initialize()
+	..()
 	install_component(new /obj/item/weapon/computer_hardware/processor_unit/small)
 	install_component(new /obj/item/weapon/computer_hardware/battery(src, /obj/item/weapon/stock_parts/cell/computer))
 	install_component(new /obj/item/weapon/computer_hardware/hard_drive)

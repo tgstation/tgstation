@@ -42,7 +42,7 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/structure/light_construct/New(loc, ndir, building)
+/obj/structure/light_construct/Initialize(mapload, ndir, building)
 	..()
 	if(building)
 		setDir(ndir)
@@ -183,19 +183,19 @@
 		break_light_tube(1)
 	return ..()
 
-/obj/machinery/light/built/New()
+/obj/machinery/light/built/Initialize()
 	status = LIGHT_EMPTY
 	update(0)
 	..()
 
-/obj/machinery/light/small/built/New()
+/obj/machinery/light/small/built/Initialize()
 	status = LIGHT_EMPTY
 	update(0)
 	..()
 
 
 // create a new lighting fixture
-/obj/machinery/light/New()
+/obj/machinery/light/Initialize()
 	..()
 	spawn(2)
 		switch(fitting)
@@ -604,7 +604,7 @@
 			desc = "A broken [name]."
 
 
-/obj/item/weapon/light/New()
+/obj/item/weapon/light/Initialize()
 	..()
 	update()
 

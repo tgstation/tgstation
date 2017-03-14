@@ -12,10 +12,9 @@
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
 
-/obj/item/weapon/clipboard/New()
-	update_icon()
+/obj/item/weapon/clipboard/Initialize()
 	..()
-
+	update_icon()
 
 /obj/item/weapon/clipboard/update_icon()
 	cut_overlays()

@@ -17,7 +17,7 @@ Doesn't work on other aliens/AI.*/
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/alien/New()
+/obj/effect/proc_holder/alien/Initialize()
 	..()
 	action = new(src)
 

@@ -46,7 +46,7 @@
 	if(!terminal)
 		to_chat(user, "<span class='warning'>This SMES has no power terminal!</span>")
 
-/obj/machinery/power/smes/New()
+/obj/machinery/power/smes/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
 	B.apply_default_parts(src)

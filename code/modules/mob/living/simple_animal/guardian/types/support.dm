@@ -98,8 +98,8 @@
 	anchored = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER
 
-/obj/structure/recieving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
-	. = ..()
+/obj/structure/recieving_pad/Initialize(mapload, mob/living/simple_animal/hostile/guardian/healer/G)
+	..()
 	if(G.namedatum)
 		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
 

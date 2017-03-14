@@ -107,7 +107,7 @@
 	if(terminal)
 		terminal.connect_to_network()
 
-/obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
+/obj/machinery/power/apc/Initialize(mapload, var/ndir, var/building=0)
 	if (!req_access)
 		req_access = list(access_engine_equip)
 	if (!armor)

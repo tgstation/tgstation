@@ -186,9 +186,9 @@ var/list/employmentCabinets = list()
 	icon_state = "employmentcabinet"
 	var/virgin = 1
 
-/obj/structure/filingcabinet/employment/New()
+/obj/structure/filingcabinet/employment/Initialize()
+	..()
 	employmentCabinets += src
-	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
 	employmentCabinets -= src

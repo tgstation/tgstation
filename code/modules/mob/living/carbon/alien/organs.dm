@@ -3,7 +3,7 @@
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
 
-/obj/item/organ/alien/New()
+/obj/item/organ/alien/Initialize()
 	for(var/A in alien_powers)
 		if(ispath(A))
 			alien_powers -= A

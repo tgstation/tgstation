@@ -22,7 +22,7 @@
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
+/obj/machinery/power/solar/Initialize(mapload, var/obj/item/solar_assembly/S)
 	..(loc)
 	Make(S)
 	connect_to_network()
@@ -141,8 +141,8 @@
 			unset_control()
 
 
-/obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc, S, 0)
+/obj/machinery/power/solar/fake/Initialize(mapload, var/obj/item/solar_assembly/S)
+	..(mapload, S, 0)
 
 /obj/machinery/power/solar/fake/process()
 	. = PROCESS_KILL

@@ -427,7 +427,7 @@ Difficulty: Hard
 	layer = BELOW_MOB_LAYER
 	var/mob/living/caster //who made this, anyway
 
-/obj/effect/overlay/temp/hierophant/New(loc, new_caster)
+/obj/effect/overlay/temp/hierophant/Initialize(loc, new_caster)
 	..()
 	if(new_caster)
 		caster = new_caster
@@ -438,7 +438,7 @@ Difficulty: Hard
 	light_range = 1
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/hierophant/squares/New(loc, new_caster)
+/obj/effect/overlay/temp/hierophant/squares/Initialize(loc, new_caster)
 	..()
 	if(ismineralturf(loc))
 		var/turf/closed/mineral/M = loc
@@ -452,7 +452,7 @@ Difficulty: Hard
 	duration = 100
 	smooth = SMOOTH_TRUE
 
-/obj/effect/overlay/temp/hierophant/wall/New(loc, new_caster)
+/obj/effect/overlay/temp/hierophant/wall/Initialize(loc, new_caster)
 	..()
 	queue_smooth_neighbors(src)
 	queue_smooth(src)
@@ -481,7 +481,7 @@ Difficulty: Hard
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 
-/obj/effect/overlay/temp/hierophant/chaser/New(loc, new_caster, new_target, new_speed, is_friendly_fire)
+/obj/effect/overlay/temp/hierophant/chaser/Initialize(loc, new_caster, new_target, new_speed, is_friendly_fire)
 	..()
 	target = new_target
 	friendly_fire_check = is_friendly_fire
@@ -559,7 +559,7 @@ Difficulty: Hard
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
 
-/obj/effect/overlay/temp/hierophant/blast/New(loc, new_caster, friendly_fire)
+/obj/effect/overlay/temp/hierophant/blast/Initialize(loc, new_caster, friendly_fire)
 	..()
 	friendly_fire_check = friendly_fire
 	if(new_caster)

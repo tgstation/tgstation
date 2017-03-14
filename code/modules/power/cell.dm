@@ -19,7 +19,7 @@
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
-/obj/item/weapon/stock_parts/cell/New()
+/obj/item/weapon/stock_parts/cell/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 	charge = maxcharge
@@ -167,7 +167,7 @@
 	materials = list(MAT_GLASS=40)
 	rating = 2
 
-/obj/item/weapon/stock_parts/cell/crap/empty/New()
+/obj/item/weapon/stock_parts/cell/crap/empty/Initialize()
 	..()
 	charge = 0
 
@@ -178,7 +178,7 @@
 	materials = list(MAT_GLASS=40)
 	rating = 2.5
 
-/obj/item/weapon/stock_parts/cell/secborg/empty/New()
+/obj/item/weapon/stock_parts/cell/secborg/empty/Initialize()
 	..()
 	charge = 0
 
@@ -212,7 +212,7 @@
 	maxcharge = 15000
 	chargerate = 2250
 
-/obj/item/weapon/stock_parts/cell/high/empty/New()
+/obj/item/weapon/stock_parts/cell/high/empty/Initialize()
 	..()
 	charge = 0
 
@@ -225,7 +225,7 @@
 	rating = 4
 	chargerate = 2000
 
-/obj/item/weapon/stock_parts/cell/super/empty/New()
+/obj/item/weapon/stock_parts/cell/super/empty/Initialize()
 	..()
 	charge = 0
 
@@ -238,7 +238,7 @@
 	rating = 5
 	chargerate = 3000
 
-/obj/item/weapon/stock_parts/cell/hyper/empty/New()
+/obj/item/weapon/stock_parts/cell/hyper/empty/Initialize()
 	..()
 	charge = 0
 
@@ -252,7 +252,7 @@
 	rating = 6
 	chargerate = 4000
 
-/obj/item/weapon/stock_parts/cell/bluespace/empty/New()
+/obj/item/weapon/stock_parts/cell/bluespace/empty/Initialize()
 	..()
 	charge = 0
 
@@ -309,7 +309,7 @@
 	maxcharge = 500
 	rating = 2
 
-/obj/item/weapon/stock_parts/cell/emproof/empty/New()
+/obj/item/weapon/stock_parts/cell/emproof/empty/Initialize()
 	..()
 	charge = 0
 

@@ -44,7 +44,7 @@
 	..()
 	w_class = mask_adjusted ? WEIGHT_CLASS_NORMAL : WEIGHT_CLASS_SMALL
 
-/obj/item/clothing/mask/gas/explorer/folded/New()
+/obj/item/clothing/mask/gas/explorer/folded/Initialize()
 	..()
 	adjustmask()
 
@@ -227,7 +227,7 @@
 	var/creator
 	var/obj/item/weapon/resonator/res
 
-/obj/effect/resonance/New(loc, set_creator, timetoburst, set_resonator)
+/obj/effect/resonance/Initialize(mapload, set_creator, timetoburst, set_resonator)
 	..()
 	creator = set_creator
 	res = set_resonator

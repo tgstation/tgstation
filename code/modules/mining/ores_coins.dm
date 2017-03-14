@@ -270,7 +270,7 @@
 				explosion(src.loc,-1,1,3,adminlog = notify_admins)
 			qdel(src)
 
-/obj/item/weapon/ore/New()
+/obj/item/weapon/ore/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
@@ -297,7 +297,7 @@
 	var/cooldown = 0
 	var/value = 1
 
-/obj/item/weapon/coin/New()
+/obj/item/weapon/coin/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
@@ -373,14 +373,14 @@
 
 /obj/item/weapon/coin/antagtoken
 	name = "antag token"
-	icon_state = "coin_valid_valid"
 	cmineral = "valid"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
 	value = 0
 
-/obj/item/weapon/coin/antagtoken/New()
-	return
+/obj/item/weapon/coin/antagtoken/Initialize()
+	..()
+	icon_state = "coin_valid_valid"
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))

@@ -8,7 +8,7 @@
 	var/obj/item/weapon/stock_parts/cell/battery = null
 	device_type = MC_CELL
 
-/obj/item/weapon/computer_hardware/battery/New(loc, battery_type = null)
+/obj/item/weapon/computer_hardware/battery/Initialize(mapload, battery_type)
 	if(battery_type)
 		battery = new battery_type(src)
 	..()

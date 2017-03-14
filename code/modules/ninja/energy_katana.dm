@@ -62,7 +62,7 @@
 	if(msg)
 		to_chat(user, "<span class='notice'>[msg]</span>")
 
-/obj/item/weapon/katana/energy/New()
+/obj/item/weapon/katana/energy/Initialize()
 	..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)

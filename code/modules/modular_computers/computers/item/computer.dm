@@ -46,7 +46,7 @@
 
 
 
-/obj/item/device/modular_computer/New()
+/obj/item/device/modular_computer/Initialize()
 	START_PROCESSING(SSobj, src)
 	update_icon()
 	if(!physical)

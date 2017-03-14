@@ -16,11 +16,12 @@
 		machinery_computer.cpu = null
 	machinery_computer = null
 
-/obj/item/device/modular_computer/processor/New(comp)
+/obj/item/device/modular_computer/processor/Initialize(mapload)
+	..()
 	STOP_PROCESSING(SSobj, src) // Processed by its machine
-
+	var/comp = loc
 	if(!comp || !istype(comp, /obj/machinery/modular_computer))
-		CRASH("Inapropriate type passed to obj/item/device/modular_computer/processor/New()! Aborting.")
+		CRASH("Inapropriate type passed to obj/item/device/modular_computer/processor/Initialize()! Aborting.")
 		return
 	// Obtain reference to machinery computer
 	all_components = list()
