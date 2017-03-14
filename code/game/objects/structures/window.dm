@@ -28,7 +28,7 @@
 	..()
 	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
-/obj/structure/window/Initialize(mapload, direct)
+/obj/structure/window/New(Loc, direct)
 	..()
 	obj_integrity = max_integrity
 	if(direct)
@@ -403,7 +403,6 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = 1
-	flags = NONE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
@@ -417,7 +416,6 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	fulltile = 1
-	flags = NONE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
@@ -431,7 +429,6 @@
 	icon_state = "tinted_window"
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
-	flags = NONE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
@@ -454,7 +451,6 @@
 	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
-	flags = NONE
 	reinf = 1
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	smooth = SMOOTH_TRUE
@@ -485,7 +481,7 @@
 	reinf = FALSE
 	var/made_glow = FALSE
 
-/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
+/obj/structure/window/reinforced/clockwork/New(loc, direct)
 	if(fulltile)
 		made_glow = TRUE
 	..()
@@ -532,7 +528,6 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	flags = NONE
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 120
 	level = 3

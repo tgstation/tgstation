@@ -37,7 +37,7 @@
 	var/next_cast = 0
 
 
-/mob/living/simple_animal/hostile/wizard/Initialize()
+/mob/living/simple_animal/hostile/wizard/New()
 	..()
 	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
 	fireball.clothes_req = 0

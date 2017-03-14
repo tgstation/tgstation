@@ -72,7 +72,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 
 	var/list/empty_turfs = list()
 	for(var/turf/open/floor/T in areaInstance)
-		if(is_blocked_turf(T))
+		if(T.density || T.contents.len)
 			continue
 		empty_turfs += T
 

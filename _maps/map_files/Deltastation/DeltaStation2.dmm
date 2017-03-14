@@ -263,9 +263,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_1)
 "aaF" = (
@@ -279,9 +276,6 @@
 	pixel_x = -26
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -1294,7 +1288,6 @@
 "act" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "acu" = (
@@ -1669,6 +1662,11 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/window/shuttle,
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = 30
+	},
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "adi" = (
@@ -2032,10 +2030,6 @@
 	},
 /obj/item/weapon/clipboard,
 /obj/item/toy/figure/syndie,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -2077,9 +2071,6 @@
 	pixel_x = 32
 	},
 /obj/item/weapon/storage/fancy/donut_box,
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -2476,9 +2467,6 @@
 	name = "Arrivals"
 	})
 "aeN" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -2490,9 +2478,6 @@
 	},
 /area/shuttle/arrival)
 "aeP" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/open/floor/plasteel/blue/side{
 	tag = "icon-blue (EAST)";
 	icon_state = "blue";
@@ -3060,10 +3045,6 @@
 /obj/item/weapon/storage/toolbox/syndicate,
 /obj/item/weapon/crowbar/red,
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
 /turf/open/floor/plasteel/podhatch{
 	dir = 10
 	},
@@ -4454,9 +4435,6 @@
 /obj/item/weapon/wrench,
 /obj/item/device/assembly/infra,
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -6342,11 +6320,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -6913,10 +6886,6 @@
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw,
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -14007,10 +13976,6 @@
 	pixel_y = -8
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -27248,7 +27213,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/obj/machinery/light/small,
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_3)
 "aXI" = (
@@ -28752,9 +28716,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn (NORTHWEST)"
 	},
@@ -28776,9 +28737,6 @@
 /obj/item/clothing/mask/gas,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
-	},
-/obj/machinery/light/small{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
@@ -31979,9 +31937,6 @@
 /obj/item/weapon/pickaxe/emergency,
 /obj/item/weapon/pickaxe/emergency,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "bgr" = (
@@ -32002,9 +31957,6 @@
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "bgt" = (
@@ -37548,7 +37500,6 @@
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
-/obj/machinery/light,
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/labor)
 "bqA" = (
@@ -39094,9 +39045,6 @@
 "btl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -108817,9 +108765,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -108861,10 +108806,6 @@
 	pixel_y = 8
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "dNe" = (
@@ -110369,9 +110310,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 6
 	},
@@ -111667,9 +111605,6 @@
 	pixel_y = -5
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "dSV" = (
@@ -113416,10 +113351,6 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "dWb" = (
@@ -113755,7 +113686,6 @@
 	id = "shuttleflash";
 	pixel_y = -26
 	},
-/obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side,
 /area/shuttle/escape)
 "dWJ" = (
@@ -114878,9 +114808,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -115757,9 +115684,6 @@
 	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	tag = "icon-vault (NORTHEAST)";
@@ -118241,208 +118165,6 @@
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
-"ehb" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"ehc" = (
-/obj/structure/chair{
-	dir = 8;
-	name = "tactical chair"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"ehd" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"ehe" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"ehf" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"ehg" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"ehh" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"ehi" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"ehj" = (
-/obj/machinery/requests_console{
-	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 0
-	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
-/area/shuttle/arrival)
-"ehk" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"ehl" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/arrival)
-"ehm" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"ehn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/supply)
-"eho" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/supply)
-"ehp" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/shuttle/escape)
-"ehq" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/shuttle/escape)
-"ehr" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8;
-	heat_capacity = 1e+006
-	},
-/area/shuttle/escape)
-"ehs" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"eht" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"ehu" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8;
-	heat_capacity = 1e+006
-	},
-/area/shuttle/escape)
-"ehv" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"ehw" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel/shuttle/red,
-/area/shuttle/escape)
-"ehx" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small,
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -121829,7 +121551,7 @@ aeG
 aeG
 aeG
 aia
-ehe
+agG
 aeh
 akK
 alL
@@ -122339,7 +122061,7 @@ aaa
 adn
 afw
 afL
-ehd
+afw
 agG
 ahp
 adn
@@ -122850,7 +122572,7 @@ aeh
 aet
 aeF
 aeT
-ehb
+aeT
 aeT
 aeT
 agb
@@ -122858,7 +122580,7 @@ aeG
 aeG
 aeG
 aeG
-ehf
+aeG
 akL
 age
 aeh
@@ -123364,7 +123086,7 @@ aeh
 adn
 aeH
 aeU
-ehc
+aeU
 aeU
 aeU
 agb
@@ -123372,7 +123094,7 @@ aeG
 aeG
 aeG
 aeG
-ehg
+aeG
 akL
 age
 aeh
@@ -123891,7 +123613,7 @@ akL
 age
 amS
 adn
-aaa
+aoD
 aaa
 aaa
 aaa
@@ -124918,7 +124640,7 @@ aeh
 akO
 alN
 amV
-ehg
+aeG
 aoE
 aoC
 apC
@@ -152681,7 +152403,7 @@ edD
 edD
 edp
 edp
-ehm
+edp
 edD
 edD
 edC
@@ -152932,7 +152654,7 @@ aaa
 eeq
 edl
 edp
-ehi
+edp
 edz
 edp
 edp
@@ -153193,7 +152915,7 @@ edo
 edo
 edF
 edF
-ehk
+edp
 edp
 edp
 edF
@@ -157301,12 +157023,12 @@ abU
 acb
 acn
 act
-ehj
 acJ
+acX
 adh
-acJ
 adt
-ehl
+acJ
+acn
 ael
 aey
 aeO
@@ -159503,19 +159225,19 @@ dJj
 dKd
 dKT
 dLY
-ehr
+dMZ
 dNT
 dNT
 dPB
 dMZ
 dOS
-ehs
+dSa
 dOS
 dMZ
 dNT
 dNT
 dNT
-ehr
+dMZ
 dOS
 dKT
 dXU
@@ -160035,7 +159757,7 @@ dKT
 dXV
 dXU
 dXU
-ehw
+dZV
 dKT
 aaa
 aaa
@@ -160530,7 +160252,7 @@ aaa
 dJj
 dKd
 dKT
-ehp
+dLZ
 dNa
 dNT
 dNT
@@ -161044,7 +160766,7 @@ aaa
 dJk
 dJk
 dKT
-ehp
+dLZ
 dNa
 dNU
 dNU
@@ -162079,7 +161801,7 @@ dOS
 dOS
 dNU
 dNU
-eht
+dNU
 dNU
 dNU
 dNU
@@ -162348,7 +162070,7 @@ dKT
 dXZ
 dYI
 dZy
-ehx
+dSa
 dKT
 eaw
 eaB
@@ -162603,7 +162325,7 @@ dWa
 dWJ
 dKT
 dYa
-ehv
+dYI
 dKS
 dKT
 dKT
@@ -165811,7 +165533,7 @@ alJ
 alJ
 aaa
 avL
-ehn
+awN
 axI
 axI
 axI
@@ -166329,7 +166051,7 @@ awO
 axJ
 ayZ
 axJ
-eho
+ayZ
 ayZ
 axJ
 aEF

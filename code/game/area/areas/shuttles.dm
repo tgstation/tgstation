@@ -4,7 +4,7 @@
 /area/shuttle
 	name = "Shuttle"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	has_gravity = 1
 	always_unpowered = 0
 	valid_territory = 0

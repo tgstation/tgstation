@@ -399,10 +399,10 @@
 
 	qdel(src, force=TRUE)
 
-/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
+/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/overlay/temp/ripple(t, animate_time)
+		ripples += new /obj/effect/overlay/temp/ripple(t)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -613,9 +613,8 @@
 /obj/docking_port/mobile/proc/check_effects()
 	if(!ripples.len)
 		if((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL))
-			var/tl = timeLeft(1)
-			if(tl <= SHUTTLE_RIPPLE_TIME)
-				create_ripples(destination, tl)
+			if(timeLeft(1) <= SHUTTLE_RIPPLE_TIME)
+				create_ripples(destination)
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	if(areaInstance.parallax_movedir && istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= PARALLAX_LOOP_TIME)

@@ -103,7 +103,7 @@ Difficulty: Hard
 				INVOKE_ASYNC(src, .proc/warp_charge)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/New()
 	..()
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in mob_list)
 		if(B != src)

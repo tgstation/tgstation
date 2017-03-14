@@ -56,7 +56,7 @@
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
-	icon_state = "meteor_gun"
+	icon_state = "riotgun"
 	item_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)

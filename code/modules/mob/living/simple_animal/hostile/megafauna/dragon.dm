@@ -53,7 +53,7 @@ Difficulty: Medium
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 
-/mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+/mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
 
@@ -96,7 +96,7 @@ Difficulty: Medium
 	duration = 12
 	pixel_z = 500
 
-/obj/effect/overlay/temp/fireball/Initialize(loc)
+/obj/effect/overlay/temp/fireball/New(loc)
 	..()
 	animate(src, pixel_z = 0, time = 12)
 
@@ -121,7 +121,7 @@ Difficulty: Medium
 /obj/effect/overlay/temp/target/ex_act()
 	return
 
-/obj/effect/overlay/temp/target/Initialize(loc)
+/obj/effect/overlay/temp/target/New(loc)
 	..()
 	INVOKE_ASYNC(src, .proc/fall)
 

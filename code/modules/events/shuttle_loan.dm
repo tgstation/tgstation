@@ -80,7 +80,7 @@
 
 		var/list/empty_shuttle_turfs = list()
 		for(var/turf/open/floor/T in SSshuttle.supply.areaInstance)
-			if(is_blocked_turf(T))
+			if(T.density || T.contents.len)
 				continue
 			empty_shuttle_turfs += T
 		if(!empty_shuttle_turfs.len)

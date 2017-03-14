@@ -47,7 +47,7 @@
 	return number
 
 /mob/living/carbon/human/get_ear_protection()
-	if((ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT)) || (head && HAS_SECONDARY_FLAG(head, BANG_PROTECT)))
+	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
 		return 1
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
@@ -198,15 +198,13 @@
 		damage_clothes(15, BRUTE, "melee")
 		return 1
 
-/mob/living/carbon/human/attack_hand(mob/user)
+/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.a_intent == INTENT_DISARM)
-			if(H.buckled_mobs && (src in H.buckled_mobs) && H.riding_datum)
-				H.riding_datum.force_dismount(src)
-		dna.species.spec_attack_hand(H, src)
+	if(M.a_intent == INTENT_DISARM)
+		if(M.buckled_mobs && (src in M.buckled_mobs) && M.riding_datum)
+			M.riding_datum.force_dismount(src)
+	dna.species.spec_attack_hand(M, src)
 
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)

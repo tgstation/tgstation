@@ -24,7 +24,7 @@
 	verb_exclaim = "flutters intensely"
 	verb_yell = "flutters intensely"
 
-/mob/living/simple_animal/butterfly/Initialize()
+/mob/living/simple_animal/butterfly/New()
 	..()
 	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)

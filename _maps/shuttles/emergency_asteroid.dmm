@@ -254,9 +254,6 @@
 /obj/structure/chair/office/light{
 	name = "Captain"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aV" = (
@@ -483,9 +480,6 @@
 /obj/structure/toilet{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bF" = (
@@ -511,48 +505,6 @@
 "bI" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bJ" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"bK" = (
-/obj/structure/chair,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bL" = (
-/obj/structure/chair,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bM" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/plastitanium/brig,
-/area/shuttle/escape)
-"bN" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"bO" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"bP" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bQ" = (
-/obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
@@ -620,13 +572,13 @@ ac
 ad
 ap
 aq
-bJ
+aq
 ac
 aU
 bd
 bl
 ac
-bO
+at
 bu
 bE
 ad
@@ -731,7 +683,7 @@ aZ
 ah
 aK
 at
-bP
+aS
 ac
 aa
 aa
@@ -740,7 +692,7 @@ aa
 ah
 ah
 aB
-bK
+aK
 at
 aZ
 ah
@@ -800,7 +752,7 @@ aa
 ah
 ah
 aB
-bL
+aK
 at
 aZ
 ah
@@ -821,7 +773,7 @@ aZ
 ah
 aK
 at
-bQ
+aS
 ac
 aa
 aa
@@ -922,9 +874,9 @@ ax
 ax
 ax
 aw
-bM
+aw
 ac
-bN
+at
 at
 bz
 bD

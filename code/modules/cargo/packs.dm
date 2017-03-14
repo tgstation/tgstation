@@ -1010,7 +1010,6 @@
 					/obj/item/device/flashlight/glowstick,
 					/obj/item/device/flashlight/glowstick/red,
 					/obj/item/device/flashlight/glowstick/blue,
-					/obj/item/device/flashlight/glowstick/cyan,
 					/obj/item/device/flashlight/glowstick/orange,
 					/obj/item/device/flashlight/glowstick/yellow,
 					/obj/item/device/flashlight/glowstick/pink)
@@ -1750,7 +1749,7 @@
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
-	cost = 10000
+	cost = 1000000
 	contains = list(/obj/vehicle/bicycle)
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large

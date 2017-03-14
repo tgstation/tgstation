@@ -50,7 +50,7 @@ Difficulty: Medium
 	appearance_flags = 0
 	mouse_opacity = 1
 
-/mob/living/simple_animal/hostile/megafauna/legion/Initialize()
+/mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
 	internal = new/obj/item/device/gps/internal/legion(src)
 

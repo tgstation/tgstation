@@ -60,9 +60,6 @@
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
-	if(!changing_turf)
-		stack_trace("Incorrect turf deletion")
-	changing_turf = FALSE
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -72,6 +69,9 @@
 		for(var/I in B.vars)
 			B.vars[I] = null
 		return
+	if(!changing_turf)
+		stack_trace("Incorrect turf deletion")
+	changing_turf = FALSE
 	SSair.remove_from_active(src)
 	visibilityChanged()
 	initialized = FALSE

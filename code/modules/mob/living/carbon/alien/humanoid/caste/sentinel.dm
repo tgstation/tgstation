@@ -6,7 +6,7 @@
 	icon_state = "aliens"
 
 
-/mob/living/carbon/alien/humanoid/sentinel/Initialize()
+/mob/living/carbon/alien/humanoid/sentinel/New()
 	AddAbility(new /obj/effect/proc_holder/alien/sneak)
 	..()
 
