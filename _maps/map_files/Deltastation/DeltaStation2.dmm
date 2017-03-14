@@ -55424,7 +55424,10 @@
 	req_access_txt = "61"
 	},
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-vault (NORTHEAST)";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "bUN" = (
@@ -61129,7 +61132,10 @@
 	req_access_txt = "61"
 	},
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-vault (NORTHEAST)";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "cfg" = (
