@@ -14,7 +14,7 @@
 	var/list/syringes = list()
 	var/max_syringes = 1
 
-/obj/item/weapon/gun/syringe/New()
+/obj/item/weapon/gun/syringe/Initialize()
 	..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 

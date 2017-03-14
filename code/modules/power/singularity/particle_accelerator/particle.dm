@@ -22,7 +22,7 @@
 	energy = 50
 
 
-/obj/effect/accelerated_particle/New(loc)
+/obj/effect/accelerated_particle/Initialize()
 	..()
 
 	addtimer(CALLBACK(src, .proc/move), 1)

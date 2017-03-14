@@ -19,10 +19,10 @@
 	var/powered = 0
 	mouse_opacity = 2
 
-/obj/machinery/particle_accelerator/control_box/New()
+/obj/machinery/particle_accelerator/control_box/Initialize()
+	..()
 	wires = new /datum/wires/particle_accelerator/control_box(src)
 	connected_parts = list()
-	..()
 
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)

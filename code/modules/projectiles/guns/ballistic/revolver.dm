@@ -6,7 +6,7 @@
 	origin_tech = "combat=3;materials=2"
 	casing_ejector = 0
 
-/obj/item/weapon/gun/ballistic/revolver/New()
+/obj/item/weapon/gun/ballistic/revolver/Initialize()
 	..()
 	if(!istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
 		verbs -= /obj/item/weapon/gun/ballistic/revolver/verb/spin
@@ -93,7 +93,7 @@
 	unique_rename = 1
 	unique_reskin = 1
 
-/obj/item/weapon/gun/ballistic/revolver/detective/New()
+/obj/item/weapon/gun/ballistic/revolver/detective/Initialize()
 	..()
 	options["Default"] = "detective"
 	options["Leopard Spots"] = "detective_leopard"
@@ -175,7 +175,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
-/obj/item/weapon/gun/ballistic/revolver/russian/New()
+/obj/item/weapon/gun/ballistic/revolver/russian/Initialize()
 	..()
 	do_spin()
 	spun = TRUE
@@ -269,7 +269,7 @@
 	unique_rename = 1
 	unique_reskin = 1
 
-/obj/item/weapon/gun/ballistic/revolver/doublebarrel/New()
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel/Initialize()
 	..()
 	options["Default"] = "dshotgun"
 	options["Dark Red Finish"] = "dshotgun-d"

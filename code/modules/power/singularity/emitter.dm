@@ -28,7 +28,7 @@
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 
-/obj/machinery/power/emitter/New()
+/obj/machinery/power/emitter/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
 	B.apply_default_parts(src)

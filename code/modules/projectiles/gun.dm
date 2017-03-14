@@ -60,7 +60,7 @@
 	var/datum/action/toggle_scope_zoom/azoom
 
 
-/obj/item/weapon/gun/New()
+/obj/item/weapon/gun/Initialize()
 	..()
 	if(pin)
 		pin = new pin(src)

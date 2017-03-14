@@ -44,7 +44,7 @@
 /obj/item/projectile/bullet/pellet/weak
 	damage = 6
 
-/obj/item/projectile/bullet/pellet/weak/New()
+/obj/item/projectile/bullet/pellet/weak/Initialize()
 	range = rand(1, 8)
 	..()
 
@@ -57,7 +57,7 @@
 /obj/item/projectile/bullet/pellet/overload
 	damage = 3
 
-/obj/item/projectile/bullet/pellet/overload/New()
+/obj/item/projectile/bullet/pellet/overload/Initialize()
 	range = rand(1, 10)
 	..()
 
@@ -164,7 +164,7 @@
 	icon_state = "banana"
 	range = 200
 
-/obj/item/projectile/bullet/honker/New()
+/obj/item/projectile/bullet/honker/Initialize()
 	..()
 	SpinAnimation()
 
@@ -175,7 +175,7 @@
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 		M.throw_at(throw_target, 3, 2)
 
-/obj/item/projectile/bullet/meteorshot/New()
+/obj/item/projectile/bullet/meteorshot/Initialize()
 	..()
 	SpinAnimation()
 
@@ -196,7 +196,7 @@
 	damage = 6
 	var/piercing = 0
 
-/obj/item/projectile/bullet/dart/New()
+/obj/item/projectile/bullet/dart/Initialize()
 	..()
 	create_reagents(50)
 	reagents.set_reacting(FALSE)
@@ -220,7 +220,7 @@
 	reagents.handle_reactions()
 	return 1
 
-/obj/item/projectile/bullet/dart/metalfoam/New()
+/obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	..()
 	reagents.add_reagent("aluminium", 15)
 	reagents.add_reagent("foaming_agent", 5)

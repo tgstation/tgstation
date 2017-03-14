@@ -12,7 +12,7 @@
 	var/disease_amount = 20
 	var/spillable = 0
 
-/obj/item/weapon/reagent_containers/New(location, vol = 0)
+/obj/item/weapon/reagent_containers/Initialize(mapload, vol = 0)
 	..()
 	if (isnum(vol) && vol > 0)
 		volume = vol

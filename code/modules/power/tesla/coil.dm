@@ -16,7 +16,7 @@
 	var/zap_cooldown = 100
 	var/last_zap = 0
 
-/obj/machinery/power/tesla_coil/New()
+/obj/machinery/power/tesla_coil/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/tesla_coil(null)
 	B.apply_default_parts(src)
@@ -109,7 +109,7 @@
 	buckle_lying = FALSE
 	buckle_requires_restraints = TRUE
 
-/obj/machinery/power/grounding_rod/New()
+/obj/machinery/power/grounding_rod/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/grounding_rod(null)
 	B.apply_default_parts(src)

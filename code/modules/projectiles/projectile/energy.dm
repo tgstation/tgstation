@@ -45,7 +45,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
-/obj/item/projectile/energy/net/New()
+/obj/item/projectile/energy/net/Initialize()
 	..()
 	SpinAnimation()
 
@@ -69,7 +69,7 @@
 	icon_state = "dragnetfield"
 	anchored = 1
 
-/obj/effect/nettingportal/New()
+/obj/effect/nettingportal/Initialize()
 	..()
 	set_light(3)
 	var/obj/item/device/radio/beacon/teletarget = null

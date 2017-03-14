@@ -23,7 +23,7 @@
 	else
 		return ..()
 
-/obj/structure/reagent_dispensers/New()
+/obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume)
 	reagents.add_reagent(reagent_id, tank_volume)
 	..()
@@ -129,7 +129,7 @@
 	density = 0
 	reagent_id = "condensedcapsaicin"
 
-/obj/structure/reagent_dispensers/peppertank/New()
+/obj/structure/reagent_dispensers/peppertank/Initialize()
 	..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"

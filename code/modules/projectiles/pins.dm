@@ -16,10 +16,10 @@
 	var/obj/item/weapon/gun/gun
 
 
-/obj/item/device/firing_pin/New(newloc)
+/obj/item/device/firing_pin/Initialize()
 	..()
-	if(istype(newloc, /obj/item/weapon/gun))
-		gun = newloc
+	if(istype(loc, /obj/item/weapon/gun))
+		gun = loc
 
 /obj/item/device/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
