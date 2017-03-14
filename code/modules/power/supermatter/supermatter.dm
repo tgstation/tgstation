@@ -39,7 +39,7 @@
 #define DETONATION_HALLUCINATION 600
 
 
-#define WARNING_DELAY 30 		//seconds between warnings.
+#define WARNING_DELAY 30
 
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
@@ -538,8 +538,8 @@
 
 	return
 
-/obj/machinery/power/supermatter_shard/proc/supermatter_zap(atom/src, range = 3, power)
-	. = src.dir
+/obj/machinery/power/supermatter_shard/proc/supermatter_zap(atom/zapstart, range = 3, power)
+	. = zapstart.dir
 	if(power < 1000)
 		return
 
@@ -552,7 +552,7 @@
 	var/list/arctargetsstructure = list()
 
 	if(prob(20)) //let's not hit all the engineers with every beam and/or segment of the arc
-		for(var/mob/living/Z in oview(src, range+2))
+		for(var/mob/living/Z in oview(zapstart, range+2))
 			arctargetsmob += Z
 	if(arctargetsmob.len)
 		var/mob/living/H = pick(arctargetsmob)
@@ -561,7 +561,7 @@
 		target_atom = A
 
 	else
-		for(var/obj/machinery/X in oview(src, range+2))
+		for(var/obj/machinery/X in oview(zapstart, range+2))
 			arctargetsmachine += X
 		if(arctargetsmachine.len)
 			var/obj/machinery/M = pick(arctargetsmachine)
@@ -570,7 +570,7 @@
 			target_atom = A
 
 		else
-			for(var/obj/structure/Y in oview(src, range+2))
+			for(var/obj/structure/Y in oview(zapstart, range+2))
 				arctargetsstructure += Y
 			if(arctargetsstructure.len)
 				var/obj/structure/O = pick(arctargetsstructure)
@@ -579,8 +579,8 @@
 				target_atom = A
 
 	if(target_atom)
-		src.Beam(target_atom, icon_state="nzcrentrs_power", time=5)
-		var/zapdir = get_dir(src, target_atom)
+		zapstart.Beam(target_atom, icon_state="nzcrentrs_power", time=5)
+		var/zapdir = get_dir(zapstart, target_atom)
 		if(zapdir)
 			. = zapdir
 
