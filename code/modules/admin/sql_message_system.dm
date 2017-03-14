@@ -166,7 +166,7 @@
 			else
 				output += "|<a href='?_src_=holder;showwatchfilter=1'>\[Filter offline clients\]</a></center>"
 		output += ruler
-		var/DBQuery/query_get_type_messages = dbcon.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'")
+		var/DBQuery/query_get_type_messages = dbcon.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]' ORDER BY timestamp DESC")
 		if(!query_get_type_messages.warn_execute())
 			return
 		while(query_get_type_messages.NextRow())
