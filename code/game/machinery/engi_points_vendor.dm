@@ -447,9 +447,11 @@
 	var/list/rangers = list()
 	var/list/listeners = list()
 	var/stop = 0
+	var/song = "beep"
 	req_access = list(access_engine)
-	var/static/list/colors = list("red","green","#0000ff","purple")
+	var/static/list/directions = list(1,5,3,6,2,10,4,9)
 	var/list/spotlights = list()
+	var/list/sparkles = list()
 
 /obj/machinery/disco
 
@@ -467,18 +469,8 @@
 	return ..()
 
 
-/
-/mob/living/proc/dance_fucker_dance(time = 20, speed = 1)
-        set waitfor = 0
-        while(time)
-                sleep(speed)
-                for(var/i in 1 to speed)
-                        setDir(pick(cardinal))
-                        lay_down()
-                time--
-
 /obj/machinery/disco/Destroy()
-	lights_off()
+	dance_over()
 	return ..()
 
 /obj/machinery/disco/attack_hand(mob/user)
@@ -502,6 +494,7 @@
 	dat +="<div class='statusDisplay'>"
 	dat += ("<A href='?src=\ref[src];action=toggle1'>[!active ? "Enable Funk" : "Disable Funk"]</A><br>")
 	dat +="</div ><br>"
+	dat += ("<A href='?src=\ref[src];action=upload'>[song]</A><br>")
 	var/datum/browser/popup = new(user, "vending", "Disco Ball", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -528,42 +521,54 @@
 				src.updateUsrDialog()
 			else if(active)
 				active = FALSE
+				STOP_PROCESSING(SSobj, src)
 				playsound(src,'sound/machines/terminal_off.ogg',50,1)
 				icon_state = "disco0"
-				lights_off()
-				STOP_PROCESSING(SSobj, src)
 				dance_over()
 				src.updateUsrDialog()
+		if("upload")
+			var/mob/living/G = usr
+			G.client.play_sound()
 
-
-
-/obj/machinery/disco/proc/bless(var/mob/living/carbon/human/blessed)
-	set waitfor = 0
-	var/time = 50
-	while(time)
-		sleep(1)
-		for(var/i in rand(1,3))
-			blessed.setDir(pick(cardinal))
-			blessed.lay_down()
-		time--
-/*	switch(rand(0,9))
-		if(0)
+/obj/machinery/disco/proc/bless(var/mob/living/carbon/M)
+	switch(rand(0,10))
+		if(0 to 1)
 			set waitfor = 0
 			for(var/i = 1, i < 10, i++)
-				blessed.SpinAnimation(7,1)
-				blessed.setDir(pick(cardinal))
+				M.SpinAnimation(7,1)
+				M.setDir(pick(cardinal))
 				sleep(10)
-				continue
 
-		if(1)
-			blessed.orbit(src, radius = 50, clockwise = FALSE, rotation_speed = 6, rotation_segments = 36, pre_rotation = FALSE, lockinorbit = FALSE)
-			blessed.SpinAnimation(7,1)
-			sleep(100)
-			blessed.stop_orbit()
+		if(2 to 3)
+			set waitfor = 0
+			for(var/i in 1 to 10)
+				if (!M)
+					return
+				M.SpinAnimation(7,1)
+				M.setDir(pick(cardinal))
+				for (var/x in 1 to 10)
+					sleep(1)
+					if (!M)
+						return
+					if (i<5)
+						M.pixel_y += 2
+					if (i>4)
+						M.pixel_y -= 2
+					M.setDir(turn(M.dir, 90))
+					switch (M.dir)
+						if (NORTH)
+							M.pixel_y += 3
+						if (SOUTH)
+							M.pixel_y -= 3
+						if (EAST)
+							M.pixel_x -= 3
+						if (WEST)
+							M.pixel_x += 3
+				sleep(10)
 
-		if(2)
-			blessed.setDir(get_dir(blessed, src))
-
+		if(4 to 5)
+			M.throw_at(get_turf(src),3,7)
+			M.setDir(get_dir(M, src))
 			for (var/i = 0, i < 25, i++)
 				var/delay = 5
 				switch (i)
@@ -578,110 +583,168 @@
 					if (0 to 4)
 						delay = 3
 
-				if (blessed)
+				if (M)
 					src.setDir(turn(src.dir, 90))
 					var/turf/T = get_step(src, src.dir)
-					var/turf/S = blessed.loc
-					if ((S && isturf(S) && S.Exit(blessed)) && (T && isturf(T) && T.Enter(src)))
-						blessed.forceMove(T)
-						blessed.setDir(get_dir(blessed, src))
+					var/turf/S = M.loc
+					if ((S && isturf(S) && S.Exit(M)) && (T && isturf(T) && T.Enter(src)))
+						M.forceMove(T)
+						M.setDir(get_dir(M, src))
 						if(i>17)
-							blessed.SpinAnimation(2,1)
+							M.SpinAnimation(2,1)
 				else
 					return 0
 				sleep(delay)
-			blessed.throw_at(get_edge_target_turf(src,pick(blessed.dir)), 3,6)
-*/
+			M.throw_at(get_edge_target_turf(src,pick(M.dir)), 3,6)
+		if(6 to 7)
+			var/speed = rand(1,3)
+			set waitfor = 0
+			var/time = 30
+			while(time)
+				sleep(speed)
+				for(var/i in 1 to speed)
+					M.setDir(pick(cardinal))
+					M.lay_down()
+				 time--
 
-
-/*		if(10 to 11)
-			blessed.setDir(get_dir(blessed, src))
+		if(8 to 10)
+			M.setDir(get_dir(M, src))
 			spawn (0)
-				if (blessed)
-					animate(blessed, transform = matrix(180, MATRIX_ROTATE), time = 2, loop = 5)
-				sleep (60)
-				if (blessed)
-					animate(blessed, transform = null, time = 2, loop = 0)
+				if (M)
+					animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+				sleep (70)
+				if (M)
+					animate(M, transform = null, time = 1, loop = 0)
 
-			for (var/i = 0, i < 30, i++)
-				if (blessed)
-					blessed.pixel_y += 3
-					blessed.setDir(turn(blessed.dir, 90))
-
-					switch (blessed.dir)
-						if (NORTH)
-							blessed.pixel_y += 3
-						if (SOUTH)
-							blessed.pixel_y -= 3
-						if (EAST)
-							blessed.pixel_x -= 3
-						if (WEST)
-							blessed.pixel_x += 3
+			for (var/i = 0, i < 60, i++)
+				if (!M)
+					return
+				if (i<31)
+					M.pixel_y += 2
+				if (i>30)
+					M.pixel_y -= 2
+				M.setDir(turn(M.dir, 90))
+				switch (M.dir)
+					if (NORTH)
+						M.pixel_y += 3
+					if (SOUTH)
+						M.pixel_y -= 3
+					if (EAST)
+						M.pixel_x -= 3
+					if (WEST)
+						M.pixel_x += 3
 				sleep (1)
-			blessed.pixel_x = 0
-			blessed.pixel_y = 0*/
+			M.pixel_x = 0
+			M.pixel_y = 0
 
 /obj/machinery/disco/proc/lights_on()
-	for(var/q in 1 to 2)
-		if(q==1)
-			var/c = 1
-			for(var/direction in cardinal)
-				var/obj/machinery/light/floor/spotlight/S = new /obj/machinery/light/floor/spotlight(get_step(src, direction))
-				S.light_color = colors[c]
-				visible_message("<span class='danger'>Spawned [S] to the [get_dir(S,src)] of the [src] with the color [S.light_color]!</span>")
-				c++
-				spotlights+=S
-		if(q==2)
-			var/x = 1
-			for(var/direction in cardinal)
-				var/obj/machinery/light/floor/spotlight/S = new /obj/machinery/light/floor/spotlight(get_step(src, direction))
-				S.loc = get_step(S, direction)
-				S.loc = get_step(S, direction)
-				S.brightness = 3
-				S.light_range = 3
-				S.light_color = colors[x]
-				x++
-				spotlights+=S
-
+	var/turf/cen = get_turf(src)
+	for(var/turf/t in view(src,3))
+		if(t.x == cen.x && t.y > cen.y)
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "yellow"
+			spotlights+=L
+			continue
+		if(t.x == cen.x && t.y < cen.y)
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "green"
+			spotlights+=L
+			continue
+		if(t.x > cen.x && t.y == cen.y)
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "purple"
+			spotlights+=L
+			continue
+		if(t.x < cen.x && t.y == cen.y)
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "#188ed6"
+			spotlights+=L
+			continue
+		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "sw"
+			spotlights+=L
+			continue
+		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2==cen.x && t.y-2 == cen.y))
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "ne"
+			spotlights+=L
+			continue
+		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "se"
+			spotlights+=L
+			continue
+		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2==cen.x && t.y-2 == cen.y))
+			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			L.light_color = "nw"
+			spotlights+=L
+			continue
+		continue
 
 /obj/machinery/disco/proc/lights_spin()
-	for(var/z in 1 to 4)
-		var/obj/H = spotlights[z]
-		var/obj/V = spotlights[z+4]
-		H.orbit(src, 95, FALSE, 60, 36, FALSE, FALSE)
-		V.orbit(src, 30, FALSE, 60, 36, FALSE, FALSE)
-		sleep(15)
-	sleep(100)
-	for(var/y in 2 to 4)
-		var/obj/machinery/light/offone = spotlights[y]
-		var/obj/machinery/light/offtwo = spotlights[y+4]
-		offone.on = FALSE
-		offtwo.on = FALSE
-	for(var/spot in 1 to 4)
-		var/obj/machinery/light/test = spotlights[spot]
-		var/obj/machinery/light/pair = spotlights[spot+4]
-		if(test.on)
-			test.on = FALSE
-			pair.on = FALSE
-			test = spotlights[spot+1]
-			pair = spotlights[spot+5]
-			test.on = TRUE
-			pair.on = TRUE
-		else
-			continue
-
-
-/obj/machinery/disco/proc/lights_off()
-	for(var/obj/machinery/light/floor/spotlight/S in spotlights)
-		qdel(S)
+	for(var/i in 1 to 24)
+		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
+		S.alpha = 0
+		sparkles += S
+		switch(i)
+			if(1 to 8)
+				S.orbit(src, 30, FALSE, 60, 36, TRUE, FALSE)
+			if(9 to 16)
+				S.orbit(src, 62, FALSE, 60, 36, TRUE, FALSE)
+			if(17 to 24)
+				S.orbit(src, 95, FALSE, 60, 36, TRUE, FALSE)
+		sleep(7)
+	for(var/obj/reveal in sparkles)
+		reveal.alpha = 120
+	for(var/n in 1 to 120)
+		for(var/obj/machinery/light/glow in spotlights)
+			if(glow.light_color == "yellow")
+				glow.light_color = "nw"
+				glow.update_light()
+				continue
+			if(glow.light_color == "nw")
+				glow.light_color = "purple"
+				glow.update_light()
+				continue
+			if(glow.light_color == "purple")
+				glow.light_color = "sw"
+				glow.update_light()
+				continue
+			if(glow.light_color == "sw")
+				glow.light_color = "green"
+				glow.update_light()
+				continue
+			if(glow.light_color == "green")
+				glow.light_color = "se"
+				glow.update_light()
+				continue
+			if(glow.light_color == "se")
+				glow.light_color = "#188ed6"
+				glow.update_light()
+				continue
+			if(glow.light_color == "#188ed6")
+				glow.light_color = "ne"
+				glow.update_light()
+				continue
+			if(glow.light_color == "ne")
+				glow.light_color = "yellow"
+				glow.update_light()
+				continue
+		sleep(10)
 
 /obj/machinery/disco/proc/dance_over()
+	for(var/obj/machinery/light/floor/spotlight/L in spotlights)
+		qdel(L)
+	for(var/obj/effect/overlay/sparkles/S in sparkles)
+		qdel(S)
+	rangers.Cut()
 	for(var/mob/living/L in listeners)
-		if(!L)
+		if(!L || !L.client)
 			continue
 		L.client.stop_client_sounds()
 	listeners.Cut()
-	rangers.Cut()
+
 
 /obj/machinery/disco/process()
 	if(world.time < stop && active)
@@ -693,22 +756,37 @@
 				listeners += M
 			if(prob(5))
 				bless(M)
-			else if(allowed(M))
+			else if(allowed(M)) // Engineers over 100% more groovy than normal crew
 				if(prob(7))
 					bless(M)
 		for(var/mob/living/L in listeners)
 			if(!(L in rangers))
 				listeners -= L
-				if(!L)
+				if(!L || !L.client)
 					continue
 				L.client.stop_client_sounds()
 
 	else if(active)
+		STOP_PROCESSING(SSobj, src)
 		playsound(src,'sound/machines/terminal_off.ogg',50,1)
-		sleep(15)
 		dance_over()
-		lights_off()
 		active = FALSE
 		icon_state = "disco0"
-		STOP_PROCESSING(SSobj, src)
 
+
+// Bonus gloves for power export goal, won't be seen in 99% of rounds
+
+
+
+/obj/item/clothing/gloves/krav_maga/engi
+	name = "fists of the singulo"
+	desc = "You have spent so much time managing power that your fists have become one with the powernet."
+	icon_state = "singulo"
+	item_state = "yellow"
+	item_color="yellow"
+	permeability_coefficient = 0.05
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = 0

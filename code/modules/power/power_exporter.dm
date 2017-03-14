@@ -47,7 +47,7 @@ obj/machinery/power/exporter/Destroy()
 	if (!anchored)
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
 		return
-	if (power_drained >= 4000000 && !rewarded) // 4 billion watts
+	if (power_drained >= 10000000 && !rewarded) // 10 billion watts
 		rewarded = TRUE
 		visible_message("<span class='danger'>You have been blessed by the gods of engineering for your massive power exports!</span>")
 		new /obj/effect/overlay/temp/explosion/fast(get_turf(src))
@@ -143,17 +143,3 @@ obj/machinery/power/exporter/Destroy()
 		active = FALSE
 		drain_rate = 0
 		icon_state = "dominator"
-
-
-/obj/item/clothing/gloves/krav_maga/engi  // unique bonus
-	name = "fists of the singulo"
-	desc = "You have spent so much time managing power that your fists have become one with the powernet."
-	icon_state = "yellow"
-	item_state = "yellow"
-	item_color="yellow"
-	permeability_coefficient = 0.05
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = 0

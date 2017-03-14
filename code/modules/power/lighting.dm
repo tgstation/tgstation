@@ -655,10 +655,12 @@
 	fitting = "bulb"
 
 /obj/machinery/light/floor/spotlight //invisible lighting source
- //	invisibility = 1
+//	invisibility = 1
+	light_color = "null"
 	brightness = 2
-	light_range = 2
-	light_power = 99
-//	alpha = 0
-//	layer = 0
+	light_range = 1
+	light_power = 10
+	alpha = 0
+	layer = 0
+	light_type = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
