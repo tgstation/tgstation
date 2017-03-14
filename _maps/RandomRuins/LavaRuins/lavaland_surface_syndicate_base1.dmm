@@ -321,10 +321,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aS" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/black,
 /area/ruin/powered/syndicate_lava_base)
 "aT" = (
@@ -406,10 +402,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bb" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -933,10 +925,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cj" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/podhatch{
 	dir = 8
 	},
@@ -1054,10 +1042,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cx" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/podhatch,
 /area/ruin/powered/syndicate_lava_base)
 "cy" = (
