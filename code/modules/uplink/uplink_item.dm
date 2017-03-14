@@ -1230,6 +1230,18 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	surplus = 0
 	restricted_roles = list("Assistant")
+	
+// Challenges!
+/datum/uplink_item/challenge
+	category = "Challenges"
+	surplus = 0
+	
+/datum/uplink_item/challenge/greentext
+	name = "Greentext"
+	desc = "A book that will include your greentext that you have to carry to the shuttle, you also will be marked with a green color and other people will try steal your greentext!"
+	item = /obj/item/weapon/greentext
+	cost = 20
+	surplus = 0
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
