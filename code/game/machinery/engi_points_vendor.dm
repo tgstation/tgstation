@@ -449,11 +449,9 @@
 	var/stop = 0
 	var/song = "beep"
 	req_access = list(access_engine)
-	var/static/list/directions = list(1,5,3,6,2,10,4,9)
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 
-/obj/machinery/disco
 
 /obj/machinery/disco/attackby(obj/item/O, mob/user, params)
 	if(!active)
@@ -473,10 +471,6 @@
 	dance_over()
 	return ..()
 
-/obj/machinery/disco/attack_hand(mob/user)
-	..()
-	interact(user)
-
 /obj/machinery/disco/interact(mob/user)
 	if (!anchored)
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
@@ -494,7 +488,6 @@
 	dat +="<div class='statusDisplay'>"
 	dat += ("<A href='?src=\ref[src];action=toggle1'>[!active ? "Enable Funk" : "Disable Funk"]</A><br>")
 	dat +="</div ><br>"
-	dat += ("<A href='?src=\ref[src];action=upload'>[song]</A><br>")
 	var/datum/browser/popup = new(user, "vending", "Disco Ball", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -526,9 +519,6 @@
 				icon_state = "disco0"
 				dance_over()
 				src.updateUsrDialog()
-		if("upload")
-			var/mob/living/G = usr
-			G.client.play_sound()
 
 /obj/machinery/disco/proc/bless(var/mob/living/carbon/M)
 	switch(rand(0,10))
@@ -538,7 +528,6 @@
 				M.SpinAnimation(7,1)
 				M.setDir(pick(cardinal))
 				sleep(10)
-
 		if(2 to 3)
 			set waitfor = 0
 			for(var/i in 1 to 8)
@@ -645,6 +634,7 @@
 		if(t.x == cen.x && t.y > cen.y)
 			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
 			L.light_color = "yellow"
+			visible_message("<span class='boldannounce'>The [L.light_color] [L] warps in! It is currently [get_dir(src,L)] of the machine!</span>")
 			spotlights+=L
 			continue
 		if(t.x == cen.x && t.y < cen.y)
@@ -655,6 +645,7 @@
 		if(t.x > cen.x && t.y == cen.y)
 			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
 			L.light_color = "purple"
+			visible_message("<span class='boldannounce'>The [L.light_color] [L] warps in! It is currently [get_dir(src,L)] of the machine!</span>")
 			spotlights+=L
 			continue
 		if(t.x < cen.x && t.y == cen.y)
@@ -671,6 +662,7 @@
 			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
 			L.light_color = "ne"
 			spotlights+=L
+			visible_message("<span class='boldannounce'>The [L.light_color] [L] warps in! It is currently [get_dir(src,L)] of the machine!</span>")
 			continue
 		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
 			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
@@ -732,6 +724,7 @@
 			if(glow.light_color == "ne")
 				glow.light_color = "yellow"
 				glow.update_light()
+				visible_message("<span class='boldannounce'>The [glow] has just turned [glow.light_color]! It is currently [get_dir(src,glow)] of the machine!</span>")
 				continue
 		sleep(100)
 
