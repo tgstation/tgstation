@@ -70,7 +70,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 
-/obj/item/weapon/stock_parts/New()
+/obj/item/weapon/stock_parts/Initialize()
 	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)

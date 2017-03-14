@@ -18,8 +18,8 @@ var/datum/events/keycard_events = new()
 	var/mob/triggerer = null
 	var/waiting = 0
 
-/obj/machinery/keycard_auth/New()
-	. = ..()
+/obj/machinery/keycard_auth/Initialize()
+	..()
 	ev = keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
 
 /obj/machinery/keycard_auth/Destroy()

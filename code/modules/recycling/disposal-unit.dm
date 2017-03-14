@@ -24,7 +24,7 @@
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 
-/obj/machinery/disposal/New(loc, var/obj/structure/disposalconstruct/make_from)
+/obj/machinery/disposal/Initialize(mapload, var/obj/structure/disposalconstruct/make_from)
 	..()
 
 	if(make_from)
@@ -443,7 +443,7 @@
 	icon_state = "intake"
 	mode = PRESSURE_OFF // the chute doesn't need charging and always works
 
-/obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
+/obj/machinery/disposal/deliveryChute/Initialize(mapload,var/obj/structure/disposalconstruct/make_from)
 	..()
 	stored.ptype = DISP_END_CHUTE
 	spawn(5)

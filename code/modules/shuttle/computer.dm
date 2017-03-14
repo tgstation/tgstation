@@ -10,7 +10,7 @@
 	var/admin_controlled
 	var/no_destination_swap = 0
 
-/obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
+/obj/machinery/computer/shuttle/Initialize(mapload, obj/item/weapon/circuitboard/computer/shuttle/C)
 	..()
 	if(istype(C))
 		possible_destinations = C.possible_destinations

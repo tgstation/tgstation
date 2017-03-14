@@ -78,7 +78,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/active = 1
 	var/decryptkey = "password"
 
-/obj/machinery/message_server/New()
+/obj/machinery/message_server/Initialize()
 	message_servers += src
 	decryptkey = GenerateKey()
 	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")

@@ -13,7 +13,7 @@
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/beaker = null
 
-/obj/machinery/computer/pandemic/New()
+/obj/machinery/computer/pandemic/Initialize()
 	..()
 	update_icon()
 
