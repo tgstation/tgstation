@@ -30,7 +30,7 @@
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/New()
+/obj/effect/particle_effect/smoke/Initialize()
 	..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
@@ -253,7 +253,7 @@
 	var/obj/chemholder
 	effect_type = /obj/effect/particle_effect/smoke/chem
 
-/datum/effect_system/smoke_spread/chem/New()
+/datum/effect_system/smoke_spread/chem/Initialize()
 	..()
 	chemholder = new /obj()
 	var/datum/reagents/R = new/datum/reagents(500)

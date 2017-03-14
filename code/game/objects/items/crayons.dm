@@ -72,7 +72,7 @@
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
 
-/obj/item/toy/crayon/New()
+/obj/item/toy/crayon/Initialize()
 	..()
 	// Makes crayons identifiable in things like grinders
 	if(name == "crayon")
@@ -507,7 +507,7 @@
 		/obj/item/toy/crayon
 	)
 
-/obj/item/weapon/storage/crayons/New()
+/obj/item/weapon/storage/crayons/Initialize()
 	..()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
@@ -590,7 +590,7 @@
 
 		return (OXYLOSS)
 
-/obj/item/toy/crayon/spraycan/New()
+/obj/item/toy/crayon/spraycan/Initialize()
 	..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
@@ -680,7 +680,7 @@
 	pre_noise = FALSE
 	post_noise = TRUE
 
-/obj/item/toy/crayon/spraycan/gang/New(loc, datum/gang/G)
+/obj/item/toy/crayon/spraycan/gang/Initialize(mapload, datum/gang/G)
 	..()
 	if(G)
 		paint_color = G.color_hex

@@ -32,7 +32,7 @@
 	var/obj/item/device/radio/headset/server_radio = null
 	var/last_signal = 0 	// Last time it sent a signal
 
-/obj/machinery/telecomms/server/New()
+/obj/machinery/telecomms/server/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/server(null)
 	B.apply_default_parts(src)
@@ -134,7 +134,7 @@
 /obj/machinery/telecomms/server/presets
 	network = "tcommsat"
 
-/obj/machinery/telecomms/server/presets/New()
+/obj/machinery/telecomms/server/presets/Initialize()
 	..()
 	name = id
 
@@ -166,10 +166,10 @@
 
 	//Common and other radio frequencies for people to freely use
 	// 1441 to 1489
-/obj/machinery/telecomms/server/presets/common/New()
+/obj/machinery/telecomms/server/presets/common/Initialize()
+	..()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
@@ -186,6 +186,6 @@
 	freq_listening = list(SEC_FREQ)
 	autolinkers = list("security")
 
-/obj/machinery/telecomms/server/presets/common/birdstation/New()
+/obj/machinery/telecomms/server/presets/common/birdstation/Initialize()
 	..()
 	freq_listening = list()

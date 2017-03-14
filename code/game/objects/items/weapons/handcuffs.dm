@@ -247,7 +247,7 @@
 	var/armed = 0
 	var/trap_damage = 20
 
-/obj/item/weapon/restraints/legcuffs/beartrap/New()
+/obj/item/weapon/restraints/legcuffs/beartrap/Initialize()
 	..()
 	icon_state = "[initial(icon_state)][armed]"
 
@@ -301,7 +301,7 @@
 	trap_damage = 0
 	flags = DROPDEL
 
-/obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/Initialize()
 	..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 

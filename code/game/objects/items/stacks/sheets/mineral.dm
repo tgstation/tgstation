@@ -46,11 +46,11 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 
-/obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/sandstone/Initialize(mapload, amount)
+	..()
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /obj/item/stack/sheet/mineral/sandstone/thirty
 	amount = 30
@@ -71,11 +71,11 @@ var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
 	new/datum/stack_recipe("sandbags", /obj/structure/barricade/sandbags, 1, time = 25, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/sandbags/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/sandbags/Initialize(mapload, amount)
+	..()
 	recipes = sandbag_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /*
  * Diamond
@@ -96,11 +96,11 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	new/datum/stack_recipe("AI Core Statue", /obj/structure/statue/diamond/ai2, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/diamond/Initialize(mapload, amount)
+	..()
 	recipes = diamond_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /*
  * Uranium
@@ -120,11 +120,11 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("Engineer Statue", /obj/structure/statue/uranium/eng, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/uranium/Initialize(mapload, amount)
+	..()
 	recipes = uranium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /*
  * Plasma
@@ -146,11 +146,11 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("Scientist Statue", /obj/structure/statue/plasma/scientist, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/plasma/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/plasma/Initialize(mapload, amount)
+	..()
 	recipes = plasma_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /obj/item/stack/sheet/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
@@ -186,11 +186,11 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("CMO Statue", /obj/structure/statue/gold/cmo, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/gold/Initialize(mapload, amount)
+	..()
 	recipes = gold_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /*
  * Silver
@@ -213,11 +213,11 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("Med Borg Statue", /obj/structure/statue/silver/medborg, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/silver/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/silver/Initialize(mapload, amount)
+	..()
 	recipes = silver_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /*
  * Clown
@@ -235,11 +235,11 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("Clown Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/bananium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/bananium/Initialize(mapload, amount)
+	..()
 	recipes = clown_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /*
  * Titanium
@@ -261,11 +261,11 @@ var/global/list/datum/stack_recipe/titanium_recipes = list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
 	)
 
-/obj/item/stack/sheet/mineral/titanium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/titanium/Initialize(mapload, amount)
+	..()
 	recipes = titanium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 
 /*
@@ -288,11 +288,11 @@ var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
 	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
 	)
 
-/obj/item/stack/sheet/mineral/plastitanium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/plastitanium/Initialize(mapload, amount)
+	..()
 	recipes = plastitanium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 
 /*
@@ -313,11 +313,11 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
 	)
 
-/obj/item/stack/sheet/mineral/snow/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/snow/Initialize(mapload, amount)
+	..()
 	recipes = snow_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
 
 /****************************** Others ****************************/
 
@@ -373,6 +373,6 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 	new/datum/stack_recipe("Abductor Sciencist Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1)*/
 	)
 
-/obj/item/stack/sheet/mineral/abductor/New(var/loc, var/amount=null)
-	recipes = abductor_recipes
+/obj/item/stack/sheet/mineral/abductor/Initialize(mapload, amount)
 	..()
+	recipes = abductor_recipes

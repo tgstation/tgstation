@@ -15,7 +15,7 @@
 	var/mopcap = 5
 	var/mopspeed = 30
 
-/obj/item/weapon/mop/New()
+/obj/item/weapon/mop/Initialize()
 	..()
 	create_reagents(mopcap)
 
@@ -85,7 +85,7 @@
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
 	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
-/obj/item/weapon/mop/advanced/New()
+/obj/item/weapon/mop/advanced/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

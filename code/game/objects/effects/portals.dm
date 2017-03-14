@@ -25,7 +25,7 @@
 /obj/effect/portal/make_frozen_visual()
 	return
 
-/obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
+/obj/effect/portal/Initialize(mapload, turf/target, creator=null, lifespan=300)
 	..()
 	portals += src
 	src.target = target

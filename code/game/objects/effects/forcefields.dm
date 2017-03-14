@@ -20,7 +20,7 @@
 	desc = "You have a bad feeling about this."
 	var/timeleft = 300
 
-/obj/effect/forcefield/mime/New()
+/obj/effect/forcefield/mime/Initialize()
 	..()
 	QDEL_IN(src, timeleft)
 

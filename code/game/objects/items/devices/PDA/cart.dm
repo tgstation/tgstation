@@ -137,7 +137,7 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 
-/obj/item/weapon/cartridge/signal/New()
+/obj/item/weapon/cartridge/signal/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
@@ -206,7 +206,7 @@
 	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
 
-/obj/item/weapon/cartridge/rd/New()
+/obj/item/weapon/cartridge/rd/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
@@ -228,7 +228,7 @@
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
 
-/obj/item/weapon/cartridge/captain/New()
+/obj/item/weapon/cartridge/captain/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 

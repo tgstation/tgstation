@@ -14,7 +14,7 @@
 	icon_state="b_beam"
 	var/atom/BeamSource
 
-/obj/effect/overlay/beam/New()
+/obj/effect/overlay/beam/Initialize()
 	..()
 	QDEL_IN(src, 10)
 
@@ -31,7 +31,7 @@
 	. = ..()
 	deltimer(timerid)
 
-/obj/effect/overlay/temp/New()
+/obj/effect/overlay/temp/Initialize()
 	..()
 	if(randomdir)
 		setDir(pick(cardinal))
@@ -45,7 +45,7 @@
 /obj/effect/overlay/temp/dir_setting
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/dir_setting/New(loc, set_dir)
+/obj/effect/overlay/temp/dir_setting/Initialize(mapload, set_dir)
 	if(set_dir)
 		setDir(set_dir)
 	..()
@@ -57,7 +57,7 @@
 	layer = BELOW_MOB_LAYER
 	var/splatter_type = "splatter"
 
-/obj/effect/overlay/temp/dir_setting/bloodsplatter/New(loc, set_dir)
+/obj/effect/overlay/temp/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
 	if(set_dir in diagonals)
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
@@ -190,7 +190,7 @@
 	desc = "It's a decoy!"
 	duration = 15
 
-/obj/effect/overlay/temp/decoy/New(loc, atom/mimiced_atom)
+/obj/effect/overlay/temp/decoy/Initialize(mapload, atom/mimiced_atom)
 	..()
 	alpha = initial(alpha)
 	if(mimiced_atom)
@@ -199,7 +199,7 @@
 		setDir(mimiced_atom.dir)
 		mouse_opacity = 0
 
-/obj/effect/overlay/temp/decoy/fading/New(loc, atom/mimiced_atom)
+/obj/effect/overlay/temp/decoy/fading/Initialize(mapload, atom/mimiced_atom)
 	..()
 	animate(src, alpha = 0, time = duration)
 
@@ -320,14 +320,14 @@
 	var/mob/user
 	var/damage = 20
 
-/obj/effect/overlay/temp/ratvar/volt_hit/New(loc, caster, multiplier)
+/obj/effect/overlay/temp/ratvar/volt_hit/Initialize(mapload, caster, multiplier)
 	if(multiplier)
 		damage *= multiplier
 	duration = max(round(damage * 0.2), 1)
 	..()
 	set_light(1.5, 2, LIGHT_COLOR_ORANGE)
 
-/obj/effect/overlay/temp/ratvar/volt_hit/true/New(loc, caster, multiplier)
+/obj/effect/overlay/temp/ratvar/volt_hit/true/Initialize(mapload, caster, multiplier)
 	..()
 	user = caster
 	if(user)
@@ -372,7 +372,7 @@
 	icon_state = "warden_gaze"
 	duration = 3
 
-/obj/effect/overlay/temp/ratvar/ocular_warden/New()
+/obj/effect/overlay/temp/ratvar/ocular_warden/Initialize()
 	..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-10, 10)
@@ -397,7 +397,7 @@
 	layer = ABOVE_MOB_LAYER
 	duration = 10
 
-/obj/effect/overlay/temp/ratvar/component/New()
+/obj/effect/overlay/temp/ratvar/component/Initialize()
 	..()
 	transform = matrix()*0.75
 	pixel_x = rand(-10, 10)
@@ -428,7 +428,7 @@
 	light_power = 2
 	light_color = "#FAE48C"
 
-/obj/effect/overlay/temp/ratvar/sigil/transgression/New()
+/obj/effect/overlay/temp/ratvar/sigil/transgression/Initialize()
 	..()
 	update_light()
 	var/oldtransform = transform
@@ -443,7 +443,7 @@
 	light_power = 0.5
 	light_color = "#1E8CE1"
 
-/obj/effect/overlay/temp/ratvar/sigil/vitality/New()
+/obj/effect/overlay/temp/ratvar/sigil/vitality/Initialize()
 	..()
 	update_light()
 
@@ -489,7 +489,7 @@
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
 
-/obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
+/obj/effect/overlay/temp/gib_animation/Initialize(mapload, gib_icon)
 	icon_state = gib_icon // Needs to be before ..() so icon is correct
 	..()
 
@@ -503,7 +503,7 @@
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
 
-/obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
+/obj/effect/overlay/temp/dust_animation/Initialize(mapload, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
 
@@ -512,7 +512,7 @@
 	icon_state = "heal"
 	duration = 15
 
-/obj/effect/overlay/temp/heal/New(loc, colour)
+/obj/effect/overlay/temp/heal/Initialize(mapload, colour)
 	..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
@@ -549,14 +549,14 @@
 	icon_state = "impact_bullet"
 	duration = 5
 
-/obj/effect/overlay/temp/impact_effect/New(loc, atom/target, obj/item/projectile/P)
+/obj/effect/overlay/temp/impact_effect/Initialize(mapload, atom/target, obj/item/projectile/P)
+	..()
 	if(target == P.original) //the projectile hit the target originally clicked
 		pixel_x = P.p_x + target.pixel_x - 16 + rand(-4,4)
 		pixel_y = P.p_y + target.pixel_y - 16 + rand(-4,4)
 	else
 		pixel_x = target.pixel_x + rand(-4,4)
 		pixel_y = target.pixel_y + rand(-4,4)
-	..()
 
 /obj/effect/overlay/temp/impact_effect/red_laser
 	icon_state = "impact_laser"

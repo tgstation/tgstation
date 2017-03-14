@@ -32,9 +32,9 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/glass/New(loc, amount)
-	recipes = glass_recipes
+/obj/item/stack/sheet/glass/Initialize(mapload, amount)
 	..()
+	recipes = glass_recipes
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -106,9 +106,9 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	source.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
 
-/obj/item/stack/sheet/rglass/New(loc, amount)
-	recipes = reinforced_glass_recipes
+/obj/item/stack/sheet/rglass/Initialize(mapload, amount)
 	..()
+	recipes = reinforced_glass_recipes
 
 
 /obj/item/weapon/shard
@@ -135,7 +135,8 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	return (BRUTELOSS)
 
 
-/obj/item/weapon/shard/New()
+/obj/item/weapon/shard/Initialize()
+	..()
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")

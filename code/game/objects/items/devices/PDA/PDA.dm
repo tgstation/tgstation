@@ -57,7 +57,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
-/obj/item/device/pda/New()
+/obj/item/device/pda/Initialize()
 	..()
 	if(fon)
 		set_light(f_lum)
@@ -978,7 +978,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
 
-/obj/item/weapon/storage/box/PDAs/New()
+/obj/item/weapon/storage/box/PDAs/Initialize()
 	..()
 	new /obj/item/device/pda(src)
 	new /obj/item/device/pda(src)

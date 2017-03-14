@@ -41,9 +41,9 @@
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
 
-/obj/item/toy/balloon/New()
-	create_reagents(10)
+/obj/item/toy/balloon/Initialize()
 	..()
+	create_reagents(10)
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -358,7 +358,7 @@
 /obj/effect/decal/cleanable/ash/snappop_phoenix
 	var/respawn_time = 300
 
-/obj/effect/decal/cleanable/ash/snappop_phoenix/New()
+/obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
@@ -663,7 +663,7 @@
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
-/obj/item/toy/cards/deck/New()
+/obj/item/toy/cards/deck/Initialize()
 	..()
 	icon_state = "deck_[deckstyle]_full"
 	for(var/i = 2; i <= 10; i++)
@@ -1166,9 +1166,9 @@
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
 
-/obj/item/toy/figure/New()
-    desc = "A \"Space Life\" brand [src]."
+/obj/item/toy/figure/Initialize()
     ..()
+    desc = "A \"Space Life\" brand [src]."
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)

@@ -125,11 +125,10 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/New()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
+	..()
 	create_reagents(1000)
 	reagents.add_reagent("water", 1000)
-	..()
-	return
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(target) || get_dist(chassis, target)>3)
@@ -198,9 +197,9 @@
 	range = MELEE|RANGED
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 
-/obj/item/mecha_parts/mecha_equipment/rcd/New()
-	rcd_list += src
+/obj/item/mecha_parts/mecha_equipment/rcd/Initialize()
 	..()
+	rcd_list += src
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
  	rcd_list -= src
@@ -300,10 +299,10 @@
 	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
 
-/obj/item/mecha_parts/mecha_equipment/cable_layer/New()
+/obj/item/mecha_parts/mecha_equipment/cable_layer/Initialize()
+	..()
 	cable = new(src)
 	cable.amount = 0
-	..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/can_attach(obj/mecha/working/M)
 	if(..())

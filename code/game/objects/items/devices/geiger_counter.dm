@@ -16,7 +16,7 @@
 	var/radiation_count = 0
 	var/emagged = 0
 
-/obj/item/device/geiger_counter/New()
+/obj/item/device/geiger_counter/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

@@ -51,7 +51,7 @@
 	return 1
 
 
-/obj/machinery/telecomms/receiver/New()
+/obj/machinery/telecomms/receiver/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/receiver(null)
 	B.apply_default_parts(src)
@@ -89,10 +89,10 @@
 	freq_listening = list(COMM_FREQ, ENG_FREQ, SEC_FREQ) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
-/obj/machinery/telecomms/receiver/preset_right/New()
+/obj/machinery/telecomms/receiver/preset_right/Initialize()
+	..()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
 
 /obj/machinery/telecomms/receiver/preset_left/birdstation
 	name = "Receiver"

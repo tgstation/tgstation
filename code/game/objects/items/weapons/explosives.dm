@@ -14,10 +14,10 @@
 	var/open_panel = 0
 	parent_type = /obj/item/weapon/grenade/plastic/c4
 
-/obj/item/weapon/c4/New()
+/obj/item/weapon/c4/Initialize()
+	..()
 	wires = new /datum/wires/explosive/c4(src)
 	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
-	..()
 
 /obj/item/weapon/c4/Destroy()
 	qdel(wires)

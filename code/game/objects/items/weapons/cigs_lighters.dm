@@ -117,7 +117,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/New()
+/obj/item/clothing/mask/cigarette/Initialize()
 	..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
@@ -257,12 +257,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 180
 	chem_volume = 50
 
-/obj/item/clothing/mask/cigarette/rollie/New()
+/obj/item/clothing/mask/cigarette/rollie/Initialize()
 	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
-/obj/item/clothing/mask/cigarette/rollie/trippy/New()
+/obj/item/clothing/mask/cigarette/rollie/trippy/Initialize()
 	..()
 	reagents.add_reagent("mushroomhallucinogen", 50)
 	light()
@@ -273,7 +273,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old roach, or for non-stoners, a used rollup."
 	icon_state = "roach"
 
-/obj/item/weapon/cigbutt/roach/New()
+/obj/item/weapon/cigbutt/roach/Initialize()
 	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
@@ -340,7 +340,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 100
 	var/packeditem = 0
 
-/obj/item/clothing/mask/cigarette/pipe/New()
+/obj/item/clothing/mask/cigarette/pipe/Initialize()
 	..()
 	name = "empty [initial(name)]"
 
@@ -444,7 +444,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A cheap-as-free lighter."
 	icon_state = "lighter"
 
-/obj/item/weapon/lighter/greyscale/New()
+/obj/item/weapon/lighter/greyscale/Initialize()
 	..()
 	var/image/I = image(icon,"lighter-overlay")
 	var/newcolor = color2hex(randomColor(1))
@@ -579,7 +579,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return (TOXLOSS|OXYLOSS)
 
 
-/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
+/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
 	..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it

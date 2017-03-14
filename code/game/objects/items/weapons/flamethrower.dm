@@ -221,7 +221,7 @@
 	return
 
 
-/obj/item/weapon/flamethrower/full/New(var/loc)
+/obj/item/weapon/flamethrower/full/Initialize()
 	..()
 	if(!weldtool)
 		weldtool = new /obj/item/weapon/weldingtool(src)
@@ -232,7 +232,7 @@
 	status = 1
 	update_icon()
 
-/obj/item/weapon/flamethrower/full/tank/New(var/loc)
+/obj/item/weapon/flamethrower/full/tank/Initialize()
 	..()
 	ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 	update_icon()

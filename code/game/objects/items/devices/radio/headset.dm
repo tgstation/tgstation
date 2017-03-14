@@ -11,7 +11,7 @@
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	dog_fashion = null
 
-/obj/item/device/radio/headset/New()
+/obj/item/device/radio/headset/Initialize()
 	..()
 	recalculateChannels()
 
@@ -54,13 +54,13 @@
 	name = "team leader headset"
 	command = TRUE
 
-/obj/item/device/radio/headset/syndicate/New()
+/obj/item/device/radio/headset/syndicate/Initialize()
 	..()
 	make_syndie()
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
-/obj/item/device/radio/headset/binary/New()
+/obj/item/device/radio/headset/binary/Initialize()
 	..()
 	qdel(keyslot)
 	keyslot = new /obj/item/device/encryptionkey/binary

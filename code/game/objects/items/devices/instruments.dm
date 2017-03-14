@@ -8,10 +8,10 @@
 	var/instrumentId = "generic"
 	var/instrumentExt = "ogg"
 
-/obj/item/device/instrument/New()
+/obj/item/device/instrument/Initialize()
+	..()
 	song = new(instrumentId, src)
 	song.instrumentExt = instrumentExt
-	..()
 
 /obj/item/device/instrument/Destroy()
 	qdel(song)

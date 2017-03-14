@@ -14,7 +14,7 @@
 	anchored = TRUE
 	layer = GHOST_LAYER
 
-/obj/effect/countdown/New(atom/A)
+/obj/effect/countdown/Initialize(atom/A)
 	. = ..()
 	attach(A)
 

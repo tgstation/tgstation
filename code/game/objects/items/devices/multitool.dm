@@ -35,7 +35,7 @@
 	var/rangewarning = 20 //Glows yellow when inside
 	origin_tech = "magnets=1;engineering=2;syndicate=1"
 
-/obj/item/device/multitool/ai_detect/New()
+/obj/item/device/multitool/ai_detect/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 
