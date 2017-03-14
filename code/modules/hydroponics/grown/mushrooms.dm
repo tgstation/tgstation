@@ -220,7 +220,7 @@
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	mutatelist = list(/obj/item/seeds/glowshroom/glowcap, /obj/item/seeds/glowshroom/shadowshroom)
+	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
 	reagents_add = list("radium" = 0.1, "phosphorus" = 0.1, "nutriment" = 0.04)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
@@ -277,28 +277,3 @@
 	filling_color = "#00FA9A"
 	effect_path = /obj/structure/glowshroom/glowcap
 	origin_tech = "biotech=4;powerstorage=6;plasmatech=4"
-
-
-//Shadowshroom
-/obj/item/seeds/glowshroom/shadowshroom
-	name = "pack of shadowshroom mycelium"
-	desc = "This mycelium will grow into something shadowy."
-	icon_state = "mycelium-shadowshroom"
-	species = "shadowshroom"
-	icon_grow = "shadowshroom-grow"
-	icon_dead = "shadowshroom-dead"
-	plantname = "Shadowshrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom
-	genes = list(/datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	mutatelist = list()
-	reagents_add = list("radium" = 0.2, "nutriment" = 0.04)
-	rarity = 30
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom
-	seed = /obj/item/seeds/glowshroom/shadowshroom
-	name = "shadowshroom cluster"
-	desc = "<I>Mycena Umbra</I>: This species of mushroom emits shadow instead of light."
-	icon_state = "shadowshroom"
-	effect_path = /obj/structure/glowshroom/shadowshroom
-	origin_tech = "biotech=4;plasmatech=4;magnets=4"
-
