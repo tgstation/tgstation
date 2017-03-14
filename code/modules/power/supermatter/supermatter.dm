@@ -45,7 +45,7 @@
 
 	var/emergency_issued = 0
 
-	var/explosion_power = 8
+	var/explosion_power = 320
 
 	var/lastwarning = 0				// Time in 1/10th of seconds since the last sent warning
 	var/power = 0
@@ -114,10 +114,10 @@
 /obj/machinery/power/supermatter_shard/proc/explode()
 	investigate_log("has collapsed into a singularity.", "supermatter")
 	var/turf/T = get_turf(src)
-	qdel(src)
 	if(T)
 		var/obj/singularity/S = new(T)
-		S.energy = 800
+		S.energy = explosion_power
+		S.consume(src)
 
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/T = loc
@@ -163,6 +163,7 @@
 					L.rad_act(rads)
 
 			explode()
+			return
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
@@ -244,8 +245,6 @@
 	power -= (power/500)**3
 
 	return 1
-
-/obj/machinery/power/supermatter_shard
 
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
@@ -384,7 +383,7 @@
 	icon_state = "darkmatter"
 	anchored = 1
 	gasefficency = 0.15
-	explosion_power = 20
+	explosion_power = 800
 
 
 #undef HALLUCINATION_RANGE
