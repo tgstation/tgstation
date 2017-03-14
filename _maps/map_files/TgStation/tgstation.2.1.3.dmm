@@ -55549,7 +55549,7 @@
 	name = "Radiation Shutters Control";
 	pixel_x = 0;
 	pixel_y = -24;
-	req_access_txt = "24"
+	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
