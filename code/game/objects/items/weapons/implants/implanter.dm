@@ -10,6 +10,7 @@
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
+	var/imp_type = null
 
 
 /obj/item/weapon/implanter/update_icon()
@@ -33,13 +34,13 @@
 			if(src && imp)
 				if(imp.implant(M, user))
 					if (M == user)
-						user << "<span class='notice'>You implant yourself.</span>"
+						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
 						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
 				else
-					user << "<span class='warning'>[src] fails to implant [M].</span>"
+					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
 
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
@@ -55,24 +56,16 @@
 	else
 		return ..()
 
-/obj/item/weapon/implanter/New()
+/obj/item/weapon/implanter/Initialize(mapload)
 	..()
+	if(imp_type)
+		imp = new imp_type(src)
 	update_icon()
-
-
-
 
 /obj/item/weapon/implanter/adrenalin
 	name = "implanter (adrenalin)"
-
-/obj/item/weapon/implanter/adrenalin/New()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
-	..()
-
+	imp_type = /obj/item/weapon/implant/adrenalin
 
 /obj/item/weapon/implanter/emp
 	name = "implanter (EMP)"
-
-/obj/item/weapon/implanter/emp/New()
-	imp = new /obj/item/weapon/implant/emp(src)
-	..()
+	imp_type = /obj/item/weapon/implant/emp

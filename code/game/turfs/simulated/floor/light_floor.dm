@@ -1,7 +1,7 @@
 /turf/open/floor/light
 	name = "light floor"
 	desc = "A wired glass tile embedded into the floor."
-	luminosity = 5
+	light_range = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light
 	broken_states = list("light_broken")
@@ -22,24 +22,24 @@
 		switch(state)
 			if(0)
 				icon_state = "light_on-[coloredlights[currentcolor]]"
-				SetLuminosity(1)
+				set_light(1)
 			if(1)
 				var/num = pick("1","2","3","4")
 				icon_state = "light_on_flicker[num]"
-				SetLuminosity(1)
+				set_light(1)
 			if(2)
 				icon_state = "light_on_broken"
-				SetLuminosity(1)
+				set_light(1)
 			if(3)
 				icon_state = "light_off"
-				SetLuminosity(0)
+				set_light(0)
 	else
-		SetLuminosity(0)
+		set_light(0)
 		icon_state = "light_off"
 
 
 /turf/open/floor/light/ChangeTurf(turf/T)
-	SetLuminosity(0)
+	set_light(0)
 	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
@@ -67,9 +67,9 @@
 			qdel(C)
 			state = 0 //fixing it by bashing it with a light bulb, fun eh?
 			update_icon()
-			user << "<span class='notice'>You replace the light bulb.</span>"
+			to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 		else
-			user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
+			to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
 
 
 //Cycles through all of the colours

@@ -99,7 +99,7 @@
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
+	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
 	M.AdjustSleeping(30, 0)
 	. = 1
 
@@ -553,10 +553,10 @@
 	taste_description = "tingling mushroom"
 
 /datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
-	M.AddLuminosity(2)
+	M.set_light(2)
 
 /datum/reagent/consumable/tinlux/on_mob_delete(mob/living/M)
-	M.AddLuminosity(-2)
+	M.set_light(-2)
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"

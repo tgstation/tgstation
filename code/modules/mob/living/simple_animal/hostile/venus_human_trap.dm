@@ -42,7 +42,7 @@
 		var/mob/living/L = AM
 		if(!("vines" in L.faction))
 			L.adjustBruteLoss(5)
-			L << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+			to_chat(L, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 
 
@@ -69,7 +69,7 @@
 	var/grasp_pull_chance = 85
 	var/grasp_range = 4
 	del_on_death = 1
-	
+
 /mob/living/simple_animal/hostile/venus_human_trap/Destroy()
 	for(var/L in grasping)
 		var/datum/beam/B = grasping[L]
@@ -99,7 +99,7 @@
 		if(grasping.len < max_grasps)
 			grasping:
 				for(var/mob/living/L in view(grasp_range, src))
-					if(L == src || faction_check(L) || (L in grasping) || L == target)
+					if(L == src || faction_check_mob(L) || (L in grasping) || L == target)
 						continue
 					for(var/t in getline(src,L))
 						for(var/a in t)
@@ -107,7 +107,7 @@
 							if(A.density && A != L)
 								continue grasping
 					if(prob(grasp_chance))
-						L << "<span class='userdanger'>\The [src] has you entangled!</span>"
+						to_chat(L, "<span class='userdanger'>\The [src] has you entangled!</span>")
 						grasping[L] = Beam(L, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 
 						break //only take 1 new victim per cycle

@@ -1,4 +1,4 @@
-/mob/living/New()
+/mob/living/Initialize()
 	. = ..()
 	generateStaticOverlay()
 	if(staticOverlays.len)
@@ -15,7 +15,7 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
-	faction |= "\ref[src]"
+	faction += "\ref[src]"
 
 
 /mob/living/prepare_huds()
@@ -31,6 +31,7 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in player_list)
 		for(var/image/I in staticOverlays)
@@ -108,7 +109,7 @@
 		var/mob/living/L = M
 		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
-				src << "<span class='warning'>[L] is restrained, you cannot push past.</span>"
+				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
 			return 1
 
 		if(L.pulling)
@@ -116,7 +117,7 @@
 				var/mob/P = L.pulling
 				if(P.restrained())
 					if(!(world.time % 5))
-						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
+						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
 					return 1
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
@@ -221,11 +222,11 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
 	if (InCritical())
-		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
+		src.log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
 		src.adjustOxyLoss(src.health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
-			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
+			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
@@ -274,7 +275,7 @@
 	set category = "IC"
 
 	if(sleeping)
-		src << "<span class='notice'>You are already sleeping.</span>"
+		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
@@ -288,7 +289,7 @@
 	set category = "IC"
 
 	resting = !resting
-	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
+	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
 
 //Recursive function to find everything a mob is holding.
@@ -399,11 +400,11 @@
 
 	if(config.allow_Metadata)
 		if(client)
-			src << "[src]'s Metainfo:<br>[client.prefs.metadata]"
+			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 		else
-			src << "[src] does not have any stored infomation!"
+			to_chat(src, "[src] does not have any stored infomation!")
 	else
-		src << "OOC Metadata is not supported by this server!"
+		to_chat(src, "OOC Metadata is not supported by this server!")
 
 	return
 
@@ -551,10 +552,10 @@
 		C.container_resist(src)
 
 	else if(has_status_effect(/datum/status_effect/freon))
-		src << "You start breaking out of the ice cube!"
+		to_chat(src, "You start breaking out of the ice cube!")
 		if(do_mob(src, src, 40))
 			if(has_status_effect(/datum/status_effect/freon))
-				src << "You break out of the ice cube!"
+				to_chat(src, "You break out of the ice cube!")
 				remove_status_effect(/datum/status_effect/freon)
 				update_canmove()
 
@@ -622,7 +623,7 @@
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(what.flags & NODROP)
-		src << "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>"
+		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
@@ -643,7 +644,7 @@
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
 	if(what && (what.flags & NODROP))
-		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
+		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
 	if(what)
 		var/list/where_list
@@ -656,7 +657,7 @@
 			final_where = where
 
 		if(!what.mob_can_equip(who, src, final_where, TRUE))
-			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
+			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
@@ -778,11 +779,11 @@
 		if(be_close && in_range(M, src))
 			return 1
 	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
 /mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
 	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	return 1
 
@@ -793,7 +794,7 @@
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
-			src << "<span class='notice'>You're too exhausted to keep going...</span>"
+			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Weaken(5)
 			setStaminaLoss(health - 2)
 	update_health_hud()
@@ -849,8 +850,7 @@
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G.summoner = new_mob
 		G.Recall()
-		G << "<span class='holoparasite'>Your summoner has changed \
-			form!</span>"
+		to_chat(G, "<span class='holoparasite'>Your summoner has changed form!</span>")
 
 /mob/living/proc/fakefireextinguish()
 	return
@@ -866,7 +866,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.AddLuminosity(3)
+		src.set_light(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
@@ -876,7 +876,7 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		src.AddLuminosity(-3)
+		src.set_light(0)
 		clear_alert("fire")
 		update_fire()
 
@@ -915,3 +915,8 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
+
+/mob/living/post_buckle_mob(mob/living/M)
+	if(riding_datum)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.handle_vehicle_layer()

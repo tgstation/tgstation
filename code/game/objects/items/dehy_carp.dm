@@ -13,19 +13,10 @@
 /obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
 	src.add_fingerprint(user)	//Anyone can add their fingerprints to it with this
 	if(!owned)
-		user << "<span class='notice'>You pet [src]. You swear it looks up at you.</span>"
+		to_chat(user, "<span class='notice'>You pet [src]. You swear it looks up at you.</span>")
 		owner = user
 		owned = 1
-	return ..()
-
-
-/obj/item/toy/carpplushie/dehy_carp/afterattack(obj/O, mob/user,proximity)
-	if(!proximity) return
-	if(istype(O,/obj/structure/sink))
-		user.drop_item()
-		loc = get_turf(O)
-		return Swell()
-	..()
+	else return ..()
 
 /obj/item/toy/carpplushie/dehy_carp/proc/Swell()
 	desc = "It's growing!"

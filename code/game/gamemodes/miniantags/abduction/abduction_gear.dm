@@ -91,7 +91,7 @@
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
 	if(ishuman(loc))
 		if(combat_cooldown != initial(combat_cooldown))
-			loc << "<span class='warning'>Combat injection is still recharging.</span>"
+			to_chat(loc, "<span class='warning'>Combat injection is still recharging.</span>")
 			return
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
@@ -109,7 +109,7 @@
 /obj/item/device/abductor/proc/AbductorCheck(user)
 	if(isabductor(user))
 		return TRUE
-	user << "<span class='warning'>You can't figure how this works!</span>"
+	to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
 	return FALSE
 
 /obj/item/device/abductor/proc/ScientistCheck(user)
@@ -132,7 +132,7 @@
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='warning'>You're not trained to use this!</span>"
+		to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
 		return
 	if(mode == GIZMO_SCAN)
 		mode = GIZMO_MARK
@@ -140,13 +140,13 @@
 	else
 		mode = GIZMO_SCAN
 		icon_state = "gizmo_scan"
-	user << "<span class='notice'>You switch the device to [mode==GIZMO_SCAN? "SCAN": "MARK"] MODE</span>"
+	to_chat(user, "<span class='notice'>You switch the device to [mode==GIZMO_SCAN? "SCAN": "MARK"] MODE</span>")
 
 /obj/item/device/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='notice'>You're not trained to use this</span>"
+		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
 		if(GIZMO_SCAN)
@@ -161,7 +161,7 @@
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='notice'>You're not trained to use this</span>"
+		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
 		if(GIZMO_SCAN)
@@ -173,16 +173,16 @@
 	if(ishuman(target))
 		if(console!=null)
 			console.AddSnapshot(target)
-			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
+			to_chat(user, "<span class='notice'>You scan [target] and add them to the database.</span>")
 
 /obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
 	if(marked == target)
-		user << "<span class='warning'>This specimen is already marked!</span>"
+		to_chat(user, "<span class='warning'>This specimen is already marked!</span>")
 		return
 	if(ishuman(target))
 		if(isabductor(target))
 			marked = target
-			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
+			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 		else
 			prepare(target,user)
 	else
@@ -190,12 +190,12 @@
 
 /obj/item/device/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
 	if(get_dist(target,user)>1)
-		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>"
+		to_chat(user, "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>")
 		return
-	user << "<span class='notice'>You begin preparing [target] for transport...</span>"
+	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
 	if(do_after(user, 100, target = target))
 		marked = target
-		user << "<span class='notice'>You finish preparing [target] for transport.</span>"
+		to_chat(user, "<span class='notice'>You finish preparing [target] for transport.</span>")
 
 
 /obj/item/device/abductor/silencer
@@ -228,7 +228,7 @@
 	for(M in view(2,targloc))
 		if(M == user)
 			continue
-		user << "<span class='notice'>You silence [M]'s radio devices.</span>"
+		to_chat(user, "<span class='notice'>You silence [M]'s radio devices.</span>")
 		radio_off_mob(M)
 
 /obj/item/device/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
@@ -269,18 +269,20 @@
 
 <br>
  1.Acquire fresh specimen.<br>
- 2.Put the specimen on operating table<br>
- 3.Apply surgical drapes preparing for dissection<br>
- 4.Apply scalpel to specimen torso<br>
- 5.Retract skin from specimen's torso<br>
- 6.Apply scalpel to specimen's torso<br>
- 7.Search through the specimen's torso with your hands to remove any organs<br>
- 8.Insert replacement gland (Retrieve one from gland storage)<br>
- 9.Consider dressing the specimen back to not disturb the habitat <br>
- 10.Put the specimen in the experiment machinery<br>
- 11.Choose one of the machine options and follow displayed instructions<br>
+ 2.Put the specimen on operating table.<br>
+ 3.Apply surgical drapes, preparing for experimental dissection.<br>
+ 4.Apply scalpel to specimen's torso.<br>
+ 5.Clamp bleeders on specimen's torso with a hemostat.<br>
+ 6.Retract skin of specimen's torso with a retractor.<br>
+ 7.Apply scalpel again to specimen's torso.<br>
+ 8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
+ 9.Insert replacement gland (Retrieve one from gland storage).<br>
+ 10.Consider dressing the specimen back to not disturb the habitat. <br>
+ 11.Put the specimen in the experiment machinery.<br>
+ 12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
+ 13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
 <br>
-Congratulations! You are now trained for xenobiology research!"}
+Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/weapon/paper/abductor/update_icon()
 	return
@@ -320,7 +322,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(BATON_PROBE)
 			txt = "probing"
 
-	usr << "<span class='notice'>You switch the baton to [txt] mode.</span>"
+	to_chat(usr, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
 
 /obj/item/weapon/abductor_baton/update_icon()
@@ -399,7 +401,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
-		user << "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>"
+		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel drowsy!</span>")
 
@@ -416,12 +418,12 @@ Congratulations! You are now trained for xenobiology research!"}
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
-					user << "<span class='notice'>You handcuff [C].</span>"
+					to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 					add_logs(user, C, "handcuffed")
 			else
-				user << "<span class='warning'>You fail to handcuff [C].</span>"
+				to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
 		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
@@ -441,8 +443,8 @@ Congratulations! You are now trained for xenobiology research!"}
 		else
 			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
 
-	user << "<span class='notice'>Probing result:</span>[species]"
-	user << "[helptext]"
+	to_chat(user, "<span class='notice'>Probing result:</span>[species]")
+	to_chat(user, "[helptext]")
 
 /obj/item/weapon/restraints/handcuffs/energy
 	name = "hard-light energy field"
@@ -474,7 +476,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(BATON_CUFF)
 			user <<"<span class='warning'>The baton is in restraining mode.</span>"
 		if(BATON_PROBE)
-			user << "<span class='warning'>The baton is in probing mode.</span>"
+			to_chat(user, "<span class='warning'>The baton is in probing mode.</span>")
 
 
 /obj/item/weapon/scalpel/alien
@@ -548,7 +550,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You start disassembling [src]...</span>"
+		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -559,9 +561,9 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(istype(I, /obj/item/stack/sheet/mineral/abductor))
 		var/obj/item/stack/sheet/P = I
 		if(P.get_amount() < 1)
-			user << "<span class='warning'>You need one alien alloy sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one alien alloy sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))
 			P.use(1)
 			new /obj/structure/table/abductor(src.loc)
@@ -570,10 +572,9 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		var/obj/item/stack/sheet/P = I
 		if(P.get_amount() < 1)
-			user << "<span class='warning'>You need one sheet of silver to do \
-				this!</span>"
+			to_chat(user, "<span class='warning'>You need one sheet of silver to do	this!</span>")
 			return
-		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))
 			P.use(1)
 			new /obj/structure/table/optable/abductor(src.loc)
@@ -610,7 +611,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	. = ..()
 	if(iscarbon(AM))
 		START_PROCESSING(SSobj, src)
-		AM << "<span class='danger'>You feel a series of tiny pricks!</span>"
+		to_chat(AM, "<span class='danger'>You feel a series of tiny pricks!</span>")
 
 /obj/structure/table/optable/abductor/process()
 	. = PROCESS_KILL
@@ -652,7 +653,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return
-				user << "<span class='notice'>You disassemble the airlock assembly.</span>"
+				to_chat(user, "<span class='notice'>You disassemble the airlock assembly.</span>")
 				new /obj/item/stack/sheet/mineral/abductor(get_turf(src), 4)
 				qdel(src)
 		else

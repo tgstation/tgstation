@@ -9,6 +9,13 @@
 	var/slowed = FALSE
 	var/slowvalue = 1
 
+/datum/riding/New(atom/movable/_ridden)
+	ridden = _ridden
+
+/datum/riding/Destroy()
+	ridden = null
+	return ..()
+
 /datum/riding/proc/handle_vehicle_layer()
 	if(ridden.dir != NORTH)
 		ridden.layer = ABOVE_MOB_LAYER
@@ -25,7 +32,7 @@
 	return TRUE
 
 /datum/riding/proc/force_dismount(mob/living/M)
-	ridden.unbuckle_mob(M)
+	Unbuckle(M)
 
 //Override this to set your vehicle's various pixel offsets
 //if they differ between directions, otherwise use the
@@ -58,7 +65,7 @@
 //MOVEMENT
 /datum/riding/proc/handle_ride(mob/user, direction)
 	if(user.incapacitated())
-		ridden.unbuckle_mob(user)
+		Unbuckle(user)
 		return
 
 	if(world.time < next_vehicle_move)
@@ -72,7 +79,10 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [ridden.name].</span>"
+		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive \the [ridden.name].</span>")
+
+/datum/riding/proc/Unbuckle(atom/movable/M)
+	addtimer(CALLBACK(ridden, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
 
 /datum/riding/proc/Process_Spacemove(direction)
 	if(ridden.has_gravity())
@@ -202,6 +212,13 @@
 	generic_pixel_x = 0
 	generic_pixel_y = 4
 
+//i want to ride my
+/datum/riding/bicycle
+	keytype = null
+	generic_pixel_x = 0
+	generic_pixel_y = 4
+	vehicle_move_delay = 0
+
 //speedbike
 /datum/riding/space/speedbike
 	keytype = null
@@ -267,7 +284,7 @@
 	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
 	else
-		user << "Boats don't go on land!"
+		to_chat(user, "Boats don't go on land!")
 		return 0
 
 /datum/riding/boat/dragon
@@ -286,7 +303,7 @@
 
 /datum/riding/animal/handle_ride(mob/user, direction)
 	if(user.incapacitated())
-		ridden.unbuckle_mob(user)
+		Unbuckle(user)
 		return
 
 	if(world.time < next_vehicle_move)
@@ -301,7 +318,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		user << "<span class='notice'>You'll need something  to guide the [ridden.name].</span>"
+		to_chat(user, "<span class='notice'>You'll need something  to guide the [ridden.name].</span>")
 
 ///////Humans. Yes, I said humans. No, this won't end well...//////////
 /datum/riding/human
@@ -311,11 +328,11 @@
 	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
 	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
-		ridden.unbuckle_mob(M)
+		Unbuckle(M)
 		return FALSE
 	if(M.restrained(TRUE))
 		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
-		ridden.unbuckle_mob(M)
+		Unbuckle(M)
 		return FALSE
 	if(H.pulling == M)
 		H.stop_pulling()
@@ -347,7 +364,7 @@
 		ridden.layer = MOB_LAYER
 
 /datum/riding/human/force_dismount(mob/living/user)
-	ridden.unbuckle_mob(user)
+	Unbuckle(user)
 	user.Weaken(3)
 	user.Stun(3)
 	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
@@ -363,14 +380,14 @@
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
 		if(kick)
-			user << "<span class='userdanger'>You fall off of [ridden]!</span>"
-			ridden.unbuckle_mob(user)
+			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
+			Unbuckle(user)
 			return
 	if(istype(user, /mob/living/carbon))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
-			ridden.unbuckle_mob(user)
-			user << "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>"
+			Unbuckle(user)
+			to_chat(user, "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>")
 			return
 
 /datum/riding/cyborg/handle_vehicle_layer()
@@ -407,7 +424,7 @@
 						M.pixel_y = 3
 
 /datum/riding/cyborg/force_dismount(mob/living/M)
-	ridden.unbuckle_mob(M)
+	Unbuckle(M)
 	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 	M.Move(targetm)

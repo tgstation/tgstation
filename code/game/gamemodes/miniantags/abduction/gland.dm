@@ -62,7 +62,7 @@
 	icon_state = "health"
 
 /obj/item/organ/heart/gland/heals/activate()
-	owner << "<span class='notice'>You feel curiously revitalized.</span>"
+	to_chat(owner, "<span class='notice'>You feel curiously revitalized.</span>")
 	owner.adjustBruteLoss(-20)
 	owner.adjustOxyLoss(-20)
 	owner.adjustFireLoss(-20)
@@ -74,7 +74,7 @@
 	icon_state = "slime"
 
 /obj/item/organ/heart/gland/slime/activate()
-	owner << "<span class='warning'>You feel nauseous!</span>"
+	to_chat(owner, "<span class='warning'>You feel nauseous!</span>")
 	owner.vomit(20)
 
 	var/mob/living/simple_animal/slime/Slime
@@ -90,13 +90,13 @@
 	icon_state = "mindshock"
 
 /obj/item/organ/heart/gland/mindshock/activate()
-	owner << "<span class='notice'>You get a headache.</span>"
+	to_chat(owner, "<span class='notice'>You get a headache.</span>")
 
 	var/turf/T = get_turf(owner)
 	for(var/mob/living/carbon/H in orange(4,T))
 		if(H == owner)
 			continue
-		H << "<span class='alien'>You hear a buzz in your head.</span>"
+		to_chat(H, "<span class='alien'>You hear a buzz in your head.</span>")
 		H.confused += 20
 
 /obj/item/organ/heart/gland/pop
@@ -107,7 +107,7 @@
 	icon_state = "species"
 
 /obj/item/organ/heart/gland/pop/activate()
-	owner << "<span class='notice'>You feel unlike yourself.</span>"
+	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
 	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly,/datum/species/jelly))
 	owner.set_species(species)
 
@@ -119,7 +119,7 @@
 	icon_state = "vent"
 
 /obj/item/organ/heart/gland/ventcrawling/activate()
-	owner << "<span class='notice'>You feel very stretchy.</span>"
+	to_chat(owner, "<span class='notice'>You feel very stretchy.</span>")
 	owner.ventcrawler = VENTCRAWLER_ALWAYS
 
 
@@ -130,7 +130,7 @@
 	icon_state = "viral"
 
 /obj/item/organ/heart/gland/viral/activate()
-	owner << "<span class='warning'>You feel sick.</span>"
+	to_chat(owner, "<span class='warning'>You feel sick.</span>")
 	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
 	var/datum/disease/D = new virus_type()
 	D.carrier = 1
@@ -148,7 +148,7 @@
 	icon_state = "emp"
 
 /obj/item/organ/heart/gland/emp/activate()
-	owner << "<span class='warning'>You feel a spike of pain in your head.</span>"
+	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
 	empulse(get_turf(owner), 2, 5, 1)
 
 /obj/item/organ/heart/gland/spiderman
@@ -158,7 +158,7 @@
 	icon_state = "spider"
 
 /obj/item/organ/heart/gland/spiderman/activate()
-	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
+	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
 	owner.faction |= "spiders"
 	new /obj/structure/spider/spiderling(owner.loc)
 
@@ -169,7 +169,7 @@
 	icon_state = "egg"
 
 /obj/item/organ/heart/gland/egg/activate()
-	owner << "<span class='boldannounce'>You lay an egg!</span>"
+	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
@@ -189,6 +189,7 @@
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
 
+
 /obj/item/organ/heart/gland/bodysnatch
 	cooldown_low = 600
 	cooldown_high = 600
@@ -196,13 +197,14 @@
 	uses = 1
 
 /obj/item/organ/heart/gland/bodysnatch/activate()
-	owner << "<span class='warning'>You feel something moving around inside you...</span>"
+	to_chat(owner, "<span class='warning'>You feel something moving around inside you...</span>")
 	//spawn cocoon with clone greytide snpc inside
 	if(ishuman(owner))
 		var/obj/structure/spider/cocoon/abductor/C = new (get_turf(owner))
 		C.Copy(owner)
 		C.Start()
-	owner.gib()
+	owner.adjustBruteLoss(40)
+	owner.add_splatter_floor()
 
 /obj/structure/spider/cocoon/abductor
 	name = "slimy cocoon"
@@ -217,16 +219,6 @@
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
 	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
 
-	//There's no define for this / get all items ?
-	var/list/slots = list(slot_back,slot_w_uniform,slot_wear_suit,\
-	slot_wear_mask,slot_head,slot_shoes,slot_gloves,slot_ears,\
-	slot_glasses,slot_belt,slot_s_store,slot_l_store,slot_r_store,slot_wear_id)
-
-	for(var/slot in slots)
-		var/obj/item/I = H.get_item_by_slot(slot)
-		if(I)
-			clone.equip_to_slot_if_possible(I,slot)
-
 /obj/structure/spider/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
 	START_PROCESSING(SSobj, src)
@@ -239,6 +231,7 @@
 			M.loc = src.loc
 		qdel(src)
 
+
 /obj/item/organ/heart/gland/plasma
 	cooldown_low = 1200
 	cooldown_high = 1800
@@ -246,10 +239,10 @@
 	uses = -1
 
 /obj/item/organ/heart/gland/plasma/activate()
-	owner << "<span class='warning'>You feel bloated.</span>"
+	to_chat(owner, "<span class='warning'>You feel bloated.</span>")
 	sleep(150)
 	if(!owner) return
-	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
+	to_chat(owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
 	sleep(50)
 	if(!owner) return
 	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")

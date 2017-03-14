@@ -112,9 +112,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
-			H << "[A] materializes into your hands!"
+			to_chat(H, "[A] materializes into your hands!")
 		else
-			H << "\The [A] materializes onto the floor."
+			to_chat(H, "\The [A] materializes onto the floor.")
 	return 1
 
 //Discounts (dynamically filled above)
@@ -1080,6 +1080,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/stack/telecrystal/twenty
 	cost = 20
 
+/datum/uplink_item/device_tools/jammer
+	name = "Radio jammer"
+	desc = "This device will disrupt any nearby outgoing radio communication when activated."
+	item = /obj/item/device/jammer
+	cost = 10
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1194,7 +1200,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisble walls, and shoot bullets out of their fingers. Obviously only works for Mimes."
-	cost = 15
+	cost = 12
 	item = /obj/item/weapon/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
 
@@ -1216,6 +1222,22 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+
+/datum/uplink_item/role_restricted/ancient_jumpsuit
+	name = "Ancient Jumpsuit"
+	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
+	item = /obj/item/clothing/under/color/grey/glorf
+	cost = 20
+	surplus = 0
+	restricted_roles = list("Assistant")
+
+/datum/uplink_item/role_restricted/haunted_magic_eightball
+	name = "Haunted Magic Eightball"
+	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. Be warned, that spirits are often capricious or just little assholes. To use, simply speak your question aloud, then begin shaking."
+	item = /obj/item/toy/eightball/haunted
+	cost = 2
+	restricted_roles = list("Librarian")
+	limited_stock = 1 // please don't spam deadchat
 
 // Pointless
 /datum/uplink_item/badass

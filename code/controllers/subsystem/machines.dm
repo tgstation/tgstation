@@ -1,21 +1,20 @@
-var/datum/subsystem/machines/SSmachine
+var/datum/controller/subsystem/machines/SSmachine
 
-/datum/subsystem/machines
+/datum/controller/subsystem/machines
 	name = "Machines"
 	init_order = 9
-	display_order = 3
 	flags = SS_KEEP_TIMING
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/powernets = list()
 
 
-/datum/subsystem/machines/Initialize()
+/datum/controller/subsystem/machines/Initialize()
 	makepowernets()
 	fire()
 	..()
 
-/datum/subsystem/machines/proc/makepowernets()
+/datum/controller/subsystem/machines/proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
 		qdel(PN)
 	powernets.Cut()
@@ -26,15 +25,15 @@ var/datum/subsystem/machines/SSmachine
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
-/datum/subsystem/machines/New()
+/datum/controller/subsystem/machines/New()
 	NEW_SS_GLOBAL(SSmachine)
 
 
-/datum/subsystem/machines/stat_entry()
+/datum/controller/subsystem/machines/stat_entry()
 	..("M:[processing.len]|PN:[powernets.len]")
 
 
-/datum/subsystem/machines/fire(resumed = 0)
+/datum/controller/subsystem/machines/fire(resumed = 0)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
@@ -57,7 +56,7 @@ var/datum/subsystem/machines/SSmachine
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/machines/proc/setup_template_powernets(list/cables)
+/datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	for(var/A in cables)
 		var/obj/structure/cable/PC = A
 		if(!PC.powernet)
@@ -65,7 +64,7 @@ var/datum/subsystem/machines/SSmachine
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
-/datum/subsystem/machines/Recover()
+/datum/controller/subsystem/machines/Recover()
 	if (istype(SSmachine.processing))
 		processing = SSmachine.processing
 	if (istype(SSmachine.powernets))

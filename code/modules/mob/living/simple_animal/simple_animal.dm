@@ -85,7 +85,7 @@
 	//domestication
 	var/tame = 0
 
-/mob/living/simple_animal/New()
+/mob/living/simple_animal/Initialize()
 	..()
 	handcrafting = new()
 	if(gender == PLURAL)
@@ -235,7 +235,7 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
+			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
@@ -361,7 +361,7 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -377,7 +377,7 @@
 		if(be_close && !in_range(M, src))
 			return 0
 	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	return 1
 
@@ -486,7 +486,7 @@
 		if(istype(held_item, /obj/item/weapon/twohanded))
 			var/obj/item/weapon/twohanded/T = held_item
 			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
@@ -540,11 +540,10 @@
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
-/mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/mob/living/simple_animal/Moved()
 	. = ..()
 	if(riding_datum)
-		riding_datum.handle_vehicle_layer()
-		riding_datum.handle_vehicle_offsets()
+		riding_datum.on_vehicle_move()
 
 
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)

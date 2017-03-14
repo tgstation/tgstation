@@ -34,7 +34,7 @@
 	var/spelldamage = 15
 	var/spellcasttime = 15							//if you varedit this also varedit ranged_cooldown_time else the mob will attack again before the spell hits, looking weird but still working
 
-/mob/living/simple_animal/hostile/flan/New()		//Required for the inheritance of casting animations.
+/mob/living/simple_animal/hostile/flan/Initialize()		//Required for the inheritance of casting animations.
 	..()
 	casting = 0
 	icon_state = "[initial(icon_state)][casting]"

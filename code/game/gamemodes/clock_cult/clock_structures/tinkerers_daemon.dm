@@ -43,12 +43,12 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(active)
 			if(component_id_to_produce)
-				user << "<span class='[get_component_span(component_id_to_produce)]_small'>It is currently producing [get_component_name(component_id_to_produce)][component_id_to_produce != REPLICANT_ALLOY ? "s":""].</span>"
+				to_chat(user, "<span class='[get_component_span(component_id_to_produce)]_small'>It is currently producing [get_component_name(component_id_to_produce)][component_id_to_produce != REPLICANT_ALLOY ? "s":""].</span>")
 			else
-				user << "<span class='brass'>It is currently producing random components.</span>"
-		user << "<span class='nezbere_small'>It will produce a component every <b>[round((production_cooldown*0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds and requires at least the following power for each component type:</span>"
+				to_chat(user, "<span class='brass'>It is currently producing random components.</span>")
+		to_chat(user, "<span class='nezbere_small'>It will produce a component every <b>[round((production_cooldown*0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds and requires at least the following power for each component type:</span>")
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[get_component_cost(i)]W</b> <i>([clockwork_component_cache[i]] exist[clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>"
+			to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[get_component_cost(i)]W</b> <i>([clockwork_component_cache[i]] exist[clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>")
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)
@@ -63,23 +63,23 @@
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>You place your hand on the daemon, but nothing happens.</span>"
+		to_chat(user, "<span class='warning'>You place your hand on the daemon, but nothing happens.</span>")
 		return
 	if(active)
 		toggle(0, user)
 	else
 		if(!anchored)
-			user << "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>"
+			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>")
 			return FALSE
 		var/servants = 0
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
 		if(servants * 0.2 < clockwork_daemons)
-			user << "<span class='nezbere'>\"There are too few servants for this daemon to work.\"</span>"
+			to_chat(user, "<span class='nezbere'>\"There are too few servants for this daemon to work.\"</span>")
 			return
 		if(!clockwork_caches)
-			user << "<span class='nezbere'>\"You require a cache for this daemon to operate. Get to it.\"</span>"
+			to_chat(user, "<span class='nezbere'>\"You require a cache for this daemon to operate. Get to it.\"</span>")
 			return
 		var/min_power_usable = 0
 		for(var/i in clockwork_component_cache)
@@ -88,7 +88,7 @@
 			else
 				min_power_usable = min(min_power_usable, get_component_cost(i))
 		if(total_accessable_power() < min_power_usable)
-			user << "<span class='nezbere'>\"You need more power to activate this daemon, friend.\"</span>"
+			to_chat(user, "<span class='nezbere'>\"You need more power to activate this daemon, friend.\"</span>")
 			return
 		var/choice = alert(user,"Activate Daemon...",,"Specific Component","Random Component","Cancel")
 		switch(choice)
@@ -105,10 +105,10 @@
 				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
 					return
 				if(!component_id_to_produce)
-					user << "<span class='warning'>You decide not to select a component and activate the daemon.</span>"
+					to_chat(user, "<span class='warning'>You decide not to select a component and activate the daemon.</span>")
 					return
 				if(total_accessable_power() < get_component_cost(component_id_to_produce))
-					user << "<span class='warning'>There is too little power to produce this type of component!</span>"
+					to_chat(user, "<span class='warning'>There is too little power to produce this type of component!</span>")
 					return
 				toggle(0, user)
 			if("Random Component")
@@ -130,10 +130,10 @@
 		component_glow.color = component_color
 		add_overlay(component_glow)
 		production_time = world.time + production_cooldown //don't immediately produce when turned on after being off
-		SetLuminosity(2, 1)
+		set_light(2, 0.9, get_component_color_bright(component_id_to_produce))
 	else
 		cut_overlays()
-		SetLuminosity(0)
+		set_light(0)
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/proc/get_component_cost(id)
 	return max(MIN_CLOCKCULT_POWER*2, (MIN_CLOCKCULT_POWER*2) * (1 + round(clockwork_component_cache[id] * 0.2)))

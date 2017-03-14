@@ -25,20 +25,20 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator/examine(mob/user)
 	..()
 	if(max_mod_capacity)
-		user << "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
+		to_chat(user, "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.")
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			user << "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>"
+			to_chat(user, "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>")
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/weapon/crowbar))
 		if(modkits.len)
-			user << "<span class='notice'>You pry the modifications out.</span>"
+			to_chat(user, "<span class='notice'>You pry the modifications out.</span>")
 			playsound(loc, A.usesound, 100, 1)
 			for(var/obj/item/borg/upgrade/modkit/M in modkits)
 				M.uninstall(src)
 		else
-			user << "<span class='notice'>There are no modifications currently installed.</span>"
+			to_chat(user, "<span class='notice'>There are no modifications currently installed.</span>")
 	else if(istype(A, /obj/item/borg/upgrade/modkit))
 		var/obj/item/borg/upgrade/modkit/MK = A
 		MK.install(src, user)
@@ -123,7 +123,7 @@
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		loc << "<span class='warning'>[src] silently charges up.<span>"
+		to_chat(loc, "<span class='warning'>[src] silently charges up.<span>")
 	update_icon()
 	overheat = FALSE
 
@@ -138,7 +138,6 @@
 			iconF = "flight_on"
 		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 
-
 //Casing
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -151,17 +150,6 @@
 	if(loc && istype(loc, /obj/item/weapon/gun/energy/kinetic_accelerator))
 		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = loc
 		KA.modify_projectile(BB)
-
-		var/turf/proj_turf = get_turf(BB)
-		if(!isturf(proj_turf))
-			return
-		var/datum/gas_mixture/environment = proj_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure > 50)
-			BB.name = "weakened [BB.name]"
-			var/obj/item/projectile/kinetic/K = BB
-			K.damage *= K.pressure_decrease
-
 
 //Projectiles
 /obj/item/projectile/kinetic
@@ -177,6 +165,17 @@
 	var/turf_aoe = FALSE
 	var/mob_aoe = 0
 	var/list/hit_overlays = list()
+
+/obj/item/projectile/kinetic/prehit(atom/target)
+	var/turf/target_turf = get_turf(target)
+	if(!isturf(target_turf))
+		return
+	var/datum/gas_mixture/environment = target_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure > 50)
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+	. = ..()
 
 /obj/item/projectile/kinetic/on_range()
 	strike_thing()
@@ -206,7 +205,7 @@
 		for(var/mob/living/L in range(1, target_turf) - firer - target)
 			var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
 			L.apply_damage(damage*mob_aoe, damage_type, def_zone, armor)
-			L << "<span class='userdanger'>You're struck by a [name]!</span>"
+			to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 
 
 //Modkits
@@ -225,7 +224,7 @@
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
 	..()
-	user << "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
+	to_chat(user, "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>")
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator) && !issilicon(user))
@@ -255,13 +254,13 @@
 		if(.)
 			if(!user.transferItemToLoc(src, KA))
 				return
-			user << "<span class='notice'>You install the modkit.</span>"
+			to_chat(user, "<span class='notice'>You install the modkit.</span>")
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			KA.modkits += src
 		else
-			user << "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>"
+			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")
 	else
-		user << "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>"
+		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
 		. = FALSE
 
 

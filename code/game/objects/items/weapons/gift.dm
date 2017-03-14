@@ -27,7 +27,7 @@
 
 /obj/item/weapon/a_gift/attack_self(mob/M)
 	if(M && M.mind && M.mind.special_role == "Santa")
-		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
+		to_chat(M, "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>")
 		return
 
 	var/gift_type_list = list(/obj/item/weapon/sord,
@@ -43,8 +43,8 @@
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,
 		/obj/item/weapon/grown/corncob,
-		/obj/item/weapon/poster/contraband,
-		/obj/item/weapon/poster/legit,
+		/obj/item/weapon/poster/random_contraband,
+		/obj/item/weapon/poster/random_official,
 		/obj/item/weapon/book/manual/barman_recipes,
 		/obj/item/weapon/book/manual/chef_recipes,
 		/obj/item/weapon/bikehorn,

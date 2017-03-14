@@ -42,7 +42,7 @@
 				new /obj/item/weapon/ore/diamond(src)
 		if(21 to 25)
 			for(var/i in 1 to 5)
-				new /obj/item/weapon/poster/contraband(src)
+				new /obj/item/weapon/poster/random_contraband(src)
 		if(26 to 30)
 			for(var/i in 1 to 3)
 				new /obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
@@ -154,7 +154,7 @@
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
-		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
+		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, 1))
 			var/list/sanitised = list()
@@ -166,14 +166,14 @@
 					if(sanitised[i] == sanitised[j])
 						sanitycheck = null //if a digit is repeated, reject the input
 			if (input == code)
-				user << "<span class='notice'>The crate unlocks!</span>"
+				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 				locked = 0
 				cut_overlays()
 				add_overlay("securecrateg")
 			else if (input == null || sanitycheck == null || length(input) != codelen)
-				user << "<span class='notice'>You leave the crate alone.</span>"
+				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
-				user << "<span class='warning'>A red light flashes.</span>"
+				to_chat(user, "<span class='warning'>A red light flashes.</span>")
 				lastattempt = input
 				attempts--
 				if(attempts == 0)
@@ -192,11 +192,11 @@
 			boom(user)
 			return
 		else if(istype(W, /obj/item/device/multitool))
-			user << "<span class='notice'>DECA-CODE LOCK REPORT:</span>"
+			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
-				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
+				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
 			else
-				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
+				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>")
 			if(lastattempt != null)
 				var/list/guess = list()
 				var/list/answer = list()
@@ -213,7 +213,7 @@
 						++bulls
 						--cows
 
-				user << "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
+				to_chat(user, "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return
 	return ..()
 

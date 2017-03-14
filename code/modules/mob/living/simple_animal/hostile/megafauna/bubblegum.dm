@@ -103,7 +103,7 @@ Difficulty: Hard
 				INVOKE_ASYNC(src, .proc/warp_charge)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/New()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	..()
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in mob_list)
 		if(B != src)
@@ -200,7 +200,7 @@ Difficulty: Hard
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_pools(get_turf(L), 0)
-		if(bloodpool.len && (!faction_check(L) || L.stat == DEAD))
+		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
 			. += L
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
@@ -250,8 +250,8 @@ Difficulty: Hard
 		new /obj/effect/overlay/temp/bubblegum_hands/leftsmack(T)
 	sleep(2.5)
 	for(var/mob/living/L in T)
-		if(!faction_check(L))
-			L << "<span class='userdanger'>[src] rends you!</span>"
+		if(!faction_check_mob(L))
+			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
@@ -266,8 +266,8 @@ Difficulty: Hard
 		new /obj/effect/overlay/temp/bubblegum_hands/leftthumb(T)
 	sleep(6)
 	for(var/mob/living/L in T)
-		if(!faction_check(L))
-			L << "<span class='userdanger'>[src] drags you through the blood!</span>"
+		if(!faction_check_mob(L))
+			to_chat(L, "<span class='userdanger'>[src] drags you through the blood!</span>")
 			playsound(T, 'sound/magic/enter_blood.ogg', 100, 1, -1)
 			var/turf/targetturf = get_step(src, dir)
 			L.forceMove(targetturf)

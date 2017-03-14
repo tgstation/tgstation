@@ -16,7 +16,7 @@
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>"
+	to_chat(user, "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>")
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -54,28 +54,10 @@
 	user.update_inv_head() //So the mob overlay updates
 
 	if(on)
-		turn_on(user)
+		set_light(brightness_on)
 	else
-		turn_off(user)
+		set_light(0)
+
 	for(var/X in actions)
 		var/datum/action/A=X
 		A.UpdateButtonIcon()
-
-/obj/item/clothing/head/helmet/space/plasmaman/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
-/obj/item/clothing/head/helmet/space/plasmaman/dropped(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
-
-/obj/item/clothing/head/helmet/space/plasmaman/proc/turn_on/(mob/user)
-		user.AddLuminosity(brightness_on)
-
-/obj/item/clothing/head/helmet/space/plasmaman/proc/turn_off/(mob/user)
-		user.AddLuminosity(-brightness_on)
-

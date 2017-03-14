@@ -30,7 +30,7 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/pet/cat/New()
+/mob/living/simple_animal/pet/cat/Initialize()
 	..()
 	verbs += /mob/living/proc/lay_down
 
@@ -85,7 +85,7 @@
 	var/cats_deployed = 0
 	var/memory_saved = 0
 
-/mob/living/simple_animal/pet/cat/Runtime/New()
+/mob/living/simple_animal/pet/cat/Runtime/Initialize()
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"
@@ -244,12 +244,12 @@
 	if(!B || !B.brainmob || !B.brainmob.mind)
 		return
 	B.brainmob.mind.transfer_to(src)
-	src << "<font size=3><b>Y</b></font><b>ou are a cak! You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	to_chat(src, "<font size=3><b>Y</b></font><b>ou are a cak! You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
-	free cake to the station!</b>"
+	free cake to the station!</b>")
 	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
 	if(new_name)
-		src << "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>"
+		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
 /mob/living/simple_animal/pet/cat/cak/Life()

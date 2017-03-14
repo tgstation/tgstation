@@ -124,7 +124,7 @@
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
 	if(prob(10))
-		M << "<span class='danger'>Your insides are burning!</span>"
+		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
@@ -383,7 +383,7 @@
 	if(prob(50))
 		switch(pick(1, 2, 3, 4))
 			if(1)
-				M << "<span class='danger'>You can barely see!</span>"
+				to_chat(M, "<span class='danger'>You can barely see!</span>")
 				M.blur_eyes(3)
 			if(2)
 				M.emote("cough")
@@ -391,7 +391,7 @@
 				M.emote("sneeze")
 			if(4)
 				if(prob(75))
-					M << "You scratch at an itch."
+					to_chat(M, "You scratch at an itch.")
 					M.adjustBruteLoss(2*REM, 0)
 					. = 1
 	..()
@@ -470,7 +470,7 @@
 	if(prob(5))
 		M.losebreath += 1
 	if(prob(8))
-		M << "You feel horrendously weak!"
+		to_chat(M, "You feel horrendously weak!")
 		M.Stun(2, 0)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
@@ -500,15 +500,15 @@
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
 	if(prob(15))
-		M << "You scratch at your head."
+		to_chat(M, "You scratch at your head.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		M << "You scratch at your leg."
+		to_chat(M, "You scratch at your leg.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		M << "You scratch at your arm."
+		to_chat(M, "You scratch at your arm.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(3))
@@ -822,7 +822,7 @@
 	if(M.dizziness < 6)
 		M.dizziness = Clamp(M.dizziness + 3, 0, 5)
 	if(prob(20))
-		M << "You feel confused and disorientated."
+		to_chat(M, "You feel confused and disorientated.")
 	..()
 
 /datum/reagent/toxin/peaceborg/tire
@@ -838,7 +838,7 @@
 	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
-		M << "You should sit down and take a rest..."
+		to_chat(M, "You should sit down and take a rest...")
 	..()
 
 /datum/reagent/toxin/delayed
@@ -860,3 +860,11 @@
 			M.Weaken(1, 0)
 		. = 1
 	..()
+
+/datum/reagent/toxin/mimesbane
+	name = "Mime's Bane"
+	id = "mimesbane"
+	description = "A nonlethal neurotoxin that interferes with the victim's ability to gesture."
+	color = "#F0F8FF" // rgb: 240, 248, 255
+	toxpwr = 0
+	taste_description = "stillness"

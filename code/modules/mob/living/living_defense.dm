@@ -6,19 +6,19 @@
 	if(armor && armour_penetration)
 		armor = max(0, armor - armour_penetration)
 		if(penetrated_text)
-			src << "<span class='userdanger'>[penetrated_text]</span>"
+			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor was penetrated!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
 	else if(armor >= 100)
 		if(absorb_text)
-			src << "<span class='userdanger'>[absorb_text]</span>"
+			to_chat(src, "<span class='userdanger'>[absorb_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor absorbs the blow!</span>")
 	else if(armor > 0)
 		if(soften_text)
-			src << "<span class='userdanger'>[soften_text]</span>"
+			to_chat(src, "<span class='userdanger'>[soften_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor softens the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
 	return armor
 
 
@@ -129,7 +129,7 @@
 		return
 
 	if(!(status_flags & CANPUSH))
-		user << "<span class='warning'>[src] can't be grabbed more aggressively!</span>"
+		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return 0
 	grippedby(user)
 
@@ -173,7 +173,7 @@
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
 	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.buckled)
@@ -205,12 +205,12 @@
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return 0
 
 	if (M.a_intent == INTENT_HARM)
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
-			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
+			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return 0
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
@@ -245,7 +245,7 @@
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return 0
 
 	switch(M.a_intent)
@@ -300,8 +300,11 @@
 	return(gain)
 
 /mob/living/narsie_act()
+	if(status_flags & GODMODE)
+		return
+
 	if(is_servant_of_ratvar(src) && !stat)
-		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
+		to_chat(src, "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>")
 		adjustBruteLoss(35)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
@@ -324,11 +327,14 @@
 
 
 /mob/living/ratvar_act()
+	if(status_flags & GODMODE)
+		return
+
 	if(stat != DEAD && !is_servant_of_ratvar(src))
 		for(var/obj/item/weapon/implant/mindshield/M in implants)
 			qdel(M)
 		if(!add_servant_of_ratvar(src))
-			src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
 			adjustFireLoss(35)
 			if(src)
 				adjust_fire_stacks(1)

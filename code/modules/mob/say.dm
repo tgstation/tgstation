@@ -2,28 +2,16 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
-
-	if(findtext(message, ":p", 1, 3))
-		if(client)
-			client.cmd_admin_say(trim(replacetext(message, ":p", 1, 3)))
-		return
-
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-
-	if(findtext(message, ":d", 1, 3))
-		if(client)
-			client.dsay(trim(replacetext(message, ":d", 1, 3)))
-		return
-
 	usr.say(message)
 
 /mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	say(message) //only carbons actually whisper, everything else just talks
 
@@ -32,7 +20,7 @@
 	set category = "IC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -44,16 +32,16 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(jobban_isbanned(src, "OOC"))
-		src << "<span class='danger'>You have been banned from deadchat.</span>"
+		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "<span class='danger'>You cannot talk in deadchat (muted).</span>"
+			to_chat(src, "<span class='danger'>You cannot talk in deadchat (muted).</span>")
 			return
 
 		if(src.client.handle_spam_prevention(message,MUTE_DEADCHAT))

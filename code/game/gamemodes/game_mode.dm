@@ -46,14 +46,14 @@
 
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
-	world << "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>"
-	world << "<b>[announce_text]</b>"
+	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
+	to_chat(world, "<b>[announce_text]</b>")
 
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
 	if(!Debug2)
@@ -103,7 +103,7 @@
 	return
 
 
-///Allows rounds to basically be "rerolled" should the initial premise fall through
+///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()
 	var/list/living_crew = list()
 
@@ -156,9 +156,9 @@
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(rand(1200,3000)) //somewhere between 2 and 5 minutes from now
+	spawn(rand(600,1800)) //somewhere between 1 and 3 minutes from now
 		if(!config.midround_antag[ticker.mode.config_tag])
 			round_converted = 0
 			return 1
@@ -289,7 +289,7 @@
 			G.on_report()
 			intercepttext += G.get_report()
 
-	print_command_report(intercepttext, "Central Command Status Summary")
+	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
@@ -302,7 +302,7 @@
 	var/datum/mind/applicant = null
 
 	// Ultimate randomizing code right here
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.client && player.ready)
 			players += player
 
@@ -310,7 +310,7 @@
 	// Goodbye antag dante
 	players = shuffle(players)
 
-	for(var/mob/new_player/player in players)
+	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready)
 			if(role in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
@@ -324,7 +324,7 @@
 					candidates -= player
 
 	if(candidates.len < recommended_enemies)
-		for(var/mob/new_player/player in players)
+		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
@@ -349,7 +349,7 @@
 			break
 /*
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
-		for(var/mob/new_player/player in players)
+		for(var/mob/dead/new_player/player in players)
 			if (player.client && player.ready)
 				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
@@ -377,7 +377,7 @@
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 /*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
+/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/dead/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1
 	return 0
@@ -385,7 +385,7 @@
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in player_list)
 		if(P.client && P.ready)
 			. ++
 
@@ -479,7 +479,7 @@
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
-			M << msg
+			to_chat(M, msg)
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
@@ -531,7 +531,7 @@
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
-		M << "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"
+		to_chat(M, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
 		M.ghostize(0)
 		M.key = theghost.key

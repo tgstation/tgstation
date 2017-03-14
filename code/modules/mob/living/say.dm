@@ -18,6 +18,8 @@ var/list/department_radio_keys = list(
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
 	  ":x" = "cords",		"#x" = "cords",			".x" = "cords",
+	  ":p" = "admin",		"#p" = "admin",			".p" = "admin",
+	  ":d" = "deadmin",		"#d" = "deadmin",		".d" = "deadmin",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -38,6 +40,8 @@ var/list/department_radio_keys = list(
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
 	  ":X" = "cords",		"#X" = "cords",			".X" = "cords",
+	  ":P" = "admin",		"#P" = "admin",			".P" = "admin",
+	  ":D" = "deadmin",		"#D" = "deadmin",		".D" = "deadmin",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -66,21 +70,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(!message || message == "")
 		return
 
-
-	if(stat == DEAD)
-		say_dead(message)
-		return
-
-	if(check_emote(message))
-		return
-
-	if(!can_speak_basic(message)) //Stat is seperate so I can handle whispers properly.
-		return
-
 	var/message_mode = get_message_mode(message)
-
-	if(stat && !(message_mode in crit_allowed_modes))
-		return
+	var/original_message = message
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
@@ -89,11 +80,34 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
 
+	if(message_mode == "admin")
+		if(client)
+			client.cmd_admin_say(message)
+		return
+
+	if(message_mode == "deadmin")
+		if(client)
+			client.dsay(message)
+		return
+
+	if(stat == DEAD)
+		say_dead(original_message)
+		return
+
+	if(check_emote(original_message))
+		return
+
+	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
+		return
+
+	if(stat && !(message_mode in crit_allowed_modes))
+		return
+
 	if(handle_inherent_channels(message, message_mode)) //Hiveminds, binary chat & holopad.
 		return
 
 	if(!can_speak_vocal(message))
-		src << "<span class='warning'>You find yourself unable to speak!</span>"
+		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
@@ -102,7 +116,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	spans += get_spans()
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
-	say_log["[LAZYLEN(say_log) + 1]\[[time_stamp()]\]"] = message
+	log_message(message, INDIVIDUAL_SAY_LOG)
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)
@@ -175,7 +189,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return 0
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return 0
@@ -213,34 +227,34 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
-						M << "[link] [msg]"
+						to_chat(M, "[link] [msg]")
 					else
 						switch(M.lingcheck())
 							if(3)
-								M << msg
+								to_chat(M, msg)
 							if(2)
-								M << msg
+								to_chat(M, msg)
 							if(1)
 								if(prob(40))
-									M << "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>"
+									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
-						M << "[link] [msg]"
+						to_chat(M, "[link] [msg]")
 					else
 						switch(M.lingcheck())
 							if(3)
-								M << msg
+								to_chat(M, msg)
 							if(2)
-								M << msg
+								to_chat(M, msg)
 							if(1)
 								if(prob(40))
-									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
+									to_chat(M, "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
 			if(1)
-				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
+				to_chat(src, "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")
 		return TRUE
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())

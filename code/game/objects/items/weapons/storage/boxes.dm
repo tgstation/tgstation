@@ -46,7 +46,7 @@
 	if(!foldable)
 		return
 	if(contents.len)
-		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
+		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
 		return
 	if(!ispath(foldable))
 		return
@@ -54,7 +54,7 @@
 	//Close any open UI windows first
 	close_all()
 
-	user << "<span class='notice'>You fold [src] flat.</span>"
+	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 	var/obj/item/I = new foldable(get_turf(src))
 	user.drop_item()
 	user.put_in_hands(I)
@@ -147,7 +147,7 @@
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
-	icon_state = "sterile"
+	illustration = "sterile"
 
 /obj/item/weapon/storage/box/masks/New()
 	..()
@@ -372,6 +372,7 @@
 	icon_state = "monkeycubebox"
 	storage_slots = 7
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	illustration = null
 
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
@@ -639,6 +640,7 @@
 	name = "box of rubber shots"
 	desc = "A box full of rubber shots, designed for riot shotguns."
 	icon_state = "rubbershot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/rubbershot/New()
 	..()
@@ -649,6 +651,7 @@
 	name = "box of lethal shotgun shots"
 	desc = "A box full of lethal shots, designed for riot shotguns."
 	icon_state = "lethalshot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/lethalshot/New()
 	..()
@@ -664,6 +667,7 @@
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
 	icon_state = "rubbershot_box"
+	illustration = null
 
 /obj/item/weapon/storage/box/beanbag/New()
 	..()
@@ -710,17 +714,17 @@
 	if(istype(W, /obj/item/weapon/pen))
 		//if a pen is used on the sack, dialogue to change its design appears
 		if(contents.len)
-			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
+			to_chat(user, "<span class='warning'>You can't modify this [src] with items still inside!</span>")
 			return
 		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
 		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
 		if(get_dist(usr, src) > 1)
-			usr << "<span class='warning'>You have moved too far away!</span>"
+			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 			return
 		var/choice = designs.Find(switchDesign)
 		if(design == designs[choice] || designs[choice] == "Cancel")
 			return 0
-		usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+		to_chat(usr, "<span class='notice'>You make some modifications to the [src] using your pen.</span>")
 		design = designs[choice]
 		icon_state = "paperbag_[design]"
 		item_state = "paperbag_[design]"
@@ -758,7 +762,7 @@
 
 /obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
-	icon_state = "donk_kit"
+	illustration = "donk_kit"
 	item_state = null
 
 /obj/item/weapon/storage/box/ingredients/wildcard
@@ -903,6 +907,7 @@
 /obj/item/weapon/storage/box/ingredients/New()
 	..()
 	if(item_state)
+		name = "[name] ([item_state])"
 		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
 
 /obj/item/weapon/storage/box/emptysandbags

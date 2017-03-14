@@ -132,7 +132,7 @@
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
 			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-7, 0)
+			M.adjustCloneLoss(-1, 0)
 			M.adjustOxyLoss(-9, 0)
 			M.adjustBruteLoss(-5, 0)
 			M.adjustFireLoss(-5, 0)
@@ -140,7 +140,7 @@
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
 			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-2, 0)
+			M.adjustCloneLoss(-1, 0)
 			M.adjustOxyLoss(-7, 0)
 			M.adjustBruteLoss(-3, 0)
 			M.adjustFireLoss(-3, 0)
@@ -156,6 +156,29 @@
 			. = 1
 	..()
 
+/datum/reagent/medicine/clonexadone
+	name = "Clonexadone"
+	id = "clonexadone"
+	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
+	color = "#0000C8"
+	taste_description = "muscle"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
+	switch(M.bodytemperature) // Low temperatures are required to take effect.
+		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
+			M.status_flags &= ~DISFIGURED
+			M.adjustCloneLoss(-7, 0)
+			. = 1
+		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
+			M.status_flags &= ~DISFIGURED
+			M.adjustCloneLoss(-3, 0)
+			. = 1
+		if(225 to T0C)
+			M.status_flags &= ~DISFIGURED
+			M.adjustCloneLoss(-2, 0)
+			. = 1
+	..()
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
@@ -200,11 +223,11 @@
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
-				M << "<span class='warning'>You don't feel so good...</span>"
+				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getFireLoss())
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your burns healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
 			M.emote("scream")
 	..()
 
@@ -248,11 +271,11 @@
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
-				M << "<span class='warning'>You don't feel so good...</span>"
+				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getBruteLoss())
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your bruises healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
 	..()
 
@@ -302,7 +325,7 @@
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 5
+		N.hal_screwyhud = SCREWYHUD_HEALTHY
 	M.adjustBruteLoss(-0.25*REM, 0)
 	M.adjustFireLoss(-0.25*REM, 0)
 	..()
@@ -314,7 +337,7 @@
 			M.Stun(4)
 			M.Weaken(4)
 			if(show_message)
-				M << "<span class='warning'>Your stomach agonizingly cramps!</span>"
+				to_chat(M, "<span class='warning'>Your stomach agonizingly cramps!</span>")
 		else
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
@@ -323,13 +346,13 @@
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 
 			if(show_message)
-				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
+				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
 	..()
 
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 0
+		N.hal_screwyhud = SCREWYHUD_NONE
 	..()
 
 /datum/reagent/medicine/synthflesh
@@ -347,7 +370,7 @@
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 	..()
 
 /datum/reagent/medicine/charcoal
@@ -582,7 +605,7 @@
 	M.status_flags |= IGNORESLOWDOWN
 	switch(current_cycle)
 		if(11)
-			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
+			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
@@ -653,13 +676,13 @@
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
 	if(M.disabilities & BLIND)
 		if(prob(20))
-			M << "<span class='warning'>Your vision slowly returns...</span>"
+			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind()
 			M.cure_nearsighted()
 			M.blur_eyes(35)
 
 	else if(M.disabilities & NEARSIGHT)
-		M << "<span class='warning'>The blackness in your peripheral vision fades.</span>"
+		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted()
 		M.blur_eyes(10)
 

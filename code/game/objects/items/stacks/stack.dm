@@ -19,42 +19,45 @@
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
-/obj/item/stack/New(var/loc, var/amount=null)
+/obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
 	..()
-	if (amount)
-		src.amount = amount
+	if(new_amount)
+		amount = new_amount
 	if(!merge_type)
-		merge_type = src.type
-	return
+		merge_type = type
+	if(merge)
+		for(var/obj/item/stack/S in loc)
+			if(S.merge_type == merge_type)
+				merge(S)
 
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
-	return ..()
+	. = ..()
 
 /obj/item/stack/examine(mob/user)
 	..()
 	if (is_cyborg)
 		if(src.singular_name)
-			user << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
+			to_chat(user, "There is enough energy for [src.get_amount()] [src.singular_name]\s.")
 		else
-			user << "There is enough energy for [src.get_amount()]."
+			to_chat(user, "There is enough energy for [src.get_amount()].")
 		return
 	if(src.singular_name)
 		if(src.get_amount()>1)
-			user << "There are [src.get_amount()] [src.singular_name]\s in the stack."
+			to_chat(user, "There are [src.get_amount()] [src.singular_name]\s in the stack.")
 		else
-			user << "There is [src.get_amount()] [src.singular_name] in the stack."
+			to_chat(user, "There is [src.get_amount()] [src.singular_name] in the stack.")
 	else if(src.get_amount()>1)
-		user << "There are [src.get_amount()] in the stack."
+		to_chat(user, "There are [src.get_amount()] in the stack.")
 	else
-		user << "There is [src.get_amount()] in the stack."
+		to_chat(user, "There is [src.get_amount()] in the stack.")
 
 /obj/item/stack/proc/get_amount()
-	if (is_cyborg)
-		return round(source.energy / cost)
+	if(is_cyborg)
+		. = round(source.energy / cost)
 	else
-		return (amount)
+		. = (amount)
 
 /obj/item/stack/attack_self(mob/user)
 	interact(user)
@@ -101,7 +104,6 @@
 	t1 += "</TT></body></HTML>"
 	user << browse(t1, "window=stack")
 	onclose(user, "stack")
-	return
 
 /obj/item/stack/Topic(href, href_list)
 	..()
@@ -156,26 +158,23 @@
 		//BubbleWrap END
 
 	if (src && usr.machine==src) //do not reopen closed window
-		spawn( 0 )
-			src.interact(usr)
-			return
-	return
+		addtimer(CALLBACK(src, /atom/.proc/interact, usr), 0)
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (src.get_amount() < R.req_amount*multiplier)
 		if (R.req_amount*multiplier>1)
-			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
-			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return 0
 	if(R.window_checks && !valid_window_location(usr.loc, usr.dir))
-		usr << "<span class='warning'>The [R.title] won't fit here!</span>"
+		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return 0
 	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
-		usr << "<span class='warning'>There is another [R.title] here!</span>"
+		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return 0
 	if(R.on_floor && !isfloorturf(usr.loc))
-		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
+		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return 0
 	return 1
 
@@ -207,7 +206,7 @@
 	update_icon()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
-	if(QDELETED(S) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
+	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
@@ -223,12 +222,12 @@
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
 		merge(o)
-	return ..()
+	. = ..()
 
 /obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
 	if(istype(AM, merge_type))
 		merge(AM)
-	return ..()
+	. = ..()
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_held_item() == src)
@@ -237,11 +236,10 @@
 		change_stack(user,1)
 	else
 		..()
-	return
 
 /obj/item/stack/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src))
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -256,10 +254,10 @@
 			return
 		else
 			change_stack(user,stackmaterial)
-			user << "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>"
+			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
 /obj/item/stack/proc/change_stack(mob/user,amount)
-	var/obj/item/stack/F = new src.type(user, amount)
+	var/obj/item/stack/F = new type(user, amount, FALSE)
 	. = F
 	F.copy_evidences(src)
 	user.put_in_hands(F)
@@ -273,9 +271,9 @@
 	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
 		merge(S)
-		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
+		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
-		return ..()
+		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA

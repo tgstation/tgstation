@@ -1,5 +1,3 @@
-
-
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
@@ -119,14 +117,14 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about about a minute.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about about a minute.)</span>")
 	audible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>",hearing_distance = 2)
 
 	if(do_after(user, 600, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/user)

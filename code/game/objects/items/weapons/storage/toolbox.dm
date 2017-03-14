@@ -13,22 +13,23 @@
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
-	var/hinges = "single_hinge"
-	var/old = FALSE
+	var/latches = "single_latch"
+	var/has_latches = TRUE
 
 /obj/item/weapon/storage/toolbox/Initialize()
 	..()
-	if(!old)
+	if(has_latches)
 		if(prob(10))
-			hinges = "double_hinge"
+			latches = "double_latch"
 		else if(prob(1))
-			hinges = "triple_hinge"
+			latches = "triple_latch"
 	update_icon()
 
 /obj/item/weapon/storage/toolbox/update_icon()
 	..()
 	cut_overlays()
-	add_overlay(image('icons/obj/storage.dmi', "[hinges]"))
+	if(has_latches)
+		add_overlay(image('icons/obj/storage.dmi', "[latches]"))
 
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
@@ -45,16 +46,19 @@
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/weldingtool/mini(src)
 	new /obj/item/weapon/extinguisher/mini(src)
-	if(prob(50))
-		new /obj/item/device/flashlight(src)
-	else
-		new /obj/item/device/flashlight/flare(src)
+	switch(rand(1,3))
+		if(1)
+			new /obj/item/device/flashlight(src)
+		if(2)
+			new /obj/item/device/flashlight/glowstick(src)
+		if(3)
+			new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
-	old = TRUE
+	has_latches = FALSE
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -73,7 +77,7 @@
 /obj/item/weapon/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
-	old = TRUE
+	has_latches = FALSE
 
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
@@ -133,12 +137,13 @@
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
+	item_state = null
+	has_latches = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 28
 	storage_slots = 28
-	slowdown = 1
-	flags = HANDSLOW
 	attack_verb = list("robusted", "crushed", "smashed")
 	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
 

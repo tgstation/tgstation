@@ -70,7 +70,7 @@
 	create_parallax()
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
-/datum/hud/proc/set_parallax_movedir(new_parallax_movedir)
+/datum/hud/proc/set_parallax_movedir(new_parallax_movedir, skip_windups)
 	. = FALSE
 	var/client/C = mymob.client
 	if(new_parallax_movedir == C.parallax_movedir)
@@ -100,24 +100,29 @@
 			newtransform = matrix(1, 0,-480, 0, 1, 0)
 
 	var/shortesttimer
-	for(var/thing in C.parallax_layers)
-		var/obj/screen/parallax_layer/L = thing
+	if(!skip_windups)
+		for(var/thing in C.parallax_layers)
+			var/obj/screen/parallax_layer/L = thing
 
-		var/T = PARALLAX_LOOP_TIME / L.speed
-		if (isnull(shortesttimer))
-			shortesttimer = T
-		if (T < shortesttimer)
-			shortesttimer = T
-		L.transform = newtransform
-		animate(L, transform = matrix(), time = T, easing = QUAD_EASING | (new_parallax_movedir ? EASE_IN : EASE_OUT), flags = ANIMATION_END_NOW)
-		if (new_parallax_movedir)
+			var/T = PARALLAX_LOOP_TIME / L.speed
+			if (isnull(shortesttimer))
+				shortesttimer = T
+			if (T < shortesttimer)
+				shortesttimer = T
 			L.transform = newtransform
-			animate(transform = matrix(), time = T) //queue up another animate so lag doesn't create a shutter
+			animate(L, transform = matrix(), time = T, easing = QUAD_EASING | (new_parallax_movedir ? EASE_IN : EASE_OUT), flags = ANIMATION_END_NOW)
+			if (new_parallax_movedir)
+				L.transform = newtransform
+				animate(transform = matrix(), time = T) //queue up another animate so lag doesn't create a shutter
 
 	C.parallax_movedir = new_parallax_movedir
 	if (C.parallax_animate_timer)
 		deltimer(C.parallax_animate_timer)
-	C.parallax_animate_timer = addtimer(CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform), min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
+	var/datum/callback/CB = CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform)
+	if(skip_windups)
+		CB.Invoke()
+	else
+		C.parallax_animate_timer = addtimer(CB, min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
 
 
 /datum/hud/proc/update_parallax_motionblur(client/C, animatedir, new_parallax_movedir, matrix/newtransform)
@@ -151,7 +156,7 @@
 	var/area/areaobj = posobj.loc
 
 	// Update the movement direction of the parallax if necessary (for shuttles)
-	set_parallax_movedir(areaobj.parallax_movedir)
+	set_parallax_movedir(areaobj.parallax_movedir, FALSE)
 
 	var/force
 	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
@@ -204,6 +209,11 @@
 			if(M && M.client && M.hud_used && length(M.client.parallax_layers))
 				M.hud_used.update_parallax()
 
+/mob/proc/update_parallax_teleport()	//used for arrivals shuttle
+	if(client && client.eye && hud_used && length(client.parallax_layers))
+		var/area/areaobj = get_area(client.eye)
+		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
+
 /obj/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1
@@ -235,6 +245,7 @@
 			var/image/I = image(icon, null, icon_state)
 			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
 			new_overlays += I
+	cut_overlays()
 	add_overlay(new_overlays)
 	view_sized = view
 

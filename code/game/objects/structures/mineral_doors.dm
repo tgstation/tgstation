@@ -125,9 +125,9 @@
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "<span class='notice'>You start digging the [name]...</span>"
+		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
 		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
-			user << "<span class='notice'>You finish digging.</span>"
+			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			deconstruct(TRUE)
 	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)
@@ -165,7 +165,7 @@
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 	obj_integrity = 300
 	max_integrity = 300
-	luminosity = 2
+	light_range = 2
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"

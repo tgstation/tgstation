@@ -1,4 +1,3 @@
-
 /obj/item/weapon/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
@@ -15,7 +14,7 @@
 		cooldown = 0
 		START_PROCESSING(SSobj, src)
 	else
-		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
+		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
 
 /obj/item/weapon/implant/abductor/process()
 	if(cooldown < initial(cooldown))

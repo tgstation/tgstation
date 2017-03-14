@@ -343,7 +343,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf,
+/turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Midship)
 "bf" = (
 /obj/structure/cable{
@@ -2372,7 +2372,7 @@
 /area/awaymission/BMPship/Fore)
 "gH" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf,
+/turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "gI" = (
 /turf/open/floor/plating/airless,
@@ -2593,7 +2593,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "hr" = (
-/obj/item/weapon/poster/contraband,
+/obj/item/weapon/poster/random_contraband,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "hs" = (
