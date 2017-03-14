@@ -11,7 +11,7 @@ var/list/doppler_arrays = list()
 	var/max_dist = 100
 	verb_say = "states coldly"
 
-/obj/machinery/doppler_array/New()
+/obj/machinery/doppler_array/Initialize()
 	..()
 	doppler_arrays += src
 

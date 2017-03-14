@@ -20,7 +20,7 @@
 	var/can_resist = FALSE
 	var/mob_layer = MOB_LAYER
 
-/obj/structure/destructible/clockwork/geis_binding/New()
+/obj/structure/destructible/clockwork/geis_binding/Initialize()
 	..()
 	set_light(2, 0.5)
 

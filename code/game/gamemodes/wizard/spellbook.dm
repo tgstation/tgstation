@@ -13,7 +13,7 @@
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
 	var/list/no_coexistance_typecache //Used so you can't have specific spells together
 
-/datum/spellbook_entry/New()
+/datum/spellbook_entry/Initialize()
 	..()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
@@ -779,7 +779,7 @@
 	desc = "This template spellbook was never meant for the eyes of man..."
 	persistence_replacement = null
 
-/obj/item/weapon/spellbook/oneuse/New()
+/obj/item/weapon/spellbook/oneuse/Initialize()
 	..()
 	name += spellname
 
@@ -947,7 +947,7 @@
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
 	qdel(src)
 
-/obj/item/weapon/spellbook/oneuse/random/New()
+/obj/item/weapon/spellbook/oneuse/random/Initialize()
 	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade,/obj/item/weapon/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)

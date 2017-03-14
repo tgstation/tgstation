@@ -70,7 +70,7 @@
 
 	var/obj/machinery/turretid/cp = null
 
-/obj/machinery/porta_turret/New(loc)
+/obj/machinery/porta_turret/Initialize(mapload)
 	..()
 	if(!base)
 		base = src
@@ -587,7 +587,7 @@
 /obj/machinery/porta_turret/aux_base/interact(mob/user) //Controlled solely from the base console.
 	return
 
-/obj/machinery/porta_turret/aux_base/New()
+/obj/machinery/porta_turret/aux_base/Initialize()
 	..()
 	cover.name = name
 	cover.desc = desc
@@ -636,7 +636,7 @@
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/machinery/turretid/New(loc, ndir = 0, built = 0)
+/obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
 	..()
 	if(built)
 		setDir(ndir)

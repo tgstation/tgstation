@@ -15,7 +15,7 @@
 	var/power_efficiency = 1
 	var/obj/machinery/quantumpad/linked_pad = null
 
-/obj/machinery/quantumpad/New()
+/obj/machinery/quantumpad/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/quantumpad(null)
 	B.apply_default_parts(src)

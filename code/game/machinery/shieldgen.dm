@@ -11,9 +11,9 @@
 	obj_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/emergency_shield/New()
-	src.setDir(pick(1,2,3,4))
+/obj/structure/emergency_shield/Initialize()
 	..()
+	src.setDir(pick(1,2,3,4))
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()
@@ -446,9 +446,9 @@
 	var/obj/machinery/shieldwallgen/gen_primary
 	var/obj/machinery/shieldwallgen/gen_secondary
 
-/obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
+/obj/machinery/shieldwall/Initialize(mapload, var/obj/machinery/shieldwallgen/B)
 	..()
-	src.gen_primary = A
+	src.gen_primary = loc
 	src.gen_secondary = B
 	if(A && B)
 		needs_power = 1

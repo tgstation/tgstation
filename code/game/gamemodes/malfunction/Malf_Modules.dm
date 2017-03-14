@@ -59,7 +59,7 @@
 	var/detonation_timer
 	var/list/milestones = list()
 
-/obj/machinery/doomsday_device/New()
+/obj/machinery/doomsday_device/Initialize()
 	..()
 	countdown = new(src)
 
@@ -342,7 +342,7 @@
 	power_type = /mob/living/silicon/ai/proc/place_transformer
 	var/list/turfOverlays = list()
 
-/datum/AI_Module/large/place_cyborg_transformer/New()
+/datum/AI_Module/large/place_cyborg_transformer/Initialize()
 	for(var/i=0;i<3;i++)
 		var/image/I = image("icon"='icons/turf/overlays.dmi')
 		turfOverlays += I
@@ -517,7 +517,7 @@
 	var/processing_time = 50
 	var/list/possible_modules = list()
 
-/datum/module_picker/New()
+/datum/module_picker/Initialize()
 	for(var/type in typesof(/datum/AI_Module))
 		var/datum/AI_Module/AM = new type
 		if(AM.power_type != null)

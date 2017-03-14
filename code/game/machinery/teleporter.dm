@@ -14,9 +14,9 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/teleporter/New()
-	src.id = "[rand(1000, 9999)]"
+/obj/machinery/computer/teleporter/Initialize()
 	..()
+	id = "[rand(1000, 9999)]"
 
 /obj/machinery/computer/teleporter/Initialize()
 	..()
@@ -233,7 +233,7 @@
 	var/obj/machinery/teleport/station/power_station
 	var/calibrated //Calibration prevents mutation
 
-/obj/machinery/teleport/hub/New()
+/obj/machinery/teleport/hub/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
 	B.apply_default_parts(src)
@@ -327,7 +327,7 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-/obj/machinery/teleport/hub/syndicate/New()
+/obj/machinery/teleport/hub/syndicate/Initialize()
 	..()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
 	RefreshParts()
@@ -346,7 +346,7 @@
 	var/list/linked_stations = list()
 	var/efficiency = 0
 
-/obj/machinery/teleport/station/New()
+/obj/machinery/teleport/station/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
 	B.apply_default_parts(src)

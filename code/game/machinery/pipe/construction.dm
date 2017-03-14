@@ -50,7 +50,7 @@ Buildable meters
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
+/obj/item/pipe/Initialize(mapload, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
 	if(make_from)
 		src.setDir(make_from.dir)

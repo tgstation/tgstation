@@ -161,7 +161,7 @@
 	sharpness = IS_SHARP
 	var/can_drop = FALSE
 
-/obj/item/weapon/melee/arm_blade/New(location,silent,synthetic)
+/obj/item/weapon/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	..()
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -239,7 +239,7 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/gun/magic/tentacle/New(location,silent)
+/obj/item/weapon/gun/magic/tentacle/Initialize(location,silent)
 	..()
 	if(ismob(loc))
 		if(!silent)
@@ -260,7 +260,7 @@
 	firing_effect_type = null
 	var/obj/item/weapon/gun/magic/tentacle/gun //the item that shot it
 
-/obj/item/ammo_casing/magic/tentacle/New(obj/item/weapon/gun/magic/tentacle/tentacle_gun)
+/obj/item/ammo_casing/magic/tentacle/Initialize(obj/item/weapon/gun/magic/tentacle/tentacle_gun)
 	gun = tentacle_gun
 	..()
 
@@ -279,7 +279,7 @@
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 
-/obj/item/projectile/tentacle/New(obj/item/ammo_casing/magic/tentacle/tentacle_casing)
+/obj/item/projectile/tentacle/Initialize(obj/item/ammo_casing/magic/tentacle/tentacle_casing)
 	source = tentacle_casing
 	..()
 
@@ -401,7 +401,7 @@
 
 	var/remaining_uses //Set by the changeling ability.
 
-/obj/item/weapon/shield/changeling/New()
+/obj/item/weapon/shield/changeling/Initialize()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -446,7 +446,7 @@
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armor at all.
 
-/obj/item/clothing/suit/space/changeling/New()
+/obj/item/clothing/suit/space/changeling/Initialize()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -495,7 +495,7 @@
 	cold_protection = 0
 	heat_protection = 0
 
-/obj/item/clothing/suit/armor/changeling/New()
+/obj/item/clothing/suit/armor/changeling/Initialize()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")

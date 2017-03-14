@@ -330,7 +330,7 @@
 	var/inert = 0
 	var/client/client_to_revive
 
-/obj/item/weapon/ectoplasm/revenant/New()
+/obj/item/weapon/ectoplasm/revenant/Initialize()
 	..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
@@ -415,7 +415,7 @@
 	dangerrating = 10
 	var/targetAmount = 100
 
-/datum/objective/revenant/New()
+/datum/objective/revenant/Initialize()
 	targetAmount = rand(350,600)
 	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
@@ -434,7 +434,7 @@
 /datum/objective/revenantFluff
 	dangerrating = 0
 
-/datum/objective/revenantFluff/New()
+/datum/objective/revenantFluff/Initialize()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \
 									 "Avoid killing in plain sight.", \
 									 "Cause as much chaos and anger as you can without being killed.", \

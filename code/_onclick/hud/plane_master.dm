@@ -4,7 +4,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_OVERLAY
 
-/obj/screen/plane_master/New()
+///obj/screen/plane_master/Initialize()
 	// Yes because of course it's automatically implied that if a plane master uses blend multiply it ALWAYS needs a backdrop.
 	// Jesus christ this is 2012 SVN tier retardedness get your shit together TG.
 	/*
@@ -16,7 +16,7 @@
 		backdrop.blend_mode = BLEND_OVERLAY
 		add_overlay(backdrop)
 	*/
-	..()
+//	..()
 
 /obj/screen/plane_master/game_world
 	name = "game world plane master"

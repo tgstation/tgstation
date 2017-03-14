@@ -11,7 +11,7 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/crew/New()
+/obj/machinery/computer/crew/Initialize()
 	monitor = crewmonitor
 	return ..()
 
@@ -34,7 +34,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 	var/list/interfaces
 	var/list/data
 
-/datum/crewmonitor/New()
+/datum/crewmonitor/Initialize()
 	. = ..()
 
 	var/list/jobs = new/list()

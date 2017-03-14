@@ -93,7 +93,7 @@
 	sigil_name = "Sigil of Submission"
 	var/glow_type
 
-/obj/effect/clockwork/sigil/submission/New()
+/obj/effect/clockwork/sigil/submission/Initialize()
 	..()
 	update_light()
 
@@ -243,7 +243,7 @@
 		return FALSE
 	return TRUE
 
-/obj/effect/clockwork/sigil/transmission/New()
+/obj/effect/clockwork/sigil/transmission/Initialize()
 	..()
 	update_glow()
 

@@ -131,17 +131,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	else
 		return 0
 
-
-/obj/machinery/telecomms/New()
-	telecomms_list += src
-	..()
-
-	//Set the listening_level if there's none.
-	if(!listening_level)
-		//Defaults to our Z level!
-		var/turf/position = get_turf(src)
-		listening_level = position.z
-
 /obj/machinery/telecomms/onShuttleMove(turf/T1, rotation)
 	. = ..()
 	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
@@ -149,6 +138,14 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/Initialize(mapload)
 	..()
+	telecomms_list += src
+
+	//Set the listening_level if there's none.
+	if(!listening_level)
+		//Defaults to our Z level!
+		var/turf/position = get_turf(src)
+		listening_level = position.z
+
 	if(mapload && autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)

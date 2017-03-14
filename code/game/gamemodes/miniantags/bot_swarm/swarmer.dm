@@ -528,9 +528,9 @@
 	icon_state = "disintegrate"
 	duration = 10
 
-/obj/effect/overlay/temp/swarmer/disintegration/New()
-	playsound(src.loc, "sparks", 100, 1)
+/obj/effect/overlay/temp/swarmer/disintegration/Initialize()
 	..()
+	playsound(src.loc, "sparks", 100, 1)
 
 /obj/effect/overlay/temp/swarmer/dismantle
 	icon_state = "dismantle"

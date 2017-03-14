@@ -14,7 +14,7 @@
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 
-/obj/structure/destructible/clockwork/cache/New()
+/obj/structure/destructible/clockwork/cache/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++

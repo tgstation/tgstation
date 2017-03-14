@@ -20,7 +20,7 @@
 	var/nuke_warning = FALSE // If we've set off a miniature alarm about an armed nuke
 	var/mode = TRACK_NUKE_DISK //What are we looking for?
 
-/obj/item/weapon/pinpointer/New()
+/obj/item/weapon/pinpointer/Initialize()
 	..()
 	pinpointer_list += src
 

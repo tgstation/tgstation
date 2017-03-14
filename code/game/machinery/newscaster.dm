@@ -198,7 +198,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New(loc, ndir, building)
+/obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	..()
 	if(building)
 		setDir(ndir)

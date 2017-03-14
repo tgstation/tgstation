@@ -11,7 +11,7 @@
 	idle_power_usage = 0
 	var/obj/item/device/radio/beacon/Beacon
 
-/obj/machinery/bluespace_beacon/New()
+/obj/machinery/bluespace_beacon/Initialize()
 	..()
 	var/turf/T = loc
 	Beacon = new /obj/item/device/radio/beacon

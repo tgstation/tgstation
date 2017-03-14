@@ -83,7 +83,7 @@
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
 
-/obj/item/clockwork/slab/New()
+/obj/item/clockwork/slab/Initialize()
 	..()
 	update_slab_info(src)
 	START_PROCESSING(SSobj, src)

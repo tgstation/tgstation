@@ -53,7 +53,7 @@ var/list/holopads = list()
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
 
-/obj/machinery/holopad/New()
+/obj/machinery/holopad/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
 	B.apply_default_parts(src)

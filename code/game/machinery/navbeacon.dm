@@ -23,7 +23,7 @@
 
 	req_access = list(access_engine, access_robotics)
 
-/obj/machinery/navbeacon/New()
+/obj/machinery/navbeacon/Initialize()
 	..()
 
 	set_codes()

@@ -542,7 +542,7 @@
 	var/wheel_buttons_type //the type of buttons used with this wheel.
 	var/list/buttons_list = list()
 
-/obj/screen/wheel/New()
+/obj/screen/wheel/Initialize()
 	..()
 	build_options()
 
@@ -674,7 +674,7 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_title)
+/obj/screen/splash/Initialize(client/C, visible, use_previous_title)
 	holder = C
 
 	if(!visible)

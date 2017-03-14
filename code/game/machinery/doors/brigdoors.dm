@@ -38,14 +38,11 @@
 	maptext_height = 26
 	maptext_width = 32
 
-/obj/machinery/door_timer/New()
+/obj/machinery/door_timer/Initialize()
 	..()
 
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
-
-/obj/machinery/door_timer/Initialize()
-	..()
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)

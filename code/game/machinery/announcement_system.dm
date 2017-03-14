@@ -25,7 +25,7 @@ var/list/announcement_systems = list()
 	var/pinklight = "Light_Pink"
 	var/errorlight = "Error_Red"
 
-/obj/machinery/announcement_system/New()
+/obj/machinery/announcement_system/Initialize()
 	..()
 	announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)

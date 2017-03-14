@@ -39,7 +39,7 @@
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
 
-/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
+/obj/effect/rend/Initialize(mapload, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
 	src.spawn_path = spawn_type
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
@@ -215,7 +215,7 @@ var/global/list/multiverse = list()
 	var/cooldown = 0
 	var/assigned = "unassigned"
 
-/obj/item/weapon/multisword/New()
+/obj/item/weapon/multisword/Initialize()
 	..()
 	multiverse |= src
 
@@ -630,6 +630,6 @@ var/global/list/multiverse = list()
 	duration = 40
 	pixel_x = 500
 
-/obj/effect/overlay/temp/tornado/New(loc)
+/obj/effect/overlay/temp/tornado/Initialize(loc)
 	..()
 	animate(src, pixel_x = -500, time = 40)

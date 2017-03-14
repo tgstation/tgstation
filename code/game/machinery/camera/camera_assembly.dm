@@ -26,7 +26,7 @@
 			4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-/obj/structure/camera_assembly/New(loc, ndir, building)
+/obj/structure/camera_assembly/Initialize(mapload, ndir, building)
 	..()
 	if(building)
 		setDir(ndir)

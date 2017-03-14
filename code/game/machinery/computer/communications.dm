@@ -43,9 +43,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		return FALSE
 	return TRUE
 
-/obj/machinery/computer/communications/New()
-	shuttle_caller_list += src
+/obj/machinery/computer/communications/Initialize()
 	..()
+	shuttle_caller_list += src
 
 /obj/machinery/computer/communications/process()
 	if(..())

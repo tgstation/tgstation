@@ -24,7 +24,7 @@
 	var/obj/effect/countdown/clockworkgate/countdown
 	var/list/required_components = list(BELLIGERENT_EYE = 7, VANGUARD_COGWHEEL = 7, GEIS_CAPACITOR = 7, REPLICANT_ALLOY = 7, HIEROPHANT_ANSIBLE = 7)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/New()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
 	..()
 	INVOKE_ASYNC(src, .proc/spawn_animation)
 
@@ -319,6 +319,6 @@
 	light_power = 4
 	light_color = "#6A4D2F"
 
-/obj/effect/clockwork/overlay/gateway_glow/New()
+/obj/effect/clockwork/overlay/gateway_glow/Initialize()
 	..()
 	update_light()
