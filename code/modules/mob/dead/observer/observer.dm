@@ -59,7 +59,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	// of the mob
 	var/deadchat_name
 
-/mob/dead/observer/New(mob/body)
+/mob/dead/observer/Initialize()
 	invisibility = observer_default_invisibility
 
 	verbs += /mob/dead/observer/proc/dead_tele
@@ -79,6 +79,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	updateallghostimages()
 
 	var/turf/T
+	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		logging = body.logging			//preserve our logs by copying them to our ghost
