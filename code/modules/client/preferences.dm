@@ -1123,7 +1123,7 @@ var/list/preferences_datums = list()
 					if (world.byond_version < 511)
 						version_message += "\nThis server does not currently support client side fps. You can set now for when it does."
 					var/desiredfps = input(user, "Choose your desired fps.[version_message]\n(0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
-					if (isnull(desiredfps))
+					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						if (world.byond_version >= 511 && user.client && user.client.byond_version >= 511)
 							user.client.vars["fps"] = clientfps
