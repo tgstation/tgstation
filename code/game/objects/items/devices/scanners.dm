@@ -39,7 +39,7 @@ MASS SPECTROMETER
 	scan()
 
 /obj/item/device/t_scanner/proc/scan()
-
+	var/list/RevealedObjs = list()
 	for(var/turf/T in range(2, src.loc) )
 		for(var/obj/O in T.contents)
 
@@ -52,15 +52,19 @@ MASS SPECTROMETER
 				O.invisibility = 0
 				if(L)
 					flick_sonar(O)
-				spawn(10)
-					if(O && O.loc)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = INVISIBILITY_MAXIMUM
+				RevealedObjs += O
 			else
 				if(L)
 					flick_sonar(O)
+	addtimer(CALLBACK(src, .proc/hide_scanned_stuff, RevealedObjs), 10)
 
+/obj/item/device/t_scanner/proc/hide_scanned_stuff(list/L)
+	for(var/I in L)
+		var/obj/O = I
+		if(O && O.loc)
+			var/turf/U = O.loc
+			if(U.intact)
+				O.invisibility = INVISIBILITY_MAXIMUM
 
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
