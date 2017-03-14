@@ -653,14 +653,3 @@
 	layer = 2.5
 	light_type = /obj/item/weapon/light/bulb
 	fitting = "bulb"
-
-/obj/machinery/light/floor/spotlight //invisible lighting source
-//	invisibility = 1
-	light_color = "null"
-	brightness = 2
-	light_range = 1
-	light_power = 10
-	alpha = 255
-	layer = 3
-	light_type = null
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

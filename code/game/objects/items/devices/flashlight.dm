@@ -399,12 +399,14 @@
 	. = ..()
 
 
-/obj/machinery/light/floor/spotlight //invisible lighting source
+/obj/item/device/flashlight/spotlight //invisible lighting source
 	light_color = "null"
-	brightness = 2
-	light_range = 2
+	brightness_on = 0
+	light_range = 0
 	light_power = 10
-	alpha = 255
-	layer = 3
-	light_type = null
+	alpha = 0
+	layer = 0
+	on = TRUE
+	anchored = TRUE
+	var/range = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

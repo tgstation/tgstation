@@ -39,6 +39,7 @@
 		new /datum/GBP_equipment("Advanced Magboot x3",			/obj/item/clothing/shoes/magboots/advance,					3000,	3),
 		new /datum/GBP_equipment("Reflector Box x3",			/obj/structure/reflector/box,								3500,	3),
 		new /datum/GBP_equipment("Radiation Collector x3",			/obj/machinery/power/rad_collector,						4000,	3),
+		new /datum/GBP_equipment("Radiant Dance Machine",		/obj/item/clothing/suit/space/hardsuit/ert/engi,			5000,	1),
 		new /datum/GBP_equipment("ERT Hardsuit x5",		/obj/item/clothing/suit/space/hardsuit/ert/engi,					7500,	5),
 		new /datum/GBP_equipment("Ranged RCD x4",			/obj/item/weapon/rcd/arcd,										9000,	4),
 		new /datum/GBP_equipment("Prototype Atmos Vehicle x2",			/obj/vehicle/space/speedbike/atmos,					10000,	2),
@@ -515,7 +516,6 @@
 			else if(active)
 				active = FALSE
 				STOP_PROCESSING(SSobj, src)
-				playsound(src,'sound/machines/terminal_off.ogg',50,1)
 				icon_state = "disco0"
 				dance_over()
 				src.updateUsrDialog()
@@ -540,7 +540,7 @@
 					if (!M)
 						return
 					if (i<5)
-						M.pixel_y += 2
+						M.pixel_y += 1
 					if (i>4)
 						M.pixel_y -= 2
 					M.setDir(turn(M.dir, 90))
@@ -611,9 +611,9 @@
 				if (!M)
 					return
 				if (i<31)
-					M.pixel_y += 2
+					M.pixel_y += 1
 				if (i>30)
-					M.pixel_y -= 2
+					M.pixel_y -= 1
 				M.setDir(turn(M.dir, 90))
 				switch (M.dir)
 					if (NORTH)
@@ -632,104 +632,133 @@
 	var/turf/cen = get_turf(src)
 	for(var/turf/t in view(src,3))
 		if(t.x == cen.x && t.y > cen.y)
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
-			L.light_color = "yellow"
-			visible_message("<span class='boldannounce'>The [L.light_color] [L] warps in! It is currently [get_dir(src,L)] of the machine!</span>")
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "red"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if(t.x == cen.x && t.y < cen.y)
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
-			L.light_color = "green"
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "purple"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if(t.x > cen.x && t.y == cen.y)
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
-			L.light_color = "purple"
-			visible_message("<span class='boldannounce'>The [L.light_color] [L] warps in! It is currently [get_dir(src,L)] of the machine!</span>")
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "#ffff00"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if(t.x < cen.x && t.y == cen.y)
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
-			L.light_color = "#00ffff"
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "green"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
 			L.light_color = "sw"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.2+get_dist(src, L)
 			spotlights+=L
 			continue
 		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2==cen.x && t.y-2 == cen.y))
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
 			L.light_color = "ne"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.2+get_dist(src, L)
 			spotlights+=L
-			visible_message("<span class='boldannounce'>The [L.light_color] [L] warps in! It is currently [get_dir(src,L)] of the machine!</span>")
 			continue
 		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
 			L.light_color = "se"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.2+get_dist(src, L)
 			spotlights+=L
 			continue
 		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2==cen.x && t.y-2 == cen.y))
-			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
 			L.light_color = "nw"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.2+get_dist(src, L)
 			spotlights+=L
 			continue
 		continue
 
 /obj/machinery/disco/proc/lights_spin()
 	for(var/i in 1 to 24)
+		if(!src || QDELETED(src) || !active)
+			return
 		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
 		S.alpha = 0
 		sparkles += S
 		switch(i)
 			if(1 to 8)
-				S.orbit(src, 30, FALSE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 30, TRUE, 60, 36, TRUE, FALSE)
 			if(9 to 16)
-				S.orbit(src, 62, FALSE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 62, TRUE, 60, 36, TRUE, FALSE)
 			if(17 to 24)
-				S.orbit(src, 95, FALSE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 95, TRUE, 60, 36, TRUE, FALSE)
 		sleep(7)
 	for(var/obj/reveal in sparkles)
-		reveal.alpha = 160
-	for(var/n in 1 to 120)
-		for(var/obj/machinery/light/glow in spotlights)
-			if(glow.light_color == "yellow")
+		reveal.alpha = 255
+	while(active)
+		visible_message("<span class='boldannounce'>Change places!</span>")
+		for(var/obj/item/device/flashlight/spotlight/glow in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
+			if(!src || QDELETED(src) || !active || !glow || QDELETED(glow))
+				return
+			if(glow.light_color == "red")
 				glow.light_color = "nw"
+				glow.light_range = 0
 				glow.update_light()
 				continue
 			if(glow.light_color == "nw")
-				glow.light_color = "purple"
-				glow.update_light()
-				continue
-			if(glow.light_color == "purple")
-				glow.light_color = "sw"
-				glow.update_light()
-				continue
-			if(glow.light_color == "sw")
 				glow.light_color = "green"
+				glow.light_range = glow.range * 1.1
+				glow.light_power = glow.light_power * 2.2
 				glow.update_light()
 				continue
 			if(glow.light_color == "green")
+				glow.light_color = "sw"
+				glow.light_power = glow.light_power * 0.5
+				glow.light_range = 0
+				glow.update_light()
+				continue
+			if(glow.light_color == "sw")
+				glow.light_color = "purple"
+				glow.light_power = glow.light_power * 2.2
+				glow.light_range = glow.range * 1.2
+				glow.update_light()
+				continue
+			if(glow.light_color == "purple")
 				glow.light_color = "se"
+				glow.light_power = glow.light_power * 0.5
+				glow.light_range = 0
 				glow.update_light()
 				continue
 			if(glow.light_color == "se")
-				glow.light_color = "#00ffff"
+				glow.light_color = "#ffff00"
+				glow.light_range = glow.range * 0.8
 				glow.update_light()
 				continue
-			if(glow.light_color == "#00ffff")
+			if(glow.light_color == "#ffff00")
 				glow.light_color = "ne"
+				glow.light_range = 0
 				glow.update_light()
 				continue
 			if(glow.light_color == "ne")
-				glow.light_color = "yellow"
+				glow.light_color = "red"
+				glow.light_range = glow.range * 0.8
 				glow.update_light()
-				visible_message("<span class='boldannounce'>The [glow] has just turned [glow.light_color]! It is currently [get_dir(src,glow)] of the machine!</span>")
 				continue
-		sleep(100)
+		sleep(5)
 
 /obj/machinery/disco/proc/dance_over()
-	for(var/obj/machinery/light/floor/spotlight/SL in spotlights)
+	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
 		qdel(SL)
 	spotlights.Cut()
 	for(var/obj/effect/overlay/sparkles/SP in sparkles)
@@ -753,9 +782,6 @@
 				listeners += M
 			if(prob(5))
 				bless(M)
-			else if(allowed(M)) // Engineers over 100% more groovy than normal crew
-				if(prob(7))
-					bless(M)
 		for(var/mob/living/L in listeners)
 			if(!(L in rangers))
 				listeners -= L
@@ -765,8 +791,8 @@
 
 	else if(active)
 		STOP_PROCESSING(SSobj, src)
-		playsound(src,'sound/machines/terminal_off.ogg',50,1)
 		dance_over()
+		playsound(src,'sound/machines/terminal_off.ogg',50,1)
 		active = FALSE
 		icon_state = "disco0"
 
