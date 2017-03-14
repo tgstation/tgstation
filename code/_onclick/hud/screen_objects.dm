@@ -674,7 +674,7 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/Initialize(client/C, visible, use_previous_title)
+/obj/screen/splash/New(client/C, visible, use_previous_title)
 	holder = C
 
 	if(!visible)
