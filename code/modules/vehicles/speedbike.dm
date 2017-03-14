@@ -10,8 +10,8 @@
  	. = ..()
 		riding_datum = new/datum/riding/space/speedbike
 
-/obj/vehicle/space/speedbike/New()
-	. = ..()
+/obj/vehicle/space/speedbike/Initialize()
+	..()
 	overlay = image("icons/obj/bike.dmi", overlay_state)
 	overlay.layer = ABOVE_MOB_LAYER
 	add_overlay(overlay)
@@ -23,7 +23,7 @@
 	duration = 10
 	randomdir = 0
 
-/obj/effect/overlay/temp/speedbike_trail/New(loc,move_dir)
+/obj/effect/overlay/temp/speedbike_trail/Initialize(mapload,move_dir)
 	..()
 	setDir(move_dir)
 
