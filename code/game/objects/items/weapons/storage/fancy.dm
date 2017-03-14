@@ -22,7 +22,7 @@
 	var/spawn_type = null
 	var/fancy_open = FALSE
 
-/obj/item/weapon/storage/fancy/New()
+/obj/item/weapon/storage/fancy/Initialize()
 	..()
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
@@ -124,7 +124,7 @@
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette
 
-/obj/item/weapon/storage/fancy/cigarettes/New()
+/obj/item/weapon/storage/fancy/cigarettes/Initialize()
 	..()
 	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 	reagents.set_reacting(FALSE)
@@ -203,7 +203,7 @@
 	desc = "Smoked by the truly robust."
 	icon_state = "robustg"
 
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/New()
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/Initialize()
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("gold",1)
@@ -218,7 +218,7 @@
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/New()
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/Initialize()
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("omnizine",15)
@@ -236,7 +236,7 @@
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
 	icon_state = "shadyjim"
 
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/New()
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/Initialize()
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("lipolicide",4)

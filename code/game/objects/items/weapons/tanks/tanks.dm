@@ -48,7 +48,7 @@
 	H.update_action_buttons_icon()
 
 
-/obj/item/weapon/tank/New()
+/obj/item/weapon/tank/Initialize()
 	..()
 
 	air_contents = new(volume) //liters

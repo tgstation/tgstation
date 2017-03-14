@@ -19,7 +19,7 @@
 
 
 
-/obj/structure/sign/barsign/New()
+/obj/structure/sign/barsign/Initialize()
 	..()
 
 

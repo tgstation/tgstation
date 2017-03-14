@@ -151,7 +151,7 @@
 
 	allow_quick_empty = 1 // this function is superceded
 
-/obj/item/weapon/storage/bag/sheetsnatcher/New()
+/obj/item/weapon/storage/bag/sheetsnatcher/Initialize()
 	..()
 	//verbs -= /obj/item/weapon/storage/verb/quick_empty
 	//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty

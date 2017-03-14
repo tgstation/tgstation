@@ -13,7 +13,7 @@
 	max_integrity = 150
 	integrity_failure = 50
 
-/obj/structure/fireaxecabinet/New()
+/obj/structure/fireaxecabinet/Initialize()
 	..()
 	update_icon()
 

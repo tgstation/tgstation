@@ -1,6 +1,6 @@
 /obj/item/weapon/storage/box/syndicate
 
-/obj/item/weapon/storage/box/syndicate/New()
+/obj/item/weapon/storage/box/syndicate/Initialize()
 	..()
 	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
 		if("bloodyspai") // 27 tc now this is more right
@@ -141,7 +141,7 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
 
-/obj/item/weapon/storage/box/syndie_kit/imp_freedom/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_freedom/Initialize()
 	..()
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/freedom(O)
@@ -150,25 +150,25 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
 	name = "Microbomb Implant (with injector)"
 
-/obj/item/weapon/storage/box/syndie_kit/imp_microbomb/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_microbomb/Initialize()
+	..()
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/explosive(O)
 	O.update_icon()
-	..()
 
 /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	name = "Macrobomb Implant (with injector)"
 
-/obj/item/weapon/storage/box/syndie_kit/imp_macrobomb/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_macrobomb/Initialize()
+	..()
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/explosive/macro(O)
 	O.update_icon()
-	..()
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
 
-/obj/item/weapon/storage/box/syndie_kit/imp_uplink/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_uplink/Initialize()
 	..()
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/uplink(O)
@@ -177,7 +177,7 @@
 /obj/item/weapon/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
 
-/obj/item/weapon/storage/box/syndie_kit/bioterror/New()
+/obj/item/weapon/storage/box/syndie_kit/bioterror/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
@@ -185,7 +185,7 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	name = "boxed adrenal implant (with injector)"
 
-/obj/item/weapon/storage/box/syndie_kit/imp_adrenal/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenal/Initialize()
 	..()
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/adrenalin(O)
@@ -194,7 +194,7 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_storage
 	name = "boxed storage implant (with injector)"
 
-/obj/item/weapon/storage/box/syndie_kit/imp_storage/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_storage/Initialize()
 	..()
 	new /obj/item/weapon/implanter/storage(src)
 
@@ -203,7 +203,7 @@
 	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
 	max_w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/storage/box/syndie_kit/space/New()
+/obj/item/weapon/storage/box/syndie_kit/space/Initialize()
 	..()
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
@@ -211,7 +211,7 @@
 /obj/item/weapon/storage/box/syndie_kit/emp
 	name = "boxed EMP kit"
 
-/obj/item/weapon/storage/box/syndie_kit/emp/New()
+/obj/item/weapon/storage/box/syndie_kit/emp/Initialize()
 	..()
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
@@ -224,7 +224,7 @@
 	name = "boxed chemical kit"
 	storage_slots = 14
 
-/obj/item/weapon/storage/box/syndie_kit/chemical/New()
+/obj/item/weapon/storage/box/syndie_kit/chemical/Initialize()
 	..()
 	new /obj/item/weapon/reagent_containers/glass/bottle/polonium(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/venom(src)
@@ -243,7 +243,7 @@
 /obj/item/weapon/storage/box/syndie_kit/nuke
 	name = "box"
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/New()
+/obj/item/weapon/storage/box/syndie_kit/nuke/Initialize()
 	..()
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
@@ -252,7 +252,7 @@
 /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
 	name = "boxed virus grenade kit"
 
-/obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade/New()
+/obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade/Initialize()
 	..()
 	new /obj/item/weapon/grenade/chem_grenade/tuberculosis(src)
 	for(var/i in 1 to 5)
@@ -263,7 +263,7 @@
 /obj/item/weapon/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
 
-/obj/item/weapon/storage/box/syndie_kit/chameleon/New()
+/obj/item/weapon/storage/box/syndie_kit/chameleon/Initialize()
 	..()
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/suit/chameleon(src)
@@ -280,7 +280,7 @@
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
-/obj/item/weapon/storage/box/syndie_kit/throwing_weapons/New()
+/obj/item/weapon/storage/box/syndie_kit/throwing_weapons/Initialize()
 	..()
 	contents = list()
 	new /obj/item/weapon/throwing_star(src)
@@ -291,28 +291,28 @@
 	new /obj/item/weapon/restraints/legcuffs/bola/tactical(src)
 	new /obj/item/weapon/restraints/legcuffs/bola/tactical(src)
 
-/obj/item/weapon/storage/box/syndie_kit/cutouts/New()
+/obj/item/weapon/storage/box/syndie_kit/cutouts/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new/obj/item/cardboard_cutout/adaptive(src)
 	new/obj/item/toy/crayon/rainbow(src)
 
-/obj/item/weapon/storage/box/syndie_kit/romerol/New()
+/obj/item/weapon/storage/box/syndie_kit/romerol/Initialize()
 	..()
 	new /obj/item/weapon/reagent_containers/glass/bottle/romerol(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
 
-/obj/item/weapon/storage/box/syndie_kit/ez_clean/New()
+/obj/item/weapon/storage/box/syndie_kit/ez_clean/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new/obj/item/weapon/grenade/chem_grenade/ez_clean(src)
 
-/obj/item/weapon/storage/box/hug/reverse_revolver/New()
+/obj/item/weapon/storage/box/hug/reverse_revolver/Initialize()
 	..()
 	new /obj/item/weapon/gun/ballistic/revolver/reverse(src)
 
-/obj/item/weapon/storage/box/syndie_kit/mimery/New()
+/obj/item/weapon/storage/box/syndie_kit/mimery/Initialize()
 	..()
 	new /obj/item/weapon/spellbook/oneuse/mimery_blockade(src)
 	new /obj/item/weapon/spellbook/oneuse/mimery_guns(src)

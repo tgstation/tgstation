@@ -21,7 +21,7 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
-/obj/item/weapon/implant/chem/New()
+/obj/item/weapon/implant/chem/Initialize()
 	..()
 	create_reagents(50)
 	tracked_chem_implants += src

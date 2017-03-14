@@ -16,7 +16,7 @@
 	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
-/obj/structure/displaycase/New()
+/obj/structure/displaycase/Initialize()
 	..()
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)

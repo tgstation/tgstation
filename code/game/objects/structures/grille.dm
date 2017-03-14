@@ -228,7 +228,7 @@
 	desc = "A strangely-shaped grille."
 	broken_type = /obj/structure/grille/ratvar/broken
 
-/obj/structure/grille/ratvar/New()
+/obj/structure/grille/ratvar/Initialize()
 	..()
 	change_construction_value(1)
 	if(broken)

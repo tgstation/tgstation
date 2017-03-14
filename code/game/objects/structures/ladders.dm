@@ -13,7 +13,8 @@
 	desc = "An extremely sturdy metal ladder."
 
 
-/obj/structure/ladder/New()
+/obj/structure/ladder/Initialize()
+	..()
 	spawn(8)
 		for(var/obj/structure/ladder/L in world)
 			if(L.id == id)

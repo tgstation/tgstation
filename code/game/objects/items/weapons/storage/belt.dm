@@ -42,7 +42,7 @@
 	icon_state = "utilitybelt_ce"
 	item_state = "utility_ce"
 
-/obj/item/weapon/storage/belt/utility/chief/full/New()
+/obj/item/weapon/storage/belt/utility/chief/full/Initialize()
 	..()
 	new /obj/item/weapon/screwdriver/power(src)
 	new /obj/item/weapon/crowbar/power(src)
@@ -54,7 +54,7 @@
 	//much roomier now that we've managed to remove two tools
 
 
-/obj/item/weapon/storage/belt/utility/full/New()
+/obj/item/weapon/storage/belt/utility/full/Initialize()
 	..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
@@ -65,7 +65,7 @@
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
-/obj/item/weapon/storage/belt/utility/atmostech/New()
+/obj/item/weapon/storage/belt/utility/atmostech/Initialize()
 	..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
@@ -153,7 +153,7 @@
 		/obj/item/weapon/restraints/legcuffs/bola
 		)
 
-/obj/item/weapon/storage/belt/security/full/New()
+/obj/item/weapon/storage/belt/security/full/Initialize()
 	..()
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/restraints/handcuffs(src)
@@ -235,7 +235,7 @@
 		/obj/item/device/soulstone
 		)
 
-/obj/item/weapon/storage/belt/soulstone/full/New()
+/obj/item/weapon/storage/belt/soulstone/full/Initialize()
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/device/soulstone(src)
@@ -265,7 +265,7 @@
 	icon_state = "belt"
 	item_state = "security"
 
-/obj/item/weapon/storage/belt/military/abductor/full/New()
+/obj/item/weapon/storage/belt/military/abductor/full/Initialize()
 	..()
 	new /obj/item/weapon/screwdriver/abductor(src)
 	new /obj/item/weapon/wrench/abductor(src)
@@ -304,7 +304,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/weapon/c4,
 		)
-/obj/item/weapon/storage/belt/grenade/full/New()
+/obj/item/weapon/storage/belt/grenade/full/Initialize()
 	..()
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/grenade/smokebomb(src)
@@ -345,7 +345,7 @@
 		/obj/item/weapon/gun/magic/wand
 		)
 
-/obj/item/weapon/storage/belt/wands/full/New()
+/obj/item/weapon/storage/belt/wands/full/Initialize()
 	..()
 	new /obj/item/weapon/gun/magic/wand/death(src)
 	new /obj/item/weapon/gun/magic/wand/resurrection(src)
@@ -400,7 +400,7 @@
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER
 
-/obj/item/weapon/storage/belt/holster/full/New()
+/obj/item/weapon/storage/belt/holster/full/Initialize()
 	..()
 	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
 	new /obj/item/ammo_box/c38(src)
@@ -505,7 +505,7 @@
 	..()
 
 
-/obj/item/weapon/storage/belt/sabre/New()
+/obj/item/weapon/storage/belt/sabre/Initialize()
 	..()
 	new /obj/item/weapon/melee/sabre(src)
 	update_icon()

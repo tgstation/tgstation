@@ -10,11 +10,11 @@
 	armor = list(melee = 0, bullet = 50, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0, fire = 20, acid = 20)
 	var/obj/item/weapon/holosign_creator/projector
 
-/obj/structure/holosign/New(loc, source_projector)
+/obj/structure/holosign/Initialize(mapload, source_projector)
+	..()
 	if(source_projector)
 		projector = source_projector
 		projector.signs += src
-	..()
 
 /obj/structure/holosign/Destroy()
 	if(projector)

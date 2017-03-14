@@ -186,7 +186,7 @@
 	var/balanced = 1
 	origin_tech = "combat=7;materials=6"
 
-/obj/item/weapon/melee/supermatter_sword/New()
+/obj/item/weapon/melee/supermatter_sword/Initialize()
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
 	qdel(shard.countdown)

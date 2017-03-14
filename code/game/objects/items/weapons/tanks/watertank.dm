@@ -18,7 +18,7 @@
 	var/on = 0
 	var/volume = 500
 
-/obj/item/weapon/watertank/New()
+/obj/item/weapon/watertank/Initialize()
 	..()
 	create_reagents(volume)
 	noz = make_noz()
@@ -114,7 +114,7 @@
 
 	var/obj/item/weapon/watertank/tank
 
-/obj/item/weapon/reagent_containers/spray/mister/New(parent_tank)
+/obj/item/weapon/reagent_containers/spray/mister/Initialize(parent_tank)
 	..()
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
@@ -155,7 +155,7 @@
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
 
-/obj/item/weapon/watertank/janitor/New()
+/obj/item/weapon/watertank/janitor/Initialize()
 	..()
 	reagents.add_reagent("cleaner", 500)
 
@@ -188,7 +188,7 @@
 	item_state = "waterbackpackatmos"
 	volume = 200
 
-/obj/item/weapon/watertank/atmos/New()
+/obj/item/weapon/watertank/atmos/Initialize()
 	..()
 	reagents.add_reagent("water", 200)
 
@@ -220,7 +220,7 @@
 	var/metal_synthesis_cooldown = 0
 	var/nanofrost_cooldown = 0
 
-/obj/item/weapon/extinguisher/mini/nozzle/New(parent_tank)
+/obj/item/weapon/extinguisher/mini/nozzle/Initialize(parent_tank)
 	..()
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
@@ -432,7 +432,7 @@
 	update_filling()
 	user.update_inv_back() //for overlays update
 
-/obj/item/weapon/reagent_containers/chemtank/stim/New()
+/obj/item/weapon/reagent_containers/chemtank/stim/Initialize()
 	..()
 	reagents.add_reagent("stimulants_longterm", 300)
 	update_filling()
@@ -447,7 +447,7 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/weapon/watertank/operator/New()
+/obj/item/weapon/watertank/operator/Initialize()
 	..()
 	reagents.add_reagent("mutagen",350)
 	reagents.add_reagent("napalm",125)

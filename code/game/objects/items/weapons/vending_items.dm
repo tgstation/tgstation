@@ -16,7 +16,7 @@
 	var/init_charges = list(0, 0, 0)
 
 
-/obj/item/weapon/vending_refill/New(amt = -1)
+/obj/item/weapon/vending_refill/Initialize(mapload, amt = -1)
 	..()
 	name = "\improper [machine_name] restocking unit"
 	if(isnum(amt) && amt > -1)

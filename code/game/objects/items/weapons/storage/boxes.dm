@@ -88,17 +88,17 @@
 		new /obj/item/weapon/disk/plantgene(src)
 
 // Ordinary survival box
-/obj/item/weapon/storage/box/survival/New()
+/obj/item/weapon/storage/box/survival/Initialize()
 	..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/survival/radio/New()
+/obj/item/weapon/storage/box/survival/radio/Initialize()
 	..()
 	new /obj/item/device/radio/off(src)
 
-/obj/item/weapon/storage/box/survival_mining/New()
+/obj/item/weapon/storage/box/survival_mining/Initialize()
 	..()
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
@@ -107,30 +107,30 @@
 
 
 // Engineer survival box
-/obj/item/weapon/storage/box/engineer/New()
+/obj/item/weapon/storage/box/engineer/Initialize()
 	..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/engineer/radio/New()
+/obj/item/weapon/storage/box/engineer/radio/Initialize()
 	..()
 	new /obj/item/device/radio/off(src)
 
 // Syndie survival box
-/obj/item/weapon/storage/box/syndie/New()
+/obj/item/weapon/storage/box/syndie/Initialize()
 	..()
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 
 // Security survival box
-/obj/item/weapon/storage/box/security/New()
+/obj/item/weapon/storage/box/security/Initialize()
 	..()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/security/radio/New()
+/obj/item/weapon/storage/box/security/radio/Initialize()
 	..()
 	new /obj/item/device/radio/off(src)
 
@@ -139,7 +139,7 @@
 	desc = "Contains sterile latex gloves."
 	illustration = "latex"
 
-/obj/item/weapon/storage/box/gloves/New()
+/obj/item/weapon/storage/box/gloves/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/gloves/color/latex(src)
@@ -149,7 +149,7 @@
 	desc = "This box contains sterile medical masks."
 	illustration = "sterile"
 
-/obj/item/weapon/storage/box/masks/New()
+/obj/item/weapon/storage/box/masks/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/mask/surgical(src)
@@ -159,7 +159,7 @@
 	desc = "A box full of syringes."
 	illustration = "syringe"
 
-/obj/item/weapon/storage/box/syringes/New()
+/obj/item/weapon/storage/box/syringes/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/syringe( src )
@@ -169,7 +169,7 @@
 	desc = "A box full of epinephrine MediPens."
 	illustration = "syringe"
 
-/obj/item/weapon/storage/box/medipens/New()
+/obj/item/weapon/storage/box/medipens/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
@@ -179,7 +179,7 @@
 	desc = "A box with several stimpack medipens for the economical miner."
 	illustration = "syringe"
 
-/obj/item/weapon/storage/box/medipens/utility/New()
+/obj/item/weapon/storage/box/medipens/utility/Initialize()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
@@ -188,7 +188,7 @@
 	name = "box of beakers"
 	illustration = "beaker"
 
-/obj/item/weapon/storage/box/beakers/New()
+/obj/item/weapon/storage/box/beakers/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/glass/beaker( src )
@@ -197,7 +197,7 @@
 	name = "box of DNA injectors"
 	desc = "This box contains injectors, it seems."
 
-/obj/item/weapon/storage/box/injectors/New()
+/obj/item/weapon/storage/box/injectors/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/dnainjector/h2m(src)
@@ -210,7 +210,7 @@
 	icon_state = "secbox"
 	illustration = "flashbang"
 
-/obj/item/weapon/storage/box/flashbangs/New()
+/obj/item/weapon/storage/box/flashbangs/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/flashbang(src)
@@ -221,7 +221,7 @@
 	icon_state = "secbox"
 	illustration = "flashbang"
 
-/obj/item/weapon/storage/box/flashes/New()
+/obj/item/weapon/storage/box/flashes/Initialize()
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/device/assembly/flash/handheld(src)
@@ -231,7 +231,7 @@
 	desc = "This box contains everything necessary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
 	illustration = "flashbang"
 
-/obj/item/weapon/storage/box/wall_flash/New()
+/obj/item/weapon/storage/box/wall_flash/Initialize()
 	..()
 	var/id = rand(1000, 9999)
 
@@ -250,7 +250,7 @@
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
 	illustration = "flashbang"
 
-/obj/item/weapon/storage/box/teargas/New()
+/obj/item/weapon/storage/box/teargas/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
@@ -260,7 +260,7 @@
 	desc = "A box with 5 emp grenades."
 	illustration = "flashbang"
 
-/obj/item/weapon/storage/box/emps/New()
+/obj/item/weapon/storage/box/emps/Initialize()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/grenade/empgrenade(src)
@@ -270,7 +270,7 @@
 	desc = "Box full of scum-bag tracking utensils."
 	illustration = "implant"
 
-/obj/item/weapon/storage/box/trackimp/New()
+/obj/item/weapon/storage/box/trackimp/Initialize()
 	..()
 	for(var/i in 1 to 4)
 		new /obj/item/weapon/implantcase/tracking(src)
@@ -283,7 +283,7 @@
 	desc = "For finding those who have died on the accursed lavaworld."
 	illustration = "implant"
 
-/obj/item/weapon/storage/box/minertracker/New()
+/obj/item/weapon/storage/box/minertracker/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/tracking(src)
@@ -296,7 +296,7 @@
 	desc = "Box of stuff used to implant chemicals."
 	illustration = "implant"
 
-/obj/item/weapon/storage/box/chemimp/New()
+/obj/item/weapon/storage/box/chemimp/Initialize()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/implantcase/chem(src)
@@ -308,7 +308,7 @@
 	desc = "Box of exile implants. It has a picture of a clown being booted through the Gateway."
 	illustration = "implant"
 
-/obj/item/weapon/storage/box/exileimp/New()
+/obj/item/weapon/storage/box/exileimp/Initialize()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/implantcase/exile(src)
@@ -324,7 +324,7 @@
 	desc = "This box contains nerd glasses."
 	illustration = "glasses"
 
-/obj/item/weapon/storage/box/rxglasses/New()
+/obj/item/weapon/storage/box/rxglasses/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
@@ -333,7 +333,7 @@
 	name = "box of drinking glasses"
 	desc = "It has a picture of drinking glasses on it."
 
-/obj/item/weapon/storage/box/drinkingglasses/New()
+/obj/item/weapon/storage/box/drinkingglasses/Initialize()
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
@@ -342,7 +342,7 @@
 	name = "box of condiment bottles"
 	desc = "It has a large ketchup smear on it."
 
-/obj/item/weapon/storage/box/condimentbottles/New()
+/obj/item/weapon/storage/box/condimentbottles/Initialize()
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/weapon/reagent_containers/food/condiment(src)
@@ -351,7 +351,7 @@
 	name = "box of paper cups"
 	desc = "It has pictures of paper cups on the front."
 
-/obj/item/weapon/storage/box/cups/New()
+/obj/item/weapon/storage/box/cups/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
@@ -361,7 +361,7 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	illustration = "donk_kit"
 
-/obj/item/weapon/storage/box/donkpockets/New()
+/obj/item/weapon/storage/box/donkpockets/Initialize()
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
@@ -374,7 +374,7 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
 	illustration = null
 
-/obj/item/weapon/storage/box/monkeycubes/New()
+/obj/item/weapon/storage/box/monkeycubes/Initialize()
 	..()
 	for(var/i = 1; i <= 5; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
@@ -384,7 +384,7 @@
 	desc = "Has so many empty IDs."
 	illustration = "id"
 
-/obj/item/weapon/storage/box/ids/New()
+/obj/item/weapon/storage/box/ids/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/card/id(src)
@@ -400,7 +400,7 @@
 	desc = "Shiny IDs for important people."
 	illustration = "id"
 
-/obj/item/weapon/storage/box/silver_ids/New()
+/obj/item/weapon/storage/box/silver_ids/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/card/id/silver(src)
@@ -410,7 +410,7 @@
 	desc = "Take away their last shred of dignity, their name."
 	illustration = "id"
 
-/obj/item/weapon/storage/box/prisoner/New()
+/obj/item/weapon/storage/box/prisoner/Initialize()
 	..()
 	new /obj/item/weapon/card/id/prisoner/one(src)
 	new /obj/item/weapon/card/id/prisoner/two(src)
@@ -425,7 +425,7 @@
 	desc = "A box full of PDA cartridges used by Security."
 	illustration = "pda"
 
-/obj/item/weapon/storage/box/seccarts/New()
+/obj/item/weapon/storage/box/seccarts/Initialize()
 	..()
 	new /obj/item/weapon/cartridge/detective(src)
 	for(var/i in 1 to 6)
@@ -436,7 +436,7 @@
 	desc = "A box full of standard firing pins, to allow newly-developed firearms to operate."
 	illustration = "id"
 
-/obj/item/weapon/storage/box/firingpins/New()
+/obj/item/weapon/storage/box/firingpins/Initialize()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/device/firing_pin(src)
@@ -446,7 +446,7 @@
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
 	illustration = "id"
 
-/obj/item/weapon/storage/box/lasertagpins/New()
+/obj/item/weapon/storage/box/lasertagpins/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/device/firing_pin/tag/red(src)
@@ -458,7 +458,7 @@
 	icon_state = "secbox"
 	illustration = "handcuff"
 
-/obj/item/weapon/storage/box/handcuffs/New()
+/obj/item/weapon/storage/box/handcuffs/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/restraints/handcuffs(src)
@@ -469,7 +469,7 @@
 	icon_state = "secbox"
 	illustration = "handcuff"
 
-/obj/item/weapon/storage/box/zipties/New()
+/obj/item/weapon/storage/box/zipties/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
@@ -480,7 +480,7 @@
 	icon_state = "alienbox"
 	illustration = "handcuff"
 
-/obj/item/weapon/storage/box/alienhandcuffs/New()
+/obj/item/weapon/storage/box/alienhandcuffs/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new	/obj/item/weapon/restraints/handcuffs/alien(src)
@@ -490,7 +490,7 @@
 	desc = "A sleek, sturdy box used to hold replica spacesuits."
 	icon_state = "syndiebox"
 
-/obj/item/weapon/storage/box/fakesyndiesuit/New()
+/obj/item/weapon/storage/box/fakesyndiesuit/Initialize()
 	..()
 	new /obj/item/clothing/head/syndicatefake(src)
 	new /obj/item/clothing/suit/syndicatefake(src)
@@ -500,7 +500,7 @@
 	desc = "<span class='alert'>Keep out of reach of children.</span>"
 	illustration = "mousetraps"
 
-/obj/item/weapon/storage/box/mousetraps/New()
+/obj/item/weapon/storage/box/mousetraps/Initialize()
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/device/assembly/mousetrap( src )
@@ -510,7 +510,7 @@
 	desc = "It has pictures of pill bottles on its front."
 	illustration = "pillbox"
 
-/obj/item/weapon/storage/box/pillbottles/New()
+/obj/item/weapon/storage/box/pillbottles/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/storage/pill_bottle( src )
@@ -523,7 +523,7 @@
 	storage_slots = 8
 	can_hold = list(/obj/item/toy/snappop)
 
-/obj/item/weapon/storage/box/snappops/New()
+/obj/item/weapon/storage/box/snappops/Initialize()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/toy/snappop(src)
@@ -539,7 +539,7 @@
 	slot_flags = SLOT_BELT
 	can_hold = list(/obj/item/weapon/match)
 
-/obj/item/weapon/storage/box/matches/New()
+/obj/item/weapon/storage/box/matches/Initialize()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/weapon/match(src)
@@ -560,7 +560,7 @@
 	max_combined_w_class = 21
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 
-/obj/item/weapon/storage/box/lights/bulbs/New()
+/obj/item/weapon/storage/box/lights/bulbs/Initialize()
 	..()
 	for(var/i = 0; i < 21; i++)
 		new /obj/item/weapon/light/bulb(src)
@@ -569,7 +569,7 @@
 	name = "box of replacement tubes"
 	illustration = "lighttube"
 
-/obj/item/weapon/storage/box/lights/tubes/New()
+/obj/item/weapon/storage/box/lights/tubes/Initialize()
 	..()
 	for(var/i = 0; i < 21; i++)
 		new /obj/item/weapon/light/tube(src)
@@ -578,7 +578,7 @@
 	name = "box of replacement lights"
 	illustration = "lightmixed"
 
-/obj/item/weapon/storage/box/lights/mixed/New()
+/obj/item/weapon/storage/box/lights/mixed/Initialize()
 	..()
 	for(var/i = 0; i < 14; i++)
 		new /obj/item/weapon/light/tube(src)
@@ -590,7 +590,7 @@
 	name = "box of deputy armbands"
 	desc = "To be issued to those authorized to act as deputy of security."
 
-/obj/item/weapon/storage/box/deputy/New()
+/obj/item/weapon/storage/box/deputy/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/tie/armband/deputy(src)
@@ -600,7 +600,7 @@
 	desc = "To be used to rapidly seal hull breaches."
 	illustration = "flashbang"
 
-/obj/item/weapon/storage/box/metalfoam/New()
+/obj/item/weapon/storage/box/metalfoam/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
@@ -622,13 +622,13 @@
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
-/obj/item/weapon/storage/box/hug/medical/New()
+/obj/item/weapon/storage/box/hug/medical/Initialize()
 	..()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/hug/survival/New()
+/obj/item/weapon/storage/box/hug/survival/Initialize()
 	..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
@@ -642,7 +642,7 @@
 	icon_state = "rubbershot_box"
 	illustration = null
 
-/obj/item/weapon/storage/box/rubbershot/New()
+/obj/item/weapon/storage/box/rubbershot/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
@@ -653,7 +653,7 @@
 	icon_state = "lethalshot_box"
 	illustration = null
 
-/obj/item/weapon/storage/box/lethalshot/New()
+/obj/item/weapon/storage/box/lethalshot/Initialize()
 	..()
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
@@ -669,7 +669,7 @@
 	icon_state = "rubbershot_box"
 	illustration = null
 
-/obj/item/weapon/storage/box/beanbag/New()
+/obj/item/weapon/storage/box/beanbag/Initialize()
 	..()
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
@@ -684,7 +684,7 @@
 	desc = "The latest set of collectable action figures."
 	icon_state = "box"
 
-/obj/item/weapon/storage/box/actionfigure/New()
+/obj/item/weapon/storage/box/actionfigure/Initialize()
 	..()
 	for(var/i in 1 to 4)
 		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
@@ -768,7 +768,7 @@
 /obj/item/weapon/storage/box/ingredients/wildcard
 	item_state = "wildcard"
 
-/obj/item/weapon/storage/box/ingredients/wildcard/New()
+/obj/item/weapon/storage/box/ingredients/wildcard/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		var/randomFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
@@ -790,7 +790,7 @@
 /obj/item/weapon/storage/box/ingredients/fiesta
 	item_state = "fiesta"
 
-/obj/item/weapon/storage/box/ingredients/fiesta/New()
+/obj/item/weapon/storage/box/ingredients/fiesta/Initialize()
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/tortilla(src)
 	for(var/i in 1 to 2)
@@ -801,7 +801,7 @@
 /obj/item/weapon/storage/box/ingredients/italian
 	item_state = "italian"
 
-/obj/item/weapon/storage/box/ingredients/italian/New()
+/obj/item/weapon/storage/box/ingredients/italian/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
@@ -811,7 +811,7 @@
 /obj/item/weapon/storage/box/ingredients/vegetarian
 	item_state = "vegetarian"
 
-/obj/item/weapon/storage/box/ingredients/vegetarian/New()
+/obj/item/weapon/storage/box/ingredients/vegetarian/Initialize()
 	..()
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
@@ -824,7 +824,7 @@
 /obj/item/weapon/storage/box/ingredients/american
 	item_state = "american"
 
-/obj/item/weapon/storage/box/ingredients/american/New()
+/obj/item/weapon/storage/box/ingredients/american/Initialize()
 	..()
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
@@ -835,7 +835,7 @@
 /obj/item/weapon/storage/box/ingredients/fruity
 	item_state = "fruity"
 
-/obj/item/weapon/storage/box/ingredients/fruity/New()
+/obj/item/weapon/storage/box/ingredients/fruity/Initialize()
 	..()
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
@@ -847,7 +847,7 @@
 /obj/item/weapon/storage/box/ingredients/sweets
 	item_state = "sweets"
 
-/obj/item/weapon/storage/box/ingredients/sweets/New()
+/obj/item/weapon/storage/box/ingredients/sweets/Initialize()
 	..()
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/cherries(src)
@@ -859,7 +859,7 @@
 /obj/item/weapon/storage/box/ingredients/delights
 	item_state = "delights"
 
-/obj/item/weapon/storage/box/ingredients/delights/New()
+/obj/item/weapon/storage/box/ingredients/delights/Initialize()
 	..()
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet(src)
@@ -871,7 +871,7 @@
 /obj/item/weapon/storage/box/ingredients/grains
 	item_state = "grains"
 
-/obj/item/weapon/storage/box/ingredients/grains/New()
+/obj/item/weapon/storage/box/ingredients/grains/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/oat(src)
@@ -883,7 +883,7 @@
 /obj/item/weapon/storage/box/ingredients/carnivore
 	item_state = "carnivore"
 
-/obj/item/weapon/storage/box/ingredients/carnivore/New()
+/obj/item/weapon/storage/box/ingredients/carnivore/Initialize()
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
@@ -896,7 +896,7 @@
 /obj/item/weapon/storage/box/ingredients/exotic
 	item_state = "exotic"
 
-/obj/item/weapon/storage/box/ingredients/exotic/New()
+/obj/item/weapon/storage/box/ingredients/exotic/Initialize()
 	..()
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
@@ -904,7 +904,7 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
 
-/obj/item/weapon/storage/box/ingredients/New()
+/obj/item/weapon/storage/box/ingredients/Initialize()
 	..()
 	if(item_state)
 		name = "[name] ([item_state])"
@@ -913,7 +913,7 @@
 /obj/item/weapon/storage/box/emptysandbags
 	name = "box of empty sandbags"
 
-/obj/item/weapon/storage/box/emptysandbags/New()
+/obj/item/weapon/storage/box/emptysandbags/Initialize()
 	..()
 	new /obj/item/weapon/emptysandbag(src)
 	new /obj/item/weapon/emptysandbag(src)
@@ -927,7 +927,7 @@
 	name = "\proper the liberator's legacy"
 	desc = "A box containing a gift for worthy golems."
 
-/obj/item/weapon/storage/box/rndboards/New()
+/obj/item/weapon/storage/box/rndboards/Initialize()
 	..()
 	new /obj/item/weapon/circuitboard/machine/protolathe(src)
 	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)

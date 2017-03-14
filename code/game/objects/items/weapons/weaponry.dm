@@ -75,7 +75,7 @@
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
-/obj/item/weapon/claymore/highlander/New()
+/obj/item/weapon/claymore/highlander/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 
@@ -524,7 +524,7 @@
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
-/obj/item/weapon/melee/flyswatter/New()
+/obj/item/weapon/melee/flyswatter/Initialize()
 	..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,

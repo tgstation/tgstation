@@ -5,7 +5,7 @@
 	origin_tech = "materials=2;biotech=4;programming=4;syndicate=3"
 	var/datum/gang/gang
 
-/obj/item/weapon/implant/gang/New(loc,var/setgang)
+/obj/item/weapon/implant/gang/Initialize(mapload, setgang)
 	..()
 	gang = setgang
 
@@ -47,9 +47,9 @@
 /obj/item/weapon/implanter/gang
 	name = "implanter (gang)"
 
-/obj/item/weapon/implanter/gang/New(loc, gang)
+/obj/item/weapon/implanter/gang/Initialize(mapload, gang)
+	..()
 	if(!gang)
 		qdel(src)
 		return
 	imp = new /obj/item/weapon/implant/gang(src,gang)
-	..()

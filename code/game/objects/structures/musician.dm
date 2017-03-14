@@ -314,7 +314,7 @@
 	var/datum/song/song
 
 
-/obj/structure/piano/New()
+/obj/structure/piano/Initialize()
 	..()
 	song = new("piano", src)
 

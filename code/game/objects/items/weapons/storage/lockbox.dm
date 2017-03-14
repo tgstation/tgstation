@@ -80,7 +80,7 @@
 	name = "lockbox of mindshield implants"
 	req_access = list(access_security)
 
-/obj/item/weapon/storage/lockbox/loyalty/New()
+/obj/item/weapon/storage/lockbox/loyalty/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/mindshield(src)
@@ -92,7 +92,7 @@
 	desc = "You have a bad feeling about opening this."
 	req_access = list(access_security)
 
-/obj/item/weapon/storage/lockbox/clusterbang/New()
+/obj/item/weapon/storage/lockbox/clusterbang/Initialize()
 	..()
 	new /obj/item/weapon/grenade/clusterbuster(src)
 
@@ -109,7 +109,7 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 
-/obj/item/weapon/storage/lockbox/medal/New()
+/obj/item/weapon/storage/lockbox/medal/Initialize()
 	..()
 	new /obj/item/clothing/tie/medal/silver/valor(src)
 	new /obj/item/clothing/tie/medal/bronze_heart(src)
