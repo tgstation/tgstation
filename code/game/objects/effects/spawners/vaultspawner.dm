@@ -9,13 +9,13 @@
 	if(!type)
 		type = pick("sandstone","rock","alien")
 
-	var/lowBoundX = location.x
-	var/lowBoundY = location.y
+	var/lowBoundX = loc.x
+	var/lowBoundY = loc.y
 
-	var/hiBoundX = location.x + rand(lX,uX)
-	var/hiBoundY = location.y + rand(lY,uY)
+	var/hiBoundX = loc.x + rand(lX,uX)
+	var/hiBoundY = loc.y + rand(lY,uY)
 
-	var/z = location.z
+	var/z = loc.z
 
 	for(var/i = lowBoundX,i<=hiBoundX,i++)
 		for(var/j = lowBoundY,j<=hiBoundY,j++)
