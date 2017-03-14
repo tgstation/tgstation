@@ -253,7 +253,7 @@
 	var/obj/chemholder
 	effect_type = /obj/effect/particle_effect/smoke/chem
 
-/datum/effect_system/smoke_spread/chem/Initialize()
+/datum/effect_system/smoke_spread/chem/New()
 	..()
 	chemholder = new /obj()
 	var/datum/reagents/R = new/datum/reagents(500)

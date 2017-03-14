@@ -142,7 +142,7 @@
 	effect_type = /obj/effect/particle_effect/foam/metal
 
 
-/datum/effect_system/foam_spread/Initialize()
+/datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new /obj()
 	var/datum/reagents/R = new/datum/reagents(1000)

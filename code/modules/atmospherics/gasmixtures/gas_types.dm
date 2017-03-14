@@ -10,7 +10,9 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 		gas_info[META_GAS_NAME] = initial(gas.name)
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas{ icon_state = initial(gas.gas_overlay) }
+			var/obj/effect/overlay/gas/G = new 
+			G.icon_state = initial(gas.gas_overlay)
+			gas_info[META_GAS_OVERLAY] = G
 		.[initial(gas.id)] = gas_info
 
 /*||||||||||||||/----------\||||||||||||||*\

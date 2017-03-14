@@ -22,7 +22,7 @@
 /datum/action/item_action/chameleon/drone/togglehatmask
 	name = "Toggle Headgear Mode"
 
-/datum/action/item_action/chameleon/drone/togglehatmask/Initialize()
+/datum/action/item_action/chameleon/drone/togglehatmask/New()
 	..()
 
 	if (istype(target, /obj/item/clothing/head/chameleon/drone))

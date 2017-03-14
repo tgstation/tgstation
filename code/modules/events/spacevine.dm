@@ -77,7 +77,7 @@
 /datum/spacevine_mutation/space_covering
 	var/static/list/coverable_turfs
 
-/datum/spacevine_mutation/space_covering/Initialize()
+/datum/spacevine_mutation/space_covering/New()
 	..()
 	if(!coverable_turfs)
 		coverable_turfs = typecacheof(list(

@@ -8,8 +8,8 @@
 /obj/effect/overlay/temp/point/Initialize(mapload, set_invis = 0)
 	..()
 	loc = get_turf(src)
-	pixel_x = target.pixel_x
-	pixel_y = target.pixel_y
+	pixel_x = loc.pixel_x
+	pixel_y = loc.pixel_y
 	invisibility = set_invis
 
 //Used by spraybottles.

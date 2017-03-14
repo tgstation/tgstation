@@ -37,7 +37,7 @@
 	icon_state = G.name
 	G.territory_new |= list(territory.type = territory.name)
 
-	..(location, newcolor, icon_state, e_name, rotation)
+	..(mapload, newcolor, icon_state, e_name, rotation)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	var/area/territory = get_area(src)

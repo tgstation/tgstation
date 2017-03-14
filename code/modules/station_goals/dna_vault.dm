@@ -17,7 +17,7 @@
 	var/human_count
 	var/plant_count
 
-/datum/station_goal/dna_vault/Initialize()
+/datum/station_goal/dna_vault/New()
 	..()
 	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * ticker.totalPlayersReady) , ticker.totalPlayersReady) // 75%+ roundstart population.

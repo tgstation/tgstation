@@ -171,8 +171,8 @@
 
 /obj/item/projectile/beam/wormhole/Initialize()
 	..()
+	var/obj/item/ammo_casing/energy/wormhole/casing = loc
 	if(casing)
-		var/obj/item/ammo_casing/energy/wormhole/casing = loc
 		gun = casing.gun
 
 /obj/item/ammo_casing/energy/wormhole/Initialize()
@@ -259,8 +259,8 @@
 
 /obj/item/projectile/gravityrepulse/Initialize()
 	..()
+	var/obj/item/ammo_casing/energy/gravityrepulse/C = loc
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		var/obj/item/ammo_casing/energy/gravityrepulse/C = loc
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravityrepulse/on_hit()
@@ -290,8 +290,8 @@
 
 /obj/item/projectile/gravityattract/Initialize()
 	..()
+	var/obj/item/ammo_casing/energy/gravityattract/C = loc
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		var/obj/item/ammo_casing/energy/gravityattract/C = loc
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravityattract/on_hit()
@@ -320,8 +320,8 @@
 
 /obj/item/projectile/gravitychaos/Initialize()
 	..()
+	var/obj/item/ammo_casing/energy/gravityattract/C = loc
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		var/obj/item/ammo_casing/energy/gravityattract/C = loc
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravitychaos/on_hit()
