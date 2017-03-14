@@ -5,7 +5,7 @@
 	icon_state = "camera_target"
 	var/allowed_area = null
 
-/mob/camera/aiEye/remote/xenobio/Initialize()
+/mob/camera/aiEye/remote/xenobio/New(loc)
 	var/area/A = get_area(loc)
 	allowed_area = A.name
 	..()

@@ -94,17 +94,14 @@
 	switch (var_name)
 		if ("light_range")
 			set_light(l_range=var_value)
-			var_edited = TRUE
 			return
 
 		if ("light_power")
 			set_light(l_power=var_value)
-			var_edited = TRUE
 			return
 
 		if ("light_color")
 			set_light(l_color=var_value)
-			var_edited = TRUE
 			return
 
 	return ..()

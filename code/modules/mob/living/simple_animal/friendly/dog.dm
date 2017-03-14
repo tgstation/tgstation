@@ -43,7 +43,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/pet/dog/corgi/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/New()
 	..()
 	regenerate_icons()
 
@@ -281,7 +281,7 @@
 	var/memory_saved = 0
 	var/saved_head //path
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/Ian/New()
 	..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn

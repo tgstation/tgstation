@@ -19,16 +19,15 @@
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
-/obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
+/obj/item/stack/Initialize(mapload, new_amount=null)
 	..()
 	if(new_amount)
 		amount = new_amount
 	if(!merge_type)
 		merge_type = type
-	if(merge)
-		for(var/obj/item/stack/S in loc)
-			if(S.merge_type == merge_type)
-				merge(S)
+	for(var/obj/item/stack/S in loc)
+		if(S.merge_type == merge_type)
+			merge(S)
 
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
@@ -257,7 +256,7 @@
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
 /obj/item/stack/proc/change_stack(mob/user,amount)
-	var/obj/item/stack/F = new type(user, amount, FALSE)
+	var/obj/item/stack/F = new src.type(user, amount)
 	. = F
 	F.copy_evidences(src)
 	user.put_in_hands(F)

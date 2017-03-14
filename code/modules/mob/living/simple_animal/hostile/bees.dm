@@ -56,7 +56,7 @@
 	return 1
 
 
-/mob/living/simple_animal/hostile/poison/bees/Initialize()
+/mob/living/simple_animal/hostile/poison/bees/New()
 	..()
 	generate_bee_visuals()
 
@@ -209,7 +209,7 @@
 			BB.bees |= src
 			beehome = BB
 
-/mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
+/mob/living/simple_animal/hostile/poison/bees/toxin/New()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(chemical_reagents_list[initial(R.id)])
@@ -283,12 +283,12 @@
 	..()
 
 
-/obj/item/queen_bee/bought/Initialize()
+/obj/item/queen_bee/bought/New()
 	..()
 	queen = new(src)
 
 
 /obj/item/queen_bee/Destroy()
-	QDEL_NULL(queen)
+	qdel(queen)
 	return ..()
 

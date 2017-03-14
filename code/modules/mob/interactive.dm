@@ -381,7 +381,7 @@
 	faction -= "neutral"
 	faction += "hostile"
 
-/mob/living/carbon/human/interactive/Initialize()
+/mob/living/carbon/human/interactive/New()
 	..()
 
 	set_species(/datum/species/synth)
@@ -1605,13 +1605,13 @@
 			nearby += M
 
 //END OF MODULES
-/mob/living/carbon/human/interactive/angry/Initialize()
+/mob/living/carbon/human/interactive/angry/New()
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_MEAN
 	faction += "bot_angry"
 	..()
 
-/mob/living/carbon/human/interactive/friendly/Initialize()
+/mob/living/carbon/human/interactive/friendly/New()
 	TRAITS |= TRAIT_FRIENDLY
 	TRAITS |= TRAIT_UNROBUST
 	faction += "bot_friendly"
@@ -1619,7 +1619,7 @@
 	functions -= "combat"
 	..()
 
-/mob/living/carbon/human/interactive/greytide/Initialize()
+/mob/living/carbon/human/interactive/greytide/New()
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_MEAN
 	TRAITS |= TRAIT_THIEVING
@@ -1631,7 +1631,7 @@
 	..()
 
 //Walk softly and carry a big stick
-/mob/living/carbon/human/interactive/robust/Initialize()
+/mob/living/carbon/human/interactive/robust/New()
 	TRAITS |= TRAIT_FRIENDLY
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_SMART

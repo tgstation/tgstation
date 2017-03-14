@@ -38,7 +38,7 @@
 	var/image/ghost_facial_hair = null
 	var/random = TRUE //if you want random names for ghosts or not
 
-/mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
+/mob/living/simple_animal/hostile/retaliate/ghost/New()
 	..()
 	if(!random)
 		give_hair()

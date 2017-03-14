@@ -454,12 +454,6 @@
 	. = ..()
 	T.air_update_turf(1)
 
-//Inivisible, indestructible fans
-/obj/structure/fans/tiny/invisible
-	name = "air flow blocker"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	invisibility = INVISIBILITY_ABSTRACT
-
 
 //Signs
 /obj/structure/sign/mining

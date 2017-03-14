@@ -7,7 +7,7 @@
 
 
 
-/mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
+/mob/living/carbon/alien/humanoid/royal/praetorian/New()
 
 	real_name = name
 

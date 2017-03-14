@@ -29,7 +29,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goat/New()
 	udder = new()
 	..()
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
@@ -106,7 +106,7 @@
 	gold_core_spawnable = 2
 	blood_volume = BLOOD_VOLUME_NORMAL
 
-/mob/living/simple_animal/cow/Initialize()
+/mob/living/simple_animal/cow/New()
 	udder = new()
 	..()
 
@@ -181,7 +181,7 @@
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/chick/Initialize()
+/mob/living/simple_animal/chick/New()
 	..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -238,7 +238,7 @@ var/global/chicken_count = 0
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/chicken/Initialize()
+/mob/living/simple_animal/chicken/New()
 	..()
 	if(!body_color)
 		body_color = pick(validColors)
@@ -297,7 +297,7 @@ var/global/chicken_count = 0
 /obj/item/udder
 	name = "udder"
 
-/obj/item/udder/Initialize()
+/obj/item/udder/New()
 	reagents = new(50)
 	reagents.my_atom = src
 	reagents.add_reagent("milk", 20)

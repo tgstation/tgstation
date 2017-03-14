@@ -85,7 +85,7 @@
 	//domestication
 	var/tame = 0
 
-/mob/living/simple_animal/Initialize()
+/mob/living/simple_animal/New()
 	..()
 	handcrafting = new()
 	if(gender == PLURAL)

@@ -460,7 +460,7 @@
 			else if(href_list["del_r2"])
 				investigate_log("[usr.name] ([usr.key]) has deleted the medical records for [active1.fields["name"]].", "records")
 				if(active2)
-					qdel(active2)
+					data_core.medical -= active2
 					active2 = null
 
 			else if(href_list["d_rec"])

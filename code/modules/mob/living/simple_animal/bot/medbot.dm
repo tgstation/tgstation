@@ -85,7 +85,7 @@
 	else
 		icon_state = "medibot1"
 
-/mob/living/simple_animal/bot/medbot/Initialize()
+/mob/living/simple_animal/bot/medbot/New()
 	..()
 	update_icon()
 

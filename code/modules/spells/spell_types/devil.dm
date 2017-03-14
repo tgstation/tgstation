@@ -232,12 +232,9 @@
 			var/turf/T = dancefloor_turfs[i]
 			T.ChangeTurf(dancefloor_turfs_types[i])
 	else
-		var/list/funky_turfs = RANGE_TURFS(1, user)
-		for(var/turf/closed/solid in funky_turfs)
-			user << "<span class='warning'>You're too close to a wall.</span>"
-			return
 		dancefloor_exists = TRUE
 		var/i = 1
+		var/list/funky_turfs = RANGE_TURFS(1, user)
 		dancefloor_turfs.len = funky_turfs.len
 		dancefloor_turfs_types.len = funky_turfs.len
 		for(var/t in funky_turfs)

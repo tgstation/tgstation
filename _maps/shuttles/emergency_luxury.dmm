@@ -81,14 +81,12 @@
 	},
 /area/shuttle/escape)
 "an" = (
-/obj/machinery/light/small,
 /turf/open/floor/plating{
 	tag = "icon-wood-broken2";
 	icon_state = "wood-broken2"
 	},
 /area/shuttle/escape)
 "ao" = (
-/obj/machinery/light/small,
 /turf/open/floor/plating{
 	tag = "icon-wood-broken6";
 	icon_state = "wood-broken6"
@@ -330,73 +328,6 @@
 "bh" = (
 /turf/open/floor/plating/beach/coastline_b,
 /area/shuttle/escape)
-"bi" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bj" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bk" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bl" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-10";
-	icon_state = "plant-10"
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bm" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bn" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bo" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bp" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"bq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -451,12 +382,12 @@ ab
 ag
 an
 ab
-bl
+ak
 aj
 aj
 aj
 aj
-bn
+aj
 aj
 aj
 ak
@@ -491,7 +422,7 @@ bd
 aj
 aj
 bg
-bp
+bg
 ab
 "}
 (7,1,1) = {"
@@ -610,7 +541,7 @@ ab
 ad
 aj
 aj
-bj
+aj
 aj
 au
 aF
@@ -706,7 +637,7 @@ ab
 ae
 aj
 aj
-bk
+aj
 aj
 au
 aL
@@ -715,7 +646,7 @@ bd
 aj
 aj
 bg
-bq
+bg
 ab
 "}
 (21,1,1) = {"
@@ -753,7 +684,7 @@ ab
 (23,1,1) = {"
 ab
 aj
-bi
+aj
 ab
 aj
 av
@@ -771,12 +702,12 @@ ab
 al
 aj
 aq
-bm
+aj
 aw
 aM
 bc
 be
-bo
+aj
 aj
 aj
 ak
