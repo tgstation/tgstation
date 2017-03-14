@@ -436,6 +436,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 1000
 	fulltile = 1
+	flags = NONE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
