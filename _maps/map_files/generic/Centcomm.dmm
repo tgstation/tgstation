@@ -8039,7 +8039,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/centcom/control)
+/area/centcom/evac)
 "tI" = (
 /turf/open/floor/plasteel/neutral/side{
 	dir = 10
@@ -14252,7 +14252,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/centcom/control)
+/area/centcom/evac)
 "Kr" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -14275,7 +14275,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/centcom/control)
+/area/centcom/evac)
 "Kt" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14394,7 +14394,7 @@
 /obj/structure/flora/ausbushes/palebush,
 /obj/machinery/light,
 /turf/open/floor/plating/asteroid,
-/area/centcom/control)
+/area/centcom/evac)
 "KH" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -14562,7 +14562,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/centcom/control)
+/area/centcom/evac)
 "Ld" = (
 /obj/machinery/light{
 	dir = 1
@@ -14848,7 +14848,7 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
-/area/space)
+/area/centcom/evac)
 "LL" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14857,17 +14857,17 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/space)
+/area/centcom/evac)
 "LM" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
-/area/space)
+/area/centcom/evac)
 "LN" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
-/area/centcom/control)
+/area/centcom/evac)
 "LO" = (
 /obj/structure/fluff/arc,
 /turf/open/floor/grass,
@@ -14876,7 +14876,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
-/area/centcom/control)
+/area/centcom/evac)
 "LQ" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14920,6 +14920,48 @@
 /obj/item/weapon/storage/box/handcuffs,
 /turf/open/floor/plasteel/vault{
 	dir = 8
+	},
+/area/centcom/evac)
+"LX" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/plating/asteroid,
+/area/centcom/evac)
+"LY" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/evac)
+"LZ" = (
+/obj/machinery/ai_status_display,
+/turf/closed/indestructible/riveted,
+/area/centcom/evac)
+"Ma" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/evac)
+"Mb" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Security";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/evac)
+"Mc" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
 	},
 /area/centcom/evac)
 
@@ -62633,12 +62675,12 @@ kq
 iH
 ox
 it
-it
-it
-it
-lB
-iu
-it
+qk
+qk
+qk
+qQ
+LZ
+qk
 it
 ir
 jc
@@ -62890,28 +62932,28 @@ ks
 ks
 oy
 is
-it
-pe
-iz
-qP
-iz
+qk
+LX
+ql
+LY
+ql
 KG
-it
+qk
 tH
 tH
 tH
 tH
 tH
-it
+qk
 Ks
-iz
-qP
-kT
-iH
+ql
+Ma
+Mb
+yS
 Lc
-jB
-iH
-kM
+yC
+yS
+Mc
 aa
 aa
 aa
@@ -63147,8 +63189,8 @@ ks
 ks
 LJ
 it
-it
-it
+qk
+qk
 qk
 qQ
 qk
@@ -63404,8 +63446,8 @@ ks
 ks
 oy
 it
-lW
-pw
+xX
+xW
 qk
 qR
 rT
@@ -63661,8 +63703,8 @@ iH
 iH
 kk
 it
-pw
-lW
+xW
+xX
 qk
 qS
 rU
@@ -63919,7 +63961,7 @@ jc
 is
 it
 Kq
-lW
+xX
 ql
 qU
 rU
@@ -64175,8 +64217,8 @@ iH
 iH
 ly
 it
-lW
-pw
+xX
+xW
 qm
 qT
 rU
@@ -64432,8 +64474,8 @@ kr
 kr
 kq
 it
-lW
-pw
+xX
+xW
 qk
 qT
 rU
@@ -64688,9 +64730,9 @@ nB
 mw
 ks
 oA
-ab
 it
-iz
+qk
+ql
 qk
 KD
 rU
@@ -65204,7 +65246,7 @@ ks
 oC
 it
 LL
-LO
+LF
 LH
 qS
 rU
@@ -65717,8 +65759,8 @@ ks
 ks
 oE
 it
-it
-iz
+qk
+ql
 qk
 KD
 rU
@@ -65974,8 +66016,8 @@ mw
 ks
 oF
 is
-pw
-lW
+xW
+xX
 qk
 qT
 rU
@@ -65993,9 +66035,9 @@ xq
 qk
 ql
 qk
-ab
-ab
-ab
+qk
+qk
+qk
 aa
 aa
 aa
@@ -66231,8 +66273,8 @@ mw
 ks
 oC
 it
-lW
-pw
+xX
+xW
 qm
 qT
 rU
@@ -66489,7 +66531,7 @@ ks
 oB
 it
 Kq
-lW
+xX
 ql
 qX
 rU
@@ -66745,8 +66787,8 @@ mw
 ks
 kd
 it
-pw
-lW
+xW
+xX
 qk
 qS
 rU
@@ -67002,8 +67044,8 @@ kr
 kr
 oG
 it
-pw
-lW
+xW
+xX
 qk
 qZ
 rV
@@ -67259,8 +67301,8 @@ nT
 ok
 kh
 it
-it
-it
+qk
+qk
 qk
 LS
 HV
@@ -67516,8 +67558,8 @@ it
 it
 it
 it
-it
-it
+qk
+qk
 qk
 ra
 ra
