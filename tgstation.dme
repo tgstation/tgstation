@@ -961,6 +961,7 @@
 #include "code\modules\admin\IsBanned.dm"
 #include "code\modules\admin\NewBan.dm"
 #include "code\modules\admin\player_panel.dm"
+#include "code\modules\admin\pray_for_fun.dm"
 #include "code\modules\admin\secrets.dm"
 #include "code\modules\admin\sql_message_system.dm"
 #include "code\modules\admin\stickyban.dm"
