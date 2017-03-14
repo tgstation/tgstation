@@ -136,6 +136,9 @@
 "y" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/emergency,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "z" = (
@@ -226,6 +229,7 @@
 "L" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/regular,
+/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "M" = (
@@ -258,6 +262,47 @@
 	tag = "icon-swall0";
 	icon_state = "swall0"
 	},
+/area/shuttle/escape)
+"Q" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"R" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"S" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"T" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"U" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"V" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -304,9 +349,9 @@ d
 l
 r
 r
-r
+R
 d
-H
+T
 J
 H
 d
@@ -355,11 +400,11 @@ a
 d
 d
 s
-o
+Q
 d
 m
 d
-o
+V
 s
 d
 d
@@ -434,9 +479,9 @@ a
 d
 t
 s
-s
+S
 o
-s
+U
 s
 t
 d

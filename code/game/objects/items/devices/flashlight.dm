@@ -369,6 +369,10 @@
 	name = "blue glowstick"
 	color = LIGHT_COLOR_BLUE
 
+/obj/item/device/flashlight/glowstick/cyan
+	name = "cyan glowstick"
+	color = LIGHT_COLOR_CYAN
+
 /obj/item/device/flashlight/glowstick/orange
 	name = "orange glowstick"
 	color = LIGHT_COLOR_ORANGE
