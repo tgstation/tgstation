@@ -31,7 +31,7 @@
 	if(!holder)
 		return
 	switch(subject)
-		if("singulo", "wires", "telesci", "gravity", "records", "cargo", "supermatter", "atmos", "kudzu")			//general one-round-only stuff
+		if("singulo", "wires", "telesci", "gravity", "records", "cargo", "supermatter", "atmos", "botany")			//general one-round-only stuff
 			var/F = investigate_subject2file(subject)
 			if(!F)
 				to_chat(src, "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>")
