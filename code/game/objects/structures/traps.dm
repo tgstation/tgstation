@@ -6,6 +6,7 @@
 	density = 0
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | INDESTRUCTIBLE
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 
