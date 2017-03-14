@@ -7,7 +7,7 @@
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	heat = 1000
 
-/obj/item/device/assembly/igniter/New()
+/obj/item/device/assembly/igniter/Initialize()
 	..()
 	sparks.set_up(2, 0, src)
 	sparks.attach(src)

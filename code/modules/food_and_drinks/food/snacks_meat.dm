@@ -23,7 +23,7 @@
 	filling_color = "#FA8072"
 	tastes = list("fish" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/carpmeat/New()
+/obj/item/weapon/reagent_containers/food/snacks/carpmeat/Initialize()
 	..()
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 
@@ -104,7 +104,7 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	tastes = list("meat" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/sausage/New()
+/obj/item/weapon/reagent_containers/food/snacks/sausage/Initialize()
 	..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 
@@ -190,7 +190,7 @@
 	filling_color = "#D2691E"
 	tastes = list("soy" = 1, "vegetables" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/New()
+/obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/Initialize()
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
@@ -231,7 +231,7 @@
 	list_reagents = list("nutriment" = 2)
 	tastes = list("\"chicken\"" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/nugget/New()
+/obj/item/weapon/reagent_containers/food/snacks/nugget/Initialize()
 	..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."

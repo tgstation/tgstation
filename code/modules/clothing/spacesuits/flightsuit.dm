@@ -104,21 +104,21 @@
 
 
 //Start/Stop processing the item to use momentum and flight mechanics.
-/obj/item/device/flightpack/New()
+/obj/item/device/flightpack/Initialize()
+	..()
 	ion_trail = new
 	ion_trail.set_up(src)
 	START_PROCESSING(SSflightpacks, src)
-	..()
 	update_parts()
 
-/obj/item/device/flightpack/full/New()
+/obj/item/device/flightpack/full/Initialize()
+	..()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
 	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
 	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	assembled = TRUE
-	..()
 
 /obj/item/device/flightpack/proc/update_parts()
 	boost_chargerate = initial(boost_chargerate)
@@ -941,7 +941,7 @@
 	var/maint_panel = FALSE
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/full/New()
+/obj/item/clothing/suit/space/hardsuit/flightsuit/full/Initialize()
 	..()
 	makepack()
 	makeshoes()

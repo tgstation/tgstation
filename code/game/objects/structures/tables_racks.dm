@@ -35,7 +35,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
-/obj/structure/table/New()
+/obj/structure/table/Initialize()
 	..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
@@ -169,8 +169,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	var/list/debris = list()
 
-/obj/structure/table/glass/New()
-	. = ..()
+/obj/structure/table/glass/Initialize()
+	..()
 	debris += new frame
 	debris += new /obj/item/weapon/shard
 
@@ -274,9 +274,9 @@
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/fancy)
 
-/obj/structure/table/wood/fancy/New()
-	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
+/obj/structure/table/wood/fancy/Initialize()
 	..()
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
 
 /*
  * Reinforced tables
@@ -327,9 +327,9 @@
 	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass)
 
-/obj/structure/table/reinforced/brass/New()
-	change_construction_value(2)
+/obj/structure/table/reinforced/brass/Initialize()
 	..()
+	change_construction_value(2)
 
 /obj/structure/table/reinforced/brass/Destroy()
 	change_construction_value(-2)
@@ -364,7 +364,7 @@
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/New()
+/obj/structure/table/optable/Initialize()
 	..()
 	for(var/dir in cardinal)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))

@@ -4,7 +4,7 @@
 	req_access = list(access_all_personal_lockers)
 	var/registered_name = null
 
-/obj/structure/closet/secure_closet/personal/New()
+/obj/structure/closet/secure_closet/personal/Initialize()
 	..()
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/dufflebag(src)
@@ -17,7 +17,7 @@
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
-/obj/structure/closet/secure_closet/personal/patient/New()
+/obj/structure/closet/secure_closet/personal/patient/Initialize()
 	..()
 	contents.Cut()
 	new /obj/item/clothing/under/color/white( src )
@@ -29,7 +29,7 @@
 	obj_integrity = 70
 	max_integrity = 70
 
-/obj/structure/closet/secure_closet/personal/cabinet/New()
+/obj/structure/closet/secure_closet/personal/cabinet/Initialize()
 	..()
 	contents = list()
 	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )

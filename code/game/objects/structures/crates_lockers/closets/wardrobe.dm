@@ -3,7 +3,7 @@
 	desc = "It's a storage unit for standard-issue Nanotrasen attire."
 	icon_door = "blue"
 
-/obj/structure/closet/wardrobe/New()
+/obj/structure/closet/wardrobe/Initialize()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/blue(src)
@@ -15,7 +15,7 @@
 	name = "pink wardrobe"
 	icon_door = "pink"
 
-/obj/structure/closet/wardrobe/pink/New()
+/obj/structure/closet/wardrobe/pink/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 3)
@@ -28,7 +28,7 @@
 	name = "black wardrobe"
 	icon_door = "black"
 
-/obj/structure/closet/wardrobe/black/New()
+/obj/structure/closet/wardrobe/black/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 3)
@@ -54,7 +54,7 @@
 	name = "green wardrobe"
 	icon_door = "green"
 
-/obj/structure/closet/wardrobe/green/New()
+/obj/structure/closet/wardrobe/green/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 3)
@@ -71,7 +71,7 @@
 	desc = "It's a storage unit for Nanotrasen-regulation prisoner attire."
 	icon_door = "orange"
 
-/obj/structure/closet/wardrobe/orange/New()
+/obj/structure/closet/wardrobe/orange/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 3)
@@ -85,7 +85,7 @@
 	name = "yellow wardrobe"
 	icon_door = "yellow"
 
-/obj/structure/closet/wardrobe/yellow/New()
+/obj/structure/closet/wardrobe/yellow/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 3)
@@ -101,7 +101,7 @@
 	name = "white wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/white/New()
+/obj/structure/closet/wardrobe/white/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 3)
@@ -116,7 +116,7 @@
 	name = "pajama wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/pjs/New()
+/obj/structure/closet/wardrobe/pjs/Initialize()
 	..()
 	contents = list()
 	new /obj/item/clothing/under/pj/red(src)
@@ -132,7 +132,7 @@
 	name = "grey wardrobe"
 	icon_door = "grey"
 
-/obj/structure/closet/wardrobe/grey/New()
+/obj/structure/closet/wardrobe/grey/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 3)
@@ -160,7 +160,7 @@
 	name = "mixed wardrobe"
 	icon_door = "mixed"
 
-/obj/structure/closet/wardrobe/mixed/New()
+/obj/structure/closet/wardrobe/mixed/Initialize()
 	..()
 	contents = list()
 	if(prob(40))

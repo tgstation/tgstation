@@ -31,7 +31,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/quiet = FALSE
 
-/obj/item/weapon/greentext/New()
+/obj/item/weapon/greentext/Initialize()
 	..()
 	poi_list |= src
 

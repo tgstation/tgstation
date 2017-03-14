@@ -22,7 +22,8 @@
 /obj/effect/landmark/sc_bible_spawner
 	name = "Safecode hint spawner"
 
-/obj/effect/landmark/sc_bible_spawner/New()
+/obj/effect/landmark/sc_bible_spawner/Initialize()
+	..()
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(src.loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
@@ -46,7 +47,7 @@
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r/New()
+/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r/Initialize()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -55,7 +56,7 @@
 //Barman's shotgun
 /obj/item/weapon/gun/ballistic/shotgun/sc_pump
 
-/obj/item/weapon/gun/ballistic/shotgun/sc_pump/New()
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump/Initialize()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -82,12 +83,14 @@ var/sc_safecode5 = "[rand(0,9)]"
 /obj/item/weapon/paper/sc_safehint_paper_prison
 	name = "smudged paper"
 
-/obj/item/weapon/paper/sc_safehint_paper_prison/New()
+/obj/item/weapon/paper/sc_safehint_paper_prison/Initialize()
+	..()
 	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[sc_safecode1]**[sc_safecode4]*'"
 
 /obj/item/weapon/paper/sc_safehint_paper_hydro
 	name = "shredded paper"
-/obj/item/weapon/paper/sc_safehint_paper_hydro/New()
+/obj/item/weapon/paper/sc_safehint_paper_hydro/Initialize()
+	..()
 	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[sc_safecode2]'"
 
 /obj/item/weapon/paper/sc_safehint_paper_caf
@@ -97,7 +100,8 @@ var/sc_safecode5 = "[rand(0,9)]"
 
 /obj/item/weapon/paper/sc_safehint_paper_bible
 	name = "hidden paper"
-/obj/item/weapon/paper/sc_safehint_paper_bible/New()
+/obj/item/weapon/paper/sc_safehint_paper_bible/Initialize()
+	..()
 	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
 			However you can make out the last three digits:</i>'[sc_safecode3][sc_safecode4][sc_safecode5]'
 			"}
@@ -121,7 +125,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 /obj/item/weapon/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/weapon/storage/secure/safe/sc_ssafe/New()
+/obj/item/weapon/storage/secure/safe/sc_ssafe/Initialize()
 	..()
 	l_code = "[sc_safecode1][sc_safecode2][sc_safecode3][sc_safecode4][sc_safecode5]"
 	l_set = 1

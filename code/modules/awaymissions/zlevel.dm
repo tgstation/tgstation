@@ -22,9 +22,9 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	name = "away mission spawn"
 	desc = "Randomly picked away mission spawn points"
 
-/obj/effect/landmark/awaystart/New()
-	awaydestinations += src
+/obj/effect/landmark/awaystart/Initialize()
 	..()
+	awaydestinations += src
 
 /obj/effect/landmark/awaystart/Destroy()
 	awaydestinations -= src

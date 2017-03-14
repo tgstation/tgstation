@@ -6,8 +6,8 @@
 	anchored = TRUE
 	var/popped = FALSE
 
-/obj/effect/fun_balloon/New()
-	. = ..()
+/obj/effect/fun_balloon/Initialize()
+	..()
 	SSobj.processing |= src
 
 /obj/effect/fun_balloon/Destroy()
@@ -90,7 +90,8 @@
 	icon_state = "syndballoon"
 	anchored = TRUE
 
-/obj/effect/station_crash/New()
+/obj/effect/station_crash/Initialize()
+	..()
 	for(var/S in SSshuttle.stationary)
 		var/obj/docking_port/stationary/SM = S
 		if(SM.id == "emergency_home")
@@ -109,7 +110,8 @@
 	icon_state = "syndballoon"
 	anchored = TRUE
 
-/obj/effect/shuttle_build/New()
+/obj/effect/shuttle_build/Initialize()
+	..()
 	SSshuttle.emergency.dock(SSshuttle.getDock("emergency_home"))
 	qdel(src)
 

@@ -9,7 +9,8 @@
 	var/timer = 240 //eventually the person will be freed
 	var/mob/living/petrified_mob
 
-/obj/structure/statue/petrified/New(loc, mob/living/L, statue_timer)
+/obj/structure/statue/petrified/Initialize(mapload, mob/living/L, statue_timer)
+	..()
 	if(statue_timer)
 		timer = statue_timer
 	if(L)
@@ -24,7 +25,6 @@
 		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		max_integrity = obj_integrity
 		START_PROCESSING(SSobj, src)
-	..()
 
 /obj/structure/statue/petrified/process()
 	if(!petrified_mob)

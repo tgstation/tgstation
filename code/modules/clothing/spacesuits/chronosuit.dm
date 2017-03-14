@@ -38,7 +38,7 @@
 	var/teleporting = 0
 	var/phase_timer_id
 
-/obj/item/clothing/suit/space/chronos/New()
+/obj/item/clothing/suit/space/chronos/Initialize()
 	..()
 	teleport_now.chronosuit = src
 	teleport_now.target = src
@@ -326,7 +326,8 @@
 	color = "#ff3311"
 	blend_mode = BLEND_SUBTRACT
 
-/obj/screen/chronos_target/New(loc, var/mob/living/carbon/human/user)
+/obj/screen/chronos_target/Initialize(mapload, var/mob/living/carbon/human/user)
+	..()
 	if(user)
 		var/icon/user_icon = getFlatIcon(user)
 		icon = user_icon

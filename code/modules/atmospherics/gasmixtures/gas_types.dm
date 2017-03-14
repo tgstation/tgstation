@@ -10,7 +10,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 		gas_info[META_GAS_NAME] = initial(gas.name)
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
+			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas{ icon_state = initial(gas.gas_overlay) }
 		.[initial(gas.id)] = gas_info
 
 /*||||||||||||||/----------\||||||||||||||*\
@@ -92,7 +92,3 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	mouse_opacity = 0
 	layer = FLY_LAYER
 	appearance_flags = TILE_BOUND
-
-/obj/effect/overlay/gas/New(state)
-	. = ..()
-	icon_state = state

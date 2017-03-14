@@ -8,7 +8,7 @@
 	use_power = 0
 	level = 0
 
-/obj/machinery/atmospherics/components/unary/portables_connector/New()
+/obj/machinery/atmospherics/components/unary/portables_connector/Initialize()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
 

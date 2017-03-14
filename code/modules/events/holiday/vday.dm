@@ -73,7 +73,7 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/valentine/New()
+/obj/item/weapon/valentine/Initialize()
 	..()
 	message = pick("Roses are red / Violets are good / One day while Andy...",
 	               "My love for you is like the singularity. It cannot be contained.",
@@ -156,7 +156,7 @@
 	list_reagents = list("sugar" = 2)
 	junkiness = 5
 
-/obj/item/weapon/reagent_containers/food/snacks/candyheart/New()
+/obj/item/weapon/reagent_containers/food/snacks/candyheart/Initialize()
 	..()
 	desc = pick("A heart-shaped candy that reads: HONK ME",
                 "A heart-shaped candy that reads: ERP",

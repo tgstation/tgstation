@@ -134,10 +134,10 @@
 	name = "roller bed dock"
 	var/loaded = null
 
-/obj/item/roller/robo/New()
+/obj/item/roller/robo/Initialize()
+	..()
 	loaded = new /obj/structure/bed/roller(src)
 	desc = "A collapsed roller bed that can be ejected for emergency use. Must be collected or replaced after use."
-	..()
 
 /obj/item/roller/robo/examine(mob/user)
 	..()

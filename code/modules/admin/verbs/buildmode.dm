@@ -13,9 +13,9 @@
 	icon = 'icons/misc/buildmode.dmi'
 	var/datum/buildmode/bd
 
-/obj/screen/buildmode/New(bd)
+/obj/screen/buildmode/Initialize()
 	..()
-	src.bd = bd
+	bd = loc
 
 /obj/screen/buildmode/mode
 	icon_state = "buildmode1"

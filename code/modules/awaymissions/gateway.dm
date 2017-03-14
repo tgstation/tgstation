@@ -78,7 +78,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/centerstation/New()
+/obj/machinery/gateway/centerstation/Initialize()
 	..()
 	if(!the_gateway)
 		the_gateway = src

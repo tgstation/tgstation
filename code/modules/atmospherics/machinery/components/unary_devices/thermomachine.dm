@@ -17,7 +17,7 @@
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
 
-/obj/machinery/atmospherics/components/unary/thermomachine/New()
+/obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
 	..()
 	initialize_directions = dir
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine(null)
@@ -33,7 +33,7 @@
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
-/obj/item/weapon/circuitboard/machine/thermomachine/New()
+/obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
 	..()
 	if(prob(50))
 		name = "Freezer (Machine Board)"
@@ -202,7 +202,7 @@
 	max_temperature = T20C
 	min_temperature = 170
 
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/New()
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/freezer(null)
 	B.apply_default_parts(src)
@@ -227,7 +227,7 @@
 	max_temperature = 140
 	min_temperature = T20C
 
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/New()
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/heater(null)
 	B.apply_default_parts(src)

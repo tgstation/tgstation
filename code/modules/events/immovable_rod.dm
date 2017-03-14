@@ -37,8 +37,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/destination
 	var/notify = TRUE
 
-/obj/effect/immovablerod/New(atom/start, atom/end)
+/obj/effect/immovablerod/Initialize(mapload, atom/end)
 	..()
+	var/atom/start = loc
 	if(SSaugury)
 		SSaugury.register_doom(src, 2000)
 	z_original = z

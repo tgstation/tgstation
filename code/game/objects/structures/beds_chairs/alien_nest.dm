@@ -14,9 +14,9 @@
 	flags = NODECONSTRUCT
 	var/image/nest_overlay
 
-/obj/structure/bed/nest/New()
+/obj/structure/bed/nest/Initialize()
+	..()
 	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=LYING_MOB_LAYER)
-	return ..()
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	if(has_buckled_mobs())

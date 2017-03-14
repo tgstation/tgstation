@@ -232,7 +232,7 @@
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/Initialize()
 	..()
 	redact()
 

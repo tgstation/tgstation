@@ -10,7 +10,7 @@
 	density = 1
 	var/gas_type = 0
 
-/obj/machinery/atmospherics/components/unary/tank/New()
+/obj/machinery/atmospherics/components/unary/tank/Initialize()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = volume
@@ -43,7 +43,7 @@
 	icon_state = "grey"
 	name = "pressure tank (Air)"
 
-/obj/machinery/atmospherics/components/unary/tank/air/New()
+/obj/machinery/atmospherics/components/unary/tank/air/Initialize()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.assert_gases("o2", "n2")

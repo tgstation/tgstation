@@ -8,7 +8,7 @@
 	var/datum/material_container/bananium
 	actions_types = list(/datum/action/item_action/toggle)
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	..()
 	bananium = new/datum/material_container(src,list(MAT_BANANIUM),200000)
 

@@ -11,7 +11,7 @@
 	var/obj/effect/beam/i_beam/last = null
 
 
-/obj/item/device/assembly/infra/New()
+/obj/item/device/assembly/infra/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

@@ -26,9 +26,9 @@
 	var/const/BOMB_TIMER_MIN = 1
 	var/const/BOMB_TIMER_MAX = 10
 
-/obj/item/pizzabox/New()
-	update_icon()
+/obj/item/pizzabox/Initialize()
 	..()
+	update_icon()
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -206,29 +206,29 @@
 	wires = null
 	update_icon()
 
-/obj/item/pizzabox/bomb/New()
+/obj/item/pizzabox/bomb/Initialize()
+	..()
 	var/randompizza = pick(subtypesof(/obj/item/weapon/reagent_containers/food/snacks/pizza))
 	pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)
-	..()
 
-/obj/item/pizzabox/margherita/New()
+/obj/item/pizzabox/margherita/Initialize()
+	..()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita(src)
 	boxtag = "Margherita Deluxe"
-	..()
 
-/obj/item/pizzabox/vegetable/New()
+/obj/item/pizzabox/vegetable/Initialize()
+	..()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
-	..()
 
-/obj/item/pizzabox/mushroom/New()
+/obj/item/pizzabox/mushroom/Initialize()
+	..()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
-	..()
 
-/obj/item/pizzabox/meat/New()
+/obj/item/pizzabox/meat/Initialize()
+	..()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
-	..()

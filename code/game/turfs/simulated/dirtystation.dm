@@ -10,7 +10,7 @@
 	desc = "Looks like it's been here a while.  Eew."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/old/New()
+/obj/effect/decal/cleanable/blood/old/Initialize()
 	..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
 	blood_DNA["Non-human DNA"] = "A+"
@@ -20,7 +20,7 @@
 	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/gibs/old/New()
+/obj/effect/decal/cleanable/blood/gibs/old/Initialize()
 	..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
@@ -30,7 +30,7 @@
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
 
-/obj/effect/decal/cleanable/vomit/old/New()
+/obj/effect/decal/cleanable/vomit/old/Initialize()
 	..()
 	icon_state += "-old"
 
