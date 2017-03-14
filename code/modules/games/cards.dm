@@ -16,8 +16,8 @@
 
 	var/list/cards = list()
 
-/obj/item/weapon/deck/New()
-	. = ..()
+/obj/item/weapon/deck/Initialize()
+	..()
 
 	var/cardcolor
 	var/datum/playingcard/card
@@ -129,8 +129,8 @@
 	var/datum/html_interface/hi
 	resistance_flags = FLAMMABLE
 
-/obj/item/weapon/hand/New(loc)
-	. = ..()
+/obj/item/weapon/hand/Initialize()
+	..()
 
 	src.hi = new/datum/html_interface/cards(src, "Your hand", 540, 302)
 	src.update_conceal()

@@ -35,7 +35,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
-/obj/machinery/hydroponics/constructable/New()
+/obj/machinery/hydroponics/constructable/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/hydroponics(null)
 	B.apply_default_parts(src)

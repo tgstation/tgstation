@@ -17,7 +17,7 @@
 	resistance_flags = FLAMMABLE
 	origin_tech = "biotech=1"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
+/obj/item/weapon/reagent_containers/food/snacks/grown/Initialize(newloc, var/obj/item/seeds/new_seed = null)
 	tastes = list(name = 1) // apples taste of apple, silly.
 	..()
 	if(new_seed)

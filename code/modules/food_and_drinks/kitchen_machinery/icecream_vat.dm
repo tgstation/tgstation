@@ -53,7 +53,7 @@
 			return "vanilla"
 
 
-/obj/machinery/icecream_vat/New()
+/obj/machinery/icecream_vat/Initialize()
 	..()
 	while(product_types.len < 6)
 		product_types.Add(5)
@@ -187,7 +187,8 @@
 	var/cone_type
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/New()
+/obj/item/weapon/reagent_containers/food/snacks/icecream/Initialize()
+	..()
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 4)
 

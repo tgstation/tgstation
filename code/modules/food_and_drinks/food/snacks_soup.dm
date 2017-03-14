@@ -7,7 +7,7 @@
 	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
 	tastes = list("tasteless soup" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/New()
+/obj/item/weapon/reagent_containers/food/snacks/soup/Initialize()
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
@@ -18,7 +18,7 @@
 	list_reagents = list("water" = 10)
 	tastes = list("wishes" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/wish/New()
+/obj/item/weapon/reagent_containers/food/snacks/soup/wish/Initialize()
 	var/wish_true = prob(25)
 	if(wish_true)
 		desc = "A wish come true!"
@@ -90,7 +90,7 @@
 	list_reagents = list("nutriment" = 6)
 	tastes = list("chaos" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/mystery/New()
+/obj/item/weapon/reagent_containers/food/snacks/soup/mystery/Initialize()
 	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
 	bonus_reagents = list("[extra_reagent]" = 5, "nutriment" = 6)
 	..()
@@ -149,7 +149,7 @@
 	icon_state = "beetsoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/beet/New()
+/obj/item/weapon/reagent_containers/food/snacks/soup/beet/Initialize()
 	..()
 	name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
 	tastes = list(name = 1)

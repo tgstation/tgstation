@@ -18,7 +18,7 @@
 	container_type = OPENCONTAINER
 	var/obj/item/weapon/reagent_containers/mixer
 
-/obj/machinery/food_cart/New()
+/obj/machinery/food_cart/Initialize()
 	..()
 	create_reagents(LIQUID_CAPACIY)
 	reagents.set_reacting(FALSE)

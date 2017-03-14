@@ -193,7 +193,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			libcomp_menu[page] = ""
 		libcomp_menu[page] += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[src];targetid=[C.id]'>\[Order\]</A></td></tr>\n"
 
-/obj/machinery/computer/libraryconsole/bookmanagement/New()
+/obj/machinery/computer/libraryconsole/bookmanagement/Initialize()
 	..()
 	if(circuit)
 		circuit.name = "Book Inventory Management Console (Machine Board)"

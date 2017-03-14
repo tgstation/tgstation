@@ -18,7 +18,7 @@
 	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth")
 	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
 
-/obj/machinery/biogenerator/New()
+/obj/machinery/biogenerator/Initialize()
 	..()
 	files = new /datum/research/biogenerator(src)
 	create_reagents(1000)

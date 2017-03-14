@@ -8,7 +8,7 @@
 	list_reagents = list("nutriment" = 7, "vitamin" = 2)
 	tastes = list("leaves" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/salad/New()
+/obj/item/weapon/reagent_containers/food/snacks/salad/Initialize()
 	..()
 	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
 

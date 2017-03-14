@@ -15,7 +15,7 @@
 	var/rating_speed = 1
 	var/rating_amount = 1
 
-/obj/machinery/processor/New()
+/obj/machinery/processor/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor(null)
 	B.apply_default_parts(src)
@@ -301,7 +301,7 @@
 	name = "Slime processor"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
-/obj/machinery/processor/slime/New()
+/obj/machinery/processor/slime/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/slime(null)
 	B.apply_default_parts(src)
