@@ -269,13 +269,13 @@
 		item_color = pick(possible_colors)
 		switch(item_color)
 			if("red")
-				light_color = "#ff0000"
+				light_color = LIGHT_COLOR_RED
 			if("green")
-				light_color = "#00ff00"
+				light_color = LIGHT_COLOR_GREEN
 			if("blue")
-				light_color = "#40ceff"
+				light_color = LIGHT_COLOR_LIGHT_CYAN
 			if("purple")
-				light_color = "#9b51ff"
+				light_color = LIGHT_COLOR_LAVENDER
 
 /obj/item/weapon/twohanded/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -302,9 +302,9 @@
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
-	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
 		user.setDir(i)
-		if(i == 8)
+		if(i == WEST)
 			user.emote("flip")
 		sleep(1)
 
@@ -349,7 +349,7 @@
 /obj/item/weapon/twohanded/dualsaber/process()
 	if(wielded)
 		if(hacked)
-			light_color = pick("#ff0000", "#00ff00", "#40ceff", "#9b51ff")
+			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)

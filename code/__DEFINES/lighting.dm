@@ -58,9 +58,13 @@
 #define LIGHT_COLOR_ORANGE     "#FA9632" //Mostly pure orange. rgb(250, 150, 50)
 #define LIGHT_COLOR_PURPLE     "#952CF4" //Light Purple. rgb(149, 44, 244)
 
+#define LIGHT_COLOR_LIGHT_CYAN	"#40CEFF" //More-saturated cyan. rgb(64, 206, 255)
+#define LIGHT_COLOR_LAVENDER	"#9B51FF" //Less-saturated light purple. rgb(155, 81, 255)
+
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE       "#FAA019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
 #define LIGHT_COLOR_FLARE      "#FA644B" //Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
 #define LIGHT_COLOR_SLIME_LAMP "#AFC84B" //Weird color, between yellow and green, very slimy. rgb(175, 200, 75)
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF" //Extremely diluted yellow, close to skin color (for some reason). rgb(250, 225, 175)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA" //Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
+
