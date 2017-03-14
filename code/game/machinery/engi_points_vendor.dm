@@ -541,12 +541,12 @@
 
 		if(2 to 3)
 			set waitfor = 0
-			for(var/i in 1 to 10)
+			for(var/i in 1 to 8)
 				if (!M)
 					return
 				M.SpinAnimation(7,1)
 				M.setDir(pick(cardinal))
-				for (var/x in 1 to 10)
+				for (var/x in 1 to 12)
 					sleep(1)
 					if (!M)
 						return
@@ -564,7 +564,9 @@
 							M.pixel_x -= 3
 						if (WEST)
 							M.pixel_x += 3
-				sleep(10)
+				sleep(12)
+			M.pixel_x = 0
+			M.pixel_y = 0
 
 		if(4 to 5)
 			M.throw_at(get_turf(src),3,7)
@@ -657,7 +659,7 @@
 			continue
 		if(t.x < cen.x && t.y == cen.y)
 			var/obj/machinery/light/floor/spotlight/L = new /obj/machinery/light/floor/spotlight(t)
-			L.light_color = "#188ed6"
+			L.light_color = "#00ffff"
 			spotlights+=L
 			continue
 		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
@@ -696,7 +698,7 @@
 				S.orbit(src, 95, FALSE, 60, 36, TRUE, FALSE)
 		sleep(7)
 	for(var/obj/reveal in sparkles)
-		reveal.alpha = 120
+		reveal.alpha = 160
 	for(var/n in 1 to 120)
 		for(var/obj/machinery/light/glow in spotlights)
 			if(glow.light_color == "yellow")
@@ -720,10 +722,10 @@
 				glow.update_light()
 				continue
 			if(glow.light_color == "se")
-				glow.light_color = "#188ed6"
+				glow.light_color = "#00ffff"
 				glow.update_light()
 				continue
-			if(glow.light_color == "#188ed6")
+			if(glow.light_color == "#00ffff")
 				glow.light_color = "ne"
 				glow.update_light()
 				continue
@@ -731,7 +733,7 @@
 				glow.light_color = "yellow"
 				glow.update_light()
 				continue
-		sleep(10)
+		sleep(100)
 
 /obj/machinery/disco/proc/dance_over()
 	for(var/obj/machinery/light/floor/spotlight/L in spotlights)
