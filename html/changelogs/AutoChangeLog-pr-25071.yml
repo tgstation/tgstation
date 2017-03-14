@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Proselytizers converting clockwork floors to walls now always take 10 seconds, regardless of how fast the proselytizer is."
