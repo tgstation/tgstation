@@ -36546,6 +36546,7 @@
 "blR" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
 	pixel_y = -30
 	},
 /obj/machinery/light,
