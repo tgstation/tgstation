@@ -17,7 +17,7 @@
 	var/human_count
 	var/plant_count
 
-/datum/station_goal/dna_vault/New()
+/datum/station_goal/dna_vault/Initialize()
 	..()
 	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * ticker.totalPlayersReady) , ticker.totalPlayersReady) // 75%+ roundstart population.
@@ -152,7 +152,8 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 
 	var/list/obj/structure/fillers = list()
 
-/obj/machinery/dna_vault/New()
+/obj/machinery/dna_vault/Initialize()
+	..()
 	//TODO: Replace this,bsa and gravgen with some big machinery datum
 	var/list/occupied = list()
 	for(var/direct in list(EAST,WEST,SOUTHEAST,SOUTHWEST))

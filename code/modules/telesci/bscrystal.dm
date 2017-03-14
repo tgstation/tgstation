@@ -17,7 +17,7 @@
 	points = 0
 	refined_type = null
 
-/obj/item/weapon/ore/bluespace_crystal/New()
+/obj/item/weapon/ore/bluespace_crystal/Initialize()
 	..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)

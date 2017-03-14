@@ -161,7 +161,7 @@
 			return locate(world.maxx,y,z)
 	return get_turf(src)
 
-/obj/machinery/bsa/full/New(loc,cannon_direction = WEST)
+/obj/machinery/bsa/full/Initialize(mapload,cannon_direction = WEST)
 	..()
 	switch(cannon_direction)
 		if(WEST)
