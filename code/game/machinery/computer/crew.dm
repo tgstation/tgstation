@@ -34,7 +34,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 	var/list/interfaces
 	var/list/data
 
-/datum/crewmonitor/Initialize()
+/datum/crewmonitor/New()
 	. = ..()
 
 	var/list/jobs = new/list()

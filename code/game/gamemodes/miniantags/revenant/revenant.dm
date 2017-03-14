@@ -415,7 +415,7 @@
 	dangerrating = 10
 	var/targetAmount = 100
 
-/datum/objective/revenant/Initialize()
+/datum/objective/revenant/New()
 	targetAmount = rand(350,600)
 	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
@@ -434,7 +434,7 @@
 /datum/objective/revenantFluff
 	dangerrating = 0
 
-/datum/objective/revenantFluff/Initialize()
+/datum/objective/revenantFluff/New()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \
 									 "Avoid killing in plain sight.", \
 									 "Cause as much chaos and anger as you can without being killed.", \

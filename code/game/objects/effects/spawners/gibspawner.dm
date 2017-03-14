@@ -17,16 +17,16 @@
 
 	if(sparks)
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(2, 1, location)
+		s.set_up(2, 1, loc)
 		s.start()
 
 	for(var/i = 1, i<= gibtypes.len, i++)
 		if(gibamounts[i])
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
-				gib = new gibType(location)
-				if(istype(location,/mob/living/carbon))
-					var/mob/living/carbon/digester = location
+				gib = new gibType(loc)
+				if(istype(loc,/mob/living/carbon))
+					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 
 				if(viruses && viruses.len > 0)

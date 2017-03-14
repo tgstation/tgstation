@@ -450,7 +450,7 @@
 	..()
 	src.gen_primary = loc
 	src.gen_secondary = B
-	if(A && B)
+	if(loc && B)
 		needs_power = 1
 	for(var/mob/living/L in get_turf(src.loc))
 		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]'s organs!</span>")

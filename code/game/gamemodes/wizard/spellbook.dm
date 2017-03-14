@@ -13,7 +13,7 @@
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
 	var/list/no_coexistance_typecache //Used so you can't have specific spells together
 
-/datum/spellbook_entry/Initialize()
+/datum/spellbook_entry/New()
 	..()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
