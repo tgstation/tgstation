@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Shuttles now have dynamic lighting; you can remove the lights on them and use your own lights."
-  - tweak: "All maps now use Deltastation's fancy syndicate shuttle."
