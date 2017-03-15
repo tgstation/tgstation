@@ -19,6 +19,7 @@
 	var/list/queued_announces	//people coming in that we have to announce
 	var/obj/machinery/requests_console/console
 	var/force_depart = FALSE
+	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	if(mapload)
@@ -65,6 +66,14 @@
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
+	
+	if(perma_docked)
+		if(mode != SHUTTLE_CALL)
+			sound_played = FALSE
+			mode = SHUTTLE_IDLE
+		else		
+			SendToStation()
+		return
 
 	if(damaged)
 		if(!CheckTurfsPressure())
