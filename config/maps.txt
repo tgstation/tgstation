@@ -34,5 +34,5 @@ map deltastation
 endmap
 
 map cerestation
-	minplayers 35
+	minplayers 45
 endmap
