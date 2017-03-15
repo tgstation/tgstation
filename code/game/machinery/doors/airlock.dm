@@ -1326,7 +1326,7 @@ var/list/airlock_overlays = list()
 	if(air_tight)
 		density = TRUE
 	sleep(5)
-	src.density = TRUE
+	density = TRUE
 	if(!safe)
 		crush()
 	sleep(9)
