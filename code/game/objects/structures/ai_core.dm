@@ -24,6 +24,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore, TRUE)
 		/datum/construction_state/first{
 		//	required_type_to_construct = /obj/item/stack/sheet/plasteel
 			required_amount_to_construct = 4
+			construction_delay = 50
 			one_per_turf = 1
 			on_floor = 1
 		},
