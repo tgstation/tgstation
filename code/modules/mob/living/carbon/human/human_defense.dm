@@ -47,7 +47,7 @@
 	return number
 
 /mob/living/carbon/human/get_ear_protection()
-	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
+	if((ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT)) || (head && HAS_SECONDARY_FLAG(head, BANG_PROTECT)))
 		return 1
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)

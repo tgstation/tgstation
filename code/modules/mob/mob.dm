@@ -20,7 +20,7 @@
 	return QDEL_HINT_HARDDEL
 
 var/next_mob_id = 0
-/mob/New()
+/mob/Initialize()
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 	if(stat == DEAD)
@@ -117,8 +117,8 @@ var/next_mob_id = 0
 				else
 					continue
 
-			else if(T.lighting_overlay)
-				if(T.lighting_overlay.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
+			else if(T.lighting_object)
+				if(T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
 						msg = blind_message
 					else
@@ -448,7 +448,7 @@ var/next_mob_id = 0
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 
-	var/mob/new_player/M = new /mob/new_player()
+	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		qdel(M)

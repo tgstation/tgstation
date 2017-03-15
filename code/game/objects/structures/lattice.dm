@@ -39,11 +39,9 @@
 		new/obj/structure/lattice/clockwork/large(loc)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = C
-		if(WT.remove_fuel(0, user))
-			to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
-			deconstruct()
+	if(istype(C, /obj/item/weapon/wirecutters))
+		to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
+		deconstruct()
 	else
 		var/turf/T = get_turf(src)
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)

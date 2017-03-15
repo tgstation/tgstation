@@ -54,7 +54,7 @@
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 
 
-/mob/living/simple_animal/hostile/New()
+/mob/living/simple_animal/hostile/Initialize()
 	..()
 
 	if(!targets_from)
@@ -103,10 +103,8 @@
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
-	. = list()
 	if(!search_objects)
-		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
-		. += Mobs
+		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 
 		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
 
@@ -114,8 +112,7 @@
 			if(can_see(targets_from, HM, vision_range))
 				. += HM
 	else
-		var/list/Objects = oview(vision_range, targets_from)
-		. += Objects
+		. = oview(vision_range, targets_from)
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()

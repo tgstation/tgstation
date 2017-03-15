@@ -32,7 +32,7 @@
 	return TRUE
 
 /datum/riding/proc/force_dismount(mob/living/M)
-	Unbuckle(M)
+	ridden.unbuckle_mob(M)
 
 //Override this to set your vehicle's various pixel offsets
 //if they differ between directions, otherwise use the
@@ -364,7 +364,7 @@
 		ridden.layer = MOB_LAYER
 
 /datum/riding/human/force_dismount(mob/living/user)
-	Unbuckle(user)
+	ridden.unbuckle_mob(user)
 	user.Weaken(3)
 	user.Stun(3)
 	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
@@ -424,7 +424,7 @@
 						M.pixel_y = 3
 
 /datum/riding/cyborg/force_dismount(mob/living/M)
-	Unbuckle(M)
+	ridden.unbuckle_mob(M)
 	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 	M.Move(targetm)

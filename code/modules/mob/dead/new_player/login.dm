@@ -1,4 +1,4 @@
-/mob/new_player/Login()
+/mob/dead/new_player/Login()
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = 1

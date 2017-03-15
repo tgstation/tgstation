@@ -1203,6 +1203,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 12
 	item = /obj/item/weapon/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
+	surplus = 0
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
@@ -1228,8 +1229,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
-	surplus = 0
 	restricted_roles = list("Assistant")
+	surplus = 0
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"

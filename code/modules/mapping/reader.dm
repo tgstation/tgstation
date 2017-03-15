@@ -213,6 +213,10 @@ var/global/dmm_suite/preloader/_preloader = new
 			if(variables_start)//if there's any variable
 				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
 				fields = readlist(full_def, ";")
+				for(var/I in fields)
+					var/value = fields[I]
+					if(istext(value))
+						fields[I] = apply_text_macros(value)
 
 			//then fill the members_attributes list with the corresponding variables
 			members_attributes.len++
@@ -403,8 +407,6 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/value = attributes[attribute]
 		if(islist(value))
 			value = deepCopyList(value)
-		if(istext(value))
-			value = apply_text_macros(value)
 		what.vars[attribute] = value
 	use_preloader = FALSE
 
