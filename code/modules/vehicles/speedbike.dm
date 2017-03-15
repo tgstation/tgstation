@@ -187,13 +187,13 @@
 
 /datum/action/innate/atmos_bike/scrub/Activate()
 	if(inner_scrubber.on)
-		owner << "<span class='notice'>You have disabled the vehicle's massive air scrubbers</span>"
+		owner << "<span class='notice'>You disable the vehicle's massive air scrubbers</span>"
 		button_icon_state = "mech_internals_off"
 		inner_scrubber.on = 0
 		UpdateButtonIcon()
 		return
 	if(!inner_scrubber.on)
-		owner << "<span class='notice'>You have enabled the vehicle's massive air scrubbers</span>"
+		owner << "<span class='notice'>You enable the vehicle's massive air scrubbers</span>"
 		button_icon_state = "mech_internals_on"
 		inner_scrubber.on = 1
 		UpdateButtonIcon()

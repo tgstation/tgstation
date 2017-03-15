@@ -37,7 +37,7 @@
 		new /datum/GBP_equipment("Freon Canister",			/obj/machinery/portable_atmospherics/canister/freon,			2500,	1),
 		new /datum/GBP_equipment("BZ Gas Canister",			/obj/machinery/portable_atmospherics/canister/bz,				2500,	1),
 		new /datum/GBP_equipment("Prototype Canister",		/obj/machinery/portable_atmospherics/canister/proto/default,	2500,	1),
-		new /datum/GBP_equipment("Rapid Lighting Device x3",	/obj/item/weapon/rcd/arcd,									3000,	3),
+		new /datum/GBP_equipment("Rapid Lighting Device x3",	/obj/item/weapon/rld/,										3000,	3),
 		new /datum/GBP_equipment("Reflector Box x3",			/obj/structure/reflector/box,								3500,	3),
 		new /datum/GBP_equipment("Radiation Collector x3",			/obj/machinery/power/rad_collector,						4000,	3),
 		new /datum/GBP_equipment("Advanced Magboot x3",			/obj/item/clothing/shoes/magboots/advance,					5000,	3),

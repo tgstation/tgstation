@@ -68,9 +68,8 @@ obj/machinery/power/exporter/Destroy()
 	if (!anchored)
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
 		return
-	if(!Adjacent(user))
-		if(!isAI(user))
-			return
+	if(!Adjacent(user) && (!isAI(user)))
+		return
 	user.set_machine(src)
 	var/list/dat = list()
 	dat += ("<b>[name]</b><br>")
@@ -96,7 +95,7 @@ obj/machinery/power/exporter/Destroy()
 		if(6001 to 10000)
 			rating = "THE 1%"
 		if(10001 to 9999999)
-			rating = "UNFATHOMABLE!"
+			rating = "INCONCEIVABLE!"
 	dat += ("Current export rating: [rating]<br><br><br>")
 	dat += ("<b><u>Warning: Setting export rate above the initial surplus is feasible but will exhaust the SMES</b></u>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
