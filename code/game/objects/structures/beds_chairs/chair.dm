@@ -15,6 +15,10 @@
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
 
+/obj/structure/chair/Destroy()
+	latejoin -= src	//These may be here due to the arrivals shuttle
+	return ..()
+
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(buildstacktype && (!(flags & NODECONSTRUCT)))
@@ -136,9 +140,13 @@
 	var/image/armrest = null
 	item_chair = null
 
-/obj/structure/chair/comfy/New()
+/obj/structure/chair/comfy/Initialize()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
+	return ..()
+
+/obj/structure/chair/comfy/Destroy()
+	QDEL_NULL(armrest)
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)

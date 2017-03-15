@@ -42,10 +42,13 @@
 /obj/item/device/radio/headset/syndicate/alt //undisguised bowman with flash protection
 	name = "syndicate headset"
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs. \nTo access the syndicate channel, use ; before speaking."
-	flags = EARBANGPROTECT
 	origin_tech = "syndicate=3"
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
+
+/obj/item/device/radio/headset/syndicate/alt/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -72,9 +75,12 @@
 /obj/item/device/radio/headset/headset_sec/alt
 	name = "security bowman headset"
 	desc = "This is used by your elite security force. Protects ears from flashbangs. \nTo access the security channel, use :s."
-	flags = EARBANGPROTECT
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
+
+/obj/item/device/radio/headset/headset_sec/alt/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -124,9 +130,12 @@
 /obj/item/device/radio/headset/heads/captain/alt
 	name = "\proper the captain's bowman headset"
 	desc = "The headset of the boss. Protects ears from flashbangs. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
-	flags = EARBANGPROTECT
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
+
+/obj/item/device/radio/headset/heads/captain/alt/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -143,9 +152,12 @@
 /obj/item/device/radio/headset/heads/hos/alt
 	name = "\proper the head of security's bowman headset"
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs. \nTo access the security channel, use :s. For command, use :c."
-	flags = EARBANGPROTECT
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
+
+/obj/item/device/radio/headset/heads/hos/alt/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -196,10 +208,13 @@
 /obj/item/device/radio/headset/headset_cent/alt
 	name = "\improper Centcom bowman headset"
 	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the centcom channel, use :y."
-	flags = EARBANGPROTECT
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
+
+/obj/item/device/radio/headset/headset_cent/alt/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
