@@ -80,7 +80,7 @@ obj/machinery/power/exporter/Destroy()
 	dat += ("Power consumption: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A></u></b><br><br>")
 	dat += ("<b><u>Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
 	dat += ("Power exported: [power_drained] kilowatts<br>")
-	dat += ("Points earned from exports: [power_drained/200] points<br>")
+	dat += ("Points earned from exports: [sqrt(power_drained)/3] points<br>")
 	switch(drain_rate)
 		if(0 to 200)
 			rating = "TERRIBLE"
