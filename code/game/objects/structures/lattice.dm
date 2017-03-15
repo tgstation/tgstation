@@ -11,7 +11,7 @@
 	layer = LATTICE_LAYER //under pipes
 	var/obj/item/stack/rods/stored
 	canSmoothWith = null
-	smooth = SMOOTH_MORE
+	smooth = SMOOTH_TRUE
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
