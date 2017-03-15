@@ -21074,7 +21074,7 @@
 	name = "Radiation Shutters Control";
 	pixel_x = 24;
 	pixel_y = 0;
-	req_access_txt = "24"
+	req_access_txt = "10"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -36546,6 +36546,7 @@
 "blR" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
 	pixel_y = -30
 	},
 /obj/machinery/light,

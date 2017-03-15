@@ -15,7 +15,7 @@
 
 	else
 		for (var/turf/T in area_contents(src))
-			if (T.lighting_overlay)
+			if (T.lighting_object)
 				T.lighting_clear_overlay()
 
 	return TRUE
