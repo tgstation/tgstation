@@ -353,8 +353,11 @@
 		var/mob/living/user = AM
 		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.mind && ((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer")))
+				power += 200
 		user.dust()
-		power += 200
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
