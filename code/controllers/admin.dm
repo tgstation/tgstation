@@ -40,8 +40,7 @@
 		return
 	switch(controller)
 		if("Master")
-			new/datum/controller/master()
-			Master.process()
+			Recreate_MC()
 			feedback_add_details("admin_verb","RMC")
 		if("Failsafe")
 			new /datum/controller/failsafe()

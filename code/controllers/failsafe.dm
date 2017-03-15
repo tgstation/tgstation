@@ -20,6 +20,7 @@ var/datum/controller/failsafe/Failsafe
 
 	// Track the MC iteration to make sure its still on track.
 	var/master_iteration = 0
+	var/running = TRUE
 
 /datum/controller/failsafe/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -32,14 +33,17 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/Initialize()
 	set waitfor = 0
 	Failsafe.Loop()
+	running = FALSE
 	qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
 
 /datum/controller/failsafe/Destroy()
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	if(running)
+		running = FALSE
+		return QDEL_HINT_LETMELIVE
+	return ..()
 
 /datum/controller/failsafe/proc/Loop()
-	while(1)
+	while(running)
 		lasttick = world.time
 		if(!Master)
 			// Replace the missing Master! This should never, ever happen.
