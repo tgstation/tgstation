@@ -82,9 +82,12 @@
 		return
 	var/turf/T = get_turf(user)
 	var/area/A = get_area(T)
-	if (A.get_apc())
-		to_chat(user, "<span class='warning'>This area already has APC!</span>")
+	if(A.get_apc())
+		to_chat(user, "<span class='warning'>This area already has an APC!</span>")
 		return //only one APC per area
+	if(!A.requires_power)
+		to_chat(user, "<span class='warning'>You cannot place [src] in this area!</span>")
+		return //can't place apcs in areas with no power requirement
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)
 			to_chat(user, "<span class='warning'>There is another network terminal here!</span>")
