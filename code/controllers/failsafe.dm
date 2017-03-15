@@ -40,6 +40,7 @@ var/datum/controller/failsafe/Failsafe
 	if(running)
 		running = FALSE
 		return QDEL_HINT_LETMELIVE
+	..()
 	return QDEL_HINT_HARDDEL_NOW
 
 /datum/controller/failsafe/proc/Loop()
