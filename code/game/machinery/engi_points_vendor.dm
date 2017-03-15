@@ -49,9 +49,9 @@
 		new /datum/GBP_equipment("Ranged RCD x4",			/obj/item/weapon/rcd/arcd,										8000,	4),
 		new /datum/GBP_equipment("Prototype Atmos Vehicle x2",			/obj/vehicle/space/speedbike/atmos,					10000,	2),
 		new /datum/GBP_equipment("Prototype Repair Vehicle x3",		/obj/vehicle/space/speedbike/repair,					15000,	3),
-		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				17500,	5),
+		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				16000,	5),
 		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,							20000,	5),
-		new /datum/GBP_equipment("Nuclear Construction Device",			/obj/machinery/construction_nuke,					25000,	1),
+		new /datum/GBP_equipment("Nuclear Construction Device",			/obj/machinery/construction_nuke,					22500,	1),
 		new /datum/GBP_equipment("Engineering's Pinnacle x5",		/obj/vehicle/space/speedbike/memewagon,					30000,	5),
 		)
 
@@ -723,7 +723,7 @@
 				return
 			if(glow.light_color == "red")
 				glow.light_color = "nw"
-				glow.light_power = round(glow.light_power * 1.48)
+				glow.light_power = glow.light_power * 1.48
 				glow.light_range = 0
 				glow.update_light()
 				continue
