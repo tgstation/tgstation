@@ -22,7 +22,7 @@
 
 /obj/item/weapon/minigunpack/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/weapon/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
