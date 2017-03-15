@@ -1,4 +1,4 @@
-/mob/living/New()
+/mob/living/Initialize()
 	. = ..()
 	generateStaticOverlay()
 	if(staticOverlays.len)

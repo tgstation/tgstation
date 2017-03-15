@@ -1,36 +1,338 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/turf/open/floor/plating/airless,/area/shuttle/escape)
-"c" = (/turf/closed/wall,/area/shuttle/escape)
-"d" = (/obj/structure/closet/malf,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"e" = (/obj/machinery/status_display,/turf/closed/wall,/area/shuttle/escape)
-"f" = (/obj/effect/shuttle_build,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"g" = (/turf/open/floor/plating,/area/shuttle/escape)
-"h" = (/obj/docking_port/mobile/emergency{name = "Shuttle Under Construction";timid = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"i" = (/obj/structure/rack,/obj/effect/spawner/lootdrop/maintenance{lootcount = 4;name = "4maintenance loot spawner"},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"j" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"k" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"c" = (
+/turf/closed/wall,
+/area/shuttle/escape)
+"d" = (
+/obj/structure/closet/malf,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"e" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/shuttle/escape)
+"f" = (
+/obj/effect/shuttle_build,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"g" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"h" = (
+/obj/docking_port/mobile/emergency{
+	name = "Shuttle Under Construction";
+	timid = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"i" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"j" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"l" = (
+/obj/structure/closet/malf,
+/obj/machinery/light/built{
+	tag = "icon-tube1 (WEST)";
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
+/obj/machinery/light/built{
+	tag = "icon-tube1 (EAST)";
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
 
 (1,1,1) = {"
-aabbbbbbbaa
-abbbbbbbbba
-acdbbbbbbba
-aedbbbfbbba
-abdbbbbbbba
-abbbbbbbbba
-bbbbbbbbbbc
-gbbbbbbbbbc
-bbbbbbbbbbc
-hbbbbbbbbbc
-bbbbbbbbbbc
-bbbbbbbbbbb
-bbbbbbbbbbc
-bbbbbbbbbbc
-abbbbbbbbba
-abbbbbbbica
-abbbbbbbiea
-acbbbbbbica
-acbbbbbbbba
-acbbbbbbbca
-aajjjjjjjaa
-aakkkkkkkaa
+a
+a
+a
+a
+a
+a
+b
+g
+b
+h
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+c
+e
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+c
+a
+a
+"}
+(3,1,1) = {"
+b
+b
+d
+l
+d
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(6,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(7,1,1) = {"
+b
+b
+b
+f
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(8,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(9,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+i
+m
+i
+b
+b
+j
+k
+"}
+(10,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+e
+c
+b
+c
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+c
+c
+c
+c
+c
+b
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
 "}
