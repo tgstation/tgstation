@@ -15,7 +15,7 @@
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
-	canSmoothWith = typesof(/obj/structure/lattice) + typesof(/turf/open/floor) + typesof(/obj/structure/falsewall) + typesof(/turf/closed/wall) - typesof(/turf/closed/wall/shuttle) - typesof(/obj/structure/falsewall/titanium)
+	canSmoothWith = typesof(/obj/structure/lattice) + typesof(/turf/open/floor) + typesof(/obj/structure/falsewall) + typesof(/turf/closed/wall) - typesof(/turf/closed/wall/shuttle) - typesof(/obj/structure/falsewall/titanium) - typesof(/turf/closed/mineral/titanium)
 	..()
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
