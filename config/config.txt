@@ -279,9 +279,13 @@ ANNOUNCE_ADMIN_LOGOUT
 #ANNOUNCE_ADMIN_LOGIN
 
 ## Map rotation
-## This feature requires you are running a Windows OS (or can other wise run .bat files) and that you are using the tgstation-server toolset in tools/
 ## You should edit maps.txt to match your configuration when you enable this.
 #MAPROTATION
+
+## Map voting
+## Allows players to vote for their preffered map
+## When it's set to zero, the map will be randomly picked each round
+ALLOW_MAP_VOTING 1
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
