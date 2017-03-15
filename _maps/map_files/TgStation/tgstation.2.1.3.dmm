@@ -2964,7 +2964,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3458,7 +3457,6 @@
 /area/security/brig)
 "aht" = (
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (WEST)";
 	dir = 8
 	},
 /area/security/brig)
@@ -17605,7 +17603,6 @@
 /area/crew_quarters/theatre)
 "aMq" = (
 /obj/structure/piano{
-	tag = "icon-piano";
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
@@ -20177,7 +20174,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21241,7 +21237,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21622,7 +21617,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/storage/art)
@@ -21633,7 +21627,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -21661,7 +21654,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/storage/emergency2)
@@ -26286,7 +26278,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -26833,12 +26824,10 @@
 /area/quartermaster/office)
 "biG" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/structure/cable{
-	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -26891,7 +26880,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (NORTH)";
 	icon_state = "whiteredcorner";
 	dir = 1
 	},
@@ -28248,7 +28236,6 @@
 "blu" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable{
-	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel,
@@ -40178,7 +40165,7 @@
 	d2 = 2
 	},
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
@@ -50954,13 +50941,13 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
@@ -50968,7 +50955,7 @@
 	dir = 9
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgL" = (
@@ -51436,7 +51423,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chG" = (
@@ -51851,7 +51838,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -52674,7 +52661,6 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
 	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -54101,7 +54087,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -54819,7 +54804,7 @@
 	pixel_y = 0
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "coL" = (
@@ -55177,7 +55162,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -55461,7 +55445,7 @@
 /area/engine/engineering)
 "cqa" = (
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -56334,7 +56318,7 @@
 /area/space)
 "csa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -57021,7 +57005,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/effect/landmark/start{
 	name = "Cyborg"
@@ -57310,9 +57293,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-warnplatecorner"
-	},
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS{
 	name = "AI Satellite Atmospherics"
 	})
@@ -57773,7 +57754,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -57843,7 +57823,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/AIsatextFP{
@@ -58862,7 +58841,6 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
 	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -60187,7 +60165,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60217,7 +60194,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60302,7 +60278,6 @@
 	dir = 4;
 	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -60311,7 +60286,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = "90Curve"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60326,7 +60300,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60335,7 +60308,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -61526,12 +61498,11 @@
 "cDk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -61634,7 +61605,6 @@
 "cDv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
-	tag = "icon-filter_off_f (EAST)";
 	icon_state = "filter_off_f";
 	dir = 4
 	},
@@ -61700,7 +61670,6 @@
 /area/engine/engineering)
 "cDD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	tag = "icon-manifold (EAST)";
 	name = "scrubbers pipe";
 	icon_state = "manifold";
 	dir = 4
@@ -62072,7 +62041,7 @@
 /area/engine/engineering)
 "cEv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -62095,7 +62064,7 @@
 /area/engine/engineering)
 "cEy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	icon_state = "manifold";
 	dir = 4
@@ -62137,7 +62106,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62331,7 +62299,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62416,7 +62383,7 @@
 /area/engine/engineering)
 "cFe" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
@@ -62439,7 +62406,7 @@
 /area/engine/engineering)
 "cFh" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
@@ -62479,7 +62446,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -62802,7 +62768,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62959,7 +62924,7 @@
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
@@ -62968,7 +62933,7 @@
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
@@ -62985,7 +62950,7 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -63019,7 +62984,7 @@
 /area/engine/engineering)
 "cGK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -63027,7 +62992,7 @@
 /area/engine/engineering)
 "cGL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -63202,7 +63167,6 @@
 	dir = 4;
 	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63223,7 +63187,6 @@
 	dir = 8;
 	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63261,7 +63224,6 @@
 	anchored = 1;
 	dir = 1;
 	icon_state = "reflector";
-	tag = "icon-reflector (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63270,7 +63232,6 @@
 	anchored = 1;
 	dir = 4;
 	icon_state = "reflector";
-	tag = "icon-reflector (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63427,7 +63388,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -63492,7 +63452,6 @@
 /area/assembly/robotics)
 "cHL" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},
@@ -65144,6 +65103,81 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
+"cMm" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMn" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMo" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMs" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMt" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMw" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMx" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMy" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMz" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -92058,7 +92092,7 @@ cfG
 cgw
 coK
 cpu
-clJ
+cMq
 ccw
 ccw
 ccw
@@ -93354,7 +93388,7 @@ ccw
 cFL
 cGf
 cGw
-cqY
+cMw
 ciZ
 cHc
 cHh
@@ -93868,7 +93902,7 @@ cFw
 cFN
 csH
 csR
-cqY
+cMx
 cGU
 cEj
 cEj
@@ -94111,7 +94145,7 @@ ckK
 clJ
 cmL
 cnv
-clJ
+cMm
 chX
 cDq
 cqg
@@ -94121,11 +94155,11 @@ crt
 czE
 cAm
 czE
-cqY
+cMs
 cFO
 csC
 csQ
-cqY
+cMy
 cGV
 cEj
 cGV
@@ -94382,7 +94416,7 @@ cAP
 cFP
 csI
 cAt
-cqY
+cMz
 cEj
 cEj
 cEj
@@ -94896,7 +94930,7 @@ ccw
 cFR
 cGf
 cGz
-cqY
+cMA
 ciZ
 cHd
 cHj
@@ -95139,7 +95173,7 @@ ceq
 clQ
 cmQ
 cgR
-clJ
+cMn
 chX
 cpD
 cDw
@@ -95396,7 +95430,7 @@ ckP
 ckH
 cja
 cgR
-clJ
+cMo
 cDj
 cDs
 cql
@@ -95910,7 +95944,7 @@ ckR
 clR
 cgR
 cgR
-clJ
+cMp
 cir
 cDt
 cDy
@@ -96429,7 +96463,7 @@ cis
 cjN
 cDz
 cDH
-clJ
+cMr
 cEj
 crM
 crV
@@ -96948,9 +96982,9 @@ ccw
 ccw
 ccw
 ccw
-cqY
-cqY
-cqY
+cMt
+cMu
+cMv
 ccw
 aaf
 aaf
