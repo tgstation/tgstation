@@ -418,14 +418,14 @@
 			to_chat(user, "<span class='notice'>You change the paintjob on the airlock assembly.</span>")
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
-	return newlist(
+	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/metal
 			required_amount_to_construct = 4
 			one_per_turf = 1
 			on_floor = 1
 		},
-		/datum/construction_state/last{
+		/datum/construction_state{
 			required_type_to_construct = /obj/item/weapon/wrench
 			required_type_to_deconstruct = /obj/item/weapon/weldingtool
 			construction_delay = 40
