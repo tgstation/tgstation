@@ -460,7 +460,7 @@
 				RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
 				return TRUE
-			to_chat(user, "<span class='notice'>The [RG] is full.</span>")
+			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
 			return FALSE
 
 	if(istype(O, /obj/item/weapon/melee/baton))
