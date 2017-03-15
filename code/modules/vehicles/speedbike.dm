@@ -60,13 +60,7 @@
 	internal_scubber.on = 1
 	internal_extinguisher = new /obj/item/weapon/extinguisher/vehicle(src)
 	internal_extinguisher.vehicle = src
-	CAN = new /obj/machinery/portable_atmospherics/canister/proto/oxygen(src)
-
-/obj/machinery/portable_atmospherics/canister/proto/oxygen
-	icon_state = "proto"
-	gas_type = "o2"
-	filled = 1
-	release_pressure = ONE_ATMOSPHERE*2
+	CAN = new /obj/machinery/portable_atmospherics/canister/proto/default/oxygen(src)
 
 /obj/item/weapon/extinguisher/vehicle
 	name = "extinguisher nozzle"
@@ -303,6 +297,8 @@
 	. = ..()
 	riding_datum = new/datum/riding/space/repair
 	var/datum/action/innate/repair_bike/foam_wall/F = new()
+	var/datum/action/innate/repair_bike/toggle_turret/T = new()
+	T.Grant(M, src)
 	F.Grant(M, src)
 
 /obj/vehicle/space/speedbike/repair/unbuckle_mob(mob/living/M)
@@ -313,12 +309,14 @@
 /datum/action/innate/repair_bike
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/space/speedbike/repair/bike
+	var/obj/machinery/repair_turret/tesla
 
-/datum/action/innate/atmos_bike/Grant(mob/living/L, obj/vehicle/B)
+/datum/action/innate/repair_bike/Grant(mob/living/L, obj/vehicle/space/speedbike/repair/B)
 	bike = B
+	tesla = B.turret
 	..()
 
-/datum/action/innate/atmos_bike/Destroy()
+/datum/action/innate/repair_bike/Destroy()
 	bike = null
 	return ..()
 
@@ -340,6 +338,28 @@
 	else
 		owner << "<span class='warning'>Metal foam mix is still being synthesized...</span>"
 
+/datum/action/innate/repair_bike/toggle_turret
+	name = "Toggle Repair Turret"
+	desc = "Toggles the mounted repair turret"
+	button_icon_state = "lightning0"
+	background_icon_state = "bg_default_on"
+
+/datum/action/innate/repair_bike/toggle_turret/Activate()
+	if(tesla.active)
+		tesla.active = FALSE
+		tesla.icon_state = "mini_off"
+		STOP_PROCESSING(SSobj, tesla)
+		background_icon_state = "bg_default"
+		UpdateButtonIcon()
+		return
+	if(!tesla.active)
+		tesla.active = TRUE
+		tesla.icon_state = "mini_on"
+		START_PROCESSING(SSobj, tesla)
+		background_icon_state = "bg_default_on"
+		UpdateButtonIcon()
+		return
+
 /obj/vehicle/space/speedbike/repair/Move(newloc,move_dir)
 	if(has_buckled_mobs())
 		if(istype(newloc,/turf/open/space))
@@ -354,9 +374,10 @@
 	name = "mounted repair turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "mini_off"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/cooldown = 0
+	var/active = TRUE
 
 /obj/machinery/repair_turret/Initialize()
 	..()
@@ -445,10 +466,10 @@
 			flooring.icon_state = initial(flooring.icon_state)
 			playsound(flooring,'sound/magic/LightningShock.ogg', 50, 1)
 			Beam(flooring,icon_state="lightning[rand(1,12)]",time=20)
-			sleep(10)
+			break
 
 /obj/machinery/repair_turret/process()
-	if(cooldown<=world.time)
+	if(cooldown<=world.time && active)
 		icon_state = "mini_on"
 		for(var/obj/target in view(7, src))
 			var/target_loc = get_turf(target)
@@ -491,8 +512,11 @@
  	. = ..()
 		riding_datum = new/datum/riding/space/speedbike/speedwagon
 
+
+//Memewagon, the less lethal more hilarious reward
+
 /obj/vehicle/space/speedbike/memewagon
-	name = "Engineering's Pinnacle X9"
+	name = "Engineering's Pinnacle"
 	desc = "The supreme department, manifest"
 	icon = 'icons/obj/bike.dmi'
 	icon_state = "speedwagon"

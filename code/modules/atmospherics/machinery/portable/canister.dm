@@ -24,6 +24,16 @@
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
+	// Prototype vars
+	var/prototype = FALSE
+	var/valve_timer = null
+	var/timer_set = 30
+	var/default_timer_set = 30
+	var/minimum_timer_set = 1
+	var/maximum_timer_set = 300
+	var/timing = FALSE
+	var/restricted = FALSE
+	req_access = list()
 
 	var/update = 0
 	var/static/list/label2types = list(
@@ -99,24 +109,21 @@
 	gas_type = "water_vapor"
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/proc/get_time_left()
+	if(timing)
+		. = round(max(0, valve_timer - world.time) / 10, 1)
+	else
+		. = timer_set
+
+/obj/machinery/portable_atmospherics/canister/proc/set_active()
+	timing = !timing
+	if(timing)
+		valve_timer = world.time + (timer_set * 10)
+	update_icon()
+
 /obj/machinery/portable_atmospherics/canister/proto
 	name = "prototype canister"
 
-
-/obj/machinery/portable_atmospherics/canister/proto/oxygen
-	name = "prototype canister"
-	desc = "A prototype canister for a prototype bike, what could go wrong?"
-	icon_state = "proto"
-	gas_type = "o2"
-	filled = 1
-	icon_state = "proto"
-	volume = 5000
-	obj_integrity = 300
-	max_integrity = 300
-	temperature_resistance = 2000 + T0C
-	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
-	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
-	release_pressure = ONE_ATMOSPHERE*2
 
 /obj/machinery/portable_atmospherics/canister/proto/default
 	name = "prototype canister"
@@ -129,6 +136,18 @@
 	temperature_resistance = 2000 + T0C
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
 	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
+	prototype = TRUE
+
+
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen
+	name = "prototype canister"
+	desc = "A prototype canister for a prototype bike, what could go wrong?"
+	icon_state = "proto"
+	gas_type = "o2"
+	filled = 1
+	release_pressure = ONE_ATMOSPHERE*2
+
+
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
@@ -270,6 +289,9 @@
 	..()
 	if(stat & BROKEN)
 		return PROCESS_KILL
+	if(timing && valve_timer < world.time)
+		valve_open = !valve_open
+		timing = FALSE
 	if(!valve_open)
 		pump.AIR1 = null
 		pump.AIR2 = null
@@ -302,6 +324,16 @@
 	data["maxReleasePressure"] = round(can_max_release_pressure)
 	data["valveOpen"] = valve_open ? 1 : 0
 
+	data["isPrototype"] = prototype ? 1 : 0
+	if (prototype)
+		data["restricted"] = restricted
+		data["timing"] = timing
+		data["time_left"] = get_time_left()
+		data["timer_set"] = timer_set
+		data["timer_is_not_default"] = timer_set != default_timer_set
+		data["timer_is_not_min"] = timer_set != minimum_timer_set
+		data["timer_is_not_max"] = timer_set != maximum_timer_set
+
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
 		data["holdingTank"] = list()
@@ -324,6 +356,13 @@
 						replacement.connected_port.connected_device = replacement
 					replacement.interact(usr)
 					qdel(src)
+		if("restricted")
+			restricted = !restricted
+			if(restricted)
+				req_access = list(access_engine)
+			else
+				req_access = list()
+			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
@@ -375,6 +414,26 @@
 			investigate_log(logmsg, "atmos")
 			release_log += logmsg
 			. = TRUE
+		if("timer")
+			var/change = params["change"]
+			if(change == "reset")
+				timer_set = default_timer_set
+			else if(change == "decrease")
+				timer_set = max(minimum_timer_set, timer_set - 10)
+			else if(change == "increase")
+				timer_set = min(maximum_timer_set, timer_set + 10)
+			else if(change == "input")
+				var/user_input = input(usr, "Set time to valvle toggle.", name) as null|num
+				if(!user_input)
+					return
+				var/N = text2num(user_input)
+				if(!N)
+					return
+				timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+				log_admin("[key_name(usr)] has activated a prototype valve timer")
+			. = TRUE
+		if("toggle_timer")
+			set_active()
 		if("eject")
 			if(holding)
 				if(valve_open)

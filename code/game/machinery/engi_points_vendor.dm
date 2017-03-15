@@ -35,19 +35,21 @@
 		new /datum/GBP_equipment("Forcefield Projector x3",		/obj/item/device/forcefield,								1500,	3),
 		new /datum/GBP_equipment("Powertools x4",			/obj/item/weapon/storage/belt/utility/chief/full,				2000,	4),
 		new /datum/GBP_equipment("Freon Canister",			/obj/machinery/portable_atmospherics/canister/freon,			2500,	1),
+		new /datum/GBP_equipment("BZ Gas Canister",			/obj/machinery/portable_atmospherics/canister/bz,				2500,	1),
 		new /datum/GBP_equipment("Prototype Canister",		/obj/machinery/portable_atmospherics/canister/proto/default,	2500,	1),
-		new /datum/GBP_equipment("Advanced Magboot x3",			/obj/item/clothing/shoes/magboots/advance,					3000,	3),
+		new /datum/GBP_equipment("Rapid Lighting Device x3",	/obj/item/weapon/rcd/arcd,									3000,	3),
 		new /datum/GBP_equipment("Reflector Box x3",			/obj/structure/reflector/box,								3500,	3),
 		new /datum/GBP_equipment("Radiation Collector x3",			/obj/machinery/power/rad_collector,						4000,	3),
-		new /datum/GBP_equipment("Radiant Dance Machine",		/obj/item/clothing/suit/space/hardsuit/ert/engi,			5000,	1),
+		new /datum/GBP_equipment("Advanced Magboot x3",			/obj/item/clothing/shoes/magboots/advance,					5000,	3),
+		new /datum/GBP_equipment("Radiant Dance Machine",		/obj/machinery/disco,										6000,	1),
 		new /datum/GBP_equipment("ERT Hardsuit x5",		/obj/item/clothing/suit/space/hardsuit/ert/engi,					7500,	5),
-		new /datum/GBP_equipment("Ranged RCD x4",			/obj/item/weapon/rcd/arcd,										9000,	4),
+		new /datum/GBP_equipment("Ranged RCD x4",			/obj/item/weapon/rcd/arcd,										8000,	4),
 		new /datum/GBP_equipment("Prototype Atmos Vehicle x2",			/obj/vehicle/space/speedbike/atmos,					10000,	2),
-		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				11000,	5),
+		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				17500,	5),
 		new /datum/GBP_equipment("Prototype Repair Vehicle x3",		/obj/vehicle/space/speedbike/repair,					15000,	3),
 		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,							20000,	5),
 		new /datum/GBP_equipment("Nuclear Construction Device",			/obj/machinery/construction_nuke,					25000,	1),
-		new /datum/GBP_equipment("Engineer's Pinnacle X5",		/obj/vehicle/space/speedbike/memewagon,						30000,	5),
+		new /datum/GBP_equipment("Engineering's Pinnacle x5",		/obj/vehicle/space/speedbike/memewagon,					30000,	5),
 		)
 
 /datum/GBP_equipment
@@ -434,8 +436,8 @@
 
 
 /obj/machinery/disco
-	name = "disco ball"
-	desc = "Funky."
+	name = "Radiant Dance Machine Mark IV"
+	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "disco0"
 	density = TRUE
@@ -444,11 +446,17 @@
 	density = TRUE
 	req_access = list(access_engine)
 	var/active = FALSE
-	var/cooldown = 0
 	var/list/rangers = list()
 	var/list/listeners = list()
+	var/charge = 35
 	var/stop = 0
-	var/song = "beep"
+	var/beat = 7
+	var/duration = 600
+	var/static/list/choices = list("Engineering's Basic Beat", "Engineering's Domination Dance", "Engineering's Superiority Shimmy", "Engineering's Ultimate High-Energy Hustle")
+	var/static/list/paths = list('sound/misc/disco.ogg', 'sound/misc/e1m1.ogg', 'sound/misc/superior.ogg', 'sound/misc/ultimate.ogg')
+	var/static/list/durations = list(600, 950, 1810, 2260) // Make sure the order of the 3 static lists correspond
+	var/song_name = "Engineering's Basic Beat"
+	var/song_path = 'sound/misc/disco.ogg'
 	req_access = list(access_engine)
 	var/list/spotlights = list()
 	var/list/sparkles = list()
@@ -477,7 +485,7 @@
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
 		return
 	if(!allowed(user))
-		user << "<span class='warning'>You stare at the complex interface and are overwhelmed by the raw amount of data being displayed... only an engineer could operate such a sophisticated device.</span>"
+		user << "<span class='warning'>You are overwhelmed by the raw amount of data being displayed, only an engineer could operate such a sophisticated device.</span>"
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 		return
 	if(!Adjacent(user))
@@ -485,11 +493,19 @@
 			return
 	user.set_machine(src)
 	var/list/dat = list()
-	dat += ("<b>Basic Funk</b><br>")
-	dat +="<div class='statusDisplay'>"
-	dat += ("<A href='?src=\ref[src];action=toggle1'>[!active ? "Enable Funk" : "Disable Funk"]</A><br>")
-	dat +="</div ><br>"
-	var/datum/browser/popup = new(user, "vending", "Disco Ball", 400, 350)
+	dat +="<div class='statusDisplay' style='text-align:center'>"
+	dat += "<b><A href='?src=\ref[src];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
+	dat += "</div><br>"
+	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
+	dat += "Track Selected: [song_name]<br>"
+	dat += "Track Length: [round(duration/10)] seconds<br><br>"
+	dat += "<br>DJ's Soundboard:<b><br>"
+	dat +="<div class='statusDisplay'><div style='text-align:center'>"
+	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
+	dat += "<A href='?src=\ref[src];action=alert'>Station Alert</A>  "
+	dat += "<A href='?src=\ref[src];action=siren'>Warning Siren</A>  "
+	dat += "<A href='?src=\ref[src];action=honk'>Honk</A>"
+	var/datum/browser/popup = new(user, "vending", "Radiance Dance Machine - Mark IV", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
 
@@ -499,17 +515,18 @@
 		return
 	add_fingerprint(usr)
 	switch(href_list["action"])
-		if("toggle1")
-			if(!active && !crit_fail)
-				if(cooldown > world.time)
-					to_chat(usr, "<span class='danger'>Error: The device is still resetting from the last activation, it will be ready again in [round((cooldown-world.time)/10)] seconds.</span>")
+		if("toggle")
+			if (!src || QDELETED(src))
+				return
+			if(!active)
+				if(stop > world.time)
+					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [round((stop-world.time)/10)] seconds.</span>")
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 					return
+				beat = 7
 				active = TRUE
 				icon_state = "disco1"
-				lights_on()
-				cooldown = world.time + 1200
-				stop = world.time + 590
+				dance_setup()
 				START_PROCESSING(SSobj, src)
 				lights_spin()
 				src.updateUsrDialog()
@@ -518,19 +535,202 @@
 				STOP_PROCESSING(SSobj, src)
 				icon_state = "disco0"
 				dance_over()
+				stop = world.time + 300
 				src.updateUsrDialog()
+		if("select")
+			if(active)
+				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
+				return
+			song_name = input(usr, "Choose your song", "Track:") as null|anything in choices
+			if (!src || QDELETED(src))
+				return
+			for(var/i in 1 to 4)
+				if(song_name == choices[i])
+					duration = durations[i]
+					song_path = paths[i]
+					break
+			src.updateUsrDialog()
+		if("horn")
+			deejay('sound/items/AirHorn2.ogg')
+		if("alert")
+			deejay('sound/misc/notice1.ogg')
+		if("siren")
+			deejay('sound/machines/engine_alert1.ogg')
+		if("honk")
+			deejay('sound/items/bikehorn.ogg')
 
-/obj/machinery/disco/proc/bless(var/mob/living/carbon/M)
+/obj/machinery/disco/proc/deejay(var/S)
+	if (!src || QDELETED(src) || !active || charge < 5)
+		to_chat(usr, "<span class='warning'>The device is not able to play more DJ sounds at this time.</span>")
+		return
+	charge -= 5
+	playsound(src, S,300,1)
+
+
+/obj/machinery/disco/proc/dance_setup()
+	stop = world.time + duration
+	var/turf/cen = get_turf(src)
+	for(var/turf/t in view(src,3))
+		if(t.x == cen.x && t.y > cen.y)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "red"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
+			spotlights+=L
+			continue
+		if(t.x == cen.x && t.y < cen.y)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "purple"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
+			spotlights+=L
+			continue
+		if(t.x > cen.x && t.y == cen.y)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "#ffff00"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
+			spotlights+=L
+			continue
+		if(t.x < cen.x && t.y == cen.y)
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "green"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1+get_dist(src, L)
+			spotlights+=L
+			continue
+		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "sw"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.4+get_dist(src, L)
+			spotlights+=L
+			continue
+		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2==cen.x && t.y-2 == cen.y))
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "ne"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.4+get_dist(src, L)
+			spotlights+=L
+			continue
+		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "se"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.4+get_dist(src, L)
+			spotlights+=L
+			continue
+		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2==cen.x && t.y-2 == cen.y))
+			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			L.light_color = "nw"
+			L.light_power = 30-(get_dist(src,L)*8)
+			L.range = 1.4+get_dist(src, L)
+			spotlights+=L
+			continue
+		continue
+
+/obj/machinery/disco/proc/hierofunk()
+	for(var/i in 1 to 10)
+		spawn_atom_to_turf(/obj/effect/overlay/temp/hierophant/telegraph/edge, src, 1, FALSE)
+		sleep(5)
+
+/obj/machinery/disco/proc/lights_spin()
+	for(var/i in 1 to 25)
+		if(!src || QDELETED(src) || !active)
+			return
+		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
+		S.alpha = 0
+		sparkles += S
+		switch(i)
+			if(1 to 8)
+				S.orbit(src, 30, TRUE, 60, 36, TRUE, FALSE)
+			if(9 to 16)
+				S.orbit(src, 62, TRUE, 60, 36, TRUE, FALSE)
+			if(17 to 24)
+				S.orbit(src, 95, TRUE, 60, 36, TRUE, FALSE)
+			if(25)
+				S.pixel_y = 7
+				S.loc = get_turf(src)
+		sleep(7)
+	if(song_name == "Engineering's Basic Beat")
+		beat=5
+		for(var/mob/living/M in rangers)
+			Beam(M,icon_state="lightning[rand(1,12)]",time=30)
+			playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 200, 1)
+	if(song_name == "Engineering's Ultimate High-Energy Hustle") // Delaying the big reveal for better timing
+		sleep(125)
+		spawn_atom_to_turf(/obj/effect/overlay/temp/big_explosion, src, 1, FALSE)
+	if(song_name == "Engineering's Superiority Shimmy")
+		beat=5
+		sleep(290)
+		INVOKE_ASYNC(src, .proc/hierofunk)
+	for(var/obj/reveal in sparkles)
+		reveal.alpha = 255
+	while(active)
+		for(var/obj/item/device/flashlight/spotlight/glow in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
+			if(!src || QDELETED(src) || !active || !glow || QDELETED(glow))
+				return
+			if(glow.light_color == "red")
+				glow.light_color = "nw"
+				glow.light_power = round(glow.light_power * 1.48) // Any changes to power must come in pairs to neutralize the effect and ensure it only affects one color
+				glow.light_range = 0
+				glow.update_light()
+				continue
+			if(glow.light_color == "nw")
+				glow.light_color = "green"
+				glow.light_range = glow.range * 1.1
+				glow.light_power = glow.light_power * 2
+				glow.update_light()
+				continue
+			if(glow.light_color == "green")
+				glow.light_color = "sw"
+				glow.light_power = glow.light_power * 0.5
+				glow.light_range = 0
+				glow.update_light()
+				continue
+			if(glow.light_color == "sw")
+				glow.light_color = "purple"
+				glow.light_power = glow.light_power * 2.5
+				glow.light_range = glow.range * 1.3
+				glow.update_light()
+				continue
+			if(glow.light_color == "purple")
+				glow.light_color = "se"
+				glow.light_power = glow.light_power * 0.4
+				glow.light_range = 0
+				glow.update_light()
+				continue
+			if(glow.light_color == "se")
+				glow.light_color = "#ffff00"
+				glow.light_range = glow.range * 0.9
+				glow.update_light()
+				continue
+			if(glow.light_color == "#ffff00")
+				glow.light_color = "ne"
+				glow.light_range = 0
+				glow.update_light()
+				continue
+			if(glow.light_color == "ne")
+				glow.light_color = "red"
+				glow.light_power = glow.light_power * 0.68
+				glow.light_range = glow.range * 0.85
+				glow.update_light()
+				continue
+		if(prob(2))
+			INVOKE_ASYNC(src, .proc/hierofunk)
+		sleep(beat)
+
+/obj/machinery/disco/proc/dance(var/mob/living/carbon/M) //Show your moves
 	switch(rand(0,10))
 		if(0 to 1)
 			set waitfor = 0
-			for(var/i = 1, i < 10, i++)
+			for(var/i = 1, i < 8, i++)
 				M.SpinAnimation(7,1)
 				M.setDir(pick(cardinal))
 				sleep(10)
 		if(2 to 3)
 			set waitfor = 0
-			for(var/i in 1 to 8)
+			for(var/i in 1 to 6)
 				if (!M)
 					return
 				M.SpinAnimation(7,1)
@@ -628,135 +828,6 @@
 			M.pixel_x = 0
 			M.pixel_y = 0
 
-/obj/machinery/disco/proc/lights_on()
-	var/turf/cen = get_turf(src)
-	for(var/turf/t in view(src,3))
-		if(t.x == cen.x && t.y > cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "red"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
-			continue
-		if(t.x == cen.x && t.y < cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "purple"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
-			continue
-		if(t.x > cen.x && t.y == cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "#ffff00"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
-			continue
-		if(t.x < cen.x && t.y == cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "green"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
-			continue
-		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "sw"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.2+get_dist(src, L)
-			spotlights+=L
-			continue
-		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2==cen.x && t.y-2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "ne"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.2+get_dist(src, L)
-			spotlights+=L
-			continue
-		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "se"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.2+get_dist(src, L)
-			spotlights+=L
-			continue
-		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2==cen.x && t.y-2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
-			L.light_color = "nw"
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.2+get_dist(src, L)
-			spotlights+=L
-			continue
-		continue
-
-/obj/machinery/disco/proc/lights_spin()
-	for(var/i in 1 to 24)
-		if(!src || QDELETED(src) || !active)
-			return
-		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
-		S.alpha = 0
-		sparkles += S
-		switch(i)
-			if(1 to 8)
-				S.orbit(src, 30, TRUE, 60, 36, TRUE, FALSE)
-			if(9 to 16)
-				S.orbit(src, 62, TRUE, 60, 36, TRUE, FALSE)
-			if(17 to 24)
-				S.orbit(src, 95, TRUE, 60, 36, TRUE, FALSE)
-		sleep(7)
-	for(var/obj/reveal in sparkles)
-		reveal.alpha = 255
-	while(active)
-		visible_message("<span class='boldannounce'>Change places!</span>")
-		for(var/obj/item/device/flashlight/spotlight/glow in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
-			if(!src || QDELETED(src) || !active || !glow || QDELETED(glow))
-				return
-			if(glow.light_color == "red")
-				glow.light_color = "nw"
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == "nw")
-				glow.light_color = "green"
-				glow.light_range = glow.range * 1.1
-				glow.light_power = glow.light_power * 2.2
-				glow.update_light()
-				continue
-			if(glow.light_color == "green")
-				glow.light_color = "sw"
-				glow.light_power = glow.light_power * 0.5
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == "sw")
-				glow.light_color = "purple"
-				glow.light_power = glow.light_power * 2.2
-				glow.light_range = glow.range * 1.2
-				glow.update_light()
-				continue
-			if(glow.light_color == "purple")
-				glow.light_color = "se"
-				glow.light_power = glow.light_power * 0.5
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == "se")
-				glow.light_color = "#ffff00"
-				glow.light_range = glow.range * 0.8
-				glow.update_light()
-				continue
-			if(glow.light_color == "#ffff00")
-				glow.light_color = "ne"
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == "ne")
-				glow.light_color = "red"
-				glow.light_range = glow.range * 0.8
-				glow.update_light()
-				continue
-		sleep(5)
-
 /obj/machinery/disco/proc/dance_over()
 	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
 		qdel(SL)
@@ -773,15 +844,17 @@
 
 
 /obj/machinery/disco/process()
+	if(charge<35)
+		charge += 1
 	if(world.time < stop && active)
 		rangers = list()
 		for(var/mob/living/M in range(9,src))
 			rangers += M
 			if(!(M in listeners))
-				M << 'sound/misc/disco.ogg'
+				M << song_path
 				listeners += M
-			if(prob(5))
-				bless(M)
+			if(prob(4+(allowed(M)*3)))
+				dance(M)
 		for(var/mob/living/L in listeners)
 			if(!(L in rangers))
 				listeners -= L
@@ -807,6 +880,7 @@
 	icon_state = "singulo"
 	item_state = "yellow"
 	item_color="yellow"
+	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

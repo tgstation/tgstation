@@ -400,6 +400,8 @@
 
 
 /obj/item/device/flashlight/spotlight //invisible lighting source
+	name = "disco lighting"
+	icon_state = "null"
 	light_color = "null"
 	brightness_on = 0
 	light_range = 0
