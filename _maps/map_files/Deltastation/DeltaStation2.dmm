@@ -55426,7 +55426,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "icon-vault (NORTHEAST)";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -61134,7 +61133,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "icon-vault (NORTHEAST)";
 	temperature = 80
 	},
 /area/tcommsat/server)
