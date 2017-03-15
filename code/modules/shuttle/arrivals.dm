@@ -182,4 +182,7 @@
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
-	LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+	if(mode != SHUTTLE_CALL)
+		AnnounceArrival(mob, rank)
+	else
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
