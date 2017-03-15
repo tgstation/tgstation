@@ -12582,6 +12582,7 @@
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
+/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "avW" = (
@@ -87841,6 +87842,10 @@
 	pixel_x = 24;
 	pixel_y = -8
 	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "cUZ" = (
@@ -90673,6 +90678,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "dax" = (
@@ -95582,6 +95588,55 @@
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
+"dlA" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/labor)
+"dlB" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"dlC" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"dlD" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"dlE" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"dlF" = (
+/obj/machinery/light/small,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"dlG" = (
+/obj/machinery/light,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"dlH" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -100486,16 +100541,16 @@ aaa
 aae
 cTV
 dkp
-dks
-dkw
+dkp
+dkp
 dky
 aae
-cTZ
+dkx
 cTJ
-dhm
-dhm
+dkf
+dkf
 cUy
-dhm
+dkf
 dbx
 cUK
 cUO
@@ -100741,11 +100796,11 @@ aaa
 aaa
 aaa
 aae
-dkl
-dkq
-dhm
-dhm
-dhm
+dkf
+dkf
+dkf
+dkf
+dkf
 dkE
 cUk
 cTJ
@@ -100998,16 +101053,16 @@ cTM
 aaa
 aaa
 aae
-dkm
-dhm
-dhm
-dhm
-dhm
+dkf
+dkf
+dkf
+dkf
+dkf
 aae
 cUc
 cTJ
 dkM
-dkX
+dku
 cUA
 aae
 aae
@@ -101263,8 +101318,8 @@ dkz
 aae
 cUl
 cTJ
-dkN
-dkY
+dkM
+dku
 cUE
 aae
 aaa
@@ -101769,16 +101824,16 @@ dke
 cTP
 dkg
 dki
-dkn
-dkr
+dkg
+dkg
 cUg
-dhm
-dhm
-dhm
-dhm
+dkf
+dkf
+dkf
+dkf
 dkI
-dkO
-dkZ
+dkM
+dku
 cTJ
 cUg
 cUK
@@ -102024,18 +102079,18 @@ bPB
 cTJ
 cTN
 dkf
-dkh
-dkj
-dko
-dhm
+dka
+dka
+dka
+dkf
 cTU
-dhm
-dkA
-dkF
-dkH
-dkJ
-dkP
-dla
+dkf
+dka
+dka
+dka
+dka
+dkM
+dku
 cTJ
 cUJ
 cUK
@@ -102277,7 +102332,7 @@ aaa
 aaa
 aPc
 cTG
-dkb
+dka
 cTJ
 aae
 cTQ
@@ -102286,13 +102341,13 @@ dkk
 cTS
 cTS
 cUg
-dhm
-dhm
-dhm
-dhm
+dkf
+dkf
+dkf
+dkf
 dkK
-dkQ
-dlb
+dkM
+dku
 cTJ
 cUg
 cUK
@@ -102800,13 +102855,13 @@ aaa
 aaa
 aae
 dkt
-dhm
+dkf
 dkB
 aae
 cUo
 cTJ
-dkR
-dlc
+dkM
+dku
 cUD
 aae
 aaa
@@ -103057,13 +103112,13 @@ aaa
 aaa
 cTl
 dku
-dhm
-dkC
+dkf
+dkB
 aae
 cUn
 cTJ
-dkS
-dld
+dkM
+dku
 cUC
 aae
 aae
@@ -103314,15 +103369,15 @@ aaa
 aaa
 cTv
 dkv
-dhm
+dkf
 dkD
-dkG
+dke
 cUq
 cTJ
 dkT
 dle
 cUB
-dhm
+dkf
 abd
 cUK
 cUP
@@ -103576,10 +103631,10 @@ aae
 aae
 cUp
 cTJ
-dhm
-dhm
+dkf
+dkf
 dlf
-dhm
+dkf
 dbA
 cUK
 cUO
@@ -103836,7 +103891,7 @@ cTJ
 dkU
 cUj
 dlg
-dlh
+dkK
 abd
 cUK
 cUQ
@@ -105222,7 +105277,7 @@ aWU
 aRA
 aaa
 cVn
-cVv
+dlF
 cVn
 aaa
 aRA
@@ -106249,7 +106304,7 @@ aVu
 bxu
 aRA
 cVn
-cVv
+dlE
 cVv
 cVv
 cVn
@@ -106765,7 +106820,7 @@ aWS
 cVn
 cVv
 cVv
-cVv
+dlG
 cVn
 aWS
 bKU
@@ -110326,7 +110381,7 @@ aaa
 awN
 ayg
 azh
-azh
+dlB
 azi
 aDe
 awN
@@ -110336,7 +110391,7 @@ cUV
 cUV
 cUV
 cUV
-cUV
+dlD
 cUV
 cUV
 cUV
@@ -110846,7 +110901,7 @@ aDg
 awN
 aaa
 cUS
-cUV
+dlC
 cUV
 cUV
 cUV
@@ -118805,7 +118860,7 @@ atJ
 auS
 avV
 auQ
-ayt
+dlA
 ayt
 ayt
 aCi
@@ -119939,7 +119994,7 @@ dlr
 cYO
 cYO
 cYO
-dlu
+dlr
 cZK
 cZe
 cZD
@@ -121998,7 +122053,7 @@ cZi
 cYO
 cZo
 cYF
-cZN
+dlH
 cZN
 cYO
 cZs

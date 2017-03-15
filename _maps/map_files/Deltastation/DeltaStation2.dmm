@@ -214,6 +214,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_1)
 "aaA" = (
@@ -233,6 +236,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_2)
@@ -266,6 +272,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_1)
 "aaF" = (
@@ -283,6 +292,9 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_2)
@@ -27232,7 +27244,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plasteel/white,
 /area/shuttle/pod_3)
 "aXH" = (
 /obj/structure/chair{
@@ -27249,6 +27261,9 @@
 	dir = 2
 	},
 /obj/machinery/light/small,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_3)
 "aXI" = (
@@ -27268,6 +27283,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/pod_3)
