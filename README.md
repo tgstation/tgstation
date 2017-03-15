@@ -1,3 +1,10 @@
+#We've moved!
+###This project is now on [GitLab.](https://gitlab.com/)
+
+###You can now access the /tg/station branch of SS13 at this URL: https://gitlab.com/tgstation/tgstation
+
+----
+
 ##/tg/station v1.0.1
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
