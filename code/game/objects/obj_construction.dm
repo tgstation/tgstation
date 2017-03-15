@@ -286,7 +286,6 @@
 
 /obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
 
-//called after Initialize if the obj was constructed from scratch
 /obj/proc/Construct(mob/user, ndir)
 	if(!current_construction_state || current_construction_state.id == 1)	//already done
 		return
@@ -297,11 +296,13 @@
 			first_step = first_step.next_state
 		if(first_step)
 			first_step.OnReached(src, user, TRUE)
-	if(!ndir)
-		ndir = user.dir
-	setDir(ndir)
-	add_fingerprint(user)
-	feedback_add_details("obj_construction","[type]")
+	if(user)
+		feedback_add_details("obj_construction","[type]")
+		add_fingerprint(user)
+		if(!ndir)
+			ndir = user.dir
+	if(ndir)
+		setDir(ndir)
 
 /obj/proc/Repair(mob/user, obj/item/used, amount)
 	var/old_integrity = obj_integrity
