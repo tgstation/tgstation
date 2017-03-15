@@ -43,8 +43,11 @@ var/global/list/used_voiceprints = list()
 	. = target.default_identity_interact()
 
 /mob/proc/identity_subject_name(atom/A)
+	var/A_faceprint_new = A.get_faceprint()
 	if(A == src)
 		. = real_name
+	else if(!A_faceprint_new)
+		. = A.name
 	else if(mind)
 		var/list/A_identity = mind.identity_cache[A]
 		var/list/A_FP_entry
@@ -67,7 +70,6 @@ var/global/list/used_voiceprints = list()
 		if(A_faceprint && A_faceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
 			A_FP_entry = mind.get_print_entry(A_faceprint, CATEGORY_FACEPRINTS)
 		else if(A.can_see_face())
-			var/A_faceprint_new = A.get_faceprint()
 			if(A_faceprint_new)
 				mind.handle_faceprint_caching(A, A_faceprint_new)
 				A_FP_entry = mind.get_print_entry(A_faceprint_new, CATEGORY_FACEPRINTS)
@@ -220,8 +222,11 @@ var/global/list/used_voiceprints = list()
 			. = "&lt;NO RECORD&gt;"
 
 /mob/living/silicon/identity_subject_name(atom/A)
+	var/faceprint = A.get_faceprint()
 	if(A == src)
 		. = real_name
+	else if(!faceprint)
+		. = A.name
 	else if(mind)
 		var/list/A_identity = mind.identity_cache[A]
 		var/A_name
@@ -235,7 +240,6 @@ var/global/list/used_voiceprints = list()
 		if(A_temp && A_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
 			A_name = A_temp
 		else
-			var/faceprint = A.get_faceprint()
 			var/datum/data/record/G
 			if(faceprint)
 				G = find_record("faceprint", faceprint, data_core.general)

@@ -9,7 +9,7 @@
 #define IDENTITY_EXPIRE_TIME 500
 #define TEMP_IDENTITY_EXPIRE 50
 
-// Magic string used for messages
+// Magic string used for messages, the argument is the index of the subjects list that is selected
 #define IDENTITY_SUBJECT(id) "<@Iden[id]/@"
 
 #define CATEGORY_VOICEPRINTS	1
