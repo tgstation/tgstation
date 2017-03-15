@@ -26,10 +26,9 @@
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = 0 // can you customize the description/name of the thing?
 
-	var/construction_blueprint	//if you change this, you also need to modify the colon accessor in controllers/subsystem/atoms.dm
-	var/blueprint_root_only	= TRUE //If this type must match the type of the construction blueprint
+	var/construction_blueprint	//The type of the construction blueprint datum this object uses, set by the CONSTRUCTION_BLUEPRINT macro
 	var/datum/construction_state/current_construction_state	//The current construction_state of the object, null means fully constructed
-	var/list/stored_construction_items
+	var/list/stored_construction_items	//Items cached inside this object during construction
 
 /obj/Initialize()
 	..()

@@ -69,7 +69,7 @@
 		return
 	pick_sign()
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign)
+CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign, TRUE)
 	return newlist(
 		/datum/construction_state{
 			required_type_to_construct = /obj/item/stack/cable_coil

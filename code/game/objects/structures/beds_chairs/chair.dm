@@ -10,7 +10,6 @@
 	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 25
-	blueprint_root_only = FALSE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
@@ -36,7 +35,7 @@
 	latejoin -= src	//These may be here due to the arrivals shuttle
 	return ..()
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/chair)
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE)
 	. = newlist(
 		/datum/construction_state/first{
 			one_per_turf = 1

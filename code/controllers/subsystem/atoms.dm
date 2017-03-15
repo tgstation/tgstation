@@ -133,7 +133,7 @@ var/datum/controller/subsystem/atoms/SSatoms
 			var/datum/construction_blueprint/CBP = new construction_blueprint_get_type;
 			var/obj/O = I
 
-			if(!((initial(O.blueprint_root_only) && CBP.owner_type == type) || (!initial(O.blueprint_root_only) && istype(type, CBP.owner_type))))
+			if(!((CBP.root_only && CBP.owner_type == type) || (!CBP.root_only && istype(type, CBP.owner_type))))
 				continue
 			var/list/BP = CBP.GetBlueprint(type)
 			if(BP.len)

@@ -417,7 +417,7 @@
 				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
 			to_chat(user, "<span class='notice'>You change the paintjob on the airlock assembly.</span>")
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly)
+CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly, FALSE)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/metal

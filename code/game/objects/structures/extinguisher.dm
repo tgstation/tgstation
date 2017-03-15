@@ -21,7 +21,7 @@
 	pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 	opened = 1
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet)
+CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet, TRUE)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/wallframe/extinguisher_cabinet
@@ -111,7 +111,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet)
 	icon_state = "extinguisher_frame"
 	result_path = /obj/structure/extinguisher_cabinet
 
-CONSTRUCTION_BLUEPRINT(/obj/item/wallframe/extinguisher_cabinet)
+CONSTRUCTION_BLUEPRINT(/obj/item/wallframe/extinguisher_cabinet, TRUE)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/metal

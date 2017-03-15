@@ -154,6 +154,7 @@
 
 /datum/construction_blueprint
 	var/owner_type
+	var/root_only
 
 /datum/construction_blueprint/proc/GetBlueprint(obj/obj_type)
 	return list()
@@ -169,6 +170,7 @@
 			var/datum/construction_blueprint/BP = new construction_blueprint
 			var/temp = -1
 			testing("Creating blueprint for [type]")
+			var/blueprint_root_only = BP.root_only
 			if((blueprint_root_only && BP.owner_type == type) || (!blueprint_root_only && istype(src, BP.owner_type)))
 				temp = BP.GetBlueprint(type)	//get steps for the first time
 				if(!islist(temp))

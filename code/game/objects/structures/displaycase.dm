@@ -10,7 +10,6 @@
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
-	blueprint_root_only = FALSE
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
@@ -48,7 +47,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
+CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase, FALSE)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/mineral/wood

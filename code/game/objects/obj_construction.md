@@ -9,7 +9,7 @@ by Cyberboss
 
 - `/obj/var/datum/construction_state/current_construction_state` - A reference to an obj's current `datum/construction_state`, null means no construction steps defined
 
-- `CONSTRUCTION_BLUEPRINT(<full object path>)` - Called to list out the construction steps of the object path given. This is a proc definition for an internal datum. Should return a list of `datum/construction_state`. See ai_core.dm or barsigns.dm in the structures tree for good examples of its use
+- `CONSTRUCTION_BLUEPRINT(<full object path>, <root_only TRUE/FALSE>)` - Called to list out the construction steps of the object path given.the `root_only` parameter is a bool as to whether or not this consturction blueprint applies to subtypes of the object. This is a proc definition for an internal datum. Should return a list of `datum/construction_state`. See ai_core.dm or barsigns.dm in the structures tree for good examples of its use
 
 - `/obj/proc/OnConstruction(state_id, mob/user, obj/item/used)` - Called when a construction step is completed on an object with the new state id. If `state_id` is zero, the object has been fully constructed and can't be deconstructed.	`used` is the material object if any used for construction and it will be deleted/deducted/stashed at the end of this proc. `user` is always holding `used`.
 
