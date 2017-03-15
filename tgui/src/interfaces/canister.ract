@@ -1,5 +1,5 @@
 <ui-notice>
-  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} is not holding a tank.</span>
+  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a tank.</span>
 </ui-notice>
 <ui-display title='Canister' button>
   {{#partial button}}
