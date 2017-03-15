@@ -771,8 +771,9 @@
 			INVOKE_ASYNC(src, .proc/hierofunk)
 		sleep(selection.song_beat)
 
+
 /obj/machinery/disco/proc/dance(var/mob/living/carbon/M) //Show your moves
-	switch(rand(0,10))
+	switch(rand(0,11))
 		if(0 to 1)
 			set waitfor = 0
 			for(var/i = 1, i < 8, i++)
@@ -838,7 +839,7 @@
 					return 0
 				sleep(delay)
 			M.throw_at(get_edge_target_turf(src,pick(M.dir)), 3,6)
-		if(6 to 7)
+		if(6 to 8)
 			var/speed = rand(1,3)
 			set waitfor = 0
 			var/time = 30
@@ -846,10 +847,10 @@
 				sleep(speed)
 				for(var/i in 1 to speed)
 					M.setDir(pick(cardinal))
-					M.lay_down()
+					M.lay_down(TRUE)
 				 time--
 
-		if(8 to 10)
+		if(9 to 11)
 			M.setDir(get_dir(M, src))
 			spawn (0)
 				if (M)
@@ -857,7 +858,6 @@
 				sleep (70)
 				if (M)
 					animate(M, transform = null, time = 1, loop = 0)
-
 			for (var/i = 0, i < 60, i++)
 				if (!M)
 					return
@@ -904,7 +904,7 @@
 			if(!(M in listeners))
 				M << selection.song_path
 				listeners += M
-			if(prob(4+(allowed(M)*3)))
+			if(prob(4+(allowed(M)*4)))
 				dance(M)
 		for(var/mob/living/L in listeners)
 			if(!(L in rangers))
