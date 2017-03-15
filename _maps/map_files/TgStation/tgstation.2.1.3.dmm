@@ -40165,7 +40165,7 @@
 	d2 = 2
 	},
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
