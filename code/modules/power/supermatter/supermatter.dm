@@ -323,24 +323,24 @@
 
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
-		if((world.time - lastwarning) / 10 >= WARNING_DELAY)
+		if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_DELAY)
 			var/stability = num2text(round((damage / explosion_point) * 100))
 
 			if(damage > emergency_point)
 
 				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
-				lastwarning = world.time
+				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", "supermatter")
 					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 					has_reached_emergency = 1
 			else if(damage >= damage_archived) // The damage is still going up
 				radio.talk_into(src, "[warning_alert] Instability: [stability]%")
-				lastwarning = world.time - 150
+				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
 
 			else                                                 // Phew, we're safe
 				radio.talk_into(src, "[safe_alert] Instability: [stability]%")
-				lastwarning = world.time
+				lastwarning = REALTIMEOFDAY
 
 			if(power > POWER_PENALTY_THRESHOLD)
 				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.")
