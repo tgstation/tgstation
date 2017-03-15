@@ -186,3 +186,9 @@
 		AnnounceArrival(mob, rank)
 	else
 		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+
+/obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
+	if(var_name == "perma_docked")
+		usr << "Use the secret!";
+		return FALSE
+	return ..()
