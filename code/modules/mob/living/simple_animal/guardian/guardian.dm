@@ -50,7 +50,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 
-/mob/living/simple_animal/hostile/guardian/New(loc, theme)
+/mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	parasites |= src
 	setthemename(theme)
 
@@ -659,7 +659,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /obj/item/weapon/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"
 
-/obj/item/weapon/storage/box/syndie_kit/guardian/New()
+/obj/item/weapon/storage/box/syndie_kit/guardian/Initialize()
 	..()
 	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/weapon/paper/guardian(src)

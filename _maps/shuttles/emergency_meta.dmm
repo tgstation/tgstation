@@ -38,7 +38,6 @@
 	dwidth = 5;
 	height = 14;
 	name = "Meta emergency shuttle";
-	timid = 1;
 	width = 25
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -106,6 +105,9 @@
 	pixel_y = 27
 	},
 /obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "at" = (
@@ -191,7 +193,7 @@
 /area/shuttle/escape)
 "au" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -219,6 +221,9 @@
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs{
 	pixel_y = 3
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -356,6 +361,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aT" = (
@@ -363,6 +369,9 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
@@ -414,8 +423,8 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Cargo Bay Airlock"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bc" = (
 /turf/closed/wall/shuttle{
@@ -473,29 +482,32 @@
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/wirecutters,
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bn" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bo" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bp" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bq" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "br" = (
 /turf/closed/wall/shuttle{
@@ -562,10 +574,10 @@
 	pixel_x = 3;
 	pixel_y = -5
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bw" = (
 /obj/item/weapon/cigbutt,
@@ -581,13 +593,17 @@
 "bz" = (
 /obj/structure/table/optable,
 /obj/item/weapon/surgical_drapes,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bA" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bB" = (
 /turf/open/space,
@@ -700,10 +716,10 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bN" = (
 /obj/machinery/space_heater,
@@ -712,8 +728,8 @@
 	pixel_x = 0;
 	pixel_y = -27
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/closet/crate{
@@ -732,8 +748,8 @@
 /obj/item/weapon/crowbar,
 /obj/item/weapon/wrench,
 /obj/item/device/radio,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bP" = (
 /obj/structure/closet/crate/medical{
@@ -753,13 +769,13 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/lazarus_injector,
+/obj/effect/turf_decal/bot,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel,
-/obj/effect/turf_decal/bot,
 /area/shuttle/escape)
 "bQ" = (
 /obj/item/device/radio/intercom{
@@ -769,8 +785,8 @@
 	pixel_y = -31
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bR" = (
 /obj/structure/table,
@@ -778,8 +794,8 @@
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen,
 /obj/item/hand_labeler_refill,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bS" = (
 /obj/machinery/vending/wallmed{
@@ -795,6 +811,145 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bU" = (
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"bV" = (
+/obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bW" = (
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/weapon/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate{
+	name = "lifejackets"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bX" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bY" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bZ" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ca" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"cb" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"cc" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/escape)
+"cd" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 
@@ -873,7 +1028,7 @@ aq
 aQ
 ad
 be
-be
+cc
 be
 be
 bf
@@ -901,10 +1056,10 @@ ay
 aq
 aq
 aq
-aq
+bY
 aq
 aW
-bU
+cb
 ad
 by
 by
@@ -929,11 +1084,11 @@ ad
 (9,1,1) = {"
 ad
 ap
+bX
 aq
 aq
 aq
-aq
-aq
+bZ
 ap
 ad
 bh
@@ -985,14 +1140,14 @@ aq
 aE
 ad
 bi
-bs
+cd
 bs
 bG
 ad
 "}
 (13,1,1) = {"
-ac
-ar
+ad
+bV
 aq
 aE
 ac
@@ -1094,7 +1249,7 @@ aE
 ac
 ar
 aq
-aE
+ca
 ad
 bm
 bv
@@ -1119,7 +1274,7 @@ bN
 ad
 "}
 (21,1,1) = {"
-ac
+ad
 ar
 aq
 aE
@@ -1168,7 +1323,7 @@ ad
 "}
 (24,1,1) = {"
 ad
-at
+bW
 aA
 at
 aq

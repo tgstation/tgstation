@@ -54,6 +54,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "al" = (
@@ -110,6 +113,7 @@
 /obj/structure/table/wood/poker,
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
+/obj/machinery/light,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "au" = (
@@ -174,6 +178,9 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aE" = (
@@ -203,6 +210,10 @@
 	id = "shuttle_flasher";
 	pixel_x = -24;
 	pixel_y = -6
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
@@ -299,12 +310,15 @@
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aX" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /mob/living/simple_animal/drone/snowflake/bardrone,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/vending/boozeomat,
-/turf/open/floor/plasteel/bar,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aZ" = (
 /obj/structure/chair/wood/normal{
@@ -441,6 +455,10 @@
 "bw" = (
 /obj/structure/table/optable,
 /obj/item/weapon/surgical_drapes,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bx" = (
@@ -449,10 +467,16 @@
 	icon_state = "toilet00";
 	tag = "icon-toilet00 (NORTH)"
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "by" = (
 /obj/machinery/recharge_station,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bz" = (
@@ -600,6 +624,42 @@
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
+"bW" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"bX" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"bY" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"bZ" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"ca" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"cb" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -635,13 +695,13 @@ aC
 aH
 aL
 bt
-aE
+bY
 bH
 aZ
 bc
 aZ
 bH
-aE
+bZ
 bt
 bp
 bs
@@ -730,7 +790,7 @@ bt
 aD
 aE
 aE
-aE
+bX
 aE
 aE
 aE
@@ -761,7 +821,7 @@ aN
 aN
 aN
 aE
-aE
+ca
 ae
 bt
 bt
@@ -824,7 +884,7 @@ bt
 bt
 bt
 aG
-bH
+bW
 bI
 aS
 aV
@@ -836,7 +896,7 @@ bT
 bk
 bF
 br
-br
+cb
 bU
 bt
 bt
