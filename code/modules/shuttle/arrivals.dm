@@ -111,11 +111,10 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/A in areas)
-		for(var/mob/living/L in A)
-			//don't dock for braindead'
-			if(L.key && L.client && L.stat != DEAD)
-				return TRUE
+	for(var/M in (living_mob_list & player_list))
+		var/mob/living/L = M
+		if((get_area(M) in areas) && L.stat != DEAD)
+			return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()

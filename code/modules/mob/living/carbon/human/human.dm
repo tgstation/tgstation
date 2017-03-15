@@ -11,7 +11,11 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-
+/mob/living/carbon/human/dummy/New(loc)
+	..()
+	if(!initialized)
+		args[1] = FALSE
+		Initialize(arglist(args))
 
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
