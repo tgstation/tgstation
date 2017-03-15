@@ -136,21 +136,20 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 				return
 
 
-/mob/living/simple_animal/hostile/swarmer/ai/Move(atom/newloc)
-	if(newloc)
-		if(newloc.z == z) //so these actions are Z-specific
-			if(istype(newloc, /turf/open/floor/plating/lava))
-				var/turf/open/floor/plating/lava/L = newloc
-				if(!L.is_safe())
-					StartAction(20)
-					new /obj/structure/lattice/catwalk/swarmer_catwalk(newloc)
-					return FALSE
+/mob/living/simple_animal/hostile/swarmer/ai/Move(atom/NewLoc, Dir = 0)
+	if(NewLoc && NewLoc.z == z) //so these actions are Z-specific
+		if(istype(NewLoc, /turf/open/floor/plating/lava))
+			var/turf/open/floor/plating/lava/L = NewLoc
+			if(!L.is_safe())
+				StartAction(20)
+				new /obj/structure/lattice/catwalk/swarmer_catwalk(NewLoc)
+				return 0
 
-			if(istype(newloc, /turf/open/chasm) && !throwing)
-				throw_at(get_edge_target_turf(src, get_dir(src, newloc)), 7 , 3, spin = FALSE) //my planet needs me
-				return FALSE
+		if(istype(NewLoc, /turf/open/chasm) && !throwing)
+			throw_at(get_edge_target_turf(src, get_dir(src, NewLoc)), 7 , 3, spin = FALSE) //my planet needs me
+			return 0
 
-		return ..()
+	return ..()
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = 0)

@@ -57,6 +57,11 @@
 #define LETPASSTHROW	32
 
 
+//flags for moving_flags
+#define KEEP_DIRECTION 1 //Don't change dir when moving
+#define FIRST_DIAG_STEP 2
+#define SECOND_DIAG_STEP 4
+
 //Movement Types
 #define IMMOBILE 0
 #define GROUND 1

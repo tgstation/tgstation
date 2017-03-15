@@ -540,8 +540,8 @@
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
-/mob/living/simple_animal/Moved()
-	. = ..()
+/mob/living/simple_animal/Moved(atom/OldLoc)
+	..()
 	if(riding_datum)
 		riding_datum.on_vehicle_move()
 

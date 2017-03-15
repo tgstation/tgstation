@@ -178,10 +178,10 @@
 
 
 
-/obj/machinery/light/Move()
+/obj/machinery/light/Moved(atom/OldLoc)
+	..()
 	if(status != LIGHT_BROKEN)
 		break_light_tube(1)
-	return ..()
 
 /obj/machinery/light/built/New()
 	status = LIGHT_EMPTY

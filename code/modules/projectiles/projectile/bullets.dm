@@ -127,7 +127,7 @@
 	name = "incendiary slug"
 	damage = 20
 
-/obj/item/projectile/bullet/incendiary/shell/Move()
+/obj/item/projectile/bullet/incendiary/shell/Moved(atom/OldLoc)
 	..()
 	var/turf/location = get_turf(src)
 	if(location)
@@ -334,7 +334,7 @@
 	damage = 7
 	armour_penetration = 0
 
-/obj/item/projectile/bullet/saw/incen/Move()
+/obj/item/projectile/bullet/saw/incen/Moved(atom/OldLoc)
 	..()
 	var/turf/location = get_turf(src)
 	if(location)

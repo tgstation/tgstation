@@ -206,11 +206,6 @@
 	air_update_turf(1)
 	return ..()
 
-/obj/structure/foamedmetal/Move()
-	var/turf/T = loc
-	..()
-	move_update_air(T)
-
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
 

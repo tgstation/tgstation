@@ -20,10 +20,10 @@
 /obj/item/target/proc/removeOverlays()
 	cut_overlays()
 
-/obj/item/target/Move()
+/obj/item/target/Moved(atom/OldLoc)
 	..()
 	if(pinnedLoc)
-		pinnedLoc.loc = loc
+		pinnedLoc.forceMove(loc)
 
 /obj/item/target/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool))

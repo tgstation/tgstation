@@ -30,7 +30,7 @@
 			var/obj/machinery/holopad/H = ai.current
 			H.move_hologram(ai)
 
-/mob/camera/aiEye/Move()
+/mob/camera/aiEye/Move(atom/NewLoc, Dir = 0)
 	return 0
 
 /mob/camera/aiEye/proc/GetViewerClient()

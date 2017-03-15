@@ -310,10 +310,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define DEFIB_TIME_LIMIT 120
 #define DEFIB_TIME_LOSS 60
 
-// Diagonal movement
-#define FIRST_DIAG_STEP 1
-#define SECOND_DIAG_STEP 2
-
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
 #define DEADCHAT_REGULAR "regular-deadchat"

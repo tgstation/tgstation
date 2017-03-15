@@ -449,10 +449,9 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
-/obj/mecha/Move(atom/newloc, direct)
-	. = ..()
-	if(.)
-		events.fireEvent("onMove",get_turf(src))
+/obj/mecha/Moved(atom/OldLoc)
+	..()
+	events.fireEvent("onMove", get_turf(src))
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()

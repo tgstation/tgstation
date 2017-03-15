@@ -244,8 +244,8 @@
 	GM.temperature = T20C
 	return GM
 
-/obj/effect/chrono_field/Move()
-	return
+/obj/effect/chrono_field/Move(atom/NewLoc, Dir = 0)
+	return 0
 
 /obj/effect/chrono_field/singularity_act()
 	return

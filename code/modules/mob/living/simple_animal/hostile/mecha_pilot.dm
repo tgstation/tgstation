@@ -281,11 +281,11 @@
 	..()
 
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/Move(atom/NewLoc, Dir=0, step_x=0, step_y=0)
 	if(mecha && loc == mecha)
 		mecha.relaymove(src, Dir)
 		return
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)

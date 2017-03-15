@@ -75,7 +75,8 @@
 		return 0
 	..()
 
-/obj/machinery/field/containment/Move()
+/obj/machinery/field/containment/Moved(atom/OldLoc)
+	..()
 	qdel(src)
 
 

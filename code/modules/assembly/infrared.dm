@@ -4,6 +4,7 @@
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
 	origin_tech = "magnets=2;materials=2"
+	moving_flags = KEEP_DIRECTION
 
 	var/on = 0
 	var/visible = 0
@@ -82,12 +83,9 @@
 	..()
 	return
 
-/obj/item/device/assembly/infra/Move()
-	var/t = dir
+/obj/item/device/assembly/infra/Moved(atom/OldLoc)
 	..()
-	setDir(t)
 	qdel(first)
-	return
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)

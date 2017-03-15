@@ -30,10 +30,11 @@
 	var/turf/start_turf
 	notify = FALSE
 
-/obj/effect/immovablerod/wizard/Move()
+/obj/effect/immovablerod/wizard/Move(atom/NewLoc, Dir = 0)
 	if(get_dist(start_turf, get_turf(src)) >= max_distance)
 		qdel(src)
-	..()
+		return 0
+	return ..()
 
 /obj/effect/immovablerod/wizard/Destroy()
 	if(wizard)

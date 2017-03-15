@@ -21,11 +21,6 @@
 	air_update_turf(1)
 	return ..()
 
-/obj/structure/emergency_shield/Move()
-	var/turf/T = loc
-	..()
-	move_update_air(T)
-
 /obj/structure/emergency_shield/CanPass(atom/movable/mover, turf/target, height)
 	if(!height) return 0
 	else return ..()

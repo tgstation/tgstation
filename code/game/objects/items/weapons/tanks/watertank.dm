@@ -138,10 +138,9 @@
 	else
 		return 1
 
-/obj/item/weapon/reagent_containers/spray/mister/Move()
-	..()
-	if(loc != tank.loc)
-		loc = tank.loc
+/obj/item/weapon/reagent_containers/spray/mister/Move(atom/NewLoc, Dir = 0)
+	NewLoc = tank.loc
+	. = ..()
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
@@ -229,11 +228,10 @@
 		loc = tank
 
 
-/obj/item/weapon/extinguisher/mini/nozzle/Move()
-	..()
-	if(loc != tank.loc)
-		loc = tank
-	return
+/obj/item/weapon/extinguisher/mini/nozzle/Move(atom/NewLoc, direct = 0)
+	if(NewLoc != tank.loc)
+		NewLoc = tank
+	. = ..()
 
 /obj/item/weapon/extinguisher/mini/nozzle/attack_self(mob/user)
 	switch(nozzle_mode)

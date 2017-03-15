@@ -57,8 +57,8 @@
 		riding_datum.handle_ride(user, direction)
 
 
-/obj/vehicle/Moved()
-	. = ..()
+/obj/vehicle/Moved(atom/OldLoc)
+	..()
 	if(riding_datum)
 		riding_datum.handle_vehicle_layer()
 		riding_datum.handle_vehicle_offsets()

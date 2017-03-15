@@ -17,6 +17,7 @@
 	anchored = 0
 	density = 0
 	dir = NORTH
+	moving_flags = KEEP_DIRECTION
 
 	var/ini_dir
 	var/obj/item/weapon/electronics/airlock/electronics = null
@@ -43,12 +44,6 @@
 	density = 0
 	air_update_turf(1)
 	return ..()
-
-/obj/structure/windoor_assembly/Move()
-	var/turf/T = loc
-	..()
-	setDir(ini_dir)
-	move_update_air(T)
 
 /obj/structure/windoor_assembly/update_icon()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"

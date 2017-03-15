@@ -597,14 +597,11 @@
 		cameranet.updatePortableCamera(src.camera)
 	updating = 0
 
-/mob/living/silicon/robot/Move(a, b, flag)
-	var/oldLoc = src.loc
-	. = ..()
-	if(.)
-		if(src.camera)
-			if(!updating)
-				updating = 1
-				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
+/mob/living/silicon/robot/Moved(atom/OldLoc)
+	..()
+	if(camera && !updating)
+		updating = TRUE
+		addtimer(CALLBACK(src, .proc/do_camera_update, OldLoc), BORG_CAMERA_BUFFER)
 	if(module)
 		if(istype(module, /obj/item/weapon/robot_module/janitor))
 			var/turf/tile = loc

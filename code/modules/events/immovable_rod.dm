@@ -61,9 +61,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	poi_list -= src
 	. = ..()
 
-/obj/effect/immovablerod/Move()
-	if((z != z_original) || (loc == destination))
+/obj/effect/immovablerod/Move(atom/NewLoc, Dir = 0)
+	if((NewLoc && NewLoc.z != z_original) || (loc == destination))
 		qdel(src)
+		return 0
 	return ..()
 
 /obj/effect/immovablerod/ex_act(severity, target)

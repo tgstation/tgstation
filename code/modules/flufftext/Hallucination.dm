@@ -102,7 +102,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	py = new_py
 	Show()
 
-/obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
+/obj/effect/hallucination/simple/Moved(atom/OldLoc)
+	..()
 	Show()
 
 /obj/effect/hallucination/simple/Destroy()

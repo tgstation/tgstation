@@ -38,10 +38,10 @@
 /mob/living/simple_animal/hostile/guardian/charger/proc/charging_end()
 	charging = 0
 
-/mob/living/simple_animal/hostile/guardian/charger/Move()
+/mob/living/simple_animal/hostile/guardian/charger/Moved(atom/OldLoc)
 	if(charging)
-		new /obj/effect/overlay/temp/decoy/fading(loc,src)
-	. = ..()
+		new /obj/effect/overlay/temp/decoy/fading(OldLoc, src)
+	..()
 
 /mob/living/simple_animal/hostile/guardian/charger/snapback()
 	if(!charging)

@@ -41,6 +41,12 @@
 		canmove = 0
 	return canmove
 
+/mob/living/brain/forceMove(atom/destination)
+	if(container)
+		return container.forceMove(destination)
+	else //something went very wrong.
+		CRASH("Brainmob without container.")
+
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
 

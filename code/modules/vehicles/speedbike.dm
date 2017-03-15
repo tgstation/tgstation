@@ -27,10 +27,10 @@
 	..()
 	setDir(move_dir)
 
-/obj/vehicle/space/speedbike/Move(newloc,move_dir)
+/obj/vehicle/space/speedbike/Moved(atom/OldLoc)
+	..()
 	if(has_buckled_mobs())
-		new /obj/effect/overlay/temp/speedbike_trail(loc,move_dir)
-	. = ..()
+		new /obj/effect/overlay/temp/speedbike_trail(OldLoc, dir)
 
 /obj/vehicle/space/speedbike/red
 	icon_state = "speedbike_red"

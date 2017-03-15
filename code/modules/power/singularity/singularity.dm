@@ -49,12 +49,12 @@
 	singularities.Remove(src)
 	return ..()
 
-/obj/singularity/Move(atom/newloc, direct)
-	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
+/obj/singularity/Move(atom/NewLoc, Dir)
+	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()
 	else
-		last_failed_movement = direct
+		last_failed_movement = Dir
 		return 0
 
 

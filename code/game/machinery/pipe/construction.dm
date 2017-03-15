@@ -19,6 +19,7 @@ Buildable meters
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
+	moving_flags = KEEP_DIRECTION
 	var/flipped = 0
 	var/is_bent = 0
 
@@ -179,11 +180,6 @@ var/global/list/pipeID2State = list(
 		return
 	else
 		rotate()
-
-/obj/item/pipe/Move()
-	var/old_dir = dir
-	..()
-	setDir(old_dir )//pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
 	if(direction in diagonals)

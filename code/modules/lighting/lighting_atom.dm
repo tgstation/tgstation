@@ -85,8 +85,8 @@
 			T.reconsider_lights()
 
 
-/atom/movable/Moved(atom/OldLoc, Dir)
-	. = ..()
+/atom/movable/Moved(atom/OldLoc)
+	..()
 	for (var/datum/light_source/L in light_sources) // Cycle through the light sources on this atom and tell them to update.
 		L.source_atom.update_light()
 

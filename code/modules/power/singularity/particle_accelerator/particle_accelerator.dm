@@ -152,7 +152,7 @@
 		new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/structure/particle_accelerator/Move()
+/obj/structure/particle_accelerator/Moved(atom/OldLoc)
 	..()
 	if(master && master.active)
 		master.toggle_power()
