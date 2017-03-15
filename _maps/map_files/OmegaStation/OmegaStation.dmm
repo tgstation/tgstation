@@ -26919,8 +26919,14 @@
 	},
 /area/tcommsat/server)
 "aQG" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "aQH" = (
@@ -26929,9 +26935,16 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
+/obj/machinery/door/airlock/command{
+	cyclelinkeddir = 2;
+	name = "Telecoms Server Room";
+	req_access = null;
+	req_access_txt = "61"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel/grimy,
 /area/tcommsat/server)
 "aQI" = (
 /obj/machinery/light{
@@ -27351,18 +27364,12 @@
 	},
 /area/maintenance/starboard)
 "aRB" = (
-/obj/machinery/telecomms/bus/preset_one/birdstation,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Telecoms Server Room APC";
-	pixel_x = -26;
-	pixel_y = 0
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aRC" = (
 /obj/structure/cable{
@@ -27376,19 +27383,31 @@
 	},
 /area/tcommsat/server)
 "aRD" = (
-/obj/machinery/blackbox_recorder,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/open/floor/circuit/green,
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
 /area/tcommsat/server)
 "aRE" = (
-/obj/machinery/telecomms/broadcaster/preset_left/birdstation,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 2;
+	min_temperature = 80;
+	on = 1;
+	target_temperature = 80
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "aRF" = (
@@ -28006,18 +28025,32 @@
 /turf/open/floor/circuit/green,
 /area/tcommsat/server)
 "aSM" = (
-/obj/machinery/telecomms/hub/preset,
-/turf/open/floor/circuit/green,
+/obj/machinery/door/airlock/command{
+	cyclelinkeddir = 2;
+	name = "Telecoms Server Room";
+	req_access = null;
+	req_access_txt = "61"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
 /area/tcommsat/server)
 "aSN" = (
-/obj/machinery/announcement_system,
-/obj/machinery/ai_status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/plating,
 /area/tcommsat/server)
 "aSO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -28658,23 +28691,46 @@
 /turf/open/floor/wood,
 /area/maintenance/starboard)
 "aTX" = (
-/obj/machinery/telecomms/receiver/preset_left/birdstation,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
+/obj/machinery/light{
+	dir = 8
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
 /area/tcommsat/server)
 "aTY" = (
-/obj/machinery/message_server,
-/turf/open/floor/circuit/green,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
 /area/tcommsat/server)
 "aTZ" = (
-/obj/machinery/telecomms/processor/preset_one/birdstation,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "aUa" = (
@@ -29063,19 +29119,32 @@
 	},
 /area/maintenance/starboard)
 "aUO" = (
-/obj/machinery/status_display{
-	pixel_y = -32
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 7
 	},
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "aUP" = (
-/obj/machinery/ntnet_relay,
-/turf/open/floor/plasteel/vault{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
-	dir = 8
+/obj/machinery/blackbox_recorder,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/circuit/green{
+	initial_gas_mix = "n2=100;TEMP=80";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "aUQ" = (
@@ -38836,13 +38905,11 @@
 /turf/open/floor/plasteel/purple/corner,
 /area/hallway/primary/central)
 "blq" = (
-/obj/machinery/camera{
-	c_tag = "Communications Relay";
-	dir = 8;
-	network = list("MINE")
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
+/obj/machinery/telecomms/broadcaster/preset_left/birdstation,
+/turf/open/floor/circuit{
+	initial_gas_mix = "n2=100;TEMP=80";
+	name = "Mainframe Base";
+	temperature = 80
 	},
 /area/tcommsat/server)
 "blr" = (
@@ -41710,6 +41777,177 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/arrival)
+"buC" = (
+/turf/open/floor/plasteel/grimy,
+/area/tcommsat/server)
+"buD" = (
+/turf/open/floor/plasteel/grimy,
+/area/tcommsat/server)
+"buE" = (
+/turf/open/floor/plasteel/grimy,
+/area/tcommsat/server)
+"buF" = (
+/turf/open/floor/plasteel/grimy,
+/area/tcommsat/server)
+"buG" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buH" = (
+/obj/machinery/telecomms/bus/preset_one/birdstation,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Telecoms Server Room APC";
+	pixel_x = -26;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/circuit/green{
+	initial_gas_mix = "n2=100;TEMP=80";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buI" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 7
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buJ" = (
+/obj/machinery/telecomms/server/presets/common/birdstation,
+/turf/open/floor/circuit/green{
+	initial_gas_mix = "n2=100;TEMP=80";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buL" = (
+/obj/machinery/telecomms/hub/preset,
+/turf/open/floor/circuit/green{
+	initial_gas_mix = "n2=100;TEMP=80";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buN" = (
+/obj/machinery/announcement_system,
+/obj/machinery/ai_status_display{
+	pixel_x = 32
+	},
+/turf/open/floor/circuit{
+	initial_gas_mix = "n2=100;TEMP=80";
+	name = "Mainframe Base";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buO" = (
+/obj/machinery/telecomms/receiver/preset_left/birdstation,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = 0
+	},
+/turf/open/floor/circuit/green{
+	initial_gas_mix = "n2=100;TEMP=80";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buP" = (
+/obj/machinery/message_server,
+/turf/open/floor/circuit/green{
+	initial_gas_mix = "n2=100;TEMP=80";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buQ" = (
+/obj/machinery/telecomms/processor/preset_one/birdstation,
+/turf/open/floor/circuit{
+	initial_gas_mix = "n2=100;TEMP=80";
+	name = "Mainframe Base";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buR" = (
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buS" = (
+/obj/machinery/ntnet_relay,
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buT" = (
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"buU" = (
+/obj/machinery/camera{
+	c_tag = "Communications Relay";
+	dir = 8;
+	network = list("MINE")
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5;
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "";
+	temperature = 80
+	},
+/area/tcommsat/server)
 
 (1,1,1) = {"
 aaa
@@ -69853,12 +70091,12 @@ aMJ
 aMJ
 aMJ
 aMJ
+aMJ
+aMJ
+aMJ
 abP
 aad
 aad
-aad
-aad
-aac
 aaa
 aaa
 aaa
@@ -70103,19 +70341,19 @@ aLG
 aMJ
 aNT
 aOv
+buC
 aPG
-aQF
 aRB
-aSL
+aPG
 aTX
-aQG
+buH
+buJ
+buO
+aRB
 aMJ
 acG
 ahu
 aad
-aad
-aad
-aac
 aac
 aaa
 aaa
@@ -70360,18 +70598,18 @@ aLH
 aMK
 aNU
 aOw
+buD
+aPG
+aRB
 aPG
 aQG
-aRC
-aQG
-aQG
 aUO
+buK
+aRB
+buR
 aMJ
 afM
 afL
-aad
-aad
-aad
 aad
 aac
 aaa
@@ -70617,17 +70855,17 @@ aLI
 aML
 aNV
 aNV
-aPH
+aNV
 aQH
 aRD
 aSM
 aTY
 aUP
+buL
+buP
+buS
 aMJ
 afM
-aad
-aad
-aad
 aad
 aad
 aad
@@ -70874,16 +71112,16 @@ aLJ
 aMM
 aNW
 aOx
+buE
 aPG
-aQG
-aQG
-aQG
-aQG
-aUO
+aRB
+aPG
+buG
+buI
+buM
+aRB
+buT
 aMJ
-aad
-aad
-aad
 aad
 aad
 aad
@@ -71131,18 +71369,18 @@ aLK
 aMJ
 aNX
 aOy
+buF
 aPG
-aQI
 aRE
 aSN
 aTZ
 blq
+buN
+buQ
+buU
 aMJ
 agE
 afL
-aad
-aad
-aad
 aad
 aaa
 aaa
@@ -71391,6 +71629,9 @@ aMN
 aMN
 aMN
 aMN
+aMN
+aMN
+aMN
 aSO
 aMJ
 aMJ
@@ -71398,9 +71639,6 @@ aMJ
 abi
 ahu
 ahu
-aad
-aad
-aad
 aac
 aaa
 aaa
