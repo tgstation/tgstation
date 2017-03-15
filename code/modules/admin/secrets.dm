@@ -6,6 +6,7 @@
 	dat +={"
 			<B>General Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secrets=spawnselfdummy'>Spawn yourself as a Test Dummy</A><BR>
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
@@ -93,6 +94,8 @@
 	var/datum/round_event/E
 	var/ok = 0
 	switch(item)
+		if("spawnselfdummy")
+			spawntestdummy(usr)
 		if("admin_log")
 			var/dat = "<B>Admin Log<HR></B>"
 			for(var/l in admin_log)
