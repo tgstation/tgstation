@@ -470,10 +470,10 @@
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 	var/static/list/songs = list(
-		new /datum/track("Engineering's Basic Beat", 				'sound/misc/disco.ogg', 	600, 	5),
-		new /datum/track("Engineering's Domination Dance", 			'sound/misc/e1m1.ogg', 		950, 	5),
-		new /datum/track("Engineering's Superiority Shimmy", 		'sound/misc/superior.ogg', 	1810, 	5),
-		new /datum/track("Engineering's Ultimate High-Energy Hustle",'sound/misc/disco.ogg', 	2260, 	7),
+		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
+		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	5),
+		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/superior.ogg', 	1810, 	5),
+		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/ultimate.ogg',	2260, 	7),
 		)
 	var/datum/track/selection = null
 
@@ -705,6 +705,7 @@
 				S.loc = get_turf(src)
 		sleep(7)
 	if(selection.song_name == "Engineering's Basic Beat")
+		sleep(20)
 		for(var/mob/living/M in rangers)
 			Beam(M,icon_state="lightning[rand(1,12)]",time=30)
 			playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 200, 1)
@@ -740,13 +741,13 @@
 				continue
 			if(glow.light_color == "sw")
 				glow.light_color = "purple"
-				glow.light_power = glow.light_power * 2
-				glow.light_range = glow.range * 1.2
+				glow.light_power = glow.light_power * 2.27
+				glow.light_range = glow.range * 1.15
 				glow.update_light()
 				continue
 			if(glow.light_color == "purple")
 				glow.light_color = "se"
-				glow.light_power = glow.light_power * 0.5
+				glow.light_power = glow.light_power * 0.44
 				glow.light_range = 0
 				glow.update_light()
 				continue
