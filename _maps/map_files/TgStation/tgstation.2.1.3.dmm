@@ -2964,7 +2964,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3458,7 +3457,6 @@
 /area/security/brig)
 "aht" = (
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (WEST)";
 	dir = 8
 	},
 /area/security/brig)
@@ -17605,7 +17603,6 @@
 /area/crew_quarters/theatre)
 "aMq" = (
 /obj/structure/piano{
-	tag = "icon-piano";
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
@@ -20177,7 +20174,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21241,7 +21237,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21622,7 +21617,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/storage/art)
@@ -21633,7 +21627,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -21661,7 +21654,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
-	tag = ""
 	},
 /turf/open/floor/plating,
 /area/storage/emergency2)
@@ -26286,7 +26278,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -26833,12 +26824,10 @@
 /area/quartermaster/office)
 "biG" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/structure/cable{
-	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -26891,7 +26880,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (NORTH)";
 	icon_state = "whiteredcorner";
 	dir = 1
 	},
@@ -28248,7 +28236,6 @@
 "blu" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable{
-	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel,
@@ -52677,7 +52664,6 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
 	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -54104,7 +54090,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -55180,7 +55165,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -57024,7 +57008,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/effect/landmark/start{
 	name = "Cyborg"
@@ -57313,9 +57296,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-warnplatecorner"
-	},
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS{
 	name = "AI Satellite Atmospherics"
 	})
@@ -57776,7 +57757,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -57846,7 +57826,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/AIsatextFP{
@@ -58865,7 +58844,6 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
 	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -60190,7 +60168,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60220,7 +60197,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60305,7 +60281,6 @@
 	dir = 4;
 	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -60314,7 +60289,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = "90Curve"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60329,7 +60303,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60338,7 +60311,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -61529,7 +61501,6 @@
 "cDk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -61637,7 +61608,6 @@
 "cDv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
-	tag = "icon-filter_off_f (EAST)";
 	icon_state = "filter_off_f";
 	dir = 4
 	},
@@ -61703,7 +61673,6 @@
 /area/engine/engineering)
 "cDD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	tag = "icon-manifold (EAST)";
 	name = "scrubbers pipe";
 	icon_state = "manifold";
 	dir = 4
@@ -62140,7 +62109,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62334,7 +62302,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62482,7 +62449,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
-	tag = ""
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -62805,7 +62771,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -63205,7 +63170,6 @@
 	dir = 4;
 	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63226,7 +63190,6 @@
 	dir = 8;
 	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63264,7 +63227,6 @@
 	anchored = 1;
 	dir = 1;
 	icon_state = "reflector";
-	tag = "icon-reflector (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63273,7 +63235,6 @@
 	anchored = 1;
 	dir = 4;
 	icon_state = "reflector";
-	tag = "icon-reflector (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63430,7 +63391,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -63495,7 +63455,6 @@
 /area/assembly/robotics)
 "cHL" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},

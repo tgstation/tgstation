@@ -17420,14 +17420,12 @@
 	icon_state = "2-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aEq" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -17441,7 +17439,6 @@
 /area/engine/engineering)
 "aEr" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -18207,7 +18204,6 @@
 "aFD" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/structure/cable/white{
-	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -21115,7 +21111,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -21803,7 +21798,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -25895,14 +25889,12 @@
 	dir = 10
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aTK" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -25912,7 +25904,6 @@
 /area/engine/engineering)
 "aTM" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -25922,7 +25913,6 @@
 /area/engine/engineering)
 "aTN" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -30737,7 +30727,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -56065,7 +56054,6 @@
 /area/maintenance/portsolar)
 "bTq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	tag = "icon-intact (SOUTHWEST)";
 	icon_state = "intact";
 	dir = 10
 	},
@@ -83788,7 +83776,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = "90Curve"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboardsolar)
@@ -89154,7 +89141,6 @@
 /area/shuttle/abandoned)
 "cXz" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -90945,7 +90931,6 @@
 "dbh" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -91213,7 +91198,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /turf/open/space,
 /area/solar/starboard)
@@ -91239,10 +91223,8 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/structure/cable{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /turf/open/space,
@@ -91300,7 +91282,6 @@
 "dbT" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
 /turf/open/space,
@@ -91319,7 +91300,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = "90Curve"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -91339,7 +91319,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = "90Curve"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -91542,7 +91521,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = "90Curve"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -92561,14 +92539,12 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dei" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92578,7 +92554,6 @@
 /area/engine/engineering)
 "dej" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92595,7 +92570,6 @@
 	name = "Mix to Gas"
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92605,7 +92579,6 @@
 /area/engine/engineering)
 "del" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92623,7 +92596,6 @@
 	name = "Gas to Mix"
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92685,7 +92657,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -92705,7 +92676,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
-	tag = ""
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -92717,7 +92687,6 @@
 	initialize_directions = 10
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -92728,7 +92697,6 @@
 "dev" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92739,7 +92707,6 @@
 "dew" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass_engineering{
@@ -92750,25 +92717,21 @@
 /area/engine/engineering)
 "dex" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dey" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "deA" = (
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -92917,7 +92880,6 @@
 	anchored = 1;
 	dir = 1;
 	icon_state = "reflector";
-	tag = "icon-reflector (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -92968,7 +92930,6 @@
 	anchored = 1;
 	dir = 1;
 	icon_state = "reflector_double";
-	tag = "icon-reflector_double (NORTH)"
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -92977,7 +92938,6 @@
 	anchored = 1;
 	dir = 8;
 	icon_state = "reflector";
-	tag = "icon-reflector (WEST)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -93066,14 +93026,12 @@
 /area/engine/engineering)
 "dfA" = (
 /obj/structure/cable/white{
-	tag = "icon-0-2";
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfB" = (
 /obj/structure/cable/white{
-	tag = "icon-0-2";
 	icon_state = "0-2"
 	},
 /obj/machinery/power/emitter{
@@ -93085,7 +93043,6 @@
 /area/engine/engineering)
 "dfC" = (
 /obj/structure/cable/white{
-	tag = "icon-0-2";
 	icon_state = "0-2"
 	},
 /obj/machinery/power/emitter{
@@ -93175,7 +93132,6 @@
 	name = "Cooling Loop Bypass"
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-4";
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -93193,7 +93149,6 @@
 	initialize_directions = 10
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -93203,25 +93158,21 @@
 /area/engine/engineering)
 "dfM" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfO" = (
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfP" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -93233,7 +93184,6 @@
 /area/engine/engineering)
 "dfQ" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -93252,7 +93202,6 @@
 	name = "Gas to Cold Loop"
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -93260,7 +93209,6 @@
 /area/engine/engineering)
 "dfS" = (
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/line,
