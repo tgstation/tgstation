@@ -175,7 +175,7 @@
 					WARNING("Invalid construction_blueprint for [type]!")
 					temp = -1
 			else
-				testing("Aborted: [blueprint_root_only]")
+				testing("Skipping, BPRO: [blueprint_root_only ? "TRUE" : "FALSE"]")
 			if(temp != -1)
 				LinkConstructionSteps(temp)	//assign ids and stitch the linked list together
 				if(ValidateConstructionSteps(temp))

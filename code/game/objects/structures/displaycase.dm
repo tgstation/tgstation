@@ -10,6 +10,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
+	blueprint_root_only = FALSE
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
