@@ -76,14 +76,15 @@
 			playsound(parent, construction_sound, CONSTRUCTION_VOLUME, TRUE)
 		parent.OnConstruction(id, user, tool)	//run event
 		var/obj/item/stack/S = tool
-		if(istype(S))
-			S.use(required_amount_to_construct)
-		else if(stash_construction_item)
-			user.transferItemToLoc(tool, parent)
-			LAZYINITLIST(parent.stored_construction_items)
-			parent.stored_construction_items["[id]"] = parent
-		else
-			qdel(tool)
+		if(required_amount_to_construct)
+			if(istype(S))
+				S.use(required_amount_to_construct)
+			else if(stash_construction_item)
+				user.transferItemToLoc(tool, parent)
+				LAZYINITLIST(parent.stored_construction_items)
+				parent.stored_construction_items["[id]"] = parent
+			else
+				qdel(tool)
 	else
 		if(!forced && deconstruction_sound)	//forced implys hitsounds and stuff
 			playsound(parent, deconstruction_sound, CONSTRUCTION_VOLUME, TRUE)
