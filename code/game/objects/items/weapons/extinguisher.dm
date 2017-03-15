@@ -23,7 +23,7 @@
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
-	var/recoil = 1 // Aka ghetto jetpack
+	var/recoil = TRUE // Aka ghetto jetpack
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -113,7 +113,7 @@
 
 		var/direction = get_dir(src,target)
 
-		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored && recoil == TRUE)
+		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored && recoil)
 			spawn(0)
 				var/obj/B = user.buckled
 				var/movementdirection = turn(direction,180)
@@ -135,7 +135,7 @@
 				sleep(3)
 				step(B, movementdirection)
 
-		else if(recoil == TRUE)
+		else if(recoil)
 			user.newtonian_move(turn(direction, 180))
 
 		var/turf/T = get_turf(target)

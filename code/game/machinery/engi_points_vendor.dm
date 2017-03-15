@@ -1,3 +1,6 @@
+
+// Contains the point vendor, reward distributor, construction nuke, dance machine, and singulo gloves
+
 /obj/machinery/engi_points_manager
 	name = "Intergalactic Energy Point Exchange"
 	desc = "A cutting edge market that trades energy and simple matter on a FTL basis."
@@ -231,7 +234,7 @@
 	var/payload = "plasteel"
 	var/payload_wall = /turf/closed/wall/r_wall
 	var/payload_floor = /turf/open/floor/engine
-	var/static/list/possible_payloads = list("wood", "sand", "ice", "mining", "silver","gold","bananium", "abductor", "plasma","uranium","diamond", "plasteel", "titanium", "plastitanium", )
+	var/static/list/possible_payloads = list("wood","sand","ice","mining","silver","gold","bananium","abductor","desolation", "plasma","uranium","bluespace","diamond","plasteel","safety","titanium","plastitanium", )
 
 /obj/machinery/nuclearbomb/Initialize()
 	..()
@@ -324,6 +327,15 @@
 		if("mining")
 			payload_wall = /turf/closed/wall/shuttle/survival/pod
 			payload_floor = /turf/open/floor/plating/asteroid/basalt/lava
+		if("desolation")
+			payload_wall = /turf/closed/wall/rust
+			payload_floor = /turf/open/floor/fakespace
+		if("bluespace")
+			payload_wall = /turf/closed/wall/mineral/titanium
+			payload_floor = /turf/open/floor/bluespace
+		if("safety")
+			payload_wall = /turf/closed/wall/r_wall
+			payload_floor = /turf/open/floor/noslip
 		else
 			payload_wall = text2path("/turf/closed/wall/mineral/[payload]")
 			payload_floor = text2path("/turf/open/floor/mineral/[payload]")
@@ -432,7 +444,9 @@
 		CHECK_TICK
 
 
+
 // DISCO BALL
+
 
 
 /obj/machinery/disco
@@ -450,18 +464,38 @@
 	var/list/listeners = list()
 	var/charge = 35
 	var/stop = 0
-	var/beat = 7
-	var/duration = 600
 	var/list/available = list()
-	var/static/list/choices = list("Engineering's Basic Beat", "Engineering's Domination Dance", "Engineering's Superiority Shimmy", "Engineering's Ultimate High-Energy Hustle")
-	var/static/list/paths = list('sound/misc/disco.ogg', 'sound/misc/e1m1.ogg', 'sound/misc/superior.ogg', 'sound/misc/ultimate.ogg')
-	var/static/list/durations = list(600, 950, 1810, 2260) // Make sure the order of the 3 static lists correspond
-	var/song_name = "Engineering's Basic Beat"
-	var/song_path = 'sound/misc/disco.ogg'
+	var/list/select_name = list()
 	req_access = list(access_engine)
 	var/list/spotlights = list()
 	var/list/sparkles = list()
+	var/static/list/songs = list(
+		new /datum/track("Engineering's Basic Beat", 				'sound/misc/disco.ogg', 	600, 	5),
+		new /datum/track("Engineering's Domination Dance", 			'sound/misc/e1m1.ogg', 		950, 	5),
+		new /datum/track("Engineering's Superiority Shimmy", 		'sound/misc/superior.ogg', 	1810, 	5),
+		new /datum/track("Engineering's Ultimate High-Energy Hustle",'sound/misc/disco.ogg', 	2260, 	7),
+		)
+	var/datum/track/selection = null
 
+/datum/track
+	var/song_name = "generic"
+	var/song_path = null
+	var/song_length = 0
+	var/song_beat = 0
+
+/datum/track/New(name, path, length, beat)
+	song_name = name
+	song_path = path
+	song_length = length
+	song_beat = beat
+
+/obj/machinery/disco/Initialize()
+	selection = songs[1]
+
+
+/obj/machinery/disco/Destroy()
+	dance_over()
+	return ..()
 
 /obj/machinery/disco/attackby(obj/item/O, mob/user, params)
 	if(!active)
@@ -476,10 +510,6 @@
 			return
 	return ..()
 
-
-/obj/machinery/disco/Destroy()
-	dance_over()
-	return ..()
 
 /obj/machinery/disco/interact(mob/user)
 	if (!anchored)
@@ -498,15 +528,19 @@
 	dat += "<b><A href='?src=\ref[src];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
 	dat += "</div><br>"
 	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
-	dat += "Track Selected: [song_name]<br>"
-	dat += "Track Length: [round(duration/10)] seconds<br><br>"
+	dat += "Track Selected: [selection.song_name]<br>"
+	dat += "Track Length: [selection.song_length/10] seconds<br><br>"
 	dat += "<i>More songs can be unlocked by earning more IEV points</i><br>"
 	dat += "<br>DJ's Soundboard:<b><br>"
 	dat +="<div class='statusDisplay'><div style='text-align:center'>"
 	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
 	dat += "<A href='?src=\ref[src];action=alert'>Station Alert</A>  "
 	dat += "<A href='?src=\ref[src];action=siren'>Warning Siren</A>  "
-	dat += "<A href='?src=\ref[src];action=honk'>Honk</A>"
+	dat += "<A href='?src=\ref[src];action=honk'>Honk</A><br>"
+	dat += "<A href='?src=\ref[src];action=pump'>Shotgun Pump</A>"
+	dat += "<A href='?src=\ref[src];action=pop'>Gunshot</A>"
+	dat += "<A href='?src=\ref[src];action=saber'>Esword</A>"
+	dat += "<A href='?src=\ref[src];action=harm'>Harm Alarm</A>"
 	var/datum/browser/popup = new(user, "vending", "Radiance Dance Machine - Mark IV", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -525,7 +559,6 @@
 					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [round((stop-world.time)/10)] seconds.</span>")
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 					return
-				beat = 7
 				active = TRUE
 				icon_state = "disco1"
 				dance_setup()
@@ -544,13 +577,12 @@
 				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
 				return
 			check_GBP()
-			song_name = input(usr, "Choose your song", "Track:") as null|anything in available
+			select_name = input(usr, "Choose your song", "Track:") as null|anything in available
 			if (!src || QDELETED(src))
 				return
-			for(var/i in 1 to 4)
-				if(song_name == choices[i])
-					duration = durations[i]
-					song_path = paths[i]
+			for(var/datum/track/S in songs)
+				if(select_name == S.song_name)
+					selection = S
 					break
 			src.updateUsrDialog()
 		if("horn")
@@ -561,6 +593,14 @@
 			deejay('sound/machines/engine_alert1.ogg')
 		if("honk")
 			deejay('sound/items/bikehorn.ogg')
+		if("pump")
+			deejay('sound/weapons/shotgunpump.ogg')
+		if("pop")
+			deejay('sound/weapons/Gunshot3.ogg')
+		if("saber")
+			deejay('sound/weapons/saberon.ogg')
+		if("harm")
+			deejay('sound/AI/harmalarm.ogg')
 
 /obj/machinery/disco/proc/deejay(var/S)
 	if (!src || QDELETED(src) || !active || charge < 5)
@@ -571,27 +611,16 @@
 
 /obj/machinery/disco/proc/check_GBP()
 	var/point_total = 0
-	choices.Cut()
+	available.Cut()
 	for(var/obj/machinery/engi_points_manager/EPM in engi_points_list)
 		point_total = EPM.GBPearned
 		break
-	switch(point_total)
-		if(0 to 10,000)
-			available += choices[1]
-		if(10,001 to 20,000)
-			available += choices[1]
-			available += choices[2]
-		if(20,001 to 30,000)
-			available += choices[1]
-			available += choices[2]
-			available += choices[3]
-		if(30,001 to INFINITY)
-			available += choices[1]
-			available += choices[2]
-			available += choices[3]
-			available += choices[4]
+	for(var/i in 1 to min(songs.len,round((point_total+10000)/10000)))
+		var/datum/track/S = songs[i]
+		available += S.song_name
+
 /obj/machinery/disco/proc/dance_setup()
-	stop = world.time + duration
+	stop = world.time + selection.song_length
 	var/turf/cen = get_turf(src)
 	for(var/turf/t in view(src,3))
 		if(t.x == cen.x && t.y > cen.y)
@@ -675,16 +704,14 @@
 				S.pixel_y = 7
 				S.loc = get_turf(src)
 		sleep(7)
-	if(song_name == "Engineering's Basic Beat")
-		beat=5
+	if(selection.song_name == "Engineering's Basic Beat")
 		for(var/mob/living/M in rangers)
 			Beam(M,icon_state="lightning[rand(1,12)]",time=30)
 			playsound(get_turf(src),'sound/magic/lightningbolt.ogg', 200, 1)
-	if(song_name == "Engineering's Ultimate High-Energy Hustle") // Delaying the big reveal for better timing
+	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle") // Delaying the big reveal for better timing
 		sleep(125)
 		spawn_atom_to_turf(/obj/effect/overlay/temp/big_explosion, src, 1, FALSE)
-	if(song_name == "Engineering's Superiority Shimmy")
-		beat=5
+	if(selection.song_name == "Engineering's Superiority Shimmy")
 		sleep(290)
 		INVOKE_ASYNC(src, .proc/hierofunk)
 	for(var/obj/reveal in sparkles)
@@ -695,14 +722,14 @@
 				return
 			if(glow.light_color == "red")
 				glow.light_color = "nw"
-				glow.light_power = round(glow.light_power * 1.48) // Any changes to power must come in pairs to neutralize the effect and ensure it only affects one color
+				glow.light_power = round(glow.light_power * 1.48)
 				glow.light_range = 0
 				glow.update_light()
 				continue
 			if(glow.light_color == "nw")
 				glow.light_color = "green"
 				glow.light_range = glow.range * 1.1
-				glow.light_power = glow.light_power * 2
+				glow.light_power = glow.light_power * 2 // Any changes to power must come in pairs to neutralize it for other colors
 				glow.update_light()
 				continue
 			if(glow.light_color == "green")
@@ -713,13 +740,13 @@
 				continue
 			if(glow.light_color == "sw")
 				glow.light_color = "purple"
-				glow.light_power = glow.light_power * 2.5
-				glow.light_range = glow.range * 1.3
+				glow.light_power = glow.light_power * 2
+				glow.light_range = glow.range * 1.2
 				glow.update_light()
 				continue
 			if(glow.light_color == "purple")
 				glow.light_color = "se"
-				glow.light_power = glow.light_power * 0.4
+				glow.light_power = glow.light_power * 0.5
 				glow.light_range = 0
 				glow.update_light()
 				continue
@@ -741,7 +768,7 @@
 				continue
 		if(prob(2))
 			INVOKE_ASYNC(src, .proc/hierofunk)
-		sleep(beat)
+		sleep(selection.song_beat)
 
 /obj/machinery/disco/proc/dance(var/mob/living/carbon/M) //Show your moves
 	switch(rand(0,10))
@@ -874,7 +901,7 @@
 		for(var/mob/living/M in range(9,src))
 			rangers += M
 			if(!(M in listeners))
-				M << song_path
+				M << selection.song_path
 				listeners += M
 			if(prob(4+(allowed(M)*3)))
 				dance(M)
