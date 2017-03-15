@@ -45,8 +45,8 @@
 		new /datum/GBP_equipment("ERT Hardsuit x5",		/obj/item/clothing/suit/space/hardsuit/ert/engi,					7500,	5),
 		new /datum/GBP_equipment("Ranged RCD x4",			/obj/item/weapon/rcd/arcd,										8000,	4),
 		new /datum/GBP_equipment("Prototype Atmos Vehicle x2",			/obj/vehicle/space/speedbike/atmos,					10000,	2),
-		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				17500,	5),
 		new /datum/GBP_equipment("Prototype Repair Vehicle x3",		/obj/vehicle/space/speedbike/repair,					15000,	3),
+		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				17500,	5),
 		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,							20000,	5),
 		new /datum/GBP_equipment("Nuclear Construction Device",			/obj/machinery/construction_nuke,					25000,	1),
 		new /datum/GBP_equipment("Engineering's Pinnacle x5",		/obj/vehicle/space/speedbike/memewagon,					30000,	5),
@@ -452,6 +452,7 @@
 	var/stop = 0
 	var/beat = 7
 	var/duration = 600
+	var/list/available = list()
 	var/static/list/choices = list("Engineering's Basic Beat", "Engineering's Domination Dance", "Engineering's Superiority Shimmy", "Engineering's Ultimate High-Energy Hustle")
 	var/static/list/paths = list('sound/misc/disco.ogg', 'sound/misc/e1m1.ogg', 'sound/misc/superior.ogg', 'sound/misc/ultimate.ogg')
 	var/static/list/durations = list(600, 950, 1810, 2260) // Make sure the order of the 3 static lists correspond
@@ -499,6 +500,7 @@
 	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
 	dat += "Track Selected: [song_name]<br>"
 	dat += "Track Length: [round(duration/10)] seconds<br><br>"
+	dat += "<i>More songs can be unlocked by earning more IEV points</i><br>"
 	dat += "<br>DJ's Soundboard:<b><br>"
 	dat +="<div class='statusDisplay'><div style='text-align:center'>"
 	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
@@ -541,7 +543,8 @@
 			if(active)
 				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
 				return
-			song_name = input(usr, "Choose your song", "Track:") as null|anything in choices
+			check_GBP()
+			song_name = input(usr, "Choose your song", "Track:") as null|anything in available
 			if (!src || QDELETED(src))
 				return
 			for(var/i in 1 to 4)
@@ -566,7 +569,27 @@
 	charge -= 5
 	playsound(src, S,300,1)
 
-
+/obj/machinery/disco/proc/check_GBP()
+	var/point_total = 0
+	choices.Cut()
+	for(var/obj/machinery/engi_points_manager/EPM in engi_points_list)
+		point_total = EPM.GBPearned
+		break
+	switch(point_total)
+		if(0 to 10,000)
+			available += choices[1]
+		if(10,001 to 20,000)
+			available += choices[1]
+			available += choices[2]
+		if(20,001 to 30,000)
+			available += choices[1]
+			available += choices[2]
+			available += choices[3]
+		if(30,001 to INFINITY)
+			available += choices[1]
+			available += choices[2]
+			available += choices[3]
+			available += choices[4]
 /obj/machinery/disco/proc/dance_setup()
 	stop = world.time + duration
 	var/turf/cen = get_turf(src)

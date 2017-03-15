@@ -193,7 +193,7 @@
 							EPM.GBP += price
 							EPM.GBPearned += price
 						if(export_target == "Premium")
-							visible_message("<span class='danger'>You have been blessed by the atmos gods for exporting a premium canister!</span>")
+							visible_message("<span class='danger'>You have been awarded a bonus payment for exporting a premium canister!</span>")
 							var/prize = pick(/obj/item/clothing/under/rank/atmos_elite,/obj/item/clothing/head/atmos_hood,/obj/item/clothing/neck/cloak/atmos)
 							spawn_atom_to_turf(/obj/effect/overlay/temp/explosion/fast, src, 1, admin_spawn=FALSE)
 							spawn_atom_to_turf(prize, src, 1, admin_spawn=FALSE)
