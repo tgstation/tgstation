@@ -81,18 +81,15 @@ var/datum/controller/subsystem/gravity/SSgravity
 		var/atom/movable/AM = atoms_forced_gravity_processing[atoms_forced_gravity_processing.len]
 		atoms_forced_gravity_processing.len--
 		if(!istype(AM))
-			SSgravity.error_no_atom++
+			error_no_atom++
 			continue
 		else
 			AM.force_gravity_processing = FALSE
 			count++
 		CHECK_TICK
 	LAZYCLEARLIST(atoms_forced_gravity_processing)
-	var/atoms_not_found = "ERROR: NO SUBSYSTEM!"
-	if(SSgravity)
-		atoms_not_found = SSgravity.error_no_atom
 	can_fire = can_fire_old
-	return "[count] atoms purged from forced processing! [atoms_not_found] things found so far that were not atoms!"
+	return "[count] atoms purged from forced processing! [error_no_atom] things found so far that were not atoms!"
 
 /datum/controller/subsystem/gravity/proc/recalculate_atoms()
 	currentrun = list()
