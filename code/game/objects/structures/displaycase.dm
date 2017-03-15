@@ -68,7 +68,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase)
 			icon_state = "glassbox_chassis"
 		},
 		/datum/construction_state{
-			required_amount_to_construct = /obj/item/stack/sheet/glass
+			required_type_to_construct = /obj/item/stack/sheet/glass
 			required_amount_to_construct = 5
 			construction_delay = 20
 			deconstruction_message = "remove the electronics from"
