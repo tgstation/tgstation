@@ -181,7 +181,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 			mapvotes[map] = mapvotes[map]*VM.voteweight
 
-	var/pickedmap = config.allow_map_voting ? pickweight(mapvotes) : pick(global.config.maplist)
+	var/pickedmap = global.config.allow_map_voting ? pickweight(mapvotes) : pick(global.config.maplist)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]
