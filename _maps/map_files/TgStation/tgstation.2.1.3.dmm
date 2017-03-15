@@ -50944,13 +50944,13 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
@@ -50958,7 +50958,7 @@
 	dir = 9
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgL" = (
@@ -51426,7 +51426,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chG" = (
@@ -51841,7 +51841,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -54807,7 +54807,7 @@
 	pixel_y = 0
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "coL" = (
@@ -55448,7 +55448,7 @@
 /area/engine/engineering)
 "cqa" = (
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -56321,7 +56321,7 @@
 /area/space)
 "csa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -61505,7 +61505,7 @@
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -62044,7 +62044,7 @@
 /area/engine/engineering)
 "cEv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -62067,7 +62067,7 @@
 /area/engine/engineering)
 "cEy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	icon_state = "manifold";
 	dir = 4
@@ -62386,7 +62386,7 @@
 /area/engine/engineering)
 "cFe" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
@@ -62409,7 +62409,7 @@
 /area/engine/engineering)
 "cFh" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
@@ -62927,7 +62927,7 @@
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
@@ -62936,7 +62936,7 @@
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
@@ -62953,7 +62953,7 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -62987,7 +62987,7 @@
 /area/engine/engineering)
 "cGK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -62995,7 +62995,7 @@
 /area/engine/engineering)
 "cGL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -65094,6 +65094,81 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
+"cMm" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMn" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMo" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMs" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMt" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMw" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMx" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMy" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMz" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -92008,7 +92083,7 @@ cfG
 cgw
 coK
 cpu
-clJ
+cMq
 ccw
 ccw
 ccw
@@ -93304,7 +93379,7 @@ ccw
 cFL
 cGf
 cGw
-cqY
+cMw
 ciZ
 cHc
 cHh
@@ -93818,7 +93893,7 @@ cFw
 cFN
 csH
 csR
-cqY
+cMx
 cGU
 cEj
 cEj
@@ -94061,7 +94136,7 @@ ckK
 clJ
 cmL
 cnv
-clJ
+cMm
 chX
 cDq
 cqg
@@ -94071,11 +94146,11 @@ crt
 czE
 cAm
 czE
-cqY
+cMs
 cFO
 csC
 csQ
-cqY
+cMy
 cGV
 cEj
 cGV
@@ -94332,7 +94407,7 @@ cAP
 cFP
 csI
 cAt
-cqY
+cMz
 cEj
 cEj
 cEj
@@ -94846,7 +94921,7 @@ ccw
 cFR
 cGf
 cGz
-cqY
+cMA
 ciZ
 cHd
 cHj
@@ -95089,7 +95164,7 @@ ceq
 clQ
 cmQ
 cgR
-clJ
+cMn
 chX
 cpD
 cDw
@@ -95346,7 +95421,7 @@ ckP
 ckH
 cja
 cgR
-clJ
+cMo
 cDj
 cDs
 cql
@@ -95860,7 +95935,7 @@ ckR
 clR
 cgR
 cgR
-clJ
+cMp
 cir
 cDt
 cDy
@@ -96379,7 +96454,7 @@ cis
 cjN
 cDz
 cDH
-clJ
+cMr
 cEj
 crM
 crV
@@ -96898,9 +96973,9 @@ ccw
 ccw
 ccw
 ccw
-cqY
-cqY
-cqY
+cMt
+cMu
+cMv
 ccw
 aaf
 aaf

@@ -7072,7 +7072,7 @@
 	})
 "aoK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -9641,11 +9641,11 @@
 	})
 "atr" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	icon_state = "intact";
 	dir = 8
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -10259,11 +10259,11 @@
 	})
 "auD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	icon_state = "intact";
 	dir = 6
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -10289,10 +10289,10 @@
 	})
 "auG" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -10871,10 +10871,10 @@
 	})
 "avP" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -10887,11 +10887,11 @@
 	})
 "avR" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	icon_state = "manifold";
 	dir = 4
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -11981,11 +11981,11 @@
 	})
 "axY" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	icon_state = "intact";
 	dir = 8
 	},
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -16119,7 +16119,6 @@
 	})
 "aFh" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -16130,6 +16129,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -16160,11 +16160,11 @@
 	})
 "aFj" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
