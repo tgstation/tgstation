@@ -24,7 +24,7 @@
 			var/mob/living/silicon/ai/AI = R.mainframe
 			R.undeploy()
 			var/converted = add_servant_of_ratvar(AI, silent_update)
-			AI << "<span class='userdanger'>Anomaly Detected. Returned to core!</span>"	//The AI needs to be in its core to properly be converted
+			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>")	//The AI needs to be in its core to properly be converted
 			return converted
 	if(!silent_update)
 		if(issilicon(new_body))

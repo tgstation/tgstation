@@ -929,7 +929,6 @@ var/list/ai_list = list()
 		var/mob/living/silicon/robot/R = borgie
 		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
 			possible += R
-			world << "Possible:[R], [possible.len]"
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
 		target = input(src, "Which body to control?") as null|anything in possible

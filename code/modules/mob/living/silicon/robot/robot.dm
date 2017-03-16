@@ -435,7 +435,7 @@
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(shell)
-			user << "You cannot seem to open the radio compartment"	//Prevent AI radio key theft
+			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
 		else if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
