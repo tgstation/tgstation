@@ -39,6 +39,27 @@
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
+/obj/item/ammo_box/magazine/m38auto
+	name = "pistol magazine (.38)"
+	icon_state = "38auto-12"
+	ammo_type = /obj/item/ammo_casing/c38
+	caliber = "38"
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/m38auto/ltl
+	name = "pistol magazine (.38 Less-Than-Lethal)"
+	desc = "A gun magazine. Loaded with rubberized rounds which do cause less physical damage at the cost of instant knockdowns."
+	ammo_type = /obj/item/ammo_casing/c38/ltl
+
+/obj/item/ammo_box/magazine/m38auto/fmj
+	name = "pistol magazine (.38 FMJ)"
+	desc = "A gun magazine. Loaded with rounds that are more lethal than the regular .38 rounds."
+	ammo_type = /obj/item/ammo_casing/c38/fmj
+
+/obj/item/ammo_box/magazine/m38auto/update_icon()
+	..()
+	icon_state = "38auto-[ammo_count() ? "12" : "0"]"
+
 /obj/item/ammo_box/magazine/wt550m9
 	name = "wt550 magazine (4.6x30mm)"
 	icon_state = "46x30mmt-20"

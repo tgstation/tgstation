@@ -14,6 +14,16 @@
 	max_ammo = 6
 	multiple_sprites = 1
 
+/obj/item/ammo_box/c38/ltl
+	name = "speed loader (.38 Less-Than-Lethal)"
+	desc = "Designed to quickly reload revolvers. Contains rubberized rounds which do cause less physical damage at the cost of instant knockdowns."
+	ammo_type = /obj/item/ammo_casing/c38/ltl
+
+/obj/item/ammo_box/c38/fmj
+	name = "speed loader (.38 FMJ)"
+	desc = "Designed to quickly reload revolvers. Contains rounds that are more lethal than the regular .38 rounds."
+	ammo_type = /obj/item/ammo_casing/c38/fmj
+
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9mmbox"
