@@ -718,6 +718,16 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/boris_ai_controller
+	name = "B.O.R.I.S. AI-Cyborg Remote Control Module"
+	id = "borg_ai_control"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ai
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 1500, MAT_GOLD = 200)
+	req_tech = list("programming" = 4, "magnets" = 4, "engineering" = 4)
+	construction_time = 50
+	category = list("Misc")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"

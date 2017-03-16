@@ -252,13 +252,13 @@
 		var/obj/item/borg/upgrade/ai/M = W
 		if(check_completion())
 			if(!isturf(loc))
-				user << "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>"
+				user << "<span class='warning'>You cannot install[M], the frame has to be standing on the ground to be perfectly precise!</span>"
 				return
 			if(!user.drop_item())
 				user << "<span class='warning'>[M] is stuck to your hand!</span>"
 				return
 			qdel(M)
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc),TRUE)
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
 
 			if(!aisync)
 				lawsync = 0

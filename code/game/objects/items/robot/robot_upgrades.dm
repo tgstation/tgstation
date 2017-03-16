@@ -383,11 +383,18 @@
 	return 1
 
 /obj/item/borg/upgrade/ai
-	name = "B.O.R.I.S. module"
+	name = "b.o.r.i.s. module"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endskeletons, creating a robotic shell controlled by an AI."
 	icon_state = "cyborg_upgrade6"
 	origin_tech = "engineering=4;magnets=4;programming=4"
 
-/obj/item/borg/upgrade/piercing_hypospray/action()
-	usr << "<span class='warning'>This device may only function on an assembled cyborg endoskeleton.</span>"
-	return
+/obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+	if(R.key) //You cannot replace a player unless the key is completely removed.
+		to_chat(usr, "<span class='warning'>Intelligence patterns detected in this [R.braintype]. Aborting.</span>")
+	else
+		R.make_shell(src)
+		R.notify_ai(4)
+		return TRUE
+
