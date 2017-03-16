@@ -53314,7 +53314,9 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "bVK" = (
 /obj/machinery/turretid{
@@ -54056,13 +54058,14 @@
 	id = "AI";
 	pixel_x = -26
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "aiuploadwindow";
-	name = "AI Upload Lockdown Door"
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/highsecurity{
+	name = "MiniSat Upload";
+	req_access_txt = "32;19;16"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "bXo" = (
 /obj/structure/grille,
@@ -54942,7 +54945,9 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/ai_monitored/turret_protected/ai_upload)
 "bZb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -121266,7 +121271,7 @@ caX
 ciT
 ehy
 bRf
-ehC
+ehB
 bkr
 ehE
 bnO
@@ -121512,7 +121517,7 @@ bNu
 bPk
 bRr
 bTJ
-bVK
+bNu
 bLt
 bZb
 cba
@@ -121523,7 +121528,7 @@ caW
 ciU
 bYV
 ehA
-ehD
+ehB
 coG
 blR
 bnP
