@@ -308,7 +308,6 @@
 		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
-		SSshuttle.arrivals.RequireUndocked(src)
 
 	//Remove the player from the join queue if he was in one and reset the timer
 	ticker.queued_players -= src
