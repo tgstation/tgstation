@@ -44302,7 +44302,7 @@
 	},
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Transit Tube Access";
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
@@ -47442,7 +47442,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	locked = 1;
 	name = "MiniSat Chamber";
-	req_access_txt = "16"
+	req_access_txt = "65"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "aicoredoor";
@@ -48611,7 +48611,7 @@
 "bNJ" = (
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Transit Tube Access";
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "65"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -50744,7 +50744,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
-	req_access_txt = "16"
+	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -50823,7 +50823,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Antechamber";
-	req_access_txt = "16"
+	req_access_txt = "65"
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -50912,7 +50912,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Antechamber";
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "65"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -50950,7 +50950,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Access";
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "65"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -54061,7 +54061,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	name = "MiniSat Upload";
-	req_access_txt = "32;19;16"
+	req_access_txt = "65;16"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
