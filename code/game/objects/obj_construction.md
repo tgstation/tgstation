@@ -32,6 +32,8 @@ by Cyberboss
 
 - `/obj/var/bp_name` - The name of an item as it appears in stack construction recipes, if this is null, the regular name will be used
 
+- `/obj/var/construction_blueprint` - Set by the CONSTRUCTION_BLUEPRINT macro, setting this back to null on subtypes will prevent those types from being able to be stack constructed even if they have `root_only` set to FALSE
+
 - `/obj/var/stored_construction_items` - A list of items stored during construction for states with `stash_construction_item` set to TRUE. This list must be populated on obj Initialization before calling the base. Items in the list will be located in the obj's contents. `datum/construction_state`s with `stash_construction_item` set to TRUE will store the used items in here. This list is keyed by the stringized id of the construction state (e.g. `"[construction_state.id]" => item reference`). Items in this list will be deleted under certain circumstances. An entry is guaranteed to exist if the current_construction_state's id is higher than the id that stored them. Items will be placed back into the world or deleted when the obj is deconstructed
 - 
 	The following helpers are for easier manipulation of stored_construction_items

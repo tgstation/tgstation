@@ -21,6 +21,11 @@
 		showpiece = new start_showpiece_type(src)
 	update_icon()
 
+/obj/structure/displaycase/Construct()
+	if(..())
+		open = TRUE
+		update_icon()
+
 /obj/structure/displaycase/Destroy()
 	if(showpiece)
 		qdel(showpiece)
@@ -171,11 +176,12 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase, FALSE, TRUE)
 				toggle_lock(user)
 			LAZYREMOVE(user.construction_tasks, src)
 	
-	else if((current_construction_state.id == DISPLAY_CASE_NOGLASS || open) && !showpiece)
-		if(user.transferItemToLoc(W, src))
+		else if(open && !showpiece && user.transferItemToLoc(W, src))
 			showpiece = W
 			to_chat(user, "<span class='notice'>You put [W] on display</span>")
 			update_icon()
+		else
+			return ..()
 	else
 		return ..()
 
