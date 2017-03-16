@@ -120,12 +120,8 @@
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
-	countdown = new(src)
-	countdown.start()
-	poi_list |= src
-	radio = new(src)
-	radio.listening = 0
-	investigate_log("has been created.", "supermatter")
+	new /obj/machinery/the_singularitygen(get_turf(src))
+	qdel(src)
 
 
 /obj/machinery/power/supermatter_shard/Destroy()
