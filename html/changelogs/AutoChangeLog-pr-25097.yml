@@ -1,0 +1,4 @@
+author: "Penguaro"
+delete-after: True
+changes: 
+  - tweak: "Increased Synchronization Range on Exosuit Fabricator"
