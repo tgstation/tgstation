@@ -88,15 +88,15 @@
 	if(!A.requires_power)
 		to_chat(user, "<span class='warning'>You cannot place [src] in this area!</span>")
 		return //can't place apcs in areas with no power requirement
-	for(var/obj/machinery/power/terminal/T in loc)
-		if (T.master)
+	for(var/obj/machinery/power/terminal/E in T)
+		if(E.master)
 			to_chat(user, "<span class='warning'>There is another network terminal here!</span>")
 			return
 		else
-			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(loc)
+			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(T)
 			C.amount = 10
 			to_chat(user, "<span class='notice'>You cut the cables and disassemble the unused power terminal.</span>")
-			qdel(T)
+			qdel(E)
 	return TRUE
 
 
