@@ -829,7 +829,6 @@ ARCD
 						if(!useResource(wallcost, user))
 							return 0
 						var/light = get_turf(winner)
-						to_chat(user, "<span class='notice'>The winner is  [winner]</span>")
 						var/align = get_dir(winner, A)
 						var/obj/machinery/light/L = new /obj/machinery/light(light)
 						L.dir = align
