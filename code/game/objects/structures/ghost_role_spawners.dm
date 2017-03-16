@@ -26,7 +26,7 @@
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
-	..()
+	return ..()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 /obj/effect/mob_spawn/human/ash_walker
@@ -74,7 +74,7 @@
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
-	..()
+	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
 	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
@@ -210,7 +210,7 @@
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
-	..()
+	return ..()
 
 //Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
 /obj/effect/mob_spawn/human/doctor/alive/lavaland
@@ -250,7 +250,7 @@
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	..()
+	return ..()
 
 //Space Hotel Staff
 /obj/effect/mob_spawn/human/hotel_staff //not free antag u little shits

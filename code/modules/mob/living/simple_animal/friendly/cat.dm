@@ -30,7 +30,7 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/pet/cat/New()
+/mob/living/simple_animal/pet/cat/Initialize()
 	..()
 	verbs += /mob/living/proc/lay_down
 
@@ -85,7 +85,7 @@
 	var/cats_deployed = 0
 	var/memory_saved = 0
 
-/mob/living/simple_animal/pet/cat/Runtime/New()
+/mob/living/simple_animal/pet/cat/Runtime/Initialize()
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"

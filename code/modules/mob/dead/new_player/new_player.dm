@@ -1,6 +1,6 @@
 
 
-/mob/new_player
+/mob/dead/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 
@@ -15,7 +15,10 @@
 	anchored = 1	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
-/mob/new_player/New()
+/mob/dead/new_player/Initialize()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 
@@ -28,7 +31,7 @@
 	else
 		loc = locate(1,1,1)
 
-/mob/new_player/proc/new_player_panel()
+/mob/dead/new_player/proc/new_player_panel()
 
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -70,7 +73,7 @@
 	popup.open(0)
 	return
 
-/mob/new_player/Stat()
+/mob/dead/new_player/Stat()
 	..()
 
 	if(statpanel("Lobby"))
@@ -88,7 +91,7 @@
 				stat("Players Ready:", "[ticker.totalPlayersReady]")
 
 
-/mob/new_player/Topic(href, href_list[])
+/mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
 		return 0
 
@@ -273,7 +276,7 @@
 					return
 				to_chat(src, "<span class='notice'>Vote successful.</span>")
 
-/mob/new_player/proc/IsJobAvailable(rank)
+/mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return 0
@@ -295,7 +298,7 @@
 	return 1
 
 
-/mob/new_player/proc/AttemptLateSpawn(rank)
+/mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
 		to_chat(src, alert("[rank] is not available. Please try another."))
 		return 0
@@ -369,7 +372,7 @@
 						ticker.mode.make_antag_chance(humanc)
 	qdel(src)
 
-/mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
+/mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	sleep(30)
 	for(var/C in employmentCabinets)
@@ -378,7 +381,7 @@
 			employmentCabinet.addFile(employee)
 
 
-/mob/new_player/proc/LateChoices()
+/mob/dead/new_player/proc/LateChoices()
 	var/mills = world.time - round_start_time // 1/10 of a second, not real milliseconds but whatever
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
@@ -398,6 +401,17 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
+
+	if(length(SSjob.prioritized_jobs))
+		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
+		var/amt = length(SSjob.prioritized_jobs)
+		var/amt_count
+		for(var/datum/job/a in SSjob.prioritized_jobs)
+			amt_count++
+			if(amt_count != amt) // checks for the last job added.
+				dat += " [a.title], "
+			else
+				dat += " [a.title]. </div>"
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
@@ -428,7 +442,7 @@
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
 
 
-/mob/new_player/proc/create_character(transfer_after)
+/mob/dead/new_player/proc/create_character(transfer_after)
 	spawning = 1
 	close_spawn_windows()
 
@@ -450,24 +464,24 @@
 	if(transfer_after)
 		transfer_character()
 
-/mob/new_player/proc/transfer_character()
+/mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stopLobbySound()
 
-/mob/new_player/proc/ViewManifest()
+/mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest(OOC = 1)
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
-/mob/new_player/Move()
+/mob/dead/new_player/Move()
 	return 0
 
 
-/mob/new_player/proc/close_spawn_windows()
+/mob/dead/new_player/proc/close_spawn_windows()
 
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window

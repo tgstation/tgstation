@@ -1,6 +1,6 @@
-/var/list/all_lighting_overlays = list() // Global list of lighting overlays.
+/var/list/all_lighting_objects = list() // Global list of lighting objects.
 
-/atom/movable/lighting_overlay
+/atom/movable/lighting_object
 	name          = ""
 
 	anchored      = TRUE
@@ -16,13 +16,13 @@
 
 	var/needs_update = FALSE
 
-/atom/movable/lighting_overlay/Initialize(mapload, var/no_update = FALSE)
+/atom/movable/lighting_object/Initialize(mapload, var/no_update = FALSE)
 	. = ..()
 	verbs.Cut()
-	global.all_lighting_overlays += src
+	global.all_lighting_objects += src
 
 	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
-	T.lighting_overlay = src
+	T.lighting_object = src
 	T.luminosity       = 0
 
 	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
@@ -31,30 +31,30 @@
 	if (no_update)
 		return
 
-	update_overlay()
+	update()
 
-/atom/movable/lighting_overlay/Destroy(var/force)
+/atom/movable/lighting_object/Destroy(var/force)
 	if (force)
-		global.all_lighting_overlays        -= src
-		global.lighting_update_overlays     -= src
+		global.all_lighting_objects        -= src
+		global.lighting_update_objects     -= src
 
 		var/turf/T   = loc
 		if (istype(T))
-			T.lighting_overlay = null
+			T.lighting_object = null
 			T.luminosity = 1
 
 		return ..()
 	else
 		return QDEL_HINT_LETMELIVE
 
-/atom/movable/lighting_overlay/proc/update_overlay()
+/atom/movable/lighting_object/proc/update()
 	var/turf/T = loc
 	if (!istype(T)) // Erm...
 		if (loc)
-			WARNING("A lighting overlay realised its loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay()!")
+			warning("A lighting object realised its loc was NOT a turf (actual loc: [loc], [loc.type]) in update()!")
 
 		else
-			WARNING("A lighting overlay realised it was in nullspace in update_overlay()!")
+			warning("A lighting object realised it was in nullspace in update()!")
 
 		qdel(src, TRUE)
 		return
@@ -68,13 +68,10 @@
 	// Including with these comments.
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
-	// No I seriously cannot think of a more efficient method, fuck off Comic.
-	var/list/corners = T.corners
-	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
-	var/datum/lighting_corner/cr  = corners[3] || dummy_lighting_corner
-	var/datum/lighting_corner/cg  = corners[2] || dummy_lighting_corner
-	var/datum/lighting_corner/cb  = corners[4] || dummy_lighting_corner
-	var/datum/lighting_corner/ca  = corners[1] || dummy_lighting_corner
+	var/datum/lighting_corner/cr  = T.corners[3] || dummy_lighting_corner
+	var/datum/lighting_corner/cg  = T.corners[2] || dummy_lighting_corner
+	var/datum/lighting_corner/cb  = T.corners[4] || dummy_lighting_corner
+	var/datum/lighting_corner/ca  = T.corners[1] || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
@@ -95,23 +92,23 @@
 
 // Variety of overrides so the overlays don't get affected by weird things.
 
-/atom/movable/lighting_overlay/ex_act(severity)
+/atom/movable/lighting_object/ex_act(severity)
 	return 0
 
-/atom/movable/lighting_overlay/singularity_act()
+/atom/movable/lighting_object/singularity_act()
 	return
 
-/atom/movable/lighting_overlay/singularity_pull()
+/atom/movable/lighting_object/singularity_pull()
 	return
 
-/atom/movable/lighting_overlay/blob_act()
+/atom/movable/lighting_object/blob_act()
 	return
 
 // Nope nope nope!
-/atom/movable/lighting_overlay/onShuttleMove(turf/T1, rotation)
+/atom/movable/lighting_object/onShuttleMove(turf/T1, rotation)
 	return FALSE
 
 // Override here to prevent things accidentally moving around overlays.
-/atom/movable/lighting_overlay/forceMove(atom/destination, var/no_tp=FALSE, var/harderforce = FALSE)
+/atom/movable/lighting_object/forceMove(atom/destination, var/no_tp=FALSE, var/harderforce = FALSE)
 	if(harderforce)
 		. = ..()

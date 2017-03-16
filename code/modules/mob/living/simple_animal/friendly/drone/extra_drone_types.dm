@@ -30,7 +30,7 @@
 	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
 
-/mob/living/simple_animal/drone/syndrone/New()
+/mob/living/simple_animal/drone/syndrone/Initialize()
 	..()
 	internal_storage.hidden_uplink.telecrystals = 10
 
@@ -43,7 +43,7 @@
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	default_storage = /obj/item/device/radio/uplink/nuclear
 
-/mob/living/simple_animal/drone/syndrone/badass/New()
+/mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	..()
 	internal_storage.hidden_uplink.telecrystals = 30
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
@@ -52,7 +52,7 @@
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
 
-/mob/living/simple_animal/drone/snowflake/New()
+/mob/living/simple_animal/drone/snowflake/Initialize()
 	..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
@@ -76,7 +76,7 @@
 	default_hatmask = null
 	picked = TRUE
 
-/mob/living/simple_animal/drone/polymorphed/New()
+/mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
 	liberate()
 	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
@@ -126,7 +126,7 @@
 /mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost proselytizer and slab in its box
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
 
-/mob/living/simple_animal/drone/cogscarab/New()
+/mob/living/simple_animal/drone/cogscarab/Initialize()
 	. = ..()
 	set_light(2, 0.5)
 	qdel(access_card) //we don't have free access

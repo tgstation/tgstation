@@ -1,7 +1,0 @@
-author: "Penguaro"
-delete-after: True
-changes: 
-  - rscdel: "**Engineering** - Removed Tables, paper bin, and pen"
-  - rscadd: "**Engineering** - Replaced with Welder and Electrical Lockers"
-  - rscadd: "**Engineering** - Moved First-Aid Burn kit to Engineering Foyer"
-  - tweak: "**Chapel** - Replaced one Window with Win-Door for Coffin Storage"

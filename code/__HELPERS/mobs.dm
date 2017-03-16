@@ -408,3 +408,5 @@ Proc for attack log creation, because really why not
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
 				to_chat(M, rendered_message)
+		else
+			to_chat(M, message)
