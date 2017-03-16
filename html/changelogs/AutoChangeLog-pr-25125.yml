@@ -1,0 +1,4 @@
+author: "peoplearestrange"
+delete-after: True
+changes: 
+  - bugfix: "Fixed buildmodes full tile window to be correct path"

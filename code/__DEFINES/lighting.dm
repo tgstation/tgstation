@@ -52,11 +52,13 @@
 #define LIGHT_COLOR_BLUE		"#6496FA" //Cold, diluted blue. rgb(100, 150, 250)
 
 #define LIGHT_COLOR_CYAN		"#7DE1E1" //Diluted cyan. rgb(125, 225, 225)
+#define LIGHT_COLOR_LIGHT_CYAN	"#40CEFF" //More-saturated cyan. rgb(64, 206, 255)
 #define LIGHT_COLOR_PINK		"#E17DE1" //Diluted, mid-warmth pink. rgb(225, 125, 225)
 #define LIGHT_COLOR_YELLOW		"#E1E17D" //Dimmed yellow, leaning kaki. rgb(225, 225, 125)
 #define LIGHT_COLOR_BROWN		"#966432" //Clear brown, mostly dim. rgb(150, 100, 50)
 #define LIGHT_COLOR_ORANGE		"#FA9632" //Mostly pure orange. rgb(250, 150, 50)
 #define LIGHT_COLOR_PURPLE		"#952CF4" //Light Purple. rgb(149, 44, 244)
+#define LIGHT_COLOR_LAVENDER	"#9B51FF" //Less-saturated light purple. rgb(155, 81, 255)
 
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE		"#FAA019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)

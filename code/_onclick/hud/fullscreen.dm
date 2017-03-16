@@ -18,7 +18,7 @@
 	screen.severity = severity
 
 	screens[category] = screen
-	if(client && stat != DEAD)
+	if(client && screen.should_show_to(src))
 		client.screen += screen
 	return screen
 
@@ -52,9 +52,14 @@
 			client.screen -= screens[category]
 
 /mob/proc/reload_fullscreen()
-	if(client && stat != DEAD) //dead mob do not see any of the fullscreen overlays that he has.
+	if(client)
+		var/obj/screen/fullscreen/screen
 		for(var/category in screens)
-			client.screen |= screens[category]
+			screen = screens[category]
+			if(screen.should_show_to(src))
+				client.screen |= screen
+			else
+				client.screen -= screen
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen_full.dmi'
@@ -64,6 +69,12 @@
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = 0
 	var/severity = 0
+	var/show_when_dead = FALSE
+
+/obj/screen/fullscreen/proc/should_show_to(mob/mymob)
+	if(!show_when_dead && mymob.stat == DEAD)
+		return FALSE
+	return TRUE
 
 /obj/screen/fullscreen/Destroy()
 	severity = 0
@@ -126,3 +137,30 @@
 
 /obj/screen/fullscreen/color_vision/blue
 	color = "#0000ff"
+
+/obj/screen/fullscreen/lighting_backdrop
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "flash"
+	transform = matrix(200, 0, 0, 0, 200, 0)
+	plane = LIGHTING_PLANE
+	blend_mode = BLEND_OVERLAY
+	show_when_dead = TRUE
+
+//Provides darkness to the back of the lighting plane
+/obj/screen/fullscreen/lighting_backdrop/lit
+	invisibility = INVISIBILITY_LIGHTING
+	layer = BACKGROUND_LAYER+21
+	color = "#000"
+	show_when_dead = TRUE
+
+//Provides whiteness in case you don't see lights so everything is still visible
+/obj/screen/fullscreen/lighting_backdrop/unlit
+	layer = BACKGROUND_LAYER+20
+	show_when_dead = TRUE
+
+/obj/screen/fullscreen/see_through_darkness
+	icon_state = "nightvision"
+	plane = LIGHTING_PLANE
+	layer = LIGHTING_LAYER
+	blend_mode = BLEND_ADD
+	show_when_dead = TRUE
