@@ -1,4 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - bugfix: "[Delta] Fixes telecoms temperature and gas mixing / being contaminated."
