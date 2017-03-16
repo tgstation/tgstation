@@ -520,7 +520,7 @@
 
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
  	. = ..()
-    riding_datum = new/datum/riding/space/speedwagon
+ 	riding_datum = new/datum/riding/space/speedwagon
 
 /obj/vehicle/space/speedbike/speedwagon/Moved()
 	. = ..()
@@ -555,5 +555,5 @@
 
 /obj/vehicle/space/speedbike/memewagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
-	riding_datum = new/datum/riding/space/speedbike/speedwagon
+	riding_datum = new/datum/riding/space/speedwagon
 
