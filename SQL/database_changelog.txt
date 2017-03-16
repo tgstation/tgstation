@@ -4,6 +4,8 @@ Modified table 'death', adding the columns 'toxloss', 'cloneloss', and 'staminal
 
 ALTER TABLE `feedback`.`death` ADD COLUMN `toxloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `oxyloss`, ADD COLUMN `cloneloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `toxloss`, ADD COLUMN `staminaloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `cloneloss`;
 
+ALTER TABLE `feedback`.`legacy_population` ADD COLUMN `server_ip` INT(10) UNSIGNED NOT NULL AFTER `time`, ADD COLUMN `server_port` SMALLINT(5) UNSIGNED NOT NULL AFTER `server_ip`;
+
 Remember to add a prefix to the table name if you use them.
 
 ----------------------------------------------------
