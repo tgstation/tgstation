@@ -483,9 +483,9 @@
 	if(chem.id == "holywater")
 		H.adjustFireLoss(4)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+
 	if(chem.id == "unholywater")
 		H.adjustBruteLoss(-4)
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+

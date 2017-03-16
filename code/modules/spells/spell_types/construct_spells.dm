@@ -241,7 +241,7 @@
 /obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
 	if(!isanimal(target) || target.stat)
 		return FALSE
-	if(target.faction == list("cult"))
+	if("cult" in target.faction)
 		return FALSE
 	return TRUE
 
