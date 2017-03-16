@@ -2061,7 +2061,7 @@
 #include "code\orphaned_procs\dbcore.dm"
 #include "code\orphaned_procs\priority_announce.dm"
 #include "code\orphaned_procs\statistics.dm"
+#include "goon\code\datums\browserOutput.dm"
 #include "interface\interface.dm"
-#include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 // END_INCLUDE
