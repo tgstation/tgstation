@@ -260,7 +260,7 @@
 
 /turf/closed/wall/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
-		if(3)
+		if(RCD_DECONSTRUCT)
 			if(istype(src, /turf/closed/wall/r_wall))
 				return 0
 			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")

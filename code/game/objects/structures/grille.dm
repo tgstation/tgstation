@@ -260,11 +260,11 @@
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
-		if(3)
+		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")
 			qdel(src)
 			return 1
-		if(4)
+		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/window) in loc)
 				return 0
 			to_chat(user, "<span class='notice'>You construct the window.</span>")

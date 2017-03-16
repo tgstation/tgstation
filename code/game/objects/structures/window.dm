@@ -564,7 +564,7 @@
 
 /obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
-		if(3)
+		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
 			qdel(src)
 			return 1

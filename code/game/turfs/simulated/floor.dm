@@ -202,11 +202,11 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/open/floor/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
-		if(1)
+		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")
 			ChangeTurf(/turf/closed/wall)
 			return 1
-		if(2)
+		if(RCD_AIRLOCK)
 			if(locate(/obj/machinery/door/airlock) in loc)
 				return 0
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
@@ -224,13 +224,13 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				A.req_access = A.electronics.accesses
 			A.autoclose = 1
 			return 1
-		if(3)
+		if(RCD_DECONSTRUCT)
 			if(istype(src, baseturf))
 				return 0
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 			ChangeTurf(baseturf)
 			return 1
-		if(4)
+		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)
 				return 0
 			to_chat(user, "<span class='notice'>You construct the grille.</span>")
