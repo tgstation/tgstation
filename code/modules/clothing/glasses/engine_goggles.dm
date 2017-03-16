@@ -61,17 +61,12 @@
 /obj/item/clothing/glasses/meson/engine/proc/flick_sonar(obj/pipe)
 	if(ismob(loc))
 		var/mob/M = loc
-		var/image/I = image(pipe.icon, get_turf(pipe), pipe.icon_state, pipe.layer+1, pipe.dir)
-		I.alpha = 128
-		I.color = pipe.color
+		var/image/I = new(loc = get_turf(pipe))
+		var/mutable_appearance/MA = new(pipe)
+		MA.alpha = 128
+		I.appearance = MA
 		if(M.client)
 			flick_overlay(I, list(M.client), 8)
-			for(var/C in pipe.overlays)
-				var/image/pipe_overlay = C
-				var/image/J = image(pipe_overlay.icon, get_turf(pipe), pipe_overlay.icon_state, pipe.layer+1, pipe_overlay.dir)
-				J.alpha = 128
-				J.color = pipe.color
-				flick_overlay(J, list(M.client), 8)
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
 	if(!ishuman(loc))
