@@ -85,9 +85,9 @@
 		if(armor <= 40 && istype(O))
 			if(istype(P)) //If the staplegun contains paper...
 				H.try_to_embed(P,O)//forceembed it
-				P = null//remove the ref
+				P = null
 			else
-				var/obj/item/stack/staples/S = new /obj/item/stack/staples(H, 1)
+				var/obj/item/stack/staples/S = new /obj/item/stack/staples
 				H.try_to_embed(S,O)
 			user.visible_message("<span class='danger'>[user] has stapled [target] in the [O]!</span>", "<span class='userdanger'>You staple [target]!</span>")
 			H.update_damage_overlays()
