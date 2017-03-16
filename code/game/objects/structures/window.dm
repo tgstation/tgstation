@@ -12,6 +12,7 @@
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = 0
+	var/heat_resistance = 800
 	var/decon_speed = 30
 	var/wtype = "glass"
 	var/fulltile = 0
@@ -175,6 +176,7 @@
 					to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 
+
 		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
 			playsound(loc, I.usesound, 75, 1)
@@ -241,11 +243,9 @@
 	if(!disassembled)
 		playsound(src, "shatter", 70, 1)
 		var/turf/T = loc
-
 		if(!(flags & NODECONSTRUCT))
 			for(var/i in debris)
 				var/obj/item/I = i
-
 				I.loc = T
 				transfer_fingerprints_to(I)
 	qdel(src)
@@ -274,7 +274,6 @@
 	ini_dir = dir
 	add_fingerprint(usr)
 	return TRUE
-
 
 /obj/structure/window/verb/revrotate()
 	set name = "Rotate Window Clockwise"
@@ -355,7 +354,8 @@
 		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
+
+	if(exposed_temperature > (T0C + heat_resistance))
 		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
 
@@ -377,6 +377,7 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
+	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	max_integrity = 50
 	explosion_block = 1
@@ -394,6 +395,11 @@
 	name = "frosted window"
 	icon_state = "fwindow"
 
+/obj/structure/window/reinforced/highpressure
+	name = "high pressure window"
+	max_integrity = 1000
+	heat_resistance = 50000
+	pressure_resistance = 4*ONE_ATMOSPHERE
 
 /* Full Tile Windows (more obj_integrity) */
 
@@ -405,7 +411,7 @@
 	fulltile = 1
 	flags = NONE
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
@@ -419,7 +425,20 @@
 	fulltile = 1
 	flags = NONE
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	level = 3
+	glass_amount = 2
+
+/obj/structure/window/reinforced/highpressure/fulltile
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon_state = "r_window"
+	dir = FULLTILE_WINDOW_DIR
+	max_integrity = 1000
+	fulltile = 1
+	flags = NONE
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -433,7 +452,7 @@
 	fulltile = 1
 	flags = NONE
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
 	glass_amount = 2
 
@@ -456,6 +475,7 @@
 	fulltile = 1
 	flags = NONE
 	reinf = 1
+	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
