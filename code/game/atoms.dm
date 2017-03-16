@@ -443,7 +443,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
-	return
+	return 0
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0
