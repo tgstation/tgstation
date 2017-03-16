@@ -87,10 +87,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		else
 			icon_state = "req_comp0"
 
-/obj/machinery/requests_console/New()
+/obj/machinery/requests_console/Initialize()
+	..()
 	name = "\improper [department] requests console"
 	allConsoles += src
-	//req_console_departments += department
 	switch(departmentType)
 		if(1)
 			if(!("[department]" in req_console_assistance))
@@ -126,6 +126,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0
+
+/obj/machinery/requests_console/Destroy()
+	QDEL_NULL(Radio)
+	allConsoles -= src
+	return ..()
 
 /obj/machinery/requests_console/attack_hand(mob/user)
 	if(..())

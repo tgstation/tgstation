@@ -190,7 +190,7 @@
 			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
-		var/DBQuery/query_get_messages = dbcon.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' ORDER BY timestamp")
+		var/DBQuery/query_get_messages = dbcon.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' ORDER BY timestamp DESC")
 		if(!query_get_messages.warn_execute())
 			return
 		var/messagedata
