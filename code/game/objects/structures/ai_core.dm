@@ -19,7 +19,7 @@
 		brain = null
 	return ..()
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore, TRUE)
+CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore, TRUE, TRUE)
 	. = newlist(
 		/datum/construction_state/first{
 		//	required_type_to_construct = /obj/item/stack/sheet/plasteel

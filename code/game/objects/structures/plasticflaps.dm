@@ -11,7 +11,7 @@
 	density = FALSE
 	..()
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/plasticflaps, TRUE)
+CONSTRUCTION_BLUEPRINT(/obj/structure/plasticflaps, FALSE, TRUE)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/plastic

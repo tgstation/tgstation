@@ -21,7 +21,7 @@
 	pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 	opened = 1
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet, TRUE)
+CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet, TRUE, TRUE)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/wallframe/extinguisher_cabinet
@@ -78,13 +78,14 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet, TRUE)
 	toggle_cabinet(user)
 
 /obj/structure/extinguisher_cabinet/proc/toggle_cabinet(mob/user, silent)
-	if(opened)
+	if(broken)
 		if(!silent)
 			to_chat(user, "<span class='warning'>[src] is broken open.</span>")
-	else
-		playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
-		opened = !opened
-		update_icon()
+		return
+
+	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
+	opened = !opened
+	update_icon()
 
 /obj/structure/extinguisher_cabinet/update_icon()
 	if(!opened)
@@ -111,7 +112,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet, TRUE)
 	icon_state = "extinguisher_frame"
 	result_path = /obj/structure/extinguisher_cabinet
 
-CONSTRUCTION_BLUEPRINT(/obj/item/wallframe/extinguisher_cabinet, TRUE)
+CONSTRUCTION_BLUEPRINT(/obj/item/wallframe/extinguisher_cabinet, TRUE, TRUE)
 	. = newlist(
 		/datum/construction_state/first{
 			//required_type_to_construct = /obj/item/stack/sheet/metal

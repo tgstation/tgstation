@@ -35,9 +35,10 @@
 	latejoin -= src	//These may be here due to the arrivals shuttle
 	return ..()
 
-CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE)
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 	. = newlist(
 		/datum/construction_state/first{
+			construction_delay = 10
 			one_per_turf = 1
 			on_floor = 1
 		},
@@ -57,7 +58,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE)
 	var/datum/construction_state/F = .[1]
 	var/obj/structure/chair/O = obj_type
 	F.required_type_to_construct = initial(O.buildstacktype)
-	F.required_amount_to_construct = initial(O.buildstacktype)
+	F.required_amount_to_construct = initial(O.buildstackamount)
 
 /obj/structure/chair/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
 	. = ..()
@@ -188,9 +189,10 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE)
 	return
 
 /obj/structure/chair/wood/normal //Kept for map compatibility
-
+	construction_blueprint = null	//Reee you have the tools, delete the damn thing!
 
 /obj/structure/chair/wood/wings
+	bp_name = "winged wooden chair"
 	icon_state = "wooden_chair_wings"
 	item_chair = /obj/item/chair/wood/wings
 
@@ -224,29 +226,37 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE)
 
 
 /obj/structure/chair/comfy/brown
+	bp_name = "brown comfy chair"
 	color = rgb(255,113,0)
 
 /obj/structure/chair/comfy/beige
+	bp_name = "beige comfy chair"
 	color = rgb(255,253,195)
 
 /obj/structure/chair/comfy/teal
+	bp_name = "teal comfy chair"
 	color = rgb(0,255,255)
 
 /obj/structure/chair/comfy/black
+	bp_name = "black comfy chair"
 	color = rgb(167,164,153)
 
 /obj/structure/chair/comfy/lime
+	bp_name = "lime comfy chair"
 	color = rgb(255,251,0)
 
 /obj/structure/chair/office
+	bp_name = "office chair"
 	anchored = 0
 	buildstackamount = 5
 	item_chair = null
 
 /obj/structure/chair/office/light
+	bp_name = "white office chair"
 	icon_state = "officechair_white"
 
 /obj/structure/chair/office/dark
+	bp_name = "black office chair"
 	icon_state = "officechair_dark"
 
 //Stool

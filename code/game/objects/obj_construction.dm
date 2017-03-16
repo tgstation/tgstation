@@ -156,6 +156,7 @@
 /datum/construction_blueprint
 	var/owner_type
 	var/root_only
+	var/build_root_only
 
 /datum/construction_blueprint/proc/GetBlueprint(obj/obj_type)
 	return list()
