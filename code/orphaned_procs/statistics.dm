@@ -235,9 +235,10 @@ var/datum/feedback/blackbox = new()
 	var/sqlpod = sanitizeSQL(placeofdeath.name)
 	var/laname
 	var/lakey
-	if(L.lastattacker)
-		laname = sanitizeSQL(L.lastattacker:real_name)
-		lakey = sanitizeSQL(L.lastattacker:key)
+	if(L.lastattacker && ismob(L.lastattacker))
+		var/mob/LA = L.lastattacker
+		laname = sanitizeSQL(LA.real_name)
+		lakey = sanitizeSQL(LA.key)
 	var/sqlgender = sanitizeSQL(L.gender)
 	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
 	var/sqlfire = sanitizeSQL(L.getFireLoss())
