@@ -53,7 +53,7 @@
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
 	if(!Debug2)
@@ -289,7 +289,7 @@
 			G.on_report()
 			intercepttext += G.get_report()
 
-	print_command_report(intercepttext, "Central Command Status Summary")
+	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
@@ -302,7 +302,7 @@
 	var/datum/mind/applicant = null
 
 	// Ultimate randomizing code right here
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.client && player.ready)
 			players += player
 
@@ -310,7 +310,7 @@
 	// Goodbye antag dante
 	players = shuffle(players)
 
-	for(var/mob/new_player/player in players)
+	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready)
 			if(role in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
@@ -324,7 +324,7 @@
 					candidates -= player
 
 	if(candidates.len < recommended_enemies)
-		for(var/mob/new_player/player in players)
+		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
@@ -349,7 +349,7 @@
 			break
 /*
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
-		for(var/mob/new_player/player in players)
+		for(var/mob/dead/new_player/player in players)
 			if (player.client && player.ready)
 				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
@@ -377,7 +377,7 @@
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 /*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
+/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/dead/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1
 	return 0
@@ -385,7 +385,7 @@
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in player_list)
 		if(P.client && P.ready)
 			. ++
 

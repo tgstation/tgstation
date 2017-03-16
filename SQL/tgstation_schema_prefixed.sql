@@ -145,6 +145,9 @@ CREATE TABLE `SS13_death` (
   `brainloss` smallint(5) unsigned NOT NULL,
   `fireloss` smallint(5) unsigned NOT NULL,
   `oxyloss` smallint(5) unsigned NOT NULL,
+  `toxloss` smallint(5) unsigned NOT NULL,
+  `cloneloss` smallint(5) unsigned NOT NULL,
+  `staminaloss` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -195,6 +198,8 @@ CREATE TABLE `SS13_legacy_population` (
   `playercount` int(11) DEFAULT NULL,
   `admincount` int(11) DEFAULT NULL,
   `time` datetime NOT NULL,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

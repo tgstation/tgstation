@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
@@ -48,7 +48,7 @@
 	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
 	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
 
-/mob/living/simple_animal/hostile/mining_drone/New()
+/mob/living/simple_animal/hostile/mining_drone/Initialize()
 	..()
 	toggle_light_action = new()
 	toggle_light_action.Grant(src)

@@ -280,6 +280,15 @@
 	..()
 	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
 
+/datum/plant_gene/trait/glow/shadow
+	//makes plant emit slightly purple shadows
+	//adds -potency*(rate*0.05) light power to products
+	name = "Shadow Emission"
+	rate = 0.04
+
+/datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
+	return -max(S.potency*(rate*0.05), 0.075)
+
 /datum/plant_gene/trait/glow/red
 	name = "Red Electrical Glow"
 	glow_color = LIGHT_COLOR_RED

@@ -454,12 +454,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
+	var/announce_command_report = TRUE
 	if(confirm == "Yes")
 		priority_announce(input, null, 'sound/AI/commandreport.ogg')
-	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+		announce_command_report = FALSE
 
-	print_command_report(input,"[confirm=="Yes" ? "" : "Classified "][command_name()] Update")
+	print_command_report(input,"[confirm=="Yes" ? "" : "Classified "][command_name()] Update",announce=announce_command_report)
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
@@ -746,24 +746,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z]).")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_COORDJMP(N)].")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/reset_latejoin_spawns()
-	set category = "Debug"
-	set name = "Remove Latejoin Spawns"
-
-	if(!check_rights(R_DEBUG))
-		return
-	var/confirm = alert(src, "Disable Latejoin spawns??", "Message", "Yes", "No")
-	if(confirm != "Yes")
-		return
-
-	latejoin.Cut()
-
-	log_admin("[key_name(usr)] removed latejoin spawnpoints.")
-	message_admins("[key_name_admin(usr)] removed latejoin spawnpoints.")
-
-
-
 
 var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 

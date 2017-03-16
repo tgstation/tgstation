@@ -2,7 +2,7 @@
 /mob/living/simple_animal/bot/cleanbot
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "cleanbot0"
 	density = 0
 	anchored = 0
@@ -31,7 +31,7 @@
 	var/next_dest
 	var/next_dest_loc
 
-/mob/living/simple_animal/bot/cleanbot/New()
+/mob/living/simple_animal/bot/cleanbot/Initialize()
 	..()
 	get_targets()
 	icon_state = "cleanbot[on]"

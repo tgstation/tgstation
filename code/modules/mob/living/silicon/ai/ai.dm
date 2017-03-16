@@ -87,7 +87,7 @@ var/list/ai_list = list()
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/deploy_last_shell/redeploy_action = new
 
-/mob/living/silicon/ai/New(loc, datum/ai_laws/L, mob/target_ai)
+/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
@@ -969,7 +969,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/resist()
 	return
 
-/mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
+/mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 	..()

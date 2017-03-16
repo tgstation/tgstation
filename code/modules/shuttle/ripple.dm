@@ -13,6 +13,10 @@
 
 	duration = 3 * SHUTTLE_RIPPLE_TIME
 
-/obj/effect/overlay/temp/ripple/New()
+/obj/effect/overlay/temp/ripple/Initialize(mapload, time_left)
 	. = ..()
-	animate(src, alpha=255, time=SHUTTLE_RIPPLE_TIME)
+	animate(src, alpha=255, time=time_left)
+	addtimer(CALLBACK(src, .proc/stop_animation), 8, TIMER_CLIENT_TIME)
+
+/obj/effect/overlay/temp/ripple/proc/stop_animation()
+	icon_state = "medi_holo_no_anim"

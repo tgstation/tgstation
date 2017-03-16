@@ -9,7 +9,7 @@
 	var/list/pet_monkey_names = list("Pun Pun", "Bubbles", "Mojo", "George", "Darwin", "Aldo", "Caeser", "Kanzi", "Kong", "Terk", "Grodd", "Mala", "Bojangles", "Coco", "Able", "Baker", "Scatter", "Norbit", "Travis")
 	var/list/rare_pet_monkey_names = list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky")
 
-/mob/living/carbon/monkey/punpun/New()
+/mob/living/carbon/monkey/punpun/Initialize()
 	Read_Memory()
 	if(ancestor_name)
 		name = ancestor_name

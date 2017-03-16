@@ -97,7 +97,7 @@
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
 
-/mob/living/silicon/robot/New(loc,newshell)
+/mob/living/silicon/robot/Initialize(mapload, newshell)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -134,7 +134,7 @@
 	..()
 
 	//If this body is meant to be a borg controlled by the AI player
-	if(newshell)
+	if(shell)
 		make_shell()
 
 	//MMI stuff. Held togheter by magic. ~Miauw
@@ -174,8 +174,7 @@
 		else
 			to_chat(src, "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>")
 			ghostize()
-			spawn(0)
-				throw EXCEPTION("Borg MMI lacked a brainmob")
+			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
@@ -759,9 +758,8 @@
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
 		lamp_intensity = 0
-		lamp_recharging = 1
-		spawn(cooldown) //10 seconds by default, if the source of the deactivation does not keep stat that long.
-			lamp_recharging = 0
+		lamp_recharging = TRUE
+		addtimer(CALLBACK(src, .proc/reset_headlamp), cooldown)
 	else
 		set_light(lamp_intensity)
 
@@ -769,6 +767,9 @@
 		lamp_button.icon_state = "lamp[lamp_intensity]"
 
 	update_icons()
+
+/mob/living/silicon/robot/proc/reset_headlamp()
+	lamp_recharging = FALSE
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
@@ -827,16 +828,18 @@
 							<i>Help the operatives secure the disk at all costs!</i></b>"
 	var/set_module = /obj/item/weapon/robot_module/syndicate
 
-/mob/living/silicon/robot/syndicate/New(loc)
+/mob/living/silicon/robot/syndicate/Initialize()
 	..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module.transform_to(set_module)
 	laws = new /datum/ai_laws/syndicate_override()
-	spawn(5)
-		if(playstyle_string)
-			to_chat(src, playstyle_string)
+	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
+
+/mob/living/silicon/robot/syndicate/proc/show_playstyle()
+	if(playstyle_string)
+		to_chat(src, playstyle_string)
 
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
@@ -1015,9 +1018,9 @@
 		new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
+	name = "AI Shell [rand(100,999)]"
+	real_name = name
 	available_ai_shells |= src
-	real_name = "AI Shell [rand(100,999)]"
-	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
@@ -1078,8 +1081,8 @@
 	mainframe.show_laws() //Always remind the AI when switching
 	mainframe = null
 
-/mob/living/silicon/robot/shell/New(loc,newshell = TRUE)
-	..()
+/mob/living/silicon/robot/shell
+	shell = TRUE
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()

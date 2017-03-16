@@ -111,7 +111,10 @@ var/list/teleportlocs = list()
 		power_equip = 1
 		power_environ = 1
 
-		if (dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
 			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	..()
@@ -328,15 +331,11 @@ var/list/teleportlocs = list()
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
-		invisibility = INVISIBILITY_LIGHTING
 	else
-	//	new lighting behaviour with obj lights
 		icon_state = null
-		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
-	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1

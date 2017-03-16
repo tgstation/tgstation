@@ -2,7 +2,7 @@
 /mob/living/simple_animal/bot/floorbot
 	name = "\improper Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "floorbot0"
 	density = 0
 	anchored = 0
@@ -38,7 +38,7 @@
 	#define REPLACE_TILE		6
 	#define TILE_EMAG		7
 
-/mob/living/simple_animal/bot/floorbot/New()
+/mob/living/simple_animal/bot/floorbot/Initialize()
 	..()
 	update_icon()
 	var/datum/job/engineer/J = new/datum/job/engineer
