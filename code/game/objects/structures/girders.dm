@@ -395,3 +395,17 @@
 	if(!(flags & NODECONSTRUCT))
 		new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
 	qdel(src)
+
+/obj/structure/girder/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+	var/turf/T = get_turf(src)
+	switch(the_rcd.mode)
+		if(1)
+			to_chat(user, "<span class='notice'>You finish a wall.</span>")
+			T.ChangeTurf(/turf/closed/wall)
+			qdel(src)
+			return 1
+		if(3)
+			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")
+			qdel(src)
+			return 1
+	return 0

@@ -24,15 +24,6 @@
 	name = "internal RCD"
 	max_matter = 600 //Bigger container and faster speeds due to being specialized and stationary.
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
-	walldelay = 10
-	grilledelay = 5
-	windowdelay = 5
-	airlockdelay = 20
-	decongirderdelay = 10
-	deconwalldelay = 20
-	deconfloordelay = 30
-	deconwindowdelay = 20
-	deconairlockdelay = 20
 
 /obj/machinery/computer/camera_advanced/base_construction
 	name = "base contruction console"

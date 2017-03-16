@@ -257,3 +257,18 @@
 	grille_type = /obj/structure/grille/ratvar
 	broken_type = null
 
+
+/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(3)
+			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")
+			qdel(src)
+			return 1
+		if(4)
+			if(locate(/obj/structure/window) in loc)
+				return 0
+			to_chat(user, "<span class='notice'>You construct the window.</span>")
+			var/obj/structure/window/WD = new the_rcd.window_type(loc)
+			WD.anchored = 1
+			return 1
+	return 0

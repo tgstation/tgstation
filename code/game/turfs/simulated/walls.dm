@@ -257,3 +257,13 @@
 
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
+
+/turf/closed/wall/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(3)
+			if(istype(src, /turf/closed/wall/r_wall))
+				return 0
+			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")
+			ChangeTurf(/turf/open/floor/plating)
+			return 1
+	return 0

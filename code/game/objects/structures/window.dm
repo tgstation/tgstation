@@ -560,3 +560,12 @@
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE
+
+
+/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(3)
+			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
+			qdel(src)
+			return 1
+	return 0
