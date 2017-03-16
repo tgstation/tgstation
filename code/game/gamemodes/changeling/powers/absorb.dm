@@ -67,7 +67,7 @@
 
 		var/list/say_log = target.logging[INDIVIDUAL_SAY_LOG]
 
-		if(say_log.len > LING_ABSORB_RECENT_SPEECH)
+		if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
 			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
 		else
 			for(var/spoken_memory in say_log)
