@@ -171,15 +171,12 @@
 		if(construction_blueprint)
 			var/datum/construction_blueprint/BP = new construction_blueprint
 			var/temp = -1
-			testing("Creating blueprint for [type]")
 			var/blueprint_root_only = BP.root_only
-			if((blueprint_root_only && BP.owner_type == type) || (!blueprint_root_only && istype(src, BP.owner_type)))
+			if(BP.owner_type == type || (!blueprint_root_only && istype(src, BP.owner_type)))
 				temp = BP.GetBlueprint(type)	//get steps for the first time
 				if(!islist(temp))
 					WARNING("Invalid construction_blueprint for [type]!")
 					temp = -1
-			else
-				testing("Skipping, BPRO: [blueprint_root_only ? "TRUE" : "FALSE"]")
 			if(temp != -1)
 				LinkConstructionSteps(temp)	//assign ids and stitch the linked list together
 				if(ValidateConstructionSteps(temp))
