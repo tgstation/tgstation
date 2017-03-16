@@ -269,3 +269,39 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
 	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
+
+/datum/design/secpistol
+	name = "Stiletto Security Pistol"
+	desc = "An expermental autoloading pistol that accepts the readily available .38 special round."
+	id = "secpistol"
+	req_tech = list("combat" = 4, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 2000, MAT_METAL = 8000)
+	build_path = /obj/item/weapon/gun/ballistic/automatic/pistol/secpistol
+	category = list("Weapons")
+
+/datum/design/mag_secpistol
+	name = "Stiletto Pistol Magazine (.38)"
+	desc = "A 12 round magazine for the Stiletto Security Pistol"
+	id = "mag_secpistol"
+	req_tech = list("combat" = 4, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 500, MAT_METAL = 5000)
+	build_path = /obj/item/ammo_box/magazine/m38auto
+	category = list("Ammo")
+
+/datum/design/mag_secpistol/ltl
+	name = "Stiletto Pistol Magazine (.38 Less-Than-Lethal)"
+	desc = "A 12 round rubberized magazine for the Stiletto Security Pistol"
+	id = "mag_secpistol_ltl"
+	req_tech = list("combat" = 5, "materials" = 4)
+	materials = list(MAT_SILVER = 750, MAT_METAL = 6000)
+	build_path = /obj/item/ammo_box/magazine/m38auto/ltl
+
+/datum/design/mag_secpistol/fmj
+	name = "Stiletto Pistol Magazine (.38 FMJ)"
+	desc = "A 12 round lethal magazine for the Stiletto Security Pistol"
+	id = "mag_secpistol_fmj"
+	req_tech = list("combat" = 5, "materials" = 5)
+	materials = list(MAT_SILVER = 750, MAT_METAL = 6500, MAT_URANIUM = 250)
+	build_path = /obj/item/ammo_box/magazine/m38auto/fmj
