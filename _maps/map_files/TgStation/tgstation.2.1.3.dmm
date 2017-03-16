@@ -56235,7 +56235,7 @@
 /area/engine/engineering)
 "crN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/machinery/recharger,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "crO" = (
