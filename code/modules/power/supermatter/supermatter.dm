@@ -198,25 +198,7 @@
 		removed = new()
 
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
-		if(takes_damage)
-			damage += max((power-1600)/10, 0)
 		return 1
-
-	damage_archived = damage
-	if(takes_damage)
-		//causing damage
-		damage = max(damage + (max(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ), 0)
-		damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500), 0)
-		damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80), 0)
-
-		//healing damage
-		if(combined_gas < MOLE_PENALTY_THRESHOLD)
-			damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
-
-		//capping damage
-		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
-		if(damage > damage_archived && prob(10))
-			playsound(get_turf(src), 'sound/effects/EMPulse.ogg', 50, 1)
 
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
 	//calculating gas related values
