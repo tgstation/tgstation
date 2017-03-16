@@ -83,4 +83,5 @@
 	desc = "A semi-automatic law enforcement pistol with a larger ammo capacity. Uses .38-special ammo."
 	icon_state = "secpistol"
 	mag_type = /obj/item/ammo_box/magazine/m38auto
+	pin = null
 	can_suppress = 0
