@@ -149,7 +149,7 @@ var/datum/controller/subsystem/atoms/SSatoms
 						var/obj/O = I
 						var/bp_name = initial(O.bp_name)
 						if(!bp_name)
-							name = initial(O.name)
+							bp_name = initial(O.name)
 						t_recipes += new /datum/stack_recipe(bp_name, I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = F.one_per_turf, on_floor = F.on_floor, window_checks = is_glass)
 		CHECK_TICK
 	testing("Compiled [recipes.len] stack construction recipes")
