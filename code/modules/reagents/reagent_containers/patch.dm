@@ -33,4 +33,4 @@
 /obj/item/weapon/reagent_containers/pill/patch/synth_flesh
 	name = "synthflesh patch"
 	desc = "Helps with burn and brute injuries."
-	list_reagents = list("synthflesh" = 20, "inacusiate" = 1,)
+	list_reagents = list("synthflesh" = 20, "inacusiate" = 1)
