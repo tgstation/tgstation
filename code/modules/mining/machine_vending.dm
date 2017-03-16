@@ -209,7 +209,7 @@
 	..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
-		new /datum/data/mining_equipment("KA Golem Adapter", 		/bj/item/borg/upgrade/modkit/trigger_guard,									100),
+		new /datum/data/mining_equipment("KA Golem Adapter", 		/obj/item/borg/upgrade/modkit/trigger_guard,									100),
 		new /datum/data/mining_equipment("Science Goggles",       	/obj/item/clothing/glasses/science, 				                   	250),
 		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
 		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
