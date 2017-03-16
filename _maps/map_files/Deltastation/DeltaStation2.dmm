@@ -17895,9 +17895,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aIx" = (
-/turf/open/floor/plasteel/red/corner{
-	dir = 1
-	},
 /obj/structure/table,
 /obj/item/weapon/storage/crayons,
 /obj/item/weapon/storage/crayons,
@@ -18559,13 +18556,10 @@
 	},
 /area/security/prison)
 "aJQ" = (
-/turf/open/floor/plating,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "aJR" = (
 /obj/effect/decal/cleanable/dirt,

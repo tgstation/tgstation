@@ -747,24 +747,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_COORDJMP(N)].")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/reset_latejoin_spawns()
-	set category = "Debug"
-	set name = "Remove Latejoin Spawns"
-
-	if(!check_rights(R_DEBUG))
-		return
-	var/confirm = alert(src, "Disable Latejoin spawns??", "Message", "Yes", "No")
-	if(confirm != "Yes")
-		return
-
-	latejoin.Cut()
-
-	log_admin("[key_name(usr)] removed latejoin spawnpoints.")
-	message_admins("[key_name_admin(usr)] removed latejoin spawnpoints.")
-
-
-
-
 var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 /client/proc/create_outfits()

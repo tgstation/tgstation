@@ -56,6 +56,8 @@ var/datum/controller/subsystem/ticker/ticker
 
 	var/news_report
 
+	var/late_join_disabled
+
 /datum/controller/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
