@@ -43116,7 +43116,8 @@
 	department = "Bar";
 	departmentType = 2;
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/structure/table,
 /obj/item/weapon/book/manual/barman_recipes{
@@ -67235,7 +67236,8 @@
 	department = "Chemistry";
 	departmentType = 2;
 	pixel_x = -30;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/whiteyellow/side{
@@ -67435,7 +67437,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -69766,7 +69769,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -30;
+	receive_ore_updates = 1
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
@@ -71347,7 +71351,8 @@
 	departmentType = 5;
 	name = "Research Director RC";
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/machinery/modular_computer/console/preset/research,
 /turf/open/floor/plasteel/cafeteria{
@@ -76968,7 +76973,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -30;
+	receive_ore_updates = 1
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light,
@@ -78448,7 +78454,8 @@
 	department = "Virology";
 	name = "Virology Requests Console";
 	pixel_x = 29;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/item/stack/sheet/mineral/plasma{
 	layer = 2.9
@@ -79172,7 +79179,8 @@
 	departmentType = 2;
 	name = "Robotics RC";
 	pixel_x = -31;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -91458,7 +91466,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/machinery/light{
 	dir = 1
