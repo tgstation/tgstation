@@ -52656,6 +52656,7 @@
 	dir = 4
 	},
 /obj/item/stack/packageWrap,
+/obj/item/weapon/storage/box/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -54379,16 +54380,12 @@
 	},
 /area/hallway/primary/central)
 "bQA" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -129388,7 +129385,7 @@ bHb
 bMP
 bKg
 bLL
-ddD
+bNz
 bOT
 bQC
 bLK
