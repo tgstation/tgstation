@@ -132,12 +132,12 @@ var/datum/controller/subsystem/atoms/SSatoms
 		var/construction_blueprint_get_type = initial(construction_blueprint_getter_type.construction_blueprint);
 		if(construction_blueprint_get_type)
 			var/datum/construction_blueprint/CBP = new construction_blueprint_get_type;
-			if((CBP.owner_type != I && (CBP.root_only || CBP.build_root_only)) || !CBP.buildable)
+			if(CBP.owner_type != I && (CBP.root_only || CBP.build_root_only))
 				continue
 			var/list/BP = CBP.GetBlueprint(I)
 			if(BP.len)
 				var/datum/construction_state/first/F = BP[1]
-				if(istype(F))
+				if(istype(F) && F.buildable)
 					var/obj/item/stack/mat_type = F.required_type_to_construct
 					if(ispath(mat_type, /obj/item/stack))
 						var/merge_type = initial(mat_type.merge_type)
