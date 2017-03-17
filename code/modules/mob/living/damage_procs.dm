@@ -140,6 +140,12 @@
 	bruteloss = Clamp((bruteloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+
+	var/area/A = get_area(src)
+	if(istype(A, /area/medical))
+		for(var/obj/machinery/medical_equipment_vendor/V in machines)
+			V.gbp += amount
+
 	return amount
 
 /mob/living/proc/getOxyLoss()
@@ -151,6 +157,12 @@
 	oxyloss = Clamp((oxyloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+
+	var/area/A = get_area(src)
+	if(istype(A, /area/medical))
+		for(var/obj/machinery/medical_equipment_vendor/V in machines)
+			V.gbp += amount
+
 	return amount
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -170,6 +182,12 @@
 	toxloss = Clamp((toxloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+
+	var/area/A = get_area(src)
+	if(istype(A, /area/medical))
+		for(var/obj/machinery/medical_equipment_vendor/V in machines)
+			V.gbp += amount
+
 	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -189,6 +207,13 @@
 	fireloss = Clamp((fireloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+
+
+	var/area/A = get_area(src)
+	if(istype(A, /area/medical))
+		for(var/obj/machinery/medical_equipment_vendor/V in machines)
+			V.gbp += amount
+
 	return amount
 
 /mob/living/proc/getCloneLoss()
@@ -200,6 +225,12 @@
 	cloneloss = Clamp((cloneloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+
+	var/area/A = get_area(src)
+	if(istype(A, /area/medical))
+		for(var/obj/machinery/medical_equipment_vendor/V in machines)
+			V.gbp += amount
+
 	return amount
 
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
