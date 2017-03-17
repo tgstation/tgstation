@@ -238,7 +238,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
-	if(emergency.mode != SHUTTLE_CALL)
+	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
 	if(ticker.mode.name == "meteor")
 		return

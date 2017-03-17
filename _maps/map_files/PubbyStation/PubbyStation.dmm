@@ -44310,11 +44310,11 @@
 	},
 /area/engine/chiefs_office)
 "bJW" = (
-/obj/machinery/computer/atmos_alert,
 /obj/machinery/airalarm{
 	dir = 2;
 	pixel_y = 22
 	},
+/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
