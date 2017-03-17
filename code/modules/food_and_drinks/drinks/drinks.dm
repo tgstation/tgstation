@@ -12,7 +12,7 @@
 	volume = 50
 	resistance_flags = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/New()
+/obj/item/weapon/reagent_containers/food/drinks/Initialize()
 	..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -346,7 +346,7 @@
 	icon_state = "lemon-lime"
 	list_reagents = list("lemon_lime" = 30)
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
 	..()
 	name = "Lemon-Lime Soda"
 

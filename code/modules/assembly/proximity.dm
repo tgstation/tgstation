@@ -19,7 +19,7 @@
 /obj/item/device/assembly/prox_sensor/proc/sense()
 
 
-/obj/item/device/assembly/prox_sensor/New()
+/obj/item/device/assembly/prox_sensor/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 	oldloc = loc

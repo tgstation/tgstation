@@ -35,7 +35,7 @@
 			signal.data["slow"] += rand(5, 10) // slow the signal down
 			relay_information(signal, "/obj/machinery/telecomms/server")
 
-/obj/machinery/telecomms/processor/New()
+/obj/machinery/telecomms/processor/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/processor(null)
 	B.apply_default_parts(src)

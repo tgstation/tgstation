@@ -15,7 +15,7 @@
 	var/obj/item/device/radio/Radio //needed to send messages to sec radio
 
 
-/obj/machinery/mineral/labor_claim_console/New()
+/obj/machinery/mineral/labor_claim_console/Initialize()
 	..()
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0

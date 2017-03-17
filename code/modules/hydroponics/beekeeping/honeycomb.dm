@@ -12,7 +12,7 @@
 	list_reagents = list("honey" = 5)
 	var/honey_color = ""
 
-/obj/item/weapon/reagent_containers/honeycomb/New()
+/obj/item/weapon/reagent_containers/honeycomb/Initialize()
 	..()
 	pixel_x = rand(8,-8)
 	pixel_y = rand(8,-8)

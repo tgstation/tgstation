@@ -96,7 +96,7 @@
 	tastes = list("pie" = 1, "mushroom" = 1)
 
 
-/obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie/New()
+/obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie/Initialize()
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"

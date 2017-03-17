@@ -37,7 +37,7 @@
 			location.hotspot_expose(1000,500,1)
 	return 1
 
-/obj/machinery/igniter/New()
+/obj/machinery/igniter/Initialize()
 	..()
 	icon_state = "igniter[on]"
 
@@ -62,7 +62,7 @@
 	anchored = 1
 	resistance_flags = FIRE_PROOF
 
-/obj/machinery/sparker/New()
+/obj/machinery/sparker/Initialize()
 	..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)

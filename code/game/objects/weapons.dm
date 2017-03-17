@@ -2,7 +2,7 @@
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
 
-/obj/item/weapon/New()
+/obj/item/weapon/Initialize()
 	..()
 	if(!hitsound)
 		if(damtype == "fire")

@@ -16,7 +16,7 @@
 	var/record_interval = 50
 	var/next_record = 0
 
-/obj/machinery/computer/monitor/New()
+/obj/machinery/computer/monitor/Initialize()
 	..()
 	search()
 	history["supply"] = list()

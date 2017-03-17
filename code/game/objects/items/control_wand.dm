@@ -13,7 +13,7 @@
 	var/region_access = 1 //See access.dm
 	var/obj/item/weapon/card/id/ID
 
-/obj/item/weapon/door_remote/New()
+/obj/item/weapon/door_remote/Initialize()
 	..()
 	ID = new /obj/item/weapon/card/id
 	ID.access = get_region_accesses(region_access)

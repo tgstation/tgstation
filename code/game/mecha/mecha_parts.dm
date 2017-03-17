@@ -27,7 +27,7 @@
 /obj/item/mecha_parts/chassis/ripley
 	name = "\improper Ripley chassis"
 
-/obj/item/mecha_parts/chassis/ripley/New()
+/obj/item/mecha_parts/chassis/ripley/Initialize()
 	..()
 	construct = new /datum/construction/mecha/ripley_chassis(src)
 
@@ -62,7 +62,7 @@
 /obj/item/mecha_parts/chassis/odysseus
 	name = "\improper Odysseus chassis"
 
-/obj/item/mecha_parts/chassis/odysseus/New()
+/obj/item/mecha_parts/chassis/odysseus/Initialize()
 	..()
 	construct = new /datum/construction/mecha/odysseus_chassis(src)
 
@@ -102,7 +102,7 @@
 /obj/item/mecha_parts/chassis/gygax
 	name = "\improper Gygax chassis"
 
-/obj/item/mecha_parts/chassis/gygax/New()
+/obj/item/mecha_parts/chassis/gygax/Initialize()
 	..()
 	construct = new /datum/construction/mecha/gygax_chassis(src)
 
@@ -155,7 +155,7 @@
 /obj/item/mecha_parts/chassis/durand
 	name = "\improper Durand chassis"
 
-/obj/item/mecha_parts/chassis/durand/New()
+/obj/item/mecha_parts/chassis/durand/Initialize()
 	..()
 	construct = new /datum/construction/mecha/durand_chassis(src)
 
@@ -207,7 +207,7 @@
 /obj/item/mecha_parts/chassis/firefighter
 	name = "Firefighter chassis"
 
-/obj/item/mecha_parts/chassis/firefighter/New()
+/obj/item/mecha_parts/chassis/firefighter/Initialize()
 	..()
 	construct = new /datum/construction/mecha/firefighter_chassis(src)
 
@@ -217,7 +217,7 @@
 /obj/item/mecha_parts/chassis/honker
 	name = "\improper H.O.N.K chassis"
 
-/obj/item/mecha_parts/chassis/honker/New()
+/obj/item/mecha_parts/chassis/honker/Initialize()
 	..()
 	construct = new /datum/construction/mecha/honker_chassis(src)
 
@@ -257,7 +257,7 @@
 /obj/item/mecha_parts/chassis/phazon
 	name = "\improper Phazon chassis"
 
-/obj/item/mecha_parts/chassis/phazon/New()
+/obj/item/mecha_parts/chassis/phazon/Initialize()
 	..()
 	construct = new /datum/construction/mecha/phazon_chassis(src)
 

@@ -34,7 +34,7 @@ insert ascii eagle on american flag background here
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/micro_laser = 1)
 
-/obj/machinery/deepfryer/New()
+/obj/machinery/deepfryer/Initialize()
 	..()
 	create_reagents(50)
 	reagents.add_reagent("nutriment", 25)

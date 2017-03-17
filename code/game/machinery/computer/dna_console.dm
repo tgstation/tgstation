@@ -53,7 +53,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/scan_consolenew/New()
+/obj/machinery/computer/scan_consolenew/Initialize()
 	..()
 
 	spawn(5)

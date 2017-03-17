@@ -133,7 +133,7 @@ var/global/posibrain_notif_cooldown = 0
 
 	to_chat(user, msg)
 
-/obj/item/device/mmi/posibrain/New()
+/obj/item/device/mmi/posibrain/Initialize()
 	brainmob = new(src)
 	picked_fluff_name = pick(fluff_names)
 	brainmob.name = "[picked_fluff_name]-[rand(100, 999)]"

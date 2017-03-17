@@ -16,8 +16,8 @@
 /obj/item/weapon/gun/energy/pulse/prize
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/energy/pulse/prize/New()
-	. = ..()
+/obj/item/weapon/gun/energy/pulse/prize/Initialize()
+	..()
 	poi_list |= src
 	var/msg = "A pulse rifle prize has been created at ([x],[y],[z] - (\
 	<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>\

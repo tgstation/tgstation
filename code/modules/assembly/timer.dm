@@ -12,7 +12,7 @@
 	var/loop = 0
 
 
-/obj/item/device/assembly/timer/New()
+/obj/item/device/assembly/timer/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

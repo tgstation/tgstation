@@ -18,7 +18,7 @@
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 	var/immune_to_servant_attacks = FALSE //if we ignore attacks from servants of ratvar instead of taking damage
 
-/obj/structure/destructible/clockwork/New()
+/obj/structure/destructible/clockwork/Initialize()
 	..()
 	change_construction_value(construction_value)
 	all_clockwork_objects += src
@@ -142,7 +142,7 @@
 	density = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/destructible/clockwork/massive/New()
+/obj/structure/destructible/clockwork/massive/Initialize()
 	..()
 	poi_list += src
 

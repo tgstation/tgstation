@@ -6,10 +6,10 @@
 	origin_tech = "materials=4;magnets=4;programming=4;biotech=4;syndicate=5;bluespace=5"
 	var/starting_tc = 0
 
-/obj/item/weapon/implant/uplink/New()
+/obj/item/weapon/implant/uplink/Initialize()
+	..()
 	hidden_uplink = new(src)
 	hidden_uplink.telecrystals = starting_tc
-	..()
 
 /obj/item/weapon/implant/uplink/implant(mob/living/target, mob/user, silent = 0)
 	for(var/X in target.implants)

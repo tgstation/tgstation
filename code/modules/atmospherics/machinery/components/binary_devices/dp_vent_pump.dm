@@ -40,7 +40,7 @@ Acts like a normal vent, but has an input AND output.
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/Initialize()
 	..()
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2

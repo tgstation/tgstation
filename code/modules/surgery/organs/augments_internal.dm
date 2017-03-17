@@ -7,7 +7,7 @@
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
-/obj/item/organ/cyberimp/New(var/mob/M = null)
+/obj/item/organ/cyberimp/Initialize(var/mob/M = null)
 	if(iscarbon(M))
 		src.Insert(M)
 	if(implant_overlay)
@@ -148,7 +148,7 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 
-/obj/item/weapon/storage/box/cyber_implants/New(loc, implant)
+/obj/item/weapon/storage/box/cyber_implants/Initialize(mapload, implant)
 	..()
 	new /obj/item/device/autoimplanter(src)
 	if(ispath(implant))
@@ -163,7 +163,7 @@
 		/obj/item/organ/cyberimp/chest/reviver)
 	var/amount = 5
 
-/obj/item/weapon/storage/box/cyber_implants/bundle/New()
+/obj/item/weapon/storage/box/cyber_implants/bundle/Initialize()
 	..()
 	var/implant
 	while(contents.len <= amount + 1) // +1 for the autoimplanter.

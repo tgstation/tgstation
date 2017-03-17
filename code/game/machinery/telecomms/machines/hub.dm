@@ -33,7 +33,7 @@
 			relay_information(signal, "/obj/machinery/telecomms/relay", 1)
 			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1) // Send it to a broadcaster.
 
-/obj/machinery/telecomms/hub/New()
+/obj/machinery/telecomms/hub/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/hub(null)
 	B.apply_default_parts(src)

@@ -53,7 +53,7 @@
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
-/obj/machinery/droneDispenser/New()
+/obj/machinery/droneDispenser/Initialize()
 	..()
 	obj_integrity = max_integrity
 	materials = new(src, list(MAT_METAL, MAT_GLASS),
@@ -65,7 +65,7 @@
 	qdel(materials)
 	. = ..()
 
-/obj/machinery/droneDispenser/preloaded/New()
+/obj/machinery/droneDispenser/preloaded/Initialize()
 	..()
 	materials.insert_amount(5000)
 
@@ -78,7 +78,7 @@
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
 
-/obj/machinery/droneDispenser/syndrone/New()
+/obj/machinery/droneDispenser/syndrone/Initialize()
 	..()
 	materials.insert_amount(25000)
 
@@ -103,7 +103,7 @@
 	glass_cost = 2000
 	power_used = 2000
 
-/obj/machinery/droneDispenser/snowflake/preloaded/New()
+/obj/machinery/droneDispenser/snowflake/preloaded/Initialize()
 	..()
 	materials.insert_amount(10000)
 

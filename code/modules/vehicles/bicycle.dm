@@ -7,7 +7,7 @@
 var/static/list/bike_music = list('sound/misc/bike1.mid',
 							'sound/misc/bike2.mid',
 							'sound/misc/bike3.mid')
-/obj/vehicle/bicycle/New()
+/obj/vehicle/bicycle/Initialize()
 	..()
 	riding_datum = new/datum/riding/bicycle
 

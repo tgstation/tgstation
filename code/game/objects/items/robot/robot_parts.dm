@@ -22,11 +22,12 @@
 	var/aisync = 1
 	var/panel_locked = 1
 
-/obj/item/robot_suit/New()
+/obj/item/robot_suit/Initialize()
 	..()
 	updateicon()
 
-/obj/item/robot_suit/prebuilt/New()
+/obj/item/robot_suit/prebuilt/Initialize()
+	..()
 	l_arm = new(src)
 	r_arm = new(src)
 	l_leg = new(src)
@@ -37,7 +38,7 @@
 	chest = new(src)
 	chest.wired = TRUE
 	chest.cell = new /obj/item/weapon/stock_parts/cell/high/plus(chest)
-	..()
+	updateicon()
 
 /obj/item/robot_suit/proc/updateicon()
 	cut_overlays()
@@ -230,7 +231,7 @@
 			chest.cell.loc = O
 			chest.cell = null
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
-			if(O.mmi) //we delete the mmi created by robot/New()
+			if(O.mmi) //we delete the mmi created by robot/Initialize()
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename()

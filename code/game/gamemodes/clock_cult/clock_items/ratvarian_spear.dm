@@ -16,7 +16,7 @@
 	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 	var/timerid
 
-/obj/item/clockwork/ratvarian_spear/New()
+/obj/item/clockwork/ratvarian_spear/Initialize()
 	..()
 	impale_cooldown = 0
 

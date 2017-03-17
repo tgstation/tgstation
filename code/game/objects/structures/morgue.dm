@@ -24,9 +24,6 @@
 	var/locked = 0
 	var/opendir = SOUTH
 
-/obj/structure/bodycontainer/New()
-	..()
-
 /obj/structure/bodycontainer/Destroy()
 	open()
 	if(connected)
@@ -118,10 +115,10 @@
 	icon_state = "morgue1"
 	opendir = EAST
 
-/obj/structure/bodycontainer/morgue/New()
+/obj/structure/bodycontainer/morgue/Initialize()
+	..()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
-	..()
 
 /obj/structure/bodycontainer/morgue/update_icon()
 	if (!connected || connected.loc != src) // Open or tray is gone.
@@ -163,12 +160,12 @@ var/global/list/crematoriums = new/list()
 	crematoriums.Remove(src)
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/New()
+/obj/structure/bodycontainer/crematorium/Initialize()
+	..()
 	connected = new/obj/structure/tray/c_tray(src)
 	connected.connected = src
 
 	crematoriums.Add(src)
-	..()
 
 /obj/structure/bodycontainer/crematorium/update_icon()
 	if(!connected || connected.loc != src)

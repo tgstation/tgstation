@@ -57,7 +57,7 @@
 	light_power = 0.4
 	light_color = "#F42B9D"
 
-/obj/item/clockwork/component/belligerent_eye/lens_gem/New()
+/obj/item/clockwork/component/belligerent_eye/lens_gem/Initialize()
 	..()
 	update_light()
 
@@ -167,7 +167,7 @@
 	var/randomsinglesprite = FALSE
 	var/randomspritemax = 2
 
-/obj/item/clockwork/alloy_shards/New()
+/obj/item/clockwork/alloy_shards/Initialize()
 	..()
 	if(randomsinglesprite)
 		replace_name_desc()

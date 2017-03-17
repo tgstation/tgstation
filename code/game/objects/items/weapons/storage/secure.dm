@@ -145,10 +145,10 @@
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
-/obj/item/weapon/storage/secure/briefcase/New()
+/obj/item/weapon/storage/secure/briefcase/Initialize()
+	..()
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
-	return ..()
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
@@ -161,10 +161,10 @@
 /obj/item/weapon/storage/secure/briefcase/syndie
 	force = 15
 
-/obj/item/weapon/storage/secure/briefcase/syndie/New()
+/obj/item/weapon/storage/secure/briefcase/syndie/Initialize()
+	..()
 	for(var/i = 0, i < storage_slots - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
-	return ..()
 
 
 // -----------------------------
@@ -185,7 +185,7 @@
 	density = 0
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
-/obj/item/weapon/storage/secure/safe/New()
+/obj/item/weapon/storage/secure/safe/Initialize()
 	..()
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
@@ -193,6 +193,3 @@
 /obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
 	return attack_self(user)
 
-/obj/item/weapon/storage/secure/safe/HoS/New()
-	..()
-	//new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)

@@ -98,7 +98,7 @@
 	density = 0
 	var/duration = 0
 
-/obj/effect/mine/pickup/New()
+/obj/effect/mine/pickup/Initialize()
 	..()
 	animate(src, pixel_y = 4, time = 20, loop = -1)
 

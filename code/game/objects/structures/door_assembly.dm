@@ -18,9 +18,9 @@
 	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
 	var/material = null //icon state logic
 
-/obj/structure/door_assembly/New()
-	update_icon()
+/obj/structure/door_assembly/Initialize()
 	..()
+	update_icon()
 
 /obj/structure/door_assembly/door_assembly_0
 	name = "airlock assembly"

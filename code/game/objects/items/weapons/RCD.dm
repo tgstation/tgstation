@@ -207,7 +207,7 @@ RCD
 			airlock_type = /obj/machinery/door/airlock
 
 
-/obj/item/weapon/rcd/New()
+/obj/item/weapon/rcd/Initialize()
 	..()
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect_system/spark_spread
@@ -322,7 +322,7 @@ RCD
 	qdel(src)
 
 
-/obj/item/weapon/rcd/borg/New()
+/obj/item/weapon/rcd/borg/Initialize()
 	..()
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."

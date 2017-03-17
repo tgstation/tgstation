@@ -45,7 +45,7 @@
 							"Imported"
 							)
 
-/obj/machinery/autolathe/New()
+/obj/machinery/autolathe/Initialize()
 	..()
 	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/autolathe(null)

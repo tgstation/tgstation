@@ -14,7 +14,7 @@
 	var/cube_production = 1
 
 
-/obj/machinery/monkey_recycler/New()
+/obj/machinery/monkey_recycler/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/monkey_recycler(null)
 	B.apply_default_parts(src)

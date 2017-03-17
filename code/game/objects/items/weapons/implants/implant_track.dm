@@ -4,7 +4,7 @@
 	activated = 0
 	origin_tech = "materials=2;magnets=2;programming=2;biotech=2"
 
-/obj/item/weapon/implant/tracking/New()
+/obj/item/weapon/implant/tracking/Initialize()
 	..()
 	tracked_implants += src
 

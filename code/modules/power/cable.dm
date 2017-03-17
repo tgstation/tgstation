@@ -66,7 +66,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
 // the power cable object
-/obj/structure/cable/New()
+/obj/structure/cable/Initialize()
 	..()
 
 
@@ -479,7 +479,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
+/obj/item/stack/cable_coil/Initialize(mapload, amount = MAXCOIL, var/param_color = null)
 	..()
 	src.amount = amount
 	if(param_color)
@@ -730,7 +730,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 /obj/item/stack/cable_coil/cut
 	item_state = "coil_red2"
 
-/obj/item/stack/cable_coil/cut/New(loc)
+/obj/item/stack/cable_coil/cut/Initialize()
 	..()
 	src.amount = rand(1,2)
 	pixel_x = rand(-2,2)
@@ -770,7 +770,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	item_color = "white"
 	icon_state = "coil_white"
 
-/obj/item/stack/cable_coil/random/New()
+/obj/item/stack/cable_coil/random/Initialize()
 	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 	..()

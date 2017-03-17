@@ -16,7 +16,7 @@
 	var/salvage_num = 5
 	var/mob/living/silicon/ai/AI //AIs to be salvaged
 
-/obj/structure/mecha_wreckage/New(loc, mob/living/silicon/ai/AI_pilot)
+/obj/structure/mecha_wreckage/Initialize(mapload, mob/living/silicon/ai/AI_pilot)
 	..()
 	if(AI_pilot) //Type-checking for this is already done in mecha/Destroy()
 		AI = AI_pilot
@@ -102,7 +102,7 @@
 	name = "\improper Gygax wreckage"
 	icon_state = "gygax-broken"
 
-/obj/structure/mecha_wreckage/gygax/New()
+/obj/structure/mecha_wreckage/gygax/Initialize()
 	..()
 	var/list/parts = list(/obj/item/mecha_parts/part/gygax_torso,
 								/obj/item/mecha_parts/part/gygax_head,
@@ -145,7 +145,7 @@
 	name = "\improper Ripley wreckage"
 	icon_state = "ripley-broken"
 
-/obj/structure/mecha_wreckage/ripley/New()
+/obj/structure/mecha_wreckage/ripley/Initialize()
 	..()
 	var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
 								/obj/item/mecha_parts/part/ripley_left_arm,
@@ -163,7 +163,7 @@
 	name = "\improper Firefighter wreckage"
 	icon_state = "firefighter-broken"
 
-/obj/structure/mecha_wreckage/ripley/firefighter/New()
+/obj/structure/mecha_wreckage/ripley/firefighter/Initialize()
 	..()
 	var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
 								/obj/item/mecha_parts/part/ripley_left_arm,
@@ -188,7 +188,7 @@
 	icon_state = "honker-broken"
 	desc = "All is right in the universe."
 
-/obj/structure/mecha_wreckage/honker/New()
+/obj/structure/mecha_wreckage/honker/Initialize()
 	..()
 	var/list/parts = list(
 							/obj/item/mecha_parts/chassis/honker,
@@ -209,7 +209,7 @@
 	name = "\improper Durand wreckage"
 	icon_state = "durand-broken"
 
-/obj/structure/mecha_wreckage/durand/New()
+/obj/structure/mecha_wreckage/durand/Initialize()
 	..()
 	var/list/parts = list(
 								/obj/item/mecha_parts/part/durand_torso,
@@ -234,7 +234,7 @@
 	name = "\improper Odysseus wreckage"
 	icon_state = "odysseus-broken"
 
-/obj/structure/mecha_wreckage/odysseus/New()
+/obj/structure/mecha_wreckage/odysseus/Initialize()
 	..()
 	var/list/parts = list(
 								/obj/item/mecha_parts/part/odysseus_torso,

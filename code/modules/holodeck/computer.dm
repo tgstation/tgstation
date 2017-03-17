@@ -45,7 +45,7 @@
 	var/list/effects = list()
 	var/last_change = 0
 
-/obj/machinery/computer/holodeck/New()
+/obj/machinery/computer/holodeck/Initialize()
 
 	if(ispath(holodeck_type,/area))
 		linked = locate(holodeck_type)

@@ -13,7 +13,7 @@
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 
-/obj/item/device/assembly/signaler/New()
+/obj/item/device/assembly/signaler/Initialize()
 	..()
 	spawn(40)
 		set_frequency(frequency)

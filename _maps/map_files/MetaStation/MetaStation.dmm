@@ -2920,7 +2920,7 @@
 	pixel_y = 30
 	},
 /obj/machinery/computer/med_data/laptop,
-/obj/item/weapon/storage/secure/safe/HoS{
+/obj/item/weapon/storage/secure/safe{
 	pixel_x = 36;
 	pixel_y = 28
 	},

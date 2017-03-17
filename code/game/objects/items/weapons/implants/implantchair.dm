@@ -20,7 +20,7 @@
 	var/special = FALSE
 	var/special_name = "special function"
 
-/obj/machinery/implantchair/New()
+/obj/machinery/implantchair/Initialize()
 	..()
 	open_machine()
 	update_icon()

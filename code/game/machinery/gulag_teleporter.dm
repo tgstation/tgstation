@@ -23,7 +23,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer = null
 	var/list/required_items
 
-/obj/machinery/gulag_teleporter/New()
+/obj/machinery/gulag_teleporter/Initialize()
 	..()
 	required_items = typecacheof(list(
 				/obj/item/weapon/implant,

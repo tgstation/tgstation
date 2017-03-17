@@ -83,12 +83,11 @@
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
 
-/obj/item/weapon/storage/box/evidence/New()
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
+/obj/item/weapon/storage/box/evidence/Initialize()
 	..()
-	return
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)

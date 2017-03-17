@@ -1,7 +1,7 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
-/obj/item/clothing/under/color/random/New()
+/obj/item/clothing/under/color/random/Initialize()
 	..()
 	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
 	name = initial(C.name)

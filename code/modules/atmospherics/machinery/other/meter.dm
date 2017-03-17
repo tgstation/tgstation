@@ -16,7 +16,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
 
 
-/obj/machinery/meter/New()
+/obj/machinery/meter/Initialize()
 	..()
 	SSair.atmos_machinery += src
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc

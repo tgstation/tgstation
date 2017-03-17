@@ -16,7 +16,7 @@
 	origin_tech = "programming=2;biotech=4"
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
-/obj/item/drone_shell/New()
+/obj/item/drone_shell/Initialize()
 	..()
 	var/area/A = get_area(src)
 	if(A)

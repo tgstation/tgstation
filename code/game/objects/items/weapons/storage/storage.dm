@@ -498,7 +498,7 @@
 		remove_from_storage(I, T)
 
 
-/obj/item/weapon/storage/New()
+/obj/item/weapon/storage/Initialize()
 	..()
 
 	can_hold = typecacheof(can_hold)

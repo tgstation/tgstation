@@ -48,7 +48,7 @@
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
-/obj/machinery/seed_extractor/New()
+/obj/machinery/seed_extractor/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/seed_extractor(null)
 	B.apply_default_parts(src)

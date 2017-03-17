@@ -77,7 +77,7 @@
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
 
-/obj/mecha/working/ripley/deathripley/New()
+/obj/mecha/working/ripley/deathripley/Initialize()
 	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
 	ME.attach(src)
@@ -87,7 +87,7 @@
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
 
-/obj/mecha/working/ripley/mining/New()
+/obj/mecha/working/ripley/mining/Initialize()
 	..()
 	//Attach drill
 	if(prob(25)) //Possible diamond drill... Feeling lucky?

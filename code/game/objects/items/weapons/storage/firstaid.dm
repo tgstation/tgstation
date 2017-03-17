@@ -20,7 +20,7 @@
 	icon_state = "firstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
-/obj/item/weapon/storage/firstaid/regular/New()
+/obj/item/weapon/storage/firstaid/regular/Initialize()
 	..()
 	if(empty) return
 	new /obj/item/stack/medical/gauze(src)
@@ -38,7 +38,7 @@
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
-/obj/item/weapon/storage/firstaid/fire/New()
+/obj/item/weapon/storage/firstaid/fire/Initialize()
 	..()
 	if(empty) return
 	icon_state = pick("ointment","firefirstaid")
@@ -56,7 +56,7 @@
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
-/obj/item/weapon/storage/firstaid/toxin/New()
+/obj/item/weapon/storage/firstaid/toxin/Initialize()
 	..()
 	if(empty) return
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
@@ -73,7 +73,7 @@
 	icon_state = "o2"
 	item_state = "firstaid-o2"
 
-/obj/item/weapon/storage/firstaid/o2/New()
+/obj/item/weapon/storage/firstaid/o2/Initialize()
 	..()
 	if(empty) return
 	for(var/i in 1 to 4)
@@ -89,7 +89,7 @@
 	icon_state = "brute"
 	item_state = "firstaid-brute"
 
-/obj/item/weapon/storage/firstaid/brute/New()
+/obj/item/weapon/storage/firstaid/brute/Initialize()
 	..()
 	if(empty) return
 	for(var/i in 1 to 4)
@@ -105,7 +105,7 @@
 	icon_state = "bezerk"
 	max_w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/storage/firstaid/tactical/New()
+/obj/item/weapon/storage/firstaid/tactical/Initialize()
 	..()
 	if(empty) return
 	new /obj/item/stack/medical/gauze(src)
@@ -151,7 +151,7 @@
 	name = "box of silver sulfadiazine patches"
 	desc = "Contains patches used to treat burns."
 
-/obj/item/weapon/storage/box/silver_sulf/New()
+/obj/item/weapon/storage/box/silver_sulf/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
@@ -160,7 +160,7 @@
 	name = "bottle of charcoal pills"
 	desc = "Contains pills used to counter toxins."
 
-/obj/item/weapon/storage/pill_bottle/charcoal/New()
+/obj/item/weapon/storage/pill_bottle/charcoal/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
@@ -169,7 +169,7 @@
 	name = "bottle of epinephrine pills"
 	desc = "Contains pills used to stabilize patients."
 
-/obj/item/weapon/storage/pill_bottle/epinephrine/New()
+/obj/item/weapon/storage/pill_bottle/epinephrine/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
@@ -178,7 +178,7 @@
 	name = "bottle of mutadone pills"
 	desc = "Contains pills used to treat genetic abnormalities."
 
-/obj/item/weapon/storage/pill_bottle/mutadone/New()
+/obj/item/weapon/storage/pill_bottle/mutadone/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/mutadone(src)
@@ -187,7 +187,7 @@
 	name = "bottle of mannitol pills"
 	desc = "Contains pills used to treat brain damage."
 
-/obj/item/weapon/storage/pill_bottle/mannitol/New()
+/obj/item/weapon/storage/pill_bottle/mannitol/Initialize()
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/mannitol(src)
@@ -196,7 +196,7 @@
 	name = "bottle of stimulant pills"
 	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
 
-/obj/item/weapon/storage/pill_bottle/stimulant/New()
+/obj/item/weapon/storage/pill_bottle/stimulant/Initialize()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/pill/stimulant(src)
@@ -205,7 +205,7 @@
 	name = "box of patches"
 	desc = "Contains patches used to treat brute and burn damage."
 
-/obj/item/weapon/storage/pill_bottle/mining/New()
+/obj/item/weapon/storage/pill_bottle/mining/Initialize()
 	..()
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	for(var/i in 1 to 3)

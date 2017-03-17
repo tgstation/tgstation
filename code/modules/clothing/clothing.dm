@@ -32,7 +32,7 @@
 
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
 
-/obj/item/clothing/New()
+/obj/item/clothing/Initialize()
 	..()
 	if(ispath(pockets))
 		pockets = new pockets(src)
@@ -507,12 +507,12 @@ BLIND     // can't see anything
 		var/mob/M = loc
 		M.update_inv_w_uniform()
 
-/obj/item/clothing/under/New()
+/obj/item/clothing/under/Initialize()
+	..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
 	adjusted = NORMAL_STYLE
-	..()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()

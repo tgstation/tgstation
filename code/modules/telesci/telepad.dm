@@ -10,7 +10,7 @@
 	active_power_usage = 5000
 	var/efficiency
 
-/obj/machinery/telepad/New()
+/obj/machinery/telepad/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telesci_pad(null)
 	B.apply_default_parts(src)
@@ -134,7 +134,7 @@
 	var/emagged = 0
 	var/teleporting = 0
 
-/obj/item/weapon/rcs/New()
+/obj/item/weapon/rcs/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

@@ -16,7 +16,7 @@
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
 
-/obj/structure/destructible/clockwork/massive/ratvar/New()
+/obj/structure/destructible/clockwork/massive/ratvar/Initialize()
 	..()
 	ratvar_awakens++
 	for(var/obj/O in all_clockwork_objects)

@@ -9,7 +9,7 @@
 	var/on = 0
 	var/volume_rate = 800
 
-/obj/machinery/zvent/New()
+/obj/machinery/zvent/Initialize()
 	..()
 	SSair.atmos_machinery += src
 

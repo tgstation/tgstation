@@ -48,7 +48,7 @@
 
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/camera_advanced/base_construction/New()
+/obj/machinery/computer/camera_advanced/base_construction/Initialize()
 	..()
 	RCD = new /obj/item/weapon/rcd/internal(src)
 

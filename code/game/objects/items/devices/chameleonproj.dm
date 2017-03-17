@@ -13,7 +13,7 @@
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
 
-/obj/item/device/chameleon/New()
+/obj/item/device/chameleon/Initialize()
 	..()
 	var/obj/item/weapon/cigbutt/butt = /obj/item/weapon/cigbutt
 	saved_appearance = initial(butt.appearance)

@@ -63,7 +63,7 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/New()
+/obj/machinery/mineral/equipment_vendor/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor(null)
 	B.apply_default_parts(src)
@@ -205,7 +205,7 @@
 /obj/machinery/mineral/equipment_vendor/golem
 	name = "golem ship equipment vendor"
 
-/obj/machinery/mineral/equipment_vendor/golem/New()
+/obj/machinery/mineral/equipment_vendor/golem/Initialize()
 	..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
@@ -283,7 +283,7 @@
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
+/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/Initialize()
 	..()
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)

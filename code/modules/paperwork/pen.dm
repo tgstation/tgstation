@@ -117,7 +117,7 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/weapon/pen/sleepy/New()
+/obj/item/weapon/pen/sleepy/Initialize()
 	create_reagents(45)
 	reagents.add_reagent("morphine", 20)
 	reagents.add_reagent("mutetoxin", 15)

@@ -7,8 +7,8 @@
 	var/question = "Travel back?"
 	var/zlevels = list(ZLEVEL_STATION)
 
-/obj/structure/signpost/New()
-	. = ..()
+/obj/structure/signpost/Initialize()
+	..()
 	set_light(2)
 
 /obj/structure/signpost/attackby(obj/item/weapon/W, mob/user, params)
@@ -38,8 +38,8 @@
 		exit the area."
 	question = "Leave? You might never come back."
 
-/obj/structure/signpost/exit/New()
-	. = ..()
+/obj/structure/signpost/exit/Initialize()
+	..()
 	zlevels = list()
 	for(var/i in 1 to world.maxz)
 		zlevels += i

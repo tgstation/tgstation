@@ -30,7 +30,7 @@ var/list/global_modular_computers = list()
 
 	var/obj/item/device/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
-/obj/machinery/modular_computer/New()
+/obj/machinery/modular_computer/Initialize()
 	..()
 	cpu = new(src)
 	cpu.physical = src

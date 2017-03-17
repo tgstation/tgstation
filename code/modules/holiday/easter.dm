@@ -109,7 +109,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/loaded
 	containsPrize = TRUE
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/loaded/New()
+/obj/item/weapon/reagent_containers/food/snacks/egg/loaded/Initialize()
 	..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
@@ -140,7 +140,7 @@
 		containsPrize = FALSE
 		qdel(src)
 
-/obj/effect/spawner/lootdrop/maintenance/New()
+/obj/effect/spawner/lootdrop/maintenance/Initialize()
 	..()
 	loot += list(/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15, /obj/item/weapon/storage/bag/easterbasket = 15)
 

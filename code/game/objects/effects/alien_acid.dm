@@ -20,8 +20,8 @@
 	var/turf/target
 
 
-/obj/effect/acid/New(loc, acid_pwr, acid_amt)
-	..(loc)
+/obj/effect/acid/Initialize(mapload, acid_pwr, acid_amt)
+	..()
 
 	target = get_turf(src)
 

@@ -19,7 +19,7 @@
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
-/obj/machinery/dominator/New()
+/obj/machinery/dominator/Initialize()
 	..()
 	set_light(2)
 	poi_list |= src

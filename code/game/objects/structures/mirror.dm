@@ -93,19 +93,19 @@
 	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
 	var/list/choosable_races = list()
 
-/obj/structure/mirror/magic/New()
+/obj/structure/mirror/magic/Initialize()
+	..()
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!(S.id in races_blacklist))
 				choosable_races += S.id
-	..()
 
-/obj/structure/mirror/magic/lesser/New()
+/obj/structure/mirror/magic/lesser/Initialize()
 	choosable_races = roundstart_species
 	..()
 
-/obj/structure/mirror/magic/badmin/New()
+/obj/structure/mirror/magic/badmin/Initialize()
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = new speciestype()
 		choosable_races += S.id

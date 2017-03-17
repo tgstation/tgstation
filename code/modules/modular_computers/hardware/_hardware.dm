@@ -20,7 +20,7 @@
 	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
 	var/device_type
 
-/obj/item/weapon/computer_hardware/New(var/obj/L)
+/obj/item/weapon/computer_hardware/Initialize()
 	..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)

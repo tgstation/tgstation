@@ -11,7 +11,7 @@
 	var/pulse = 0
 	var/cooldown = 0
 
-/obj/item/nuke_core/New()
+/obj/item/nuke_core/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

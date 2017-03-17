@@ -11,7 +11,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	mouse_opacity = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 
-/obj/effect/particle_effect/New()
+/obj/effect/particle_effect/Initialize()
 	..()
 	if(ticker)
 		cameranet.updateVisibility(src)

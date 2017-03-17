@@ -30,7 +30,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = "blumpkinjuice",
 	)
 
-/obj/machinery/juicer/New()
+/obj/machinery/juicer/Initialize()
+	..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/juicer/update_icon()
@@ -166,7 +167,7 @@
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 
-/obj/structure/closet/crate/juice/New()
+/obj/structure/closet/crate/juice/Initialize()
 	..()
 	new/obj/machinery/juicer(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)

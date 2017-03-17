@@ -21,7 +21,7 @@
 	// This number is for T1, each upgraded part adds 5% for a tech level above T1.
 	// At T4, it reaches 95%.
 
-/obj/machinery/plantgenes/New()
+/obj/machinery/plantgenes/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes(null)
 	B.apply_default_parts(src)
@@ -361,7 +361,7 @@
 
 
 // Gene modder for seed vault ship, built with high tech alien parts.
-/obj/machinery/plantgenes/seedvault/New()
+/obj/machinery/plantgenes/seedvault/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes/vault(null)
 	B.apply_default_parts(src)
@@ -388,7 +388,7 @@
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
 
-/obj/item/weapon/disk/plantgene/New()
+/obj/item/weapon/disk/plantgene/Initialize()
 	..()
 	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)

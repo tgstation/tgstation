@@ -18,8 +18,8 @@
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
 
-/obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
-	..(location)
+/obj/machinery/computer/Initialize(mapload, obj/item/weapon/circuitboard/C)
+	..()
 	if(C && istype(C))
 		circuit = C
 	//Some machines, oldcode arcades mostly, new themselves, so circuit

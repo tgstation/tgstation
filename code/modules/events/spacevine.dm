@@ -78,7 +78,7 @@
 	var/static/list/coverable_turfs
 
 /datum/spacevine_mutation/space_covering/New()
-	. = ..()
+	..()
 	if(!coverable_turfs)
 		coverable_turfs = typecacheof(list(
 			/turf/open/space
@@ -327,7 +327,7 @@
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
 
-/obj/structure/spacevine/New()
+/obj/structure/spacevine/Initialize()
 	..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
@@ -437,7 +437,8 @@
 	var/list/mutations_list = list()
 	var/mutativeness = 1
 
-/obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
+/obj/effect/spacevine_controller/Initialize(loc, list/muts, potency, production)
+	..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	spawn_spacevine_piece(loc, , muts)
 	START_PROCESSING(SSobj, src)
@@ -447,7 +448,6 @@
 	if(production != null)
 		spread_cap *= production / 5
 		spread_multiplier /= production / 5
-	..()
 
 /obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
 	return

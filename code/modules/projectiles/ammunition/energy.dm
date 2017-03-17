@@ -201,8 +201,9 @@
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
 
-/obj/item/ammo_casing/energy/gravityrepulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
-	gun = G
+/obj/item/ammo_casing/energy/gravityrepulse/Initialize(mapload)
+	..()
+	gun = loc
 
 /obj/item/ammo_casing/energy/gravityattract
 	projectile_type = /obj/item/projectile/gravityattract
@@ -213,8 +214,9 @@
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
 
 
-/obj/item/ammo_casing/energy/gravityattract/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
-	gun = G
+/obj/item/ammo_casing/energy/gravityattract/Initialize()
+	..()
+	gun = loc
 
 /obj/item/ammo_casing/energy/gravitychaos
 	projectile_type = /obj/item/projectile/gravitychaos
@@ -224,8 +226,9 @@
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
 
-/obj/item/ammo_casing/energy/gravitychaos/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
-	gun = G
+/obj/item/ammo_casing/energy/gravitychaos/Initialize()
+	..()
+	gun = loc
 
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma

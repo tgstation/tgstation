@@ -779,7 +779,7 @@
 	desc = "This template spellbook was never meant for the eyes of man..."
 	persistence_replacement = null
 
-/obj/item/weapon/spellbook/oneuse/New()
+/obj/item/weapon/spellbook/oneuse/Initialize()
 	..()
 	name += spellname
 
@@ -947,7 +947,7 @@
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
 	qdel(src)
 
-/obj/item/weapon/spellbook/oneuse/random/New()
+/obj/item/weapon/spellbook/oneuse/random/Initialize()
 	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade,/obj/item/weapon/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)

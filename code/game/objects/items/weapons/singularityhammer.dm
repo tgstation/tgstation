@@ -15,7 +15,7 @@
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/weapon/twohanded/singularityhammer/New()
+/obj/item/weapon/twohanded/singularityhammer/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

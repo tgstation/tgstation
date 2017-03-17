@@ -31769,7 +31769,7 @@
 /area/security/hos)
 "biM" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/secure/safe/HoS{
+/obj/item/weapon/storage/secure/safe{
 	pixel_x = 32
 	},
 /obj/item/device/flashlight/lamp,

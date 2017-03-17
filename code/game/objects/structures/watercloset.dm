@@ -11,10 +11,10 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 
-/obj/structure/toilet/New()
+/obj/structure/toilet/Initialize()
+	..()
 	open = round(rand(0, 1))
 	update_icon()
-	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -114,7 +114,7 @@
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
-/obj/structure/urinal/New()
+/obj/structure/urinal/Initialize()
 	..()
 	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
 

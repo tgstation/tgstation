@@ -6,7 +6,7 @@
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
 
-/obj/structure/closet/syndicate/personal/New()
+/obj/structure/closet/syndicate/personal/Initialize()
 	..()
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -20,7 +20,7 @@
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."
 
-/obj/structure/closet/syndicate/nuclear/New()
+/obj/structure/closet/syndicate/nuclear/Initialize()
 	..()
 	contents = list()
 	for(var/i in 1 to 5)
@@ -34,7 +34,7 @@
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
 
-/obj/structure/closet/syndicate/resources/New()
+/obj/structure/closet/syndicate/resources/Initialize()
 	..()
 	var/common_min = 30 //Minimum amount of minerals in the stack for common minerals
 	var/common_max = 50 //Maximum amount of HONK in the stack for HONK common minerals
@@ -99,7 +99,7 @@
 /obj/structure/closet/syndicate/resources/everything
 	desc = "It's an emergency storage closet for repairs."
 
-/obj/structure/closet/syndicate/resources/everything/New()
+/obj/structure/closet/syndicate/resources/everything/Initialize()
 	..()
 	contents = list()
 	var/list/resources = list(

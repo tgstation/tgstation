@@ -16,7 +16,7 @@
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 
-/obj/machinery/smartfridge/New()
+/obj/machinery/smartfridge/Initialize()
 	..()
 	create_reagents()
 	reagents.set_reacting(FALSE)
@@ -37,7 +37,7 @@
 							/obj/machinery/smartfridge/chemistry/virology = "viruses",
 							/obj/machinery/smartfridge/disks = "disks")
 
-/obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
+/obj/item/weapon/circuitboard/machine/smartfridge/Initialize(mapload, new_type)
 	if(new_type)
 		build_path = new_type
 	..()
@@ -246,7 +246,7 @@
 	icon_off = "drying_rack"
 	var/drying = FALSE
 
-/obj/machinery/smartfridge/drying_rack/New()
+/obj/machinery/smartfridge/drying_rack/Initialize()
 	..()
 	if(component_parts && component_parts.len)
 		component_parts.Cut()
@@ -384,7 +384,7 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/smartfridge/extract/New()
+/obj/machinery/smartfridge/extract/Initialize()
 	..()
 	var/obj/item/device/slime_scanner/I = new /obj/item/device/slime_scanner(src)
 	load(I)
@@ -403,7 +403,7 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
 
-/obj/machinery/smartfridge/chemistry/New()
+/obj/machinery/smartfridge/chemistry/Initialize()
 	..()
 	for(var/typekey in spawn_meds)
 		var/amount = spawn_meds[typekey]

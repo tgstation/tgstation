@@ -92,7 +92,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
 
-/obj/machinery/telecomms/broadcaster/New()
+/obj/machinery/telecomms/broadcaster/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/broadcaster(null)
 	B.apply_default_parts(src)

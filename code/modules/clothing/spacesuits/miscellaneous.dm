@@ -281,7 +281,7 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/New()
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	..()
 	new /obj/item/weapon/nullrod(src)
 

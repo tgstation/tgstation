@@ -360,7 +360,7 @@
 	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
 	var/friendly = FALSE
 
-/obj/machinery/door/airlock/cult/New()
+/obj/machinery/door/airlock/cult/Initialize()
 	..()
 	new openingoverlaytype(src.loc)
 
@@ -429,7 +429,7 @@
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
-/obj/machinery/door/airlock/clockwork/New()
+/obj/machinery/door/airlock/clockwork/Initialize()
 	..()
 	var/turf/T = get_turf(src)
 	new /obj/effect/overlay/temp/ratvar/door(T)

@@ -39,7 +39,7 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 
-/obj/item/weapon/extinguisher/New()
+/obj/item/weapon/extinguisher/Initialize()
 	..()
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)

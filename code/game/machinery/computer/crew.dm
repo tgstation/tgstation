@@ -11,7 +11,7 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/crew/New()
+/obj/machinery/computer/crew/Initialize()
 	monitor = crewmonitor
 	return ..()
 

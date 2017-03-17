@@ -44,7 +44,7 @@
 		"corazone", // prevents cardiac arrest damage
 		"mimesbane") // stops them gasping from lack of air.
 
-/obj/machinery/clonepod/New()
+/obj/machinery/clonepod/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
 	B.apply_default_parts(src)
@@ -103,7 +103,7 @@
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.
-/obj/item/weapon/disk/data/New()
+/obj/item/weapon/disk/data/Initialize()
 	..()
 	icon_state = "datadisk[rand(0,6)]"
 	add_overlay("datadisk_gene")

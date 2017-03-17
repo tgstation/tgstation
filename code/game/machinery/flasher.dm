@@ -25,7 +25,7 @@
 	base_state = "pflash"
 	density = 1
 
-/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
+/obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
 		setDir(ndir)

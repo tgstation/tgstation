@@ -9,7 +9,7 @@
 	var/datum/gas_mixture/air_contents = new()
 
 
-/obj/structure/transit_tube_pod/New(loc)
+/obj/structure/transit_tube_pod/Initialize()
 	..()
 	air_contents.assert_gases("o2", "n2")
 	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD * 2

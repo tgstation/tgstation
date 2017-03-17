@@ -145,7 +145,7 @@
 	var/area_type = /area/space
 	var/last_dock_time
 
-/obj/docking_port/stationary/New()
+/obj/docking_port/stationary/Initialize()
 	..()
 	SSshuttle.stationary += src
 	if(!id)
@@ -168,7 +168,7 @@
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
-/obj/docking_port/stationary/transit/New()
+/obj/docking_port/stationary/transit/Initialize()
 	..()
 	SSshuttle.transit += src
 
@@ -223,7 +223,7 @@
 
 	var/list/ripples = list()
 
-/obj/docking_port/mobile/New()
+/obj/docking_port/mobile/Initialize()
 	..()
 	if(!timid)
 		register()

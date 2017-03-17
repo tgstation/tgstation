@@ -59,7 +59,7 @@
 	filling_color = "#FFEFD5"
 	tastes = list("popcorn" = 3, "butter" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/popcorn/New()
+/obj/item/weapon/reagent_containers/food/snacks/popcorn/Initialize()
 	..()
 	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 
@@ -387,7 +387,7 @@
 	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/lollipop/New()
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/Initialize()
 	..()
 	head = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
@@ -406,7 +406,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/New()
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
 	..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
@@ -426,14 +426,14 @@
 	list_reagents = list("sugar" = 5, "bicaridine" = 2, "kelotane" = 2)	//Kek
 	tastes = list("candy")
 
-/obj/item/weapon/reagent_containers/food/snacks/gumball/New()
+/obj/item/weapon/reagent_containers/food/snacks/gumball/Initialize()
 	..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/New()
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/Initialize()
 	..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 

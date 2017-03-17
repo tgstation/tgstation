@@ -214,7 +214,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/under/chameleon/New()
+/obj/item/clothing/under/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
@@ -237,7 +237,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/suit/chameleon/New()
+/obj/item/clothing/suit/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
@@ -259,7 +259,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/chameleon/New()
+/obj/item/clothing/glasses/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
@@ -281,7 +281,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/gloves/chameleon/New()
+/obj/item/clothing/gloves/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/gloves
@@ -303,7 +303,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/head/chameleon/New()
+/obj/item/clothing/head/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
@@ -321,7 +321,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// which means it offers no protection, it's just air and light
 
-/obj/item/clothing/head/chameleon/drone/New()
+/obj/item/clothing/head/chameleon/drone/Initialize()
 	..()
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
@@ -347,7 +347,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/mask/chameleon/New()
+/obj/item/clothing/mask/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
@@ -370,7 +370,7 @@
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
 
-/obj/item/clothing/mask/chameleon/drone/New()
+/obj/item/clothing/mask/chameleon/drone/Initialize()
 	..()
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
@@ -395,7 +395,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/shoes/chameleon/New()
+/obj/item/clothing/shoes/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
@@ -424,7 +424,7 @@
 	var/list/gun_copy_vars
 	var/badmin_mode = FALSE
 
-/obj/item/weapon/gun/energy/laser/chameleon/New()
+/obj/item/weapon/gun/energy/laser/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/gun
@@ -527,7 +527,7 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/weapon/storage/backpack/chameleon/New()
+/obj/item/weapon/storage/backpack/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/storage/backpack
@@ -543,7 +543,7 @@
 	silent = 1
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/weapon/storage/belt/chameleon/New()
+/obj/item/weapon/storage/belt/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/storage/belt
@@ -557,7 +557,7 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/New()
+/obj/item/device/radio/headset/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/radio/headset
@@ -571,7 +571,7 @@
 	name = "PDA"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/pda/chameleon/New()
+/obj/item/device/pda/chameleon/Initialize()
 	..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/pda

@@ -17,8 +17,8 @@
 		return 1
 	return !density
 
-/obj/structure/transit_tube/New(loc, newdirection)
-	..(loc)
+/obj/structure/transit_tube/Initialize(mapload, newdirection)
+	..()
 	if(newdirection)
 		setDir(newdirection)
 	init_tube_dirs()

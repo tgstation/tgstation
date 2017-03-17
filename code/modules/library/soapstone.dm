@@ -15,8 +15,8 @@
 	var/w_chipping = "chipping"
 	var/w_dull = "dull"
 
-/obj/item/soapstone/New()
-	. = ..()
+/obj/item/soapstone/Initialize()
+	..()
 	random_name()
 	check_name() // could start empty
 
@@ -157,7 +157,7 @@
 	var/list/like_keys = list()
 	var/list/dislike_keys = list()
 
-/obj/structure/chisel_message/New(newloc)
+/obj/structure/chisel_message/Initialize()
 	..()
 	SSpersistence.chisel_messages += src
 	var/turf/T = get_turf(src)

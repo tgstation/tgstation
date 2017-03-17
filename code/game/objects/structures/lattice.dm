@@ -17,7 +17,7 @@
 	smooth = SMOOTH_MORE
 	//	flags = CONDUCT
 
-/obj/structure/lattice/New()
+/obj/structure/lattice/Initialize()
 	..()
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
@@ -61,7 +61,7 @@
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
-/obj/structure/lattice/clockwork/New()
+/obj/structure/lattice/clockwork/Initialize()
 	..()
 	ratvar_act()
 
@@ -69,7 +69,7 @@
 	if(IsOdd(x+y))
 		new/obj/structure/lattice/clockwork/large(loc)
 
-/obj/structure/lattice/clockwork/large/New()
+/obj/structure/lattice/clockwork/large/Initialize()
 	..()
 	icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
 	pixel_x = -9
@@ -87,7 +87,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
-/obj/structure/lattice/catwalk/New()
+/obj/structure/lattice/catwalk/Initialize()
 	..()
 	stored.amount++
 	stored.update_icon()
@@ -111,7 +111,7 @@
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
 
-/obj/structure/lattice/catwalk/clockwork/New()
+/obj/structure/lattice/catwalk/clockwork/Initialize()
 	..()
 	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
 	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)

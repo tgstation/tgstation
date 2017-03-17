@@ -67,8 +67,8 @@
 	unique_frequency = TRUE
 	max_mod_capacity = 80
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/New()
-	. = ..()
+/obj/item/weapon/gun/energy/kinetic_accelerator/Initialize()
+	..()
 	if(!holds_charge)
 		empty()
 

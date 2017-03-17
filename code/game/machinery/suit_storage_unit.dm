@@ -102,7 +102,7 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
-/obj/machinery/suit_storage_unit/New()
+/obj/machinery/suit_storage_unit/Initialize()
 	..()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)

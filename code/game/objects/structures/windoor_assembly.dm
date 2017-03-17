@@ -32,7 +32,7 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/structure/windoor_assembly/New(loc, set_dir)
+/obj/structure/windoor_assembly/Initialize(mapload, set_dir)
 	..()
 	if(set_dir)
 		dir = set_dir

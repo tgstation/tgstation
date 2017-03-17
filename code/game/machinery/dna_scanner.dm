@@ -13,7 +13,7 @@
 	var/scan_level
 	var/precision_coeff
 
-/obj/machinery/dna_scannernew/New()
+/obj/machinery/dna_scannernew/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonescanner(null)
 	B.apply_default_parts(src)

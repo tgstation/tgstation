@@ -31,7 +31,7 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 
-/obj/item/weapon/robot_module/New()
+/obj/item/weapon/robot_module/Initialize()
 	..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)

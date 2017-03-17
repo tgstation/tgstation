@@ -88,7 +88,7 @@
 				amount -= MIN_CLOCKCULT_POWER
 	. = ..()
 
-/obj/item/clockwork/clockwork_proselytizer/New()
+/obj/item/clockwork/clockwork_proselytizer/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

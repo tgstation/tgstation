@@ -82,13 +82,13 @@
 			countdown.stop()
 			STOP_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/syndicatebomb/New()
+/obj/machinery/syndicatebomb/Initialize()
+	..()
 	wires = new /datum/wires/syndicatebomb(src)
 	if(src.payload)
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
-	..()
 
 /obj/machinery/syndicatebomb/Destroy()
 	qdel(wires)
@@ -260,7 +260,7 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/New()
+/obj/machinery/syndicatebomb/empty/Initialize()
 	..()
 	wires.cut_all()
 

@@ -142,9 +142,9 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	var/corrupt_delay = 50
 	var/last_corrupt = 0
 
-/obj/structure/destructible/cult/pylon/New()
-	START_PROCESSING(SSfastprocess, src)
+/obj/structure/destructible/cult/pylon/Initialize()
 	..()
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/destructible/cult/pylon/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

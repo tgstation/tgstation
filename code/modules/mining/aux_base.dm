@@ -25,7 +25,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/obj/item/device/gps/internal/base/locator
 	circuit = /obj/item/weapon/circuitboard/computer/auxillary_base
 
-/obj/machinery/computer/auxillary_base/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
+/obj/machinery/computer/auxillary_base/Initialize(location, obj/item/weapon/circuitboard/computer/shuttle/C)
 	..()
 	locator = new /obj/item/device/gps/internal/base(src)
 

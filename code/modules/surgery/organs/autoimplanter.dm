@@ -10,7 +10,7 @@
 	var/organ_type = /obj/item/organ/cyberimp
 	var/uses = INFINITE
 
-/obj/item/device/autoimplanter/New()
+/obj/item/device/autoimplanter/Initialize()
 	..()
 	if(storedorgan)
 		storedorgan.loc = src

@@ -157,11 +157,11 @@ var/list/total_extraction_beacons = list()
 	density = 0
 	var/beacon_network = "station"
 
-/obj/structure/extraction_point/New()
+/obj/structure/extraction_point/Initialize()
+	..()
 	var/area/area_name = get_area(src)
 	name += " ([rand(100,999)]) ([area_name.name])"
 	total_extraction_beacons += src
-	..()
 
 /obj/structure/extraction_point/Destroy()
 	total_extraction_beacons -= src

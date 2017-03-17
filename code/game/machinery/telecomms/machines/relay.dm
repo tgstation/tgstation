@@ -45,7 +45,7 @@
 		return 0
 	return receiving
 
-/obj/machinery/telecomms/relay/New()
+/obj/machinery/telecomms/relay/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/relay(null)
 	B.apply_default_parts(src)

@@ -100,9 +100,9 @@
 	desc = "Heavy duty, airtight, plastic flaps."
 	CanAtmosPass = ATMOS_PASS_NO
 
-/obj/structure/plasticflaps/mining/New()
+/obj/structure/plasticflaps/mining/Initialize()
+	..()
 	air_update_turf(1)
-	. = ..()
 
 /obj/structure/plasticflaps/mining/Destroy()
 	var/atom/oldloc = loc

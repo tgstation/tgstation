@@ -15,7 +15,7 @@
 	item_state = "gift1"
 	resistance_flags = FLAMMABLE
 
-/obj/item/weapon/a_gift/New()
+/obj/item/weapon/a_gift/Initialize()
 	..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)

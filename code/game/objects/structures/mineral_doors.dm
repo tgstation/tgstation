@@ -23,7 +23,7 @@
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/mineral_door/New(location)
+/obj/structure/mineral_door/Initialize()
 	..()
 	initial_state = icon_state
 	air_update_turf(1)

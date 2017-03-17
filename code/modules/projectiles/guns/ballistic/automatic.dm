@@ -97,7 +97,7 @@
 /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/c20r/New()
+/obj/item/weapon/gun/ballistic/automatic/c20r/Initialize()
 	..()
 	update_icon()
 	return
@@ -148,7 +148,7 @@
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
-/obj/item/weapon/gun/ballistic/automatic/m90/New()
+/obj/item/weapon/gun/ballistic/automatic/m90/Initialize()
 	..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher(src)
 	update_icon()
@@ -157,7 +157,7 @@
 /obj/item/weapon/gun/ballistic/automatic/m90/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/New()
+/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/Initialize()
 	..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_icon()
@@ -257,7 +257,7 @@
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/New()
+/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/Initialize()
 	..()
 	update_icon()
 

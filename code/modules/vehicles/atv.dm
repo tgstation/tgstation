@@ -9,7 +9,7 @@
 	. = ..()
 	riding_datum = new/datum/riding/atv
 
-/obj/vehicle/atv/New()
+/obj/vehicle/atv/Initialize()
 	..()
 	if(!atvcover)
 		atvcover = image("icons/obj/vehicles.dmi", "atvcover")
@@ -36,8 +36,8 @@
 	density = 0
 
 
-/obj/vehicle/atv/turret/New()
-	. = ..()
+/obj/vehicle/atv/turret/Initialize()
+	..()
 	turret = new(loc)
 	turret.base = src
 

@@ -12,7 +12,7 @@
 	var/repairs
 	state_open = 1
 
-/obj/machinery/recharge_station/New()
+/obj/machinery/recharge_station/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
 	B.apply_default_parts(src)

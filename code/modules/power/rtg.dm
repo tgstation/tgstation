@@ -19,7 +19,7 @@
 	var/board_path = /obj/item/weapon/circuitboard/machine/rtg
 	var/irradiate = TRUE // RTGs irradiate surroundings, but only when panel is open.
 
-/obj/machinery/power/rtg/New()
+/obj/machinery/power/rtg/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
 	B.apply_default_parts(src)

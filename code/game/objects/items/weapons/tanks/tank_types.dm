@@ -19,7 +19,7 @@
 	dog_fashion = /datum/dog_fashion/back
 
 
-/obj/item/weapon/tank/internals/oxygen/New()
+/obj/item/weapon/tank/internals/oxygen/Initialize()
 	..()
 	air_contents.assert_gas("o2")
 	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
@@ -47,7 +47,7 @@
 	item_state = "an_tank"
 	force = 10
 
-/obj/item/weapon/tank/internals/anesthetic/New()
+/obj/item/weapon/tank/internals/anesthetic/Initialize()
 	..()
 	air_contents.assert_gases("o2", "n2o")
 	air_contents.gases["o2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
@@ -64,7 +64,7 @@
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
 
-/obj/item/weapon/tank/internals/air/New()
+/obj/item/weapon/tank/internals/air/Initialize()
 	..()
 	air_contents.assert_gases("o2","n2")
 	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
@@ -84,7 +84,7 @@
 	force = 8
 
 
-/obj/item/weapon/tank/internals/plasma/New()
+/obj/item/weapon/tank/internals/plasma/Initialize()
 	..()
 	air_contents.assert_gas("plasma")
 	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
@@ -103,7 +103,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/tank/internals/plasma/full/New()
+/obj/item/weapon/tank/internals/plasma/full/Initialize()
 	..()
 	air_contents.assert_gas("plasma")
 	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
@@ -122,13 +122,13 @@
 	force = 10
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 
-/obj/item/weapon/tank/internals/plasmaman/New()
+/obj/item/weapon/tank/internals/plasmaman/Initialize()
 	..()
 	air_contents.assert_gas("plasma")
 	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-/obj/item/weapon/tank/internals/plasmaman/full/New()
+/obj/item/weapon/tank/internals/plasmaman/full/Initialize()
 	..()
 	air_contents.assert_gas("plasma")
 	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
@@ -141,7 +141,7 @@
 	slot_flags = SLOT_BELT
 	force = 5
 
-/obj/item/weapon/tank/internals/plasmaman/belt/full/New()
+/obj/item/weapon/tank/internals/plasmaman/belt/full/Initialize()
 	..()
 	air_contents.assert_gas("plasma")
 	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
@@ -164,7 +164,7 @@
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 
-/obj/item/weapon/tank/internals/emergency_oxygen/New()
+/obj/item/weapon/tank/internals/emergency_oxygen/Initialize()
 	..()
 	air_contents.assert_gas("o2")
 	air_contents.gases["o2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)

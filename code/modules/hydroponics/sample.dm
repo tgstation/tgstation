@@ -28,7 +28,7 @@ var/list/chem_t4_reagents = list(
 	yield = -1
 	var/sample_color = "#FFFFFF"
 
-/obj/item/seeds/sample/New()
+/obj/item/seeds/sample/Initialize()
 	..()
 	if(sample_color)
 		var/image/I = image(icon, icon_state = "sample-filling")

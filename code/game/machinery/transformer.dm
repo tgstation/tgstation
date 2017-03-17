@@ -16,7 +16,7 @@
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
 
-/obj/machinery/transformer/New()
+/obj/machinery/transformer/Initialize()
 	// On us
 	..()
 	new /obj/machinery/conveyor/auto(loc, WEST)
@@ -112,7 +112,7 @@
 		R.SetLockdown(0)
 		R.notify_ai(1)
 
-/obj/machinery/transformer/conveyor/New()
+/obj/machinery/transformer/conveyor/Initialize()
 	..()
 	var/turf/T = loc
 	if(T)

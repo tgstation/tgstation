@@ -147,7 +147,7 @@
 	var/obj/structure/disposalconstruct/stored
 
 	// new pipe, set the icon_state as on map
-/obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
+/obj/structure/disposalpipe/Initialize(mapload,var/obj/structure/disposalconstruct/make_from)
 	..()
 
 	if(make_from && !QDELETED(make_from))
@@ -349,7 +349,7 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe-s"
 
-/obj/structure/disposalpipe/segment/New()
+/obj/structure/disposalpipe/segment/Initialize()
 	..()
 	if(stored.ptype == DISP_PIPE_STRAIGHT)
 		dpdir = dir | turn(dir, 180)
@@ -366,7 +366,7 @@
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
-/obj/structure/disposalpipe/junction/New()
+/obj/structure/disposalpipe/junction/Initialize()
 	..()
 	switch(stored.ptype)
 		if(DISP_JUNCTION)
@@ -442,7 +442,7 @@
 
 	dpdir = sortdir | posdir | negdir
 
-/obj/structure/disposalpipe/sortjunction/New()
+/obj/structure/disposalpipe/sortjunction/Initialize()
 	..()
 
 	// Generate a list of soring tags.
@@ -506,7 +506,7 @@
 	var/negdir = 0
 	var/sortdir = 0
 
-/obj/structure/disposalpipe/wrapsortjunction/New()
+/obj/structure/disposalpipe/wrapsortjunction/Initialize()
 	..()
 	posdir = dir
 	if(stored.ptype == DISP_SORTJUNCTION)
@@ -547,7 +547,7 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
-/obj/structure/disposalpipe/trunk/New()
+/obj/structure/disposalpipe/trunk/Initialize()
 	..()
 	dpdir = dir
 	spawn(1)
@@ -621,7 +621,7 @@
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
 
-/obj/structure/disposalpipe/broken/New()
+/obj/structure/disposalpipe/broken/Initialize()
 	..()
 	update()
 
@@ -645,7 +645,7 @@
 	var/start_eject = 0
 	var/eject_range = 2
 
-/obj/structure/disposaloutlet/New(loc, var/obj/structure/disposalconstruct/make_from)
+/obj/structure/disposaloutlet/Initialize(mapload, var/obj/structure/disposalconstruct/make_from)
 	..()
 
 	if(make_from)

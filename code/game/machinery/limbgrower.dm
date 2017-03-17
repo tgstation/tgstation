@@ -34,7 +34,7 @@
 							"special"
 							)
 
-/obj/machinery/limbgrower/New()
+/obj/machinery/limbgrower/Initialize()
 	..()
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/limbgrower(null)

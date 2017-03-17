@@ -330,7 +330,7 @@
 	var/inert = 0
 	var/client/client_to_revive
 
-/obj/item/weapon/ectoplasm/revenant/New()
+/obj/item/weapon/ectoplasm/revenant/Initialize()
 	..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 

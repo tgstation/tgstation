@@ -8,7 +8,7 @@
 	var/set_luminosity = 8
 	var/set_cap = 0
 
-/obj/effect/light_emitter/New()
+/obj/effect/light_emitter/Initialize()
 	..()
 	set_light(set_luminosity, set_cap)
 
@@ -18,7 +18,7 @@
 	name = "mining wardrobe"
 	icon_door = "mixed"
 
-/obj/structure/closet/wardrobe/miner/New()
+/obj/structure/closet/wardrobe/miner/Initialize()
 	..()
 	contents = list()
 	new /obj/item/weapon/storage/backpack/dufflebag(src)
@@ -39,7 +39,7 @@
 	icon_state = "mining"
 	req_access = list(access_mining)
 
-/obj/structure/closet/secure_closet/miner/New()
+/obj/structure/closet/secure_closet/miner/Initialize()
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
@@ -384,21 +384,22 @@
 	max_n_of_items = 10
 	pixel_y = -4
 	flags = NODECONSTRUCT
+	var/empty = FALSE
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
 	desc = "A heated storage unit. This one's seen better days."
-
-/obj/machinery/smartfridge/survival_pod/empty/New()
-	return()
+	empty = TRUE
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
 		return 1
 	return 0
 
-/obj/machinery/smartfridge/survival_pod/New()
+/obj/machinery/smartfridge/survival_pod/Initialize()
 	..()
+	if(empty)
+		return
 	for(var/i in 1 to 5)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)
@@ -445,7 +446,7 @@
 	icon_state = "fan_tiny"
 	buildstackamount = 2
 
-/obj/structure/fans/New(loc)
+/obj/structure/fans/Initialize()
 	..()
 	air_update_turf(1)
 

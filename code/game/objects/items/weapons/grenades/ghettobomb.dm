@@ -17,7 +17,7 @@
 	var/range = 3
 	var/times = list()
 
-/obj/item/weapon/grenade/iedcasing/New(loc)
+/obj/item/weapon/grenade/iedcasing/Initialize()
 	..()
 	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"))
 	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired"))

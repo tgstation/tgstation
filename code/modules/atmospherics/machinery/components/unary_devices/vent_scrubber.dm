@@ -33,7 +33,7 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
 	..()
 	if(!id_tag)
 		assign_uid()

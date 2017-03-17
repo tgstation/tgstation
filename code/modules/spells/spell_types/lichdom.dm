@@ -24,7 +24,7 @@
 
 	action_icon_state = "skeleton"
 
-/obj/effect/proc_holder/spell/targeted/lichdom/New()
+/obj/effect/proc_holder/spell/targeted/lichdom/Initialize()
 	if(initial(ticker.mode.round_ends_with_antag_death))
 		existence_stops_round_end = 1
 		ticker.mode.round_ends_with_antag_death = 0

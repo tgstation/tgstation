@@ -37,7 +37,7 @@
 	var/bee_resources = 0
 
 
-/obj/structure/beebox/New()
+/obj/structure/beebox/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 
@@ -57,7 +57,7 @@
 	var/random_reagent = FALSE
 
 
-/obj/structure/beebox/premade/New()
+/obj/structure/beebox/premade/Initialize()
 	..()
 
 	var/datum/reagent/R = null

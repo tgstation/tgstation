@@ -15,7 +15,8 @@
 	var/point_rate = 2
 
 
-/obj/structure/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
+/obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
+	..()
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
 	poi_list |= src
@@ -25,7 +26,6 @@
 	if(overmind)
 		update_icon()
 	point_rate = new_rate
-	..()
 
 /obj/structure/blob/core/scannerreport()
 	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."

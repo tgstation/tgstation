@@ -28,7 +28,7 @@
 	resistance_flags = FIRE_PROOF
 
 
-/obj/machinery/firealarm/New(loc, dir, building)
+/obj/machinery/firealarm/Initialize(loc, dir, building)
 	..()
 	if(dir)
 		src.setDir(dir)

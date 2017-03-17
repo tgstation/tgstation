@@ -31,8 +31,8 @@
 	metal = 2
 
 
-/obj/effect/particle_effect/foam/New(loc)
-	..(loc)
+/obj/effect/particle_effect/foam/Initialize()
+	..()
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
@@ -196,7 +196,7 @@
 	max_integrity = 20
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/foamedmetal/New()
+/obj/structure/foamedmetal/Initialize()
 	..()
 	air_update_turf(1)
 

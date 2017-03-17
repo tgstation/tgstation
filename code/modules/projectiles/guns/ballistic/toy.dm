@@ -36,7 +36,7 @@
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
 
-/obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot/New()
+/obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot/Initialize()
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	..()
 

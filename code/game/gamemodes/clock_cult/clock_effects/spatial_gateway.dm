@@ -15,7 +15,7 @@
 	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
 	var/timerid
 
-/obj/effect/clockwork/spatial_gateway/New()
+/obj/effect/clockwork/spatial_gateway/Initialize()
 	..()
 	update_light()
 	addtimer(CALLBACK(src, .proc/check_setup), 1)

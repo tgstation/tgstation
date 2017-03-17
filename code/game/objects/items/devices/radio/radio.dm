@@ -47,7 +47,7 @@
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
-/obj/item/device/radio/New()
+/obj/item/device/radio/Initialize()
 	wires = new /datum/wires/radio(src)
 	if(prison_radio)
 		wires.cut(WIRE_TX) // OH GOD WHY
@@ -557,7 +557,7 @@
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
+/obj/item/device/radio/borg/syndicate/Initialize()
 	..()
 	set_frequency(SYND_FREQ)
 

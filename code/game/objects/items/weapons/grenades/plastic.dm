@@ -14,9 +14,9 @@
 	var/aim_dir = NORTH
 	var/boom_sizes = list(0, 0, 3)
 
-/obj/item/weapon/grenade/plastic/New()
-	image_overlay = image('icons/obj/grenade.dmi', "[item_state]2")
+/obj/item/weapon/grenade/plastic/Initialize()
 	..()
+	image_overlay = image('icons/obj/grenade.dmi', "[item_state]2")
 
 /obj/item/weapon/grenade/plastic/Destroy()
 	qdel(nadeassembly)

@@ -14,7 +14,7 @@
 	item_color = "r"
 	var/obj/item/weapon/storage/internal/implant/storage
 
-/obj/item/weapon/implant/storage/New()
+/obj/item/weapon/implant/storage/Initialize()
 	..()
 	storage = new /obj/item/weapon/storage/internal/implant(src)
 

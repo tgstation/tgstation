@@ -15,7 +15,7 @@
 	can_hold = list(/obj/item/weapon/coin, /obj/item/stack/spacecash)
 
 
-/obj/item/weapon/storage/bag/money/vault/New()
+/obj/item/weapon/storage/bag/money/vault/Initialize()
 	..()
 	new /obj/item/weapon/coin/silver(src)
 	new /obj/item/weapon/coin/silver(src)

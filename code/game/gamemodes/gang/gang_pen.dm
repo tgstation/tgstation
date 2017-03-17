@@ -7,7 +7,7 @@
 	var/last_used = 0
 	var/charges = 1
 
-/obj/item/weapon/pen/gang/New()
+/obj/item/weapon/pen/gang/Initialize()
 	..()
 	last_used = world.time
 

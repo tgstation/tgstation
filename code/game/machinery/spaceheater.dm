@@ -24,7 +24,7 @@
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
-/obj/machinery/space_heater/New()
+/obj/machinery/space_heater/Initialize()
 	..()
 	cell = new(src)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/space_heater(null)

@@ -24,7 +24,7 @@
 	var/repairability = 0
 	var/turf/recharging_turf = null
 
-/obj/machinery/mech_bay_recharge_port/New()
+/obj/machinery/mech_bay_recharge_port/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mech_recharger(null)
 	B.apply_default_parts(src)

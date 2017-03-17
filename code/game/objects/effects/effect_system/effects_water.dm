@@ -7,7 +7,7 @@
 	mouse_opacity = 0
 
 
-/obj/effect/particle_effect/water/New()
+/obj/effect/particle_effect/water/Initialize()
 	..()
 	QDEL_IN(src, 70)
 
@@ -45,7 +45,7 @@ steam.start() -- spawns the effect
 	icon_state = "extinguish"
 	density = 0
 
-/obj/effect/particle_effect/steam/New()
+/obj/effect/particle_effect/steam/Initialize()
 	..()
 	QDEL_IN(src, 20)
 

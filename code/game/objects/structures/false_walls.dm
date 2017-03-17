@@ -30,7 +30,7 @@
 	can_be_unanchored = 0
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/falsewall/New(loc)
+/obj/structure/falsewall/Initialize()
 	..()
 	air_update_turf(1)
 
@@ -327,7 +327,7 @@
 	walltype = /turf/closed/wall/clockwork
 	mineral = /obj/item/stack/tile/brass
 
-/obj/structure/falsewall/brass/New(loc)
+/obj/structure/falsewall/brass/Initialize()
 	..()
 	var/turf/T = get_turf(src)
 	new /obj/effect/overlay/temp/ratvar/wall/false(T)

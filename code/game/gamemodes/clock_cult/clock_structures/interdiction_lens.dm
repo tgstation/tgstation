@@ -19,7 +19,7 @@
 	var/interdiction_range = 14 //how large an area it drains and disables in
 	var/static/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
 
-/obj/structure/destructible/clockwork/powered/interdiction_lens/New()
+/obj/structure/destructible/clockwork/powered/interdiction_lens/Initialize()
 	..()
 	set_light(1.4, 0.8, "#F42B9D")
 

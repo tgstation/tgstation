@@ -26,7 +26,7 @@
 	smooth = SMOOTH_TRUE
 	layer = CLOSED_TURF_LAYER
 
-/obj/effect/clockwork/overlay/wall/New()
+/obj/effect/clockwork/overlay/wall/Initialize()
 	..()
 	queue_smooth_neighbors(src)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/queue_smooth, src), 1)

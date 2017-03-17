@@ -15,8 +15,8 @@
 
 	var/static/regex/standard_station_regex
 
-/obj/item/station_charter/New()
-	. = ..()
+/obj/item/station_charter/Initialize()
+	..()
 	if(!standard_station_regex)
 		var/prefixes = jointext(station_prefixes, "|")
 		var/names = jointext(station_names, "|")

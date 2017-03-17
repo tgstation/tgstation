@@ -12,7 +12,7 @@ var/list/GPS_list = list()
 	var/turf/locked_location
 	var/tracking = TRUE
 
-/obj/item/device/gps/New()
+/obj/item/device/gps/Initialize()
 	..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
@@ -131,8 +131,8 @@ var/list/GPS_list = list()
 		for marking the area around the transition edges."
 	var/list/turf/tagged
 
-/obj/item/device/gps/visible_debug/New()
-	. = ..()
+/obj/item/device/gps/visible_debug/Initialize()
+	..()
 	tagged = list()
 	SSfastprocess.processing += src
 

@@ -22,8 +22,8 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/structure/disposalconstruct/New(var/loc, var/pipe_type, var/direction = 1)
-	..(loc)
+/obj/structure/disposalconstruct/Initialize(mapload, var/pipe_type, var/direction = 1)
+	..()
 	if(pipe_type)
 		ptype = pipe_type
 	setDir(direction)

@@ -8,7 +8,7 @@
 	var/mapGeneratorType = /datum/mapGenerator/nature
 	var/datum/mapGenerator/mapGenerator
 
-/obj/effect/landmark/mapGenerator/New()
+/obj/effect/landmark/mapGenerator/Initialize()
 	..()
 	if(startTurfZ < 0)
 		startTurfZ = z

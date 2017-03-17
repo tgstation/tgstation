@@ -28,8 +28,8 @@
 	var/dirs = 0
 
 
-/obj/machinery/am_shielding/New(loc)
-	..(loc)
+/obj/machinery/am_shielding/Initialize()
+	..()
 	spawn(10)
 		controllerscan()
 	return

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
-/obj/item/weapon/storage/pill_bottle/dice/New()
+/obj/item/weapon/storage/pill_bottle/dice/Initialize()
 	..()
 	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
 	if(special_die == "1")
@@ -42,10 +42,10 @@
 	var/can_be_rigged = TRUE
 	var/rigged = FALSE
 
-/obj/item/weapon/dice/New()
+/obj/item/weapon/dice/Initialize()
+	..()
 	result = rand(1, sides)
 	update_icon()
-	..()
 
 /obj/item/weapon/dice/d1
 	name = "d1"
@@ -73,7 +73,7 @@
 	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
 	icon_state = "spaced6"
 
-/obj/item/weapon/dice/d6/space/New()
+/obj/item/weapon/dice/d6/space/Initialize()
 	..()
 	if(prob(10))
 		name = "spess cube"

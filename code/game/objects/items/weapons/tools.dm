@@ -145,7 +145,7 @@
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New(loc, var/param_color = null)
+/obj/item/weapon/screwdriver/Initialize(mapload, param_color)
 	..()
 	if(!icon_state)
 		if(!param_color)
@@ -234,7 +234,7 @@
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
-/obj/item/weapon/wirecutters/New(loc, var/param_color = null)
+/obj/item/weapon/wirecutters/Initialize(mapload, param_color)
 	..()
 	if(!icon_state)
 		if(!param_color)
@@ -339,7 +339,7 @@
 	heat = 3800
 	toolspeed = 1
 
-/obj/item/weapon/weldingtool/New()
+/obj/item/weapon/weldingtool/Initialize()
 	..()
 	create_reagents(max_fuel)
 	reagents.add_reagent("welding_fuel", max_fuel)

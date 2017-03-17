@@ -36,7 +36,8 @@
 	var/faction = "wizard"
 	var/braindead_check = 0
 
-/obj/structure/academy_wizard_spawner/New()
+/obj/structure/academy_wizard_spawner/Initialize()
+	..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/academy_wizard_spawner/Destroy()

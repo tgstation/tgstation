@@ -191,7 +191,8 @@ LINEN BINS
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
-/obj/item/weapon/bedsheet/random/New()
+/obj/item/weapon/bedsheet/random/Initialize()
+	..()
 	var/obj/item/weapon/bedsheet/B = pick(subtypesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
 	name = initial(B.name)
 	desc = initial(B.desc)

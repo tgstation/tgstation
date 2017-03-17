@@ -18,7 +18,7 @@
 	item_color="yellow"
 	resistance_flags = 0
 
-/obj/item/clothing/gloves/color/fyellow/New()
+/obj/item/clothing/gloves/color/fyellow/Initialize()
 	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
@@ -184,7 +184,7 @@
 	item_state = "wgloves"
 	item_color = "mime"
 
-/obj/item/clothing/gloves/color/random/New()
+/obj/item/clothing/gloves/color/random/Initialize()
 	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,

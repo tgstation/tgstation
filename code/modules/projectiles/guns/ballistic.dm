@@ -9,7 +9,7 @@
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = 1 //whether the gun ejects the chambered casing
 
-/obj/item/weapon/gun/ballistic/New()
+/obj/item/weapon/gun/ballistic/Initialize()
 	..()
 	if(!spawnwithmagazine)
 		update_icon()

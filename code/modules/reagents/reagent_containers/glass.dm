@@ -122,7 +122,7 @@
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
 
-/obj/item/weapon/reagent_containers/glass/beaker/New()
+/obj/item/weapon/reagent_containers/glass/beaker/Initialize()
 	..()
 	update_icon()
 
@@ -176,7 +176,7 @@
 	origin_tech = "materials=2;engineering=3;plasmatech=3"
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/beaker/noreact/New()
+/obj/item/weapon/reagent_containers/glass/beaker/noreact/Initialize()
 	..()
 	reagents.set_reacting(FALSE)
 

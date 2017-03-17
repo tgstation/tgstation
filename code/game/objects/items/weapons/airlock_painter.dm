@@ -15,7 +15,7 @@
 
 	var/obj/item/device/toner/ink = null
 
-/obj/item/weapon/airlock_painter/New()
+/obj/item/weapon/airlock_painter/Initialize()
 	..()
 	ink = new /obj/item/device/toner(src)
 

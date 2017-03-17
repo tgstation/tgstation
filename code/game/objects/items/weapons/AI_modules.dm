@@ -337,7 +337,7 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 
-/obj/item/weapon/aiModule/core/full/New()
+/obj/item/weapon/aiModule/core/full/Initialize()
 	..()
 	if(!law_id)
 		return
@@ -407,7 +407,7 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/custom
 	name = "Default Core AI Module"
 
-/obj/item/weapon/aiModule/core/full/custom/New()
+/obj/item/weapon/aiModule/core/full/custom/Initialize()
 	..()
 	for(var/line in file2list("config/silicon_laws.txt"))
 		if(!line)

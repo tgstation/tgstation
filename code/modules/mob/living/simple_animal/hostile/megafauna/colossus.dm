@@ -291,7 +291,7 @@ Difficulty: Very Hard
 		return FALSE
 	return TRUE
 
-/obj/machinery/smartfridge/black_box/New()
+/obj/machinery/smartfridge/black_box/Initialize()
 	var/static/obj/machinery/smartfridge/black_box/current
 	if(current && current != src)
 		qdel(src, force=TRUE)
@@ -379,7 +379,7 @@ Difficulty: Very Hard
 	var/list/affected_targets = list()
 	var/activation_sound = 'sound/effects/break_stone.ogg'
 
-/obj/machinery/anomalous_crystal/New()
+/obj/machinery/anomalous_crystal/Initialize()
 	activation_method = pick("touch","laser","bullet","energy","bomb","mob_bump","heat","weapon","speech")
 	..()
 
@@ -425,7 +425,8 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/ex_act()
 	ActivationReaction(null,"bomb")
 
-/obj/machinery/anomalous_crystal/random/New()//Just a random crysal spawner for loot
+/obj/machinery/anomalous_crystal/random/Initialize()//Just a random crysal spawner for loot
+	..()
 	var/random_crystal = pick(typesof(/obj/machinery/anomalous_crystal) - /obj/machinery/anomalous_crystal/random - /obj/machinery/anomalous_crystal)
 	new random_crystal(loc)
 	qdel(src)
@@ -444,7 +445,7 @@ Difficulty: Very Hard
 		qdel(C)
 		affected_targets.Add(H)
 
-/obj/machinery/anomalous_crystal/honk/New()
+/obj/machinery/anomalous_crystal/honk/Initialize()
 	..()
 	activation_method = pick("mob_bump","speech")
 
@@ -459,7 +460,7 @@ Difficulty: Very Hard
 	var/list/NewFlora = list()
 	var/florachance = 8
 
-/obj/machinery/anomalous_crystal/theme_warp/New()
+/obj/machinery/anomalous_crystal/theme_warp/Initialize()
 	..()
 	terrain_theme = pick("lavaland","winter","jungle","ayy lmao")
 	switch(terrain_theme)
@@ -524,7 +525,7 @@ Difficulty: Very Hard
 	cooldown_add = 50
 	var/generated_projectile = /obj/item/projectile/beam/emitter
 
-/obj/machinery/anomalous_crystal/emitter/New()
+/obj/machinery/anomalous_crystal/emitter/Initialize()
 	..()
 	generated_projectile = pick(/obj/item/projectile/magic/aoe/fireball/infernal,/obj/item/projectile/magic/aoe/lightning,/obj/item/projectile/magic/spellblade,
 								 /obj/item/projectile/bullet/meteorshot, /obj/item/projectile/beam/xray, /obj/item/projectile/colossus)
@@ -658,7 +659,7 @@ Difficulty: Very Hard
 	activation_sound = 'sound/magic/TIMEPARADOX2.ogg'
 	var/list/banned_items_typecache = list(/obj/item/weapon/storage, /obj/item/weapon/implant, /obj/item/weapon/implanter, /obj/item/weapon/disk/nuclear, /obj/item/projectile, /obj/item/weapon/spellbook)
 
-/obj/machinery/anomalous_crystal/refresher/New()
+/obj/machinery/anomalous_crystal/refresher/Initialize()
 	..()
 	banned_items_typecache = typecacheof(banned_items_typecache)
 
@@ -711,7 +712,7 @@ Difficulty: Very Hard
 			holder_animal.gib()
 			return
 
-/obj/structure/closet/stasis/New()
+/obj/structure/closet/stasis/Initialize()
 	..()
 	if(isanimal(loc))
 		holder_animal = loc

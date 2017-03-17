@@ -455,7 +455,7 @@
 	name = "monitor decryption key"
 	var/obj/machinery/message_server/server = null
 
-/obj/item/weapon/paper/monitorkey/New()
+/obj/item/weapon/paper/monitorkey/Initialize()
 	..()
 	spawn(10)
 		if(message_servers)

@@ -14,8 +14,8 @@
 	var/tables_required = 2
 	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
-	. = ..()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
+	..()
 	if(prob(50))
 		desc = "Oh no, not again."
 	update_icon()
@@ -65,8 +65,8 @@
 	var/never_spoken = TRUE
 	flags = NODECONSTRUCT
 
-/obj/structure/table/abductor/wabbajack/New()
-	. = ..()
+/obj/structure/table/abductor/wabbajack/Initialize()
+	..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/table/abductor/wabbajack/Destroy()

@@ -32,7 +32,7 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
 
-/obj/machinery/atmospherics/New(loc, process = TRUE)
+/obj/machinery/atmospherics/Initialize(mapload, process = TRUE)
 	nodes = new(device_type)
 	if (!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)

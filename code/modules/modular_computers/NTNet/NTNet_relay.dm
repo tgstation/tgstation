@@ -95,7 +95,7 @@
 /obj/machinery/ntnet_relay/attack_hand(mob/living/user)
 	ui_interact(user)
 
-/obj/machinery/ntnet_relay/New()
+/obj/machinery/ntnet_relay/Initialize()
 	uid = gl_uid
 	gl_uid++
 	component_parts = list()

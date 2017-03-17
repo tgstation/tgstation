@@ -12,7 +12,7 @@
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/weapon/tank/jetpack/New()
+/obj/item/weapon/tank/jetpack/Initialize()
 	..()
 	if(gas_type)
 		air_contents.assert_gas(gas_type)
@@ -144,7 +144,7 @@
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/weapon/tank/internals/tank = null
 
-/obj/item/weapon/tank/jetpack/suit/New()
+/obj/item/weapon/tank/jetpack/suit/Initialize()
 	..()
 	STOP_PROCESSING(SSobj, src)
 	temp_air_contents = air_contents

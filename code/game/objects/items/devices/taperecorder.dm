@@ -19,10 +19,10 @@
 	var/canprint = 1
 
 
-/obj/item/device/taperecorder/New()
+/obj/item/device/taperecorder/Initialize()
+	..()
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
-	..()
 
 
 /obj/item/device/taperecorder/examine(mob/user)
@@ -229,8 +229,10 @@
 
 
 //empty tape recorders
-/obj/item/device/taperecorder/empty/New()
-	return
+/obj/item/device/taperecorder/empty/Initialize()
+	..()
+	QDEL_NULL(mytape)
+	update_icon()
 
 
 /obj/item/device/tape
@@ -285,6 +287,6 @@
 				fix()
 
 //Random colour tapes
-/obj/item/device/tape/random/New()
-	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
+/obj/item/device/tape/random/Initialize()
 	..()
+	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"

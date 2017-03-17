@@ -49,7 +49,7 @@
 			if(can_send)
 				break
 
-/obj/machinery/telecomms/bus/New()
+/obj/machinery/telecomms/bus/Initialize()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/bus(null)
 	B.apply_default_parts(src)
@@ -93,10 +93,10 @@
 	freq_listening = list(ENG_FREQ)
 	autolinkers = list("processor4", "engineering", "common")
 
-/obj/machinery/telecomms/bus/preset_four/New()
+/obj/machinery/telecomms/bus/preset_four/Initialize()
+	..()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
 
 /obj/machinery/telecomms/bus/preset_one/birdstation
 	name = "Bus"

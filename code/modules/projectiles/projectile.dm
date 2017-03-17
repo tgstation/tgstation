@@ -51,9 +51,9 @@
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
-/obj/item/projectile/New()
+/obj/item/projectile/Initialize()
 	permutated = list()
-	return ..()
+	..()
 
 /obj/item/projectile/proc/Range()
 	range--

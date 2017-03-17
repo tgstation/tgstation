@@ -96,7 +96,7 @@
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
+/obj/effect/overlay/temp/medical_holosign/Initialize(loc, creator)
 	..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
@@ -164,9 +164,9 @@
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
 
-/obj/item/device/flashlight/flare/New()
-	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
+/obj/item/device/flashlight/flare/Initialize()
 	..()
+	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 
 /obj/item/device/flashlight/flare/process()
 	open_flame(heat)
@@ -259,7 +259,7 @@
 	var/charge_tick = 0
 
 
-/obj/item/device/flashlight/emp/New()
+/obj/item/device/flashlight/emp/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

@@ -103,7 +103,7 @@
 		/obj/item/ammo_casing/caseless/arrow
 		)
 
-/obj/item/weapon/storage/backpack/quiver/full/New()
+/obj/item/weapon/storage/backpack/quiver/full/Initialize()
 	..()
 	for(var/i in 1 to storage_slots)
 		new /obj/item/ammo_casing/caseless/arrow(src)

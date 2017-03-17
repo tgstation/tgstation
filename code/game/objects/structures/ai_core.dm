@@ -11,7 +11,7 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
-/obj/structure/AIcore/New()
+/obj/structure/AIcore/Initialize()
 	..()
 	laws.set_laws_config()
 
@@ -235,7 +235,7 @@
 	anchored = 1
 	state = AI_READY_CORE
 
-/obj/structure/AIcore/deactivated/New()
+/obj/structure/AIcore/deactivated/Initialize()
 	..()
 	circuit = new(src)
 

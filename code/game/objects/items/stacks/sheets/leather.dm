@@ -13,9 +13,9 @@ var/global/list/datum/stack_recipe/human_recipes = list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/human/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/human/Initialize(mapload, amount)
+	..()
 	recipes = human_recipes
-	return ..()
 
 /obj/item/stack/sheet/animalhide/generic
 	name = "skin"
@@ -33,9 +33,9 @@ var/global/list/datum/stack_recipe/corgi_recipes = list ( \
 	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/corgi/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, amount)
+	..()
 	recipes = corgi_recipes
-	return ..()
 
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
@@ -54,9 +54,9 @@ var/global/list/datum/stack_recipe/monkey_recipes = list ( \
 	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/monkey/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, amount)
+	..()
 	recipes = monkey_recipes
-	return ..()
 
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
@@ -75,7 +75,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/xeno/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/xeno/Initialize(var/loc, var/amount=null)
 	recipes = xeno_recipes
 	return ..()
 
@@ -138,9 +138,9 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/sinew/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/sinew/Initialize(mapload, amount)
+	..()
 	recipes = sinew_recipes
-	return ..()
 		/*
  * Plates
  		*/

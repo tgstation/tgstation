@@ -17,7 +17,7 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/New()
+/obj/effect/anomaly/Initialize()
 	..()
 	poi_list |= src
 	START_PROCESSING(SSobj, src)
@@ -82,7 +82,7 @@
 	density = 0
 	var/boing = 0
 
-/obj/effect/anomaly/grav/New()
+/obj/effect/anomaly/grav/Initialize()
 	..()
 	aSignal.origin_tech = "magnets=7"
 
@@ -128,7 +128,7 @@
 	var/shockdamage = 20
 	var/explosive = 1
 
-/obj/effect/anomaly/flux/New()
+/obj/effect/anomaly/flux/Initialize()
 	..()
 	aSignal.origin_tech = "powerstorage=7"
 
@@ -177,7 +177,7 @@
 	icon_state = "bluespace"
 	density = 1
 
-/obj/effect/anomaly/bluespace/New()
+/obj/effect/anomaly/bluespace/Initialize()
 	..()
 	aSignal.origin_tech = "bluespace=7"
 
@@ -249,7 +249,7 @@
 	icon_state = "mustard"
 	var/ticks = 0
 
-/obj/effect/anomaly/pyro/New()
+/obj/effect/anomaly/pyro/Initialize()
 	..()
 	aSignal.origin_tech = "plasmatech=7"
 
@@ -280,7 +280,7 @@
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
 
-/obj/effect/anomaly/bhole/New()
+/obj/effect/anomaly/bhole/Initialize()
 	..()
 	aSignal.origin_tech = "engineering=7"
 

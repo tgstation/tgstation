@@ -542,7 +542,7 @@
 	var/wheel_buttons_type //the type of buttons used with this wheel.
 	var/list/buttons_list = list()
 
-/obj/screen/wheel/New()
+/obj/screen/wheel/Initialize()
 	..()
 	build_options()
 

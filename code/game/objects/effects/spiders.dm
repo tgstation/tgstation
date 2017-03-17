@@ -30,10 +30,10 @@
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
 
-/obj/structure/spider/stickyweb/New()
+/obj/structure/spider/stickyweb/Initialize()
+	..()
 	if(prob(50))
 		icon_state = "stickyweb2"
-	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
@@ -57,11 +57,11 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
-/obj/structure/spider/eggcluster/New()
+/obj/structure/spider/eggcluster/Initialize()
+	. = ..()
 	pixel_x = rand(3,-3)
 	pixel_y = rand(3,-3)
 	START_PROCESSING(SSobj, src)
-	. = ..()
 
 /obj/structure/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -92,11 +92,11 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
-/obj/structure/spider/spiderling/New()
+/obj/structure/spider/spiderling/Initialize()
+	. = ..()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
-	. = ..()
 
 /obj/structure/spider/spiderling/hunter
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
@@ -190,9 +190,9 @@
 	icon_state = "cocoon1"
 	obj_integrity = 60
 
-/obj/structure/spider/cocoon/New()
+/obj/structure/spider/cocoon/Initialize()
+	..()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
-	. = ..()
 
 /obj/structure/spider/cocoon/container_resist(mob/living/user)
 	var/breakout_time = 1

@@ -42,7 +42,7 @@ var/bomb_set
 	var/image/interior = null
 	var/obj/effect/countdown/nuclearbomb/countdown
 
-/obj/machinery/nuclearbomb/New()
+/obj/machinery/nuclearbomb/Initialize()
 	..()
 	countdown = new(src)
 	nuke_list += src
@@ -79,7 +79,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
-/obj/machinery/nuclearbomb/syndicate/New()
+/obj/machinery/nuclearbomb/syndicate/Initialize()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
 	if(existing)
 		qdel(src)
@@ -497,7 +497,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/weapon/disk/nuclear/New()
+/obj/item/weapon/disk/nuclear/Initialize()
 	..()
 	poi_list |= src
 	set_stationloving(TRUE, inform_admins=TRUE)

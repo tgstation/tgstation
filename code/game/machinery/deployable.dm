@@ -101,7 +101,7 @@
 	var/deploy_message = TRUE
 
 
-/obj/structure/barricade/security/New()
+/obj/structure/barricade/security/Initialize()
 	..()
 	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
 

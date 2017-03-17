@@ -21,7 +21,7 @@
 	var/const/OPEN_DURATION = 6
 	var/const/CLOSE_DURATION = 6
 
-/obj/structure/transit_tube/station/New()
+/obj/structure/transit_tube/station/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 

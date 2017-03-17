@@ -13,7 +13,7 @@ This file contains the arcane tome files.
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/weapon/tome/New()
+/obj/item/weapon/tome/Initialize()
 	..()
 	if(!LAZYLEN(rune_types))
 		rune_types = list()

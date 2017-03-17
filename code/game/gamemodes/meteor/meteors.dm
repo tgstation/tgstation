@@ -122,7 +122,7 @@
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
-/obj/effect/meteor/New()
+/obj/effect/meteor/Initialize()
 	..()
 	meteor_list += src
 	if(SSaugury)
@@ -274,7 +274,7 @@
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 
-/obj/effect/meteor/meaty/New()
+/obj/effect/meteor/meaty/Initialize()
 	for(var/path in meteordrop)
 		if(path == /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant)
 			meteordrop -= path
@@ -305,7 +305,7 @@
 	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 
-/obj/effect/meteor/meaty/xeno/New()
+/obj/effect/meteor/meaty/xeno/Initialize()
 	meteordrop += subtypesof(/obj/item/organ/alien)
 	..()
 
@@ -356,7 +356,7 @@
 	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
 	threat = 100
 
-/obj/effect/meteor/pumpkin/New()
+/obj/effect/meteor/pumpkin/Initialize()
 	..()
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////

@@ -66,7 +66,7 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 
-/obj/structure/alien/resin/New(location)
+/obj/structure/alien/resin/Initialize(location)
 	..()
 	air_update_turf(1)
 	return
@@ -132,10 +132,10 @@
 	/turf/open/chasm,
 	/turf/open/floor/plating/lava))
 
-/obj/structure/alien/weeds/New()
+/obj/structure/alien/weeds/Initialize()
+	..()
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
-	..()
 	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
 	if(icon == initial(icon))
 		switch(rand(1,3))
@@ -174,9 +174,9 @@
 	light_range = 1
 	var/node_range = NODERANGE
 
-/obj/structure/alien/weeds/node/New()
-	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
+/obj/structure/alien/weeds/node/Initialize()
 	..()
+	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
 	if(W && W != src)
 		qdel(W)
@@ -219,9 +219,9 @@
 	layer = MOB_LAYER
 
 
-/obj/structure/alien/egg/New()
-	new /obj/item/clothing/mask/facehugger(src)
+/obj/structure/alien/egg/Initialize()
 	..()
+	new /obj/item/clothing/mask/facehugger(src)
 	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 
 /obj/structure/alien/egg/Destroy()

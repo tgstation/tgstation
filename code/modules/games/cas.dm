@@ -28,7 +28,7 @@ var/global/list/cards_against_space
 	decksize = 50
 	card_text_file = "strings/cas_black.txt"
 
-/obj/item/toy/cards/deck/cas/New()
+/obj/item/toy/cards/deck/cas/Initialize()
 	if(!cards_against_space)  //saves loading from the files every single time a new deck is created, but still lets each deck have a random assortment, it's purely an optimisation
 		cards_against_space = list("cas_white" = file2list("strings/cas_white.txt"),"cas_black" = file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]

@@ -59,7 +59,7 @@
 	var/detonation_timer
 	var/list/milestones = list()
 
-/obj/machinery/doomsday_device/New()
+/obj/machinery/doomsday_device/Initialize()
 	..()
 	countdown = new(src)
 

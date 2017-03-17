@@ -337,7 +337,7 @@ MASS SPECTROMETER
 	origin_tech = "magnets=2;biotech=1;plasmatech=2"
 	var/details = 0
 
-/obj/item/device/mass_spectrometer/New()
+/obj/item/device/mass_spectrometer/Initialize()
 	..()
 	create_reagents(5)
 

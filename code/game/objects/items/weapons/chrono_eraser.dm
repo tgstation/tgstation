@@ -54,12 +54,13 @@
 	var/obj/effect/chrono_field/field = null
 	var/turf/startpos = null
 
-/obj/item/weapon/gun/energy/chrono_gun/New(var/obj/item/weapon/chrono_eraser/T)
-	. = ..()
+/obj/item/weapon/gun/energy/chrono_gun/Initialize()
+	..()
+	var/obj/item/weapon/chrono_eraser/T = loc
 	if(istype(T))
 		TED = T
 	else //admin must have spawned it
-		TED = new(src.loc)
+		TED = new(loc)
 		qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
@@ -159,7 +160,7 @@
 	var/preloaded = 0
 	var/RPpos = null
 
-/obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/weapon/gun/energy/chrono_gun/G)
+/obj/effect/chrono_field/Initialize(mapload, var/mob/living/target, var/obj/item/weapon/gun/energy/chrono_gun/G)
 	if(target && isliving(target) && G)
 		target.loc = src
 		src.captured = target

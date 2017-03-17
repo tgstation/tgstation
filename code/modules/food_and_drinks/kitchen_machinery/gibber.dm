@@ -19,7 +19,7 @@
 /obj/machinery/gibber/autogibber
 	var/turf/input_plate
 
-/obj/machinery/gibber/autogibber/New()
+/obj/machinery/gibber/autogibber/Initialize()
 	..()
 	spawn(5)
 		for(var/i in cardinal)
@@ -45,7 +45,7 @@
 			M.gib()
 
 
-/obj/machinery/gibber/New()
+/obj/machinery/gibber/Initialize()
 	..()
 	src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)

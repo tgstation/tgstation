@@ -10,7 +10,7 @@
 	var/machinedir = EAST
 	speed_process = 1
 
-/obj/machinery/mineral/processing_unit_console/New()
+/obj/machinery/mineral/processing_unit_console/Initialize()
 	..()
 	spawn(7)
 		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))

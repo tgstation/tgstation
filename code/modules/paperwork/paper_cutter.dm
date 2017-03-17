@@ -12,7 +12,7 @@
 	pass_flags = PASSTABLE
 
 
-/obj/item/weapon/papercutter/New()
+/obj/item/weapon/papercutter/Initialize()
 	..()
 	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
 	update_icon()
@@ -113,7 +113,7 @@
 	obj_integrity = 50
 	max_integrity = 50
 
-/obj/item/weapon/paperslip/New()
+/obj/item/weapon/paperslip/Initialize()
 	..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)

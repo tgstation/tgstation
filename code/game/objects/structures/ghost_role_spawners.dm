@@ -53,7 +53,7 @@
 		H.underwear = "Nude"
 		H.update_body()
 
-/obj/effect/mob_spawn/human/ash_walker/New()
+/obj/effect/mob_spawn/human/ash_walker/Initialize()
 	..()
 	var/area/A = get_area(src)
 	if(A)
@@ -106,7 +106,7 @@
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
+/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species, has_owner = FALSE, mob/creator)
 	..()
 	if(species)
 		name += " ([initial(species.id)])"
@@ -175,7 +175,8 @@
 	conditions of your makeshift shelter, the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
 
-/obj/effect/mob_spawn/human/hermit/New()
+/obj/effect/mob_spawn/human/hermit/Initialize()
+	..()
 	var/arrpee = rand(1,4)
 	switch(arrpee)
 		if(1)
@@ -206,7 +207,6 @@
 			uniform = /obj/item/clothing/under/color/grey/glorf
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			back = /obj/item/weapon/storage/backpack
-	..()
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
@@ -241,12 +241,12 @@
 	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
 	L.name = L.real_name
 
-/obj/effect/mob_spawn/human/prisoner_transport/New()
+/obj/effect/mob_spawn/human/prisoner_transport/Initialize()
+	..()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
 	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
 	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
-	..()
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))

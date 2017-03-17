@@ -55,7 +55,7 @@ Contents:
 	var/a_boost = 3//Number of adrenaline boosters.
 
 
-/obj/item/clothing/suit/space/space_ninja/New()
+/obj/item/clothing/suit/space/space_ninja/Initialize()
 	..()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
 

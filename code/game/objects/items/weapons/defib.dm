@@ -23,13 +23,13 @@
 	var/combat = 0 //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 
-/obj/item/weapon/defibrillator/New() //starts without a cell for rnd
+/obj/item/weapon/defibrillator/Initialize() //starts without a cell for rnd
 	..()
 	paddles = make_paddles()
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/loaded/New() //starts with hicap
+/obj/item/weapon/defibrillator/loaded/Initialize() //starts with hicap
 	..()
 	paddles = make_paddles()
 	bcell = new(src)
@@ -237,7 +237,7 @@
 	if(slot == user.getBeltSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/compact/loaded/New()
+/obj/item/weapon/defibrillator/compact/loaded/Initialize()
 	..()
 	paddles = make_paddles()
 	bcell = new(src)
@@ -249,7 +249,7 @@
 	combat = 1
 	safety = 0
 
-/obj/item/weapon/defibrillator/compact/combat/loaded/New()
+/obj/item/weapon/defibrillator/compact/combat/loaded/Initialize()
 	..()
 	paddles = make_paddles()
 	bcell = new /obj/item/weapon/stock_parts/cell/infinite(src)
@@ -295,7 +295,7 @@
 	cooldown = 0
 	update_icon()
 
-/obj/item/weapon/twohanded/shockpaddles/New(mainunit)
+/obj/item/weapon/twohanded/shockpaddles/Initialize(mainunit)
 	..()
 	if(check_defib_exists(mainunit, src) && req_defib)
 		defib = mainunit

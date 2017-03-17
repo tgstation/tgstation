@@ -48,7 +48,7 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/arcade/New()
+/obj/machinery/computer/arcade/Initialize()
 	..()
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
@@ -113,7 +113,7 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 	var/turtle = 0
 
-/obj/machinery/computer/arcade/battle/New()
+/obj/machinery/computer/arcade/battle/Initialize()
 	..()
 	var/name_action
 	var/name_part1
@@ -363,7 +363,7 @@
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
-/obj/machinery/computer/arcade/orion_trail/New()
+/obj/machinery/computer/arcade/orion_trail/Initialize()
 	..()
 	// Sets up the main trail
 	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")

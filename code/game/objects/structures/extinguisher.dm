@@ -11,7 +11,7 @@
 	var/obj/item/weapon/extinguisher/stored_extinguisher
 	var/opened = 0
 
-/obj/structure/extinguisher_cabinet/New(loc, ndir, building)
+/obj/structure/extinguisher_cabinet/Initialize(loc, ndir, building)
 	..()
 	if(building)
 		setDir(ndir)
