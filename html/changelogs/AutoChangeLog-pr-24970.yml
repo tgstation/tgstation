@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "SDQL2 now supports outputting proccalls to variables, and associative lists"

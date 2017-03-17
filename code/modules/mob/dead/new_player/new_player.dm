@@ -300,8 +300,12 @@
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
-		to_chat(src, alert("[rank] is not available. Please try another."))
+		alert(src, "[rank] is not available. Please try another.")
 		return 0
+	
+	if(ticker.late_join_disabled)
+		alert(src, "An administrator has disabled late join spawning.")
+		return FALSE
 
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up

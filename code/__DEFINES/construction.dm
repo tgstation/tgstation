@@ -112,6 +112,11 @@
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
 
+#define RCD_FLOORWALL 1
+#define RCD_AIRLOCK 2
+#define RCD_DECONSTRUCT 3
+#define RCD_WINDOWGRILLE 4
+
 //barsign.dm
 #define BARSIGN_UNWIRED 1
 #define BARSIGN_OPEN 2

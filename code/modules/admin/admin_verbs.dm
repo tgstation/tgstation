@@ -145,7 +145,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
 	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
-	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,

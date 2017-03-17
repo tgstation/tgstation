@@ -9,7 +9,6 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 	name = "Lighting"
 	wait = 2
 	init_order = -20
-	priority = 35
 	flags = SS_TICKER
 
 	var/initialized = FALSE
