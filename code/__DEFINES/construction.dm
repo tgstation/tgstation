@@ -3,7 +3,7 @@
 //Defines for construction states
 
 #define NO_DECONSTRUCT -1   //use as a type for required_type_to_(de)construct to prevent passing that state
-#define CONSTRUCTION_VOLUME 100 //used for all construction sounds
+#define CONSTRUCTION_VOLUME 50 //used for all construction sounds
 
 //girder construction states
 #define GIRDER_NORMAL 0
