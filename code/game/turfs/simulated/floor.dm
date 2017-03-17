@@ -200,15 +200,15 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
 
-/turf/open/floor/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+/turf/open/floor/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")
 			ChangeTurf(/turf/closed/wall)
-			return 1
+			return TRUE
 		if(RCD_AIRLOCK)
 			if(locate(/obj/machinery/door/airlock) in loc)
-				return 0
+				return FALSE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
 
@@ -223,18 +223,18 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			else
 				A.req_access = A.electronics.accesses
 			A.autoclose = 1
-			return 1
+			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(istype(src, baseturf))
-				return 0
+				return FALSE
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 			ChangeTurf(baseturf)
-			return 1
+			return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)
-				return 0
+				return FALSE
 			to_chat(user, "<span class='notice'>You construct the grille.</span>")
 			var/obj/structure/grille/G = new(src)
 			G.anchored = 1
-			return 1
-	return 0
+			return TRUE
+	return FALSE

@@ -183,10 +183,10 @@
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return 0
 
-/turf/open/space/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+/turf/open/space/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
 			ChangeTurf(/turf/open/floor/plating)
-			return 1
-	return 0
+			return TRUE
+	return FALSE

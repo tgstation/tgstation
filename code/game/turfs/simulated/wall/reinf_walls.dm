@@ -248,3 +248,7 @@
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
+
+
+/turf/closed/wall/r_vall/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd)
+	return FALSE
