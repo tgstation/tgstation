@@ -1529,8 +1529,14 @@ var/list/airlock_overlays = list()
 				ae.loc = src.loc
 	qdel(src)
 
-/obj/machinery/door/airlock/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+	return FALSE
+
+/obj/machinery/door/airlock/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the airlock.</span>")
 			qdel(src)

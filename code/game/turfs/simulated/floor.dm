@@ -200,8 +200,20 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
 
-/turf/open/floor/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd)
+/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
+		if(RCD_AIRLOCK)
+			return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
+		if(RCD_WINDOWGRILLE)
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 4)
+	return FALSE
+
+/turf/open/floor/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")
 			ChangeTurf(/turf/closed/wall)

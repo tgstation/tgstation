@@ -39,8 +39,7 @@ RCD
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 
-	var/delay = 20
-	var/action_cost = 20
+	var/delay_mod = 1
 
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \
 		the RCD blinks yellow.</span>"
@@ -285,10 +284,13 @@ RCD
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return 0
-	if(do_after(user, delay, target = A))
-		if(checkResource(action_cost, user))
-			if(A.rcd_act(user, src))
-				useResource(action_cost, user)
+	var/list/rcd_results = A.rcd_vals(user, src)
+	if(!rcd_results)
+		return
+	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+		if(checkResource(rcd_results["cost"], user))
+			if(A.rcd_act(user, src, rcd_results["mode"]))
+				useResource(rcd_results["cost"], user)
 				activate()
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				return 1

@@ -258,8 +258,8 @@
 	broken_type = null
 
 
-/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
-	switch(the_rcd.mode)
+/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")
 			qdel(src)
