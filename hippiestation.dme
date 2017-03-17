@@ -746,7 +746,6 @@
 #include "code\game\objects\items\weapons\airlock_painter.dm"
 #include "code\game\objects\items\weapons\cards_ids.dm"
 #include "code\game\objects\items\weapons\chrono_eraser.dm"
-#include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"
 #include "code\game\objects\items\weapons\cosmetics.dm"
 #include "code\game\objects\items\weapons\courtroom.dm"
@@ -2063,6 +2062,7 @@
 #include "hippiestation\code\game\area\areas\misc.dm"
 #include "hippiestation\code\game\machinery\vending.dm"
 #include "hippiestation\code\game\machinery\vending_types.dm"
+#include "hippiestation\code\game\objects\items\weapons\cigs_lighters.dm"
 #include "hippiestation\code\interface\skin.dmf"
 #include "hippiestation\code\modules\admin\verbs\aooc.dm"
 #include "hippiestation\code\modules\admin\verbs\fillbreach.dm"
@@ -2088,5 +2088,4 @@
 #include "hippiestation\code\modules\teeth\teeth.dm"
 #include "interface\interface.dm"
 #include "interface\stylesheet.dm"
-#include "interface\skin.dmf"
 // END_INCLUDE
