@@ -385,7 +385,6 @@
 /area/holodeck/rec_center/lounge)
 "bg" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	dir = 1
 	},
 /turf/open/floor/holofloor/carpet,
@@ -4229,7 +4228,6 @@
 /area/centcom/control)
 "li" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
