@@ -68,8 +68,6 @@
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(M), M.dir)
 		M.name_override = null
-		M.icon = initial(M.icon)
-		M.icon_state = initial(M.icon_state)
 		M.cut_overlays()
 		M.regenerate_icons()
 
