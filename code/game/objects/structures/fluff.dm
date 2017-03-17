@@ -8,20 +8,28 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
-	var/deconstructible = TRUE
 
-/obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/wrench) && deconstructible)
-		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(user, I.usesound, 50, 1)
-		if(!do_after(user, 50, target = src))
-			return 0
-		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-		playsound(user, 'sound/items/Deconstruct.ogg', 50, 1)
-		new/obj/item/stack/sheet/metal(get_turf(src))
-		qdel(src)
-		return
-	..()
+CONSTRUCTION_BLUEPRINT(/obj/structure/fluff, FALSE, FALSE)
+	. = newlist(
+		/datum/construction_state/first{
+			//required_type_to_construct = /obj/stack/sheet/metal
+			required_amount_to_construct = 1
+			buildable = 0
+		},
+		/datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/weapon/wrench
+			deconstruction_delay = 50
+			deconstruction_sound = 'sound/items/Deconstruct.ogg'
+			deconstruction_message = "disassembling"
+		}
+	)
+	
+	//This is here to work around a byond bug
+	//http://www.byond.com/forum/?post=2220240
+	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
+
+	var/datum/construction_state/first/X = .[1]
+	X.required_type_to_construct = /obj/item/stack/sheet/metal
 
 /obj/structure/fluff/empty_terrarium //Empty terrariums are created when a preserved terrarium in a lavaland seed vault is activated.
 	name = "empty terrarium"
@@ -64,7 +72,7 @@
 	icon_state = "drake_statue"
 	pixel_x = -16
 	density = TRUE
-	deconstructible = FALSE
+	construction_blueprint = null
 
 /obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
@@ -77,7 +85,7 @@
 	icon = 'icons/obj/bus.dmi'
 	density = TRUE
 	anchored = TRUE
-	deconstructible = FALSE
+	construction_blueprint = null
 
 /obj/structure/fluff/bus/dense
 	name = "bus"
@@ -111,7 +119,7 @@
 	desc = "A lining of paper scattered across the bottom of a wall."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "paper"
-	deconstructible = FALSE
+	construction_blueprint = null
 
 /obj/structure/fluff/paper/corner
 	icon_state = "papercorner"
