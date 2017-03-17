@@ -22603,11 +22603,11 @@
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
 "aJH" = (
-/obj/machinery/computer/atmos_alert,
 /obj/structure/cable/white{
 	tag = "icon-2-4";
 	icon_state = "2-4"
 	},
+/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
