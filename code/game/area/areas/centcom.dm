@@ -71,6 +71,7 @@
 /area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1

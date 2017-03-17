@@ -27403,7 +27403,7 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
-/obj/machinery/modular_computer/console/preset/engineering,
+/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel/vault,
 /area/engine/chiefs_office)
 "aWy" = (

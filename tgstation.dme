@@ -540,6 +540,7 @@
 #include "code\game\machinery\camera\presets.dm"
 #include "code\game\machinery\camera\tracking.dm"
 #include "code\game\machinery\computer\aifixer.dm"
+#include "code\game\machinery\computer\apc_control.dm"
 #include "code\game\machinery\computer\arcade.dm"
 #include "code\game\machinery\computer\atmos_alert.dm"
 #include "code\game\machinery\computer\atmos_control.dm"

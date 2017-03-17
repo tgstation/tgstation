@@ -31,9 +31,17 @@
 		can_electrify = TRUE
 	update_icon()
 
+/obj/structure/chair/Initialize()
+	..()
+	if(!anchored)	//why would you put these on the shuttle?
+		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+
 /obj/structure/chair/Destroy()
-	latejoin -= src	//These may be here due to the arrivals shuttle
+	RemoveFromLatejoin()
 	return ..()
+
+/obj/structure/chair/proc/RemoveFromLatejoin()
+	latejoin -= src	//These may be here due to the arrivals shuttle
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 	. = newlist(

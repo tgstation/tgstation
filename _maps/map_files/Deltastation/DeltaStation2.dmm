@@ -47561,7 +47561,6 @@
 	name = "Transit Tube"
 	})
 "bLD" = (
-/obj/machinery/computer/atmos_alert,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
@@ -47575,6 +47574,7 @@
 	dir = 4;
 	name = "engineering camera"
 	},
+/obj/machinery/computer/apc_control,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
