@@ -340,18 +340,14 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair/office, FALSE, FALSE)
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)
-	var/stack_type = initial(origin_type.buildstacktype)
-	if(!stack_type)
-		return
-	var/remaining_mats = initial(origin_type.buildstackamount)
-	remaining_mats-- //Part of the chair was rendered completely unusable. It magically dissapears. Maybe make some dirt?
-	if(remaining_mats)
-		for(var/M=1 to remaining_mats)
-			new stack_type(get_turf(loc))
+	var/datum/construction_blueprint/BP = initial(origin_type.construction_blueprint)
+	if(BP)
+		BP = new BP
+		var/list/Steps = BP.GetBlueprint()
+		var/datum/construction_state/first/F = Steps[1]
+		new F.required_type_to_construct(get_turf(src))
+		qdel(BP)
 	qdel(src)
-
-
-
 
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
