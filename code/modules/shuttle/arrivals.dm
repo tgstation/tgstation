@@ -188,7 +188,7 @@
 		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
-	if(var_name == "perma_docked")
-		usr << "Use the secret!";
-		return FALSE
+	switch(var_name)
+		if("perma_docked")
+			feedback_add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
 	return ..()
