@@ -3,8 +3,7 @@
 	name = "Initializing..."
 	var/target
 
-//Don't port this to Initialize it's too critical
-/obj/effect/statclick/New(loc, text, target)
+/obj/effect/statclick/New(loc, text, target) //Don't port this to Initialize it's too critical
 	..()
 	name = text
 	src.target = target
