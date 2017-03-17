@@ -56,7 +56,8 @@
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
-		M.copy_overlays(disguise, TRUE)
+		M.cut_overlays()
+		M.add_overlay(disguise.overlays)
 		M.update_inv_hands()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
@@ -67,6 +68,8 @@
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(M), M.dir)
 		M.name_override = null
+		M.icon = initial(M.icon)
+		M.icon_state = initial(M.icon_state)
 		M.cut_overlays()
 		M.regenerate_icons()
 
