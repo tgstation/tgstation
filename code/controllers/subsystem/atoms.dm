@@ -125,6 +125,7 @@ var/datum/controller/subsystem/atoms/SSatoms
 /datum/controller/subsystem/atoms/proc/InitConstruction()
 	var/list/recipes = list()
 	recipes_cache = recipes
+	var/count = 0
 	var/list/objs = typesof(/obj)
 	for(var/I in objs)
 		var/obj/construction_blueprint_getter_type = I;
@@ -153,5 +154,7 @@ var/datum/controller/subsystem/atoms/SSatoms
 						if(!bp_name)
 							bp_name = initial(O.name)
 						t_recipes += new /datum/stack_recipe(bp_name, I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = F.one_per_turf, on_floor = F.on_floor, window_checks = is_glass)
+						++count
 		CHECK_TICK
-	testing("Compiled [recipes.len] stack construction recipes")
+	testing("Compiled [count] stack construction recipes")
+	return count
