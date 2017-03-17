@@ -12,8 +12,6 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
-	blend_mode       = BLEND_ADD
-
 	var/needs_update = FALSE
 
 /atom/movable/lighting_object/Initialize(mapload, var/no_update = FALSE)
