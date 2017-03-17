@@ -284,11 +284,13 @@
 
 /mob/proc/get_contents()
 
-/mob/living/proc/lay_down()
+/mob/living/proc/lay_down(silent)
 	set name = "Rest"
 	set category = "IC"
 
 	resting = !resting
+	if(silent)
+		return
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
 

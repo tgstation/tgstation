@@ -12,7 +12,7 @@ export function css () {
       paths: [ f.src ]
     }))
     .pipe(g.postcss([
-      s.autoprefixer({ browsers: ['last 2 versions', 'ie >= 8'] }),
+      s.autoprefixer({ browsers: ['ie >= 8'] }),
       s.gradient,
       s.opacity,
       s.rgba({oldie: true}),

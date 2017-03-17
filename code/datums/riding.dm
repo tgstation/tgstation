@@ -111,7 +111,7 @@
 		ridden.layer = OBJ_LAYER
 
 /datum/riding/atv/turret
-	var/obj/machinery/porta_turret/syndicate/vehicle_turret/turret = null
+	var/obj/vehicle/atv/turret/R = null
 
 /datum/riding/atv/turret/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
@@ -119,31 +119,31 @@
 	else
 		ridden.layer = OBJ_LAYER
 
-	if(turret)
+	if(R.turret)
 		if(ridden.dir == NORTH)
-			turret.layer = ABOVE_MOB_LAYER
+			R.turret.layer = ABOVE_MOB_LAYER
 		else
-			turret.layer = OBJ_LAYER
+			R.turret.layer = OBJ_LAYER
 
 
 /datum/riding/atv/turret/handle_vehicle_offsets()
 	..()
-	if(turret)
-		turret.forceMove(get_turf(ridden))
+	R = ridden
+	if(R.turret)
+		R.turret.forceMove(get_turf(ridden))
 		switch(ridden.dir)
 			if(NORTH)
-				turret.pixel_x = 0
-				turret.pixel_y = 4
+				R.turret.pixel_x = 0
+				R.turret.pixel_y = 4
 			if(EAST)
-				turret.pixel_x = -12
-				turret.pixel_y = 4
+				R.turret.pixel_x = -12
+				R.turret.pixel_y = 4
 			if(SOUTH)
-				turret.pixel_x = 0
-				turret.pixel_y = 4
+				R.turret.pixel_x = 0
+				R.turret.pixel_y = 4
 			if(WEST)
-				turret.pixel_x = 12
-				turret.pixel_y = 4
-
+				R.turret.pixel_x = 12
+				R.turret.pixel_y = 4
 
 //pimpin ride
 /datum/riding/janicart
@@ -251,6 +251,71 @@
 				if(WEST)
 					buckled_mob.pixel_x = 10
 					buckled_mob.pixel_y = 5
+
+//prototype repair vehicle
+/datum/riding/space/repair
+	keytype = null
+	vehicle_move_delay = 1
+	var/obj/machinery/repair_turret/turret = null
+	var/obj/vehicle/space/speedbike/repair/R = null
+
+/datum/riding/space/repair/handle_vehicle_layer()
+	R = ridden
+	turret = R.turret
+	switch(ridden.dir)
+		if(NORTH,SOUTH)
+			ridden.pixel_x = -16
+			ridden.pixel_y = -16
+		if(EAST,WEST)
+			ridden.pixel_x = -18
+			ridden.pixel_y = 0
+	if(turret)
+		if(ridden.dir == SOUTH)
+			turret.layer = 4
+		else
+			turret.layer = 5
+
+/datum/riding/space/repair/handle_vehicle_offsets()
+	..()
+	R = ridden
+	turret = R.turret
+	if(turret)
+		turret.forceMove(get_turf(ridden))
+		switch(ridden.dir)
+			if(NORTH)
+				turret.pixel_x = 1
+				turret.pixel_y = -16
+			if(EAST)
+				turret.pixel_x = -23
+				turret.pixel_y = 10
+			if(SOUTH)
+				turret.pixel_x = 1
+				turret.pixel_y = 23
+			if(WEST)
+				turret.pixel_x = 23
+				turret.pixel_y = 10
+	if(ridden.has_buckled_mobs())
+		for(var/m in ridden.buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.setDir(ridden.dir)
+			switch(ridden.dir)
+				if(NORTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = -8
+				if(SOUTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 4
+				if(EAST)
+					buckled_mob.pixel_x = -10
+					buckled_mob.pixel_y = 5
+				if(WEST)
+					buckled_mob.pixel_x = 10
+					buckled_mob.pixel_y = 5
+
+//ATMOBILE
+
+datum/riding/space/speedbike/atmos
+	vehicle_move_delay = 1
 
 //SPEEDUWAGON
 

@@ -5,6 +5,9 @@
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/weapon/circuitboard/computer/stationalert
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
+	var/air_alarm_count = 0
+	var/power_alarm_count = 0
+	var/fire_alarm_count = 0
 
 	light_color = LIGHT_COLOR_CYAN
 
@@ -68,9 +71,9 @@
 				L -= I
 	return !cleared
 
-
 /obj/machinery/computer/station_alert/process()
 	..()
+
 
 /obj/machinery/computer/station_alert/update_icon()
 	..()

@@ -136,3 +136,11 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
+
+/turf/closed/wall/wizard
+	name = "majestic wall"
+	desc = "An elegant wall."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "iron"
+	sheet_type = /obj/item/stack/rods
+	canSmoothWith = list(/turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron)

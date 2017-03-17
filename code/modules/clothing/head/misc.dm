@@ -279,3 +279,19 @@
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the land."
 	icon_state = "fancycrown"
+
+/obj/item/clothing/head/atmos_hood
+	name = "elite atmosian hood"
+	desc = "A mysterious artifact of atmosia, rumored to be used in the worship of their plasma gods."
+	icon_state = "atmos_hood"
+	item_state = "atmos_hood"
+	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/head/orange_beret
+	name = "elite engineer's beret"
+	desc = "A beret awarded only to the most elite of engineers."
+	icon_state = "beret_orange"
+	item_state = "beret_orange"
+	armor = list(melee = 15, bullet = 15, laser = 20,energy = 20, bomb = 25, bio = 10, rad = 60, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
