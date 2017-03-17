@@ -139,13 +139,15 @@ var/datum/controller/subsystem/atoms/SSatoms
 				if(istype(F))
 					var/obj/item/stack/mat_type = F.required_type_to_construct
 					if(ispath(mat_type, /obj/item/stack))
-						mat_type = initial(mat_type.merge_type)
-						var/list/t_recipes = recipes[mat_type]
+						var/merge_type = initial(mat_type.merge_type)
+						if(!merge_type)
+							merge_type = mat_type
+						var/list/t_recipes = recipes[merge_type]
 						if(!t_recipes)
 							t_recipes = list()
-							recipes[mat_type] = t_recipes
+							recipes[merge_type] = t_recipes
 						//TODO: Handle these snowflakes
-						var/is_glass = ispath(mat_type, /obj/item/stack/sheet/glass) || ispath(mat_type, /obj/item/stack/sheet/rglass)
+						var/is_glass = ispath(merge_type, /obj/item/stack/sheet/glass) || ispath(merge_type, /obj/item/stack/sheet/rglass)
 						var/obj/O = I
 						var/bp_name = initial(O.bp_name)
 						if(!bp_name)
