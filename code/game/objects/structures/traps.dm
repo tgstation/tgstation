@@ -7,6 +7,8 @@
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | INDESTRUCTIBLE
+	var/divine_vulnerability = TRUE // can you destroy with null rod
+	var/disarm_with_examine = TRUE
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 
@@ -32,6 +34,8 @@
 
 /obj/structure/trap/examine(mob/user)
 	..()
+	if(!disarm_with_examine)
+		return
 	if(!isliving(user))
 		return
 	if(get_dist(user, src) <= 1)
@@ -59,6 +63,14 @@
 
 /obj/structure/trap/proc/trap_effect(mob/living/L)
 	return
+
+/obj/structure/trap/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/nullrod))
+		user.say("BEGONE FOUL MAGIKS!!")
+		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
+		qdel(src)
+		return
+	. = ..()
 
 /obj/structure/trap/stun
 	name = "shock trap"

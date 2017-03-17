@@ -524,14 +524,17 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
-	resistance_flags = INDESTRUCTIBLE
+
+	// I don't know how you smuggled a null rod into CTF, but you can't
+	// use it to spawn camp.
+	divine_vulnerability = FALSE
+
+
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
+	disarm_with_examine = FALSE
 	anchored = TRUE
 	alpha = 255
-
-/obj/structure/trap/examine(mob/user)
-	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
 	if(!(src.team in L.faction))
