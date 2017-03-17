@@ -94,10 +94,10 @@
 		if(1)
 			if(!locked)
 				if(!istype(target) || target.anchored)
-					occupant_message("Unable to lock on [target]")
+					occupant_message("Unable to lock on [IDENTITY_SUBJECT(1)]", list(target))
 					return
 				locked = target
-				occupant_message("Locked on [target]")
+				occupant_message("Locked on [IDENTITY_SUBJECT(1)]", list(target))
 				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
@@ -107,7 +107,7 @@
 					return 1
 				else
 					locked = null
-					occupant_message("Lock on [locked] disengaged.")
+					occupant_message("Lock on [IDENTITY_SUBJECT(1)] disengaged.", list(locked))
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 		if(2)
 			var/list/atoms = list()

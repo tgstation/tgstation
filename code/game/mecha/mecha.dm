@@ -997,10 +997,10 @@
 /////// Messages and Log ///////
 ////////////////////////////////
 
-/obj/mecha/proc/occupant_message(message as text)
+/obj/mecha/proc/occupant_message(message as text, list/subjects)
 	if(message)
 		if(occupant && occupant.client)
-			to_chat(occupant, "\icon[src] [message]")
+			to_chat(occupant, "\icon[src] [message]", subjects)
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)
