@@ -2062,6 +2062,7 @@
 #include "hippiestation\code\game\area\areas\misc.dm"
 #include "hippiestation\code\game\machinery\vending.dm"
 #include "hippiestation\code\game\machinery\vending_types.dm"
+#include "hippiestation\code\game\objects\items\staples.dm"
 #include "hippiestation\code\game\objects\items\weapons\cigs_lighters.dm"
 #include "hippiestation\code\interface\skin.dmf"
 #include "hippiestation\code\modules\admin\verbs\aooc.dm"
