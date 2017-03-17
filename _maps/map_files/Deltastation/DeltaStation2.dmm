@@ -6456,7 +6456,6 @@
 	})
 "anB" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	dir = 1
 	},
 /obj/effect/landmark/start{
@@ -6488,7 +6487,6 @@
 	})
 "anD" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
@@ -47898,7 +47896,6 @@
 	})
 "bMn" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -50331,7 +50328,6 @@
 /area/crew_quarters/captain)
 "bQz" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	color = "#c45c57";
 	dir = 1
 	},

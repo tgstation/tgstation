@@ -30202,7 +30202,6 @@
 /area/hallway/primary/central)
 "aWQ" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	dir = 1
 	},
 /obj/effect/landmark/start{
@@ -30230,7 +30229,6 @@
 /area/hallway/primary/central)
 "aWS" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	dir = 1
 	},
 /obj/machinery/firealarm{
