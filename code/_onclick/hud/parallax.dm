@@ -27,10 +27,12 @@
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
+	C.screen |= plane_masters["[PLANE_SPACE]"]
 
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
 	C.screen -= (C.parallax_layers_cached)
+	C.screen -= plane_masters["[PLANE_SPACE]"]
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
