@@ -57198,7 +57198,7 @@
 	name = "Antechamber Turret Control";
 	pixel_x = 0;
 	pixel_y = -24;
-	req_access = list(65)
+	req_access_txt = "65"
 	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -57529,7 +57529,7 @@
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
 	pixel_y = 0;
-	req_access = list(65)
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57555,7 +57555,7 @@
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
 	pixel_y = 0;
-	req_access = list(65)
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
 /turf/open/floor/plasteel/darkblue/corner{
@@ -57929,7 +57929,7 @@
 	name = "Chamber Hallway Turret Control";
 	pixel_x = 32;
 	pixel_y = -24;
-	req_access = list(65)
+	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
