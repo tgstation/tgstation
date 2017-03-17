@@ -134,7 +134,7 @@ Pipelines + Other Objects -> Pipe network
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
 		var/obj/item/pipe/pipe = W
 		user.drop_item(pipe)
-		pipe.setPipingLayer(src.piping_layer) //align it with us
+		pipe.setPipingLayer(piping_layer) //align it with us
 		return 1
 	if(istype(W, /obj/item/weapon/wrench))
 		if(can_unwrench(user))
