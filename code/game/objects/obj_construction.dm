@@ -58,6 +58,7 @@
 
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
+	var/buildable = TRUE
 
 /datum/construction_state/last	//this should only contain deconstruction parameters
 	required_type_to_construct = NO_DECONSTRUCT
