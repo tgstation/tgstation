@@ -206,68 +206,48 @@ var/datum/feedback/blackbox = new()
 	return list(variable,value,details)
 
 //sql reporting procs
-/proc/sql_poll_players()
+/proc/sql_poll_population()
 	if(!config.sql_enabled)
+		return
+	if(!dbcon.Connect())
 		return
 	var/playercount = 0
 	for(var/mob/M in player_list)
 		if(M.client)
 			playercount += 1
-	if(!dbcon.Connect())
-		log_game("SQL ERROR during player polling. Failed to connect.")
-	else
-		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-		var/DBQuery/query_record_playercount = dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, time) VALUES ([playercount], '[sqltime]')")
-		query_record_playercount.Execute()
-
-/proc/sql_poll_admins()
-	if(!config.sql_enabled)
-		return
 	var/admincount = admins.len
-	if(!dbcon.Connect())
-		log_game("SQL ERROR during admin polling. Failed to connect.")
-	else
-		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-		var/DBQuery/query_record_admincount = dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (admincount, time) VALUES ([admincount], '[sqltime]')")
-		query_record_admincount.Execute()
-
-/proc/sql_report_round_start()
-	// TODO
-	if(!config.sql_enabled)
-		return
-
-/proc/sql_report_round_end()
-	// TODO
-	if(!config.sql_enabled)
-		return
+	var/DBQuery/query_record_playercount = dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()], INET_ATON('[world.internet_address]'), '[world.port]')")
+	query_record_playercount.Execute()
 
 /proc/sql_report_death(mob/living/L)
 	if(!config.sql_enabled)
 		return
-	if(!L)
+	if(!dbcon.Connect())
 		return
-	if(!L.key || !L.mind)
+	if(!L || !L.key || !L.mind)
 		return
-
 	var/turf/T = get_turf(L)
 	var/area/placeofdeath = get_area(T.loc)
-	var/podname = placeofdeath.name
-
 	var/sqlname = sanitizeSQL(L.real_name)
-	var/sqlkey = sanitizeSQL(L.key)
-	var/sqlpod = sanitizeSQL(podname)
-	var/sqlspecial = sanitizeSQL(L.mind.special_role)
+	var/sqlkey = sanitizeSQL(L.ckey)
 	var/sqljob = sanitizeSQL(L.mind.assigned_role)
+	var/sqlspecial = sanitizeSQL(L.mind.special_role)
+	var/sqlpod = sanitizeSQL(placeofdeath.name)
 	var/laname
 	var/lakey
-	if(L.lastattacker)
-		laname = sanitizeSQL(L.lastattacker:real_name)
-		lakey = sanitizeSQL(L.lastattacker:key)
-	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	var/coord = "[L.x], [L.y], [L.z]"
-	var/map = SSmapping.config.map_name
-	if(!dbcon.Connect())
-		log_game("SQL ERROR during death reporting. Failed to connect.")
-	else
-		var/DBQuery/query_report_death = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[L.gender]', [L.getBruteLoss()], [L.getFireLoss()], [L.brainloss], [L.getOxyLoss()], '[coord]', '[map]', INET_ATON('[world.internet_address]'), '[world.port]')")
-		query_report_death.Execute()
+	if(L.lastattacker && ismob(L.lastattacker))
+		var/mob/LA = L.lastattacker
+		laname = sanitizeSQL(LA.real_name)
+		lakey = sanitizeSQL(LA.key)
+	var/sqlgender = sanitizeSQL(L.gender)
+	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
+	var/sqlfire = sanitizeSQL(L.getFireLoss())
+	var/sqlbrain = sanitizeSQL(L.getBrainLoss())
+	var/sqloxy = sanitizeSQL(L.getOxyLoss())
+	var/sqltox = sanitizeSQL(L.getStaminaLoss())
+	var/sqlclone = sanitizeSQL(L.getStaminaLoss())
+	var/sqlstamina = sanitizeSQL(L.getStaminaLoss())
+	var/coord = sanitizeSQL("[L.x], [L.y], [L.z]")
+	var/map = sanitizeSQL(SSmapping.config.map_name)
+	var/DBQuery/query_report_death = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[SQLtime()]', '[laname]', '[lakey]', '[sqlgender]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[coord]', '[map]', INET_ATON('[world.internet_address]'), '[world.port]')")
+	query_report_death.Execute()

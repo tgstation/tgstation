@@ -154,8 +154,8 @@
 	//check for wall mounted frames
 	if(istype(W,/obj/item/wallframe))
 		var/obj/item/wallframe/F = W
-		if(F.try_build(src))
-			F.attach(src)
+		if(F.try_build(src, user))
+			F.attach(src, user)
 		return 1
 	//Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))

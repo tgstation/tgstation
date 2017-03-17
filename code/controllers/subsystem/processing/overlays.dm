@@ -96,7 +96,8 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 			new_overlays[i] = icon2appearance(cached_overlay)
 		else	//image probable
 			appearance_bro.appearance = cached_overlay
-			appearance_bro.dir = cached_overlay.dir
+			if(!ispath(cached_overlay))
+				appearance_bro.dir = cached_overlay.dir
 			new_overlays[i] = appearance_bro.appearance
 	return new_overlays
 
