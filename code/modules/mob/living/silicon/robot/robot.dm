@@ -982,6 +982,7 @@
 
 	speed = 0
 	ionpulse = FALSE
+	revert_shell()
 
 	return 1
 
@@ -1015,18 +1016,34 @@
 
 /mob/living/silicon/robot/proc/make_shell(var/obj/item/borg/upgrade/ai/board)
 	if(!board)
-		new /obj/item/borg/upgrade/ai(src)
+		upgrades |= new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
-	name = "AI Shell [rand(100,999)]"
+	name = "[designation] AI Shell [rand(100,999)]"
 	real_name = name
 	available_ai_shells |= src
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
+	notify_ai(4)
+
+/mob/living/silicon/robot/proc/revert_shell()
+	if(!shell)
+		return
+	undeploy()
+	for(var/obj/item/borg/upgrade/ai/boris in src)
+	//A player forced reset of a borg would drop the module before this is called, so this is for catching edge cases
+		qdel(boris)
+	shell = FALSE
+	available_ai_shells -= src
+	name = "Unformatted Cyborg [rand(100,999)]"
+	real_name = name
+	if(camera)
+		camera.c_tag = real_name
+	diag_hud_set_aishell()
 
 /mob/living/silicon/robot/proc/deploy_init(var/mob/living/silicon/ai/AI)
-	real_name = AI.real_name
+	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up seperately in the shells list
 	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
@@ -1072,8 +1089,6 @@
 	undeployment_action.Remove(src)
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
-	real_name = "[real_name] shell [rand(100, 999)]"	//Randomizing the name on leaving, so it shows up seperately in the shells list
-	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()

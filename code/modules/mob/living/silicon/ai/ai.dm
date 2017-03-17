@@ -85,7 +85,8 @@ var/list/ai_list = list()
 
 	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
-	var/datum/action/deploy_last_shell/redeploy_action = new
+	var/datum/action/innate/deploy_shell/deploy_action = new
+	var/datum/action/innate/deploy_last_shell/redeploy_action = new
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	..()
@@ -130,7 +131,6 @@ var/list/ai_list = list()
 	spark_system.attach(src)
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	verbs += /mob/living/silicon/ai/proc/deploy_to_shell
 
 	aiPDA = new/obj/item/device/pda/ai(src)
 	aiPDA.owner = name
@@ -140,6 +140,8 @@ var/list/ai_list = list()
 	aiMulti = new(src)
 	radio = new /obj/item/device/radio/headset/ai(src)
 	aicamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
+
+	deploy_action.Grant(src)
 
 	if(isturf(loc))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
@@ -914,7 +916,7 @@ var/list/ai_list = list()
 		to_chat(src, "Hack complete. \The [apc] is now under your exclusive control.")
 		apc.update_icon()
 
-/mob/living/silicon/ai/proc/deploy_to_shell(var/mob/living/silicon/robot/target)
+/mob/living/silicon/ai/verb/deploy_to_shell(var/mob/living/silicon/robot/target)
 	set category = "AI Commands"
 	set name = "Deploy to Shell"
 
@@ -922,6 +924,8 @@ var/list/ai_list = list()
 		to_chat(src, "<span class='danger'>Wireless networking module is offline.</span>")
 		return
 
+	if(!LAZYLEN(available_ai_shells))
+		to_chat(src, "No AI shell beacons detected.")
 
 	var/list/possible = list()
 
@@ -939,18 +943,28 @@ var/list/ai_list = list()
 	else if(mind)
 		soullink(/datum/soullink/sharedbody, src, target)
 		deployed_shell = target
-		mind.transfer_to(target)
 		target.deploy_init(src)
+		mind.transfer_to(target)
 	diag_hud_set_deployed()
 
-/datum/action/deploy_last_shell
- 	name = "Reconnect to shell"
- 	desc = "Reconnect to the most recently used AI shell."
- 	button_icon_state = "ai_shell"
- 	check_flags = AB_CHECK_CONSCIOUS
- 	var/mob/living/silicon/robot/last_used_shell
+/datum/action/innate/deploy_shell
+	name = "Deploy to AI Shell"
+	desc = "Wirelessly control a specialized cyborg shell."
+	button_icon_state = "ai_shell"
 
-/datum/action/deploy_last_shell/Trigger()
+/datum/action/innate/deploy_shell/Trigger()
+	var/mob/living/silicon/ai/AI = owner
+	if(!AI)
+		return
+	AI.deploy_to_shell()
+
+/datum/action/innate/deploy_last_shell
+	name = "Reconnect to shell"
+	desc = "Reconnect to the most recently used AI shell."
+	button_icon_state = "ai_last_shell"
+	var/mob/living/silicon/robot/last_used_shell
+
+/datum/action/innate/deploy_last_shell/Trigger()
 	if(!owner)
 		return
 	if(last_used_shell)
