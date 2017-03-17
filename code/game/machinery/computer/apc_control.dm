@@ -92,6 +92,8 @@
 /obj/machinery/computer/apc_control/Topic(href, href_list)
 	if(..())
 		return
+	if(!usr || !usr.canUseTopic(src) || usr.incapacitated() || stat || QDELETED(src))
+		return
 	var/image/I = image(src) //For feedback message flavor
 	if(href_list["authenticate"])
 		var/obj/item/weapon/card/id/ID = usr.get_active_held_item()
