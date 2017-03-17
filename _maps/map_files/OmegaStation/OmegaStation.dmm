@@ -15489,7 +15489,8 @@
 	departmentType = 0;
 	name = "Bar RC";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold (EAST)";
@@ -27872,7 +27873,8 @@
 	departmentType = 0;
 	name = "Research RC";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 4
@@ -29314,7 +29316,8 @@
 	departmentType = 0;
 	name = "Chemistry RC";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
@@ -32130,7 +32133,8 @@
 	departmentType = 0;
 	name = "Robotics RC";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	receive_ore_updates = 1
 	},
 /obj/machinery/light_switch{
 	pixel_x = 24
@@ -37997,7 +38001,8 @@
 	departmentType = 0;
 	name = "Xenobiology RC";
 	pixel_x = 0;
-	pixel_y = -32
+	pixel_y = -32;
+	receive_ore_updates = 1
 	},
 /obj/structure/cable/white{
 	tag = "icon-1-4";

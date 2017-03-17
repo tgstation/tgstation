@@ -20195,7 +20195,8 @@
 	department = "Bar";
 	departmentType = 2;
 	pixel_x = 30;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Bar";
@@ -26296,7 +26297,8 @@
 	department = "Robotics";
 	departmentType = 2;
 	name = "Robotics RC";
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/machinery/light{
 	dir = 1
@@ -26694,7 +26696,8 @@
 	department = "Chemistry";
 	departmentType = 2;
 	pixel_x = -30;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -27682,7 +27685,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = -30;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/toxins/lab)
@@ -32431,7 +32435,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -30;
+	receive_ore_updates = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -34110,7 +34115,8 @@
 	departmentType = 5;
 	name = "Research Director RC";
 	pixel_x = -2;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -40330,7 +40336,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -30;
+	receive_ore_updates = 1
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
@@ -42997,7 +43004,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -30;
+	receive_ore_updates = 1
 	},
 /obj/item/weapon/paper_bin{
 	pixel_x = 1;
@@ -43474,7 +43482,8 @@
 	dir = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)

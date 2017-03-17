@@ -86,7 +86,7 @@
 		msg += "[capitalize(sheet.name)]: [sheet.amount] sheets<br>"
 
 	for(var/obj/machinery/requests_console/D in allConsoles)
-		if(D.departmentType == 2) // temporary
+		if(D.receive_ore_updates)
 			D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
 /obj/machinery/mineral/ore_redemption/process()
