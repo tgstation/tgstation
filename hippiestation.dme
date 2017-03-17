@@ -2071,6 +2071,7 @@
 #include "hippiestation\code\modules\butts\main.dm"
 #include "hippiestation\code\modules\butts\misc.dm"
 #include "hippiestation\code\modules\butts\storage.dm"
+#include "hippiestation\code\modules\clothing\clothing.dm"
 #include "hippiestation\code\modules\hydroponics\buttflower.dm"
 #include "hippiestation\code\modules\hydroponics\limbflower.dm"
 #include "hippiestation\code\modules\mob\living\emote.dm"
