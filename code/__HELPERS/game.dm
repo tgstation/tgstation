@@ -512,16 +512,6 @@
 		return
 	winset(C, "mainwindow", "flash=5")
 
-//See game/objects/obj_construction.dm
-#define CONSTRUCTION_BLUEPRINT(type, bproot_only, bpbuild_root_only)\
-##type/construction_blueprint = /datum/construction_blueprint##type;\
-/datum/construction_blueprint##type{\
-	owner_type = ##type;\
-	root_only = ##bproot_only;\
-	build_root_only = ##bpbuild_root_only;\
-}\
-/datum/construction_blueprint##type/GetBlueprint(obj/obj_type)
-
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(ticker.current_state != GAME_STATE_PLAYING || !character)
 		return
@@ -546,3 +536,13 @@
 
 /proc/GetBluePart(const/hexa)
 	return hex2num(copytext(hexa, 6, 8))
+
+//See game/objects/obj_construction.dm
+#define CONSTRUCTION_BLUEPRINT(type, bproot_only, bpbuild_root_only)\
+##type/construction_blueprint = /datum/construction_blueprint##type;\
+/datum/construction_blueprint##type{\
+	owner_type = ##type;\
+	root_only = ##bproot_only;\
+	build_root_only = ##bpbuild_root_only;\
+}\
+/datum/construction_blueprint##type/GetBlueprint(obj/obj_type)
