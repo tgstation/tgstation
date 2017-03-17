@@ -234,7 +234,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				A.req_one_access = A.electronics.accesses
 			else
 				A.req_access = A.electronics.accesses
-			A.autoclose = 1
+			A.autoclose = TRUE
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(istype(src, baseturf))
@@ -247,6 +247,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the grille.</span>")
 			var/obj/structure/grille/G = new(src)
-			G.anchored = 1
+			G.anchored = TRUE
 			return TRUE
 	return FALSE

@@ -283,17 +283,17 @@ RCD
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
-		return 0
+		return FALSE
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
-		return
+		return FALSE
 	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 		if(checkResource(rcd_results["cost"], user))
 			if(A.rcd_act(user, src, rcd_results["mode"]))
 				useResource(rcd_results["cost"], user)
 				activate()
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-				return 1
+				return TRUE
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
