@@ -187,9 +187,7 @@
 
 	if(H.wear_mask)
 		var/obj/item/clothing/mask/M = H.wear_mask
-		if(istype(M, /obj/item/clothing))
-			var/obj/item/clothing/C = M
-			dynamic_fhair_suffix = C.dynamic_fhair_suffix //mask > head in terms of facial hair
+		dynamic_fhair_suffix = M.dynamic_fhair_suffix //mask > head in terms of facial hair
 		if(M.flags_inv & HIDEFACIALHAIR)
 			facialhair_hidden = TRUE
 
@@ -240,9 +238,8 @@
 
 	if(H.wear_mask)
 		var/obj/item/clothing/mask/M = H.wear_mask
-		if(istype(M, /obj/item/clothing) && !dynamic_hair_suffix) //head > mask in terms of head hair
-			var/obj/item/clothing/C = M
-			dynamic_hair_suffix = C.dynamic_hair_suffix
+		if(!dynamic_hair_suffix) //head > mask in terms of head hair
+			dynamic_hair_suffix = M.dynamic_hair_suffix
 		if(M.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
