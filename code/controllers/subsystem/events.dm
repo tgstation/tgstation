@@ -93,7 +93,7 @@ var/datum/controller/subsystem/events/SSevent
 
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/E)
 	. = E.preRunEvent()
-	if(. == EVENT_DONT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
+	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
 	else if(. != EVENT_CANCELLED)
 		E.runEvent(TRUE)
