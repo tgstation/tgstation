@@ -321,7 +321,7 @@
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		if(!buckled_mob.Move(newloc, direct))
+		if(!buckled_mob.Move(newloc, direct) && buckled_mob == buckled_mobs[1])
 			loc = buckled_mob.loc
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move

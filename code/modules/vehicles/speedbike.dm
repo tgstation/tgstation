@@ -44,7 +44,7 @@
 
 /obj/vehicle/space/speedbike/atmos
 	name = "prototype atmos vehicle"
-	desc = "This vehicle possesses unparalled utility for atmospherics containment and control"
+	desc = "This vehicle possesses unparalleled utility for atmospheric containment and control"
 	icon_state = "atmo_bike"
 	overlay_state = "cover_atmo"
 	var/obj/machinery/portable_atmospherics/scrubber/huge/internal_scubber = null
@@ -530,30 +530,30 @@
 				Bump(A)
 
 
-//Memewagon, the less lethal more hilarious reward
+//Engiwagon, the smaller, non-lethal, more hilarious reward
 
-/obj/vehicle/space/speedbike/memewagon
+/obj/vehicle/space/speedbike/engiwagon
 	name = "Engineering's Pinnacle"
 	desc = "The supreme department, manifest"
 	icon = 'icons/obj/bike.dmi'
-	icon_state = "speedwagon"
+	icon_state = "memewagon"
 	layer = LYING_MOB_LAYER
-	overlay_state = "speedwagon_cover"
+	overlay_state = "memewagon_cover"
+	max_buckled_mobs = 2
 
-/obj/vehicle/space/speedbike/memewagon/Bump(mob/living/A)
+/obj/vehicle/space/speedbike/engiwagon/Bump(mob/living/A)
 	. = ..()
 	if(A.density && has_buckled_mobs() && (istype(A, /mob/living/carbon/human) && has_buckled_mobs()))
 		var/atom/throw_target = get_edge_target_turf(A, pick(cardinal))
-		A.throw_at(throw_target, 10, 8)
+		A.throw_at(throw_target, 6, 8)
 		A.Weaken(2)
-		A.adjustStaminaLoss(10)
-		A.apply_damage(rand(1,5), BRUTE)
+		A.apply_damage(2,BRUTE)
 		visible_message("<span class='danger'>[src] crashes into [A]!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 75, 1)
-		sleep(10)
+		sleep(8)
 		playsound(src, 'sound/items/carhorn.ogg', 100, 1)
 
-/obj/vehicle/space/speedbike/memewagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+/obj/vehicle/space/speedbike/engiwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
-	riding_datum = new/datum/riding/space/speedwagon
+	riding_datum = new/datum/riding/space/speedbike/engiwagon
 

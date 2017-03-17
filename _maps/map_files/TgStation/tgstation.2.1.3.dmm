@@ -2964,6 +2964,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -20174,6 +20175,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
+	
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21237,6 +21239,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
+	
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21617,6 +21620,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
+	
 	},
 /turf/open/floor/plating,
 /area/storage/art)
@@ -21627,6 +21631,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
+	
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -21654,6 +21659,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0;
+	
 	},
 /turf/open/floor/plating,
 /area/storage/emergency2)
@@ -26278,6 +26284,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -52661,6 +52668,7 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
 	icon_state = "propulsion";
+	
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -54087,6 +54095,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -55162,6 +55171,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -57005,6 +57015,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /obj/effect/landmark/start{
 	name = "Cyborg"
@@ -57754,6 +57765,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -57823,6 +57835,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/AIsatextFP{
@@ -58841,6 +58854,7 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
 	icon_state = "propulsion";
+	
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -60165,6 +60179,7 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4";
+	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60194,6 +60209,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60278,6 +60294,7 @@
 	dir = 4;
 	icon_state = "emitter";
 	state = 2;
+	tag = "icon-emitter (NORTH)"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -60286,6 +60303,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
+	tag = "90Curve"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60300,6 +60318,7 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
+	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60308,6 +60327,7 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
+	tag = ""
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -62041,7 +62061,7 @@
 /area/engine/engineering)
 "cEv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -62064,7 +62084,7 @@
 /area/engine/engineering)
 "cEy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	icon_state = "manifold";
 	dir = 4
@@ -62106,6 +62126,7 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
+	
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62299,6 +62320,7 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
+	
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62446,6 +62468,7 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
+	
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -62768,6 +62791,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -63167,6 +63191,7 @@
 	dir = 4;
 	icon_state = "emitter";
 	state = 2;
+	
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63187,6 +63212,7 @@
 	dir = 8;
 	icon_state = "emitter";
 	state = 2;
+	
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63224,6 +63250,7 @@
 	anchored = 1;
 	dir = 1;
 	icon_state = "reflector";
+	
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63232,6 +63259,7 @@
 	anchored = 1;
 	dir = 4;
 	icon_state = "reflector";
+	
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63388,6 +63416,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65085,25 +65114,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cMm" = (
-/obj/structure/light_construct{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
-"cMn" = (
-/obj/structure/light_construct/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned)
-"cMo" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
-"cMm" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
@@ -65151,21 +65161,35 @@
 "cMv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMw" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	icon_state = "manifold";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	icon_state = "manifold";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMz" = (
@@ -65174,6 +65198,41 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMC" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cME" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMF" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMG" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cMH" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
@@ -92092,7 +92151,7 @@ cfG
 cgw
 coK
 cpu
-cMq
+cMt
 ccw
 ccw
 ccw
@@ -93388,7 +93447,7 @@ ccw
 cFL
 cGf
 cGw
-cMw
+cMD
 ciZ
 cHc
 cHh
@@ -93638,8 +93697,8 @@ cqf
 cqD
 ccw
 crs
-cEv
-cEv
+cMv
+cMx
 cFe
 ccw
 cFM
@@ -93902,7 +93961,7 @@ cFw
 cFN
 csH
 csR
-cMx
+cME
 cGU
 cEj
 cEj
@@ -94145,7 +94204,7 @@ ckK
 clJ
 cmL
 cnv
-cMm
+cMp
 chX
 cDq
 cqg
@@ -94155,11 +94214,11 @@ crt
 czE
 cAm
 czE
-cMs
+cMz
 cFO
 csC
 csQ
-cMy
+cMF
 cGV
 cEj
 cGV
@@ -94416,7 +94475,7 @@ cAP
 cFP
 csI
 cAt
-cMz
+cMG
 cEj
 cEj
 cEj
@@ -94666,8 +94725,8 @@ cqi
 ccw
 cAP
 crv
-cEy
-cEy
+cMw
+cMy
 cFh
 ccw
 cFQ
@@ -94930,7 +94989,7 @@ ccw
 cFR
 cGf
 cGz
-cMA
+cMH
 ciZ
 cHd
 cHj
@@ -95173,7 +95232,7 @@ ceq
 clQ
 cmQ
 cgR
-cMn
+cMq
 chX
 cpD
 cDw
@@ -95430,7 +95489,7 @@ ckP
 ckH
 cja
 cgR
-cMo
+cMr
 cDj
 cDs
 cql
@@ -95944,7 +96003,7 @@ ckR
 clR
 cgR
 cgR
-cMp
+cMs
 cir
 cDt
 cDy
@@ -96463,7 +96522,7 @@ cis
 cjN
 cDz
 cDH
-cMr
+cMu
 cEj
 crM
 crV
@@ -96982,9 +97041,9 @@ ccw
 ccw
 ccw
 ccw
-cMt
-cMu
-cMv
+cMA
+cMB
+cMC
 ccw
 aaf
 aaf

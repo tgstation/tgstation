@@ -14,6 +14,7 @@
 	var/auto_door_open = TRUE
 	var/view_range = 7
 	var/datum/riding/riding_datum = null
+	var/driver_check = 0
 
 /obj/vehicle/Destroy()
 	QDEL_NULL(riding_datum)
@@ -41,7 +42,7 @@
 		return
 	for(var/atom/movable/A in get_turf(src))
 		if(A.density)
-			if(A != src && A != M)
+			if(A != src && !istype(A, /mob/living))
 				return
 	M.loc = get_turf(src)
 	..()
