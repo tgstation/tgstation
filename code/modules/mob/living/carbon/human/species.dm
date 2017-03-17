@@ -110,7 +110,7 @@
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
-	var/obj/item/organ/eyes/eyes = C.getorganslot("eyes")
+	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -126,7 +126,7 @@
 	if(eyes)
 		qdel(eyes)
 		eyes = new mutanteyes
-		mutanteyes.Insert(C)
+		eyes.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
