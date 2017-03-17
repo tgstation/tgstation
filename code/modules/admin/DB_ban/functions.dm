@@ -416,6 +416,7 @@
 				output+= "|<a href='?_src_=holder;dbsearchckey=[playerckey];dbsearchadmin=[adminckey];dbsearchpage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 				bancount -= bansperpage
 				pagecount++
+				CHECK_TICK
 			output += "|"
 		var/blcolor = "#ffeeee" //banned light
 		var/bdcolor = "#ffdddd" //banned dark
@@ -495,6 +496,7 @@
 			output += "<tr>"
 			output += "<td colspan='5' bgcolor='white'>&nbsp</td>"
 			output += "</tr>"
+			CHECK_TICK
 
 		output += "</table></div>"
 
