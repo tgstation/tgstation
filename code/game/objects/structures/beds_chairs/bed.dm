@@ -19,24 +19,30 @@
 	obj_integrity = 100
 	max_integrity = 100
 	integrity_failure = 30
-	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 2
 
-/obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-	..()
+CONSTRUCTION_BLUEPRINT(/obj/structure/bed, TRUE, TRUE)
+	. = newlist(
+		/datum/construction_state/first{
+			//required_type_to_construct = /obj/item/stack/sheet/metal
+			required_amount_to_construct = 2
+			one_per_turf = 1
+			on_floor = 1
+		},
+		/datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/weapon/wrench
+			required_type_to_repair = /obj/item/weapon/screwdriver
+		}
+	)
+	
+	//This is here to work around a byond bug
+	//http://www.byond.com/forum/?post=2220240
+	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
+
+	var/datum/construction_state/first/X = .[1]
+	X.required_type_to_construct = /obj/item/stack/sheet/metal
 
 /obj/structure/bed/attack_paw(mob/user)
 	return attack_hand(user)
-
-/obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, W.usesound, 50, 1)
-		deconstruct(TRUE)
-	else
-		return ..()
 
 /*
  * Roller beds
@@ -159,9 +165,13 @@
 	icon_state = "dogbed"
 	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
 	anchored = 0
-	buildstacktype = /obj/item/stack/sheet/mineral/wood
-	buildstackamount = 10
 
+CONSTRUCTION_BLUEPRINT(/obj/structure/bed/dogbed, TRUE, TRUE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_type_to_construct = /obj/item/stack/sheet/mineral/wood
+	F.required_amount_to_construct = 10
+	F.construction_delay = 10
 
 /obj/structure/bed/alien
 	name = "resting contraption"

@@ -537,8 +537,12 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/abductor.dmi'
-	buildstacktype = /obj/item/stack/sheet/mineral/abductor
 	icon_state = "bed"
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/bed/abductor, TRUE, TRUE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_type_to_construct = /obj/item/stack/sheet/mineral/abductor
 
 /obj/structure/table_frame/abductor
 	name = "alien table frame"

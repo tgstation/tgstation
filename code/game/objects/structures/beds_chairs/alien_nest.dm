@@ -10,8 +10,6 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 	canSmoothWith = null
-	buildstacktype = null
-	flags = NODECONSTRUCT
 	var/image/nest_overlay
 
 /obj/structure/bed/nest/New()
