@@ -49,6 +49,7 @@
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
+	circulatory = 1
 	var/playable_spider = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
