@@ -12,7 +12,7 @@
 
 /obj/item/clothing/head/hippie
 	alternate_worn_icon = 'hippiestation/icons/mob/head.dmi'
-	icon = 'hippiestation/icons/obj/clothing/head.dmi'
+	icon = 'hippiestation/icons/obj/clothing/hats.dmi'
 
 /obj/item/clothing/neck/hippie
 	alternate_worn_icon = 'hippiestation/icons/mob/neck.dmi'
