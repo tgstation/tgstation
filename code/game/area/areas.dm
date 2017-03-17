@@ -123,6 +123,9 @@ var/list/teleportlocs = list()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
+	if(!IS_DYNAMIC_LIGHTING(src))
+		add_overlay(/obj/effect/fullbright)
+
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
