@@ -62,11 +62,11 @@
 		if(EASYLIMBATTACHMENT in H.dna.species.species_traits)
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
-					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
-					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
+					H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] jams [src] into [H.p_their()] empty socket!</span>",\
+					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>", subjects=list(H))
 				else
-					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
-					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
+					H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] jams [src] into [IDENTITY_SUBJECT(2)]'s empty socket!</span>",\
+					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>", subjects=list(user, H))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				attach_limb(C)
 				return
@@ -79,8 +79,8 @@
 			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")
 			return
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-		user.visible_message("<span class='warning'>[user] begins to cut open [src].</span>",\
-			"<span class='notice'>You begin to cut open [src]...</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins to cut open [src].</span>",\
+			"<span class='notice'>You begin to cut open [src]...</span>", subjects=list(user, src))
 		if(do_after(user, 54, target = src))
 			drop_organs(user)
 	else

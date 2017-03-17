@@ -17,7 +17,7 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>", subjects=list(user))
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
@@ -38,8 +38,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so shitty.</span>", \
-	"<span class='suicide'>You try to impale yourself with [src], but it's USELESS...</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so shitty.</span>", \
+	"<span class='suicide'>You try to impale yourself with [src], but it's USELESS...</span>", subjects=list(user))
 	return SHAME
 
 /obj/item/weapon/claymore
@@ -62,7 +62,7 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return(BRUTELOSS)
 
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
@@ -117,7 +117,7 @@
 	if(target && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
-		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
+		target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] crumbles to dust beneath [IDENTITY_SUBJECT(2)]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>", subjects=list(target, user))
 		target.dust()
 
 /obj/item/weapon/claymore/highlander/attack_self(mob/living/user)
@@ -176,8 +176,8 @@
 			new_name = "gore-stained claymore"
 			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)
-			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
-			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s eyes light up with a vengeful fire!</span>", \
+			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>", subjects=list(user))
 			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_valhalla"
@@ -210,7 +210,7 @@
 	slot_flags = null
 
 /obj/item/weapon/katana/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>", subjects=list(user))
 	return(BRUTELOSS)
 
 /obj/item/weapon/wirerod
@@ -306,7 +306,7 @@
 		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 /obj/item/weapon/phone
@@ -324,9 +324,9 @@
 
 /obj/item/weapon/phone/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
-		user.visible_message("<span class='suicide'>[user] begins to tie a noose with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] begins to tie a noose with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return(OXYLOSS)
 
 /obj/item/weapon/cane
@@ -382,7 +382,7 @@
 	icon_state = "ectoplasm"
 
 /obj/item/weapon/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>", subjects=list(user))
 	return (OXYLOSS)
 
 /obj/item/weapon/mounted_chainsaw

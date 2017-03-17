@@ -168,9 +168,9 @@
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	hierophant_message("<span class='nzcrentr_large'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope [invoker.p_they()] [invoker.p_do()] not shatter under it!")]\"</span>", FALSE, invoker)
-	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
+	invoker.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins to radiate a blinding light!</span>", \
 	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n\
-	<span class='userdanger'>You feel limitless power surging through you!</span>")
+	<span class='userdanger'>You feel limitless power surging through you!</span>", subjects=list(invoker))
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	sleep(2)
 	playsound(invoker, 'sound/magic/lightning_chargeup.ogg', 100, 0)
@@ -178,9 +178,9 @@
 	animate(invoker, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), time = 88) //Gradual advancement to extreme brightness
 	sleep(88)
 	if(invoker)
-		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [invoker]'s body!</span>", \
+		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [IDENTITY_SUBJECT(1)]'s body!</span>", \
 		"<span class='nzcrentr'>\"[text2ratvar("I told you you wouldn't be able to handle it.")]\"</span>\n\
-		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
+		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>", subjects=list(invoker))
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		if(invoker.stat == CONSCIOUS)
 			animate(invoker, color = oldcolor, time = 10)
@@ -195,10 +195,10 @@
 				else
 					L.adjustFireLoss(randdamage)
 					L.visible_message(
-					"<span class='danger'>[L] was shocked by Nzcrentr's power!</span>", \
+					"<span class='danger'>[IDENTITY_SUBJECT(1)] was shocked by Nzcrentr's power!</span>", \
 					"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-					"<span class='italics'>You hear a heavy electrical crack.</span>" \
-					)
+					"<span class='italics'>You hear a heavy electrical crack.</span>", \
+					subjects=list(L))
 				L.Weaken(8)
 				playsound(L, 'sound/magic/LightningShock.ogg', 50, 1)
 		else

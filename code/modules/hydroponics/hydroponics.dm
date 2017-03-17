@@ -695,7 +695,7 @@
 		if(myseed || weedlevel)
 			to_chat(user, "<span class='warning'>[src] needs to be clear of plants and weeds!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] gently pulls open the soil for [O] and places it inside.</span>", "<span class='notice'>You tenderly root [O] into [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] gently pulls open the soil for [O] and places it inside.</span>", "<span class='notice'>You tenderly root [O] into [src].</span>", subjects=list(user))
 		user.drop_item()
 		qdel(O)
 		visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
@@ -721,19 +721,19 @@
 		var/irrigate = 0	//How am I supposed to irrigate pill contents?
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
-			visi_msg="[user] composts [reagent_source], spreading it through [target]"
+			visi_msg="[IDENTITY_SUBJECT(1)] composts [reagent_source], spreading it through [target]"
 		else
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
 				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
-				visi_msg="[user] injects [target] with [syr]"
+				visi_msg="[IDENTITY_SUBJECT(1)] injects [target] with [syr]"
 				if(syr.reagents.total_volume <= syr.amount_per_transfer_from_this)
 					syr.mode = 0
 			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
-				visi_msg="[user] sprays [target] with [reagent_source]"
+				visi_msg="[IDENTITY_SUBJECT(1)] sprays [target] with [reagent_source]"
 				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 				irrigate = 1
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
-				visi_msg="[user] uses [reagent_source] on [target]"
+				visi_msg="[IDENTITY_SUBJECT(1)] uses [reagent_source] on [target]"
 				irrigate = 1
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
@@ -745,7 +745,7 @@
 				visi_msg += ", setting off the irrigation system"
 
 		if(visi_msg)
-			visible_message("<span class='notice'>[visi_msg].</span>")
+			visible_message("<span class='notice'>[visi_msg].</span>", subjects=list(user))
 
 		var/split = round(reagent_source.amount_per_transfer_from_this/trays.len)
 
@@ -802,7 +802,7 @@
 
 	else if(istype(O, /obj/item/weapon/cultivator))
 		if(weedlevel > 0)
-			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>", subjects=list(user))
 			weedlevel = 0
 			update_icon()
 		else
@@ -822,31 +822,31 @@
 			return
 
 		if(!anchored && !isinspace())
-			user.visible_message("[user] begins to wrench [src] into place.", \
-								"<span class='notice'>You begin to wrench [src] in place...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] begins to wrench [src] into place.", \
+								"<span class='notice'>You begin to wrench [src] in place...</span>", subjects=list(user))
 			playsound(loc, O.usesound, 50, 1)
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
 				anchored = 1
-				user.visible_message("[user] wrenches [src] into place.", \
-									"<span class='notice'>You wrench [src] in place.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] wrenches [src] into place.", \
+									"<span class='notice'>You wrench [src] in place.</span>", subjects=list(user))
 		else if(anchored)
-			user.visible_message("[user] begins to unwrench [src].", \
-								"<span class='notice'>You begin to unwrench [src]...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] begins to unwrench [src].", \
+								"<span class='notice'>You begin to unwrench [src]...</span>", subjects=list(user))
 			playsound(loc, O.usesound, 50, 1)
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
 				anchored = 0
-				user.visible_message("[user] unwrenches [src].", \
-									"<span class='notice'>You unwrench [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unwrenches [src].", \
+									"<span class='notice'>You unwrench [src].</span>", subjects=list(user))
 
 	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
 		playsound(src, O.usesound, 50, 1)
-		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
-		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
+		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>", subjects=list(user))
 		for(var/obj/machinery/hydroponics/h in range(1,src))
 			h.update_icon()
 
@@ -854,11 +854,11 @@
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts digging out [src]'s plants...</span>", "<span class='notice'>You start digging out [src]'s plants...</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts digging out [src]'s plants...</span>", "<span class='notice'>You start digging out [src]'s plants...</span>", subjects=list(user))
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		if(!do_after(user, 50, target = src) || (!myseed && !weedlevel))
 			return
-		user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>", subjects=list(user))
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		if(myseed) //Could be that they're just using it as a de-weeder
 			age = 0

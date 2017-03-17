@@ -568,12 +568,12 @@
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(2, 1, src)
 		s.start()
-		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
+		owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s shields deflect [attack_text] in a shower of sparks!</span>", subjects=list(owner))
 		current_charges--
 		if(recharge_rate)
 			START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
-			owner.visible_message("[owner]'s shield overloads!")
+			owner.visible_message("[IDENTITY_SUBJECT(1)]'s shield overloads!", subjects=list(owner))
 			shield_state = "broken"
 			owner.update_inv_wear_suit()
 		return 1

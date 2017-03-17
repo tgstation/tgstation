@@ -21,7 +21,7 @@
 	if(..())
 		if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())))
 			if(!silent)
-				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
+				target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>", subjects=list(target))
 			removed(target, 1)
 			qdel(src)
 			return 0

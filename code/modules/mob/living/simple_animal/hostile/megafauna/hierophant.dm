@@ -117,7 +117,7 @@ Difficulty: Hard
 		if(!L.dropItemToGround(W))
 			qdel(W)
 	visible_message("<span class='hierophant_warning'>\"[pick(kill_phrases)]\"</span>")
-	visible_message("<span class='hierophant_warning'>[src] annihilates [L]!</span>","<span class='userdanger'>You annihilate [L], restoring your health!</span>")
+	visible_message("<span class='hierophant_warning'>[IDENTITY_SUBJECT(1)] annihilates [IDENTITY_SUBJECT(2)]!</span>","<span class='userdanger'>You annihilate [IDENTITY_SUBJECT(2)], restoring your health!</span>", subjects=list(src, L))
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
 

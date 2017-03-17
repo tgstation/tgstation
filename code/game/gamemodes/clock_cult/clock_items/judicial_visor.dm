@@ -133,7 +133,7 @@
 			V.update_status()
 			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
-		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
+		ranged_ability_user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s judicial visor fires a stream of energy at [IDENTITY_SUBJECT(2)], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [IDENTITY_SUBJECT(2)]. You must wait for some time before doing this again.</span>", subjects=list(ranged_ability_user, target))
 		var/turf/targetturf = get_turf(target)
 		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
@@ -178,17 +178,17 @@
 			continue
 		if(L.null_rod_check())
 			var/obj/item/I = L.null_rod_check()
-			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
+			L.visible_message("<span class='warning'>Strange energy flows into [IDENTITY_SUBJECT(1)]'s [I.name]!</span>", \
+			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>", subjects=list(L))
 			continue
 		if(!iscultist(L))
-			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8) //stun targets for 14-16 seconds
+			L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is struck by a judicial explosion!</span>", \
+			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>", subjects=list(L))
+			L.Weaken(8)
 		else
-			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //stun for 6-8 seconds, but set cultist targets on fire
+			L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is struck by a judicial explosion!</span>", \
+			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>", subjects=list(L))
+			L.Weaken(4) //half the stun, but sets cultists on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
 		if(iscarbon(L))

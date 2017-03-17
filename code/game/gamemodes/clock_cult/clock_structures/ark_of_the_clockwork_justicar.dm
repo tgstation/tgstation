@@ -149,8 +149,8 @@
 					used_all = FALSE
 		if(used_components)
 			update_slab_info(S)
-			user.visible_message("<span class='notice'>[user][used_all ? "":" partially"] empties [S] into [src].</span>", \
-			"<span class='notice'>You offload [used_all ? "all":"some"] of your slab's components into [src].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)][used_all ? "":" partially"] empties [S] into [src].</span>", \
+			"<span class='notice'>You offload [used_all ? "all":"some"] of your slab's components into [src].</span>", subjects=list(user))
 		return 1
 	else
 		return ..()

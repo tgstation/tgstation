@@ -102,10 +102,10 @@
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
+	var/attack_message = "[IDENTITY_SUBJECT(1)] has been [message_verb][message_hit_area] with [I]."
 	if(user in viewers(src, null))
-		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
+		attack_message = "[IDENTITY_SUBJECT(2)] has [message_verb] [IDENTITY_SUBJECT(1)][message_hit_area] with [I]!"
 	visible_message("<span class='danger'>[attack_message]</span>", \
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(src, user))
 	return 1
 

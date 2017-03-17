@@ -384,28 +384,28 @@
 						has_electronics = 0
 						if (stat & BROKEN)
 							user.visible_message(\
-								"[user.name] has broken the power control board inside [src.name]!",\
+								"[IDENTITY_SUBJECT(1)] has broken the power control board inside [src.name]!",\
 								"<span class='notice'>You break the charred power control board and remove the remains.</span>",
-								"<span class='italics'>You hear a crack.</span>")
+								"<span class='italics'>You hear a crack.</span>", subjects=list(user))
 							return
 							//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 						else if (emagged) // We emag board, not APC's frame
 							emagged = 0
 							user.visible_message(\
-								"[user.name] has discarded emaged power control board from [src.name]!",\
-								"<span class='notice'>You discarded shorten board.</span>")
+								"[IDENTITY_SUBJECT(1)] has discarded emaged power control board from [src.name]!",\
+								"<span class='notice'>You discarded shorten board.</span>", subjects=list(user))
 							return
 						else if (malfhack) // AI hacks board, not APC's frame
 							user.visible_message(\
-								"[user.name] has discarded strangely programmed power control board from [src.name]!",\
-								"<span class='notice'>You discarded strangely programmed board.</span>")
+								"[IDENTITY_SUBJECT(1)] has discarded strangely programmed power control board from [src.name]!",\
+								"<span class='notice'>You discarded strangely programmed board.</span>", subjects=list(user))
 							malfai = null
 							malfhack = 0
 							return
 						else
 							user.visible_message(\
-								"[user.name] has removed the power control board from [src.name]!",\
-								"<span class='notice'>You remove the power control board.</span>")
+								"[IDENTITY_SUBJECT(1)] has removed the power control board from [src.name]!",\
+								"<span class='notice'>You remove the power control board.</span>", subjects=list(user))
 							new /obj/item/weapon/electronics/apc(loc)
 							return
 			else if (opened!=2) //cover isn't removed
@@ -438,8 +438,8 @@
 			W.forceMove(src)
 			cell = W
 			user.visible_message(\
-				"[user.name] has inserted the power cell to [src.name]!",\
-				"<span class='notice'>You insert the power cell.</span>")
+				"[IDENTITY_SUBJECT(1)] has inserted the power cell to [src.name]!",\
+				"<span class='notice'>You insert the power cell.</span>", subjects=list(user))
 			chargecount = 0
 			update_icon()
 
@@ -506,8 +506,8 @@
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need ten lengths of cable for APC!</span>")
 			return
-		user.visible_message("[user.name] adds cables to the APC frame.", \
-							"<span class='notice'>You start adding cables to the APC frame...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] adds cables to the APC frame.", \
+							"<span class='notice'>You start adding cables to the APC frame...</span>", subjects=list(user))
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			if (C.get_amount() < 10 || !C)
@@ -536,8 +536,8 @@
 			to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged!</span>")
 			return
 
-		user.visible_message("[user.name] inserts the power control board into [src].", \
-							"<span class='notice'>You start to insert the power control board into the frame...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] inserts the power control board into [src].", \
+							"<span class='notice'>You start to insert the power control board into the frame...</span>", subjects=list(user))
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
@@ -551,22 +551,22 @@
 		if (WT.get_fuel() < 3)
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task!</span>")
 			return
-		user.visible_message("[user.name] welds [src].", \
+		user.visible_message("[IDENTITY_SUBJECT(1)] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='italics'>You hear welding.</span>", subjects=list(user))
 		playsound(src.loc, WT.usesound, 50, 1)
 		if(do_after(user, 50*W.toolspeed, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
-					"[user.name] has cut [src] apart with [W].",\
-					"<span class='notice'>You disassembled the broken APC frame.</span>")
+					"[IDENTITY_SUBJECT(1)] has cut [src] apart with [W].",\
+					"<span class='notice'>You disassembled the broken APC frame.</span>", subjects=list(user))
 			else
 				new /obj/item/wallframe/apc(loc)
 				user.visible_message(\
-					"[user.name] has cut [src] from the wall with [W].",\
-					"<span class='notice'>You cut the APC frame from the wall.</span>")
+					"[IDENTITY_SUBJECT(1)] has cut [src] from the wall with [W].",\
+					"<span class='notice'>You cut the APC frame from the wall.</span>", subjects=list(user))
 			qdel(src)
 			return
 
@@ -575,8 +575,8 @@
 			to_chat(user, "<span class='warning'>You found no reason for repairing this APC</span>")
 			return
 		if (!(stat & BROKEN) && opened==2) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
-			user.visible_message("[user.name] replaces missing APC's cover.",\
-							"<span class='notice'>You begin to replace APC's cover...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] replaces missing APC's cover.",\
+							"<span class='notice'>You begin to replace APC's cover...</span>", subjects=list(user))
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				to_chat(user, "<span class='notice'>You replace missing APC's cover.</span>")
 				qdel(W)
@@ -586,8 +586,8 @@
 		if (has_electronics)
 			to_chat(user, "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>")
 			return
-		user.visible_message("[user.name] replaces the damaged APC frame with a new one.",\
-							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] replaces the damaged APC frame with a new one.",\
+							"<span class='notice'>You begin to replace the damaged APC frame...</span>", subjects=list(user))
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You replace the damaged APC frame with a new one.</span>")
 			qdel(W)
@@ -647,8 +647,8 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("[user.name] removes the power cell from [src.name]!",\
-								 "<span class='notice'>You remove the power cell.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] removes the power cell from [src.name]!",\
+								 "<span class='notice'>You remove the power cell.</span>", subjects=list(user))
 			//to_chat(user, "You remove the power cell.")
 			charging = 0
 			src.update_icon()
@@ -919,7 +919,7 @@
 	if(!T)
 		return
 	transfer_in_progress = TRUE
-	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>", subjects=list(user))
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
 	occupier << sound('sound/misc/notice2.ogg') //To alert the AI that someone's trying to card them if they're tabbed out
 	if(alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", "Yes - Transfer Me", "No - Keep Me Here") == "No - Keep Me Here")
@@ -941,7 +941,7 @@
 	if(!occupier || !card)
 		transfer_in_progress = FALSE
 		return
-	user.visible_message("<span class='notice'>[user] transfers [occupier] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] transfers [IDENTITY_SUBJECT(2)] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>", subjects=list(user, occupier))
 	to_chat(occupier, "<span class='notice'>Transfer complete! You've been stored in [user]'s [card.name].</span>")
 	occupier.forceMove(card)
 	card.AI = occupier

@@ -45,7 +45,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	if(vent_found)
 		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
 		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
-			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>", subjects=list(src))
 
 			if(!do_after(src, 25, target = vent_found))
 				return
@@ -65,7 +65,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 					to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 					return
 
-			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>", subjects=list(src))
 			forceMove(vent_found)
 	else
 		to_chat(src, "<span class='warning'>This ventilation duct is not connected to anything!</span>")

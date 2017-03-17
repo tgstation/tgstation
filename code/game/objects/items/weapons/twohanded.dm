@@ -216,7 +216,7 @@
 	return
 
 /obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
@@ -367,7 +367,7 @@
 		var/mob/living/carbon/C = user
 		if(C.wear_mask == src)
 			in_mouth = ", barely missing their nose"
-	. = "<span class='warning'>[user] swings [user.p_their()] [src][in_mouth]. [user.p_they()] light[user.p_s()] [A] in the process.</span>"
+	. = "<span class='warning'>[IDENTITY_SUBJECT(1)] swings [user.p_their()] [src][in_mouth]. [user.p_they()] light[user.p_s()] [A] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
@@ -522,7 +522,7 @@
 
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
-		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
+		owner.visible_message("<span class='danger'>Ranged attacks just make [IDENTITY_SUBJECT(1)] angrier!</span>", subjects=list(owner))
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 		return 1
 	return 0
@@ -597,7 +597,7 @@
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
@@ -623,7 +623,7 @@
 		return
 	if(istype(target, /turf/closed/wall))
 		var/turf/closed/wall/W = target
-		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] blasts \the [IDENTITY_SUBJECT(2)] with \the [src]!</span>", subjects=list(user, target))
 		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
 		W.break_wall()
 		return 1
@@ -653,11 +653,11 @@
 	if(wielded || attack_type != PROJECTILE_ATTACK)
 		if(prob(final_block_chance))
 			if(attack_type == PROJECTILE_ATTACK)
-				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+				owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] deflects [attack_text] with [src]!</span>", subjects=list(owner))
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				return 1
 			else
-				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+				owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] parries [attack_text] with [src]!</span>", subjects=list(owner))
 				return 1
 	return 0
 

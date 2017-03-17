@@ -158,9 +158,9 @@
 			return
 		else
 			M.adjustFireLoss(shockdamage)
-			M.visible_message("<span class='danger'>[M] was shocked by \the [name]!</span>", \
+			M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] was shocked by \the [name]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>")
+		"<span class='italics'>You hear a heavy electrical crack.</span>", subjects=list(M))
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)

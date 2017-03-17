@@ -24,7 +24,7 @@
 	if(charges > 0)
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
-		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
+		user.visible_message("<span class='boldannounce'>[src] hums with power as [IDENTITY_SUBJECT(1)] deals a blow to [activate_descriptor] itself!</span>", subjects=list(user))
 	else
 		to_chat(user, "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>")
 
@@ -58,7 +58,7 @@
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/nullrod))
-		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] seals \the [src] with \the [I].</span>", subjects=list(user))
 		qdel(src)
 		return
 	else
@@ -115,7 +115,7 @@
 
 /obj/item/weapon/scrying/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You can see...everything!</span>")
-	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
+	visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] stares into [src], their eyes glazing over.</span>", subjects=list(user))
 	user.ghostize(1)
 	return
 

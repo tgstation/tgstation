@@ -131,8 +131,8 @@
 			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
 			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
 		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
-		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
-		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
+		L.visible_message("<span class='warning'>A blue light washes over [IDENTITY_SUBJECT(1)], mending [L.p_their()] bruises and burns!</span>", \
+		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>", subjects=list(L))
 		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 
 		if(L.reagents && L.reagents.has_reagent("holywater"))
@@ -157,7 +157,7 @@
 
 	if(target in view(7, get_turf(ranged_ability_user)))
 		successful = TRUE
-		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [target]!</span>", "<span class='nzcrentr'>You fire a volt ray at [target].</span>")
+		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [IDENTITY_SUBJECT(1)]!</span>", "<span class='nzcrentr'>You fire a volt ray at [IDENTITY_SUBJECT(1)].</span>", subjects=list(target))
 		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
 		var/turf/targetturf = get_turf(target)
 		var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(ranged_ability_user))
@@ -238,8 +238,8 @@
 		successful = TRUE
 
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
-		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s eyes fire a stream of energy at [target], creating a strange mark!</span>", \
-		"<span class='heavy_brass'>You direct the judicial force to [target].</span>")
+		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s eyes fire a stream of energy at [IDENTITY_SUBJECT(1)], creating a strange mark!</span>", \
+		"<span class='heavy_brass'>You direct the judicial force to [IDENTITY_SUBJECT(1)].</span>", subjects=list(target))
 		var/turf/targetturf = get_turf(target)
 		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")

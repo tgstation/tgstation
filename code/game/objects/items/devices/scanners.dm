@@ -91,14 +91,14 @@ MASS SPECTROMETER
 	// Clumsiness/brain damage check
 	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
-		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] has analyzed the floor's vitals!</span>", subjects=list(user))
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
 		to_chat(user, "<span class='info'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>")
 		to_chat(user, "<span class='info'>\tDamage specifics: <font color='blue'>0</font>-<font color='green'>0</font>-<font color='#FF8000'>0</font>-<font color='red'>0</font></span>")
 		to_chat(user, "<span class='info'>Body temperature: ???</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] has analyzed [IDENTITY_SUBJECT(1)]'s vitals.</span>", subjects=list(user, M))
 
 	if(scanmode == 0)
 		healthscan(user, M, mode)

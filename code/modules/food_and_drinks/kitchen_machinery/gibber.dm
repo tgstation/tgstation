@@ -108,11 +108,11 @@
 			to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 			return
 
-		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] starts to put [IDENTITY_SUBJECT(2)] into the gibber!</span>", subjects=list(user, C))
 		src.add_fingerprint(user)
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
-				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
+				user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] stuffs [IDENTITY_SUBJECT(2)] into the gibber!</span>", subjects=list(user, C))
 				C.forceMove(src)
 				occupant = C
 				update_icon()

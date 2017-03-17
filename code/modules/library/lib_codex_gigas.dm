@@ -42,7 +42,7 @@
 			willpower = 25
 		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.
 		speed += U.getBrainLoss() * 3
-		user.visible_message("[user] opens [title] and begins reading intently.")
+		user.visible_message("[IDENTITY_SUBJECT(1)] opens [title] and begins reading intently.", subjects=list(user))
 		if(do_after(U, speed, 0, U))
 			var/usedName = devilName
 			if(!prob(correctness))

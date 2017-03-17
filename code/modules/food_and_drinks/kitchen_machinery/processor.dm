@@ -71,7 +71,7 @@
 	if (!P)
 		return
 
-	src.visible_message("[picked_slime] is sucked into [src].")
+	src.visible_message("[IDENTITY_SUBJECT(1)] is sucked into [src].", subjects=list(picked_slime))
 	picked_slime.loc = src
 
 /datum/food_processor_process
@@ -138,7 +138,7 @@
 	var/C = S.cores
 	if(S.stat != DEAD)
 		S.loc = loc
-		S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
+		S.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] crawls free of the processor!</span>", subjects=list(C))
 		return
 	for(var/i in 1 to (C+processor.rating_amount-1))
 		new S.coretype(loc)
@@ -152,9 +152,9 @@
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
 		O.loc = loc
-		O.visible_message("<span class='notice'>Suddenly [O] jumps out from the processor!</span>", \
+		O.visible_message("<span class='notice'>Suddenly [IDENTITY_SUBJECT(1)] jumps out from the processor!</span>", \
 				"<span class='notice'>You jump out from the processor!</span>", \
-				"<span class='italics'>You hear chimpering.</span>")
+				"<span class='italics'>You hear chimpering.</span>", subjects=list(O))
 		return
 	var/obj/bucket = new /obj/item/weapon/reagent_containers/glass/bucket(loc)
 
@@ -223,8 +223,8 @@
 
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
-		user.visible_message("[user] put [O] into [src].", \
-			"You put [O] into [src].")
+		user.visible_message("[IDENTITY_SUBJECT(1)] put [O] into [src].", \
+			"You put [O] into [src].", subjects=list(user))
 		user.drop_item()
 		O.loc = src
 		return 1
@@ -246,7 +246,7 @@
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/pushed_mob = user.pulling
-		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
+		visible_message("<span class='warner'>[IDENTITY_SUBJECT(1)] stuffs [IDENTITY_SUBJECT(2)] into [src]!</span>", subjects=list(user, pushed_mob))
 		pushed_mob.forceMove(src)
 		user.stop_pulling()
 		return
@@ -254,9 +254,9 @@
 		to_chat(user, "<span class='warning'>The processor is empty!</span>")
 		return 1
 	src.processing = 1
-	user.visible_message("[user] turns on [src].", \
+	user.visible_message("[IDENTITY_SUBJECT(1)] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
-		"<span class='italics'>You hear a food processor.</span>")
+		"<span class='italics'>You hear a food processor.</span>", subjects=list(user))
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 	use_power(500)
 	var/total_time = 0

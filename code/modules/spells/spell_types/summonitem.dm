@@ -65,9 +65,9 @@
 						var/mob/M = item_to_retrieve.loc
 
 						if(issilicon(M)) //Items in silicons warp the whole silicon
-							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
+							M.loc.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] suddenly disappears!</span>", subjects=list(M))
 							M.loc = L.loc
-							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
+							M.loc.visible_message("<span class='caution'>[IDENTITY_SUBJECT(1)] suddenly appears!</span>", subjects=list(M))
 							item_to_retrieve = null
 							break
 						M.dropItemToGround(item_to_retrieve)
@@ -105,7 +105,7 @@
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
 				playsound(get_turf(L), 'sound/magic/SummonItems_generic.ogg', 50, 1)
 			else
-				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
+				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [IDENTITY_SUBJECT(1)]'s hand!</span>", subjects=list(L))
 				playsound(get_turf(L), 'sound/magic/SummonItems_generic.ogg', 50, 1)
 
 

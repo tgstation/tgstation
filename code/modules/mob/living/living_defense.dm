@@ -78,8 +78,8 @@
 		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
 			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
 		if(!blocked)
-			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
-							"<span class='userdanger'>[src] has been hit by [I].</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has been hit by [I].</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has been hit by [I].</span>", subjects=list(src))
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
@@ -109,13 +109,13 @@
 			else
 				return
 		updatehealth()
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-						"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has hit [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has hit [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
 		add_logs(M.occupant, src, "pushed", M)
-		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>", null, null, 5)
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] pushes [IDENTITY_SUBJECT(2)] out of the way.</span>", null, null, 5, subjects=list(M, src))
 
 /mob/living/fire_act()
 	adjust_fire_stacks(3)
@@ -142,8 +142,8 @@
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
 			var/grab_upgrade_time = 30
-			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
-				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] starts to tighten [user.p_their()] grip on [IDENTITY_SUBJECT(2)]!</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] starts to tighten [user.p_their()] grip on you!</span>", subjects=list(user, src))
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
@@ -152,19 +152,19 @@
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
 				add_logs(user, src, "grabbed", addition="aggressively")
-				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has grabbed [IDENTITY_SUBJECT(2)] aggressively!</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has grabbed [IDENTITY_SUBJECT(2)] aggressively!</span>", subjects=list(user, src))
 				drop_all_held_items()
 				stop_pulling()
 			if(GRAB_NECK)
-				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
-								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has grabbed [IDENTITY_SUBJECT(2)] by the neck!</span>",\
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has grabbed you by the neck!</span>", subjects=list(user, src))
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
-				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
-								"<span class='userdanger'>[user] is strangling you!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is strangling [IDENTITY_SUBJECT(2)]!</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is strangling you!</span>", subjects=list(user, src))
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
@@ -184,21 +184,21 @@
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>The [IDENTITY_SUBJECT(1)] glomps [IDENTITY_SUBJECT(2)]!</span>", \
+				"<span class='userdanger'>The [IDENTITY_SUBJECT(1)] glomps [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
-		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
+		M.visible_message("<span class='notice'>\The [IDENTITY_SUBJECT(1)] [M.friendly] [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 		return 0
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] [M.attacktext] [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>\The [IDENTITY_SUBJECT(1)] [M.attacktext] [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 		add_logs(M, src, "attacked")
 		return 1
 
@@ -216,31 +216,31 @@
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 			return 1
 		else
-			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has attempted to bite [IDENTITY_SUBJECT(2)]!</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has attempted to bite [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
 		if("help")
-			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>", subjects=list(L, src))
 			return 0
 
 		else
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
-				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(L, src))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
-				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has attempted to bite [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has attempted to bite [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(L, src))
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -250,7 +250,7 @@
 
 	switch(M.a_intent)
 		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] caresses [IDENTITY_SUBJECT(2)] with its scythe like arm.</span>", subjects=list(M, src))
 			return 0
 
 		if ("grab")
@@ -281,9 +281,10 @@
 		if(!illusion)
 			adjustFireLoss(shock_damage)
 		visible_message(
-			"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+			"<span class='danger'>[IDENTITY_SUBJECT(1)] was shocked by \the [source]!</span>", \
 			"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-			"<span class='italics'>You hear a heavy electrical crack.</span>" \
+			"<span class='italics'>You hear a heavy electrical crack.</span>", \
+			subjects=list(src) \
 		)
 		return shock_damage
 

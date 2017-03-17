@@ -141,7 +141,7 @@
 	for(var/atom/A in T)
 		if(A != src)
 			if(isliving(A))
-				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
+				A.visible_message("<span class='warning'>[src] slams into [IDENTITY_SUBJECT(1)].</span>", "<span class='userdanger'>[src] slams into you!.</span>", subjects=list(A))
 			A.ex_act(hitpwr)
 
 	//then, ram the turf if it still exists

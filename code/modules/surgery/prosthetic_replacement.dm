@@ -38,12 +38,12 @@
 					organ_rejection_dam = 30
 
 		if(target_zone == BP.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
-			user.visible_message("[user] begins to replace [target]'s [parse_zone(target_zone)].", "<span class ='notice'>You begin to replace [target]'s [parse_zone(target_zone)]...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] begins to replace [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].", "<span class ='notice'>You begin to replace [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]...</span>", subjects=list(user, target))
 		else
 			to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
 			return -1
 	else if(target_zone == "l_arm" || target_zone == "r_arm")
-		user.visible_message("[user] begins to attach [tool] onto [target].", "<span class='notice'>You begin to attach [tool] onto [target]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to attach [tool] onto [IDENTITY_SUBJECT(2)].", "<span class='notice'>You begin to attach [tool] onto [target]...</span>", subjects=list(user, target))
 	else
 		to_chat(user, "<span class='warning'>[tool] must be installed onto an arm.</span>")
 		return -1
@@ -55,11 +55,11 @@
 		L.attach_limb(target)
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
-		user.visible_message("[user] successfully replaces [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] successfully replaces [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!", "<span class='notice'>You succeed in replacing [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].</span>", subjects=list(user, target))
 		return 1
 	else
 		target.regenerate_limb(target_zone)
-		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>", subjects=list(user))
 		qdel(tool)
 		if(istype(tool, /obj/item/weapon/twohanded/required/chainsaw))
 			var/obj/item/weapon/mounted_chainsaw/new_arm = new(target)

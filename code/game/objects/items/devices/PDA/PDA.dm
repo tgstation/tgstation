@@ -809,7 +809,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		switch(scanmode)
 
 			if(1)
-				C.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
+				C.visible_message("<span class='alert'>[IDENTITY_SUBJECT(1)] has analyzed [IDENTITY_SUBJECT(2)]'s vitals!</span>", subjects=list(user, C))
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
@@ -817,9 +817,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// Unused
 
 			if(4)
-				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
+				C.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] has analyzed [IDENTITY_SUBJECT(2)]'s radiation levels!</span>", subjects=list(user, C))
 
-				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
+				user.show_message("<span class='notice'>Analyzing Results for [IDENTITY_SUBJECT(1)]:</span>", subjects=list(C))
 				if(C.radiation)
 					user.show_message("\green Radiation Level: \black [C.radiation]")
 				else

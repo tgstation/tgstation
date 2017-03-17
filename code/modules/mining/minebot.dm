@@ -87,7 +87,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/death()
 	..()
-	visible_message("<span class='danger'>[src] is destroyed!</span>")
+	visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is destroyed!</span>", subjects=list(src))
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
 	DropOre(0)
 	qdel(src)

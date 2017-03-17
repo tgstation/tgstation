@@ -343,9 +343,9 @@
 				if(M == usr)
 					to_chat(usr, "<span class='notice'>You put [W] [preposition]to [src].</span>")
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+					M.show_message("<span class='notice'>[IDENTITY_SUBJECT(1)] puts [W] [preposition]to [src].</span>", 1, subjects=list(usr))
 				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+					M.show_message("<span class='notice'>[IDENTITY_SUBJECT(1)] puts [W] [preposition]to [src].</span>", 1, subjects=list(usr))
 
 		orient2hud(usr)
 		for(var/mob/M in can_see_contents())

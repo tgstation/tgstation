@@ -56,10 +56,10 @@
 	add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		if (bulb)
-			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>", subjects=list(user))
 			playsound(src.loc, W.usesound, 100, 1)
 			if(do_after(user, 30*W.toolspeed, target = src) && bulb)
-				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>", subjects=list(user))
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
@@ -68,7 +68,7 @@
 		if (!bulb)
 			if(!user.drop_item())
 				return
-			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>", subjects=list(user))
 			W.forceMove(src)
 			bulb = W
 			power_change()

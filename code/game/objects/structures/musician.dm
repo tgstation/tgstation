@@ -360,18 +360,18 @@
 			to_chat(user, "<span class='notice'> You begin to tighten \the [src] to the floor...</span>")
 			if (do_after(user, 20*O.toolspeed, target = src))
 				user.visible_message( \
-					"[user] tightens \the [src]'s casters.", \
+					"[IDENTITY_SUBJECT(1)] tightens \the [src]'s casters.", \
 					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
+					"<span class='italics'>You hear ratchet.</span>", subjects=list(user))
 				anchored = 1
 		else if(anchored)
 			playsound(src.loc, O.usesound, 50, 1)
 			to_chat(user, "<span class='notice'> You begin to loosen \the [src]'s casters...</span>")
 			if (do_after(user, 40*O.toolspeed, target = src))
 				user.visible_message( \
-					"[user] loosens \the [src]'s casters.", \
+					"[IDENTITY_SUBJECT(1)] loosens \the [src]'s casters.", \
 					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
+					"<span class='italics'>You hear ratchet.</span>", subjects=list(user))
 				anchored = 0
 	else
 		return ..()

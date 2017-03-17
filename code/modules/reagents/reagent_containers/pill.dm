@@ -28,19 +28,19 @@
 		return 0
 
 	if(M == user)
-		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
+		M.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] attempts to [apply_method] [src].</span>", subjects=list(user))
 		if(self_delay)
 			if(!do_mob(user, M, self_delay))
 				return 0
 		to_chat(M, "<span class='notice'>You [apply_method] [src].</span>")
 
 	else
-		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
-							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attempts to force [IDENTITY_SUBJECT(2)] to [apply_method] [src].</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] attempts to force [IDENTITY_SUBJECT(2)] to [apply_method] [src].</span>", subjects=list(user, M))
 		if(!do_mob(user, M))
 			return 0
-		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
-							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] forces [IDENTITY_SUBJECT(2)] to [apply_method] [src].</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] forces [IDENTITY_SUBJECT(2)] to [apply_method] [src].</span>", subjects=list(user, M))
 
 
 	add_logs(user, M, "fed", reagentlist(src))

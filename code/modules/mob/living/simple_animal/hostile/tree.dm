@@ -57,8 +57,8 @@
 		var/mob/living/carbon/C = target
 		if(prob(15))
 			C.Weaken(3)
-			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-					"<span class='userdanger'>\The [src] knocks you down!</span>")
+			C.visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] knocks down \the [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>\The [IDENTITY_SUBJECT(1)] knocks you down!</span>", subjects=list(src, C))
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"

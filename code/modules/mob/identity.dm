@@ -271,6 +271,12 @@ var/global/list/used_voiceprints = list()
 		var/mob/M = A
 		. = M.real_name
 
+/obj/effect/fake_attacker/can_see_face()
+	. = clone_faceprint
+
+/obj/effect/fake_attacker/get_faceprint()
+	. = clone_faceprint
+
 /mob/living/proc/last_voiceprint_message(voice_print, message)
 	if(client && mind && voice_print && message)
 		var/list/voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)

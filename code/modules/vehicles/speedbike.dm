@@ -55,7 +55,7 @@
 		var/atom/throw_target = get_edge_target_turf(A, src.dir)
 		if(crash_all)
 			A.throw_at(throw_target, 4, 3)
-			visible_message("<span class='danger'>[src] crashes into [A]!</span>")
+			visible_message("<span class='danger'>[src] crashes into [IDENTITY_SUBJECT(1)]!</span>", subjects=list(A))
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
@@ -64,7 +64,7 @@
 			H.apply_damage(rand(20,35), BRUTE)
 			if(!crash_all)
 				H.throw_at(throw_target, 4, 3)
-				visible_message("<span class='danger'>[src] crashes into [H]!</span>")
+				visible_message("<span class='danger'>[src] crashes into [IDENTITY_SUBJECT(1)]!</span>", subjects=list(H))
 				playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)

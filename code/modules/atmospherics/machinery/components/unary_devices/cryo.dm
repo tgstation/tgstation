@@ -220,8 +220,8 @@
 			return
 		beaker = I
 		I.loc = src
-		user.visible_message("[user] places [I] in [src].", \
-							"<span class='notice'>You place [I] in [src].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] places [I] in [src].", \
+							"<span class='notice'>You place [I] in [src].</span>", subjects=list(user))
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return

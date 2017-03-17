@@ -57,7 +57,7 @@
 		H.throw_at(throw_target, 4, 3)
 		H.Weaken(5)
 		H.adjustStaminaLoss(40)
-		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
+		visible_message("<span class='danger'>[src] crashes into [IDENTITY_SUBJECT(1)], sending [IDENTITY_SUBJECT(2)] flying!</span>", subjects=list(A, H))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/scooter/skateboard/MouseDrop(atom/over_object)

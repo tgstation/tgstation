@@ -132,8 +132,9 @@ var/next_mob_id = 0
 // self_message (optional) is what the src mob hears.
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
+// subjects (optional) subjects in the message ordered according to the indexes in the message
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+/mob/audible_message(message, deaf_message, hearing_distance, self_message, list/subjects)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -141,20 +142,22 @@ var/next_mob_id = 0
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
-		M.show_message( msg, 2, deaf_message, 1)
+		M.show_message( msg, 2, deaf_message, 1, subjects)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
 // message is the message output to anyone who can hear.
+// self_message (not used)
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
+// subjects (optional) subjects in the message ordered according to the indexes in the message
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
+/atom/proc/audible_message(message, deaf_message, hearing_distance, self_message, list/subjects)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
-		M.show_message( message, 2, deaf_message, 1)
+		M.show_message( message, 2, deaf_message, 1, subjects)
 
 /mob/proc/movement_delay()
 	return 0
@@ -324,7 +327,7 @@ var/next_mob_id = 0
 	changeNext_move(CLICK_CD_GRABBING)
 
 	if(AM.pulledby)
-		visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has pulled [IDENTITY_SUBJECT(2)] from [AM.pulledby]'s grip.</span>", subjects=list(src, AM))
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
@@ -335,7 +338,7 @@ var/next_mob_id = 0
 	if(ismob(AM))
 		var/mob/M = AM
 		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] has grabbed [IDENTITY_SUBJECT(2)] passively!</span>", subjects=list(src, M))
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else

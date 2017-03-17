@@ -86,7 +86,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open = !open
 
-		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] [open ? "opens" : "closes"] the beacon's cover.", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>", subjects=list(user))
 
 		updateicon()
 

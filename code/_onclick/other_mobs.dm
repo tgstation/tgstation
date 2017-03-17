@@ -95,14 +95,14 @@
 	var/armor = ML.run_armor_check(affecting, "melee")
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
-		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
-						"<span class='userdanger'>[name] bites [ML]!</span>")
+		ML.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, ML))
 		if(armor >= 2)
 			return
 		for(var/datum/disease/D in viruses)
 			ML.ForceContractDisease(D)
 	else
-		ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
+		ML.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has attempted to bite [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, ML))
 
 /*
 	Aliens

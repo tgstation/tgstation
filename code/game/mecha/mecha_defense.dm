@@ -56,7 +56,7 @@
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
-	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] hits [IDENTITY_SUBJECT(2)]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user, src))
 	log_message("Attack by hand/paw. Attacker - [user.real_name]/([key_name(user)]).",1)
 	log_append_to_last("Armor saved.")
 
@@ -164,7 +164,7 @@
 				if(!user.drop_item())
 					return
 				E.attach(src)
-				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>", subjects=list(user))
 			else
 				to_chat(user, "<span class='warning'>You were unable to attach [W] to [src]!</span>")
 		return
@@ -248,7 +248,7 @@
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
 					to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>")
+					user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] repairs some damage to [name].</span>", subjects=list(user))
 					obj_integrity += min(10, max_integrity-obj_integrity)
 			else
 				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
@@ -262,7 +262,7 @@
 			to_chat(user, "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>")
 			return
 		trackers += W
-		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>", subjects=list(user))
 		diag_hud_set_mechtracking()
 		return
 	else

@@ -17,7 +17,7 @@
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
 		M.forceMove(loc)
-		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bursts out of [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 	..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)

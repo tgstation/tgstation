@@ -20,58 +20,58 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("[user] is loosening the [name]'s bolts.", \
-								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] is loosening the [name]'s bolts.", \
+								 "<span class='notice'>You are loosening the [name]'s bolts...</span>", subjects=list(user))
 			if(do_after(user,40*W.toolspeed, target = src))
 				if(!src.loc || !anchored)
 					return
-				user.visible_message("[user] loosened the [name]'s bolts!", \
-									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] loosened the [name]'s bolts!", \
+									 "<span class='notice'>You loosen the [name]'s bolts!</span>", subjects=list(user))
 				anchored = 0
 		else
 			if(!isfloorturf(src.loc))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
 			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("[user] is securing the [name]'s bolts...", \
-								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] is securing the [name]'s bolts...", \
+								 "<span class='notice'>You are securing the [name]'s bolts...</span>", subjects=list(user))
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if(!src.loc || anchored)
 					return
-				user.visible_message("[user] has secured the [name]'s bolts.", \
-									 "<span class='notice'>You have secured the [name]'s bolts.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] has secured the [name]'s bolts.", \
+									 "<span class='notice'>You have secured the [name]'s bolts.</span>", subjects=list(user))
 				anchored = 1
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		user.visible_message("[user] is slicing apart the [name]...", \
-							 "<span class='notice'>You are slicing apart the [name]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] is slicing apart the [name]...", \
+							 "<span class='notice'>You are slicing apart the [name]...</span>", subjects=list(user))
 		if(do_after(user,40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
-			user.visible_message("[user] slices apart the [name].", \
-								 "<span class='notice'>You slice apart the [name].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] slices apart the [name].", \
+								 "<span class='notice'>You slice apart the [name].</span>", subjects=list(user))
 			deconstruct(TRUE)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!src.loc)
 			return
-		user.visible_message("[user] destroys the [name]!", \
-							 "<span class='notice'>You destroy the [name].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] destroys the [name]!", \
+							 "<span class='notice'>You destroy the [name].</span>", subjects=list(user))
 		D.playDigSound()
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
 		playsound(loc, W.usesound, 40, 1)
-		user.visible_message("[user] is slicing apart the [name].", \
-							 "<span class='notice'>You are slicing apart the [name]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] is slicing apart the [name].", \
+							 "<span class='notice'>You are slicing apart the [name]...</span>", subjects=list(user))
 		if(do_after(user, 40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-			user.visible_message("[user] slices apart the [name].", \
-								 "<span class='notice'>You slice apart the [name]!</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] slices apart the [name].", \
+								 "<span class='notice'>You slice apart the [name]!</span>", subjects=list(user))
 			deconstruct(TRUE)
 	else
 		return ..()
@@ -79,8 +79,8 @@
 /obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
-						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] rubs some dust off from the [name]'s surface.", \
+						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>", subjects=list(user))
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

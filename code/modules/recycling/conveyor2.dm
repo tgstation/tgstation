@@ -116,8 +116,8 @@
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
-		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] struggles to pry up \the [src] with \the [I].</span>", \
+		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>", subjects=list(user))
 		if(do_after(user, 40*I.toolspeed, target = src))
 			if(QDELETED(src))
 				return //prevent multiple decontructs

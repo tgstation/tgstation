@@ -3,8 +3,8 @@
 
 /obj/item/weapon/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target.check_block())
-		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind their back!</span>",
-					"<span class='userdanger'>You block the attack!</span>")
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] blocks [src] and twists [IDENTITY_SUBJECT(2)]'s arm behind their back!</span>",
+					"<span class='userdanger'>You block the attack!</span>", subjects=list(target, user))
 		user.Stun(2)
 		return TRUE
 
@@ -25,7 +25,7 @@
 	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (OXYLOSS)
 
 /obj/item/weapon/melee/synthetic_arm_blade
@@ -113,8 +113,8 @@
 			target.Weaken(3)
 			add_logs(user, target, "stunned", src)
 			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+			target.visible_message("<span class ='danger'>[IDENTITY_SUBJECT(1)] has knocked down [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+				"<span class ='userdanger'>[IDENTITY_SUBJECT(1)] has knocked down [IDENTITY_SUBJECT(2)] with [src]!</span>", subjects=list(user, target))
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
@@ -137,7 +137,7 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 
-	user.visible_message("<span class='suicide'>[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear their mind.</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear their mind.</span>", subjects=list(user))
 	if(!on)
 		src.attack_self(user)
 	else
@@ -241,7 +241,7 @@
 	consume_everything()
 
 /obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>", subjects=list(user))
 	user.drop_item()
 	shard.Bumped(user)
 
@@ -281,5 +281,5 @@
 	if(ishuman(target) && proximity_flag)
 		var/mob/living/carbon/human/H = target
 		H.drop_all_held_items()
-		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+		H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] disarms [IDENTITY_SUBJECT(2)]!</span>", "<span class='userdanger'>[user] disarmed you!</span>", subjects=list(user, H))
 	..()

@@ -33,7 +33,7 @@
 		return FALSE
 	var/msg = O.ignition_effect(src, user)
 	if(msg)
-		visible_message(msg)
+		visible_message(msg, subjects=list(user))
 		ignite()
 		return TRUE
 
@@ -48,20 +48,20 @@
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
 		adjust_fuel_timer(LOG_BURN_TIMER * logs_used)
-		user.visible_message("<span class='notice'>[user] tosses some \
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] tosses some \
 			wood into [src].</span>", "<span class='notice'>You add \
-			some fuel to [src].</span>")
+			some fuel to [src].</span>", subjects=list(user))
 	else if(istype(T, /obj/item/weapon/paper_bin))
 		var/obj/item/weapon/paper_bin/paper_bin = T
-		user.visible_message("<span class='notice'>[user] throws [T] into \
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] throws [T] into \
 			[src].</span>", "<span class='notice'>You add [T] to [src].\
-			</span>")
+			</span>", subjects=list(user))
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
 	else if(istype(T, /obj/item/weapon/paper))
-		user.visible_message("<span class='notice'>[user] throws [T] into \
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] throws [T] into \
 			[src].</span>", "<span class='notice'>You throw [T] into [src].\
-			</span>")
+			</span>", subjects=list(user))
 		adjust_fuel_timer(PAPER_BURN_TIMER)
 		qdel(T)
 	else if(try_light(T,user))

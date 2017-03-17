@@ -68,9 +68,9 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 				candidates += player
 	return candidates
 
-/datum/game_mode/blob/proc/show_message(message)
+/datum/game_mode/blob/proc/show_message(message, type, alt_msg, alt_type, list/subjects)
 	for(var/datum/mind/blob in blob_overminds)
-		to_chat(blob.current, message)
+		to_chat(blob.current, message, subjects)
 
 /datum/game_mode/blob/post_setup()
 	set waitfor = FALSE

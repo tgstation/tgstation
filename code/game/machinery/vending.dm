@@ -600,7 +600,7 @@
 		return 0
 
 	throw_item.throw_at(target, 16, 3)
-	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
+	visible_message("<span class='danger'>[src] launches [throw_item] at [IDENTITY_SUBJECT(1)]!</span>", subjects=list(target))
 	return 1
 
 

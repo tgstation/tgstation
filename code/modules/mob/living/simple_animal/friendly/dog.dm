@@ -76,10 +76,10 @@
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
 				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't cause [p_them()] any damage.</span>")
-				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] hits [IDENTITY_SUBJECT(2)] with [O], however [IDENTITY_SUBJECT(2)] is too armored.</span>", subjects=list(user, src))
 			else
 				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't reach [p_their()] skin.<span>")
-				visible_message("[user] gently taps [src] with [O].")
+				visible_message("[IDENTITY_SUBJECT(1)] gently taps [IDENTITY_SUBJECT(2)] with [O].", subjects=list(user, src))
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
 			return
@@ -91,9 +91,9 @@
 		if (nofur)
 			to_chat(user, "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>")
 			return
-		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] starts to shave [IDENTITY_SUBJECT(2)] using \the [O].", "<span class='notice'>You start to shave [IDENTITY_SUBJECT(2)] using \the [O]...</span>", subjects=list(user, src))
 		if(do_after(user, 50, target = src))
-			user.visible_message("[user] shaves [src]'s hair using \the [O].")
+			user.visible_message("[IDENTITY_SUBJECT(1)] shaves [IDENTITY_SUBJECT(2)]'s hair using \the [O].", subjects=list(user, src))
 			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 			shaved = 1
 			icon_living = "[initial(icon_living)]_shaved"
@@ -157,7 +157,7 @@
 					var/obj/item/item_to_add = usr.get_active_held_item()
 
 					if(!item_to_add)
-						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
+						usr.visible_message("[IDENTITY_SUBJECT(1)] pets [IDENTITY_SUBJECT(2)].","<span class='notice'>You rest your hand on [IDENTITY_SUBJECT(2)]'s back for a moment.</span>", subjects=list(usr, src))
 						return
 
 					if(!usr.drop_item())
@@ -209,7 +209,7 @@
 			to_chat(user, "<span class='warning'>You can't put more than one hat on [src]!</span>")
 		return
 	if(!item_to_add)
-		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] pets [IDENTITY_SUBJECT(2)].","<span class='notice'>You rest your hand on [IDENTITY_SUBJECT(2)]'s head for a moment.</span>", subjects=list(user, src))
 		return
 
 	if(user && !user.drop_item())
@@ -226,9 +226,9 @@
 		if(health <= 0)
 			to_chat(user, "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>")
 		else if(user)
-			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
-				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
-				"<span class='italics'>You hear a friendly-sounding bark.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] puts [item_to_add] on [IDENTITY_SUBJECT(2)]'s head.  [IDENTITY_SUBJECT(2)] looks at [IDENTITY_SUBJECT(1)] and barks once.",
+				"<span class='notice'>You put [item_to_add] on [IDENTITY_SUBJECT(2)]'s head.  [IDENTITY_SUBJECT(2)] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
+				"<span class='italics'>You hear a friendly-sounding bark.</span>", subjects=list(user, src))
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		update_corgi_fluff()

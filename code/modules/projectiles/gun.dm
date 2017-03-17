@@ -115,9 +115,9 @@
 		playsound(user, fire_sound, 50, 1)
 		if(message)
 			if(pointblank)
-				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+				user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] fires [src] point blank at [IDENTITY_SUBJECT(1)]!</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user, pbtarget))
 			else
-				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+				user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user))
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -382,26 +382,26 @@
 		return
 
 	if(user == target)
-		target.visible_message("<span class='warning'>[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger...</span>", \
-			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>")
+		target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] sticks [src] in [user.p_their()] mouth, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>", subjects=list(user))
 	else
-		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
-			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
+		target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] points [src] at [IDENTITY_SUBJECT(2)]'s head, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>[IDENTITY_SUBJECT(1)] points [src] at your head, ready to pull the trigger...</span>", subjects=list(user, target))
 
 	semicd = 1
 
 	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
 		if(user)
 			if(user == target)
-				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
+				user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] decided not to shoot.</span>", subjects=list(user))
 			else if(target && target.Adjacent(user))
-				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+				target.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] has decided to spare [IDENTITY_SUBJECT(2)]</span>", "<span class='notice'>[IDENTITY_SUBJECT(1)] has decided to spare your life!</span>", subjects=list(user, target))
 		semicd = 0
 		return
 
 	semicd = 0
 
-	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
+	target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] pulls the trigger!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] pulls the trigger!</span>", subjects=list(user))
 
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5

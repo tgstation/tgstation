@@ -53,7 +53,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
 
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] successfully broke out of [src]!</span>", subjects=list(user))
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 
 		open_machine()

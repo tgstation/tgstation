@@ -830,7 +830,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>", subjects=list(user))
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 

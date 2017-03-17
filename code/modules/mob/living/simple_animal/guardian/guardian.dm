@@ -133,8 +133,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(summoner.stat == DEAD)
 			forceMove(summoner.loc)
 			to_chat(src, "<span class='danger'>Your summoner has died!</span>")
-			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
-			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
+			visible_message("<span class='danger'><B>\The [IDENTITY_SUBJECT(1)] dies along with its user!</B></span>", subjects=list(src))
+			summoner.visible_message("<span class='danger'><B>[IDENTITY_SUBJECT(1)]'s body is completely consumed by the strain of sustaining [IDENTITY_SUBJECT(2)]!</B></span>", subjects=list(summoner, src))
 			for(var/obj/item/W in summoner)
 				if(!summoner.dropItemToGround(W))
 					qdel(W)
@@ -143,7 +143,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			qdel(src)
 	else
 		to_chat(src, "<span class='danger'>Your summoner has died!</span>")
-		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
+		visible_message("<span class='danger'><B>The [IDENTITY_SUBJECT(1)] dies along with its user!</B></span>", subjects=list(src))
 		death(TRUE)
 		qdel(src)
 	snapback()
@@ -171,7 +171,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			return
 		else
 			to_chat(src, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>")
-			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
+			visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] jumps back to its user.</span>", subjects=list(src))
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
@@ -214,7 +214,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
 			to_chat(summoner, "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>")
-			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
+			summoner.visible_message("<span class='danger'><B>Blood sprays from [IDENTITY_SUBJECT(1)] as [IDENTITY_SUBJECT(2)] takes damage!</B></span>", subjects=list(summoner, src))
 			if(summoner.stat == UNCONSCIOUS)
 				to_chat(summoner, "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>")
 				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss

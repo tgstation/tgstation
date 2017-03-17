@@ -46,7 +46,7 @@
 	var/obj/item/organ/lungs/L = user.getorganslot("lungs")
 
 	if(can_use(user) && L)
-		user.visible_message("<span class='suicide'>[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 		use(user)
 
 		// Once you've inhaled the toner, you throw up your lungs
@@ -72,20 +72,20 @@
 
 		// TODO maybe add some colorful vomit?
 
-		user.visible_message("<span class='suicide'>[user] vomits out their [L]!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] vomits out their [L]!</span>", subjects=list(user))
 		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
 
 		L.forceMove(T)
 
 		return (TOXLOSS|OXYLOSS)
 	else if(can_use(user) && !L)
-		user.visible_message("<span class='suicide'>[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>", subjects=list(user))
 		user.reagents.add_reagent("colorful_reagent", 1)
 		user.reagents.reaction(user, TOUCH, 1)
 		return TOXLOSS
 
 	else
-		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from [src]! It might be a suicide attempt if [src] had any toner.</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is trying to inhale toner from [src]! It might be a suicide attempt if [src] had any toner.</span>", subjects=list(user))
 		return SHAME
 
 

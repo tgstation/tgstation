@@ -45,7 +45,7 @@ RCD
 		the RCD blinks yellow.</span>"
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 /obj/item/weapon/rcd/verb/toggle_window_type()

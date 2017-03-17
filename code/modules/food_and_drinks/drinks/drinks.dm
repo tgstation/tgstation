@@ -34,12 +34,12 @@
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
 
 	else
-		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attempts to feed the contents of [src] to [IDENTITY_SUBJECT(2)].</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] attempts to feed the contents of [src] to [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, M))
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The drink might be empty after the delay, such as by spam-feeding
-		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", "<span class='userdanger'>[user] feeds the contents of [src] to [M].</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] feeds the contents of [src] to [IDENTITY_SUBJECT(2)].</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] feeds the contents of [src] to [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, M))
 		add_logs(user, M, "fed", reagentlist(src))
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)
@@ -315,7 +315,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
-		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>", subjects=list(user))
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state

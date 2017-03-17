@@ -34,19 +34,19 @@
 	..()
 	var/msg = W.ignition_effect(src, user)
 	if(msg)
-		light(msg)
+		light(msg, user)
 
 /obj/item/candle/fire_act(exposed_temperature, exposed_volume)
 	if(!src.lit)
 		light() //honk
 	..()
 
-/obj/item/candle/proc/light(show_message)
+/obj/item/candle/proc/light(show_message, user)
 	if(!src.lit)
 		src.lit = TRUE
 		//src.damtype = "fire"
 		if(show_message)
-			usr.visible_message(show_message)
+			usr.visible_message(show_message, subjects=list(user))
 		set_light(CANDLE_LUMINOSITY)
 		START_PROCESSING(SSobj, src)
 		update_icon()
@@ -66,7 +66,7 @@
 /obj/item/candle/attack_self(mob/user)
 	if(lit)
 		user.visible_message(
-			"<span class='notice'>[user] snuffs [src].</span>")
+			"<span class='notice'>[IDENTITY_SUBJECT(1)] snuffs [src].</span>", subjects=list(user))
 		lit = FALSE
 		update_icon()
 		set_light(0)

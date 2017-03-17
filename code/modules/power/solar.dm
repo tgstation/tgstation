@@ -59,10 +59,10 @@
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>", subjects=list(user))
 		if(do_after(user, 50*W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>", subjects=list(user))
 			deconstruct(TRUE)
 	else
 		return ..()
@@ -211,10 +211,10 @@
 			return
 		anchored = !anchored
 		if(anchored)
-			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>", subjects=list(user))
 			playsound(src.loc, W.usesound, 75, 1)
 		else
-			user.visible_message("[user] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>", subjects=list(user))
 			playsound(src.loc, W.usesound, 75, 1)
 		return 1
 
@@ -226,7 +226,7 @@
 		if(S.use(2))
 			glass_type = W.type
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>", subjects=list(user))
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
 			else
@@ -242,13 +242,13 @@
 				return
 			tracker = 1
 			qdel(W)
-			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>", subjects=list(user))
 			return 1
 	else
 		if(istype(W, /obj/item/weapon/crowbar))
 			new /obj/item/weapon/electronics/tracker(src.loc)
 			tracker = 0
-			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>", subjects=list(user))
 			return 1
 	return ..()
 

@@ -98,8 +98,8 @@
 	picked_fluff_name = "Slave"
 	braintype = picked_fluff_name
 	brainmob.timeofhostdeath = H.timeofdeath
-	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
-	"<span class='brass'>You extract [H]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] presses [src] to [IDENTITY_SUBJECT(2)]'s head, ripping through the skull and carefully extracting the brain!</span>", \
+	"<span class='brass'>You extract [IDENTITY_SUBJECT(2)]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>", subjects=list(user, H))
 	transfer_personality(H)
 	brainmob.fully_replace_character_name(null, "[braintype] [H.real_name]")
 	name = "[initial(name)] ([brainmob.name])"

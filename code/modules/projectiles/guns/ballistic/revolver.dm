@@ -59,7 +59,7 @@
 		return
 
 	if(do_spin())
-		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
+		usr.visible_message("[IDENTITY_SUBJECT(1)] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>", subjects=list(usr))
 	else
 		verbs -= /obj/item/weapon/gun/ballistic/revolver/verb/spin
 
@@ -228,7 +228,7 @@
 				if(zone == "head" || zone == "eyes" || zone == "mouth")
 					shoot_self(user, affecting)
 				else
-					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
+					user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>", subjects=list(user))
 				chambered = null
 				return
 
@@ -237,7 +237,7 @@
 
 /obj/item/weapon/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
-	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>", subjects=list(user))
 
 /obj/item/weapon/gun/ballistic/revolver/russian/soul
 	name = "cursed russian revolver"
@@ -249,7 +249,7 @@
 	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
 		qdel(SS)
 		return
-	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>", subjects=list(user))
 
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
@@ -351,7 +351,7 @@
 	if((user.disabilities & CLUMSY) || (user.mind && user.mind.assigned_role == "Clown"))
 		return ..()
 	if(process_fire(user, user, 0, zone_override = "head"))
-		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>", subjects=list(user))
 		user.emote("scream")
 		user.drop_item()
 		user.Weaken(4)

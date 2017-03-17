@@ -86,7 +86,7 @@
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Weaken(3)
-			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is knocked right off [M.p_their()] feet!</span>", subjects=list(M))
 
 //
 // Structures
@@ -103,7 +103,7 @@
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(get_dist(src,user)<2)
 		if(user.drop_item(src))
-			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
+			visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] dunks [W] into \the [src]!</span>", subjects=list(user))
 
 /obj/structure/holohoop/attack_hand(mob/user)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -113,7 +113,7 @@
 			return
 		L.loc = src.loc
 		L.Weaken(5)
-		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] dunks [IDENTITY_SUBJECT(2)] into \the [src]!</span>", subjects=list(user, L))
 		user.stop_pulling()
 	else
 		..()

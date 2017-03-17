@@ -180,7 +180,7 @@
 	if(prob(20))
 		M.emote("laugh")
 	if(prob(33))
-		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s hands flip out and flail everywhere!</span>", subjects=list(M))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()

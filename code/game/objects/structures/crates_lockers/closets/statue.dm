@@ -16,7 +16,7 @@
 		petrified_mob = L
 		if(L.buckled)
 			L.buckled.unbuckle_mob(L,force=1)
-		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
+		L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>", subjects=list(L))
 		L.forceMove(src)
 		L.disabilities |= MUTE
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues

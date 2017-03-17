@@ -235,15 +235,15 @@ var/global/list/pipeID2State = list(
 
 	playsound(src.loc, W.usesound, 50, 1)
 	user.visible_message( \
-		"[user] fastens \the [src].", \
+		"[IDENTITY_SUBJECT(1)] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
-		"<span class='italics'>You hear ratchet.</span>")
+		"<span class='italics'>You hear ratchet.</span>", subjects=list(user))
 
 	qdel(src)
 
 /obj/item/pipe/suicide_act(mob/user)
 	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
-		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 		if(istype(user, /mob/living/carbon))
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)

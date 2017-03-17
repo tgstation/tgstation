@@ -150,20 +150,20 @@
 
 /obj/item/weapon/gun/energy/suicide_act(mob/user)
 	if (src.can_shoot())
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 		sleep(25)
 		if(user.is_holding(src))
-			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
+			user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] melts [user.p_their()] face off with [src]!</span>", subjects=list(user))
 			playsound(loc, fire_sound, 50, 1, -1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			power_supply.use(shot.e_cost)
 			update_icon()
 			return(FIRELOSS)
 		else
-			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
+			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>", subjects=list(user))
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>", subjects=list(user))
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
 
@@ -188,13 +188,13 @@
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)
-			user.visible_message("<span class='danger'>[user] tries to light their [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] tries to light their [A.name] with [src], but it doesn't do anything. Dumbass.</span>", subjects=list(user))
 			playsound(user, E.fire_sound, 50, 1)
 			playsound(user, BB.hitsound, 50, 1)
 			power_supply.use(E.e_cost)
 			. = ""
 		else if(BB.damage_type != BURN)
-			user.visible_message("<span class='danger'>[user] tries to light their [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] tries to light their [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>", subjects=list(user))
 			playsound(user, E.fire_sound, 50, 1)
 			playsound(user, BB.hitsound, 50, 1)
 			power_supply.use(E.e_cost)
@@ -204,4 +204,4 @@
 			playsound(user, E.fire_sound, 50, 1)
 			playsound(user, BB.hitsound, 50, 1)
 			power_supply.use(E.e_cost)
-			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"
+			. = "<span class='danger'>[IDENTITY_SUBJECT(1)] casually lights their [A.name] with [src]. Damn.</span>"

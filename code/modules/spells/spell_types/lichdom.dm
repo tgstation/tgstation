@@ -99,7 +99,7 @@
 						I.forceMove(body_turf)
 				var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 				if(wheres_wizdo)
-					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
+					old_body.visible_message("<span class='warning'>Suddenly [IDENTITY_SUBJECT(1)]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>", subjects=list(old_body))
 					body_turf.Beam(item_turf,icon_state="lichbeam",time=10+10*resurrections,maxdistance=INFINITY)
 				old_body.dust()
 

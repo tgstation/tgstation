@@ -55,7 +55,7 @@
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
-			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
+			visible_message("<span class='warning'>\The [src] has been broken by [IDENTITY_SUBJECT(1)] with an electromagnetic card!</span>", subjects=list(user))
 			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)

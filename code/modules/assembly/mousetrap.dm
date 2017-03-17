@@ -82,8 +82,8 @@
 			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"
 			triggered(user, which_hand)
-			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
-								 "<span class='warning'>You accidentally trigger [src]!</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] accidentally sets off [src], breaking their fingers.</span>", \
+								 "<span class='warning'>You accidentally trigger [src]!</span>", subjects=list(user))
 			return
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
@@ -98,8 +98,8 @@
 			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"
 			triggered(user, which_hand)
-			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
-								 "<span class='warning'>You accidentally trigger [src]!</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] accidentally sets off [src], breaking their fingers.</span>", \
+								 "<span class='warning'>You accidentally trigger [src]!</span>", subjects=list(user))
 			return
 	..()
 
@@ -113,8 +113,8 @@
 					var/mob/living/carbon/H = AM
 					if(H.m_intent == MOVE_INTENT_RUN)
 						triggered(H)
-						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
-										  "<span class='warning'>You accidentally step on [src]</span>")
+						H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] accidentally steps on [src].</span>", \
+										  "<span class='warning'>You accidentally step on [src]</span>", subjects=list(H))
 				else if(ismouse(MM))
 					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
@@ -124,8 +124,8 @@
 
 /obj/item/device/assembly/mousetrap/on_found(mob/finder)
 	if(armed)
-		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
-							   "<span class='warning'>You accidentally trigger [src]!</span>")
+		finder.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] accidentally sets off [src], breaking their fingers.</span>", \
+							   "<span class='warning'>You accidentally trigger [src]!</span>", subjects=list(finder))
 		triggered(finder, (finder.active_hand_index % 2 == 0) ? "r_hand" : "l_hand")
 		return 1	//end the search!
 	return 0
@@ -134,7 +134,7 @@
 /obj/item/device/assembly/mousetrap/hitby(A as mob|obj)
 	if(!armed)
 		return ..()
-	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
+	visible_message("<span class='warning'>[src] is triggered by [IDENTITY_SUBJECT(1)].</span>", subjects=list(A))
 	triggered(null)
 
 

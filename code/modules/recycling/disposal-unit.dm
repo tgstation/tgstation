@@ -108,7 +108,7 @@
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
 	I.forceMove(src)
-	user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>", subjects=list(user))
 
 //mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
@@ -127,17 +127,17 @@
 		return
 	add_fingerprint(user)
 	if(user == target)
-		user.visible_message("[user] starts climbing into [src].", "<span class='notice'>You start climbing into [src]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] starts climbing into [src].", "<span class='notice'>You start climbing into [src]...</span>", subjects=list(user))
 	else
-		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", "<span class='userdanger'>[user] starts putting you into [src]!</span>")
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] starts putting [IDENTITY_SUBJECT(2)] into [src].</span>", "<span class='userdanger'>[user] starts putting you into [src]!</span>", subjects=list(user, target))
 	if(do_mob(user, target, 20))
 		if (!loc)
 			return
 		target.forceMove(src)
 		if(user == target)
-			user.visible_message("[user] climbs into [src].", "<span class='notice'>You climb into [src].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] climbs into [src].", "<span class='notice'>You climb into [src].</span>", subjects=list(user))
 		else
-			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
+			target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has placed [IDENTITY_SUBJECT(2)] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>", subjects=list(user, target))
 			add_logs(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()

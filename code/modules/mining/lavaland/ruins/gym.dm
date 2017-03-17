@@ -31,7 +31,7 @@
 		user.Stun(4)
 		user.loc = src.loc
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-		user.visible_message("<B>[user] is [bragmessage]!</B>")
+		user.visible_message("<B>[IDENTITY_SUBJECT(1)] is [bragmessage]!</B>", subjects=list(user))
 		var/lifts = 0
 		while (lifts++ < 6)
 			if (user.loc != src.loc)
@@ -72,7 +72,7 @@
 		W.layer = WALL_OBJ_LAYER
 		add_overlay(W)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-		user.visible_message("<B>[user] is [bragmessage]!</B>")
+		user.visible_message("<B>[IDENTITY_SUBJECT(1)] is [bragmessage]!</B>", subjects=list(user))
 		var/reps = 0
 		user.pixel_y = 5
 		while (reps++ < 6)

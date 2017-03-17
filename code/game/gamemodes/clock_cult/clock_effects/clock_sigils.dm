@@ -14,14 +14,14 @@
 
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
 	if(I.force && !is_servant_of_ratvar(user))
-		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>", subjects=list(user))
 		qdel(src)
 		return 1
 	return ..()
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == INTENT_HARM)))
-		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>", subjects=list(user))
 		qdel(src)
 		return 1
 	..()
@@ -38,8 +38,8 @@
 			if((!is_servant_of_ratvar(L) || (affects_servants && is_servant_of_ratvar(L))) && (L.mind || L.has_status_effect(STATUS_EFFECT_SIGILMARK)) && !isdrone(L))
 				var/obj/item/I = L.null_rod_check()
 				if(I)
-					L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
-					"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>")
+					L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
+					"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>", subjects=list(L))
 					return
 				sigil_effects(L)
 
@@ -67,8 +67,8 @@
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
 		L.Weaken(7)
-	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
-	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
+	L.visible_message("<span class='warning'>[src] appears around [IDENTITY_SUBJECT(1)] in a burst of light!</span>", \
+	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>", subjects=list(L))
 	L.Stun(5)
 	new /obj/effect/overlay/temp/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
@@ -165,8 +165,8 @@
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
 	if(L.isloyal())
 		delete_on_finish = TRUE
-		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
-		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")
+		L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] visibly trembles!</span>", \
+		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>", subjects=list(L))
 		for(var/obj/item/weapon/implant/mindshield/M in L.implants)
 			qdel(M)
 
@@ -220,7 +220,7 @@
 		return
 	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), power_charge) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(modify_charge(giving_power))
-		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
+		cyborg.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] glows a brilliant orange!</span>", subjects=list(cyborg))
 		var/previous_color = cyborg.color
 		cyborg.color = list("#EC8A2D", "#EC8A2D", "#EC8A2D", rgb(0,0,0))
 		var/datum/status_effect/cyborg_power_regen/CPR = cyborg.apply_status_effect(STATUS_EFFECT_POWERREGEN)
@@ -316,7 +316,7 @@
 				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
-				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
+				L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] collapses in on [L.p_them()]self as [src] flares bright blue!</span>", subjects=list(L))
 				to_chat(L, "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
 				for(var/obj/item/W in L)
 					if(!L.dropItemToGround(W))
@@ -344,8 +344,8 @@
 					var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
 					playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, [ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \
-					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
+					L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] suddenly gets back up, [ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \
+					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>", subjects=list(L))
 					vitality -= revival_cost
 					if(!ratvar_awakens)
 						qdel(src)

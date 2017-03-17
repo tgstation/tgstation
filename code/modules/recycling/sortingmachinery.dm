@@ -37,13 +37,13 @@
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
-		user.visible_message("[user] labels [src] as [str].")
+		user.visible_message("[IDENTITY_SUBJECT(1)] labels [src] as [str].", subjects=list(user))
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
-			user.visible_message("[user] wraps the package in festive paper!")
+			user.visible_message("[user] wraps the package in festive paper!", subjects=list(user))
 			giftwrapped = 1
 			icon_state = "gift[icon_state]"
 		else
@@ -118,7 +118,7 @@
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
-		user.visible_message("[user] labels [src] as [str].")
+		user.visible_message("[IDENTITY_SUBJECT(1)] labels [src] as [str].", subjects=list(user))
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
@@ -126,7 +126,7 @@
 		if(WP.use(1))
 			icon_state = "gift[icon_state]"
 			giftwrapped = 1
-			user.visible_message("[user] wraps the package in festive paper!")
+			user.visible_message("[IDENTITY_SUBJECT(1)] wraps the package in festive paper!", subjects=list(user))
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
 

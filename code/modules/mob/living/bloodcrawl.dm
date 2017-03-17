@@ -46,7 +46,7 @@
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
 
-	src.visible_message("<span class='warning'>[src] sinks into the pool of blood!</span>")
+	src.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] sinks into the pool of blood!</span>", subjects=list(src))
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
@@ -72,13 +72,13 @@
 	var/kidnapped = FALSE
 
 	if(victim.stat == CONSCIOUS)
-		src.visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
+		src.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>", subjects=list(victim))
 	else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
-		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
+		visible_message("<span class='warning'>Something prevents [IDENTITY_SUBJECT(1)] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [IDENTITY_SUBJECT(1)] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>", subjects=list(victim))
 	else
 		victim.forceMove(src)
 		victim.emote("scream")
-		src.visible_message("<span class='warning'><b>[src] drags [victim] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>")
+		src.visible_message("<span class='warning'><b>[IDENTITY_SUBJECT(1)] drags [IDENTITY_SUBJECT(2)] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>", subjects=list(src, victim))
 		kidnapped = TRUE
 
 	if(kidnapped)
@@ -111,14 +111,14 @@
 		for(var/obj/effect/decal/cleanable/target in range(1,get_turf(victim)))
 			if(target.can_bloodcrawl_in())
 				victim.forceMove(get_turf(target))
-				victim.visible_message("<span class='warning'>[target] violently expels [victim]!</span>")
+				victim.visible_message("<span class='warning'>[target] violently expels [IDENTITY_SUBJECT(1)]!</span>", subjects=list(victim))
 				victim.exit_blood_effect(target)
 				found_bloodpool = TRUE
 
 		if(!found_bloodpool)
 			// Fuck it, just eject them, thanks to some split second cleaning
 			victim.forceMove(get_turf(victim))
-			victim.visible_message("<span class='warning'>[victim] appears from nowhere, covered in blood!</span>")
+			victim.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] appears from nowhere, covered in blood!</span>", subjects=list(victim))
 			victim.exit_blood_effect()
 		return TRUE
 
@@ -162,7 +162,7 @@
 		return
 	src.loc = B.loc
 	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
+	src.visible_message("<span class='warning'><B>[IDENTITY_SUBJECT(1)] rises out of the pool of blood!</B>", subjects=list(src))
 	exit_blood_effect(B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src

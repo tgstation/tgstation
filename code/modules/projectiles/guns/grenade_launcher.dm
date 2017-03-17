@@ -38,8 +38,8 @@
 		to_chat(user, "<span class='danger'>The grenade launcher is empty.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
-	user.visible_message("<span class='danger'>[user] fired a grenade!</span>", \
-						"<span class='danger'>You fire the grenade launcher!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] fired a grenade!</span>", \
+						"<span class='danger'>You fire the grenade launcher!</span>", subjects=list(user))
 	var/obj/item/weapon/grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.loc = user.loc

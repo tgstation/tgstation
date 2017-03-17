@@ -47,7 +47,7 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message("<span class='notice'>[src] calms down.</span>")
+			src.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] calms down.</span>", subjects=list(src))
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
@@ -62,7 +62,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
+	src.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] gets an evil-looking gleam in [p_their()] eye.</span>", subjects=list(src))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
@@ -129,8 +129,8 @@
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
-			"<span class='notice'>You tip over [src].</span>")
+		M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] tips over [IDENTITY_SUBJECT(2)].</span>",
+			"<span class='notice'>You tip over [IDENTITY_SUBJECT(2)].</span>", subjects=list(M, src))
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Weaken(30)
 		icon_state = icon_dead
@@ -143,13 +143,13 @@
 					if(1,2,3)
 						var/text = pick("imploringly.", "pleadingly.",
 							"with a resigned expression.")
-						external = "[src] looks at [M] [text]"
-						internal = "You look at [M] [text]"
+						external = "[IDENTITY_SUBJECT(1)] looks at [IDENTITY_SUBJECT(2)] [text]"
+						internal = "You look at [IDENTITY_SUBJECT(2)] [text]"
 					if(4)
-						external = "[src] seems resigned to its fate."
+						external = "[IDENTITY_SUBJECT(1)] seems resigned to its fate."
 						internal = "You resign yourself to your fate."
 				visible_message("<span class='notice'>[external]</span>",
-					"<span class='revennotice'>[internal]</span>")
+					"<span class='revennotice'>[internal]</span>", subjects=list(src, M))
 	else
 		..()
 
@@ -256,8 +256,8 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(istype(O, food_type)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
-			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
-			user.visible_message(feedmsg)
+			var/feedmsg = "[IDENTITY_SUBJECT(1)] feeds [O] to [name]! [pick(feedMessages)]"
+			user.visible_message(feedmsg, subjects=list(user))
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
@@ -272,7 +272,7 @@ var/global/chicken_count = 0
 	if(!.)
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
-		visible_message("[src] [pick(layMessage)]")
+		visible_message("[IDENTITY_SUBJECT(1)] [pick(layMessage)]", subjects=list(src))
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
 		E.pixel_x = rand(-6,6)
@@ -314,6 +314,6 @@ var/global/chicken_count = 0
 		return
 	var/transfered = reagents.trans_to(O, rand(5,10))
 	if(transfered)
-		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>", subjects=list(user))
 	else
 		to_chat(user, "<span class='danger'>The udder is dry. Wait a bit longer...</span>")

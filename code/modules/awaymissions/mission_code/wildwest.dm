@@ -101,7 +101,7 @@
 
 	if(ishuman(M) && M.stat != DEAD && M.ckey)
 		for(var/mob/O in viewers(world.view, src.loc))
-		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] triggered the [src]!</span>", subjects=list(M))
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

@@ -87,16 +87,16 @@
 /obj/item/organ/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
-	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
-						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] raises [src] to their mouth and tears into it with their teeth!</span>", \
+						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>", subjects=list(user))
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
 			user <<"<span class='warning'>...and you don't feel any different.</span>"
 			qdel(src)
 			return
-	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
-						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s eyes flare a deep crimson!</span>", \
+						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>", subjects=list(user))
 	user.drop_item()
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
@@ -188,4 +188,4 @@
 		// Be safe and just eject the corpse
 		victim.forceMove(get_turf(victim))
 		victim.exit_blood_effect()
-		victim.visible_message("[victim] falls out of the air, covered in blood, looking highly confused. And dead.")
+		victim.visible_message("[IDENTITY_SUBJECT(1)] falls out of the air, covered in blood, looking highly confused. And dead.", subjects=list(victim))

@@ -160,7 +160,7 @@
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/proc/discard_gun(mob/user)
 	throw_at(pick(oview(7,get_turf(user))),1,1)
-	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] tosses aside the spent rifle!</span>", subjects=list(user))
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/discard_gun(mob/user)
 	return

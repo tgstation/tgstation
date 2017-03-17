@@ -118,8 +118,8 @@
 			to_chat(user, "<span class='warning'>You already have omelette on your fork!</span>")
 		else
 			F.icon_state = "forkloaded"
-			user.visible_message("[user] takes a piece of omelette with their fork!", \
-				"<span class='notice'>You take a piece of omelette with your fork.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] takes a piece of omelette with their fork!", \
+				"<span class='notice'>You take a piece of omelette with your fork.</span>", subjects=list(user))
 
 			var/datum/reagent/R = pick(reagents.reagent_list)
 			reagents.remove_reagent(R.id, 1)

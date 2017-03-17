@@ -77,8 +77,8 @@
 			if(L) //living mob
 				var/drawn_amount = reagents.maximum_volume - reagents.total_volume
 				if(target != user)
-					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
-									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
+					target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is trying to take a blood sample from [IDENTITY_SUBJECT(2)]!</span>", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is trying to take a blood sample from [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, target))
 					busy = 1
 					if(!do_mob(user, target))
 						busy = 0
@@ -121,8 +121,8 @@
 
 			if(L) //living mob
 				if(L != user)
-					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
-											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
+					L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is trying to inject [IDENTITY_SUBJECT(2)]!</span>", \
+											"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is trying to inject [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, L))
 					if(!do_mob(user, L))
 						return
 					if(!reagents.total_volume)
@@ -130,8 +130,8 @@
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
 
-					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
-									"<span class='userdanger'>[user] injects [L] with the syringe!")
+					L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] injects [IDENTITY_SUBJECT(2)] with the syringe!", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] injects [IDENTITY_SUBJECT(2)] with the syringe!", subjects=list(user, L))
 
 				var/list/rinject = list()
 				for(var/datum/reagent/R in reagents.reagent_list)

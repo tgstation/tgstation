@@ -23,7 +23,7 @@
 		playsound(loc, W.usesound, 50, 1)
 		var/obj/item/weapon/crowbar/C = W
 		if(do_after(user, 50*C.toolspeed, target = src))
-			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>", subjects=list(user))
 			deconstruct(TRUE, user)
 	else
 		return ..()

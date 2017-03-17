@@ -183,7 +183,7 @@ var/list/holopads = list()
 			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
 			return
 		create_holo(user)//Create one.
-		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
+		src.visible_message("A holographic image of [IDENTITY_SUBJECT(1)] flicks to life right before your eyes!", subjects=list(user))
 	else
 		to_chat(user, "<span class='danger'>ERROR:</span> \black Unable to project hologram.")
 

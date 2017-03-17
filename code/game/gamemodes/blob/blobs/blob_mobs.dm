@@ -139,7 +139,7 @@
 	update_icons()
 	H.forceMove(src)
 	oldguy = H
-	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	visible_message("<span class='warning'>The corpse of [IDENTITY_SUBJECT(1)] suddenly rises!</span>", subjects=list(H))
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	// On death, create a small smoke of harmful gas (s-Acid)

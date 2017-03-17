@@ -183,9 +183,9 @@
 		return
 	playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 	src.bullets--
-	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
-						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='italics'>You hear a gunshot!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] fires [src] at [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='danger'>You fire [src] at [IDENTITY_SUBJECT(2)]!</span>", \
+						 "<span class='italics'>You hear a gunshot!</span>", subjects=list(user, target))
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -491,9 +491,9 @@
 
 /obj/item/toy/talking/proc/activation_message(mob/user)
 	user.visible_message(
-		"<span class='notice'>[user] pulls the string on \the [src].</span>",
+		"<span class='notice'>[IDENTITY_SUBJECT(1)] pulls the string on \the [src].</span>",
 		"<span class='notice'>You pull the string on \the [src].</span>",
-		"<span class='notice'>You hear a string being pulled.</span>")
+		"<span class='notice'>You hear a string being pulled.</span>", subjects=list(user))
 
 /obj/item/toy/talking/proc/generate_messages()
 	return list(pick(messages))
@@ -608,7 +608,7 @@
 		"Remember, a dog is for life, not just for christmas.")
 
 /obj/item/toy/talking/skeleton/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to commit suicide with [src].</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is trying to commit suicide with [src].</span>", subjects=list(user))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -707,7 +707,7 @@
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
-	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>", subjects=list(user))
 	update_icon()
 
 /obj/item/toy/cards/deck/update_icon()
@@ -724,7 +724,7 @@
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
 		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
-		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>", subjects=list(user))
 		cooldown = world.time
 
 /obj/item/toy/cards/deck/attackby(obj/item/I, mob/living/user, params)
@@ -735,7 +735,7 @@
 				to_chat(user, "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>")
 				return
 			cards += SC.cardname
-			user.visible_message("[user] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>", subjects=list(user))
 			qdel(SC)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
@@ -747,7 +747,7 @@
 				to_chat(user, "<span class='warning'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>")
 				return
 			cards += CH.currenthand
-			user.visible_message("[user] puts their hand of cards in the deck.", "<span class='notice'>You put the hand of cards in the deck.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] puts their hand of cards in the deck.", "<span class='notice'>You put the hand of cards in the deck.</span>", subjects=list(user))
 			qdel(CH)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
@@ -816,7 +816,7 @@
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
 			cardUser.put_in_hands(C)
-			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
+			cardUser.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>", subjects=list(cardUser))
 
 			interact(cardUser)
 			if(src.currenthand.len < 3)
@@ -841,7 +841,7 @@
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [C.cardname] to your hand.</span>", subjects=list(user))
 			qdel(C)
 			interact(user)
 			if(currenthand.len > 4)
@@ -882,7 +882,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
-			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname]</span>")
+			cardUser.visible_message("[IDENTITY_SUBJECT(1)] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname]</span>", subjects=list(cardUser))
 		else
 			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
 
@@ -929,7 +929,7 @@
 		var/obj/item/toy/cards/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
-			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [cardname] to your hand.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [cardname] to your hand.</span>", subjects=list(user))
 			qdel(src)
 			H.interact(user)
 			if(H.currenthand.len > 4)
@@ -997,7 +997,7 @@
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
-		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>", subjects=list(user))
 		sleep(5)
 		icon_state = "nuketoy"
 		playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
@@ -1068,7 +1068,7 @@
 /obj/item/toy/redbutton/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
-		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>", subjects=list(user))
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
@@ -1127,7 +1127,7 @@
 /obj/item/toy/toy_xeno/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = (world.time + 50) //5 second cooldown
-		user.visible_message("<span class='notice'>[user] pulls back the string on [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] pulls back the string on [src].</span>", subjects=list(user))
 		icon_state = "[initial(icon_state)]_used"
 		sleep(5)
 		audible_message("<span class='danger'>\icon[src] Hiss!</span>")

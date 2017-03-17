@@ -250,18 +250,18 @@ var/global/list/lawlorify = list (
 	sleep(50)
 	if(!D)
 		return
-	D.visible_message("<span class='warning'>[D]'s skin begins to erupt with spikes.</span>", \
-		"<span class='warning'>Your flesh begins creating a shield around yourself.</span>")
+	D.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s skin begins to erupt with spikes.</span>", \
+		"<span class='warning'>Your flesh begins creating a shield around yourself.</span>", subjects=list(D))
 	sleep(100)
 	if(!D)
 		return
-	D.visible_message("<span class='warning'>The horns on [D]'s head slowly grow and elongate.</span>", \
-		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>")
+	D.visible_message("<span class='warning'>The horns on [IDENTITY_SUBJECT(1)]'s head slowly grow and elongate.</span>", \
+		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>", subjects=list(D))
 	sleep(90)
 	if(!D)
 		return
-	D.visible_message("<span class='warning'>[D]'s body begins to violently stretch and contort.</span>", \
-		"<span class='warning'>You begin to rend apart the final barriers to ultimate power.</span>")
+	D.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s body begins to violently stretch and contort.</span>", \
+		"<span class='warning'>You begin to rend apart the final barriers to ultimate power.</span>", subjects=list(D))
 	sleep(40)
 	if(!D)
 		return

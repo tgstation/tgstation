@@ -84,9 +84,9 @@
 			if (do_after(user, 40*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
-					"[user] fastens \the [src].", \
+					"[IDENTITY_SUBJECT(1)] fastens \the [src].", \
 					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
+					"<span class='italics'>You hear ratchet.</span>", subjects=list(user))
 				anchored = 1
 				stat &= MAINT
 				if (usr.machine==src)
@@ -97,9 +97,9 @@
 			if (do_after(user, 20*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
-					"[user] unfastens \the [src].", \
+					"[IDENTITY_SUBJECT(1)] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
+					"<span class='italics'>You hear ratchet.</span>", subjects=list(user))
 				anchored = 0
 				stat |= ~MAINT
 				power_change()

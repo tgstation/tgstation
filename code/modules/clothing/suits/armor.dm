@@ -204,9 +204,9 @@
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
+			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [IDENTITY_SUBJECT(1)]!</span>", subjects=list(H))
 			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [IDENTITY_SUBJECT(1)] clear of [attack_text], shutting itself off in the process!</span>", subjects=list(H))
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -236,7 +236,7 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</spawn>")
+			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</spawn>", subjects=list(owner))
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
@@ -258,14 +258,14 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] activates, but is still recharging its holographic emitters!</spawn>")
+			owner.visible_message("<span class='danger'>The reactive stealth system on [IDENTITY_SUBJECT(1)] activates, but is still recharging its holographic emitters!</spawn>", subjects=list(owner))
 			return
 		var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
 		E.Copy_Parent(owner, 50)
 		E.GiveTarget(owner) //so it starts running right away
 		E.Goto(owner, E.move_to_delay, E.minimum_distance)
 		owner.alpha = 0
-		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
+		owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is hit by [attack_text] in the chest!</span>", subjects=list(owner)) //We pretend to be hit, since blocking it would stop the message otherwise
 		spawn(40)
 			owner.alpha = initial(owner.alpha)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
@@ -288,7 +288,7 @@
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
-			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</spawn>")
+			owner.visible_message("<span class='danger'>The tesla capacitors on [IDENTITY_SUBJECT(1)]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</spawn>", subjects=list(owner))
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
 		tesla_zap(owner,tesla_range,tesla_power,tesla_boom, tesla_stun)
@@ -308,8 +308,8 @@
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive table armor's fabricators are still on cooldown!</span>")
 			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a fabricated table!</span>")
-		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [IDENTITY_SUBJECT(1)] clear of [attack_text] and slams them into a fabricated table!</span>", subjects=list(H))
+		owner.visible_message("<font color='red' size='3'>[IDENTITY_SUBJECT(1)] GOES ON THE TABLE!!!</font>", subjects=list(H))
 		owner.Weaken(2)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))

@@ -19,8 +19,8 @@ Contents:
 			return
 		s_active=!s_active
 		animate(U, alpha = 50,time = 15)
-		U.visible_message("<span class='warning'>[U.name] vanishes into thin air!</span>", \
-						"<span class='notice'>You are now mostly invisible to normal detection.</span>")
+		U.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] vanishes into thin air!</span>", \
+						"<span class='notice'>You are now mostly invisible to normal detection.</span>", subjects=list(U))
 	return
 
 
@@ -31,8 +31,8 @@ Contents:
 	if(s_active)
 		s_active=!s_active
 		animate(U, alpha = 255, time = 15)
-		U.visible_message("<span class='warning'>[U.name] appears from thin air!</span>", \
-						"<span class='notice'>You are now visible.</span>")
+		U.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] appears from thin air!</span>", \
+						"<span class='notice'>You are now visible.</span>", subjects=list(U))
 		return 1
 	return 0
 

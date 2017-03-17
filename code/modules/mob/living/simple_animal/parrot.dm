@@ -505,7 +505,7 @@
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
 					parrot_interest.loc = src
-					visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
+					visible_message("[IDENTITY_SUBJECT(1)] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>", subjects=list(src))
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -701,7 +701,7 @@
 
 			held_item = I
 			I.loc = src
-			visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message("[IDENTITY_SUBJECT(1)] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>", subjects=list(src))
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
@@ -730,7 +730,7 @@
 		if(stolen_item)
 			C.transferItemToLoc(stolen_item, src, TRUE)
 			held_item = stolen_item
-			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message("[IDENTITY_SUBJECT(1)] grabs [held_item] out of [IDENTITY_SUBJECT(2)]'s hand!", "<span class='notice'>You snag [held_item] out of [IDENTITY_SUBJECT(2)]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>", subjects=list(src, C))
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</spawn>")
@@ -975,4 +975,4 @@
 	loc = H
 	H.ContractDisease(P)
 	parrot_interest = null
-	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
+	H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] dive bombs into [IDENTITY_SUBJECT(2)]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>", subjects=list(src, H))

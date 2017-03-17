@@ -86,7 +86,7 @@
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
 		to_chat(user, "There's already an egg here.")
 		return 0
-	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
+	user.visible_message("<span class='alertalien'>[IDENTITY_SUBJECT(1)] has laid an egg!</span>", subjects=list(user))
 	new /obj/structure/alien/egg(user.loc)
 	return 1
 
@@ -141,7 +141,7 @@
 			return
 
 		to_chat(A, "<span class='noticealien'>The queen has granted you a promotion to Praetorian!</span>")
-		user.visible_message("<span class='alertalien'>[A] begins to expand, twist and contort!</span>")
+		user.visible_message("<span class='alertalien'>[IDENTITY_SUBJECT(1)] begins to expand, twist and contort!</span>", subjects=list(A))
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_prae = new (A.loc)
 		A.mind.transfer_to(new_prae)
 		qdel(A)

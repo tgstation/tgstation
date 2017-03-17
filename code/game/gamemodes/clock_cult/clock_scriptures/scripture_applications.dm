@@ -76,7 +76,7 @@
 		if(remove_item_if_better(I, L))
 			do_message += L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
 		if(do_message)
-			L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
+			L.visible_message("<span class='warning'>Strange armor appears on [IDENTITY_SUBJECT(1)]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>", subjects=list(L))
 			playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 15*do_message, 1) //get sound loudness based on how much we equipped
 			affected++
 	return affected
@@ -116,13 +116,13 @@
 	return create_marauder()
 
 /datum/clockwork_scripture/memory_allocation/proc/create_marauder()
-	invoker.visible_message("<span class='warning'>A purple tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
-	"<span class='sevtug'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
+	invoker.visible_message("<span class='warning'>A purple tendril appears from [IDENTITY_SUBJECT(1)]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
+	"<span class='sevtug'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>", subjects=list(invoker))
 	invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought Modification in progress"
 	if(!do_after(invoker, 50, target = invoker))
-		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
-		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
+		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [IDENTITY_SUBJECT(1)]'s head and back into the [slab.name]!</span>", \
+		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>", subjects=list(invoker))
 		invoker.notransform = FALSE
 		invoker.Stun(5)
 		invoker.Weaken(5)
@@ -139,16 +139,16 @@
 	if(!check_special_requirements())
 		return FALSE
 	if(!marauder_candidates.len)
-		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
-		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
+		invoker.visible_message("<span class='warning'>The tendril retracts from [IDENTITY_SUBJECT(1)]'s head, sealing the entry wound as it does so!</span>", \
+		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>", subjects=list(invoker))
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...sword and shield!"))
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
 	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
 	M.key = theghost.key
 	M.bind_to_host(invoker)
-	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
-	"<span class='sevtug'>[M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
+	invoker.visible_message("<span class='warning'>The tendril retracts from [IDENTITY_SUBJECT(1)]'s head, sealing the entry wound as it does so!</span>", \
+	"<span class='sevtug'>[M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>", subjects=list(invoker))
 	return TRUE
 
 

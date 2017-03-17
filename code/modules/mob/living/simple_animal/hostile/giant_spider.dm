@@ -179,7 +179,7 @@
 		return
 	if(busy != SPINNING_WEB)
 		busy = SPINNING_WEB
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+		src.visible_message("<span class='notice'>\the [IDENTITY_SUBJECT(1)] begins to secrete a sticky substance.</span>", subjects=list(src))
 		stop_automated_movement = 1
 		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
@@ -214,7 +214,7 @@
 			cocoon_target = null
 			return
 		busy = SPINNING_COCOON
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
+		src.visible_message("<span class='notice'>\the [IDENTITY_SUBJECT(1)] begins to secrete a sticky substance around \the [cocoon_target].</span>", subjects=list(src))
 		stop_automated_movement = 1
 		walk(src,0)
 		if(do_after(src, 50, target = src))
@@ -242,7 +242,7 @@
 						C.pixel_x = L.pixel_x
 						C.pixel_y = L.pixel_y
 						fed++
-						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
+						visible_message("<span class='danger'>\the [IDENTITY_SUBJECT(1)] sticks a proboscis into \the [IDENTITY_SUBJECT(2)] and sucks a viscous substance out.</span>", subjects=list(src, L))
 						break
 
 					if(large_cocoon)
@@ -265,7 +265,7 @@
 		to_chat(src, "<span class='warning'>You are too hungry to do this!</span>")
 	else if(busy != LAYING_EGGS)
 		busy = LAYING_EGGS
-		src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
+		src.visible_message("<span class='notice'>\the [IDENTITY_SUBJECT(1)] begins to lay a cluster of eggs.</span>", subjects=list(src))
 		stop_automated_movement = 1
 		if(do_after(src, 50, target = src.loc))
 			if(busy == LAYING_EGGS)

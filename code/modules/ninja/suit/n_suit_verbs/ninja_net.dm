@@ -18,7 +18,7 @@
 					H.Beam(C,"n_beam",time=15)
 				H.say("Get over here!")
 				var/obj/structure/energy_net/E = new /obj/structure/energy_net(C.loc)
-				H.visible_message("<span class='danger'>[H] caught [C] with an energy net!</span>","<span class='notice'>You caught [C] with an energy net!</span>")
+				H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] caught [IDENTITY_SUBJECT(2)] with an energy net!</span>","<span class='notice'>You caught [IDENTITY_SUBJECT(2)] with an energy net!</span>", subjects=list(H, C))
 				E.affecting = C
 				E.master = H
 				spawn(0)//Parallel processing.

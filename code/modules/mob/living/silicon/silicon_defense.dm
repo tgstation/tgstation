@@ -11,8 +11,8 @@
 		if (prob(90))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-							"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has slashed at [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has slashed at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 			if(prob(8))
 				flash_act(affect_silicon = 1)
 			add_logs(M, src, "attacked")
@@ -20,8 +20,8 @@
 			updatehealth()
 		else
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] took a swipe at [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] took a swipe at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -30,7 +30,7 @@
 			for(var/mob/living/N in buckled_mobs)
 				N.Weaken(1)
 				unbuckle_mob(N)
-				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>")
+				N.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] is knocked off of [IDENTITY_SUBJECT(2)] by [IDENTITY_SUBJECT(3)]!</span>", subjects=list(N, src, M))
 		switch(M.melee_damage_type)
 			if(BRUTE)
 				adjustBruteLoss(damage)
@@ -51,30 +51,30 @@
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == INTENT_HELP)
-		visible_message("[L.name] rubs its head against [src].")
+		visible_message("[IDENTITY_SUBJECT(1)] rubs its head against [IDENTITY_SUBJECT(2)].", subjects=list(L, src))
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-				"<span class='userdanger'>[user] has punched [src]!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has punched [IDENTITY_SUBJECT(2)]!</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has punched [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, src))
 		return 1
 	return 0
 
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	switch(M.a_intent)
 		if ("help")
-			M.visible_message("[M] pets [src].", \
-							"<span class='notice'>You pet [src].</span>")
+			M.visible_message("[IDENTITY_SUBJECT(1)] pets [IDENTITY_SUBJECT(2)].", \
+							"<span class='notice'>You pet [IDENTITY_SUBJECT(2)].</span>", subjects=list(M, src))
 		if("grab")
 			grabbedby(M)
 		else
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
-				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] punches [IDENTITY_SUBJECT(2)], but doesn't leave a dent.</span>", \
+				"<span class='warning'>[IDENTITY_SUBJECT(1)] punches [IDENTITY_SUBJECT(2)], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 	return 0
 
 /mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
@@ -96,7 +96,7 @@
 		if(prob(severity*50))
 			unbuckle_mob(M)
 			M.Weaken(2)
-			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
+			M.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] is thrown off of [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 	flash_act(affect_silicon = 1)
 	..()
 
@@ -105,13 +105,13 @@
 		adjustBruteLoss(Proj.damage)
 		if(prob(Proj.damage*1.5))
 			for(var/mob/living/M in buckled_mobs)
-				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
+				M.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] is knocked off of [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 				unbuckle_mob(M)
 				M.Weaken(2)
 	if(Proj.stun || Proj.weaken)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
-			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
+			M.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] is knocked off of [IDENTITY_SUBJECT(2)] by the [Proj]!</span>", subjects=list(M, src))
 	Proj.on_hit(src)
 	return 2
 

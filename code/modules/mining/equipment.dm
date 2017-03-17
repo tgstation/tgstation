@@ -67,7 +67,7 @@
 	slot_flags = SLOT_BELT
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] activates the [src.name]!</span>", subjects=list(user))
 	feedback_add_details("jaunter", "U") // user activated
 	activate(user)
 
@@ -319,7 +319,7 @@
 					else
 						H.attack_same = 0
 				loaded = 0
-				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+				user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] injects [IDENTITY_SUBJECT(2)] with [src], reviving it.</span>", subjects=list(user, M))
 				feedback_add_details("lazarus_injector", "[M.type]")
 				playsound(src,'sound/effects/refill.ogg',50,1)
 				icon_state = "lazarus_empty"

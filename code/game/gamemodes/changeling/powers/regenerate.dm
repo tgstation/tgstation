@@ -18,12 +18,12 @@
 		var/list/missing = C.get_missing_limbs()
 		if(missing.len)
 			playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
-			C.visible_message("<span class='warning'>[user]'s missing limbs \
+			C.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s missing limbs \
 				reform, making a loud, grotesque sound!</span>",
 				"<span class='userdanger'>Your limbs regrow, making a \
 				loud, crunchy sound and giving you great pain!</span>",
 				"<span class='italics'>You hear organic matter ripping \
-				and tearing!</span>")
+				and tearing!</span>", subjects=list(user))
 			C.emote("scream")
 			C.regenerate_limbs(1)
 		C.regenerate_organs()

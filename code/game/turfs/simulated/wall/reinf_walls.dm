@@ -53,7 +53,7 @@
 			if(!istype(src, /turf/closed/wall/r_wall) || !W)
 				return 1
 			D.playDigSound()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>", subjects=list(user))
 			dismantle_wall()
 			return 1
 	return 0

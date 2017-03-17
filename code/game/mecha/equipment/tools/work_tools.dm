@@ -35,7 +35,7 @@
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
-				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
+				chassis.visible_message("[chassis] lifts [IDENTITY_SUBJECT(1)] and starts to load it into cargo compartment.", subjects=list(target))
 				O.anchored = 1
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
@@ -59,14 +59,14 @@
 				return
 			M.adjustOxyLoss(round(dam_force/2))
 			M.updatehealth()
-			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
-								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
-								"<span class='italics'>You hear something crack.</span>")
+			target.visible_message("<span class='danger'>[chassis] squeezes [IDENTITY_SUBJECT(1)].</span>", \
+								"<span class='userdanger'>[chassis] squeezes [IDENTITY_SUBJECT(1)].</span>",\
+								"<span class='italics'>You hear something crack.</span>", subjects=list(target))
 			add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
-			chassis.visible_message("[chassis] pushes [target] out of the way.")
+			chassis.visible_message("[chassis] pushes [IDENTITY_SUBJECT(1)] out of the way.", subjects=list(target))
 		return 1
 
 
@@ -86,7 +86,7 @@
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
-				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
+				chassis.visible_message("[chassis] lifts [IDENTITY_SUBJECT(1)] and starts to load it into cargo compartment.", subjects=list(target))
 				O.anchored = 1
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
@@ -105,14 +105,14 @@
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
-			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
-								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+			target.visible_message("<span class='danger'>[chassis] destroys [IDENTITY_SUBJECT(1)] in an unholy fury.</span>", \
+								"<span class='userdanger'>[chassis] destroys [IDENTITY_SUBJECT(1)] in an unholy fury.</span>", subjects=list(target))
 		if(chassis.occupant.a_intent == INTENT_DISARM)
-			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
-								"<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
+			target.visible_message("<span class='danger'>[chassis] rips [IDENTITY_SUBJECT(1)]'s arms off.</span>", \
+								"<span class='userdanger'>[chassis] rips [IDENTITY_SUBJECT(1)]'s arms off.</span>", subjects=list(target))
 		else
 			step_away(M,chassis)
-			target.visible_message("[chassis] tosses [target] like a piece of paper.")
+			target.visible_message("[chassis] tosses [IDENTITY_SUBJECT(1)] like a piece of paper.", subjects=list(target))
 		return 1
 
 

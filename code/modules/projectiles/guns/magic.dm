@@ -75,7 +75,7 @@
 	to_chat(user, "<span class='warning'>The [name] whizzles quietly.<span>")
 
 /obj/item/weapon/gun/magic/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	playsound(loc, fire_sound, 50, 1, -1)
 	return (FIRELOSS)
 

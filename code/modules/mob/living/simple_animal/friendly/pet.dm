@@ -21,7 +21,7 @@
 		return
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
-			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
+			user.visible_message("[IDENTITY_SUBJECT(1)] baps [IDENTITY_SUBJECT(2)] on the nose with the rolled up [O].", subjects=list(user, src))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					setDir(i)

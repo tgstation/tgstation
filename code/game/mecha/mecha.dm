@@ -827,7 +827,7 @@
 		to_chat(user, "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
 		return
 
-	visible_message("[user] starts to climb into [name].")
+	visible_message("[IDENTITY_SUBJECT(1)] starts to climb into [name].", subjects=list(user))
 
 	if(do_after(user, 40, target = src))
 		if(obj_integrity <= 0)
@@ -875,7 +875,7 @@
 		to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
 		return FALSE
 
-	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
+	visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts to insert an MMI into [name].</span>", subjects=list(user))
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)

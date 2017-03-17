@@ -240,7 +240,7 @@
 
 /obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(ptank && damage && attack_type == PROJECTILE_ATTACK && prob(15))
-		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
+		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [IDENTITY_SUBJECT(1)]'s [src], rupturing it! What a shot!</span>", subjects=list(owner))
 		var/target_turf = get_turf(owner)
 		ignite_turf(target_turf, 100)
 		qdel(ptank)

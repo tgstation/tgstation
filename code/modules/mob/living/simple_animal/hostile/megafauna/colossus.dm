@@ -52,7 +52,7 @@ Difficulty: Very Hard
 	death_sound = 'sound/magic/demon_dies.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
-	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	visible_message("<span class='colossus'>[src] disintegrates [IDENTITY_SUBJECT(1)]!</span>", subjects=list(L))
 	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()

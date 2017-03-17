@@ -65,17 +65,17 @@
 				else if(src.heal_brute < 1)
 					to_chat(user, "<span class='notice'> [src] won't help [M] at all.</span>")
 					return
-			user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
+			user.visible_message("<span class='green'>[IDENTITY_SUBJECT(1)] applies [src] on [IDENTITY_SUBJECT(2)].</span>", "<span class='green'>You apply [src] on [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, M))
 		else
 			var/t_himself = "itself"
 			if(user.gender == MALE)
 				t_himself = "himself"
 			else if(user.gender == FEMALE)
 				t_himself = "herself"
-			user.visible_message("<span class='notice'>[user] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>", subjects=list(user))
 			if(!do_mob(user, M, self_delay))
 				return
-			user.visible_message("<span class='green'>[user] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>")
+			user.visible_message("<span class='green'>[IDENTITY_SUBJECT(1)] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>", subjects=list(user))
 
 
 	if(iscarbon(M))

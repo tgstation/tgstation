@@ -155,7 +155,7 @@
 
 		else if(istype(W, /obj/item/weapon/weldingtool))
 			if(weld(W, user))
-				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame bolted to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>")
+				visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] unwelds [src], leaving it as just a frame bolted to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>", subjects=list(user))
 				deconstruct(TRUE)
 			return
 
@@ -295,7 +295,7 @@
 		addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 	if(displaymessage)
 		if(user)
-			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] [change_msg] [src]!</span>", subjects=list(user))
 			add_hiddenprint(user)
 		else
 			visible_message("<span class='danger'>\The [src] [change_msg]!</span>")

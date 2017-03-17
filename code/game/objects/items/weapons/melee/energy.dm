@@ -32,7 +32,7 @@
 		set_light(brightness_on)
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>", subjects=list(user))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
@@ -62,7 +62,7 @@
 	light_color = "#40ceff"
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
@@ -148,7 +148,7 @@
 		var/mob/living/carbon/C = user
 		if(C.wear_mask == src)
 			in_mouth = ", barely missing their nose"
-	. = "<span class='warning'>[user] swings their \
+	. = "<span class='warning'>[IDENTITY_SUBJECT(1)] swings their \
 		[src][in_mouth]. They light [A] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)

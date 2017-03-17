@@ -147,8 +147,8 @@
 	if(is_blocked_turf(target, TRUE))
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
+	user.visible_message("<span class='warning'>Dust flows from [IDENTITY_SUBJECT(1)]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
+						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", subjects=list(user))
 	user.forceMove(target)
 	return ..()
 
@@ -163,11 +163,11 @@
 
 /obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
-	user.visible_message("<span class='warning'>[user]'s hand glows red for a moment.</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s hand glows red for a moment.</span>", \
+						 "<span class='cultitalic'>You speak the words of the talisman!</span>", subjects=list(user))
 	new /obj/item/weapon/tome(get_turf(user))
-	user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
-			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>")
+	user.visible_message("<span class='warning'>A tome appears at [IDENTITY_SUBJECT(1)]'s feet!</span>", \
+			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>", subjects=list(user))
 
 /obj/item/weapon/paper/talisman/true_sight
 	cultist_name = "Talisman of Veiling"
@@ -182,15 +182,15 @@
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
 	if(!revealing)
-		user.visible_message("<span class='warning'>Thin grey dust falls from [user]'s hand!</span>", \
-			"<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
+		user.visible_message("<span class='warning'>Thin grey dust falls from [IDENTITY_SUBJECT(1)]'s hand!</span>", \
+			"<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>", subjects=list(user))
 		invocation = "Nikt'o barada kla'atu!"
 		revealing = TRUE
 		for(var/obj/effect/rune/R in range(3,user))
 			R.talismanhide()
 	else
-		user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
-			 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
+		user.visible_message("<span class='warning'>A flash of light shines from [IDENTITY_SUBJECT(1)]'s hand!</span>", \
+			 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>", subjects=list(user))
 		for(var/obj/effect/rune/R in range(3,user))
 			R.talismanreveal()
 
@@ -204,8 +204,8 @@
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
-	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
+	user.visible_message("<span class='warning'>Dust flows from [IDENTITY_SUBJECT(1)]s hand.</span>", \
+						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>", subjects=list(user))
 	for(var/obj/effect/rune/R in orange(6,user))
 		R.desc = "A rune vandalizing the station."
 
@@ -220,8 +220,8 @@
 
 /obj/item/weapon/paper/talisman/emp/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
-	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s hand flashes a bright blue!</span>", \
+						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>", subjects=list(user))
 	empulse(src, 4, 8)
 
 
@@ -245,12 +245,12 @@
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
 	if(iscultist(user))
 		invoke(user, 1)
-		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
-							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] holds up [src], which explodes in a flash of red light!</span>", \
+							 "<span class='cultitalic'>You stun [IDENTITY_SUBJECT(2)] with the talisman!</span>", subjects=list(user, target))
 		var/obj/item/weapon/nullrod/N = locate() in target
 		if(N)
-			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
-								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
+			target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s holy weapon absorbs the talisman's light!</span>", \
+								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>", subjects=list(target))
 		else
 			target.Weaken(10)
 			target.Stun(10)
@@ -282,8 +282,8 @@
 
 /obj/item/weapon/paper/talisman/armor/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
-	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, arming yourself!</span>")
+	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [IDENTITY_SUBJECT(1)]!</span>", \
+						 "<span class='cultitalic'>You speak the words of the talisman, arming yourself!</span>", subjects=list(user))
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
@@ -403,8 +403,8 @@
 	if(!C.handcuffed)
 		invoke(user, 1)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] begins restraining [C] with dark magic!</span>", \
-								"<span class='userdanger'>[user] begins shaping a dark magic around your wrists!</span>")
+		C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] begins restraining [IDENTITY_SUBJECT(2)] with dark magic!</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] begins shaping a dark magic around your wrists!</span>", subjects=list(user, C))
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
@@ -431,6 +431,6 @@
 	flags = DROPDEL
 
 /obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
-							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s shackles shatter in a discharge of dark magic!</span>", \
+							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>", subjects=list(user))
 	. = ..()

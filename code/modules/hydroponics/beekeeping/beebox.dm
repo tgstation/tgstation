@@ -145,7 +145,7 @@
 	if(istype(I, /obj/item/honey_frame))
 		var/obj/item/honey_frame/HF = I
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)
-			visible_message("<span class='notice'>[user] adds a frame to the apiary.</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] adds a frame to the apiary.</span>", subjects=list(user))
 			if(!user.transferItemToLoc(HF, src))
 				return
 			honey_frames += HF
@@ -170,7 +170,7 @@
 		qb.queen = null
 
 		if(queen_bee)
-			visible_message("<span class='notice'>[user] sets [qb] down inside the apiary, making it their new home.</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] sets [qb] down inside the apiary, making it their new home.</span>", subjects=list(user))
 			var/relocated = 0
 			for(var/b in bees)
 				var/mob/living/simple_animal/hostile/poison/bees/B = b
@@ -202,7 +202,7 @@
 			B.target = user
 			bees = TRUE
 		if(bees)
-			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] disturbs the bees!</span>", subjects=list(user))
 	else
 		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
 		if(!Adjacent(user))
@@ -217,7 +217,7 @@
 				if(HF)
 					if(!user.put_in_active_hand(HF))
 						HF.loc = get_turf(src)
-					visible_message("<span class='notice'>[user] removes a frame from the apiary.</span>")
+					visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] removes a frame from the apiary.</span>", subjects=list(user))
 
 					var/amtH = HF.honeycomb_capacity
 					var/fallen = 0
@@ -229,7 +229,7 @@
 							fallen++
 					if(fallen)
 						var/multiple = fallen > 1
-						visible_message("<span class='notice'>[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame.</span>")
+						visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame.</span>", subjects=list(user))
 
 			if("Remove the Queen Bee")
 				if(!queen_bee || queen_bee.loc != src)
@@ -242,5 +242,5 @@
 				QB.name = queen_bee.name
 				if(!user.put_in_active_hand(QB))
 					QB.loc = get_turf(src)
-				visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
+				visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] removes the queen from the apiary.</span>", subjects=list(user))
 				queen_bee = null

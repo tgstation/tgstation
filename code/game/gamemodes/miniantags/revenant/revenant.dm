@@ -181,8 +181,8 @@
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
 	if(istype(W, /obj/item/weapon/nullrod))
-		visible_message("<span class='warning'>[src] violently flinches!</span>", \
-						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] violently flinches!</span>", \
+						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>", subjects=list(src))
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
@@ -220,12 +220,12 @@
 	revealed = 1
 	invisibility = 0
 	playsound(src, 'sound/effects/screech.ogg', 100, 1)
-	visible_message("<span class='warning'>[src] lets out a waning screech as violet mist swirls around its dissolving body!</span>")
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] lets out a waning screech as violet mist swirls around its dissolving body!</span>", subjects=list(src))
 	icon_state = "revenant_draining"
 	for(var/i = alpha, i > 0, i -= 10)
 		stoplag()
 		alpha = i
-	visible_message("<span class='danger'>[src]'s body breaks apart into a fine pile of blue dust.</span>")
+	visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s body breaks apart into a fine pile of blue dust.</span>", subjects=list(src))
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
 	var/obj/item/weapon/ectoplasm/revenant/R = new(get_turf(src))
 	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
@@ -346,8 +346,8 @@
 /obj/item/weapon/ectoplasm/revenant/attack_self(mob/user)
 	if(!reforming || inert)
 		return ..()
-	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
-						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] scatters [src] in all directions.</span>", \
+						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>", subjects=list(user))
 	user.drop_item()
 	qdel(src)
 

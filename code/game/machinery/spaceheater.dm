@@ -158,14 +158,14 @@
 					C.loc = src
 					C.add_fingerprint(usr)
 
-					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>", subjects=list(user))
 					SStgui.update_uis(src)
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
-		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>", subjects=list(user))
 		update_icon()
 		if(panel_open)
 			interact(user)
@@ -213,7 +213,7 @@
 		if("power")
 			on = !on
 			mode = HEATER_MODE_STANDBY
-			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
+			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>", subjects=list(usr))
 			update_icon()
 			. = TRUE
 		if("mode")

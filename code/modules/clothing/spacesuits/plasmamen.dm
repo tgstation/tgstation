@@ -29,7 +29,7 @@
 				return
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
-			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
+			H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>", subjects=list(H))
 			H.ExtinguishMob()
 			new /obj/effect/particle_effect/water(get_turf(H))
 

@@ -184,7 +184,7 @@ Difficulty: Hard
 
 	else if(isliving(A))
 		var/mob/living/L = A
-		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
+		L.visible_message("<span class='danger'>[src] slams into [IDENTITY_SUBJECT(1)]!</span>", "<span class='userdanger'>[src] slams into you!</span>", subjects=list(L))
 		L.apply_damage(40, BRUTE)
 		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 		shake_camera(L, 4, 3)

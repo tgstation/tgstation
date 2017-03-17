@@ -36,9 +36,9 @@
 			if(1)
 				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 			if(2)
-				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>", "<span class='notice'>We extend a proboscis.</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] extends a proboscis!</span>", "<span class='notice'>We extend a proboscis.</span>", subjects=list(user))
 			if(3)
-				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>", "<span class='notice'>We stab [target] with the proboscis.</span>")
+				user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] stabs [IDENTITY_SUBJECT(2)] with the proboscis!</span>", "<span class='notice'>We stab [IDENTITY_SUBJECT(2)] with the proboscis.</span>", subjects=list(user, target))
 				to_chat(target, "<span class='userdanger'>You feel a sharp stabbing pain!</span>")
 				target.take_overall_damage(40)
 
@@ -48,8 +48,8 @@
 			changeling.isabsorbing = 0
 			return
 
-	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
-	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] sucks the fluids from [IDENTITY_SUBJECT(2)]!</span>", "<span class='notice'>We have absorbed [IDENTITY_SUBJECT(2)].</span>")
+	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>", subjects=list(user, target))
 
 	if(!changeling.has_dna(target.dna))
 		changeling.add_new_profile(target, user)

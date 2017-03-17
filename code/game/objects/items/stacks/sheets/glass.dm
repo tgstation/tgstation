@@ -131,7 +131,7 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	sharpness = IS_SHARP
 
 /obj/item/weapon/shard/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 
@@ -202,11 +202,11 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 			H.apply_damage(5, BRUTE, picked_def_zone)
 			if(cooldown < world.time - 10) //cooldown to avoid message spam.
 				if(!H.incapacitated())
-					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
-							"<span class='userdanger'>You step in the broken glass!</span>")
+					H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] steps in the broken glass!</span>", \
+							"<span class='userdanger'>You step in the broken glass!</span>", subjects=list(H))
 				else
-					H.visible_message("<span class='danger'>[H] slides on the broken glass!</span>", \
-							"<span class='userdanger'>You slide on the broken glass!</span>")
+					H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slides on the broken glass!</span>", \
+							"<span class='userdanger'>You slide on the broken glass!</span>", subjects=list(H))
 
 				cooldown = world.time
 			H.Weaken(3)

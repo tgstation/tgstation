@@ -60,7 +60,7 @@
 				if(affected_mob.dna && affected_mob.dna.species)
 					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
 					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
-				affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
+				affected_mob.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>", subjects=list(affected_mob))
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
 				addtimer(CALLBACK(src, .proc/cure), 100)
 		else

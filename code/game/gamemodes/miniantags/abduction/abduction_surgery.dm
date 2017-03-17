@@ -27,11 +27,11 @@
 		if(A.type in organ_types)
 			IC = A
 			break
-	user.visible_message("[user] starts to remove [target]'s organs.", "<span class='notice'>You start to remove [target]'s organs...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] starts to remove [IDENTITY_SUBJECT(2)]'s organs.", "<span class='notice'>You start to remove [IDENTITY_SUBJECT(2)]'s organs...</span>", subjects=list(user, target))
 
 /datum/surgery_step/extract_organ/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(IC)
-		user.visible_message("[user] pulls [IC] out of [target]'s [target_zone]!", "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] pulls [IC] out of [IDENTITY_SUBJECT(2)]'s [target_zone]!", "<span class='notice'>You pull [IC] out of [IDENTITY_SUBJECT(2)]'s [target_zone].</span>", subjects=list(user, target))
 		user.put_in_hands(IC)
 		IC.Remove(target)
 		return 1
@@ -45,10 +45,10 @@
 	time = 32
 
 /datum/surgery_step/gland_insert/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] starts to insert [tool] into [target].", "<span class ='notice'>You start to insert [tool] into [target]...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] starts to insert [tool] into [IDENTITY_SUBJECT(2)].", "<span class ='notice'>You start to insert [tool] into [target]...</span>", subjects=list(user, target))
 
 /datum/surgery_step/gland_insert/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] inserts [tool] into [target].", "<span class ='notice'>You insert [tool] into [target].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] inserts [tool] into [IDENTITY_SUBJECT(2)].", "<span class ='notice'>You insert [tool] into [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, target))
 	user.drop_item()
 	var/obj/item/organ/heart/gland/gland = tool
 	gland.Insert(target, 2)

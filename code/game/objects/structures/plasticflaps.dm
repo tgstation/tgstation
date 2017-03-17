@@ -22,7 +22,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(state == PLASTIC_FLAPS_NORMAL)
 			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.", subjects=list(user))
 			if(do_after(user, 100*W.toolspeed, target = src))
 				if(state != PLASTIC_FLAPS_NORMAL)
 					return
@@ -31,7 +31,7 @@
 				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
 		else if(state == PLASTIC_FLAPS_DETACHED)
 			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.", subjects=list(user))
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if(state != PLASTIC_FLAPS_DETACHED)
 					return
@@ -41,7 +41,7 @@
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(state == PLASTIC_FLAPS_DETACHED)
 			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.", subjects=list(user))
 			if(do_after(user, 50*W.toolspeed, target = src))
 				if(state != PLASTIC_FLAPS_DETACHED)
 					return

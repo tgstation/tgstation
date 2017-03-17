@@ -281,10 +281,10 @@
 
 		playsound(src, WT.usesound, 50, 1)
 		user.visible_message(
-			"<span class='notice'>[user] begins patching up \
+			"<span class='notice'>[IDENTITY_SUBJECT(1)] begins patching up \
 				[src] with [WT].</span>",
 			"<span class='notice'>You begin restoring the \
-				damage to [src]...</span>")
+				damage to [src]...</span>", subjects=list(user))
 
 		if(!do_after(user, 40*O.toolspeed, target = src))
 			return
@@ -292,8 +292,8 @@
 			return
 
 		user.visible_message(
-			"<span class='notice'>[user] fixes [src]!</span>",
-			"<span class='notice'>You restore [src] to operation.</span>")
+			"<span class='notice'>[IDENTITY_SUBJECT(1)] fixes [src]!</span>",
+			"<span class='notice'>You restore [src] to operation.</span>", subjects=list(user))
 
 		stat &= ~BROKEN
 		obj_integrity = max_integrity

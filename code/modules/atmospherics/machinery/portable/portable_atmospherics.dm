@@ -93,9 +93,9 @@
 				disconnect()
 				playsound(src.loc, W.usesound, 50, 1)
 				user.visible_message( \
-					"[user] disconnects [src].", \
+					"[IDENTITY_SUBJECT(1)] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
+					"<span class='italics'>You hear a ratchet.</span>", subjects=list(user))
 				update_icon()
 				return
 			else
@@ -108,9 +108,9 @@
 					return
 				playsound(src.loc, W.usesound, 50, 1)
 				user.visible_message( \
-					"[user] connects [src].", \
+					"[IDENTITY_SUBJECT(1)] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
+					"<span class='italics'>You hear a ratchet.</span>", subjects=list(user))
 				update_icon()
 	else if(istype(W, /obj/item/device/analyzer) && Adjacent(user))
 		atmosanalyzer_scan(air_contents, user)

@@ -106,7 +106,7 @@
 			if(!isfloorturf(T))
 				to_chat(user, "<span class='warning'>[src] bolts must be tightened on the floor!</span>")
 				return
-			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>", subjects=list(user))
 			ChangeToWall()
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
@@ -125,7 +125,7 @@
 		return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>", subjects=list(user))
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 	deconstruct(disassembled)
 

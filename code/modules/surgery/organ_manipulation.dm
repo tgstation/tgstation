@@ -61,16 +61,16 @@
 			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 
-		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to insert [tool] into [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].",
+			"<span class='notice'>You begin to insert [tool] into [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]...</span>", subjects=list(user, target))
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
 		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
 		if(target.has_brain_worms())
-			user.visible_message("[user] begins to extract [B] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [B] from [target]'s [parse_zone(target_zone)]...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] begins to extract [B] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].",
+					"<span class='notice'>You begin to extract [B] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]...</span>", subjects=list(user, target))
 			return TRUE
 		if(!organs.len)
 			to_chat(user, "<span class='notice'>There is no removeable organs in [target]'s [parse_zone(target_zone)]!</span>")
@@ -85,15 +85,15 @@
 			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
 				if(!I) return -1
-				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] begins to extract [I] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].",
+					"<span class='notice'>You begin to extract [I] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]...</span>", subjects=list(user, target))
 			else
 				return -1
 
 	else if(implement_type in implements_mend)
 		current_type = "mend"
-		user.visible_message("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You begin to mend the incision in [target]'s [parse_zone(target_zone)]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to mend the incision in [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].",
+			"<span class='notice'>You begin to mend the incision in [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]...</span>", subjects=list(user, target))
 
 	else if(istype(tool, /obj/item/weapon/reagent_containers/food/snacks/organ))
 		to_chat(user, "<span class='warning'>[tool] was biten by someone! It's too damaged to use!</span>")
@@ -101,8 +101,8 @@
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(current_type == "mend")
-		user.visible_message("[user] mends the incision in [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] mends the incision in [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].",
+			"<span class='notice'>You mend the incision in [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].</span>", subjects=list(user, target))
 		if(locate(/datum/surgery_step/saw) in surgery.steps)
 			target.heal_bodypart_damage(45,0)
 		return 1
@@ -110,24 +110,24 @@
 		I = tool
 		user.drop_item()
 		I.Insert(target)
-		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
-			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] inserts [tool] into [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!",
+			"<span class='notice'>You insert [tool] into [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].</span>", subjects=list(user, target))
 
 	else if(current_type == "extract")
 		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
 		if(B && B.victim == target)
-			user.visible_message("[user] successfully extracts [B] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [B] from [target]'s [parse_zone(target_zone)].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] successfully extracts [B] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!",
+				"<span class='notice'>You successfully extract [B] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].</span>", subjects=list(user, target))
 			add_logs(user, target, "surgically removed [B] from", addition="INTENT: [uppertext(user.a_intent)]")
 			B.leave_victim()
 			return FALSE
 		if(I && I.owner == target)
-			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] successfully extracts [I] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!",
+				"<span class='notice'>You successfully extract [I] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].</span>", subjects=list(user, target))
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
 			I.loc = get_turf(target)
 		else
-			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] can't seem to extract anything from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!",
+				"<span class='notice'>You can't extract anything from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!</span>", subjects=list(user, target))
 	return 0

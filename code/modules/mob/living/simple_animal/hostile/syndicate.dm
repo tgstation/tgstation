@@ -62,7 +62,7 @@
 	if(prob(50))
 		return ..()
 	else
-		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] blocks [Proj] with its shield!</span>", subjects=list(src))
 		return 0
 
 

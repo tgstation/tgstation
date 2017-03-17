@@ -234,7 +234,7 @@
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if(prob(1) && !owner.paralysis)
-		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+		owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>", subjects=list(owner))
 		owner.Paralyse(10)
 		owner.Jitter(1000)
 		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
@@ -285,7 +285,7 @@
 	owner.resize = 0.8
 	owner.update_transform()
 	owner.pass_flags |= PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>", subjects=list(owner))
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -293,7 +293,7 @@
 	owner.resize = 1.25
 	owner.update_transform()
 	owner.pass_flags &= ~PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>", subjects=list(owner))
 
 /datum/mutation/human/clumsy
 
@@ -589,10 +589,10 @@
 			if(prob(15))
 				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing", "smashing")
 				var/dancemoves = pick(dancetypes)
-				owner.visible_message("<b>[owner]</b> busts out some [dancemoves] moves!")
+				owner.visible_message("<b>[IDENTITY_SUBJECT(1)]</b> busts out some [dancemoves] moves!", subjects=list(owner))
 		if(2)
 			if(prob(15))
-				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
+				owner.visible_message("<b>[IDENTITY_SUBJECT(1)]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!", subjects=list(owner))
 
 /datum/mutation/human/elvis/say_mod(message)
 	if(message)

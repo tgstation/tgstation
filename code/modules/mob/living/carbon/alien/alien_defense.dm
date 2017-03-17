@@ -26,7 +26,7 @@ In all, this is a lot like the monkey code. /N
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] nuzzles [IDENTITY_SUBJECT(2)] trying to wake [p_them()] up!</span>", subjects=list(M, src))
 
 		if ("grab")
 			grabbedby(M)
@@ -35,8 +35,8 @@ In all, this is a lot like the monkey code. /N
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] bites [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 				adjustBruteLoss(1)
 				add_logs(M, src, "attacked")
 				updatehealth()

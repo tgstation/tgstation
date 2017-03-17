@@ -362,7 +362,7 @@
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] has fixed some of the dents on [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, src))
 			return
 		else
 			to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
@@ -379,7 +379,7 @@
 			if (coil.use(1))
 				adjustFireLoss(-30)
 				updatehealth()
-				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] has fixed some of the burnt wires on [IDENTITY_SUBJECT(2)].", "<span class='notice'>You fix some of the burnt wires on [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, src))
 			else
 				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 		else
@@ -439,7 +439,7 @@
 			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>")
 			if(do_after(user, 50*W.toolspeed, target = src) && !cell)
-				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deconstructs [IDENTITY_SUBJECT(2)]!", "<span class='notice'>You unfasten the securing bolts, and [IDENTITY_SUBJECT(2)] falls to pieces!</span>", subjects=list(user, src))
 				deconstruct()
 
 	else if(istype(W, /obj/item/weapon/aiModule))
@@ -1005,7 +1005,7 @@
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] really can't seem to mount the [IDENTITY_SUBJECT(2)]...</span>", subjects=list(M, src))
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg(src)
@@ -1022,10 +1022,10 @@
 		return
 	if(module)
 		if(!module.allow_riding)
-			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
+			M.visible_message("<span class='boldwarning'>Unfortunately, [IDENTITY_SUBJECT(1)] just can't seem to hold onto [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 			return
 	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		M.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] can't climb onto [IDENTITY_SUBJECT(2)] because his hands are full!</span>", subjects=list(M, src))
 		return
 	. = ..(M, force, check_loc)
 

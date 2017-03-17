@@ -405,10 +405,10 @@
 
 	if(L.gender == MALE)
 		L.gender = FEMALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+		L.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] suddenly looks more feminine!</span>", subjects=list(L))
 	else
 		L.gender = MALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+		L.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] suddenly looks more masculine!</span>", subjects=list(L))
 	L.regenerate_icons()
 	qdel(src)
 

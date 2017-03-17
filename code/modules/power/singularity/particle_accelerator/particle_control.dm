@@ -273,40 +273,40 @@
 			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
 				playsound(loc, W.usesound, 75, 1)
 				anchored = 1
-				user.visible_message("[user.name] secures the [name] to the floor.", \
-					"You secure the external bolts.")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the [name] to the floor.", \
+					"You secure the external bolts.", subjects=list(user))
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(loc, W.usesound, 75, 1)
 				anchored = 0
-				user.visible_message("[user.name] detaches the [name] from the floor.", \
-					"You remove the external bolts.")
+				user.visible_message("[IDENTITY_SUBJECT(1)] detaches the [name] from the floor.", \
+					"You remove the external bolts.", subjects=list(user))
 				construction_state = PA_CONSTRUCTION_UNSECURED
 				did_something = TRUE
 			else if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/CC = W
 				if(CC.use(1))
-					user.visible_message("[user.name] adds wires to the [name].", \
-						"You add some wires.")
+					user.visible_message("[IDENTITY_SUBJECT(1)] adds wires to the [name].", \
+						"You add some wires.", subjects=list(user))
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN
 					did_something = TRUE
 		if(PA_CONSTRUCTION_PANEL_OPEN)
 			if(istype(W, /obj/item/weapon/wirecutters))//TODO:Shock user if its on?
-				user.visible_message("[user.name] removes some wires from the [name].", \
-					"You remove some wires.")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes some wires from the [name].", \
+					"You remove some wires.", subjects=list(user))
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 			else if(istype(W, /obj/item/weapon/screwdriver))
-				user.visible_message("[user.name] closes the [name]'s access panel.", \
-					"You close the access panel.")
+				user.visible_message("[IDENTITY_SUBJECT(1)] closes the [name]'s access panel.", \
+					"You close the access panel.", subjects=list(user))
 				construction_state = PA_CONSTRUCTION_COMPLETE
 				did_something = TRUE
 		if(PA_CONSTRUCTION_COMPLETE)
 			if(istype(W, /obj/item/weapon/screwdriver))
-				user.visible_message("[user.name] opens the [name]'s access panel.", \
-					"You open the access panel.")
+				user.visible_message("[IDENTITY_SUBJECT(1)] opens the [name]'s access panel.", \
+					"You open the access panel.", subjects=list(user))
 				construction_state = PA_CONSTRUCTION_PANEL_OPEN
 				did_something = TRUE
 

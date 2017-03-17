@@ -33,7 +33,7 @@
 	reagents.add_reagent("weedkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/weedspray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (TOXLOSS)
 
 /obj/item/weapon/reagent_containers/spray/pestspray // -- Skie
@@ -55,7 +55,7 @@
 	reagents.add_reagent("pestkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/pestspray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (TOXLOSS)
 
 /obj/item/weapon/cultivator
@@ -91,7 +91,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -112,7 +112,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/scythe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/obj/item/bodypart/BP = C.get_bodypart("head")

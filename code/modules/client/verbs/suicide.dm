@@ -46,12 +46,12 @@
 				death(0)
 				return
 
-		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
+		var/suicide_message = pick("[IDENTITY_SUBJECT(1)] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
+							"[IDENTITY_SUBJECT(1)] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
+							"[IDENTITY_SUBJECT(1)] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
+							"[IDENTITY_SUBJECT(1)] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
 
-		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
+		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>", subjects=list(src))
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -65,8 +65,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-		visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>", \
-						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>", subjects=list(src))
 		death(0)
 
 /mob/living/carbon/monkey/verb/suicide()
@@ -78,8 +78,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-		visible_message("<span class='danger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>", subjects=list(src))
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
 
@@ -92,8 +92,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", subjects=list(src))
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -107,8 +107,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", subjects=list(src))
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -120,8 +120,8 @@
 	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
 		var/turf/T = get_turf(src.loc)
-		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
-		 "<span class='notice'>[src] bleeps electronically.</span>")
+		T.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
+		 "<span class='notice'>[IDENTITY_SUBJECT(1)] bleeps electronically.</span>", subjects=list(src))
 		death(0)
 	else
 		to_chat(src, "Aborting suicide attempt.")
@@ -135,9 +135,9 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='italics'>You hear thrashing.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
+				"<span class='italics'>You hear thrashing.</span>", subjects=list(src))
 		//put em at -175
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -151,8 +151,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-		visible_message("<span class='danger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", \
-						"<span class='userdanger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", subjects=list(src))
 		death(0)
 
 

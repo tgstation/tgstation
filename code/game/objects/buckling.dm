@@ -112,14 +112,14 @@
 	if(buckle_mob(M, check_loc = check_loc))
 		if(M == user)
 			M.visible_message(\
-				"<span class='notice'>[M] buckles [M.p_them()]self to [src].</span>",\
-				"<span class='notice'>You buckle yourself to [src].</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='notice'>[IDENTITY_SUBJECT(1)] buckles [M.p_them()]self to [IDENTITY_SUBJECT(2)].</span>",\
+				"<span class='notice'>You buckle yourself to [IDENTITY_SUBJECT(2)].</span>",\
+				"<span class='italics'>You hear metal clanking.</span>", subjects=list(M, src))
 		else
 			M.visible_message(\
-				"<span class='warning'>[user] buckles [M] to [src]!</span>",\
-				"<span class='warning'>[user] buckles you to [src]!</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='warning'>[IDENTITY_SUBJECT(1)] buckles [IDENTITY_SUBJECT(2)] to [IDENTITY_SUBJECT(3)]!</span>",\
+				"<span class='warning'>[IDENTITY_SUBJECT(1)] buckles you to [IDENTITY_SUBJECT(3)]!</span>",\
+				"<span class='italics'>You hear metal clanking.</span>", subjects=list(user, M, src))
 		return 1
 
 
@@ -128,14 +128,14 @@
 	if(M)
 		if(M != user)
 			M.visible_message(\
-				"<span class='notice'>[user] unbuckles [M] from [src].</span>",\
-				"<span class='notice'>[user] unbuckles you from [src].</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='notice'>[IDENTITY_SUBJECT(1)] unbuckles [IDENTITY_SUBJECT(2)] from [IDENTITY_SUBJECT(3)].</span>",\
+				"<span class='notice'>[IDENTITY_SUBJECT(1)] unbuckles you from [IDENTITY_SUBJECT(3)].</span>",\
+				"<span class='italics'>You hear metal clanking.</span>", subjects=list(user, M, src))
 		else
 			M.visible_message(\
-				"<span class='notice'>[M] unbuckles [M.p_them()]self from [src].</span>",\
-				"<span class='notice'>You unbuckle yourself from [src].</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='notice'>[IDENTITY_SUBJECT(1)] unbuckles [M.p_them()]self from [IDENTITY_SUBJECT(2)].</span>",\
+				"<span class='notice'>You unbuckle yourself from [IDENTITY_SUBJECT(2)].</span>",\
+				"<span class='italics'>You hear metal clanking.</span>", subjects=list(M, src))
 		add_fingerprint(user)
 	return M
 

@@ -419,8 +419,8 @@
 	usermessage("Engine output set to [momentum_gain].")
 	momentum_drift_coeff = ((momentum_gain)*(drift_tolerance*1.1))/momentum_max
 
-/obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
-	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
+/obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, atom/victim)
+	var/crashmessagesrc = "<span class='userdanger'>[IDENTITY_SUBJECT(1)] violently crashes into [IDENTITY_SUBJECT(2)], "
 	var/userdamage = 10
 	userdamage -= stabilizer*3
 	userdamage -= part_bin.rating
@@ -434,10 +434,10 @@
 	if(userdamage)
 		crashmessagesrc += "that really must have hurt!"
 	else
-		crashmessagesrc += "but luckily [wearer]'s impact was absorbed by their suit's stabilizers!</span>"
+		crashmessagesrc += "but luckily [IDENTITY_SUBJECT(1)]'s impact was absorbed by their suit's stabilizers!</span>"
 	wearer.adjustBruteLoss(userdamage)
 	usermessage("WARNING: Stabilizers taking damage!", 2)
-	wearer.visible_message(crashmessagesrc)
+	wearer.visible_message(crashmessagesrc, subjects=list(wearer, victim))
 	crash_damage = Clamp(crash_damage + crash_damage_high, 0, crash_disable_threshold*1.5)
 
 /obj/item/device/flightpack/proc/userknockback(density, anchored, speed, dir)
@@ -448,7 +448,7 @@
 	dir = angle2dir(angle)
 	var/turf/target = get_edge_target_turf(get_turf(wearer), dir)
 	wearer.throw_at(target, (speed+density+anchored), 2, wearer)
-	wearer.visible_message("[wearer] is knocked flying by the impact!")
+	wearer.visible_message("[IDENTITY_SUBJECT(1)] is knocked flying by the impact!", subjects=list(wearer))
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
 	if((unmovablevictim == wearer) || crashing)
@@ -477,7 +477,7 @@
 			crashing = FALSE
 			return FALSE
 		if(L.buckled)
-			wearer.visible_message("<span class='warning'>[wearer] reflexively flies over [L]!</span>")
+			wearer.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] reflexively flies over [IDENTITY_SUBJECT(2)]!</span>", subjects=list(wearer, L))
 			wearer.forceMove(get_turf(L))
 			crashing = FALSE
 			return FALSE
@@ -527,7 +527,7 @@
 		if(anchored)
 			damage = TRUE
 	if(damage)
-		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
+		crash_damage(density, anchored, momentum_speed, unmovablevictim)
 		userknockback(density, anchored, momentum_speed, dir)
 		losecontrol(stun = FALSE, move = FALSE)
 	crashing = FALSE
@@ -539,13 +539,13 @@
 	if(dragging_through)
 		dragging_through.forceMove(get_turf(door))
 		wearer.pulling = dragging_through
-	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
+	wearer.visible_message("<span class='boldnotice'>[IDENTITY_SUBJECT(1)] rolls to their sides and slips past [door]!</span>", subjects=list(wearer))
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
 	target.hitby(wearer)
 	target.take_damage(60, BRUTE, "melee", 1)
 	if(wearer.Move(target.loc))
-		wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>")
+		wearer.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] smashes straight past [target]!</span>", subjects=list(wearer))
 
 /obj/item/device/flightpack/proc/airlock_hit(obj/machinery/door/A)
 	var/pass = 0
@@ -562,7 +562,7 @@
 	if(!pass)
 		spawn()
 			A.open()
-		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
+		wearer.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] rolls sideways and slips past [A]</span>", subjects=list(wearer))
 		wearer.forceMove(get_turf(A))
 		if(dragging_through)
 			dragging_through.forceMove(get_turf(A))
@@ -573,13 +573,13 @@
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
 		return FALSE
-	var/knockmessage = "<span class='warning'>[victim] is knocked back by [wearer] as they narrowly avoid a collision!"
+	var/knockmessage = "<span class='warning'>[IDENTITY_SUBJECT(1)] is knocked back by [IDENTITY_SUBJECT(2)] as they narrowly avoid a collision!"
 	if(power == 1)
-		knockmessage = "<span class='warning'>[wearer] soars into [victim], pushing them away!"
+		knockmessage = "<span class='warning'>[IDENTITY_SUBJECT(2)] soars into [IDENTITY_SUBJECT(1)], pushing them away!"
 	var/knockback = 0
 	var/stun = boost * 2 + (power - 2)
 	if((stun >= 0) || (power == 3))
-		knockmessage += " [wearer] dashes across [victim] at full impulse, knocking them [stun ? "down" : "away"]!"	//Impulse...
+		knockmessage += " [IDENTITY_SUBJECT(2)] dashes across [IDENTITY_SUBJECT(1)] at full impulse, knocking them [stun ? "down" : "away"]!"	//Impulse...
 	knockmessage += "</span>"
 	knockback += power
 	knockback += (part_manip.rating / 2)
@@ -594,7 +594,7 @@
 	var/turf/target = get_step(victim, throwdir)
 	for(var/i in 1 to (knockback-1))
 		target = get_step(target, throwdir)
-	wearer.visible_message(knockmessage)
+	wearer.visible_message(knockmessage, subjects=list(victim, wearer))
 	victim.throw_at(target, knockback, 1)
 	victim.Weaken(stun)
 
@@ -616,7 +616,7 @@
 		return FALSE
 	if(anchored)
 		knockback = 0
-	victim.visible_message("<span class='warning'>[victim.name] is sent flying by the impact!</span>")
+	victim.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is sent flying by the impact!</span>", subjects=list(victim))
 	var/turf/target = get_turf(victim)
 	for(var/i in 1 to knockback)
 		target = get_step(target, direction)
@@ -634,7 +634,7 @@
 		momentum_y = 0
 		calculate_momentum_speed()
 	usermessage("Warning: Control system not responding. Deactivating!", 3)
-	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
+	wearer.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s flight suit abruptly shuts off and they lose control!</span>", subjects=list(wearer))
 	if(wearer)
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
@@ -642,7 +642,7 @@
 				step(wearer, pick(cardinal))
 				momentum_decay()
 				adjust_momentum(0, 0, 10)
-		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
+		wearer.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s flight suit crashes into the ground!</span>", subjects=list(wearer))
 		if(stun)
 			wearer.Weaken(4)
 	momentum_x = 0
@@ -658,7 +658,7 @@
 	wearer.movement_type |= FLYING
 	wearer.pass_flags |= flight_passflags
 	usermessage("ENGAGING FLIGHT ENGINES.")
-	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
+	wearer.visible_message("<font color='blue' size='2'>[IDENTITY_SUBJECT(1)]'s flight engines activate as they lift into the air!</font>", subjects=list(wearer))
 	//I DONT HAVE SOUND EFFECTS YET playsound(
 	flight = TRUE
 	if(suit.shoes)
@@ -674,7 +674,7 @@
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
-		wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
+		wearer.visible_message("<font color='blue' size='2'>[IDENTITY_SUBJECT(1)] drops to the ground as their flight engines cut out!</font>", subjects=list(wearer))
 		//NO SOUND YET	playsound(
 		ion_trail.stop()
 		wearer.movement_type &= ~FLYING
@@ -750,7 +750,7 @@
 		usermessage("Insufficient charge in boost capacitors to engage.", 2)
 		return FALSE
 	usermessage("Boosters engaged!")
-	wearer.visible_message("<span class='notice'>[wearer.name]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>")
+	wearer.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>", subjects=list(wearer))
 	boost = TRUE
 	update_slowdown()
 
@@ -1035,7 +1035,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/lock_suit(mob/wearer)
 	user = wearer
-	user.visible_message("<span class='notice'>[wearer]'s flight suit locks around them, powered buckles and straps automatically adjusting to their body!</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s flight suit locks around them, powered buckles and straps automatically adjusting to their body!</span>", subjects=list(user))
 	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = locked_strip_delay
@@ -1056,7 +1056,7 @@
 		usermessage("Your flight shoes must be fully retracted first!", 1)
 		return FALSE
 	if(wearer)
-		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>", subjects=list(wearer))
 	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = initial(strip_delay)
@@ -1079,7 +1079,7 @@
 		user.equip_to_slot_if_possible(pack,slot_back,0,0,1)
 		pack.flags |= NODROP
 		resync()
-		user.visible_message("<span class='notice'>A [pack.name] extends from [user]'s [name] and clamps to their back!</span>")
+		user.visible_message("<span class='notice'>A [pack.name] extends from [IDENTITY_SUBJECT(1)]'s [name] and clamps to their back!</span>", subjects=list(user))
 		user.update_inv_wear_suit()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = TRUE
@@ -1096,7 +1096,7 @@
 		if(user)
 			user.transferItemToLoc(pack, src, TRUE)
 			user.update_inv_wear_suit()
-			user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [pack.name] detaches from their back and retracts into their [src]!</span>", subjects=list(user))
 	pack.loc = src
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = FALSE
@@ -1116,7 +1116,7 @@
 			return FALSE
 		user.equip_to_slot_if_possible(shoes,slot_shoes,0,0,1)
 		shoes.flags |= NODROP
-		user.visible_message("<span class='notice'>[user]'s [name] extends a pair of [shoes.name] over their feet!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [name] extends a pair of [shoes.name] over their feet!</span>", subjects=list(user))
 		user.update_inv_wear_suit()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = TRUE
@@ -1127,7 +1127,7 @@
 	if(user)
 		user.transferItemToLoc(shoes, src, TRUE)
 		user.update_inv_wear_suit()
-		user.visible_message("<span class='notice'>[user]'s [shoes.name] retracts back into their [name]!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [shoes.name] retracts back into their [name]!</span>", subjects=list(user))
 	shoes.loc = src
 	deployedshoes = FALSE
 

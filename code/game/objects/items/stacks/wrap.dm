@@ -96,7 +96,7 @@
 		to_chat(user, "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] wraps [target].</span>", subjects=list(user))
 	user.log_message("<font color='blue'>Has used [name] on [target]</font>", INDIVIDUAL_ATTACK_LOG)
 
 /obj/item/stack/packageWrap/Destroy()

@@ -111,8 +111,8 @@ The console is located at computer/gulag_teleporter.dm
 			return
 
 		locked = FALSE
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] successfully broke out of [src]!</span>")
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>", subjects=list(user))
 
 		open_machine()
 

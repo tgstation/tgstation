@@ -93,8 +93,8 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/death(gibbed)
 	emerge_from_host(FALSE, TRUE)
 	unbind_from_host()
-	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
-	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
+	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>", subjects=list(src))
 	. = ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Stat()
@@ -271,8 +271,8 @@
 			target.changeNext_move(CLICK_CD_MELEE)
 		blockchance = initial(blockchance)
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 30, 1, 0, 1) //clang
-		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
-		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
+		visible_message("<span class='boldannounce'>[IDENTITY_SUBJECT(1)] blocks [target && istype(textobject, /obj/item) ? "[IDENTITY_SUBJECT(2)]'s [textobject.name]":"\the [textobject]"]!</span>", \
+		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[IDENTITY_SUBJECT(2)]'s [textobject.name]":"\the [textobject]"]!</span>", subjects=list(src, target))
 		if(target && Adjacent(target))
 			if(prob(counterchance))
 				counterchance = initial(counterchance)
@@ -316,8 +316,8 @@
 	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 	if(iscarbon(host))
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
-	host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='sevtug'>You feel [true_name]'s consciousness settle in your mind.</span>")
-	visible_message("<span class='warning'>[src] suddenly disappears!</span>", "<span class='sevtug'>You return to [host].</span>")
+	host.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s skin flashes crimson!</span>", "<span class='sevtug'>You feel [true_name]'s consciousness settle in your mind.</span>", subjects=list(host))
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] suddenly disappears!</span>", "<span class='sevtug'>You return to [IDENTITY_SUBJECT(2)].</span>", subjects=list(src, host))
 	forceMove(host)
 	if(resulthealth > MARAUDER_EMERGE_THRESHOLD && health != maxHealth)
 		recovering = TRUE
@@ -354,7 +354,7 @@
 		else
 			to_chat(host, "<span class='sevtug'>[true_name] emerges from your body to protect you!</span>")
 	forceMove(host.loc)
-	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='sevtug_small'>You exit the safety of [host]'s body!</span>")
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s skin glows red as [IDENTITY_SUBJECT(2)] emerges from their body!</span>", "<span class='sevtug_small'>You exit the safety of [IDENTITY_SUBJECT(1)]'s body!</span>", subjects=list(host, src))
 	return TRUE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/get_alt_name()

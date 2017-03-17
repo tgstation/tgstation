@@ -161,16 +161,16 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		if(!anchored)
 			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] secures the [src.name] to the floor.", \
+			user.visible_message("[IDENTITY_SUBJECT(1)] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
+				"<span class='italics'>You hear a ratchet.</span>", subjects=list(user))
 			src.anchored = 1
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] unsecures the [src.name].", \
+			user.visible_message("[IDENTITY_SUBJECT(1)] unsecures the [src.name].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
+				"<span class='italics'>You hear a ratchet.</span>", subjects=list(user))
 			src.anchored = 0
 			disconnect_from_network()
 		else
@@ -184,9 +184,9 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		fueljar = W
-		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
+		user.visible_message("[IDENTITY_SUBJECT(1)] loads an [W.name] into the [src.name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
-				"<span class='italics'>You hear a thunk.</span>")
+				"<span class='italics'>You hear a thunk.</span>", subjects=list(user))
 	else
 		return ..()
 

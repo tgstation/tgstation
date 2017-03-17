@@ -61,7 +61,7 @@
 	if(!patient_insertion_check(target))
 		return
 	occupant_message("<span class='notice'>You start putting [target] into [src]...</span>")
-	chassis.visible_message("<span class='warning'>[chassis] starts putting [target] into \the [src].</span>")
+	chassis.visible_message("<span class='warning'>[chassis] starts putting [IDENTITY_SUBJECT(1)] into \the [src].</span>", subjects=list(target))
 	if(do_after_cooldown(target))
 		if(!patient_insertion_check(target))
 			return
@@ -70,7 +70,7 @@
 		START_PROCESSING(SSobj, src)
 		update_equip_info()
 		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
-		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
+		chassis.visible_message("<span class='warning'>[chassis] loads [IDENTITY_SUBJECT(1)] into [src].</span>", subjects=list(target))
 		log_message("[target.real_name]/([key_name(target)]) loaded. Life support functions engaged.")
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target)
@@ -333,7 +333,7 @@
 				var/mob/living/carbon/M = safepick(mobs)
 				if(M)
 					var/R
-					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
+					mechsyringe.visible_message("<span class=\"attack\"> [IDENTITY_SUBJECT(1)] was hit by the syringe!</span>", subjects=list(M))
 					if(M.can_inject(null, 1))
 						if(mechsyringe.reagents)
 							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)

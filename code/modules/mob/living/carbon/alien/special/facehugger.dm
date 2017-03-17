@@ -146,8 +146,8 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(!valid_to_attach(M))
 		return FALSE
 	// passed initial checks - time to leap!
-	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
-							"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
+	M.visible_message("<span class='danger'>[src] leaps at [IDENTITY_SUBJECT(1)]'s face!</span>", \
+							"<span class='userdanger'>[src] leaps at [IDENTITY_SUBJECT(1)]'s face!</span>", subjects=list(M))
 
 	// probiscis-blocker handling
 	if(iscarbon(M))
@@ -158,14 +158,14 @@ var/const/MAX_ACTIVE_TIME = 400
 				return FALSE
 			if(!istype(W,/obj/item/clothing/mask/facehugger))
 				target.dropItemToGround(W)
-				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
-									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
+				target.visible_message("<span class='danger'>[src] tears [W] off of [IDENTITY_SUBJECT(1)]'s face!</span>", \
+									"<span class='userdanger'>[src] tears [W] off of [IDENTITY_SUBJECT(1)]'s face!</span>", subjects=list(target))
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.is_mouth_covered(head_only = 1))
-				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
-									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
+				H.visible_message("<span class='danger'>[src] smashes against [IDENTITY_SUBJECT(1)]'s [H.head]!</span>", \
+									"<span class='userdanger'>[src] smashes against [IDENTITY_SUBJECT(1)]'s [H.head]!</span>", subjects=list(H))
 				Die()
 				return FALSE
 		forceMove(target)
@@ -204,8 +204,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(!sterile)
 		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
-		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>", \
-								"<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
+		target.visible_message("<span class='danger'>[src] falls limp after violating [IDENTITY_SUBJECT(1)]'s face!</span>", \
+								"<span class='userdanger'>[src] falls limp after violating [IDENTITY_SUBJECT(1)]'s face!</span>", subjects=list(target))
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
@@ -219,8 +219,8 @@ var/const/MAX_ACTIVE_TIME = 400
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else
-		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \
-								"<span class='userdanger'>[src] violates [target]'s face!</span>")
+		target.visible_message("<span class='danger'>[src] violates [IDENTITY_SUBJECT(1)]'s face!</span>", \
+								"<span class='userdanger'>[src] violates [IDENTITY_SUBJECT(1)]'s face!</span>", subjects=list(target))
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
 	if(stat == DEAD || stat == CONSCIOUS)

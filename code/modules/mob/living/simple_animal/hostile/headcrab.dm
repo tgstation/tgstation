@@ -33,8 +33,8 @@
 		egg.origin = mind
 	for(var/obj/item/organ/I in src)
 		I.loc = egg
-	visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
-					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] plants something in [IDENTITY_SUBJECT(2)]'s flesh!</span>", \
+					"<span class='danger'>We inject our egg into [IDENTITY_SUBJECT(2)]'s body!</span>", subjects=list(src, victim))
 	egg_lain = 1
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()

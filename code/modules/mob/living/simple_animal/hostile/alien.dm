@@ -113,7 +113,7 @@
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
-	visible_message("<span class='alertalien'>[src] has planted some alien weeds!</span>")
+	visible_message("<span class='alertalien'>[IDENTITY_SUBJECT(1)] has planted some alien weeds!</span>", subjects=list(src))
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
@@ -121,7 +121,7 @@
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
-	visible_message("<span class='alertalien'>[src] has laid an egg!</span>")
+	visible_message("<span class='alertalien'>[IDENTITY_SUBJECT(1)] has laid an egg!</span>", subjects=list(src))
 	new /obj/structure/alien/egg(loc)
 
 /mob/living/simple_animal/hostile/alien/queen/large
@@ -167,9 +167,9 @@
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(istype(target, /atom/movable))
 		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message("[src] cleans up \the [target].")
+			visible_message("[IDENTITY_SUBJECT(1)] cleans up \the [target].", subjects=list(src))
 			qdel(target)
 			return
 		var/atom/movable/M = target
 		M.clean_blood()
-		visible_message("[src] polishes \the [target].")
+		visible_message("[IDENTITY_SUBJECT(1)] polishes \the [IDENTITY_SUBJECT(2)].", subjects=list(src, target))

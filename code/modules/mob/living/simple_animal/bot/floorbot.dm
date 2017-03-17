@@ -181,7 +181,7 @@
 		return
 
 	if(prob(5))
-		audible_message("[src] makes an excited booping beeping sound!")
+		audible_message("[IDENTITY_SUBJECT(1)] makes an excited booping beeping sound!", subjects=list(src))
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
 	if(!target && emagged < 2)
@@ -255,7 +255,7 @@
 				anchored = 1
 				mode = BOT_REPAIRING
 				F.ReplaceWithLattice()
-				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
+				audible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] makes an excited booping sound.</span>", subjects=list(src))
 				spawn(5)
 					anchored = 0
 					mode = BOT_IDLE
@@ -317,7 +317,7 @@
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
 		anchored = 1
 		icon_state = "floorbot-c"
-		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
+		visible_message("<span class='notice'>[targetdirection ? "[IDENTITY_SUBJECT(1)] begins installing a bridge plating." : "[IDENTITY_SUBJECT(1)] begins to repair the hole."] </span>", subjects=list(src))
 		mode = BOT_REPAIRING
 		sleep(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
@@ -333,7 +333,7 @@
 			anchored = 1
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
-			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins repairing the floor.</span>", subjects=list(src))
 			sleep(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
@@ -344,7 +344,7 @@
 			anchored = 1
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
-			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins replacing the floor tiles.</span>", subjects=list(src))
 			sleep(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
@@ -364,7 +364,7 @@
 
 /mob/living/simple_animal/bot/floorbot/explode()
 	on = 0
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[IDENTITY_SUBJECT(1)] blows apart!</span>", subjects=list(src))
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)

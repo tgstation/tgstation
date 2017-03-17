@@ -40,8 +40,8 @@
 	var/obj/item/clothing/mask/magichead = new choice
 	magichead.flags |=NODROP
 	magichead.flags_inv = null
-	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
-						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
+	target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
+						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>", subjects=list(target))
 	if(!target.dropItemToGround(target.wear_mask))
 		qdel(target.wear_mask)
 	target.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)

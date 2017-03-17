@@ -434,13 +434,13 @@ var/total_borer_hosts_needed = 10
 
 	if(!hiding)
 		layer = LATTICE_LAYER
-		visible_message("<span class='name'>[src] scurries to the ground!</span>", \
-						"<span class='noticealien'>You are now hiding.</span>")
+		visible_message("<span class='name'>[IDENTITY_SUBJECT(1)] scurries to the ground!</span>", \
+						"<span class='noticealien'>You are now hiding.</span>", subjects=list(src))
 		hiding = TRUE
 	else
 		layer = MOB_LAYER
-		visible_message("[src] slowly peaks up from the ground...", \
-					"<span class='noticealien'>You stop hiding.</span>")
+		visible_message("[IDENTITY_SUBJECT(1)] slowly peaks up from the ground...", \
+					"<span class='noticealien'>You stop hiding.</span>", subjects=list(src))
 		hiding = FALSE
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
@@ -782,7 +782,7 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(B.chemicals >= 200)
-		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>", subjects=list(src))
 		B.chemicals -= 200
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))

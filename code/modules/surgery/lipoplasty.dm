@@ -16,10 +16,10 @@
 	time = 64
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to cut away [target]'s excess fat.", "<span class='notice'>You begin to cut away [target]'s excess fat...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to cut away [IDENTITY_SUBJECT(2)]'s excess fat.", "<span class='notice'>You begin to cut away [IDENTITY_SUBJECT(2)]'s excess fat...</span>", subjects=list(user, target))
 
 /datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] cuts [target]'s excess fat loose!", "<span class='notice'>You cut [target]'s excess fat loose.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] cuts [IDENTITY_SUBJECT(2)]'s excess fat loose!", "<span class='notice'>You cut [IDENTITY_SUBJECT(2)]'s excess fat loose.</span>", subjects=list(user, target))
 	return 1
 
 //remove fat
@@ -29,10 +29,10 @@
 	time = 32
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to extract [target]'s loose fat!", "<span class='notice'>You begin to extract [target]'s loose fat...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to extract [IDENTITY_SUBJECT(2)]'s loose fat!", "<span class='notice'>You begin to extract [IDENTITY_SUBJECT(2)]'s loose fat...</span>", subjects=list(user, target))
 
 /datum/surgery_step/remove_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] extracts [target]'s fat!", "<span class='notice'>You extract [target]'s fat.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] extracts [IDENTITY_SUBJECT(2)]'s fat!", "<span class='notice'>You extract [IDENTITY_SUBJECT(2)]'s fat.</span>", subjects=list(user, target))
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
 	target.nutrition = NUTRITION_LEVEL_WELL_FED

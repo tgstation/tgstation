@@ -151,8 +151,8 @@
 	return invoker.can_hold_items()
 
 /datum/clockwork_scripture/function_call/scripture_effects()
-	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
+	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [IDENTITY_SUBJECT(1)]!</span>", \
+	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>", subjects=list(invoker))
 	var/datum/action/innate/function_call/F = new()
 	F.Grant(invoker)
 	return TRUE
@@ -177,7 +177,7 @@
 	if(!owner.get_empty_held_indexes())
 		to_chat(usr, "<span class='warning'>You need an empty hand to call forth your spear!</span>")
 		return FALSE
-	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
+	owner.visible_message("<span class='warning'>A strange spear materializes in [IDENTITY_SUBJECT(1)]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>", subjects=list(owner))
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
 	if(!ratvar_awakens)
@@ -281,7 +281,7 @@
 						if(usable_power > 0 && C.cell.use(usable_power))
 							multiplier += (usable_power * 0.0005)
 				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
-				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
+				invoker.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>", subjects=list(invoker))
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
 				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
 			to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>")

@@ -981,7 +981,7 @@
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
-		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>")
+		target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] blocks [IDENTITY_SUBJECT(2)]'s grab attempt!</span>", subjects=list(target, user))
 		return 0
 	if(attacker_style && attacker_style.grab_act(user,target))
 		return 1
@@ -995,7 +995,7 @@
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
-		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
+		target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] blocks [IDENTITY_SUBJECT(2)]'s attack!</span>", subjects=list(target, user))
 		return 0
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return 1
@@ -1021,8 +1021,8 @@
 
 		if(!damage || !affecting)
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
-			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
-			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has attempted to [atk_verb] [IDENTITY_SUBJECT(2)]!</span>",\
+			"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has attempted to [atk_verb] [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(user, target))
 			return 0
 
 
@@ -1030,16 +1030,16 @@
 
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 
-		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
-					"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has [atk_verb]ed [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has [atk_verb]ed [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(user, target))
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 		target.apply_damage(damage, BRUTE, affecting, armor_block)
 		add_logs(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] has weakened [target]!</span>", \
-							"<span class='userdanger'>[user] has weakened [target]!</span>")
+			target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has weakened [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has weakened [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, target))
 			target.apply_effect(4, WEAKEN, armor_block)
 			target.forcesay(hit_appends)
 		else if(target.lying)
@@ -1054,13 +1054,13 @@
 	var/target_restrained = target.restrained()
 	if(aim_for_mouth && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_mouth))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
-			"<span class='notice'>You slap [target] in the face! </span>",\
-		"You hear a slap.")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slaps [IDENTITY_SUBJECT(2)] in the face!</span>",
+			"<span class='notice'>You slap [IDENTITY_SUBJECT(2)] in the face! </span>",\
+		"You hear a slap.", subjects=list(user, target))
 		target.endTailWag()
 		return FALSE
 	else if(target.check_block())
-		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
+		target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] blocks [IDENTITY_SUBJECT(2)]'s disarm attempt!</span>", subjects=list(target, user))
 		return 0
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
@@ -1074,8 +1074,8 @@
 		var/randn = rand(1, 100)
 		if(randn <= 25)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
-				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has pushed [IDENTITY_SUBJECT(2)]!</span>",
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has pushed [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(user, target))
 			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(hit_appends)
 			return
@@ -1085,22 +1085,22 @@
 		if(randn <= 60)
 			//BubbleWrap: Disarming breaks a pull
 			if(target.pulling)
-				to_chat(target, "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
+				to_chat(target, "<span class='warning'>[IDENTITY_SUBJECT(1)] has broken [IDENTITY_SUBJECT(2)]'s grip on [IDENTITY_SUBJECT(3)]!</span>", subjects=list(user, target, target.pulling))
 				talked = 1
 				target.stop_pulling()
 			//End BubbleWrap
 
 			if(!talked)	//BubbleWrap
 				if(target.drop_item())
-					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
-						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+					target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has disarmed [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has disarmed [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(user, target))
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			return
 
 
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
-						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attempted to disarm [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] attemped to disarm [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(user, target))
 
 
 
@@ -1138,7 +1138,7 @@
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 	if(H.check_block())
-		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
+		H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] blocks [I]!</span>", subjects=list(H))
 		return 0
 
 	var/hit_area
@@ -1184,8 +1184,8 @@
 			if("head")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
-										"<span class='userdanger'>[H] has been knocked senseless!</span>")
+						H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has been knocked senseless!</span>", \
+										"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has been knocked senseless!</span>", subjects=list(H))
 						H.confused = max(H.confused, 20)
 						H.adjust_blurriness(10)
 
@@ -1206,8 +1206,8 @@
 			if("chest")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
-									"<span class='userdanger'>[H] has been knocked down!</span>")
+						H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has been knocked down!</span>", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has been knocked down!</span>", subjects=list(H))
 						H.apply_effect(3, WEAKEN, armor_block)
 
 				if(bloody)

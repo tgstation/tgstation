@@ -97,7 +97,7 @@
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
 	if(user.disabilities & CLUMSY && prob(75))
-		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>", subjects=list(user))
 		user.drop_item()
 		if(prob(10))
 			target = get_turf(user)
@@ -106,8 +106,8 @@
 			target = pick(possible_targets)
 		discharge = 1
 	if(!discharge)
-		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
-				    		 "<span class='danger'>You fire \the [src]!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] fires \the [src]!</span>", \
+				    		 "<span class='danger'>You fire \the [src]!</span>", subjects=list(user))
 	add_logs(user, target, "fired at", src)
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
@@ -117,7 +117,7 @@
 		ITD.loc = get_turf(src)
 		ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
 	if(pressureSetting >= 3 && user)
-		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!", subjects=list(user))
 		user.Weaken(3)
 
 

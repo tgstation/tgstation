@@ -11,7 +11,7 @@
 	icon_state = "shadow_mend"
 
 /datum/status_effect/shadow_mend/on_apply()
-	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
+	owner.visible_message("<span class='notice'>Violet light wraps around [IDENTITY_SUBJECT(1)]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>", subjects=list(owner))
 	playsound(owner, 'sound/magic/Teleport_app.ogg', 50, 1)
 
 /datum/status_effect/shadow_mend/tick()
@@ -19,7 +19,7 @@
 	owner.adjustFireLoss(-15)
 
 /datum/status_effect/shadow_mend/on_remove()
-	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
+	owner.visible_message("<span class='warning'>The violet light around [IDENTITY_SUBJECT(1)] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>", subjects=list(owner))
 	playsound(owner, 'sound/magic/Teleport_diss.ogg', 50, 1)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
 
@@ -69,7 +69,7 @@
 /datum/status_effect/vanguard_shield/on_apply()
 	add_logs(owner, null, "gained Vanguard stun immunity")
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
-	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	owner.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>", subjects=list(owner))
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
@@ -99,7 +99,7 @@
 				owner.Paralyse(stuns_blocked)
 		else
 			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
-		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
+		owner.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s glowing aura fades!</span>", message_to_owner, subjects=list(owner))
 		add_logs(owner, null, "lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]")
 
 
@@ -116,7 +116,7 @@
 
 /datum/status_effect/inathneqs_endowment/on_apply()
 	add_logs(owner, null, "gained Inath-neq's invulnerability")
-	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
+	owner.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>", subjects=list(owner))
 	var/oldcolor = owner.color
 	owner.color = "#1E8CE1"
 	owner.fully_heal()
@@ -128,7 +128,7 @@
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	add_logs(owner, null, "lost Inath-neq's invulnerability")
-	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
+	owner.visible_message("<span class='warning'>The light around [IDENTITY_SUBJECT(1)] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>", subjects=list(owner))
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
 
@@ -212,7 +212,7 @@
 
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = 1, admin_revive = 1)
-	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
+	owner.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>", subjects=list(owner))
 	owner.update_canmove()
 
 /obj/screen/alert/status_effect/wish_granters_gift

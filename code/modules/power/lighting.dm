@@ -76,8 +76,8 @@
 				if (!do_after(usr, 30*W.toolspeed, target = src))
 					return
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-				user.visible_message("[user.name] deconstructs [src].", \
-					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deconstructs [src].", \
+					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>", subjects=list(user))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 				qdel(src)
 				return
@@ -91,8 +91,8 @@
 						if("bulb")
 							icon_state = "bulb-construct-stage2"
 					stage = 2
-					user.visible_message("[user.name] adds wires to [src].", \
-						"<span class='notice'>You add wires to [src].</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] adds wires to [src].", \
+						"<span class='notice'>You add wires to [src].</span>", subjects=list(user))
 				else
 					to_chat(user, "<span class='warning'>You need one length of cable to wire [src]!</span>")
 				return
@@ -109,14 +109,14 @@
 					if("bulb")
 						icon_state = "bulb-construct-stage1"
 				new /obj/item/stack/cable_coil(get_turf(loc), 1, "red")
-				user.visible_message("[user.name] removes the wiring from [src].", \
-					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the wiring from [src].", \
+					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>", subjects=list(user))
 				playsound(loc, W.usesound, 100, 1)
 				return
 
 			if(istype(W, /obj/item/weapon/screwdriver))
-				user.visible_message("[user.name] closes [src]'s casing.", \
-					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] closes [src]'s casing.", \
+					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>", subjects=list(user))
 				playsound(loc, W.usesound, 75, 1)
 				switch(fixture_type)
 					if("tube")
@@ -344,8 +344,8 @@
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
 			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] opens [src]'s casing.", \
-				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] opens [src]'s casing.", \
+				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>", subjects=list(user))
 			deconstruct()
 		else
 			to_chat(user, "<span class='userdanger'>You stick \the [W] into the light socket!</span>")

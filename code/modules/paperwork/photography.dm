@@ -149,7 +149,7 @@
 	if(C)
 		pictures_max = C.pictures_max
 		pictures_left = C.pictures_left
-		visible_message("[C] has been imbued with godlike power!")
+		visible_message("[IDENTITY_SUBJECT(1)] has been imbued with godlike power!", subjects=list(C))
 		qdel(C)
 
 
@@ -508,7 +508,7 @@
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
-	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
+	visible_message("[IDENTITY_SUBJECT(1)] spits out a photograph from a narrow slot on its chassis.", subjects=list(C))
 	to_chat(usr, "<span class='notice'>You print a photograph.</span>")
 
 // Picture frames
@@ -564,8 +564,8 @@
 	var/turf/T = target
 	if(!iswallturf(T))
 		return
-	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-						 "<span class='notice'>You attach the sign to [T].</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] fastens [src] to [T].</span>", \
+						 "<span class='notice'>You attach the sign to [T].</span>", subjects=list(user))
 	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/obj/structure/sign/picture_frame/PF = new /obj/structure/sign/picture_frame(T)
 	PF.copy_overlays(src)
@@ -591,14 +591,14 @@
 
 /obj/structure/sign/picture_frame/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/screwdriver))
-		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-							 "<span class='notice'>You start unfastening [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts removing [src]...</span>", \
+							 "<span class='notice'>You start unfastening [src].</span>", subjects=list(user))
 		playsound(src, O.usesound, 50, 1)
 		if(!do_after(user, 30*O.toolspeed, target = src))
 			return
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-							 "<span class='notice'>You unfasten [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>", subjects=list(user))
 		var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame(get_turf(user))
 		if(framed)
 			F.displayed = framed

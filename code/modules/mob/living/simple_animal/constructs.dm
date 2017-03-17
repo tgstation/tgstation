@@ -63,11 +63,11 @@
 			adjustHealth(-5)
 			if(src != M)
 				Beam(M,icon_state="sendbeam",time=4)
-				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
-						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+				M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] repairs some of \the <b>[IDENTITY_SUBJECT(2)]'s</b> dents.</span>", \
+						   "<span class='cult'>You repair some of <b>[IDENTITY_SUBJECT(2)]'s</b> dents, leaving <b>[IDENTITY_SUBJECT(2)]</b> at <b>[health]/[maxHealth]</b> health.</span>", subjects=list(M, src))
 			else
-				M.visible_message("<span class='danger'>[M] repairs some of [p_their()] own dents.</span>", \
-						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
+				M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] repairs some of [p_their()] own dents.</span>", \
+						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>", subjects=list(M))
 		else
 			if(src != M)
 				to_chat(M, "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>")
@@ -120,8 +120,8 @@
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
-			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
-							"<span class='userdanger'>The [P.name] is reflected by your armored shell!</span>")
+			visible_message("<span class='danger'>The [P.name] is reflected by [IDENTITY_SUBJECT(1)]'s armored shell!</span>", \
+							"<span class='userdanger'>The [P.name] is reflected by your armored shell!</span>", subjects=list(src))
 
 			// Find a turf near or on the original location to bounce to
 			if(P.starting)

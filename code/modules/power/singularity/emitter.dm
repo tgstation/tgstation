@@ -251,9 +251,9 @@
 			if(EM_SECURED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+					user.visible_message("[IDENTITY_SUBJECT(1)] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
+						"<span class='italics'>You hear welding.</span>", subjects=list(user))
 					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
 						state = EM_WELDED
 						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
@@ -261,9 +261,9 @@
 			if(EM_WELDED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+					user.visible_message("[IDENTITY_SUBJECT(1)] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
+						"<span class='italics'>You hear welding.</span>", subjects=list(user))
 					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
 						state = EM_SECURED
 						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
@@ -307,4 +307,4 @@
 		locked = 0
 		emagged = 1
 		if(user)
-			user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] emags the [src.name].","<span class='notice'>You short out the lock.</span>", subjects=list(user))

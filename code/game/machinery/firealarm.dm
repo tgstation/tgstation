@@ -158,9 +158,9 @@
 				if(istype(W, /obj/item/device/multitool))
 					detecting = !detecting
 					if (src.detecting)
-						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
+						user.visible_message("[IDENTITY_SUBJECT(1)] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>", subjects=list(user))
 					else
-						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+						user.visible_message("[IDENTITY_SUBJECT(1)] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>", subjects=list(user))
 					return
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
@@ -184,8 +184,8 @@
 
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, W.usesound, 50, 1)
-					user.visible_message("[user.name] removes the electronics from [src.name].", \
-										"<span class='notice'>You start prying out the circuit...</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] removes the electronics from [src.name].", \
+										"<span class='notice'>You start prying out the circuit...</span>", subjects=list(user))
 					if(do_after(user, 20*W.toolspeed, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
@@ -205,8 +205,8 @@
 					return
 
 				else if(istype(W, /obj/item/weapon/wrench))
-					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
-										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] removes the fire alarm assembly from the wall.", \
+										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>", subjects=list(user))
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.loc = user.loc
 					playsound(src.loc, W.usesound, 50, 1)

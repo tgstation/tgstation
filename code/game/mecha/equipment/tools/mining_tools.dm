@@ -19,9 +19,9 @@
 		var/obj/target_obj = target
 		if(target_obj.resistance_flags & UNACIDABLE)
 			return
-	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-					 "<span class='italics'>You hear drilling.</span>")
+	target.visible_message("<span class='warning'>[chassis] starts to drill [IDENTITY_SUBJECT(1)].</span>", \
+					"<span class='userdanger'>[chassis] starts to drill [IDENTITY_SUBJECT(1)]...</span>", \
+					 "<span class='italics'>You hear drilling.</span>", subjects=list(target))
 
 	if(do_after_cooldown(target))
 		if(isturf(target))
@@ -78,8 +78,8 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user, var/drill_damage=80)
-	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \
-						"<span class='userdanger'>[chassis] drills [target] with [src].</span>")
+	target.visible_message("<span class='danger'>[chassis] drills [IDENTITY_SUBJECT(1)] with [src].</span>", \
+						"<span class='userdanger'>[chassis] drills [IDENTITY_SUBJECT(1)] with [src].</span>", subjects=list(target))
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD)
 		if(target.butcher_results)

@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 
 /obj/item/clothing/shoes/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>", subjects=list(user))
 	for(var/i = 0, i < 3, i++)
 		sleep(3)
 		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
@@ -197,7 +197,7 @@
 
 	jumping = TRUE
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
-	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
+	usr.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] dashes foward into the air!</span>", subjects=list(usr))
 	usr.throw_at(target, jumpdistance, 1, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()

@@ -770,9 +770,9 @@
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
-			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+			M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s body convulses a bit, and then falls still once more.</span>", subjects=list(M))
 			return
-		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
+		M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s body convulses a bit.</span>", subjects=list(M))
 		if(!M.suiciding && !(M.disabilities & NOCLONE) && !M.hellbound)
 			if(!M)
 				return

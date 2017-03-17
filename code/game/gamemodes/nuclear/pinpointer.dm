@@ -31,7 +31,7 @@
 
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
 	active = !active
-	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>", subjects=list(user))
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
 	icon_state = "pin[active ? "onnull" : "off"]"
 	if(active)
@@ -43,7 +43,7 @@
 /obj/item/weapon/pinpointer/attackby(obj/item/I, mob/living/user, params)
 	if(mode != TRACK_ATOM)
 		return ..()
-	user.visible_message("<span class='notice'>[user] tunes [src] to [I].</span>", "<span class='notice'>You fine-tune [src]'s tracking to track [I].</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] tunes [src] to [I].</span>", "<span class='notice'>You fine-tune [src]'s tracking to track [I].</span>", subjects=list(user))
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
 	constant_target = I
 

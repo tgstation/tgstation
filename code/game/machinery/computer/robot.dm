@@ -164,7 +164,7 @@
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, D)
 				s.start()
-				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
+				D.visible_message("<span class='danger'>\the [IDENTITY_SUBJECT(1)] self destructs!</span>", subjects=list(D))
 				D.gib()
 
 	src.updateUsrDialog()

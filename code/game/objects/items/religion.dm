@@ -109,7 +109,7 @@
 /obj/item/weapon/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(staffcooldown + staffwait > world.time)
 		return
-	user.visible_message("[user] chants deeply and waves their staff!")
+	user.visible_message("[IDENTITY_SUBJECT(1)] chants deeply and waves their staff!", subjects=list(user))
 	if(do_after(user, 20,1,src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time

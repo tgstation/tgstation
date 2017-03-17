@@ -77,7 +77,7 @@
 
 	src.cards                   = newcards
 
-	user.visible_message("\The [user] shuffles [src].")
+	user.visible_message("\The [IDENTITY_SUBJECT(1)] shuffles [src].", subjects=list(user))
 
 /obj/item/weapon/deck/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if(flag)
@@ -111,7 +111,7 @@
 	H.cards.Add(card)
 	H.update_icon()
 
-	source.visible_message("\The [source] deals a card to \the [target].")
+	source.visible_message("\The [IDENTITY_SUBJECT(1)] deals a card to \the [target].", subjects=list(source, target))
 	H.throw_at(get_step(target, target.dir), 10, 1, source)
 
 /* Hand */
@@ -183,7 +183,7 @@
 
 	ASSERT(H)
 
-	usr.visible_message("\The [usr] plays \the [card.name].")
+	usr.visible_message("\The [IDENTITY_SUBJECT(1)] plays \the [card.name].", subjects=list(usr))
 	H.loc = get_step(usr,usr.dir)
 
 	src.update_icon()
@@ -197,7 +197,7 @@
 
 	src.update_conceal()
 
-	usr.visible_message("\The [usr] [concealed ? "conceals" : "reveals"] their hand.")
+	usr.visible_message("\The [IDENTITY_SUBJECT(1)] [concealed ? "conceals" : "reveals"] their hand.", subjects=list(usr))
 
 	src.update_icon()
 

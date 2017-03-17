@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/flan/OpenFire(mob/living/A)		//Spellcasting!
 	if(isliving(A))				//A is originally an atom, this is here to prevent that from fucking this up.
-		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
+		visible_message("<span class='danger'><b>[IDENTITY_SUBJECT(1)]</b> [ranged_message] at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, A))
 		casting = 1
 		icon_state = "[initial(icon_state)][casting]"
 		if(do_after_mob(src, A, spellcasttime, uninterruptible = 1, progress = 0))		//Break LOS to dodge.
@@ -54,7 +54,7 @@
 				A.do_attack_animation(A, spellanimation)
 				playsound(A, spellsound, 20, 1)
 				A.apply_damage(damage = spelldamage,damagetype = spelldamagetype, def_zone = null, blocked = 0)
-				visible_message("<span class='danger'><b>[A]</b> has been hit by [spellname]</span>")
+				visible_message("<span class='danger'><b>[IDENTITY_SUBJECT(1)]</b> has been hit by [spellname]</span>", subjects=list(A))
 				spellaftereffects(A,src)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		casting = 0

@@ -42,7 +42,7 @@
 	if(alertresult == "No" || !O)
 		return 0
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
-	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
+	R.visible_message("<span class='heavy_brass'>[IDENTITY_SUBJECT(1)] forms, and its eyes blink open, glowing bright red!</span>", subjects=list(R))
 	R.key = O.key
 
 /obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)

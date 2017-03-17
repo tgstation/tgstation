@@ -65,17 +65,17 @@
 				else
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
-						"[user] attaches \the [src] to the cable.", \
+						"[IDENTITY_SUBJECT(1)] attaches \the [src] to the cable.", \
 						"<span class='notice'>You attach \the [src] to the cable.</span>",
-						"<span class='italics'>You hear some wires being connected to something.</span>")
+						"<span class='italics'>You hear some wires being connected to something.</span>", subjects=list(user))
 			else
 				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 		else
 			set_mode(DISCONNECTED)
 			user.visible_message( \
-				"[user] detaches \the [src] from the cable.", \
+				"[IDENTITY_SUBJECT(1)] detaches \the [src] from the cable.", \
 				"<span class='notice'>You detach \the [src] from the cable.</span>",
-				"<span class='italics'>You hear some wires being disconnected from something.</span>")
+				"<span class='italics'>You hear some wires being disconnected from something.</span>", subjects=list(user))
 	else
 		return ..()
 
@@ -92,18 +92,18 @@
 
 		if(CLAMPED_OFF)
 			user.visible_message( \
-				"[user] activates \the [src]!", \
+				"[IDENTITY_SUBJECT(1)] activates \the [src]!", \
 				"<span class='notice'>You activate \the [src].</span>",
-				"<span class='italics'>You hear a click.</span>")
+				"<span class='italics'>You hear a click.</span>", subjects=list(user))
 			message_admins("Power sink activated by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 			log_game("Power sink activated by [key_name(user)] at ([x],[y],[z])")
 			set_mode(OPERATING)
 
 		if(OPERATING)
 			user.visible_message( \
-				"[user] deactivates \the [src]!", \
+				"[IDENTITY_SUBJECT(1)] deactivates \the [src]!", \
 				"<span class='notice'>You deactivate \the [src].</span>",
-				"<span class='italics'>You hear a click.</span>")
+				"<span class='italics'>You hear a click.</span>", subjects=list(user))
 			set_mode(CLAMPED_OFF)
 
 /obj/item/device/powersink/process()

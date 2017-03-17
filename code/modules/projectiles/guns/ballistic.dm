@@ -139,17 +139,17 @@
 
 /obj/item/weapon/gun/ballistic/suicide_act(mob/user)
 	if (chambered && chambered.BB && !chambered.BB.nodamage)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 		sleep(25)
 		if(user.is_holding(src))
 			process_fire(user, user, 0, zone_override = "head")
-			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
+			user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>", subjects=list(user))
 			return(BRUTELOSS)
 		else
-			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
+			user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] panics and starts choking to death!</span>", subjects=list(user))
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>", subjects=list(user))
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
 
@@ -170,7 +170,7 @@
 	if(do_after(user, 30, target = src))
 		if(sawn_state == SAWN_OFF)
 			return
-		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>", subjects=list(user))
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL

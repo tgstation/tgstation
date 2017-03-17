@@ -181,8 +181,8 @@
 
 /obj/item/organ/heart/gland/bloody/activate()
 	owner.blood_volume -= 20
-	owner.visible_message("<span class='danger'>[owner]'s skin erupts with blood!</span>",\
-	"<span class='userdanger'>Blood pours from your skin!</span>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s skin erupts with blood!</span>",\
+	"<span class='userdanger'>Blood pours from your skin!</span>", subjects=list(owner))
 
 	for(var/turf/T in oview(3,owner)) //Make this respect walls and such
 		owner.add_splatter_floor(T)
@@ -245,7 +245,7 @@
 	to_chat(owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
 	sleep(50)
 	if(!owner) return
-	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] vomits a cloud of plasma!</span>", subjects=list(owner))
 	var/turf/open/T = get_turf(owner)
 	if(istype(T))
 		T.atmos_spawn_air("plasma=50;TEMP=[T20C]")

@@ -103,10 +103,10 @@
 		new_xeno.invisibility = 0
 
 	if(gib_on_success)
-		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner] in a shower of gore!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		new_xeno.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bursts out of [IDENTITY_SUBJECT(2)] in a shower of gore!</span>", "<span class='userdanger'>You exit [IDENTITY_SUBJECT(2)], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>", subjects=list(new_xeno, owner))
 		owner.gib(TRUE)
 	else
-		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
+		new_xeno.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] wriggles out of [IDENTITY_SUBJECT(2)]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", subjects=list(new_xeno, owner))
 		owner.adjustBruteLoss(40)
 		owner.cut_overlay(overlay)
 	qdel(src)

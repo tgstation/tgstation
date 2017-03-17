@@ -182,11 +182,11 @@
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>", subjects=list(user))
 		playsound(src, I.usesound, 20, 1)
 		if(!do_after(user, 70*I.toolspeed, target = src))
 			return 0
-		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>", subjects=list(user))
 		playsound(src, I.usesound, 80, 1)
 		make_plating()
 		return 1

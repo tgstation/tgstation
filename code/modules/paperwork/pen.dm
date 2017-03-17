@@ -28,7 +28,7 @@
 	var/degrees = 0
 
 /obj/item/weapon/pen/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>", subjects=list(user))
 	return(BRUTELOSS)
 
 /obj/item/weapon/pen/blue

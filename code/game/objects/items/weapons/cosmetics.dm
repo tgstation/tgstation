@@ -61,17 +61,17 @@
 			to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
 			return
 		if(H == user)
-			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
-								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] does their lips with \the [src].</span>", \
+								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>", subjects=list(user))
 			H.lip_style = "lipstick"
 			H.lip_color = colour
 			H.update_body()
 		else
-			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
-								 "<span class='notice'>You begin to apply \the [src] on [H]'s lips...</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins to do [IDENTITY_SUBJECT(2)]'s lips with \the [src].</span>", \
+								 "<span class='notice'>You begin to apply \the [src] on [IDENTITY_SUBJECT(2)]'s lips...</span>", subjects=list(user, H))
 			if(do_after(user, 20, target = H))
-				user.visible_message("[user] does [H]'s lips with \the [src].", \
-									 "<span class='notice'>You apply \the [src] on [H]'s lips.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] does [IDENTITY_SUBJECT(2)]'s lips with \the [src].", \
+									 "<span class='notice'>You apply \the [src] on [IDENTITY_SUBJECT(2)]'s lips.</span>", subjects=list(user, H))
 				H.lip_style = "lipstick"
 				H.lip_color = colour
 				H.update_body()
@@ -91,11 +91,11 @@
 				H.lip_style = null
 				H.update_body()
 			else
-				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
-								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick...</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins to wipe [IDENTITY_SUBJECT(2)]'s lipstick off with \the [src].</span>", \
+								 	 "<span class='notice'>You begin to wipe off [IDENTITY_SUBJECT(2)]'s lipstick...</span>", subjects=list(user, H))
 				if(do_after(user, 10, target = H))
-					user.visible_message("[user] wipes [H]'s lipstick off with \the [src].", \
-										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] wipes [IDENTITY_SUBJECT(2)]'s lipstick off with \the [src].", \
+										 "<span class='notice'>You wipe off [IDENTITY_SUBJECT(2)]'s lipstick.</span>", subjects=list(user, H))
 					H.lip_style = null
 					H.update_body()
 	else
@@ -137,20 +137,20 @@
 				return
 
 			if(H == user) //shaving yourself
-				user.visible_message("[user] starts to shave their facial hair with [src].", \
-									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] starts to shave their facial hair with [src].", \
+									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>", subjects=list(user))
 				if(do_after(user, 50, target = H))
-					user.visible_message("[user] shaves his facial hair clean with [src].", \
-										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] shaves his facial hair clean with [src].", \
+										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>", subjects=list(user))
 					shave(H, location)
 			else
 				var/turf/H_loc = H.loc
-				user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
-									 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] tries to shave [IDENTITY_SUBJECT(2)]'s facial hair with [src].</span>", \
+									 "<span class='notice'>You start shaving [IDENTITY_SUBJECT(2)]'s facial hair...</span>", subjects=list(user, H))
 				if(do_after(user, 50, target = H))
 					if(H_loc == H.loc)
-						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
-											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
+						user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] shaves off [IDENTITY_SUBJECT(2)]'s facial hair with [src].</span>", \
+											 "<span class='notice'>You shave [IDENTITY_SUBJECT(2)]'s facial hair clean off.</span>", subjects=list(user, H))
 						shave(H, location)
 
 		else if(location == "head")
@@ -165,20 +165,20 @@
 				return
 
 			if(H == user) //shaving yourself
-				user.visible_message("[user] starts to shave their head with [src].", \
-									 "<span class='notice'>You start to shave your head with [src]...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] starts to shave their head with [src].", \
+									 "<span class='notice'>You start to shave your head with [src]...</span>", subjects=list(user))
 				if(do_after(user, 5, target = H))
-					user.visible_message("[user] shaves his head with [src].", \
-										 "<span class='notice'>You finish shaving with [src].</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] shaves his head with [src].", \
+										 "<span class='notice'>You finish shaving with [src].</span>", subjects=list(user))
 					shave(H, location)
 			else
 				var/turf/H_loc = H.loc
-				user.visible_message("<span class='warning'>[user] tries to shave [H]'s head with [src]!</span>", \
-									 "<span class='notice'>You start shaving [H]'s head...</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] tries to shave [IDENTITY_SUBJECT(2)]'s head with [src]!</span>", \
+									 "<span class='notice'>You start shaving [IDENTITY_SUBJECT(2)]'s head...</span>", subjects=list(user, H))
 				if(do_after(user, 50, target = H))
 					if(H_loc == H.loc)
-						user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \
-											 "<span class='notice'>You shave [H]'s head bald.</span>")
+						user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] shaves [IDENTITY_SUBJECT(2)]'s head bald with [src]!</span>", \
+											 "<span class='notice'>You shave [IDENTITY_SUBJECT(2)]'s head bald.</span>", subjects=list(user, H))
 						shave(H, location)
 		else
 			..()

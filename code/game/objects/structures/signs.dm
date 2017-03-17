@@ -26,14 +26,14 @@
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench) && buildable_sign)
-		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-							 "<span class='notice'>You start unfastening [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts removing [src]...</span>", \
+							 "<span class='notice'>You start unfastening [src].</span>", subjects=list(user))
 		playsound(src, O.usesound, 50, 1)
 		if(!do_after(user, 30*O.toolspeed, target = src))
 			return
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-							 "<span class='notice'>You unfasten [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>", subjects=list(user))
 		var/obj/item/sign_backing/SB = new (get_turf(user))
 		SB.icon_state = icon_state
 		SB.sign_path = type
@@ -101,8 +101,8 @@
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	if(isturf(target) && proximity)
 		var/turf/T = target
-		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-							 "<span class='notice'>You attach the sign to [T].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] fastens [src] to [T].</span>", \
+							 "<span class='notice'>You attach the sign to [T].</span>", subjects=list(user))
 		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
 		new sign_path(T)
 		user.drop_item()

@@ -104,11 +104,11 @@
 
 	//Display an attack message.
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
-				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has hit [IDENTITY_SUBJECT(2)][head_attack_message] with a bottle of [src.name]!</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has hit [IDENTITY_SUBJECT(2)][head_attack_message] with a bottle of [src.name]!</span>", subjects=list(user, target))
 	else
-		user.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", subjects=list(target))
 
 	//Attack logs
 	add_logs(user, target, "attacked", src)

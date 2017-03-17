@@ -29,13 +29,13 @@
 			if(prob(10))
 				to_chat(affected_mob, "<span class='danger'>You feel butterflies in your stomach.</span>")
 			if(prob(5))
-				affected_mob.visible_message("<span class='danger'>[affected_mob] stumbles around in a panic.</span>", \
-												"<span class='userdanger'>You have a panic attack!</span>")
+				affected_mob.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] stumbles around in a panic.</span>", \
+												"<span class='userdanger'>You have a panic attack!</span>", subjects=list(affected_mob))
 				affected_mob.confused += (rand(6,8))
 				affected_mob.jitteriness += (rand(6,8))
 			if(prob(2))
-				affected_mob.visible_message("<span class='danger'>[affected_mob] coughs up butterflies!</span>", \
-													"<span class='userdanger'>You cough up butterflies!</span>")
+				affected_mob.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] coughs up butterflies!</span>", \
+													"<span class='userdanger'>You cough up butterflies!</span>", subjects=list(affected_mob))
 				new /mob/living/simple_animal/butterfly(affected_mob.loc)
 				new /mob/living/simple_animal/butterfly(affected_mob.loc)
 	return

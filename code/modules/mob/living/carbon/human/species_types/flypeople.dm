@@ -19,8 +19,8 @@
 			var/turf/pos = get_turf(H)
 			H.vomit(0, 0, 0, 1, 1)
 			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
-			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
-						"<span class='userdanger'>You throw up on the floor!</span>")
+			H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] vomits on the floor!</span>", \
+						"<span class='userdanger'>You throw up on the floor!</span>", subjects=list(H))
 	..()
 
 /datum/species/fly/check_weakness(obj/item/weapon, mob/living/attacker)

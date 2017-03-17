@@ -267,7 +267,7 @@
 			to_chat(user, "<span class='notice'>You attempt to pull [paicard] free...</span>")
 			if(do_after(user, 30, target = src))
 				if (paicard)
-					user.visible_message("<span class='notice'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
+					user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] uses [W] to pull [IDENTITY_SUBJECT(2)] out of [IDENTITY_SUBJECT(3)]!</span>","<span class='notice'>You pull [IDENTITY_SUBJECT(2)] out of [IDENTITY_SUBJECT(3)] with [W].</span>", subjects=list(user, paicard, bot_name))
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -281,7 +281,7 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
 				adjustHealth(-10)
-				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] repairs [IDENTITY_SUBJECT(2)]!","<span class='notice'>You repair [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, src))
 			else
 				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 		else
@@ -305,7 +305,7 @@
 	new /obj/effect/overlay/temp/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
-		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
+		src.visible_message("[IDENTITY_SUBJECT(1)] is flies out of [IDENTITY_SUBJECT(2)]!","<span class='warning'>You are forcefully ejected from [IDENTITY_SUBJECT(2)]!</span>", subjects=list(paicard, bot_name))
 		ejectpai(0)
 	if(on)
 		turn_off()
@@ -854,7 +854,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 					return
 				card.forceMove(src)
 				paicard = card
-				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] inserts [card] into [IDENTITY_SUBJECT(2)]!","<span class='notice'>You insert [card] into [src].</span>", subjects=list(user, src))
+				user.visible_message("[IDENTITY_SUBJECT(1)] inserts [card] into [IDENTITY_SUBJECT(2)]!","<span class='notice'>You insert [card] into [src].</span>", subjects=list(user, src))
 				paicard.pai.mind.transfer_to(src)
 				to_chat(src, "<span class='notice'>You sense your form change as you are uploaded into [src].</span>")
 				bot_name = name

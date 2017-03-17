@@ -209,12 +209,12 @@
 
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"])
-		user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [name] begins tearing apart [IDENTITY_SUBJECT(2)]!</span>", "<span class='brass'>You begin proselytizing [IDENTITY_SUBJECT(2)]...</span>", subjects=list(user, target))
 		if(!do_after(user, proselytize_values["operation_time"], target = target, extra_checks = CALLBACK(src, .proc/proselytize_checks, proselytize_values, target, target_type, user, TRUE)))
 			return FALSE
-		user.visible_message("<span class='warning'>[user]'s [name] covers [target] in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [name] covers [IDENTITY_SUBJECT(2)] in golden energy!</span>", "<span class='brass'>You proselytize [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, target))
 	else
-		user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [name] tears apart [IDENTITY_SUBJECT(2)], covering it in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>", subjects=list(user, target))
 
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/new_thing_type = proselytize_values["new_obj_type"]

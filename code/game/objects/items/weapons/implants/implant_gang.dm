@@ -39,7 +39,7 @@
 
 		if(ishuman(target))
 			if(!success)
-				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
+				target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>", subjects=list(target))
 
 		qdel(src)
 		return 0

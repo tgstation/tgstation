@@ -121,7 +121,7 @@
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
 			S.loc = remote_eye.loc
-			S.visible_message("[S] warps in!")
+			S.visible_message("[IDENTITY_SUBJECT(1)] warps in!", subjects=list(S))
 			X.stored_slimes -= S
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
@@ -144,7 +144,7 @@
 			if(!S.ckey)
 				if(S.buckled)
 					S.Feedstop(silent=1)
-				S.visible_message("[S] vanishes in a flash of light!")
+				S.visible_message("[IDENTITY_SUBJECT(1)] vanishes in a flash of light!", subjects=list(S))
 				S.loc = X
 				X.stored_slimes += S
 	else
@@ -186,7 +186,7 @@
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
-				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
+				M.visible_message("[IDENTITY_SUBJECT(1)] vanishes as they are reclaimed for recycling!", subjects=list(M))
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
 	else

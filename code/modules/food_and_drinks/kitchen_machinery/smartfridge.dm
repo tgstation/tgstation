@@ -101,7 +101,7 @@
 
 		if(accept_check(O))
 			load(O)
-			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>", subjects=list(user))
 			updateUsrDialog()
 			return TRUE
 
@@ -118,11 +118,11 @@
 
 			if(loaded)
 				if(contents.len >= max_n_of_items)
-					user.visible_message("[user] loads \the [src] with \the [O].", \
-									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] loads \the [src] with \the [O].", \
+									 "<span class='notice'>You fill \the [src] with \the [O].</span>", subjects=list(user))
 				else
-					user.visible_message("[user] loads \the [src] with \the [O].", \
-										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] loads \the [src] with \the [O].", \
+										 "<span class='notice'>You load \the [src] with \the [O].</span>", subjects=list(user))
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
 				return TRUE

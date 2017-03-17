@@ -237,7 +237,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			return
 		if(buckled)
 			Feedstop(silent=1)
-			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] pulls [IDENTITY_SUBJECT(2)] off!</span>", subjects=list(M, src))
 			return
 		attacked += 5
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
@@ -272,22 +272,22 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
 			if(prob(60))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
+				visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] attempts to wrestle \the [IDENTITY_SUBJECT(2)] off!</span>", subjects=list(M, src))
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
+				visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] manages to wrestle \the [IDENTITY_SUBJECT(2)] off!</span>", subjects=list(M, src))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				discipline_slime(M)
 
 		else
 			if(prob(30))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
+				visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] attempts to wrestle \the [IDENTITY_SUBJECT(2)] off of [IDENTITY_SUBJECT(3)]!</span>", subjects=list(M, src, buckled))
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [buckled]!</span>")
+				visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] manages to wrestle \the [IDENTITY_SUBJECT(2)] off of [IDENTITY_SUBJECT(3)]!</span>", subjects=list(M, src, buckled))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				discipline_slime(M)

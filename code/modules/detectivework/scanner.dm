@@ -58,7 +58,7 @@
 
 		scanning = 1
 
-		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
+		user.visible_message("\The [IDENTITY_SUBJECT(1)] points the [src.name] at \the [IDENTITY_SUBJECT(2)] and performs a forensic scan.", subjects=list(user, A))
 		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
 
 

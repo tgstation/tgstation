@@ -26,8 +26,8 @@
 
 /obj/machinery/computer/cargo/emag_act(mob/living/user)
 	if(!emagged)
-		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
-		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] swipes a suspicious card through [src]!",
+		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>", subjects=list(user))
 
 		emagged = TRUE
 		contraband = TRUE

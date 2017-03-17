@@ -21,7 +21,7 @@
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, "swing_hit", 25, 1)
-		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
+		swirlie.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slams the toilet seat onto [IDENTITY_SUBJECT(2)]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>", subjects=list(user, swirlie))
 		swirlie.adjustBruteLoss(5)
 
 	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -33,10 +33,10 @@
 				return
 			if(!swirlie)
 				if(open)
-					GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
+					GM.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] starts to give [IDENTITY_SUBJECT(2)] a swirlie!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] starts to give you a swirlie...</span>", subjects=list(user, GM))
 					swirlie = GM
 					if(do_after(user, 30, 0, target = src))
-						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>")
+						GM.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] gives [IDENTITY_SUBJECT(2)] a swirlie!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] gives you a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>", subjects=list(user, GM))
 						if(iscarbon(GM))
 							var/mob/living/carbon/C = GM
 							if(!C.internal)
@@ -46,7 +46,7 @@
 					swirlie = null
 				else
 					playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
-					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
+					GM.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slams [IDENTITY_SUBJECT(2)] into [src]!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] slams you into [src]!</span>", subjects=list(user, GM))
 					GM.adjustBruteLoss(5)
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
@@ -76,7 +76,7 @@
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
-			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>", subjects=list(user))
 			cistern = !cistern
 			update_icon()
 
@@ -126,7 +126,7 @@
 				to_chat(user, "<span class='notice'>[GM.name] needs to be on [src].</span>")
 				return
 			user.changeNext_move(CLICK_CD_MELEE)
-			user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
+			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slams [IDENTITY_SUBJECT(2)] into [src]!</span>", "<span class='danger'>You slam [IDENTITY_SUBJECT(2)] into [src]!</span>", subjects=list(user, GM))
 			GM.adjustBruteLoss(8)
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
@@ -149,7 +149,7 @@
 		to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 20*I.toolspeed, target = src))
-			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>", subjects=list(user))
 			exposed = !exposed
 	else if(exposed)
 		if (hiddenitem)
@@ -228,7 +228,7 @@
 					watertemp = "boiling"
 				if("boiling")
 					watertemp = "normal"
-			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>", subjects=list(user))
 			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
 			add_hiddenprint(user)
 
@@ -424,8 +424,8 @@
 	var/washing_face = 0
 	if(selected_area in list("head", "mouth", "eyes"))
 		washing_face = 1
-	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
-						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts washing their [washing_face ? "face" : "hands"]...</span>", \
+						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>", subjects=list(user))
 	busy = 1
 
 	if(!do_after(user, 40, target = src))
@@ -473,8 +473,8 @@
 				user.Weaken(stunforce)
 				user.stuttering = stunforce
 				B.deductcharge(B.hitcost)
-				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
-									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] shocks themself while attempting to wash the active [B.name]!</span>", \
+									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>", subjects=list(user))
 				playsound(src, "sparks", 50, 1)
 				return
 
@@ -508,8 +508,8 @@
 		create_reagents(5)
 		reagents.add_reagent("[dispensedreagent]", 5)
 		reagents.reaction(O, TOUCH)
-		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
-							"<span class='notice'>You wash [O] using [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] washes [O] using [src].</span>", \
+							"<span class='notice'>You wash [O] using [src].</span>", subjects=list(user))
 		return 1
 	else
 		return ..()

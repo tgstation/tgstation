@@ -21,11 +21,11 @@
 	time = 64
 
 /datum/surgery_step/sever_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to sever [target]'s tail!", "<span class='notice'>You begin to sever [target]'s tail...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to sever [IDENTITY_SUBJECT(2)]'s tail!", "<span class='notice'>You begin to sever [IDENTITY_SUBJECT(2)]'s tail...</span>", subjects=list(user, target))
 
 /datum/surgery_step/sever_tail/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/carbon/human/L = target
-	user.visible_message("[user] severs [L]'s tail!", "<span class='notice'>You sever [L]'s tail.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] severs [IDENTITY_SUBJECT(2)]'s tail!", "<span class='notice'>You sever [IDENTITY_SUBJECT(2)]'s tail.</span>", subjects=list(user, L))
 	if("tail_lizard" in L.dna.species.mutant_bodyparts)
 		L.dna.species.mutant_bodyparts -= "tail_lizard"
 	else if("waggingtail_lizard" in L.dna.species.mutant_bodyparts)
@@ -58,11 +58,11 @@
 	time = 64
 
 /datum/surgery_step/attach_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to attach a tail to [target]!", "<span class='notice'>You begin to attach the tail to [target]...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to attach a tail to [IDENTITY_SUBJECT(2)]!", "<span class='notice'>You begin to attach the tail to [IDENTITY_SUBJECT(2)]...</span>", subjects=list(user, target))
 
 /datum/surgery_step/attach_tail/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/carbon/human/L = target
-	user.visible_message("[user] gives [L] a tail!", "<span class='notice'>You give [L] a tail. It adjusts to [L]'s melanin.</span>") // fluff for color
+	user.visible_message("[IDENTITY_SUBJECT(1)] gives [IDENTITY_SUBJECT(2)] a tail!", "<span class='notice'>You give [IDENTITY_SUBJECT(2)] a tail. It adjusts to [IDENTITY_SUBJECT(2)]'s melanin.</span>", subjects=list(user, L)) // fluff for color
 	if(!(L.dna.features["mcolor"]))
 		L.dna.features["mcolor"] = tool.color
 	var/obj/item/severedtail/T = tool

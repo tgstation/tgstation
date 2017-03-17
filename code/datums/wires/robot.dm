@@ -38,10 +38,10 @@
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!isnull(R.camera) && !R.scrambledcodes)
 				R.camera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lense focuses loudly.", "Your camera lense focuses loudly.")
+				R.visible_message("[IDENTITY_SUBJECT(1)]'s camera lense focuses loudly.", "Your camera lense focuses loudly.", subjects=list(R))
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
-				R.visible_message("[R] gently chimes.", "LawSync protocol engaged.")
+				R.visible_message("[IDENTITY_SUBJECT(1)] gently chimes.", "LawSync protocol engaged.", subjects=list(R))
 				R.lawsync()
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
@@ -66,6 +66,6 @@
 			if(!isnull(R.camera) && !R.scrambledcodes)
 				R.camera.status = mend
 				R.camera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lense focuses loudly.", "Your camera lense focuses loudly.")
+				R.visible_message("[IDENTITY_SUBJECT(1)]'s camera lense focuses loudly.", "Your camera lense focuses loudly.", subjects=list(R))
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)

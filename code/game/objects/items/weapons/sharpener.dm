@@ -38,7 +38,7 @@
 	if(I.force > initial(I.force))
 		to_chat(user, "<span class='notice'>[I] has already been refined before. It cannot be sharpened further.</span>")
 		return
-	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>", subjects=list(user))
 	I.sharpness = IS_SHARP_ACCURATE
 	I.force = Clamp(I.force + increment, 0, max)
 	I.throwforce = Clamp(I.throwforce + increment, 0, max)

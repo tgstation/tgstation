@@ -55,8 +55,8 @@
 			return
 
 		if(!master || master.can_terminal_dismantle())
-			user.visible_message("[user.name] dismantles the power terminal from [master].", \
-								"<span class='notice'>You begin to cut the cables...</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] dismantles the power terminal from [master].", \
+								"<span class='notice'>You begin to cut the cables...</span>", subjects=list(user))
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50*W.toolspeed, target = src))

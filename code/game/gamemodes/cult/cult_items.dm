@@ -16,8 +16,8 @@
 	if(!iscultist(user))
 		user.Weaken(5)
 		user.dropItemToGround(src, TRUE)
-		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
-							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
+		user.visible_message("<span class='warning'>A powerful force shoves [IDENTITY_SUBJECT(1)] away from [IDENTITY_SUBJECT(2)]!</span>", \
+							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>", subjects=list(user, target))
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(rand(force/2, force), BRUTE, pick("l_arm", "r_arm"))
@@ -195,7 +195,7 @@
 		current_charges--
 		new /obj/effect/overlay/temp/cult/sparks(get_turf(owner))
 		if(!current_charges)
-			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
+			owner.visible_message("<span class='danger'>The runed shield around [IDENTITY_SUBJECT(1)] suddenly disappears!</span>", subjects=list(owner))
 			owner.update_inv_wear_suit()
 		return 1
 	return 0

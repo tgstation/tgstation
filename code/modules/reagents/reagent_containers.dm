@@ -96,8 +96,8 @@
 			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
-		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
-						"<span class='userdanger'>[M] has been splashed with something!</span>")
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has been splashed with something!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has been splashed with something!</span>", subjects=list(M))
 		for(var/datum/reagent/A in reagents.reagent_list)
 			R += A.id + " ("
 			R += num2text(A.volume) + "),"
@@ -107,7 +107,7 @@
 		reagents.reaction(target, TOUCH)
 
 	else if((target.CanPass(src, get_turf(src))) && thrown && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
-		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+		visible_message("<span class='notice'>[src] lands onto the [IDENTITY_SUBJECT(1)] without spilling a single drop.</span>", subjects=list(target))
 		return
 
 	else
@@ -115,7 +115,7 @@
 			add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
 			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [COORD(target)].")
 			message_admins("[key_name_admin(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
-		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
+		visible_message("<span class='notice'>[src] spills its contents all over [IDENTITY_SUBJECT(1)].</span>", subjects=list(target))
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
 			return

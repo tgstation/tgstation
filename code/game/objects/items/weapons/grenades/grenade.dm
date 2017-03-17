@@ -102,6 +102,6 @@
 
 /obj/item/weapon/grenade/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(damage && attack_type == PROJECTILE_ATTACK && prob(15))
-		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
+		owner.visible_message("<span class='danger'>[attack_text] hits [IDENTITY_SUBJECT(1)]'s [src], setting it off! What a shot!</span>", subjects=list(owner))
 		prime()
 		return 1 //It hit the grenade, not them

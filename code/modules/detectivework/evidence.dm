@@ -42,8 +42,8 @@
 		else
 			return
 
-	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
-	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
+	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>", subjects=list(user))
 
 	icon_state = "evidence"
 
@@ -66,8 +66,8 @@
 /obj/item/weapon/evidencebag/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
-		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
+		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>", subjects=list(user))
 		cut_overlays()	//remove the overlays
 		user.put_in_hands(I)
 		w_class = WEIGHT_CLASS_TINY

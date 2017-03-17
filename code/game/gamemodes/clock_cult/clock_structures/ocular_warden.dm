@@ -94,7 +94,7 @@
 		if(validtargets.len)
 			target = pick(validtargets)
 			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,1)
-			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
+			visible_message("<span class='warning'>[src] swivels to face [IDENTITY_SUBJECT(1)]!</span>", subjects=list(target))
 			if(isliving(target))
 				var/mob/living/L = target
 				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>")

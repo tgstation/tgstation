@@ -25,8 +25,8 @@
 			M.changeNext_move(CLICK_CD_MELEE)
 			obj_integrity = min(max_integrity, obj_integrity + 5)
 			Beam(M, icon_state="sendbeam", time=4)
-			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
-				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
+			M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] repairs \the <b>[src]</b>.</span>", \
+				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>", subjects=list(M))
 		else
 			to_chat(M, "<span class='cult'>You cannot repair [src], as [p_they()] [p_are()] undamaged!</span>")
 	else

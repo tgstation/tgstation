@@ -21,7 +21,7 @@
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
-	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>", subjects=list(user))
 	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	push_over()
 
@@ -59,9 +59,9 @@
 	user.do_attack_animation(src)
 
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit \
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has hit \
 			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
-			with [I]!</span>")
+			with [I]!</span>", subjects=list(user))
 
 		if(prob(I.force))
 			push_over()
@@ -88,7 +88,7 @@
 		return
 	if(!do_after(user, 10, FALSE, src, TRUE))
 		return
-	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>", subjects=list(user))
 	crayon.use_charges(1)
 	crayon.check_empty(user)
 	alpha = 255

@@ -27,13 +27,13 @@
 					affected_mob.updatehealth()
 		if(4)
 			if(prob(10))
-				affected_mob.visible_message("<span class='danger'>[affected_mob] buzzes.</span>", \
-												"<span class='userdanger'>Your stomach buzzes violently!</span>")
+				affected_mob.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] buzzes.</span>", \
+												"<span class='userdanger'>Your stomach buzzes violently!</span>", subjects=list(affected_mob))
 			if(prob(5))
 				to_chat(affected_mob, "<span class='danger'>You feel something moving in your throat.</span>")
 			if(prob(1))
-				affected_mob.visible_message("<span class='danger'>[affected_mob] coughs up a swarm of bees!</span>", \
-													"<span class='userdanger'>You cough up a swarm of bees!</span>")
+				affected_mob.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] coughs up a swarm of bees!</span>", \
+													"<span class='userdanger'>You cough up a swarm of bees!</span>", subjects=list(affected_mob))
 				new /mob/living/simple_animal/hostile/poison/bees(affected_mob.loc)
 		//if(5)
 		//Plus if you die, you explode into bees

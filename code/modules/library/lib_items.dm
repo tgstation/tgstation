@@ -187,7 +187,7 @@
 		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
+		user.visible_message("[IDENTITY_SUBJECT(1)] opens a book titled \"[title]\" and begins reading intently.", subjects=list(user))
 		onclose(user, "book")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")

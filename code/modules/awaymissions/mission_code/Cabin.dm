@@ -23,7 +23,7 @@
 		var/msg = W.ignition_effect(src, user)
 		if(msg)
 			active = TRUE
-			visible_message(msg)
+			visible_message(msg, subjects=list(user))
 			toggleFirepit()
 		else
 			return ..()

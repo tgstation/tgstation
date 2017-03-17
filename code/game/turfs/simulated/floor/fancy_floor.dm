@@ -63,7 +63,7 @@
 	if(istype(C, /obj/item/weapon/shovel) && params)
 		new ore_type(src)
 		new ore_type(src) //Make some sand if you shovel grass
-		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You uproot [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] digs up [src].</span>", "<span class='notice'>You uproot [src].</span>", subjects=list(user))
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())

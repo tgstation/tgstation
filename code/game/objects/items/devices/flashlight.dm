@@ -55,12 +55,12 @@
 
 		if(M == user)	//they're using it on themselves
 			if(M.flash_act(visual = 1))
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+				M.visible_message("[IDENTITY_SUBJECT(1)] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>", subjects=list(M))
 			else
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
+				M.visible_message("[IDENTITY_SUBJECT(1)] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>", subjects=list(M))
 		else
-			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
-								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] directs [src] to [IDENTITY_SUBJECT(2)]'s eyes.</span>", \
+								 "<span class='danger'>You direct [src] to [IDENTITY_SUBJECT(2)]'s eyes.</span>", subjects=list(user, M))
 			var/mob/living/carbon/C = M
 			if(istype(C))
 				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
@@ -104,7 +104,7 @@
 	..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
-		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] created a medical hologram!</span>", subjects=list(creator))
 
 
 /obj/item/device/flashlight/seclite
@@ -183,7 +183,7 @@
 
 /obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
 	if(fuel && on)
-		. = "<span class='notice'>[user] lights [A] with [src] like a real \
+		. = "<span class='notice'>[IDENTITY_SUBJECT(1)] lights [A] with [src] like a real \
 			badass.</span>"
 	else
 		. = ""
@@ -218,7 +218,7 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>", subjects=list(user))
 		force = on_damage
 		damtype = "fire"
 		START_PROCESSING(SSobj, src)
@@ -294,8 +294,8 @@
 		if(ismob(A))
 			var/mob/M = A
 			add_logs(user, M, "attacked", "EMP-light")
-			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
-								"<span class='userdanger'>[user] blinks \the [src] at you.")
+			M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] blinks \the [src] at \the [IDENTITY_SUBJECT(2)].", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] blinks \the [src] at you.", subjects=list(user, M))
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
@@ -362,7 +362,7 @@
 
 	. = ..()
 	if(.)
-		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>", subjects=list(user))
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/glowstick/red

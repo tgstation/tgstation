@@ -39,8 +39,8 @@
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
 				return
-			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
-			playsound(src.loc, W.usesound, 50, 1)
+			user.visible_message("[IDENTITY_SUBJECT(1)] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
+			playsound(src.loc, W.usesound, 50, 1, subjects=list(user))
 			if(do_after(user, 35*W.toolspeed, target = src))
 				to_chat(user, "<span class='notice'>You deattach the [name].</span>")
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)

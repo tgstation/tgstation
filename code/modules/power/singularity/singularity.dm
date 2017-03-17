@@ -397,8 +397,8 @@
 
 /obj/singularity/proc/combust_mobs()
 	for(var/mob/living/carbon/C in urange(20, src, 1))
-		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
-						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
+		C.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s skin bursts into flame!</span>", \
+						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>", subjects=list(C))
 		C.adjust_fire_stacks(5)
 		C.IgniteMob()
 	return
@@ -419,8 +419,8 @@
 						return
 
 		M.apply_effect(3, STUN)
-		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
-						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] stares blankly at the [src.name]!</span>", \
+						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>", subjects=list(M))
 	return
 
 

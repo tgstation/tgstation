@@ -61,10 +61,10 @@
 		return
 
 	if(existing_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>", subjects=list(user))
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 		if(do_after(user, tool_speed, target = existing_message))
-			user.visible_message("<span class='notice'>[user] erases [existing_message].</span>", "<span class='notice'>You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] erases [existing_message].</span>", "<span class='notice'>You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""].</span>", subjects=list(user))
 			existing_message.persists = FALSE
 			qdel(existing_message)
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
@@ -81,10 +81,10 @@
 		to_chat(user, "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>")
 		return
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-	user.visible_message("<span class='notice'>[user] starts [w_engraving] a message into [T]...</span>", "<span class='notice'>You start [w_engraving] a message into [T]...</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts [w_engraving] a message into [T]...</span>", "<span class='notice'>You start [w_engraving] a message into [T]...</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>", subjects=list(user))
 	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
 		if(!locate(/obj/structure/chisel_message in T))
-			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You [w_engrave] a message into [T]!</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] leaves a message for future spacemen!</span>", "<span class='notice'>You [w_engrave] a message into [T]!</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>", subjects=list(user))
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
