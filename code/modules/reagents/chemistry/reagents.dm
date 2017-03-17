@@ -20,7 +20,6 @@
 	var/current_cycle = 0
 	var/volume = 0
 	var/color = "#000000" // rgb: 0, 0, 0
-	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
@@ -31,6 +30,9 @@
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
 	holder = null
+
+/datum/reagent/proc/CanSynth()
+	return SSatoms.CanSynthReagent(id)
 
 /datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))

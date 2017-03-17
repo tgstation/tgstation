@@ -32,7 +32,6 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	can_synth = 0
 	taste_description = "badmins"
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
@@ -1106,7 +1105,6 @@
 	description = "It's mining magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
-	can_synth = 0
 
 /datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
 	M.heal_bodypart_damage(5,5, 0)
