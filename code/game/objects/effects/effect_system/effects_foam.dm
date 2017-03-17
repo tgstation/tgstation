@@ -5,7 +5,7 @@
 	name = "foam"
 	icon_state = "foam"
 	opacity = 0
-	anchored = FALSE	//It's a corporeal effect!
+	anchored = TRUE
 	density = 0
 	layer = WALL_OBJ_LAYER
 	mouse_opacity = 0
