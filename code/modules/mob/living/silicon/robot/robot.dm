@@ -93,7 +93,7 @@
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
 
-/mob/living/silicon/robot/New(loc)
+/mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -816,7 +816,7 @@
 							<i>Help the operatives secure the disk at all costs!</i></b>"
 	var/set_module = /obj/item/weapon/robot_module/syndicate
 
-/mob/living/silicon/robot/syndicate/New(loc)
+/mob/living/silicon/robot/syndicate/Initialize()
 	..()
 	cell.maxcharge = 25000
 	cell.charge = 25000

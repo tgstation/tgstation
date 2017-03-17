@@ -37,13 +37,13 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 #define JUDGEMENT_CV_REQ 300
 
 //general component/cooldown things
-#define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute 30 seconds
+#define SLAB_PRODUCTION_TIME 600 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute 30 seconds
 
 #define SLAB_SERVANT_SLOWDOWN 300 //how much each servant above 5 slows down slab-based generation; defaults to 30 seconds per sevant
 
 #define SLAB_SLOWDOWN_MAXIMUM 2700 //maximum slowdown from additional servants; defaults to 4 minutes 30 seconds
 
-#define CACHE_PRODUCTION_TIME 900 //how long(deciseconds) caches require to produce a component; defaults to 1 minute 30 seconds
+#define CACHE_PRODUCTION_TIME 400 //how long(deciseconds) caches require to produce a component; defaults to 1 minute 30 seconds
 
 #define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
 

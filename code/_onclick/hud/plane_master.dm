@@ -28,3 +28,8 @@
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = 0
+
+/obj/screen/plane_master/lighting/proc/params2color(params)
+	color = params2list(params)
+/obj/screen/plane_master/lighting/proc/basecolor()
+	color = LIGHTING_BASE_MATRIX

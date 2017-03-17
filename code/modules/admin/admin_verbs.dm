@@ -65,6 +65,9 @@ var/list/admin_verbs_admin = list(
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
 	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
+	/client/proc/aooc,		 /* Antag OOC */
+	/client/proc/fill_breach,
+	/client/proc/reset_atmos, /* Clean air */
 	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
 	)
 var/list/admin_verbs_ban = list(

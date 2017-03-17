@@ -112,7 +112,7 @@
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
 	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
 	whispered = TRUE
-	channel_time = 20
+	channel_time = 10
 	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
@@ -135,14 +135,14 @@
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
 		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*3, 50)
+		channel_time = min(channel_time + servants*2, 50)
 	return ..()
 
 //The scripture that does the converting.
 /datum/clockwork_scripture/geis
 	name = "Geis Conversion"
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 49
+	channel_time = 25
 	tier = SCRIPTURE_PERIPHERAL
 	var/mob/living/target
 	var/obj/structure/destructible/clockwork/geis_binding/binding
