@@ -32,8 +32,10 @@
 	var/deconstruction_sound
 
 	var/examine_message	//null values do not adjust these
+
 	var/icon/icon
-	var/icon_state	//having this be null will trigger calls to update_icon
+	var/icon_state	//having both of these be null will trigger calls to update_icon
+
 	var/anchored
 
 	var/max_integrity   //null values do not adjust these, these should always be smaller for earlier construction steps
@@ -114,10 +116,9 @@
 
 	if(icon)
 		parent.icon = icon
-
 	if(icon_state)
 		parent.icon_state = icon_state
-	else
+	else if(!icon)
 		parent.update_icon()
 
 	if(!constructed && damage_reachable)

@@ -10,8 +10,6 @@
 	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 25
-	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
 	var/can_electrify = FALSE
@@ -30,9 +28,6 @@
 	else
 		can_electrify = TRUE
 	update_icon()
-
-/obj/structure/chair/Initialize()
-	..()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 
@@ -46,6 +41,8 @@
 CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 	. = newlist(
 		/datum/construction_state/first{
+			//required_type_to_construct = /obj/item/stack/sheet/metal
+			required_amount_to_construct = 1
 			construction_delay = 10
 			one_per_turf = 1
 			on_floor = 1
@@ -63,10 +60,12 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 		}
 	)
 	
-	var/datum/construction_state/F = .[1]
-	var/obj/structure/chair/O = obj_type
-	F.required_type_to_construct = initial(O.buildstacktype)
-	F.required_amount_to_construct = initial(O.buildstackamount)
+	//This is here to work around a byond bug
+	//http://www.byond.com/forum/?post=2220240
+	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
+
+	var/datum/construction_state/first/X = .[1]
+	X.required_type_to_construct = /obj/item/stack/sheet/metal
 
 /obj/structure/chair/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
 	. = ..()
@@ -75,14 +74,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 
 	if(state_started_id)	//not just constructed, must try to be making an echair
 		return can_electrify
-
-/obj/structure/chair/OnConstruction(state_id, mob/user, obj/item/used)
-	..()
-	update_icon()
-
-/obj/structure/chair/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
-	..()
-	update_icon()
 
 /obj/structure/chair/update_icon()
 	cut_overlays()
@@ -189,9 +180,13 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 	resistance_flags = FLAMMABLE
 	obj_integrity = 70
 	max_integrity = 70
-	buildstacktype = /obj/item/stack/sheet/mineral/wood
-	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair/wood, FALSE, FALSE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_type_to_construct = /obj/item/stack/sheet/mineral/wood
+	F.required_amount_to_construct = 3
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -212,9 +207,13 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 	resistance_flags = FLAMMABLE
 	obj_integrity = 70
 	max_integrity = 70
-	buildstackamount = 2
 	var/image/armrest = null
 	item_chair = null
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair/comfy, FALSE, FALSE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_amount_to_construct = 2
 
 /obj/structure/chair/comfy/Initialize()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
@@ -256,8 +255,12 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 /obj/structure/chair/office
 	bp_name = "office chair"
 	anchored = 0
-	buildstackamount = 5
 	item_chair = null
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair/office, FALSE, FALSE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_amount_to_construct = 5
 
 /obj/structure/chair/office/light
 	bp_name = "white office chair"
@@ -274,7 +277,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 	desc = "Apply butt."
 	icon_state = "stool"
 	can_buckle = 0
-	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
 /obj/structure/chair/stool/narsie_act()
