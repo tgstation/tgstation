@@ -909,6 +909,6 @@
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Edit", src)
+		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)
