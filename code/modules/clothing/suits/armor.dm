@@ -139,6 +139,17 @@
 	if (prob(hit_reflect_chance))
 		return 1
 
+/obj/item/clothing/suit/armor/swat
+	name = "MK.I SWAT Vest"
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 100, acid = 100)
+	desc = "A lightweight vest variant of the infamous tactical suit."
+	icon_state = "swatvest"
+	item_state = "armor"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
+	strip_delay = 120
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+
 /obj/item/clothing/suit/armor/vest/det_suit
 	name = "armor"
 	desc = "An armored vest with a detective's badge on it."
