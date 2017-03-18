@@ -41,3 +41,6 @@
 /obj/item/clothing/belt/hippie
 	alternate_worn_icon = 'hippiestation/icons/mob/belt.dmi'
 	icon = 'hippiestation/icons/obj/clothing/belts.dmi'
+
+/obj/item
+	var/list/alternate_screams = list()

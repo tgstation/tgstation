@@ -900,6 +900,7 @@
 	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
 	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
 	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
+	.["Make Cluwne"] = "?_src_=vars;cluwneing=\ref[src]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(user) || stat || user.stat)//Get consent first :^)
