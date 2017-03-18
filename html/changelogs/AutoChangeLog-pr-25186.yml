@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "The alert level is no longer lowered by a nuke's detonation."
