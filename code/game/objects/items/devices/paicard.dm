@@ -65,7 +65,7 @@
 		SSpai.findPAI(src, usr)
 
 	if(pai)
-		if(!(usr in range(src, 1)))
+		if(!(loc == usr))
 			return
 		if(href_list["setdna"])
 			if(pai.master_dna)
