@@ -9,6 +9,7 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 	name = "Lighting"
 	wait = 2
 	init_order = -20
+	priority = 35
 	flags = SS_TICKER
 
 	var/initialized = FALSE
@@ -30,7 +31,7 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 
 	create_all_lighting_objects()
 	initialized = TRUE
-	
+
 	fire(FALSE, TRUE)
 
 	..()
@@ -53,10 +54,8 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 		L.vis_update   = FALSE
 		L.force_update = FALSE
 		L.needs_update = FALSE
-		
-		if(init_tick_checks)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
+
+		if (MC_TICK_CHECK)
 			break
 	if (i)
 		lighting_update_lights.Cut(1, i+1)
@@ -69,9 +68,7 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 
 		C.update_objects()
 		C.needs_update = FALSE
-		if(init_tick_checks)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK)
 			break
 	if (i)
 		lighting_update_corners.Cut(1, i+1)
@@ -88,9 +85,7 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 
 		O.update()
 		O.needs_update = FALSE
-		if(init_tick_checks)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK)
 			break
 	if (i)
 		lighting_update_objects.Cut(1, i+1)
