@@ -14,6 +14,7 @@
 	var/origin_oldloc = null
 	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
+	var/timing_id = null
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
 	endtime = world.time+time
@@ -34,6 +35,7 @@
 	INVOKE_ASYNC(src, /datum/beam/.proc/recalculate)
 
 /datum/beam/proc/recalculate()
+	timing_id = null
 	if(origin && target && world.time < endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
 		var/origin_turf = get_turf(origin)
 		var/target_turf = get_turf(target)
@@ -50,10 +52,16 @@
 /datum/beam/proc/afterDraw()
 	return
 
+/datum/beam/proc/recalculate_in(time)
+	if(timing_id)
+		deltimer(timing_id)
+	timing_id = addtimer(CALLBACK(src, .proc/recalculate), time, TIMER_STOPPABLE)
+
 /datum/beam/proc/after_calculate()
 	if((sleep_time == null) || finished)	//Does not automatically recalculate.
 		return
-	addtimer(src, .proc/recalculate, sleep_time)
+	if(isnull(timing_id))
+		timing_id = addtimer(CALLBACK(src, .proc/recalculate), sleep_time, TIMER_STOPPABLE)
 
 /datum/beam/proc/End(destroy_self = TRUE)
 	finished = TRUE
