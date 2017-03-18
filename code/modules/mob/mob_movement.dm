@@ -8,7 +8,7 @@
 	if(buckled == mover)
 		return 1
 	if(ismob(mover))
-		if (mover in buckled_mobs)
+		if (mover in buckled_mobs || mover in src.buckled.buckled_mobs)
 			return 1
 	return (!mover.density || !density || lying)
 
