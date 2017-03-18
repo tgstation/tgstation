@@ -32,7 +32,7 @@
 	return TRUE
 
 /datum/riding/proc/force_dismount(mob/living/M)
-	Unbuckle(M)
+	ridden.unbuckle_mob(M)
 
 //Override this to set your vehicle's various pixel offsets
 //if they differ between directions, otherwise use the
@@ -254,24 +254,32 @@
 
 //SPEEDUWAGON
 
-/datum/riding/space/speedbike/speedwagon/handle_vehicle_offsets()
+/datum/riding/space/speedwagon
+	vehicle_move_delay = 0
+
+/datum/riding/space/speedwagon/handle_vehicle_offsets()
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.setDir(ridden.dir)
+			ridden.pixel_x = -48
+			ridden.pixel_y = -48
 			switch(ridden.dir)
 				if(NORTH)
-					buckled_mob.pixel_x = -5
-					buckled_mob.pixel_y = -5
+					buckled_mob.pixel_x = -10
+					buckled_mob.pixel_y = -3
 				if(SOUTH)
-					buckled_mob.pixel_x = 5
+					buckled_mob.pixel_x = 16
 					buckled_mob.pixel_y = 3
 				if(EAST)
-					buckled_mob.pixel_x = -8
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = -4
+					buckled_mob.pixel_y = 30
 				if(WEST)
-					buckled_mob.pixel_x = 8
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = 4
+					buckled_mob.pixel_y = -1
+
+/datum/riding/space/speedwagon/handle_vehicle_layer()
+	ridden.layer = BELOW_MOB_LAYER
 
 ///////////////BOATS////////////
 /datum/riding/boat
@@ -364,7 +372,7 @@
 		ridden.layer = MOB_LAYER
 
 /datum/riding/human/force_dismount(mob/living/user)
-	Unbuckle(user)
+	ridden.unbuckle_mob(user)
 	user.Weaken(3)
 	user.Stun(3)
 	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
@@ -424,7 +432,7 @@
 						M.pixel_y = 3
 
 /datum/riding/cyborg/force_dismount(mob/living/M)
-	Unbuckle(M)
+	ridden.unbuckle_mob(M)
 	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 	M.Move(targetm)

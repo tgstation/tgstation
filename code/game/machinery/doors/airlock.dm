@@ -89,6 +89,8 @@ var/list/airlock_overlays = list()
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
+	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+
 /obj/machinery/door/airlock/Initialize()
 	..()
 	wires = new /datum/wires/airlock(src)
@@ -1321,8 +1323,10 @@ var/list/airlock_overlays = list()
 	operating = 1
 	update_icon(AIRLOCK_CLOSING, 1)
 	src.layer = CLOSED_DOOR_LAYER
+	if(air_tight)
+		density = TRUE
 	sleep(5)
-	src.density = 1
+	density = TRUE
 	if(!safe)
 		crush()
 	sleep(9)
@@ -1528,3 +1532,17 @@ var/list/airlock_overlays = list()
 				electronics = null
 				ae.loc = src.loc
 	qdel(src)
+
+/obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+	return FALSE
+
+/obj/machinery/door/airlock/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the airlock.</span>")
+			qdel(src)
+			return TRUE
+	return FALSE

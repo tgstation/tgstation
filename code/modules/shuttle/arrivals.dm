@@ -19,6 +19,7 @@
 	var/list/queued_announces	//people coming in that we have to announce
 	var/obj/machinery/requests_console/console
 	var/force_depart = FALSE
+	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	if(mapload)
@@ -65,6 +66,14 @@
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
+	
+	if(perma_docked)
+		if(mode != SHUTTLE_CALL)
+			sound_played = FALSE
+			mode = SHUTTLE_IDLE
+		else		
+			SendToStation()
+		return
 
 	if(damaged)
 		if(!CheckTurfsPressure())
@@ -111,11 +120,10 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/A in areas)
-		for(var/mob/living/L in A)
-			//don't dock for braindead'
-			if(L.key && L.client && L.stat != DEAD)
-				return TRUE
+	for(var/M in (living_mob_list & player_list))
+		var/mob/living/L = M
+		if((get_area(M) in areas) && L.stat != DEAD)
+			return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
@@ -174,4 +182,13 @@
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
-	LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+	if(mode != SHUTTLE_CALL)
+		AnnounceArrival(mob, rank)
+	else
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+
+/obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("perma_docked")
+			feedback_add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
+	return ..()

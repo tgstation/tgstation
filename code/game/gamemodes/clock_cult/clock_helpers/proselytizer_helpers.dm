@@ -52,7 +52,10 @@
 	if(is_blocked_turf(src, TRUE))
 		to_chat(user, "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
 		return TRUE
-	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
+	var/operation_time = 100
+	if(proselytizer.speed_multiplier > 0)
+		operation_time /= proselytizer.speed_multiplier
+	return list("operation_time" = operation_time, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 //False wall conversion
 /obj/structure/falsewall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

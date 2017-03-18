@@ -66,6 +66,7 @@
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
+		instance.backdrop(mymob)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -216,7 +217,7 @@
 	..()
 	hidden_inventory_update(viewmob)
 
-/datum/hud/robot/show_hud(version = 0)
+/datum/hud/robot/show_hud(version = 0, mob/viewmob)
 	..()
 	update_robot_modules_display()
 

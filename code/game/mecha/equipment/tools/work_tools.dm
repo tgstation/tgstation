@@ -204,7 +204,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
  	rcd_list -= src
- 	..()
+ 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
 	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
