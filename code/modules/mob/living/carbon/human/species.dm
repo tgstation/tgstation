@@ -18,11 +18,9 @@
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/face_y_offset = 0
-	var/face_x_offset = 0
 
 
 	var/hair_y_offset = 0
-	var/hair_x_offset = 0
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
@@ -239,7 +237,6 @@
 					img_hair.color = forced_colour
 				img_hair.alpha = hair_alpha
 				img_hair.pixel_y += hair_y_offset
-				img_hair.pixel_x += hair_x_offset
 				standing += img_hair
 
 	if(standing.len)
@@ -268,7 +265,6 @@
 			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]", "layer" = -BODY_LAYER)
 			lips.color = H.lip_color
 			lips.pixel_y += face_y_offset
-			lips.pixel_x += face_x_offset
 			standing	+= lips
 
 		// eyes
