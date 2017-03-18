@@ -2,7 +2,7 @@
 	name = "butt"
 	desc = "extremely treasured body part"
 	alternate_worn_icon = 'hippiestation/icons/mob/head.dmi'
-	icon = 'hippiestation/icons/obj/items/butt.dmi'
+	icon = 'hippiestation/icons/obj/butts.dmi'
 	icon_state = "butt"
 	item_state = "butt"
 	zone = "groin"
