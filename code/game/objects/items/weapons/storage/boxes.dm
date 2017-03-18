@@ -29,6 +29,8 @@
 	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
+	icon = 'hippiestation/icons/obj/storage.dmi'
+	pixel_y = 6
 
 /obj/item/weapon/storage/box/Initialize()
 	. = ..()
@@ -550,7 +552,7 @@
 
 /obj/item/weapon/storage/box/lights
 	name = "box of replacement bulbs"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'hippiestation/icons/obj/storage.dmi'
 	illustration = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	item_state = "syringe_kit"

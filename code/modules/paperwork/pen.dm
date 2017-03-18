@@ -13,7 +13,7 @@
 /obj/item/weapon/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'hippiestation/icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
 	slot_flags = SLOT_BELT | SLOT_EARS
