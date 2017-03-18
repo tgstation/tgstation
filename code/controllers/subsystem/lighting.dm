@@ -30,12 +30,10 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 
 	create_all_lighting_objects()
 	initialized = TRUE
-	
-	fire(FALSE, TRUE)
 
 	..()
 
-/datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
+/datum/controller/subsystem/lighting/fire()
 	var/real_tick_limit = CURRENT_TICKLIMIT
 	CURRENT_TICKLIMIT = (real_tick_limit - world.tick_usage)/3
 	var/i = 0
@@ -53,10 +51,8 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 		L.vis_update   = FALSE
 		L.force_update = FALSE
 		L.needs_update = FALSE
-		
-		if(init_tick_checks)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
+
+		if (MC_TICK_CHECK)
 			break
 	if (i)
 		lighting_update_lights.Cut(1, i+1)
@@ -69,9 +65,7 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 
 		C.update_objects()
 		C.needs_update = FALSE
-		if(init_tick_checks)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK)
 			break
 	if (i)
 		lighting_update_corners.Cut(1, i+1)
@@ -88,9 +82,7 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 
 		O.update()
 		O.needs_update = FALSE
-		if(init_tick_checks)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK)
 			break
 	if (i)
 		lighting_update_objects.Cut(1, i+1)
