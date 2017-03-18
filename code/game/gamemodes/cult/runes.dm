@@ -847,6 +847,7 @@ var/list/wall_runes = list()
 	invocation = "Dedo ol'btoh!"
 	icon_state = "4"
 	color = "#C80000"
+	light_color = LIGHT_COLOR_LAVA
 	req_cultists = 3
 	construct_invoke = 0
 	var/tick_damage = 25

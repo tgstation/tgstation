@@ -9,6 +9,7 @@
 	dynamic_lighting = new_dynamic_lighting
 
 	if (IS_DYNAMIC_LIGHTING(src))
+		cut_overlay(/obj/effect/fullbright)
 		for (var/turf/T in area_contents(src))
 			if (IS_DYNAMIC_LIGHTING(T))
 				T.lighting_build_overlay()

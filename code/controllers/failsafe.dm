@@ -20,6 +20,7 @@ var/datum/controller/failsafe/Failsafe
 
 	// Track the MC iteration to make sure its still on track.
 	var/master_iteration = 0
+	var/running = TRUE
 
 /datum/controller/failsafe/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -32,14 +33,16 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/Initialize()
 	set waitfor = 0
 	Failsafe.Loop()
-	qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
+	if(!QDELETED(src))
+		qdel(src) //when Loop() returns, we delete ourselves and let the mc recreate us
 
 /datum/controller/failsafe/Destroy()
+	running = FALSE
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
 /datum/controller/failsafe/proc/Loop()
-	while(1)
+	while(running)
 		lasttick = world.time
 		if(!Master)
 			// Replace the missing Master! This should never, ever happen.
@@ -94,6 +97,6 @@ var/datum/controller/failsafe/Failsafe
 
 /datum/controller/failsafe/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
 	stat("Failsafe Controller:", statclick.update("Defcon: [defcon_pretty()] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.master_iteration])"))
