@@ -56,7 +56,8 @@
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
-		M.copy_overlays(disguise, TRUE)
+		M.cut_overlays()
+		M.add_overlay(disguise.overlays)
 		M.update_inv_hands()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
