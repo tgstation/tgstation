@@ -271,7 +271,18 @@
 
 	var/new_colour = pick("red", "orange")
 	var/mob/living/simple_animal/slime/S = new(T, new_colour)
-	S.rabid = 1
+	S.rabid = TRUE
+	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
+	S.Evolve()
+
+	spawn(0)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [S.name]?", null, null, 0, 300, S, null)
+		var/mob/dead/observer/chosen = null
+
+		if(candidates.len)
+			chosen = pick(candidates)
+			message_admins("[key_name_admin(chosen)] was spawned as [S.name]")
+			S.key = chosen.key
 
 /////////////////////
 
