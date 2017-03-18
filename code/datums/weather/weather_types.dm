@@ -184,3 +184,33 @@
 		status_signal.data["picture_state"] = "radiation"
 
 	frequency.post_signal(src, status_signal)
+
+
+/datum/weather/acid_rain
+	name = "acid rain"
+	desc = "Chocolate Rain."
+
+	telegraph_duration = 400
+	telegraph_message = "<span class='danger'>Stinging droplets start to fall upon you..</span>"
+	telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'
+
+	weather_message = "<span class='userdanger'><i>Your skin melts underneath the rain!</i></span>"
+	weather_overlay = "acid_rain"
+	weather_duration_lower = 600
+	weather_duration_upper = 1500
+	weather_sound = 'sound/lavaland/ash_storm_start.ogg'
+
+	end_duration = 100
+	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
+	end_sound = 'sound/lavaland/ash_storm_end.ogg'
+
+	area_type = /area/lavaland/surface/outdoors
+	target_z = ZLEVEL_LAVALAND
+
+	immunity_type = "ash" // temp
+
+
+/datum/weather/acid_rain/impact(mob/living/L)
+	var/resist = L.getarmor(null, "acid")
+	if(prob(max(0,100-resist)))
+		L.acid_act(20,20)
