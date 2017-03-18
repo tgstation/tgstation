@@ -634,7 +634,13 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/list/possible_sutandos = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+
+	var/list/chosen_abilities = list()
+	var/totalvalue = 0
+	var/allowedvalue = 10
+	var/chosen_ability = null
+
+	var/possible_candidates
 	var/random = TRUE
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
@@ -666,57 +672,29 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 		user << "[failure_message]"
 		used = FALSE
 
+/obj/item/weapon/sutandocreator/proc/pick_stando()
+	var/datum/sutando_abilities/S = chosen_ability
+	S = pick(possible_candidates)
+	S.value += totalvalue
+	possible_candidates -= S
+	chosen_abilities |= S
+
 
 /obj/item/weapon/sutandocreator/proc/spawn_sutando(var/mob/living/user, var/key)
-	var/sutandotype = "Standard"
 	if(random)
-		sutandotype = pick(possible_sutandos)
-	else
-		sutandotype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_sutandos
-		if(!sutandotype)
-			user << "[failure_message]" //they canceled? sure okay don't force them into it
-			used = FALSE
-			return
-	var/pickedtype = /mob/living/simple_animal/hostile/sutando/punch
-	switch(sutandotype)
-
-		if("Chaos")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/fire
-
-		if("Standard")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/punch
-
-		if("Ranged")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/ranged
-
-		if("Support")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/healer
-
-		if("Explosive")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/bomb
-
-		if("Lightning")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/beam
-
-		if("Protector")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/protector
-
-		if("Charger")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/charger
-
-		if("Assassin")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/assassin
-
-		if("Dextrous")
-			pickedtype = /mob/living/simple_animal/hostile/sutando/dextrous
-
+		for(var/ability in subtypesof(/datum/sutando_abilities))
+			var/datum/sutando_abilities/A = ability
+			if(A.value <= allowedvalue)
+				A += possible_candidates
+		while(totalvalue <= allowedvalue)
+			pick_stando()
 	var/list/sutandos = user.hasparasites()
 	if(sutandos.len && !allowmultiple)
 		user << "<span class='holoparasite'>You already have a [mob_name]!</span>" //nice try, bucko
 		used = FALSE
 		return
-	var/mob/living/simple_animal/hostile/sutando/G = new pickedtype(user, theme)
-	G.summoner = user
+	var/mob/living/simple_animal/hostile/sutando/G = new
+	G.abilities += chosen_abilities
 	G.key = key
 	G.mind.enslave_mind_to_creator(user)
 	switch(theme)
@@ -736,11 +714,8 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 /obj/item/weapon/sutandocreator/choose
 	random = FALSE
 
-/obj/item/weapon/sutandocreator/choose/dextrous
-	possible_sutandos = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/sutandocreator/choose/wizard
-	possible_sutandos = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
 /obj/item/weapon/sutandocreator/tech
@@ -755,14 +730,10 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
-/obj/item/weapon/sutandocreator/tech/choose/traitor
-	possible_sutandos = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/sutandocreator/tech/choose
 	random = FALSE
 
-/obj/item/weapon/sutandocreator/tech/choose/dextrous
-	possible_sutandos = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/paper/sutando
 	name = "Holoparasite Guide"
@@ -822,7 +793,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /obj/item/weapon/storage/box/syndie_kit/sutando/New()
 	..()
-	new /obj/item/weapon/sutandocreator/tech/choose/traitor(src)
+	new /obj/item/weapon/sutandocreator/tech/choose(src)
 	new /obj/item/weapon/paper/sutando(src)
 	return
 
