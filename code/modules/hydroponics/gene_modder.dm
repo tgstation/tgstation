@@ -60,7 +60,7 @@
 		max_wchance = ML.rating*16+3 // 19,35,51,67 	Clamps at 67
 	for(var/obj/item/weapon/circuitboard/machine/plantgenes/vaultcheck in component_parts)
 		if(istype(vaultcheck, /obj/item/weapon/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
-			max_potency = 100 // See 36 for how these work
+			max_potency = 100
 			max_yield = 10
 			min_production = 1
 			max_endurance = 100
