@@ -48,7 +48,7 @@
 /obj/machinery/atmos_points_exporter
 	name = "atmospheric canister exporter"
 	desc = "used to export canisters for engineering points"
-	icon = 'icons/obj/machines/teleporter.dmi'
+	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "floorflush_c"
 	verb_say = "states"
 	density = FALSE

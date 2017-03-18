@@ -47,14 +47,6 @@ obj/machinery/power/exporter/Destroy()
 	if (!anchored)
 		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
 		return
-	if (power_drained >= 10000000 && !rewarded) // 10 billion watts
-		rewarded = TRUE
-		visible_message("<span class='danger'>You have been blessed by the gods of engineering for your massive power exports!</span>")
-		new /obj/effect/overlay/temp/explosion/fast(get_turf(src))
-		playsound(src, 'sound/effects/pray_chaplain.ogg', 100, 1)
-		for(var/i in 1 to 3)
-			new /obj/item/clothing/head/orange_beret(get_turf(src))
-			new /obj/item/clothing/suit/poncho/engiponcho(get_turf(src))
 	interact(user)
 
 /obj/machinery/power/exporter/attack_ai(mob/user)
