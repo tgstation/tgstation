@@ -395,7 +395,8 @@ Proc for attack log creation, because really why not
 					continue
 
 		if(isobserver(M))
-			var/rendered_message
+			var/rendered_message = message
+
 			if(follow_target)
 				var/F
 				if(turf_target)
@@ -403,10 +404,10 @@ Proc for attack log creation, because really why not
 				else
 					F = FOLLOW_LINK(M, follow_target)
 				rendered_message = "[F] [message]"
-				to_chat(M, rendered_message)
 			else if(turf_target)
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
-				to_chat(M, rendered_message)
+
+			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
