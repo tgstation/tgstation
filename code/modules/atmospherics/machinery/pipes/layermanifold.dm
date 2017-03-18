@@ -37,8 +37,7 @@
 	build_network()	//WE WILL SURVIVE!
 	..()
 
-/*
-/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
+/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	var/invis = invisibility ? "-f" : ""
 	icon_state = "[initial(icon_state)][invis]"
 	overlays.Cut()
@@ -66,7 +65,6 @@
 					I.pixel_y = layer_diff * PIPING_LAYER_P_Y
 					I.pixel_x = 4
 			add_overlay(I)
-*/
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)
