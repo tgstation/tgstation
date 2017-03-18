@@ -924,15 +924,15 @@ var/list/ai_list = list()
 		to_chat(src, "<span class='danger'>Wireless networking module is offline.</span>")
 		return
 
-	if(!LAZYLEN(available_ai_shells))
-		to_chat(src, "No AI shell beacons detected.")
-
 	var/list/possible = list()
 
 	for(var/borgie in available_ai_shells)
 		var/mob/living/silicon/robot/R = borgie
 		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
 			possible += R
+
+	if(!LAZYLEN(possible))
+		to_chat(src, "No usable AI shell beacons detected.")
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
 		target = input(src, "Which body to control?") as null|anything in possible

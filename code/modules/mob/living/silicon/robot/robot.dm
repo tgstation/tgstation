@@ -1096,6 +1096,11 @@
 	mainframe.show_laws() //Always remind the AI when switching
 	mainframe = null
 
+/mob/living/silicon/robot/attack_ai(mob/user)
+	if(shell && (!connected_ai || connected_ai == user))
+		var/mob/living/silicon/ai/AI = user
+		AI.deploy_to_shell(src)
+
 /mob/living/silicon/robot/shell
 	shell = TRUE
 
