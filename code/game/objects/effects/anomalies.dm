@@ -265,9 +265,9 @@
 		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
 
 /obj/effect/anomaly/pyro/detonate()
-	INVOKE_ASYNC(src, .proc/makeslime)
+	INVOKE_ASYNC(src, .proc/makepyroslime)
 
-/obj/effect/anomaly/pyro/proc/makeslime()
+/obj/effect/anomaly/pyro/proc/makepyroslime()
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
@@ -276,14 +276,7 @@
 	S.rabid = TRUE
 	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
 	S.Evolve()
-
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [S.name]?", null, null, 0, 300, S, null)
-	var/mob/dead/observer/chosen = null
-
-	if(candidates.len)
-		chosen = pick(candidates)
-		message_admins("[key_name_admin(chosen)] was spawned as [S.name]")
-		S.key = chosen.key
+	offer_control(S)
 
 /////////////////////
 
