@@ -177,7 +177,8 @@
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
 	light_color = LIGHT_COLOR_BLUE
-	var/lon_range = 3
+	light_power = 0.5
+	var/lon_range = 4
 	var/node_range = NODERANGE
 
 /obj/structure/alien/weeds/node/Initialize()
