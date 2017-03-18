@@ -15,7 +15,6 @@
 	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
 
-
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
 	endtime = world.time+time
 	origin = beam_origin
@@ -31,10 +30,11 @@
 	icon_state = beam_icon_state
 	beam_type = btype
 
-
 /datum/beam/proc/Start()
-	Draw()
-	while(!finished && origin && target && world.time < endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
+	INVOKE_ASYNC(src, /datum/beam/.proc/recalculate)
+
+/datum/beam/proc/recalculate()
+	if(origin && target && world.time < endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
 		var/origin_turf = get_turf(origin)
 		var/target_turf = get_turf(target)
 		if(!static_beam && (origin_turf != origin_oldloc || target_turf != target_oldloc))
@@ -42,19 +42,21 @@
 			target_oldloc = target_turf
 			Reset()
 			Draw()
-		sleep(sleep_time)
-	if(!QDELETED(src))
-		qdel(src)
+			afterDraw()
 
+/datum/beam/proc/afterDraw()
+	if((sleep_time = null) || finished)	//Does not automatically recalculate.
+		return
+	addtimer(src, .proc/recalculate, sleep_time)
 
-/datum/beam/proc/End()
+/datum/beam/proc/End(destroy_self = TRUE)
 	finished = TRUE
-
+	if(!QDELETED(src) && destroy_self)
+		qdel(src)
 
 /datum/beam/proc/Reset()
 	for(var/obj/effect/ebeam/B in elements)
 		qdel(B)
-
 
 /datum/beam/Destroy()
 	Reset()
@@ -62,10 +64,8 @@
 	origin = null
 	return ..()
 
-
 /datum/beam/proc/Draw()
 	var/Angle = round(Get_Angle(origin,target))
-
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
 
@@ -117,20 +117,16 @@
 		X.pixel_y = Pixel_y
 		CHECK_TICK
 
-
 /obj/effect/ebeam
 	mouse_opacity = 0
 	anchored = 1
 	var/datum/beam/owner
 
-
 /obj/effect/ebeam/Destroy()
 	owner = null
 	return ..()
-
 
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)
 	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
 	return newbeam
-
