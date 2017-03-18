@@ -763,6 +763,15 @@ var/next_mob_id = 0
 	mob_spell_list += S
 	S.action.Grant(src)
 
+/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
+	if(!spell)
+		return
+	for(var/X in mob_spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(istype(S, spell))
+			mob_spell_list -= S
+			qdel(S)
+
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir)))

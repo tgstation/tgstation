@@ -230,7 +230,8 @@
 
 	enslaved_to = creator
 
-	current.faction = creator.faction.Copy()
+	current.faction |= creator.faction
+	creator.faction |= current.faction
 
 	if(creator.mind.special_role)
 		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
@@ -1502,13 +1503,14 @@
 	S.action.Grant(current)
 
 //To remove a specific spell from a mind
-/datum/mind/proc/RemoveSpell(var/obj/effect/proc_holder/spell/spell)
-	if(!spell) return
+/datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
+	if(!spell)
+		return
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(istype(S, spell))
-			qdel(S)
 			spell_list -= S
+			qdel(S)
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)

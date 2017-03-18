@@ -3,6 +3,7 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -55,7 +56,7 @@
 			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
-	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE) || !isliving(target))
 		return
 
 	if(attached)

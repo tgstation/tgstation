@@ -32,6 +32,13 @@
 
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
 
+	//These allow head/mask items to dynamically alter the user's hair
+	// and facial hair, checking hair_extensions.dmi and facialhair_extensions.dmi
+	// for a state matching hair_state+dynamic_hair_suffix
+	// THESE OVERRIDE THE HIDEHAIR FLAGS
+	var/dynamic_hair_suffix = ""//head > mask for head hair
+	var/dynamic_fhair_suffix = ""//mask > head for facial hair
+
 /obj/item/clothing/New()
 	..()
 	if(ispath(pockets))

@@ -681,7 +681,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = lastused_total,
 		"coverLocked" = coverlocked,
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
