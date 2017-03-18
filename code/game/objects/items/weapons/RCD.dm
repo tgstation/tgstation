@@ -5,6 +5,12 @@ CONTAINS:
 RCD
 ARCD
 */
+
+
+/*
+CONTAINS:
+RCD
+*/
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build and deconstruct walls and floors."
@@ -378,24 +384,21 @@ ARCD
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
 
-<<<<<<< HEAD
+
+/obj/item/weapon/rcd/admin
+	name = "admin RCD"
+	max_matter = INFINITY
+	matter = INFINITY
+
+
 /obj/item/weapon/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
 	max_matter = 300
 	matter = 300
 	color = "red"
 
-	/* Build delays (deciseconds) */
 
-	walldelay = 10
-	grilledelay = 5
-	windowdelay = 5
-	airlockdelay = 20
-	decongirderdelay = 10
-	deconwalldelay = 20
-	deconfloordelay = 30
-	deconwindowdelay = 20
-	deconairlockdelay = 20
+// Ranged RCD
 
 
 /obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
@@ -668,10 +671,3 @@ ARCD
 		to_chat(user, no_ammo_message)
 		user << 'sound/misc/compiler-failure.ogg'
 	return .
-=======
-
-/obj/item/weapon/rcd/admin
-	name = "admin RCD"
-	max_matter = INFINITY
-	matter = INFINITY
->>>>>>> 983fddda4c79a67116dc491819a7a5c6274939c1

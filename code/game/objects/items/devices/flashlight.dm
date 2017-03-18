@@ -406,8 +406,6 @@
 	color = initial(glowtype.color)
 	. = ..()
 
-<<<<<<< HEAD
-
 /obj/item/device/flashlight/spotlight //invisible lighting source
 	name = "disco lighting"
 	icon_state = "null"
@@ -421,7 +419,7 @@
 	anchored = TRUE
 	var/range = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-=======
+
 /obj/item/device/flashlight/flashdark
 	name = "flashdark"
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
@@ -429,4 +427,3 @@
 	item_state = "flashdark"
 	brightness_on = 2.5
 	flashlight_power = -3
->>>>>>> 983fddda4c79a67116dc491819a7a5c6274939c1

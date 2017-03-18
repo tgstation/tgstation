@@ -723,7 +723,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
 	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()	
+	var/icon/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
 		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
 		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
@@ -1425,8 +1425,6 @@ var/valid_HTTPSGet = FALSE
 
 /proc/to_chat(target, message)
 	target << message
-<<<<<<< HEAD
 
 #define UNTIL(X) while(!(X)) stoplag()
-=======
->>>>>>> 983fddda4c79a67116dc491819a7a5c6274939c1
+
