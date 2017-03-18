@@ -1740,10 +1740,6 @@
 		message_admins("[key_name_admin(usr)] punished [key_name_admin(H)] with [punishment].")
 		log_admin("[key_name(usr)] punished [key_name(H)] with [punishment].")
 
-	else if(href_list["BlueSpaceArtillery"])
-		var/mob/living/M = locate(href_list["BlueSpaceArtillery"]) in mob_list
-		usr.client.bluespace_artillery(M)
-
 	else if(href_list["CentcommReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"]) in mob_list
 		if(!istype(H))
