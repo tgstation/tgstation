@@ -13986,7 +13986,8 @@
 	departmentType = 0;
 	name = "Bar RC";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	receive_ore_updates = 1
 	},
 /obj/item/weapon/book/manual/barman_recipes,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
@@ -79701,7 +79702,8 @@
 	departmentType = 0;
 	name = "Xenobiology RC";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology - Starboard";
@@ -83133,6 +83135,7 @@
 	name = "Research RC";
 	pixel_x = 32;
 	pixel_y = 0
+	receive_ore_updates = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Science - Research and Development";
@@ -84652,7 +84655,8 @@
 	departmentType = 0;
 	name = "Chemistry RC";
 	pixel_x = 0;
-	pixel_y = -64
+	pixel_y = -64;
+	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -90819,7 +90823,8 @@
 	departmentType = 5;
 	name = "Research Director's RC";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -93407,7 +93412,8 @@
 	departmentType = 0;
 	name = "Robotics RC";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	receive_ore_updates = 1
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -95889,7 +95895,8 @@
 	departmentType = 0;
 	name = "Toxins RC";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -104734,7 +104741,8 @@
 	departmentType = 0;
 	name = "Virology RC";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	receive_ore_updates = 1
 	},
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen/red,
