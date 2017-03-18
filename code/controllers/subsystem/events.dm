@@ -93,9 +93,9 @@ var/datum/controller/subsystem/events/SSevent
 
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/E)
 	. = E.preRunEvent()
-	if(!.)//we couldn't run this event for some reason, set its max_occurrences to 0
+	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
-	else
+	else if(. != EVENT_CANCELLED)
 		E.runEvent(TRUE)
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!

@@ -149,38 +149,39 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/players = clients.len
 	var/list/mapvotes = list()
 	//count votes
-	for (var/client/c in clients)
-		var/vote = c.prefs.preferred_map
-		if (!vote)
-			if (global.config.defaultmap)
-				mapvotes[global.config.defaultmap.map_name] += 1
-			continue
-		mapvotes[vote] += 1
+	if(global.config.allow_map_voting)
+		for (var/client/c in clients)
+			var/vote = c.prefs.preferred_map
+			if (!vote)
+				if (global.config.defaultmap)
+					mapvotes[global.config.defaultmap.map_name] += 1
+				continue
+			mapvotes[vote] += 1
 
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-		if (!(map in global.config.maplist))
-			mapvotes.Remove(map)
-			continue
-		var/datum/map_config/VM = global.config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_min_users > 0 && players < VM.config_min_users)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_max_users > 0 && players > VM.config_max_users)
-			mapvotes.Remove(map)
-			continue
+		//filter votes
+		for (var/map in mapvotes)
+			if (!map)
+				mapvotes.Remove(map)
+			if (!(map in global.config.maplist))
+				mapvotes.Remove(map)
+				continue
+			var/datum/map_config/VM = global.config.maplist[map]
+			if (!VM)
+				mapvotes.Remove(map)
+				continue
+			if (VM.voteweight <= 0)
+				mapvotes.Remove(map)
+				continue
+			if (VM.config_min_users > 0 && players < VM.config_min_users)
+				mapvotes.Remove(map)
+				continue
+			if (VM.config_max_users > 0 && players > VM.config_max_users)
+				mapvotes.Remove(map)
+				continue
 
-		mapvotes[map] = mapvotes[map]*VM.voteweight
+			mapvotes[map] = mapvotes[map]*VM.voteweight
 
-	var/pickedmap = pickweight(mapvotes)
+	var/pickedmap = global.config.allow_map_voting ? pickweight(mapvotes) : pick(global.config.maplist)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]
