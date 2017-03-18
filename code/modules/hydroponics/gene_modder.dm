@@ -55,6 +55,15 @@
 		var/wratemod = ML.rating*2.5
 		max_wrate = Floor(wratemod,1) // 2,5,7,10	Clamps at 10
 		max_wchance = ML.rating*16+3 // 19,35,51,67 	Clamps at 67
+	for(var/obj/item/weapon/circuitboard/machine/plantgenes/vaultcheck in component_parts)
+		if(istype(vaultcheck, /obj/item/weapon/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
+			max_potency = 100 // See 36 for how these work
+			max_yield = 10
+			min_production = 1
+			max_endurance = 100
+			max_wchance = 67
+			max_wrate = 10
+
 
 /obj/machinery/plantgenes/update_icon()
 	..()
