@@ -222,6 +222,7 @@
 	anchored = TRUE
 	obj_integrity = 100
 	max_integrity = 100
+	integrity_failure = 5
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 	var/obj/item/clothing/mask/facehugger/child
@@ -236,6 +237,8 @@
 		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 	if(status == GROWN)
 		add_to_proximity_list(src, 1)
+	if(status == BURST)
+		obj_integrity = integrity_failure
 
 /obj/structure/alien/egg/Destroy()
 	remove_from_proximity_list(src, 1)
@@ -310,14 +313,10 @@
 		add_to_proximity_list(src, 1)
 	return ..()
 
-/obj/structure/alien/egg/deconstruct()
+/obj/structure/alien/egg/obj_break(damage_flag)
 	if(!(flags & NODECONSTRUCT))
 		if(status != BURST)
-			Burst()
-		else if(status == BURST)
-			qdel(src)	//Remove the egg after it has been hit after bursting.
-	else
-		qdel(src)
+			Burst(kill=TRUE)
 
 /obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
