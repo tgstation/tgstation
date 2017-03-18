@@ -546,9 +546,12 @@
 /obj/structure/cloth_pile/Destroy()
 	if(cloth_golem)
 		QDEL_NULL(cloth_golem)
+	return ..()
+
+/obj/structure/cloth_pile/burn()
 	visible_message("<span class='danger'>[src] burns into ash!</span>")
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
-	return ..()
+	..()
 
 /obj/structure/cloth_pile/proc/revive()
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
