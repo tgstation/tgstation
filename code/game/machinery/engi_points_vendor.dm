@@ -52,7 +52,8 @@
 		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				16000,	5),
 		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,							20000,	5),
 		new /datum/GBP_equipment("Nuclear Construction Device",			/obj/machinery/construction_nuke,					22500,	1),
-		new /datum/GBP_equipment("Engineering's Pinnacle x4",		/obj/vehicle/space/speedbike/engiwagon,					30000,	4),
+		new /datum/GBP_equipment("Pinnacle, two-seater x4",		/obj/vehicle/space/speedbike/engiwagon,						30000,	4),
+		new /datum/GBP_equipment("Ascension, four-seater",		/obj/vehicle/space/speedbike/engiwagon,						30000,	1),
 		)
 
 /datum/GBP_equipment

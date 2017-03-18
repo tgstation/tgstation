@@ -64,9 +64,10 @@
 
 //MOVEMENT
 /datum/riding/proc/handle_ride(mob/user, direction)
-	if(user.incapacitated())
-		Unbuckle(user)
-		return
+	for(var/mob/rider in ridden.buckled_mobs)
+		if(rider.incapacitated())
+			Unbuckle(rider)
+			return
 	if(world.time < next_vehicle_move)
 		return
 	var/turf/targetm = get_step(get_turf(ridden), direction)
@@ -75,11 +76,6 @@
 		if(!Process_Spacemove(direction) || !isturf(ridden.loc))
 			return
 		ridden.Move(targetm)
-		for(var/mob/living/rider in ridden.buckled_mobs)
-			if(rider==ridden.buckled_mobs[1])
-				continue
-			to_chat(rider, "<span class='notice'>YOURE MOVING.</span>")
-			rider.Move(targetm)
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
@@ -370,25 +366,81 @@ datum/riding/space/speedbike/atmos
 	vehicle_move_delay = 0
 
 /datum/riding/space/speedwagon/handle_vehicle_offsets()
+	var/seat_number = 0
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
 			var/mob/living/buckled_mob = m
+			seat_number++
 			buckled_mob.setDir(ridden.dir)
 			ridden.pixel_x = -48
 			ridden.pixel_y = -48
-			switch(ridden.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = -10
-					buckled_mob.pixel_y = -3
-				if(SOUTH)
-					buckled_mob.pixel_x = 16
-					buckled_mob.pixel_y = 3
-				if(EAST)
-					buckled_mob.pixel_x = -4
-					buckled_mob.pixel_y = 30
-				if(WEST)
-					buckled_mob.pixel_x = 4
-					buckled_mob.pixel_y = -1
+			if(seat_number == 1)
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = -10
+						buckled_mob.pixel_y = -4
+					if(SOUTH)
+						buckled_mob.pixel_x = 16
+						buckled_mob.pixel_y = 3
+					if(EAST)
+						buckled_mob.pixel_x = -4
+						buckled_mob.pixel_y = 30
+					if(WEST)
+						buckled_mob.pixel_x = 4
+						buckled_mob.pixel_y = -3
+
+			if(seat_number == 2)
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = 19
+						buckled_mob.pixel_y = -5
+						buckled_mob.layer = 4
+					if(SOUTH)
+						buckled_mob.pixel_x = -13
+						buckled_mob.pixel_y = 3
+						buckled_mob.layer = 4
+					if(EAST)
+						buckled_mob.pixel_x = -4
+						buckled_mob.pixel_y = -3
+						buckled_mob.layer = 4.1
+					if(WEST)
+						buckled_mob.pixel_x = 4
+						buckled_mob.pixel_y = 28
+						buckled_mob.layer = 3.9
+			if(seat_number == 3)
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = -10
+						buckled_mob.pixel_y = -18
+						buckled_mob.layer = 4.2
+					if(SOUTH)
+						buckled_mob.pixel_x = 16
+						buckled_mob.pixel_y = 25
+						buckled_mob.layer = 3.9
+					if(EAST)
+						buckled_mob.pixel_x = -22
+						buckled_mob.pixel_y = 30
+					if(WEST)
+						buckled_mob.pixel_x = 22
+						buckled_mob.pixel_y = -3
+						buckled_mob.layer = 4.1
+			if(seat_number == 4)
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = 19
+						buckled_mob.pixel_y = -18
+						buckled_mob.layer = 4.2
+					if(SOUTH)
+						buckled_mob.pixel_x = -13
+						buckled_mob.pixel_y = 25
+						buckled_mob.layer = 3.9
+					if(EAST)
+						buckled_mob.pixel_x = -22
+						buckled_mob.pixel_y = -3
+						buckled_mob.layer = 3.9
+					if(WEST)
+						buckled_mob.pixel_x = 22
+						buckled_mob.pixel_y = 28
 
 /datum/riding/space/speedwagon/handle_vehicle_layer()
 	ridden.layer = BELOW_MOB_LAYER

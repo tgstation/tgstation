@@ -33,6 +33,7 @@
 //BUCKLE HOOKS
 /obj/vehicle/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	if(riding_datum)
+		buckled_mob.pass_flags = initial(buckled_mob.pass_flags)
 		riding_datum.restore_position(buckled_mob)
 		. = ..()
 
@@ -46,6 +47,7 @@
 				return
 	M.loc = get_turf(src)
 	..()
+	M.pass_flags |= PASSMOB
 	if(user.client)
 		user.client.change_view(view_range)
 	if(riding_datum)
@@ -54,7 +56,7 @@
 
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
-	if(riding_datum)
+	if(riding_datum && user == src.buckled_mobs[1])
 		riding_datum.handle_ride(user, direction)
 
 

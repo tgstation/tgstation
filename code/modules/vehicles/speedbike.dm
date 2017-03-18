@@ -530,15 +530,16 @@
 				Bump(A)
 
 
-//Engiwagon, the smaller, non-lethal, more hilarious reward
+//Engiwagon, the 2-seater
 
 /obj/vehicle/space/speedbike/engiwagon
-	name = "Engineering's Pinnacle"
-	desc = "The supreme department, manifest"
+	name = "Engineering's Ascension"
+	desc = "Supreme department, supreme style"
 	icon = 'icons/obj/bike.dmi'
 	icon_state = "memewagon"
 	layer = LYING_MOB_LAYER
 	overlay_state = "memewagon_cover"
+	luminosity = 6
 	max_buckled_mobs = 2
 
 /obj/vehicle/space/speedbike/engiwagon/Bump(mob/living/A)
@@ -547,7 +548,6 @@
 		var/atom/throw_target = get_edge_target_turf(A, pick(cardinal))
 		A.throw_at(throw_target, 6, 8)
 		A.Weaken(2)
-		A.apply_damage(2,BRUTE)
 		visible_message("<span class='danger'>[src] crashes into [A]!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 75, 1)
 		sleep(8)
@@ -557,3 +557,45 @@
 	. = ..()
 	riding_datum = new/datum/riding/space/speedbike/engiwagon
 
+
+//Pinnacle, the 4-seater reskinned speedwagon that doesn't murder everyone
+
+/obj/vehicle/space/speedbike/pinnacle
+	name = "Engineering's Pinnacle"
+	desc = "The supreme department, manifest."
+	icon = 'icons/obj/car.dmi'
+	icon_state = "SMwagon"
+	layer = LYING_MOB_LAYER
+	overlay_state = "SMwagon_cover"
+	luminosity = 6
+	pixel_y = -48 //to fix the offset when Initialized()
+	pixel_x = -48
+	max_buckled_mobs = 4
+	var/image/overlay2 = null
+
+/obj/vehicle/space/speedbike/pinnacle/Initialize()
+		overlay2 = image("icons/obj/car.dmi", "SMwagon_cover2")
+		overlay2.layer = 4.3
+		add_overlay(overlay2)
+
+/obj/vehicle/space/speedbike/pinnacle/Bump(mob/living/A)
+	. = ..()
+	if(A.density && has_buckled_mobs() && (istype(A, /mob/living/carbon/human) && has_buckled_mobs()))
+		var/atom/throw_target = get_edge_target_turf(A, pick(cardinal))
+		A.throw_at(throw_target, 6, 8)
+		A.Weaken(2)
+		visible_message("<span class='danger'>[src] crashes into [A]!</span>")
+		playsound(src, 'sound/effects/bang.ogg', 75, 1)
+		sleep(8)
+		playsound(src, 'sound/items/carhorn.ogg', 100, 1)
+
+/obj/vehicle/space/speedbike/pinnacle/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+ 	. = ..()
+ 	riding_datum = new/datum/riding/space/speedwagon
+
+/obj/vehicle/space/speedbike/pinnacle/Moved()
+	. = ..()
+	if(src.has_buckled_mobs())
+		for(var/atom/A in range(1, src))
+			if(!(A in src.buckled_mobs))
+				Bump(A)
