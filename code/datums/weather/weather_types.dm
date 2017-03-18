@@ -188,7 +188,7 @@
 
 /datum/weather/acid_rain
 	name = "acid rain"
-	desc = "Chocolate Rain."
+	desc = "Some stay dry and others feel the pain"
 
 	telegraph_duration = 400
 	telegraph_message = "<span class='danger'>Stinging droplets start to fall upon you..</span>"
