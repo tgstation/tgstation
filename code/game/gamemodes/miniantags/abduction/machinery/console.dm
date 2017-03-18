@@ -4,18 +4,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/team = 0
 
-/obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
-	if(H.dna.species.id == "abductor")
-		var/datum/species/abductor/S = H.dna.species
-		return S.agent
-	return 0
-
-/obj/machinery/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	if(H.dna.species.id == "abductor")
-		var/datum/species/abductor/S = H.dna.species
-		return S.scientist
-	return 0
-
 //Console
 
 /obj/machinery/abductor/console
@@ -23,8 +11,8 @@
 	desc = "Ship command center."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/item/device/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
@@ -86,7 +74,6 @@
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/abductor/console/Topic(href, href_list)
@@ -116,7 +103,7 @@
 				Dispense(/obj/item/device/abductor/gizmo)
 			if("vest")
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
@@ -131,16 +118,9 @@
 	if(vest!=null)
 		vest.flip_mode()
 
-/obj/machinery/abductor/console/proc/SelectDisguise(remote=0)
-	var/list/entries = list()
-	var/tempname
-	var/datum/icon_snapshot/temp
-	for(var/i = 1; i <= disguises.len; i++)
-		temp = disguises[i]
-		tempname = temp.name
-		entries["[tempname]"] = disguises[i]
-	var/entry_name = input( "Choose Disguise", "Disguise") in entries
-	var/datum/icon_snapshot/chosen = entries[entry_name]
+/obj/machinery/abductor/console/proc/SelectDisguise(remote = 0)
+	var/entry_name = input( "Choose Disguise", "Disguise") as null|anything in disguises
+	var/datum/icon_snapshot/chosen = disguises[entry_name]
 	if(chosen && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
 
@@ -183,12 +163,11 @@
 	entry.icon = target.icon
 	entry.icon_state = target.icon_state
 	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER))	//ugh
-	for(var/i=1,i<=disguises.len,i++)
-		var/datum/icon_snapshot/temp = disguises[i]
-		if(temp.name == entry.name)
-			disguises[i] = entry
-			return
-	disguises.Add(entry)
+	//Update old disguise instead of adding new one
+	if(disguises[entry.name])
+		disguises[entry.name] = entry
+		return
+	disguises[entry.name] = entry
 
 /obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/device/abductor/gizmo))
@@ -214,7 +193,7 @@
 			flick("alien-pad", pad)
 			new item(pad.loc)
 		else
-			new item(src.loc)
+			new item(loc)
 	else
 		say("Insufficent data!")
 
