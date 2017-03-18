@@ -69,7 +69,6 @@
 /obj/structure/alien/resin/New(location)
 	..()
 	air_update_turf(1)
-	return
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -217,6 +216,7 @@
 /obj/structure/alien/egg
 	name = "egg"
 	desc = "A large mottled egg."
+	var/base_icon = "egg"
 	icon_state = "egg_growing"
 	density = FALSE
 	anchored = TRUE
@@ -243,12 +243,13 @@
 
 /obj/structure/alien/egg/update_icon()
 	..()
-	if(status == GROWING)
-		icon_state = "[initial(icon_state)]_growing"
-	if(status == GROWN)
-		icon_state = initial(icon_state)
-	if(status == BURST)
-		icon_state = "[initial(icon_state)]_hatched"
+	switch(status)
+		if(GROWING)
+			icon_state = "[base_icon]_growing"
+		if(GROWN)
+			icon_state = "[base_icon]"
+		if(BURST)
+			icon_state = "[base_icon]_hatched"
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
 	. = attack_hand(user)
@@ -343,7 +344,6 @@
 	icon_state = "egg_hatched"
 
 #undef BURST
-#undef BURSTING
 #undef GROWING
 #undef GROWN
 #undef MIN_GROWTH_TIME
