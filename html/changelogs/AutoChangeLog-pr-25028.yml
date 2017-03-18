@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "You can now complete a golem shell with runed metal, if you somehow manage to get both."
+  - rscadd: "Runic golems don't have passive bonuses over golems, but they have some special abilities."
