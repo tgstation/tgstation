@@ -45,6 +45,10 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
+
 	if(requires_activation)
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
