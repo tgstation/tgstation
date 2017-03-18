@@ -62,10 +62,10 @@
 	if(is_servant_of_ratvar(target))
 		to_chat(user, "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>")
 		return
-	if(target.stat == CONSCIOUS)
+	var/mob/living/carbon/human/H = target
+	if(H.stat == CONSCIOUS)
 		to_chat(user, "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>")
 		return
-	var/mob/living/carbon/human/H = target
 	if(H.head)
 		var/obj/item/I = H.head
 		if(I.flags_inv & HIDEHAIR) //they're wearing a hat that covers their skull
