@@ -31,9 +31,9 @@
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
 	if(reagents.total_volume)
-		user << "<span class='notice'>It has [reagents.total_volume] units left.</span>"
+		to_chat(user, "<span class='notice'>It has [reagents.total_volume] units left.</span>")
 	else
-		user << "<span class='danger'>It's empty.</span>"
+		to_chat(user, "<span class='danger'>It's empty.</span>")
 
 
 /obj/structure/reagent_dispensers/proc/boom()
@@ -97,12 +97,12 @@
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(!reagents.has_reagent("welding_fuel"))
-			user << "<span class='warning'>[src] is out of fuel!</span>"
+			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.welding)
 			if(W.reagents.has_reagent("welding_fuel", W.max_fuel))
-				user << "<span class='warning'>Your [W.name] is already full!</span>"
+				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
 			reagents.trans_to(W, W.max_fuel)
 			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
@@ -146,11 +146,11 @@
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	..()
-	user << "There are [paper_cups ? paper_cups : "no"] paper cups left."
+	to_chat(user, "There are [paper_cups ? paper_cups : "no"] paper cups left.")
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
 	if(!paper_cups)
-		user << "<span class='warning'>There aren't any cups left!</span>"
+		to_chat(user, "<span class='warning'>There aren't any cups left!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] takes a cup from [src].</span>", "<span class='notice'>You take a paper cup from [src].</span>")
 	var/obj/item/weapon/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))

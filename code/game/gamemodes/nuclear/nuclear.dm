@@ -83,7 +83,7 @@
 
 		if(nuke_code)
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+			to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 
 		if(!leader_selected)
 			prepare_syndicate_leader(synd_mind, nuke_code)
@@ -105,9 +105,9 @@
 		nukeops_lastname = nukelastname(synd_mind.current)
 		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
-	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
-	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
-	synd_mind.current << "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>"
+	to_chat(synd_mind.current, "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
+	to_chat(synd_mind.current, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
+	to_chat(synd_mind.current, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
 
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
 	synd_mind.current.put_in_hands_or_del(challenge)
@@ -146,7 +146,7 @@
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
 	if(you_are)
-		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
+		to_chat(syndicate.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 	syndicate.announce_objectives()
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
@@ -198,71 +198,71 @@
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
 		feedback_set_details("round_end_result","loss - syndicate nuked - disk secured")
-		world << "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>"
-		world << "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
+		to_chat(world, "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>")
+		to_chat(world, "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!")
 
 		ticker.news_report = NUKE_SYNDICATE_BASE
 
 	else if(!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
-		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
+		to_chat(world, "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>")
+		to_chat(world, "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>")
 
 		ticker.news_report = STATION_NUKED
 
 	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
-		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
-		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
+		to_chat(world, "<FONT size = 3><B>Total Annihilation</B></FONT>")
+		to_chat(world, "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!")
 
 		ticker.news_report = STATION_NUKED
 
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
-		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
-		world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!"
+		to_chat(world, "<FONT size = 3><B>Crew Minor Victory</B></FONT>")
+		to_chat(world, "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!")
 
 		ticker.news_report = NUKE_MISS
 
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
-		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"
+		to_chat(world, "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>")
+		to_chat(world, "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!")
 
 		ticker.news_report = NUKE_MISS
 
 	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
-		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
-		world << "<B>The Research Staff has saved the disk and killed the [syndicate_name()] Operatives</B>"
+		to_chat(world, "<FONT size = 3><B>Crew Major Victory!</B></FONT>")
+		to_chat(world, "<B>The Research Staff has saved the disk and killed the [syndicate_name()] Operatives</B>")
 
 		ticker.news_report = OPERATIVES_KILLED
 
 	else if (disk_rescued)
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
-		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
-		world << "<B>The Research Staff has saved the disk and stopped the [syndicate_name()] Operatives!</B>"
+		to_chat(world, "<FONT size = 3><B>Crew Major Victory</B></FONT>")
+		to_chat(world, "<B>The Research Staff has saved the disk and stopped the [syndicate_name()] Operatives!</B>")
 
 		ticker.news_report = OPERATIVES_KILLED
 
 	else if (!disk_rescued && are_operatives_dead())
 		feedback_set_details("round_end_result","halfwin - evacuation - disk not secured")
-		world << "<FONT size = 3><B>Neutral Victory!</B></FONT>"
-		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
+		to_chat(world, "<FONT size = 3><B>Neutral Victory!</B></FONT>")
+		to_chat(world, "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>")
 
 		ticker.news_report = OPERATIVE_SKIRMISH
 
 	else if (!disk_rescued &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!"
+		to_chat(world, "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>")
+		to_chat(world, "<B>[syndicate_name()] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!")
 
 		ticker.news_report = OPERATIVE_SKIRMISH
 
 	else if (!disk_rescued && !crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - interrupted")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>Round was mysteriously interrupted!</B>"
+		to_chat(world, "<FONT size = 3><B>Neutral Victory</B></FONT>")
+		to_chat(world, "<B>Round was mysteriously interrupted!</B>")
 
 		ticker.news_report = OPERATIVE_SKIRMISH
 
@@ -285,7 +285,7 @@
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
 			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
-		world << text
+		to_chat(world, text)
 	return 1
 
 
@@ -298,7 +298,7 @@
 
 	else
 		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			M << "That name is reserved."
+			to_chat(M, "That name is reserved.")
 			return nukelastname(M)
 
 	return capitalize(newname)

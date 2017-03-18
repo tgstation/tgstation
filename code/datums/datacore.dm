@@ -16,6 +16,17 @@
 	name = "record"
 	var/list/fields = list()
 
+/datum/data/record/Destroy()
+	if(src in data_core.medical)
+		data_core.medical -= src
+	if(src in data_core.security)
+		data_core.security -= src
+	if(src in data_core.general)
+		data_core.general -= src
+	if(src in data_core.locked)
+		data_core.locked -= src
+	. = ..()
+
 /datum/data/crime
 	name = "crime"
 	var/crimeName = ""
@@ -66,7 +77,7 @@
 			return
 
 /datum/datacore/proc/manifest()
-	for(var/mob/new_player/N in player_list)
+	for(var/mob/dead/new_player/N in player_list)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK

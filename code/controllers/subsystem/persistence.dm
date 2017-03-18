@@ -1,6 +1,6 @@
-var/datum/subsystem/persistence/SSpersistence
+var/datum/controller/subsystem/persistence/SSpersistence
 
-/datum/subsystem/persistence
+/datum/controller/subsystem/persistence
 	name = "Persistence"
 	init_order = -100
 	flags = SS_NO_FIRE
@@ -13,16 +13,16 @@ var/datum/subsystem/persistence/SSpersistence
 	var/list/saved_messages = list()
 	var/savefile/chisel_messages_sav
 
-/datum/subsystem/persistence/New()
+/datum/controller/subsystem/persistence/New()
 	NEW_SS_GLOBAL(SSpersistence)
 
-/datum/subsystem/persistence/Initialize()
+/datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
 	LoadPoly()
 	LoadChiselMessages()
 	..()
 
-/datum/subsystem/persistence/proc/LoadSatchels()
+/datum/controller/subsystem/persistence/proc/LoadSatchels()
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 	secret_satchels[SSmapping.config.map_name] >> old_secret_satchels
@@ -44,7 +44,7 @@ var/datum/subsystem/persistence/SSpersistence
 			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchels) >= (50 - expanded_old_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
 				break
 
-/datum/subsystem/persistence/proc/PlaceSecretSatchel(list/expanded_old_satchels)
+/datum/controller/subsystem/persistence/proc/PlaceSecretSatchel(list/expanded_old_satchels)
 	var/satchel_string
 
 	if(expanded_old_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
@@ -70,12 +70,12 @@ var/datum/subsystem/persistence/SSpersistence
 	new path(F)
 	return 1
 
-/datum/subsystem/persistence/proc/LoadPoly()
+/datum/controller/subsystem/persistence/proc/LoadPoly()
 	for(var/mob/living/simple_animal/parrot/Poly/P in living_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 
-/datum/subsystem/persistence/proc/LoadChiselMessages()
+/datum/controller/subsystem/persistence/proc/LoadChiselMessages()
 	chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
 	var/saved_json
 	chisel_messages_sav[SSmapping.config.map_name] >> saved_json
@@ -83,7 +83,7 @@ var/datum/subsystem/persistence/SSpersistence
 	if(!saved_json)
 		return
 
-	var/saved_messages = saved_json
+	var/saved_messages = json_decode(saved_json)
 
 	for(var/item in saved_messages)
 		var/turf/T = locate(item["x"], item["y"], ZLEVEL_STATION)
@@ -98,11 +98,11 @@ var/datum/subsystem/persistence/SSpersistence
 			qdel(M)
 
 
-/datum/subsystem/persistence/proc/CollectData()
+/datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectSecretSatchels()
 
-/datum/subsystem/persistence/proc/CollectSecretSatchels()
+/datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	for(var/A in new_secret_satchels)
 		var/obj/item/weapon/storage/backpack/satchel/flat/F = A
 		if(QDELETED(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)
@@ -120,11 +120,11 @@ var/datum/subsystem/persistence/SSpersistence
 		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
 	secret_satchels[SSmapping.config.map_name] << old_secret_satchels
 
-/datum/subsystem/persistence/proc/CollectChiselMessages()
+/datum/controller/subsystem/persistence/proc/CollectChiselMessages()
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
 	chisel_messages_sav[SSmapping.config.map_name] << json_encode(saved_messages)
 
-/datum/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
+/datum/controller/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
 	saved_messages += list(M.pack()) // dm eats one list.

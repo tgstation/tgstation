@@ -7,7 +7,7 @@
 		return
 
 	if(!dbcon.Connect())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	var/bantype_pass = 0
@@ -93,7 +93,7 @@
 
 	if(blockselfban)
 		if(a_ckey == ckey)
-			usr << "<span class='danger'>You cannot apply this ban type on yourself.</span>"
+			to_chat(usr, "<span class='danger'>You cannot apply this ban type on yourself.</span>")
 			return
 
 	var/who
@@ -119,14 +119,17 @@
 		if(query_check_adminban_amt.NextRow())
 			var/adm_bans = text2num(query_check_adminban_amt.item[1])
 			if(adm_bans >= MAX_ADMIN_BANS_PER_ADMIN)
-				usr << "<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>"
+				to_chat(usr, "<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>")
 				return
-
+	if(!computerid)
+		computerid = "0"
+	if(!ip)
+		ip = "0.0.0.0"
 	var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON('[world.internet_address]'), '[world.port]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', INET_ATON('[ip]'), '[a_ckey]', '[a_computerid]', INET_ATON('[a_ip]'), '[who]', '[adminwho]')"
 	var/DBQuery/query_add_ban = dbcon.NewQuery(sql)
 	if(!query_add_ban.warn_execute())
 		return
-	usr << "<span class='adminnotice'>Ban saved to database.</span>"
+	to_chat(usr, "<span class='adminnotice'>Ban saved to database.</span>")
 	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize_russian(reason)]\" to the ban database.",1)
 
 	if(announceinirc)
@@ -198,17 +201,17 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		usr << "<span class='danger'>Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.</span>"
+		to_chat(usr, "<span class='danger'>Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.</span>")
 		return
 
 	if(ban_number > 1)
-		usr << "<span class='danger'>Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin.</span>"
+		to_chat(usr, "<span class='danger'>Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin.</span>")
 		return
 
 	if(istext(ban_id))
 		ban_id = text2num(ban_id)
 	if(!isnum(ban_id))
-		usr << "<span class='danger'>Database update failed due to a ban ID mismatch. Contact the database admin.</span>"
+		to_chat(usr, "<span class='danger'>Database update failed due to a ban ID mismatch. Contact the database admin.</span>")
 		return
 
 	DB_ban_unban_by_id(ban_id)
@@ -219,7 +222,7 @@
 		return
 
 	if(!isnum(banid) || !istext(param))
-		usr << "Cancelled"
+		to_chat(usr, "Cancelled")
 		return
 
 	var/DBQuery/query_edit_ban_get_details = dbcon.NewQuery("SELECT ckey, duration, reason FROM [format_table_name("ban")] WHERE id = [banid]")
@@ -236,7 +239,7 @@
 		duration = query_edit_ban_get_details.item[2]
 		reason = query_edit_ban_get_details.item[3]
 	else
-		usr << "Invalid ban id. Contact the database admin"
+		to_chat(usr, "Invalid ban id. Contact the database admin")
 		return
 
 	reason = sanitizeSQL(reason)
@@ -248,7 +251,7 @@
 				value = input("Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null) as null|text
 				value = sanitizeSQL(value)
 				if(!value)
-					usr << "Cancelled"
+					to_chat(usr, "Cancelled")
 					return
 
 			var/DBQuery/query_edit_ban_reason = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
@@ -259,7 +262,7 @@
 			if(!value)
 				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
 				if(!isnum(value) || !value)
-					usr << "Cancelled"
+					to_chat(usr, "Cancelled")
 					return
 
 			var/DBQuery/query_edit_ban_duration = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
@@ -271,10 +274,10 @@
 				DB_ban_unban_by_id(banid)
 				return
 			else
-				usr << "Cancelled"
+				to_chat(usr, "Cancelled")
 				return
 		else
-			usr << "Cancelled"
+			to_chat(usr, "Cancelled")
 			return
 
 /datum/admins/proc/DB_ban_unban_by_id(id)
@@ -298,11 +301,11 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		usr << "<span class='danger'>Database update failed due to a ban id not being present in the database.</span>"
+		to_chat(usr, "<span class='danger'>Database update failed due to a ban id not being present in the database.</span>")
 		return
 
 	if(ban_number > 1)
-		usr << "<span class='danger'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>"
+		to_chat(usr, "<span class='danger'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>")
 		return
 
 	if(!src.owner || !istype(src.owner, /client))
@@ -329,7 +332,7 @@
 	holder.DB_ban_panel()
 
 
-/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null)
+/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, page = 0)
 	if(!usr.client)
 		return
 
@@ -337,7 +340,7 @@
 		return
 
 	if(!dbcon.Connect())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	var/output = "<div align='center'><table width='90%'><tr>"
@@ -390,7 +393,30 @@
 	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
 	if(adminckey || playerckey)
-
+		playerckey = sanitizeSQL(ckey(playerckey))
+		adminckey = sanitizeSQL(ckey(adminckey))
+		var/playersearch = ""
+		var/adminsearch = ""
+		if(playerckey)
+			playersearch = "AND ckey = '[playerckey]' "
+		if(adminckey)
+			adminsearch = "AND a_ckey = '[adminckey]' "
+		var/bancount = 0
+		var/bansperpage = 15
+		var/pagecount = 0
+		page = text2num(page)
+		var/DBQuery/query_count_bans = dbcon.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch]")
+		if(!query_count_bans.warn_execute())
+			return
+		if(query_count_bans.NextRow())
+			bancount = text2num(query_count_bans.item[1])
+		if(bancount > bansperpage)
+			output += "<br><b>Page: </b>"
+			while(bancount > 0)
+				output+= "|<a href='?_src_=holder;dbsearchckey=[playerckey];dbsearchadmin=[adminckey];dbsearchpage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+				bancount -= bansperpage
+				pagecount++
+			output += "|"
 		var/blcolor = "#ffeeee" //banned light
 		var/bdcolor = "#ffdddd" //banned dark
 		var/ulcolor = "#eeffee" //unbanned light
@@ -404,17 +430,8 @@
 		output += "<th width='20%'><b>ADMIN</b></th>"
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
-
-		adminckey = ckey(adminckey)
-		playerckey = ckey(playerckey)
-		var/adminsearch = ""
-		var/playersearch = ""
-		if(adminckey)
-			adminsearch = "AND a_ckey = '[adminckey]' "
-		if(playerckey)
-			playersearch = "AND ckey = '[playerckey]' "
-
-		var/DBQuery/query_search_bans = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC")
+		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
+		var/DBQuery/query_search_bans = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 

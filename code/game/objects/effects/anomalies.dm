@@ -72,7 +72,7 @@
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
-		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>"
+		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
 ///////////////////////
 
@@ -126,6 +126,7 @@
 	density = 1
 	var/canshock = 0
 	var/shockdamage = 20
+	var/explosive = 1
 
 /obj/effect/anomaly/flux/New()
 	..()
@@ -162,7 +163,10 @@
 		"<span class='italics'>You hear a heavy electrical crack.</span>")
 
 /obj/effect/anomaly/flux/detonate()
-	explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+	if(explosive)
+		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+	else
+		new /obj/effect/particle_effect/sparks(loc)
 
 
 /////////////////////

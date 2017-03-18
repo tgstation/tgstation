@@ -46,7 +46,7 @@
 		return
 
 	if(on_cooldown)
-		user << "<span class='warning'>[src] was shaken recently, it needs time to settle.</span>"
+		to_chat(user, "<span class='warning'>[src] was shaken recently, it needs time to settle.</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] starts shaking [src].</span>", "<span class='notice'>You start shaking [src].</span>", "<span class='italics'>You hear shaking and sloshing.</span>")
@@ -106,7 +106,7 @@
 
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)
-		user << "<span class='warning'>[src] is not currently being shaken.</span>"
+		to_chat(user, "<span class='warning'>[src] is not currently being shaken.</span>")
 		return
 	interact(user)
 
@@ -155,7 +155,7 @@
 
 	return most_popular_answer
 
-/obj/item/toy/eightball/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=observer_state)
+/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=observer_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - tweak: "The map rotation message will only show if the map is actually changing"

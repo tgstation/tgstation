@@ -7,7 +7,7 @@
 
 
 
-/mob/living/carbon/alien/humanoid/royal/praetorian/New()
+/mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
 
 	real_name = name
 
@@ -37,10 +37,10 @@
 /obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/humanoid/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
-		user << "<span class='danger'>Without the hivemind, you would be unfit to rule as queen!</span>"
+		to_chat(user, "<span class='danger'>Without the hivemind, you would be unfit to rule as queen!</span>")
 		return 0
 	if(node.recent_queen_death)
-		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
+		to_chat(user, "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>")
 		return 0
 	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
@@ -50,5 +50,5 @@
 			M.Grant(new_xeno)
 		return 1
 	else
-		user << "<span class='notice'>We already have an alive queen.</span>"
+		to_chat(user, "<span class='notice'>We already have an alive queen.</span>")
 		return 0

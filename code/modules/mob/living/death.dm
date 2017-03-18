@@ -52,7 +52,7 @@
 	if(mind && mind.name && mind.active && (!(T.flags & NO_DEATHRATTLE)))
 		var/area/A = get_area(T)
 		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[A.name]</b>.</span>"
-		deadchat_broadcast(rendered, follow_target = src, message_type=DEADCHAT_DEATHRATTLE)
+		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 	living_mob_list -= src
@@ -65,7 +65,7 @@
 	SetSleeping(0, 0)
 	blind_eyes(1)
 	reset_perspective(null)
-	hide_fullscreens()
+	reload_fullscreen()
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()

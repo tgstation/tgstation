@@ -1,19 +1,19 @@
 #define COMMUNICATION_COOLDOWN 600
 #define COMMUNICATION_COOLDOWN_AI 600
 
-var/datum/subsystem/communications/SScommunications
+var/datum/controller/subsystem/communications/SScommunications
 
-/datum/subsystem/communications
+/datum/controller/subsystem/communications
 	name = "Communications"
 	flags = SS_NO_INIT | SS_NO_FIRE
 
 	var/silicon_message_cooldown
 	var/nonsilicon_message_cooldown
 
-/datum/subsystem/communications/New()
+/datum/controller/subsystem/communications/New()
 	NEW_SS_GLOBAL(SScommunications)
 
-/datum/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
+/datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && silicon_message_cooldown > world.time)
 		. = FALSE
 	else if(!is_silicon && nonsilicon_message_cooldown > world.time)
@@ -21,7 +21,7 @@ var/datum/subsystem/communications/SScommunications
 	else
 		. = TRUE
 
-/datum/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input)
+/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input)
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)

@@ -19,9 +19,9 @@
 	opposable thumbs.</b>"
 	var/movement_delay_time //how long the fragment is slowed after being hit
 
-/mob/living/simple_animal/hostile/clockwork/fragment/New()
+/mob/living/simple_animal/hostile/clockwork/fragment/Initialize()
 	..()
-	set_light(2, 0.1)
+	set_light(2, 0.8)
 	if(prob(1))
 		name = "anime fragment"
 		desc = "I-it's not like I want to show you the light of the Justiciar or anything, B-BAKA!"

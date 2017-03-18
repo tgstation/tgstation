@@ -178,7 +178,7 @@
 		if(T)
 			T.alternateProcessing = !T.alternateProcessing
 			T.forceProcess = 1
-			usr << "[T]'s processing has been switched to [T.alternateProcessing ? "High Profile" : "Low Profile"]"
+			to_chat(usr, "[T]'s processing has been switched to [T.alternateProcessing ? "High Profile" : "Low Profile"]")
 
 /client/proc/customiseSNPC(var/mob/A in SSnpc.botPool_l)
 	set name = "Customize SNPC"
@@ -381,7 +381,7 @@
 	faction -= "neutral"
 	faction += "hostile"
 
-/mob/living/carbon/human/interactive/New()
+/mob/living/carbon/human/interactive/Initialize()
 	..()
 
 	set_species(/datum/species/synth)
@@ -1605,13 +1605,13 @@
 			nearby += M
 
 //END OF MODULES
-/mob/living/carbon/human/interactive/angry/New()
+/mob/living/carbon/human/interactive/angry/Initialize()
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_MEAN
 	faction += "bot_angry"
 	..()
 
-/mob/living/carbon/human/interactive/friendly/New()
+/mob/living/carbon/human/interactive/friendly/Initialize()
 	TRAITS |= TRAIT_FRIENDLY
 	TRAITS |= TRAIT_UNROBUST
 	faction += "bot_friendly"
@@ -1619,7 +1619,7 @@
 	functions -= "combat"
 	..()
 
-/mob/living/carbon/human/interactive/greytide/New()
+/mob/living/carbon/human/interactive/greytide/Initialize()
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_MEAN
 	TRAITS |= TRAIT_THIEVING
@@ -1631,7 +1631,7 @@
 	..()
 
 //Walk softly and carry a big stick
-/mob/living/carbon/human/interactive/robust/New()
+/mob/living/carbon/human/interactive/robust/Initialize()
 	TRAITS |= TRAIT_FRIENDLY
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_SMART

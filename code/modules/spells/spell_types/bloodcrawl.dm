@@ -19,7 +19,7 @@
 			perform(target)
 			return
 	revert_cast()
-	user << "<span class='warning'>There must be a nearby source of blood!</span>"
+	to_chat(user, "<span class='warning'>There must be a nearby source of blood!</span>")
 
 /obj/effect/proc_holder/spell/bloodcrawl/perform(obj/effect/decal/cleanable/target, recharge = 1, mob/living/user = usr)
 	if(istype(user))
@@ -32,4 +32,4 @@
 		start_recharge()
 		return
 	revert_cast()
-	user << "<span class='warning'>You are unable to blood crawl!</span>"
+	to_chat(user, "<span class='warning'>You are unable to blood crawl!</span>")

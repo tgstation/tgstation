@@ -3,7 +3,7 @@
 ## administration, and the in game library.
 
 ## Should SQL be enabled? Uncomment to enable.
-#SQL_ENABLED
+SQL_ENABLED
 
 ## Server the MySQL database can be found at.
 # Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
@@ -24,10 +24,10 @@ FEEDBACK_DATABASE feedback
 ##	FEEDBACK_TABLEPREFIX SS13_
 ##
 ## Leave as is if you are using the standard schema file.
-FEEDBACK_TABLEPREFIX 
+FEEDBACK_TABLEPREFIX erro_
 
 ## Username/Login used to access the database.
-FEEDBACK_LOGIN username
+FEEDBACK_LOGIN root
 
 ## Password used to access the database.
-FEEDBACK_PASSWORD password
+FEEDBACK_PASSWORD root

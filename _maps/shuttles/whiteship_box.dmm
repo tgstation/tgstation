@@ -21,10 +21,11 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Medical Ship";
+	port_angle = -90;
+	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	port_angle = 180;
-	width = 35;
-	timid = 1
+	timid = null;
+	width = 35
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -40,8 +41,8 @@
 /area/shuttle/abandoned)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -68,6 +69,9 @@
 "al" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
+/obj/structure/light_construct{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "am" = (
@@ -78,8 +82,8 @@
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -161,8 +165,8 @@
 /area/shuttle/abandoned)
 "aB" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -198,6 +202,7 @@
 /obj/structure/frame/computer{
 	anchored = 1
 	},
+/obj/structure/light_construct,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "aI" = (
@@ -337,7 +342,75 @@
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
+/obj/structure/light_construct,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bi" = (
+/obj/structure/light_construct/small,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"bj" = (
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bk" = (
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bl" = (
+/obj/structure/light_construct{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bm" = (
+/obj/structure/light_construct{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bn" = (
+/obj/structure/light_construct/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bo" = (
+/obj/structure/light_construct{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bp" = (
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bq" = (
+/obj/structure/light_construct/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"br" = (
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bs" = (
+/obj/structure/light_construct{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bt" = (
+/obj/structure/light_construct/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"
@@ -472,7 +545,7 @@ aa
 aC
 aj
 aj
-aj
+bp
 aC
 aa
 aa
@@ -709,11 +782,11 @@ ao
 aC
 aC
 aC
+bl
 aj
 aj
 aj
-aj
-aj
+br
 aC
 aC
 aC
@@ -754,7 +827,7 @@ aa
 aC
 ap
 at
-at
+bi
 aC
 aj
 aj
@@ -764,7 +837,7 @@ aj
 aj
 ba
 aC
-at
+bt
 at
 ap
 aC
@@ -831,7 +904,7 @@ aj
 aj
 aj
 aj
-aj
+bm
 aj
 aj
 aj
@@ -853,12 +926,12 @@ aj
 aj
 aj
 aj
-az
-am
-am
-am
-am
-aI
+aC
+aC
+aC
+aC
+aC
+aC
 aj
 aj
 aC
@@ -877,10 +950,10 @@ aC
 aC
 aX
 aj
-ae
+aC
 aN
 aj
-aj
+bq
 aj
 af
 aj
@@ -900,14 +973,14 @@ av
 av
 aX
 aC
-aj
-ae
+bk
+aC
 aO
 aj
 aV
 aY
-ae
-aj
+aC
+bs
 aj
 aC
 aj
@@ -927,10 +1000,10 @@ aC
 aj
 af
 aj
-aj
+bn
 aj
 aZ
-ae
+aC
 aj
 aj
 aC
@@ -949,12 +1022,12 @@ aj
 aj
 aC
 aj
-aF
-am
-am
-am
-am
-au
+aC
+aC
+aC
+aC
+aC
+aC
 aj
 aE
 aL
@@ -975,7 +1048,7 @@ aW
 aj
 aj
 aj
-aj
+bo
 aj
 aj
 aj
@@ -1090,7 +1163,7 @@ aC
 aC
 aw
 aC
-bb
+bj
 aJ
 aj
 aj

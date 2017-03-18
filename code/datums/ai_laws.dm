@@ -382,28 +382,28 @@
 
 	if (devillaws && devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
 		for(var/i in devillaws)
-			who << "666. [i]"
+			to_chat(who, "666. [i]")
 
 	if (zeroth)
-		who << "0. [zeroth]"
+		to_chat(who, "0. [zeroth]")
 
 	for (var/index = 1, index <= ion.len, index++)
 		var/law = ion[index]
 		var/num = ionnum()
-		who << "[num]. [russian_html2text(law)]"
+		to_chat(who, "[num]. [russian_html2text(law)]")
 
 	var/number = 1
 	for (var/index = 1, index <= inherent.len, index++)
 		var/law = inherent[index]
 
 		if (length(law) > 0)
-			who << "[number]. [russian_html2text(law)]"
+			to_chat(who, "[number]. [russian_html2text(law)]")
 			number++
 
 	for (var/index = 1, index <= supplied.len, index++)
 		var/law = supplied[index]
 		if (length(law) > 0)
-			who << "[number]. [russian_html2text(law)]"
+			to_chat(who, "[number]. [russian_html2text(law)]")
 			number++
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1

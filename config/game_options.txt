@@ -17,7 +17,7 @@ REVIVAL_BRAIN_LIFE -1
 ### RENAMING ###
 
 #Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
-#RENAME_CYBORG
+RENAME_CYBORG
 
 ### OOC DURING ROUND ###
 #Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
@@ -25,7 +25,7 @@ OOC_DURING_ROUND
 
 ### EMOJI ###
 #Comment this out if you want to disable emojis
-EMOJIS
+#EMOJIS
 
 ### MOB MOVEMENT ###
 
@@ -36,7 +36,7 @@ EMOJIS
 ## These values get directly added to values and totals ingame.
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
-## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
+## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
 RUN_DELAY 1
 WALK_DELAY 4
 
@@ -51,7 +51,7 @@ ANIMAL_DELAY 0
 
 ### NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
-#HUMANS_NEED_SURNAMES
+HUMANS_NEED_SURNAMES
 
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
@@ -92,7 +92,6 @@ PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 PROBABILITY DEVIL 0
-PROBABILITY DEVIL_AGENTS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -116,12 +115,10 @@ CONTINUOUS BLOB
 CONTINUOUS ABDUCTION
 #CONTINUOUS RAGINMAGES
 #CONTINUOUS MONKEY
-
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
 CONTINUOUS METEOR
 CONTINUOUS EXTENDED
-
 
 ## Toggles for allowing midround antagonists (aka mulligan antagonists).
 ## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
@@ -197,8 +194,6 @@ MIDROUND_ANTAG ABDUCTION
 #MIN_POP EXTENDED 0
 #MAX_POP EXTENDED -1
 
-
-
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
 
@@ -219,13 +214,13 @@ TRAITOR_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-#PROTECT_ROLES_FROM_ANTAGONIST
+PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
 ## If non-human species are barred from joining as a head of staff
-#ENFORCE_HUMAN_AUTHORITY
+ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -234,6 +229,7 @@ ALLOW_LATEJOIN_ANTAGONISTS
 #SHOW_GAME_TYPE_ODDS
 
 ### RANDOM EVENTS ###
+
 ## Comment this to disable random events during the round.
 ALLOW_RANDOM_EVENTS
 
@@ -244,7 +240,6 @@ EVENTS_MIN_TIME_MUL 1
 ## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
-
 
 ### AI ###
 
@@ -286,7 +281,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
-#EVERYONE_HAS_MAINT_ACCESS
+EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this to make security officers spawn in departmental security posts
 SEC_START_BRIG
@@ -294,7 +289,7 @@ SEC_START_BRIG
 
 ### GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ### NON-VOCAL SILICONS ###
 ## Uncomment to stop the AI, or cyborgs, from having vocal communication.
@@ -386,7 +381,6 @@ SILICON_MAX_LAW_AMOUNT 12
 ## Uncomment to give players the choice of their species before they join the game
 JOIN_WITH_MUTANT_RACE
 
-
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
@@ -397,8 +391,9 @@ ROUNDSTART_RACES human
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
+#ROUNDSTART_RACES shadowling
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
@@ -422,6 +417,7 @@ ROUNDSTART_RACES plasmaman
 
 ##-------------------------------------------------------------------------------------------
 
+
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS
 
@@ -429,11 +425,10 @@ ROUNDSTART_RACES plasmaman
 ASSISTANT_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
-## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
-#STARLIGHT
+STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+GREY_ASSISTANTS
 
 ### Midround Antag (aka Mulligan antag) config options ###
 
@@ -458,15 +453,14 @@ REACTIONARY_EXPLOSIONS
 ## This caps all explosions to the specified range. Used for both balance reasons and to prevent overloading the server and lagging the game out.
 ## This is given as the 3rd number(light damage) in the standard (1,2,3) explosion notation. The other numbers are derived by dividing by 2 and 4.
 ## eg: If you give the number 20. The bomb cap will be 5,10,20.
-## Can be any number above 4, some examples are provided below.
+## Can be any number between 4 and 128, some examples are provided below.
 
-## Small (3, 7, 14)
-#BOMBCAP 14
-## Default (5, 10, 20) (recommended if you enable REACTIONARY_EXPLOSIONS above)
-BOMBCAP 20
-## LagHell (7, 14, 28)
+## Default (3,7,14)
+BOMBCAP 14
+## One 'step' up (4,8,16) (recommended if you enable REACTIONARY_EXPLOSIONS above)
+#BOMBCAP 16
+## LagHell (7,14,28)
 #BOMBCAP 28
-
 
 ## Lavaland "Budget"
 # Lavaland ruin spawning has an imaginary budget to spend on ruins, where
@@ -477,3 +471,10 @@ LAVALAND_BUDGET 60
 
 ## Space Ruin Budged
 Space_Budget 16
+
+#Time in ds from when a player latejoins till the arrival shuttle docks at the station
+#Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
+ARRIVALS_SHUTTLE_DOCK_WINDOW 55
+
+#Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
+ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0

@@ -30,9 +30,9 @@
 				return
 			O.loc = src
 			scan = O
-			user << "<span class='notice'>You insert [O].</span>"
+			to_chat(user, "<span class='notice'>You insert [O].</span>")
 		else
-			user << "<span class='warning'>There's already an ID card in the console.</span>"
+			to_chat(user, "<span class='warning'>There's already an ID card in the console.</span>")
 	else
 		return ..()
 
@@ -41,7 +41,7 @@
 	if(..())
 		return
 	if(src.z > 6)
-		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	var/dat
 
@@ -702,7 +702,6 @@ What a mess.*/
 					if("Delete Record (Security) Execute")
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
 						if(active2)
-							data_core.security -= active2
 							qdel(active2)
 							active2 = null
 
@@ -711,15 +710,12 @@ What a mess.*/
 							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
 							for(var/datum/data/record/R in data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
-									data_core.medical -= R
 									qdel(R)
 									break
-							data_core.general -= active1
 							qdel(active1)
 							active1 = null
 
 						if(active2)
-							data_core.security -= active2
 							qdel(active2)
 							active2 = null
 					else

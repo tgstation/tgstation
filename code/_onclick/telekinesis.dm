@@ -152,7 +152,7 @@ var/const/tk_maxrange = 15
 	if(focus)
 		d = max(d,get_dist(user,focus)) // whichever is further
 	if(d > tk_maxrange)
-		user << "<span class ='warning'>Your mind won't reach that far.</span>"
+		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
 		return 0
 	return 1
 

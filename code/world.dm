@@ -1,5 +1,5 @@
 /world
-	mob = /mob/new_player
+	mob = /mob/dead/new_player
 	turf = /turf/basic
 	area = /area/space
 	view = "15x15"
@@ -8,13 +8,13 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
 	fps = 20
-	visibility = 1
+	visibility = 0
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
 
 /world/New()
-	log_world("World loaded at [world.timeofday]")
+	log_world("World loaded at [time_stamp()]")
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
@@ -30,8 +30,8 @@
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 //	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-//	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	diary << "\n\nStarting up. [time_stamp()]\n---------------------"
+//	diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
@@ -56,7 +56,7 @@
 
 	data_core = new /datum/datacore()
 
-	Master.Setup(10, FALSE)
+	Master.Initialize(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
@@ -130,16 +130,15 @@
 
 		return list2params(s)
 
-	else if(copytext(T,1,9)=="announce")
-		var/i[]=params2list(T)
-		if(i["key"] != global.comms_key)
-			spawn(50)
-				return "Bad Key (Throttled)"
-
-		i["announce"] = sanitize_russian(i["announce"])
-		i["g"] = sanitize_russian(i["g"])
-		for(var/client/C in clients)
-			C<<"<font color=#[i["i"]]><b><span class='prefix'>OOC:</span> <EM>[i["g"]]:</EM> <span class='message'>[i["announce"]]</span></b></font>"
+	else if("announce" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
+			for(var/client/C in clients)
+				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
+					to_chat(C, "<span class='announce'>PR: [input["sanitize_russian(announce)"]]</span>")
+#undef CHAT_PULLR
 
 	else if("crossmessage" in input)
 		if(!key_valid)
@@ -175,13 +174,13 @@
 	else if("server_hop" in input)
 		show_server_hop_transfer_screen(input["server_hop"])
 
-#define WORLD_REBOOT(X) log_world("World rebooted at [world.timeofday]"); ..(X); return;
+#define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
+		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
 		WORLD_REBOOT(1)
 	var/delay
 	if(time)
@@ -189,9 +188,9 @@
 	else
 		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
-		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
+		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
-	world << "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>"
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 	var/round_end_sound_sent = FALSE
 	if(ticker.round_end_sound)
 		round_end_sound_sent = TRUE
@@ -202,7 +201,7 @@
 			C.Export("##action=load_rsc", ticker.round_end_sound)
 	sleep(delay)
 	if(ticker.delay_end)
-		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
 	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	WORLD_REBOOT(0)
@@ -224,7 +223,7 @@
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	world << "<span class='boldannounce'>Rebooting world...</span>"
+	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 	for(var/thing in clients)
 		var/client/C = thing
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
@@ -274,7 +273,6 @@
 	join_motd = sanitize_russian(file2text("config/motd.txt")) + "<br>" + revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
-	protected_config = new /datum/protected_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")

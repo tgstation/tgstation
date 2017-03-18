@@ -28,7 +28,7 @@
 
 /obj/item/weapon/storage/secure/examine(mob/user)
 	..()
-	user << text("The service panel is [src.open ? "open" : "closed"].")
+	to_chat(user, text("The service panel is [src.open ? "open" : "closed"]."))
 
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(locked)
@@ -64,7 +64,7 @@
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
-		usr << "<span class='warning'>It's locked!</span>"
+		to_chat(usr, "<span class='warning'>It's locked!</span>")
 		return 0
 	..()
 
@@ -117,7 +117,7 @@
 
 /obj/item/weapon/storage/secure/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(locked)
-		user << "<span class='warning'>It's locked!</span>"
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 		return 0
 	return ..()
 
@@ -152,7 +152,7 @@
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
-		usr << "<span class='warning'>[src] is locked and cannot be opened!</span>"
+		to_chat(usr, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		add_fingerprint(user)
 	else
 		..()

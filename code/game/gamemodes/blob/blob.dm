@@ -70,7 +70,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 /datum/game_mode/blob/proc/show_message(message)
 	for(var/datum/mind/blob in blob_overminds)
-		blob.current << message
+		to_chat(blob.current, message)
 
 /datum/game_mode/blob/post_setup()
 	set waitfor = FALSE
@@ -88,7 +88,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/datum/round_event_control/blob/B = locate() in SSevent.control
 	if(B)
 		B.max_occurrences = 0 // disable the event
-	
+
 	. = ..()
 
 	var/message_delay = rand(messagedelay_low, messagedelay_high) //between 4 and 6 minutes with 2400 low and 3600 high.

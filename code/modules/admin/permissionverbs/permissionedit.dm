@@ -23,7 +23,7 @@
 <th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
 <th style='width:125px;'>RANK</th>
 <th style='width:375px;'>PERMISSIONS</th>
-
+<th style='width:100%;'>VERB-OVERRIDES</th>
 </tr>
 "}
 
@@ -60,7 +60,7 @@
 		return
 
 	if(!dbcon.Connect())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	if(!adm_ckey || !new_rank)
@@ -87,13 +87,13 @@
 		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_admin (ckey, rank, flags) VALUES ('[adm_ckey]', '[new_rank]', 0)")
 		insert_query.Execute()
 		message_admins("[key_name_admin(usr)] made [key_name_admin(adm_ckey)] an admin with the rank [new_rank]")
-		log_admin("[key_name(usr)] made [key_name(adm_ckey)] an admin with the rank [new_rank]")
+		to_chat(usr, "[key_name(usr)] made [key_name(adm_ckey)] an admin with the rank [new_rank]")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
 			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE erro_admin SET rank = '[new_rank]' WHERE id = [admin_id]")
 			insert_query.Execute()
 			message_admins("[key_name_admin(usr)] changed [key_name_admin(adm_ckey)] admin rank to [new_rank]")
-			log_admin("[key_name(usr)] changed [key_name(adm_ckey)] admin rank to [new_rank]")
+			to_chat(usr ,"[key_name(usr)] changed [key_name(adm_ckey)] admin rank to [new_rank]")
 
 
 /datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission, var/nominal)
@@ -102,7 +102,7 @@
 	if(!check_rights(R_PERMISSIONS))	return
 
 	if(!dbcon.Connect())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))

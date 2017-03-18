@@ -21,9 +21,10 @@
 
 /obj/machinery/doorButtons/Initialize(mapload)
 	if(mapload)
-		return TRUE	//wait for the machines list to init
-	..()
-	findObjsByTag()
+		..()
+		return TRUE
+	else
+		findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
 	if(!emagged)
@@ -31,7 +32,7 @@
 		req_access = list()
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
-		user << "<span class='warning'>You short out the access controller.</span>"
+		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
 
@@ -61,7 +62,7 @@
 	if(busy)
 		return
 	if(!allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	if(controller && !controller.busy && door)
 		if(controller.stat & NOPOWER)
@@ -130,7 +131,7 @@
 	if(busy)
 		return
 	if(!allowed(usr))
-		usr << "<span class='warning'>Access denied.</span>"
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 	switch(href_list["command"])
 		if("close_exterior")

@@ -46,7 +46,7 @@
 	..()
 	desc = initial(desc)
 	if(unanchored_icon)
-		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+		to_chat(user, "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>")
 
 /obj/structure/destructible/clockwork/examine_status(mob/user)
 	if(is_servant_of_ratvar(user) || isobserver(user))
@@ -90,7 +90,7 @@
 /obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user, silent)
 	if(anchored && obj_integrity <= round(max_integrity * 0.25, 1))
 		if(!silent)
-			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+			to_chat(user, "<span class='warning'>[src] is too damaged to unsecure!</span>")
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -125,7 +125,7 @@
 		if(do_damage)
 			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
-		user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
+		to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
 /obj/structure/destructible/clockwork/emp_act(severity)
 	if(anchored && unanchored_icon)
@@ -167,8 +167,8 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
 		var/sigil_number = LAZYLEN(check_apc_and_sigils())
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
-		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>"
+		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
+		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>")
 
 /obj/structure/destructible/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -189,7 +189,7 @@
 /obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
-			user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
+			to_chat(user, "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>")
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -198,7 +198,7 @@
 		if(!is_servant_of_ratvar(user))
 			return FALSE
 		if(!anchored && !active)
-			user << "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>"
+			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>")
 			return FALSE
 		visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
 	active = !active
