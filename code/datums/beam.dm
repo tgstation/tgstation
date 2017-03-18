@@ -43,14 +43,14 @@
 			Reset()
 			Draw()
 			afterDraw()
-		else
-			if((sleep_time == null) || finished)	//Does not automatically recalculate.
-				return
-			addtimer(src, .proc/recalculate, sleep_time)
+		after_calculate()
 	else
 		End()
 
 /datum/beam/proc/afterDraw()
+	return
+
+/datum/beam/proc/after_calculate()
 	if((sleep_time == null) || finished)	//Does not automatically recalculate.
 		return
 	addtimer(src, .proc/recalculate, sleep_time)
