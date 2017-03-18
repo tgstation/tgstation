@@ -606,8 +606,7 @@ var/list/binary = list("0","1")
 			base = text("[]\herself", rest)
 		if("hers")
 			base = text("[]\hers", rest)
-	
-	testing("Substituted macro(\\[macro]) in string([string]). Result: \"[base + rest]\"")
+
 	. = base
 	if(rest)
 		. += .(rest)

@@ -28060,6 +28060,12 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plating,
 /area/tcommsat/server)
+"aSN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/plating,
+/area/tcommsat/server)
 "aSO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (NORTHEAST)";
