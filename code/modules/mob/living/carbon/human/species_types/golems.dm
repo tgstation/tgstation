@@ -562,7 +562,7 @@
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
 	new /obj/effect/overlay/temp/mummy_animation(get_turf(src))
-	sleep(15)
+	sleep(20)
 	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
 	cloth_golem.forceMove(get_turf(src))
