@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/buttbot
 	name = "buttbot"
 	desc = "It's a robotic butt. Are you dense or something??"
-	icon = 'hippiestation/icons/obj/items/butt.dmi'
+	icon = 'hippiestation/icons/obj/butts.dmi'
 	icon_state = "buttbot"
 	layer = 5.0
 	density = 0
