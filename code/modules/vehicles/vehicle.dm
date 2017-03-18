@@ -14,9 +14,12 @@
 	var/auto_door_open = TRUE
 	var/view_range = 7
 	var/datum/riding/riding_datum = null
+	var/driver_check = 0
 
 /obj/vehicle/Destroy()
 	QDEL_NULL(riding_datum)
+	for(var/mob/living/M in buckled_mobs)
+		unbuckle_mob(M,1)
 	return ..()
 
 /obj/vehicle/update_icon()
@@ -32,6 +35,7 @@
 //BUCKLE HOOKS
 /obj/vehicle/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	if(riding_datum)
+		buckled_mob.pass_flags = initial(buckled_mob.pass_flags)
 		riding_datum.restore_position(buckled_mob)
 		. = ..()
 
@@ -41,10 +45,11 @@
 		return
 	for(var/atom/movable/A in get_turf(src))
 		if(A.density)
-			if(A != src && A != M)
+			if(A != src && !istype(A, /mob/living))
 				return
 	M.loc = get_turf(src)
 	..()
+	M.pass_flags |= 16
 	if(user.client)
 		user.client.change_view(view_range)
 	if(riding_datum)
@@ -53,7 +58,7 @@
 
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
-	if(riding_datum)
+	if(riding_datum && user == src.buckled_mobs[1])
 		riding_datum.handle_ride(user, direction)
 
 
