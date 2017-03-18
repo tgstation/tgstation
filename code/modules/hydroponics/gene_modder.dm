@@ -15,7 +15,7 @@
 
 	var/datum/plant_gene/target
 	var/operation = ""
-	var/max_potency = 50 // See 36 for how these work
+	var/max_potency = 50 // See RefreshParts() for how these work
 	var/max_yield = 2
 	var/min_production = 12
 	var/max_endurance = 10 // IMPT: ALSO AFFECTS LIFESPAN
@@ -39,7 +39,10 @@
 
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		max_potency = initial(max_potency) + (M.rating**3) // 53,59,77,100 	 Clamps at 100
+		if(M.rating > 3)
+			max_potency = 95
+		else
+			max_potency = initial(max_potency) + (M.rating**3) // 53,59,77,95 	 Clamps at 100
 
 		max_yield = initial(max_yield) + (M.rating*2) // 4,6,8,10 	Clamps at 10
 
