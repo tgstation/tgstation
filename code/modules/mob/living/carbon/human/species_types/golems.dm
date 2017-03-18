@@ -562,9 +562,9 @@
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
 	new /obj/effect/overlay/temp/mummy_animation(get_turf(src))
-	sleep(20)
 	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
+	sleep(20)
 	cloth_golem.forceMove(get_turf(src))
 	cloth_golem.visible_message("<span class='danger'>[src] rises and reforms into [cloth_golem]!</span>","<span class='userdanger'>You reform into yourself!</span>")
 	cloth_golem = null
