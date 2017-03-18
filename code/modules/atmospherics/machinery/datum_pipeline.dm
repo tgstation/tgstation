@@ -18,6 +18,7 @@
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
+		P.depipeline(src)
 		P.parent = null
 	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
 		C.nullifyPipenet(src)
