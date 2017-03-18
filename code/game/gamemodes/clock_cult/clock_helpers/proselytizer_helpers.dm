@@ -317,14 +317,18 @@
 //Hitting a ratvar'd silicon will also try to repair it.
 /mob/living/silicon/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
-	if(proselytizer_heal(user, proselytizer) && user)
+	if(health == maxHealth) //if we're at maximum health, prosel the turf under us
+		return FALSE
+	else if(proselytizer_heal(user, proselytizer) && user)
 		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[abs(HEALTH_THRESHOLD_DEAD - health)]/[abs(HEALTH_THRESHOLD_DEAD - maxHealth)]</b> health.</span>")
 
 //Same with clockwork mobs.
 /mob/living/simple_animal/hostile/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
-	if(proselytizer_heal(user, proselytizer) && user)
+	if(health == maxHealth) //if we're at maximum health, prosel the turf under us
+		return FALSE
+	else if(proselytizer_heal(user, proselytizer) && user)
 		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[health]/[maxHealth]</b> health.</span>")
 
@@ -332,20 +336,20 @@
 /mob/living/simple_animal/drone/cogscarab/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
 	if(stat == DEAD)
-		try_reactivate(user)
+		try_reactivate(user) //if we're at maximum health, prosel the turf under us
 		return
-	if(health < maxHealth && !(flags & GODMODE))
+	if(health == maxHealth)
+		return FALSE
+	else if(!(flags & GODMODE))
 		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
 		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
 		proselytizer.repairing = src
-		if(do_after(user,80*proselytizer.speed_multiplier, target=src))
+		if(do_after(user, (maxHealth - health)*2, target=src))
 			adjustHealth(-maxHealth)
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairin[src == user ? "g yourself" : "g [src]"].</span>")
 		if(proselytizer)
 			proselytizer.repairing = null
-	else
-		to_chat(user, "<span class='warning'>[src == user ? "You" : "[src]"] [src == user ? "are" : "is"] at maximum health!</span>")
 
 //Convert shards and gear bits directly to power
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
