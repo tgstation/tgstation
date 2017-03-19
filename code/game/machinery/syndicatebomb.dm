@@ -381,6 +381,9 @@
 	range_light = 20
 	range_flame = 20
 
+/obj/item/weapon/bombcore/large/underwall
+	layer = ABOVE_OPEN_TURF_LAYER
+
 /obj/item/weapon/bombcore/miniature
 	name = "small bomb core"
 	w_class = WEIGHT_CLASS_SMALL

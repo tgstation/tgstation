@@ -1448,47 +1448,47 @@
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "du" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dv" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dw" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dx" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dy" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dz" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dA" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dB" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dC" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dD" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dE" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dF" = (
@@ -1504,7 +1504,7 @@
 /turf/open/floor/circuit/red,
 /area/ruin/powered/syndicate_lava_base)
 "dH" = (
-/obj/item/weapon/bombcore/large,
+/obj/item/weapon/bombcore/large/underwall,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "dI" = (
