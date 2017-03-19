@@ -488,6 +488,12 @@
 		to_chat(user, "<span class='warning'>You were interrupted!</span>")
 		return FALSE
 	
+	if(constructing && !anchored)
+		var/datum/construction_state/next_state = current_construction_state.next_state
+		if(next_state && next_state.anchored && !isfloorturf(loc))
+			to_chat(userm "<span class='warning'>You cannot do that without a floor underneath \the [src]!</span>")
+			return FALSE
+	
 	var/obj/item/weapon/weldingtool/WT = I
 	if(istype(WT) && !WT.isOn())
 		to_chat(user, "<span class='warning'>\The [WT] runs out of fuel!</span>")
