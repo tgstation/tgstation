@@ -93,16 +93,16 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign, TRUE, TRUE)
 		}
 	)
 
-/obj/structure/sign/barsign/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip)
+/obj/structure/sign/barsign/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check)
 	. = ..()
-	if(!. || skip)
+	if(!.)
 		return
 	
 	if (state_started_id == BARSIGN_COMPLETE && !allowed(user))
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return FALSE
 	
-	if (state_started_id == BARSIGN_OPEN && emagged)
+	if (state_started_id == BARSIGN_OPEN && emagged && action_type == DECONSTRUCTING)
 		to_chat(user, "<span class='warning'>The wires are fried beyond repair.</span>")
 		return FALSE
 

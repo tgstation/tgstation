@@ -489,13 +489,13 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly, FALSE, TRUE)
 	var/datum/construction_state/first/X = .[1]
 	X.required_type_to_construct = /obj/item/stack/sheet/metal
 
-/obj/structure/door_assembly/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip)
+/obj/structure/door_assembly/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check)
 	. = ..()
-	if(!. || skip)
+	if(!.)
 		return
 	switch(state_started_id)
 		if(AIRLOCK_ASSEMBLY_UNSECURED)
-			if(constructing)
+			if(action_type == CONSTRUCTING)
 				for(var/obj/machinery/door/D in loc)
 					if(!D.sub_door)
 						to_chat(user, "<span class='warning'>There is another door here!</span>")

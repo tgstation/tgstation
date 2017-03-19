@@ -67,12 +67,12 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 	var/datum/construction_state/first/X = .[1]
 	X.required_type_to_construct = /obj/item/stack/sheet/metal
 
-/obj/structure/chair/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
+/obj/structure/chair/ConstructionChecks(state_started_id, action_type, obj/item, mob/user, first_check)
 	. = ..()
-	if(!. || skip)
+	if(!.)
 		return
 
-	if(state_started_id)	//not just constructed, must try to be making an echair
+	if(state_started_id && action_type == CONSTRUCTING)	//not just constructed, must try to be making an echair
 		return can_electrify
 
 /obj/structure/chair/update_icon()

@@ -21,14 +21,7 @@ by Cyberboss
 	
 - `/datum/construction_state/proc/DamageDeconstruct(obj/parent)` - Call this on `current_construction_state` if you want to forcefully deconstruct an object. Will be called automatically from `obj_break`. Will only work if the previous state has `damage_reachable` set to TRUE
 
-- `/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)` - Called repeatedly during a construction step. Must check the base. Returning FALSE will cancel the step. Setting skip to TRUE for parent calls requests that no further checks other than the base be made. e.g. Every instance of if must start like this:
-```
-/obj/.../ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
-	. = ..()
-    if(!. || skip)
-    	return
-```
-# TODO: Reevaluate the skip arg, is it needed?
+- `/obj/proc/ConstructionChecks(state_started_id, action_type, obj/item, mob/user, first_check)` - Called repeatedly during a construction step. Must check the base. Returning FALSE will cancel the step. The proc should not continue if the parent call returns FALSE. `action_type` is the type of construction going on, either `CONSTRUCTING`, `DECONSTRUCTING`, or `REPAIRING`. `first_check` is TRUE if this is the first time the check is called in the construction action. Should generally be ignored in the logic (i.e. The base proc uses it to change the wording for welding tool and material checks).
 
 - `/obj/var/bp_name` - The name of an item as it appears in stack construction recipes, if this is null, the regular name will be used
 

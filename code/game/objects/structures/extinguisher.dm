@@ -52,9 +52,9 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/extinguisher_cabinet, TRUE, TRUE)
 	var/datum/construction_state/first/X = .[1]
 	X.required_type_to_construct = /obj/item/wallframe/extinguisher_cabinet
 
-/obj/structure/extinguisher_cabinet/ConstructionChecks(state_started_id, constructing, obj/item, mob/user, skip)
+/obj/structure/extinguisher_cabinet/ConstructionChecks(state_started_id, action_type, obj/item, mob/user, first_check)
 	. = ..()
-	if(!. || skip)
+	if(!.)
 		return
 	if(state_started_id == EXTINGUISHER_CABINET_FULL)
 		if(iscyborg(user) || isalien(user))

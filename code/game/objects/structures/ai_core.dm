@@ -100,11 +100,11 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore, TRUE, TRUE)
 	var/datum/construction_state/first/X = .[1]
 	X.required_type_to_construct = /obj/item/stack/sheet/plasteel
 
-/obj/structure/AIcore/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip)
+/obj/structure/AIcore/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check)
 	. = ..()
-	if(!. || skip)
+	if(!.)
 		return
-	if(state_started_id == CABLED_CORE && !constructing && brain)
+	if(state_started_id == CABLED_CORE && action_type == DECONSTRUCTING && brain)
 		to_chat(user, "<span class='warning'>Get that [brain.name] out of there first!</span>")
 		return FALSE
 

@@ -381,60 +381,58 @@
 		return
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs)
-		var/constructed
+		var/action_type
 		var/wait
 		var/message
 		if(!ccs.required_type_to_construct)
-			constructed = TRUE
+			action_type = CONSTRUCTING
 			wait = ccs.construction_delay
 			message = ccs.construction_message
 		else if(!ccs.required_type_to_deconstruct)
-			constructed = FALSE
+			action_type = DECONSTRUCTING
 			wait = ccs.deconstruction_delay
 			message = ccs.deconstruction_message
 		else
 			return
-		
-		if(!ConstructionChecks(ccs.id, constructed, null, user, FALSE))
+
+		if(!ConstructionChecks(ccs.id, action_type, null, user, TRUE))
 			return
 
 		if(wait)			
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
 			LAZYADD(user.construction_tasks, src)	//prevent repeats
-			var/result = do_after(user, wait, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, null, user, FALSE))
+			var/result = do_after(user, wait, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, action_type, null, user, FALSE))
 			LAZYREMOVE(user.construction_tasks, src)	//prevent repeats
 			if(!result)
 				return
 
 		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
 								"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
-		ccs.OnLeft(src, user, null, constructed, FALSE)
+		ccs.OnLeft(src, user, null, action_type == CONSTRUCTING, FALSE)
 
 //construct by tool if possible
 /obj/attackby(obj/item/I, mob/living/user)
+	if(src in user.construction_tasks)
+		return
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs && user.a_intent == INTENT_HELP)
-		if(src in user.construction_tasks)
-			return
-
-		var/constructed
-		var/repairing
+		var/action_type
 		var/wait
 		var/message
 		if(istype(I, ccs.required_type_to_construct))
-			constructed = TRUE
+			action_type = CONSTRUCTING
 			wait = ccs.construction_delay
 			message = ccs.construction_message
 		else if(istype(I, ccs.required_type_to_deconstruct))
-			constructed = FALSE
+			action_type = DECONSTRUCTING
 			wait = ccs.deconstruction_delay
 			message = ccs.deconstruction_message
 		else if(istype(I, ccs.required_type_to_repair))
 			if(obj_integrity == max_integrity)
 				to_chat(user, "<span class='notice'>\The [src] isn't damaged!</span>")
 				return
-			repairing = TRUE
+			action_type = REPAIRING
 			wait = ccs.repair_delay
 			message = ccs.repair_message
 			if(!message)
@@ -442,24 +440,7 @@
 		else
 			return ..()
 
-		//snowflakish stuff here
-		if(istype(I, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = I
-			if(!WT.isOn())
-				to_chat(user, "<span class='warning'>\The [WT] must be on for this task!</span>")
-				return
-			else
-				WT.remove_fuel(M = user)
-
-		var/obj/item/stack/Mats = I
-		if(istype(Mats))
-			var/check_against = repairing ? ccs.required_amount_to_repair : ccs.required_type_to_construct
-			if(Mats.amount < check_against)
-				to_chat(user, "<span class='warning'>You need [ccs.required_amount_to_construct] or more of [Mats] first!</span>")
-				return
-
-		var/cont = ConstructionChecks(ccs.id, constructed, I, user, FALSE)
-		if(!cont)
+		if(!ConstructionChecks(ccs.id, action_type, I, user, TRUE))
 			return
 
 		if(I.usesound)
@@ -470,37 +451,44 @@
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
 			LAZYADD(user.construction_tasks, src)	//prevent repeats
 			//Checks will always run because we've verified do_after will last at least 1 tick
-			cont = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, constructed, I, user, FALSE))
+			var/result = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, action_type, I, user, FALSE))
 			LAZYREMOVE(user.construction_tasks, src)
+			if(!result)
+				return
 
-		if(cont)
-			user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
-									"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
-			if(!repairing)
-				ccs.OnLeft(src, user, I, constructed, FALSE)
-			else
-				Repair(user, I)
+		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
+								"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
+		if(action_type != REPAIRING)
+			ccs.OnLeft(src, user, I, action_type == CONSTRUCTING, FALSE)
+		else
+			Repair(user, I)
 	else
 		return ..()
 
-/obj/proc/ConstructionChecks(state_started_id, constructing, obj/item/I, mob/user, skip) 
+/obj/proc/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check) 
 	if(current_construction_state.id != state_started_id)
 		to_chat(user, "<span class='warning'>You were interrupted!</span>")
 		return FALSE
 	
-	if(constructing && !anchored)
-		var/datum/construction_state/next_state = current_construction_state.next_state
-		if(next_state && next_state.anchored && !isfloorturf(loc))
-			to_chat(userm "<span class='warning'>You cannot do that without a floor underneath \the [src]!</span>")
-			return FALSE
-	
 	var/obj/item/weapon/weldingtool/WT = I
 	if(istype(WT) && !WT.isOn())
-		to_chat(user, "<span class='warning'>\The [WT] runs out of fuel!</span>")
+		to_chat(user, "<span class='warning'>\The [WT] [first_check ? "needs to be on for this task" : "runs out of fuel"]!</span>")
 		return FALSE
-	
+
 	var/obj/item/stack/Mats = I
-	if(istype(Mats) && Mats.amount < current_construction_state.required_amount_to_construct)
-		to_chat(user, "<span class='warning'>You no longer have enough [Mats]!</span>")
-		return FALSE
+	if(istype(Mats))
+		var/check_against = action_type == REPAIRING ? current_construction_state.required_amount_to_repair : current_construction_state.required_type_to_construct
+		if(Mats.amount < check_against)
+			if(first_check)
+				to_chat(user, "<span class='warning'>You need [check_against] or more of [Mats] first!</span>")
+			else
+				to_chat(user, "<span class='warning'>You no longer have enough [Mats]!</span>")
+			return FALSE
+
+	if(action_type == CONSTRUCTING && !anchored)
+		var/datum/construction_state/next_state = current_construction_state.next_state
+		if(next_state && next_state.anchored && !isfloorturf(loc))
+			to_chat(user, "<span class='warning'>You cannot do that without a floor underneath \the [src]!</span>")
+			return FALSE
+
 	return TRUE
