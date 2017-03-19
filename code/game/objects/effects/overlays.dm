@@ -214,14 +214,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
 	duration = 20
-
-/obj/effect/overlay/temp/big_explosion
-	icon = 'icons/effects/explosion.dmi'
-	icon_state = "explosion"
-	pixel_x = -20
-	randomdir = 0
-	duration = 30
-
+	
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
