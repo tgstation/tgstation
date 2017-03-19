@@ -646,7 +646,7 @@ RCD
 				G.color = color_choice
 				G.light_color = G.color
 				G.throw_at(A, 9, 3, user)
-				G.activate()
+				G.on = TRUE
 				G.update_brightness()
 				return 1
 			return 0
