@@ -119,7 +119,7 @@
 		if(loaded > 0)
 			to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>")
 		else
-			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
+			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [IDENTITY_SUBJECT(1)]!</span>", list(src))
 	else
 		..()
 
@@ -127,7 +127,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
+			to_chat(user, "<span class='danger'>[IDENTITY_SUBJECT(1)] buzzes and beeps.</span>", list(src))
 
 /mob/living/simple_animal/bot/floorbot/Topic(href, href_list)
 	if(..())

@@ -187,7 +187,7 @@
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
 			if(!isturf(target)) //otherwise, if we didn't get TRUE and the original target wasn't a turf, try to proselytize the turf
 				return proselytize(get_turf(target), user, no_table_check)
-			to_chat(user, "<span class='warning'>[target] cannot be proselytized!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] cannot be proselytized!</span>", list(target))
 			if(!no_table_check)
 				return TRUE
 		return FALSE
@@ -246,10 +246,10 @@
 	if(!can_use_power(proselytize_values["power_cost"]))
 		if(stored_power - proselytize_values["power_cost"] < 0)
 			if(!silent)
-				to_chat(user, "<span class='warning'>You need <b>[proselytize_values["power_cost"]]W</b> power to proselytize [target]!</span>")
+				to_chat(user, "<span class='warning'>You need <b>[proselytize_values["power_cost"]]W</b> power to proselytize [IDENTITY_SUBJECT(1)]!</span>", list(target))
 		else if(stored_power - proselytize_values["power_cost"] > max_power)
 			if(!silent)
-				to_chat(user, "<span class='warning'>Your [name] contains too much power to proselytize [target]!</span>")
+				to_chat(user, "<span class='warning'>Your [name] contains too much power to proselytize [IDENTITY_SUBJECT(1)]!</span>", list(target))
 		return FALSE
 	return TRUE
 
@@ -264,11 +264,11 @@
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
 			if(!silent)
-				to_chat(user, "<span class='warning'>[L] does not serve Ratvar!</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] does not serve Ratvar!</span>", list(L))
 			return FALSE
 		if(L.health >= L.maxHealth || (L.flags & GODMODE))
 			if(!silent)
-				to_chat(user, "<span class='warning'>[L == user ? "You are" : "[L] is"] at maximum health!</span>")
+				to_chat(user, "<span class='warning'>[L == user ? "You are" : "[IDENTITY_SUBJECT(1)] is"] at maximum health!</span>", list(L))
 			return FALSE
 		repair_values["amount_to_heal"] = L.maxHealth - L.health
 	else if(isobj(target))
@@ -292,7 +292,7 @@
 	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER) //and get the power cost from that
 	if(!can_use_power(RATVAR_POWER_CHECK) && !can_use_power(repair_values["power_required"]))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You need at least <b>[repair_values["power_required"]]W</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \
-			<b>[round(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]W</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>")
+			to_chat(user, "<span class='warning'>You need at least <b>[repair_values["power_required"]]W</b> power to start repairin[target == user ? "g yourself" : "g [IDENTITY_SUBJECT(1)]"], and at least \
+			<b>[round(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]W</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>", list(target))
 		return FALSE
 	return TRUE

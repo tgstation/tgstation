@@ -52,7 +52,7 @@
 				M.updateappearance(mutations_overlay_update=1)
 		log_attack(log_msg)
 	else
-		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
+		to_chat(user, "<span class='notice'>It appears that [IDENTITY_SUBJECT(1)] does not have compatible DNA.</span>", list(M))
 		return
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
@@ -311,7 +311,7 @@
 
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
+			to_chat(user, "<span class='notice'>You can't modify [IDENTITY_SUBJECT(1)]'s DNA while [M.p_theyre()] dead.</span>", list(M))
 			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
@@ -358,7 +358,7 @@
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
 		log_attack(log_msg)
 	else
-		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
+		to_chat(user, "<span class='notice'>It appears that [IDENTITY_SUBJECT(1)] does not have compatible DNA.</span>", list(M))
 		return
 
 /obj/item/weapon/dnainjector/timed/hulk

@@ -107,7 +107,7 @@ var/global/mulebot_count = 0
 			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] knocks [IDENTITY_SUBJECT(2)] off [IDENTITY_SUBJECT(3)] with \the [I]!</span>",
 									"<span class='danger'>You knock [IDENTITY_SUBJECT(2)] off [IDENTITY_SUBJECT(3)] with \the [I]!</span>", subjects=list(user, load, src))
 		else
-			to_chat(user, "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>")
+			to_chat(user, "<span class='warning'>You hit [IDENTITY_SUBJECT(1)] with \the [I] but to no effect!</span>", list(src))
 			..()
 	else
 		..()
@@ -119,7 +119,7 @@ var/global/mulebot_count = 0
 		emagged = 1
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [IDENTITY_SUBJECT(1)]'s controls!</span>", list(src))
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
@@ -209,7 +209,7 @@ var/global/mulebot_count = 0
 				turn_off()
 			else if(cell && !open)
 				if(!turn_on())
-					to_chat(usr, "<span class='warning'>You can't switch on [src]!</span>")
+					to_chat(usr, "<span class='warning'>You can't switch on [IDENTITY_SUBJECT(1)]!</span>", list(src))
 					return
 			. = TRUE
 		else
@@ -598,7 +598,7 @@ var/global/mulebot_count = 0
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				to_chat(calling_ai, "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>")
+				to_chat(calling_ai, "<span class='notice'>\icon[src] [IDENTITY_SUBJECT(1)] wirelessly plays a chiming sound!</span>", list(src))
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.

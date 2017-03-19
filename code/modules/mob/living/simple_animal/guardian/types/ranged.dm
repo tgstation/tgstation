@@ -102,7 +102,7 @@
 
 /obj/effect/snare/Crossed(AM as mob|obj)
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
-		to_chat(spawner.summoner, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
+		to_chat(spawner.summoner, "<span class='danger'><B>[IDENTITY_SUBJECT(1)] has crossed surveillance snare, [name].</span></B>", list(AM))
 		var/list/guardians = spawner.summoner.hasparasites()
 		for(var/para in guardians)
-			to_chat(para, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
+			to_chat(para, "<span class='danger'><B>[IDENTITY_SUBJECT(1)] has crossed surveillance snare, [name].</span></B>", list(AM))

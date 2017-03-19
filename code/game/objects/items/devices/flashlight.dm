@@ -64,12 +64,12 @@
 			var/mob/living/carbon/C = M
 			if(istype(C))
 				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
-					to_chat(user, "<span class='warning'>[C] pupils don't react to the light!</span>")
+					to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] pupils don't react to the light!</span>", list(C))
 				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
-					to_chat(user, "<span class='danger'>[C] pupils give an eerie glow!</span>")
+					to_chat(user, "<span class='danger'>[IDENTITY_SUBJECT(1)] pupils give an eerie glow!</span>", list(C))
 				else //they're okay!
 					if(C.flash_act(visual = 1))
-						to_chat(user, "<span class='notice'>[C]'s pupils narrow.</span>")
+						to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)]'s pupils narrow.</span>", list(C))
 	else
 		return ..()
 

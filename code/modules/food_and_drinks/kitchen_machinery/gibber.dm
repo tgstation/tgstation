@@ -102,7 +102,7 @@
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
-			to_chat(user, "<span class='warning'>[C] is attached to something!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is attached to something!</span>", list(C))
 			return
 		if(C.abiotic(1) && !ignore_clothing)
 			to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")

@@ -72,7 +72,7 @@
 	if(isliving(user))
 		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
 			to_chat(user, "<span class='danger'><B>The [src] was boobytrapped!</span></B>")
-			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
+			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [IDENTITY_SUBJECT(1)]</span></B>", list(user))
 			var/turf/T = get_turf(src)
 			stored_obj.forceMove(T)
 			playsound(T,'sound/effects/Explosion2.ogg', 200, 1)

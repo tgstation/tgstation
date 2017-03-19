@@ -691,7 +691,7 @@
 		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
 		A.environment_smash += 2
-		to_chat(user, "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
+		to_chat(user, "<span class='info'>You increase the size of [IDENTITY_SUBJECT(1)], giving it a surge of strength!</span>", list(A))
 		qdel(src)
 
 /////////////////////Lavaland

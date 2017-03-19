@@ -54,7 +54,7 @@
 		if(M == usr)
 			to_chat(M, "<span class='warning'>You are unable to buckle yourself to the [src]!</span>")
 		else
-			to_chat(usr, "<span class='warning'>You are unable to buckle [M] to the [src]!</span>")
+			to_chat(usr, "<span class='warning'>You are unable to buckle [IDENTITY_SUBJECT(1)] to the [src]!</span>", list(M))
 		return 0
 
 	if(M.pulledby && buckle_prevents_pull)

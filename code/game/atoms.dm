@@ -227,15 +227,15 @@
 
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/f_name = "\a [src]."
+	var/f_name = "\a [IDENTITY_SUBJECT(1)]."
 	if(src.blood_DNA && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else
 			f_name = "a "
-		f_name += "<span class='danger'>blood-stained</span> [name]!"
+		f_name += "<span class='danger'>blood-stained</span> [IDENTITY_SUBJECT(1)]!"
 
-	to_chat(user, "\icon[src] That's [f_name]")
+	to_chat(user, "\icon[src] That's [f_name]", list(src))
 
 	if(desc)
 		to_chat(user, desc)

@@ -63,7 +63,7 @@
 		return
 	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
-			to_chat(user, "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
+			to_chat(user, "<span class='warning'>You can't impale [IDENTITY_SUBJECT(1)] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>", list(target))
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
@@ -102,7 +102,7 @@
 		if(target)
 			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
 			target.Stun(2) //brief stun
-			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
+			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [IDENTITY_SUBJECT(1)]...</span>", list(target))
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)

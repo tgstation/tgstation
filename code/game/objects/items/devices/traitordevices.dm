@@ -86,7 +86,7 @@ effective or pretty fucking useless.
 		used = 1
 		icon_state = "health1"
 		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
-		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
+		to_chat(user, "<span class='warning'>Successfully irradiated [IDENTITY_SUBJECT(1)].</span>", list(M))
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)

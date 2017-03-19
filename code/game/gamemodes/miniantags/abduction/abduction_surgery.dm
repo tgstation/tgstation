@@ -36,7 +36,7 @@
 		IC.Remove(target)
 		return 1
 	else
-		to_chat(user, "<span class='warning'>You don't find anything in [target]'s [target_zone]!</span>")
+		to_chat(user, "<span class='warning'>You don't find anything in [IDENTITY_SUBJECT(1)]'s [target_zone]!</span>", list(target))
 		return 1
 
 /datum/surgery_step/gland_insert

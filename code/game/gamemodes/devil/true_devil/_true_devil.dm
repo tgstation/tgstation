@@ -65,7 +65,7 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[IDENTITY_SUBJECT(1)]</b>!\n"
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
@@ -87,7 +87,7 @@
 	else if(health < (maxHealth/2))
 		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
-	to_chat(user, msg)
+	to_chat(user, msg, list(src))
 
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()

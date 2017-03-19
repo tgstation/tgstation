@@ -170,22 +170,22 @@
 	if(being_used || !ismob(M))
 		return
 	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		to_chat(user, "<span class='warning'>[M] is already too intelligent for this to work!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is already too intelligent for this to work!</span>", list(M))
 		return ..()
 	if(M.stat)
-		to_chat(user, "<span class='warning'>[M] is dead!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is dead!</span>", list(M))
 		return ..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
-		to_chat(user, "<span class='warning'>The potion won't work on [SM].</span>")
+		to_chat(user, "<span class='warning'>The potion won't work on [IDENTITY_SUBJECT(1)].</span>", list(SM))
 		return ..()
 
 
 
-	to_chat(user, "<span class='notice'>You offer the sentience potion to [SM]...</span>")
+	to_chat(user, "<span class='notice'>You offer the sentience potion to [IDENTITY_SUBJECT(1)]...</span>", list(SM))
 	being_used = 1
 
-	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.real_name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -195,11 +195,11 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
-		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
-		to_chat(user, "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>")
+		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+		to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] accepts the potion and suddenly becomes attentive and aware. It worked!</span>", list(SM))
 		qdel(src)
 	else
-		to_chat(user, "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>")
+		to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>", list(SM))
 		being_used = 0
 		..()
 
@@ -216,14 +216,14 @@
 	if(prompted || !ismob(M))
 		return
 	if(!isanimal(M) || M.ckey) //much like sentience, these will not work on something that is already player controlled
-		to_chat(user, "<span class='warning'>[M] already has a higher consciousness!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] already has a higher consciousness!</span>", list(M))
 		return ..()
 	if(M.stat)
-		to_chat(user, "<span class='warning'>[M] is dead!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is dead!</span>", list(M))
 		return ..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != animal_type)
-		to_chat(user, "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" )
+		to_chat(user, "<span class='warning'>You cannot transfer your consciousness to [IDENTITY_SUBJECT(1)].</span>", list(SM))
 		return ..()
 	if(jobban_isbanned(user, ROLE_ALIEN)) //ideally sentience and trasnference potions should be their own unique role.
 		to_chat(user, "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>")
@@ -234,7 +234,7 @@
 		prompted = 0
 		return
 
-	to_chat(user, "<span class='notice'>You drink the potion then place your hands on [SM]...</span>")
+	to_chat(user, "<span class='notice'>You drink the potion then place your hands on [IDENTITY_SUBJECT(1)]...</span>", list(SM))
 
 
 	user.mind.transfer_to(SM)
@@ -243,8 +243,8 @@
 	SM.faction = user.faction.Copy()
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
-	to_chat(SM, "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>")
-	to_chat(SM, "<span class='warning'>You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!</span>")
+	to_chat(SM, "<span class='notice'>In a quick flash, you feel your consciousness flow into [IDENTITY_SUBJECT(1)]!</span>", list(SM))
+	to_chat(SM, "<span class='warning'>You are now [SM.real_name]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!</span>")
 	SM.name = "[SM.name] as [user.real_name]"
 	qdel(src)
 

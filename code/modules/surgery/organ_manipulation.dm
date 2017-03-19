@@ -58,7 +58,7 @@
 		current_type = "insert"
 		I = tool
 		if(target_zone != I.zone || target.getorganslot(I.slot))
-			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
+			to_chat(user, "<span class='notice'>There is no room for [I] in [IDENTITY_SUBJECT(1)]'s [parse_zone(target_zone)]!</span>", list(target))
 			return -1
 
 		user.visible_message("[IDENTITY_SUBJECT(1)] begins to insert [tool] into [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].",
@@ -73,7 +73,7 @@
 					"<span class='notice'>You begin to extract [B] from [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]...</span>", subjects=list(user, target))
 			return TRUE
 		if(!organs.len)
-			to_chat(user, "<span class='notice'>There is no removeable organs in [target]'s [parse_zone(target_zone)]!</span>")
+			to_chat(user, "<span class='notice'>There is no removeable organs in [IDENTITY_SUBJECT(1)]'s [parse_zone(target_zone)]!</span>", list(target))
 			return -1
 		else
 			for(var/obj/item/organ/O in organs)

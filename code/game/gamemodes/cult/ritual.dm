@@ -36,7 +36,7 @@ This file contains the arcane tome files.
 		return ..()
 	if(iscultist(M))
 		if(M.reagents && M.reagents.has_reagent("holywater")) //allows cultists to be rescued from the clutches of ordained religion
-			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
+			to_chat(user, "<span class='cult'>You remove the taint from [IDENTITY_SUBJECT(1)].</span>", list(M))
 			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)

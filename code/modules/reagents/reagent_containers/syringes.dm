@@ -87,9 +87,9 @@
 						return
 				busy = 0
 				if(L.transfer_blood_to(src, drawn_amount))
-					user.visible_message("[user] takes a blood sample from [L].")
+					user.visible_message("[IDENTITY_SUBJECT(1)] takes a blood sample from [IDENTITY_SUBJECT(2)].", subjects=list(user, L))
 				else
-					to_chat(user, "<span class='warning'>You are unable to draw any blood from [L]!</span>")
+					to_chat(user, "<span class='warning'>You are unable to draw any blood from [IDENTITY_SUBJECT(1)]!</span>", list(L))
 
 			else //if not mob
 				if(!target.reagents.total_volume)

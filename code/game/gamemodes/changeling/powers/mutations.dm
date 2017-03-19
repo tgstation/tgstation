@@ -340,10 +340,10 @@
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1
 							else
-								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off of [C]'s hands!<span>")
+								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off of [IDENTITY_SUBJECT(1)]'s hands!<span>", list(C))
 								return 0
 						else
-							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!<span>")
+							to_chat(firer, "<span class='danger'>[IDENTITY_SUBJECT(1)] has nothing in hand to disarm!<span>", list(C))
 							return 0
 
 					if(INTENT_GRAB)

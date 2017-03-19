@@ -169,7 +169,7 @@
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = 0
 		emagged = 1
-		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
+		to_chat(user, "<span class='notice'>You bypass [IDENTITY_SUBJECT(1)]'s controls.</span>", list(src))
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
@@ -187,11 +187,11 @@
 	..()
 	if(health < maxHealth)
 		if(health > maxHealth/3)
-			to_chat(user, "[src]'s parts look loose.")
+			to_chat(user, "[IDENTITY_SUBJECT(1)]'s parts look loose.", list(src))
 		else
-			to_chat(user, "[src]'s parts look very loose!")
+			to_chat(user, "[IDENTITY_SUBJECT(1)]'s parts look very loose!", list(src))
 	else
-		to_chat(user, "[src] is in pristine condition.")
+		to_chat(user, "[IDENTITY_SUBJECT(1)] is in pristine condition.", list(src))
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
@@ -235,7 +235,7 @@
 	if(!topic_denied(user))
 		interact(user)
 	else
-		to_chat(user, "<span class='warning'>[src]'s interface is not responding!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s interface is not responding!</span>", list(src))
 
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
@@ -273,7 +273,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
-				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] does not need a repair!</span>", list(src))
 				return
 			if(!open)
 				to_chat(user, "<span class='warning'>Unable to repair with the maintenance panel closed!</span>")
@@ -468,12 +468,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		access_card.access = prev_access
 
-/mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
+/mob/living/simple_animal/bot/proc/call_bot(mob/caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
 
 	if(client) //Player bots instead get a location command from the AI
-		to_chat(src, "<span class='noticebig'>Priority waypoint set by \icon[caller] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.")
+		to_chat(src, "<span class='noticebig'>Priority waypoint set by \icon[caller] <b>[caller.real_name]</b>. Proceed to <b>[end_area.name]<\b>.")
 
 	//For giving the bot temporary all-access.
 	var/obj/item/weapon/card/id/all_access = new /obj/item/weapon/card/id
@@ -489,7 +489,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card = all_access //Give the bot all-access while under the AI's command.
 		if(message)
-			to_chat(calling_ai, "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
+			to_chat(calling_ai, "<span class='notice'>\icon[src] [real_name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0
@@ -504,7 +504,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/success = bot_move(ai_waypoint, 3)
 	if(!success)
 		if(calling_ai)
-			to_chat(calling_ai, "\icon[src] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]")
+			to_chat(calling_ai, "\icon[src] [get_turf(src) == ai_waypoint ? "<span class='notice'>[real_name] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]")
 			calling_ai = null
 		bot_reset()
 
@@ -756,7 +756,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return 1
 
 	if(topic_denied(usr))
-		to_chat(usr, "<span class='warning'>[src]'s interface is not responding!</span>")
+		to_chat(usr, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s interface is not responding!</span>", list(src))
 		return 1
 	add_fingerprint(usr)
 
@@ -868,7 +868,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		else
 			to_chat(user, "<span class='warning'>The personality slot is locked.</span>")
 	else
-		to_chat(user, "<span class='warning'>[src] is not compatible with [card]</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is not compatible with [card]</span>", list(src))
 
 /mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = 1)
 	if(paicard)

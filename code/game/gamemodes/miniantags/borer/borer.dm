@@ -22,13 +22,13 @@
 
 		var/mob/living/simple_animal/borer/B = loc
 		to_chat(src, "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>")
-		to_chat(B.victim, "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>")
+		to_chat(B.victim, "<i><span class='alien'>The captive mind of [src.real_name] whispers, \"[message]\"</span></i>")
 
 		for (var/mob/M in player_list)
 			if(isnewplayer(M))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
-				to_chat(M, "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>")
+				to_chat(M, "<i>Thought-speech, <b>[src.real_name]</b> -> <b>[B.truename]:</b> [message]</i>")
 
 /mob/living/captive_brain/emote(var/message)
 	return
@@ -38,7 +38,7 @@
 	var/mob/living/simple_animal/borer/B = loc
 
 	to_chat(src, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 40 seconds).</span>")
-	to_chat(B.victim, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
+	to_chat(B.victim, "<span class='danger'>You feel the captive mind of [src.real_name] begin to resist your control.</span>")
 
 	var/delay = rand(150,250) + B.victim.brainloss
 	addtimer(CALLBACK(src, .proc/return_control, src.loc), delay)
@@ -206,15 +206,15 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-	to_chat(B, "<span class='changeling'><i>[src] says:</i> [input]</span>")
+	to_chat(B, "<span class='changeling'><i>[src.real_name] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
 
 	for(var/M in dead_mob_list)
 		if(isobserver(M))
-			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [input]</i>"
+			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src.real_name]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
-	to_chat(src, "<span class='changeling'><i>[src] says:</i> [input]</span>")
+	to_chat(src, "<span class='changeling'><i>[src.real_name] says:</i> [input]</span>")
 
 /mob/living/proc/trapped_mind_comm()
 	set name = "Converse with Trapped Mind"
@@ -332,11 +332,14 @@ var/total_borer_hosts_needed = 10
 		return
 
 	var/list/choices = list()
+	var/list/choice_names = list()
 	for(var/mob/living/carbon/H in view(1,src))
 		if(H!=src && Adjacent(H))
-			choices += H
+			var/choice_name = avoid_assoc_duplicate_keys(identity_subject_name(H), choice_names)
+			choices[choice_name] = H
 
-	var/mob/living/carbon/H = input(src,"Who do you wish to infest?") in null|choices
+	var/H_name = input(src,"Who do you wish to infest?") in null|choices
+	var/mob/living/carbon/H = choices[H_name]
 	if(!H || !src)
 		return
 
@@ -348,12 +351,12 @@ var/total_borer_hosts_needed = 10
 		return FALSE
 
 	if(H.has_brain_worms())
-		to_chat(src, "<span class='warning'>[victim] is already infested!</span>")
+		to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is already infested!</span>", list(H))
 		return
 
-	to_chat(src, "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>")
+	to_chat(src, "<span class='warning'>You slither up [IDENTITY_SUBJECT(1)] and begin probing at their ear canal...</span>", list(H))
 	if(!do_mob(src, H, 30))
-		to_chat(src, "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>")
+		to_chat(src, "<span class='warning'>As [IDENTITY_SUBJECT(1)] moves away, you are dislodged and fall to the ground.</span>", list(H))
 		return
 
 	if(!H || !src)
@@ -367,15 +370,15 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(C.has_brain_worms())
-		to_chat(src, "<span class='warning'>[C] is already infested!</span>")
+		to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is already infested!</span>", list(C))
 		return
 
 	if(!C.key || !C.mind)
-		to_chat(src, "<span class='warning'>[C]'s mind seems unresponsive. Try someone else!</span>")
+		to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s mind seems unresponsive. Try someone else!</span>", list(C))
 		return
 
 	if(C && C.dna && istype(C.dna.species, /datum/species/skeleton))
-		to_chat(src, "<span class='warning'>[C] does not possess the vital systems needed to support us.</span>")
+		to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] does not possess the vital systems needed to support us.</span>", list(C))
 		return
 
 	victim = C
@@ -479,7 +482,7 @@ var/total_borer_hosts_needed = 10
 
 	layer = MOB_LAYER
 
-	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
+	to_chat(src, "<span class='warning'>You focus your psychic lance on [IDENTITY_SUBJECT(1)] and freeze their limbs with a wave of terrible dread.</span>", list(M))
 	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
 	M.Stun(3)
 
@@ -502,7 +505,7 @@ var/total_borer_hosts_needed = 10
 		to_chat(src, "<span class='userdanger'>You decide against leaving your host.</span>")
 		return
 
-	to_chat(src, "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>")
+	to_chat(src, "<span class='userdanger'>You begin disconnecting from [victim.real_name]'s synapses and prodding at their internal ear canal.</span>")
 
 	if(victim.stat != DEAD)
 		to_chat(victim, "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>")
@@ -523,7 +526,7 @@ var/total_borer_hosts_needed = 10
 		to_chat(src, "<span class='userdanger'>You cannot release your host in your current state.</span>")
 		return
 
-	to_chat(src, "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>")
+	to_chat(src, "<span class='userdanger'>You wiggle out of [victim.real_name]'s ear and plop to the ground.</span>")
 	if(victim.mind)
 		to_chat(victim, "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>")
 		to_chat(victim, "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>")
@@ -644,7 +647,7 @@ var/total_borer_hosts_needed = 10
 		src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
 		return
 	if(is_servant_of_ratvar(victim) || iscultist(victim) || victim.isloyal())
-		to_chat(src, "<span class='warning'>[victim]'s mind seems to be blocked by some unknown force!</span>")
+		to_chat(src, "<span class='warning'>[victim.real_name]'s mind seems to be blocked by some unknown force!</span>")
 		return
 
 	else
@@ -664,7 +667,8 @@ var/total_borer_hosts_needed = 10
 
 		host_brain.ckey = victim.ckey
 
-		host_brain.name = victim.name
+		host_brain.name = victim.real_name
+		host_brain.real_name = victim.real_name
 
 		if(victim.mind)
 			host_brain.mind = victim.mind

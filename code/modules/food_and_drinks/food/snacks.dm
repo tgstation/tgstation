@@ -97,7 +97,7 @@
 									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] forces [IDENTITY_SUBJECT(2)] to eat [src].</span>", subjects=list(user, M))
 
 			else
-				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't seem to have a mouth!</span>", list(M))
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.

@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[IDENTITY_SUBJECT(1)]</EM>!\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"
 	else
@@ -16,9 +16,9 @@
 				msg += "<B>Its casing is melted and heat-warped!</B>\n"
 		msg += "</span>"
 		if (shunted == 0 && !src.client)
-			msg += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
+			msg += "[IDENTITY_SUBJECT(1)]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
 	msg += "*---------*</span>"
 
-	to_chat(user, msg)
+	to_chat(user, msg, list(src))
 
 	..()

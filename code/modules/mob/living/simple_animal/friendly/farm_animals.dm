@@ -131,7 +131,7 @@
 	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] tips over [IDENTITY_SUBJECT(2)].</span>",
 			"<span class='notice'>You tip over [IDENTITY_SUBJECT(2)].</span>", subjects=list(M, src))
-		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
+		to_chat(src, "<span class='userdanger'>You are tipped over by [IDENTITY_SUBJECT(1)]!</span>", list(M))
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
@@ -256,14 +256,14 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(istype(O, food_type)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
-			var/feedmsg = "[IDENTITY_SUBJECT(1)] feeds [O] to [name]! [pick(feedMessages)]"
-			user.visible_message(feedmsg, subjects=list(user))
+			var/feedmsg = "[IDENTITY_SUBJECT(1)] feeds [O] to [IDENTITY_SUBJECT(2)]! [pick(feedMessages)]"
+			user.visible_message(feedmsg, subjects=list(user, src))
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
 			//to_chat(world, eggsleft)
 		else
-			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't seem hungry!</span>", list(src))
 	else
 		..()
 

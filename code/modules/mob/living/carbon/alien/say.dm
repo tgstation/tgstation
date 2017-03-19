@@ -12,7 +12,7 @@
 			var/link = FOLLOW_LINK(S, src)
 			to_chat(S, "[link] [rendered]")
 
-/mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
+/mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = real_name)
 	shown_name = "<FONT size = 3>[shown_name]</FONT>"
 	..(message, shown_name)
 

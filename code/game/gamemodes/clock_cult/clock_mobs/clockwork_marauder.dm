@@ -297,14 +297,14 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/marauder_comms(message)
-	var/name_part = "<span class='sevtug'>[src] ([true_name])</span>"
+	var/name_part = "<span class='sevtug'>[IDENTITY_SUBJECT(1)] ([true_name])</span>"
 	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
-	to_chat(src, "[name_part]<span class='sevtug_small'>:</span> [message]")
-	to_chat(host, "[name_part]<span class='sevtug_small'>:</span> [message]")
+	to_chat(src, "[name_part]<span class='sevtug_small'>:</span> [message]", list(src))
+	to_chat(host, "[name_part]<span class='sevtug_small'>:</span> [message]", list(src))
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[findtextEx(host.name, host.real_name) ? "[host.name]" : "[host.real_name] (as [host.name])"]</span><span class='sevtug_small'>):</span> [message] ")
+			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[host.real_name]</span><span class='sevtug_small'>):</span> [message] ", list(src))
 	return TRUE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/return_to_host()
@@ -417,7 +417,7 @@
 	if(!linked_marauder)
 		to_chat(owner, "<span class='warning'>Your marauder seems to have been destroyed!</span>")
 		return FALSE
-	var/name_part = "<span class='sevtug'>Servant [findtextEx(owner.name, owner.real_name) ? "[owner.name]" : "[owner.real_name] (as [owner.name])"]</span>"
+	var/name_part = "<span class='sevtug'>Servant [owner.real_name]</span>"
 	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
 	to_chat(owner, "[name_part]<span class='sevtug_small'>:</span> [message]")
 	to_chat(linked_marauder, "[name_part]<span class='sevtug_small'>:</span> [message]")

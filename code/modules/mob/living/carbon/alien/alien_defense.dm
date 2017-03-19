@@ -41,7 +41,7 @@ In all, this is a lot like the monkey code. /N
 				add_logs(M, src, "attacked")
 				updatehealth()
 			else
-				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
+				to_chat(M, "<span class='warning'>[IDENTITY_SUBJECT(1)] is too injured for that.</span>", list(src))
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)

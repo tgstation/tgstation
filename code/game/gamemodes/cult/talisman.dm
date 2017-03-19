@@ -311,7 +311,7 @@
 
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+		to_chat(user, "<span class='cultitalic'>You disturb [IDENTITY_SUBJECT(1)] with visons of the end!</span>", list(target))
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
@@ -409,15 +409,15 @@
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
 				C.update_handcuffed()
-				to_chat(user, "<span class='notice'>You shackle [C].</span>")
+				to_chat(user, "<span class='notice'>You shackle [IDENTITY_SUBJECT(1)].</span>", list(C))
 				add_logs(user, C, "handcuffed")
 				uses--
 			else
-				to_chat(user, "<span class='warning'>[C] is already bound.</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is already bound.</span>", list(C))
 		else
-			to_chat(user, "<span class='warning'>You fail to shackle [C].</span>")
+			to_chat(user, "<span class='warning'>You fail to shackle [IDENTITY_SUBJECT(1)].</span>", list(C))
 	else
-		to_chat(user, "<span class='warning'>[C] is already bound.</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is already bound.</span>", list(C))
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)

@@ -141,12 +141,12 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 				R.invisibility = 0
 	if(user.mind && (user.mind.isholy))
 		if(A.reagents && A.reagents.has_reagent("water")) // blesses all the water in the holder
-			to_chat(user, "<span class='notice'>You bless [A].</span>")
+			to_chat(user, "<span class='notice'>You bless [IDENTITY_SUBJECT(1)].</span>", list(A))
 			var/water2holy = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)
 		if(A.reagents && A.reagents.has_reagent("unholywater")) // yeah yeah, copy pasted code - sue me
-			to_chat(user, "<span class='notice'>You purify [A].</span>")
+			to_chat(user, "<span class='notice'>You purify [IDENTITY_SUBJECT(1)].</span>", list(A))
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)

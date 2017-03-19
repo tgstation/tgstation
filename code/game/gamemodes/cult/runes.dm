@@ -376,12 +376,12 @@ var/list/teleport_runes = list()
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>You need more invokers to convert [convertee]!</span>")
+			to_chat(M, "<span class='warning'>You need more invokers to convert [IDENTITY_SUBJECT(1)]!</span>", list(convertee))
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return 0
 	if(convertee.null_rod_check())
 		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
+			to_chat(M, "<span class='warning'>Something is shielding [IDENTITY_SUBJECT(1)]'s mind!</span>", list(convertee))
 		log_game("Offer rune failed - convertee had null rod")
 		return 0
 	var/brutedamage = convertee.getBruteLoss()
@@ -404,7 +404,7 @@ var/list/teleport_runes = list()
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
-			to_chat(M, "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
+			to_chat(M, "<span class='cultitalic'>[IDENTITY_SUBJECT(1)] is too greatly linked to the world! You need three acolytes!</span>", list(sacrificial))
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
 	var/sacrifice_fulfilled = FALSE
@@ -653,7 +653,7 @@ var/list/teleport_runes = list()
 /obj/effect/rune/astral/examine(mob/user)
 	..()
 	if(affecting)
-		to_chat(user, "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>")
+		to_chat(user, "<span class='cultitalic'>A translucent field encases [IDENTITY_SUBJECT(1)] above the rune!</span>", list(user))
 
 /obj/effect/rune/astral/can_invoke(mob/living/user)
 	if(rune_in_use)
@@ -806,10 +806,13 @@ var/list/wall_runes = list()
 /obj/effect/rune/summon/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	var/list/cultists = list()
+	var/list/cultist_names = list()
 	for(var/datum/mind/M in ticker.mode.cult)
-		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
-			cultists |= M.current
-	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
+		if(M.current && !(M.current in invokers) && M.current.stat != DEAD)
+			var/cultist_name = avoid_assoc_duplicate_keys(M.current.real_name, cultist_names)
+			cultists[cultist_name] = M.current
+	var/cultist_name_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
+	var/mob/living/cultist_to_summon = cultists[cultist_name_to_summon]
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(!cultist_to_summon)
@@ -818,17 +821,17 @@ var/list/wall_runes = list()
 		log_game("Summon Cultist rune failed - no target")
 		return
 	if(cultist_to_summon.stat == DEAD)
-		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] has died!</span>")
+		to_chat(user, "<span class='cultitalic'>[cultist_to_summon.real_name] has died!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target died")
 		return
 	if(!iscultist(cultist_to_summon))
-		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] is not a follower of the Geometer!</span>")
+		to_chat(user, "<span class='cultitalic'>[cultist_to_summon.real_name] is not a follower of the Geometer!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target was deconverted")
 		return
 	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] is not in our dimension!</span>")
+		to_chat(user, "<span class='cultitalic'>[cultist_to_summon.real_name] is not in our dimension!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target in away mission")
 		return

@@ -3,10 +3,11 @@
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
 	A.examine(src)
 	if(ishuman(A))
-		if(A in drained_mobs)
-			to_chat(src, "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" )
-		else if(in_range(src, A))
-			Harvest(A)
+		var/mob/living/carbon/human/H = A
+		if(H in drained_mobs)
+			to_chat(src, "<span class='revenwarning'>[H.real_name]'s soul is dead and empty.</span>" )
+		else if(in_range(src, H))
+			Harvest(H)
 
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
 	if(!castcheck(0))
@@ -21,7 +22,7 @@
 		return
 	draining = 1
 	essence_drained += rand(15, 20)
-	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")
+	to_chat(src, "<span class='revennotice'>You search for the soul of [target.real_name].</span>")
 	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
 		if(target.ckey)
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul burns with intelligence.</span>")
@@ -34,13 +35,13 @@
 		if(do_after(src, rand(15, 20), 0, target)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
-					to_chat(src, "<span class='revennotice'>[target] will not yield much essence. Still, every bit counts.</span>")
+					to_chat(src, "<span class='revennotice'>[target.real_name] will not yield much essence. Still, every bit counts.</span>")
 				if(30 to 70)
-					to_chat(src, "<span class='revennotice'>[target] will yield an average amount of essence.</span>")
+					to_chat(src, "<span class='revennotice'>[target.real_name] will yield an average amount of essence.</span>")
 				if(70 to 90)
-					to_chat(src, "<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>")
+					to_chat(src, "<span class='revenboldnotice'>Such a feast! [target.real_name] will yield much essence to you.</span>")
 				if(90 to INFINITY)
-					to_chat(src, "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>")
+					to_chat(src, "<span class='revenbignotice'>Ah, the perfect soul. [target.real_name] will yield massive amounts of essence to you.</span>")
 			if(do_after(src, rand(15, 25), 0, target)) //how about now
 				if(!target.stat)
 					to_chat(src, "<span class='revenwarning'>[target.p_they(TRUE)] [target.p_are()] now powerful enough to fight off your draining.</span>")
@@ -59,12 +60,12 @@
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5
-						to_chat(src, "<span class='revenboldnotice'>The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>",)
+						to_chat(src, "<span class='revenboldnotice'>The absorption of [target.real_name]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>",)
 					if(essence_drained > 90)
 						essence_regen_cap += 15
 						perfectsouls += 1
-						to_chat(src, "<span class='revenboldnotice'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
-					to_chat(src, "<span class='revennotice'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>")
+						to_chat(src, "<span class='revenboldnotice'>The perfection of [target.real_name]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
+					to_chat(src, "<span class='revennotice'>[target.real_name]'s soul has been considerably weakened and will yield no more essence for the time being.</span>")
 					target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] slumps onto the ground.</span>", \
 										   "<span class='revenwarning'>Violets lights, dancing in your vision, getting clo--</span>", subjects=list(target))
 					drained_mobs.Add(target)

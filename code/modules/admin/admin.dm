@@ -712,7 +712,7 @@ var/global/BSACooldown = 0
 	if(istype(M) && M.mind && M.mind.devilinfo)
 		to_chat(usr, ticker.mode.printdevilinfo(M.mind))
 	else
-		to_chat(usr, "<b>[M] is not a devil.")
+		to_chat(usr, "<b>[IDENTITY_SUBJECT(1)] is not a devil.", list(M))
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())

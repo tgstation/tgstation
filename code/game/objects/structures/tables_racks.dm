@@ -61,7 +61,7 @@
 	if(user.a_intent == INTENT_GRAB && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
 		if(pushed_mob.buckled)
-			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is buckled to [IDENTITY_SUBJECT(2)]!</span>", list(pushed_mob, pushed_mob.buckled))
 			return
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")

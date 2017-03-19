@@ -205,7 +205,7 @@
 /obj/item/weapon/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
 		if (cooldown)
-			to_chat(user, "<span class='notice'>Give [M] a chance to think through the contract, don't rush him.</span>")
+			to_chat(user, "<span class='notice'>Give [IDENTITY_SUBJECT(1)] a chance to think through the contract, don't rush him.</span>", list(M))
 			return 0
 		cooldown = TRUE
 		var/mob/living/carbon/human/H = M

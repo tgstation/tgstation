@@ -137,7 +137,7 @@
 			Recover()
 			qdel(I)
 		else
-			to_chat(user, "<span class='warning'>[src] won't eat it!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] won't eat it!</span>", list(src))
 		return
 	if(I.force)
 		Bruise()

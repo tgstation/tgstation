@@ -905,10 +905,10 @@
 		to_chat(user, "<span class='warning'>There's nothing in [src] to transfer!</span>")
 		return
 	if(!occupier.mind || !occupier.client)
-		to_chat(user, "<span class='warning'>[occupier] is either inactive or destroyed!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is either inactive or destroyed!</span>", list(occupier))
 		return
 	if(!occupier.parent.stat)
-		to_chat(user, "<span class='warning'>[occupier] is refusing all attempts at transfer!</span>" )
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is refusing all attempts at transfer!</span>", list(occupier))
 		return
 	if(transfer_in_progress)
 		to_chat(user, "<span class='warning'>There's already a transfer in progress!</span>")
@@ -929,20 +929,20 @@
 		return
 	if(user.loc != T)
 		to_chat(user, "<span class='danger'>Location changed. Process terminated.</span>")
-		to_chat(occupier, "<span class='warning'>[user] moved away! Transfer canceled.</span>")
+		to_chat(occupier, "<span class='warning'>[IDENTITY_SUBJECT(1)] moved away! Transfer canceled.</span>", list(user))
 		transfer_in_progress = FALSE
 		return
 	to_chat(user, "<span class='notice'>AI accepted request. Transferring stored intelligence to [card]...</span>")
 	to_chat(occupier, "<span class='notice'>Transfer starting. You will be moved to [card] shortly.</span>")
 	if(!do_after(user, 50, target = src))
-		to_chat(occupier, "<span class='warning'>[user] was interrupted! Transfer canceled.</span>")
+		to_chat(occupier, "<span class='warning'>[IDENTITY_SUBJECT(1)] was interrupted! Transfer canceled.</span>", list(user))
 		transfer_in_progress = FALSE
 		return
 	if(!occupier || !card)
 		transfer_in_progress = FALSE
 		return
 	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] transfers [IDENTITY_SUBJECT(2)] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>", subjects=list(user, occupier))
-	to_chat(occupier, "<span class='notice'>Transfer complete! You've been stored in [user]'s [card.name].</span>")
+	to_chat(occupier, "<span class='notice'>Transfer complete! You've been stored in [IDENTITY_SUBJECT(1)]'s [card.name].</span>", list(user))
 	occupier.forceMove(card)
 	card.AI = occupier
 	occupier.parent.shunted = FALSE

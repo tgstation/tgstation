@@ -2,8 +2,8 @@
 
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
-		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
-		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
+		to_chat(user, "<span class='notice'>You begin to place [I] on [IDENTITY_SUBJECT(1)]'s head...</span>", list(src))
+		to_chat(src, "<span class='notice'>[IDENTITY_SUBJECT(1)] is placing [I] on your head...</span>", list(user))
 		if(do_after(user, 30, target = src))
 			user.temporarilyRemoveItemFromInventory(I, TRUE)
 			place_on_head(I)
@@ -101,7 +101,7 @@
 		to_chat(user, "<span class='warning'>You must unexpose the wires first!</span>")
 		return
 
-	to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
+	to_chat(user, "<span class='notice'>You emag [IDENTITY_SUBJECT(1)]'s interface.</span>", list(src))
 	emag_cooldown = world.time + 100
 
 	if(is_servant_of_ratvar(src))
@@ -121,7 +121,7 @@
 			ai_is_antag = (connected_ai.mind.special_role == "traitor")
 	if(ai_is_antag)
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
-		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")
+		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[real_name]] successfully defended against subversion.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
 		return
 

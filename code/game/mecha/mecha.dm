@@ -466,7 +466,7 @@
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
 				if(occupant)
-					to_chat(occupant, "<span class='info'>You push off of [backup] to propel yourself.</span>")
+					to_chat(occupant, "<span class='info'>You push off of [IDENTITY_SUBJECT(1)] to propel yourself.</span>", list(backup))
 		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
@@ -687,14 +687,14 @@
 				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
 				return
 			else if(AI.stat || !AI.client)
-				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
+				to_chat(user, "<span class='warning'>[AI.real_name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
 			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.real_name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null
 			ai_enter_mech(AI, interaction)
 
@@ -833,7 +833,7 @@
 		if(obj_integrity <= 0)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
-			to_chat(user, "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>")
+			to_chat(user, "<span class='danger'>[IDENTITY_SUBJECT(1)] was faster! Try better next time, loser.</span>", list(occupant))
 		else if(user.buckled)
 			to_chat(user, "<span class='warning'>You can't enter the exosuit while buckled.</span>")
 		else if(user.has_buckled_mobs())

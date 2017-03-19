@@ -128,14 +128,14 @@
 		AI.control_disabled = 1
 		AI.radio_enabled = 0
 		to_chat(AI, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
-		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.real_name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		update_icon()
 
 	else //Uploading AI from terminal to card
 		if(occupier && !active)
 			to_chat(occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [occupier.real_name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 			occupier.loc = card
 			card.AI = occupier
 			occupier = null

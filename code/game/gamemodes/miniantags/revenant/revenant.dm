@@ -7,6 +7,7 @@
 
 /mob/living/simple_animal/revenant
 	name = "revenant"
+	real_name = "revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
@@ -148,7 +149,7 @@
 	if(!message)
 		return
 	log_say("[key_name(src)] : [message]")
-	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
+	var/rendered = "<span class='revennotice'><b>[src.real_name]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
 		if(isrevenant(M))
 			to_chat(M, rendered)

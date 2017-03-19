@@ -264,10 +264,10 @@
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
-					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
-				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
+					to_chat(usr, "<span class='warning'>You try to empty [IDENTITY_SUBJECT(1)]'s [pocket_side] pocket, it seems to be stuck!</span>", list(src))
+				to_chat(usr, "<span class='notice'>You try to empty [IDENTITY_SUBJECT(1)]'s [pocket_side] pocket.</span>", list(src))
 			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags&ABSTRACT))
-				to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
+				to_chat(usr, "<span class='notice'>You try to place [place_item] into [IDENTITY_SUBJECT(1)]'s [pocket_side] pocket.</span>", list(src))
 				delay_denominator = 4
 			else
 				return
@@ -647,7 +647,7 @@
 	CHECK_DNA_AND_SPECIES(C)
 
 	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
-		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
+		to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is dead!</span>", list(C))
 		return
 	if(is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
@@ -660,7 +660,7 @@
 		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] is trying to perform CPR on [IDENTITY_SUBJECT(2)]!</span>", \
 						"<span class='notice'>You try to perform CPR on [IDENTITY_SUBJECT(2)]... Hold still!</span>", subjects=list(src, C))
 		if(!do_mob(src, C))
-			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
+			to_chat(src, "<span class='warning'>You fail to perform CPR on [IDENTITY_SUBJECT(1)]!</span>", list(C))
 			return 0
 
 		var/they_breathe = (!(NOBREATH in C.dna.species.species_traits))

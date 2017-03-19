@@ -129,7 +129,7 @@
 		return
 
 	if(!(status_flags & CANPUSH))
-		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] can't be grabbed more aggressively!</span>", list(src))
 		return 0
 	grippedby(user)
 

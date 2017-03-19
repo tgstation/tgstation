@@ -351,7 +351,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (!getBruteLoss())
-			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is already in good condition!</span>", list(src))
 			return
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
@@ -381,7 +381,7 @@
 				updatehealth()
 				user.visible_message("[IDENTITY_SUBJECT(1)] has fixed some of the burnt wires on [IDENTITY_SUBJECT(2)].", "<span class='notice'>You fix some of the burnt wires on [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, src))
 			else
-				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
+				to_chat(user, "<span class='warning'>You need more cable to repair [IDENTITY_SUBJECT(1)]!</span>", list(src))
 		else
 			to_chat(user, "The wires seem fine, there's no need to fix them.")
 
@@ -432,12 +432,12 @@
 
 	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
-			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
+			to_chat(user, "<span class='boldannounce'>[IDENTITY_SUBJECT(1)]'s bolts spark! Maybe you should lock them down first!</span>", list(src))
 			spark_system.start()
 			return
 		else
 			playsound(src, W.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>")
+			to_chat(user, "<span class='notice'>You start to unfasten [IDENTITY_SUBJECT(1)]'s securing bolts...</span>", list(src))
 			if(do_after(user, 50*W.toolspeed, target = src) && !cell)
 				user.visible_message("[IDENTITY_SUBJECT(1)] deconstructs [IDENTITY_SUBJECT(2)]!", "<span class='notice'>You unfasten the securing bolts, and [IDENTITY_SUBJECT(2)] falls to pieces!</span>", subjects=list(user, src))
 				deconstruct()
@@ -457,7 +457,7 @@
 			emote("buzz-[user.name]")
 			return
 		if(!mind) //A player mind is required for law procs to run antag checks.
-			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>")
+			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>", list(src))
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
@@ -476,7 +476,7 @@
 		else
 			if(allowed(usr))
 				locked = !locked
-				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] [src]'s cover.</span>")
+				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] [IDENTITY_SUBJECT(1)]'s cover.</span>", list(src))
 				update_icons()
 			else
 				to_chat(user, "<span class='danger'>Access denied.</span>")
@@ -493,7 +493,7 @@
 			if(!user.drop_item())
 				return
 			if(U.action(src))
-				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
+				to_chat(user, "<span class='notice'>You apply the upgrade to [IDENTITY_SUBJECT(1)].</span>", list(src))
 				if(U.one_use)
 					qdel(U)
 				else
@@ -504,13 +504,13 @@
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
-			to_chat(user, "<span class='warning'>The toner level of [src] is at its highest level possible!</span>")
+			to_chat(user, "<span class='warning'>The toner level of [IDENTITY_SUBJECT(1)] is at its highest level possible!</span>", list(src))
 		else
 			if(!user.drop_item())
 				return
 			toner = tonermax
 			qdel(W)
-			to_chat(user, "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>")
+			to_chat(user, "<span class='notice'>You fill the toner level of [IDENTITY_SUBJECT(1)] to its max capacity.</span>", list(src))
 	else
 		return ..()
 
@@ -633,7 +633,7 @@
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
 							cleaned_human.wash_cream()
-							to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
+							to_chat(cleaned_human, "<span class='danger'>[IDENTITY_SUBJECT(1)] cleans your face!</span>", list(src))
 			return
 
 		if(istype(module, /obj/item/weapon/robot_module/miner))
@@ -844,9 +844,9 @@
 		return
 	switch(notifytype)
 		if(1) //New Cyborg
-			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=\ref[connected_ai][connected_ai.ai_track_href(src)]'>[name]</a></span><br>")
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=\ref[connected_ai][connected_ai.ai_track_href(src)]'>[real_name]</a></span><br>")
 		if(2) //New Module
-			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>")
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [real_name] has loaded the [designation] module.</span><br>")
 		if(3) //New Name
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
 

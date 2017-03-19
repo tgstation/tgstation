@@ -32,5 +32,5 @@
 		else
 			return 0
 	else
-		to_chat(user, "<span class='warning'>There aren't any cores left in [target]!</span>")
+		to_chat(user, "<span class='warning'>There aren't any cores left in [IDENTITY_SUBJECT(1)]!</span>", list(target))
 		return 1

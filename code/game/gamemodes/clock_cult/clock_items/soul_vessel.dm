@@ -64,28 +64,28 @@
 		return
 	var/mob/living/carbon/human/H = target
 	if(H.stat == CONSCIOUS)
-		to_chat(user, "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] must be dead or unconscious for you to claim [H.p_their()] mind!</span>", list(H))
 		return
 	if(H.head)
 		var/obj/item/I = H.head
 		if(I.flags_inv & HIDEHAIR) //they're wearing a hat that covers their skull
-			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s head is covered, remove [H.head] first!</span>", list(H))
 			return
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask
 		if(I.flags_inv & HIDEHAIR) //they're wearing a mask that covers their skull
-			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s head is covered, remove [H.wear_mask] first!</span>", list(H))
 			return
 	var/obj/item/bodypart/head/HE = H.get_bodypart("head")
 	if(!HE) //literally headless
-		to_chat(user, "<span class='warning'>[H] has no head, and thus no mind to claim!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] has no head, and thus no mind to claim!</span>", list(H))
 		return
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 	if(!B) //either somebody already got to them or robotics did
-		to_chat(user, "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] has no brain, and thus no mind to claim!</span>", list(H))
 		return
 	if(!H.key) //nobody's home
-		to_chat(user, "<span class='warning'>[H] has no mind to claim!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] has no mind to claim!</span>", list(H))
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)

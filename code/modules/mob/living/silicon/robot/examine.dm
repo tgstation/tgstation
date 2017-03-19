@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[IDENTITY_SUBJECT(1)]</EM>!\n"
 	if(desc)
 		msg += "[desc]\n"
 
@@ -46,6 +46,6 @@
 			msg += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>\n"
 	msg += "*---------*</span>"
 
-	to_chat(user, msg)
+	to_chat(user, msg, list(src))
 
 	..()

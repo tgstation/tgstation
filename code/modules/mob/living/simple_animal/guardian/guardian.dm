@@ -194,7 +194,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	drop_all_held_items()
 	..()
 	if(summoner)
-		to_chat(summoner, "<span class='danger'><B>Your [name] died somehow!</span></B>")
+		to_chat(summoner, "<span class='danger'><B>Your [real_name] died somehow!</span></B>")
 		summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
@@ -213,10 +213,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			return FALSE
 		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
-			to_chat(summoner, "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>")
+			to_chat(summoner, "<span class='danger'><B>Your [real_name] is under attack! You take damage!</span></B>")
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [IDENTITY_SUBJECT(1)] as [IDENTITY_SUBJECT(2)] takes damage!</B></span>", subjects=list(summoner, src))
 			if(summoner.stat == UNCONSCIOUS)
-				to_chat(summoner, "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>")
+				to_chat(summoner, "<span class='danger'><B>Your body can't take the strain of sustaining [src.real_name] in this condition, it begins to fall apart!</span></B>")
 				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
@@ -232,7 +232,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
-		to_chat(summoner, "<span class='danger'><B>Your [src] was blown up!</span></B>")
+		to_chat(summoner, "<span class='danger'><B>Your [real_name] was blown up!</span></B>")
 		summoner.gib()
 	ghostize()
 	qdel(src)

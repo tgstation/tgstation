@@ -161,7 +161,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
 	if(!is_servant_of_ratvar(user))
-		to_chat(user, "<span class='warning'>You fiddle around with [src] to no avail.</span>")
+		to_chat(user, "<span class='warning'>You fiddle around with [IDENTITY_SUBJECT(1)] to no avail.</span>", list(src))
 	else
 		..()
 

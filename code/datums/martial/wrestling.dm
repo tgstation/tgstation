@@ -119,7 +119,7 @@
 	if(!D)
 		return
 	if(!A.pulling || A.pulling != D)
-		to_chat(A, "You need to have [D] in a cinch!")
+		to_chat(A, "You need to have [IDENTITY_SUBJECT(1)] in a cinch!", list(D))
 		return
 	D.forceMove(A.loc)
 	D.setDir(get_dir(D, A))
@@ -145,11 +145,11 @@
 		if (A && D)
 
 			if (get_dist(A, D) > 1)
-				to_chat(A, "[D] is too far away!")
+				to_chat(A, "[IDENTITY_SUBJECT(1)] is too far away!", list(D))
 				return 0
 
 			if (!isturf(A.loc) || !isturf(D.loc))
-				to_chat(A, "You can't throw [D] from here!")
+				to_chat(A, "You can't throw [IDENTITY_SUBJECT(1)] from here!", list(D))
 				return 0
 
 			A.setDir(turn(A.dir, 90))
@@ -167,11 +167,11 @@
 		// These are necessary because of the sleep call.
 
 		if (get_dist(A, D) > 1)
-			to_chat(A, "[D] is too far away!")
+			to_chat(A, "[IDENTITY_SUBJECT(1)] is too far away!", list(D))
 			return 0
 
 		if (!isturf(A.loc) || !isturf(D.loc))
-			to_chat(A, "You can't throw [D] from here!")
+			to_chat(A, "You can't throw [IDENTITY_SUBJECT(1)] from here!", list(D))
 			return 0
 
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
@@ -190,7 +190,7 @@
 	if(!D)
 		return
 	if(!A.pulling || A.pulling != D)
-		to_chat(A, "You need to have [D] in a cinch!")
+		to_chat(A, "You need to have [IDENTITY_SUBJECT(1)] in a cinch!", list(D))
 		return
 	D.forceMove(A.loc)
 	A.setDir(get_dir(A, D))
@@ -223,7 +223,7 @@
 					D.pixel_x = A.pixel_x + 8
 
 			if (get_dist(A, D) > 1)
-				to_chat(A, "[D] is too far away!")
+				to_chat(A, "[IDENTITY_SUBJECT(1)] is too far away!", list(D))
 				A.pixel_x = 0
 				A.pixel_y = 0
 				D.pixel_x = 0
@@ -231,7 +231,7 @@
 				return 0
 
 			if (!isturf(A.loc) || !isturf(D.loc))
-				to_chat(A, "You can't slam [D] here!")
+				to_chat(A, "You can't slam [IDENTITY_SUBJECT(1)] here!", list(D))
 				A.pixel_x = 0
 				A.pixel_y = 0
 				D.pixel_x = 0
@@ -255,11 +255,11 @@
 		D.pixel_y = 0
 
 		if (get_dist(A, D) > 1)
-			to_chat(A, "[D] is too far away!")
+			to_chat(A, "[IDENTITY_SUBJECT(1)] is too far away!", list(D))
 			return 0
 
 		if (!isturf(A.loc) || !isturf(D.loc))
-			to_chat(A, "You can't slam [D] here!")
+			to_chat(A, "You can't slam [IDENTITY_SUBJECT(1)] here!", list(D))
 			return 0
 
 		D.forceMove(A.loc)
@@ -369,12 +369,12 @@
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
 				A.adjustBruteLoss(rand(10,20))
 				A.Weaken(3)
-			to_chat(A, "[D] is too far away!")
+			to_chat(A, "[IDENTITY_SUBJECT(1)] is too far away!", list(D))
 			return 0
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			A.pixel_y = 0
-			to_chat(A, "You can't drop onto [D] from here!")
+			to_chat(A, "You can't drop onto [IDENTITY_SUBJECT(1)] from here!", list(D))
 			return 0
 
 		if(A)

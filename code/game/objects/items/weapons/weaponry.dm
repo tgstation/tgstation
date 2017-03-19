@@ -21,8 +21,8 @@
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
-	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
-	to_chat(user, "<font color='red'>You have <b>BANNED</b> [M]</font>")
+	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [IDENTITY_SUBJECT(1)]<b></font>", list(user))
+	to_chat(user, "<font color='red'>You have <b>BANNED</b> [IDENTITY_SUBJECT(1)]</font>", list(M))
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
 /obj/item/weapon/sord

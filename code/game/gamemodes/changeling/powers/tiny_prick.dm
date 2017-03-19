@@ -49,7 +49,7 @@
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
-	to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
+	to_chat(user, "<span class='notice'>We stealthily sting [IDENTITY_SUBJECT(1)].</span>", list(target))
 	if(target.mind && target.mind.changeling)
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	return 1
@@ -92,7 +92,7 @@
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
-		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [IDENTITY_SUBJECT(1)]!</span>", list(target))
 
 	var/mob/living/carbon/C = target
 	if(istype(C))
@@ -145,7 +145,7 @@
 		return
 
 	if(ismonkey(target))
-		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [IDENTITY_SUBJECT(1)]!</span>", list(target))
 
 	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)

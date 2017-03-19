@@ -1085,7 +1085,7 @@
 		if(randn <= 60)
 			//BubbleWrap: Disarming breaks a pull
 			if(target.pulling)
-				to_chat(target, "<span class='warning'>[IDENTITY_SUBJECT(1)] has broken [IDENTITY_SUBJECT(2)]'s grip on [IDENTITY_SUBJECT(3)]!</span>", subjects=list(user, target, target.pulling))
+				to_chat(target, "<span class='warning'>[IDENTITY_SUBJECT(1)] has broken [IDENTITY_SUBJECT(2)]'s grip on [IDENTITY_SUBJECT(3)]!</span>", list(user, target, target.pulling))
 				talked = 1
 				target.stop_pulling()
 			//End BubbleWrap

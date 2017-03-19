@@ -590,7 +590,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
+				to_chat(O, "<span class='danger'>[IDENTITY_SUBJECT(1)] stumbles around.</span>", list(my_target))
 
 /obj/effect/fake_attacker/Initialize(mapload, var/mob/living/carbon/T)
 	..()

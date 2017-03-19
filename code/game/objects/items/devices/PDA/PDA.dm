@@ -837,9 +837,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					for (var/re in A.reagents.reagent_list)
 						to_chat(user, "<span class='notice'>\t [re]</span>")
 				else
-					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
+					to_chat(user, "<span class='notice'>No active chemical agents found in [IDENTITY_SUBJECT(1)].</span>", list(A))
 			else
-				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [IDENTITY_SUBJECT(1)].</span>", list(A))
 
 		if(5)
 			if (istype(A, /obj/item/weapon/tank))

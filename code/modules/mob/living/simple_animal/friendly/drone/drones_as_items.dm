@@ -62,7 +62,7 @@
 
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='warning'>[drone] is trying to escape!</span>")
+		to_chat(L, "<span class='warning'>[IDENTITY_SUBJECT(1)] is trying to escape!</span>", list(src))
 		if(!do_after(drone, 50, target = L))
 			return
 		L.dropItemToGround(src)

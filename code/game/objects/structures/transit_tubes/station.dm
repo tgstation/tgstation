@@ -64,7 +64,7 @@
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
 					if(GM.buckled || GM.has_buckled_mobs())
-						to_chat(user, "<span class='warning'>[GM] is attached to something!</span>")
+						to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is attached to something!</span>", list(GM))
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message("<span class='warning'>[user] starts putting [IDENTITY_SUBJECT(1)] into the [pod]!</span>", subjects=list(user, GM))

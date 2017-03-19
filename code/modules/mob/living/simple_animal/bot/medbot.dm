@@ -233,7 +233,7 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
+			to_chat(user, "<span class='notice'>You short out [IDENTITY_SUBJECT(1)]'s reagent synthesis circuits.</span>", list(src))
 		audible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] buzzes oddly!</span>", subjects=list(src))
 		flick("medibot_spark", src)
 		if(user)

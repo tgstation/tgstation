@@ -79,7 +79,7 @@
 	else
 		user.visible_message("[IDENTITY_SUBJECT(1)] begins to clean \the [IDENTITY_SUBJECT(2)] with [src]...", "<span class='notice'>You begin to clean \the [IDENTITY_SUBJECT(2)] with [src]...</span>", subjects=list(user, target))
 		if(do_after(user, src.cleanspeed, target = target))
-			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+			to_chat(user, "<span class='notice'>You clean \the [IDENTITY_SUBJECT(1)].</span>", list(target))
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

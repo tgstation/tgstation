@@ -79,7 +79,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive \the [ridden.name].</span>")
+		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive \the [IDENTITY_SUBJECT(1)].</span>", list(ridden))
 
 /datum/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(ridden, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
@@ -326,7 +326,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, "<span class='notice'>You'll need something  to guide the [ridden.name].</span>")
+		to_chat(user, "<span class='notice'>You'll need something to guide the [IDENTITY_SUBJECT(1)].</span>", list(ridden))
 
 ///////Humans. Yes, I said humans. No, this won't end well...//////////
 /datum/riding/human
@@ -388,14 +388,14 @@
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
 		if(kick)
-			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
+			to_chat(user, "<span class='userdanger'>You fall off of [IDENTITY_SUBJECT(1)]!</span>", list(ridden))
 			Unbuckle(user)
 			return
 	if(istype(user, /mob/living/carbon))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			Unbuckle(user)
-			to_chat(user, "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>")
+			to_chat(user, "<span class='userdanger'>You can't grab onto [IDENTITY_SUBJECT(1)] with no hands!</span>", list(ridden))
 			return
 
 /datum/riding/cyborg/handle_vehicle_layer()

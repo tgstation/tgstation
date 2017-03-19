@@ -100,7 +100,7 @@
 	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[IDENTITY_SUBJECT(1)] does not yet serve Ratvar.\"</span>", list(L))
 			return TRUE
 		if(L.stat == DEAD)
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
@@ -111,7 +111,7 @@
 		var/oxydamage = L.getOxyLoss()
 		var/totaldamage = brutedamage + burndamage + oxydamage
 		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[IDENTITY_SUBJECT(1)] is unhurt and untainted.\"</span>", list(L))
 			return TRUE
 
 		successful = TRUE
@@ -130,7 +130,7 @@
 		else
 			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
 			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
-		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
+		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[IDENTITY_SUBJECT(1)]"] in Inath-neq's power!</span>", list(L))
 		L.visible_message("<span class='warning'>A blue light washes over [IDENTITY_SUBJECT(1)], mending [L.p_their()] bruises and burns!</span>", \
 		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>", subjects=list(L))
 		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
@@ -194,7 +194,7 @@
 	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[IDENTITY_SUBJECT(1)] does not yet serve Ratvar.\"</span>", list(L))
 			return TRUE
 		if(L.stat == DEAD)
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")

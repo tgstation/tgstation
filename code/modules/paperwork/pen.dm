@@ -89,7 +89,7 @@
 
 	if(!force)
 		if(M.can_inject(user, 1))
-			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
+			to_chat(user, "<span class='warning'>You stab [IDENTITY_SUBJECT(1)] with the pen.</span>", list(M))
 			if(!stealth)
 				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1

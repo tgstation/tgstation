@@ -378,13 +378,13 @@
 		if(!M.has_dna())
 			to_chat(P, "<b>No DNA detected</b>")
 			return
-		to_chat(P, "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>")
+		to_chat(P, "<font color = red><h3>[IDENTITY_SUBJECT(1)]'s UE string : [M.dna.unique_enzymes]</h3></font>", list(M))
 		if(M.dna.unique_enzymes == P.master_dna)
 			to_chat(P, "<b>DNA is a match to stored Master DNA.</b>")
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly.")
+		to_chat(P, "[IDENTITY_SUBJECT(1)] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly.", list(M))
 
 // -=-=-=-= Software =-=-=-=-=- //
 

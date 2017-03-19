@@ -623,8 +623,8 @@
 			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
 
 		var/mob/living/carbon/C = target
-		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] sprays [src] into the face of [IDENTITY_SUBJECT(2)]!</span>")
-		to_chat(target, "<span class='userdanger'>[IDENTITY_SUBJECT(1)] sprays [src] into your face!</span>", subjects=list(user, target))
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] sprays [src] into the face of [IDENTITY_SUBJECT(2)]!</span>", \
+		"<span class='userdanger'>[IDENTITY_SUBJECT(1)] sprays [src] into your face!</span>", subjects=list(user, target))
 
 		if(C.client)
 			C.blur_eyes(3)

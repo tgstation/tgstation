@@ -29,7 +29,7 @@
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
-				to_chat(user, "<span class='warning'>[GM] needs to be on [src]!</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] needs to be on [src]!</span>", list(GM))
 				return
 			if(!swirlie)
 				if(open)
@@ -123,7 +123,7 @@
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
-				to_chat(user, "<span class='notice'>[GM.name] needs to be on [src].</span>")
+				to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] needs to be on [src].</span>")
 				return
 			user.changeNext_move(CLICK_CD_MELEE)
 			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slams [IDENTITY_SUBJECT(2)] into [src]!</span>", "<span class='danger'>You slam [IDENTITY_SUBJECT(2)] into [src]!</span>", subjects=list(user, GM))

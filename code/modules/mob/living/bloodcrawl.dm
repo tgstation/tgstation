@@ -88,7 +88,7 @@
 	return 1
 
 /mob/living/proc/bloodcrawl_consume(mob/living/victim)
-	to_chat(src, "<span class='danger'>You begin to feast on [victim]. You can not move while you are doing this.</span>")
+	to_chat(src, "<span class='danger'>You begin to feast on [IDENTITY_SUBJECT(1)]. You can not move while you are doing this.</span>", list(victim))
 
 	var/sound
 	if(istype(src, /mob/living/simple_animal/slaughter))
@@ -122,7 +122,7 @@
 			victim.exit_blood_effect()
 		return TRUE
 
-	to_chat(src, "<span class='danger'>You devour [victim]. Your health is fully restored.</span>")
+	to_chat(src, "<span class='danger'>You devour [IDENTITY_SUBJECT(1)]. Your health is fully restored.</span>", list(victim))
 	src.revive(full_heal = 1)
 
 	// No defib possible after laughter

@@ -98,7 +98,7 @@
 					vr_human.revert_to_reality(FALSE, FALSE)
 					occupant.mind.transfer_to(vr_human)
 					vr_human.real_me = occupant
-					to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
+					to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human.real_name] in VR!</span>")
 					SStgui.close_user_uis(vr_human, src)
 				else
 					if(allow_creating_vr_humans)
@@ -106,7 +106,7 @@
 						var/turf/T = get_vr_spawnpoint()
 						if(T)
 							build_virtual_human(occupant, T)
-							to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
+							to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human.real_name] in VR!</span>")
 						else
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else

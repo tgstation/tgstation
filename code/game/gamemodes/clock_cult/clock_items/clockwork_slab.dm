@@ -184,7 +184,7 @@
 				user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] empties [src] into [IDENTITY_SUBJECT(2)]'s [targetslab.name].</span>", \
 				"<span class='notice'>You transfer your slab's components into [IDENTITY_SUBJECT(2)]'s [targetslab.name].</span>", subjects=list(user, target))
 		else
-			to_chat(user, "<span class='warning'>[target] has no slabs to transfer components to.</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] has no slabs to transfer components to.</span>", list(target))
 	else
 		return ..()
 

@@ -75,10 +75,10 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't cause [p_them()] any damage.</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is wearing too much armor! You can't cause [p_them()] any damage.</span>", list(src))
 				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] hits [IDENTITY_SUBJECT(2)] with [O], however [IDENTITY_SUBJECT(2)] is too armored.</span>", subjects=list(user, src))
 			else
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't reach [p_their()] skin.<span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is wearing too much armor! You can't reach [p_their()] skin.<span>", list(src))
 				visible_message("[IDENTITY_SUBJECT(1)] gently taps [IDENTITY_SUBJECT(2)] with [O].", subjects=list(user, src))
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
@@ -213,7 +213,7 @@
 		return
 
 	if(user && !user.drop_item())
-		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
+		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [IDENTITY_SUBJECT(1)]'s head!</span>", list(src))
 		return 0
 
 	var/valid = FALSE
@@ -224,7 +224,7 @@
 
 	if(valid)
 		if(health <= 0)
-			to_chat(user, "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>")
+			to_chat(user, "<span class ='notice'>There is merely a dull, lifeless look in [IDENTITY_SUBJECT(1)]'s eyes as you put the [item_to_add] on [p_them()].</span>", list(src))
 		else if(user)
 			user.visible_message("[IDENTITY_SUBJECT(1)] puts [item_to_add] on [IDENTITY_SUBJECT(2)]'s head.  [IDENTITY_SUBJECT(2)] looks at [IDENTITY_SUBJECT(1)] and barks once.",
 				"<span class='notice'>You put [item_to_add] on [IDENTITY_SUBJECT(2)]'s head.  [IDENTITY_SUBJECT(2)] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
@@ -234,7 +234,7 @@
 		update_corgi_fluff()
 		regenerate_icons()
 	else
-		to_chat(user, "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>")
+		to_chat(user, "<span class='warning'>You set [item_to_add] on [IDENTITY_SUBJECT(1)]'s head, but it falls off!</span>", list(src))
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)
@@ -465,7 +465,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='warning'>You can't fit this on [src]!</span>")
+		to_chat(usr, "<span class='warning'>You can't fit this on [IDENTITY_SUBJECT(1)]!</span>", list(src))
 		return
 	..()
 
@@ -505,7 +505,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='danger'>[src] already has a cute bow!</span>")
+		to_chat(usr, "<span class='danger'>[IDENTITY_SUBJECT(1)] already has a cute bow!</span>", list(src))
 		return
 	..()
 

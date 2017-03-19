@@ -32,9 +32,9 @@
 			if(objects > 0)
 				user.visible_message("[IDENTITY_SUBJECT(1)] sucessfully removes [objects] objects from [IDENTITY_SUBJECT(2)]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [IDENTITY_SUBJECT(2)]'s [L.name].</span>", subjects=list(user, H))
 			else
-				to_chat(user, "<span class='warning'>You find no objects embedded in [H]'s [L]!</span>")
+				to_chat(user, "<span class='warning'>You find no objects embedded in [IDENTITY_SUBJECT(1)]'s [L]!</span>", list(H))
 
 	else
-		to_chat(user, "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>")
+		to_chat(user, "<span class='warning'>You can't find [IDENTITY_SUBJECT(1)]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>", list(target))
 
 	return 1

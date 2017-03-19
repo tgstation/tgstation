@@ -417,12 +417,12 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
-					to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+					to_chat(user, "<span class='notice'>You handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 					add_logs(user, C, "handcuffed")
 			else
-				to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
+				to_chat(user, "<span class='warning'>You fail to handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 		else
-			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't have two hands...</span>", list(C))
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] probes [IDENTITY_SUBJECT(2)] with [src]!</span>", \

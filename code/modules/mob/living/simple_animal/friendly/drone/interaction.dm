@@ -23,7 +23,7 @@
 							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 							qdel(src)
 						else
-							to_chat(D, "<span class='warning'>You need to remain still to cannibalize [src]!</span>")
+							to_chat(D, "<span class='warning'>You need to remain still to cannibalize [IDENTITY_SUBJECT(1)]!</span>", list(src))
 					else
 						to_chat(D, "<span class='warning'>You're already in perfect condition!</span>")
 				if("Nothing")
@@ -45,9 +45,9 @@
 		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] picks up [IDENTITY_SUBJECT(2)]!</span>", \
 						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] picks you up!</span>", subjects=list(user, src))
 		if(buckled)
-			to_chat(user, "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is buckled to [buckled] and cannot be picked up!</span>", list(src))
 			return
-		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
+		to_chat(user, "<span class='notice'>You pick [IDENTITY_SUBJECT(1)] up.</span>", list(src))
 		drop_all_held_items()
 		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 		DH.updateVisualAppearence(src)
@@ -67,7 +67,7 @@
 									  "can't tell if their ethernet detour is moving or not", "won't be able to reseed enough"+\
 									  " kernels to function properly","can't start their neurotube console")
 
-		to_chat(user, "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>")
+		to_chat(user, "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [IDENTITY_SUBJECT(1)] [pick(faux_problems)].</span>", list(src))
 		return
 	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins to reactivate [IDENTITY_SUBJECT(2)].</span>", "<span class='notice'>You begin to reactivate [src]...</span>", subjects=list(user, src))
 	if(do_after(user, 30, 1, target = src))
@@ -75,9 +75,9 @@
 		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] reactivates [IDENTITY_SUBJECT(2)]!</span>", "<span class='notice'>You reactivate [src].</span>", subjects=list(user, src))
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)
-			to_chat(G, "<span class='ghostalert'>You([name]) were reactivated by [user]!</span>")
+			to_chat(G, "<span class='ghostalert'>You([real_name]) were reactivated by [user.real_name]!</span>")
 	else
-		to_chat(user, "<span class='warning'>You need to remain still to reactivate [src]!</span>")
+		to_chat(user, "<span class='warning'>You need to remain still to reactivate [IDENTITY_SUBJECT(1)]!</span>", list(src))
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
@@ -88,9 +88,9 @@
 				adjustBruteLoss(-getBruteLoss())
 				visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] tightens [src == user ? "[user.p_their()]" : "[IDENTITY_SUBJECT(2)]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[IDENTITY_SUBJECT(2)]'s"] loose screws.</span>", subjects=list(user, src))
 			else
-				to_chat(user, "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>")
+				to_chat(user, "<span class='warning'>You need to remain still to tighten [IDENTITY_SUBJECT(1)]'s screws!</span>", list(src))
 		else
-			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s screws can't get any tighter!</span>", list(src))
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
 	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts resetting [IDENTITY_SUBJECT(2)]...</span>", \

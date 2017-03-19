@@ -437,7 +437,7 @@
 				update_icon()
 				return
 			if(H && H.stat == DEAD)
-				to_chat(user, "<span class='warning'>[H] is dead.</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is dead.</span>", list(H))
 				playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 				busy = 0
 				update_icon()

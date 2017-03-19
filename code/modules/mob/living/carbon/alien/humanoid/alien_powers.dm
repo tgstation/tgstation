@@ -86,7 +86,7 @@ Doesn't work on other aliens/AI.*/
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
-		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
+		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [IDENTITY_SUBJECT(1)]</span>", list(M))
 		for(var/ded in dead_mob_list)
 			if(!isobserver(ded))
 				continue
@@ -118,7 +118,7 @@ Doesn't work on other aliens/AI.*/
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			to_chat(M, "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>")
-			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [M]</span>")
+			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [IDENTITY_SUBJECT(1)]</span>", list(M))
 		else
 			to_chat(user, "<span class='noticealien'>You need to be closer!</span>")
 	return

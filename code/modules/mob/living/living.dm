@@ -132,7 +132,7 @@
 		var/mob/living/L = M
 		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
+				to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is restrained, you cannot push past.</span>", list(L))
 			return 1
 
 		if(L.pulling)
@@ -140,7 +140,7 @@
 				var/mob/P = L.pulling
 				if(P.restrained())
 					if(!(world.time % 5))
-						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
+						to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is restraining [IDENTITY_SUBJECT(2)], you cannot push past.</span>", list(L, P))
 					return 1
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
@@ -423,9 +423,9 @@
 
 	if(config.allow_Metadata)
 		if(client)
-			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
+			to_chat(src, "[src.real_name]'s Metainfo:<br>[client.prefs.metadata]")
 		else
-			to_chat(src, "[src] does not have any stored infomation!")
+			to_chat(src, "[src.real_name] does not have any stored infomation!")
 	else
 		to_chat(src, "OOC Metadata is not supported by this server!")
 
@@ -667,7 +667,7 @@
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
 	if(what && (what.flags & NODROP))
-		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
+		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [IDENTITY_SUBJECT(1)], it's stuck to your hand!</span>", list(who))
 		return
 	if(what)
 		var/list/where_list

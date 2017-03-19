@@ -82,14 +82,14 @@
 	var/mob/living/user = src.loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
-			to_chat(user, "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>")
+			to_chat(user, "<span class='alert'><b>FAIL: <i>[IDENTITY_SUBJECT(1)]</i> already has an existing connection.</b></span>", list(F.captured))
 		src.field_disconnect(F)
 	else
 		startpos = get_turf(src)
 		field = F
 		F.gun = src
 		if(isliving(user) && F.captured)
-			to_chat(user, "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>")
+			to_chat(user, "<span class='notice'>Connection established with target: <b>[IDENTITY_SUBJECT(1)]</b></span>", list(F.captured))
 
 
 /obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
@@ -98,7 +98,7 @@
 		if(F.gun == src)
 			F.gun = null
 		if(isliving(user) && F.captured)
-			to_chat(user, "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>")
+			to_chat(user, "<span class='alert'>Disconnected from target: <b>[IDENTITY_SUBJECT(1)]</b></span>", list(F.captured))
 	field = null
 	startpos = null
 

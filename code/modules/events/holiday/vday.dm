@@ -58,7 +58,7 @@
 	protect_objective.target = date.mind
 	protect_objective.explanation_text = "Protect [date.real_name], your date."
 	lover.mind.objectives += protect_objective
-	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
+	to_chat(lover, "<span class='warning'><B>You're on a date with [date.real_name]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
 
 
 /datum/round_event/valentines/announce()

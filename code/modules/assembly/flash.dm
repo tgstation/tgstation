@@ -92,12 +92,12 @@
 			terrible_conversion_proc(M, user)
 			M.Weaken(rand(4,6))
 			visible_message("<span class='disarm'>[IDENTITY_SUBJECT(1)] blinds [IDENTITY_SUBJECT(2)] with the flash!</span>", subjects=list(user, M))
-			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
-			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
+			to_chat(user, "<span class='danger'>You blind [IDENTITY_SUBJECT(1)] with the flash!</span>", list(M))
+			to_chat(M, "<span class='userdanger'>[IDENTITY_SUBJECT(1)] blinds you with the flash!</span>", list(user))
 		else
 			visible_message("<span class='disarm'>[IDENTITY_SUBJECT(1)] fails to blind [IDENTITY_SUBJECT(2)] with the flash!</span>", subjects=list(user, M))
-			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
-			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+			to_chat(user, "<span class='warning'>You fail to blind [IDENTITY_SUBJECT(1)] with the flash!</span>", list(M))
+			to_chat(M, "<span class='danger'>[IDENTITY_SUBJECT(1)] fails to blind you with the flash!</span>", list(user))
 	else
 		if(M.flash_act())
 			M.confused += power

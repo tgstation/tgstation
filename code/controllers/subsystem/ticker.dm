@@ -474,10 +474,10 @@ var/datum/controller/subsystem/ticker/ticker
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
-			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
+			to_chat(world, "<b>[aiPlayer.real_name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
-			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>")
+			to_chat(world, "<b>[aiPlayer.real_name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>")
 			aiPlayer.show_laws(1)
 
 		to_chat(world, "<b>Total law changes: [aiPlayer.law_change_counter]</b>")
@@ -486,7 +486,7 @@ var/datum/controller/subsystem/ticker/ticker
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if(robo.mind)
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
+					robolist += "[robo.real_name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			to_chat(world, "[robolist]")
 
 	CHECK_TICK
@@ -494,9 +494,9 @@ var/datum/controller/subsystem/ticker/ticker
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
-				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
+				to_chat(world, "<b>[robo.real_name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
 			else
-				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
+				to_chat(world, "<b>[robo.real_name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)

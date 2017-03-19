@@ -14,7 +14,7 @@
 	var/mob/living/L = locate() in buckled_mobs
 	if(!L)
 		return
-	to_chat(user, "<span class='notice'>You attempt to sacrifice [L] by invoking the sacrificial ritual.</span>")
+	to_chat(user, "<span class='notice'>You attempt to sacrifice [IDENTITY_SUBJECT(1)] by invoking the sacrificial ritual.</span>", list(L))
 	L.gib()
 	message_admins("[key_name_admin(user)] has sacrificed [key_name_admin(L)] on the sacrifical altar.")
 

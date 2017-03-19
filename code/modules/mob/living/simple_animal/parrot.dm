@@ -246,7 +246,7 @@
 						usr.drop_item()
 						headset_to_add.loc = src
 						src.ears = headset_to_add
-						to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
+						to_chat(usr, "<span class='notice'>You fit the headset onto [IDENTITY_SUBJECT(1)].</span>", list(src))
 
 						clearlist(available_channels)
 						for(var/ch in headset_to_add.channels)
@@ -342,7 +342,7 @@
 			adjustBruteLoss(-10)
 		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
 		speech_shuffle_rate += 10
-		to_chat(user, "<span class='notice'>[src] eagerly devours the cracker.</span>")
+		to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] eagerly devours the cracker.</span>", list(src))
 	..()
 	return
 
@@ -825,7 +825,7 @@
 		icon_state = "parrot_fly"
 		parrot_state = PARROT_WANDER
 		if(buckled)
-			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
+			to_chat(src, "<span class='notice'>You are no longer sitting on [IDENTITY_SUBJECT(1)]'s shoulder.</span>", list(buckled))
 			buckled.unbuckle_mob(src,force=1)
 		buckled = null
 		pixel_x = initial(pixel_x)
@@ -842,7 +842,7 @@
 	pixel_x = pick(-8,8) //pick left or right shoulder
 	icon_state = "parrot_sit"
 	parrot_state = PARROT_PERCH
-	to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
+	to_chat(src, "<span class='notice'>You sit on [IDENTITY_SUBJECT(1)]'s shoulder.</span>", list(H))
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()

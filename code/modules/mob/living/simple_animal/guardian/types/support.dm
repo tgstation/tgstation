@@ -128,7 +128,7 @@
 		to_chat(src, "<span class='danger'><B>The beacon is too far away to warp to!</span></B>")
 		return
 
-	to_chat(src, "<span class='danger'><B>You begin to warp [A].</span></B>")
+	to_chat(src, "<span class='danger'><B>You begin to warp [IDENTITY_SUBJECT(1)].</span></B>", list(A))
 	A.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] starts to glow faintly!</span>", \
 	"<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>", subjects=list(A))
 	do_attack_animation(A, null, 1)

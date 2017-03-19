@@ -133,7 +133,7 @@ MASS SPECTROMETER
 		if(C.has_brain_worms())
 			to_chat(user, "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>")
 
-	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
+	to_chat(user, "<span class='info'>Analyzing results for [IDENTITY_SUBJECT(1)]:\n\tOverall status: [mob_status]</span>", list(M))
 
 	// Damage descriptions
 	if(brute_loss > 10)

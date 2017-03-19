@@ -725,7 +725,7 @@
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
 
 	if(!(isliving(choice)))
-		to_chat(user, "[choice] is already dead!")
+		to_chat(user, "[IDENTITY_SUBJECT(1)] is already dead!", list(choice))
 		used = FALSE
 		return
 	if(choice == user)
@@ -750,7 +750,7 @@
 		for(var/mob/living/carbon/human/H in player_list)
 			if(H == L)
 				continue
-			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
+			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [IDENTITY_SUBJECT(1)]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>", list(L))
 			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
 
 	qdel(src)

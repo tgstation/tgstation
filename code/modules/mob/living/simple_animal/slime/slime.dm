@@ -326,7 +326,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		if(prob(25))
 			user.do_attack_animation(src)
 			user.changeNext_move(CLICK_CD_MELEE)
-			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
+			to_chat(user, "<span class='danger'>[W] passes right through [IDENTITY_SUBJECT(1)]!</span>", list(src))
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
@@ -348,7 +348,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 
 /mob/living/simple_animal/slime/examine(mob/user)
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[IDENTITY_SUBJECT(1)]</EM>!\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
@@ -376,7 +376,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
 
 	msg += "*---------*</span>"
-	to_chat(user, msg)
+	to_chat(user, msg, list(src))
 	return
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)

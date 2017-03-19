@@ -44,7 +44,7 @@
 			playsound(loc, cuffsound, 30, 1, -2)
 			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				apply_cuffs(C,user)
-				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+				to_chat(user, "<span class='notice'>You handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
 					feedback_add_details("handcuffs","C")
 				else
@@ -52,9 +52,9 @@
 
 				add_logs(user, C, "handcuffed")
 			else
-				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
+				to_chat(user, "<span class='warning'>You fail to handcuff [IDENTITY_SUBJECT(1)]!</span>", list(C))
 		else
-			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't have two hands...</span>", list(C))
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
@@ -101,7 +101,7 @@
 	if(!istype(C))
 		return
 	if(wirestorage && wirestorage.energy < 15)
-		to_chat(user, "<span class='warning'>You need at least 15 wire to restrain [C]!</span>")
+		to_chat(user, "<span class='warning'>You need at least 15 wire to restrain [IDENTITY_SUBJECT(1)]!</span>", list(C))
 		return
 	return ..()
 
@@ -200,10 +200,10 @@
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 					C.update_handcuffed()
-					to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+					to_chat(user, "<span class='notice'>You handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 					add_logs(user, C, "handcuffed")
 			else
-				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
+				to_chat(user, "<span class='warning'>You fail to handcuff [IDENTITY_SUBJECT(1)]!</span>", list(C))
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"

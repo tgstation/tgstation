@@ -92,7 +92,7 @@ Borg Hypospray
 		return
 	if(R.total_volume && M.can_inject(user, 1, user.zone_selected,bypass_protection))
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
-		to_chat(user, "<span class='notice'>You inject [M] with the injector.</span>")
+		to_chat(user, "<span class='notice'>You inject [IDENTITY_SUBJECT(1)] with the injector.</span>", list(M))
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
 		R.reaction(M, INJECT, fraction)
 		if(M.reagents)

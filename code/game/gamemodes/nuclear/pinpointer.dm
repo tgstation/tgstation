@@ -58,7 +58,13 @@
 		if(TRACK_INFILTRATOR)
 			msg += "\"vasvygengbefuvc\"."
 		if(TRACK_OPERATIVES)
-			msg += "\"[target ? "Operative [target]" : "friends"]\"."
+			var/target_name
+			if(ismob(target))
+				var/mob/M = target
+				target_name = "Operative [M.real_name]"
+			else
+				target_name = "friends"
+			msg += "\"[target_name]\"."
 		if(TRACK_ATOM)
 			msg += "\"[initial(constant_target.name)]\"."
 		if(TRACK_COORDINATES)

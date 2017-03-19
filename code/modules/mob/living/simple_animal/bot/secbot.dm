@@ -161,7 +161,7 @@ Auto Patrol: []"},
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='danger'>You short out [src]'s target assessment circuits.</span>")
+			to_chat(user, "<span class='danger'>You short out [IDENTITY_SUBJECT(1)]'s target assessment circuits.</span>", list(src))
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] buzzes oddly!</span>", subjects=list(src))
 		declare_arrests = 0

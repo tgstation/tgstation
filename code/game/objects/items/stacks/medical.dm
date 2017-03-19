@@ -23,11 +23,11 @@
 			t_him = "him"
 		else if(M.gender == FEMALE)
 			t_him = "her"
-		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
+		to_chat(user, "<span class='danger'>\The [IDENTITY_SUBJECT(1)] is dead, you cannot help [t_him]!</span>", list(M))
 		return
 
 	if(!istype(M, /mob/living/carbon) && !istype(M, /mob/living/simple_animal))
-		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
+		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [IDENTITY_SUBJECT(1)]!</span>", list(M))
 		return 1
 
 	var/obj/item/bodypart/affecting
@@ -35,16 +35,16 @@
 		var/mob/living/carbon/C = M
 		affecting = C.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting) //Missing limb?
-			to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't have \a [parse_zone(user.zone_selected)]!</span>", list(C))
 			return
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(stop_bleeding)
 				if(H.bleedsuppress)
-					to_chat(user, "<span class='warning'>[H]'s bleeding is already bandaged!</span>")
+					to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s bleeding is already bandaged!</span>", list(H))
 					return
 				else if(!H.bleed_rate)
-					to_chat(user, "<span class='warning'>[H] isn't bleeding!</span>")
+					to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] isn't bleeding!</span>", list(H))
 					return
 
 
@@ -57,13 +57,13 @@
 			if (istype(M, /mob/living/simple_animal))
 				var/mob/living/simple_animal/critter = M
 				if (!(critter.healable))
-					to_chat(user, "<span class='notice'> You cannot use [src] on [M]!</span>")
+					to_chat(user, "<span class='notice'> You cannot use [src] on [IDENTITY_SUBJECT(1)]!</span>", list(M))
 					return
 				else if (critter.health == critter.maxHealth)
-					to_chat(user, "<span class='notice'> [M] is at full health.</span>")
+					to_chat(user, "<span class='notice'> [IDENTITY_SUBJECT(1)] is at full health.</span>", list(M))
 					return
 				else if(src.heal_brute < 1)
-					to_chat(user, "<span class='notice'> [src] won't help [M] at all.</span>")
+					to_chat(user, "<span class='notice'> [src] won't help [IDENTITY_SUBJECT(1)] at all.</span>", list(M))
 					return
 			user.visible_message("<span class='green'>[IDENTITY_SUBJECT(1)] applies [src] on [IDENTITY_SUBJECT(2)].</span>", "<span class='green'>You apply [src] on [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, M))
 		else
@@ -82,7 +82,7 @@
 		var/mob/living/carbon/C = M
 		affecting = C.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting) //Missing limb?
-			to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't have \a [parse_zone(user.zone_selected)]!</span>", list(C))
 			return
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

@@ -664,7 +664,7 @@
 		set_light(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
-	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
+	var/rendered = "<B>Swarm communication - [src.real_name]</b> [say_quote(msg, get_spans())]"
 	for(var/mob/M in mob_list)
 		if(isswarmer(M))
 			to_chat(M, rendered)
