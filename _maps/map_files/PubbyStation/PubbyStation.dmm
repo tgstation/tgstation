@@ -21535,7 +21535,8 @@
 	department = "Bar";
 	departmentType = 2;
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Bar Access";
@@ -28449,7 +28450,8 @@
 	department = "Robotics";
 	departmentType = 2;
 	name = "Robotics RC";
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel,
 /area/assembly/robotics)
@@ -30033,7 +30035,8 @@
 	dir = 2;
 	name = "Science Requests Console";
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 30;
+	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -30699,7 +30702,7 @@
 /area/toxins/xenobiology)
 "bjI" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -30796,7 +30799,7 @@
 /area/toxins/xenobiology)
 "bjO" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -31245,7 +31248,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/item/weapon/book/manual/research_and_development,
 /turf/open/floor/plasteel/purple/side{
@@ -33276,7 +33280,8 @@
 	department = "Chemistry";
 	departmentType = 2;
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -35020,7 +35025,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6
@@ -36832,7 +36838,8 @@
 	departmentType = 2;
 	name = "Science Requests Console";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -38356,7 +38363,8 @@
 	departmentType = 5;
 	name = "Research Director RC";
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -30;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/crew_quarters/hor)
@@ -40684,7 +40692,8 @@
 /obj/machinery/requests_console{
 	department = "Virology";
 	name = "Virology Requests Console";
-	pixel_x = 32
+	pixel_x = 32;
+	receive_ore_updates = 1
 	},
 /obj/item/weapon/storage/box/monkeycubes{
 	layer = 3.1

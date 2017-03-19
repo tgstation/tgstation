@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "The Syndicate lavaland base now has a single self destruct bomb
+located next to the Communications Room. Guaranteed destruction of the
+base is guaranteed by payloads embedded in the walls."

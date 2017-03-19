@@ -71,6 +71,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/regenerate_icons()
 
 	if(!..())
+		icon_render_key = null //invalidate bodyparts cache
 		update_body()
 		update_hair()
 		update_inv_w_uniform()

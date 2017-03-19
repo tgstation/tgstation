@@ -292,35 +292,32 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(unique_rename && istype(W, /obj/item/weapon/pen))
-		rewrite(user)
-	else
-		if(istype(W,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = W
-			if(S.use_to_pickup)
-				if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-					if(isturf(loc))
-						var/list/rejections = list()
+	if(istype(W,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		if(S.use_to_pickup)
+			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
+				if(isturf(loc))
+					var/list/rejections = list()
 
-						var/list/things = loc.contents.Copy()
-						if (S.collection_mode == 2)
-							things = typecache_filter_list(things, typecacheof(type))
+					var/list/things = loc.contents.Copy()
+					if (S.collection_mode == 2)
+						things = typecache_filter_list(things, typecacheof(type))
 
-						var/len = things.len
-						if(!len)
-							to_chat(user, "<span class='notice'>You failed to pick up anything with [S].</span>")
-							return
-						var/datum/progressbar/progress = new(user, len, loc)
+					var/len = things.len
+					if(!len)
+						to_chat(user, "<span class='notice'>You failed to pick up anything with [S].</span>")
+						return
+					var/datum/progressbar/progress = new(user, len, loc)
 
-						while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
-							sleep(1)
+					while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
+						sleep(1)
 
-						qdel(progress)
+					qdel(progress)
 
-						to_chat(user, "<span class='notice'>You put everything you could [S.preposition] [S].</span>")
+					to_chat(user, "<span class='notice'>You put everything you could [S.preposition] [S].</span>")
 
-				else if(S.can_be_inserted(src))
-					S.handle_item_insertion(src)
+			else if(S.can_be_inserted(src))
+				S.handle_item_insertion(src)
 
 /obj/item/proc/handle_mass_pickup(obj/item/weapon/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	for(var/obj/item/I in things)

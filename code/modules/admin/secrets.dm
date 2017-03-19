@@ -34,6 +34,7 @@
 			<B>Shuttles</B><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=moveferry'>Move Ferry</A><BR>
+			<A href='?src=\ref[src];secrets=togglearrivals'>Toggle Arrivals Ferry</A><BR>
 			<A href='?src=\ref[src];secrets=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<A href='?src=\ref[src];secrets=movelaborshuttle'>Move Labor Shuttle</A><BR>
 			<BR>
@@ -219,7 +220,20 @@
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(usr)] moved the centcom ferry")
 				log_admin("[key_name(usr)] moved the centcom ferry")
-
+			
+		if("togglearrivals")
+			if(!check_rights(R_ADMIN))
+				return
+			var/obj/docking_port/mobile/arrivals/A = SSshuttle.arrivals
+			if(A)
+				var/new_perma = !A.perma_docked
+				A.perma_docked = new_perma
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ShA[new_perma ? "s" : "g"]")
+				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
+				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
+			else
+				to_chat(usr, "<span class='admin'>There is no arrivals shuttle</span>")
 		if("showailaws")
 			if(!check_rights(R_ADMIN))
 				return

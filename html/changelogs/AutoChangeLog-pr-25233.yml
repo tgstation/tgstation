@@ -1,0 +1,4 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Monkey Recycler board not showing in Circuit Imprinter"

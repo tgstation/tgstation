@@ -284,7 +284,7 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 		new /obj/item/stack/sheet/runed_metal(loc, amount)
 		qdel(src)
 
-/obj/item/stack/tile/brass/Initialize()
+/obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 	pixel_x = 0
 	pixel_y = 0
