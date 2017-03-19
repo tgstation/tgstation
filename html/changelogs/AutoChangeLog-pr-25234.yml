@@ -1,0 +1,4 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - tweak: "Kinetic Accelerator Range Mod now takes up 25% space instead of 24%"
