@@ -45,7 +45,7 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 
 #define CACHE_PRODUCTION_TIME 600 //how long(deciseconds) caches require to produce a component; defaults to 1 minute
 
-#define ACTIVE_CACHE_SLOWDOWN 150 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 15 seconds
+#define ACTIVE_CACHE_SLOWDOWN 100 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 10 seconds
 
 #define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
 
