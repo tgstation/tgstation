@@ -345,7 +345,7 @@
 			owner.research_scanner++
 		else
 			owner.research_scanner--
-		owner << "<span class='notice'>[target] research scanner has been [active ? "activated" : "deactivated"].</span>"
+		to_chat(owner, "<span class='notice'>[target] research scanner has been [active ? "activated" : "deactivated"].</span>")
 		return 1
 
 /datum/action/item_action/toggle_research_scanner/Remove(mob/M)

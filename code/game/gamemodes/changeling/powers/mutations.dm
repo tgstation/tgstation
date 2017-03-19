@@ -38,7 +38,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
 	if(!user.drop_item())
-		user << "<span class='warning'>The [user.get_active_held_item()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
+		to_chat(user, "<span class='warning'>The [user.get_active_held_item()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
 		return
 	var/limb_regen = 0
 	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
@@ -111,10 +111,10 @@
 
 /obj/effect/proc_holder/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.canUnEquip(user.wear_suit))
-		user << "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!"
+		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
 		return
 	if(!user.canUnEquip(user.head))
-		user << "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!"
+		to_chat(user, "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!")
 		return
 
 	user.dropItemToGround(user.head)
@@ -185,7 +185,7 @@
 		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 		if(A.locked)
-			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
+			to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 			return
 
 		if(A.hasPower())
@@ -245,11 +245,11 @@
 		if(!silent)
 			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		else
-			loc << "<span class='notice'>You prepare to extend a tentacle.</span>"
+			to_chat(loc, "<span class='notice'>You prepare to extend a tentacle.</span>")
 
 
 /obj/item/weapon/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	user << "<span class='warning'>The [name] is not ready yet.<span>"
+	to_chat(user, "<span class='warning'>The [name] is not ready yet.<span>")
 
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
@@ -264,9 +264,9 @@
 	gun = tentacle_gun
 	..()
 
-/obj/item/ammo_casing/magic/tentacle/Destroy(obj/item/weapon/gun/magic/tentacle/tentacle_gun)
+/obj/item/ammo_casing/magic/tentacle/Destroy()
 	gun = null
-	..()
+	return ..()
 
 /obj/item/projectile/tentacle
 	name = "tentacle"
@@ -316,7 +316,7 @@
 	if(istype(target, /obj/item))
 		var/obj/item/I = target
 		if(!I.anchored)
-			firer << "<span class='notice'>You pull [I] towards yourself.</span>"
+			to_chat(firer, "<span class='notice'>You pull [I] towards yourself.</span>")
 			H.throw_mode_on()
 			I.throw_at(H, 10, 2)
 			. = 1
@@ -340,10 +340,10 @@
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1
 							else
-								firer << "<span class='danger'>You can't seem to pry [I] off of [C]'s hands!<span>"
+								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off of [C]'s hands!<span>")
 								return 0
 						else
-							firer << "<span class='danger'>[C] has nothing in hand to disarm!<span>"
+							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!<span>")
 							return 0
 
 					if(INTENT_GRAB)

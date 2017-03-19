@@ -61,7 +61,7 @@
 			colour = "blue"
 		else
 			colour = "black"
-	user << "<span class='notice'>\The [src] will now write in [colour].</span>"
+	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
 
@@ -69,9 +69,9 @@
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
-		user << "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>"
+		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
 		if(hidden_uplink && degrees == traitor_unlock_degrees)
-			user << "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>"
+			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 			degrees = 0
 			hidden_uplink.interact(user)
 
@@ -89,15 +89,50 @@
 
 	if(!force)
 		if(M.can_inject(user, 1))
-			user << "<span class='warning'>You stab [M] with the pen.</span>"
+			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
 			if(!stealth)
-				M << "<span class='danger'>You feel a tiny prick!</span>"
+				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1
 
 		add_logs(user, M, "stabbed", src)
 
 	else
 		. = ..()
+
+/obj/item/weapon/pen/afterattack(obj/O, mob/living/user, proximity)
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
+	if(isobj(O) && proximity)
+		if(O.unique_rename)
+			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
+
+				if(penchoice == "Rename")
+					var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+					var/oldname = O.name
+					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
+						if(oldname == input)
+							to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+							return
+						else
+							O.name = input
+							to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+							return
+					else
+						to_chat(user, "You are too far away!")
+
+				if(penchoice == "Change description")
+					var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
+						O.desc = input
+						to_chat(user, "You have successfully changed \the [O.name]'s description.")
+						return
+					else
+						to_chat(user, "You are too far away!")
+			else
+				to_chat(user, "You are too far away!")
+				return
+	else
+		return
 
 /*
  * Sleepypens
@@ -142,7 +177,7 @@
 		embed_chance = initial(embed_chance)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
-		user << "<span class='warning'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
 		on = 1
 		force = 18
@@ -152,7 +187,7 @@
 		embed_chance = 100 //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
-		user << "<span class='warning'>[src] is now active.</span>"
+		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 
 /obj/item/weapon/pen/edagger/update_icon()

@@ -53,6 +53,10 @@ var/bomb_set
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/Destroy()
+	safety = FALSE
+	if(!exploding)
+		// If we're not exploding, set the alert level back to normal
+		set_safety()
 	poi_list -= src
 	nuke_list -= src
 	if(countdown)
@@ -63,11 +67,9 @@ var/bomb_set
 /obj/machinery/nuclearbomb/examine(mob/user)
 	. = ..()
 	if(exploding)
-		user << "It is in the process of exploding. Perhaps reviewing your \
-			affairs is in order."
+		to_chat(user, "It is in the process of exploding. Perhaps reviewing your affairs is in order.")
 	if(timing)
-		user << "There are [get_time_left()] seconds until \
-			detonation."
+		to_chat(user, "There are [get_time_left()] seconds until detonation.")
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
@@ -101,18 +103,18 @@ var/bomb_set
 		if(NUKESTATE_INTACT)
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
 				playsound(loc, I.usesound, 100, 1)
-				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
+				to_chat(user, "<span class='notice'>You start removing [src]'s front panel's screws...</span>")
 				if(do_after(user, 60*I.toolspeed,target=src))
 					deconstruction_state = NUKESTATE_UNSCREWED
-					user << "<span class='notice'>You remove the screws from [src]'s front panel.</span>"
+					to_chat(user, "<span class='notice'>You remove the screws from [src]'s front panel.</span>")
 					update_icon()
 				return
 		if(NUKESTATE_UNSCREWED)
 			if(istype(I, /obj/item/weapon/crowbar))
-				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
+				to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,30*I.toolspeed,target=src))
-					user << "<span class='notice'>You remove [src]'s front panel.</span>"
+					to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					update_icon()
 				return
@@ -120,19 +122,19 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/welder = I
 				playsound(loc, I.usesound, 100, 1)
-				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
+				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")
 				if(welder.remove_fuel(1,user))
 					if(do_after(user,80*I.toolspeed,target=src))
-						user << "<span class='notice'>You cut [src]'s inner plate.</span>"
+						to_chat(user, "<span class='notice'>You cut [src]'s inner plate.</span>")
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
 				return
 		if(NUKESTATE_WELDED)
 			if(istype(I, /obj/item/weapon/crowbar))
-				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
+				to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,50*I.toolspeed,target=src))
-					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
+					to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
 					START_PROCESSING(SSobj, core)
@@ -140,30 +142,30 @@ var/bomb_set
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = I
-				user << "<span class='notice'>You start loading the plutonium core into [core_box]...</span>"
+				to_chat(user, "<span class='notice'>You start loading the plutonium core into [core_box]...</span>")
 				if(do_after(user,50,target=src))
 					if(core_box.load(core, user))
-						user << "<span class='notice'>You load the plutonium core into [core_box].</span>"
+						to_chat(user, "<span class='notice'>You load the plutonium core into [core_box].</span>")
 						deconstruction_state = NUKESTATE_CORE_REMOVED
 						update_icon()
 						core = null
 					else
-						user << "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>"
+						to_chat(user, "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>")
 				return
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
 				if(M.amount >= 20)
-					user << "<span class='notice'>You begin repairing [src]'s inner metal plate...</span>"
+					to_chat(user, "<span class='notice'>You begin repairing [src]'s inner metal plate...</span>")
 					if(do_after(user, 100, target=src))
 						if(M.use(20))
-							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
+							to_chat(user, "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>")
 							deconstruction_state = NUKESTATE_PANEL_REMOVED
 							STOP_PROCESSING(SSobj, core)
 							update_icon()
 						else
-							user << "<span class='warning'>You need more metal to do that!</span>"
+							to_chat(user, "<span class='warning'>You need more metal to do that!</span>")
 				else
-					user << "<span class='warning'>You need more metal to do that!</span>"
+					to_chat(user, "<span class='warning'>You need more metal to do that!</span>")
 				return
 	. = ..()
 
@@ -352,7 +354,7 @@ var/bomb_set
 	if(!isinspace())
 		anchored = !anchored
 	else
-		usr << "<span class='warning'>There is nothing to anchor to!</span>"
+		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -370,7 +372,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/proc/set_active()
 	if(safety && !bomb_set)
-		usr << "<span class='danger'>The safety is still on.</span>"
+		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
 	timing = !timing
 	if(timing)
@@ -500,13 +502,13 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	START_PROCESSING(SSobj, src)
+	set_stationloving(TRUE, inform_admins=TRUE)
 
 /obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/claymore/highlander))
 		var/obj/item/weapon/claymore/highlander/H = I
 		if(H.nuke_disk)
-			user << "<span class='notice'>Wait... what?</span>"
+			to_chat(user, "<span class='notice'>Wait... what?</span>")
 			qdel(H.nuke_disk)
 			H.nuke_disk = null
 			return
@@ -515,6 +517,12 @@ This is here to make the tiles around the station mininuke change when it's arme
 		H.nuke_disk = src
 		return 1
 	return ..()
+
+/obj/item/weapon/disk/nuclear/Destroy(force=FALSE)
+	// respawning is handled in /obj/Destroy()
+	if(force)
+		poi_list -= src
+	. = ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -533,56 +541,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS
-
-/obj/item/weapon/disk/nuclear/process()
-	var/turf/diskturf = get_turf(src)
-	if(diskturf && (diskturf.z == ZLEVEL_CENTCOM || diskturf.z == ZLEVEL_STATION))
-		return
-	else
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-		var/turf/targetturf = relocate()
-		message_admins("[src] has been moved out of bounds in \
-			[ADMIN_COORDJMP(diskturf)]. Moving it to \
-			[ADMIN_COORDJMP(targetturf)].")
-		log_game("[src] has been moved out of bounds in [COORD(diskturf)]. \
-			Moving it to [COORD(targetturf)].")
-
-/obj/item/weapon/disk/nuclear/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION)
-	if(!targetturf)
-		if(blobstart.len > 0)
-			targetturf = get_turf(pick(blobstart))
-		else
-			throw EXCEPTION("Unable to find a blobstart landmark")
-
-	if(ismob(loc))
-		var/mob/M = loc
-		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
-		S.remove_from_storage(src, targetturf)
-	else
-		forceMove(targetturf)
-	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
-	return targetturf
-
-/obj/item/weapon/disk/nuclear/Destroy(force)
-	var/turf/diskturf = get_turf(src)
-
-	if(force)
-		message_admins("[src] has been !!force deleted!! in \
-			[ADMIN_COORDJMP(diskturf)].")
-		log_game("[src] has been !!force deleted!! in [COORD(diskturf)].")
-		poi_list -= src
-		STOP_PROCESSING(SSobj, src)
-		return ..()
-
-	var/turf/targetturf = relocate()
-	message_admins("[src] has been destroyed in [ADMIN_COORDJMP(diskturf)]. \
-		Moving it to [ADMIN_COORDJMP(targetturf)].")
-	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to \
-		[COORD(targetturf)].")
-	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced
 
 /obj/item/weapon/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"

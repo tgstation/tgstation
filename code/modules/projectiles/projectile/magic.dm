@@ -35,10 +35,9 @@
 			C.regenerate_organs()
 		if(target.revive(full_heal = 1))
 			target.grab_ghost(force = TRUE) // even suicides
-			target << "<span class='notice'>You rise with a start, \
-				you're alive!!!</span>"
+			to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
 		else if(target.stat != DEAD)
-			target << "<span class='notice'>You feel great!</span>"
+			to_chat(target, "<span class='notice'>You feel great!</span>")
 
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -265,20 +264,19 @@
 
 	new_mob.languages_spoken |= HUMAN
 	new_mob.languages_understood |= HUMAN
-	new_mob.attack_log = M.attack_log
+	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
 		new_mob.equip_to_appropriate_slot(W)
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+	M.log_message("<font color='orange'>became [new_mob.real_name].</font>", INDIVIDUAL_ATTACK_LOG)
 
 	new_mob.a_intent = INTENT_HARM
 
 	M.wabbajack_act(new_mob)
 
-	new_mob << "<span class='warning'>Your form morphs into that of \
-		a [randomize].</span>"
+	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
 	qdel(M)
 	return new_mob
@@ -312,7 +310,7 @@
 				if(L.mind)
 					L.mind.transfer_to(S)
 					if(owner)
-						S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>"
+						to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
 				P.loc = S
 				return
 		else

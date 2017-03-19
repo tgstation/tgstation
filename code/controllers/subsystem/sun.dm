@@ -1,6 +1,6 @@
-var/datum/subsystem/sun/SSsun
+var/datum/controller/subsystem/sun/SSsun
 
-/datum/subsystem/sun
+/datum/controller/subsystem/sun
 	name = "Sun"
 	wait = 600
 	init_order = 2
@@ -11,7 +11,7 @@ var/datum/subsystem/sun/SSsun
 	var/rate
 	var/list/solars	= list()
 
-/datum/subsystem/sun/New()
+/datum/controller/subsystem/sun/New()
 	NEW_SS_GLOBAL(SSsun)
 
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
@@ -19,10 +19,10 @@ var/datum/subsystem/sun/SSsun
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
-/datum/subsystem/sun/stat_entry(msg)
+/datum/controller/subsystem/sun/stat_entry(msg)
 	..("P:[solars.len]")
 
-/datum/subsystem/sun/fire()
+/datum/controller/subsystem/sun/fire()
 	angle = (360 + angle + rate * 6) % 360	 // increase/decrease the angle to the sun, adjusted by the rate
 
 	// now calculate and cache the (dx,dy) increments for line drawing

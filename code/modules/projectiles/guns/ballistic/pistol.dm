@@ -33,7 +33,12 @@
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	if(magazine)
+		cut_overlays()
+		add_overlay("deagle_magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated desert eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -64,12 +69,12 @@
 	origin_tech = "combat=3;materials=2;abductor=3"
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)
-	user << "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>"
+	to_chat(user, "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>")
 	if(prob(50))
-		user << "<span class='notice'>..and vanishes from your vision! Where the hell did it go?</span>"
+		to_chat(user, "<span class='notice'>..and vanishes from your vision! Where the hell did it go?</span>")
 		qdel(src)
 		user.update_icons()
 	else
-		user << "<span class='notice'>..and falls into view. Whew, that was a close one.</span>"
+		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
 		user.dropItemToGround(src)
 

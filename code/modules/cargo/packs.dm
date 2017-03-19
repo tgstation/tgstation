@@ -1006,7 +1006,14 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/beer)
+					/obj/item/weapon/reagent_containers/food/drinks/beer,
+					/obj/item/device/flashlight/glowstick,
+					/obj/item/device/flashlight/glowstick/red,
+					/obj/item/device/flashlight/glowstick/blue,
+					/obj/item/device/flashlight/glowstick/cyan,
+					/obj/item/device/flashlight/glowstick/orange,
+					/obj/item/device/flashlight/glowstick/yellow,
+					/obj/item/device/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
 
 /datum/supply_pack/organic/critter
@@ -1577,6 +1584,7 @@
 /datum/supply_pack/misc/randomised/toys
 	name = "Toy Crate"
 	cost = 5000 // or play the arcade machines ya lazy bum
+	// TODO make this actually just use the arcade machine loot list
 	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
@@ -1591,7 +1599,8 @@
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
-	                /obj/item/toy/redbutton)
+	                /obj/item/toy/redbutton,
+					/obj/item/toy/eightball)
 	crate_name = "toy crate"
 
 /datum/supply_pack/misc/autodrobe
@@ -1696,7 +1705,12 @@
 	cost = 12000
 	special = TRUE
 	contains = list(
-					/obj/item/weapon/circuitboard/machine/dna_vault
+					/obj/item/weapon/circuitboard/machine/dna_vault,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
 					)
 	crate_name= "dna vault parts crate"
 
@@ -1736,7 +1750,7 @@
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
-	cost = 1000000
+	cost = 10000
 	contains = list(/obj/vehicle/bicycle)
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large

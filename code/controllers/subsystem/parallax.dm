@@ -1,17 +1,17 @@
-var/datum/subsystem/parallax/SSparallax
+var/datum/controller/subsystem/parallax/SSparallax
 
-/datum/subsystem/parallax
-	name = "parallax"
+/datum/controller/subsystem/parallax
+	name = "Parallax"
 	wait = 2
 	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
 	priority = 65
 	var/list/currentrun
 
-/datum/subsystem/parallax/New()
+/datum/controller/subsystem/parallax/New()
 	NEW_SS_GLOBAL(SSparallax)
 	return ..()
 
-/datum/subsystem/parallax/fire(resumed = 0)
+/datum/controller/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = clients.Copy()
 

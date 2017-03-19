@@ -34,10 +34,10 @@
 		if(!isnum(user.client.player_age)) //apparently what happens when there's no DB connected. just don't let anybody be a drone without admin intervention
 			return
 		if(user.client.player_age < DRONE_MINIMUM_AGE)
-			user << "<span class='danger'>You're too new to play as a drone! Please try again in [DRONE_MINIMUM_AGE - user.client.player_age] days.</span>"
+			to_chat(user, "<span class='danger'>You're too new to play as a drone! Please try again in [DRONE_MINIMUM_AGE - user.client.player_age] days.</span>")
 			return
 	if(!ticker.mode)
-		user << "Can't become a drone before the game has started."
+		to_chat(user, "Can't become a drone before the game has started.")
 		return
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_drone == "No" || QDELETED(src) || !isobserver(user))
@@ -62,7 +62,7 @@
 
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L << "<span class='warning'>[drone] is trying to escape!</span>"
+		to_chat(L, "<span class='warning'>[drone] is trying to escape!</span>")
 		if(!do_after(drone, 50, target = L))
 			return
 		L.dropItemToGround(src)
