@@ -530,7 +530,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 32
-		},
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -557,14 +557,14 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/mining_construction)
 "abj" = (
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1;
 	icon_state = "yellow";
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/mining_construction)
 "abk" = (
 /obj/effect/decal/cleanable/dirt,
@@ -707,7 +707,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -724,7 +724,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
 	req_access_txt = "10"
@@ -741,7 +741,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -753,7 +753,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /turf/open/space,
 /area/solar/auxstarboard)
 "abB" = (
@@ -911,7 +911,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 0
-		},
+	},
 /turf/closed/wall/r_wall,
 /area/maintenance/auxsolarstarboard)
 "abM" = (
@@ -954,7 +954,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 0
-		},
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry{
 	name = "Arrivals"
@@ -992,7 +992,7 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK"
-		},
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry{
 	name = "Arrivals"
@@ -1305,7 +1305,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/mining_construction)
 "acx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1316,7 +1316,7 @@
 	dir = 1;
 	icon_state = "yellow";
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/mining_construction)
 "acy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2277,7 +2277,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/mining_construction)
 "aeB" = (
 /obj/structure/cable/white{
@@ -2557,7 +2557,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 5;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/maintenance/starboard/fore_starboard_maintenance)
 "afc" = (
 /obj/structure/grille,
@@ -3721,7 +3721,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -3806,7 +3806,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -4743,7 +4743,7 @@
 	anchored = 1;
 	dir = 4;
 	icon_state = "reflector_box"
-		},
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -4762,8 +4762,9 @@
 	})
 "ajO" = (
 /obj/machinery/camera{
-	c_tag = "Atmospherics - Reflector Box";
-	name = "atmospherics camera"
+	c_tag = "Supermatter Engine - Fore";
+	name = "atmospherics camera";
+	network = list("SS13","Engine")
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -4776,7 +4777,7 @@
 	anchored = 1;
 	dir = 8;
 	icon_state = "reflector"
-		},
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4976,7 +4977,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /turf/open/floor/plating,
 /area/bridge{
 	name = "Customs"
@@ -5058,7 +5059,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /turf/open/floor/plating,
 /area/security/checkpoint2)
 "akA" = (
@@ -5197,7 +5198,7 @@
 	anchored = 1;
 	dir = 1;
 	icon_state = "reflector_double"
-		},
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -5633,7 +5634,7 @@
 	anchored = 1;
 	dir = 4;
 	icon_state = "reflector_double"
-		},
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -6334,7 +6335,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 6;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/maintenance/fpmaint2/fore_port_maintenance)
 "ano" = (
 /obj/structure/table/wood,
@@ -6740,7 +6741,7 @@
 	anchored = 1;
 	dir = 1;
 	icon_state = "reflector"
-		},
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -11364,9 +11365,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
-	c_tag = "Atmospherics - Engine Port";
+	c_tag = "Supermatter Engine - Port";
 	dir = 4;
-	name = "atmospherics camera"
+	name = "atmospherics camera";
+	network = list("SS13","Engine")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -11443,9 +11445,10 @@
 	pixel_y = 0
 	},
 /obj/machinery/camera{
-	c_tag = "Atmospherics - Engine Starboard";
+	c_tag = "Supermatter Engine - Starboard";
 	dir = 8;
-	name = "atmospherics camera"
+	name = "atmospherics camera";
+	network = list("SS13","Engine")
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -13478,7 +13481,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white,
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -13633,8 +13636,9 @@
 	pixel_y = 0
 	},
 /obj/machinery/camera{
-	c_tag = "Atmospherics - Engine Aft";
-	name = "atmospherics camera"
+	c_tag = "Supermatter Engine - Aft";
+	name = "atmospherics camera";
+	network = list("SS13","Engine")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -14145,7 +14149,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -14792,7 +14796,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light_switch{
 	pixel_x = 38
 	},
@@ -15075,7 +15079,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 32
-		},
+	},
 /obj/machinery/camera{
 	c_tag = "Solar - Fore Port";
 	name = "solar camera"
@@ -15835,7 +15839,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
 	req_access_txt = "24";
@@ -15853,7 +15857,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -15870,7 +15874,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -16051,7 +16055,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light_switch{
 	pixel_x = 24;
 	pixel_y = 24
@@ -16863,7 +16867,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
@@ -18077,7 +18081,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 32
-		},
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -19047,7 +19051,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -19231,7 +19235,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -20383,7 +20387,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -20426,7 +20430,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -21019,7 +21023,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Cargo Bay APC";
@@ -21755,7 +21759,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light_switch{
 	pixel_x = 26;
 	pixel_y = -26
@@ -24154,7 +24158,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 32
-		},
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -24561,7 +24565,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -25810,7 +25814,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/white{
@@ -26354,7 +26358,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/chem_master/condimaster{
 	name = "BrewMaster 3000"
 	},
@@ -26692,7 +26696,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white,
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -27506,7 +27510,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -28875,7 +28879,7 @@
 	name = "WARNING: BLAST DOORS";
 	pixel_x = 0;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "bdl" = (
@@ -29531,7 +29535,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -30490,7 +30494,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
@@ -32212,7 +32216,7 @@
 	dir = 4;
 	icon_state = "direction_supply";
 	name = "supply department"
-		},
+	},
 /obj/structure/sign/directions/medical{
 	pixel_y = -8
 	},
@@ -39242,7 +39246,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/sign/electricshock{
@@ -39309,7 +39313,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -39437,8 +39441,17 @@
 /obj/machinery/button/door{
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Control";
-	pixel_x = -26;
+	pixel_x = -38;
 	req_access_txt = "24"
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engine.";
+	dir = 4;
+	layer = 4;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = -24;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
@@ -39675,7 +39688,7 @@
 	name = "WARNING: BLAST DOORS";
 	pixel_x = 0;
 	pixel_y = 32
-		},
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	icon_state = "darkblue";
 	dir = 1
@@ -40149,7 +40162,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -40169,7 +40182,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/gravity_generator)
 "byB" = (
@@ -41900,7 +41913,7 @@
 	icon_state = "pipe-j1s";
 	name = "HoP Junction";
 	sortType = 15
-		},
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -42469,7 +42482,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
@@ -42560,7 +42573,7 @@
 	dir = 1;
 	icon_state = "yellow";
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/engine/break_room)
 "bCn" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -42571,7 +42584,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light_switch{
 	pixel_y = 26
 	},
@@ -43311,7 +43324,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light_switch{
 	pixel_y = -26
 	},
@@ -43357,7 +43370,7 @@
 	desc = "A handy sign praising the engineering department.";
 	icon_state = "safety";
 	name = "engineering plaque"
-		},
+	},
 /turf/closed/wall,
 /area/engine/break_room)
 "bDO" = (
@@ -43716,7 +43729,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "bEx" = (
@@ -43953,7 +43966,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 5;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/maintenance/starboard)
 "bEX" = (
 /obj/structure/closet/secure_closet/detective,
@@ -44713,7 +44726,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/machinery/power/apc{
 	cell_type = 10000;
 	dir = 1;
@@ -45330,7 +45343,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/button/door{
 	id = "transitlock";
 	name = "Transit Tube Lockdown Control";
@@ -45697,7 +45710,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -45852,7 +45865,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	icon_state = "intact";
 	dir = 5
@@ -46023,7 +46036,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -46817,7 +46830,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -48875,7 +48888,7 @@
 	icon_state = "direction_bridge";
 	name = "command department";
 	pixel_y = -8
-		},
+	},
 /turf/closed/wall,
 /area/storage/primary)
 "bOj" = (
@@ -49125,14 +49138,14 @@
 	icon_state = "direction_bridge";
 	name = "command department";
 	pixel_y = 0
-		},
+	},
 /obj/structure/sign/directions/engineering{
 	desc = "A direction sign, pointing out which way the Supply department is.";
 	dir = 1;
 	icon_state = "direction_supply";
 	name = "supply department";
 	pixel_y = 8
-		},
+	},
 /turf/closed/wall,
 /area/storage/tools)
 "bOG" = (
@@ -49403,7 +49416,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -50655,7 +50668,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -51167,6 +51180,15 @@
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engine.";
+	dir = 4;
+	layer = 4;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = -30;
+	pixel_y = 0
 	},
 /mob/living/simple_animal/parrot/Poly,
 /turf/open/floor/plasteel/vault{
@@ -51836,7 +51858,7 @@
 	icon_state = "pipe-j1s";
 	name = "Security Junction";
 	sortType = 7
-		},
+	},
 /turf/open/floor/plasteel/red/corner,
 /area/hallway/primary/starboard)
 "bTh" = (
@@ -51940,7 +51962,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -52154,7 +52176,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -53345,7 +53367,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/porta_turret/ai,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -53893,7 +53915,7 @@
 	name = "WARNING: BLAST DOORS";
 	pixel_x = 0;
 	pixel_y = -32
-		},
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -54814,7 +54836,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "bYN" = (
@@ -56117,7 +56139,7 @@
 	dir = 8;
 	icon_state = "camera";
 	network = list("Singularity")
-		},
+	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cbf" = (
@@ -57187,7 +57209,7 @@
 	dir = 1;
 	icon_state = "yellow";
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/engine/engineering)
 "ccX" = (
 /turf/open/floor/plasteel/yellow/side{
@@ -57224,7 +57246,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/engine/engineering)
 "cdc" = (
 /obj/machinery/vending/engivend,
@@ -57505,7 +57527,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "cdK" = (
@@ -57907,7 +57929,7 @@
 	dir = 4;
 	icon_state = "camera";
 	network = list("Singularity")
-		},
+	},
 /turf/open/space,
 /area/space)
 "cey" = (
@@ -58615,7 +58637,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -60186,7 +60208,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -60355,7 +60377,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cjt" = (
@@ -61553,7 +61575,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "clR" = (
@@ -62052,7 +62074,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -62139,7 +62161,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -62421,7 +62443,7 @@
 	icon_state = "nboard00";
 	pixel_x = 32;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cnJ" = (
@@ -62537,7 +62559,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -63642,7 +63664,7 @@
 	name = "WARNING: PRESSURIZED DOORS";
 	pixel_x = 0;
 	pixel_y = 0
-		},
+	},
 /turf/closed/wall,
 /area/crew_quarters/courtroom)
 "cpO" = (
@@ -63825,7 +63847,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -64045,7 +64067,7 @@
 	icon_state = "direction_bridge";
 	name = "command department";
 	pixel_y = 0
-		},
+	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
@@ -64231,7 +64253,7 @@
 	icon_state = "direction_bridge";
 	name = "command department";
 	pixel_y = 0
-		},
+	},
 /turf/closed/wall/r_wall,
 /area/gateway)
 "cqZ" = (
@@ -64811,7 +64833,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -64906,7 +64928,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
@@ -66207,7 +66229,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -66237,7 +66259,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -66264,7 +66286,7 @@
 	dir = 1;
 	icon_state = "yellow";
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/engine/engineering{
 	name = "Engineering Storage"
 	})
@@ -66280,7 +66302,7 @@
 	dir = 1;
 	icon_state = "yellow";
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/engine/engineering{
 	name = "Engineering Storage"
 	})
@@ -66459,7 +66481,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -66872,7 +66894,7 @@
 	dir = 4;
 	icon_state = "camera";
 	network = list("Singularity")
-		},
+	},
 /turf/open/space,
 /area/space)
 "cvZ" = (
@@ -66881,7 +66903,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /turf/open/space,
 /area/space)
 "cwa" = (
@@ -66890,7 +66912,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-		},
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -66961,7 +66983,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -68747,7 +68769,7 @@
 	dir = 8;
 	icon_state = "camera";
 	network = list("Singularity")
-		},
+	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "czm" = (
@@ -68809,7 +68831,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -70610,7 +70632,7 @@
 	dir = 1;
 	icon_state = "nboard00";
 	pixel_y = -32
-		},
+	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/engineering{
@@ -70753,7 +70775,7 @@
 	name = "WARNING: PRESSURIZED DOORS";
 	pixel_x = 0;
 	pixel_y = 0
-		},
+	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
@@ -70892,7 +70914,7 @@
 	name = "WARNING: BLAST DOORS";
 	pixel_x = 0;
 	pixel_y = 0
-		},
+	},
 /turf/closed/wall/r_wall,
 /area/gateway)
 "cDe" = (
@@ -72413,7 +72435,7 @@
 	icon_state = "pipe-j1s";
 	name = "Medbay Junction";
 	sortType = 9
-		},
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "cFJ" = (
@@ -76113,7 +76135,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -76438,7 +76460,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light_switch{
 	pixel_x = 38
 	},
@@ -76808,7 +76830,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -76939,7 +76961,7 @@
 	icon_state = "doors";
 	name = "WARNING: BIOHAZARD CELL";
 	pixel_x = 0
-		},
+	},
 /turf/closed/wall,
 /area/toxins/xenobiology)
 "cOG" = (
@@ -77117,7 +77139,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
@@ -77254,7 +77276,7 @@
 	icon_state = "pipe-j1s";
 	name = "Chemistry Junction";
 	sortType = 11
-		},
+	},
 /turf/open/floor/plasteel/blue/corner,
 /area/hallway/primary/aft)
 "cPj" = (
@@ -77937,7 +77959,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -79547,7 +79569,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -80622,7 +80644,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -81953,7 +81975,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -82089,7 +82111,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28
-		},
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
 	},
@@ -82139,7 +82161,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28
-		},
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
@@ -82539,7 +82561,7 @@
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 5;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/toxins/lab)
 "cYV" = (
 /obj/machinery/computer/rdconsole/core,
@@ -83134,7 +83156,7 @@
 	departmentType = 0;
 	name = "Research RC";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
 	receive_ore_updates = 1
 	},
 /obj/machinery/camera{
@@ -83205,7 +83227,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
@@ -83921,7 +83943,7 @@
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-		},
+	},
 /area/toxins/lab)
 "dbD" = (
 /obj/effect/decal/cleanable/dirt,
@@ -85241,7 +85263,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
@@ -86304,7 +86326,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -86348,7 +86370,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
@@ -86427,7 +86449,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -86743,7 +86765,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/toxins/explab)
@@ -86946,7 +86968,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -87901,7 +87923,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -87974,7 +87996,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/preopen{
@@ -89566,7 +89588,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/camera{
 	c_tag = "Science - Research Director's Office";
 	dir = 8;
@@ -89741,7 +89763,7 @@
 	icon_state = "fire0";
 	pixel_x = 7;
 	pixel_y = -26
-		},
+	},
 /obj/machinery/light,
 /obj/machinery/light_switch{
 	pixel_x = 7;
@@ -90985,7 +91007,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = -26
-		},
+	},
 /obj/machinery/light_switch{
 	pixel_x = 26;
 	pixel_y = -38
@@ -94117,7 +94139,7 @@
 	dir = 1;
 	icon_state = "nboard00";
 	pixel_y = -32
-		},
+	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	icon_state = "whitepurplecorner";
 	dir = 8
@@ -95528,7 +95550,7 @@
 	icon_state = "nboard00";
 	pixel_x = 32;
 	pixel_y = 0
-		},
+	},
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
@@ -96928,7 +96950,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = -26
-		},
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -98800,7 +98822,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -99067,7 +99089,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/aft)
 "dEm" = (
@@ -101315,7 +101337,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 5
 	},
@@ -101706,7 +101728,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/medical/virology)
@@ -102122,7 +102144,7 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
-		},
+	},
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
@@ -104143,7 +104165,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -104721,7 +104743,7 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
-		},
+	},
 /area/shuttle/escape)
 "dPE" = (
 /obj/structure/table/glass,
@@ -105840,7 +105862,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/camera{
 	c_tag = "Chapel - Starboard";
 	dir = 8;
@@ -106407,7 +106429,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/structure/closet/secure_closet/medical1,
 /obj/machinery/light_switch{
 	pixel_x = 26;
@@ -107251,7 +107273,7 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK"
-		},
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -107371,7 +107393,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 0
-		},
+	},
 /turf/closed/wall/r_wall,
 /area/maintenance/portsolar)
 "dUV" = (
@@ -107644,7 +107666,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /turf/open/space,
 /area/solar/port)
 "dVx" = (
@@ -107653,7 +107675,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
 	req_access_txt = "10"
@@ -107670,7 +107692,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -107686,7 +107708,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
-		},
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -108180,7 +108202,7 @@
 	icon_state = "nboard00";
 	name = "memorial board";
 	pixel_y = -32
-		},
+	},
 /obj/machinery/holopad,
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -109540,7 +109562,7 @@
 	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = 0
-		},
+	},
 /obj/machinery/status_display{
 	pixel_x = 0;
 	pixel_y = 32
@@ -109609,7 +109631,7 @@
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
 	pixel_x = 32
-		},
+	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -109676,7 +109698,7 @@
 /obj/structure/sign/poster{
 	icon_state = "poster22_legit";
 	pixel_y = -32
-		},
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -112843,6 +112865,23 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
+"ehy" = (
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	name = "atmospherics camera";
+	network = list("Engine")
+	},
+/turf/open/floor/circuit/green,
+/area/engine/gravity_generator{
+	name = "Atmospherics Engine"
+	})
 
 (1,1,1) = {"
 aaa
@@ -139393,7 +139432,7 @@ apK
 ebP
 aso
 aiW
-auH
+ehy
 auH
 auH
 aiW
@@ -142232,7 +142271,7 @@ awX
 axa
 ame
 aib
-aJi
+axZ
 aAj
 azm
 aAj
@@ -143756,7 +143795,7 @@ ajY
 akW
 alZ
 anj
-aoh
+akV
 eeI
 aqa
 arq
@@ -146161,7 +146200,7 @@ cLH
 cLI
 cLH
 cLI
-cZW
+cIm
 dbq
 dcN
 dez
@@ -158497,7 +158536,7 @@ cUr
 cLM
 cLL
 cLM
-dau
+cIt
 dcd
 ddk
 dfg
@@ -163916,7 +163955,7 @@ dAL
 dCd
 dDz
 dAI
-dFv
+dCa
 dHf
 dHU
 aaa
