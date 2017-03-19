@@ -49564,7 +49564,7 @@
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
 	pixel_y = 0;
-	req_access = list(65)
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
