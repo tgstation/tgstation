@@ -627,33 +627,6 @@
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
 
-	var/chattering = FALSE
-	var/phomeme_type = "sans"
-	var/list/phomeme_types = list("sans", "papyrus")
-
-/obj/item/organ/tongue/bone/New()
-	. = ..()
-	phomeme_type = pick(phomeme_types)
-
-/obj/item/organ/tongue/bone/TongueSpeech(var/message)
-	. = message
-
-	if(chattering)
-		//Annoy everyone nearby with your chattering.
-		chatter(message, phomeme_type, usr)
-
-/obj/item/organ/tongue/bone/get_spans()
-	. = ..()
-	// Feature, if the tongue talks directly, it will speak with its span
-	switch(phomeme_type)
-		if("sans")
-			. |= SPAN_SANS
-		if("papyrus")
-			. |= SPAN_PAPYRUS
-
-/obj/item/organ/tongue/bone/chatter
-	name = "chattering bone \"tongue\""
-	chattering = TRUE
 
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"

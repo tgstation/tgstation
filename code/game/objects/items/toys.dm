@@ -465,12 +465,11 @@
 	var/span = "danger"
 	var/recharge_time = 30
 
-	var/chattering = FALSE
-	var/phomeme
 
 // Talking toys are language universal, and thus all species can use them
 /obj/item/toy/talking/attack_alien(mob/user)
 	. = attack_hand(user)
+
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
@@ -487,7 +486,8 @@
 		spawn(recharge_time)
 			cooldown = FALSE
 		return
-	..()
+
+
 
 /obj/item/toy/talking/proc/activation_message(mob/user)
 	user.visible_message(
@@ -500,8 +500,8 @@
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
 	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
-	if(chattering)
-		chatter(message, phomeme, user)
+	return
+
 
 /*
  * AI core prizes
@@ -543,16 +543,12 @@
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon_state = "owlprize"
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
-	chattering = TRUE
-	phomeme = "owl"
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
-	chattering = TRUE
-	phomeme = "griffin"
 
 /obj/item/toy/talking/skeleton
 	name = "skeleton action figure"
@@ -561,7 +557,6 @@
 		of age."
 	icon_state = "skeletonprize"
 	attack_verb = list("boned", "dunked on", "worked down to the bone")
-	chattering = TRUE
 
 	var/list/regular_messages = list(
 		"Why was the skeleton such a bad liar? \
@@ -623,11 +618,6 @@
 /obj/item/toy/talking/skeleton/generate_messages()
 	return list(pick(regular_messages))
 
-/obj/item/toy/talking/skeleton/toy_talk(user, message)
-	phomeme = pick("sans", "papyrus")
-
-	span = "danger [phomeme]"
-	..()
 
 /*
 || A Deck of Cards for playing various games of chance ||
