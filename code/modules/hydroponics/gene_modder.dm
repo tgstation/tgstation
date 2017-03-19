@@ -158,27 +158,27 @@
 						if(gene.value > max_potency)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_potency]</span> potency. "
 							dat += "Target gene will be degraded to <span class='highlight'>[max_potency]</span> potency on extraction."
-					if(istype(target, /datum/plant_gene/core/lifespan))
+					else if(istype(target, /datum/plant_gene/core/lifespan))
 						if(gene.value > max_endurance)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> lifespan. "
 							dat += "Target gene will be degraded to <span class='highlight'>[max_endurance]</span> Lifespan on extraction."
-					if(istype(target, /datum/plant_gene/core/endurance))
+					else if(istype(target, /datum/plant_gene/core/endurance))
 						if(gene.value > max_endurance)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> endurance. "
 							dat += "Target gene will be degraded to <span class='highlight'>[max_endurance]</span> endurance on extraction."
-					if(istype(target, /datum/plant_gene/core/yield))
+					else if(istype(target, /datum/plant_gene/core/yield))
 						if(gene.value > max_yield)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_yield]</span> yield. "
 							dat += "Target gene will be degraded to <span class='highlight'>[max_yield]</span> yield on extraction."
-					if(istype(target, /datum/plant_gene/core/production))
+					else if(istype(target, /datum/plant_gene/core/production))
 						if(gene.value < min_production)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_production]</span> production. "
 							dat += "Target gene will be degraded to <span class='highlight'>[min_production]</span> production on extraction."
-					if(istype(target, /datum/plant_gene/core/weed_rate))
+					else if(istype(target, /datum/plant_gene/core/weed_rate))
 						if(gene.value > max_wrate)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_wrate]</span> weed rate. "
 							dat += "Target gene will be degraded to <span class='highlight'>[max_wrate]</span> weed rate on extraction."
-					if(istype(target, /datum/plant_gene/core/weed_chance))
+					else if(istype(target, /datum/plant_gene/core/weed_chance))
 						if(gene.value > max_wchance)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_wchance]</span> weed chance. "
 							dat += "Target gene will be degraded to <span class='highlight'>[max_wchance]</span> weed chance on extraction."
@@ -341,17 +341,17 @@
 							var/datum/plant_gene/core/gene = G
 							if(istype(G, /datum/plant_gene/core/potency))
 								gene.value = min(gene.value, max_potency)
-							if(istype(G, /datum/plant_gene/core/lifespan))
+							else if(istype(G, /datum/plant_gene/core/lifespan))
 								gene.value = min(gene.value, max_endurance) //INTENDED
-							if(istype(G, /datum/plant_gene/core/endurance))
+							else if(istype(G, /datum/plant_gene/core/endurance))
 								gene.value = min(gene.value, max_endurance)
-							if(istype(G, /datum/plant_gene/core/production))
+							else if(istype(G, /datum/plant_gene/core/production))
 								gene.value = max(gene.value, min_production)
-							if(istype(G, /datum/plant_gene/core/yield))
+							else if(istype(G, /datum/plant_gene/core/yield))
 								gene.value = min(gene.value, max_yield)
-							if(istype(G, /datum/plant_gene/core/weed_rate))
+							else if(istype(G, /datum/plant_gene/core/weed_rate))
 								gene.value = min(gene.value, max_wrate)
-							if(istype(G, /datum/plant_gene/core/weed_chance))
+							else if(istype(G, /datum/plant_gene/core/weed_chance))
 								gene.value = min(gene.value, max_wchance)
 						disk.update_name()
 						qdel(seed)
@@ -450,7 +450,7 @@
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
-	unique_rename = 1 // >> writing unique renaming code for items when we have a perfectly good system, FOR SHAME
+	unique_rename = 1
 
 /obj/item/weapon/disk/plantgene/New()
 	..()
@@ -460,7 +460,7 @@
 
 /obj/item/weapon/disk/plantgene/proc/update_name()
 	if(gene)
-		name = "[gene.get_name()]"
+		name = "[gene.get_name()] (Plant Data Disk)"
 	else
 		name = "plant data disk"
 
