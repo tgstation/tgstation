@@ -45173,7 +45173,7 @@
 	desc = "Used for watching the engine containment area.";
 	dir = 4;
 	name = "Engine Monitor";
-	network = list("Singularity");
+	network = list("Engine");
 	pixel_x = -32;
 	pixel_y = 0
 	},
@@ -45252,6 +45252,14 @@
 /area/engine/engine_smes)
 "bLA" = (
 /obj/structure/filingcabinet,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the engine containment area.";
+	dir = 4;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -46909,6 +46917,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Center";
 	dir = 2;
+	network = list("SS13","Engine");
 	pixel_x = 23
 	},
 /obj/machinery/light{
@@ -47779,7 +47788,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Port Fore";
 	dir = 2;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -47804,7 +47813,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Starboard Fore";
 	dir = 2;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -48275,7 +48284,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Port Aft";
 	dir = 1;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -48332,7 +48341,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Starboard Aft";
 	dir = 1;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
