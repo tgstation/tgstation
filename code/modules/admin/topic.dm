@@ -1164,7 +1164,7 @@
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
-				to_chat(M, "<span class='danger'>This is a permanent ban.</span>")
+				to_chat(M, "<span class='danger'>This is a ban until appeal.</span>")
 				if(config.banappeals)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
@@ -1172,8 +1172,8 @@
 				if(!DB_ban_record(BANTYPE_PERMA, M, -1, reason))
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
-				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
-				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
+				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a ban until appeal.")
+				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a ban until appeal.")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>")
 				feedback_inc("ban_perma",1)
 				qdel(M.client)
