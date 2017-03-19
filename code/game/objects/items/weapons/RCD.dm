@@ -592,7 +592,7 @@ RCD
 								candidates += C
 						if(!candidates.len)
 							to_chat(user, "<span class='warning'>Valid target not found...</span>")
-							user << 'sound/misc/compiler-failure.ogg'
+							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
 							return 0
 						for(var/turf/open/O in candidates)
 							if(istype(O))
@@ -657,7 +657,7 @@ RCD
 	if(matter < amount)
 		if(user)
 			to_chat(user, no_ammo_message)
-			user << 'sound/misc/compiler-failure.ogg'
+			playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
 		return 0
 	matter -= amount
 	desc = "An RLD. It currently holds [matter]/[max_matter] matter-units."
@@ -669,5 +669,5 @@ RCD
 	. = matter >= amount
 	if(!. && user)
 		to_chat(user, no_ammo_message)
-		user << 'sound/misc/compiler-failure.ogg'
+		playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
 	return .
