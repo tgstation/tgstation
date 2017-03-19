@@ -70,8 +70,8 @@
 
 /datum/beam/proc/End(destroy_self = TRUE)
 	finished = TRUE
-	if(!isnull(timerid))
-		deltimer(timerid)
+	if(!isnull(timing_id))
+		deltimer(timing_id)
 	if(!QDELETED(src) && destroy_self)
 		qdel(src)
 
