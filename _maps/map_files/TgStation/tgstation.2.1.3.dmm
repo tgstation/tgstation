@@ -12499,7 +12499,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/gateway)
+/area/maintenance/fpmaint)
 "aBj" = (
 /obj/structure/rack{
 	dir = 8;
