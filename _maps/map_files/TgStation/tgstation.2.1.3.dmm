@@ -2963,7 +2963,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -20173,7 +20173,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
+	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21237,7 +21237,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
+	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -21617,7 +21617,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
+	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/storage/art)
@@ -21627,7 +21627,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
+	pixel_x = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -21654,7 +21654,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
+	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/storage/emergency2)
@@ -26278,7 +26278,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -52672,7 +52672,7 @@
 "ckq" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
-	icon_state = "propulsion";
+	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -54098,7 +54098,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -55173,7 +55173,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -57016,7 +57016,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/landmark/start{
 	name = "Cyborg"
@@ -57765,7 +57765,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -57834,7 +57834,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/AIsatextFP{
@@ -58852,7 +58852,7 @@
 "cwU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
-	icon_state = "propulsion";
+	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -60177,6 +60177,7 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4";
+	
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60206,6 +60207,7 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8";
+	
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60290,6 +60292,7 @@
 	dir = 4;
 	icon_state = "emitter";
 	state = 2;
+	
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -60298,6 +60301,7 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
+	
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60312,6 +60316,7 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
+	
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60320,6 +60325,7 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8";
+	
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -62117,7 +62123,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
+	icon_state = "1-8"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62310,7 +62316,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
+	icon_state = "1-8"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -62457,7 +62463,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
+	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -62779,7 +62785,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -63178,7 +63184,7 @@
 	anchored = 1;
 	dir = 4;
 	icon_state = "emitter";
-	state = 2;
+	state = 2
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63198,7 +63204,7 @@
 	anchored = 1;
 	dir = 8;
 	icon_state = "emitter";
-	state = 2;
+	state = 2
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63235,7 +63241,7 @@
 /obj/structure/reflector/single{
 	anchored = 1;
 	dir = 1;
-	icon_state = "reflector";
+	icon_state = "reflector"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63243,7 +63249,7 @@
 /obj/structure/reflector/single{
 	anchored = 1;
 	dir = 4;
-	icon_state = "reflector";
+	icon_state = "reflector"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -63399,7 +63405,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65178,6 +65184,11 @@
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"cMB" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 aaa
@@ -73513,7 +73524,7 @@ aaa
 aaa
 aaa
 aCS
-aCV
+cMB
 aCV
 aCV
 aCS
@@ -92092,7 +92103,7 @@ cfG
 cgw
 coK
 cpu
-cMq
+cMm
 ccw
 ccw
 ccw
@@ -93388,7 +93399,7 @@ ccw
 cFL
 cGf
 cGw
-cMw
+cMm
 ciZ
 cHc
 cHh
@@ -93902,7 +93913,7 @@ cFw
 cFN
 csH
 csR
-cMx
+cMm
 cGU
 cEj
 cEj
@@ -94155,11 +94166,11 @@ crt
 czE
 cAm
 czE
-cMs
+cMm
 cFO
 csC
 csQ
-cMy
+cMm
 cGV
 cEj
 cGV
@@ -94416,7 +94427,7 @@ cAP
 cFP
 csI
 cAt
-cMz
+cMm
 cEj
 cEj
 cEj
@@ -94930,7 +94941,7 @@ ccw
 cFR
 cGf
 cGz
-cMA
+cMm
 ciZ
 cHd
 cHj
@@ -95173,7 +95184,7 @@ ceq
 clQ
 cmQ
 cgR
-cMn
+cMm
 chX
 cpD
 cDw
@@ -95430,7 +95441,7 @@ ckP
 ckH
 cja
 cgR
-cMo
+cMm
 cDj
 cDs
 cql
@@ -95944,7 +95955,7 @@ ckR
 clR
 cgR
 cgR
-cMp
+cMm
 cir
 cDt
 cDy
@@ -96463,7 +96474,7 @@ cis
 cjN
 cDz
 cDH
-cMr
+cMm
 cEj
 crM
 crV
@@ -96982,9 +96993,9 @@ ccw
 ccw
 ccw
 ccw
-cMt
-cMu
-cMv
+cMm
+cMm
+cMm
 ccw
 aaf
 aaf
