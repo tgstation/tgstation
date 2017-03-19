@@ -246,9 +246,11 @@ var/global/datum/crewmonitor/crewmonitor = new
 					if (C)
 						var/turf/current_loc = AI.eyeobj.loc
 
-						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
-							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
-								AI.switchCamera(C)
+						addtimer(CALLBACK(src, .proc/update_ai, AI, C), min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
+
+/datum/crewmonitor/proc/update_ai(mob/living/silicon/ai/AI, obj/machinery/camera/C)
+	if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
+		AI.switchCamera(C)
 
 /mob/living/carbon/human/Move()
 	if (src.w_uniform)
