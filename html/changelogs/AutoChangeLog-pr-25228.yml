@@ -1,0 +1,4 @@
+author: "Cheridan"
+delete-after: True
+changes: 
+  - tweak: "The slime created by a pyroclastic anomaly detonating is now adult and player-controlled! Reminder that if you see an anomaly alert, you should grab an analyzer and head to the announced location to scan it, and then signal the given frequency on a signaller!"
