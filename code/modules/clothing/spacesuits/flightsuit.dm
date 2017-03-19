@@ -573,30 +573,8 @@
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
 		return FALSE
-	var/knockmessage = "<span class='warning'>[victim] is knocked back by [wearer] as they narrowly avoid a collision!"
-	if(power == 1)
-		knockmessage = "<span class='warning'>[wearer] soars into [victim], pushing them away!"
-	var/knockback = 0
-	var/stun = boost * 2 + (power - 2)
-	if((stun >= 0) || (power == 3))
-		knockmessage += " [wearer] dashes across [victim] at full impulse, knocking them [stun ? "down" : "away"]!"	//Impulse...
-	knockmessage += "</span>"
-	knockback += power
-	knockback += (part_manip.rating / 2)
-	knockback += (part_bin.rating / 2)
-	knockback += boost*2
-	switch(power)
-		if(1)
-			knockback = 1
-		if(2)
-			knockback /= 1.5
-	var/throwdir = pick(alldirs)
-	var/turf/target = get_step(victim, throwdir)
-	for(var/i in 1 to (knockback-1))
-		target = get_step(target, throwdir)
-	wearer.visible_message(knockmessage)
-	victim.throw_at(target, knockback, 1)
-	victim.Weaken(stun)
+	forceMove(get_turf(victim))
+	wearer.visible_message("<span class='notice'>[wearer] flies over [victim]!</span>")
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
 	if(!victim)
