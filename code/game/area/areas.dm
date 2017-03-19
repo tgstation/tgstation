@@ -120,10 +120,9 @@ var/list/teleportlocs = list()
 	..()
 
 	power_change()		// all machines set to current power level, also updates icon
+	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 	if(!IS_DYNAMIC_LIGHTING(src))
 		add_overlay(/obj/effect/fullbright)
-
-	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
