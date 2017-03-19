@@ -41953,6 +41953,12 @@
 	temperature = 80
 	},
 /area/tcommsat/server)
+"buV" = (
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/toxins/xenobiology)
 
 (1,1,1) = {"
 aaa
@@ -70603,7 +70609,7 @@ aLH
 aMK
 aNU
 aOw
-buD
+buC
 aPG
 aRB
 aPG
@@ -71117,15 +71123,15 @@ aLJ
 aMM
 aNW
 aOx
-buE
+buC
 aPG
 aRB
 aPG
 buG
 buI
-buM
+buK
 aRB
-buT
+buR
 aMJ
 aad
 aad
@@ -71374,7 +71380,7 @@ aLK
 aMJ
 aNX
 aOy
-buF
+buC
 aPG
 aRE
 aSN
@@ -88358,7 +88364,7 @@ bfo
 bfP
 bgm
 bhi
-bgm
+buV
 bfP
 bje
 bjx

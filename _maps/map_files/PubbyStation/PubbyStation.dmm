@@ -56147,6 +56147,10 @@
 /obj/machinery/light,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
+"cjQ" = (
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/turf/open/floor/engine,
+/area/toxins/xenobiology)
 
 (1,1,1) = {"
 aaa
@@ -98937,7 +98941,7 @@ bbO
 aAC
 aUf
 bed
-bfy
+cjQ
 bgu
 bfy
 bed
