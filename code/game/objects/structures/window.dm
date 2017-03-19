@@ -562,7 +562,7 @@
 	anchored = FALSE
 
 
-/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
