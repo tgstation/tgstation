@@ -71,14 +71,17 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	LAZYINITLIST(abilities)
 	LAZYINITLIST(current_abilities)
 	setthemename(theme)
+	give_ability()
+	parasites |= src
+	..()
+
+/mob/living/simple_animal/hostile/sutando/proc/give_ability()
 	for(var/type in abilities)
 		var/datum/sutando_abilities/G = new type
 		G.user = summoner
 		G.stand = src
 		G.handle_stats()
 		current_abilities += G
-	parasites |= src
-	..()
 
 /mob/living/simple_animal/hostile/sutando/Shoot()
 	. = ..()
@@ -87,7 +90,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando/AttackingTarget()
 	if(loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
+		to_chat(src,"<span class='danger'><B>You must be manifested to attack!</span></B>")
 		return FALSE
 	else
 		for(var/datum/sutando_abilities/I in current_abilities)
@@ -180,12 +183,12 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	if(mind)
 		mind.name = "[real_name]"
 	if(!summoner)
-		src << "<span class='holoparasitebold'>For some reason, somehow, you have no summoner. Please report this bug immediately.</span>"
+		to_chat(src, "<span class='holoparasitebold'>For some reason, somehow, you have no summoner. Please report this bug immediately.</span>")
 		return
-	src << "<span class='holoparasite'>You are <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>, bound to serve [summoner.real_name].</span>"
-	src << "<span class='holoparasite'>You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there.</span>"
-	src << "<span class='holoparasite'>While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself.</span>"
-	src << playstyle_string
+	to_chat(src, "<span class='holoparasite'>You are <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>, bound to serve [summoner.real_name].</span>")
+	to_chat(src, "<span class='holoparasite'>You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there.</span>")
+	to_chat(src, "<span class='holoparasite'>While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself.</span>")
+	to_chat(src, playstyle_string)
 
 /mob/living/simple_animal/hostile/sutando/Life() //Dies if the summoner dies
 	. = ..()
@@ -198,7 +201,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	if(summoner)
 		if(summoner.stat == DEAD)
 			forceMove(summoner.loc)
-			src << "<span class='danger'>Your summoner has died!</span>"
+			to_chat(src, "<span class='danger'>Your summoner has died!</span>")
 			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
 			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
 			for(var/obj/item/W in summoner)
@@ -208,7 +211,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 			death(TRUE)
 			qdel(src)
 	else
-		src << "<span class='danger'>Your summoner has died!</span>"
+		to_chat(src,"<span class='danger'>Your summoner has died!</span>")
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 		death(TRUE)
 		qdel(src)
@@ -250,7 +253,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
-			src << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>"
+			to_chat(src,"<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>")
 			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
@@ -292,7 +295,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	drop_all_held_items()
 	..()
 	if(summoner)
-		summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
+		to_chat(summoner,"<span class='danger'><B>Your [name] died somehow!</span></B>")
 		summoner.death()
 
 
@@ -314,10 +317,10 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 			return FALSE
 		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
-			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
+			to_chat(summoner,"<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>")
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 			if(summoner.stat == UNCONSCIOUS)
-				summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
+				to_chat(summoner,"<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>")
 				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
@@ -336,7 +339,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando/gib()
 	if(summoner)
-		summoner << "<span class='danger'><B>Your [src] was blown up!</span></B>"
+		to_chat(summoner,"<span class='danger'><B>Your [src] was blown up!</span></B>")
 		summoner.gib()
 	ghostize()
 	qdel(src)
@@ -453,16 +456,25 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando/equip_to_slot(obj/item/I, slot)
 	if(dextrous)
-		if(!..())
-			return
+		if(!slot)
+			return FALSE
+		if(!istype(I))
+			return FALSE
 
-		switch(slot)
-			if(slot_generic_dextrous_storage)
-				internal_storage = I
-				update_inv_internal_storage()
-			else
-				src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+		. = TRUE
+		var/index = get_held_index_of_item(I)
+		if(index)
+			held_items[index] = null
+			update_inv_hands()
 
+		if(I.pulledby)
+			I.pulledby.stop_pulling()
+
+		I.screen_loc = null // will get moved if inventory is visible
+		I.loc = src
+		I.equipped(src, slot)
+		I.layer = ABOVE_HUD_LAYER
+		I.plane = ABOVE_HUD_PLANE
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
@@ -495,7 +507,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 		for(var/datum/sutando_abilities/I in current_abilities)
 			I.handle_mode()
 	else
-		src << "<span class='danger'><B>You don't have another mode!</span></B>"
+		to_chat(src,"<span class='danger'><B>You don't have another mode!</span></B>")
 
 /mob/living/simple_animal/hostile/sutando/proc/ToggleLight()
 	if(!luminosity)
@@ -640,6 +652,8 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	var/allowedvalue = 10
 	var/chosen_ability = null
 
+	var/list/abilitynames = list()
+
 	var/possible_candidates
 	var/random = TRUE
 	var/allowmultiple = FALSE
@@ -672,7 +686,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 		user << "[failure_message]"
 		used = FALSE
 
-/obj/item/weapon/sutandocreator/proc/pick_stando()
+/obj/item/weapon/sutandocreator/proc/pick_sutando()
 	var/datum/sutando_abilities/S = chosen_ability
 	S = pick(possible_candidates)
 	S.value += totalvalue
@@ -682,19 +696,23 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /obj/item/weapon/sutandocreator/proc/spawn_sutando(var/mob/living/user, var/key)
 	if(random)
-		for(var/ability in subtypesof(/datum/sutando_abilities))
-			var/datum/sutando_abilities/A = ability
+		for(var/datum/sutando_abilities/A in subtypesof(/datum/sutando_abilities))
 			if(A.value <= allowedvalue)
 				A += possible_candidates
 		while(totalvalue <= allowedvalue)
-			pick_stando()
+			pick_sutando()
+	else
+		for(var/datum/sutando_abilities/A in subtypesof(/datum/sutando_abilities))
+			abilitynames |= A.name
+
 	var/list/sutandos = user.hasparasites()
 	if(sutandos.len && !allowmultiple)
 		user << "<span class='holoparasite'>You already have a [mob_name]!</span>" //nice try, bucko
 		used = FALSE
 		return
 	var/mob/living/simple_animal/hostile/sutando/G = new
-	G.abilities += chosen_abilities
+	G.abilities |= chosen_abilities
+	G.give_ability()
 	G.key = key
 	G.mind.enslave_mind_to_creator(user)
 	switch(theme)

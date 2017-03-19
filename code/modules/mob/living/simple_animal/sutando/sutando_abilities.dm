@@ -1,6 +1,7 @@
 //SABAKU NO WA ORE stand DA
 
 /datum/sutando_abilities
+	var/name = "Ability Name"
 	var/toggle = FALSE
 	var/mob/living/simple_animal/hostile/sutando/stand = null
 	var/mob/living/user = null
@@ -63,6 +64,7 @@
 //ORA ORA ORA
 
 /datum/sutando_abilities/punch
+	name = "Close-Range Combat"
 	value = 5
 
 
@@ -87,6 +89,7 @@
 //killed queem u bad cat
 
 /datum/sutando_abilities/bomb
+	name = "Remote Explosives"
 	var/bomb_cooldown = 0
 	value = 6
 
@@ -134,6 +137,7 @@
 //rore zone
 
 /datum/sutando_abilities/ranged
+	name = "Long-Range Ability"
 	value = 4
 	var/datum/action/innate/snare/plant/P = new
 	var/datum/action/innate/snare/remove/R = new
@@ -248,6 +252,10 @@
 			P.color = stand.namedatum.colour
 
 //magician's fried chicken
+/datum/sutando_abilities/fire
+	name = "Controlled Combustion"
+	value = 7
+
 
 /datum/sutando_abilities/fire/handle_stats()
 	stand.melee_damage_lower += 4.5
@@ -274,6 +282,7 @@
 //lame
 
 /datum/sutando_abilities/assassin
+	name = "Undetected Elimination"
 	value = 6
 	var/stealthcooldown = 160
 	var/obj/screen/alert/canstealthalert
@@ -357,6 +366,7 @@
 //red hot achilles peeper
 
 /datum/sutando_abilities/lightning
+	name = "Controlled Current"
 	value = 7
 	var/datum/beam/userchain
 	var/list/enemychains
@@ -472,6 +482,7 @@
 
 //screeeeeeeeeeeeee
 /datum/sutando_abilities/charge
+	name = "Stampede Force"
 	value = 7
 	var/charging = FALSE
 	var/obj/screen/alert/chargealert
@@ -550,6 +561,7 @@
 
 //protector ability
 /datum/sutando_abilities/protector
+	name = "Impenetrable Defense"
 	value = 4
 
 /datum/sutando_abilities/protector/handle_stats()
@@ -621,6 +633,7 @@
 //healsluts
 
 /datum/sutando_abilities/heal
+	name = "Mending Properties"
 	value = 3
 	var/obj/structure/recieving_pad/beacon
 	var/beacon_cooldown = 0
@@ -753,6 +766,7 @@
 
 //metal pinky
 /datum/sutando_abilities/dextrous
+	name = "Dexterity"
 	value = 4
 
 /datum/sutando_abilities/dextrous/handle_stats()
@@ -805,6 +819,7 @@
 //prop hunt
 
 /datum/sutando_abilities/shapeshift
+	name = "Chameleon Skin"
 	value = 4
 	var/obj/item/remembered = null
 	var/obj/item/host = null
@@ -848,6 +863,10 @@
 
 //ion man
 
+/datum/sutando_abilities/ion
+	value = 8 //you may think this is bullshit, but this ability is actually VERY strong.
+	name = "Electronic Disruption"
+
 /datum/sutando_abilities/ion/handle_stats()
 	. = ..()
 	stand.projectiletype = /obj/item/projectile/ion
@@ -863,6 +882,7 @@
 //oingo boingo
 
 /datum/sutando_abilities/bounce
+	name = "Rubbery Skin"
 	value = 1
 	var/bounce_distance = 5
 
