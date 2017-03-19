@@ -73,7 +73,7 @@
 	var/sound
 	var/walks_left = 50 //prevents the game from hanging in extreme cases (such as minigun fire)
 
-/obj/effect/cross_action/spacetime_dist/New()
+/obj/effect/cross_action/spacetime_dist/Initialize(mapload)
 	..()
 	sound = "sound/guitar/[safepick(guitar_notes)]"
 	dir = pick(cardinal)
