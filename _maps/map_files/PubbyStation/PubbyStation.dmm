@@ -30703,7 +30703,7 @@
 /area/toxins/xenobiology)
 "bjI" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -30800,7 +30800,7 @@
 /area/toxins/xenobiology)
 "bjO" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable{
 	icon_state = "0-2";

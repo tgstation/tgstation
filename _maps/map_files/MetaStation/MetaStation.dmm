@@ -37536,7 +37536,7 @@
 	name = "Antechamber Turret Control";
 	pixel_x = 30;
 	pixel_y = 0;
-	req_access = list(65)
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -87165,7 +87165,7 @@
 /area/toxins/xenobiology)
 "cTD" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
