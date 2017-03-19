@@ -521,12 +521,6 @@
 				S.pixel_y = 7
 				S.loc = get_turf(src)
 		sleep(7)
-	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle") // Delaying the big reveal for better timing
-		sleep(125)
-		spawn_atom_to_turf(/obj/effect/overlay/temp/big_explosion, src, 1, FALSE)
-	if(selection.song_name == "Engineering's Superiority Shimmy")
-		sleep(290)
-		INVOKE_ASYNC(src, .proc/hierofunk)
 	for(var/obj/reveal in sparkles)
 		reveal.alpha = 255
 	while(active)
