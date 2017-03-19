@@ -214,7 +214,7 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
-//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures and consume power or replicant alloy.
+//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures at a power cost
 /datum/clockwork_scripture/create_object/mending_motor
 	descname = "Powered Structure, Repairs Other Structures"
 	name = "Mending Motor"
