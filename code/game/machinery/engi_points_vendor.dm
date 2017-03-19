@@ -246,7 +246,7 @@
 	sleep(100)
 	for(var/mob/M in player_list)
 		M << 'sound/effects/explosionfar.ogg'
-	spawn_atom_to_turf(/obj/effect/overlay/temp/big_explosion, startpoint, 1, FALSE)
+	spawn_atom_to_turf(/obj/effect/overlay/temp/explosion, startpoint, 1, FALSE)
 	qdel(src)
 	for(var/I in spiral_range_turfs(range, startpoint))
 		var/turf/T = I
