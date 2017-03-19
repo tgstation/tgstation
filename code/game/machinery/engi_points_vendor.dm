@@ -289,8 +289,8 @@
 	var/static/list/songs = list(
 		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
 		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	5),
-		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/superior.ogg', 	1810, 	5),
-		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/ultimate.ogg',	2260, 	7),
+	//	new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/e1m1.ogg', 	1810, 	5),
+	//	new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/e1m1.ogg',	2260, 	7),
 		)
 	var/datum/track/selection = null
 
