@@ -214,7 +214,7 @@ var/global/dmm_suite/preloader/_preloader = new
 				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
 				fields = readlist(full_def, ";")
 				if(fields.len)
-					if(!trim(fields[fields.len])
+					if(!trim(fields[fields.len]))
 						--fields.len
 					for(var/I in fields)
 						var/value = fields[I]
