@@ -119,8 +119,6 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 /datum/controller/master/Initialize(delay, init_sss)
 	set waitfor = 0
 
-	InitGlobals()
-
 	if(delay)
 		sleep(delay)
 
