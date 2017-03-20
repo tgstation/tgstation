@@ -6,8 +6,7 @@
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages_spoken = 0 //For say() and Hear()
-	var/languages_understood = 0
+	var/list/languages
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -550,3 +549,39 @@
 	var/turf/currentturf = get_turf(src)
 	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
 		. = TRUE
+
+
+/* Language procs */
+/atom/movable/proc/grant_language(datum/language/dt)
+	if(!has_language(dt))
+		var/datum/language/L = new dt
+		LAZYADD(languages, L)
+
+/atom/movable/proc/grant_all_languages(ignore_restrictions=FALSE)
+	for(var/la in subtypesof(/datum/language))
+		grant_language(la)
+
+	if(ignore_restrictions)
+		SET_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE)
+
+/atom/movable/proc/remove_language(datum/language/dt)
+	if(languages && languages.len)
+		for(var/L in languages)
+			if(istype(L, dt))
+				languages -= L
+				qdel(L)
+				break
+
+/atom/movable/proc/has_language(datum/language/dt)
+	. = FALSE
+	if(languages)
+		for(var/L in languages)
+			if(istype(L, dt))
+				. = TRUE
+				break
+
+/atom/movable/proc/can_speak_in_language(datum/language/dt)
+	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
+		. = TRUE
+	else
+		. = has_language(dt)

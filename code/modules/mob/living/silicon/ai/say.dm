@@ -53,7 +53,6 @@
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
-	return
 
 
 // Make sure that the code compiles with AI_VOX undefined
@@ -167,3 +166,12 @@ var/const/VOX_DELAY = 600
 	return 0
 
 #endif
+
+/mob/living/silicon/ai/can_speak_in_language(datum/language/dt)
+	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
+		. = TRUE
+	else if(is_servant_of_ratvar(src))
+		// The AI cannot speak common if converted.
+		. = !istype(dt, /datum/language/common)
+	else
+		. = ..()

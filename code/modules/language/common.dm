@@ -5,6 +5,7 @@
 	speech_verb = "says"
 	whisper_verb = "whispers"
 	key = "0"
+	flags = TONGUELESS_SPEECH
 
 //Syllable Lists
 /*

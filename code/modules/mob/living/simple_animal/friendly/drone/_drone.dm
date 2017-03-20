@@ -104,6 +104,8 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
+	add_language(/datum/language/drone)
+
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -285,3 +287,9 @@
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring
+
+/mob/living/simple_animal/drone/can_speak_in_language(datum/language/dt)
+	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
+		. = TRUE
+	else
+		. = istype(dt, /datum/language/drone)

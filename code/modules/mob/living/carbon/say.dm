@@ -28,3 +28,13 @@
 	var/obj/item/I = get_active_held_item()
 	if(I)
 		. |= I.get_held_item_speechspans(src)
+
+/mob/living/carbon/can_speak_in_language(datum/language/dt)
+	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
+		. = TRUE
+	else
+		var/obj/item/organ/tongue/T = getorganslot("tongue")
+		if(T)
+			. = T.can_speak_in_language(dt)
+		else
+			. = initial(dt.flags) & TONGUELESS_SPEECH

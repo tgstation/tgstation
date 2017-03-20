@@ -191,6 +191,12 @@
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
 
+/mob/living/simple_animal/drone/can_speak_in_language(datum/language/dt)
+	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
+		. = TRUE
+	else
+		. = istype(dt, /datum/language/ratvar)
+
 /obj/item/drone_shell/dusty
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
