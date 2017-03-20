@@ -21110,7 +21110,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -21797,7 +21797,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -30726,7 +30726,7 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -83780,7 +83780,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboardsolar)
@@ -91202,7 +91202,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /turf/open/space,
 /area/solar/starboard)
@@ -91227,7 +91227,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -91304,7 +91304,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -91323,7 +91323,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -91526,7 +91526,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -92662,7 +92662,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -92681,7 +92681,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -92885,7 +92885,7 @@
 /obj/structure/reflector/single{
 	anchored = 1;
 	dir = 1;
-	icon_state = "reflector";
+	icon_state = "reflector"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -92935,7 +92935,7 @@
 /obj/structure/reflector/double{
 	anchored = 1;
 	dir = 1;
-	icon_state = "reflector_double";
+	icon_state = "reflector_double"
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -92943,7 +92943,7 @@
 /obj/structure/reflector/single{
 	anchored = 1;
 	dir = 8;
-	icon_state = "reflector";
+	icon_state = "reflector"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -128703,7 +128703,7 @@ cTD
 cRi
 cSn
 daF
-daJ
+cSn
 cRi
 bvT
 cRi
