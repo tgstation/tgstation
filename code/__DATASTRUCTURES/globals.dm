@@ -45,3 +45,8 @@ GLOBAL_MANAGED(X)
 
 #define GLOBAL_DATUM(X, Typepath) GLOBAL_RAW(Typepath/##X)\
 GLOBAL_MANAGED(X)
+
+#ifdef TESTING
+/proc/VVGlobals()
+    usr.client.debug_variables(world.ListGlobals())
+#endif
