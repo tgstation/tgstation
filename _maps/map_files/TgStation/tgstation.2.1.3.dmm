@@ -55726,7 +55726,10 @@
 "cqD" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cqE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/glass_engineering{
@@ -55735,11 +55738,17 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cqF" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cqG" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/rubbershot{
@@ -55903,7 +55912,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cra" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -55919,7 +55931,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "crb" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
@@ -55928,7 +55943,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "crc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -56065,7 +56083,10 @@
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "crt" = (
 /obj/machinery/door/airlock/glass_engineering{
 	heat_proof = 1;
@@ -56073,20 +56094,29 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cru" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "crv" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "crw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -56220,7 +56250,10 @@
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "crJ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -56527,7 +56560,10 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "csB" = (
 /obj/item/weapon/wirecutters,
 /obj/structure/lattice,
@@ -60202,7 +60238,10 @@
 "cAm" = (
 /obj/machinery/power/supermatter_shard/crystal,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cAn" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -60475,7 +60514,10 @@
 "cAP" = (
 /obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cAQ" = (
 /obj/structure/chair,
 /turf/open/floor/plating,
@@ -61923,11 +61965,17 @@
 "cEf" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEg" = (
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62047,7 +62095,10 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEu" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62057,7 +62108,10 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
@@ -62065,7 +62119,10 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -62073,14 +62130,20 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
@@ -62089,7 +62152,10 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEz" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62099,7 +62165,10 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEA" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -62116,7 +62185,10 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62239,7 +62311,10 @@
 	},
 /obj/item/weapon/tank/internals/plasma,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEN" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62309,7 +62384,10 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cEU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62407,7 +62485,10 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cFf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -62430,7 +62511,10 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cFi" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62456,7 +62540,10 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cFk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62546,7 +62633,10 @@
 "cFw" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 "cFx" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
@@ -65190,6 +65280,74 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
+"cMC" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMD" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cME" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMF" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMG" = (
+/turf/open/floor/engine,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMH" = (
+/turf/open/floor/engine,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMI" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMJ" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cML" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
+"cMM" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering{
+	icon_state = "engine_sm";
+	name = "Supermatter Engine"
+	})
 
 (1,1,1) = {"
 aaa
@@ -93392,11 +93550,11 @@ cpy
 cDv
 cDD
 cqU
-ccw
+cME
 cEu
 cEu
 cEu
-ccw
+cMI
 cFL
 cGf
 cGw
@@ -93648,12 +93806,12 @@ chV
 cDq
 cqf
 cqD
-ccw
+cMD
 crs
 cEv
 cEv
 cFe
-ccw
+cMJ
 cFM
 czE
 cGx
@@ -94164,10 +94322,10 @@ cqg
 cqE
 cqZ
 crt
-czE
+cMG
 cAm
-czE
-cMm
+cMH
+cMK
 cFO
 csC
 csQ
@@ -94675,13 +94833,13 @@ ccw
 cii
 cDq
 cqi
-ccw
+cMC
 cAP
 crv
 cEy
 cEy
 cFh
-ccw
+cML
 cFQ
 czE
 cGx
@@ -94934,11 +95092,11 @@ cDr
 cDw
 cDE
 cEa
-ccw
+cMF
 cEz
 cEz
 cEz
-ccw
+cMM
 cFR
 cGf
 cGz
