@@ -25,13 +25,12 @@
 	if(!avail(active_power_usage))
 		return change_setting(val - 1)
 	setting = val
-	light_range = light_setting_list[val]
-	set_light(val/2)
+	set_light(light_setting_list[val])
 	var/setting_text = ""
 	if(val > 1)
-		icon_state = "[icon_state]_on"
+		icon_state = "[initial(icon_state)]_on"
 	else
-		icon_state = "floodlight"
+		icon_state = initial(icon_state)
 	switch(val)
 		if(1)
 			setting_text = "OFF"
@@ -42,7 +41,7 @@
 		if(4)
 			setting_text = "high power"
 	if(user)
-		to_chat(user, setting_text)
+		to_chat(user, "You set the [src] to [setting_text].")
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
