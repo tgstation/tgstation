@@ -13,9 +13,9 @@
 	var/max_ext_kpa = 6500
 	var/overlay_color = "#FFFFFF"
 	var/active = FALSE
-	var/power_draw = 4	//0 = none, 1 = static, 2 = scaled to mols, 3 = scaled to kpa, 4 = scaled to kpa+mol
+	var/power_draw = 1	//0 = none, 1 = static, 2 = scaled to mols, 3 = scaled to kpa, 4 = scaled to kpa+mol
 	var/power_draw_static = 2000
-	var/power_draw_dynamic_mol_coeff = 5
+	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	idle_power_usage = 150
@@ -25,7 +25,7 @@
 	if(!active)
 		return FALSE
 	var/turf/T = get_turf(src)
-	if(!isopen(T))
+	if(!istype(T, /turf/open))
 		return FALSE
 	var/turf/open/OT = T
 	if(OT.planetary_atmos)
