@@ -7,7 +7,7 @@
 	anchored = 1
 	idle_power_usage = 100
 	active_power_usage = 1000
-	var/light_setting_list = list(0, 5, 10, 15)
+	var/list/light_setting_list = list(0, 5, 10, 15)
 	var/light_power_coefficient = 300
 	var/setting = 1
 
@@ -57,7 +57,7 @@
 	. = ..()
 
 /obj/machinery/power/floodlight/attack_hand(mob/user)
-	var/current = val
+	var/current = setting
 	if(current == 1)
 		current = light_setting_list.len
 	else
