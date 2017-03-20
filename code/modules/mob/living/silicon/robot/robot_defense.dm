@@ -16,11 +16,12 @@
 	if (M.a_intent == INTENT_DISARM)
 		if(!(lying))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			if(get_active_held_item())
+			var/obj/item/I = get_active_held_item()
+			if(I)
 				uneq_active()
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
-				add_logs(M, src, "disarmed")
+				add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
 				Stun(2)
 				step(src,get_dir(M,src))
