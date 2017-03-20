@@ -91,7 +91,7 @@ Pipelines + Other Objects -> Pipe network
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
-	if((target.initialize_directions & get_dir(target,src)) && isConnectable(target, get_dir(src, target), piping_layer))
+	if((target.initialize_directions & get_dir(target,src)) && (isConnectable(target, direction, layer) && target.isConnectable(src, turn(direction, 180), layer)))
 		return 1
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
