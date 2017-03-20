@@ -602,8 +602,7 @@
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
 	alert_signal.data["zone"] = A.name
-	alert_signal.data["type"] = "Atmospheric"
-
+	
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
 	else if (alert_level==1)

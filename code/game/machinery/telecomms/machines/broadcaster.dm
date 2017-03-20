@@ -47,42 +47,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		signal.data["level"] |= listening_level
 
-	   /** #### - Normal Broadcast - #### **/
-
-		if(signal.data["type"] == 0)
-
-			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_Message(signal.data["mob"],
-							  signal.data["vmask"], signal.data["radio"],
-							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
-							  0, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
-
-
-	   /** #### - Simple Broadcast - #### **/
-
-		if(signal.data["type"] == 1)
-
-			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
-								  signal.data["message"],null, null,
-								  signal.data["compression"], listening_level)
-
-
-	   /** #### - Artificial Broadcast - #### **/
-	   			// (Imitates a mob)
-
-		if(signal.data["type"] == 2)
-
-			/* ###### Broadcast a message using signal.data ###### */
-				// Parameter "data" as 4: AI can't track this person/mob
-			Broadcast_Message(signal.data["mob"],
-							  signal.data["vmask"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
-
+		/* ###### Broadcast a message using signal.data ###### */
+		Broadcast_Message(signal.data["mob"],
+							signal.data["vmask"], signal.data["radio"],
+							signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
+							0, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
+							signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
 		if(!message_delay)
 			message_delay = 1
 			spawn(10)
