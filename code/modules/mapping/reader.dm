@@ -288,19 +288,16 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf)
-	var/atom/instance
 	_preloader.setup(attributes, path)
 
 	if(crds)
 		if(!no_changeturf && ispath(path, /turf))
-			instance = crds.ChangeTurf(path, TRUE)
+			. = crds.ChangeTurf(path, TRUE)
 		else
-			instance = new path (crds)//first preloader pass
+			. = new path (crds)//first preloader pass
 
-	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
-		_preloader.load(instance)
-
-	return instance
+	if(use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
+		_preloader.load(.)
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
