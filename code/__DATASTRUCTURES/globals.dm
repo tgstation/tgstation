@@ -2,20 +2,20 @@
 \
 /world/ReadGlobal(global_name){\
     if(global_name == #X){\
-        return X;\
+        return global.##X;\
     }\
     return ..();\
 }\
 /world/WriteGlobal(global_name, value){\
     if(global_name == #X){\
-        ##X = value;\
+        global.##X = value;\
         return TRUE;\
     }\
     return ..();\
 }\
 /world/ListGlobals(){\
     . = ..();\
-    .[#X] = ##X;\
+    .[#X] = global.##X;\
 }
 
 #define GLOBAL_INIT(X, InitValue)\
@@ -23,7 +23,7 @@ GLOBAL_MANAGED(X)\
 \
 /world/InitGlobals(){\
     ..();\
-    ##X = ##InitValue;\
+    global.##X = ##InitValue;\
 }
 
 #define GLOBAL_RAW(X) var/global##X;
