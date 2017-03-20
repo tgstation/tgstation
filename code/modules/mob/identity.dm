@@ -86,6 +86,7 @@ var/global/list/used_voiceprints = list()
 				A_name = A.default_identity_seen()
 				A_identity[IDENTITY_CACHE_TEMP] = A_name
 				A_identity[IDENTITY_CACHE_TEMP_TIME] = world.time
+				A_identity[IDENTITY_CACHE_TIMESTAMP] = world.time
 		mind.identity_cache[A] = A_identity
 		. = A_name
 
@@ -250,6 +251,7 @@ var/global/list/used_voiceprints = list()
 				A_name = "&lt;NO RECORD&gt;"
 			A_identity[IDENTITY_CACHE_TEMP] = A_name
 			A_identity[IDENTITY_CACHE_TEMP_TIME] = world.time
+			A_identity[IDENTITY_CACHE_TIMESTAMP] = world.time
 		mind.identity_cache[A] = A_identity
 		. = A_name
 
@@ -295,6 +297,7 @@ var/global/list/used_voiceprints = list()
 		cache_entry = new(IDENTITY_CACHE_LENGTH)
 	cache_entry[IDENTITY_CACHE_VOICEPRINT] = voice_print
 	cache_entry[IDENTITY_CACHE_VOICEPRINT_TIME] = world.time
+	cache_entry[IDENTITY_CACHE_TIMESTAMP] = world.time
 	identity_cache[speaker] = cache_entry
 
 /datum/mind/proc/voiceprint_edit_tag(voice_print)
@@ -420,6 +423,7 @@ var/global/list/used_voiceprints = list()
 		cache_entry = new(IDENTITY_CACHE_LENGTH)
 	cache_entry[IDENTITY_CACHE_FACEPRINT] = faceprint
 	cache_entry[IDENTITY_CACHE_FACEPRINT_TIME] = world.time
+	cache_entry[IDENTITY_CACHE_TIMESTAMP] = world.time
 	identity_cache[seen] = cache_entry
 
 /datum/mind/proc/open_idman()

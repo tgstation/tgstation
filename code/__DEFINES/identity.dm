@@ -18,7 +18,7 @@
 // List lengths
 #define VOICEPRINTS_LIST_LENGTH	6
 #define FACEPRINTS_LIST_LENGTH	4
-#define IDENTITY_CACHE_LENGTH	6
+#define IDENTITY_CACHE_LENGTH	7
 #define IDENTITY_TAGS_LENGTH	2
 
 // List structure for mind.voiceprints and mind.faceprints, IDENTITY_PRINT defines are shared between them
@@ -31,12 +31,13 @@
 #define IDENTITY_VOICEPRINT_EDIT	6 // Edit ref for clicking and editing in chat, voiceprints only
 
 // This is for the identity cache which stores the voiceprints or faceprints recently used by a person, as well as a 5 second temporary identity if there are none
-#define IDENTITY_CACHE_VOICEPRINT		1
-#define IDENTITY_CACHE_VOICEPRINT_TIME	2
-#define IDENTITY_CACHE_FACEPRINT		3
-#define IDENTITY_CACHE_FACEPRINT_TIME	4
-#define IDENTITY_CACHE_TEMP				5
-#define IDENTITY_CACHE_TEMP_TIME		6
+#define IDENTITY_CACHE_TIMESTAMP		1
+#define IDENTITY_CACHE_VOICEPRINT		2
+#define IDENTITY_CACHE_VOICEPRINT_TIME	3
+#define IDENTITY_CACHE_FACEPRINT		4
+#define IDENTITY_CACHE_FACEPRINT_TIME	5
+#define IDENTITY_CACHE_TEMP				6
+#define IDENTITY_CACHE_TEMP_TIME		7
 
 // This is for the edit tag refs so that way we never send the actual voiceprint to clients
 #define IDENTITY_EDIT_TAG_PRINT		1 // The voiceprint itself

@@ -625,6 +625,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(SSfire_burning)
 	SearchVar(SSgarbage)
 	SearchVar(SSicon_smooth)
+	SearchVar(SSidentity_gc)
 	SearchVar(SSipintel)
 	SearchVar(SSjob)
 	SearchVar(SSlighting)
