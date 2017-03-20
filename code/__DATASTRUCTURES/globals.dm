@@ -23,7 +23,7 @@ GLOBAL_MANAGED(X)\
 \
 /world/InitGlobals(){\
     ..();\
-    testing("IG: [##X] = [#InitProc]()");\
+    testing("IG: [##X] = [#InitProc]");\
     ##X = ##InitValue;\
 }
 
