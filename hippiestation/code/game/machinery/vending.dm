@@ -12,7 +12,7 @@
 /obj/machinery/vending
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'hippiestation/icons/obj/vending.dmi'
 	icon_state = "generic"
 	layer = BELOW_OBJ_LAYER
 	anchored = 1

@@ -673,6 +673,7 @@ WALLMED
 /obj/machinery/vending/wallmed
 	name = "\improper NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
 	density = 0
@@ -932,6 +933,7 @@ PDA TECH
 
 /obj/machinery/vending/cart
 	name = "\improper PTech"
+	icon = 'icons/obj/vending.dmi'
 	desc = "Cartridges for PDAs"
 	product_slogans = "Carts to go!"
 	icon_state = "cart"
