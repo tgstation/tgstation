@@ -276,12 +276,6 @@ var/global/dmm_suite/preloader/_preloader = new
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
 		instance_atom(members[index],members_attributes[index],crds,no_changeturf)
-
-		//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
-		if(world.tick_usage > CURRENT_TICKLIMIT)
-			SSatoms.map_loader_stop()
-			stoplag()
-			SSatoms.map_loader_begin()
 	//Restore initialization to the previous value
 	SSatoms.map_loader_stop()
 
@@ -301,6 +295,12 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	if(use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(.)
+
+	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
+	if(world.tick_usage > CURRENT_TICKLIMIT)
+		SSatoms.map_loader_stop()
+		stoplag()
+		SSatoms.map_loader_begin()
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
