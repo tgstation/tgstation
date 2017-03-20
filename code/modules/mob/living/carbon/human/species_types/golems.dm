@@ -571,7 +571,7 @@
 	qdel(src)
 
 /obj/structure/cloth_pile/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
-	..()
+	. = ..()
 
 	if(resistance_flags & ON_FIRE)
 		return
