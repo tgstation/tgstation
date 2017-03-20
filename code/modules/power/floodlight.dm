@@ -26,8 +26,7 @@
 		return change_setting(val - 1)
 	setting = val
 	light_range = light_setting_list[val]
-	light_power = val
-	update_light()
+	set_light(val/2)
 	var/setting_text = ""
 	if(val > 1)
 		icon_state = "[icon_state]_on"
