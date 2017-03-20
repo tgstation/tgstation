@@ -27,7 +27,7 @@ GLOBAL_MANAGED(X)\
     ##X = ##InitValue;\
 }
 
-#define GLOBAL_RAW(X) var##X;
+#define GLOBAL_RAW(X) var/global/##X;
 
 #define GLOBAL_VAR_INIT(X, InitValue) GLOBAL_RAW(/##X)\
 GLOBAL_INIT(X, InitValue)
