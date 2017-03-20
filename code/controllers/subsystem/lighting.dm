@@ -39,7 +39,7 @@ var/list/lighting_update_objects  = list() // List of lighting objects queued fo
 	var/real_tick_limit
 	if(!init_tick_checks)
 		real_tick_limit = CURRENT_TICKLIMIT
-		CURRENT_TICKLIMIT = (real_tick_limit - world.tick_usage)/3
+		CURRENT_TICKLIMIT = ((real_tick_limit - world.tick_usage) / 3) + world.tick_usage
 	var/i = 0
 	for (i in 1 to lighting_update_lights.len)
 		var/datum/light_source/L = lighting_update_lights[i]
