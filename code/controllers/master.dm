@@ -6,15 +6,15 @@
   * Odds are, there is a reason
   *
  **/
-var/datum/controller/master/Master = new()
-var/MC_restart_clear = 0
-var/MC_restart_timeout = 0
-var/MC_restart_count = 0
+GLOBAL_DATUM(Master, /datum/controller/master)
+GLOBAL_VAR_INIT(MC_restart_clear, 0)
+GLOBAL_VAR_INIT(MC_restart_timeout, 0)
+GLOBAL_VAR_INIT(MC_restart_count, 0)
 
 
 //current tick limit, assigned by the queue controller before running a subsystem.
 //used by check_tick as well so that the procs subsystems call can obey that SS's tick limits
-var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 /datum/controller/master
 	name = "Master"
@@ -115,10 +115,24 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		Initialize(20, TRUE)
 
 
+/datum/controller/master/proc/InitGlobals()
+	return world.InitGlobals()
+
+/datum/controller/master/proc/ReadGlobal(name)
+	var/Result = world.ReadGlobal(name)
+	if(!istype(Result, /datum) && !islist(Result))
+		usr << "[Result]"
+	usr.client.debug_variables(Result)
+
+/datum/controller/master/proc/ListGlobals()
+	usr.client.debug_variables(world.ListGlobals())
+
 // Please don't stuff random bullshit here,
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
 /datum/controller/master/Initialize(delay, init_sss)
 	set waitfor = 0
+
+	InitGlobals()
 
 	if(delay)
 		sleep(delay)
