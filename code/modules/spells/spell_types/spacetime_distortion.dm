@@ -45,9 +45,9 @@
 		var/obj/effect/cross_action/spacetime_dist/STD0 = new /obj/effect/cross_action/spacetime_dist(T0)
 		var/obj/effect/cross_action/spacetime_dist/STD1 = new /obj/effect/cross_action/spacetime_dist(T1)
 		STD0.linked_dist = STD1
-		STD0.overlays += T1.photograph()
+		STD0.add_overlay(T1.photograph())
 		STD1.linked_dist = STD0
-		STD1.overlays += T0.photograph()
+		STD1.add_overlay(T0.photograph())
 		STD1.set_light(4, 30, "#c9fff5")
 		effects += STD0
 		effects += STD1
