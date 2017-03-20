@@ -5,6 +5,7 @@
 		Space Suit
 		Shield
 		Armor
+		Tentacles
 */
 
 
@@ -251,6 +252,11 @@
 /obj/item/weapon/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] is not ready yet.<span>")
 
+/obj/item/weapon/gun/magic/tentacle/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
+
+
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
 	desc = "a tentacle."
@@ -336,11 +342,11 @@
 						var/obj/item/I = C.get_active_held_item()
 						if(I)
 							if(C.drop_item())
-								C.visible_message("<span class='danger'>[I] is yanked off of [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
+								C.visible_message("<span class='danger'>[I] is yanked off [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1
 							else
-								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off of [C]'s hands!<span>")
+								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off [C]'s hands!<span>")
 								return 0
 						else
 							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!<span>")
