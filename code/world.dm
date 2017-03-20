@@ -334,3 +334,17 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
+#define GLOBAL_FIND_FAIL "Could not find global"
+
+/world/proc/InitGlobals()
+	return
+
+/world/proc/ReadGlobal(global_name)
+	return GLOBAL_FIND_FAIL
+
+/world/proc/WriteGlobal(global_name, value)
+	return FALSE
+
+/world/proc/ListGlobals()
+	return list()
