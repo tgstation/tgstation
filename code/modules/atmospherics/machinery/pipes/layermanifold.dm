@@ -33,10 +33,6 @@
 	nullifyAllNodes()
 	..()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/depipeline()
-	build_network()	//WE WILL SURVIVE!
-	..()
-
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	var/invis = invisibility ? "-f" : ""
 	icon_state = "[initial(icon_state)][invis]"

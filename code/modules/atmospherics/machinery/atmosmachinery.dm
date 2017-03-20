@@ -169,9 +169,6 @@ Pipelines + Other Objects -> Pipe network
 	else
 		return ..()
 
-/obj/machinery/atmospherics/proc/depipeline()
-	return
-
 /obj/machinery/atmospherics/proc/can_unwrench(mob/user)
 	return can_unwrench
 
