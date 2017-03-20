@@ -14,16 +14,16 @@
     return ..();\
 }\
 /world/ListGlobals(){\
-    . = ..();\
     .[#X] = global.##X;\
+    . = ..();\
 }
 
 #define GLOBAL_INIT(X, InitValue)\
 GLOBAL_MANAGED(X)\
 \
 /world/InitGlobals(){\
-    ..();\
     global.##X = ##InitValue;\
+    ..();\
 }
 
 #define GLOBAL_RAW(X) var/global##X;
