@@ -1,7 +1,7 @@
 
 /obj/machinery/power/floodlight
 	name = "floodlight"
-	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."1
+	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight"
 	anchored = 1
