@@ -233,6 +233,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	////////////////
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
+	var/turf/crds = locate(xcrd,ycrd,zcrd)
 
 	//first instance the /area and remove it from the members list
 	index = members.len
@@ -241,7 +242,6 @@ var/global/dmm_suite/preloader/_preloader = new
 		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 
 		instance = locate(members[index])
-		var/turf/crds = locate(xcrd,ycrd,zcrd)
 		if(crds)
 			instance.contents.Add(crds)
 
@@ -259,20 +259,20 @@ var/global/dmm_suite/preloader/_preloader = new
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd,no_changeturf)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
 			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd,no_changeturf)//instance new turf
+			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf)//instance new turf
 			T.underlays += underlay
 			index++
 
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd,no_changeturf)
+		instance_atom(members[index],members_attributes[index],crds,no_changeturf)
 
 		//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
 		if(world.tick_usage > CURRENT_TICKLIMIT)
@@ -287,17 +287,15 @@ var/global/dmm_suite/preloader/_preloader = new
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/dmm_suite/proc/instance_atom(path,list/attributes, x, y, z, no_changeturf)
+/dmm_suite/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf)
 	var/atom/instance
 	_preloader.setup(attributes, path)
 
-	var/turf/T = locate(x,y,z)
-	if(T)
+	if(crds)
 		if(!no_changeturf && ispath(path, /turf))
-			T.ChangeTurf(path, TRUE)
-			instance = T
+			instance = crds.ChangeTurf(path, TRUE)
 		else
-			instance = new path (T)//first preloader pass
+			instance = new path (crds)//first preloader pass
 
 	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
