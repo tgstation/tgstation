@@ -89,7 +89,7 @@
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
-			SetLuminosity(0)
+			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
@@ -108,7 +108,7 @@
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
 					O.reset_perspective(null)
-					O << "The screen bursts into static."
+					to_chat(O, "The screen bursts into static.")
 			..()
 
 /obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune
@@ -138,7 +138,7 @@
 	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
-		user << "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>"
+		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, W.usesound, 50, 1)
 		return
 
@@ -150,7 +150,7 @@
 
 		else if(istype(W, /obj/item/device/multitool)) //change focus
 			setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
-			user << "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>"
+			to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
 			return
 
 		else if(istype(W, /obj/item/weapon/weldingtool))
@@ -165,27 +165,27 @@
 					return
 				upgradeXRay()
 				qdel(W)
-				user << "[msg]"
+				to_chat(user, "[msg]")
 			else
-				user << "[msg2]"
+				to_chat(user, "[msg2]")
 			return
 
 		else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
 			if(!isEmpProof())
 				upgradeEmpProof()
-				user << "[msg]"
+				to_chat(user, "[msg]")
 				qdel(W)
 			else
-				user << "[msg2]"
+				to_chat(user, "[msg2]")
 			return
 
 		else if(istype(W, /obj/item/device/assembly/prox_sensor))
 			if(!isMotion())
 				upgradeMotion()
-				user << "[msg]"
+				to_chat(user, "[msg]")
 				qdel(W)
 			else
-				user << "[msg2]"
+				to_chat(user, "[msg2]")
 			return
 
 	// OTHER
@@ -204,7 +204,7 @@
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		U << "<span class='notice'>You hold \the [itemname] up to the camera...</span>"
+		to_chat(U, "<span class='notice'>You hold \the [itemname] up to the camera...</span>")
 		U.changeNext_move(CLICK_CD_MELEE)
 		for(var/mob/O in player_list)
 			if(isAI(O))
@@ -212,25 +212,25 @@
 				if(AI.control_disabled || (AI.stat == DEAD))
 					return
 				if(U.name == "Unknown")
-					AI << "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
+					to_chat(AI, "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
-					AI << "<b><a href='?src=\ref[AI];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
+					to_chat(AI, "<b><a href='?src=\ref[AI];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 			else if (O.client && O.client.eye == src)
-				O << "[U] holds \a [itemname] up to one of the cameras ..."
+				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
 	else if(istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
-			user << "<span class='notice'>Camera non-functional.</span>"
+			to_chat(user, "<span class='notice'>Camera non-functional.</span>")
 			return
 		if(bug)
-			user << "<span class='notice'>Camera bug removed.</span>"
+			to_chat(user, "<span class='notice'>Camera bug removed.</span>")
 			bug.bugged_cameras -= src.c_tag
 			bug = null
 		else
-			user << "<span class='notice'>Camera bugged.</span>"
+			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			bug = W
 			bug.bugged_cameras[src.c_tag] = src
 		return
@@ -280,7 +280,7 @@
 	if(can_use())
 		cameranet.addCamera(src)
 	else
-		SetLuminosity(0)
+		set_light(0)
 		cameranet.removeCamera(src)
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
@@ -305,7 +305,7 @@
 		if (O.client && O.client.eye == src)
 			O.unset_machine()
 			O.reset_perspective(null)
-			O << "The screen bursts into static."
+			to_chat(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
@@ -374,7 +374,7 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 
-	user << "<span class='notice'>You start to weld [src]...</span>"
+	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
 	playsound(src.loc, WT.usesound, 50, 1)
 	busy = 1
 	if(do_after(user, 100*WT.toolspeed, target = src))
@@ -391,9 +391,9 @@
 			if(cam == src)
 				return
 	if(on)
-		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		set_light(AI_CAMERA_LUMINOSITY)
 	else
-		src.SetLuminosity(0)
+		set_light(0)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf

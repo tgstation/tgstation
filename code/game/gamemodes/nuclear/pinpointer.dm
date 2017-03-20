@@ -26,6 +26,7 @@
 
 /obj/item/weapon/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	pinpointer_list -= src
 	return ..()
 
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
@@ -64,10 +65,10 @@
 			msg += "\"([target_x], [target_y])\"."
 		else
 			msg = "Its tracking indicator is blank."
-	user << msg
+	to_chat(user, msg)
 	for(var/obj/machinery/nuclearbomb/bomb in machines)
 		if(bomb.timing)
-			user << "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]"
+			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]")
 
 /obj/item/weapon/pinpointer/process()
 	if(!active)
@@ -148,12 +149,12 @@
 				playsound(src, 'sound/items/Nuke_toy_lowpower.ogg', 50, 0)
 				if(isliving(loc))
 					var/mob/living/L = loc
-					L << "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>"
+					to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")
 
 /obj/item/weapon/pinpointer/proc/switch_mode_to(new_mode) //If we shouldn't be tracking what we are
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L << "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>"
+		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>")
 		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
 	mode = new_mode
 	target = null //Switch modes so we can find the new target

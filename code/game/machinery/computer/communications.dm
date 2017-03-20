@@ -35,6 +35,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/stat_msg1
 	var/stat_msg2
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/communications/proc/checkCCcooldown()
 	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
 	if(CM.lastTimeUsed + 600 > world.time)
@@ -55,7 +57,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if (src.z > ZLEVEL_CENTCOM) //Can only use on centcom and SS13
-		usr << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	usr.set_machine(src)
 
@@ -84,7 +86,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(src.emagged)
 					authenticated = 2
 					auth_id = "Unknown"
-					M << "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>"
+					to_chat(M, "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>")
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 					playsound(src, 'sound/machines/terminal_alert.ogg', 25, 0)
 					if(prob(25))
@@ -108,7 +110,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
-						usr << "<span class='notice'>Authorization confirmed. Modifying security level.</span>"
+						to_chat(usr, "<span class='notice'>Authorization confirmed. Modifying security level.</span>")
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
@@ -120,12 +122,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else
-					usr << "<span class='warning'>You are not authorized to do this!</span>"
+					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
-				usr << "<span class='warning'>You need to swipe your ID!</span>"
+				to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		if("announce")
@@ -136,7 +138,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
-					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
@@ -158,12 +160,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
-						usr << "It's a bit late to buy a new shuttle, don't you think?"
+						to_chat(usr, "It's a bit late to buy a new shuttle, don't you think?")
 						return
 					if(SSshuttle.shuttle_purchased)
-						usr << "A replacement shuttle has already been purchased."
+						to_chat(usr, "A replacement shuttle has already been purchased.")
 					else if(!S.prerequisites_met())
-						usr << "You have not met the requirements for purchasing this shuttle."
+						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
 						if(SSshuttle.points >= S.credit_cost)
 							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
@@ -178,9 +180,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
 								feedback_add_details("shuttle_purchase", S.name)
 							else
-								usr << "Something went wrong! The shuttle exchange system seems to be down."
+								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
 						else
-							usr << "Not enough credits."
+							to_chat(usr, "Not enough credits.")
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -270,14 +272,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(!checkCCcooldown())
-					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Centcomm_announce(input, usr)
-				usr << "<span class='notice'>Message transmitted to Central Command.</span>"
+				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				CM.lastTimeUsed = world.time
 
@@ -286,7 +288,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(!checkCCcooldown())
-					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
@@ -294,12 +296,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Syndicate_announce(input, usr)
-				usr << "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>"
+				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.lastTimeUsed = world.time
 
 		if("RestoreBackup")
-			usr << "<span class='notice'>Backup routing data restored!</span>"
+			to_chat(usr, "<span class='notice'>Backup routing data restored!</span>")
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			src.emagged = 0
 			src.updateDialog()
@@ -307,13 +309,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("nukerequest") //When there's no other way
 			if(src.authenticated==2)
 				if(!checkCCcooldown())
-					usr << "<span class='warning'>Arrays recycling. Please stand by.</span>"
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				Nuke_request(input, usr)
-				usr << "<span class='notice'>Request sent.</span>"
+				to_chat(usr, "<span class='notice'>Request sent.</span>")
 				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
 				CM.lastTimeUsed = world.time
@@ -402,14 +404,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		src.emagged = 1
 		if(authenticated == 1)
 			authenticated = 2
-		user << "<span class='danger'>You scramble the communication routing circuits!</span>"
+		to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 
 /obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > 6)
-		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 
 	user.set_machine(src)
@@ -453,7 +455,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
-					if(cross_allowed)
+					if(config.cross_allowed)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
@@ -657,7 +659,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
 	if(!SScommunications.can_announce(user, is_silicon))
-		user << "Intercomms recharging. Please stand by."
+		to_chat(user, "Intercomms recharging. Please stand by.")
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))

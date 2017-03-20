@@ -171,7 +171,7 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
-	luminosity = 1
+	light_range = 1
 	var/node_range = NODERANGE
 
 /obj/structure/alien/weeds/node/New()
@@ -238,19 +238,19 @@
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURST)
-				user << "<span class='notice'>You clear the hatched egg.</span>"
+				to_chat(user, "<span class='notice'>You clear the hatched egg.</span>")
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 				qdel(src)
 				return
 			if(GROWING)
-				user << "<span class='notice'>The child is not developed yet.</span>"
+				to_chat(user, "<span class='notice'>The child is not developed yet.</span>")
 				return
 			if(GROWN)
-				user << "<span class='notice'>You retrieve the child.</span>"
+				to_chat(user, "<span class='notice'>You retrieve the child.</span>")
 				Burst(0)
 				return
 	else
-		user << "<span class='notice'>It feels slimy.</span>"
+		to_chat(user, "<span class='notice'>It feels slimy.</span>")
 		user.changeNext_move(CLICK_CD_MELEE)
 
 

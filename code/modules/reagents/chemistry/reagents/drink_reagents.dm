@@ -266,7 +266,7 @@
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/M)
 	if(prob(5))
-		M << "<span class = 'notice'>[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>"
+		to_chat(M, "<span class = 'notice'>[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>")
 	..()
 	. = 1
 

@@ -51,7 +51,7 @@
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
+/mob/living/simple_animal/hostile/statue/Initialize(mapload, var/mob/living/creator)
 	..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
@@ -74,7 +74,7 @@
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
-			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
+			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
 		return 0
 	return ..()
 
@@ -92,7 +92,7 @@
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
 	if(can_be_seen(get_turf(loc)))
 		if(client)
-			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
+			to_chat(src, "<span class='warning'>You cannot attack, there are eyes on you!</span>")
 			return
 	else
 		..()
@@ -111,7 +111,7 @@
 	// Check for darkness
 	var/turf/T = get_turf(loc)
 	if(T && destination && T.lighting_object)
-		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
+		if(T.get_lumcount()<0.1 && destination.get_lumcount()<0.1) // No one can see us in the darkness, right?
 			return null
 		if(T == destination)
 			destination = null

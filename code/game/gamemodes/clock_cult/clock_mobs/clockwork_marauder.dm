@@ -29,10 +29,10 @@
 	Stay near your host to protect and heal them; being too far from your host will rapidly cause you massive damage. Recall to your host if you are too weak and believe you cannot continue \
 	fighting safely. As a final note, you should probably avoid harming any fellow servants of Ratvar.</span>"
 
-/mob/living/simple_animal/hostile/clockwork/marauder/New()
+/mob/living/simple_animal/hostile/clockwork/marauder/Initialize()
 	..()
 	true_name = pick(possible_true_names)
-	SetLuminosity(2,1)
+	set_light(2, 1.1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
@@ -51,8 +51,8 @@
 		if(!recovering)
 			heal_host() //also heal our host if inside of them and we aren't recovering
 		else if(health == maxHealth)
-			src << "<span class='userdanger'>Your strength has returned. You can once again come forward!</span>"
-			host << "<span class='userdanger'>Your marauder is now strong enough to come forward again!</span>"
+			to_chat(src, "<span class='userdanger'>Your strength has returned. You can once again come forward!</span>")
+			to_chat(host, "<span class='userdanger'>Your marauder is now strong enough to come forward again!</span>")
 			recovering = FALSE
 	else
 		if(ratvar_awakens) //If Ratvar is alive, marauders don't need a host and are downright impossible to kill
@@ -64,7 +64,7 @@
 				return
 			if(host.stat == DEAD)
 				adjustHealth(50)
-				src << "<span class='userdanger'>Your host is dead!</span>"
+				to_chat(src, "<span class='userdanger'>Your host is dead!</span>")
 				return
 			if(z && host.z && z == host.z)
 				switch(get_dist(get_turf(src), get_turf(host)))
@@ -82,13 +82,13 @@
 						adjustHealth(9)
 					if(8 to INFINITY)
 						adjustHealth(15)
-						src << "<span class='userdanger'>You're too far from your host and rapidly taking damage!</span>"
+						to_chat(src, "<span class='userdanger'>You're too far from your host and rapidly taking damage!</span>")
 					else //right next to or on top of host
 						adjustHealth(-2)
 						heal_host() //gradually heal host if nearby and host is very weak
 			else //well then, you're not even in the same zlevel
 				adjustHealth(15)
-				src << "<span class='userdanger'>You're too far from your host and rapidly taking damage!</span>"
+				to_chat(src, "<span class='userdanger'>You're too far from your host and rapidly taking damage!</span>")
 
 /mob/living/simple_animal/hostile/clockwork/marauder/death(gibbed)
 	emerge_from_host(FALSE, TRUE)
@@ -156,7 +156,7 @@
 	if(amount > 0)
 		for(var/mob/living/L in view(2, src))
 			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
-				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
+				to_chat(src, "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>")
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
 	. = ..()
@@ -237,7 +237,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder) || !blockOrCounter(M, M))
+	if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder) || !blockOrCounter(M, M)) //we don't want infinite blockcounter loops if fighting another marauder
 		return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/attack_paw(mob/living/carbon/monkey/M)
@@ -299,19 +299,19 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/marauder_comms(message)
 	var/name_part = "<span class='sevtug'>[src] ([true_name])</span>"
 	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
-	src << "[name_part]<span class='sevtug_small'>:</span> [message]"
-	host << "[name_part]<span class='sevtug_small'>:</span> [message]"
+	to_chat(src, "[name_part]<span class='sevtug_small'>:</span> [message]")
+	to_chat(host, "[name_part]<span class='sevtug_small'>:</span> [message]")
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[findtextEx(host.name, host.real_name) ? "[host.name]" : "[host.real_name] (as [host.name])"]</span><span class='sevtug_small'>):</span> [message] "
+			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[findtextEx(host.name, host.real_name) ? "[host.name]" : "[host.real_name] (as [host.name])"]</span><span class='sevtug_small'>):</span> [message] ")
 	return TRUE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/return_to_host()
 	if(is_in_host())
 		return FALSE
 	if(!host)
-		src << "<span class='warning'>You don't have a host!</span>"
+		to_chat(src, "<span class='warning'>You don't have a host!</span>")
 		return FALSE
 	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 	if(iscarbon(host))
@@ -321,20 +321,20 @@
 	forceMove(host)
 	if(resulthealth > MARAUDER_EMERGE_THRESHOLD && health != maxHealth)
 		recovering = TRUE
-		src << "<span class='userdanger'>You have weakened and will need to recover before manifesting again!</span>"
-		host << "<span class='sevtug'>[true_name] has weakened and will need to recover before manifesting again!</span>"
+		to_chat(src, "<span class='userdanger'>You have weakened and will need to recover before manifesting again!</span>")
+		to_chat(host, "<span class='sevtug'>[true_name] has weakened and will need to recover before manifesting again!</span>")
 	return TRUE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/try_emerge()
 	if(!host)
-		src << "<span class='warning'>You don't have a host!</span>"
+		to_chat(src, "<span class='warning'>You don't have a host!</span>")
 		return FALSE
 	if(!ratvar_awakens)
 		var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 		if(iscarbon(host))
 			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 		if(host.stat != DEAD && resulthealth > MARAUDER_EMERGE_THRESHOLD) //if above 20 health, fails
-			src << "<span class='warning'>Your host must be at [MARAUDER_EMERGE_THRESHOLD]% or less health to emerge like this!</span>"
+			to_chat(src, "<span class='warning'>Your host must be at [MARAUDER_EMERGE_THRESHOLD]% or less health to emerge like this!</span>")
 			return FALSE
 	return emerge_from_host(FALSE)
 
@@ -343,16 +343,16 @@
 		return FALSE
 	if(!force && recovering)
 		if(hostchosen)
-			host << "<span class='sevtug'>[true_name] is too weak to come forth!</span>"
+			to_chat(host, "<span class='sevtug'>[true_name] is too weak to come forth!</span>")
 		else
-			host << "<span class='sevtug'>[true_name] tries to emerge to protect you, but it's too weak!</span>"
-		src << "<span class='userdanger'>You try to come forth, but you're too weak!</span>"
+			to_chat(host, "<span class='sevtug'>[true_name] tries to emerge to protect you, but it's too weak!</span>")
+		to_chat(src, "<span class='userdanger'>You try to come forth, but you're too weak!</span>")
 		return FALSE
 	if(!force)
 		if(hostchosen) //marauder approved
-			host << "<span class='sevtug'>Your words echo with power as [true_name] emerges from your body!</span>"
+			to_chat(host, "<span class='sevtug'>Your words echo with power as [true_name] emerges from your body!</span>")
 		else
-			host << "<span class='sevtug'>[true_name] emerges from your body to protect you!</span>"
+			to_chat(host, "<span class='sevtug'>[true_name] emerges from your body to protect you!</span>")
 	forceMove(host.loc)
 	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='sevtug_small'>You exit the safety of [host]'s body!</span>")
 	return TRUE
@@ -415,14 +415,14 @@
 	if(!owner || !message)
 		return FALSE
 	if(!linked_marauder)
-		owner << "<span class='warning'>Your marauder seems to have been destroyed!</span>"
+		to_chat(owner, "<span class='warning'>Your marauder seems to have been destroyed!</span>")
 		return FALSE
 	var/name_part = "<span class='sevtug'>Servant [findtextEx(owner.name, owner.real_name) ? "[owner.name]" : "[owner.real_name] (as [owner.name])"]</span>"
 	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
-	owner << "[name_part]<span class='sevtug_small'>:</span> [message]"
-	linked_marauder << "[name_part]<span class='sevtug_small'>:</span> [message]"
+	to_chat(owner, "[name_part]<span class='sevtug_small'>:</span> [message]")
+	to_chat(linked_marauder, "[name_part]<span class='sevtug_small'>:</span> [message]")
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder] ([linked_marauder.true_name])</span><span class='sevtug_small'>):</span> [message]"
+			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder] ([linked_marauder.true_name])</span><span class='sevtug_small'>):</span> [message]")
 	return TRUE

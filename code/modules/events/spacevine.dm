@@ -119,7 +119,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
-		holder.SetLuminosity(severity, 3)
+		holder.set_light(severity, 0.3)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"
@@ -131,7 +131,7 @@
 	if(issilicon(crosser))
 		return
 	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
-		crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
+		to_chat(crosser, "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>")
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
@@ -196,7 +196,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
-	holder.SetOpacity(0)
+	holder.set_opacity(0)
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
@@ -269,13 +269,13 @@
 	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 	. =	expected_damage
 
 /datum/spacevine_mutation/woodening
@@ -341,7 +341,7 @@
 	else
 		text += " normal"
 	text += " vine."
-	user << text
+	to_chat(user, text)
 
 /obj/structure/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -355,7 +355,7 @@
 			KZ.set_potency(master.mutativeness * 10)
 			KZ.set_production((master.spread_cap / initial(master.spread_cap)) * 5)
 	mutations = list()
-	SetOpacity(0)
+	set_opacity(0)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
@@ -521,7 +521,7 @@
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		SetOpacity(1)
+		set_opacity(1)
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
@@ -543,7 +543,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
-		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
+		to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 		buckle_mob(V, 1)
 
 /obj/structure/spacevine/proc/spread()

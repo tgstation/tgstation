@@ -111,14 +111,20 @@ var/list/teleportlocs = list()
 		power_equip = 1
 		power_environ = 1
 
-		if (lighting_use_dynamic != DYNAMIC_LIGHTING_IFSTARLIGHT)
-			lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	..()
 
 	power_change()		// all machines set to current power level, also updates icon
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
+
+	if(!IS_DYNAMIC_LIGHTING(src))
+		add_overlay(/obj/effect/fullbright)
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -255,6 +261,12 @@ var/list/teleportlocs = list()
 		for(var/area/RA in related)
 			RA.ModifyFiredoors(FALSE)
 
+/area/proc/close_and_lock_door(obj/machinery/door/DOOR)
+	set waitfor = FALSE
+	DOOR.close()
+	if(DOOR.density)
+		DOOR.lock()
+
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
@@ -266,10 +278,7 @@ var/list/teleportlocs = list()
 		RA.set_fire_alarm_effect()
 		//Lockdown airlocks
 		for(var/obj/machinery/door/DOOR in RA)
-			spawn(0)
-				DOOR.close()
-				if(DOOR.density)
-					DOOR.lock()
+			close_and_lock_door(DOOR)
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
@@ -325,15 +334,11 @@ var/list/teleportlocs = list()
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
-		invisibility = INVISIBILITY_LIGHTING
 	else
-	//	new lighting behaviour with obj lights
 		icon_state = null
-		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
-	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1
@@ -413,6 +418,7 @@ var/list/teleportlocs = list()
 
 
 /area/Entered(A)
+	set waitfor = FALSE
 	if(!isliving(A))
 		return
 
@@ -434,9 +440,9 @@ var/list/teleportlocs = list()
 		if(!L.client.played)
 			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = 1
-			spawn(600)			//ewww - this is very very bad
-				if(L.&& L.client)
-					L.client.played = 0
+			sleep(600)			//ewww - this is very very bad
+			if(L.&& L.client)
+				L.client.played = 0
 
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))

@@ -1,0 +1,6 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - experiment: "All core traits [Hydroponics] scale with the parts in the gene machine. Time to beg Duke's Guide Read.... I mean RND!"
+  - tweak: "Data disks with genes on them will have just the name of the gene instead of the prefix \"plant data disk\"."
+  - tweak: "If you were unaware, you can rename these disks with a pen. Now, you can also change the description if you felt inclined to."

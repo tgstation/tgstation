@@ -49,7 +49,8 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
-	luminosity = 3
+	light_range = 3
+	light_color = LIGHT_COLOR_FIRE
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
@@ -147,7 +148,7 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
-	SetLuminosity(0)
+	set_light(0)
 	SSair.hotspots -= src
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)

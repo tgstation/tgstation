@@ -8,6 +8,8 @@
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
 #define VAULT_ARMOUR "Bone Reinforcement"
+#define VAULT_SPEED "Leg Muscle Stimulus"
+#define VAULT_QUICK "Arm Muscle Stimulus"
 
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
@@ -85,35 +87,35 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
-			user << "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>" //Because space dna is actually magic
+			to_chat(user, "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
-			user << "<span class='notice'>Plant data already present in local storage.<span>"
+			to_chat(user, "<span class='notice'>Plant data already present in local storage.<span>")
 			return
 		plants[H.myseed.type] = 1
-		user << "<span class='notice'>Plant data added to local storage.<span>"
+		to_chat(user, "<span class='notice'>Plant data added to local storage.<span>")
 
 	//animals
 	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
-				user << "<span class='warning'>No compatible DNA detected</span>"
+				to_chat(user, "<span class='warning'>No compatible DNA detected</span>")
 				return
 		if(animals[target.type])
-			user << "<span class='notice'>Animal data already present in local storage.<span>"
+			to_chat(user, "<span class='notice'>Animal data already present in local storage.<span>")
 			return
 		animals[target.type] = 1
-		user << "<span class='notice'>Animal data added to local storage.<span>"
+		to_chat(user, "<span class='notice'>Animal data added to local storage.<span>")
 
 	//humans
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(dna[H.dna.uni_identity])
-			user << "<span class='notice'>Humanoid data already present in local storage.<span>"
+			to_chat(user, "<span class='notice'>Humanoid data already present in local storage.<span>")
 			return
 		dna[H.dna.uni_identity] = 1
-		user << "<span class='notice'>Humanoid data added to local storage.<span>"
+		to_chat(user, "<span class='notice'>Humanoid data added to local storage.<span>")
 
 
 /obj/item/weapon/circuitboard/machine/dna_vault
@@ -121,7 +123,8 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	build_path = /obj/machinery/dna_vault
 	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor/quadratic = 5,
+							/obj/item/weapon/stock_parts/capacitor/super = 5,
+							/obj/item/weapon/stock_parts/manipulator/pico = 5,
 							/obj/item/stack/cable_coil = 2)
 
 /obj/machinery/dna_vault
@@ -134,7 +137,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
-	luminosity = 1
+	light_range = 1
 
 	//High defaults so it's not completed automatically if there's no station goal
 	var/animals_max = 100
@@ -189,7 +192,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	if(user in power_lottery)
 		return
 	var/list/L = list()
-	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR)
+	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
 	power_lottery[user] = L
@@ -244,7 +247,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 				uploaded++
 				dna[ui] = 1
 		check_goal()
-		user << "<span class='notice'>[uploaded] new datapoints uploaded.</span>"
+		to_chat(user, "<span class='notice'>[uploaded] new datapoints uploaded.</span>")
 	else
 		return ..()
 
@@ -256,23 +259,30 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	var/datum/species/S = H.dna.species
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
-			H << "<span class='notice'>You feel resistant to airborne toxins.</span>"
+			to_chat(H, "<span class='notice'>You feel resistant to airborne toxins.</span>")
 			if(locate(/obj/item/organ/lungs) in H.internal_organs)
 				var/obj/item/organ/lungs/L = H.internal_organs_slot["lungs"]
 				L.tox_breath_dam_min = 0
 				L.tox_breath_dam_max = 0
 			S.species_traits |= VIRUSIMMUNE
 		if(VAULT_NOBREATH)
-			H << "<span class='notice'>Your lungs feel great.</span>"
+			to_chat(H, "<span class='notice'>Your lungs feel great.</span>")
 			S.species_traits |= NOBREATH
 		if(VAULT_FIREPROOF)
-			H << "<span class='notice'>You feel fireproof.</span>"
+			to_chat(H, "<span class='notice'>You feel fireproof.</span>")
 			S.burnmod = 0.5
 			S.heatmod = 0
 		if(VAULT_STUNTIME)
-			H << "<span class='notice'>Nothing can keep you down for long.</span>"
+			to_chat(H, "<span class='notice'>Nothing can keep you down for long.</span>")
 			S.stunmod = 0.5
 		if(VAULT_ARMOUR)
-			H << "<span class='notice'>You feel tough.</span>"
+			to_chat(H, "<span class='notice'>You feel tough.</span>")
 			S.armor = 30
+
+		if(VAULT_SPEED)
+			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
+			S.speedmod = -1
+		if(VAULT_QUICK)
+			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
+			H.next_move_modifier = 0.5
 	power_lottery[H] = list()

@@ -22,7 +22,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "g" = (
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/ruin/powered)
 "h" = (
 /turf/closed/indestructible{
@@ -47,30 +47,30 @@
 /area/ruin/powered)
 "l" = (
 /mob/living/simple_animal/hostile/faithless,
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/ruin/powered)
 "m" = (
 /obj/machinery/wish_granter_dark,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ruin/powered)
 "n" = (
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ruin/powered)
 "o" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ruin/powered)
 "p" = (
 /obj/structure/signpost,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ruin/powered)
 "q" = (
 /obj/effect/meatgrinder,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/ruin/powered)
 "r" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/ruin/powered)
 "s" = (
 /turf/open/floor/engine/cult{
@@ -131,8 +131,8 @@
 	},
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
-	blocks_air = 1
 	},
+/obj/structure/fans/tiny/invisible,
 /area/ruin/powered)
 "D" = (
 /turf/open/floor/engine/cult{

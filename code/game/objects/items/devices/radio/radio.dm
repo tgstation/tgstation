@@ -238,6 +238,12 @@
 	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
 
+	var/jammed = FALSE
+	for(var/obj/item/device/jammer/jammer in active_jammers)
+		if(get_dist(position,get_turf(jammer)) < jammer.range)
+			jammed = TRUE
+			break
+
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
@@ -254,6 +260,8 @@
 
 	var/jobname // the mob's "job"
 
+	if(jammed)
+		message = Gibberish(message,100)
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
@@ -499,18 +507,18 @@
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		user << "<span class='notice'>[name] can be attached and modified.</span>"
+		to_chat(user, "<span class='notice'>[name] can be attached and modified.</span>")
 	else
-		user << "<span class='notice'>[name] can not be modified or attached.</span>"
+		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
-			user << "<span class='notice'>The radio can now be attached and modified!</span>"
+			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
 		else
-			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
+			to_chat(user, "<span class='notice'>The radio can no longer be modified or attached!</span>")
 	else
 		return ..()
 
@@ -518,7 +526,7 @@
 	emped++ //There's been an EMP; better count it
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
-		loc << "<span class='warning'>\The [src] overloads.</span>"
+		to_chat(loc, "<span class='warning'>\The [src] overloads.</span>")
 	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
@@ -540,6 +548,10 @@
 	name = "cyborg radio"
 	subspace_switchable = 1
 	dog_fashion = null
+
+/obj/item/device/radio/borg/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
@@ -565,14 +577,14 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
+			to_chat(user, "<span class='notice'>You pop out the encryption key in the radio.</span>")
 
 		else
-			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
+			to_chat(user, "<span class='warning'>This radio doesn't have any encryption keys!</span>")
 
 	else if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "<span class='warning'>The radio can't hold another key!</span>"
+			to_chat(user, "<span class='warning'>The radio can't hold another key!</span>")
 			return
 
 		if(!keyslot)

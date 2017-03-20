@@ -9,6 +9,8 @@
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
 	eyeobj.origin = src
@@ -36,7 +38,7 @@
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	if(current_user)
-		user << "The console is already in use!"
+		to_chat(user, "The console is already in use!")
 		return
 	if(..())
 		return

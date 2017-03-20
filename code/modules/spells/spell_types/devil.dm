@@ -66,7 +66,7 @@
 						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>"
+			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")
 
 
 /obj/effect/proc_holder/spell/aimed/fireball/hellish
@@ -110,21 +110,21 @@
 						continuing = 1
 						break
 			if(continuing)
-				user << "<span class='warning'>You are now phasing in.</span>"
+				to_chat(user, "<span class='warning'>You are now phasing in.</span>")
 				if(do_mob(user,user,150))
 					user.infernalphasein()
 			else
-				user << "<span class='warning'>You can only re-appear near a potential signer."
+				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.")
 				revert_cast()
 				return ..()
 		else
 			user.notransform = 1
 			user.fakefire()
-			src << "<span class='warning'>You begin to phase back into sinful flames.</span>"
+			to_chat(src, "<span class='warning'>You begin to phase back into sinful flames.</span>")
 			if(do_mob(user,user,150))
 				user.infernalphaseout()
 			else
-				user << "<span class='warning'>You must remain still while exiting.</span>"
+				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
 				user.ExtinguishMob()
 		start_recharge()
 		return
@@ -153,7 +153,7 @@
 
 /mob/living/proc/infernalphasein()
 	if(src.notransform)
-		src << "<span class='warning'>You're too busy to jaunt in.</span>"
+		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
 		return 0
 	fakefire()
 	src.loc = get_turf(src)
@@ -232,9 +232,12 @@
 			var/turf/T = dancefloor_turfs[i]
 			T.ChangeTurf(dancefloor_turfs_types[i])
 	else
+		var/list/funky_turfs = RANGE_TURFS(1, user)
+		for(var/turf/closed/solid in funky_turfs)
+			user << "<span class='warning'>You're too close to a wall.</span>"
+			return
 		dancefloor_exists = TRUE
 		var/i = 1
-		var/list/funky_turfs = RANGE_TURFS(1, user)
 		dancefloor_turfs.len = funky_turfs.len
 		dancefloor_turfs_types.len = funky_turfs.len
 		for(var/t in funky_turfs)

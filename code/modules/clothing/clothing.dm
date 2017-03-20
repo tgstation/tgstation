@@ -32,6 +32,13 @@
 
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
 
+	//These allow head/mask items to dynamically alter the user's hair
+	// and facial hair, checking hair_extensions.dmi and facialhair_extensions.dmi
+	// for a state matching hair_state+dynamic_hair_suffix
+	// THESE OVERRIDE THE HIDEHAIR FLAGS
+	var/dynamic_hair_suffix = ""//head > mask for head hair
+	var/dynamic_fhair_suffix = ""//mask > head for facial hair
+
 /obj/item/clothing/New()
 	..()
 	if(ispath(pockets))
@@ -76,7 +83,7 @@
 		C.use(1)
 		update_clothes_damaged_state(FALSE)
 		obj_integrity = max_integrity
-		user << "<span class='notice'>You fix the damages on [src] with [C].</span>"
+		to_chat(user, "<span class='notice'>You fix the damages on [src] with [C].</span>")
 		return 1
 	if(pockets)
 		var/i = pockets.attackby(W, user, params)
@@ -92,7 +99,7 @@
 		pockets.remove_from_storage(I, get_turf(src))
 
 		if(!user.put_in_hands(I))
-			user << "<span class='notice'>You fumble for [I] and it falls on the floor.</span>"
+			to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
 			return 1
 		user.visible_message("<span class='warning'>[user] draws [I] from [src]!</span>", "<span class='notice'>You draw [I] from [src].</span>")
 		return 1
@@ -133,7 +140,7 @@
 /obj/item/clothing/examine(mob/user)
 	..()
 	if(damaged_clothes)
-		user <<  "<span class='warning'>It looks damaged!</span>"
+		to_chat(user,  "<span class='warning'>It looks damaged!</span>")
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
@@ -171,10 +178,13 @@ var/list/damaged_clothes_icons = list()
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
-	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
 	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/ears/earmuffs/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 //Glasses
 /obj/item/clothing/glasses
@@ -325,11 +335,11 @@ BLIND     // can't see anything
 		flags |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
-		user << "<span class='notice'>You push \the [src] back into place.</span>"
+		to_chat(user, "<span class='notice'>You push \the [src] back into place.</span>")
 		slot_flags = initial(slot_flags)
 	else
 		icon_state += "_up"
-		user << "<span class='notice'>You push \the [src] out of the way.</span>"
+		to_chat(user, "<span class='notice'>You push \the [src] out of the way.</span>")
 		gas_transfer_coefficient = null
 		permeability_coefficient = null
 		flags &= ~visor_flags
@@ -542,7 +552,7 @@ BLIND     // can't see anything
 		var/obj/item/clothing/tie/T = I
 		if(hastie)
 			if(user)
-				user << "<span class='warning'>[src] already has an accessory.</span>"
+				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return 0
 		else
 			if(user && !user.drop_item())
@@ -551,7 +561,7 @@ BLIND     // can't see anything
 				return
 
 			if(user && notifyAttach)
-				user << "<span class='notice'>You attach [I] to [src].</span>"
+				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
 
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
@@ -569,9 +579,9 @@ BLIND     // can't see anything
 		var/obj/item/clothing/tie/T = hastie
 		hastie.detach(src, user)
 		if(user.put_in_hands(T))
-			user << "<span class='notice'>You detach [T] from [src].</span>"
+			to_chat(user, "<span class='notice'>You detach [T] from [src].</span>")
 		else
-			user << "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>"
+			to_chat(user, "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>")
 
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -582,20 +592,20 @@ BLIND     // can't see anything
 	..()
 	if(can_adjust)
 		if(adjusted == ALT_STYLE)
-			user << "Alt-click on [src] to wear it normally."
+			to_chat(user, "Alt-click on [src] to wear it normally.")
 		else
-			user << "Alt-click on [src] to wear it casually."
+			to_chat(user, "Alt-click on [src] to wear it casually.")
 	switch(sensor_mode)
 		if(0)
-			user << "Its sensors appear to be disabled."
+			to_chat(user, "Its sensors appear to be disabled.")
 		if(1)
-			user << "Its binary life sensors appear to be enabled."
+			to_chat(user, "Its binary life sensors appear to be enabled.")
 		if(2)
-			user << "Its vital tracker appears to be enabled."
+			to_chat(user, "Its vital tracker appears to be enabled.")
 		if(3)
-			user << "Its vital tracker and tracking beacon appear to be enabled."
+			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 	if(hastie)
-		user << "\A [hastie] is attached to it."
+		to_chat(user, "\A [hastie] is attached to it.")
 
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
@@ -614,29 +624,29 @@ BLIND     // can't see anything
 	if (!can_use(M))
 		return
 	if(src.has_sensor >= 2)
-		usr << "The controls are locked."
+		to_chat(usr, "The controls are locked.")
 		return 0
 	if(src.has_sensor <= 0)
-		usr << "This suit does not have any sensors."
+		to_chat(usr, "This suit does not have any sensors.")
 		return 0
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
 	if(get_dist(usr, src) > 1)
-		usr << "<span class='warning'>You have moved too far away!</span>"
+		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
-				usr << "<span class='notice'>You disable your suit's remote sensing equipment.</span>"
+				to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
 			if(1)
-				usr << "<span class='notice'>Your suit will now only report whether you are alive or dead.</span>"
+				to_chat(usr, "<span class='notice'>Your suit will now only report whether you are alive or dead.</span>")
 			if(2)
-				usr << "<span class='notice'>Your suit will now only report your exact vital lifesigns.</span>"
+				to_chat(usr, "<span class='notice'>Your suit will now only report your exact vital lifesigns.</span>")
 			if(3)
-				usr << "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>"
+				to_chat(usr, "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>")
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -650,7 +660,7 @@ BLIND     // can't see anything
 		return 1
 
 	if(!user.canUseTopic(src, be_close=TRUE))
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		if(hastie)
@@ -668,12 +678,12 @@ BLIND     // can't see anything
 	if(!can_use(usr))
 		return
 	if(!can_adjust)
-		usr << "<span class='warning'>You cannot wear this suit any differently!</span>"
+		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
 		return
 	if(toggle_jumpsuit_adjust())
-		usr << "<span class='notice'>You adjust the suit to wear it more casually.</span>"
+		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
 	else
-		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
+		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.update_inv_w_uniform()
@@ -700,7 +710,7 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	user << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
+	to_chat(user, "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>")
 
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user

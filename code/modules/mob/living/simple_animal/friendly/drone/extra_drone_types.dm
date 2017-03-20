@@ -30,20 +30,20 @@
 	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
 
-/mob/living/simple_animal/drone/syndrone/New()
+/mob/living/simple_animal/drone/syndrone/Initialize()
 	..()
 	internal_storage.hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
-	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
+	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	default_storage = /obj/item/device/radio/uplink/nuclear
 
-/mob/living/simple_animal/drone/syndrone/badass/New()
+/mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	..()
 	internal_storage.hidden_uplink.telecrystals = 30
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
@@ -52,7 +52,7 @@
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
 
-/mob/living/simple_animal/drone/snowflake/New()
+/mob/living/simple_animal/drone/snowflake/Initialize()
 	..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
@@ -76,7 +76,7 @@
 	default_hatmask = null
 	picked = TRUE
 
-/mob/living/simple_animal/drone/polymorphed/New()
+/mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
 	liberate()
 	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
@@ -111,6 +111,7 @@
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
+	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
@@ -125,9 +126,9 @@
 /mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost proselytizer and slab in its box
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
 
-/mob/living/simple_animal/drone/cogscarab/New()
+/mob/living/simple_animal/drone/cogscarab/Initialize()
 	. = ..()
-	SetLuminosity(2,1)
+	set_light(2, 0.5)
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
@@ -137,10 +138,10 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
+	to_chat(src, "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
 	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>"
+	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>")
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
@@ -160,7 +161,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>You fiddle around with [src] to no avail.</span>"
+		to_chat(user, "<span class='warning'>You fiddle around with [src] to no avail.</span>")
 	else
 		..()
 

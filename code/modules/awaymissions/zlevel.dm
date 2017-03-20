@@ -6,10 +6,10 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		return
 
 	if(potentialRandomZlevels && potentialRandomZlevels.len)
-		world << "<span class='boldannounce'>Loading away mission...</span>"
+		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
 		var/map = pick(potentialRandomZlevels)
 		load_new_z_level(map)
-		world << "<span class='boldannounce'>Away mission loaded.</span>"
+		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
 
 /proc/reset_gateway_spawns(reset = FALSE)
 	for(var/obj/machinery/gateway/G in world)
@@ -28,7 +28,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 /obj/effect/landmark/awaystart/Destroy()
 	awaydestinations -= src
-	..()
+	return ..()
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()

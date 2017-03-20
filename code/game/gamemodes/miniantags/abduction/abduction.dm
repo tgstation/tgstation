@@ -19,10 +19,10 @@
 	var/finished = 0
 
 /datum/game_mode/abduction/announce()
-	world << "<B>The current game mode is - Abduction!</B>"
-	world << "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!"
-	world << "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones."
-	world << "<b>Crew</b> - don't get abducted and stop the abductors."
+	to_chat(world, "<B>The current game mode is - Abduction!</B>")
+	to_chat(world, "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!")
+	to_chat(world, "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones.")
+	to_chat(world, "<b>Crew</b> - don't get abducted and stop the abductors.")
 
 /datum/game_mode/abduction/pre_setup()
 	abductor_teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
@@ -184,9 +184,9 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='notice'>You are an agent of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
+	to_chat(abductor.current, "<span class='notice'>You are an agent of [team_name]!</span>")
+	to_chat(abductor.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
+	to_chat(abductor.current, "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>")
 
 	abductor.announce_objectives()
 
@@ -194,9 +194,9 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='notice'>You are a scientist of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
+	to_chat(abductor.current, "<span class='notice'>You are a scientist of [team_name]!</span>")
+	to_chat(abductor.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
+	to_chat(abductor.current, "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>")
 
 	abductor.announce_objectives()
 
@@ -269,9 +269,9 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<span class='greenannounce'>[team_name] team fulfilled its mission!</span>"
+			to_chat(world, "<span class='greenannounce'>[team_name] team fulfilled its mission!</span>")
 		else
-			world << "<span class='boldannounce'>[team_name] team failed its mission.</span>"
+			to_chat(world, "<span class='boldannounce'>[team_name] team failed its mission.</span>")
 	..()
 	return 1
 
@@ -289,21 +289,12 @@
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
 	text += "<br>"
-	world << text
+	to_chat(world, text)
 
 //Landmarks
 // TODO: Split into seperate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1
-
-/obj/effect/landmark/abductor/console/New()
-	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
-	c.team = team
-
-	spawn(5) // I'd do this properly when i got some time, temporary hack for mappers
-		c.Setup()
-	qdel(src)
-
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist

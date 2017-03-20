@@ -29,7 +29,7 @@
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 
-/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0, starting_points = 60)
+/mob/camera/blob/Initialize(mapload, pre_placed = 0, mode_made = 0, starting_points = 60)
 	blob_points = starting_points
 	if(pre_placed) //we already have a core!
 		manualplace_min_time = 0
@@ -61,8 +61,8 @@
 	if(!blob_core)
 		if(!placed)
 			if(manualplace_min_time && world.time >= manualplace_min_time)
-				src << "<b><span class='big'><font color=\"#EE4000\">You may now place your blob core.</font></span></b>"
-				src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
+				to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You may now place your blob core.</font></span></b>")
+				to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>")
 				manualplace_min_time = 0
 			if(autoplace_max_time && world.time >= autoplace_max_time)
 				place_blob_core(base_point_rate, 1)
@@ -92,7 +92,7 @@
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
-	src << "<span class='notice'>You are the overmind!</span>"
+	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	blob_help()
 	update_health_hud()
 	add_points(0)
@@ -100,7 +100,7 @@
 /mob/camera/blob/examine(mob/user)
 	..()
 	if(blob_reagent_datum)
-		user << "Its chemical is <font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>."
+		to_chat(user, "Its chemical is <font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>.")
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
@@ -119,7 +119,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "You cannot send IC messages (muted)."
+			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -142,10 +142,10 @@
 
 	for(var/mob/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
-			M << rendered
+			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			to_chat(M, "[link] [rendered]")
 
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return

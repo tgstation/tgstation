@@ -9,7 +9,7 @@
 
 /obj/structure/signpost/New()
 	. = ..()
-	SetLuminosity(2)
+	set_light(2)
 
 /obj/structure/signpost/attackby(obj/item/weapon/W, mob/user, params)
 	return attack_hand(user)
@@ -22,10 +22,9 @@
 			if(T)
 				var/area/A = get_area(T)
 				user.forceMove(T)
-				user << "<span class='notice'>You blink and find yourself \
-					in [A.name].</span>"
+				to_chat(user, "<span class='notice'>You blink and find yourself in [A.name].</span>")
 			else
-				user << "Nothing happens. You feel that this is a bad sign."
+				to_chat(user, "Nothing happens. You feel that this is a bad sign.")
 		if("No")
 			return
 

@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Caches produce components every 70 seconds, from every 90, but each other linked, component-producing cache slows down cache generation by 10 seconds."

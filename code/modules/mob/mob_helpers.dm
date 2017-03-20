@@ -379,9 +379,11 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	return 1
 
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
+	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
+		return
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)
 				O << sound(ghost_sound)
 			if(flashwindow)
@@ -421,7 +423,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			return 1 //successful heal
 		else
-			user << "<span class='warning'>[affecting] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
 
 /proc/IsAdminGhost(var/mob/user)
@@ -438,7 +440,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	return TRUE
 
 /proc/offer_control(mob/M)
-	M << "Control of your mob has been offered to dead players."
+	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
@@ -452,13 +454,13 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 
 	if(candidates.len)
 		theghost = pick(candidates)
-		M << "Your mob has been taken over by a ghost!"
+		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
 		M.key = theghost.key
 		return TRUE
 	else
-		M << "There were no ghosts willing to take control."
+		to_chat(M, "There were no ghosts willing to take control.")
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
 
@@ -479,7 +481,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	else
 		return 0
 
-mob/proc/click_random_mob()
+/mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()
 	for(var/mob/living/L in range(1, src))
 		if(L!=src)
@@ -487,3 +489,14 @@ mob/proc/click_random_mob()
 	if(nearby_mobs.len)
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
+
+/mob/proc/log_message(message, message_type)
+	if(!LAZYLEN(message) || !message_type)
+		return
+
+	if(!islist(logging[message_type]))
+		logging[message_type] = list()
+
+	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
+
+	logging[message_type] += timestamped_message

@@ -422,20 +422,20 @@
 		window_flash(G.client)
 	switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
-			G << "<span class='notice'>Choice registered: Yes.</span>"
+			to_chat(G, "<span class='notice'>Choice registered: Yes.</span>")
 			if((world.time-time_passed)>poll_time)
-				G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+				to_chat(G, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
 				G << 'sound/machines/buzz-sigh.ogg'
 			else
 				candidates += G
 		if(2)
-			G << "<span class='danger'>Choice registered: No.</span>"
+			to_chat(G, "<span class='danger'>Choice registered: No.</span>")
 		if(3)
 			var/list/L = poll_ignore[ignore_category]
 			if(!L)
 				poll_ignore[ignore_category] = list()
 			poll_ignore[ignore_category] += G.ckey
-			G << "<span class='danger'>Choice registered: Never for this round.</span>"
+			to_chat(G, "<span class='danger'>Choice registered: Never for this round.</span>")
 
 /proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null, flashwindow = TRUE)
 	var/list/mob/dead/observer/candidates = list()
@@ -498,10 +498,10 @@
 
 	return new_character
 
-/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
+/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of to_chat(world, where needed)
 	for(var/M in player_list)
 		if(M && !isnewplayer(M))
-			M << thing
+			to_chat(M, thing)
 
 /proc/window_flash(client/C, ignorepref = FALSE)
 	if(ismob(C))
@@ -511,3 +511,28 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
+
+/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+	if(ticker.current_state != GAME_STATE_PLAYING || !character)
+		return
+	var/area/A = get_area(character)
+	var/message = "<span class='game deadsay'><span class='name'>\
+		[character.real_name]</span> ([rank]) has arrived at the station at \
+		<span class='name'>[A.name]</span>.</span>"
+	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if((!announcement_systems.len) || (!character.mind))
+		return
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+		return
+
+	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+
+/proc/GetRedPart(const/hexa)
+	return hex2num(copytext(hexa, 2, 4))
+
+/proc/GetGreenPart(const/hexa)
+	return hex2num(copytext(hexa, 4, 6))
+
+/proc/GetBluePart(const/hexa)
+	return hex2num(copytext(hexa, 6, 8))

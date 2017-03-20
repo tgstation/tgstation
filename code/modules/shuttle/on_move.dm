@@ -29,22 +29,15 @@
 /atom/movable/light/onShuttleMove()
 	return 0
 
-/obj/machinery/door/onShuttleMove()
-	. = ..()
-	if(!.)
-		return
-	INVOKE_ASYNC(src, .proc/close)
-	// Close any attached airlocks as well
-	for(var/obj/machinery/door/D in orange(1, src))
-		INVOKE_ASYNC(src, .proc/close)
-
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0
-	for(var/obj/machinery/door/airlock/A in orange(1, src))
+	for(var/obj/machinery/door/airlock/A in range(1, src))
 		A.shuttledocked = 0
+		A.air_tight = TRUE
+		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 	. = ..()
 	shuttledocked =  1
-	for(var/obj/machinery/door/airlock/A in orange(1, src))
+	for(var/obj/machinery/door/airlock/A in range(1, src))
 		A.shuttledocked = 1
 /mob/onShuttleMove()
 	if(!move_on_shuttle)

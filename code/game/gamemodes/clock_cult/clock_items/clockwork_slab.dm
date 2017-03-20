@@ -81,7 +81,7 @@
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
-	user << "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>"
+	to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
 
 /obj/item/clockwork/slab/New()
 	..()
@@ -138,7 +138,7 @@
 			if(S == src)
 				continue
 			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
-		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>"
+		to_chat(L, "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>")
 
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
@@ -148,16 +148,16 @@
 				if(!quickbound[i])
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				user << "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>."
-		if(clockwork_caches)
-			user << "<b>Stored components (with global cache):</b>"
+				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
+		if(clockwork_caches) //show components on examine
+			to_chat(user, "<b>Stored components (with global cache):</b>")
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
-				(<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>"
+				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
+				(<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>")
 		else
-			user << "<b>Stored components:</b>"
+			to_chat(user, "<b>Stored components:</b>")
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>"
+				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
 
 //Component Transferal
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
@@ -174,7 +174,7 @@
 					targetslab = S
 		if(targetslab)
 			if(targetslab == src)
-				user << "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>"
+				to_chat(user, "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>")
 			else
 				for(var/i in stored_components)
 					targetslab.stored_components[i] += stored_components[i]
@@ -184,7 +184,7 @@
 				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
 				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
 		else
-			user << "<span class='warning'>[target] has no slabs to transfer components to.</span>"
+			to_chat(user, "<span class='warning'>[target] has no slabs to transfer components to.</span>")
 	else
 		return ..()
 
@@ -226,7 +226,7 @@
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	if(!user.can_speak_vocal())
-		user << "<span class='warning'>You cannot speak into the slab!</span>"
+		to_chat(user, "<span class='warning'>You cannot speak into the slab!</span>")
 		return FALSE
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
@@ -238,7 +238,7 @@
 //Scripture Recital
 /obj/item/clockwork/slab/attack_self(mob/living/user)
 	if(iscultist(user))
-		user << "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>"
+		to_chat(user, "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
 		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.drop_item()
@@ -247,15 +247,15 @@
 		user.apply_damage(5, BURN, "r_arm")
 		return 0
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>"
+		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
 		user.confused += 5
 		user.dizziness += 5
 		return 0
 	if(busy)
-		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
+		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
 		return 0
 	if(!nonhuman_usable && !ishuman(user))
-		user << "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>"
+		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0
 	access_display(user)
 
@@ -277,13 +277,13 @@
 	if(!scripture || !user || !user.canUseTopic(src) || (!nonhuman_usable && !ishuman(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
-		user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
+		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 		return FALSE
 	var/initial_tier = initial(scripture.tier)
 	if(initial_tier != SCRIPTURE_PERIPHERAL)
 		var/list/tiers_of_scripture = scripture_unlock_check()
 		if(!ratvar_awakens && !no_cost && !tiers_of_scripture[initial_tier])
-			user << "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>"
+			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
 	scripture_to_recite.slab = src
@@ -369,17 +369,17 @@
 		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 	return textlist.Join()
 
-/obj/item/clockwork/slab/ui_data(mob/user)
+/obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
 	data["components"] = stored_components.Copy()
 	var/list/temp_data = list("<font color=#B18B25>")
-	for(var/i in data["components"])
+	for(var/i in data["components"]) //display the slab's components
 		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i]]</b></font>"
 		if(i != HIEROPHANT_ANSIBLE)
 			temp_data += " "
 		else
 			temp_data += " ("
-	if(clockwork_caches)
+	if(clockwork_caches) //if we have caches, display what's in the global cache
 		for(var/i in clockwork_component_cache)
 			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + clockwork_component_cache[i]]</b></font>"
 			if(i != HIEROPHANT_ANSIBLE)
@@ -390,7 +390,7 @@
 	temp_data = temp_data.Join()
 	data["components"] = temp_data
 
-	switch(selected_scripture)
+	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
 			data["tier_info"] = "<font color=#B18B25><i>These scriptures are always unlocked.</i></font>"
 		if(SCRIPTURE_SCRIPT)
@@ -405,7 +405,7 @@
 	data["selected"] = selected_scripture
 
 	data["target_comp"] = "<font color=#B18B25>NONE</font>"
-	if(target_component_id)
+	if(target_component_id) //if we have a component to make, display that, too
 		data["target_comp"] = "<font color=[get_component_color_bright(target_component_id)]>[get_component_acronym(target_component_id)]</font>"
 
 	generate_all_scripture()
@@ -413,7 +413,7 @@
 	data["scripture"] = list()
 	for(var/s in all_scripture)
 		var/datum/clockwork_scripture/S = all_scripture[s]
-		if(S.tier == selected_scripture)
+		if(S.tier == selected_scripture) //display only scriptures of the selected tier
 			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
 			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
@@ -493,7 +493,7 @@
 
 /obj/item/clockwork/slab/proc/update_quickbind()
 	for(var/datum/action/item_action/clock/quickbind/Q in actions)
-		qdel(Q)
+		qdel(Q) //regenerate all our quickbound scriptures
 	if(LAZYLEN(quickbound))
 		for(var/i in 1 to quickbound.len)
 			if(!quickbound[i])
@@ -503,7 +503,7 @@
 			var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[i]]
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
 			var/list/temp_desc = list()
-			for(var/c in quickbind_slot.consumed_components)
+			for(var/c in quickbind_slot.consumed_components) //show how much the bound scripture costs
 				if(quickbind_slot.consumed_components[c])
 					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_acronym(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
 			if(LAZYLEN(temp_desc))

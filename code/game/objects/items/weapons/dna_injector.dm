@@ -51,15 +51,15 @@
 				M.updateappearance(mutations_overlay_update=1)
 		log_attack(log_msg)
 	else
-		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"
+		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
 		return
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(used)
-		user << "<span class='warning'>This injector is used up!</span>"
+		to_chat(user, "<span class='warning'>This injector is used up!</span>")
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
@@ -75,7 +75,7 @@
 						"<span class='userdanger'>[user] injects [target] with the syringe with [src]!")
 
 	else
-		user << "<span class='notice'>You inject yourself with [src].</span>"
+		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
 
 	add_logs(user, target, "injected", src)
 
@@ -310,7 +310,7 @@
 
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			user << "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>"
+			to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
@@ -353,7 +353,7 @@
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
 		log_attack(log_msg)
 	else
-		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"
+		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
 		return
 
 /obj/item/weapon/dnainjector/timed/hulk

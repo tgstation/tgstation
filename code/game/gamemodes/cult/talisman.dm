@@ -4,18 +4,19 @@
 	var/invocation = "Naise meam!"
 	var/uses = 1
 	var/health_cost = 0 //The amount of health taken from the user when invoking the talisman
+	var/creation_time = 100 //how long it takes an imbue rune to make this type of talisman
 
 /obj/item/weapon/paper/talisman/examine(mob/user)
 	if(iscultist(user) || user.stat == DEAD)
-		user << "<b>Name:</b> [cultist_name]"
-		user << "<b>Effect:</b> [cultist_desc]"
-		user << "<b>Uses Remaining:</b> [uses]"
+		to_chat(user, "<b>Name:</b> [cultist_name]")
+		to_chat(user, "<b>Effect:</b> [cultist_desc]")
+		to_chat(user, "<b>Uses Remaining:</b> [uses]")
 	else
-		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 		return
 	if(invoke(user))
 		uses--
@@ -39,7 +40,7 @@
 	invocation = "Ra'sha yoka!"
 
 /obj/item/weapon/paper/talisman/malformed/invoke(mob/living/user, successfuluse = 1)
-	user << "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>"
+	to_chat(user, "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(10, BRUTE, "head")
@@ -119,6 +120,7 @@
 	color = "#551A8B" // purple
 	invocation = "Sas'so c'arta forbici!"
 	health_cost = 5
+	creation_time = 80
 
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
@@ -128,12 +130,12 @@
 		potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
-		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
+		to_chat(user, "<span class='warning'>There are no valid runes to teleport to!</span>")
 		log_game("Teleport talisman failed - no other teleport runes")
 		return ..(user, 0)
 
 	if(user.z > ZLEVEL_SPACEMAX)
-		user << "<span class='cultitalic'>You are not in the right dimension!</span>"
+		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
 		log_game("Teleport talisman failed - user in away mission")
 		return ..(user, 0)
 
@@ -143,7 +145,7 @@
 		return ..(user, 0)
 	var/turf/target = get_turf(actual_selected_rune)
 	if(is_blocked_turf(target, TRUE))
-		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
+		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		return ..(user, 0)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
@@ -157,6 +159,7 @@
 	color = "#512727" // red-black
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	health_cost = 1
+	creation_time = 30
 
 /obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
@@ -172,6 +175,7 @@
 	color = "#9c9c9c" // grey
 	invocation = "Kla'atu barada nikt'o!"
 	health_cost = 1
+	creation_time = 30
 	uses = 2
 	var/revealing = FALSE //if it reveals or not
 
@@ -196,6 +200,7 @@
 	cultist_desc = "A talisman that will make nearby runes appear fake."
 	color = "#ff80d5" // honk
 	invocation = "By'o nar'nar!"
+	creation_time = 20
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
@@ -232,9 +237,9 @@
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
 		return ..()
 	if(iscultist(user))
-		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
+		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
 	else
-		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 	return 0
 
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
@@ -273,6 +278,7 @@
 	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
 	color = "#33cc33" // green
 	invocation = "N'ath reth sh'yro eth draggathnor!"
+	creation_time = 80
 
 /obj/item/weapon/paper/talisman/armor/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
@@ -301,15 +307,16 @@
 	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
 	color = "#ffb366" // light orange
 	invocation = "Lo'Nab Na'Dm!"
+	creation_time = 80
 
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
-		user << "<span class='cultitalic'>You disturb [target] with visons of the end!</span>"
+		to_chat(user, "<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
 			if(is_servant_of_ratvar(target))
-				target << "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>"
+				to_chat(target, "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>")
 				target.emote("scream")
 				target.confused = max(0, target.confused + 3)
 				target.flash_act()
@@ -323,17 +330,18 @@
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
 	uses = 25
+	creation_time = 80
 
 /obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
 	if(iscultist(user))
-		user << "<span class='warning'>To use this talisman, place it upon a stack of metal sheets.</span>"
+		to_chat(user, "<span class='warning'>To use this talisman, place it upon a stack of metal sheets.</span>")
 	else
-		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 
 
 /obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
 	if(iscultist(user))
-		user << "<span class='cultitalic'>This talisman will only work on a stack of metal or plasteel sheets!</span>"
+		to_chat(user, "<span class='cultitalic'>This talisman will only work on a stack of metal or plasteel sheets!</span>")
 		log_game("Construct talisman failed - not a valid target")
 	else
 		..()
@@ -345,24 +353,24 @@
 		if(istype(target, /obj/item/stack/sheet/metal))
 			if(target.use(25))
 				new /obj/structure/constructshell(T)
-				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+				to_chat(user, "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>")
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				invoke(user, 1)
 				qdel(src)
 			else
-				user << "<span class='warning'>You need more metal to produce a construct shell!</span>"
+				to_chat(user, "<span class='warning'>You need more metal to produce a construct shell!</span>")
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/quantity = min(target.amount, uses)
 			uses -= quantity
 			new /obj/item/stack/sheet/runed_metal(T,quantity)
 			target.use(quantity)
-			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
+			to_chat(user, "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>")
 			user << sound('sound/effects/magic.ogg',0,1,25)
 			invoke(user, 1)
 			if(uses <= 0)
 				qdel(src)
 		else
-			user << "<span class='warning'>The talisman must be used on metal or plasteel!</span>"
+			to_chat(user, "<span class='warning'>The talisman must be used on metal or plasteel!</span>")
 
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
@@ -377,9 +385,9 @@
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
 		return ..()
 	if(iscultist(user))
-		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
+		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
 	else
-		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 	return 0
 
 /obj/item/weapon/paper/talisman/shackle/attack(mob/living/carbon/target, mob/living/user)
@@ -401,15 +409,15 @@
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
 				C.update_handcuffed()
-				user << "<span class='notice'>You shackle [C].</span>"
+				to_chat(user, "<span class='notice'>You shackle [C].</span>")
 				add_logs(user, C, "handcuffed")
 				uses--
 			else
-				user << "<span class='warning'>[C] is already bound.</span>"
+				to_chat(user, "<span class='warning'>[C] is already bound.</span>")
 		else
-			user << "<span class='warning'>You fail to shackle [C].</span>"
+			to_chat(user, "<span class='warning'>You fail to shackle [C].</span>")
 	else
-		user << "<span class='warning'>[C] is already bound.</span>"
+		to_chat(user, "<span class='warning'>[C] is already bound.</span>")
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)

@@ -25,7 +25,7 @@
 
 	if(SSreligion.holy_weapon)
 		holy_weapon = new SSreligion.holy_weapon
-		M << "<span class='notice'>The null rod suddenly morphs into your religions already chosen holy weapon.</span>"
+		to_chat(M, "<span class='notice'>The null rod suddenly morphs into your religions already chosen holy weapon.</span>")
 	else
 		var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
 		var/list/display_names = list()
@@ -216,7 +216,7 @@
 	if(possessed)
 		return
 
-	user << "You attempt to wake the spirit of the blade..."
+	to_chat(user, "You attempt to wake the spirit of the blade...")
 
 	possessed = TRUE
 
@@ -237,12 +237,12 @@
 			S.real_name = input
 			S.name = input
 	else
-		user << "The blade is dormant. Maybe you can try again later."
+		to_chat(user, "The blade is dormant. Maybe you can try again later.")
 		possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		S << "You were destroyed!"
+		to_chat(S, "You were destroyed!")
 		qdel(S)
 	return ..()
 
@@ -322,7 +322,7 @@
 /obj/item/weapon/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
 	else if(user.mind && (user.mind.isholy))
-		user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
+		to_chat(user, "You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
 		user.faction |= "carp"
 		used_blessing = TRUE
 
@@ -348,9 +348,24 @@
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharpness = IS_SHARP
 	slot_flags = null
-	flags = HANDSLOW
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+/obj/item/weapon/nullrod/tribal_knife/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
+
+/obj/item/weapon/nullrod/tribal_knife/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/nullrod/tribal_knife/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/weapon/nullrod/tribal_knife/process()
+	slowdown = rand(-2, 2)
+
 
 /obj/item/weapon/nullrod/pitchfork
 	icon_state = "pitchfork0"
@@ -360,15 +375,3 @@
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-
-/obj/item/weapon/nullrod/tribal_knife/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/nullrod/tribal_knife/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/weapon/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
-

@@ -27,11 +27,11 @@
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
-		light_amount = min(10,T.get_lumcount()) - 5
-		H.nutrition += light_amount
+		light_amount = min(1,T.get_lumcount()) - 0.5
+		H.nutrition += light_amount * 10
 		if(H.nutrition > NUTRITION_LEVEL_FULL)
 			H.nutrition = NUTRITION_LEVEL_FULL
-		if(light_amount > 2) //if there's enough light, heal
+		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(1,1)
 			H.adjustToxLoss(-1)
 			H.adjustOxyLoss(-1)

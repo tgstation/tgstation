@@ -45,6 +45,7 @@
 	// register for radio system
 
 /obj/machinery/status_display/Initialize()
+	..()
 	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
@@ -122,9 +123,9 @@
 	. = ..()
 	switch(mode)
 		if(1,2,4,5)
-			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			to_chat(user, "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>")
 	if(mode == 1 && SSshuttle.emergency)
-		user << "Current Shuttle: [SSshuttle.emergency.name]"
+		to_chat(user, "Current Shuttle: [SSshuttle.emergency.name]")
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)

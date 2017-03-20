@@ -26,8 +26,9 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-/turf/SDQL_update(const/var_name, new_value)
-	if(var_name == "x" || var_name == "y" || var_name == "z")
+/turf/vv_edit_var(var_name, new_value)
+	var/static/list/banned_edits = list("x", "y", "z")
+	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
 
@@ -44,23 +45,42 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
+
 	if(requires_activation)
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
+
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy(force)
+	. = QDEL_HINT_IWILLGC
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
+	if(force)
+		..()
+		//this will completely wipe turf state
+		var/turf/basic/B = new /turf/basic(src)
+		for(var/A in B.contents)
+			qdel(A)
+		for(var/I in B.vars)
+			B.vars[I] = null
+		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
-	return QDEL_HINT_IWILLGC
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -110,7 +130,7 @@
 	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags&ON_BORDER)
+		if(border_obstacle.flags & ON_BORDER)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
 				return 0
@@ -123,10 +143,16 @@
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
+	var/atom/movable/tompost_bump
+	var/top_layer = 0
 	for(var/atom/movable/obstacle in large_dense)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
-			mover.Bump(obstacle, 1)
-			return 0
+			if(obstacle.layer > top_layer)
+				tompost_bump = obstacle
+				top_layer = obstacle.layer
+	if(tompost_bump)
+		mover.Bump(tompost_bump,1)
+		return 0
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
@@ -160,7 +186,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.is_frozen)
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -276,7 +302,7 @@
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(src_object.contents.len)
-		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
 			return 0
 
@@ -392,7 +418,6 @@
 
 	T0.ChangeTurf(turf_type)
 
-	T0.redraw_lighting()
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)

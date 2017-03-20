@@ -21,25 +21,15 @@
 	user.update_inv_head()	//so our mob-overlays update
 
 	if(on)
-		user.AddLuminosity(brightness_on)
+		set_light(brightness_on)
 	else
-		user.AddLuminosity(-brightness_on)
+		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-
-/obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
 	if(suit)
 		suit.RemoveHelmet()
 
@@ -97,28 +87,28 @@
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank/jetpack/suit))
 		if(jetpack)
-			user << "<span class='warning'>[src] already has a jetpack installed.</span>"
+			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
 			return
 		if(src == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
-			user << "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>"
+			to_chat(user, "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>")
 			return
 
 		if(user.transferItemToLoc(I, src))
 			jetpack = I
-			user << "<span class='notice'>You successfully install the jetpack into [src].</span>"
+			to_chat(user, "<span class='notice'>You successfully install the jetpack into [src].</span>")
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!jetpack)
-			user << "<span class='warning'>[src] has no jetpack installed.</span>"
+			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
 		if(src == user.get_item_by_slot(slot_wear_suit))
-			user << "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>"
+			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
 		jetpack.turn_off()
 		jetpack.loc = get_turf(src)
 		jetpack = null
-		user << "<span class='notice'>You successfully remove the jetpack from [src].</span>"
+		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
@@ -254,23 +244,23 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		to_chat(user, "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" )
 		return
 	on = !on
 	if(on || force)
-		user << "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>"
+		to_chat(user, "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>")
 		name = initial(name)
 		desc = initial(desc)
-		user.AddLuminosity(brightness_on)
+		set_light(brightness_on)
 		flags |= visor_flags
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
-		user << "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>"
+		to_chat(user, "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>")
 		name += " (combat)"
 		desc = alt_desc
-		user.AddLuminosity(-brightness_on)
+		set_light(0)
 		flags &= ~visor_flags
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 		flags_inv &= ~visor_flags_inv
@@ -437,7 +427,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic))
-		user << ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>")
+		to_chat(user, ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>"))
 	else
 		onboard_hud_enabled = 1
 		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]

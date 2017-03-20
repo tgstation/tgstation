@@ -38,7 +38,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("firelock frame", /obj/structure/firelock_frame, 3, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-/*	new/datum/stack_recipe("reflector frame", /obj/structure/reflector, 5, time = 25, one_per_turf = 1, on_floor = 1), \*/
+	new/datum/stack_recipe("reflector frame", /obj/structure/reflector, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2), \
@@ -85,7 +85,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = metal_recipes
 	return ..()
 
@@ -111,7 +111,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 
-/obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = plasteel_recipes
 	return ..()
 
@@ -160,7 +160,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 
-/obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = wood_recipes
 	return ..()
 
@@ -205,7 +205,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = cloth_recipes
 	return ..()
 
@@ -237,7 +237,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/cardboard
 
-/obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge = TRUE)
 		recipes = cardboard_recipes
 		return ..()
 
@@ -272,20 +272,20 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	return ..()
 
 /obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	..()
 
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
 
-/obj/item/stack/sheet/runed_metal/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = runed_metal_recipes
 	return ..()
 
@@ -322,7 +322,7 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 		new /obj/item/stack/sheet/runed_metal(loc, amount)
 		qdel(src)
 
-/obj/item/stack/tile/brass/New(var/loc, var/amount=null)
+/obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = brass_recipes
 	..()
 	pixel_x = 0
@@ -368,7 +368,6 @@ var/global/list/datum/stack_recipe/plastic_recipes = list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	throwforce = 7
-	flags = CONDUCT
 	origin_tech = "materials=1"
 	origin_tech = "materials=1;biotech=1"
 	merge_type = /obj/item/stack/sheet/plastic
@@ -379,6 +378,6 @@ var/global/list/datum/stack_recipe/plastic_recipes = list(
 /obj/item/stack/sheet/plastic/five
 	amount = 5
 
-/obj/item/stack/sheet/plastic/New()
+/obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = plastic_recipes
 	. = ..()

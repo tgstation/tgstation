@@ -43,7 +43,7 @@
 	icon_state = "asteroid0"
 
 /turf/open/floor/holofloor/asteroid/Initialize()
-	icon_state = "asteroid[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
+	icon_state = "asteroid[rand(0, 12)]"
 	..()
 
 /turf/open/floor/holofloor/basalt
@@ -51,8 +51,10 @@
 	icon_state = "basalt0"
 
 /turf/open/floor/holofloor/basalt/Initialize()
-	icon_state = "basalt[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
 	..()
+	if(prob(15))
+		icon_state = "basalt[rand(0, 12)]"
+		set_basalt_light(src)
 
 /turf/open/floor/holofloor/space
 	name = "Space"

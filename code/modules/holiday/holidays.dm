@@ -144,7 +144,7 @@
 /datum/holiday/april_fools/celebrate()
 	if(ticker)
 		ticker.login_music = 'sound/ambience/clown.ogg'
-		for(var/mob/new_player/P in mob_list)
+		for(var/mob/dead/new_player/P in mob_list)
 			if(P.client)
 				P.stopLobbySound()
 				P.client.playtitlemusic()
@@ -421,5 +421,5 @@
 				begin_day += 31
 				begin_month-- //begins in march, ends in april
 
-//	world << "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]"
+//	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()

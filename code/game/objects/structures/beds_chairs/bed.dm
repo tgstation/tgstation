@@ -53,7 +53,7 @@
 	if(istype(W,/obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
 		if(R.loaded)
-			user << "<span class='warning'>You already have a roller bed docked!</span>"
+			to_chat(user, "<span class='warning'>You already have a roller bed docked!</span>")
 			return
 
 		if(has_buckled_mobs())
@@ -78,7 +78,7 @@
 		if(has_buckled_mobs())
 			return 0
 		if(usr.incapacitated())
-			usr << "<span class='warning'>You can't do that right now!</span>"
+			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return 0
 		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
 		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
@@ -108,7 +108,7 @@
 	if(istype(I, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = I
 		if(R.loaded)
-			user << "<span class='warning'>[R] already has a roller bed loaded!</span>"
+			to_chat(user, "<span class='warning'>[R] already has a roller bed loaded!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>")
 		R.loaded = new/obj/structure/bed/roller(R)
@@ -141,7 +141,7 @@
 
 /obj/item/roller/robo/examine(mob/user)
 	..()
-	user << "The dock is [loaded ? "loaded" : "empty"]"
+	to_chat(user, "The dock is [loaded ? "loaded" : "empty"]")
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
@@ -150,7 +150,7 @@
 		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
 		loaded = null
 	else
-		user << "<span class='warning'>The dock is empty!</span>"
+		to_chat(user, "<span class='warning'>The dock is empty!</span>")
 
 //Dog bed
 

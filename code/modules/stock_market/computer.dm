@@ -9,6 +9,8 @@
 	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	clockwork = TRUE //it'd look weird
 
+	light_color = LIGHT_COLOR_GREEN
+
 /obj/machinery/computer/stockexchange/New()
 	..()
 	logged_in = "[station_name()] Cargo Department"
@@ -20,7 +22,7 @@
 
 /obj/machinery/computer/stockexchange/attack_ai(mob/user)
 	return attack_hand(user)
-	
+
 /obj/machinery/computer/stockexchange/attack_robot(mob/user)
 	return attack_hand(user)
 
@@ -176,12 +178,12 @@ a.updated {
 		return
 	var/li = logged_in
 	if (!li)
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 	var/b = SSshuttle.points
 	var/avail = S.shareholders[logged_in]
 	if (!avail)
-		user << "<span class='danger'>This account does not own any shares of [S.name]!</span>"
+		to_chat(user, "<span class='danger'>This account does not own any shares of [S.name]!</span>")
 		return
 	var/price = S.current_value
 	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
@@ -195,14 +197,14 @@ a.updated {
 		return
 	b = SSshuttle.points
 	if (!isnum(b))
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 
 	var/total = amt * S.current_value
 	if (!S.sellShares(logged_in, amt))
-		user << "<span class='danger'>Could not complete transaction.</span>"
+		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
-	user << "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
+	to_chat(user, "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
 	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
@@ -210,11 +212,11 @@ a.updated {
 		return
 	var/li = logged_in
 	if (!li)
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 	var/b = balance()
 	if (!isnum(b))
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 	var/avail = S.available_shares
 	var/price = S.current_value
@@ -226,26 +228,26 @@ a.updated {
 		return
 	b = balance()
 	if (!isnum(b))
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 
 	amt = min(amt, S.available_shares, round(b / S.current_value))
 	if (!amt)
 		return
 	if (!S.buyShares(logged_in, amt))
-		user << "<<span class='danger'>Could not complete transaction.</span>"
+		to_chat(user, "<<span class='danger'>Could not complete transaction.</span>")
 		return
 
 	var/total = amt * S.current_value
-	user << "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
+	to_chat(user, "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
 	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
 	if (B.stock.borrow(B, logged_in))
-		user << "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>"
+		to_chat(user, "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>")
 		stockExchange.add_log(/datum/stock_log/borrow, user.name, B.stock.name, B.share_amount, B.deposit)
 	else
-		user << "<span class='danger'>Could not complete transaction. Check your account balance.</span>"
+		to_chat(user, "<span class='danger'>Could not complete transaction. Check your account balance.</span>")
 
 /obj/machinery/computer/stockexchange/Topic(href, href_list)
 	if (..())

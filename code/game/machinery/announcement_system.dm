@@ -61,7 +61,7 @@ var/list/announcement_systems = list()
 		add_overlay(errorlight)
 
 /obj/machinery/announcement_system/Destroy()
-	qdel(radio)
+	QDEL_NULL(radio)
 	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
@@ -73,12 +73,12 @@ var/list/announcement_systems = list()
 	if(istype(P, /obj/item/weapon/screwdriver))
 		playsound(src.loc, P.usesound, 50, 1)
 		panel_open = !panel_open
-		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
+		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
 	else if(istype(P, /obj/item/device/multitool) && panel_open && (stat & BROKEN))
-		user << "<span class='notice'>You reset [src]'s firmware.</span>"
+		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
 		stat &= ~BROKEN
 		update_icon()
 	else
@@ -97,9 +97,10 @@ var/list/announcement_systems = list()
 
 	if(message_type == "ARRIVAL" && arrivalToggle)
 		message = CompileText(arrival, user, rank)
-
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
+	else if(message_type == "ARRIVALS_BROKEN")
+		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, list(SPAN_ROBOT))
@@ -159,7 +160,7 @@ var/list/announcement_systems = list()
 	if(!issilicon(user))
 		return
 	if(stat & BROKEN)
-		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"
+		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
 		return
 	interact(user)
 
