@@ -2,8 +2,8 @@
 #define pick_list_replacements(FILE, KEY) (strings_replacement(FILE, KEY))
 #define json_load(FILE) (json_decode(file2text(FILE)))
 
-var/global/list/string_cache
-var/global/string_filename_current_key
+GLOBAL_LIST(string_cache)
+GLOBAL_VAR(string_filename_current_key)
 
 
 /proc/strings_replacement(filename, key)

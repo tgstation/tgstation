@@ -763,9 +763,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
-var/list/can_embed_types = typecacheof(list(
+GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/stack/rods,
-	/obj/item/pipe))
+	/obj/item/pipe)))
 
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
@@ -780,7 +780,7 @@ var/list/can_embed_types = typecacheof(list(
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = typecacheof(list(
+GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
@@ -788,14 +788,14 @@ var/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
-	))
+	)))
 
-var/list/WALLITEMS_EXTERNAL = typecacheof(list(
+GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
 	/obj/machinery/camera, /obj/structure/camera_assembly,
-	/obj/structure/light_construct, /obj/machinery/light))
+	/obj/structure/light_construct, /obj/machinery/light)))
 
-var/list/WALLITEMS_INVERSE = typecacheof(list(
-	/obj/structure/light_construct, /obj/machinery/light))
+GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
+	/obj/structure/light_construct, /obj/machinery/light)))
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
@@ -1372,7 +1372,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 //Set this to TRUE before calling
 //This prevents RCEs from badmins
 //kevinz000 if you touch this I will hunt you down
-var/valid_HTTPSGet = FALSE
+GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 /proc/HTTPSGet(url)
 	if(findtext(url, "\""))
 		valid_HTTPSGet = FALSE

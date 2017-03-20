@@ -334,10 +334,10 @@
 		new_text += copytext(text, i, i+1)
 	return new_text
 
-var/list/zero_character_only = list("0")
-var/list/hex_characters = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
-var/list/alphabet = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-var/list/binary = list("0","1")
+GLOBAL_LIST_INIT(zero_character_only, list("0"))
+GLOBAL_LIST_INIT(hex_characters, list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"))
+GLOBAL_LIST_INIT(alphabet, list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_string(length, list/characters)
 	. = ""
 	for(var/i=1, i<=length, i++)

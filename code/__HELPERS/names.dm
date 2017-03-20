@@ -9,8 +9,8 @@
 /proc/plasmaman_name()
 	return "[pick(plasmaman_names)] \Roman[rand(1,99)]"
 
-var/church_name = null
 /proc/church_name()
+	var/static/church_name
 	if (church_name)
 		return church_name
 
@@ -26,7 +26,7 @@ var/church_name = null
 
 	return name
 
-var/command_name = null
+GLOBAL_VAR(command_name)
 /proc/command_name()
 	if (command_name)
 		return command_name
@@ -42,8 +42,8 @@ var/command_name = null
 
 	return name
 
-var/religion_name = null
 /proc/religion_name()
+	var/static/religion_name
 	if (religion_name)
 		return religion_name
 
@@ -113,8 +113,8 @@ var/religion_name = null
 			new_station_name += pick("13","XIII","Thirteen")
 	return new_station_name
 
-var/syndicate_name = null
 /proc/syndicate_name()
+	var/static/syndicate_name
 	if (syndicate_name)
 		return syndicate_name
 
@@ -145,8 +145,8 @@ var/syndicate_name = null
 
 
 //Traitors and traitor silicons will get these. Revs will not.
-var/syndicate_code_phrase//Code phrase for traitors.
-var/syndicate_code_response//Code response for traitors.
+GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
+GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 
 	/*
 	Should be expanded.

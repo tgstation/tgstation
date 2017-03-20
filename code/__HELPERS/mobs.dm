@@ -117,7 +117,7 @@
 /proc/random_skin_tone()
 	return pick(skin_tones)
 
-var/list/skin_tones = list(
+GLOBAL_LIST_INIT(skin_tones, list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -130,10 +130,10 @@ var/list/skin_tones = list(
 	"indian",
 	"african1",
 	"african2"
-	)
+	))
 
-var/global/list/species_list[0]
-var/global/list/roundstart_species[0]
+GLOBAL_LIST_INIT(species_list, list())
+GLOBAL_LIST_INIT(roundstart_species, list())
 
 /proc/age2agedescription(age)
 	switch(age)
