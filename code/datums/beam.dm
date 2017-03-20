@@ -7,7 +7,6 @@
 	var/icon
 	var/icon_state = "" //icon state of the main segments of the beam
 	var/max_distance = 0
-	var/endtime = 0
 	var/sleep_time = 3
 	var/finished = 0
 	var/target_oldloc = null
@@ -18,7 +17,6 @@
 	var/recalculating = FALSE
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
-	endtime = world.time+time
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
@@ -31,9 +29,11 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
+	addtimer(CALLBACK(src,.proc/End), time)
 
 /datum/beam/proc/Start()
-	INVOKE_ASYNC(src, /datum/beam/.proc/recalculate)
+	Draw()
+	recalculate_in(sleep_time)
 
 /datum/beam/proc/recalculate()
 	if(recalculating)
@@ -41,7 +41,7 @@
 		return
 	recalculating = TRUE
 	timing_id = null
-	if(origin && target && world.time < endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
+	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
 		var/origin_turf = get_turf(origin)
 		var/target_turf = get_turf(target)
 		if(!static_beam && (origin_turf != origin_oldloc || target_turf != target_oldloc))
