@@ -198,7 +198,7 @@
 	weather_overlay = "acid_rain"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
-	weather_sound = 'sound/lavaland/acidrain_mid.ogg'
+	weather_sound = 'sound/ambience/acidrain_mid.ogg'
 
 	end_duration = 100
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
