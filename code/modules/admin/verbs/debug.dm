@@ -776,7 +776,7 @@ var/list/TYPES_SHORTCUTS = list(
 /client/proc/pump_random_event()
 	set category = "Debug"
 	set name = "Pump Random Event"
-	set desc = "Scheudules the event subsystem to fire a new random event immediately."
+	set desc = "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification."
 	if(!holder)
 		return
 
