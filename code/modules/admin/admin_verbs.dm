@@ -153,7 +153,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/jump_to_ruin,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/toggle_medal_disable,
-	/client/proc/view_runtimes
+	/client/proc/view_runtimes,
+	/client/proc/pump_random_event
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

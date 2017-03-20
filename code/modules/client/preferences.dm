@@ -1265,7 +1265,10 @@ var/list/preferences_datums = list()
 		if(!initial(organ_eyes.eye_color))
 			organ_eyes.eye_color = eye_color
 		organ_eyes.old_eye_color = eye_color
+<<<<<<< HEAD
 
+=======
+>>>>>>> 67ffcb10cc7f421ecfff1401adbb3423a4401b0a
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 

@@ -149,7 +149,7 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		if(clockwork_caches)
+		if(clockwork_caches) //show components on examine
 			to_chat(user, "<b>Stored components (with global cache):</b>")
 			for(var/i in stored_components)
 				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
@@ -369,17 +369,17 @@
 		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 	return textlist.Join()
 
-/obj/item/clockwork/slab/ui_data(mob/user)
+/obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
 	data["components"] = stored_components.Copy()
 	var/list/temp_data = list("<font color=#B18B25>")
-	for(var/i in data["components"])
+	for(var/i in data["components"]) //display the slab's components
 		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i]]</b></font>"
 		if(i != HIEROPHANT_ANSIBLE)
 			temp_data += " "
 		else
 			temp_data += " ("
-	if(clockwork_caches)
+	if(clockwork_caches) //if we have caches, display what's in the global cache
 		for(var/i in clockwork_component_cache)
 			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + clockwork_component_cache[i]]</b></font>"
 			if(i != HIEROPHANT_ANSIBLE)
@@ -390,7 +390,7 @@
 	temp_data = temp_data.Join()
 	data["components"] = temp_data
 
-	switch(selected_scripture)
+	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
 			data["tier_info"] = "<font color=#B18B25><i>These scriptures are always unlocked.</i></font>"
 		if(SCRIPTURE_SCRIPT)
@@ -405,7 +405,7 @@
 	data["selected"] = selected_scripture
 
 	data["target_comp"] = "<font color=#B18B25>NONE</font>"
-	if(target_component_id)
+	if(target_component_id) //if we have a component to make, display that, too
 		data["target_comp"] = "<font color=[get_component_color_bright(target_component_id)]>[get_component_acronym(target_component_id)]</font>"
 
 	generate_all_scripture()
@@ -413,7 +413,7 @@
 	data["scripture"] = list()
 	for(var/s in all_scripture)
 		var/datum/clockwork_scripture/S = all_scripture[s]
-		if(S.tier == selected_scripture)
+		if(S.tier == selected_scripture) //display only scriptures of the selected tier
 			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
 			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
@@ -493,7 +493,7 @@
 
 /obj/item/clockwork/slab/proc/update_quickbind()
 	for(var/datum/action/item_action/clock/quickbind/Q in actions)
-		qdel(Q)
+		qdel(Q) //regenerate all our quickbound scriptures
 	if(LAZYLEN(quickbound))
 		for(var/i in 1 to quickbound.len)
 			if(!quickbound[i])
@@ -503,7 +503,7 @@
 			var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[i]]
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
 			var/list/temp_desc = list()
-			for(var/c in quickbind_slot.consumed_components)
+			for(var/c in quickbind_slot.consumed_components) //show how much the bound scripture costs
 				if(quickbind_slot.consumed_components[c])
 					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_acronym(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
 			if(LAZYLEN(temp_desc))
