@@ -34,7 +34,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	origin_tech = "combat=5,biotech=5"
+	origin_tech = "combat=5;biotech=5"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 10
