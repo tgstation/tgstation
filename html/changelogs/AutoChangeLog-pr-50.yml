@@ -1,7 +1,0 @@
-author: "Guyonbroadway"
-delete-after: True
-changes: 
-  - tweak: "The Judicial Visor's Cooldown has been reduced to 10 seconds, and down to 2 when Ratvar is alive. (Was 30 and 3 respectivly)"
-  - tweak: "Clockwork slabs and caches now produce components much faster so you can freely spend them on more fun things like guardians and judicial visors."
-  - tweak: "the clockwork proselytizer (seriously, who the fuck came up with that name?) now charges twice as fast."
-  - tweak: "The geis conversion spell now converts converts much faster, to the point where early game it's near impossible for a new convert to break out of the ring on their own. Later game it is possible to resist out."
