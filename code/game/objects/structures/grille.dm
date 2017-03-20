@@ -257,7 +257,7 @@
 	grille_type = /obj/structure/grille/ratvar
 	broken_type = null
 
-/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/structure/grille/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
