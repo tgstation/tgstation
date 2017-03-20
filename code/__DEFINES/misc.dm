@@ -182,7 +182,7 @@
 //Key:
 //"entered-[blood_state]-[dir_of_image]"
 //or: "exited-[blood_state]-[dir_of_image]"
-var/list/bloody_footprints_cache = list()
+GLOBAL_LIST_INIT(list/bloody_footprints_cache, list())
 
 //Bloody shoes/footprints
 #define MAX_SHOE_BLOODINESS			100
@@ -247,7 +247,7 @@ var/list/bloody_footprints_cache = list()
 
 #define GHOST_ACCS_DEFAULT_OPTION	GHOST_ACCS_FULL
 
-var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL) //So save files can be sanitized properly.
+GLOBAL_LIST_INIT(ghost_accs_options, list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL)) //So save files can be sanitized properly.
 
 #define GHOST_OTHERS_SIMPLE 			1
 #define GHOST_OTHERS_DEFAULT_SPRITE		50
@@ -263,7 +263,7 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 #define GHOST_MAX_VIEW_RANGE_MEMBER 14
 
 
-var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
+GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING)) //Same as ghost_accs_options.
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"
