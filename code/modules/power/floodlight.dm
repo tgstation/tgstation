@@ -4,7 +4,8 @@
 	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight"
-	anchored = 1
+	anchored = FALSE
+	density = TRUE
 	idle_power_usage = 100
 	active_power_usage = 1000
 	var/list/light_setting_list = list(0, 5, 10, 15)
@@ -31,7 +32,7 @@
 	if(val > 1)
 		icon_state = "[icon_state]_on"
 	else
-		icon_state = initial(icon_state)
+		icon_state = "floodlight"
 	switch(val)
 		if(1)
 			setting_text = "OFF"
@@ -46,15 +47,13 @@
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
-		if(!anchored && !isinspace())
+		default_unfasten_wrench(user, O, time = 20)
+		if(anchored)
 			connect_to_network()
-			to_chat(user, "<span class='notice'>You secure the floodlight to the floor.</span>")
-			anchored = 1
-		else if(anchored)
+		else
 			disconnect_from_network()
-			to_chat(user, "<span class='notice'>You unsecure the floodlight from the floor.</span>")
-			anchored = 0
-	. = ..()
+	else
+		. = ..()
 
 /obj/machinery/power/floodlight/attack_hand(mob/user)
 	var/current = setting
