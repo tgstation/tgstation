@@ -182,7 +182,7 @@
 //Key:
 //"entered-[blood_state]-[dir_of_image]"
 //or: "exited-[blood_state]-[dir_of_image]"
-GLOBAL_LIST_INIT(list/bloody_footprints_cache, list())
+GLOBAL_LIST_INIT(bloody_footprints_cache, list())
 
 //Bloody shoes/footprints
 #define MAX_SHOE_BLOODINESS			100
