@@ -146,10 +146,10 @@
 	taste_description = "burning"
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	M.IgniteMob()
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
+	M.IgniteMob()
 	..()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/M)
