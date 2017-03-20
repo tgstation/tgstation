@@ -6,7 +6,12 @@
   * Odds are, there is a reason
   *
  **/
-GLOBAL_DATUM(Master, /datum/controller/master)
+
+//This is to get around the global variable ban, and it's the ONLY thing that should do so
+#define MASTER_CREATE var/datum/controller/master/Master = new; GLOBAL_MANAGED(Master)
+MASTER_CREATE
+#undef MASTER_CREATE
+
 GLOBAL_VAR_INIT(MC_restart_clear, 0)
 GLOBAL_VAR_INIT(MC_restart_timeout, 0)
 GLOBAL_VAR_INIT(MC_restart_count, 0)
@@ -62,6 +67,18 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		else
 			init_subtypes(/datum/controller/subsystem, subsystems)
 		Master = src
+	
+	var/static/first_run = TRUE
+	if(first_run)
+		first_run = FALSE
+
+		#ifdef TESTING
+		var/start_time = REALTIMEOFDAY
+		#endif
+		world.InitGlobals()
+		#ifdef TESTING
+		testing("Globals initialization took [(REALTIMEOFDAY - start_time)/10]s.")
+		#endif
 
 /datum/controller/master/Destroy()
 	..()

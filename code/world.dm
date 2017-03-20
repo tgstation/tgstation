@@ -16,14 +16,6 @@
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
-	#ifdef TESTING
-	var/start_time = timeofday
-	#endif
-	InitGlobals()
-	#ifdef TESTING
-	testing("Global initialization took [(timeofday - start_time)/10]s.")
-	#endif
-
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
