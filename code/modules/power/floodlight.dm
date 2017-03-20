@@ -13,7 +13,7 @@
 
 /obj/machinery/power/floodlight/process()
 	if(avail(active_power_usage))
-		add_load(active_power_usage))
+		add_load(active_power_usage)
 	else
 		change_setting(1)
 
@@ -48,11 +48,11 @@
 	if(istype(O, /obj/item/weapon/wrench))
 		if(!anchored && !isinspace())
 			connect_to_network()
-			to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
+			to_chat(user, "<span class='notice'>You secure the floodlight to the floor.</span>")
 			anchored = 1
 		else if(anchored)
 			disconnect_from_network()
-			to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
+			to_chat(user, "<span class='notice'>You unsecure the floodlight from the floor.</span>")
 			anchored = 0
 	. = ..()
 
