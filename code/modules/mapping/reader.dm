@@ -48,6 +48,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/key_len = 0
 
 	var/stored_index = 1
+	var/zexpansion_status
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
 
@@ -81,6 +82,8 @@ var/global/dmm_suite/preloader/_preloader = new
 					continue
 				else
 					world.maxz = zcrd //create a new z_level if needed
+				if(!no_changeturf)
+					WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
