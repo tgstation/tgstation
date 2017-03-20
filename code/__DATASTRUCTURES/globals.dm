@@ -38,7 +38,7 @@ GLOBAL_INIT(X, InitValue)
 #define GLOBAL_DATUM_INIT(X, Typepath, InitValue) GLOBAL_RAW(Typepath/##X)\
 GLOBAL_INIT(X, InitValue)
 
-#define GLOBAL_VAR(X) GLOBAL_RAW(##X)\
+#define GLOBAL_VAR(X) GLOBAL_RAW(/##X)\
 GLOBAL_MANAGED(X)
 
 #define GLOBAL_LIST(X) GLOBAL_RAW(list/##X)\
