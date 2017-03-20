@@ -12,8 +12,8 @@
 	var/max_ext_mol = INFINITY
 	var/max_ext_kpa = 6500
 	var/overlay_color = "#FFFFFF"
-	var/active = FALSE
-	var/power_draw = 1	//0 = none, 1 = static, 2 = scaled to mols, 3 = scaled to kpa, 4 = scaled to kpa+mol
+	var/active = TRUE
+	var/power_draw = 0	//0 = none, 1 = static, 2 = scaled to mols, 3 = scaled to kpa, 4 = scaled to kpa+mol
 	var/power_draw_static = 2000
 	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
@@ -38,11 +38,8 @@
 	return TRUE
 
 /obj/machinery/atmospherics/miner/proc/update_power()
-	if(!check_operation())
+	if(!active)
 		active_power_usage = idle_power_usage
-		if(active)
-			active = FALSE
-		return FALSE
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/G = T.return_air()
 	var/P = G.return_pressure()
@@ -88,7 +85,7 @@
 /obj/machinery/atmospherics/miner/process()
 	update_power()
 	update_icon()
-	if(active)
+	if(active && check_operation())
 		if(isnull(spawn_id))
 			return FALSE
 		var/used = do_use_power(active_power_usage)
