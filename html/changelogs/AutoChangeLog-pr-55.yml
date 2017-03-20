@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "Lattices now require wirecutters to deconstruct, rather than welding tools."

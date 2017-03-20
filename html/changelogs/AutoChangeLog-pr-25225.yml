@@ -1,4 +1,4 @@
-author: "HonkBot"
+author: "ExcessiveUseOfCobblestone"
 delete-after: True
 changes: 
   - experiment: "All core traits [Hydroponics] scale with the parts in the gene machine. Time to beg Duke's Guide Read.... I mean RND!"

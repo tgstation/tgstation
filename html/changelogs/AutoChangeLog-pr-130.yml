@@ -1,4 +1,0 @@
-author: "Penguaro"
-delete-after: True
-changes: 
-  - bugfix: "change access variables for turrets and shield gens"
