@@ -91,7 +91,7 @@
         "HOMOSEXUAL",
         "HETEROSEXUAL",
         "SEXUAL",
-	"BLOODY",
+        "BLOODY",
         "COLORFUL",
         "DRAB",
         "DULL",
@@ -159,7 +159,8 @@
         "BROWN",
         "GREY",
         "RAINBOW",
-	"IMPERFECT",
+        "IMPERFECT",
+        "DERANGED"
     ],
     "ionthinksof": [
         "HAS",
