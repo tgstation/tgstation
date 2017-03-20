@@ -77,23 +77,23 @@
 
 /turf/open/floor/engine/n2o
 	name = "n2o floor"
-	initial_gas_mix = "n2o=500;TEMP=293.15"
+	initial_gas_mix = "n2o=6000;TEMP=293.15"
 
 /turf/open/floor/engine/co2
 	name = "co2 floor"
-	initial_gas_mix = "co2=500;TEMP=293.15"
+	initial_gas_mix = "co2=50000;TEMP=293.15"
 
 /turf/open/floor/engine/plasma
 	name = "plasma floor"
-	initial_gas_mix = "plasma=1000;TEMP=293.15"
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
 
 /turf/open/floor/engine/o2
 	name = "o2 floor"
-	initial_gas_mix = "o2=1000;TEMP=293.15"
+	initial_gas_mix = "o2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/n2
 	name = "n2 floor"
-	initial_gas_mix = "n2=1000;TEMP=293.15"
+	initial_gas_mix = "n2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/air
 	name = "air floor"
