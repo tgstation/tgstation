@@ -14,6 +14,10 @@ var/global/dmm_suite/preloader/_preloader = new
 		// /^[\s\n]+|[\s\n]+$/
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	var/static/list/modelCache = list()
+	var/static/space_key
+	#ifdef TESTING
+	var/static/turfsSkipped
+	#endif
 
 /**
  * Construct the model map and control the loading process
@@ -28,7 +32,15 @@ var/global/dmm_suite/preloader/_preloader = new
 /dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
+	space_key = null
+	#ifdef TESTING
+	turfsSkipped = 0
+	#endif
 	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+	#ifdef TESTING
+	if(turfsSkipped)
+		testing("Skipped loading [turfsSkipped] default turfs")
+	#endif
 	Master.StopLoadingMap()
 
 /dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
@@ -48,7 +60,6 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/key_len = 0
 
 	var/stored_index = 1
-	var/zexpansion_status
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
 
@@ -129,11 +140,16 @@ var/global/dmm_suite/preloader/_preloader = new
 
 							if(xcrd >= 1)
 								var/model_key = copytext(line, tpos, tpos + key_len)
-								if(!grid_models[model_key])
-									throw EXCEPTION("Undefined model key in DMM.")
-								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+								var/no_afterchange = no_changeturf || zexpansion
+								if(!no_afterchange || (model_key != space_key))
+									if(!grid_models[model_key])
+										throw EXCEPTION("Undefined model key in DMM.")
+									parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+								#ifdef TESTING
+								else
+									++turfsSkipped
+								#endif
 								CHECK_TICK
-
 							maxx = max(maxx, xcrd)
 							++xcrd
 					--ycrd
@@ -170,7 +186,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
+/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -227,6 +243,18 @@ var/global/dmm_suite/preloader/_preloader = new
 
 			CHECK_TICK
 		while(dpos != 0)
+
+		//check and see if we can just skip this turf
+		//So you don't have to understand this horrid statement, we can do this if
+		// 1. no_changeturf is set
+		// 2. the space_key isn't set yet
+		// 3. there are exactly 2 members
+		// 4. with no attributes
+		// 5. and the members are world.turf and world.area
+		if(no_changeturf && !space_key && members.len == 2 && members_attributes.len == 2 && length(members_attributes[1]) == 0 && length(members_attributes[2]) == 0 && (world.area in members) && (world.turf in members))
+			space_key = model_key
+			return
+
 
 		modelCache[model] = list(members, members_attributes)
 
