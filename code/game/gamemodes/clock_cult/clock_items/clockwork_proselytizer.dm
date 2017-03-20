@@ -136,7 +136,7 @@
 			else
 				to_chat(user, "<span class='alloy'>It can convert brass to power at a rate of <b>1:[POWER_FLOOR]W</b>.</span>")
 			to_chat(user, "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power, and is gaining <b>[charge_rate*0.5]W</b> of power per second.</span>")
-			to_chat(user, "<span class='alloy'>Use it in-hand to produce brass sheets.</span>")
+			to_chat(user, "<span class='alloy'>Use it in-hand to produce <b>5</b> brass sheets at a cost of <b>[POWER_WALL_TOTAL]W</b> power.</span>")
 
 /obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
