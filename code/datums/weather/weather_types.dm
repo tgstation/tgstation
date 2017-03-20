@@ -192,17 +192,17 @@
 
 	telegraph_duration = 400
 	telegraph_message = "<span class='danger'>Stinging droplets start to fall upon you..</span>"
-	telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'
+	telegraph_sound = 'sound/ambience/acidrain_start.ogg'
 
 	weather_message = "<span class='userdanger'><i>Your skin melts underneath the rain!</i></span>"
 	weather_overlay = "acid_rain"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
-	weather_sound = 'sound/lavaland/ash_storm_start.ogg'
+	weather_sound = 'sound/lavaland/acidrain_mid.ogg'
 
 	end_duration = 100
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
-	end_sound = 'sound/lavaland/ash_storm_end.ogg'
+	end_sound = 'sound/ambience/acidrain_end.ogg'
 
 	area_type = /area/lavaland/surface/outdoors
 	target_z = ZLEVEL_LAVALAND
