@@ -5,8 +5,11 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
-	var/dispensedreagent = "water" // for whenever plumbing happens
+	var/use_reagents = TRUE//If we're reliant on the plumbing system
 
+/obj/structure/sink/Initialize()
+	create_reagents(15)
+	..()
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	if(!user || !istype(user))
@@ -15,10 +18,14 @@
 		return
 	if(!Adjacent(user))
 		return
-
+	if(!reagents.total_volume && !plumbing_has_reagents(15) && use_reagents) //15 units per use
+		to_chat(user, "<span class='warning'>Nothing comes out of the spigot!</span>")
+		return
 	if(busy)
 		to_chat(user, "<span class='notice'>Someone's already washing here.</span>")
 		return
+	if(use_reagents)
+		master_plumber.request_liquid(src, 15)
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
 	if(selected_area in list("head", "mouth", "eyes"))
@@ -33,6 +40,11 @@
 
 	busy = 0
 
+	if(!reagents.total_volume && !plumbing_has_reagents(15) && use_reagents)
+		to_chat(user, "<span class='warning'>The spigot suddenly runs dry!</span>")
+		return
+	if(use_reagents)
+		master_plumber.request_liquid(src, 15)
 	user.visible_message("<span class='notice'>[user] washes their [washing_face ? "face" : "hands"] using [src].</span>", \
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
 	if(washing_face)
@@ -45,6 +57,7 @@
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
 		user.clean_blood()
+	reagents.reaction(user, TOUCH)
 
 
 /obj/structure/sink/attackby(obj/item/O, mob/user, params)
@@ -56,13 +69,27 @@
 		var/obj/item/weapon/reagent_containers/RG = O
 		if(RG.container_type & OPENCONTAINER)
 			if(!RG.reagents.holder_full())
-				RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+				var/vol_to_grab = min(RG.volume - RG.reagents.total_volume, min(RG.amount_per_transfer_from_this, 15))
+				if(reagents.total_volume || !use_reagents)
+					if(use_reagents)
+						reagents.trans_to(RG, vol_to_grab)
+					else
+						RG.reagents.add_reagent("water", vol_to_grab)
+					if(RG.reagents.holder_full())
+						to_chat(user, "<span class='notice'>You fill [RG] to the brim from [src].</span>")
+					else
+						to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+				else
+					if(!plumbing_has_reagents(vol_to_grab))
+						to_chat(user, "<span class='warning'>Nothing comes out of the spigot!</span>")
+						return
+					to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+					master_plumber.request_liquid(RG, vol_to_grab)
 				return TRUE
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
 			return FALSE
 
-	if(istype(O, /obj/item/weapon/melee/baton))
+	if(istype(O, /obj/item/weapon/melee/baton) && (plumbing_has_reagents(1) || !use_reagents)) //As long as there's anything at all!
 		var/obj/item/weapon/melee/baton/B = O
 		if(B.bcell)
 			if(B.bcell.charge > 0 && B.status == 1)
@@ -78,7 +105,13 @@
 				return
 
 	if(istype(O, /obj/item/weapon/mop))
-		O.reagents.add_reagent("[dispensedreagent]", 5)
+		if(!plumbing_has_reagents(5) && use_reagents)
+			to_chat(user, "<span class='warning'>Nothing comes out of the spigot!</span>")
+			return
+		if(use_reagents)
+			master_plumber.request_liquid(O, 5)
+		else
+			O.reagents.add_reagent("water", 5)
 		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return
@@ -96,17 +129,24 @@
 		return
 
 	if(user.a_intent != INTENT_HARM)
+		if(!plumbing_has_reagents(15) && use_reagents)
+			to_chat(user, "<span class='warning'>Nothing comes out of the spigot!</span>")
+			return
 		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
 		busy = 1
 		if(!do_after(user, 40, target = src))
 			busy = 0
 			return 1
+		if(!plumbing_has_reagents(15) && use_reagents)
+			to_chat(user, "<span class='warning'>The spigot suddenly runs dry!</span>")
+			return
 		busy = 0
+		if(use_reagents)
+			master_plumber.request_liquid(src, 15)
 		O.clean_blood()
 		O.acid_level = 0
-		create_reagents(5)
-		reagents.add_reagent("[dispensedreagent]", 5)
 		reagents.reaction(O, TOUCH)
+		reagents.clear_reagents()
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
@@ -128,6 +168,7 @@
 	name = "puddle"
 	desc = "A puddle used for washing one's hands and face."
 	icon_state = "puddle"
+	use_reagents = FALSE
 
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"

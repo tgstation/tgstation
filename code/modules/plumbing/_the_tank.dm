@@ -1,5 +1,8 @@
 var/obj/machinery/plumbing_tank/master_plumber //Cool name, right?
 
+/proc/plumbing_has_reagents(volume)
+	return master_plumber && master_plumber.reagents.total_volume >= volume
+
 //The master reservoir connected to all plumbing on the station. Synthesizes power into reagents.
 /obj/machinery/plumbing_tank
 	name = "master plumbing tank"
@@ -119,20 +122,11 @@ var/obj/machinery/plumbing_tank/master_plumber //Cool name, right?
 		user.visible_message("<span class='notice'>[user] turns a dial on [src].</span>", "<span class='notice'>You switch the dial to [new_mode][!user.ear_deaf ? mode_fluff : ""].")
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
-/obj/machinery/plumbing_tank/proc/request_liquid(obj/requester, reagent_volume, reagent_id)
-	if(reagent_id)
-		if(!reagents.get_reagent_amount(reagent_id) < reagent_volume)
-			return
-		reagents.remove_reagent(reagent_id, reagent_volume)
-		if(requester.reagents)
-			requester.reagents.add_reagent(reagent_id, reagent_volume)
-		return TRUE
-	else
-		if(reagents.total_volume < reagent_volume)
-			return
-		for(var/V in reagents.reagent_list)
-			var/datum/reagent/R = V
-			reagents.remove_reagent(R.id, reagent_volume / reagents.reagent_list.len)
-			if(requester.reagents)
-				requester.reagents.add_reagent(R.id, reagent_volume / reagents.reagent_list.len)
-		return TRUE
+/obj/machinery/plumbing_tank/proc/request_liquid(atom/requester, reagent_volume)
+	if(reagents.total_volume < reagent_volume || !requester.reagents)
+		return
+	for(var/V in reagents.reagent_list)
+		var/datum/reagent/R = V
+		reagents.remove_reagent(R.id, reagent_volume / reagents.reagent_list.len)
+		requester.reagents.add_reagent(R.id, reagent_volume / reagents.reagent_list.len)
+	return TRUE
