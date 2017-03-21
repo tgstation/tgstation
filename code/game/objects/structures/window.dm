@@ -27,7 +27,7 @@
 
 /obj/structure/window/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
 	..()
@@ -56,6 +56,20 @@
 		debris += new /obj/item/weapon/shard(src)
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
+
+/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
+	return FALSE
+
+/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
+			qdel(src)
+			return TRUE
+	return FALSE
 
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
@@ -560,18 +574,3 @@
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE
-
-
-/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
-	switch(the_rcd.mode)
-		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
-	return FALSE
-
-/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
-	switch(the_rcd.mode)
-		if(RCD_DECONSTRUCT)
-			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
-			qdel(src)
-			return TRUE
-	return FALSE
