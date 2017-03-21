@@ -330,10 +330,6 @@
 /obj/structure/flora/grass/jungle/b
 	icon_state = "grassb"
 
-/obj/structure/flora/grass/jungle/b/New()
-	icon_state = "[icon_state][rand(1, 5)]"
-	..()
-
 //Jungle rocks
 
 /obj/structure/flora/rock/jungle
@@ -361,13 +357,5 @@
 /obj/structure/flora/junglebush/b
 	icon_state = "bushb"
 
-/obj/structure/flora/junglebush/b/New()
-	icon_state = "[icon_state][rand(1, 3)]"
-	..()
-
 /obj/structure/flora/junglebush/c
 	icon_state = "bushc"
-
-/obj/structure/flora/junglebush/c/New()
-	icon_state = "[icon_state][rand(1, 3)]"
-	..()
