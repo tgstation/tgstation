@@ -40,4 +40,4 @@
 	item_state = "atmos_reward"
 	item_color = "atmos_reward"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 20, bio = 20, rad = 20, fire = 80, acid = 20)
-resistance_flags = 0
+	resistance_flags = 0
