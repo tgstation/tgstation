@@ -5,10 +5,10 @@
 	name = "chasm"
 	desc = "Watch your step."
 	baseturf = /turf/open/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
-	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
+	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
