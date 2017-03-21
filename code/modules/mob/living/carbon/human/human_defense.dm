@@ -316,7 +316,6 @@
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
 		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
 
-
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 25)

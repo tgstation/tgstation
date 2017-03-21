@@ -39,12 +39,10 @@
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
-	..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H.check_shields(0, "the full force of [name]'s blow", src, attack_type = MELEE_ATTACK))
-			return 0
-		H.adjustStaminaLoss(8)
+	if(..())
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.adjustStaminaLoss(8)
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"

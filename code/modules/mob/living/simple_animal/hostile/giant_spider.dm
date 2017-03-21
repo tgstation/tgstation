@@ -9,17 +9,11 @@
 	var/poison_type = "toxin"
 
 /mob/living/simple_animal/hostile/poison/AttackingTarget()
-	..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if (H.check_shields(0, "the [name]'s poison tendrils", src, attack_type = MELEE_ATTACK))
-				return 0
-		if(L.reagents)
-			L.reagents.add_reagent(poison_type, poison_per_bite)
-
-
+	if(..())
+		if(isliving(target))
+			var/mob/living/L = target
+			if(L.reagents)
+				L.reagents.add_reagent(poison_type, poison_per_bite)
 
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
