@@ -79,6 +79,10 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		#ifdef TESTING
 		testing("Globals initialization took [(REALTIMEOFDAY - start_time)/10]s.")
 		#endif
+	
+	#ifndef PROTECT_GLOBAL_VARS_FROM_VV
+	global_vars = SLOTH
+	#endif
 
 /datum/controller/master/Destroy()
 	..()
