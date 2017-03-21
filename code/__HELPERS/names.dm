@@ -2,12 +2,12 @@
 
 /proc/lizard_name(gender)
 	if(gender == MALE)
-		return "[pick(lizard_names_male)]-[pick(lizard_names_male)]"
+		return "[pick(SLOTH.lizard_names_male)]-[pick(SLOTH.lizard_names_male)]"
 	else
-		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
+		return "[pick(SLOTH.lizard_names_female)]-[pick(SLOTH.lizard_names_female)]"
 
 /proc/plasmaman_name()
-	return "[pick(plasmaman_names)] \Roman[rand(1,99)]"
+	return "[pick(SLOTH.plasmaman_names)] \Roman[rand(1,99)]"
 
 /proc/church_name()
 	var/static/church_name
@@ -28,17 +28,17 @@
 
 GLOBAL_VAR(command_name)
 /proc/command_name()
-	if (command_name)
-		return command_name
+	if (SLOTH.command_name)
+		return SLOTH.command_name
 
 	var/name = "Central Command"
 
-	command_name = name
+	SLOTH.command_name = name
 	return name
 
 /proc/change_command_name(name)
 
-	command_name = name
+	SLOTH.command_name = name
 
 	return name
 
@@ -55,20 +55,20 @@ GLOBAL_VAR(command_name)
 	return capitalize(name)
 
 /proc/station_name()
-	if(station_name)
-		return station_name
+	if(SLOTH.station_name)
+		return SLOTH.station_name
 
 	if(config && config.station_name)
-		station_name = config.station_name
+		SLOTH.station_name = config.station_name
 	else
-		station_name = new_station_name()
+		SLOTH.station_name = new_station_name()
 
 	if(config && config.server_name)
-		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
+		world.name = "[config.server_name][config.server_name==SLOTH.station_name ? "" : ": [SLOTH.station_name]"]"
 	else
-		world.name = station_name
+		world.name = SLOTH.station_name
 
-	return station_name
+	return SLOTH.station_name
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -77,7 +77,7 @@ GLOBAL_VAR(command_name)
 
 	//Rare: Pre-Prefix
 	if (prob(10))
-		name = pick(station_prefixes)
+		name = pick(SLOTH.station_prefixes)
 		new_station_name = name + " "
 		name = ""
 
@@ -89,12 +89,12 @@ GLOBAL_VAR(command_name)
 		name = holiday.getStationPrefix()
 		//get normal name
 	if(!name)
-		name = pick(station_names)
+		name = pick(SLOTH.station_names)
 	if(name)
 		new_station_name += name + " "
 
 	// Suffix
-	name = pick(station_suffixes)
+	name = pick(SLOTH.station_suffixes)
 	new_station_name += name + " "
 
 	// ID Number
@@ -102,13 +102,13 @@ GLOBAL_VAR(command_name)
 		if(1)
 			new_station_name += "[rand(1, 99)]"
 		if(2)
-			new_station_name += pick(greek_letters)
+			new_station_name += pick(SLOTH.greek_letters)
 		if(3)
 			new_station_name += "\Roman[rand(1,99)]"
 		if(4)
-			new_station_name += pick(phonetic_alphabet)
+			new_station_name += pick(SLOTH.phonetic_alphabet)
 		if(5)
-			new_station_name += pick(numbers_as_words)
+			new_station_name += pick(SLOTH.numbers_as_words)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 	return new_station_name
@@ -204,9 +204,9 @@ GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 							if(prob(10))
 								code_phrase += pick(lizard_name(MALE),lizard_name(FEMALE))
 							else
-								code_phrase += pick(pick(first_names_male,first_names_female))
+								code_phrase += pick(pick(SLOTH.first_names_male,SLOTH.first_names_female))
 								code_phrase += " "
-								code_phrase += pick(last_names)
+								code_phrase += pick(SLOTH.last_names)
 					if(2)
 						code_phrase += pick(get_all_jobs())//Returns a job.
 				safety -= 1
@@ -241,4 +241,4 @@ GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 		world.name = "[config.server_name]: [designation]"
 	else
 		world.name = designation
-	station_name = designation
+	SLOTH.station_name = designation

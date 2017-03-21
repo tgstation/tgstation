@@ -391,7 +391,7 @@
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")
-					guests_allowed = 0
+					SLOTH.guests_allowed = 0
 				if("usewhitelist")
 					config.usewhitelist = TRUE
 				if("allow_metadata")
@@ -421,9 +421,9 @@
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
-					global.comms_key = value
+					SLOTH.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						global.comms_allowed = 1
+						SLOTH.comms_allowed = 1
 				if("cross_server_address")
 					cross_address = value
 					if(value != "byond:\\address:port")
@@ -437,9 +437,9 @@
 					if(value != "byond:\\address:port")
 						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
-					global.medal_hub = value
+					SLOTH.medal_hub = value
 				if("medal_hub_password")
-					global.medal_pass = value
+					SLOTH.medal_pass = value
 				if("show_irc_name")
 					config.showircname = 1
 				if("see_own_notes")
@@ -716,10 +716,10 @@
 					config.mutant_races				= 1
 				if("roundstart_races")
 					var/race_id = lowertext(value)
-					for(var/species_id in species_list)
+					for(var/species_id in SLOTH.species_list)
 						if(species_id == race_id)
-							roundstart_races += species_list[species_id]
-							roundstart_species[species_id] = species_list[species_id]
+							roundstart_races += SLOTH.species_list[species_id]
+							SLOTH.roundstart_species[species_id] = SLOTH.species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
 				if("assistant_cap")
@@ -747,11 +747,11 @@
 					if (BombCap < 4)
 						BombCap = 4
 
-					MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
-					MAX_EX_HEAVY_RANGE = round(BombCap/2)
-					MAX_EX_LIGHT_RANGE = BombCap
-					MAX_EX_FLASH_RANGE = BombCap
-					MAX_EX_FLAME_RANGE = BombCap
+					SLOTH.MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
+					SLOTH.MAX_EX_HEAVY_RANGE = round(BombCap/2)
+					SLOTH.MAX_EX_LIGHT_RANGE = BombCap
+					SLOTH.MAX_EX_FLASH_RANGE = BombCap
+					SLOTH.MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
 					config.arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
@@ -843,17 +843,17 @@
 			if("sql_enabled")
 				config.sql_enabled = 1
 			if("address")
-				sqladdress = value
+				SLOTH.sqladdress = value
 			if("port")
-				sqlport = value
+				SLOTH.sqlport = value
 			if("feedback_database")
-				sqlfdbkdb = value
+				SLOTH.sqlfdbkdb = value
 			if("feedback_login")
-				sqlfdbklogin = value
+				SLOTH.sqlfdbklogin = value
 			if("feedback_password")
-				sqlfdbkpass = value
+				SLOTH.sqlfdbkpass = value
 			if("feedback_tableprefix")
-				sqlfdbktableprefix = value
+				SLOTH.sqlfdbktableprefix = value
 			else
 				diary << "Unknown setting in configuration: '[name]'"
 

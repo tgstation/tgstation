@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 	/obj/item/weapon/reagent_containers/syringe,
 	/obj/item/weapon/kitchen/fork)))
 
-#define is_pointed(W) (is_type_in_typecache(W, pointed_types))
+#define is_pointed(W) (is_type_in_typecache(W, SLOTH.pointed_types))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 

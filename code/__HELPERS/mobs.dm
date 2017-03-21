@@ -21,81 +21,81 @@
 			return "000"
 
 /proc/random_underwear(gender)
-	if(!underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
+	if(!SLOTH.underwear_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, SLOTH.underwear_list, SLOTH.underwear_m, SLOTH.underwear_f)
 	switch(gender)
 		if(MALE)
-			return pick(underwear_m)
+			return pick(SLOTH.underwear_m)
 		if(FEMALE)
-			return pick(underwear_f)
+			return pick(SLOTH.underwear_f)
 		else
-			return pick(underwear_list)
+			return pick(SLOTH.underwear_list)
 
 /proc/random_undershirt(gender)
-	if(!undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+	if(!SLOTH.undershirt_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, SLOTH.undershirt_list, SLOTH.undershirt_m, SLOTH.undershirt_f)
 	switch(gender)
 		if(MALE)
-			return pick(undershirt_m)
+			return pick(SLOTH.undershirt_m)
 		if(FEMALE)
-			return pick(undershirt_f)
+			return pick(SLOTH.undershirt_f)
 		else
-			return pick(undershirt_list)
+			return pick(SLOTH.undershirt_list)
 
 /proc/random_socks()
-	if(!socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
-	return pick(socks_list)
+	if(!SLOTH.socks_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, SLOTH.socks_list)
+	return pick(SLOTH.socks_list)
 
 /proc/random_features()
-	if(!tails_list_human.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
-	if(!tails_list_lizard.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
-	if(!snouts_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
-	if(!horns_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
-	if(!ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, horns_list)
-	if(!frills_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
-	if(!spines_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
-	if(!legs_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
-	if(!body_markings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
-	if(!wings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	if(!SLOTH.tails_list_human.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, SLOTH.tails_list_human)
+	if(!SLOTH.tails_list_lizard.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, SLOTH.tails_list_lizard)
+	if(!SLOTH.snouts_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, SLOTH.snouts_list)
+	if(!SLOTH.horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, SLOTH.horns_list)
+	if(!SLOTH.ears_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, SLOTH.horns_list)
+	if(!SLOTH.frills_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, SLOTH.frills_list)
+	if(!SLOTH.spines_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, SLOTH.spines_list)
+	if(!SLOTH.legs_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, SLOTH.legs_list)
+	if(!SLOTH.body_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, SLOTH.body_markings_list)
+	if(!SLOTH.wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, SLOTH.wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list), "legs" = "Normal Legs"))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(SLOTH.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(SLOTH.snouts_list), "horns" = pick(SLOTH.horns_list), "ears" = "None", "frills" = pick(SLOTH.frills_list), "spines" = pick(SLOTH.spines_list), "body_markings" = pick(SLOTH.body_markings_list), "legs" = "Normal Legs"))
 
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)
-			return pick(hair_styles_male_list)
+			return pick(SLOTH.hair_styles_male_list)
 		if(FEMALE)
-			return pick(hair_styles_female_list)
+			return pick(SLOTH.hair_styles_female_list)
 		else
-			return pick(hair_styles_list)
+			return pick(SLOTH.hair_styles_list)
 
 /proc/random_facial_hair_style(gender)
 	switch(gender)
 		if(MALE)
-			return pick(facial_hair_styles_male_list)
+			return pick(SLOTH.facial_hair_styles_male_list)
 		if(FEMALE)
-			return pick(facial_hair_styles_female_list)
+			return pick(SLOTH.facial_hair_styles_female_list)
 		else
-			return pick(facial_hair_styles_list)
+			return pick(SLOTH.facial_hair_styles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
 		if(gender==FEMALE)
-			. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+			. = capitalize(pick(SLOTH.first_names_female)) + " " + capitalize(pick(SLOTH.last_names))
 		else
-			. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+			. = capitalize(pick(SLOTH.first_names_male)) + " " + capitalize(pick(SLOTH.last_names))
 
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break
@@ -115,7 +115,7 @@
 			break
 
 /proc/random_skin_tone()
-	return pick(skin_tones)
+	return pick(SLOTH.skin_tones)
 
 GLOBAL_LIST_INIT(skin_tones, list(
 	"albino",
@@ -369,7 +369,7 @@ Proc for attack log creation, because really why not
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	for(var/mob/M in player_list)
+	for(var/mob/M in SLOTH.player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)
 			prefs = M.client.prefs

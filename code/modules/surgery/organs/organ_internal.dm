@@ -568,7 +568,7 @@
 	//Hacks
 	var/mob/living/carbon/human/user = usr
 	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in SLOTH.living_mob_list)
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
 			continue
@@ -578,7 +578,7 @@
 			if(Ayy.team != Byy.team)
 				continue
 		to_chat(H, rendered)
-	for(var/mob/M in dead_mob_list)
+	for(var/mob/M in SLOTH.dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
 		to_chat(M, "[link] [rendered]")
 	return ""

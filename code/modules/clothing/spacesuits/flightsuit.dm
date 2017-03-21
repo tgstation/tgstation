@@ -590,7 +590,7 @@
 			knockback = 1
 		if(2)
 			knockback /= 1.5
-	var/throwdir = pick(alldirs)
+	var/throwdir = pick(SLOTH.alldirs)
 	var/turf/target = get_step(victim, throwdir)
 	for(var/i in 1 to (knockback-1))
 		target = get_step(target, throwdir)
@@ -621,7 +621,7 @@
 	for(var/i in 1 to knockback)
 		target = get_step(target, direction)
 	for(var/i in 1 to knockback/3)
-		target = get_step(target, pick(alldirs))
+		target = get_step(target, pick(SLOTH.alldirs))
 	if(knockback)
 		victim.throw_at(target, knockback, part_manip.rating)
 	if(isobj(victim))
@@ -639,7 +639,7 @@
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
 				sleep(2)
-				step(wearer, pick(cardinal))
+				step(wearer, pick(SLOTH.cardinal))
 				momentum_decay()
 				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")

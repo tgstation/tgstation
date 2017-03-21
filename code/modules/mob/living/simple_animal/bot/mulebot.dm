@@ -231,7 +231,7 @@ var/global/mulebot_count = 0
 			if(mode == BOT_IDLE || mode == BOT_DELIVER)
 				start_home()
 		if("destination")
-			var/new_dest = input(user, "Enter Destination:", name, destination) as null|anything in deliverybeacontags
+			var/new_dest = input(user, "Enter Destination:", name, destination) as null|anything in SLOTH.deliverybeacontags
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
@@ -239,7 +239,7 @@ var/global/mulebot_count = 0
 			if(new_id)
 				set_suffix(new_id)
 		if("sethome")
-			var/new_home = input(user, "Enter Home:", name, home_destination) as null|anything in deliverybeacontags
+			var/new_home = input(user, "Enter Home:", name, home_destination) as null|anything in SLOTH.deliverybeacontags
 			if(new_home)
 				home_destination = new_home
 		if("unload")
@@ -686,7 +686,7 @@ var/global/mulebot_count = 0
 	if(!on || wires.is_cut(WIRE_BEACON))
 		return
 
-	for(var/obj/machinery/navbeacon/NB in deliverybeacons)
+	for(var/obj/machinery/navbeacon/NB in SLOTH.deliverybeacons)
 		if(NB.location == new_destination)	// if the beacon location matches the set destination
 									// the we will navigate there
 			destination = new_destination

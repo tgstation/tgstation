@@ -14,7 +14,7 @@ var/datum/controller/subsystem/ping/SSping
 
 /datum/controller/subsystem/ping/fire(resumed = FALSE)
 	if (!resumed)
-		src.currentrun = clients.Copy()
+		src.currentrun = SLOTH.clients.Copy()
 
 	var/list/currentrun = src.currentrun
 	while (length(currentrun))

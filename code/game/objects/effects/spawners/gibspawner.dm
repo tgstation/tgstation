@@ -64,7 +64,7 @@
 
 /obj/effect/gibspawner/human/New()
 	playsound(src, 'sound/effects/blobattack.ogg', 50, 1)
-	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), alldirs, alldirs, list())
+	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), SLOTH.alldirs, SLOTH.alldirs, list())
 	..()
 
 
@@ -74,7 +74,7 @@
 
 /obj/effect/gibspawner/humanbodypartless/New()
 	playsound(src, 'sound/effects/blobattack.ogg', 50, 1)
-	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), alldirs, list())
+	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), SLOTH.alldirs, list())
 	..()
 
 
@@ -84,7 +84,7 @@
 
 /obj/effect/gibspawner/xeno/New()
 	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
-	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), alldirs, alldirs, list())
+	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), SLOTH.alldirs, SLOTH.alldirs, list())
 	..()
 
 
@@ -95,7 +95,7 @@
 
 /obj/effect/gibspawner/xenobodypartless/New()
 	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
-	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), alldirs, list())
+	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), SLOTH.alldirs, list())
 	..()
 
 /obj/effect/gibspawner/larva
@@ -104,7 +104,7 @@
 
 /obj/effect/gibspawner/larva/New()
 	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
-	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST), list(), alldirs)
+	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST), list(), SLOTH.alldirs)
 	..()
 
 /obj/effect/gibspawner/larvabodypartless
@@ -122,6 +122,6 @@
 	gibamounts = list(1,1,1,1,1,1)
 
 /obj/effect/gibspawner/robot/New()
-	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), alldirs, alldirs)
+	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), SLOTH.alldirs, SLOTH.alldirs)
 	gibamounts[6] = pick(0,1,2)
 	..()

@@ -44,7 +44,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return TRUE
 
 /obj/machinery/computer/communications/New()
-	shuttle_caller_list += src
+	SLOTH.shuttle_caller_list += src
 	..()
 
 /obj/machinery/computer/communications/process()
@@ -168,7 +168,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
 						if(SSshuttle.points >= S.credit_cost)
-							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
+							var/obj/machinery/shuttle_manipulator/M = locate() in SLOTH.machines
 							if(M)
 								SSshuttle.shuttle_purchased = TRUE
 								M.unload_preview()
@@ -688,7 +688,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 
 /obj/machinery/computer/communications/Destroy()
-	shuttle_caller_list -= src
+	SLOTH.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 	return ..()
 

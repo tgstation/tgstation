@@ -120,11 +120,11 @@
 		owner = creator
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
+	var/golem_surname = pick(SLOTH.golem_names)
 	// 3% chance that our golem has a human surname, because
 	// cultural contamination
 	if(prob(3))
-		golem_surname = pick(last_names)
+		golem_surname = pick(SLOTH.last_names)
 
 	var/datum/species/golem/X = mob_species
 	var/golem_forename = initial(X.id)

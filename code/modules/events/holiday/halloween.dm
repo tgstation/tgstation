@@ -8,7 +8,7 @@
 
 /datum/round_event/spooky/start()
 	..()
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in SLOTH.mob_list)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/storage/spooky(b)
 		if(ishuman(H) || islizard(H))
@@ -17,9 +17,9 @@
 			else
 				H.set_species(/datum/species/zombie)
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in SLOTH.mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
-	for(var/mob/living/simple_animal/parrot/Poly/Poly in mob_list)
+	for(var/mob/living/simple_animal/parrot/Poly/Poly in SLOTH.mob_list)
 		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
 		qdel(Poly)
 
@@ -35,7 +35,7 @@
 	earliest_start = 0
 
 /datum/round_event/carp_migration/eyeballs/start()
-	for(var/obj/effect/landmark/C in landmarks_list)
+	for(var/obj/effect/landmark/C in SLOTH.landmarks_list)
 		if(C.name == "carpspawn")
 			new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
 
@@ -66,7 +66,7 @@
 	endWhen = 40
 
 /datum/round_event/creepy_clowns/start()
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in SLOTH.living_mob_list)
 		if(!H.client || !istype(H))
 			return
 		to_chat(H, "<span class='danger'>Honk...</span>")
@@ -77,7 +77,7 @@
 
 /datum/round_event/creepy_clowns/tick()
 	if(IsMultiple(activeFor, 4))
-		for(var/mob/living/carbon/human/H in living_mob_list)
+		for(var/mob/living/carbon/human/H in SLOTH.living_mob_list)
 			if (prob(66))
 				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 100, 1)
 			if (prob(33))

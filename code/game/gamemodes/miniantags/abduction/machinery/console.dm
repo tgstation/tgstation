@@ -142,17 +142,17 @@
 	if(!team)
 		return
 
-	for(var/obj/machinery/abductor/pad/p in machines)
+	for(var/obj/machinery/abductor/pad/p in SLOTH.machines)
 		if(p.team == team)
 			pad = p
 			break
 
-	for(var/obj/machinery/abductor/experiment/e in machines)
+	for(var/obj/machinery/abductor/experiment/e in SLOTH.machines)
 		if(e.team == team)
 			experiment = e
 			e.console = src
 
-	for(var/obj/machinery/computer/camera_advanced/abductor/c in machines)
+	for(var/obj/machinery/computer/camera_advanced/abductor/c in SLOTH.machines)
 		if(c.team == team)
 			camera = c
 			c.console = src

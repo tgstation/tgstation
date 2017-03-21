@@ -41,7 +41,7 @@
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
 			return 0
 	else if(placement_override == 1)
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick(SLOTH.blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
@@ -267,7 +267,7 @@
 			var/list/diagonalblobs = list()
 			for(var/I in possibleblobs)
 				var/obj/structure/blob/IB = I
-				if(get_dir(IB, T) in cardinal)
+				if(get_dir(IB, T) in SLOTH.cardinal)
 					cardinalblobs += IB
 				else
 					diagonalblobs += IB

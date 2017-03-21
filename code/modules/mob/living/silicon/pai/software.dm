@@ -33,7 +33,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == 2)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
+		left_part = "<b><font color=red>ï¿½Rrï¿½R ï¿½aï¿½ï¿½ ï¿½ï¿½Rrï¿½ï¿½ï¿½ï¿½oï¿½</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -599,7 +599,7 @@
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/T = get_turf(src.loc)
-	for(var/mob/living/silicon/ai/AI in player_list)
+	for(var/mob/living/silicon/ai/AI in SLOTH.player_list)
 		if(T.loc)
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 		else

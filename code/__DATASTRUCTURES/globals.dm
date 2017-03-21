@@ -1,52 +1,26 @@
-#define GLOBAL_MANAGED(X)\
-\
-/world/ReadGlobal(global_name){\
-    if(global_name == #X){\
-        return global.##X;\
-    }\
-    return ..();\
-}\
-/world/WriteGlobal(global_name, value){\
-    if(global_name == #X){\
-        global.##X = value;\
-        return TRUE;\
-    }\
-    return ..();\
-}\
-/world/ListGlobals(){\
-    .[#X] = global.##X;\
-    . = ..();\
+/datum/global_vars/proc/InitEverything()
+    for(var/I in vars)
+        call(src, "InitGlobal[I]")()
+
+#define GLOBAL_MANAGED(X, InitValue)\
+/datum/global_vars/proc/InitGlobal##X(){\
+    ##X = ##InitValue;\
 }
 
-#define GLOBAL_INIT(X, InitValue)\
-GLOBAL_MANAGED(X)\
-\
-/world/InitGlobals(){\
-    global.##X = ##InitValue;\
-    ..();\
-}
+#define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X
 
-#define GLOBAL_RAW(X) var/global##X;
+GLOBAL_REAL(SLOTH, /datum/global_vars)
 
-#define GLOBAL_VAR_INIT(X, InitValue) GLOBAL_RAW(/##X)\
-GLOBAL_INIT(X, InitValue)
+#define GLOBAL_RAW(X) /datum/global_vars/var##X;
 
-#define GLOBAL_LIST_INIT(X, InitValue) GLOBAL_RAW(/list/##X)\
-GLOBAL_INIT(X, InitValue)
+#define GLOBAL_VAR_INIT(X, InitValue) GLOBAL_RAW(/##X) GLOBAL_MANAGED(X, InitValue)
 
-#define GLOBAL_DATUM_INIT(X, Typepath, InitValue) GLOBAL_RAW(Typepath/##X)\
-GLOBAL_INIT(X, InitValue)
+#define GLOBAL_LIST_INIT(X, InitValue) GLOBAL_RAW(/list/##X) GLOBAL_MANAGED(X, InitValue)
 
-#define GLOBAL_VAR(X) GLOBAL_RAW(/##X)\
-GLOBAL_MANAGED(X)
+#define GLOBAL_DATUM_INIT(X, Typepath, InitValue) GLOBAL_RAW(Typepath/##X) GLOBAL_MANAGED(X, InitValue)
 
-#define GLOBAL_LIST(X) GLOBAL_RAW(/list/##X)\
-GLOBAL_MANAGED(X)
+#define GLOBAL_VAR(X) GLOBAL_RAW(/##X) GLOBAL_MANAGED(X, null)
 
-#define GLOBAL_DATUM(X, Typepath) GLOBAL_RAW(Typepath/##X)\
-GLOBAL_MANAGED(X)
+#define GLOBAL_LIST(X) GLOBAL_RAW(/list/##X) GLOBAL_MANAGED(X, null)
 
-#ifdef TESTING
-/proc/VVGlobals()
-    usr.client.debug_variables(world.ListGlobals())
-#endif
+#define GLOBAL_DATUM(X, Typepath) GLOBAL_RAW(Typepath/##X) GLOBAL_MANAGED(X, null)

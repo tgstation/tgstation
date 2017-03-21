@@ -49,7 +49,7 @@
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
 
-	for(var/obj/machinery/computer/shuttle/S in machines)
+	for(var/obj/machinery/computer/shuttle/S in SLOTH.machines)
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 

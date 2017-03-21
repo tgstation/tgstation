@@ -17,7 +17,7 @@
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		var/list/trackerlist = list()
-		for(var/obj/mecha/MC in mechas_list)
+		for(var/obj/mecha/MC in SLOTH.mechas_list)
 			trackerlist += MC.trackers
 		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
 			var/answer = TR.get_mecha_info()

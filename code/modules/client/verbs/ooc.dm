@@ -30,10 +30,10 @@
 		return
 
 	if(!holder)
-		if(!ooc_allowed)
+		if(!SLOTH.ooc_allowed)
 			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
 			return
-		if(!dooc_allowed && (mob.stat == DEAD))
+		if(!SLOTH.dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
 			return
 		if(prefs.muted & MUTE_OOC)
@@ -59,7 +59,7 @@
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
-	for(var/client/C in clients)
+	for(var/client/C in SLOTH.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
@@ -74,13 +74,13 @@
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
-		if(toggle != ooc_allowed)
-			ooc_allowed = toggle
+		if(toggle != SLOTH.ooc_allowed)
+			SLOTH.ooc_allowed = toggle
 		else
 			return
 	else //otherwise just toggle it
-		ooc_allowed = !ooc_allowed
-	to_chat(world, "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"].</B>")
+		SLOTH.ooc_allowed = !SLOTH.ooc_allowed
+	to_chat(world, "<B>The OOC channel has been globally [SLOTH.ooc_allowed ? "enabled" : "disabled"].</B>")
 
 var/global/normal_ooc_colour = OOC_COLOR
 
@@ -139,8 +139,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "OOC"
 	set desc ="Check the Message of the Day"
 
-	if(join_motd)
-		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
+	if(SLOTH.join_motd)
+		to_chat(src, "<div class=\"motd\">[SLOTH.join_motd]</div>")
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
@@ -169,7 +169,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(clients)
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(SLOTH.clients)
 	if(!selection)
 		return
 	if(selection == src)

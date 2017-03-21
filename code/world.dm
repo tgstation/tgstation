@@ -32,7 +32,7 @@
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	diary << "\n\nStarting up. [time_stamp()]\n---------------------"
 	diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
-	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
+	SLOTH.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	load_configuration()
@@ -48,7 +48,7 @@
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
-		if(!dbcon.Connect())
+		if(!SLOTH.dbcon.Connect())
 			log_world("Your server failed to establish a connection with the database.")
 		else
 			log_world("Database connection established.")
@@ -64,18 +64,18 @@
 		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
-	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
+	var/key_valid = (SLOTH.comms_allowed && input["key"] == SLOTH.comms_key)
 	var/static/last_irc_status = 0
 
 	if("ping" in input)
 		var/x = 1
-		for (var/client/C in clients)
+		for (var/client/C in SLOTH.clients)
 			x++
 		return x
 
 	else if("players" in input)
 		var/n = 0
-		for(var/mob/M in player_list)
+		for(var/mob/M in SLOTH.player_list)
 			if(M.client)
 				n++
 		return n
@@ -86,21 +86,21 @@
 		var/list/adm = get_admin_counts()
 		var/list/allmins = adm["total"]
 		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
+		status += "Players: [SLOTH.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
 
 	else if("status" in input)
 		var/list/s = list()
-		s["version"] = game_version
-		s["mode"] = master_mode
-		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
+		s["version"] = SLOTH.game_version
+		s["mode"] = SLOTH.master_mode
+		s["respawn"] = config ? SLOTH.abandon_allowed : 0
+		s["enter"] = SLOTH.enter_allowed
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["active_players"] = get_active_player_count()
-		s["players"] = clients.len
+		s["players"] = SLOTH.clients.len
 		s["revision"] = revdata.commit
 		s["revision_date"] = revdata.date
 
@@ -135,7 +135,7 @@
 			return "Bad Key"
 		else
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-			for(var/client/C in clients)
+			for(var/client/C in SLOTH.clients)
 				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
 					to_chat(C, "<span class='announce'>PR: [input["announce"]]</span>")
 #undef CHAT_PULLR
@@ -148,7 +148,7 @@
 				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
 			if(input["crossmessage"] == "Comms_Console")
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-				for(var/obj/machinery/computer/communications/CM in machines)
+				for(var/obj/machinery/computer/communications/CM in SLOTH.machines)
 					CM.overrideCooldown()
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
@@ -194,7 +194,7 @@
 	var/round_end_sound_sent = FALSE
 	if(ticker.round_end_sound)
 		round_end_sound_sent = TRUE
-		for(var/thing in clients)
+		for(var/thing in SLOTH.clients)
 			var/client/C = thing
 			if (!C)
 				continue
@@ -224,7 +224,7 @@
 	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
-	for(var/thing in clients)
+	for(var/thing in SLOTH.clients)
 		var/client/C = thing
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -235,7 +235,7 @@
 	if(!ticker && ticker.round_end_sound)
 		round_end_sound = ticker.round_end_sound
 		if (!round_end_sound_sent)
-			for(var/thing in clients)
+			for(var/thing in SLOTH.clients)
 				var/client/C = thing
 				if (!C)
 					continue
@@ -251,7 +251,7 @@
 		'sound/roundend/disappointed.ogg'\
 		)
 
-	for(var/thing in clients)
+	for(var/thing in SLOTH.clients)
 		var/obj/screen/splash/S = new(thing, FALSE)
 		S.Fade(FALSE,FALSE)
 
@@ -261,8 +261,8 @@
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
 		if(Lines[1])
-			master_mode = Lines[1]
-			diary << "Saved mode is '[master_mode]'"
+			SLOTH.master_mode = Lines[1]
+			diary << "Saved mode is '[SLOTH.master_mode]'"
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
@@ -270,7 +270,7 @@
 	F << the_mode
 
 /world/proc/load_motd()
-	join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
+	SLOTH.join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
 	config = new /datum/configuration()
@@ -281,7 +281,7 @@
 		config.loadmaplist("config/maps.txt")
 
 	// apply some settings from config..
-	abandon_allowed = config.respawn
+	SLOTH.abandon_allowed = config.respawn
 
 
 /world/proc/update_status()
@@ -301,15 +301,15 @@
 	var/list/features = list()
 
 	if(ticker)
-		if(master_mode)
-			features += master_mode
+		if(SLOTH.master_mode)
+			features += SLOTH.master_mode
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if (!SLOTH.enter_allowed)
 		features += "closed"
 
-	features += abandon_allowed ? "respawn" : "no respawn"
+	features += SLOTH.abandon_allowed ? "respawn" : "no respawn"
 
 	if (config && config.allow_vote_mode)
 		features += "vote"
@@ -318,7 +318,7 @@
 		features += "AI allowed"
 
 	var/n = 0
-	for (var/mob/M in player_list)
+	for (var/mob/M in SLOTH.player_list)
 		if (M.client)
 			n++
 
@@ -334,17 +334,3 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-#define GLOBAL_FIND_FAIL "Could not find global"
-
-/world/proc/InitGlobals()
-	return
-
-/world/proc/ReadGlobal(global_name)
-	return GLOBAL_FIND_FAIL
-
-/world/proc/WriteGlobal(global_name, value)
-	return FALSE
-
-/world/proc/ListGlobals()
-	return list()

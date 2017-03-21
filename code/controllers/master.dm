@@ -8,9 +8,7 @@
  **/
 
 //This is to get around the global variable ban, and it's the ONLY thing that should do so
-#define MASTER_CREATE var/datum/controller/master/Master = new; GLOBAL_MANAGED(Master)
-MASTER_CREATE
-#undef MASTER_CREATE
+GLOBAL_REAL(Master, /datum/controller/master) = new
 
 GLOBAL_VAR_INIT(MC_restart_clear, 0)
 GLOBAL_VAR_INIT(MC_restart_timeout, 0)
@@ -57,6 +55,10 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
 
+	#ifndef PROTECT_GLOBAL_VARS_FROM_VV
+	var/datum/global_vars/global_vars
+	#endif
+
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
@@ -68,14 +70,12 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			init_subtypes(/datum/controller/subsystem, subsystems)
 		Master = src
 	
-	var/static/first_run = TRUE
-	if(first_run)
-		first_run = FALSE
-
+	if(!SLOTH)
+		SLOTH = new
 		#ifdef TESTING
 		var/start_time = REALTIMEOFDAY
 		#endif
-		world.InitGlobals()
+		SLOTH.InitEverything()
 		#ifdef TESTING
 		testing("Globals initialization took [(REALTIMEOFDAY - start_time)/10]s.")
 		#endif
@@ -94,14 +94,14 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 //	-1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
-	if (world.time < MC_restart_timeout)
+	if (world.time < SLOTH.MC_restart_timeout)
 		return 0
-	if (world.time < MC_restart_clear)
-		MC_restart_count *= 0.5
+	if (world.time < SLOTH.MC_restart_clear)
+		SLOTH.MC_restart_count *= 0.5
 
-	var/delay = 50 * ++MC_restart_count
-	MC_restart_timeout = world.time + delay
-	MC_restart_clear = world.time + (delay * 2)
+	var/delay = 50 * ++SLOTH.MC_restart_count
+	SLOTH.MC_restart_timeout = world.time + delay
+	SLOTH.MC_restart_clear = world.time + (delay * 2)
 	Master.processing = 0 //stop ticking this one
 	try
 		new/datum/controller/master()
@@ -150,13 +150,13 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
-	CURRENT_TICKLIMIT = config.tick_limit_mc_init
+	SLOTH.CURRENT_TICKLIMIT = config.tick_limit_mc_init
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
-	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+	SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
@@ -259,7 +259,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
-			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+			SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -267,7 +267,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		//	because sleeps are processed in the order received, so longer sleeps are more likely to run first
 		if (world.tick_usage > TICK_LIMIT_MC)
 			sleep_delta += 2
-			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
+			SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
 			sleep(world.tick_lag * (processing + sleep_delta))
 			continue
 
@@ -296,7 +296,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			if (!error_level)
 				iteration++
 			error_level++
-			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+			SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -308,7 +308,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 				if (!error_level)
 					iteration++
 				error_level++
-				CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+				SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				sleep(10)
 				continue
 		error_level--
@@ -319,7 +319,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		iteration++
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
-		CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
+		SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
 		sleep(world.tick_lag * (processing + sleep_delta))
 
 
@@ -408,7 +408,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			else
 				tick_precentage = tick_remaining
 
-			CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
+			SLOTH.CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
 
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE

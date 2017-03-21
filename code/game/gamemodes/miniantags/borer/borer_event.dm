@@ -23,7 +23,7 @@
 /datum/round_event/borer/start()
 
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in SLOTH.machines)
 		if(QDELETED(temp_vent))
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
@@ -36,7 +36,7 @@
 		return kill()
 
 	var/total_humans = 0
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in SLOTH.mob_list)
 		if(H.stat != DEAD)
 			total_humans++
 

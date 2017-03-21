@@ -53,14 +53,14 @@
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/dead/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in SLOTH.player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(!Debug2)
+	if(!SLOTH.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
-	if(!Debug2)
+	if(!SLOTH.Debug2)
 		if(antag_candidates.len < required_enemies)
 			return 0
 		return 1
@@ -91,8 +91,8 @@
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	generate_station_goals()
-	start_state = new /datum/station_state()
-	start_state.count(1)
+	SLOTH.start_state = new /datum/station_state()
+	SLOTH.start_state.count(1)
 	return 1
 
 
@@ -107,10 +107,10 @@
 /datum/game_mode/proc/convert_roundtype()
 	var/list/living_crew = list()
 
-	for(var/mob/Player in mob_list)
+	for(var/mob/Player in SLOTH.mob_list)
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
 			living_crew += Player
-	if(living_crew.len / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
+	if(living_crew.len / SLOTH.joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
 		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
 		return null
 
@@ -183,7 +183,7 @@
 		return TRUE
 	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
-			for(var/mob/Player in mob_list)
+			for(var/mob/Player in SLOTH.mob_list)
 				if(Player.mind)
 					if(Player.mind.special_role)
 						continuous_sanity_checked = 1
@@ -199,7 +199,7 @@
 		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player))
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
-		for(var/mob/Player in living_mob_list)
+		for(var/mob/Player in SLOTH.living_mob_list)
 			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
 				if(Player.mind.special_role) //Someone's still antaging!
 					living_antag_player = Player
@@ -228,7 +228,7 @@
 	var/escaped_humans = 0
 	var/escaped_total = 0
 
-	for(var/mob/M in player_list)
+	for(var/mob/M in SLOTH.player_list)
 		if(M.client)
 			clients++
 			if(ishuman(M))
@@ -302,7 +302,7 @@
 	var/datum/mind/applicant = null
 
 	// Ultimate randomizing code right here
-	for(var/mob/dead/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in SLOTH.player_list)
 		if(player.client && player.ready)
 			players += player
 
@@ -385,7 +385,7 @@
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/dead/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in SLOTH.player_list)
 		if(P.client && P.ready)
 			. ++
 
@@ -394,7 +394,7 @@
 ///////////////////////////////////
 /datum/game_mode/proc/get_living_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player in mob_list)
+	for(var/mob/living/carbon/human/player in SLOTH.mob_list)
 		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
 			. |= player.mind
 
@@ -404,7 +404,7 @@
 ////////////////////////////
 /datum/game_mode/proc/get_all_heads()
 	. = list()
-	for(var/mob/player in mob_list)
+	for(var/mob/player in SLOTH.mob_list)
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			. |= player.mind
 
@@ -413,7 +413,7 @@
 //////////////////////////////////////////////
 /datum/game_mode/proc/get_living_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player in mob_list)
+	for(var/mob/living/carbon/human/player in SLOTH.mob_list)
 		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in security_positions))
 			. |= player.mind
 
@@ -422,7 +422,7 @@
 ////////////////////////////////////////
 /datum/game_mode/proc/get_all_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player in mob_list)
+	for(var/mob/living/carbon/human/player in SLOTH.mob_list)
 		if(player.mind && (player.mind.assigned_role in security_positions))
 			. |= player.mind
 
@@ -431,11 +431,11 @@
 //////////////////////////
 /proc/display_roundstart_logout_report()
 	var/msg = "<span class='boldnotice'>Roundstart logout report\n\n</span>"
-	for(var/mob/living/L in mob_list)
+	for(var/mob/living/L in SLOTH.mob_list)
 
 		if(L.ckey)
 			var/found = 0
-			for(var/client/C in clients)
+			for(var/client/C in SLOTH.clients)
 				if(C.ckey == L.ckey)
 					found = 1
 					break
@@ -459,7 +459,7 @@
 					continue //Dead
 
 			continue //Happy connected client
-		for(var/mob/dead/observer/D in mob_list)
+		for(var/mob/dead/observer/D in SLOTH.mob_list)
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
 					if(L.suiciding)	//Suicider
@@ -477,7 +477,7 @@
 
 
 
-	for(var/mob/M in mob_list)
+	for(var/mob/M in SLOTH.mob_list)
 		if(M.client && M.client.holder)
 			to_chat(M, msg)
 

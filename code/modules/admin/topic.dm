@@ -11,7 +11,7 @@
 			return
 		if(!check_rights(R_ADMIN))
 			return
-		var/client/C = locate(href_list["rejectadminhelp"]) in clients
+		var/client/C = locate(href_list["rejectadminhelp"]) in SLOTH.clients
 		if(!C)
 			return
 		if (deltimer(C.adminhelptimerid))
@@ -31,7 +31,7 @@
 		if(world.time && spamcooldown > world.time)
 			to_chat(usr, "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds.")
 			return
-		var/client/C = locate(href_list["icissue"]) in clients
+		var/client/C = locate(href_list["icissue"]) in SLOTH.clients
 		if(!C)
 			return
 
@@ -242,7 +242,7 @@
 
 		var/mob/playermob
 
-		for(var/mob/M in player_list)
+		for(var/mob/M in SLOTH.player_list)
 			if(M.ckey == banckey)
 				playermob = M
 				break
@@ -1109,7 +1109,7 @@
 
 	else if(href_list["messageedits"])
 		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
-		var/DBQuery/query_get_message_edits = dbcon.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
+		var/DBQuery/query_get_message_edits = SLOTH.dbcon.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
 		if(!query_get_message_edits.warn_execute())
 			return
 		if(query_get_message_edits.NextRow())
@@ -1196,7 +1196,7 @@
 			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
-		dat += {"Now: [master_mode]"}
+		dat += {"Now: [SLOTH.master_mode]"}
 		usr << browse(dat, "window=c_mode")
 
 	else if(href_list["f_secret"])
@@ -1205,13 +1205,13 @@
 
 		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-		if(master_mode != "secret")
+		if(SLOTH.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
 		var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
 		for(var/mode in config.modes)
 			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
 		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
-		dat += {"Now: [secret_force_mode]"}
+		dat += {"Now: [SLOTH.secret_force_mode]"}
 		usr << browse(dat, "window=f_secret")
 
 	else if(href_list["c_mode2"])
@@ -1220,12 +1220,12 @@
 
 		if (ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-		master_mode = href_list["c_mode2"]
-		log_admin("[key_name(usr)] set the mode as [master_mode].")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [master_mode].</span>")
-		to_chat(world, "<span class='adminnotice'><b>The mode is now: [master_mode]</b></span>")
+		SLOTH.master_mode = href_list["c_mode2"]
+		log_admin("[key_name(usr)] set the mode as [SLOTH.master_mode].")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [SLOTH.master_mode].</span>")
+		to_chat(world, "<span class='adminnotice'><b>The mode is now: [SLOTH.master_mode]</b></span>")
 		Game() // updates the main game menu
-		world.save_mode(master_mode)
+		world.save_mode(SLOTH.master_mode)
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
@@ -1234,11 +1234,11 @@
 
 		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-		if(master_mode != "secret")
+		if(SLOTH.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
-		secret_force_mode = href_list["f_secret2"]
-		log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode].</span>")
+		SLOTH.secret_force_mode = href_list["f_secret2"]
+		log_admin("[key_name(usr)] set the forced secret mode as [SLOTH.secret_force_mode].")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the forced secret mode as [SLOTH.secret_force_mode].</span>")
 		Game() // updates the main game menu
 		.(href, list("f_secret"=1))
 
@@ -1313,7 +1313,7 @@
 		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
 			return
 
-		M.loc = pick(prisonwarp)
+		M.loc = pick(SLOTH.prisonwarp)
 		to_chat(M, "<span class='adminnotice'>You have been sent to Prison!</span>")
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
@@ -1363,7 +1363,7 @@
 
 		M.Paralyse(5)
 		sleep(5)
-		M.loc = pick(tdome1)
+		M.loc = pick(SLOTH.tdome1)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
@@ -1389,7 +1389,7 @@
 
 		M.Paralyse(5)
 		sleep(5)
-		M.loc = pick(tdome2)
+		M.loc = pick(SLOTH.tdome2)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
@@ -1412,7 +1412,7 @@
 
 		M.Paralyse(5)
 		sleep(5)
-		M.loc = pick(tdomeadmin)
+		M.loc = pick(SLOTH.tdomeadmin)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Admin.)")
@@ -1442,7 +1442,7 @@
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), slot_shoes)
 		M.Paralyse(5)
 		sleep(5)
-		M.loc = pick(tdomeobserve)
+		M.loc = pick(SLOTH.tdomeobserve)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Observer.)")
@@ -1714,7 +1714,7 @@
 		if(!check_rights(R_ADMIN|R_FUN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["adminsmite"]) in mob_list
+		var/mob/living/carbon/human/H = locate(href_list["adminsmite"]) in SLOTH.mob_list
 		if(!H || !istype(H))
 			return
 
@@ -1741,11 +1741,11 @@
 		log_admin("[key_name(usr)] punished [key_name(H)] with [punishment].")
 
 	else if(href_list["BlueSpaceArtillery"])
-		var/mob/living/M = locate(href_list["BlueSpaceArtillery"]) in mob_list
+		var/mob/living/M = locate(href_list["BlueSpaceArtillery"]) in SLOTH.mob_list
 		usr.client.bluespace_artillery(M)
 
 	else if(href_list["CentcommReply"])
-		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"]) in mob_list
+		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"]) in SLOTH.mob_list
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
@@ -1831,7 +1831,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/mob/M = locate(href_list["individuallog"]) in mob_list
+		var/mob/M = locate(href_list["individuallog"]) in SLOTH.mob_list
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
@@ -2239,7 +2239,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/code = random_nukecode()
-		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in nuke_list)
+		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in SLOTH.nuke_list)
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")

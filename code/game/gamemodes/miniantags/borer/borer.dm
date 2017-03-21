@@ -24,7 +24,7 @@
 		to_chat(src, "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>")
 		to_chat(B.victim, "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>")
 
-		for (var/mob/M in player_list)
+		for (var/mob/M in SLOTH.player_list)
 			if(isnewplayer(M))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
@@ -183,7 +183,7 @@ var/total_borer_hosts_needed = 10
 		if(victim)
 			to_chat(victim, "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>")
 			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
-			for(var/M in dead_mob_list)
+			for(var/M in SLOTH.dead_mob_list)
 				if(isobserver(M))
 					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [input]</i>"
 					var/link = FOLLOW_LINK(M, src)
@@ -209,7 +209,7 @@ var/total_borer_hosts_needed = 10
 	to_chat(B, "<span class='changeling'><i>[src] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
 
-	for(var/M in dead_mob_list)
+	for(var/M in SLOTH.dead_mob_list)
 		if(isobserver(M))
 			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
@@ -233,7 +233,7 @@ var/total_borer_hosts_needed = 10
 	to_chat(CB, "<span class='changeling'><i>[B.truename] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [input]")
 
-	for(var/M in dead_mob_list)
+	for(var/M in SLOTH.dead_mob_list)
 		if(isobserver(M))
 			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
@@ -300,7 +300,7 @@ var/total_borer_hosts_needed = 10
 		message = copytext(message,2)
 		for(var/borer in borers)
 			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
-		for(var/mob/D in dead_mob_list)
+		for(var/mob/D in SLOTH.dead_mob_list)
 			to_chat(D, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
 		return
 	if(!victim)

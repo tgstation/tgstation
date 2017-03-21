@@ -30,7 +30,7 @@
 
 /datum/station_goal/proc/get_coverage()
 	var/list/coverage = list()
-	for(var/obj/machinery/satellite/meteor_shield/A in machines)
+	for(var/obj/machinery/satellite/meteor_shield/A in SLOTH.machines)
 		if(!A.active || A.z != ZLEVEL_STATION)
 			continue
 		coverage |= view(A.kill_range,A)
@@ -62,7 +62,7 @@
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
-	for(var/obj/machinery/satellite/S in machines)
+	for(var/obj/machinery/satellite/S in SLOTH.machines)
 		if(S.id == id && S.z == z)
 			S.toggle()
 
@@ -70,7 +70,7 @@
 	var/list/data = list()
 
 	data["satellites"] = list()
-	for(var/obj/machinery/satellite/S in machines)
+	for(var/obj/machinery/satellite/S in SLOTH.machines)
 		data["satellites"] += list(list(
 			"id" = S.id,
 			"active" = S.active,
@@ -147,7 +147,7 @@
 /obj/machinery/satellite/meteor_shield/process()
 	if(!active)
 		return
-	for(var/obj/effect/meteor/M in meteor_list)
+	for(var/obj/effect/meteor/M in SLOTH.meteor_list)
 		if(M.z != z)
 			continue
 		if(get_dist(M,src) > kill_range)

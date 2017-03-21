@@ -15,11 +15,11 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(t)
-	var/sqltext = dbcon.Quote("[t]");
+	var/sqltext = SLOTH.dbcon.Quote("[t]");
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
 /proc/format_table_name(table as text)
-	return sqlfdbktableprefix + table
+	return SLOTH.sqlfdbktableprefix + table
 
 /*
  * Text sanitization
@@ -349,10 +349,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		. += string
 
 /proc/random_short_color()
-	return random_string(3, hex_characters)
+	return random_string(3, SLOTH.hex_characters)
 
 /proc/random_color()
-	return random_string(6, hex_characters)
+	return random_string(6, SLOTH.hex_characters)
 
 /proc/add_zero2(t, u)
 	var/temp1

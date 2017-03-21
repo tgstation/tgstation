@@ -156,7 +156,7 @@ var/const/VOX_DELAY = 600
  		// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
-			for(var/mob/M in player_list)
+			for(var/mob/M in SLOTH.player_list)
 				if(M.client && !M.ear_deaf && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)

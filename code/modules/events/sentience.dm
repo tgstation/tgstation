@@ -29,11 +29,11 @@
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless and on station
 	var/list/potential = list()
-	for(var/mob/living/simple_animal/L in living_mob_list)
+	for(var/mob/living/simple_animal/L in SLOTH.living_mob_list)
 		var/turf/T = get_turf(L)
 		if(T.z != ZLEVEL_STATION)
 			continue
-		if(!(L in player_list) && !L.mind)
+		if(!(L in SLOTH.player_list) && !L.mind)
 			potential += L
 
 	if(!potential.len)

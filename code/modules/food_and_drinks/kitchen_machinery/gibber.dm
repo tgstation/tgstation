@@ -22,7 +22,7 @@
 /obj/machinery/gibber/autogibber/New()
 	..()
 	spawn(5)
-		for(var/i in cardinal)
+		for(var/i in SLOTH.cardinal)
 			var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
 			if(input_obj)
 				if(isturf(input_obj.loc))

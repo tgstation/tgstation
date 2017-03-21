@@ -264,7 +264,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 
 	testing("Beginning search for references to a [type].")
 	last_find_references = world.time
-	find_references_in_globals()
+	DoSearchVar(SLOTH)
 	for(var/datum/thing in world)
 		DoSearchVar(thing, "WorldRef: [thing]")
 	testing("Completed search for references to a [type].")
@@ -344,11 +344,4 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 #else
 	CHECK_TICK
 #endif
-
-//if find_references isn't working for some datum
-//update this list using tools/DMTreeToGlobalsList
-/datum/proc/find_references_in_globals()
-	var/list/globals = world.ListGlobals()
-	for(var/I in globals)
-		DoSearchVar(globals[I], "Global: [I]")
 #endif

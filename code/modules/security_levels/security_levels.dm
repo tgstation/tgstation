@@ -28,7 +28,7 @@
 					else
 						SSshuttle.emergency.modTimer(2)
 				security_level = SEC_LEVEL_GREEN
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in SLOTH.machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
@@ -41,7 +41,7 @@
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(2)
 				security_level = SEC_LEVEL_BLUE
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in SLOTH.machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
@@ -61,10 +61,10 @@
 				if(CC)
 					CC.post_status("alert", "redalert")*/
 
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in SLOTH.machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
-				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
+				for(var/obj/machinery/computer/shuttle/pod/pod in SLOTH.machines)
 					pod.admin_controlled = 0
 			if(SEC_LEVEL_DELTA)
 				minor_announce(config.alert_desc_delta, "Attention! Delta security level reached!",1)
@@ -74,10 +74,10 @@
 					else if(security_level == SEC_LEVEL_BLUE)
 						SSshuttle.emergency.modTimer(0.5)
 				security_level = SEC_LEVEL_DELTA
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in SLOTH.machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
-				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
+				for(var/obj/machinery/computer/shuttle/pod/pod in SLOTH.machines)
 					pod.admin_controlled = 0
 	else
 		return

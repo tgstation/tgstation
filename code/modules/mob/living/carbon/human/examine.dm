@@ -142,7 +142,7 @@
 			if(!key)
 				var/foundghost = 0
 				if(mind)
-					for(var/mob/dead/observer/G in player_list)
+					for(var/mob/dead/observer/G in SLOTH.player_list)
 						if(G.mind == mind)
 							foundghost = 1
 							if (G.can_reenter_corpse == 0)

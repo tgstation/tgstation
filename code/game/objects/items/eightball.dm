@@ -98,10 +98,10 @@
 /obj/item/toy/eightball/haunted/Initialize(mapload)
 	..()
 	votes = list()
-	poi_list |= src
+	SLOTH.poi_list |= src
 
 /obj/item/toy/eightball/haunted/Destroy()
-	poi_list -= src
+	SLOTH.poi_list -= src
 	. = ..()
 
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)

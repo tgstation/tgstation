@@ -7,10 +7,10 @@ var/highlander = FALSE
 
 	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 
-	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+	for(var/obj/item/weapon/disk/nuclear/N in SLOTH.poi_list)
 		N.relocate() //Gets it out of bags and such
 
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in SLOTH.player_list)
 		if(H.stat == DEAD || !(H.client))
 			continue
 		H.make_scottish()
@@ -83,7 +83,7 @@ var/highlander = FALSE
 		alert("The game hasn't started yet!")
 		return
 
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in SLOTH.player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue
 

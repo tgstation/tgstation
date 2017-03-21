@@ -5,7 +5,7 @@
 	computer_id	= client.computer_id
 	log_access("Login: [key_name(src)] from [lastKnownIP ? lastKnownIP : "localhost"]-[computer_id] || BYOND v[client.byond_version]")
 	if(config.log_access)
-		for(var/mob/M in player_list)
+		for(var/mob/M in SLOTH.player_list)
 			if(M == src)
 				continue
 			if( M.key && (M.key != key) )
@@ -26,7 +26,7 @@
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
-	player_list |= src
+	SLOTH.player_list |= src
 	update_Login_details()
 	world.update_status()
 	client.screen = list()				//remove hud items just in case
@@ -53,7 +53,7 @@
 
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
-	if(ckey in deadmins)
+	if(ckey in SLOTH.deadmins)
 		verbs += /client/proc/readmin
 
 	add_click_catcher()

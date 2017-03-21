@@ -55,18 +55,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
-	if(tech_list[ID])
-		var/datum/tech/tech = tech_list[ID]
+	if(SLOTH.tech_list[ID])
+		var/datum/tech/tech = SLOTH.tech_list[ID]
 		return tech.name
 	return "ERROR: Report This"
 
 /proc/CallMaterialName(ID)
-	if (copytext(ID, 1, 2) == "$" && materials_list[ID])
-		var/datum/material/material = materials_list[ID]
+	if (copytext(ID, 1, 2) == "$" && SLOTH.materials_list[ID])
+		var/datum/material/material = SLOTH.materials_list[ID]
 		return material.name
 
-	else if(chemical_reagents_list[ID])
-		var/datum/reagent/reagent = chemical_reagents_list[ID]
+	else if(SLOTH.chemical_reagents_list[ID])
+		var/datum/reagent/reagent = SLOTH.chemical_reagents_list[ID]
 		return reagent.name
 	return "ERROR: Report This"
 
@@ -90,7 +90,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
+	for(var/obj/machinery/r_n_d/server/centcom/C in SLOTH.machines)
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			C.files.AddTech2Known(T)
@@ -350,7 +350,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
-					for(var/obj/machinery/r_n_d/server/S in machines)
+					for(var/obj/machinery/r_n_d/server/S in SLOTH.machines)
 						var/server_processed = 0
 						if(S.disabled)
 							continue

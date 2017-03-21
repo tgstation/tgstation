@@ -41,7 +41,7 @@
 
 /mob/living/silicon/Initialize()
 	..()
-	silicon_mobs += src
+	SLOTH.silicon_mobs += src
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
@@ -56,7 +56,7 @@
 /mob/living/silicon/Destroy()
 	radio = null
 	aicamera = null
-	silicon_mobs -= src
+	SLOTH.silicon_mobs -= src
 	return ..()
 
 /mob/living/silicon/contents_explosion(severity, target)

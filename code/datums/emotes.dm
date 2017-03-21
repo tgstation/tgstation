@@ -53,7 +53,7 @@ var/global/list/emote_list = list()
 	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
 	msg = "<b>[user]</b> " + msg
 
-	for(var/mob/M in dead_mob_list)
+	for(var/mob/M in SLOTH.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(src)

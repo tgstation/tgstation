@@ -67,7 +67,7 @@
 var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
-	for(var/V in sortedAreas)
+	for(var/V in SLOTH.sortedAreas)
 		var/area/AR = V
 		if(istype(AR, /area/shuttle) || AR.noteleport)
 			continue
@@ -137,24 +137,24 @@ var/list/teleportlocs = list()
 			var/list/cameras = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
-			for (var/mob/living/silicon/aiPlayer in player_list)
+			for (var/mob/living/silicon/aiPlayer in SLOTH.player_list)
 				if (state == 1)
 					aiPlayer.cancelAlarm("Power", src, source)
 				else
 					aiPlayer.triggerAlarm("Power", src, cameras, source)
 
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in SLOTH.machines)
 				if(state == 1)
 					a.cancelAlarm("Power", src, source)
 				else
 					a.triggerAlarm("Power", src, cameras, source)
 
-			for(var/mob/living/simple_animal/drone/D in mob_list)
+			for(var/mob/living/simple_animal/drone/D in SLOTH.mob_list)
 				if(state == 1)
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+			for(var/datum/computer_file/program/alarm_monitor/p in SLOTH.alarmdisplay)
 				if(state == 1)
 					p.cancelAlarm("Power", src, source)
 				else
@@ -168,23 +168,23 @@ var/list/teleportlocs = list()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 
-			for(var/mob/living/silicon/aiPlayer in player_list)
+			for(var/mob/living/silicon/aiPlayer in SLOTH.player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in SLOTH.machines)
 				a.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/mob/living/simple_animal/drone/D in mob_list)
+			for(var/mob/living/simple_animal/drone/D in SLOTH.mob_list)
 				D.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+			for(var/datum/computer_file/program/alarm_monitor/p in SLOTH.alarmdisplay)
 				p.triggerAlarm("Atmosphere", src, cameras, source)
 
 		else if (src.atmosalm == 2)
-			for(var/mob/living/silicon/aiPlayer in player_list)
+			for(var/mob/living/silicon/aiPlayer in SLOTH.player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, source)
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in SLOTH.machines)
 				a.cancelAlarm("Atmosphere", src, source)
-			for(var/mob/living/simple_animal/drone/D in mob_list)
+			for(var/mob/living/simple_animal/drone/D in SLOTH.mob_list)
 				D.cancelAlarm("Atmosphere", src, source)
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+			for(var/datum/computer_file/program/alarm_monitor/p in SLOTH.alarmdisplay)
 				p.cancelAlarm("Atmosphere", src, source)
 
 		src.atmosalm = danger_level
@@ -224,13 +224,13 @@ var/list/teleportlocs = list()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
-	for (var/obj/machinery/computer/station_alert/a in machines)
+	for (var/obj/machinery/computer/station_alert/a in SLOTH.machines)
 		a.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/silicon/aiPlayer in player_list)
+	for (var/mob/living/silicon/aiPlayer in SLOTH.player_list)
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/simple_animal/drone/D in mob_list)
+	for (var/mob/living/simple_animal/drone/D in SLOTH.mob_list)
 		D.triggerAlarm("Fire", src, cameras, source)
-	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+	for(var/datum/computer_file/program/alarm_monitor/p in SLOTH.alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
 
 	START_PROCESSING(SSobj, src)
@@ -245,13 +245,13 @@ var/list/teleportlocs = list()
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
-	for (var/mob/living/silicon/aiPlayer in player_list)
+	for (var/mob/living/silicon/aiPlayer in SLOTH.player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)
-	for (var/obj/machinery/computer/station_alert/a in machines)
+	for (var/obj/machinery/computer/station_alert/a in SLOTH.machines)
 		a.cancelAlarm("Fire", src, source)
-	for (var/mob/living/simple_animal/drone/D in mob_list)
+	for (var/mob/living/simple_animal/drone/D in SLOTH.mob_list)
 		D.cancelAlarm("Fire", src, source)
-	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+	for(var/datum/computer_file/program/alarm_monitor/p in SLOTH.alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
 
 	STOP_PROCESSING(SSobj, src)
@@ -282,7 +282,7 @@ var/list/teleportlocs = list()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
-	for (var/mob/living/silicon/SILICON in player_list)
+	for (var/mob/living/silicon/SILICON in SLOTH.player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)

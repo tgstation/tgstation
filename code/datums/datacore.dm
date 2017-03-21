@@ -77,7 +77,7 @@
 			return
 
 /datum/datacore/proc/manifest()
-	for(var/mob/dead/new_player/N in player_list)
+	for(var/mob/dead/new_player/N in SLOTH.player_list)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK

@@ -2,7 +2,7 @@
 var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
 
 /proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+	if(SLOTH.awaydestinations.len)	//crude, but it saves another var!
 		return
 
 	if(potentialRandomZlevels && potentialRandomZlevels.len)
@@ -14,20 +14,20 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 /proc/reset_gateway_spawns(reset = FALSE)
 	for(var/obj/machinery/gateway/G in world)
 		if(reset)
-			G.randomspawns = awaydestinations
+			G.randomspawns = SLOTH.awaydestinations
 		else
-			G.randomspawns.Add(awaydestinations)
+			G.randomspawns.Add(SLOTH.awaydestinations)
 
 /obj/effect/landmark/awaystart
 	name = "away mission spawn"
 	desc = "Randomly picked away mission spawn points"
 
 /obj/effect/landmark/awaystart/New()
-	awaydestinations += src
+	SLOTH.awaydestinations += src
 	..()
 
 /obj/effect/landmark/awaystart/Destroy()
-	awaydestinations -= src
+	SLOTH.awaydestinations -= src
 	return ..()
 
 /proc/generateMapList(filename)

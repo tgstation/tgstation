@@ -18,10 +18,10 @@
 /obj/item/station_charter/New()
 	. = ..()
 	if(!standard_station_regex)
-		var/prefixes = jointext(station_prefixes, "|")
-		var/names = jointext(station_names, "|")
-		var/suffixes = jointext(station_suffixes, "|")
-		var/numerals = jointext(station_numerals, "|")
+		var/prefixes = jointext(SLOTH.station_prefixes, "|")
+		var/names = jointext(SLOTH.station_names, "|")
+		var/suffixes = jointext(SLOTH.station_suffixes, "|")
+		var/numerals = jointext(SLOTH.station_numerals, "|")
 		var/regexstr = "(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])"
 		standard_station_regex = new(regexstr)
 
@@ -60,7 +60,7 @@
 	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>")
+	to_chat(SLOTH.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>")
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)

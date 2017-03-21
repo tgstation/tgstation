@@ -98,8 +98,8 @@
 			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 
 	equip_antag(M)
-	var/wizard_name_first = pick(wizard_first)
-	var/wizard_name_second = pick(wizard_second)
+	var/wizard_name_first = pick(SLOTH.wizard_first)
+	var/wizard_name_second = pick(SLOTH.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	if(usr)
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -204,10 +204,10 @@
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
 
-	var/brainfirstname = pick(first_names_male)
+	var/brainfirstname = pick(SLOTH.first_names_male)
 	if(prob(50))
-		brainfirstname = pick(first_names_female)
-	var/brainopslastname = pick(last_names)
+		brainfirstname = pick(SLOTH.first_names_female)
+	var/brainopslastname = pick(SLOTH.last_names)
 	if(ticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
 		brainopslastname = ticker.mode.nukeops_lastname
 	var/brainopsname = "[brainfirstname] [brainopslastname]"

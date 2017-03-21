@@ -367,7 +367,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/list/guardians = summoner.hasparasites()
 		for(var/para in guardians)
 			to_chat(para, my_message)
-		for(var/M in dead_mob_list)
+		for(var/M in SLOTH.dead_mob_list)
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
@@ -389,7 +389,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" )
-	for(var/M in dead_mob_list)
+	for(var/M in SLOTH.dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 

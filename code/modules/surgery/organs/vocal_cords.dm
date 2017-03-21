@@ -371,7 +371,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/i=1, i<=(5*power_multiplier), i++)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				step(L, direction ? direction : pick(cardinal))
+				step(L, direction ? direction : pick(SLOTH.cardinal))
 			sleep(10)
 
 	//WALK

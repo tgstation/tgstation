@@ -72,7 +72,7 @@
 
 /obj/effect/cross_action/spacetime_dist/New()
 	..()
-	sound = "sound/guitar/[safepick(guitar_notes)]"
+	sound = "sound/guitar/[safepick(SLOTH.guitar_notes)]"
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(linked_dist && walks_left > 0)

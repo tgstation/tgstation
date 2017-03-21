@@ -4,12 +4,12 @@
 	if(!check_rights(R_DEBUG))
 		return
 
-	if(Debug2)
-		Debug2 = 0
+	if(SLOTH.Debug2)
+		SLOTH.Debug2 = 0
 		message_admins("[key_name(src)] toggled debugging off.")
 		log_admin("[key_name(src)] toggled debugging off.")
 	else
-		Debug2 = 1
+		SLOTH.Debug2 = 1
 		message_admins("[key_name(src)] toggled debugging on.")
 		log_admin("[key_name(src)] toggled debugging on.")
 
@@ -177,7 +177,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	to_chat(usr, t)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_robotize(mob/M in mob_list)
+/client/proc/cmd_admin_robotize(mob/M in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Make Robot"
 
@@ -193,7 +193,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_blobize(mob/M in mob_list)
+/client/proc/cmd_admin_blobize(mob/M in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Make Blob"
 
@@ -211,7 +211,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Invalid mob")
 
 
-/client/proc/cmd_admin_animalize(mob/M in mob_list)
+/client/proc/cmd_admin_animalize(mob/M in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
@@ -232,13 +232,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		M.Animalize()
 
 
-/client/proc/makepAI(turf/T in mob_list)
+/client/proc/makepAI(turf/T in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
 
 	var/list/available = list()
-	for(var/mob/C in mob_list)
+	for(var/mob/C in SLOTH.mob_list)
 		if(C.key)
 			available.Add(C)
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
@@ -259,7 +259,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			SSpai.candidates.Remove(candidate)
 	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_alienize(mob/M in mob_list)
+/client/proc/cmd_admin_alienize(mob/M in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Make Alien"
 
@@ -276,7 +276,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_slimeize(mob/M in mob_list)
+/client/proc/cmd_admin_slimeize(mob/M in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Make slime"
 
@@ -388,7 +388,7 @@ var/list/TYPES_SHORTCUTS = list(
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_grantfullaccess(mob/M in mob_list)
+/client/proc/cmd_admin_grantfullaccess(mob/M in SLOTH.mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
@@ -428,7 +428,7 @@ var/list/TYPES_SHORTCUTS = list(
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
-/client/proc/cmd_assume_direct_control(mob/M in mob_list)
+/client/proc/cmd_assume_direct_control(mob/M in SLOTH.mob_list)
 	set category = "Admin"
 	set name = "Assume direct control"
 	set desc = "Direct intervention"
@@ -464,37 +464,37 @@ var/list/TYPES_SHORTCUTS = list(
 		if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
-	for(var/obj/machinery/power/apc/APC in apcs_list)
+	for(var/obj/machinery/power/apc/APC in SLOTH.apcs_list)
 		var/area/A = get_area(APC)
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 
-	for(var/obj/machinery/airalarm/AA in machines)
+	for(var/obj/machinery/airalarm/AA in SLOTH.machines)
 		var/area/A = get_area(AA)
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 
-	for(var/obj/machinery/requests_console/RC in machines)
+	for(var/obj/machinery/requests_console/RC in SLOTH.machines)
 		var/area/A = get_area(RC)
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
 
-	for(var/obj/machinery/light/L in machines)
+	for(var/obj/machinery/light/L in SLOTH.machines)
 		var/area/A = get_area(L)
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
 
-	for(var/obj/machinery/light_switch/LS in machines)
+	for(var/obj/machinery/light_switch/LS in SLOTH.machines)
 		var/area/A = get_area(LS)
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
 
-	for(var/obj/item/device/radio/intercom/I in machines)
+	for(var/obj/item/device/radio/intercom/I in SLOTH.machines)
 		var/area/A = get_area(I)
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
 
-	for(var/obj/machinery/camera/C in machines)
+	for(var/obj/machinery/camera/C in SLOTH.machines)
 		var/area/A = get_area(C)
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
@@ -535,7 +535,7 @@ var/list/TYPES_SHORTCUTS = list(
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
 
-/client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
+/client/proc/cmd_admin_dress(mob/living/carbon/human/M in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
 	if(!ishuman(M))
@@ -607,11 +607,11 @@ var/list/TYPES_SHORTCUTS = list(
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
 
-	for(var/obj/machinery/power/emitter/E in machines)
+	for(var/obj/machinery/power/emitter/E in SLOTH.machines)
 		if(E.anchored)
 			E.active = 1
 
-	for(var/obj/machinery/field/generator/F in machines)
+	for(var/obj/machinery/field/generator/F in SLOTH.machines)
 		if(F.active == 0)
 			F.active = 1
 			F.state = 2
@@ -622,7 +622,7 @@ var/list/TYPES_SHORTCUTS = list(
 			F.update_icon()
 
 	spawn(30)
-		for(var/obj/machinery/the_singularitygen/G in machines)
+		for(var/obj/machinery/the_singularitygen/G in SLOTH.machines)
 			if(G.anchored)
 				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
 //				qdel(G)
@@ -639,7 +639,7 @@ var/list/TYPES_SHORTCUTS = list(
 				//S.dissipate_track = 0
 				//S.dissipate_strength = 10
 
-	for(var/obj/machinery/power/rad_collector/Rad in machines)
+	for(var/obj/machinery/power/rad_collector/Rad in SLOTH.machines)
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
@@ -652,7 +652,7 @@ var/list/TYPES_SHORTCUTS = list(
 			if(!Rad.active)
 				Rad.toggle_power()
 
-	for(var/obj/machinery/power/smes/SMES in machines)
+	for(var/obj/machinery/power/smes/SMES in SLOTH.machines)
 		if(SMES.anchored)
 			SMES.input_attempt = 1
 
@@ -663,19 +663,19 @@ var/list/TYPES_SHORTCUTS = list(
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
-			to_chat(usr, jointext(player_list,","))
+			to_chat(usr, jointext(SLOTH.player_list,","))
 		if("Admins")
-			to_chat(usr, jointext(admins,","))
+			to_chat(usr, jointext(SLOTH.admins,","))
 		if("Mobs")
-			to_chat(usr, jointext(mob_list,","))
+			to_chat(usr, jointext(SLOTH.mob_list,","))
 		if("Living Mobs")
-			to_chat(usr, jointext(living_mob_list,","))
+			to_chat(usr, jointext(SLOTH.living_mob_list,","))
 		if("Dead Mobs")
-			to_chat(usr, jointext(dead_mob_list,","))
+			to_chat(usr, jointext(SLOTH.dead_mob_list,","))
 		if("Clients")
-			to_chat(usr, jointext(clients,","))
+			to_chat(usr, jointext(SLOTH.clients,","))
 		if("Joined Clients")
-			to_chat(usr, jointext(joined_player_list,","))
+			to_chat(usr, jointext(SLOTH.joined_player_list,","))
 
 /client/proc/cmd_display_del_log()
 	set category = "Debug"
@@ -712,7 +712,7 @@ var/list/TYPES_SHORTCUTS = list(
 	if(!holder)
 		return
 	var/list/names = list()
-	for(var/i in ruin_landmarks)
+	for(var/i in SLOTH.ruin_landmarks)
 		var/obj/effect/landmark/ruin/ruin_landmark = i
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
 
@@ -757,11 +757,11 @@ var/list/TYPES_SHORTCUTS = list(
 	if(!holder)
 		return
 
-	global.medals_enabled = !global.medals_enabled
+	SLOTH.medals_enabled = !SLOTH.medals_enabled
 
-	message_admins("<span class='adminnotice'>[key_name_admin(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] [SLOTH.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
 	feedback_add_details("admin_verb","TMH") // If...
-	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
+	log_admin("[key_name(src)] [SLOTH.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
 /client/proc/view_runtimes()
 	set category = "Debug"

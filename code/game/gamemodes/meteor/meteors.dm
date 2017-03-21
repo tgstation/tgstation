@@ -30,7 +30,7 @@
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
-		var/startSide = pick(cardinal)
+		var/startSide = pick(SLOTH.cardinal)
 		pickedstart = spaceDebrisStartLoc(startSide, 1)
 		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
 		max_i--
@@ -118,13 +118,13 @@
 			get_hit()
 
 /obj/effect/meteor/Destroy()
-	meteor_list -= src
+	SLOTH.meteor_list -= src
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
 /obj/effect/meteor/New()
 	..()
-	meteor_list += src
+	SLOTH.meteor_list += src
 	if(SSaugury)
 		SSaugury.register_doom(src, threat)
 	SpinAnimation()
@@ -185,7 +185,7 @@
 
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
-		for(var/mob/M in player_list)
+		for(var/mob/M in SLOTH.player_list)
 			if((M.orbiting) && (SSaugury.watchers[M]))
 				continue
 			var/turf/T = get_turf(M)

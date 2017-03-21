@@ -156,8 +156,8 @@ var/next_external_rsc = 0
 		preload_rsc = external_rsc_urls[next_external_rsc]
 #endif
 
-	clients += src
-	directory[ckey] = src
+	SLOTH.clients += src
+	SLOTH.directory[ckey] = src
 
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
@@ -180,7 +180,7 @@ var/next_external_rsc = 0
 				admin_datums[ckey] = D
 	holder = admin_datums[ckey]
 	if(holder)
-		admins |= src
+		SLOTH.admins |= src
 		holder.owner = src
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
@@ -228,22 +228,22 @@ var/next_external_rsc = 0
 			qdel(src)
 			return 0
 
-	if( (world.address == address || !address) && !host )
-		host = key
+	if( (world.address == address || !address) && !SLOTH.host )
+		SLOTH.host = key
 		world.update_status()
 
 	if(holder)
 		add_admin_verbs()
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
-		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
+		if((SLOTH.comms_key == "default_pwd" || length(SLOTH.comms_key) <= 6) && SLOTH.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
 	add_verbs_from_config()
 	set_client_age_from_db()
 
 	if (isnum(player_age) && player_age == -1) //first connection
-		if (config.panic_bunker && !holder && !(ckey in deadmins))
+		if (config.panic_bunker && !holder && !(ckey in SLOTH.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
@@ -264,7 +264,7 @@ var/next_external_rsc = 0
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
 
-	if(!IsGuestKey(key) && dbcon.IsConnected())
+	if(!IsGuestKey(key) && SLOTH.dbcon.IsConnected())
 		findJoinDate()
 
 	sync_client_with_db(tdata)
@@ -278,7 +278,7 @@ var/next_external_rsc = 0
 
 	screen += void
 
-	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+	if(prefs.lastchangelog != SLOTH.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		if(config.aggressive_changelog)
 			changelog()
@@ -310,9 +310,9 @@ var/next_external_rsc = 0
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
-		admins -= src
-	directory -= ckey
-	clients -= src
+		SLOTH.admins -= src
+	SLOTH.directory -= ckey
+	SLOTH.clients -= src
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
@@ -325,12 +325,12 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	if(!dbcon.Connect())
+	if(!SLOTH.dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(src.ckey)
 
-	var/DBQuery/query_get_client_age = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query_get_client_age = SLOTH.dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
 		return
 
@@ -346,18 +346,18 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	if (!dbcon.Connect())
+	if (!SLOTH.dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(ckey)
 
-	var/DBQuery/query_get_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
+	var/DBQuery/query_get_ip = SLOTH.dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
 	query_get_ip.Execute()
 	related_accounts_ip = ""
 	while(query_get_ip.NextRow())
 		related_accounts_ip += "[query_get_ip.item[1]], "
 
-	var/DBQuery/query_get_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
+	var/DBQuery/query_get_cid = SLOTH.dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
 	if(!query_get_cid.Execute())
 		return
 	related_accounts_cid = ""
@@ -376,13 +376,13 @@ var/next_external_rsc = 0
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/DBQuery/query_log_player = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	var/DBQuery/query_log_player = SLOTH.dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
 	if(!query_log_player.Execute())
 		return
 
 	//Logging player access
 
-	var/DBQuery/query_log_connection = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/DBQuery/query_log_connection = SLOTH.dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 
 /client/proc/check_randomizer(topic)
@@ -438,7 +438,7 @@ var/next_external_rsc = 0
 			cidcheck -= ckey
 	else
 		var/sql_ckey = sanitizeSQL(ckey)
-		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+		var/DBQuery/query_cidcheck = SLOTH.dbcon.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 		query_cidcheck.Execute()
 
 		var/lastcid
@@ -466,13 +466,13 @@ var/next_external_rsc = 0
 	var/const/adminckey = "CID-Error"
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
+	var/DBQuery/query_get_notes = SLOTH.dbcon.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
 		return
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = dbcon.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = SLOTH.dbcon.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())

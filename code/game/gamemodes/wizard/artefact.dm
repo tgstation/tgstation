@@ -517,7 +517,7 @@ var/global/list/multiverse = list()
 					user.unset_machine()
 			if("r_leg","l_leg")
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(cardinal))
+				var/turf/T = get_step(target,pick(SLOTH.cardinal))
 				target.Move(T)
 			if("r_arm","l_arm")
 				target.click_random_mob()
@@ -533,7 +533,7 @@ var/global/list/multiverse = list()
 	possible = list()
 	if(!link)
 		return
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in SLOTH.living_mob_list)
 		if(md5(H.dna.uni_identity) in link.fingerprints)
 			possible |= H
 

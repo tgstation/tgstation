@@ -62,7 +62,7 @@
 
 	var/list/turf/synd_spawn = list()
 
-	for(var/obj/effect/landmark/A in landmarks_list)
+	for(var/obj/effect/landmark/A in SLOTH.landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
 			continue
@@ -93,7 +93,7 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in SLOTH.nuke_list
 	if(nuke)
 		nuke.r_code = nuke_code
 	return ..()
@@ -182,7 +182,7 @@
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
+	for(var/obj/item/weapon/disk/nuclear/D in SLOTH.poi_list)
 		if(!D.onCentcom())
 			disk_rescued = 0
 			break
@@ -290,7 +290,7 @@
 
 
 /proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
+	var/randomname = pick(SLOTH.last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
 	if (!newname)

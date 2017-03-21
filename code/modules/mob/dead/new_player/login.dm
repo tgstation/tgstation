@@ -6,8 +6,8 @@
 
 	..()
 
-	if(join_motd)
-		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
+	if(SLOTH.join_motd)
+		to_chat(src, "<div class=\"motd\">[SLOTH.join_motd]</div>")
 
 	if(admin_notice)
 		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>")

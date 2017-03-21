@@ -332,7 +332,7 @@ Code:
 
 
 
-			for(var/obj/machinery/computer/monitor/pMon in machines)
+			for(var/obj/machinery/computer/monitor/pMon in SLOTH.machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)) )
 					powercount++
 					powermonitors += pMon
@@ -563,7 +563,7 @@ Code:
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/mob/living/simple_animal/bot/cleanbot/B in living_mob_list)
+				for (var/mob/living/simple_animal/bot/cleanbot/B in SLOTH.living_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -775,7 +775,7 @@ Code:
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
 		var/botcount = 0
-		for(Bot in living_mob_list) //Git da botz
+		for(Bot in SLOTH.living_mob_list) //Git da botz
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"

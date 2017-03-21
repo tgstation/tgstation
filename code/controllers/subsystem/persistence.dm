@@ -71,7 +71,7 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	return 1
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
-	for(var/mob/living/simple_animal/parrot/Poly/P in living_mob_list)
+	for(var/mob/living/simple_animal/parrot/Poly/P in SLOTH.living_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 

@@ -198,7 +198,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!first_sound_played || prob(7))
-		for(var/M in player_list)
+		for(var/M in SLOTH.player_list)
 			if(M && !isnewplayer(M))
 				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 	if(!obj_integrity)
@@ -227,9 +227,9 @@
 		var/used_components = FALSE
 		for(var/i in required_components)
 			if(required_components[i])
-				var/to_use = min(clockwork_component_cache[i], required_components[i])
+				var/to_use = min(SLOTH.clockwork_component_cache[i], required_components[i])
 				required_components[i] -= to_use
-				clockwork_component_cache[i] -= to_use
+				SLOTH.clockwork_component_cache[i] -= to_use
 				if(to_use)
 					used_components = TRUE
 		if(used_components)
@@ -278,12 +278,12 @@
 				QDEL_IN(src, 3)
 				if(ratvar_portal)
 					sleep(3)
-					clockwork_gateway_activated = TRUE
+					SLOTH.clockwork_gateway_activated = TRUE
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
 					INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0) //call the shuttle immediately
 					sleep(3)
-					clockwork_gateway_activated = TRUE
+					SLOTH.clockwork_gateway_activated = TRUE
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>")
@@ -301,9 +301,9 @@
 							dist = FALSE
 						T.ratvar_act(dist)
 						CHECK_TICK
-					for(var/mob/living/L in living_mob_list)
+					for(var/mob/living/L in SLOTH.living_mob_list)
 						L.ratvar_act()
-					for(var/I in all_clockwork_mobs)
+					for(var/I in SLOTH.all_clockwork_mobs)
 						var/mob/M = I
 						if(M.stat == CONSCIOUS)
 							clockwork_say(M, text2ratvar(pick("Purge all untruths and honor Engine!", "All glory to Engine's light!", "Engine's power is unmatched!")))

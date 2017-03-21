@@ -46,7 +46,7 @@ var/global/datum/getrev/revdata = new()
 			return
 
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
-		valid_HTTPSGet = TRUE
+		SLOTH.valid_HTTPSGet = TRUE
 		var/json = HTTPSGet(url)
 		if(!json)
 			return

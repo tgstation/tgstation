@@ -31,16 +31,16 @@
 	var/turf/T = loc
 	hide(T.intact)
 	if(codes["patrol"])
-		if(!navbeacons["[z]"])
-			navbeacons["[z]"] = list()
-		navbeacons["[z]"] += src //Register with the patrol list!
+		if(!SLOTH.navbeacons["[z]"])
+			SLOTH.navbeacons["[z]"] = list()
+		SLOTH.navbeacons["[z]"] += src //Register with the patrol list!
 	if(codes["delivery"])
-		deliverybeacons += src
-		deliverybeacontags += location
+		SLOTH.deliverybeacons += src
+		SLOTH.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	navbeacons["[z]"] -= src //Remove from beacon list, if in one.
-	deliverybeacons -= src
+	SLOTH.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	SLOTH.deliverybeacons -= src
 	return ..()
 
 // set the transponder codes assoc list from codes_txt

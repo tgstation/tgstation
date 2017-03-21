@@ -13,7 +13,7 @@ var/datum/controller/subsystem/parallax/SSparallax
 
 /datum/controller/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)
-		src.currentrun = clients.Copy()
+		src.currentrun = SLOTH.clients.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun

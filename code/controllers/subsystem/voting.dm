@@ -58,7 +58,7 @@ var/datum/controller/subsystem/vote/SSvote
 			greatest_votes = votes
 	//default-vote for everyone who didn't vote
 	if(!config.vote_no_default && choices.len)
-		var/list/non_voters = directory.Copy()
+		var/list/non_voters = SLOTH.directory.Copy()
 		non_voters -= voted
 		for (var/non_voter_ckey in non_voters)
 			var/client/C = non_voters[non_voter_ckey]
@@ -70,10 +70,10 @@ var/datum/controller/subsystem/vote/SSvote
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
 			else if(mode == "gamemode")
-				if(master_mode in choices)
-					choices[master_mode] += non_voters.len
-					if(choices[master_mode] >= greatest_votes)
-						greatest_votes = choices[master_mode]
+				if(SLOTH.master_mode in choices)
+					choices[SLOTH.master_mode] += non_voters.len
+					if(choices[SLOTH.master_mode] >= greatest_votes)
+						greatest_votes = choices[SLOTH.master_mode]
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -103,7 +103,7 @@ var/datum/controller/subsystem/vote/SSvote
 			. = pick(winners)
 			text += "\n<b>Vote Result: [.]</b>"
 		else
-			text += "\n<b>Did not vote:</b> [clients.len-voted.len]"
+			text += "\n<b>Did not vote:</b> [SLOTH.clients.len-voted.len]"
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
@@ -120,15 +120,15 @@ var/datum/controller/subsystem/vote/SSvote
 				if(. == "Restart Round")
 					restart = 1
 			if("gamemode")
-				if(master_mode != .)
+				if(SLOTH.master_mode != .)
 					world.save_mode(.)
 					if(ticker && ticker.mode)
 						restart = 1
 					else
-						master_mode = .
+						SLOTH.master_mode = .
 	if(restart)
 		var/active_admins = 0
-		for(var/client/C in admins)
+		for(var/client/C in SLOTH.admins)
 			if(!C.is_afk() && check_rights_for(C, R_SERVER))
 				active_admins = 1
 				break
@@ -161,7 +161,7 @@ var/datum/controller/subsystem/vote/SSvote
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
-			if((admin_datums[ckey]) || (ckey in deadmins))
+			if((admin_datums[ckey]) || (ckey in SLOTH.deadmins))
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
@@ -194,7 +194,7 @@ var/datum/controller/subsystem/vote/SSvote
 		log_vote(text)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
-		for(var/c in clients)
+		for(var/c in SLOTH.clients)
 			var/client/C = c
 			var/datum/action/vote/V = new
 			if(question)

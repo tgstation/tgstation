@@ -27,7 +27,7 @@
 		to_chat(src, "<font color='red'>Only Admins may use this command.</font>")
 		return
 
-	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
+	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in SLOTH.clients
 	if(!istype(target,/client))
 		to_chat(src, "<font color='red'>Error: giveruntimelog(): Client not found.</font>")
 		return

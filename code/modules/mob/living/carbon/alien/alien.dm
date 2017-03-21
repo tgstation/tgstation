@@ -110,7 +110,7 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/C in mob_list)
+		for (var/mob/living/C in SLOTH.mob_list)
 			if(C.status_flags & XENO_HOST)
 				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)

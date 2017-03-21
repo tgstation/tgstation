@@ -109,8 +109,8 @@ var/global/posibrain_notif_cooldown = 0
 	to_chat(brainmob, welcome_message)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
-	dead_mob_list -= brainmob
-	living_mob_list += brainmob
+	SLOTH.dead_mob_list -= brainmob
+	SLOTH.living_mob_list += brainmob
 
 	visible_message(new_mob_message)
 	update_icon()

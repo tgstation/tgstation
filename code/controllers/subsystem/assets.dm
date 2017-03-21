@@ -14,6 +14,6 @@ var/datum/controller/subsystem/assets/SSasset
 		var/datum/asset/A = new type()
 		A.register()
 
-	for(var/client/C in clients)
+	for(var/client/C in SLOTH.clients)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, cache, FALSE), 10)
 	..()

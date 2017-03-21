@@ -20,14 +20,14 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 	tag = "mob_[next_mob_id++]"
-	mob_list += src
+	SLOTH.mob_list += src
 
 	if(client && ticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
 
-	if(length(newplayer_start))
-		loc = pick(newplayer_start)
+	if(length(SLOTH.newplayer_start))
+		loc = pick(SLOTH.newplayer_start)
 	else
 		loc = locate(1,1,1)
 
@@ -48,11 +48,11 @@
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
-		if (dbcon.Connect())
+		if (SLOTH.dbcon.Connect())
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/DBQuery/query_get_new_polls = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			var/DBQuery/query_get_new_polls = SLOTH.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
 			if(!query_get_new_polls.Execute())
 				return
 			var/newpoll = 0
@@ -77,7 +77,7 @@
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[SLOTH.master_mode]")
 		stat("Map:", SSmapping.config.map_name)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
@@ -175,7 +175,7 @@
 
 	if(href_list["SelectedJob"])
 
-		if(!enter_allowed)
+		if(!SLOTH.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
@@ -325,8 +325,8 @@
 		character = equip
 
 	var/D
-	if(latejoin.len)
-		D = get_turf(pick(latejoin))
+	if(SLOTH.latejoin.len)
+		D = get_turf(pick(SLOTH.latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 			if(!T.density)
@@ -363,7 +363,7 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
-	joined_player_list += character.ckey
+	SLOTH.joined_player_list += character.ckey
 
 	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)

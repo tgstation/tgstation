@@ -132,9 +132,9 @@
 	smoke_system.attach(src)
 	add_cell()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	SLOTH.poi_list |= src
 	log_message("[src.name] created.")
-	mechas_list += src //global mech list
+	SLOTH.mechas_list += src //global mech list
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
@@ -185,7 +185,7 @@
 		if(AI)
 			AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
-	poi_list.Remove(src)
+	SLOTH.poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
 	internal_tank = null
@@ -200,7 +200,7 @@
 	qdel(smoke_system)
 	smoke_system = null
 
-	mechas_list -= src //global mech list
+	SLOTH.mechas_list -= src //global mech list
 	return ..()
 
 ////////////////////////

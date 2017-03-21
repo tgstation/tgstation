@@ -533,7 +533,7 @@
 
 /obj/item/device/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
-		for(var/obj/machinery/syndicatebomb/B in machines)
+		for(var/obj/machinery/syndicatebomb/B in SLOTH.machines)
 			if(B.active)
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++

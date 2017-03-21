@@ -90,7 +90,7 @@
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+	for(var/obj/effect/landmark/abductor/A in SLOTH.landmarks_list)
 		if(istype(A,/obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))
@@ -137,7 +137,7 @@
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+	for(var/obj/effect/landmark/abductor/A in SLOTH.landmarks_list)
 		if(istype(A,/obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))
@@ -212,7 +212,7 @@
 
 /datum/game_mode/abduction/proc/get_team_console(team)
 	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
+	for(var/obj/machinery/abductor/console/c in SLOTH.machines)
 		if(c.team == team)
 			console = c
 			break
@@ -319,7 +319,7 @@
 			return 0
 		var/datum/species/abductor/S = H.dna.species
 		ab_team = S.team
-	for(var/obj/machinery/abductor/experiment/E in machines)
+	for(var/obj/machinery/abductor/experiment/E in SLOTH.machines)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
 				return 1
@@ -428,7 +428,7 @@
 	explanation_text = "Call forth a spirit from the other side."
 
 /datum/objective/abductee/calling/New()
-	var/mob/dead/D = pick(dead_mob_list)
+	var/mob/dead/D = pick(SLOTH.dead_mob_list)
 	if(D)
 		explanation_text = "You know that [D] has perished. Hold a seance to call them from the spirit realm."
 

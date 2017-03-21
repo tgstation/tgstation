@@ -4,16 +4,16 @@ var/global/BSACooldown = 0
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(admins, msg)
+	to_chat(SLOTH.admins, msg)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(admins, msg)
+	to_chat(SLOTH.admins, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/datum/admins/proc/show_player_panel(mob/M in mob_list)
+/datum/admins/proc/show_player_panel(mob/M in SLOTH.mob_list)
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
@@ -388,7 +388,7 @@ var/global/BSACooldown = 0
 		<center><B>Game Panel</B></center><hr>\n
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
-	if(master_mode == "secret")
+	if(SLOTH.master_mode == "secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
@@ -489,7 +489,7 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
-	dooc_allowed = !( dooc_allowed )
+	SLOTH.dooc_allowed = !( SLOTH.dooc_allowed )
 
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
@@ -528,8 +528,8 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
-	enter_allowed = !( enter_allowed )
-	if (!( enter_allowed ))
+	SLOTH.enter_allowed = !( SLOTH.enter_allowed )
+	if (!( SLOTH.enter_allowed ))
 		to_chat(world, "<B>New players may no longer enter the game.</B>")
 	else
 		to_chat(world, "<B>New players may now enter the game.</B>")
@@ -555,13 +555,13 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
-	abandon_allowed = !( abandon_allowed )
-	if (abandon_allowed)
+	SLOTH.abandon_allowed = !( SLOTH.abandon_allowed )
+	if (SLOTH.abandon_allowed)
 		to_chat(world, "<B>You may now respawn.</B>")
 	else
 		to_chat(world, "<B>You may no longer respawn :(</B>")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
-	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [SLOTH.abandon_allowed ? "On" : "Off"].</span>")
+	log_admin("[key_name(usr)] toggled respawn to [SLOTH.abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -584,11 +584,11 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
 		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/unprison(mob/M in mob_list)
+/datum/admins/proc/unprison(mob/M in SLOTH.mob_list)
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == ZLEVEL_CENTCOM)
-		M.loc = pick(latejoin)
+		M.loc = pick(SLOTH.latejoin)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
@@ -637,7 +637,7 @@ var/global/BSACooldown = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/datum/admins/proc/show_traitor_panel(mob/M in mob_list)
+/datum/admins/proc/show_traitor_panel(mob/M in SLOTH.mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
@@ -657,8 +657,8 @@ var/global/BSACooldown = 0
 	set category = "Debug"
 	set desc="Reduces view range when wearing welding helmets"
 	set name="Toggle tinted welding helmes"
-	tinted_weldhelh = !( tinted_weldhelh )
-	if (tinted_weldhelh)
+	SLOTH.tinted_weldhelh = !( SLOTH.tinted_weldhelh )
+	if (SLOTH.tinted_weldhelh)
 		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
 	else
 		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
@@ -670,18 +670,18 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Guests can't enter"
 	set name="Toggle guests"
-	guests_allowed = !( guests_allowed )
-	if (!( guests_allowed ))
+	SLOTH.guests_allowed = !( SLOTH.guests_allowed )
+	if (!( SLOTH.guests_allowed ))
 		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else
 		to_chat(world, "<B>Guests may now enter the game.</B>")
-	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>")
+	log_admin("[key_name(usr)] toggled guests game entering [SLOTH.guests_allowed?"":"dis"]allowed.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [SLOTH.guests_allowed?"":"dis"]allowed.</span>")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in SLOTH.mob_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -769,7 +769,7 @@ var/global/BSACooldown = 0
 //returns a list of ckeys of the kicked clients
 /proc/kick_clients_in_lobby(message, kick_only_afk = 0)
 	var/list/kicked_client_names = list()
-	for(var/client/C in clients)
+	for(var/client/C in SLOTH.clients)
 		if(isnewplayer(C.mob))
 			if(kick_only_afk && !C.is_afk()) //Ignore clients who are not afk
 				continue

@@ -14,11 +14,11 @@ var/explosionid = 1
 
 	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
 		//Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min(MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min(MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min(MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min(MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min(MAX_EX_FLAME_RANGE, flame_range)
+		devastation_range = min(SLOTH.MAX_EX_DEVESTATION_RANGE, devastation_range)
+		heavy_impact_range = min(SLOTH.MAX_EX_HEAVY_RANGE, heavy_impact_range)
+		light_impact_range = min(SLOTH.MAX_EX_LIGHT_RANGE, light_impact_range)
+		flash_range = min(SLOTH.MAX_EX_FLASH_RANGE, flash_range)
+		flame_range = min(SLOTH.MAX_EX_FLAME_RANGE, flame_range)
 
 	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -51,7 +51,7 @@ var/explosionid = 1
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
-		for(var/mob/M in player_list)
+		for(var/mob/M in SLOTH.player_list)
 			// Double check for client
 			if(M && M.client)
 				var/turf/M_turf = get_turf(M)
@@ -179,7 +179,7 @@ var/explosionid = 1
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
-	if(Debug2)
+	if(SLOTH.Debug2)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
 	//Machines which report explosions.
@@ -277,7 +277,7 @@ var/explosionid = 1
 	if(!power)
 		return
 	var/range = 0
-	range = round((2 * power)**DYN_EX_SCALE)
+	range = round((2 * power)**SLOTH.DYN_EX_SCALE)
 	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
 
 // Using default dyn_ex scale:

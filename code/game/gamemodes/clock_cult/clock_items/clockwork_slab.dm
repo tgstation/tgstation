@@ -97,7 +97,7 @@
 	return ..()
 
 /obj/item/clockwork/slab/ratvar_act()
-	if(ratvar_awakens)
+	if(SLOTH.ratvar_awakens)
 		nonhuman_usable = TRUE
 	else
 		nonhuman_usable = initial(nonhuman_usable)
@@ -119,7 +119,7 @@
 		return
 	var/servants = 0
 	var/production_slowdown = 0
-	for(var/mob/living/M in living_mob_list)
+	for(var/mob/living/M in SLOTH.living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
@@ -149,11 +149,11 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		if(clockwork_caches) //show components on examine
+		if(SLOTH.clockwork_caches) //show components on examine
 			to_chat(user, "<b>Stored components (with global cache):</b>")
 			for(var/i in stored_components)
 				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
-				(<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>")
+				(<b>[stored_components[i] + SLOTH.clockwork_component_cache[i]]</b>)</span>")
 		else
 			to_chat(user, "<b>Stored components:</b>")
 			for(var/i in stored_components)
@@ -195,9 +195,9 @@
 		if(!C.component_id)
 			return 0
 		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src]\
-		[clockwork_caches ? ", where it is added to the global cache":""].</span>")
-		if(clockwork_caches)
-			clockwork_component_cache[C.component_id]++
+		[SLOTH.clockwork_caches ? ", where it is added to the global cache":""].</span>")
+		if(SLOTH.clockwork_caches)
+			SLOTH.clockwork_component_cache[C.component_id]++
 			update_slab_info()
 		else
 			stored_components[C.component_id]++
@@ -282,7 +282,7 @@
 	var/initial_tier = initial(scripture.tier)
 	if(initial_tier != SCRIPTURE_PERIPHERAL)
 		var/list/tiers_of_scripture = scripture_unlock_check()
-		if(!ratvar_awakens && !no_cost && !tiers_of_scripture[initial_tier])
+		if(!SLOTH.ratvar_awakens && !no_cost && !tiers_of_scripture[initial_tier])
 			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
@@ -294,7 +294,7 @@
 //Guide to Serving Ratvar
 /obj/item/clockwork/slab/proc/recollection()
 	var/list/textlist = list("If you're seeing this, file a bug report.")
-	if(ratvar_awakens)
+	if(SLOTH.ratvar_awakens)
 		textlist = list("<font color=#BE8700 size=3><b>")
 		for(var/i in 1 to 100)
 			textlist += "HONOR RATVAR "
@@ -302,7 +302,7 @@
 	else
 		var/servants = 0
 		var/production_time = SLAB_PRODUCTION_TIME
-		for(var/mob/living/M in living_mob_list)
+		for(var/mob/living/M in SLOTH.living_mob_list)
 			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 				servants++
 		if(servants > SCRIPT_SERVANT_REQ)
@@ -379,9 +379,9 @@
 			temp_data += " "
 		else
 			temp_data += " ("
-	if(clockwork_caches) //if we have caches, display what's in the global cache
-		for(var/i in clockwork_component_cache)
-			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + clockwork_component_cache[i]]</b></font>"
+	if(SLOTH.clockwork_caches) //if we have caches, display what's in the global cache
+		for(var/i in SLOTH.clockwork_component_cache)
+			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + SLOTH.clockwork_component_cache[i]]</b></font>"
 			if(i != HIEROPHANT_ANSIBLE)
 				temp_data += " "
 	else
@@ -411,8 +411,8 @@
 	generate_all_scripture()
 
 	data["scripture"] = list()
-	for(var/s in all_scripture)
-		var/datum/clockwork_scripture/S = all_scripture[s]
+	for(var/s in SLOTH.all_scripture)
+		var/datum/clockwork_scripture/S = SLOTH.all_scripture[s]
 		if(S.tier == selected_scripture) //display only scriptures of the selected tier
 			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
@@ -456,10 +456,10 @@
 			selected_scripture = params["category"]
 		if("component")
 			var/list/components = list("Random Components")
-			for(var/i in clockwork_component_cache)
+			for(var/i in SLOTH.clockwork_component_cache)
 				var/cache_components = 0
-				if(clockwork_caches)
-					cache_components = clockwork_component_cache[i]
+				if(SLOTH.clockwork_caches)
+					cache_components = SLOTH.clockwork_component_cache[i]
 				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
 			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
 			if(input_component && !..())
@@ -500,7 +500,7 @@
 				continue
 			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
 			Q.scripture_index = i
-			var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[i]]
+			var/datum/clockwork_scripture/quickbind_slot = SLOTH.all_scripture[quickbound[i]]
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
 			var/list/temp_desc = list()
 			for(var/c in quickbind_slot.consumed_components) //show how much the bound scripture costs

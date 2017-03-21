@@ -25,11 +25,11 @@
 	modePlayer += wizard
 	wizard.assigned_role = "Wizard"
 	wizard.special_role = "Wizard"
-	if(wizardstart.len == 0)
+	if(SLOTH.wizardstart.len == 0)
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(wizardstart)
+		wiz.current.loc = pick(SLOTH.wizardstart)
 
 	return 1
 
@@ -97,8 +97,8 @@
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
-	var/wizard_name_first = pick(wizard_first)
-	var/wizard_name_second = pick(wizard_second)
+	var/wizard_name_first = pick(SLOTH.wizard_first)
+	var/wizard_name_second = pick(SLOTH.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	spawn(0)
 		var/newname = copytext(sanitize(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)

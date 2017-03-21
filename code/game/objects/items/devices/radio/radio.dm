@@ -239,7 +239,7 @@
 	var/turf/position = get_turf(src)
 
 	var/jammed = FALSE
-	for(var/obj/item/device/jammer/jammer in active_jammers)
+	for(var/obj/item/device/jammer/jammer in SLOTH.active_jammers)
 		if(get_dist(position,get_turf(jammer)) < jammer.range)
 			jammed = TRUE
 			break

@@ -45,11 +45,11 @@ var/bomb_set
 /obj/machinery/nuclearbomb/New()
 	..()
 	countdown = new(src)
-	nuke_list += src
+	SLOTH.nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_icon()
-	poi_list |= src
+	SLOTH.poi_list |= src
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/Destroy()
@@ -57,8 +57,8 @@ var/bomb_set
 	if(!exploding)
 		// If we're not exploding, set the alert level back to normal
 		set_safety()
-	poi_list -= src
-	nuke_list -= src
+	SLOTH.poi_list -= src
+	SLOTH.nuke_list -= src
 	if(countdown)
 		qdel(countdown)
 	countdown = null
@@ -361,7 +361,7 @@ var/bomb_set
 	if(safety)
 		if(timing)
 			set_security_level(previous_level)
-			for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+			for(var/obj/item/weapon/pinpointer/syndicate/S in SLOTH.pinpointer_list)
 				S.switch_mode_to(initial(S.mode))
 				S.nuke_warning = FALSE
 		timing = FALSE
@@ -380,14 +380,14 @@ var/bomb_set
 		bomb_set = TRUE
 		set_security_level("delta")
 		detonation_timer = world.time + (timer_set * 10)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in SLOTH.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 	else
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in SLOTH.pinpointer_list)
 			S.switch_mode_to(initial(S.mode))
 			S.nuke_warning = FALSE
 		countdown.stop()
@@ -419,7 +419,7 @@ var/bomb_set
 	yes_code = FALSE
 	safety = TRUE
 	update_icon()
-	for(var/mob/M in player_list)
+	for(var/mob/M in SLOTH.player_list)
 		M << 'sound/machines/Alarm.ogg'
 	if(ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 1
@@ -430,7 +430,7 @@ var/bomb_set
 		ticker.mode.explosion_in_progress = 0
 		return
 
-	enter_allowed = 0
+	SLOTH.enter_allowed = 0
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
@@ -501,7 +501,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
-	poi_list |= src
+	SLOTH.poi_list |= src
 	set_stationloving(TRUE, inform_admins=TRUE)
 
 /obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
@@ -521,7 +521,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/Destroy(force=FALSE)
 	// respawning is handled in /obj/Destroy()
 	if(force)
-		poi_list -= src
+		SLOTH.poi_list -= src
 	. = ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)

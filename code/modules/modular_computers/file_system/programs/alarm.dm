@@ -103,8 +103,8 @@
 
 /datum/computer_file/program/alarm_monitor/run_program(mob/user)
 	. = ..(user)
-	alarmdisplay += src
+	SLOTH.alarmdisplay += src
 
 /datum/computer_file/program/alarm_monitor/kill_program(forced = FALSE)
-	alarmdisplay -= src
+	SLOTH.alarmdisplay -= src
 	..()

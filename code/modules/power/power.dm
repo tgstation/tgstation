@@ -139,7 +139,7 @@
 	var/cdir
 	var/turf/T
 
-	for(var/card in cardinal)
+	for(var/card in SLOTH.cardinal)
 		T = get_step(loc,card)
 		cdir = get_dir(T,loc)
 
@@ -159,7 +159,7 @@
 	var/cdir
 	var/turf/T
 
-	for(var/card in cardinal)
+	for(var/card in SLOTH.cardinal)
 		T = get_step(loc,card)
 		cdir = get_dir(T,loc)
 
@@ -361,6 +361,6 @@
 	return null
 
 /area/proc/get_apc()
-	for(var/obj/machinery/power/apc/APC in apcs_list)
+	for(var/obj/machinery/power/apc/APC in SLOTH.apcs_list)
 		if(APC.area == src)
 			return APC

@@ -123,7 +123,7 @@ var/list/holopads = list()
 			temp = "You requested an AI's presence.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in living_mob_list)
+			for(var/mob/living/silicon/ai/AI in SLOTH.living_mob_list)
 				if(!AI.client)
 					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")

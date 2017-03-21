@@ -311,21 +311,21 @@
 		stopLobbySound()
 
 	var/turf/loc_landmark
-	for(var/obj/effect/landmark/start/sloc in landmarks_list)
+	for(var/obj/effect/landmark/start/sloc in SLOTH.landmarks_list)
 		if(sloc.name != "AI")
 			continue
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
 		loc_landmark = sloc.loc
 	if(!loc_landmark)
-		for(var/obj/effect/landmark/tripai in landmarks_list)
+		for(var/obj/effect/landmark/tripai in SLOTH.landmarks_list)
 			if(tripai.name == "tripai")
 				if(locate(/mob/living/silicon/ai) in tripai.loc)
 					continue
 				loc_landmark = tripai.loc
 	if(!loc_landmark)
 		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in SLOTH.landmarks_list)
 			if (sloc.name == "AI")
 				loc_landmark = sloc.loc
 

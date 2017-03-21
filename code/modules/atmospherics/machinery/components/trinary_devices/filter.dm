@@ -26,7 +26,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	cut_overlays()
-	for(var/direction in cardinal)
+	for(var/direction in SLOTH.cardinal)
 		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
 			if(node)

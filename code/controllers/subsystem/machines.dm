@@ -19,7 +19,7 @@ var/datum/controller/subsystem/machines/SSmachine
 		qdel(PN)
 	powernets.Cut()
 
-	for(var/obj/structure/cable/PC in cable_list)
+	for(var/obj/structure/cable/PC in SLOTH.cable_list)
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)

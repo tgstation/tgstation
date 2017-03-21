@@ -27,7 +27,7 @@
 
 	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
 		available_vr_spawnpoints = list()
-		for(var/obj/effect/landmark/vr_spawn/V in landmarks_list)
+		for(var/obj/effect/landmark/vr_spawn/V in SLOTH.landmarks_list)
 			available_vr_spawnpoints[V.vr_category] = list()
 			var/turf/T = get_turf(V)
 			if(T)

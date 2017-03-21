@@ -1,4 +1,4 @@
-/client/proc/cmd_admin_drop_everything(mob/M in mob_list)
+/client/proc/cmd_admin_drop_everything(mob/M in SLOTH.mob_list)
 	set category = null
 	set name = "Drop Everything"
 	if(!holder)
@@ -19,7 +19,7 @@
 	feedback_add_details("admin_verb","DEVR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/cmd_admin_subtle_message(mob/M in mob_list)
+/client/proc/cmd_admin_subtle_message(mob/M in SLOTH.mob_list)
 	set category = "Special Verbs"
 	set name = "Subtle Message"
 
@@ -70,7 +70,7 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to whom?", "Active Players") as null|anything in player_list
+		M = input("Direct narrate to whom?", "Active Players") as null|anything in SLOTH.player_list
 
 	if(!M)
 		return
@@ -107,7 +107,7 @@
 	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>[get_area(A)]</a>):</b> [msg]<BR></span>")
 	feedback_add_details("admin_verb","LN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_godmode(mob/M in mob_list)
+/client/proc/cmd_admin_godmode(mob/M in SLOTH.mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
 	if(!holder)
@@ -147,7 +147,7 @@
 	if(istype(whom, /client))
 		C = whom
 	else if(istext(whom))
-		C = directory[whom]
+		C = SLOTH.directory[whom]
 	else
 		return
 
@@ -194,7 +194,7 @@
 /proc/create_xeno(ckey)
 	if(!ckey)
 		var/list/candidates = list()
-		for(var/mob/M in player_list)
+		for(var/mob/M in SLOTH.player_list)
 			if(M.stat != DEAD)
 				continue	//we are not dead!
 			if(!(ROLE_ALIEN in M.client.prefs.be_special))
@@ -212,7 +212,7 @@
 		return 0
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
-	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
+	var/obj/effect/landmark/spawn_here = SLOTH.xeno_spawn.len ? pick(SLOTH.xeno_spawn) : pick(SLOTH.latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
 		if("Queen")
@@ -251,7 +251,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/mob/dead/observer/G_found
-	for(var/mob/dead/observer/G in player_list)
+	for(var/mob/dead/observer/G in SLOTH.player_list)
 		if(G.ckey == input)
 			G_found = G
 			break
@@ -265,10 +265,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(G_found.mind.assigned_role=="Alien")
 			if(alert("This character appears to have been an alien. Would you like to respawn them as such?",,"Yes","No")=="Yes")
 				var/turf/T
-				if(xeno_spawn.len)
-					T = pick(xeno_spawn)
+				if(SLOTH.xeno_spawn.len)
+					T = pick(SLOTH.xeno_spawn)
 				else
-					T = pick(latejoin)
+					T = pick(SLOTH.latejoin)
 
 				var/mob/living/carbon/alien/new_xeno
 				switch(G_found.mind.special_role)//If they have a mind, we can determine which caste they were.
@@ -296,7 +296,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		//check if they were a monkey
 		else if(findtext(G_found.real_name,"monkey"))
 			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
-				var/mob/living/carbon/monkey/new_monkey = new(pick(latejoin))
+				var/mob/living/carbon/monkey/new_monkey = new(pick(SLOTH.latejoin))
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
@@ -305,7 +305,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 	//Ok, it's not a xeno or a monkey. So, spawn a human.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new(pick(SLOTH.latejoin))//The mob being spawned.
 
 	var/datum/data/record/record_found			//Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
@@ -354,7 +354,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
 			ticker.mode.equip_traitor(new_character)
 		if("Wizard")
-			new_character.loc = pick(wizardstart)
+			new_character.loc = pick(SLOTH.wizardstart)
 			//ticker.mode.learn_basic_spells(new_character)
 			ticker.mode.equip_wizard(new_character)
 		if("Syndicate")
@@ -364,7 +364,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Space Ninja")
 			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/L in landmarks_list)
+			for(var/obj/effect/landmark/L in SLOTH.landmarks_list)
 				if(L.name=="carpspawn")
 					ninja_spawn += L
 			new_character.equip_space_ninja()
@@ -426,7 +426,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_rejuvenate(mob/living/M in mob_list)
+/client/proc/cmd_admin_rejuvenate(mob/living/M in SLOTH.mob_list)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
 	if(!holder)
@@ -562,7 +562,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		return
 
-/client/proc/cmd_admin_gib(mob/M in mob_list)
+/client/proc/cmd_admin_gib(mob/M in SLOTH.mob_list)
 	set category = "Special Verbs"
 	set name = "Gib"
 
@@ -600,7 +600,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		mob.gib(1, 1, 1)
 
-/client/proc/cmd_admin_check_contents(mob/living/M in mob_list)
+/client/proc/cmd_admin_check_contents(mob/living/M in SLOTH.mob_list)
 	set category = "Special Verbs"
 	set name = "Check Contents"
 
@@ -728,7 +728,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] changed the security level to [level]")
 		feedback_add_details("admin_verb","CSL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in nuke_list)
+/client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in SLOTH.nuke_list)
 	set name = "Toggle Nuke"
 	set category = "Fun"
 	set popup_menu = 0
@@ -951,7 +951,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	set name = "Shuttle Manipulator"
 	set desc = "Opens the shuttle manipulator UI."
 
-	for(var/obj/machinery/shuttle_manipulator/M in machines)
+	for(var/obj/machinery/shuttle_manipulator/M in SLOTH.machines)
 		M.ui_interact(usr)
 
 /client/proc/mass_zombie_infection()
@@ -967,7 +967,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in SLOTH.mob_list)
 		new /obj/item/organ/zombie_infection(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
@@ -985,7 +985,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/zombie_infection/I in zombie_infection_list)
+	for(var/obj/item/organ/zombie_infection/I in SLOTH.zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")
@@ -1004,7 +1004,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	var/list/mobs = shuffle(living_mob_list.Copy()) // might change while iterating
+	var/list/mobs = shuffle(SLOTH.living_mob_list.Copy()) // might change while iterating
 	var/who_did_it = key_name_admin(usr)
 
 	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
@@ -1055,13 +1055,13 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 #define ON_PURRBATION(H) (!(H.dna.features["tail_human"] == "None" && H.dna.features["ears"] == "None"))
 
 /proc/mass_purrbation()
-	for(var/M in mob_list)
+	for(var/M in SLOTH.mob_list)
 		if(ishumanbasic(M))
 			purrbation_apply(M)
 		CHECK_TICK
 
 /proc/mass_remove_purrbation()
-	for(var/M in mob_list)
+	for(var/M in SLOTH.mob_list)
 		if(ishumanbasic(M))
 			purrbation_remove(M)
 		CHECK_TICK

@@ -61,7 +61,7 @@
 	air.holder = src
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in cardinal)
+	for(var/direction in SLOTH.cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)

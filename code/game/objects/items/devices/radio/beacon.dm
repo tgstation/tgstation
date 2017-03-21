@@ -9,10 +9,10 @@
 
 /obj/item/device/radio/beacon/New()
 	..()
-	teleportbeacons += src
+	SLOTH.teleportbeacons += src
 
 /obj/item/device/radio/beacon/Destroy()
-	teleportbeacons.Remove(src)
+	SLOTH.teleportbeacons.Remove(src)
 	return ..()
 
 /obj/item/device/radio/beacon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)

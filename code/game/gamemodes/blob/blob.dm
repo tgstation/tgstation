@@ -62,7 +62,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 /datum/game_mode/blob/proc/get_blob_candidates()
 	var/list/candidates = list()
-	for(var/mob/living/carbon/human/player in player_list)
+	for(var/mob/living/carbon/human/player in SLOTH.player_list)
 		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (ROLE_BLOB in player.client.prefs.be_special))
 			if(age_check(player.client))
 				candidates += player
@@ -78,7 +78,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	for(var/datum/mind/blob in blob_overminds)
 		var/mob/camera/blob/B = blob.current.become_overmind(TRUE, round(blob_base_starting_points/blob_overminds.len))
 		B.mind.name = B.name
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick(SLOTH.blobstart)
 		B.loc = T
 		B.base_point_rate = blob_point_rate
 

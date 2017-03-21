@@ -113,7 +113,7 @@
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
-	apcs_list += src
+	SLOTH.apcs_list += src
 
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
@@ -138,7 +138,7 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
-	apcs_list -= src
+	SLOTH.apcs_list -= src
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
@@ -893,7 +893,7 @@
 			occupier.loc = src.loc
 			occupier.death()
 			occupier.gib()
-			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			for(var/obj/item/weapon/pinpointer/P in SLOTH.pinpointer_list)
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
 				P.nuke_warning = FALSE
 

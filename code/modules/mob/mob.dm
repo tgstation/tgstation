@@ -1,8 +1,8 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	living_mob_list -= src
-	all_clockwork_mobs -= src
+	SLOTH.mob_list -= src
+	SLOTH.dead_mob_list -= src
+	SLOTH.living_mob_list -= src
+	SLOTH.all_clockwork_mobs -= src
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -22,11 +22,11 @@
 var/next_mob_id = 0
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
-	mob_list += src
+	SLOTH.mob_list += src
 	if(stat == DEAD)
-		dead_mob_list += src
+		SLOTH.dead_mob_list += src
 	else
-		living_mob_list += src
+		SLOTH.living_mob_list += src
 	prepare_huds()
 	can_ride_typecache = typecacheof(can_ride_typecache)
 	..()
@@ -429,7 +429,7 @@ var/next_mob_id = 0
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( abandon_allowed ))
+	if (!( SLOTH.abandon_allowed ))
 		return
 	if ((stat != 2 || !( ticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
@@ -927,11 +927,11 @@ var/next_mob_id = 0
 	switch(var_name)
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				dead_mob_list -= src
-				living_mob_list += src
+				SLOTH.dead_mob_list -= src
+				SLOTH.living_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				living_mob_list -= src
-				dead_mob_list += src
+				SLOTH.living_mob_list -= src
+				SLOTH.dead_mob_list += src
 	. = ..()
 	switch(var_name)
 		if("weakened")

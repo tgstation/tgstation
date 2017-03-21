@@ -31,10 +31,10 @@
 
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(!slab.no_cost)
-		if(ratvar_awakens)
+		if(SLOTH.ratvar_awakens)
 			to_chat(invoker, "<span class='big_brass'>\"I am already here, idiot.\"</span>")
 			return FALSE
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in SLOTH.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			to_chat(invoker, "<span class='userdanger'>There is already a gateway at [gate_area.map_name]!</span>")
 			return FALSE
@@ -43,7 +43,7 @@
 		if(!T || T.z != ZLEVEL_STATION || istype(A, /area/shuttle) || !A.blob_allowed)
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
-		if(clockwork_gateway_activated)
+		if(SLOTH.clockwork_gateway_activated)
 			if(ticker && ticker.mode && ticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
 				to_chat(invoker, "<span class='nezbere'>\"Look upon his works. Is it not glorious?\"</span>")
 			else

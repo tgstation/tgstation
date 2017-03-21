@@ -106,7 +106,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //It's only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(pref_species && !(pref_species.id in roundstart_species))
+	if(pref_species && !(pref_species.id in SLOTH.roundstart_species))
 		var/rando_race = pick(config.roundstart_races)
 		pref_species = new rando_race()
 
@@ -197,8 +197,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
-	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
-	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	ghost_accs		= sanitize_inlist(ghost_accs, SLOTH.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
+	ghost_others	= sanitize_inlist(ghost_others, SLOTH.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 
 	return 1
 
@@ -262,8 +262,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(config.mutant_races && species_id && (species_id in roundstart_species))
-		var/newtype = roundstart_species[species_id]
+	if(config.mutant_races && species_id && (species_id in SLOTH.roundstart_species))
+		var/newtype = SLOTH.roundstart_species[species_id]
 		pref_species = new newtype()
 	else
 		var/rando_race = pick(config.roundstart_races)
@@ -339,33 +339,33 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	gender			= sanitize_gender(gender)
 	if(gender == MALE)
-		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
-		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
-		underwear		= sanitize_inlist(underwear, underwear_m)
-		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
+		hair_style			= sanitize_inlist(hair_style, SLOTH.hair_styles_male_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, SLOTH.hair_styles_male_list)
+		underwear		= sanitize_inlist(underwear, SLOTH.underwear_m)
+		undershirt 		= sanitize_inlist(undershirt, SLOTH.undershirt_m)
 	else
-		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
-		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
-		underwear		= sanitize_inlist(underwear, underwear_f)
-		undershirt		= sanitize_inlist(undershirt, undershirt_f)
-	socks			= sanitize_inlist(socks, socks_list)
+		hair_style			= sanitize_inlist(hair_style, SLOTH.hair_styles_female_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, SLOTH.facial_hair_styles_female_list)
+		underwear		= sanitize_inlist(underwear, SLOTH.underwear_f)
+		undershirt		= sanitize_inlist(undershirt, SLOTH.undershirt_f)
+	socks			= sanitize_inlist(socks, SLOTH.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
-	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
-	backbag			= sanitize_inlist(backbag, backbaglist, initial(backbag))
-	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, uplink_spawn_loc_list, initial(uplink_spawn_loc))
+	skin_tone		= sanitize_inlist(skin_tone, SLOTH.skin_tones)
+	backbag			= sanitize_inlist(backbag, SLOTH.backbaglist, initial(backbag))
+	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, SLOTH.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
-	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
-	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
-	features["horns"] 	= sanitize_inlist(features["horns"], horns_list)
-	features["ears"]	= sanitize_inlist(features["ears"], ears_list, "None")
-	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
-	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
-	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
-	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
+	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], SLOTH.tails_list_lizard)
+	features["tail_human"] 	= sanitize_inlist(features["tail_human"], SLOTH.tails_list_human, "None")
+	features["snout"]	= sanitize_inlist(features["snout"], SLOTH.snouts_list)
+	features["horns"] 	= sanitize_inlist(features["horns"], SLOTH.horns_list)
+	features["ears"]	= sanitize_inlist(features["ears"], SLOTH.ears_list, "None")
+	features["frills"] 	= sanitize_inlist(features["frills"], SLOTH.frills_list)
+	features["spines"] 	= sanitize_inlist(features["spines"], SLOTH.spines_list)
+	features["body_markings"] 	= sanitize_inlist(features["body_markings"], SLOTH.body_markings_list)
+	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], SLOTH.legs_list, "Normal Legs")
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))

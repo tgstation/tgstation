@@ -60,7 +60,7 @@
 		C.present_tasks(owner) //Memorize the objectives
 
 /datum/antagonist/clockcultist/apply_innate_effects()
-	all_clockwork_mobs += owner
+	SLOTH.all_clockwork_mobs += owner
 	owner.faction |= "ratvar"
 	owner.languages_spoken |= RATVAR
 	owner.languages_understood |= RATVAR
@@ -77,7 +77,7 @@
 			A.requires_power = POWER_REQ_CLOCKCULT
 			A.languages_spoken &= ~HUMAN
 			var/list/AI_frame = list(image('icons/mob/clockwork_mobs.dmi', A, "aiframe")) //make the AI's cool frame
-			for(var/d in cardinal)
+			for(var/d in SLOTH.cardinal)
 				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
 			A.add_overlay(AI_frame)
 			if(!A.lacks_power())
@@ -110,13 +110,13 @@
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	if(!clockwork_gateway_activated)
+	if(!SLOTH.clockwork_gateway_activated)
 		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
 	update_slab_info()
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
-	all_clockwork_mobs -= owner
+	SLOTH.all_clockwork_mobs -= owner
 	owner.faction -= "ratvar"
 	owner.languages_spoken &= ~RATVAR
 	owner.languages_understood &= ~RATVAR

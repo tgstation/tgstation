@@ -146,11 +146,11 @@ var/datum/controller/subsystem/mapping/SSmapping
 #undef INIT_ANNOUNCE
 
 /datum/controller/subsystem/mapping/proc/maprotate()
-	var/players = clients.len
+	var/players = SLOTH.clients.len
 	var/list/mapvotes = list()
 	//count votes
 	if(global.config.allow_map_voting)
-		for (var/client/c in clients)
+		for (var/client/c in SLOTH.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
 				if (global.config.defaultmap)

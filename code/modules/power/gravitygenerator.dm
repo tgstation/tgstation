@@ -371,7 +371,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
-	for(var/mob/M in mob_list)
+	for(var/mob/M in SLOTH.mob_list)
 		if(M.z != z)
 			continue
 		M.update_gravity(M.mob_has_gravity())

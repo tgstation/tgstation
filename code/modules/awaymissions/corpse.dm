@@ -41,10 +41,10 @@
 	if(instant || (roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
-		poi_list |= src
+		SLOTH.poi_list |= src
 
 /obj/effect/mob_spawn/Destroy()
-	poi_list.Remove(src)
+	SLOTH.poi_list.Remove(src)
 	. = ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)

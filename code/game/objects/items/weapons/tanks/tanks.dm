@@ -120,7 +120,7 @@
 		for(var/obj/item/W in H)
 			H.dropItemToGround(W)
 			if(prob(50))
-				step(W, pick(alldirs))
+				step(W, pick(SLOTH.alldirs))
 		H.status_flags |= DISFIGURED
 		H.bleed_rate = 5
 		H.gib_animation()

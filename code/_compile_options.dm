@@ -9,6 +9,8 @@
 									//Sets world.loop_checks to false and prevents find references from sleeping
 #endif
 
+#define PROTECT_GLOBAL_VARS_FROM_VV //Uncomment to allow global variables to be varedited through debugging the MC
+
 #define PRELOAD_RSC	1			/*set to:
 								0 to allow using external resources or on-demand behaviour;
 								1 to use the default behaviour;
@@ -54,6 +56,7 @@
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
+#undef PROTECT_GLOBAL_VARS_FROM_VV
 #endif
 
 #ifdef TRAVISTESTING

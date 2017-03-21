@@ -593,7 +593,7 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection") as null|anything in roundstart_species
+							var/t1 = input("Select a species", "Species Selection") as null|anything in SLOTH.roundstart_species
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
@@ -697,7 +697,7 @@ What a mess.*/
 								if("released")
 									active2.fields["criminal"] = "Discharged"
 							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", "records")
-							for(var/mob/living/carbon/human/H in mob_list) //thanks for forcing me to do this, whoever wrote this shitty records system
+							for(var/mob/living/carbon/human/H in SLOTH.mob_list) //thanks for forcing me to do this, whoever wrote this shitty records system
 								H.sec_hud_set_security_status()
 					if("Delete Record (Security) Execute")
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
@@ -749,7 +749,7 @@ What a mess.*/
 					if(prob(10))
 						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
 					else
-						R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
+						R.fields["name"] = "[pick(pick(SLOTH.first_names_male), pick(SLOTH.first_names_female))] [pick(SLOTH.last_names)]"
 				if(2)
 					R.fields["sex"] = pick("Male", "Female")
 				if(3)
@@ -761,7 +761,7 @@ What a mess.*/
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				if(7)
-					R.fields["species"] = pick(roundstart_species)
+					R.fields["species"] = pick(SLOTH.roundstart_species)
 				if(8)
 					var/datum/data/record/G = pick(data_core.general)
 					R.fields["photo_front"] = G.fields["photo_front"]

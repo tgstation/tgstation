@@ -88,7 +88,7 @@
 		for(var/i in owner.stun_absorption)
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
-		if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
+		if(!SLOTH.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
 			vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 			owner.Stun(stuns_blocked)
 			owner.Weaken(stuns_blocked)

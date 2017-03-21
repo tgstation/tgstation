@@ -438,10 +438,10 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/findStealthKey(txt)
 	if(txt)
-		for(var/P in stealthminID)
-			if(stealthminID[P] == txt)
+		for(var/P in SLOTH.stealthminID)
+			if(SLOTH.stealthminID[P] == txt)
 				return P
-	txt = stealthminID[ckey]
+	txt = SLOTH.stealthminID[ckey]
 	return txt
 
 /client/proc/createStealthKey()
@@ -449,11 +449,11 @@ var/list/admin_verbs_hideable = list(
 	var/i = 0
 	while(i == 0)
 		i = 1
-		for(var/P in stealthminID)
-			if(num == stealthminID[P])
+		for(var/P in SLOTH.stealthminID)
+			if(num == SLOTH.stealthminID[P])
 				num++
 				i = 0
-	stealthminID["[ckey]"] = "@[num2text(num)]"
+	SLOTH.stealthminID["[ckey]"] = "@[num2text(num)]"
 
 /client/proc/stealth()
 	set category = "Admin"
@@ -502,7 +502,7 @@ var/list/admin_verbs_hideable = list(
 		if("Big Bomb (3, 5, 7, 5)")
 			explosion(epicenter, 3, 5, 7, 5, TRUE, TRUE)
 		if("Maxcap")
-			explosion(epicenter, MAX_EX_DEVESTATION_RANGE, MAX_EX_HEAVY_RANGE, MAX_EX_LIGHT_RANGE, MAX_EX_FLASH_RANGE)
+			explosion(epicenter, SLOTH.MAX_EX_DEVESTATION_RANGE, SLOTH.MAX_EX_HEAVY_RANGE, SLOTH.MAX_EX_LIGHT_RANGE, SLOTH.MAX_EX_FLASH_RANGE)
 		if("Custom Bomb")
 			var/devastation_range = input("Devastation range (in tiles):") as null|num
 			if(devastation_range == null)
@@ -516,7 +516,7 @@ var/list/admin_verbs_hideable = list(
 			var/flash_range = input("Flash range (in tiles):") as null|num
 			if(flash_range == null)
 				return
-			if(devastation_range > MAX_EX_DEVESTATION_RANGE || heavy_impact_range > MAX_EX_HEAVY_RANGE || light_impact_range > MAX_EX_LIGHT_RANGE || flash_range > MAX_EX_FLASH_RANGE)
+			if(devastation_range > SLOTH.MAX_EX_DEVESTATION_RANGE || heavy_impact_range > SLOTH.MAX_EX_HEAVY_RANGE || light_impact_range > SLOTH.MAX_EX_LIGHT_RANGE || flash_range > SLOTH.MAX_EX_FLASH_RANGE)
 				if(alert("Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
 					return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
@@ -544,7 +544,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Get the estimated range of a bomb, using explosive power."
 
 	var/ex_power = input("Explosive Power:") as null|num
-	var/range = round((2 * ex_power)**DYN_EX_SCALE)
+	var/range = round((2 * ex_power)**SLOTH.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
 /client/proc/get_dynex_power()
@@ -553,7 +553,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
 	var/ex_range = input("Light Explosion Range:") as null|num
-	var/power = (0.5 * ex_range)**(1/DYN_EX_SCALE)
+	var/power = (0.5 * ex_range)**(1/SLOTH.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Power: [power]")
 
 /client/proc/set_dynex_scale()
@@ -564,11 +564,11 @@ var/list/admin_verbs_hideable = list(
 	var/ex_scale = input("New DynEx Scale:") as null|num
 	if(!ex_scale)
 		return
-	DYN_EX_SCALE = ex_scale
+	SLOTH.DYN_EX_SCALE = ex_scale
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
-/client/proc/give_spell(mob/T in mob_list)
+/client/proc/give_spell(mob/T in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
@@ -592,7 +592,7 @@ var/list/admin_verbs_hideable = list(
 		T.AddSpell(new S)
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
-/client/proc/remove_spell(mob/T in mob_list)
+/client/proc/remove_spell(mob/T in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Remove Spell"
 	set desc = "Remove a spell from the selected mob."
@@ -605,7 +605,7 @@ var/list/admin_verbs_hideable = list(
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [S] from [key_name(T)].</span>")
 			feedback_add_details("admin_verb","RS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_disease(mob/T in mob_list)
+/client/proc/give_disease(mob/T in SLOTH.mob_list)
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
@@ -667,7 +667,7 @@ var/list/admin_verbs_hideable = list(
 	holder.disassociate()
 	qdel(holder)
 
-	deadmins += ckey
+	SLOTH.deadmins += ckey
 	admin_datums -= ckey
 	verbs += /client/proc/readmin
 
@@ -686,7 +686,7 @@ var/list/admin_verbs_hideable = list(
 	if(!holder) // Something went wrong...
 		return
 
-	deadmins -= ckey
+	SLOTH.deadmins -= ckey
 	verbs -= /client/proc/readmin
 
 	to_chat(src, "<span class='interface'>You are now an admin.</span>")

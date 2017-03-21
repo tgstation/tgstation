@@ -654,7 +654,7 @@
 	if(!mapload)
 		return
 	if(control_area && istext(control_area))
-		for(var/V in sortedAreas)
+		for(var/V in SLOTH.sortedAreas)
 			var/area/A = V
 			if(A.name == control_area)
 				control_area = A

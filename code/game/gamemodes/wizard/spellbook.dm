@@ -865,7 +865,7 @@
 
 /obj/item/weapon/spellbook/oneuse/mindswap/recoil(mob/user)
 	..()
-	if(stored_swap in dead_mob_list)
+	if(stored_swap in SLOTH.dead_mob_list)
 		stored_swap = null
 	if(!stored_swap)
 		stored_swap = user

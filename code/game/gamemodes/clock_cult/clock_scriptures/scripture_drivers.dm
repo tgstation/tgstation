@@ -128,8 +128,8 @@
 
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
-	if(!ratvar_awakens)
-		for(var/mob/living/M in all_clockwork_mobs)
+	if(!SLOTH.ratvar_awakens)
+		for(var/mob/living/M in SLOTH.all_clockwork_mobs)
 			if(ishuman(M) || issilicon(M))
 				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
@@ -159,8 +159,8 @@
 
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
-	if(!ratvar_awakens)
-		for(var/mob/living/M in all_clockwork_mobs)
+	if(!SLOTH.ratvar_awakens)
+		for(var/mob/living/M in SLOTH.all_clockwork_mobs)
 			if(ishuman(M) || issilicon(M))
 				servants++
 	if(target.buckled)
@@ -266,7 +266,7 @@
 	var/static/prev_cost = 0
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
+	var/cache_cost_increase = min(round(SLOTH.clockwork_caches*0.25), 5)
 	if(cache_cost_increase != prev_cost)
 		prev_cost = cache_cost_increase
 		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)

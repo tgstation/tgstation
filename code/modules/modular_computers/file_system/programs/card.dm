@@ -52,7 +52,7 @@
 /datum/computer_file/program/card_mod/proc/can_open_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
-			if((job.total_positions <= player_list.len * (max_relative_positions / 100)))
+			if((job.total_positions <= SLOTH.player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
 					return 1

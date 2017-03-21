@@ -22,7 +22,7 @@
 
 /obj/machinery/computer/apc_control/process()
 	apcs = list() //Clear the list every tick
-	for(var/V in apcs_list)
+	for(var/V in SLOTH.apcs_list)
 		var/obj/machinery/power/apc/APC = V
 		if(check_apc(APC))
 			apcs[APC.name] = APC
@@ -120,7 +120,7 @@
 		LAZYADD(logs, "<b>-=- Logging restored to full functionality at this point -=-</b>")
 	if(href_list["access_apc"])
 		playsound(src, "terminal_type", 50, 0)
-		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in apcs_list
+		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in SLOTH.apcs_list
 		if(!APC || APC.aidisabled || APC.panel_open || QDELETED(APC))
 			to_chat(usr, "<span class='robot danger'>\icon[I] APC does not return interface request. Remote access may be disabled.</span>")
 			return
