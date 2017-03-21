@@ -16941,9 +16941,6 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aKL" = (
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
 /obj/machinery/camera{
 	c_tag = "Hydroponics Storage"
 	},
@@ -17003,6 +17000,15 @@
 "aKU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
+	},
+/obj/machinery/smartfridge/disks{
+	pixel_x = -32;
+	pixel_y = 32;
+	step_x = 0;
+	step_y = 0
+	},
+/obj/machinery/airalarm{
+	pixel_y = 55
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
@@ -65190,6 +65196,15 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
+"cMC" = (
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
+"cMD" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
 
 (1,1,1) = {"
 aaa
@@ -104141,7 +104156,7 @@ bua
 bvn
 bwL
 bxX
-bsL
+cMD
 bua
 bBJ
 bhh
@@ -106165,7 +106180,7 @@ aCA
 anf
 aFp
 aGW
-anf
+aIp
 aIp
 aKI
 aMA
@@ -106423,7 +106438,7 @@ alP
 aFo
 aGV
 aIp
-aIp
+cMC
 aKL
 aMz
 aNQ
