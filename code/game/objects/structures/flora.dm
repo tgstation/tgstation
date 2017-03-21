@@ -80,6 +80,10 @@
 	..()
 
 
+/obj/structure/flora/tree
+
+
+
 //grass
 /obj/structure/flora/grass
 	name = "grass"
@@ -306,3 +310,61 @@
 /obj/structure/flora/rock/pile/New()
 	..()
 	icon_state = "[icon_state][rand(1,3)]"
+
+//Jungle grass
+
+/obj/structure/flora/grass/jungle
+	name = "jungle grass"
+	desc = "Thick alien flora."
+	icon = 'icons/obj/flora/jungleflora.dmi'
+	icon_state = "grassa"
+
+
+/obj/structure/flora/grass/jungle/New()
+	icon_state = "[icon_state][rand(1, 5)]"
+	..()
+
+/obj/structure/flora/grass/jungle/b
+	icon_state = "grassb"
+
+/obj/structure/flora/grass/jungle/b/New()
+	icon_state = "[icon_state][rand(1, 5)]"
+	..()
+
+//Jungle rocks
+
+/obj/structure/flora/rock/jungle
+	icon_state = "pile of rocks"
+	desc = "A pile of rocks."
+	icon = 'icons/obj/flora/jungleflora.dmi'
+	density = FALSE
+
+/obj/structure/flora/rock/jungle/New()
+	..()
+	icon_state = "[icon_state][rand(1,5)]"
+
+
+//Jungle bushes
+
+/obj/structure/flora/junglebush
+	name = "bush"
+	icon = 'icons/obj/flora/jungleflora.dmi'
+	icon_state = "busha"
+
+/obj/structure/flora/junglebush/New()
+	icon_state = "[icon_state][rand(1, 3)]"
+	..()
+
+/obj/structure/flora/junglebush/b
+	icon_state = "bushb"
+
+/obj/structure/flora/junglebush/b/New()
+	icon_state = "[icon_state][rand(1, 3)]"
+	..()
+
+/obj/structure/flora/junglebush/c
+	icon_state = "bushc"
+
+/obj/structure/flora/junglebush/c/New()
+	icon_state = "[icon_state][rand(1, 3)]"
+	..()
