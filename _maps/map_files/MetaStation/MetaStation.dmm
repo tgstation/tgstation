@@ -23845,6 +23845,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQd" = (
@@ -37297,6 +37299,7 @@
 /obj/item/device/lightreplacer{
 	pixel_y = 7
 	},
+/obj/item/weapon/storage/belt/utility,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bne" = (
@@ -119833,7 +119836,7 @@ aax
 aax
 abr
 abJ
-acd
+abE
 abE
 abE
 ade
