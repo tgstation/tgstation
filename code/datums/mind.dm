@@ -63,6 +63,34 @@
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+	var/kill_streak = 0 //How many kills we have
+
+/datum/mind/proc/kill_streak_act()
+	var/sound
+	switch(kill_streak)
+		if(3)
+			world << "<B>[name] is on a killing spree!</B>"
+			sound = 'sound/killstreaks/Multikill.ogg'
+		if(5)
+			world << "<B>[name] is dominating!</B>"
+			sound = 'sound/killstreaks/Dominating.ogg'
+		if(7)
+			world << "<B>[name] is on a RAMPAGE!</B>"
+			sound = 'sound/killstreaks/Rampage.ogg'
+		if(9)
+			world << "<B>[name] is UNSTOPPABLE!</B>"
+			sound = 'sound/killstreaks/Unstoppable.ogg'
+		if(11)
+			world << "<B>[name] is WICKED SICK!!</B>"
+			sound = 'sound/killstreaks/HOLYSHIT.ogg'
+		if(13)
+			world << "<B>[name] is GODLIKE!</B>"
+			sound = 'sound/killstreaks/GODLIKE.ogg'
+	if(sound)
+		for(var/mob/M in player_list)
+			M << sound
+
+
 
 /datum/mind/New(var/key)
 	src.key = key

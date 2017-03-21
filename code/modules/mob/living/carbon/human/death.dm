@@ -30,6 +30,12 @@
 		if(M.occupant == src)
 			M.go_out()
 
+	if(istype(LAssailant, /mob/living) && mind)
+		var/mob/living/L = LAssailant
+		if(L.mind && LAssailant != src)
+			L.mind.kill_streak++
+			L.mind.kill_streak_act()
+
 	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)
