@@ -155,6 +155,7 @@
         "WHITE",
         "BROWN",
         "GREY",
+        "ERECT",
         "RAINBOW"
     ],
     "ionthinksof": [
@@ -375,6 +376,7 @@
         "WINDOWS",
         "WIRECUTTERS",
         "WRENCHES",
+        "WENCHES",
         "WIZARD ROBES"
     ],
     "ionrequire": [
