@@ -65190,6 +65190,10 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
+"cMC" = (
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/turf/open/floor/engine,
+/area/toxins/xenobiology)
 
 (1,1,1) = {"
 aaa
@@ -107486,7 +107490,7 @@ byf
 byf
 byf
 bDb
-bEm
+cMC
 bEm
 bEm
 bDb
