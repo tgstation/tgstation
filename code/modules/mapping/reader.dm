@@ -278,7 +278,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd,no_changeturf)
 
 		//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
-		if(world.tick_usage > CURRENT_TICKLIMIT)
+		if(TICK_CHECK)
 			SSatoms.map_loader_stop()
 			stoplag()
 			SSatoms.map_loader_begin()
