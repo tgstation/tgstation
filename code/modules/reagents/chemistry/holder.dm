@@ -743,6 +743,24 @@ var/const/INJECT = 5 //injection
 
 	return english_list(out, "something indescribable")
 
+/datum/reagents/proc/get_reagent_proportions(include_empty_space = FALSE) //Returns an assoclist with all reagents equal to the percentage of the container they're taking up
+	var/list/reagent_props = list()
+	if(!include_empty_space)
+		for(var/datum/reagent/reagent in reagent_list)
+			reagent_props[reagent.id] = reagent.volume / total_volume
+	else
+		for(var/datum/reagent/reagent in reagent_list)
+			reagent_props[reagent.id] = reagent.volume / maximum_volume
+	return reagent_props
+
+/proc/reagent_proportions_to_volume(list/props, volume) //Adjusts an associative list of proportions to fit a specified volume.
+	if(!props.len)
+		return
+	var/list/reagent_props = list()
+	for(var/reagent in props)
+		reagent_props[reagent] = props[reagent] * volume
+	return reagent_props
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 
