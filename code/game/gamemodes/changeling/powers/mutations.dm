@@ -228,7 +228,7 @@
 	desc = "A fleshy tentacle that can stretch out and grab things or people."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "tentacle"
-	item_state = null
+	item_state = "tentacle"
 	flags = ABSTRACT | NODROP | DROPDEL | NOBLUDGEON
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle

@@ -277,7 +277,7 @@
 	name = "range increase"
 	desc = "Increases the range of a kinetic accelerator when installed."
 	modifier = 1
-	cost = 24 //so you can fit four plus a tracer cosmetic
+	cost = 25
 
 /obj/item/borg/upgrade/modkit/range/modify_projectile(obj/item/projectile/kinetic/K)
 	K.range += modifier
