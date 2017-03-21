@@ -79,10 +79,12 @@
 	icon_state = "tree_[rand(1, 6)]"
 	..()
 
+/obj/structure/flora/tree/jungle
+	name = "jungle tree"
 
-/obj/structure/flora/tree
-
-
+/obj/structure/flora/tree/jungle/New()
+	icon_state = "[icon_state][rand(1, 3)]"
+	..()
 
 //grass
 /obj/structure/flora/grass
