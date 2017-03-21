@@ -32,7 +32,7 @@
 	origin_tech = "materials=3;engineering=4"
 
 
-/obj/vehicle/janicart/Moved(atom/OldLoc, Dir)
+/obj/vehicle/janicart/Moved(atom/OldLoc)
 	if(floorbuffer)
 		var/turf/tile = loc
 		if(isturf(tile))
@@ -40,7 +40,7 @@
 			for(var/A in tile)
 				if(is_cleanable(A))
 					qdel(A)
-	. = ..()
+	..()
 
 
 /obj/vehicle/janicart/examine(mob/user)

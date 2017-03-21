@@ -71,11 +71,6 @@
 	air_update_turf(1)
 	return
 
-/obj/structure/alien/resin/Move()
-	var/turf/T = loc
-	..()
-	move_update_air(T)
-
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
@@ -281,11 +276,11 @@
 							child.Attach(M)
 							break
 
-/obj/structure/alien/egg/Moved(oldloc)
-	remove_from_proximity_list(oldloc, 1)
+/obj/structure/alien/egg/Moved(atom/OldLoc)
+	remove_from_proximity_list(OldLoc, 1)
 	if(status == GROWN)
 		add_to_proximity_list(src, 1)
-	return ..()
+	..()
 
 /obj/structure/alien/egg/deconstruct()
 	if(!(flags & NODECONSTRUCT))

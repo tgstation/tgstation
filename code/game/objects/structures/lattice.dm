@@ -95,9 +95,8 @@
 /obj/structure/lattice/catwalk/ratvar_act()
 	new/obj/structure/lattice/catwalk/clockwork(loc)
 
-/obj/structure/lattice/catwalk/Move()
-	var/turf/T = loc
-	for(var/obj/structure/cable/C in T)
+/obj/structure/lattice/catwalk/Moved(atom/OldLoc)
+	for(var/obj/structure/cable/C in OldLoc)
 		C.deconstruct()
 	..()
 

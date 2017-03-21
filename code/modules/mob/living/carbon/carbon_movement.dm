@@ -52,12 +52,12 @@ var/const/SLIDE_ICE = 8
 	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
 		return 1
 
-/mob/living/carbon/Move(NewLoc, direct)
-	. = ..()
-	if(. && mob_has_gravity()) //floating is easy
+/mob/living/carbon/Moved(atom/OldLoc)
+	..()
+	if(stat != DEAD && mob_has_gravity()) //floating is easy
 		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
 			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
-		else if(nutrition && stat != DEAD)
+		else if(nutrition > 0)
 			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10

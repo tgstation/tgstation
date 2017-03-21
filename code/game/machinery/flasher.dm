@@ -187,9 +187,9 @@
 	remove_from_proximity_list(src, range)
 	return ..()
 
-/obj/machinery/flasher/portable/Moved(oldloc)
-	remove_from_proximity_list(oldloc, range)
-	return ..()
+/obj/machinery/flasher/portable/Moved(atom/OldLoc)
+	remove_from_proximity_list(OldLoc, range)
+	..()
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"

@@ -59,9 +59,9 @@
 	if(mapload && z == 1 && prob(3) && !start_active)
 		toggle_cam()
 
-/obj/machinery/camera/Move()
-	remove_from_proximity_list(src, 1)
-	return ..()
+/obj/machinery/camera/Moved(atom/OldLoc)
+	remove_from_proximity_list(src, 1, OldLoc)
+	..()
 
 /obj/machinery/camera/Destroy()
 	toggle_cam(null, 0) //kick anyone viewing out

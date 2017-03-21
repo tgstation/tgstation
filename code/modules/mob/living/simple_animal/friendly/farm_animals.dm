@@ -64,7 +64,7 @@
 	..()
 	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
 
-/mob/living/simple_animal/hostile/retaliate/goat/Move()
+/mob/living/simple_animal/hostile/retaliate/goat/Moved(atom/OldLoc)
 	..()
 	if(!stat)
 		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc

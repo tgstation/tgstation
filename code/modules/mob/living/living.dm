@@ -120,7 +120,7 @@
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
 					return 1
 
-	if(moving_diagonally)//no mob swap during diagonal moves.
+	if(moving_flags & (FIRST_DIAG_STEP | SECOND_DIAG_STEP))//no mob swap during diagonal moves.
 		return 1
 
 	if(!M.buckled && !M.has_buckled_mobs())
@@ -174,7 +174,7 @@
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
-	if(moving_diagonally)// no pushing during diagonal moves.
+	if(moving_flags & (FIRST_DIAG_STEP | SECOND_DIAG_STEP))// no pushing during diagonal moves.
 		return 1
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
@@ -408,41 +408,50 @@
 
 	return
 
-/mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc) //not updating position
+/mob/living/Move(atom/NewLoc, Dir = 0)
+	if (buckled && buckled.loc != NewLoc) //not updating position
 		if (!buckled.anchored)
-			return buckled.Move(newloc, direct)
+			return buckled.Move(NewLoc, Dir)
 		else
 			return 0
+	return ..()
 
-	var/atom/movable/pullee = pulling
-	if(pullee && get_dist(src, pullee) > 1)
+/mob/living/Moved(atom/OldLoc)
+	..()
+	if(pulling && get_dist(OldLoc, pulling) > 1)
 		stop_pulling()
-	if(pullee && !isturf(pullee.loc) && pullee.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
-		log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
+	if(pulling && !isturf(pulling.loc) && pulling.loc != OldLoc) //to be removed once all code that changes an object's loc uses forceMove().
+		log_game("DEBUG:[src]'s pull on [pulling] wasn't broken despite [pulling] being in [pulling.loc]. Pull stopped manually.")
 		stop_pulling()
-	var/turf/T = loc
-	. = ..()
-	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
+	if(pulling)
+		var/pull_dir = get_dir(src, pulling)
 		if(pulling.anchored)
 			stop_pulling()
-			return
-
-		var/pull_dir = get_dir(src, pulling)
-		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
+		else if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
 			if(isliving(pulling))
 				var/mob/living/M = pulling
 				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
-					M.makeTrail(T)
-			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+					M.makeTrail(OldLoc)
+			pulling.Move(OldLoc, get_dir(pulling, OldLoc)) //the pullee tries to reach our previous position
 			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
 				stop_pulling()
 
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && !(moving_flags & FIRST_DIAG_STEP) && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
 	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
+
+/mob/living/forceMove(atom/destination)
+	stop_pulling()
+	if(buckled)
+		buckled.unbuckle_mob(src,force=1)
+	if(has_buckled_mobs())
+		unbuckle_all_mobs(force=1)
+	. = ..()
+	if(client)
+		reset_perspective(destination)
+	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()

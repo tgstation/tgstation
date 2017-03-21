@@ -56,7 +56,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	return "off"
 
 // You aren't allowed to move.
-/obj/machinery/gravity_generator/Move()
+/obj/machinery/gravity_generator/Moved(atom/OldLoc)
 	..()
 	qdel(src)
 

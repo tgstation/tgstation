@@ -161,8 +161,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(cooldown >= world.time)
 			stat(null, "Manifest/Recall Cooldown Remaining: [max(round((cooldown - world.time)*0.1, 0.1), 0)] seconds")
 
-/mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/Moved(atom/OldLoc) //Returns to summoner if they move out of range
+	..()
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/proc/snapback()

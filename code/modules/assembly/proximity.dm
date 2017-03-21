@@ -123,7 +123,7 @@
 			sense()
 			oldloc = newloc
 
-/obj/item/device/assembly/prox_sensor/Moved()
+/obj/item/device/assembly/prox_sensor/Moved(atom/OldLoc)
 	..()
 	handle_move(loc)
 

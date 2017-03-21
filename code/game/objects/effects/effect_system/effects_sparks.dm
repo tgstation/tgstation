@@ -26,7 +26,7 @@
 		T.hotspot_expose(1000,100)
 	return ..()
 
-/obj/effect/particle_effect/sparks/Move()
+/obj/effect/particle_effect/sparks/Moved(atom/OldLoc)
 	..()
 	var/turf/T = loc
 	if(isturf(T))

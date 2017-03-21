@@ -101,14 +101,9 @@
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			if(!mob.control_object)
-				return
-			mob.control_object.setDir(direct)
+			mob.control_object.Move(get_step(mob.control_object, direct), direct)
 		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
-	return
-
+			mob.control_object.forceMove(get_step(mob.control_object, direct))
 
 /client/Move(n, direct)
 	if(world.time < move_delay)

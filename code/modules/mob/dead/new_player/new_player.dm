@@ -480,7 +480,7 @@
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
-/mob/dead/new_player/Move()
+/mob/dead/new_player/Move(atom/NewLoc, Dir = 0)
 	return 0
 
 

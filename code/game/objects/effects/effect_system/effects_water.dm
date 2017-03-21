@@ -11,13 +11,11 @@
 	..()
 	QDEL_IN(src, 70)
 
-/obj/effect/particle_effect/water/Move(turf/newloc)
-	if (--src.life < 1)
+/obj/effect/particle_effect/water/Move(atom/NewLoc, Dir = 0)
+	if(--life < 1)
 		qdel(src)
 		return 0
-	if(newloc.density)
-		return 0
-	.=..()
+	return ..()
 
 /obj/effect/particle_effect/water/Bump(atom/A)
 	if(reagents)

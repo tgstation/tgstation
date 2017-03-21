@@ -1,6 +1,6 @@
 /atom/movable
 	layer = OBJ_LAYER
-	var/last_move = null
+	var/last_move = 0
 	var/anchored = 0
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
@@ -18,7 +18,7 @@
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
 	var/pass_flags = 0
-	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/moving_flags = 0
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
@@ -34,76 +34,6 @@
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
 	return ..()
-
-/atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
-	var/atom/oldloc = loc
-
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
-			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			moving_diagonally = FIRST_DIAG_STEP
-			if (direct & 1)
-				if (direct & 4)
-					if (step(src, NORTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-				else if (direct & 8)
-					if (step(src, NORTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-			else if (direct & 2)
-				if (direct & 4)
-					if (step(src, SOUTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-				else if (direct & 8)
-					if (step(src, SOUTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-			moving_diagonally = 0
-			return
-
-	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = 0
-		return
-
-	if(.)
-		Moved(oldloc, direct)
-
-	last_move = direct
-	setDir(direct)
-	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		. = 0
-
-//Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir)
-	if (!inertia_moving)
-		inertia_next_move = world.time + inertia_move_delay
-		newtonian_move(Dir)
-	if (length(client_mobs_in_contents))
-		update_parallax_contents()
-
-	if (orbiters)
-		for (var/thing in orbiters)
-			var/datum/orbit/O = thing
-			O.Check()
-	if (orbiting)
-		orbiting.Check()
-	return 1
 
 /atom/movable/Destroy(force)
 	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
@@ -136,11 +66,6 @@
 		pulledby.stop_pulling()
 
 
-// Previously known as HasEntered()
-// This is automatically called when something enters your square
-/atom/movable/Crossed(atom/movable/AM)
-	return
-
 /atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
 	if((A && yes))
 		if(throwing)
@@ -149,53 +74,6 @@
 			if(!A || QDELETED(A))
 				return
 		A.Bumped(src)
-
-/atom/movable/proc/forceMove(atom/destination)
-	if(destination)
-		if(pulledby)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = oldloc == destination
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
-
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-			if(old_area)
-				old_area.Exited(src, destination)
-
-		loc = destination
-
-		if(!same_loc)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
-
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src)
-
-		Moved(oldloc, 0)
-		return 1
-	return 0
-
-/mob/living/forceMove(atom/destination)
-	stop_pulling()
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
-	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
-	. = ..()
-	if(client)
-		reset_perspective(destination)
-	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
-
-/mob/living/brain/forceMove(atom/destination)
-	if(container)
-		return container.forceMove(destination)
-	else //something went very wrong.
-		CRASH("Brainmob without container.")
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below

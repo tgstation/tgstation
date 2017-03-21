@@ -171,16 +171,14 @@
 				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")
 			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
 
-/mob/camera/blob/Move(NewLoc, Dir = 0)
+/mob/camera/blob/Move(atom/NewLoc, Dir = 0)
 	if(placed)
 		var/obj/structure/blob/B = locate() in range("3x3", NewLoc)
-		if(B)
-			loc = NewLoc
-		else
+		if(!B)
 			return 0
 	else
 		var/area/A = get_area(NewLoc)
 		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
 			return 0
-		loc = NewLoc
-		return 1
+
+	return ..()

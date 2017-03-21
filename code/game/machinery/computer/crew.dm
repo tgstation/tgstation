@@ -250,17 +250,6 @@ var/global/datum/crewmonitor/crewmonitor = new
 	if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
 		AI.switchCamera(C)
 
-/mob/living/carbon/human/Move()
-	if (src.w_uniform)
-		var/old_z = src.z
-
-		. = ..()
-
-		if (old_z != src.z) crewmonitor.queueUpdate(old_z)
-		crewmonitor.queueUpdate(src.z)
-	else
-		return ..()
-
 /datum/crewmonitor/proc/queueUpdate(z)
 	addtimer(CALLBACK(crewmonitor, .proc/update, z), 5, TIMER_UNIQUE)
 

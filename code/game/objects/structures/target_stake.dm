@@ -15,7 +15,7 @@
 /obj/structure/target_stake/proc/nullPinnedTarget()
 	pinned_target = null
 
-/obj/structure/target_stake/Move()
+/obj/structure/target_stake/Moved(atom/OldLoc)
 	..()
 	if(pinned_target)
 		pinned_target.loc = loc

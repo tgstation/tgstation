@@ -17,9 +17,9 @@
 	var/cargo_capacity = 15
 	var/hides = 0
 
-/obj/mecha/working/ripley/Move()
-	. = ..()
-	if(. && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment))
+/obj/mecha/working/ripley/Moved(atom/OldLoc)
+	..()
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment)
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
 		if(ore_box)
 			for(var/obj/item/weapon/ore/ore in get_turf(src))

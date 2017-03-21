@@ -62,10 +62,9 @@
 	anchored = 1 //Prevent movement
 	return 1
 
-/obj/machinery/portable_atmospherics/Move()
-	. = ..()
-	if(.)
-		disconnect()
+/obj/machinery/portable_atmospherics/Moved(atom/OldLoc)
+	..()
+	disconnect()
 
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)

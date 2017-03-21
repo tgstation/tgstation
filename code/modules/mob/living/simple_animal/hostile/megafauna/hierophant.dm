@@ -145,16 +145,19 @@ Difficulty: Hard
 	if(!blinking)
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Move()
-	if(!blinking)
-		var/prevloc = loc
-		. = ..()
-		if(!stat && .)
-			var/obj/effect/overlay/temp/hierophant/squares/HS = new /obj/effect/overlay/temp/hierophant/squares(prevloc)
-			HS.dir = dir
-			playsound(loc, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
-			if(target)
-				arena_trap(target)
+/mob/living/simple_animal/hostile/megafauna/hierophant/Move(atom/NewLoc, Dir = 0)
+	if(blinking)
+		return 0
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(atom/OldLoc)
+	..()
+	if(!stat)
+		var/obj/effect/overlay/temp/hierophant/squares/HS = new(OldLoc)
+		HS.dir = dir
+		playsound(loc, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
+		if(target)
+			arena_trap(target)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Goto(target, delay, minimum_distance)
 	wander = TRUE

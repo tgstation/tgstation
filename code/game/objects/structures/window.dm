@@ -7,6 +7,7 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
+	moving_flags = KEEP_DIRECTION
 	max_integrity = 25
 	obj_integrity = 25
 	var/ini_dir = null
@@ -328,13 +329,6 @@
 	air_update_turf(1)
 	update_nearby_icons()
 	return ..()
-
-
-/obj/structure/window/Move()
-	var/turf/T = loc
-	..()
-	setDir(ini_dir)
-	move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)

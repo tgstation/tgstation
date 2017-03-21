@@ -281,10 +281,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
-
-/mob/dead/observer/Move(NewLoc, direct)
+/mob/dead/observer/Move(atom/NewLoc, Dir)
 	if(updatedir)
-		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+		setDir(Dir)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -292,13 +291,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		update_parallax_contents()
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
-	if((direct & NORTH) && y < world.maxy)
+	if((Dir & NORTH) && y < world.maxy)
 		y++
-	else if((direct & SOUTH) && y > 1)
+	else if((Dir & SOUTH) && y > 1)
 		y--
-	if((direct & EAST) && x < world.maxx)
+	if((Dir & EAST) && x < world.maxx)
 		x++
-	else if((direct & WEST) && x > 1)
+	else if((Dir & WEST) && x > 1)
 		x--
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb

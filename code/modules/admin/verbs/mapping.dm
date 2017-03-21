@@ -55,7 +55,7 @@ var/list/admin_verbs_debug_mapping = list(
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "yellow"
 
-/obj/effect/debugging/marker/Move()
+/obj/effect/debugging/marker/Move(atom/NewLoc, Dir = 0)
 	return 0
 
 /client/proc/do_not_use_these()

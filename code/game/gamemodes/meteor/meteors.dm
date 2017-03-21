@@ -103,19 +103,19 @@
 	var/list/meteordrop = list(/obj/item/weapon/ore/iron)
 	var/dropamt = 2
 
-/obj/effect/meteor/Move()
-	if(z != z_original || loc == dest)
+/obj/effect/meteor/Move(atom/NewLoc, Dir = 0)
+	if((NewLoc && NewLoc.z && NewLoc.z != z_original) || loc == dest)
 		qdel(src)
-		return
+		return 0
+	return ..()
 
-	. = ..() //process movement...
+/obj/effect/meteor/Moved(atom/OldLoc)
+	..()
+	var/turf/T = get_turf(loc)
+	ram_turf(T)
 
-	if(.)//.. if did move, ram the turf we get in
-		var/turf/T = get_turf(loc)
-		ram_turf(T)
-
-		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
-			get_hit()
+	if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
+		get_hit()
 
 /obj/effect/meteor/Destroy()
 	meteor_list -= src
@@ -325,10 +325,9 @@
 	meteordrop = list(/obj/item/weapon/ore/plasma)
 	threat = 50
 
-/obj/effect/meteor/tunguska/Move()
-	. = ..()
-	if(.)
-		new /obj/effect/overlay/temp/revenant(get_turf(src))
+/obj/effect/meteor/tunguska/Moved(atom/OldLoc)
+	..()
+	new /obj/effect/overlay/temp/revenant(get_turf(src))
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()
