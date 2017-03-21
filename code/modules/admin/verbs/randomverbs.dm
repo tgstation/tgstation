@@ -453,13 +453,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!input)
 		return
 
-	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
+	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No", "Cancel")
 	var/announce_command_report = TRUE
-	if(confirm == "Yes")
-		priority_announce(input, null, 'sound/AI/commandreport.ogg')
-		announce_command_report = FALSE
+	switch(confirm)
+		if("Yes")
+			priority_announce(input, null, 'sound/AI/commandreport.ogg')
+			announce_command_report = FALSE
+		if("Cancel")
+			return
 
-	print_command_report(input,"[confirm=="Yes" ? "" : "Classified "][command_name()] Update",announce=announce_command_report)
+	print_command_report(input, "[announce_command_report ? "Classified " : ""][command_name()] Update", announce_command_report)
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
