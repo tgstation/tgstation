@@ -24,9 +24,9 @@
 	if( last_wave + 20 < world.time )
 		last_wave = world.time
 		if(label)
-			user.visible_message("<span class='warning'>[user] waves around \the \"[label]\" sign.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] waves around \the \"[label]\" sign.</span>", subjects=list(user))
 		else
-			user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] waves around blank sign.</span>", subjects=list(user))
 		user.changeNext_move(CLICK_CD_MELEE)
 
 /datum/crafting_recipe/picket_sign

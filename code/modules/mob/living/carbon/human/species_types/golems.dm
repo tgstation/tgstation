@@ -234,7 +234,7 @@
 	attack_sound = 'sound/effects/shovel_dig.ogg'
 
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
-	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
+	H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] turns into a pile of sand!</span>", subjects=list(H))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
@@ -245,8 +245,8 @@
 	if(!(P.original == H && P.firer == H))
 		if(P.flag == "bullet" || P.flag == "bomb")
 			playsound(H, 'sound/effects/shovel_dig.ogg', 70, 1)
-			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
-			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
+			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [IDENTITY_SUBJECT(1)]'s sandy body!</span>", \
+			"<span class='userdanger'>The [P.name] sinks harmlessly in [IDENTITY_SUBJECT(1)]'s sandy body!</span>", subjects=list(H))
 			return 2
 	return 0
 
@@ -264,7 +264,7 @@
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, "shatter", 70, 1)
-	H.visible_message("<span class='danger'>[H] shatters!</span>")
+	H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] shatters!</span>", subjects=list(H))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
@@ -274,8 +274,8 @@
 /datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H)) //self-shots don't reflect
 		if(P.flag == "laser" || P.flag == "energy")
-			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s glass skin!</span>", \
-			"<span class='userdanger'>The [P.name] gets reflected by [H]'s glass skin!</span>")
+			H.visible_message("<span class='danger'>The [P.name] gets reflected by [IDENTITY_SUBJECT(1)]'s glass skin!</span>", \
+			"<span class='userdanger'>The [P.name] gets reflected by [IDENTITY_SUBJECT(1)]'s glass skin!</span>", subjects=list(H))
 			if(P.starting)
 				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
@@ -307,7 +307,7 @@
 	var/last_teleport = 0
 
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
-	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
+	H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>", subjects=list(H))
 	new /obj/effect/particle_effect/sparks(get_turf(H))
 	playsound(get_turf(H), "sparks", 50, 1)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg')
@@ -364,12 +364,12 @@
 
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
-	H.visible_message("<span class='warning'>[H] starts vibrating!</span>", "<span class='danger'>You start charging your bluespace core...</span>")
+	H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] starts vibrating!</span>", "<span class='danger'>You start charging your bluespace core...</span>", subjects=list(H))
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, 1)
 	addtimer(CALLBACK(src, .proc/teleport, H), 15)
 
 /datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
-	H.visible_message("<span class='warning'>[H] disappears in a shower of sparks!</span>", "<span class='danger'>You teleport!</span>")
+	H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disappears in a shower of sparks!</span>", "<span class='danger'>You teleport!</span>", subjects=list(H))
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(10, 0, src)
 	spark_system.attach(H)
@@ -512,11 +512,11 @@
 	if(gibbed)
 		return
 	if(H.on_fire)
-		H.visible_message("<span class='danger'>[H] burns into ash!</span>")
+		H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] burns into ash!</span>", subjects=list(H))
 		H.dust(just_ash = TRUE)
 		return
 
-	H.visible_message("<span class='danger'>[H] falls apart into a pile of bandages!</span>")
+	H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] falls apart into a pile of bandages!</span>", subjects=list(H))
 	new /obj/structure/cloth_pile(get_turf(H), H)
 	..()
 
@@ -549,7 +549,7 @@
 	return ..()
 
 /obj/structure/cloth_pile/burn()
-	visible_message("<span class='danger'>[src] burns into ash!</span>")
+	visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] burns into ash!</span>", subjects=list(src))
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	..()
 
@@ -566,7 +566,7 @@
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
 	sleep(20)
 	cloth_golem.forceMove(get_turf(src))
-	cloth_golem.visible_message("<span class='danger'>[src] rises and reforms into [cloth_golem]!</span>","<span class='userdanger'>You reform into yourself!</span>")
+	cloth_golem.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] rises and reforms into [IDENTITY_SUBJECT(2)]!</span>","<span class='userdanger'>You reform into yourself!</span>", subjects=list(src, cloth_golem))
 	cloth_golem = null
 	qdel(src)
 
@@ -577,5 +577,5 @@
 		return
 
 	if(P.is_hot())
-		visible_message("<span class='danger'>[src] bursts into flames!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bursts into flames!</span>", subjects=list(src))
 		fire_act()

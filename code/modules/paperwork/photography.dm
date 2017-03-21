@@ -33,6 +33,7 @@
 	obj_integrity = 50
 	max_integrity = 50
 	var/icon/img		//Big photo image
+	var/list/mobinfo
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
 	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
@@ -55,6 +56,7 @@
 	..()
 
 	if(in_range(src, user))
+		user << who_are_they(user)
 		show(user)
 	else
 		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")
@@ -69,6 +71,28 @@
 		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
 	onclose(user, "[name]")
 
+/obj/item/weapon/photo/proc/who_are_they(mob/user)
+	if(user && mobinfo && mobinfo.len)
+		for(var/list/m_info in mobinfo)
+			var/m_name
+			if(m_info[1])
+				if(!user.mind)
+					continue
+				m_name = user.mind.remembered_faceprint_name(m_info[2])
+			else
+				m_name = m_info[2]
+			if(!m_name)
+				continue
+			. = "[.]You can see [m_name] on the photo.[m_info[3] ? " They look injured." : null]"
+			if(m_info.len > 3)
+				var/list/m_items = m_info.Copy(3)
+				var/text_items
+				for(var/i_name in m_items)
+					text_items = "[text_items], \an [i_name]"
+				if(length(text_items))
+					. = "[.] They are holding[text_items]."
+			. = "[.]\n"
+
 
 /obj/item/weapon/photo/verb/rename()
 	set name = "Rename photo"
@@ -81,10 +105,10 @@
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
-/obj/item/weapon/photo/proc/photocreate(inicon, inimg, indesc, inblueprints)
+/obj/item/weapon/photo/proc/photocreate(inicon, inimg, inmobinfo, inblueprints)
 	icon = inicon
 	img = inimg
-	desc = indesc
+	mobinfo = inmobinfo
 	blueprints = inblueprints
 
 /*
@@ -125,7 +149,7 @@
 	if(C)
 		pictures_max = C.pictures_max
 		pictures_left = C.pictures_left
-		visible_message("[C] has been imbued with godlike power!")
+		visible_message("[IDENTITY_SUBJECT(1)] has been imbued with godlike power!", subjects=list(C))
 		qdel(C)
 
 
@@ -234,43 +258,44 @@
 
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
-	var/mob_detail
+	var/list/mob_detail = list()
 	for(var/mob/M in the_turf)
+		var/list/M_info = new(PHOTO_MOB_INFO_LEN) //[1] = if it's a faceprint or just a direct name, [2] = for the faceprint or direct name, [3] = looks hurt or not, [thereafter] = stuff they are holding
 		if(M.invisibility)
 			if(see_ghosts && isobserver(M))
 				var/mob/dead/observer/O = M
 				if(O.orbiting)
 					continue
-				if(!mob_detail)
-					mob_detail = "You can see a g-g-g-g-ghooooost! "
-				else
-					mob_detail += "You can also see a g-g-g-g-ghooooost!"
+				M_info[1] = FALSE
+				M_info[2] = "a g-g-g-g-ghooooost"
+				M_info[3] = FALSE
 			else
 				continue
-
-		var/list/holding = list()
 
 		if(isliving(M))
 			var/mob/living/L = M
 
-			for(var/obj/item/I in L.held_items)
-				if(!holding)
-					holding += "[L.p_they(TRUE)] [L.p_are()] holding \a [I]"
+			if(L.can_see_face())
+				var/face_print = L.get_faceprint()
+				if(face_print)
+					M_info[1] = TRUE
+					M_info[2] = face_print
 				else
-					holding += " and \a [I]"
-			holding = holding.Join()
+					M_info[1] = FALSE
+					M_info[2] = L.name
+				M_info[3] = L.health < (L.maxHealth * 0.75)
 
-			if(!mob_detail)
-				mob_detail = "You can see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
-			else
-				mob_detail += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
+				for(var/obj/item/I in L.held_items)
+					M_info += I.name
 
+		if(M_info.len)
+			mob_detail[++mob_detail.len] = M_info
 
 	return mob_detail
 
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
-	var/mobs = ""
+	var/list/mobs = list()
 	var/isAi = isAI(user)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
@@ -282,7 +307,8 @@
 		seen = get_hear(world.view, target)
 
 	var/list/turfs = list()
-	for(var/turf/T in range(1, target))
+	for(var/_T in spiral_range_turfs(1, target))
+		var/turf/T = _T
 		if(T in seen)
 			if(isAi && !cameranet.checkTurfVis(T))
 				continue
@@ -312,14 +338,13 @@
 	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
 	P.icon = ic
 	P.img = temp
-	P.desc = mobs
+	P.mobinfo = mobs
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
 
 	if(blueprints)
 		P.blueprints = 1
 		blueprints = 0
-
 
 /obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs, isAi) //instead of printing a picture like a regular camera would, we do this instead for the AI
 
@@ -329,7 +354,7 @@
 	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
 	var/icon = ic
 	var/img = temp
-	var/desc = mobs
+	var/mobinfo = mobs
 	var/pixel_x = rand(-10, 10)
 	var/pixel_y = rand(-10, 10)
 
@@ -339,9 +364,9 @@
 		blueprints = 0
 
 	if(isAi)
-		injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
+		injectaialbum(icon, img, mobinfo, pixel_x, pixel_y, injectblueprints)
 	else
-		injectmasteralbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
+		injectmasteralbum(icon, img, mobinfo, pixel_x, pixel_y, injectblueprints)
 
 
 
@@ -350,7 +375,7 @@
 	var/list/fields = list()
 
 
-/obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectaialbum(icon, img, mobinfo, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -358,7 +383,7 @@
 	P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
 	P.fields["icon"] = icon
 	P.fields["img"] = img
-	P.fields["desc"] = desc
+	P.fields["mobinfo"] = mobinfo
 	P.fields["pixel_x"] = pixel_x
 	P.fields["pixel_y"] = pixel_y
 	P.fields["blueprints"] = blueprintsinject
@@ -366,7 +391,7 @@
 	aipictures += P
 	to_chat(usr, "<span class='unconscious'>Image recorded</span>") //feedback to the AI player that the picture was taken
 
-/obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectmasteralbum(icon, img, mobinfo, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	var/mob/living/silicon/robot/C = src.loc
 	if(C.connected_ai)
@@ -376,7 +401,7 @@
 		P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
 		P.fields["icon"] = icon
 		P.fields["img"] = img
-		P.fields["desc"] = desc
+		P.fields["mobinfo"] = mobinfo
 		P.fields["pixel_x"] = pixel_x
 		P.fields["pixel_y"] = pixel_y
 		P.fields["blueprints"] = blueprintsinject
@@ -384,7 +409,7 @@
 		C.connected_ai.aicamera.aipictures += P
 		to_chat(usr, "<span class='unconscious'>Image recorded and saved to remote database</span>") //feedback to the Cyborg player that the picture was taken
 	else
-		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
+		injectaialbum(icon, img, mobinfo, pixel_x, pixel_y, blueprintsinject)
 
 /obj/item/device/camera/siliconcam/proc/selectpicture(obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
@@ -399,16 +424,16 @@
 		if(q.fields["name"] == find)
 			return q
 
-/obj/item/device/camera/siliconcam/proc/viewpichelper(obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/viewpichelper(obj/item/device/camera/siliconcam/targetloc, mob/user)
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	var/datum/picture/selection = selectpicture(targetloc)
 	if(selection)
-		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["mobinfo"])
 		P.pixel_x = selection.fields["pixel_x"]
 		P.pixel_y = selection.fields["pixel_y"]
 
-		P.show(usr)
-		to_chat(usr, P.desc)
+		to_chat(user, P.who_are_they(user))
+		P.show(user)
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
 /obj/item/device/camera/siliconcam/proc/viewpictures(user)
@@ -417,13 +442,13 @@
 		var/obj/item/device/camera/siliconcam/Cinfo
 		if(C.connected_ai)
 			Cinfo = C.connected_ai.aicamera
-			viewpichelper(Cinfo)
+			viewpichelper(Cinfo, user)
 		else
 			Cinfo = C.aicamera
-			viewpichelper(Cinfo)
+			viewpichelper(Cinfo, user)
 	else // AI
 		var/Ainfo = src
-		viewpichelper(Ainfo)
+		viewpichelper(Ainfo, user)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
@@ -479,11 +504,11 @@
 			selection = q
 			break
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc)
-	p.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
+	p.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["mobinfo"], selection.fields["blueprints"])
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
-	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
+	visible_message("[IDENTITY_SUBJECT(1)] spits out a photograph from a narrow slot on its chassis.", subjects=list(C))
 	to_chat(usr, "<span class='notice'>You print a photograph.</span>")
 
 // Picture frames
@@ -539,8 +564,8 @@
 	var/turf/T = target
 	if(!iswallturf(T))
 		return
-	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-						 "<span class='notice'>You attach the sign to [T].</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] fastens [src] to [T].</span>", \
+						 "<span class='notice'>You attach the sign to [T].</span>", subjects=list(user))
 	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/obj/structure/sign/picture_frame/PF = new /obj/structure/sign/picture_frame(T)
 	PF.copy_overlays(src)
@@ -566,14 +591,14 @@
 
 /obj/structure/sign/picture_frame/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/screwdriver))
-		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-							 "<span class='notice'>You start unfastening [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts removing [src]...</span>", \
+							 "<span class='notice'>You start unfastening [src].</span>", subjects=list(user))
 		playsound(src, O.usesound, 50, 1)
 		if(!do_after(user, 30*O.toolspeed, target = src))
 			return
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-							 "<span class='notice'>You unfasten [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>", subjects=list(user))
 		var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame(get_turf(user))
 		if(framed)
 			F.displayed = framed

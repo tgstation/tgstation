@@ -39,6 +39,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
+	identity_name = "Head of Security"
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
@@ -59,6 +60,7 @@
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	identity_name = "Warden"
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
@@ -84,6 +86,7 @@
 	armor = list(melee = 50, bullet = 40, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 100, acid = 90)
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
+	identity_name = "Captain"
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
@@ -103,6 +106,7 @@
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 80
 	put_on_delay = 60
+	identity_name = "Riot Officer"
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
@@ -112,6 +116,7 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	identity_name = "Bone Guy"
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
@@ -146,6 +151,7 @@
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton)
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	identity_name = "Detective"
 
 
 //Reactive armor
@@ -198,9 +204,9 @@
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
+			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [IDENTITY_SUBJECT(1)]!</span>", subjects=list(H))
 			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [IDENTITY_SUBJECT(1)] clear of [attack_text], shutting itself off in the process!</span>", subjects=list(H))
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -230,7 +236,7 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</spawn>")
+			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</spawn>", subjects=list(owner))
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
@@ -252,14 +258,14 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] activates, but is still recharging its holographic emitters!</spawn>")
+			owner.visible_message("<span class='danger'>The reactive stealth system on [IDENTITY_SUBJECT(1)] activates, but is still recharging its holographic emitters!</spawn>", subjects=list(owner))
 			return
 		var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
 		E.Copy_Parent(owner, 50)
 		E.GiveTarget(owner) //so it starts running right away
 		E.Goto(owner, E.move_to_delay, E.minimum_distance)
 		owner.alpha = 0
-		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
+		owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is hit by [attack_text] in the chest!</span>", subjects=list(owner)) //We pretend to be hit, since blocking it would stop the message otherwise
 		spawn(40)
 			owner.alpha = initial(owner.alpha)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
@@ -282,7 +288,7 @@
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
-			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</spawn>")
+			owner.visible_message("<span class='danger'>The tesla capacitors on [IDENTITY_SUBJECT(1)]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</spawn>", subjects=list(owner))
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
 		tesla_zap(owner,tesla_range,tesla_power,tesla_boom, tesla_stun)
@@ -302,8 +308,8 @@
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive table armor's fabricators are still on cooldown!</span>")
 			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a fabricated table!</span>")
-		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [IDENTITY_SUBJECT(1)] clear of [attack_text] and slams them into a fabricated table!</span>", subjects=list(H))
+		owner.visible_message("<font color='red' size='3'>[IDENTITY_SUBJECT(1)] GOES ON THE TABLE!!!</font>", subjects=list(H))
 		owner.Weaken(2)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
@@ -345,6 +351,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 90, acid = 90)
+	identity_name = "Centcom Official"
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -358,6 +365,7 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 90, acid = 90)
+	identity_name = "Heavily Armored Person"
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -385,6 +393,7 @@
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	item_state = "knight_green"
+	identity_name = "Knight"
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -403,3 +412,4 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+	identity_name = "Templar"

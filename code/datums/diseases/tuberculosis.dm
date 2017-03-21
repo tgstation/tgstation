@@ -40,7 +40,7 @@
 				affected_mob.adjustStaminaLoss(70)
 			if(prob(10))
 				affected_mob.adjustStaminaLoss(100)
-				affected_mob.visible_message("<span class='warning'>[affected_mob] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
+				affected_mob.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>", subjects=list(affected_mob))
 				affected_mob.AdjustSleeping(5)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>")

@@ -346,10 +346,10 @@
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)
-					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
+					user.visible_message("[IDENTITY_SUBJECT(1)] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.", subjects=list(user))
 					welded = 1
 				else
-					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
+					user.visible_message("[IDENTITY_SUBJECT(1)] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.", subjects=list(user))
 					welded = 0
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
@@ -371,7 +371,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user)
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
-	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
+	user.visible_message("[IDENTITY_SUBJECT(1)] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.", subjects=list(user))
 	welded = 0
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)

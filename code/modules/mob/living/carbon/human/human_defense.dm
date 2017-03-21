@@ -62,15 +62,15 @@
 	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 		if(prob(martial_art.deflection_chance))
 			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>", subjects=list(src))
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
-				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
-								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
+				visible_message("<span class='danger'>The [P.name] gets reflected by [IDENTITY_SUBJECT(1)]!</span>", \
+								"<span class='userdanger'>The [P.name] gets reflected by [IDENTITY_SUBJECT(1)]!</span>", subjects=list(src))
 				// Find a turf near or on the original location to bounce to
 				if(P.starting)
 					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
@@ -153,7 +153,7 @@
 					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
 					L.receive_damage(I.w_class*I.embedded_impact_pain_multiplier)
-					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>")
+					visible_message("<span class='danger'>\the [I.name] embeds itself in [IDENTITY_SUBJECT(1)]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>", subjects=list(src))
 					hitpush = 0
 					skipcatch = 1 //can't catch the now embedded item
 
@@ -191,9 +191,9 @@
 			return
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/message = "[user] has [hulk_verb]ed [src]!"
+		var/message = "[IDENTITY_SUBJECT(1)] has [hulk_verb]ed [IDENTITY_SUBJECT(2)]!"
 		visible_message("<span class='danger'>[message]</span>", \
-								"<span class='userdanger'>[message]</span>")
+								"<span class='userdanger'>[message]</span>", subjects=list(user, src))
 		adjustBruteLoss(15)
 		damage_clothes(15, BRUTE, "melee")
 		return 1
@@ -221,14 +221,14 @@
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		if(get_active_held_item() && drop_item())
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-					"<span class='userdanger'>[M] disarmed [src]!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] disarmed [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] disarmed [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			Weaken(5)
 			add_logs(M, src, "tackled")
-			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-				"<span class='userdanger'>[M] has tackled down [src]!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has tackled down [IDENTITY_SUBJECT(2)]!</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has tackled down [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
@@ -245,7 +245,7 @@
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(check_shields(0, M.name))
-		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attempted to touch [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 		return 0
 
 	if(..())
@@ -255,8 +255,8 @@
 			var/damage = prob(90) ? 20 : 0
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
-					"<span class='userdanger'>[M] has lunged at [src]!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has lunged at [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has lunged at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 				return 0
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			if(!affecting)
@@ -264,8 +264,8 @@
 			var/armor_block = run_armor_check(affecting, "melee","","",10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-				"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has slashed at [IDENTITY_SUBJECT(2)]!</span>", \
+				"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has slashed at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 			add_logs(M, src, "attacked")
 			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
 				return 1
@@ -275,14 +275,14 @@
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 			if(get_active_held_item() && drop_item())
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-						"<span class='userdanger'>[M] disarmed [src]!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] disarmed [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] disarmed [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(5)
 				add_logs(M, src, "tackled")
-				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-					"<span class='userdanger'>[M] has tackled down [src]!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has tackled down [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has tackled down [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)
@@ -366,8 +366,8 @@
 				update_damage_overlays()
 			updatehealth()
 
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[M.name] has hit [IDENTITY_SUBJECT(1)]!</span>", \
+								"<span class='userdanger'>[M.name] has hit [IDENTITY_SUBJECT(1)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(src))
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
@@ -648,8 +648,8 @@
 
 	if(health >= 0)
 		if(src == M)
-			visible_message("[src] examines [p_them()]self.", \
-				"<span class='notice'>You check yourself for injuries.</span>")
+			visible_message("[IDENTITY_SUBJECT(1)] examines [p_them()]self.", \
+				"<span class='notice'>You check yourself for injuries.</span>", subjects=list(src))
 
 			var/list/missing = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
 			for(var/X in bodyparts)

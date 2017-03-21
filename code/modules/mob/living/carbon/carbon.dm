@@ -25,17 +25,17 @@
 	if(user in src.stomach_contents)
 		if(prob(40))
 			if(prob(25))
-				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
+				audible_message("<span class='warning'>You hear something rumbling inside [IDENTITY_SUBJECT(1)]'s stomach...</span>", \
 							 "<span class='warning'>You hear something rumbling.</span>", 4,\
-							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
+							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>", subjects=list(src))
 			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
 				var/obj/item/bodypart/BP = get_bodypart("chest")
 				if(BP.receive_damage(d, 0))
 					update_damage_overlays()
-				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
-									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attacks [IDENTITY_SUBJECT(2)]'s stomach wall with the [I.name]!</span>", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] attacks your stomach wall with the [I.name]!</span>", subjects=list(user, src))
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
 				if(prob(src.getBruteLoss() - 50))
@@ -113,7 +113,7 @@
 			take_bodypart_damage(10)
 			victim.Weaken(1)
 			Weaken(1)
-			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] crashes into [IDENTITY_SUBJECT(2)], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, victim))
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -169,7 +169,7 @@
 		dropItemToGround(I)
 
 	if(thrown_thing)
-		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has thrown [IDENTITY_SUBJECT(2)].</span>", subjects=list(src, thrown_thing))
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
@@ -219,8 +219,8 @@
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
 			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] tries to [internal ? "close" : "open"] the valve on [IDENTITY_SUBJECT(2)]'s [ITEM].</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] tries to [internal ? "close" : "open"] the valve on [IDENTITY_SUBJECT(2)]'s [ITEM].</span>", subjects=list(usr, src))
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
@@ -230,8 +230,8 @@
 							internal = ITEM
 							update_internals_hud_icon(1)
 
-					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
-									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
+					visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] [internal ? "opens" : "closes"] the valve on [IDENTITY_SUBJECT(2)]'s [ITEM].</span>", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] [internal ? "opens" : "closes"] the valve on [IDENTITY_SUBJECT(2)]'s [ITEM].</span>", subjects=list(usr, src))
 
 
 /mob/living/carbon/fall(forced)
@@ -244,8 +244,8 @@
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
-		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
-					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] attempts to unbuckle themself!</span>", \
+					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>", subjects=list(src))
 		if(do_after(src, 600, 0, target = src))
 			if(!buckled)
 				return
@@ -260,12 +260,12 @@
 	fire_stacks -= 5
 	Weaken(3, 1, 1)
 	spin(32,2)
-	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
-		"<span class='notice'>You stop, drop, and roll!</span>")
+	visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] rolls on the floor, trying to put themselves out!</span>", \
+		"<span class='notice'>You stop, drop, and roll!</span>", subjects=list(src))
 	sleep(30)
 	if(fire_stacks <= 0)
-		visible_message("<span class='danger'>[src] has successfully extinguished themselves!</span>", \
-			"<span class='notice'>You extinguish yourself.</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has successfully extinguished themselves!</span>", \
+			"<span class='notice'>You extinguish yourself.</span>", subjects=list(src))
 		ExtinguishMob()
 	return
 
@@ -292,8 +292,8 @@
 	breakouttime = I.breakouttime
 	var/displaytime = breakouttime / 600
 	if(!cuff_break)
-		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] attempts to remove [I]!</span>")
+		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>", subjects=list(src))
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
@@ -301,8 +301,8 @@
 
 	else if(cuff_break == FAST_CUFFBREAK)
 		breakouttime = 50
-		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
-		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is trying to break [I]!</span>")
+		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>", subjects=list(src))
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
@@ -342,8 +342,8 @@
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
 		return
-	visible_message("<span class='danger'>[src] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
-	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
+	visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
+	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>", subjects=list(src))
 
 	if(cuff_break)
 		qdel(I)
@@ -454,20 +454,20 @@
 
 	if(nutrition < 100 && !blood)
 		if(message)
-			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
+			visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>", subjects=list(src))
 		if(stun)
 			Weaken(10)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
-			visible_message("<span class='danger'>[src] throws up all over themself!</span>", \
-							"<span class='userdanger'>You throw up all over yourself!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] throws up all over themself!</span>", \
+							"<span class='userdanger'>You throw up all over yourself!</span>", subjects=list(src))
 		distance = 0
 	else
 		if(message)
-			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] throws up!</span>", "<span class='userdanger'>You throw up!</span>", subjects=list(src))
 
 	if(stun)
 		Stun(4)
@@ -753,13 +753,13 @@
 
 
 /mob/living/carbon/proc/devour_mob(mob/living/carbon/C, devour_time = 130)
-	C.visible_message("<span class='danger'>[src] is attempting to devour [C]!</span>", \
-					"<span class='userdanger'>[src] is attempting to devour you!</span>")
+	C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is attempting to devour [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is attempting to devour you!</span>", subjects=list(src, C))
 	if(!do_mob(src, C, devour_time))
 		return
 	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == INTENT_GRAB)
-		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
-						"<span class='userdanger'>[src] devours you!</span>")
+		C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] devours [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] devours you!</span>", subjects=list(src, C))
 		C.forceMove(src)
 		stomach_contents.Add(C)
 		add_logs(src, C, "devoured")
@@ -793,3 +793,11 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+
+/mob/living/carbon/proc/facial_hair_covered()
+	if((head && head.flags_inv & HIDEFACIALHAIR) || (wear_mask && wear_mask.flags_inv & HIDEFACIALHAIR))
+		. = 1
+
+/mob/living/carbon/proc/hair_covered()
+	if((head && head.flags_inv & HIDEHAIR) || (wear_mask && wear_mask.flags_inv & HIDEHAIR))
+		. = 1

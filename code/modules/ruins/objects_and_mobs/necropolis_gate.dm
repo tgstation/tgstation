@@ -23,7 +23,7 @@
 	var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
 	if(safety == "Abort" || !in_range(src, user) || !src || is_anyone_home || user.incapacitated())
 		return
-	user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>", subjects=list(user))
 	playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
 	is_anyone_home = TRUE
 	sleep(50)

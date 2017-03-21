@@ -59,13 +59,13 @@
 		if(has_buckled_mobs())
 			if(buckled_mobs.len > 1)
 				unbuckle_all_mobs()
-				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [src].</span>")
+				user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] unbuckles all creatures from [src].</span>", subjects=list(user))
 			else
 				user_unbuckle_mob(buckled_mobs[1],user)
 		else
 			R.loaded = src
 			forceMove(R)
-			user.visible_message("[user] collects [src].", "<span class='notice'>You collect [src].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] collects [src].", "<span class='notice'>You collect [src].</span>", subjects=list(user))
 		return 1
 	else
 		return ..()
@@ -80,7 +80,7 @@
 		if(usr.incapacitated())
 			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return 0
-		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
+		usr.visible_message("[IDENTITY_SUBJECT(1)] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>", subjects=list(usr))
 		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
 		usr.put_in_hands(B)
 		qdel(src)
@@ -110,7 +110,7 @@
 		if(R.loaded)
 			to_chat(user, "<span class='warning'>[R] already has a roller bed loaded!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>", subjects=list(user))
 		R.loaded = new/obj/structure/bed/roller(R)
 		qdel(src) //"Load"
 		return
@@ -147,7 +147,7 @@
 	if(loaded)
 		var/obj/structure/bed/roller/R = loaded
 		R.loc = location
-		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>", subjects=list(user))
 		loaded = null
 	else
 		to_chat(user, "<span class='warning'>The dock is empty!</span>")

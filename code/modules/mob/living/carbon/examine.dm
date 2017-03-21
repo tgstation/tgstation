@@ -6,7 +6,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[IDENTITY_SUBJECT(1)]</EM>!\n"
 
 	if (handcuffed)
 		msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] handcuffed!</span>\n"
@@ -87,4 +87,4 @@
 
 	msg += "*---------*</span>"
 
-	to_chat(user, msg)
+	to_chat(user, msg, list(src))

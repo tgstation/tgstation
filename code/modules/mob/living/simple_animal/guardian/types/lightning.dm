@@ -113,9 +113,10 @@
 							if(C)
 								C.jitteriness = max(C.jitteriness - 990, 10)
 					L.visible_message(
-						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
+						"<span class='danger'>[IDENTITY_SUBJECT(1)] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
-						"<span class='italics'>You hear a heavy electrical crack.</span>" \
+						"<span class='italics'>You hear a heavy electrical crack.</span>", \
+						subjects=list(L) \
 					)
 				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

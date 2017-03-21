@@ -63,26 +63,26 @@
 
 			if(S.ignore_clothes || get_location_accessible(M, selected_zone))
 				var/datum/surgery/procedure = new S.type(M, selected_zone, affecting)
-				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
-					"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] drapes [I] over [IDENTITY_SUBJECT(2)]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
+					"<span class='notice'>You drape [I] over [IDENTITY_SUBJECT(2)]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>", subjects=list(user, M))
 
 				add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
 			else
-				to_chat(user, "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>")
+				to_chat(user, "<span class='warning'>You need to expose [IDENTITY_SUBJECT(1)]'s [parse_zone(selected_zone)] first!</span>", list(M))
 
 	else if(!current_surgery.step_in_progress)
 		if(current_surgery.status == 1)
 			M.surgeries -= current_surgery
-			user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-				"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] removes the drapes from [IDENTITY_SUBJECT(2)]'s [parse_zone(selected_zone)].", \
+				"<span class='notice'>You remove the drapes from [IDENTITY_SUBJECT(2)]'s [parse_zone(selected_zone)].</span>", subjects=list(user, M))
 			qdel(current_surgery)
 		else if(istype(user.get_inactive_held_item(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
 			M.surgeries -= current_surgery
-			user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] mends the incision and removes the drapes from [IDENTITY_SUBJECT(2)]'s [parse_zone(selected_zone)].", \
+				"<span class='notice'>You mend the incision and remove the drapes from [IDENTITY_SUBJECT(2)]'s [parse_zone(selected_zone)].</span>", subjects=list(user, M))
 			qdel(current_surgery)
 		else if(current_surgery.can_cancel)
-			to_chat(user, "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>")
+			to_chat(user, "<span class='warning'>You need to hold a cautery in inactive hand to stop [IDENTITY_SUBJECT(1)]'s surgery!</span>", list(M))
 
 	return 1
 

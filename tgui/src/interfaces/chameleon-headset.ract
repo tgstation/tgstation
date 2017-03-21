@@ -1,0 +1,38 @@
+<ui-display>
+	<ui-section label='Recording'>
+		<ui-button icon='{{data.recording ? "circle" : "circle-o"}}' style='{{data.recording ? "selected" : null}}' action='togglerecord'>{{data.recording ? null : "Not "}}Recording</ui-button>
+	</ui-section>
+	<ui-section label='Voice Masking'>
+		<ui-button icon='{{data.chosenvoice ? data.voicemasking ? "check-square-o" : "square-o" : "close"}}' style='{{data.chosenvoice ? data.voicemasking ? "selected" : null : "disabled"}}' action='togglevoicemasking'>{{data.voicemasking ? "Ena" : "Disa"}}bled</ui-button>
+	</ui-section>
+	<ui-section label='Selected Voice Signature'>
+		<span>{{data.chosenvoice ? data.pseudonyms[data.chosenvoice] : "None"}}</span>
+	</ui-section>
+	<ui-section>
+		<ui-button icon='{{config.screen == "choosevoice" ? "chevron-down" : "chevron-right"}}' action='tgui:view' params='{"screen": "{{config.screen == "choosevoice" ? "home" : "choosevoice"}}"}'>Captured Voice Signatures</ui-button>
+		{{#if data.speeches && config.screen == "choosevoice"}}
+			<ui-display>
+				{{#each data.speeches:voiceref}}
+					<ui-button icon='{{data.selectedvoice == voiceref ? "chevron-down" : "chevron-right"}}' action='selectvoice' params='{"voice": "{{voiceref}}"}'>{{data.pseudonyms[voiceref]}}</ui-button>
+					<ui-button icon='{{data.chosenvoice == voiceref ? "check-square-o" : "square-o"}}' style='{{data.chosenvoice == voiceref ? "selected" : null}}' action='usevoice' params='{"voice": "{{voiceref}}"}'/>
+					{{#if data.selectedvoice == voiceref}}
+						<ui-section>
+							<ui-button icon='trash' action='deletevoice' params='{"voice": "{{voiceref}}"}'>Delete</ui-button> 
+						</ui-section>
+						<ui-display>
+							<table>
+								{{#each .}}
+									<tr>
+										<span class='content'>"{{.}}"</span>
+									</tr>
+								{{/each}}
+							</table>
+						</ui-display>
+					{{/if}}
+				{{/each}}
+				<ui-notice>Random names assigned for convenience.</ui-notice>
+			</ui-display>
+		{{/if}}
+		<ui-button icon='trash' action='clearvoices'>Clear Voice Signatures</ui-button>
+	</ui-section>
+</ui-display>

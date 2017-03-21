@@ -10,8 +10,8 @@
 /obj/item/weapon/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
 	if(status && user.disabilities & CLUMSY && prob(50))
-		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
-							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] accidentally hits themself with [src]!</span>", \
+							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>", subjects=list(user))
 		if(do_teleport(user, get_turf(user), 50))//honk honk
 			user.Weaken(stunforce*3)
 			deductcharge(hitcost)

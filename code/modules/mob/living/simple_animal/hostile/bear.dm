@@ -86,7 +86,7 @@
 	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
 		var/mob/living/simple_animal/hostile/bear/A = target
 		if(A.armored)
-			to_chat(user, "<span class='warning'>[A] has already been armored up!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] has already been armored up!</span>", list(A))
 			return
 		A.armored = TRUE
 		A.maxHealth += 60
@@ -95,7 +95,7 @@
 		A.melee_damage_lower += 5
 		A.melee_damage_upper += 5
 		A.update_icons()
-		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
+		to_chat(user, "<span class='info'>You strap the armor plating to [IDENTITY_SUBJECT(1)] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>", list(A))
 		qdel(src)
 
 

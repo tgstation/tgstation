@@ -91,23 +91,23 @@ var/global/mulebot_count = 0
 		var/obj/item/weapon/stock_parts/cell/C = I
 		C.loc = src
 		cell = C
-		visible_message("[user] inserts a cell into [src].",
-						"<span class='notice'>You insert the new cell into [src].</span>")
+		visible_message("[IDENTITY_SUBJECT(1)] inserts a cell into [IDENTITY_SUBJECT(2)].",
+						"<span class='notice'>You insert the new cell into [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, src))
 	else if(istype(I, /obj/item/weapon/crowbar) && open && cell)
 		cell.add_fingerprint(usr)
 		cell.loc = loc
 		cell = null
-		visible_message("[user] crowbars out the power cell from [src].",
-						"<span class='notice'>You pry the powercell out of [src].</span>")
+		visible_message("[IDENTITY_SUBJECT(1)] crowbars out the power cell from [IDENTITY_SUBJECT(2)].",
+						"<span class='notice'>You pry the powercell out of [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, src))
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1 + I.force * 2))
 			unload(0)
-			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>",
-									"<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
+			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] knocks [IDENTITY_SUBJECT(2)] off [IDENTITY_SUBJECT(3)] with \the [I]!</span>",
+									"<span class='danger'>You knock [IDENTITY_SUBJECT(2)] off [IDENTITY_SUBJECT(3)] with \the [I]!</span>", subjects=list(user, load, src))
 		else
-			to_chat(user, "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>")
+			to_chat(user, "<span class='warning'>You hit [IDENTITY_SUBJECT(1)] with \the [I] but to no effect!</span>", list(src))
 			..()
 	else
 		..()
@@ -119,7 +119,7 @@ var/global/mulebot_count = 0
 		emagged = 1
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [IDENTITY_SUBJECT(1)]'s controls!</span>", list(src))
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
@@ -153,7 +153,7 @@ var/global/mulebot_count = 0
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
-			visible_message("<span class='danger'>Something shorts out inside [src]!</span>")
+			visible_message("<span class='danger'>Something shorts out inside [IDENTITY_SUBJECT(1)]!</span>", subjects=list(src))
 			wires.cut_random()
 
 /mob/living/simple_animal/bot/mulebot/interact(mob/user)
@@ -209,7 +209,7 @@ var/global/mulebot_count = 0
 				turn_off()
 			else if(cell && !open)
 				if(!turn_on())
-					to_chat(usr, "<span class='warning'>You can't switch on [src]!</span>")
+					to_chat(usr, "<span class='warning'>You can't switch on [IDENTITY_SUBJECT(1)]!</span>", list(src))
 					return
 			. = TRUE
 		else
@@ -314,13 +314,13 @@ var/global/mulebot_count = 0
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
 		if(SIGH)
-			audible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			audible_message("[IDENTITY_SUBJECT(1)] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>", subjects=list(src))
 			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		if(ANNOYED)
-			audible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			audible_message("[IDENTITY_SUBJECT(1)] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>", subjects=list(src))
 			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		if(DELIGHT)
-			audible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
+			audible_message("[IDENTITY_SUBJECT(1)] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>", subjects=list(src))
 			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 
@@ -591,14 +591,14 @@ var/global/mulebot_count = 0
 /mob/living/simple_animal/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_channel = "Supply" //Supply channel
-		audible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
+		audible_message("[IDENTITY_SUBJECT(1)] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>", subjects=list(src))
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
 
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				to_chat(calling_ai, "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>")
+				to_chat(calling_ai, "<span class='notice'>\icon[src] [IDENTITY_SUBJECT(1)] wirelessly plays a chiming sound!</span>", list(src))
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.
@@ -639,11 +639,11 @@ var/global/mulebot_count = 0
 		var/mob/M = obs
 		if(ismob(M))
 			if(iscyborg(M))
-				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] bumps into [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M))
 			else
 				if(!paicard)
 					add_logs(src, M, "knocked down")
-					visible_message("<span class='danger'>[src] knocks over [M]!</span>")
+					visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] knocks over [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, M))
 					M.stop_pulling()
 					M.Stun(8)
 					M.Weaken(5)
@@ -653,8 +653,8 @@ var/global/mulebot_count = 0
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
-	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
-					"<span class='userdanger'>[src] drives over you!<span>")
+	H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] drives over [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] drives over you!<span>", subjects=list(src, H))
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
@@ -709,7 +709,7 @@ var/global/mulebot_count = 0
 
 
 /mob/living/simple_animal/bot/mulebot/explode()
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[IDENTITY_SUBJECT(1)] blows apart!</span>", subjects=list(src))
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
@@ -747,7 +747,7 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
 	if(..())
-		visible_message("[src] safeties are locked on.")
+		visible_message("[IDENTITY_SUBJECT(1)] safeties are locked on.", subjects=list(src))
 
 #undef SIGH
 #undef ANNOYED

@@ -70,24 +70,28 @@
 	if(src.broken > 0)
 		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
-				"[user] starts to fix part of the microwave.", \
-				"<span class='notice'>You start to fix part of the microwave...</span>" \
+				"[IDENTITY_SUBJECT(1)] starts to fix part of the microwave.", \
+				"<span class='notice'>You start to fix part of the microwave...</span>", \
+				subjects=list(user) \
 			)
 			if (do_after(user,20*O.toolspeed, target = src))
 				user.visible_message( \
-					"[user] fixes part of the microwave.", \
-					"<span class='notice'>You fix part of the microwave.</span>" \
+					"[IDENTITY_SUBJECT(1)] fixes part of the microwave.", \
+					"<span class='notice'>You fix part of the microwave.</span>", \
+					subjects=list(user) \
 				)
 				src.broken = 1 // Fix it a bit
 		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the wrench
 			user.visible_message( \
-				"[user] starts to fix part of the microwave.", \
-				"<span class='notice'>You start to fix part of the microwave...</span>" \
+				"[IDENTITY_SUBJECT(1)] starts to fix part of the microwave.", \
+				"<span class='notice'>You start to fix part of the microwave...</span>", \
+				subjects=list(user) \
 			)
 			if (do_after(user,20*O.toolspeed, target = src))
 				user.visible_message( \
-					"[user] fixes the microwave.", \
-					"<span class='notice'>You fix the microwave.</span>" \
+					"[IDENTITY_SUBJECT(1)] fixes the microwave.", \
+					"<span class='notice'>You fix the microwave.</span>", \
+					subjects=list(user) \
 				)
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
@@ -103,9 +107,8 @@
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message( \
-				"[user] has cleaned the microwave.", \
-				"<span class='notice'>You clean the microwave.</span>" \
-			)
+				"[IDENTITY_SUBJECT(1)] has cleaned the microwave.", \
+				"<span class='notice'>You clean the microwave.</span>", subjects=list(user))
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
@@ -119,14 +122,12 @@
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
 		var/obj/item/weapon/soap/P = O
 		user.visible_message( \
-			"[user] starts to clean the microwave.", \
-			"<span class='notice'>You start to clean the microwave...</span>" \
-		)
+			"[IDENTITY_SUBJECT(1)] starts to clean the microwave.", \
+			"<span class='notice'>You start to clean the microwave...</span>", subjects=list(user))
 		if (do_after(user, P.cleanspeed, target = src))
 			user.visible_message( \
-				"[user] has cleaned the microwave.", \
-				"<span class='notice'>You clean the microwave.</span>" \
-			)
+				"[IDENTITY_SUBJECT(1)] has cleaned the microwave.", \
+				"<span class='notice'>You clean the microwave.</span>", subjects=list(user))
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
@@ -161,8 +162,8 @@
 
 			O.loc = src
 			user.visible_message( \
-				"[user] has added \the [O] to \the [src].", \
-				"<span class='notice'>You add \the [O] to \the [src].</span>")
+				"[IDENTITY_SUBJECT(1)] has added \the [O] to \the [src].", \
+				"<span class='notice'>You add \the [O] to \the [src].</span>", subjects=list(user))
 
 	else
 		..()

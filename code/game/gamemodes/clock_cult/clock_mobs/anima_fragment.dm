@@ -41,8 +41,8 @@
 		stat(null, "Movement delay(seconds): [max(round((movement_delay_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/living/simple_animal/hostile/clockwork/fragment/death(gibbed)
-	visible_message("<span class='warning'>[src]'s flame jets cut out as it falls to the floor with a tremendous crash.</span>", \
-	"<span class='userdanger'>Your gears seize up. Your flame jets flicker out. Your soul vessel belches smoke as you helplessly crash down.</span>")
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s flame jets cut out as it falls to the floor with a tremendous crash.</span>", \
+	"<span class='userdanger'>Your gears seize up. Your flame jets flicker out. Your soul vessel belches smoke as you helplessly crash down.</span>", subjects=list(src))
 	..()
 
 /mob/living/simple_animal/hostile/clockwork/fragment/Process_Spacemove(movement_dir = 0)

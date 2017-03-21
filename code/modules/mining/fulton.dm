@@ -57,9 +57,9 @@ var/list/total_extraction_beacons = list()
 			return
 		if(A.anchored)
 			return
-		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
+		to_chat(user, "<span class='notice'>You start attaching the pack to [IDENTITY_SUBJECT(1)]...</span>", list(A))
 		if(do_after(user,50,target=A))
-			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
+			to_chat(user, "<span class='notice'>You attach the pack to [IDENTITY_SUBJECT(1)] and activate it.</span>", list(A))
 			if(loc == user || istype(user.back, /obj/item/weapon/storage/backpack))
 				var/obj/item/weapon/storage/backpack/B = user.back
 				if(B.can_be_inserted(src,stop_messages = 1))

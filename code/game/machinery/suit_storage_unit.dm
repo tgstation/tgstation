@@ -191,17 +191,17 @@
 		return
 
 	if(target == user)
-		user.visible_message("<span class='warning'>[user] starts squeezing into [src]!</span>", "<span class='notice'>You start working your way into [src]...</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] starts squeezing into [src]!</span>", "<span class='notice'>You start working your way into [src]...</span>", subjects=list(user))
 	else
-		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
+		target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] starts shoving [IDENTITY_SUBJECT(2)] into [src]!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] starts shoving you into [src]!</span>", subjects=list(user, target))
 
 	if(do_mob(user, target, 30))
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
-			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>", subjects=list(user))
 		else
-			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
+			target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] pushes [IDENTITY_SUBJECT(2)] into [src] and shuts its door!<span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] shoves you into [src] and shuts the door!</span>", subjects=list(user, target))
 		close_machine(target)
 		add_fingerprint(user)
 
@@ -263,7 +263,7 @@
 /obj/machinery/suit_storage_unit/container_resist(mob/living/user)
 	add_fingerprint(user)
 	if(locked)
-		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
+		visible_message("<span class='notice'>You see [IDENTITY_SUBJECT(1)] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>", subjects=list(user))
 		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
 		open_machine()
@@ -271,7 +271,7 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
-		visible_message("<span class='notice'>You see [user] bursts out of [src]!</span>", "<span class='notice'>You escape the cramped confines of [src]!</span>")
+		visible_message("<span class='notice'>You see [IDENTITY_SUBJECT(1)] bursts out of [src]!</span>", "<span class='notice'>You escape the cramped confines of [src]!</span>", subjects=list(user))
 		open_machine()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
@@ -306,7 +306,7 @@
 			storage = I
 
 		I.loc = src
-		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>", subjects=list(user))
 		update_icon()
 		return
 

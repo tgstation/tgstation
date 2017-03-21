@@ -96,13 +96,13 @@
 		return
 	var/mob/living/carbon/human/C = hit_atom
 	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s headgear blocks the sand!</span>", subjects=list(C))
 		return
 	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s mask blocks the sand!</span>", subjects=list(C))
 		return
 	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s glasses block the sand!</span>", subjects=list(C))
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
@@ -196,7 +196,7 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
-		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>", subjects=list(user))
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
@@ -258,7 +258,7 @@
 		else if(triggered_by == 2)
 			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [key_name(attacher)].")
 		else
-			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>", subjects=list(user))
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
@@ -423,6 +423,6 @@
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
+			user.visible_message("[IDENTITY_SUBJECT(1)] has flipped [src]. It lands on [coinflip].", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-							 "<span class='italics'>You hear the clattering of loose change.</span>")
+							 "<span class='italics'>You hear the clattering of loose change.</span>", subjects=list(user))

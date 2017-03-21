@@ -243,7 +243,8 @@
 				if(mut == UE_CHANGED)
 					if(dna.previous["name"])
 						real_name = dna.previous["name"]
-						name = real_name
+						if(!name_locked)
+							name = real_name
 						dna.previous.Remove("name")
 					if(dna.previous["UE"])
 						dna.unique_enzymes = dna.previous["UE"]
@@ -251,6 +252,9 @@
 					if(dna.previous["blood_type"])
 						dna.blood_type = dna.previous["blood_type"]
 						dna.previous.Remove("blood_type")
+					if(dna.previous["voiceprint"])
+						voiceprint = dna.previous["voiceprint"]
+						dna.previous.Remove("voiceprint")
 					dna.temporary_mutations.Remove(mut)
 					continue
 				HM = mutations_list[mut]

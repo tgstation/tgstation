@@ -151,5 +151,5 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] explodes into a shower of gibs!</span>", subjects=list(M))
 		M.gib()

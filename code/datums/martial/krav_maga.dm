@@ -12,7 +12,7 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>")
 		return
-	owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>", subjects=list(owner))
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "neck_chop"
 
@@ -24,7 +24,7 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>")
 		return
-	owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>", subjects=list(owner))
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "leg_sweep"
 
@@ -36,7 +36,7 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>")
 		return
-	owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>", subjects=list(owner))
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "quick_choke"//internal name for lung punch
 
@@ -74,8 +74,8 @@
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(D.stat || D.weakened)
 		return 0
-	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
-					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
+	D.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] leg sweeps [IDENTITY_SUBJECT(2)]!</span>", \
+					  	"<span class='userdanger'>[IDENTITY_SUBJECT(1)] leg sweeps you!</span>", subjects=list(A, D))
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
 	D.Weaken(2)
@@ -83,8 +83,8 @@
 	return 1
 
 /datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
-	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
-				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>")
+	D.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] pounds [IDENTITY_SUBJECT(2)] on the chest!</span>", \
+				  	"<span class='userdanger'>[IDENTITY_SUBJECT(1)] slams your chest! You can't breathe!</span>", subjects=list(A, D))
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	if(D.losebreath <= 10)
 		D.losebreath = Clamp(D.losebreath + 5, 0, 10)
@@ -93,8 +93,8 @@
 	return 1
 
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
-				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
+	D.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] karate chops [IDENTITY_SUBJECT(2)]'s neck!</span>", \
+				  	"<span class='userdanger'>[IDENTITY_SUBJECT(1)] karate chops your neck, rendering you unable to speak!</span>", subjects=list(A, D))
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
 	if(D.silent <= 10)
@@ -124,8 +124,8 @@
 	else
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		playsound(get_turf(D), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
-					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
+	D.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] [picked_hit_type] [IDENTITY_SUBJECT(2)]!</span>", \
+					  "<span class='userdanger'>[IDENTITY_SUBJECT(1)] [picked_hit_type] you!</span>", subjects=list(A, D))
 	add_logs(A, D, "[picked_hit_type] with Krav Maga")
 	return 1
 
@@ -137,12 +137,12 @@
 		if(I)
 			if(D.drop_item())
 				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
-							"<span class='userdanger'>[A] has disarmed [D]!</span>")
+		D.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has disarmed [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has disarmed [IDENTITY_SUBJECT(2)]!</span>", subjects=list(A, D))
 		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	else
-		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
-							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
+		D.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attempted to disarm [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] attempted to disarm [IDENTITY_SUBJECT(2)]!</span>", subjects=list(A, D))
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with krav maga")
 	return 1

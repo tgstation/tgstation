@@ -33,7 +33,7 @@
 			to_chat(user, "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>")
 		else
 			playsound(src, I.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>", subjects=list(user))
 			if(do_after(user, 30*I.toolspeed, target = src) && !anchored)
 				to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 				deconstruct(TRUE)

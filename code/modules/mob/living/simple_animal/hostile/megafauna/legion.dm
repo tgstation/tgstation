@@ -172,8 +172,8 @@ Difficulty: Medium
 			if(A.stage == WIND_DOWN_STAGE)
 				to_chat(user, "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>")
 				return
-			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
-			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] holds [src] skywards as an orange beam travels into the sky!</span>", \
+			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>", subjects=list(user))
 			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
 			A.wind_down()
 			return
@@ -185,8 +185,8 @@ Difficulty: Medium
 		A.telegraph_duration = 100
 		A.end_duration = 100
 
-	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
-	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] holds [src] skywards as red lightning crackles into the sky!</span>", \
+	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>", subjects=list(user))
 	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200

@@ -33,7 +33,7 @@
 
 /obj/item/weapon/paperplane/suicide_act(mob/user)
 	user.Stun(10)
-	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
 	sleep(10)
@@ -67,8 +67,8 @@
 
 	else if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
-				"<span class='userdanger'>You miss the [src] and accidentally light yourself on fire!</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] accidentally ignites themselves!</span>", \
+				"<span class='userdanger'>You miss the [src] and accidentally light yourself on fire!</span>", subjects=list(user))
 			user.dropItemToGround(P)
 			user.adjust_fire_stacks(1)
 			user.IgniteMob()
@@ -77,7 +77,7 @@
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
 		user.dropItemToGround(src)
-		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>", subjects=list(user))
 		fire_act()
 
 	add_fingerprint(user)
@@ -93,7 +93,7 @@
 	if(prob(2))
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			return
-		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
+		visible_message("<span class='danger'>\The [src] hits [IDENTITY_SUBJECT(1)] in the eye!</span>", subjects=list(H))
 		H.adjust_blurriness(6)
 		H.adjust_eye_damage(rand(6,8))
 		H.Weaken(2)

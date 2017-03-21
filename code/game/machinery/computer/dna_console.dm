@@ -371,6 +371,7 @@
 					"SE"=viable_occupant.dna.struc_enzymes,
 					"UE"=viable_occupant.dna.unique_enzymes,
 					"name"=viable_occupant.real_name,
+					"voiceprint"=viable_occupant.dna.voiceprint,
 					"blood_type"=viable_occupant.dna.blood_type
 					)
 		if("clearbuffer")
@@ -430,12 +431,16 @@
 							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 								I = new /obj/item/weapon/dnainjector/timed(loc)
 								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+								if(buffer_slot["voiceprint"])
+									I.fields["voiceprint"] = buffer_slot["voiceprint"]
 								if(connected)
 									I.damage_coeff  = connected.damage_coeff
 						if("mixed")
 							if(buffer_slot["UI"] && buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 								I = new /obj/item/weapon/dnainjector/timed(loc)
 								I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+								if(buffer_slot["voiceprint"])
+									I.fields["voiceprint"] = buffer_slot["voiceprint"]
 								if(connected)
 									I.damage_coeff = connected.damage_coeff
 					if(I)
@@ -563,6 +568,8 @@
 					viable_occupant.name = buffer_slot["name"]
 					viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
+					if(buffer_slot["voiceprint"])
+						viable_occupant.voiceprint = buffer_slot["voiceprint"]
 			if(SCANNER_ACTION_MIXED)
 				if(buffer_slot["UI"])
 					viable_occupant.dna.uni_identity = buffer_slot["UI"]
@@ -572,6 +579,8 @@
 					viable_occupant.name = buffer_slot["name"]
 					viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
+					if(buffer_slot["voiceprint"])
+						viable_occupant.voiceprint = buffer_slot["voiceprint"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
 	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")

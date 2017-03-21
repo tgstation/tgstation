@@ -53,7 +53,6 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja/cloak(get_turf(M), M.dir)
-		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.cut_overlays()
@@ -67,7 +66,6 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(M), M.dir)
-		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
 
@@ -170,20 +168,20 @@
 		if(GIZMO_MARK)
 			mark(target, user)
 
-/obj/item/device/abductor/gizmo/proc/scan(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/scan(mob/living/carbon/human/target, mob/living/user)
 	if(ishuman(target))
 		if(console!=null)
 			console.AddSnapshot(target)
-			to_chat(user, "<span class='notice'>You scan [target] and add them to the database.</span>")
+			to_chat(user, "<span class='notice'>You scan [target.real_name] and add them to the database.</span>")
 
-/obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/mark(mob/living/carbon/human/target, mob/living/user)
 	if(marked == target)
 		to_chat(user, "<span class='warning'>This specimen is already marked!</span>")
 		return
 	if(ishuman(target))
 		if(isabductor(target))
 			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
+			to_chat(user, "<span class='notice'>You mark [target.real_name] for future retrieval.</span>")
 		else
 			prepare(target,user)
 	else
@@ -193,10 +191,10 @@
 	if(get_dist(target,user)>1)
 		to_chat(user, "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>")
 		return
-	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
+	to_chat(user, "<span class='notice'>You begin preparing [IDENTITY_SUBJECT(1)] for transport...</span>", list(target))
 	if(do_after(user, 100, target = target))
 		marked = target
-		to_chat(user, "<span class='notice'>You finish preparing [target] for transport.</span>")
+		to_chat(user, "<span class='notice'>You finish preparing [IDENTITY_SUBJECT(1)] for transport.</span>", list(target))
 
 
 /obj/item/device/abductor/silencer
@@ -383,8 +381,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	L.Weaken(7)
 	L.apply_effect(STUTTER, 7)
 
-	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+	L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has stunned [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has stunned you with [src]!</span>", subjects=list(user, L))
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
@@ -395,16 +393,16 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.stunned || L.sleeping)
-		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
-							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
+		L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has induced sleep in [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+							"<span class='userdanger'>You suddenly feel very drowsy!</span>", subjects=list(user, L))
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 		L.Sleeping(60)
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
 		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
-		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
-							"<span class='userdanger'>You suddenly feel drowsy!</span>")
+		L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] tried to induce sleep in [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+							"<span class='userdanger'>You suddenly feel drowsy!</span>", subjects=list(user, L))
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
 	if(!iscarbon(L))
@@ -413,22 +411,22 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
-									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
+			C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] begins restraining [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] begins shaping an energy field around your hands!</span>", subjects=list(user, C))
 			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
-					to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+					to_chat(user, "<span class='notice'>You handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 					add_logs(user, C, "handcuffed")
 			else
-				to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
+				to_chat(user, "<span class='warning'>You fail to handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 		else
-			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't have two hands...</span>", list(C))
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
-	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
-						"<span class='userdanger'>[user] probes you!</span>")
+	L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] probes [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] probes you!</span>", subjects=list(user, L))
 
 	var/species = "<span class='warning'>Unknown species</span>"
 	var/helptext = "<span class='warning'>Species unsuitable for experiments.</span>"
@@ -460,8 +458,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	flags = DROPDEL
 
 /obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
-							"<span class='userdanger'>[user]'s [src] break in a discharge of energy!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s [src] break in a discharge of energy!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)]'s [src] break in a discharge of energy!</span>", subjects=list(user))
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
 	S.start()
@@ -648,8 +646,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
-								"You start to disassemble the airlock assembly...")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disassembles the airlock assembly.</span>", \
+								"You start to disassemble the airlock assembly...", subjects=list(user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )

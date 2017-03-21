@@ -17,14 +17,14 @@
 								 "recognizer",
 								 "voice sensor")
 
-/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(speaker == src)
 		return
 
 	if(listening && !radio_freq)
 		record_speech(speaker, raw_message)
 	else
-		if(check_activation(speaker, raw_message))
+		if(check_activation(speaker, raw_message, voice_print))
 			spawn(10)
 				pulse(0)
 
@@ -39,7 +39,8 @@
 			listening = 0
 			say("Activation message is '[recorded]'.")
 		if(3)
-			recorded = speaker.GetVoice()
+			var/voice_print = speaker.get_voiceprint()
+			recorded = voice_print ? voice_print : speaker.GetVoice()
 			listening = 0
 			say("Your voice pattern is saved.")
 		if(4)
@@ -47,7 +48,7 @@
 				spawn(10)
 					pulse(0)
 
-/obj/item/device/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
+/obj/item/device/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message, voice_print)
 	. = 0
 	switch(mode)
 		if(1)
@@ -57,7 +58,7 @@
 			if(raw_message == recorded)
 				. = 1
 		if(3)
-			if(speaker.GetVoice() == recorded)
+			if(speaker.GetVoice() == recorded || voice_print == recorded)
 				. = 1
 		if(4)
 			if(length(raw_message))

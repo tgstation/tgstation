@@ -19,7 +19,7 @@
 	return ..()
 
 /obj/item/device/instrument/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 /obj/item/device/instrument/Initialize(mapload)

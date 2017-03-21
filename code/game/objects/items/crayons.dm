@@ -69,7 +69,7 @@
 	var/post_noise = FALSE
 
 /obj/item/toy/crayon/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/New()
@@ -568,11 +568,11 @@
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
-		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!</span>", subjects=list(user))
 		user.say("MEDIOCRE!!")
 		return SHAME
 	else
-		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>", subjects=list(user))
 		user.say("WITNESS ME!!")
 		if(pre_noise || post_noise)
 			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
@@ -623,8 +623,8 @@
 			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
 
 		var/mob/living/carbon/C = target
-		user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
-		to_chat(target, "<span class='userdanger'>[user] sprays [src] into your face!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] sprays [src] into the face of [IDENTITY_SUBJECT(2)]!</span>", \
+		"<span class='userdanger'>[IDENTITY_SUBJECT(1)] sprays [src] into your face!</span>", subjects=list(user, target))
 
 		if(C.client)
 			C.blur_eyes(3)

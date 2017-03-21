@@ -46,5 +46,5 @@
 	to_chat(owner, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>")
 	owner.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(!silent_update)
-		owner.visible_message("<span class='big'>[owner] looks like [owner.p_they()] just reverted to their old faith!</span>")
+		owner.visible_message("<span class='big'>[IDENTITY_SUBJECT(1)] looks like [owner.p_they()] just reverted to their old faith!</span>", subjects=list(owner))
 	..()

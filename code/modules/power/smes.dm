@@ -159,8 +159,8 @@
 
 			C.use(10)
 			user.visible_message(\
-				"[user.name] has built a power terminal.",\
-				"<span class='notice'>You build the power terminal.</span>")
+				"[IDENTITY_SUBJECT(1)] has built a power terminal.",\
+				"<span class='notice'>You build the power terminal.</span>", subjects=list(user))
 
 			//build the terminal and link it to the network
 			make_terminal(T)

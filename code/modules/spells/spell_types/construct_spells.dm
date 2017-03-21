@@ -174,7 +174,7 @@
 	var/mob/living/carbon/target = targets[1]
 
 	if(!(target in oview(range)))
-		to_chat(user, "<span class='notice'>[target] is too far away!</span>")
+		to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] is too far away!</span>", list(target))
 		revert_cast()
 		return
 
@@ -214,22 +214,22 @@
 	var/mob/living/simple_animal/S = targets[1]
 
 	if(S.ckey)
-		to_chat(user, "<span class='warning'>[S] is too intelligent to dominate!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is too intelligent to dominate!</span>", list(S))
 		revert_cast()
 		return
 
 	if(S.stat)
-		to_chat(user, "<span class='warning'>[S] is dead!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is dead!</span>", list(S))
 		revert_cast()
 		return
 
 	if(S.sentience_type != SENTIENCE_ORGANIC)
-		to_chat(user, "<span class='warning'>[S] cannot be dominated!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] cannot be dominated!</span>", list(S))
 		revert_cast()
 		return
 
 	if(!(S in oview(range)))
-		to_chat(user, "<span class='notice'>[S] is too far away!</span>")
+		to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] is too far away!</span>", list(S))
 		revert_cast()
 		return
 

@@ -60,7 +60,7 @@
 		return
 
 	if(attached)
-		visible_message("<span class='warning'>[attached] is detached from \the [src].</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is detached from \the [src].</span>", subjects=list(attached))
 		attached = null
 		update_icon()
 		return
@@ -71,7 +71,7 @@
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
-			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
+			usr.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] attaches \the [src] to \the [IDENTITY_SUBJECT(2)].</span>", "<span class='notice'>You attach \the [src] to \the [IDENTITY_SUBJECT(2)].</span>", subjects=list(usr, target))
 			attached = target
 			START_PROCESSING(SSmachine, src)
 			update_icon()
@@ -144,7 +144,7 @@
 	if(!ishuman(user))
 		return
 	if(attached)
-		visible_message("[attached] is detached from \the [src]")
+		visible_message("[IDENTITY_SUBJECT(1)] is detached from \the [src]", subjects=list(attached))
 		attached = null
 		update_icon()
 		return

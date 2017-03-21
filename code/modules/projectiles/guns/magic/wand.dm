@@ -48,7 +48,7 @@
 
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user)
-	user.visible_message("<span class='danger'>[user] zaps [user.p_them()]self with [src].</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] zaps [user.p_them()]self with [src].</span>", subjects=list(user))
 	playsound(user, fire_sound, 50, 1)
 	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", INDIVIDUAL_ATTACK_LOG)
 

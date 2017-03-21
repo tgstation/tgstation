@@ -133,8 +133,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(summoner.stat == DEAD)
 			forceMove(summoner.loc)
 			to_chat(src, "<span class='danger'>Your summoner has died!</span>")
-			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
-			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
+			visible_message("<span class='danger'><B>\The [IDENTITY_SUBJECT(1)] dies along with its user!</B></span>", subjects=list(src))
+			summoner.visible_message("<span class='danger'><B>[IDENTITY_SUBJECT(1)]'s body is completely consumed by the strain of sustaining [IDENTITY_SUBJECT(2)]!</B></span>", subjects=list(summoner, src))
 			for(var/obj/item/W in summoner)
 				if(!summoner.dropItemToGround(W))
 					qdel(W)
@@ -143,7 +143,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			qdel(src)
 	else
 		to_chat(src, "<span class='danger'>Your summoner has died!</span>")
-		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
+		visible_message("<span class='danger'><B>The [IDENTITY_SUBJECT(1)] dies along with its user!</B></span>", subjects=list(src))
 		death(TRUE)
 		qdel(src)
 	snapback()
@@ -171,7 +171,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			return
 		else
 			to_chat(src, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>")
-			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
+			visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] jumps back to its user.</span>", subjects=list(src))
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
@@ -194,7 +194,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	drop_all_held_items()
 	..()
 	if(summoner)
-		to_chat(summoner, "<span class='danger'><B>Your [name] died somehow!</span></B>")
+		to_chat(summoner, "<span class='danger'><B>Your [real_name] died somehow!</span></B>")
 		summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
@@ -213,10 +213,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			return FALSE
 		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
-			to_chat(summoner, "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>")
-			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
+			to_chat(summoner, "<span class='danger'><B>Your [real_name] is under attack! You take damage!</span></B>")
+			summoner.visible_message("<span class='danger'><B>Blood sprays from [IDENTITY_SUBJECT(1)] as [IDENTITY_SUBJECT(2)] takes damage!</B></span>", subjects=list(summoner, src))
 			if(summoner.stat == UNCONSCIOUS)
-				to_chat(summoner, "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>")
+				to_chat(summoner, "<span class='danger'><B>Your body can't take the strain of sustaining [src.real_name] in this condition, it begins to fall apart!</span></B>")
 				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
@@ -232,7 +232,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
-		to_chat(summoner, "<span class='danger'><B>Your [src] was blown up!</span></B>")
+		to_chat(summoner, "<span class='danger'><B>Your [real_name] was blown up!</span></B>")
 		summoner.gib()
 	ghostize()
 	qdel(src)
@@ -361,7 +361,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			return
 
 		var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
-		var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
+		var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src.real_name]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
 		to_chat(summoner, my_message)
 		var/list/guardians = summoner.hasparasites()
@@ -382,13 +382,13 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return
 
 	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
-	var/my_message = "<span class='holoparasitebold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
+	var/my_message = "<span class='holoparasitebold'><i>[src.real_name]:</i> [preliminary_message]</span>" //add source, color source with default grey...
 
 	to_chat(src, my_message)
 	var/list/guardians = hasparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
-		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" )
+		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src.real_name]:</i></b></font> [preliminary_message]" )
 	for(var/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")

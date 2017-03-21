@@ -93,7 +93,7 @@
 			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
-					user.visible_message("[user] disassembles the windoor assembly.", "<span class='notice'>You start to disassemble the windoor assembly...</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] disassembles the windoor assembly.", "<span class='notice'>You start to disassemble the windoor assembly...</span>", subjects=list(user))
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 
 					if(do_after(user, 40*W.toolspeed, target = src))
@@ -115,7 +115,7 @@
 						to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 						return
 				playsound(loc, W.usesound, 100, 1)
-				user.visible_message("[user] secures the windoor assembly to the floor.", "<span class='notice'>You start to secure the windoor assembly to the floor...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the windoor assembly to the floor.", "<span class='notice'>You start to secure the windoor assembly to the floor...</span>", subjects=list(user))
 
 				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || anchored)
@@ -134,7 +134,7 @@
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(istype(W, /obj/item/weapon/wrench) && anchored)
 				playsound(loc, W.usesound, 100, 1)
-				user.visible_message("[user] unsecures the windoor assembly to the floor.", "<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unsecures the windoor assembly to the floor.", "<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>", subjects=list(user))
 
 				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || !anchored)
@@ -191,7 +191,7 @@
 			//Removing wire from the assembly. Step 5 undone.
 			if(istype(W, /obj/item/weapon/wirecutters))
 				playsound(loc, W.usesound, 100, 1)
-				user.visible_message("[user] cuts the wires from the airlock assembly.", "<span class='notice'>You start to cut the wires from airlock assembly...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts the wires from the airlock assembly.", "<span class='notice'>You start to cut the wires from airlock assembly...</span>", subjects=list(user))
 
 				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || state != "02")
@@ -210,7 +210,7 @@
 				if(!user.drop_item())
 					return
 				playsound(loc, W.usesound, 100, 1)
-				user.visible_message("[user] installs the electronics into the airlock assembly.", "<span class='notice'>You start to install electronics into the airlock assembly...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the electronics into the airlock assembly.", "<span class='notice'>You start to install electronics into the airlock assembly...</span>", subjects=list(user))
 				W.loc = src
 
 				if(do_after(user, 40, target = src))
@@ -229,7 +229,7 @@
 					return
 
 				playsound(loc, W.usesound, 100, 1)
-				user.visible_message("[user] removes the electronics from the airlock assembly.", "<span class='notice'>You start to uninstall electronics from the airlock assembly...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the electronics from the airlock assembly.", "<span class='notice'>You start to uninstall electronics from the airlock assembly...</span>", subjects=list(user))
 
 				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || !electronics)
@@ -259,7 +259,7 @@
 					return
 				usr << browse(null, "window=windoor_access")
 				playsound(loc, W.usesound, 100, 1)
-				user.visible_message("[user] pries the windoor into the frame.", "<span class='notice'>You start prying the windoor into the frame...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries the windoor into the frame.", "<span class='notice'>You start prying the windoor into the frame...</span>", subjects=list(user))
 
 				if(do_after(user, 40*W.toolspeed, target = src))
 

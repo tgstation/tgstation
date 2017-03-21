@@ -180,7 +180,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	update_icon("alienh_pounce")
 	if(A == target)
 		target.Weaken(5)
-		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] flails around wildly.</span>","<span class ='userdanger'>[IDENTITY_SUBJECT(2)] pounces on you!</span>", subjects=list(target, src))
 
 /obj/effect/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
@@ -297,7 +297,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				target.staminaloss += 40
 				step_away(target, bubblegum)
 				shake_camera(target, 4, 3)
-				target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
+				target.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>", subjects=list(target))
 			sleep(2)
 		sleep(30)
 		qdel(bubblegum)
@@ -533,6 +533,11 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			clone_weapon = I.name
 			F.weap = I
 
+	if(clone.can_see_face())
+		F.clone_faceprint = clone.get_faceprint()
+
+	F.voiceprint = clone.get_voiceprint()
+
 	F.name = clone.name
 	F.my_target = target
 	F.weapon_name = clone_weapon
@@ -560,6 +565,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/image/currentimage = null
 	var/icon/base = null
 	var/skin_tone
+	var/clone_faceprint
 	var/mob/living/clone = null
 	var/image/left
 	var/image/right
@@ -574,8 +580,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	my_target.playsound_local(src, P.hitsound, 1)
-	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
-							"<span class='danger'>[my_target] has attacked [src]!</span>")
+	my_target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] flails around wildly.</span>", \
+							"<span class='danger'>[IDENTITY_SUBJECT(1)] has attacked [IDENTITY_SUBJECT(2)]!</span>", subjects=list(my_target, src))
 
 	obj_integrity -= P.force
 
@@ -584,7 +590,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
+				to_chat(O, "<span class='danger'>[IDENTITY_SUBJECT(1)] stumbles around.</span>", list(my_target))
 
 /obj/effect/fake_attacker/Initialize(mapload, var/mob/living/carbon/T)
 	..()
@@ -625,7 +631,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(prob(15))
 				if(weapon_name)
 					my_target.playsound_local(my_target, weap.hitsound, weap.get_clamped_volume(), 1)
-					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
+					my_target.show_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has attacked [IDENTITY_SUBJECT(2)] with [weapon_name]!</span>", 1, subjects=list(src, my_target))
 					my_target.staminaloss += 30
 					if(prob(20))
 						my_target.blur_eyes(3)
@@ -634,7 +640,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							fake_blood(my_target)
 				else
 					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1, -1)
-					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
+					my_target.show_message("<span class='userdanger'>[IDENTITY_SUBJECT(1)] has punched [IDENTITY_SUBJECT(2)]!</span>", 1, subjects=list(src, my_target))
 					my_target.staminaloss += 30
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
@@ -718,7 +724,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		people += H
 	if(person) //Basic talk
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		to_chat(target, target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans()))
+		var/voice_print = person.get_voiceprint()
+		var/voiceprint_name = target.get_voiceprint_name(person, voice_print)
+		var/accent = person.accent_from_voiceprint(voice_print)
+		to_chat(target, target.compose_message(person, person.languages_understood, pick(speak_messages), null, person.get_spans(), voiceprint_name, accent))
 		if(target.client)
 			target.client.images |= speech_overlay
 			sleep(30)
@@ -728,7 +737,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		to_chat(target, target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans()))
+		var/voice_print = person.get_voiceprint()
+		var/voiceprint_name = target.get_voiceprint_name(person, voice_print)
+		var/accent = person.accent_from_voiceprint(voice_print)
+		to_chat(target, target.compose_message(person, person.languages_understood, pick(radio_messages), "1459", person.get_spans(), voiceprint_name, accent))
 	qdel(src)
 
 /obj/effect/hallucination/message

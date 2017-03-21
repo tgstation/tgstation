@@ -29,7 +29,7 @@
 				initiate(user, target, target_zone, tool, surgery)
 				return 1
 			else
-				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
+				to_chat(user, "<span class='warning'>You need to expose [IDENTITY_SUBJECT(1)]'s [parse_zone(target_zone)] to perform surgery on it!</span>", list(target))
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
 	if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
 		return 1
@@ -72,15 +72,15 @@
 
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to perform surgery on [target].", "<span class='notice'>You begin to perform surgery on [target]...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to perform surgery on [IDENTITY_SUBJECT(2)].", "<span class='notice'>You begin to perform surgery on [IDENTITY_SUBJECT(2)]...</span>", subjects=list(user, target))
 
 
 /datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] succeeds!", "<span class='notice'>You succeed.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] succeeds!", "<span class='notice'>You succeed.</span>", subjects=list(user))
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] screws up!</span>", "<span class='warning'>You screw up!</span>", subjects=list(user))
 	return 0
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)

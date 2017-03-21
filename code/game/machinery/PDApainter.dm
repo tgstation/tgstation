@@ -84,9 +84,9 @@
 		var/obj/item/weapon/weldingtool/WT = O
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] is repairing [src].", \
+				user.visible_message("[IDENTITY_SUBJECT(1)] is repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
-								"<span class='italics'>You hear welding.</span>")
+								"<span class='italics'>You hear welding.</span>", subjects=list(user))
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))

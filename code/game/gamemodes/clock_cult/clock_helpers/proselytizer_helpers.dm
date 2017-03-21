@@ -94,8 +94,8 @@
 	if(amount_temp >= 20)
 		var/sheets_to_make = round(amount_temp * 0.05) //and 20 to 1 brass
 		var/used = sheets_to_make * 20
-		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
-		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>", subjects=list(user))
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
@@ -112,8 +112,8 @@
 	if(get_amount() >= 10)
 		var/sheets_to_make = round(get_amount() * 0.1)
 		var/used = sheets_to_make * 10
-		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
-		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>", subjects=list(user))
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
@@ -130,8 +130,8 @@
 	if(get_amount() >= 5)
 		var/sheets_to_make = round(get_amount() * 0.2)
 		var/used = sheets_to_make * 5
-		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
-		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>", subjects=list(user))
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
@@ -148,8 +148,8 @@
 	if(get_amount() >= 2)
 		var/sheets_to_make = round(get_amount() * 0.5)
 		var/used = sheets_to_make * 2
-		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
-		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>", subjects=list(user))
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
@@ -269,8 +269,8 @@
 	var/list/repair_values = list()
 	if(!proselytizer.proselytizer_repair_checks(repair_values, src, user))
 		return
-	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts covering [src] in glowing orange energy...</span>", \
-	"<span class='alloy'>You start repairing [src]...</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] starts covering [src] in glowing orange energy...</span>", \
+	"<span class='alloy'>You start repairing [src]...</span>", subjects=list(user))
 	proselytizer.repairing = src
 	while(proselytizer && user && src)
 		if(!do_after(user, repair_values["healing_for_cycle"] * proselytizer.speed_multiplier, target = src, \
@@ -283,16 +283,16 @@
 	if(proselytizer)
 		proselytizer.repairing = null
 		if(user)
-			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with glowing orange energy.</span>", \
-			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] stops covering [src] with glowing orange energy.</span>", \
+			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>", subjects=list(user))
 
 //Proselytizer mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/proselytizer_heal(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/list/repair_values = list()
 	if(!proselytizer.proselytizer_repair_checks(repair_values, src, user))
 		return
-	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
-	"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] starts coverin[src == user ? "g [user.p_them()]" : "g [IDENTITY_SUBJECT(2)]"] in glowing orange energy...</span>", \
+	"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [IDENTITY_SUBJECT(2)]"]...</span>", subjects=list(user, src))
 	proselytizer.repairing = src
 	while(proselytizer && user && src)
 		if(!do_after(user, repair_values["healing_for_cycle"] * proselytizer.speed_multiplier, target = src, \
@@ -320,8 +320,8 @@
 	if(health == maxHealth) //if we're at maximum health, prosel the turf under us
 		return FALSE
 	else if(proselytizer_heal(user, proselytizer) && user)
-		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
-		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[abs(HEALTH_THRESHOLD_DEAD - health)]/[abs(HEALTH_THRESHOLD_DEAD - maxHealth)]</b> health.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [IDENTITY_SUBJECT(2)]"] with glowing orange energy.</span>", \
+		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [IDENTITY_SUBJECT(2)]. [p_they(TRUE)] [p_are()]"] now at <b>[abs(HEALTH_THRESHOLD_DEAD - health)]/[abs(HEALTH_THRESHOLD_DEAD - maxHealth)]</b> health.</span>", subjects=list(user, src))
 
 //Same with clockwork mobs.
 /mob/living/simple_animal/hostile/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -329,8 +329,8 @@
 	if(health == maxHealth) //if we're at maximum health, prosel the turf under us
 		return FALSE
 	else if(proselytizer_heal(user, proselytizer) && user)
-		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
-		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[health]/[maxHealth]</b> health.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [IDENTITY_SUBJECT(2)]"] with glowing orange energy.</span>", \
+		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [IDENTITY_SUBJECT(2)]. [p_they(TRUE)] [p_are()]"] now at <b>[health]/[maxHealth]</b> health.</span>", subjects=list(user, src))
 
 //Cogscarabs get special interaction because they're drones and have innate self-heals/revives.
 /mob/living/simple_animal/drone/cogscarab/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -341,13 +341,13 @@
 	if(health == maxHealth)
 		return FALSE
 	else if(!(flags & GODMODE))
-		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
-		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] starts coverin[src == user ? "g [user.p_them()]" : "g [IDENTITY_SUBJECT(2)]"] in glowing orange energy...</span>", \
+		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [IDENTITY_SUBJECT(2)]"]...</span>", subjects=list(user, src))
 		proselytizer.repairing = src
 		if(do_after(user, (maxHealth - health)*2, target=src))
 			adjustHealth(-maxHealth)
-			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
-			"<span class='alloy'>You finish repairin[src == user ? "g yourself" : "g [src]"].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [IDENTITY_SUBJECT(2)]"] with glowing orange energy.</span>", \
+			"<span class='alloy'>You finish repairin[src == user ? "g yourself" : "g [IDENTITY_SUBJECT(2)]"].</span>", subjects=list(user, src))
 		if(proselytizer)
 			proselytizer.repairing = null
 

@@ -25,7 +25,7 @@ var/global/list/whiteness = list (
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under))
 					var/obj/item/clothing/under/U = H.w_uniform
 					if(whiteness[U.type])
-						src.visible_message("<span class='warning'>[src] seems to have been harmed by the purity of [attacker]'s clothes.</span>", "<span class='notice'>Unsullied white clothing is disrupting your form.</span>")
+						src.visible_message("<span class='warning'>[src] seems to have been harmed by the purity of [IDENTITY_SUBJECT(1)]'s clothes.</span>", "<span class='notice'>Unsullied white clothing is disrupting your form.</span>", subjects=list(attacker))
 						return whiteness[U.type] + 1
 		if(BANE_TOOLBOX)
 			if(istype(weapon,/obj/item/weapon/storage/toolbox))

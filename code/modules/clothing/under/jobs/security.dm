@@ -20,6 +20,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Security Officer"
 
 /obj/item/clothing/under/rank/security/grey
 	name = "grey security jumpsuit"
@@ -40,6 +41,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Warden"
 
 /obj/item/clothing/under/rank/warden/grey
 	name = "grey security suit"
@@ -62,6 +64,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Detective"
 
 /obj/item/clothing/under/rank/det/grey
 	name = "noir suit"
@@ -85,6 +88,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Head of Security"
 
 /obj/item/clothing/under/rank/head_of_security/grey
 	name = "head of security's grey jumpsuit"

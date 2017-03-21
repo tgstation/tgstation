@@ -249,7 +249,7 @@ Class Procs:
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user))
 		take_damage(4, BRUTE, "melee", 1)
 
 
@@ -294,7 +294,7 @@ Class Procs:
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
 		playsound(loc, C.usesound, 50, 1)
-		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>", subjects=list(usr))
 		open_machine()
 		return 1
 

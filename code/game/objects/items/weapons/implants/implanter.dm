@@ -27,7 +27,7 @@
 		return
 	if(user && imp)
 		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
+			M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is attemping to implant [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, M))
 
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_mob(user, M, 50)))
@@ -36,11 +36,11 @@
 					if (M == user)
 						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
-						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
+						M.visible_message("[IDENTITY_SUBJECT(1)] has implanted [IDENTITY_SUBJECT(2)].", "<span class='notice'>[IDENTITY_SUBJECT(1)] implants you.</span>", subjects=list(user, M))
 					imp = null
 					update_icon()
 				else
-					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
+					to_chat(user, "<span class='warning'>[src] fails to implant [IDENTITY_SUBJECT(1)].</span>", subjects=list(M))
 
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))

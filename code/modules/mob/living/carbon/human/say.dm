@@ -1,12 +1,10 @@
-/mob/living/carbon/human/say_quote(input, spans)
-	if(!input)
-		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+/mob/living/carbon/human/say_quote(input, spans, message_mode)
 	verb_say = dna.species.say_mod
+	. = ..()
 	if(src.slurring)
 		input = attach_spans(input, spans)
 		return "slurs, \"[input]\""
 
-	return ..()
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)
@@ -31,18 +29,6 @@
 	return ..() | dna.mutations_get_spans() | dna.species_get_spans()
 
 /mob/living/carbon/human/GetVoice()
-	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
-		var/obj/item/clothing/mask/chameleon/V = wear_mask
-		if(V.vchange && wear_id)
-			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
-			if(istype(idcard))
-				return idcard.registered_name
-			else
-				return real_name
-		else
-			return real_name
-	if(mind && mind.changeling && mind.changeling.mimicing)
-		return mind.changeling.mimicing
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
 	return real_name

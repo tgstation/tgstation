@@ -30,8 +30,8 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(state == GIRDER_DISPLACED)
 			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
-								"<span class='notice'>You start to disassemble the girder...</span>", "You hear clanking and banging noises.")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disassembles the girder.</span>", \
+								"<span class='notice'>You start to disassemble the girder...</span>", "You hear clanking and banging noises.", subjects=list(user))
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if(state != GIRDER_DISPLACED)
 					return
@@ -332,7 +332,7 @@
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/tome) && iscultist(user)) //Cultists can demolish cult girders instantly with their tomes
-		user.visible_message("<span class='warning'>[user] strikes [src] with [W]!</span>", "<span class='notice'>You demolish [src].</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] strikes [src] with [W]!</span>", "<span class='notice'>You demolish [src].</span>", subjects=list(user))
 		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
 		R.amount = 1
 		qdel(src)
@@ -375,11 +375,11 @@
 		if(R.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>")
 			return 0
-		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>", subjects=list(user))
 		if(do_after(user, 50, target = src))
 			if(R.get_amount() < 1 || !R)
 				return
-			user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>", subjects=list(user))
 			R.use(1)
 			var/turf/T = get_turf(src)
 			T.ChangeTurf(/turf/closed/wall/mineral/cult)

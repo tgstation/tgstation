@@ -39,8 +39,8 @@
 		else if (user.mind && (user.mind.assigned_role =="Head of Personnel") || (user.mind.assigned_role == "Centcom Commander"))
 			deconvert = prob (10) // the HoP doesn't have AS much legal training
 	if(deconvert)
-		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
-		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>")
+		M.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] reminds [IDENTITY_SUBJECT(2)] that [IDENTITY_SUBJECT(2)]'s soul was already purchased by Nanotrasen!</span>")
+		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>", subjects=list(user, M))
 		M.return_soul()
 	else
 		if(ishuman(M))
@@ -48,8 +48,8 @@
 			if(!istype(N.head, /obj/item/clothing/head/helmet))
 				N.adjustBrainLoss(10)
 				to_chat(N, "<span class='danger'>You feel dumber.</span>")
-		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
-			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] beats [IDENTITY_SUBJECT(2)] over the head with [src]!</span>", \
+			"<span class='userdanger'>[IDENTITY_SUBJECT(1)] beats [IDENTITY_SUBJECT(2)] over the head with [src]!</span>", subjects=list(user, M))
 	return ..()
 
 
@@ -100,7 +100,7 @@
 	if(signed && (user == target.current) && istype(user,/mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
 		H.forcesay("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!")
-		H.visible_message("<span class='suicide'>[H] holds up a contract claiming [user.p_their()] soul, then immediately catches fire.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		H.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] holds up a contract claiming [user.p_their()] soul, then immediately catches fire.  It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(H))
 		H.adjust_fire_stacks(20)
 		H.IgniteMob()
 		return(FIRELOSS)
@@ -166,14 +166,14 @@
 	else if(istype(P, /obj/item/weapon/stamp))
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>")
 	else if(P.is_hot())
-		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>", subjects=list(user))
 	else
 		return ..()
 
 /obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
 	add_fingerprint(user)
 	if(M == user && target == M.mind && M.mind.soulOwner != owner && attempt_signature(user, 1))
-		user.visible_message("<span class='danger'>[user] slices [user.p_their()] wrist with [src], and scrawls [user.p_their()] name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slices [user.p_their()] wrist with [src], and scrawls [user.p_their()] name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>", subjects=list(user))
 		user.blood_volume = max(user.blood_volume - 100, 0)
 	else
 		return ..()
@@ -205,7 +205,7 @@
 /obj/item/weapon/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
 		if (cooldown)
-			to_chat(user, "<span class='notice'>Give [M] a chance to think through the contract, don't rush him.</span>")
+			to_chat(user, "<span class='notice'>Give [IDENTITY_SUBJECT(1)] a chance to think through the contract, don't rush him.</span>", list(M))
 			return 0
 		cooldown = TRUE
 		var/mob/living/carbon/human/H = M
@@ -221,7 +221,7 @@
 		if(response == "Yes")
 			H.revive(1,0)
 			add_logs(user, H, "infernally revived via contract")
-			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
+			user.visible_message("<span class='notice'>With a sudden blaze, [IDENTITY_SUBJECT(1)] stands back up.</span>", subjects=list(H))
 			H.fakefire()
 			FulfillContract(H, 1)//Revival contracts are always signed in blood
 			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/fakefireextinguish), 5, TIMER_UNIQUE)

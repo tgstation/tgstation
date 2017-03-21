@@ -22,9 +22,9 @@
 /obj/item/device/unactivated_swarmer/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/screwdriver) && !crit_fail)
-		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
-			"<span class='italics'>You hear clicking.</span>")
+			"<span class='italics'>You hear clicking.</span>", subjects=list(user))
 		name = "deactivated swarmer"
 		desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 		crit_fail = 1
@@ -664,7 +664,7 @@
 		set_light(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
-	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
+	var/rendered = "<B>Swarm communication - [src.real_name]</b> [say_quote(msg, get_spans())]"
 	for(var/mob/M in mob_list)
 		if(isswarmer(M))
 			to_chat(M, rendered)

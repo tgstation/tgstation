@@ -22,24 +22,52 @@ var/list/freqtospan = list(
 	if(message == "" || !message)
 		return
 	var/list/spans = get_spans()
-	send_speech(message, 7, src, , spans)
+	var/voice_print = get_voiceprint()
+	send_speech(message, 6, src, , spans, voice_print)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	return
 
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
+/atom/movable/proc/send_speech(message, range = 6, obj/source = src, bubble_type, list/spans, voice_print)
 	var/rendered = compose_message(src, languages_spoken, message, , spans)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendered, src, languages_spoken, message, , spans, voice_print)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/atom/movable/proc/accent_from_voiceprint(voice_print)
+	if(istext(voice_print) && length(voice_print))
+		. = ""
+		var/hash = 0
+		for(var/i = 1, i <= length(voice_print), i++)
+			hash += text2ascii(voice_print, i)
+		var/static/list/accent_colors = list("black", "brown", "darkgreen", "darkred", "navy", "purple")
+		var/static/list/accent_sizes = list("1.1em", "0.9em")
+		var/static/list/accent_fonts = list("Arial", "Georgia, Vernanda", "Cambria")
+		var/color_index = ((hash / 8) % accent_colors.len) + 1
+		var/accent_color = color2hex(accent_colors[color_index])
+		. += "color: [accent_color];"
+		var/size_index = (hash / 16) % (accent_sizes.len + 1)
+		if(size_index)
+			var/accent_size = accent_sizes[size_index]
+			. += " font-size: [accent_size];"
+		var/fonts_index = (hash / 24) % (accent_fonts.len + 1)
+		if(fonts_index)
+			var/accent_font = accent_fonts[fonts_index]
+			. += " font-family: [accent_font];"
+
+/atom/movable/proc/compose_accent(name, accent)
+	if(accent)
+		. = "<span style='[accent]'>[name]</span>"
+	else
+		. = name
+
+/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, name, accent, message_mode, edit_tag)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -48,19 +76,16 @@ var/list/freqtospan = list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
-	var/namepart =  "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/namepart = name ? name : "[speaker.GetVoice()][speaker.get_alt_name()]"
 	//End name span.
 	var/endspanpart = "</span>"
 	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message, spans)]</span></span>"
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message, spans, message_mode)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
+	return "[spanpart1][spanpart2][freqpart][compose_namepart(speaker, compose_accent(namepart, accent), edit_tag, radio_freq)][endspanpart][messagepart]"
 
-/atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
-	return ""
-
-/atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
-	return ""
+/atom/movable/proc/compose_namepart(atom/movable/speaker, namepart, edit_tag, radio_freq)
+	return namepart
 
 /atom/movable/proc/say_quote(input, list/spans=list())
 	if(!input)
@@ -77,15 +102,15 @@ var/list/freqtospan = list(
 
 	return "[verb_say], \"[input]\""
 
-/atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
+/atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans, message_mode)
 	if(languages_understood & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
 			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
-				return speaker.say_quote(raw_message, spans)
-			return AM.say_quote(raw_message, spans)
+				return speaker.say_quote(raw_message, spans, message_mode)
+			return AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans)
+			return speaker.say_quote(raw_message, spans, message_mode)
 	else if((message_langs & HUMAN) || (message_langs & RATVAR)) //it's human or ratvar language
 		var/atom/movable/AM = speaker.GetSource()
 		if(message_langs & HUMAN)
@@ -93,9 +118,9 @@ var/list/freqtospan = list(
 		if(message_langs & RATVAR)
 			raw_message = text2ratvar(raw_message)
 		if(AM)
-			return AM.say_quote(raw_message, spans)
+			return AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans)
+			return speaker.say_quote(raw_message, spans, message_mode)
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)
@@ -170,3 +195,12 @@ var/list/freqtospan = list(
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
+
+/atom/movable/virtualspeaker/default_identity_heard()
+	. = (source ? source.default_identity_heard() : ..())
+
+/atom/movable/virtualspeaker/default_identity_seen()
+	. = (source ? source.default_identity_seen() : ..())
+
+/atom/movable/virtualspeaker/default_identity_interact()
+	. = (source ? source.default_identity_interact() : ..())

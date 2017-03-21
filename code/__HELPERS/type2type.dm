@@ -437,49 +437,41 @@ for(var/t in test_times)
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
+var/static/list/colors_list = list("white" = "#FFFFFF", "black" = "#000000", "gray" = "#808080", "brown" = "#A52A2A",
+									"red" = "#FF0000", "darkred" = "#8B0000", "crimson" = "#DC143C", "orange" = "#FFA500",
+									"yellow" = "#FFFF00", "green" = "#008000", "lime" = "#00FF00", "darkgreen" = "#006400",
+									"cyan" = "#00FFFF", "blue" = "#0000FF", "navy" = "#000080", "teal" = "#008080",
+									"purple" = "#800080", "indigo" = "#4B0082")
+
 /proc/color2hex(color)	//web colors
 	if(!color)
 		return "#000000"
 
-	switch(color)
-		if("white")
-			return "#FFFFFF"
-		if("black")
-			return "#000000"
-		if("gray")
-			return "#808080"
-		if("brown")
-			return "#A52A2A"
-		if("red")
-			return "#FF0000"
-		if("darkred")
-			return "#8B0000"
-		if("crimson")
-			return "#DC143C"
-		if("orange")
-			return "#FFA500"
-		if("yellow")
-			return "#FFFF00"
-		if("green")
-			return "#008000"
-		if("lime")
-			return "#00FF00"
-		if("darkgreen")
-			return "#006400"
-		if("cyan")
-			return "#00FFFF"
-		if("blue")
-			return "#0000FF"
-		if("navy")
-			return "#000080"
-		if("teal")
-			return "#008080"
-		if("purple")
-			return "#800080"
-		if("indigo")
-			return "#4B0082"
-		else
-			return "#FFFFFF"
+	var/search_color = colors_list[color]
+	if(search_color)
+		. = search_color
+	else
+		. = "#FFFFFF"
+
+/proc/color_hex2color(hex) //returns the closest matching color in the colors_list list
+	var/static/list/colors_list_rgb = list()
+	. = "black"
+	if(!hex)
+		return
+	var/list/color_hex_rgb = ReadRGB(hex)
+	if(color_hex_rgb)
+		var/color_name_similar = "white"
+		var/color_name_similar_similarity = 442
+		for(var/color_name in colors_list)
+			var/color_rgb = colors_list_rgb[color_name]
+			if(!color_rgb)
+				color_rgb = ReadRGB(colors_list[color_name])
+				colors_list_rgb[color_name] = color_rgb
+			var/similarity = abs(sqrt(((color_hex_rgb[1] - color_rgb[1])^2) + ((color_hex_rgb[2] - color_rgb[2])^2) + ((color_hex_rgb[3] - color_rgb[3])^2)))
+			if(similarity < color_name_similar_similarity)
+				color_name_similar = color_name
+				color_name_similar_similarity = similarity
+		. = color_name_similar
 
 
 //This is a weird one:

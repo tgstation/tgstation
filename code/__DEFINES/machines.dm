@@ -63,3 +63,6 @@
 #define PROGRAM_STATE_KILLED 0
 #define PROGRAM_STATE_BACKGROUND 1
 #define PROGRAM_STATE_ACTIVE 2
+
+//Security console internal tape entry length
+#define SECURITY_TAPEINFO_ENTRY_LEN 2

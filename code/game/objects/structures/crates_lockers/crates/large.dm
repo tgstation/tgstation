@@ -19,9 +19,9 @@
 		if(manifest)
 			tear_manifest(user)
 
-		user.visible_message("[user] pries \the [src] open.", \
+		user.visible_message("[IDENTITY_SUBJECT(1)] pries \the [src] open.", \
 							 "<span class='notice'>You pry open \the [src].</span>", \
-							 "<span class='italics'>You hear splitting wood.</span>")
+							 "<span class='italics'>You hear splitting wood.</span>", subjects=list(user))
 		playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, 1)
 
 		for(var/i in 1 to rand(2, 5))

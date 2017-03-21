@@ -16,8 +16,8 @@
 	if(!iscultist(user))
 		user.Weaken(5)
 		user.dropItemToGround(src, TRUE)
-		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
-							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
+		user.visible_message("<span class='warning'>A powerful force shoves [IDENTITY_SUBJECT(1)] away from [IDENTITY_SUBJECT(2)]!</span>", \
+							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>", subjects=list(user, target))
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(rand(force/2, force), BRUTE, pick("l_arm", "r_arm"))
@@ -195,7 +195,7 @@
 		current_charges--
 		new /obj/effect/overlay/temp/cult/sparks(get_turf(owner))
 		if(!current_charges)
-			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
+			owner.visible_message("<span class='danger'>The runed shield around [IDENTITY_SUBJECT(1)] suddenly disappears!</span>", subjects=list(owner))
 			owner.update_inv_wear_suit()
 		return 1
 	return 0
@@ -375,10 +375,13 @@
 	if(istype(A, /obj/item))
 
 		var/list/cultists = list()
+		var/list/cultist_names = list()
 		for(var/datum/mind/M in ticker.mode.cult)
-			if(M.current && M.current.stat != DEAD)
-				cultists |= M.current
-		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+			if(M.current && M.current != user && M.current.stat != DEAD)
+				var/cultist_name = avoid_assoc_duplicate_keys(M.current.real_name, cultist_names)
+				cultists[cultist_name] = M.current
+		var/cultist_name_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
+		var/mob/living/cultist_to_receive = cultists[cultist_name_to_receive]
 		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 			return
 		if(!cultist_to_receive)
@@ -386,14 +389,14 @@
 			log_game("Void torch failed - no target")
 			return
 		if(cultist_to_receive.stat == DEAD)
-			to_chat(user, "<span class='cultitalic'>[cultist_to_receive] has died!</span>")
+			to_chat(user, "<span class='cultitalic'>[cultist_to_receive.real_name] has died!</span>")
 			log_game("Void torch failed  - target died")
 			return
 		if(!iscultist(cultist_to_receive))
-			to_chat(user, "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
+			to_chat(user, "<span class='cultitalic'>[cultist_to_receive.real_name] is not a follower of the Geometer!</span>")
 			log_game("Void torch failed - target was deconverted")
 			return
-		to_chat(user, "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+		to_chat(user, "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive.real_name]!")
 		cultist_to_receive.put_in_hands(A)
 		charges--
 		to_chat(user, "\The [src] now has [charges] charge\s.")

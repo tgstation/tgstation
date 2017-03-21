@@ -15,12 +15,12 @@
 	missing -= "head" // headless changelings are funny
 	if(missing.len)
 		playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
-		user.visible_message("<span class='warning'>[user]'s missing limbs \
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s missing limbs \
 			reform, making a loud, grotesque sound!</span>",
 			"<span class='userdanger'>Your limbs regrow, making a \
 			loud, crunchy sound and giving you great pain!</span>",
 			"<span class='italics'>You hear organic matter ripping \
-			and tearing!</span>")
+			and tearing!</span>", subjects=list(user))
 		user.emote("scream")
 		user.regenerate_limbs(0, list("head"))
 		user.regenerate_organs()

@@ -46,8 +46,8 @@
 					reagents.reaction(safe_thing, TOUCH, fraction)
 					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this)
 
-					target.visible_message("<span class='danger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>", \
-											"<span class='userdanger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>")
+					target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] tries to squirt something into [IDENTITY_SUBJECT(2)]'s eyes, but fails!</span>", \
+											"<span class='userdanger'>[IDENTITY_SUBJECT(1)] tries to squirt something into [IDENTITY_SUBJECT(2)]'s eyes, but fails!</span>", subjects=list(user, target))
 
 					to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
 					update_icon()
@@ -56,8 +56,8 @@
 				to_chat(target, "<span class='danger'>[target] does not seem to have any eyes!</span>")
 				return
 
-			target.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>", \
-									"<span class='userdanger'>[user] squirts something into [target]'s eyes!</span>")
+			target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] squirts something into [IDENTITY_SUBJECT(2)]'s eyes!</span>", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] squirts something into [IDENTITY_SUBJECT(2)]'s eyes!</span>", subjects=list(user, target))
 
 			reagents.reaction(target, TOUCH, fraction)
 			var/mob/M = target

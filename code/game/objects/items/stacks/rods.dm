@@ -44,9 +44,9 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
+			user.visible_message("[IDENTITY_SUBJECT(1)] shaped [src] into metal with the welding tool.", \
 						 "<span class='notice'>You shape [src] into metal with the welding tool.</span>", \
-						 "<span class='italics'>You hear welding.</span>")
+						 "<span class='italics'>You hear welding.</span>", subjects=list(user))
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_held_item()==R)

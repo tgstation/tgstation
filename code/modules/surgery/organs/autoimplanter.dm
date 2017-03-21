@@ -23,7 +23,7 @@
 		to_chat(user, "<span class='notice'>[src] currently has no implant stored.</span>")
 		return
 	storedorgan.Insert(user)//insert stored organ into the user
-	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>", subjects=list(user))
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, 1)
 	storedorgan = null
 	if(uses != INFINITE)

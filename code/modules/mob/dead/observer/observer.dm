@@ -404,7 +404,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
 	if(orbiting && orbiting.orbiting != target)
-		to_chat(src, "<span class='notice'>Now orbiting [target].</span>")
+		to_chat(src, "<span class='notice'>Now orbiting [IDENTITY_SUBJECT(1)].</span>", list(target))
 
 	var/rot_seg
 
@@ -643,7 +643,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
 		return 0
-	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
+	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [IDENTITY_SUBJECT(1)].</span>", subjects=list(A))
 	return 1
 
 /mob/dead/observer/verb/view_manifest()

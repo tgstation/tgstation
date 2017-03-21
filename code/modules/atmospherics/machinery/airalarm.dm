@@ -657,8 +657,8 @@
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar))
-				user.visible_message("[user.name] removes the electronics from [src.name].",\
-									"<span class='notice'>You start prying out the circuit...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the electronics from [src.name].",\
+									"<span class='notice'>You start prying out the circuit...</span>", subjects=list(user))
 				playsound(src.loc, W.usesound, 50, 1)
 				if (do_after(user, 20*W.toolspeed, target = src))
 					if (buildstage == 1)
@@ -674,8 +674,8 @@
 				if(cable.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>")
 					return
-				user.visible_message("[user.name] wires the air alarm.", \
-									"<span class='notice'>You start wiring the air alarm...</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] wires the air alarm.", \
+									"<span class='notice'>You start wiring the air alarm...</span>", subjects=list(user))
 				if (do_after(user, 20, target = src))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)

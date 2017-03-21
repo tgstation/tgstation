@@ -55,6 +55,7 @@
 
 				transform_dna.transfer_identity(affected_mob, transfer_SE = 1)
 				affected_mob.real_name = affected_mob.dna.real_name
+				affected_mob.voiceprint = affected_mob.dna.voiceprint
 				affected_mob.updateappearance(mutcolor_update=1)
 				affected_mob.domutcheck()
 

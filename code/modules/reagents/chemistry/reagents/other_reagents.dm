@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"voiceprint"=null,"cloneable"=null,"factions"=null)
 	name = "Blood"
 	id = "blood"
 	color = "#C80000" // rgb: 200, 0, 0
@@ -193,7 +193,7 @@
 					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
 					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
-					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
+					M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>", subjects=list(M))
 	if(data >= 75)	// 30 units, 135 seconds
 		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
@@ -364,9 +364,9 @@
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
+				M.visible_message(pick("<b>[IDENTITY_SUBJECT(1)]</b>'s collar pops up without warning.</span>", "<b>[IDENTITY_SUBJECT(1)]</b> flexes [M.p_their()] arms."), subjects=list(M))
 			else
-				M.visible_message("<b>[M]</b> [M.p_their()] their arms.")
+				M.visible_message("<b>[IDENTITY_SUBJECT(1)]</b> [M.p_their()] their arms.", subjects=list(M))
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()
@@ -385,7 +385,7 @@
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
-	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.visible_message("<b>[IDENTITY_SUBJECT(1)]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!", subjects=list(H)) //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || QDELETED(H))
@@ -536,7 +536,7 @@
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
 	to_chat(H, "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
-	H.visible_message("<b>[H]</b> suddenly transforms!")
+	H.visible_message("<b>[IDENTITY_SUBJECT(1)]</b> suddenly transforms!", subjects=list(H))
 	randomize_human(H)
 	..()
 

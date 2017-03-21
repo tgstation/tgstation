@@ -16,13 +16,13 @@
 	time = 16
 
 /datum/surgery_step/extract_core/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to extract a core from [target].", "<span class='notice'>You begin to extract a core from [target]...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to extract a core from [IDENTITY_SUBJECT(2)].", "<span class='notice'>You begin to extract a core from [IDENTITY_SUBJECT(2)]...</span>", subjects=list(user, target))
 
 /datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/simple_animal/slime/slime = target
 	if(slime.cores > 0)
 		slime.cores--
-		user.visible_message("[user] successfully extracts a core from [target]!", "<span class='notice'>You successfully extract a core from [target]. [slime.cores] core\s remaining.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] successfully extracts a core from [IDENTITY_SUBJECT(2)]!", "<span class='notice'>You successfully extract a core from [IDENTITY_SUBJECT(2)]. [slime.cores] core\s remaining.</span>", subjects=list(user, target))
 
 		new slime.coretype(slime.loc)
 
@@ -32,5 +32,5 @@
 		else
 			return 0
 	else
-		to_chat(user, "<span class='warning'>There aren't any cores left in [target]!</span>")
+		to_chat(user, "<span class='warning'>There aren't any cores left in [IDENTITY_SUBJECT(1)]!</span>", list(target))
 		return 1

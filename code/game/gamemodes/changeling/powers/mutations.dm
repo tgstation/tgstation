@@ -32,7 +32,7 @@
 		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
-			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+			user.visible_message("<span class='warning'>With a sickening crunch, [IDENTITY_SUBJECT(1)] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>", subjects=list(user))
 		user.update_inv_hands()
 		return 1
 
@@ -46,7 +46,7 @@
 	else
 		limb_regen = user.regenerate_limb("l_arm", 1)
 	if(limb_regen)
-		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>", subjects=list(user))
 		user.emote("scream")
 	var/obj/item/W = new weapon_type(user, silent)
 	user.put_in_hands(W)
@@ -88,7 +88,7 @@
 		return 1
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
+		H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>", subjects=list(H))
 		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
@@ -164,7 +164,7 @@
 /obj/item/weapon/melee/arm_blade/New(location,silent,synthetic)
 	..()
 	if(ismob(loc) && !silent)
-		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>A grotesque blade forms around [IDENTITY_SUBJECT(1)]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>", subjects=list(loc))
 	if(synthetic)
 		can_drop = TRUE
 
@@ -189,14 +189,14 @@
 			return
 
 		if(A.hasPower())
-			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the airlock open.</span>", \
-			"<span class='italics'>You hear a metal screeching sound.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the airlock open.</span>", \
+			"<span class='italics'>You hear a metal screeching sound.</span>", subjects=list(user))
 			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 			if(!do_after(user, 100, target = A))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
-		user.visible_message("<span class='warning'>[user] forces the airlock to open with their [src]!</span>", "<span class='warning'>We force the airlock to open.</span>", \
-		"<span class='italics'>You hear a metal screeching sound.</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] forces the airlock to open with their [src]!</span>", "<span class='warning'>We force the airlock to open.</span>", \
+		"<span class='italics'>You hear a metal screeching sound.</span>", subjects=list(user))
 		A.open(2)
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
@@ -243,7 +243,7 @@
 	..()
 	if(ismob(loc))
 		if(!silent)
-			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+			loc.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>", subjects=list(loc))
 		else
 			to_chat(loc, "<span class='notice'>You prepare to extend a tentacle.</span>")
 
@@ -301,7 +301,7 @@
 	if(H.Adjacent(C))
 		for(var/obj/item/I in H.held_items)
 			if(I.is_sharp())
-				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
+				C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] impales [IDENTITY_SUBJECT(2)] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] impales you with [H.p_their()] [I.name]!</span>", subjects=list(H, C))
 				C.apply_damage(I.force, BRUTE, "chest")
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
@@ -328,7 +328,7 @@
 				var/mob/living/carbon/C = L
 				switch(firer.a_intent)
 					if(INTENT_HELP)
-						C.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
+						C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is pulled by [IDENTITY_SUBJECT(2)]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [IDENTITY_SUBJECT(2)]!</span>", subjects=list(L, H))
 						C.throw_at(get_step_towards(H,C), 8, 2)
 						return 1
 
@@ -336,27 +336,27 @@
 						var/obj/item/I = C.get_active_held_item()
 						if(I)
 							if(C.drop_item())
-								C.visible_message("<span class='danger'>[I] is yanked off of [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
+								C.visible_message("<span class='danger'>[I] is yanked off of [IDENTITY_SUBJECT(1)]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>", subjects=list(C))
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1
 							else
-								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off of [C]'s hands!<span>")
+								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off of [IDENTITY_SUBJECT(1)]'s hands!<span>", list(C))
 								return 0
 						else
-							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!<span>")
+							to_chat(firer, "<span class='danger'>[IDENTITY_SUBJECT(1)] has nothing in hand to disarm!<span>", list(C))
 							return 0
 
 					if(INTENT_GRAB)
-						C.visible_message("<span class='danger'>[L] is grabbed by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
+						C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is grabbed by [IDENTITY_SUBJECT(2)]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [IDENTITY_SUBJECT(2)]!</span>", subjects=list(L, H))
 						C.throw_at(get_step_towards(H,C), 8, 2, callback=CALLBACK(src, .proc/tentacle_grab, H, C))
 						return 1
 
 					if(INTENT_HARM)
-						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
+						C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is thrown towards [IDENTITY_SUBJECT(2)] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [IDENTITY_SUBJECT(2)]!</span>", subjects=list(L, H))
 						C.throw_at(get_step_towards(H,C), 8, 2, callback=CALLBACK(src, .proc/tentacle_stab, H, C))
 						return 1
 			else
-				L.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
+				L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is pulled by [IDENTITY_SUBJECT(2)]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [IDENTITY_SUBJECT(2)]!</span>", subjects=list(L, H))
 				L.throw_at(get_step_towards(H,L), 8, 2)
 				. = 1
 
@@ -404,13 +404,13 @@
 /obj/item/weapon/shield/changeling/New()
 	..()
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>The end of [IDENTITY_SUBJECT(1)]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>", subjects=list(loc))
 
 /obj/item/weapon/shield/changeling/hit_reaction()
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
-			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+			H.visible_message("<span class='warning'>With a sickening crunch, [IDENTITY_SUBJECT(1)] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>", subjects=list(H))
 		qdel(src)
 		return 0
 	else
@@ -449,7 +449,7 @@
 /obj/item/clothing/suit/space/changeling/New()
 	..()
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>", subjects=list(loc))
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/changeling/process()
@@ -498,7 +498,7 @@
 /obj/item/clothing/suit/armor/changeling/New()
 	..()
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>", subjects=list(loc))
 
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"

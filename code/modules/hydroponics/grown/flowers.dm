@@ -122,8 +122,8 @@
 	throw_range = 3
 
 /obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
-	to_chat(user, "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>")
+	to_chat(M, "<font color='green'><b> [IDENTITY_SUBJECT(1)] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>", list(user))
+	to_chat(user, "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [IDENTITY_SUBJECT(1)]</font>", list(M))
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower

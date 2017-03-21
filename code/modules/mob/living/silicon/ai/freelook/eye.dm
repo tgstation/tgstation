@@ -104,6 +104,6 @@
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/camera/aiEye/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/camera/aiEye/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
-		ai.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
+		ai.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans, voice_print, message_mode)

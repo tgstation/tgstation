@@ -1,5 +1,5 @@
 /mob/living/carbon/human
-	name = "Unknown"
+	name = "Person"
 	real_name = "Unknown"
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
@@ -23,6 +23,8 @@
 
 	//initialize limbs first
 	create_bodyparts()
+
+	voiceprint = generate_voiceprint()
 
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
@@ -242,7 +244,7 @@
 				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
 				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
+				usr.visible_message("[IDENTITY_SUBJECT(1)] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>", subjects=list(usr))
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 			return
@@ -262,10 +264,10 @@
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
-					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
-				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
+					to_chat(usr, "<span class='warning'>You try to empty [IDENTITY_SUBJECT(1)]'s [pocket_side] pocket, it seems to be stuck!</span>", list(src))
+				to_chat(usr, "<span class='notice'>You try to empty [IDENTITY_SUBJECT(1)]'s [pocket_side] pocket.</span>", list(src))
 			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags&ABSTRACT))
-				to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
+				to_chat(usr, "<span class='notice'>You try to place [place_item] into [IDENTITY_SUBJECT(1)]'s [pocket_side] pocket.</span>", list(src))
 				delay_denominator = 4
 			else
 				return
@@ -575,7 +577,7 @@
 
 	//Check for ID
 	var/obj/item/weapon/card/id/idcard = get_idcard()
-	if(judgebot.idcheck && !idcard && name=="Unknown")
+	if(judgebot.idcheck && !idcard && default_identity_seen()=="Unknown")
 		threatcount += 4
 
 	//Check for weapons
@@ -645,7 +647,7 @@
 	CHECK_DNA_AND_SPECIES(C)
 
 	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
-		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
+		to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is dead!</span>", list(C))
 		return
 	if(is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
@@ -655,10 +657,10 @@
 		return 0
 
 	if(C.cpr_time < world.time + 30)
-		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
-						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] is trying to perform CPR on [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='notice'>You try to perform CPR on [IDENTITY_SUBJECT(2)]... Hold still!</span>", subjects=list(src, C))
 		if(!do_mob(src, C))
-			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
+			to_chat(src, "<span class='warning'>You fail to perform CPR on [IDENTITY_SUBJECT(1)]!</span>", list(C))
 			return 0
 
 		var/they_breathe = (!(NOBREATH in C.dna.species.species_traits))
@@ -667,7 +669,7 @@
 		if(C.health > HEALTH_THRESHOLD_CRIT)
 			return
 
-		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		src.visible_message("[IDENTITY_SUBJECT(1)] performs CPR on [IDENTITY_SUBJECT(2)]!", "<span class='notice'>You perform CPR on [IDENTITY_SUBJECT(2)].</span>", subjects=list(src, C))
 		C.cpr_time = world.time
 		add_logs(src, C, "CPRed")
 
@@ -833,25 +835,25 @@
 	var/datum/objective/sintouched/O
 	switch(rand(1,7))//traditional seven deadly sins... except lust.
 		if(1) // acedia
-			log_game("[src] was influenced by the sin of Acedia.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of Acedia.")
 			O = new /datum/objective/sintouched/acedia
 		if(2) // Gluttony
-			log_game("[src] was influenced by the sin of gluttony.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of gluttony.")
 			O = new /datum/objective/sintouched/gluttony
 		if(3) // Greed
-			log_game("[src] was influenced by the sin of greed.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of greed.")
 			O = new /datum/objective/sintouched/greed
 		if(4) // sloth
-			log_game("[src] was influenced by the sin of sloth.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of sloth.")
 			O = new /datum/objective/sintouched/sloth
 		if(5) // Wrath
-			log_game("[src] was influenced by the sin of wrath.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of wrath.")
 			O = new /datum/objective/sintouched/wrath
 		if(6) // Envy
-			log_game("[src] was influenced by the sin of envy.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of envy.")
 			O = new /datum/objective/sintouched/envy
 		if(7) // Pride
-			log_game("[src] was influenced by the sin of pride.")
+			log_game("[src.real_name]/([key_name(src)]) was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
 	ticker.mode.sintouched += src.mind
 	src.mind.objectives += O
@@ -875,8 +877,8 @@
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
 	if(blood && (NOBLOOD in dna.species.species_traits))
 		if(message)
-			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
+			visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>", subjects=list(src))
 		if(stun)
 			Weaken(10)
 		return 1
@@ -910,7 +912,7 @@
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
+		M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] really can't seem to mount [IDENTITY_SUBJECT(2)]...</span>", subjects=list(M, src))
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/human(src)
@@ -919,10 +921,10 @@
 	if(buckled)	//NO INFINITE STACKING!!
 		return
 	if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-		M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
+		M.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] can't hang onto [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 		return
 	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 2)))	//MAKE SURE THIS IS LAST!!
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+		M.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] can't climb onto [IDENTITY_SUBJECT(2)] because [M.p_their()] hands are full!</span>", subjects=list(M, src))
 		return
 	. = ..(M, force, check_loc)
 	stop_pulling()

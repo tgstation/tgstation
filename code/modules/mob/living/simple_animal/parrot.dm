@@ -144,7 +144,7 @@
 		stat("Held Item", held_item)
 		stat("Mode",a_intent)
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(speaker != src && prob(50)) //Dont imitate ourselves
 		if(!radio_freq || prob(10))
 			if(speech_buffer.len >= 500)
@@ -246,7 +246,7 @@
 						usr.drop_item()
 						headset_to_add.loc = src
 						src.ears = headset_to_add
-						to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
+						to_chat(usr, "<span class='notice'>You fit the headset onto [IDENTITY_SUBJECT(1)].</span>", list(src))
 
 						clearlist(available_channels)
 						for(var/ch in headset_to_add.channels)
@@ -342,7 +342,7 @@
 			adjustBruteLoss(-10)
 		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
 		speech_shuffle_rate += 10
-		to_chat(user, "<span class='notice'>[src] eagerly devours the cracker.</span>")
+		to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] eagerly devours the cracker.</span>", list(src))
 	..()
 	return
 
@@ -505,7 +505,7 @@
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
 					parrot_interest.loc = src
-					visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
+					visible_message("[IDENTITY_SUBJECT(1)] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>", subjects=list(src))
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -701,7 +701,7 @@
 
 			held_item = I
 			I.loc = src
-			visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message("[IDENTITY_SUBJECT(1)] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>", subjects=list(src))
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
@@ -730,7 +730,7 @@
 		if(stolen_item)
 			C.transferItemToLoc(stolen_item, src, TRUE)
 			held_item = stolen_item
-			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message("[IDENTITY_SUBJECT(1)] grabs [held_item] out of [IDENTITY_SUBJECT(2)]'s hand!", "<span class='notice'>You snag [held_item] out of [IDENTITY_SUBJECT(2)]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>", subjects=list(src, C))
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</spawn>")
@@ -825,7 +825,7 @@
 		icon_state = "parrot_fly"
 		parrot_state = PARROT_WANDER
 		if(buckled)
-			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
+			to_chat(src, "<span class='notice'>You are no longer sitting on [IDENTITY_SUBJECT(1)]'s shoulder.</span>", list(buckled))
 			buckled.unbuckle_mob(src,force=1)
 		buckled = null
 		pixel_x = initial(pixel_x)
@@ -842,7 +842,7 @@
 	pixel_x = pick(-8,8) //pick left or right shoulder
 	icon_state = "parrot_sit"
 	parrot_state = PARROT_PERCH
-	to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
+	to_chat(src, "<span class='notice'>You sit on [IDENTITY_SUBJECT(1)]'s shoulder.</span>", list(H))
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()
@@ -975,4 +975,4 @@
 	loc = H
 	H.ContractDisease(P)
 	parrot_interest = null
-	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
+	H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] dive bombs into [IDENTITY_SUBJECT(2)]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>", subjects=list(src, H))

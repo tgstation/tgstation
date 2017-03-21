@@ -82,7 +82,7 @@
 					)
 
 /datum/construction/mecha/ripley_chassis/custom_action(step, atom/used_atom, mob/user)
-	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>", subjects=list(user))
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
@@ -171,107 +171,108 @@
 	//TODO: better messages.
 	switch(index)
 		if(14)
-			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>", subjects=list(user))
 			holder.icon_state = "ripley1"
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "ripley2"
 			else
-				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "ripley0"
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "ripley3"
 			else
-				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "ripley1"
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "ripley4"
 			else
-				user.visible_message("[user] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "ripley2"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "ripley5"
 			else
-				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "ripley3"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "ripley6"
 			else
-				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/ripley/main(get_turf(holder))
 				holder.icon_state = "ripley4"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "ripley7"
 			else
-				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "ripley5"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "ripley8"
 			else
-				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/ripley/peripherals(get_turf(holder))
 				holder.icon_state = "ripley6"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "ripley9"
 			else
-				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "ripley7"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "ripley10"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "ripley8"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>", subjects=list(user))
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "ripley11"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "ripley9"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the external reinforced armor layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the external reinforced armor layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "ripley12"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "ripley10"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>", subjects=list(user))
 				holder.icon_state = "ripley13"
 			else
-				user.visible_message("[user] pries external armor layer from the [holder].", "<span class='notice'>You pry external armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries external armor layer from the [holder].", "<span class='notice'>You pry external armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "ripley11"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>", subjects=list(user))
 			else
-				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>", subjects=list(user))
 				holder.icon_state = "ripley12"
 	return 1
 
@@ -292,7 +293,7 @@
 					)
 
 /datum/construction/mecha/gygax_chassis/custom_action(step, atom/used_atom, mob/user)
-	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>", subjects=list(user))
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
@@ -404,159 +405,159 @@
 	//TODO: better messages.
 	switch(index)
 		if(20)
-			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>", subjects=list(user))
 			holder.icon_state = "gygax1"
 		if(19)
 			if(diff==FORWARD)
-				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "gygax2"
 			else
-				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "gygax0"
 		if(18)
 			if(diff==FORWARD)
-				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "gygax3"
 			else
-				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "gygax1"
 		if(17)
 			if(diff==FORWARD)
-				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "gygax4"
 			else
-				user.visible_message("[user] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "gygax2"
 		if(16)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "gygax5"
 			else
-				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "gygax3"
 		if(15)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "gygax6"
 			else
-				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/gygax/main(get_turf(holder))
 				holder.icon_state = "gygax4"
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "gygax7"
 			else
-				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "gygax5"
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "gygax8"
 			else
-				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/gygax/peripherals(get_turf(holder))
 				holder.icon_state = "gygax6"
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "gygax9"
 			else
-				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "gygax7"
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the weapon control module.", "<span class='notice'>You secure the weapon control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the weapon control module.", "<span class='notice'>You secure the weapon control module.</span>", subjects=list(user))
 				holder.icon_state = "gygax10"
 			else
-				user.visible_message("[user] removes the weapon control module from the [holder].", "<span class='notice'>You remove the weapon control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the weapon control module from the [holder].", "<span class='notice'>You remove the weapon control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/gygax/targeting(get_turf(holder))
 				holder.icon_state = "gygax8"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>", subjects=list(user))
 				var/obj/item/I = used_atom
 				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax11"
 			else
-				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>", subjects=list(user))
 				holder.icon_state = "gygax9"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the advanced scanner module.", "<span class='notice'>You secure the scanner module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the advanced scanner module.", "<span class='notice'>You secure the scanner module.</span>", subjects=list(user))
 				holder.icon_state = "gygax12"
 			else
-				user.visible_message("[user] removes the advanced scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the advanced scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>", subjects=list(user))
 				var/obj/item/I = locate(/obj/item/weapon/stock_parts/scanning_module) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "gygax10"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>", subjects=list(user))
 				var/obj/item/I = used_atom
 				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax13"
 			else
-				user.visible_message("[user] unfastens the  scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>", subjects=list(user))
 				holder.icon_state = "gygax11"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the  capacitor.", "<span class='notice'>You secure the capacitor.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the  capacitor.", "<span class='notice'>You secure the capacitor.</span>", subjects=list(user))
 				holder.icon_state = "gygax14"
 			else
-				user.visible_message("[user] removes the  capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the  capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>", subjects=list(user))
 				var/obj/item/I = locate(/obj/item/weapon/stock_parts/capacitor) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "gygax12"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "gygax15"
 			else
-				user.visible_message("[user] unfastens the capacitor.", "<span class='notice'>You unfasten the capacitor.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the capacitor.", "<span class='notice'>You unfasten the capacitor.</span>", subjects=list(user))
 				holder.icon_state = "gygax13"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "gygax16"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "gygax14"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "gygax17"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "gygax15"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs Gygax Armor Plates to the [holder].", "<span class='notice'>You install Gygax Armor Plates to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs Gygax Armor Plates to the [holder].", "<span class='notice'>You install Gygax Armor Plates to the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "gygax18"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "gygax16"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures Gygax Armor Plates.", "<span class='notice'>You secure Gygax Armor Plates.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures Gygax Armor Plates.", "<span class='notice'>You secure Gygax Armor Plates.</span>", subjects=list(user))
 				holder.icon_state = "gygax19"
 			else
-				user.visible_message("[user] pries Gygax Armor Plates from the [holder].", "<span class='notice'>You pry Gygax Armor Plates from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries Gygax Armor Plates from the [holder].", "<span class='notice'>You pry Gygax Armor Plates from the [holder].</span>", subjects=list(user))
 				new /obj/item/mecha_parts/part/gygax_armor(get_turf(holder))
 				holder.icon_state = "gygax17"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds Gygax Armor Plates to the [holder].", "<span class='notice'>You weld Gygax Armor Plates to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds Gygax Armor Plates to the [holder].", "<span class='notice'>You weld Gygax Armor Plates to the [holder].</span>", subjects=list(user))
 			else
-				user.visible_message("[user] unfastens Gygax Armor Plates.", "<span class='notice'>You unfasten Gygax Armor Plates.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens Gygax Armor Plates.", "<span class='notice'>You unfasten Gygax Armor Plates.</span>", subjects=list(user))
 				holder.icon_state = "gygax18"
 	return 1
 
@@ -577,7 +578,7 @@
 					)
 
 /datum/construction/mecha/firefighter_chassis/custom_action(step, atom/used_atom, mob/user)
-	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>", subjects=list(user))
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
@@ -670,117 +671,117 @@
 	//TODO: better messages.
 	switch(index)
 		if(15)
-			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>", subjects=list(user))
 			holder.icon_state = "fireripley1"
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "fireripley2"
 			else
-				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "fireripley0"
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley3"
 			else
-				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "fireripley1"
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley4"
 			else
-				user.visible_message("[user] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "fireripley2"
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "fireripley5"
 			else
-				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley3"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "fireripley6"
 			else
-				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/ripley/main(get_turf(holder))
 				holder.icon_state = "fireripley4"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "fireripley7"
 			else
-				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "fireripley5"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "fireripley8"
 			else
-				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/ripley/peripherals(get_turf(holder))
 				holder.icon_state = "fireripley6"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley9"
 			else
-				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "fireripley7"
 
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>",subjects=list(user))
 				holder.icon_state = "fireripley10"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "fireripley8"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley11"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "fireripley9"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] starts to install the external armor layer to the [holder].", "<span class='notice'>You install the external armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] starts to install the external armor layer to the [holder].", "<span class='notice'>You install the external armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley12"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley10"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the external reinforced armor layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the external reinforced armor layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "fireripley13"
 			else
-				user.visible_message("[user] removes the external armor from the [holder].", "<span class='notice'>You remove the external armor from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the external armor from the [holder].", "<span class='notice'>You remove the external armor from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "fireripley11"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>", subjects=list(user))
 				holder.icon_state = "fireripley14"
 			else
-				user.visible_message("[user] pries external armor layer from the [holder].", "<span class='notice'>You pry external armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries external armor layer from the [holder].", "<span class='notice'>You pry external armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "fireripley12"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>", subjects=list(user))
 			else
-				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>", subjects=list(user))
 				holder.icon_state = "fireripley13"
 	return 1
 
@@ -804,7 +805,7 @@
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/honker_chassis/custom_action(step, atom/used_atom, mob/user)
-	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>", subjects=list(user))
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
@@ -846,19 +847,19 @@
 	//TODO: better messages.
 	switch(step)
 		if(10)
-			user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central control module into the [holder].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] installs the central control module into the [holder].", "<span class='notice'>You install the central control module into the [holder].</span>", subjects=list(user))
 			qdel(used_atom)
 		if(8)
-			user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>", subjects=list(user))
 			qdel(used_atom)
 		if(6)
-			user.visible_message("[user] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>", subjects=list(user))
 			qdel(used_atom)
 		if(4)
-			user.visible_message("[user] puts clown wig and mask on the [holder].", "<span class='notice'>You put clown wig and mask on the [holder].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] puts clown wig and mask on the [holder].", "<span class='notice'>You put clown wig and mask on the [holder].</span>", subjects=list(user))
 			qdel(used_atom)
 		if(2)
-			user.visible_message("[user] puts clown boots on the [holder].", "<span class='notice'>You put clown boots on the [holder].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] puts clown boots on the [holder].", "<span class='notice'>You put clown boots on the [holder].</span>", subjects=list(user))
 			qdel(used_atom)
 	return 1
 
@@ -877,7 +878,7 @@
 					)
 
 /datum/construction/mecha/durand_chassis/custom_action(step, atom/used_atom, mob/user)
-	user.visible_message("[user] has connected [used_atom] to the [holder].", "You connect [used_atom] to the [holder]")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has connected [used_atom] to the [holder].", "You connect [used_atom] to the [holder]", subjects=list(user))
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
@@ -989,159 +990,159 @@
 	//TODO: better messages.
 	switch(index)
 		if(20)
-			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>", subjects=list(user))
 			holder.icon_state = "durand1"
 		if(19)
 			if(diff==FORWARD)
-				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "durand2"
 			else
-				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "durand0"
 		if(18)
 			if(diff==FORWARD)
-				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "durand3"
 			else
-				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "durand1"
 		if(17)
 			if(diff==FORWARD)
-				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "durand4"
 			else
-				user.visible_message("[user] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "durand2"
 		if(16)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "durand5"
 			else
-				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "durand3"
 		if(15)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "durand6"
 			else
-				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/durand/main(get_turf(holder))
 				holder.icon_state = "durand4"
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "durand7"
 			else
-				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "durand5"
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "durand8"
 			else
-				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/durand/peripherals(get_turf(holder))
 				holder.icon_state = "durand6"
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "durand9"
 			else
-				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "durand7"
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the weapon control module.", "<span class='notice'>You secure the weapon control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the weapon control module.", "<span class='notice'>You secure the weapon control module.</span>", subjects=list(user))
 				holder.icon_state = "durand10"
 			else
-				user.visible_message("[user] removes the weapon control module from the [holder].", "<span class='notice'>You remove the weapon control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the weapon control module from the [holder].", "<span class='notice'>You remove the weapon control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/durand/targeting(get_turf(holder))
 				holder.icon_state = "durand8"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>", subjects=list(user))
 				var/obj/item/I = used_atom
 				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand11"
 			else
-				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>", subjects=list(user))
 				holder.icon_state = "durand9"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the scanner module.", "<span class='notice'>You secure the scanner module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the scanner module.", "<span class='notice'>You secure the scanner module.</span>", subjects=list(user))
 				holder.icon_state = "durand12"
 			else
-				user.visible_message("[user] removes the scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>", subjects=list(user))
 				var/obj/item/I = locate(/obj/item/weapon/stock_parts/scanning_module) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "durand10"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>", subjects=list(user))
 				var/obj/item/I = used_atom
 				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand13"
 			else
-				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>", subjects=list(user))
 				holder.icon_state = "durand11"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>", subjects=list(user))
 				holder.icon_state = "durand14"
 			else
-				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>", subjects=list(user))
 				var/obj/item/I = locate(/obj/item/weapon/stock_parts/capacitor) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "durand12"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "durand15"
 			else
-				user.visible_message("[user] unfastens the super capacitor.", "<span class='notice'>You unfasten the capacitor.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the super capacitor.", "<span class='notice'>You unfasten the capacitor.</span>", subjects=list(user))
 				holder.icon_state = "durand13"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "durand16"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "durand14"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "durand17"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "durand15"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs Durand Armor Plates to the [holder].", "<span class='notice'>You install Durand Armor Plates to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs Durand Armor Plates to the [holder].", "<span class='notice'>You install Durand Armor Plates to the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "durand18"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "durand16"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures Durand Armor Plates.", "<span class='notice'>You secure Durand Armor Plates.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures Durand Armor Plates.", "<span class='notice'>You secure Durand Armor Plates.</span>", subjects=list(user))
 				holder.icon_state = "durand19"
 			else
-				user.visible_message("[user] pries Durand Armor Plates from the [holder].", "<span class='notice'>You pry Durand Armor Plates from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries Durand Armor Plates from the [holder].", "<span class='notice'>You pry Durand Armor Plates from the [holder].</span>", subjects=list(user))
 				new /obj/item/mecha_parts/part/durand_armor(get_turf(holder))
 				holder.icon_state = "durand17"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds Durand Armor Plates to the [holder].", "<span class='notice'>You weld Durand Armor Plates to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds Durand Armor Plates to the [holder].", "<span class='notice'>You weld Durand Armor Plates to the [holder].</span>", subjects=list(user))
 			else
-				user.visible_message("[user] unfastens Durand Armor Plates.", "<span class='notice'>You unfasten Durand Armor Plates.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens Durand Armor Plates.", "<span class='notice'>You unfasten Durand Armor Plates.</span>", subjects=list(user))
 				holder.icon_state = "durand18"
 	return 1
 
@@ -1165,7 +1166,7 @@
 					)
 
 /datum/construction/mecha/phazon_chassis/custom_action(step, atom/used_atom, mob/user)
-	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>", subjects=list(user))
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
@@ -1294,186 +1295,186 @@
 	//TODO: better messages.
 	switch(index)
 		if(24)
-			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>", subjects=list(user))
 			holder.icon_state = "phazon1"
 		if(23)
 			if(diff==FORWARD)
-				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "phazon2"
 			else
-				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "phazon0"
 		if(22)
 			if(diff==FORWARD)
-				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon3"
 			else
-				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "phazon1"
 		if(21)
 			if(diff==FORWARD)
-				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon4"
 			else
-				user.visible_message("[user] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "phazon2"
 		if(20)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "phazon5"
 			else
-				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon3"
 		if(19)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "phazon6"
 			else
-				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/phazon/main(get_turf(holder))
 				holder.icon_state = "phazon4"
 		if(18)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "phazon7"
 			else
-				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "phazon5"
 		if(17)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "phazon8"
 			else
-				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/phazon/peripherals(get_turf(holder))
 				holder.icon_state = "phazon6"
 		if(16)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "phazon9"
 			else
-				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "phazon7"
 		if(15)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the weapon control module.", "<span class='notice'>You secure the weapon control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the weapon control module.", "<span class='notice'>You secure the weapon control module.</span>", subjects=list(user))
 				holder.icon_state = "phazon10"
 			else
-				user.visible_message("[user] removes the weapon control module from the [holder].", "<span class='notice'>You remove the weapon control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the weapon control module from the [holder].", "<span class='notice'>You remove the weapon control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/phazon/targeting(get_turf(holder))
 				holder.icon_state = "phazon8"
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the phasic scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>", subjects=list(user))
 				var/obj/item/I = used_atom
 				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon11"
 			else
-				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>", subjects=list(user))
 				holder.icon_state = "phazon9"
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the phasic scanner module.", "<span class='notice'>You secure the scanner module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the phasic scanner module.", "<span class='notice'>You secure the scanner module.</span>", subjects=list(user))
 				holder.icon_state = "phazon12"
 			else
-				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>", subjects=list(user))
 				var/obj/item/I = locate(/obj/item/weapon/stock_parts/scanning_module) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "phazon10"
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs super capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>", subjects=list(user))
 				var/obj/item/I = used_atom
 				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon13"
 			else
-				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the scanner module.</span>", subjects=list(user))
 				holder.icon_state = "phazon11"
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the super capacitor.", "<span class='notice'>You secure the capacitor.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the super capacitor.", "<span class='notice'>You secure the capacitor.</span>", subjects=list(user))
 				holder.icon_state = "phazon14"
 			else
-				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>", subjects=list(user))
 				var/obj/item/I = locate(/obj/item/weapon/stock_parts/capacitor) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "phazon12"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the bluespace crystal.", "<span class='notice'>You install the bluespace crystal.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the bluespace crystal.", "<span class='notice'>You install the bluespace crystal.</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "phazon15"
 			else
-				user.visible_message("[user] unsecures the super capacitor from the [holder].", "<span class='notice'>You unsecure the capacitor from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unsecures the super capacitor from the [holder].", "<span class='notice'>You unsecure the capacitor from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon13"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] connects the bluespace crystal.", "<span class='notice'>You connect the bluespace crystal.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] connects the bluespace crystal.", "<span class='notice'>You connect the bluespace crystal.</span>", subjects=list(user))
 				holder.icon_state = "phazon16"
 			else
-				user.visible_message("[user] removes the bluespace crystal from the [holder].", "<span class='notice'>You remove the bluespace crystal from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the bluespace crystal from the [holder].", "<span class='notice'>You remove the bluespace crystal from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/ore/bluespace_crystal(get_turf(holder))
 				holder.icon_state = "phazon14"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] engages the bluespace crystal.", "<span class='notice'>You engage the bluespace crystal.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] engages the bluespace crystal.", "<span class='notice'>You engage the bluespace crystal.</span>", subjects=list(user))
 				holder.icon_state = "phazon17"
 			else
-				user.visible_message("[user] disconnects the bluespace crystal from the [holder].", "<span class='notice'>You disconnect the bluespace crystal from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the bluespace crystal from the [holder].", "<span class='notice'>You disconnect the bluespace crystal from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon15"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the phase armor layer to the [holder].", "<span class='notice'>You install the phase armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the phase armor layer to the [holder].", "<span class='notice'>You install the phase armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon18"
 			else
-				user.visible_message("[user] disengages the bluespace crystal.", "<span class='notice'>You disengage the bluespace crystal.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disengages the bluespace crystal.", "<span class='notice'>You disengage the bluespace crystal.</span>", subjects=list(user))
 				holder.icon_state = "phazon16"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the phase armor layer.", "<span class='notice'>You secure the phase armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the phase armor layer.", "<span class='notice'>You secure the phase armor layer.</span>", subjects=list(user))
 				holder.icon_state = "phazon19"
 			else
-				user.visible_message("[user] pries the phase armor layer from the [holder].", "<span class='notice'>You pry the phase armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries the phase armor layer from the [holder].", "<span class='notice'>You pry the phase armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "phazon17"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the phase armor layer to the [holder].", "<span class='notice'>You weld the phase armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the phase armor layer to the [holder].", "<span class='notice'>You weld the phase armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon20"
 			else
-				user.visible_message("[user] unfastens the phase armor layer.", "<span class='notice'>You unfasten the phase armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the phase armor layer.", "<span class='notice'>You unfasten the phase armor layer.</span>", subjects=list(user))
 				holder.icon_state = "phazon18"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs Phazon Armor Plates to the [holder].", "<span class='notice'>You install Phazon Armor Plates to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs Phazon Armor Plates to the [holder].", "<span class='notice'>You install Phazon Armor Plates to the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "phazon21"
 			else
-				user.visible_message("[user] cuts phase armor layer from the [holder].", "<span class='notice'>You cut the phase armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts phase armor layer from the [holder].", "<span class='notice'>You cut the phase armor layer from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "phazon19"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures Phazon Armor Plates.", "<span class='notice'>You secure Phazon Armor Plates.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures Phazon Armor Plates.", "<span class='notice'>You secure Phazon Armor Plates.</span>", subjects=list(user))
 				holder.icon_state = "phazon22"
 			else
-				user.visible_message("[user] pries Phazon Armor Plates from the [holder].", "<span class='notice'>You pry Phazon Armor Plates from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries Phazon Armor Plates from the [holder].", "<span class='notice'>You pry Phazon Armor Plates from the [holder].</span>", subjects=list(user))
 				new /obj/item/mecha_parts/part/phazon_armor(get_turf(holder))
 				holder.icon_state = "phazon20"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds Phazon Armor Plates to the [holder].", "<span class='notice'>You weld Phazon Armor Plates to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds Phazon Armor Plates to the [holder].", "<span class='notice'>You weld Phazon Armor Plates to the [holder].</span>", subjects=list(user))
 			else
-				user.visible_message("[user] unfastens Phazon Armor Plates.", "<span class='notice'>You unfasten Phazon Armor Plates.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens Phazon Armor Plates.", "<span class='notice'>You unfasten Phazon Armor Plates.</span>", subjects=list(user))
 				holder.icon_state = "phazon21"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] carefully inserts the anomaly core into \the [holder] and secures it.", "<span class='notice'>You slowly place the anomaly core into its socket and close its chamber.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] carefully inserts the anomaly core into \the [holder] and secures it.", "<span class='notice'>You slowly place the anomaly core into its socket and close its chamber.</span>", subjects=list(user))
 				qdel(used_atom)
 	return 1
 
@@ -1496,7 +1497,7 @@
 					)
 
 /datum/construction/mecha/odysseus_chassis/custom_action(step, atom/used_atom, mob/user)
-	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>", subjects=list(user))
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
@@ -1584,109 +1585,109 @@
 	//TODO: better messages.
 	switch(index)
 		if(14)
-			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>", subjects=list(user))
 			holder.icon_state = "odysseus1"
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "odysseus2"
 			else
-				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "odysseus0"
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus3"
 			else
-				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>", subjects=list(user))
 				holder.icon_state = "odysseus1"
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus4"
 			else
-				user.visible_message("[user] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the wiring from the [holder].", "<span class='notice'>You remove the wiring from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "odysseus2"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "odysseus5"
 			else
-				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus3"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "odysseus6"
 			else
-				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/odysseus/main(get_turf(holder))
 				holder.icon_state = "odysseus4"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>", subjects=list(user))
 				qdel(used_atom)
 				holder.icon_state = "odysseus7"
 			else
-				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>", subjects=list(user))
 				holder.icon_state = "odysseus5"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "odysseus8"
 			else
-				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>", subjects=list(user))
 				new /obj/item/weapon/circuitboard/mecha/odysseus/peripherals(get_turf(holder))
 				holder.icon_state = "odysseus6"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus9"
 			else
-				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>", subjects=list(user))
 				holder.icon_state = "odysseus7"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "odysseus10"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>", subjects=list(user))
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "odysseus8"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus11"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>", subjects=list(user))
 				holder.icon_state = "odysseus9"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs [used_atom] layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] installs [used_atom] layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>", subjects=list(user))
 
 				holder.icon_state = "odysseus12"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus10"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>", subjects=list(user))
 				holder.icon_state = "odysseus13"
 			else
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
-				user.visible_message("[user] pries [MS] from the [holder].", "<span class='notice'>You pry [MS] from the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries [MS] from the [holder].", "<span class='notice'>You pry [MS] from the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus11"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>", subjects=list(user))
 				holder.icon_state = "odysseus14"
 			else
-				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>", subjects=list(user))
 				holder.icon_state = "odysseus12"
 	return 1
 

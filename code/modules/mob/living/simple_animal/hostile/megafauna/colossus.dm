@@ -52,7 +52,7 @@ Difficulty: Very Hard
 	death_sound = 'sound/magic/demon_dies.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
-	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	visible_message("<span class='colossus'>[src] disintegrates [IDENTITY_SUBJECT(1)]!</span>", subjects=list(L))
 	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
@@ -383,7 +383,7 @@ Difficulty: Very Hard
 	activation_method = pick("touch","laser","bullet","energy","bomb","mob_bump","heat","weapon","speech")
 	..()
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, voice_print, accent, message_mode)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker,"speech")

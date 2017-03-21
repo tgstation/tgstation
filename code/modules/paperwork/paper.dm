@@ -102,7 +102,7 @@
 	add_fingerprint(usr)
 
 /obj/item/weapon/paper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 /obj/item/weapon/paper/attack_self(mob/user)
@@ -345,8 +345,8 @@
 
 	if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
-								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] accidentally ignites themselves!</span>", \
+								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>", subjects=list(user))
 			user.dropItemToGround(P)
 			user.adjust_fire_stacks(1)
 			user.IgniteMob()
@@ -356,7 +356,7 @@
 			return
 
 		user.dropItemToGround(src)
-		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>", subjects=list(user))
 		fire_act()
 
 

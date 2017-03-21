@@ -129,7 +129,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if (shock(user, 50))
 			return
-		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
+		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>", subjects=list(user))
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 		deconstruct()
@@ -474,9 +474,9 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
-		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
@@ -501,7 +501,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
 		if(user == H)
-			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts to fix some of the wires in [IDENTITY_SUBJECT(2)]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [IDENTITY_SUBJECT(2)]'s [affecting.name].</span>", subjects=list(user, H))
 			if(!do_mob(user, H, 50))
 				return
 		if(item_heal_robotic(H, user, 0, 15))

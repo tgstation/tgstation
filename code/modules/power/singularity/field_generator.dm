@@ -67,9 +67,9 @@ field_generator power level display
 				to_chat(user, "<span class='warning'>You are unable to turn off the [name] once it is online!</span>")
 				return 1
 			else
-				user.visible_message("[user.name] turns on the [name].", \
+				user.visible_message("[IDENTITY_SUBJECT(1)] turns on the [name].", \
 					"<span class='notice'>You turn on the [name].</span>", \
-					"<span class='italics'>You hear heavy droning.</span>")
+					"<span class='italics'>You hear heavy droning.</span>", subjects=list(user))
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 
@@ -108,9 +108,9 @@ field_generator power level display
 			if(FG_SECURED)
 				if (WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+					user.visible_message("[IDENTITY_SUBJECT(1)] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
+						"<span class='italics'>You hear welding.</span>", subjects=list(user))
 					if(do_after(user,20*W.toolspeed, target = src) && state == FG_SECURED && WT.isOn())
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
@@ -118,9 +118,9 @@ field_generator power level display
 			if(FG_WELDED)
 				if (WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+					user.visible_message("[IDENTITY_SUBJECT(1)] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
+						"<span class='italics'>You hear welding.</span>", subjects=list(user))
 					if(do_after(user,20*W.toolspeed, target = src) && state == FG_WELDED && WT.isOn())
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
@@ -132,7 +132,7 @@ field_generator power level display
 	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
 		state = FG_UNSECURED
 		anchored = FALSE
-		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+		M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] rips [src] free from its moorings!</span>", subjects=list(M))
 	else
 		..()
 	if(!anchored)

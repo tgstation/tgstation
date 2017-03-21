@@ -144,9 +144,9 @@ Pipelines + Other Objects -> Pipe network
 
 			if (do_after(user, 20*W.toolspeed, target = src) && !QDELETED(src))
 				user.visible_message( \
-					"[user] unfastens \the [src].", \
+					"[IDENTITY_SUBJECT(1)] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
+					"<span class='italics'>You hear ratchet.</span>", subjects=list(user))
 				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
 
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
@@ -175,7 +175,7 @@ Pipelines + Other Objects -> Pipe network
 	var/range = pressures/250
 	var/speed = range/5
 
-	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>", subjects=list(user))
 	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)

@@ -293,10 +293,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
-
-		if(M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
+		var/name = avoid_assoc_duplicate_keys(M.real_name, namecounts)
 		if(M.stat == DEAD)
 			if(isobserver(M))
 				name += " \[ghost\]"
@@ -833,7 +830,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>", subjects=list(user))
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
@@ -1424,5 +1421,9 @@ var/valid_HTTPSGet = FALSE
 
 #define UNTIL(X) while(!(X)) stoplag()
 
-/proc/to_chat(target, message)
+
+/proc/to_chat(target, message, list/subjects)
+	if(subjects)
+		var/mob/M = target
+		message = M.parse_identity_subjects(message, subjects)
 	target << message

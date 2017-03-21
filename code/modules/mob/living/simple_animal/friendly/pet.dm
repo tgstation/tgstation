@@ -13,7 +13,7 @@
 		collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
 		pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
 		regenerate_icons()
-		to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
+		to_chat(user, "<span class='notice'>You put the [P] around [IDENTITY_SUBJECT(1)]'s neck.</span>", list(src))
 		if(P.tagname)
 			real_name = "\proper [P.tagname]"
 			name = real_name
@@ -21,7 +21,7 @@
 		return
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
-			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
+			user.visible_message("[IDENTITY_SUBJECT(1)] baps [IDENTITY_SUBJECT(2)] on the nose with the rolled up [O].", subjects=list(user, src))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					setDir(i)

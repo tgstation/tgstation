@@ -23,6 +23,8 @@
 	for(var/mob/living/carbon/human/H in mob_list) //yes, even the dead
 		H.set_species(new_species)
 		H.real_name = new_species.random_name(H.gender,1)
+		if(H.voiceprint)
+			H.voiceprint = generate_voiceprint()
 		H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
 		to_chat(H, "<span class='notice'>You feel somehow... different?</span>")
 		if(!all_the_same)

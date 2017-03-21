@@ -274,7 +274,7 @@ var/global/list/crematoriums = new/list()
 		return
 	O.loc = src.loc
 	if (user != O)
-		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] stuffs [IDENTITY_SUBJECT(2)] into [src].</span>", subjects=list(user, O))
 	return
 
 /*

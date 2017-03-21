@@ -34,44 +34,62 @@
 /datum/trackable
 	var/list/names = list()
 	var/list/namecounts = list()
-	var/list/humans = list()
-	var/list/others = list()
+	var/list/records = list()
 	var/list/cameras = list()
 
 /mob/living/silicon/ai/proc/trackable_mobs()
 
 	track.names.Cut()
 	track.namecounts.Cut()
-	track.humans.Cut()
-	track.others.Cut()
+	track.records.Cut()
 
-	if(usr.stat == 2)
+	if(stat == DEAD)
 		return list()
 
-	for(var/mob/living/M in mob_list)
-		if(!M.can_track(usr))
+	for(var/datum/data/record/G in data_core.general)
+		var/record_id = G.fields["id"]
+		if(!(G.fields["faceprint"] && record_id))
 			continue
-
-		// Human check
-		var/human = 0
-		if(ishuman(M))
-			human = 1
-
-		var/name = M.name
+		var/name = G.fields["name"]
+		if(!name)
+			name = "&lt;NAME MISSING&gt;"
 		if (name in track.names)
 			track.namecounts[name]++
 			name = text("[] ([])", name, track.namecounts[name])
 		else
 			track.names.Add(name)
 			track.namecounts[name] = 1
-		if(human)
-			track.humans[name] = M
-		else
-			track.others[name] = M
-
-	var/list/targets = sortList(track.humans) + sortList(track.others)
+		track.records[name] = record_id
+	var/list/targets = sortList(track.records)
 
 	return targets
+
+/mob/living/silicon/ai/proc/ai_track_href(atom/A, record_id)
+	var/turf/T = get_turf(A)
+	var/coords_href
+	if(T && cameranet.checkTurfVis(T))
+		coords_href = ";X=[T.x];Y=[T.y];Z=[T.z]"
+	if(record_id)
+		. = ";track=[record_id][coords_href]"
+	else if(coords_href)
+		. = ";trackfromcoords=1[coords_href]"
+	else
+		. = ";notrace=1"
+
+/mob/living/silicon/ai/proc/mobs_from_record(datum/data/record/R)
+	if(!R)
+		return
+	var/list/found = list()
+	var/R_faceprint = R.fields["faceprint"]
+	if(!R_faceprint)
+		return
+	for(var/mob/living/L in mob_list)
+		if(!(L.can_see_face() && L.can_track(src)))
+			continue
+		var/L_faceprint = L.get_faceprint()
+		if(L_faceprint == R_faceprint)
+			found += L
+	. = found.len ? found : null
 
 /mob/living/silicon/ai/verb/ai_camera_track(target_name in trackable_mobs())
 	set name = "track"
@@ -80,39 +98,44 @@
 	if(!target_name)
 		return
 
-	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
-
-	ai_actual_track(target)
+	var/record_id = track.records[target_name]
+	if(!record_id)
+		return
+	var/datum/data/record/G = find_record("id", record_id, data_core.general)
+	if(!G)
+		src << "<span class='notice'>Unable to locate [target_name] in crew records.</span>"
+		return
+	var/list/targets = mobs_from_record(G)
+	if(targets && targets.len)
+		ai_actual_track(pick(targets))
+	else
+		src << "<span class='notice'>[target_name]'s facial signature was not detected on the camera network.</span>"
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))
 		return
-	var/mob/living/silicon/ai/U = usr
 
-	U.cameraFollow = target
-	U.tracking = 1
-
-	if(!target || !target.can_track(usr))
-		to_chat(U, "<span class='warning'>Target is not near any active cameras.</span>")
-		U.cameraFollow = null
+	if(!(target && target.can_track(src)))
+		to_chat(src, "<span class='warning'>Target is not near any active cameras.</span>")
 		return
 
-	to_chat(U, "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>")
+	cameraFollow = target
+	tracking = 1
 
 	var/cameraticks = 0
 	spawn(0)
-		while(U.cameraFollow == target)
-			if(U.cameraFollow == null)
+		while(cameraFollow == target)
+			if(cameraFollow == null)
 				return
 
-			if(!target.can_track(usr))
-				U.tracking = 1
+			if(!target.can_track(src))
+				tracking = 1
 				if(!cameraticks)
-					to_chat(U, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
+					to_chat(src, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
 				cameraticks++
 				if(cameraticks > 9)
-					U.cameraFollow = null
-					to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
+					cameraFollow = null
+					to_chat(src, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
 					tracking = 0
 					return
 				else
@@ -121,17 +144,30 @@
 
 			else
 				cameraticks = 0
-				U.tracking = 0
+				tracking = 0
 
-			if(U.eyeobj)
-				U.eyeobj.setLoc(get_turf(target))
+			if(eyeobj)
+				eyeobj.setLoc(get_turf(target))
 
 			else
 				view_core()
-				U.cameraFollow = null
+				cameraFollow = null
 				return
 
 			sleep(10)
+
+/mob/living/silicon/ai/proc/ai_coords_track(x, y, z)
+	var/turf/T = locate(x, y, z)
+	if(T && cameranet.checkTurfVis(T))
+		. = 1
+		cameraFollow = null
+		src.eyeobj.setLoc(T)
+		var/list/targets = list()
+		for(var/mob/living/L in T.contents)
+			targets += L
+		if(targets && targets.len)
+			ai_actual_track(pick(targets))
+			. = 2
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))

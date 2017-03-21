@@ -1069,19 +1069,19 @@
 						if(BP)
 							BP.drop_limb()
 						else
-							to_chat(usr, "[C] doesn't have such bodypart.")
+							to_chat(usr, "[C.real_name] doesn't have such bodypart.")
 					if("add")
 						if(BP)
-							to_chat(usr, "[C] already has such bodypart.")
+							to_chat(usr, "[C.real_name] already has such bodypart.")
 						else
 							if(!C.regenerate_limb(result))
-								to_chat(usr, "[C] cannot have such bodypart.")
+								to_chat(usr, "[C.real_name] cannot have such bodypart.")
 					if("augment")
 						if(ishuman(C))
 							if(BP)
 								BP.change_bodypart_status(BODYPART_ROBOTIC, 1)
 							else
-								to_chat(usr, "[C] doesn't have such bodypart.")
+								to_chat(usr, "[C.real_name] doesn't have such bodypart.")
 						else
 							to_chat(usr, "Only humans can be augmented.")
 
@@ -1105,12 +1105,12 @@
 
 			var/success = purrbation_toggle(H)
 			if(success)
-				to_chat(usr, "Put [H] on purrbation.")
+				to_chat(usr, "Put [H.real_name] on purrbation.")
 				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
 				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 
 			else
-				to_chat(usr, "Removed [H] from purrbation.")
+				to_chat(usr, "Removed [H.real_name] from purrbation.")
 				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
 				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 
@@ -1146,11 +1146,11 @@
 				if("stamina")
 					L.adjustStaminaLoss(amount)
 				else
-					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
+					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L.real_name]")
 					return
 
 			if(amount != 0)
-				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
+				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L.real_name]([key_name(L)]) ")
+				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L.real_name]([key_name(L)]) </span>")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 

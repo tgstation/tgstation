@@ -63,9 +63,9 @@
 
 	if(isnum(drained)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
 		if(drained)
-			to_chat(H, "<span class='notice'>Gained <B>[drained]</B> energy from \the [A].</span>")
+			to_chat(H, "<span class='notice'>Gained <B>[drained]</B> energy from \the [IDENTITY_SUBJECT(1)].</span>", list(A))
 		else
-			to_chat(H, "<span class='danger'>\The [A] has run dry of power, you must find another source!</span>")
+			to_chat(H, "<span class='danger'>\The [IDENTITY_SUBJECT(1)] has run dry of power, you must find another source!</span>", list(A))
 	else
 		drained = 0 //as to not cancel attack_hand()
 

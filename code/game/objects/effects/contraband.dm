@@ -99,7 +99,7 @@
 /obj/structure/sign/poster/attack_hand(mob/user)
 	if(ruined)
 		return
-	visible_message("[user] rips [src] in a single, decisive motion!" )
+	visible_message("[IDENTITY_SUBJECT(1)] rips [src] in a single, decisive motion!", subjects=list(user))
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
 
 	var/obj/structure/sign/poster/ripped/R = new(loc)

@@ -327,7 +327,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		new /obj/item/clockwork/slab(T)
 
 	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "dusty old tome" : "strange metal tablet"] sitting on the desk. You don't really remember printing it.[spook == "brass" ? " And how did it print something made of metal?" : ""]</span>")
-	user.visible_message("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2)
+	user.visible_message("[IDENTITY_SUBJECT(1)] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2, subjects=list(user))
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/barcodescanner))
@@ -575,7 +575,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(!user.drop_item())
 		return
 	P.loc = src
-	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
+	user.visible_message("[IDENTITY_SUBJECT(1)] loads some paper into [src].", "You load some paper into [src].", subjects=list(user))
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = 1
 	sleep(rand(200,400))

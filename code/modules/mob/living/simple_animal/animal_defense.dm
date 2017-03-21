@@ -6,7 +6,7 @@
 
 		if("help")
 			if (health > 0)
-				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
+				visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [response_help] [IDENTITY_SUBJECT(2)].</span>", subjects=list(M, src))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if("grab")
@@ -14,8 +14,8 @@
 
 		if("harm", "disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
-			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] [response_harm] [IDENTITY_SUBJECT(2)]!</span>",\
+			"<span class='userdanger'>[IDENTITY_SUBJECT(1)] [response_harm] [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
@@ -26,8 +26,8 @@
 	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-			"<span class='userdanger'>[user] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has punched [IDENTITY_SUBJECT(2)]!</span>", \
+			"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has punched [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(user, src))
 		adjustBruteLoss(15)
 		return 1
 
@@ -39,7 +39,7 @@
 			return 1
 	if (M.a_intent == INTENT_HELP)
 		if (health > 0)
-			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [response_help] [IDENTITY_SUBJECT(2)].</span>", subjects=list(M, src))
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
@@ -47,13 +47,13 @@
 	if(..()) //if harm or disarm intent.
 		if(M.a_intent == INTENT_DISARM)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
-					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] [response_disarm] [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] [response_disarm] [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 			add_logs(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-					"<span class='userdanger'>[M] has slashed at [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has slashed at [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has slashed at [IDENTITY_SUBJECT(2)]!</span>", null, COMBAT_MESSAGE_RANGE, subjects=list(M, src))
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			attack_threshold_check(damage)
 			add_logs(M, src, "attacked")
@@ -88,7 +88,7 @@
 		temp_damage *= damage_coeff[damagetype]
 
 	if(temp_damage >= 0 && temp_damage <= force_threshold)
-		visible_message("<span class='warning'>[src] looks unharmed.</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] looks unharmed.</span>", subjects=list(src))
 	else
 		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 

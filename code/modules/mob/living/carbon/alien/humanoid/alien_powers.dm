@@ -65,7 +65,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		to_chat(user, "There's already a weed node here.")
 		return 0
-	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
+	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>", subjects=list(user))
 	new/obj/structure/alien/weeds/node(user.loc)
 	return 1
 
@@ -86,13 +86,13 @@ Doesn't work on other aliens/AI.*/
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
-		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
+		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [IDENTITY_SUBJECT(1)]</span>", list(M))
 		for(var/ded in dead_mob_list)
 			if(!isobserver(ded))
 				continue
 			var/follow_link_user = FOLLOW_LINK(ded, user)
 			var/follow_link_whispee = FOLLOW_LINK(ded, M)
-			to_chat(ded, "[follow_link_user] <span class='name'>[user]</span> <span class='alertalien'>Alien Whisper --> </span> [follow_link_whispee] <span class='name'>[M]</span> <span class='noticealien'>[msg]</span>")
+			to_chat(ded, "[follow_link_user] <span class='name'>[user.real_name]</span> <span class='alertalien'>Alien Whisper --> </span> [follow_link_whispee] <span class='name'>[M]</span> <span class='noticealien'>[msg]</span>")
 	else
 		return 0
 	return 1
@@ -118,7 +118,7 @@ Doesn't work on other aliens/AI.*/
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			to_chat(M, "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>")
-			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [M]</span>")
+			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [IDENTITY_SUBJECT(1)]</span>", list(M))
 		else
 			to_chat(user, "<span class='noticealien'>You need to be closer!</span>")
 	return
@@ -138,7 +138,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/acid/proc/corrode(atom/target,mob/living/carbon/user = usr)
 	if(target in oview(1,user))
 		if(target.acid_act(200, 100))
-			user.visible_message("<span class='alertalien'>[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
+			user.visible_message("<span class='alertalien'>[IDENTITY_SUBJECT(1)] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>", subjects=list(user))
 			return 1
 		else
 			to_chat(user, "<span class='noticealien'>You cannot dissolve this object.</span>")
@@ -208,7 +208,7 @@ Doesn't work on other aliens/AI.*/
 	if(!isturf(U) || !isturf(T))
 		return FALSE
 
-	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>", subjects=list(user))
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
 	A.current = U
 	A.preparePixelProjectile(target, get_turf(target), user, params)
@@ -258,7 +258,7 @@ Doesn't work on other aliens/AI.*/
 	if (!cost_check(check_turf,user))
 		return 0
 	to_chat(user, "<span class='notice'>You shape a [choice].</span>")
-	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] vomits up a thick purple substance and begins to shape it.</span>", subjects=list(user))
 
 	choice = structures[choice]
 	new choice(user.loc)
@@ -278,7 +278,7 @@ Doesn't work on other aliens/AI.*/
 			if(isliving(A))
 				var/mob/M = A
 				M.reset_perspective()
-		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
+		user.visible_message("<span class='alertealien'>[IDENTITY_SUBJECT(1)] hurls out the contents of their stomach!</span>", subjects=list(user))
 	return
 
 /obj/effect/proc_holder/alien/sneak

@@ -19,7 +19,7 @@
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
 			to_chat(user, "<span class='warning'>[S]'s trapped consciousness appears inactive!</span>")
 			return 0
-		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>", subjects=list(user))
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
 		A.visible_message("<span class='brass'>[src][spawn_message]</span>")
 		S.brainmob.mind.transfer_to(A)

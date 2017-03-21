@@ -11,7 +11,7 @@
 
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to sever the muscles on [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to sever the muscles on [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)]...</span>", subjects=list(user, target))
 
 
 /datum/surgery_step/add_limb
@@ -31,9 +31,9 @@
 		return -1
 	L = surgery.operated_bodypart
 	if(L)
-		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to augment [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)]...</span>", subjects=list(user, target))
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] looks for [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)]...</span>", subjects=list(user, target))
 
 
 //ACTUAL SURGERIES
@@ -48,7 +48,7 @@
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(L)
-		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] successfully augments [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].</span>", subjects=list(user, target))
 		L.change_bodypart_status(BODYPART_ROBOTIC, 1)
 		user.drop_item()
 		qdel(tool)
@@ -56,5 +56,5 @@
 		target.updatehealth()
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
-		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
+		to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] has no organic [parse_zone(target_zone)] there!</span>", list(target))
 	return 1

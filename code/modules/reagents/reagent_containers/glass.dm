@@ -22,8 +22,8 @@
 	if(istype(M))
 		if(user.a_intent == INTENT_HARM)
 			var/R
-			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
-							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+			M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] splashes the contents of [src] onto [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] splashes the contents of [src] onto [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, M))
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += A.id + " ("
@@ -37,13 +37,13 @@
 			reagents.clear_reagents()
 		else
 			if(M != user)
-				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
-							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+				M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attempts to feed something to [IDENTITY_SUBJECT(2)].</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] attempts to feed something to you.</span>", subjects=list(user, M))
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
-				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
+				M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] feeds something to [IDENTITY_SUBJECT(2)].</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] feeds something to you.</span>", subjects=list(user, M))
 				add_logs(user, M, "fed", reagentlist(src))
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
@@ -84,8 +84,8 @@
 
 	else if(reagents.total_volume)
 		if(user.a_intent == INTENT_HARM)
-			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
-								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
+			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] splashes the contents of [src] onto [IDENTITY_SUBJECT(2)]!</span>", \
+								"<span class='notice'>You splash the contents of [src] onto [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, target))
 			reagents.reaction(target, TOUCH)
 			reagents.clear_reagents()
 

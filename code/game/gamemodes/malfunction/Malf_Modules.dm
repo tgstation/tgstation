@@ -294,7 +294,7 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [M]!</span>")
+				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [IDENTITY_SUBJECT(1)]!</span>", subjects=list(M))
 				to_chat(src, "<span class='warning'>Overloading machine circuitry...</span>")
 				spawn(50)
 					if(M)

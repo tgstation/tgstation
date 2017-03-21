@@ -63,7 +63,7 @@
 		return
 	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
-			to_chat(user, "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
+			to_chat(user, "<span class='warning'>You can't impale [IDENTITY_SUBJECT(1)] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>", list(target))
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
@@ -82,7 +82,7 @@
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
 			if(S.stat != DEAD)
-				S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
+				S.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>", subjects=list(S))
 				S.adjustFireLoss(22) //total 37 damage on borgs
 		else if(iscultist(target) || isconstruct(target))
 			var/mob/living/M = target
@@ -102,7 +102,7 @@
 		if(target)
 			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
 			target.Stun(2) //brief stun
-			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
+			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [IDENTITY_SUBJECT(1)]...</span>", list(target))
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
@@ -110,9 +110,9 @@
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
-					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
+					user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] [remove_verb]s [src] out of [IDENTITY_SUBJECT(2)]!</span>", "<span class='warning'>You [remove_verb] your spear from [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, target))
 				else
-					user.visible_message("<span class='warning'>[user] kicks [target] off of [src]!</span>", "<span class='warning'>You kick [target] off of [src]!</span>")
+					user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] kicks [IDENTITY_SUBJECT(2)] off of [src]!</span>", "<span class='warning'>You kick [IDENTITY_SUBJECT(2)] off of [src]!</span>", subjects=list(user, target))
 					to_chat(target, "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>")
 					target.emote("scream")
 					step(target, get_dir(user, target))
@@ -122,7 +122,7 @@
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
 				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
-				user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] [remove_verb]s [src] out of [IDENTITY_SUBJECT(2)]!</span>", "<span class='warning'>You [remove_verb] your spear from [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, target))
 				if(target.stat == CONSCIOUS)
 					to_chat(target, "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>")
 					target.emote("scream")
@@ -134,9 +134,9 @@
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L))
 			if(L.put_in_active_hand(src))
-				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
+				L.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] catches [src] out of the air!</span>", subjects=list(L))
 			else
-				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+				L.visible_message("<span class='warning'>[src] bounces off of [IDENTITY_SUBJECT(1)], as if repelled by an unseen force!</span>", subjects=list(L))
 		else if(!..())
 			if(!L.null_rod_check())
 				if(issilicon(L) || iscultist(L))

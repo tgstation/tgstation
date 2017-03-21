@@ -122,9 +122,9 @@
 		return 1
 
 	if(istype(O, /obj/item/weapon/disk/design_disk))
-		user.visible_message("[user] begins to load \the [O] in \the [src]...",
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
-			"You hear the chatter of a floppy drive.")
+			"You hear the chatter of a floppy drive.", subjects=list(user))
 		busy = 1
 		var/obj/item/weapon/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))

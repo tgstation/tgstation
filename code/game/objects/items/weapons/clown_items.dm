@@ -43,7 +43,7 @@
 
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
-	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!", subjects=list(user))
 	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
 
@@ -60,26 +60,26 @@
 	if(user.client && (target in user.client.screen))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
-		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to scrub \the [IDENTITY_SUBJECT(2)] out with [src].", "<span class='warning'>You begin to scrub \the [IDENTITY_SUBJECT(2)] out with [src]...</span>", subjects=list(user, target))
 		if(do_after(user, src.cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
 		var/mob/living/carbon/human/H = user
-		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
+		user.visible_message("<span class='warning'>\the [IDENTITY_SUBJECT(1)] washes \the [IDENTITY_SUBJECT(2)]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>", subjects=list(user, target)) //washes mouth out with soap sounds better than 'the soap' here
 		H.lip_style = null //removes lipstick
 		H.update_body()
 		return
 	else if(istype(target, /obj/structure/window))
-		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>", subjects=list(user))
 		if(do_after(user, src.cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
 	else
-		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to clean \the [IDENTITY_SUBJECT(2)] with [src]...", "<span class='notice'>You begin to clean \the [IDENTITY_SUBJECT(2)] with [src]...</span>", subjects=list(user, target))
 		if(do_after(user, src.cleanspeed, target = target))
-			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+			to_chat(user, "<span class='notice'>You clean \the [IDENTITY_SUBJECT(1)].</span>", list(target))
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -110,7 +110,7 @@
 	var/cooldowntime = 20
 
 /obj/item/weapon/bikehorn/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	playsound(src.loc, honksound, 50, 1)
 	return (BRUTELOSS)
 

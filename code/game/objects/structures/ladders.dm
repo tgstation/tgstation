@@ -87,9 +87,9 @@
 
 /obj/structure/ladder/proc/show_fluff_message(up,mob/user)
 	if(up)
-		user.visible_message("[user] climbs up \the [src].","<span class='notice'>You climb up \the [src].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] climbs up \the [src].","<span class='notice'>You climb up \the [src].</span>", subjects=list(user))
 	else
-		user.visible_message("[user] climbs down \the [src].","<span class='notice'>You climb down \the [src].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] climbs down \the [src].","<span class='notice'>You climb down \the [src].</span>", subjects=list(user))
 
 /obj/structure/ladder/proc/can_use(mob/user)
 	return 1

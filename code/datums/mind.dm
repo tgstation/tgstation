@@ -41,13 +41,18 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	var/datum/job/assigned_job
-
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 
 	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
+
+	var/list/voiceprints = list() // remembering other people's voices
+	var/list/faceprints = list() // remembering other people's faces
+	var/list/identity_cache = list()
+	var/list/identity_edit_tags = list()
+	var/datum/identity_manager/idman
+	var/update_idman = FALSE //if set to TRUE, idman will update next tick, and automatically reset this to FALSE
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
@@ -67,10 +72,15 @@
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
+	idman = new(src)
 
 /datum/mind/Destroy()
 	ticker.minds -= src
-	return ..()
+	if(idman)
+		idman.mind = null
+		qdel(idman)
+		idman = null
+	. = ..()
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
@@ -773,35 +783,35 @@
 		if (objective)
 			objectives -= objective
 			objectives.Insert(objective_pos, new_objective)
-			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
-			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
+			message_admins("[key_name_admin(usr)] edited [current.real_name]/([key])'s objective to [new_objective.explanation_text]")
+			log_admin("[key_name(usr)] edited [current.real_name]/([key])'s objective to [new_objective.explanation_text]")
 		else
 			objectives += new_objective
-			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
-			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
+			message_admins("[key_name_admin(usr)] added a new objective for [current.real_name]/([key]): [new_objective.explanation_text]")
+			log_admin("[key_name(usr)] added a new objective for [current.real_name]/([key]): [new_objective.explanation_text]")
 
 	else if (href_list["obj_delete"])
 		var/datum/objective/objective = locate(href_list["obj_delete"])
 		if(!istype(objective))
 			return
 		objectives -= objective
-		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
-		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
+		message_admins("[key_name_admin(usr)] removed an objective for [current.real_name]/([key]): [objective.explanation_text]")
+		log_admin("[key_name(usr)] removed an objective for [current.real_name]/([key]): [objective.explanation_text]")
 
 	else if(href_list["obj_completed"])
 		var/datum/objective/objective = locate(href_list["obj_completed"])
 		if(!istype(objective))
 			return
 		objective.completed = !objective.completed
-		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
+		log_admin("[key_name(usr)] toggled the win state for [current.real_name]/([key])'s objective: [objective.explanation_text]")
 
 	else if (href_list["revolution"])
 		switch(href_list["revolution"])
 			if("clear")
 				remove_rev()
 				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a revolutionary!</span>")
-				message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
-				log_admin("[key_name(usr)] has de-rev'ed [current].")
+				message_admins("[key_name_admin(usr)] has de-rev'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has de-rev'ed [current.real_name]/([key]).")
 			if("rev")
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
@@ -814,8 +824,8 @@
 				ticker.mode.revolutionaries += src
 				ticker.mode.update_rev_icons_added(src)
 				special_role = "Revolutionary"
-				message_admins("[key_name_admin(usr)] has rev'ed [current].")
-				log_admin("[key_name(usr)] has rev'ed [current].")
+				message_admins("[key_name_admin(usr)] has rev'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has rev'ed [current.real_name]/([key]).")
 
 			if("headrev")
 				if(src in ticker.mode.revolutionaries)
@@ -840,8 +850,8 @@
 				ticker.mode.head_revolutionaries += src
 				ticker.mode.update_rev_icons_added(src)
 				special_role = "Head Revolutionary"
-				message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
-				log_admin("[key_name(usr)] has head-rev'ed [current].")
+				message_admins("[key_name_admin(usr)] has head-rev'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has head-rev'ed [current.real_name]/([key]).")
 
 			if("autoobjectives")
 				ticker.mode.forge_revolutionary_objectives(src)
@@ -876,8 +886,8 @@
 		switch(href_list["gang"])
 			if("clear")
 				remove_gang()
-				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
-				log_admin("[key_name(usr)] has de-gang'ed [current].")
+				message_admins("[key_name_admin(usr)] has de-gang'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has de-gang'ed [current.real_name]/([key]).")
 
 			if("equip")
 				switch(ticker.mode.equip_gang(current,gang_datum))
@@ -919,8 +929,8 @@
 		special_role = "[G.name] Gang Boss"
 		G.add_gang_hud(src)
 		to_chat(current, "<FONT size=3 color=red><B>You are a [G.name] Gang Boss!</B></FONT>")
-		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang leadership.")
-		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang leadership.")
+		message_admins("[key_name_admin(usr)] has added [current.real_name]/([key]) to the [G.name] Gang leadership.")
+		log_admin("[key_name(usr)] has added [current.real_name]/([key]) to the [G.name] Gang leadership.")
 		ticker.mode.forge_gang_objectives(src)
 		ticker.mode.greet_gang(src,0)
 
@@ -930,8 +940,8 @@
 			return
 		ticker.mode.remove_gangster(src,0,2,1)
 		ticker.mode.add_gangster(src,G,0)
-		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang (A).")
-		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang (A).")
+		message_admins("[key_name_admin(usr)] has added [current.real_name]/([key]) to the [G.name] Gang (A).")
+		log_admin("[key_name(usr)] has added [current.real_name]/([key]) to the [G.name] Gang (A).")
 
 /////////////////////////////////
 
@@ -941,13 +951,13 @@
 		switch(href_list["cult"])
 			if("clear")
 				remove_cultist()
-				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
-				log_admin("[key_name(usr)] has de-cult'ed [current].")
+				message_admins("[key_name_admin(usr)] has de-cult'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has de-cult'ed [current.real_name]/([key]).")
 			if("cultist")
 				if(!(src in ticker.mode.cult))
 					ticker.mode.add_cultist(src, 0)
-					message_admins("[key_name_admin(usr)] has cult'ed [current].")
-					log_admin("[key_name(usr)] has cult'ed [current].")
+					message_admins("[key_name_admin(usr)] has cult'ed [current.real_name]/([key]).")
+					log_admin("[key_name(usr)] has cult'ed [current.real_name]/([key]).")
 			if("tome")
 				if (!ticker.mode.equip_cultist(current,1))
 					to_chat(usr, "<span class='danger'>Spawning tome failed!</span>")
@@ -960,25 +970,25 @@
 		switch(href_list["clockcult"])
 			if("clear")
 				remove_servant_of_ratvar(current, TRUE)
-				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
-				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
+				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has removed clockwork servant status from [current.real_name]/([key]).")
 			if("servant")
 				if(!is_servant_of_ratvar(current))
 					add_servant_of_ratvar(current, TRUE)
-					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
-					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
+					message_admins("[key_name_admin(usr)] has made [current.real_name]/([key]) into a servant of Ratvar.")
+					log_admin("[key_name(usr)] has made [current.real_name]/([key]) into a servant of Ratvar.")
 			if("slab")
 				if(!ticker.mode.equip_servant(current))
-					to_chat(usr, "<span class='warning'>Failed to outfit [current] with a slab!</span>")
+					to_chat(usr, "<span class='warning'>Failed to outfit [src] with a slab!</span>")
 				else
-					to_chat(usr, "<span class='notice'>Successfully gave [current] a clockwork slab!</span>")
+					to_chat(usr, "<span class='notice'>Successfully gave [src] a clockwork slab!</span>")
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
 			if("clear")
 				remove_wizard()
 				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")
-				log_admin("[key_name(usr)] has de-wizard'ed [current].")
+				log_admin("[key_name(usr)] has de-wizard'ed [current.real_name]/([key]).")
 				ticker.mode.update_wiz_icons_removed(src)
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
@@ -986,8 +996,8 @@
 					special_role = "Wizard"
 					//ticker.mode.learn_basic_spells(current)
 					to_chat(current, "<span class='boldannounce'>You are the Space Wizard!</span>")
-					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
-					log_admin("[key_name(usr)] has wizard'ed [current].")
+					message_admins("[key_name_admin(usr)] has wizard'ed [current.real_name]/([key]).")
+					log_admin("[key_name(usr)] has wizard'ed [current.real_name]/([key]).")
 					ticker.mode.update_wiz_icons_added(src)
 			if("lair")
 				current.loc = pick(wizardstart)
@@ -1004,16 +1014,16 @@
 			if("clear")
 				remove_changeling()
 				to_chat(current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
-				message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
-				log_admin("[key_name(usr)] has de-changeling'ed [current].")
+				message_admins("[key_name_admin(usr)] has de-changeling'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has de-changeling'ed [current.real_name]/([key]).")
 			if("changeling")
 				if(!(src in ticker.mode.changelings))
 					ticker.mode.changelings += src
 					current.make_changeling()
 					special_role = "Changeling"
 					to_chat(current, "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>")
-					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
-					log_admin("[key_name(usr)] has changeling'ed [current].")
+					message_admins("[key_name_admin(usr)] has changeling'ed [current.real_name]/([key]).")
+					log_admin("[key_name(usr)] has changeling'ed [current.real_name]/([key]).")
 					ticker.mode.update_changeling_icons_added(src)
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
@@ -1034,8 +1044,8 @@
 			if("clear")
 				remove_nukeop()
 				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a syndicate operative!</span>")
-				message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
-				log_admin("[key_name(usr)] has de-nuke op'ed [current].")
+				message_admins("[key_name_admin(usr)] has de-nuke op'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has de-nuke op'ed [current.real_name]/([key]).")
 			if("nuclear")
 				if(!(src in ticker.mode.syndicates))
 					ticker.mode.syndicates += src
@@ -1049,8 +1059,8 @@
 					to_chat(current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 					ticker.mode.forge_syndicate_objectives(src)
 					ticker.mode.greet_syndicate(src)
-					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
-					log_admin("[key_name(usr)] has nuke op'ed [current].")
+					message_admins("[key_name_admin(usr)] has nuke op'ed [current.real_name]/([key]).")
+					log_admin("[key_name(usr)] has nuke op'ed [current.real_name]/([key]).")
 			if("lair")
 				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 			if("dressup")
@@ -1084,8 +1094,8 @@
 			if("clear")
 				remove_traitor()
 				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>")
-				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
-				log_admin("[key_name(usr)] has de-traitor'ed [current].")
+				message_admins("[key_name_admin(usr)] has de-traitor'ed [current.real_name]/([key]).")
+				log_admin("[key_name(usr)] has de-traitor'ed [current.real_name]/([key]).")
 				ticker.mode.update_traitor_icons_removed(src)
 
 			if("traitor")
@@ -1093,8 +1103,8 @@
 					ticker.mode.traitors += src
 					special_role = "traitor"
 					to_chat(current, "<span class='boldannounce'>You are a traitor!</span>")
-					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
-					log_admin("[key_name(usr)] has traitor'ed [current].")
+					message_admins("[key_name_admin(usr)] has traitor'ed [current.real_name]/([key]).")
+					log_admin("[key_name(usr)] has traitor'ed [current.real_name]/([key]).")
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						ticker.mode.add_law_zero(A)
@@ -1126,16 +1136,16 @@
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
-					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
+					message_admins("[key_name_admin(usr)] has de-devil'ed [current.real_name]/([key]).")
 					devilinfo = null
 					if(issilicon(current))
 						var/mob/living/silicon/S = current
 						S.clear_law_sixsixsix(current)
-					log_admin("[key_name(usr)] has de-devil'ed [current].")
+					log_admin("[key_name(usr)] has de-devil'ed [current.real_name]/([key]).")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
-					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
-					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
+					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current.real_name]/([key]).")
+					log_admin("[key_name(usr)] has de-sintouch'ed [current.real_name]/([key]).")
 			if("devil")
 				if(devilinfo)
 					devilinfo.ascendable = FALSE
@@ -1175,7 +1185,7 @@
 					ticker.mode.sintouched += src
 					var/mob/living/carbon/human/H = current
 					H.influenceSin()
-					message_admins("[key_name_admin(usr)] has sintouch'ed [current].")
+					message_admins("[key_name_admin(usr)] has sintouch'ed [current.real_name]/([key]).")
 				else
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
@@ -1190,7 +1200,7 @@
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
 				make_Abductor()
-				log_admin("[key_name(usr)] turned [current] into abductor.")
+				log_admin("[key_name(usr)] turned [current.real_name]/([key]) into abductor.")
 				ticker.mode.update_abductor_icons_added(src)
 			if("equip")
 				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
@@ -1256,16 +1266,16 @@
 				var/mob/living/silicon/robot/R = current
 				if (istype(R))
 					R.SetEmagged(0)
-					message_admins("[key_name_admin(usr)] has unemag'ed [R].")
-					log_admin("[key_name(usr)] has unemag'ed [R].")
+					message_admins("[key_name_admin(usr)] has unemag'ed [current.real_name]/([key]).")
+					log_admin("[key_name(usr)] has unemag'ed [current.real_name]/([key]).")
 
 			if("unemagcyborgs")
 				if(isAI(current))
 					var/mob/living/silicon/ai/ai = current
 					for (var/mob/living/silicon/robot/R in ai.connected_robots)
 						R.SetEmagged(0)
-					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
-					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
+					message_admins("[key_name_admin(usr)] has unemag'ed [current.real_name]/([key])'s Cyborgs.")
+					log_admin("[key_name(usr)] has unemag'ed [current.real_name]/([key])'s Cyborgs.")
 
 	else if (href_list["common"])
 		switch(href_list["common"])
@@ -1275,7 +1285,7 @@
 			if("takeuplink")
 				take_uplink()
 				memory = null//Remove any memory they may have had.
-				log_admin("[key_name(usr)] removed [current]'s uplink.")
+				log_admin("[key_name(usr)] removed [current.real_name]/([key])'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN, 0))
 					var/obj/item/device/uplink/U = find_syndicate_uplink()
@@ -1283,12 +1293,12 @@
 						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null|num
 						if(!isnull(crystals))
 							U.telecrystals = crystals
-							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
-							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
+							message_admins("[key_name_admin(usr)] changed [current.real_name]/([key])'s telecrystal count to [crystals].")
+							log_admin("[key_name(usr)] changed [current.real_name]/([key])'s telecrystal count to [crystals].")
 			if("uplink")
 				if(!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
 					to_chat(usr, "<span class='danger'>Equipping a syndicate failed!</span>")
-				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
+				log_admin("[key_name(usr)] attempted to give [current.real_name]/([key]) an uplink.")
 
 	else if (href_list["obj_announce"])
 		announce_objectives()

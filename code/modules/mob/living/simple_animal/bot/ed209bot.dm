@@ -178,9 +178,9 @@ Auto Patrol[]"},
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
+			to_chat(user, "<span class='warning'>You short out [IDENTITY_SUBJECT(1)]'s target assessment circuits.</span>", list(src))
 			oldtarget_name = user.name
-		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+		audible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] buzzes oddly!</span>", subjects=list(src))
 		declare_arrests = 0
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
@@ -338,7 +338,7 @@ Auto Patrol[]"},
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
 			playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
-			visible_message("<b>[src]</b> points at [C.name]!")
+			visible_message("<b>[IDENTITY_SUBJECT(1)]</b> points at [IDENTITY_SUBJECT(2)]!", subjects=list(src, C))
 			mode = BOT_HUNT
 			spawn(0)
 				handle_automated_action()	// ensure bot quickly responds to a perp
@@ -353,7 +353,7 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/explode()
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[IDENTITY_SUBJECT(1)] blows apart!</span>", subjects=list(src))
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
@@ -534,14 +534,14 @@ Auto Patrol[]"},
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
-	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
-							"<span class='userdanger'>[src] has stunned you!</span>")
+	C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has stunned [IDENTITY_SUBJECT(2)]!</span>",\
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has stunned you!</span>", subjects=list(src, C))
 
 /mob/living/simple_animal/bot/ed209/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST
 	playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
-						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
+	C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is trying to put zipties on [IDENTITY_SUBJECT(2)]!</span>",\
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is trying to put zipties on you!</span>", subjects=list(src, C))
 
 	spawn(60)
 		if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.

@@ -33,9 +33,9 @@
 			if(!WT.isOn())
 				return
 			playsound(src.loc, WT.usesound, 50, 1)
-			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+			visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] slices apart \the [src].</span>",
 							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='italics'>You hear welding.</span>", subjects=list(user))
 			new /obj/item/stack/sheet/metal(src.loc, 4)
 			qdel(src)
 		return
@@ -82,7 +82,7 @@
 			if(user.pulling != L)
 				return
 			playsound(src.loc, 'sound/effects/splat.ogg', 25, 1)
-			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+			L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] slams [IDENTITY_SUBJECT(2)] onto the meat spike!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>", subjects=list(user, L))
 			L.loc = src.loc
 			L.emote("scream")
 			L.add_splatter_floor()
@@ -109,21 +109,21 @@
 		var/mob/living/M = buckled_mob
 		if(M != user)
 			M.visible_message(\
-				"[user.name] tries to pull [M.name] free of the [src]!",\
-				"<span class='notice'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
-				"<span class='italics'>You hear a squishy wet noise.</span>")
+				"[IDENTITY_SUBJECT(1)] tries to pull [IDENTITY_SUBJECT(2)] free of the [src]!",\
+				"<span class='notice'>[IDENTITY_SUBJECT(1)] is trying to pull you off the [src], opening up fresh wounds!</span>",\
+				"<span class='italics'>You hear a squishy wet noise.</span>", subjects=list(user, M))
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
 					M.visible_message(\
-					"[user.name] fails to free [M.name]!",\
-					"<span class='notice'>[user.name] fails to pull you off of the [src].</span>")
+					"[IDENTITY_SUBJECT(1)] fails to free [IDENTITY_SUBJECT(2)]!",\
+					"<span class='notice'>[IDENTITY_SUBJECT(1)] fails to pull you off of the [src].</span>", subjects=list(user, M))
 				return
 
 		else
 			M.visible_message(\
-			"<span class='warning'>[M.name] struggles to break free from the [src]!</span>",\
+			"<span class='warning'>[IDENTITY_SUBJECT(1)] struggles to break free from the [src]!</span>",\
 			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
-			"<span class='italics'>You hear a wet squishing noise..</span>")
+			"<span class='italics'>You hear a wet squishing noise..</span>", subjects=list(M))
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
@@ -136,7 +136,7 @@
 		animate(M, transform = m180, time = 3)
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
-		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
+		src.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] falls free of the [src]!</span>", subjects=list(M))
 		unbuckle_mob(M,force=1)
 		M.emote("scream")
 		M.AdjustWeakened(10)

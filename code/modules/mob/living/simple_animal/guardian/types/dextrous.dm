@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)
-		var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+		var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[IDENTITY_SUBJECT(1)]</b>!\n"
 		msg += "[desc]\n"
 
 		for(var/obj/item/I in held_items)
@@ -42,7 +42,7 @@
 			else
 				msg += "It is holding \icon[internal_storage] \a [internal_storage] in its internal storage.\n"
 		msg += "*---------*</span>"
-		to_chat(user, msg)
+		to_chat(user, msg, list(src))
 	else
 		..()
 

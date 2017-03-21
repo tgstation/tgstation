@@ -34,7 +34,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		structureclimber.Weaken(2)
-		structureclimber.visible_message("<span class='warning'>[structureclimber.name] has been knocked off the [src]", "You're knocked off the [src]!", "You see [structureclimber.name] get knocked off the [src]</span>")
+		structureclimber.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] has been knocked off the [src]", "You're knocked off the [src]!", "You see [IDENTITY_SUBJECT(1)] get knocked off the [src]</span>", subjects=list(structureclimber))
 	interact(user)
 
 /obj/structure/interact(mob/user)
@@ -70,8 +70,8 @@
 
 /obj/structure/proc/climb_structure(mob/user)
 	src.add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>You start climbing onto [src]...</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] starts climbing onto [src].</span>", \
+								"<span class='notice'>You start climbing onto [src]...</span>", subjects=list(user))
 	var/adjusted_climb_time = climb_time
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
@@ -81,8 +81,8 @@
 	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed
 			if(do_climb(user))
-				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
-									"<span class='notice'>You climb onto [src].</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] climbs onto [src].</span>", \
+									"<span class='notice'>You climb onto [src].</span>", subjects=list(user))
 				add_logs(user, src, "climbed onto")
 				user.Stun(climb_stun)
 				. = 1

@@ -36,19 +36,19 @@
 			if(1)
 				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 			if(2)
-				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>", "<span class='notice'>We extend a proboscis.</span>")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] extends a proboscis!</span>", "<span class='notice'>We extend a proboscis.</span>", subjects=list(user))
 			if(3)
-				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>", "<span class='notice'>We stab [target] with the proboscis.</span>")
+				user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] stabs [IDENTITY_SUBJECT(2)] with the proboscis!</span>", "<span class='notice'>We stab [IDENTITY_SUBJECT(2)] with the proboscis.</span>", subjects=list(user, target))
 				to_chat(target, "<span class='userdanger'>You feel a sharp stabbing pain!</span>")
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(user, target, 150))
-			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
+			to_chat(user, "<span class='warning'>Our absorption of [IDENTITY_SUBJECT(1)] has been interrupted!</span>", list(target))
 			changeling.isabsorbing = 0
 			return
 
-	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] sucks the fluids from [IDENTITY_SUBJECT(2)]!</span>", "<span class='notice'>We have absorbed [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, target))
 	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>")
 
 	if(!changeling.has_dna(target.dna))
@@ -76,13 +76,13 @@
 				recent_speech[spoken_memory] = say_log[spoken_memory]
 
 		if(recent_speech.len)
-			user.mind.store_memory("<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B>")
-			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>")
+			user.mind.store_memory("<B>Some of [target.real_name]'s speech patterns, we should study these to better impersonate them!</B>")
+			to_chat(user, "<span class='boldnotice'>Some of [target.real_name]'s speech patterns, we should study these to better impersonate them!</span>")
 			for(var/spoken_memory in recent_speech)
 				user.mind.store_memory("\"[recent_speech[spoken_memory]]\"")
 				to_chat(user, "<span class='notice'>\"[recent_speech[spoken_memory]]\"</span>")
-			user.mind.store_memory("<B>We have no more knowledge of [target]'s speech patterns.</B>")
-			to_chat(user, "<span class='boldnotice'>We have no more knowledge of [target]'s speech patterns.</span>")
+			user.mind.store_memory("<B>We have no more knowledge of [target.real_name]'s speech patterns.</B>")
+			to_chat(user, "<span class='boldnotice'>We have no more knowledge of [target.real_name]'s speech patterns.</span>")
 
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)

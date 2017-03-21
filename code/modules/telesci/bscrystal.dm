@@ -23,7 +23,7 @@
 	pixel_y = rand(-5, 5)
 
 /obj/item/weapon/ore/bluespace_crystal/attack_self(mob/user)
-	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>", subjects=list(user))
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(src.loc, "sparks", 50, 1)
 	blink_mob(user)

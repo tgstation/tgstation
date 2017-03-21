@@ -28,7 +28,7 @@
 	var/degrees = 0
 
 /obj/item/weapon/pen/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>", subjects=list(user))
 	return(BRUTELOSS)
 
 /obj/item/weapon/pen/blue
@@ -89,7 +89,7 @@
 
 	if(!force)
 		if(M.can_inject(user, 1))
-			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
+			to_chat(user, "<span class='warning'>You stab [IDENTITY_SUBJECT(1)] with the pen.</span>", list(M))
 			if(!stealth)
 				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1

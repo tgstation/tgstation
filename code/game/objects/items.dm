@@ -84,6 +84,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
+	var/identity_name // Used for getting identity from clothing.
 	var/heat = 0
 	var/sharpness = IS_BLUNT
 	var/toolspeed = 1
@@ -345,7 +346,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
+		owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] blocks [attack_text] with [src]!</span>", subjects=list(owner))
 		return 1
 	return 0
 
@@ -461,13 +462,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	user.do_attack_animation(M)
 
 	if(M != user)
-		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
-							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has stabbed [IDENTITY_SUBJECT(1)] in the eye with [src]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] stabs you in the eye with [src]!</span>", subjects=list(user, M))
 	else
 		user.visible_message( \
-			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
-			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
-		)
+			"<span class='danger'>[IDENTITY_SUBJECT(1)] has stabbed themself in the eyes with [src]!</span>", \
+			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>", subjects=list(user))
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
 		U.apply_damage(7, BRUTE, affecting)
@@ -574,7 +574,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/proc/ignition_effect(atom/A, mob/user)
 	if(is_hot())
-		. = "<span class='notice'>[user] lights [A] with [src].</span>"
+		. = "<span class='notice'>[IDENTITY_SUBJECT(1)] lights [A] with [src].</span>"
 	else
 		. = ""
 

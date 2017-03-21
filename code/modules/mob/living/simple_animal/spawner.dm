@@ -46,7 +46,7 @@
 	spawned_mobs += L
 	L.nest = src
 	L.faction = src.faction
-	visible_message("<span class='danger'>[L] [spawn_text] [src].</span>")
+	visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] [spawn_text] [src].</span>", subjects=list(L))
 
 /mob/living/simple_animal/hostile/spawner/syndicate
 	name = "warp beacon"

@@ -99,12 +99,12 @@
 		if(!C.get_bodypart("head"))
 			return
 		user.drop_item()
-		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
+		var/msg = "[IDENTITY_SUBJECT(2)] has [src] inserted into [C.p_their()] head by [IDENTITY_SUBJECT(1)]."
 		if(C == user)
-			msg = "[user] inserts [src] into [user.p_their()] head!"
+			msg = "[IDENTITY_SUBJECT(1)] inserts [src] into [user.p_their()] head!"
 
 		C.visible_message("<span class='danger'>[msg]</span>",
-						"<span class='userdanger'>[msg]</span>")
+						"<span class='userdanger'>[msg]</span>", subjects=list(user, C))
 
 		if(C != user)
 			to_chat(C, "<span class='notice'>[user] inserts [src] into your head.</span>")

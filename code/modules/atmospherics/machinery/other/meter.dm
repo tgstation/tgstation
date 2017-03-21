@@ -103,9 +103,9 @@
 		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 		if (do_after(user, 40*W.toolspeed, target = src))
 			user.visible_message( \
-				"[user] unfastens \the [src].", \
+				"[IDENTITY_SUBJECT(1)] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
-				"<span class='italics'>You hear ratchet.</span>")
+				"<span class='italics'>You hear ratchet.</span>", subjects=list(user))
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
 	else

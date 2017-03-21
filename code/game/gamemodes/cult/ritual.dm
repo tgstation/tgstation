@@ -36,7 +36,7 @@ This file contains the arcane tome files.
 		return ..()
 	if(iscultist(M))
 		if(M.reagents && M.reagents.has_reagent("holywater")) //allows cultists to be rescued from the clutches of ordained religion
-			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
+			to_chat(user, "<span class='cult'>You remove the taint from [IDENTITY_SUBJECT(1)].</span>", list(M))
 			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)
@@ -44,8 +44,8 @@ This file contains the arcane tome files.
 		return
 	M.take_bodypart_damage(0, 15) //Used to be a random between 5 and 20
 	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
-	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
-					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
+	M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] strikes [IDENTITY_SUBJECT(2)] with the arcane tome!</span>", \
+					  "<span class='userdanger'>[IDENTITY_SUBJECT(1)] strikes you with the tome, searing your flesh!</span>", subjects=list(user, M))
 	flick("tome_attack", src)
 	user.do_attack_animation(M)
 	add_logs(user, M, "smacked", src)
@@ -225,8 +225,8 @@ This file contains the arcane tome files.
 		else
 			to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
 			return
-	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open their arm and begins writing in their own blood":"begins sketching out a strange design"]!</span>", \
-						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] [user.blood_volume ? "cuts open their arm and begins writing in their own blood":"begins sketching out a strange design"]!</span>", \
+						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>", subjects=list(user))
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
@@ -237,8 +237,8 @@ This file contains the arcane tome files.
 		return
 	if(!check_rune_turf(Turf, user))
 		return
-	user.visible_message("<span class='warning'>[user] creates a strange circle[user.blood_volume ? " in their own blood":""].</span>", \
-						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] creates a strange circle[user.blood_volume ? " in their own blood":""].</span>", \
+						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>", subjects=list(user))
 	for(var/V in shields)
 		var/obj/structure/emergency_shield/S = V
 		if(S && !QDELETED(S))

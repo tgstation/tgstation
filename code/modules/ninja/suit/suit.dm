@@ -21,6 +21,7 @@ Contents:
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
+	identity_name = "Space Ninja"
 
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null

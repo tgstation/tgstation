@@ -18,13 +18,13 @@
 		I = O
 		break
 	if(I)
-		user.visible_message("[user] begins to extract [I] from [target]'s [target_zone].", "<span class='notice'>You begin to extract [I] from [target]'s [target_zone]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to extract [I] from [IDENTITY_SUBJECT(2)]'s [target_zone].", "<span class='notice'>You begin to extract [I] from [IDENTITY_SUBJECT(2)]'s [target_zone]...</span>", subjects=list(user, target))
 	else
-		user.visible_message("[user] looks for an implant in [target]'s [target_zone].", "<span class='notice'>You look for an implant in [target]'s [target_zone]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] looks for an implant in [IDENTITY_SUBJECT(2)]'s [target_zone].", "<span class='notice'>You look for an implant in [IDENTITY_SUBJECT(2)]'s [target_zone]...</span>", subjects=list(user, target))
 
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(I)
-		user.visible_message("[user] successfully removes [I] from [target]'s [target_zone]!", "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] successfully removes [I] from [IDENTITY_SUBJECT(2)]'s [target_zone]!", "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>", subjects=list(user))
 		I.removed(target)
 
 		var/obj/item/weapon/implantcase/case
@@ -37,10 +37,10 @@
 			case.imp = I
 			I.loc = case
 			case.update_icon()
-			user.visible_message("[user] places [I] into [case]!", "<span class='notice'>You place [I] into [case].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] places [I] into [case]!", "<span class='notice'>You place [I] into [case].</span>", subjects=list(user))
 		else
 			qdel(I)
 
 	else
-		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
+		to_chat(user, "<span class='warning'>You can't find anything in [IDENTITY_SUBJECT(1)]'s [target_zone]!</span>", list(target))
 	return 1

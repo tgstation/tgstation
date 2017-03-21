@@ -27,6 +27,11 @@
 		return ITALICS | REDUCE_RANGE
 	return ..()
 
+/obj/item/device/radio/headset/ui_data(mob/user)
+	var/list/data = ..()
+	data["headset"] = TRUE
+	. = data
+
 /obj/item/device/radio/headset/receive_range(freq, level, AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc

@@ -558,10 +558,10 @@
 					if(M.pulledby)
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
-					M.visible_message("<span class='warning'>[M] is hit by \
+					M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is hit by \
 							a hyperspace ripple!</span>",
 							"<span class='userdanger'>You feel an immense \
-							crushing pressure as the space around you ripples.</span>")
+							crushing pressure as the space around you ripples.</span>", subjects=list(M))
 					if(M.key || M.get_ghost(TRUE))
 						feedback_add_details("shuttle_gib", "[type]")
 					else

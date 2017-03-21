@@ -26,7 +26,7 @@
 	return ..()
 
 /obj/item/weapon/c4/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>", subjects=list(user))
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -87,10 +87,10 @@
 		src.target = AM
 		forceMove(null)
 
-		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
+		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name]/([key_name(target)]) at [ADMIN_COORDJMP(target)] with [timer] second fuse"
 		bombers += message
 		message_admins(message,0,1)
-		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
+		log_game("[key_name(user)] planted [name] on [target.name]/([key_name(target)]) at [COORD(target)] with [timer] second fuse")
 
 		target.add_overlay(image_overlay, 1)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")

@@ -141,15 +141,15 @@
 		return
 
 	if (active)
-		user.visible_message("[user] deactivated \the [src].", \
+		user.visible_message("[IDENTITY_SUBJECT(1)] deactivated \the [src].", \
 			"<span class='notice'>You deactivate \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning fade out.</span>")
+			"<span class='italics'>You hear heavy droning fade out.</span>", subjects=list(user))
 		shields_down()
 	else
 		if(anchored)
-			user.visible_message("[user] activated \the [src].", \
+			user.visible_message("[IDENTITY_SUBJECT(1)] activated \the [src].", \
 				"<span class='notice'>You activate \the [src].</span>", \
-				"<span class='italics'>You hear heavy droning.</span>")
+				"<span class='italics'>You hear heavy droning.</span>", subjects=list(user))
 			shields_up()
 		else
 			to_chat(user, "<span class='warning'>The device must first be secured to the floor!</span>")
@@ -288,16 +288,16 @@
 		active = 0
 		icon_state = "Shield_Gen"
 
-		user.visible_message("[user] turned \the [src] off.", \
+		user.visible_message("[IDENTITY_SUBJECT(1)] turned \the [src] off.", \
 			"<span class='notice'>You turn off \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning fade out.</span>")
+			"<span class='italics'>You hear heavy droning fade out.</span>", subjects=list(user))
 		cleanup()
 	else
 		active = 1
 		icon_state = "Shield_Gen +a"
-		user.visible_message("[user] turned \the [src] on.", \
+		user.visible_message("[IDENTITY_SUBJECT(1)] turned \the [src] on.", \
 			"<span class='notice'>You turn on \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning.</span>")
+			"<span class='italics'>You hear heavy droning.</span>", subjects=list(user))
 	add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/process()
@@ -453,7 +453,7 @@
 	if(A && B)
 		needs_power = 1
 	for(var/mob/living/L in get_turf(src.loc))
-		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]'s organs!</span>")
+		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [IDENTITY_SUBJECT(1)]'s organs!</span>", subjects=list(L))
 		L.gib()
 
 /obj/machinery/shieldwall/attack_hand(mob/user)

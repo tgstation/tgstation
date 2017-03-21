@@ -28,11 +28,11 @@
 	. = ..()
 	if(!silent_update && new_body)
 		if(.)
-			new_body.visible_message("<span class='heavy_brass'>[new_body]'s eyes glow a blazing yellow!</span>")
+			new_body.visible_message("<span class='heavy_brass'>[IDENTITY_SUBJECT(1)]'s eyes glow a blazing yellow!</span>", subjects=list(new_body))
 			to_chat(new_body, "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. \
 			Perform his every whim without hesitation.</span>")
 		else
-			new_body.visible_message("<span class='boldwarning'>[new_body] seems to resist an unseen force!</span>")
+			new_body.visible_message("<span class='boldwarning'>[IDENTITY_SUBJECT(1)] seems to resist an unseen force!</span>", subjects=list(new_body))
 			to_chat(new_body, "<span class='userdanger'>And yet, you somehow push it all away.</span>")
 
 /datum/antagonist/clockcultist/on_gain()
@@ -86,9 +86,9 @@
 				A.eyeobj.relay_speech = TRUE
 			for(var/mob/living/silicon/robot/R in A.connected_robots)
 				if(R.connected_ai == A)
-					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
+					R.visible_message("<span class='heavy_brass'>[IDENTITY_SUBJECT(1)]'s eyes glow a blazing yellow!</span>", \
 					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
-					whim without hesitation.</span>")
+					whim without hesitation.</span>", subjects=list(R))
 					to_chat(R, "<span class='boldwarning'>Your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
 					add_servant_of_ratvar(R, TRUE)
 		S.laws = new/datum/ai_laws/ratvar
@@ -146,8 +146,8 @@
 
 /datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)
-		owner.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>", \
-		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
+		owner.visible_message("<span class='big'>[IDENTITY_SUBJECT(1)] seems to have remembered their true allegiance!</span>", \
+		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>", subjects=list(owner))
 	if(ticker && ticker.mode && owner.mind)
 		ticker.mode.servants_of_ratvar -= owner.mind
 		ticker.mode.update_servant_icons_removed(owner.mind)

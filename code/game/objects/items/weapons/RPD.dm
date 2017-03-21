@@ -169,7 +169,7 @@ var/global/list/RPD_recipes=list(
 	show_menu(user)
 
 /obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>", subjects=list(user))
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
@@ -542,7 +542,7 @@ var/global/list/RPD_recipes=list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 			P.pipe_color = paint_colors[paint_color]
-			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>", subjects=list(user))
 			P.update_node_icon()
 			return
 

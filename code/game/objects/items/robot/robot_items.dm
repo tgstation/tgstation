@@ -26,8 +26,8 @@
 	M.apply_effect(STUTTER, 5)
 	M.Stun(5)
 
-	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
-					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
+	M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has prodded [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has prodded you with [src]!</span>", subjects=list(user, M))
 
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
@@ -72,60 +72,60 @@
 		if(0)
 			if(M.health >= 0)
 				if(user.zone_selected == "head")
-					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
-									"<span class='notice'>You playfully boop [M] on the head!</span>")
+					user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] playfully boops [IDENTITY_SUBJECT(2)] on the head!</span>", \
+									"<span class='notice'>You playfully boop [IDENTITY_SUBJECT(2)] on the head!</span>", subjects=list(user, M))
 					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
 				else if(ishuman(M))
 					if(M.lying)
-						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
-										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] shakes [IDENTITY_SUBJECT(2)] trying to get [M.p_them()] up!</span>", \
+										"<span class='notice'>You shake [IDENTITY_SUBJECT(2)] trying to get [M.p_them()] up!</span>", subjects=list(user, M))
 					else
-						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
-								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] hugs [IDENTITY_SUBJECT(2)] to make [M.p_them()] feel better!</span>", \
+								"<span class='notice'>You hug [IDENTITY_SUBJECT(2)] to make [M.p_them()] feel better!</span>", subjects=list(user, M))
 					if(M.resting)
 						M.resting = FALSE
 						M.update_canmove()
 				else
-					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
-							"<span class='notice'>You pet [M]!</span>")
+					user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] pets [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='notice'>You pet [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, M))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
 					if(M.lying)
-						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
-										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] shakes [IDENTITY_SUBJECT(2)] trying to get [M.p_them()] up!</span>", \
+										"<span class='notice'>You shake [IDENTITY_SUBJECT(2)] trying to get [M.p_them()] up!</span>", subjects=list(user, M))
 					else if(user.zone_selected == "head")
-						user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
-										"<span class='warning'>You bop [M] on the head!</span>")
+						user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] bops [IDENTITY_SUBJECT(2)] on the head!</span>", \
+										"<span class='warning'>You bop [IDENTITY_SUBJECT(2)] on the head!</span>", subjects=list(user, M))
 						user.do_attack_animation(M, ATTACK_EFFECT_PUNCH)
 					else
-						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
-								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
+						user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] hugs [IDENTITY_SUBJECT(2)] in a firm bear-hug! [IDENTITY_SUBJECT(2)] looks uncomfortable...</span>", \
+								"<span class='warning'>You hug [IDENTITY_SUBJECT(2)] firmly to make [M.p_them()] feel better! [IDENTITY_SUBJECT(2)] looks uncomfortable...</span>", subjects=list(user, M))
 					if(M.resting)
 						M.resting = FALSE
 						M.update_canmove()
 				else
-					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
-							"<span class='warning'>You bop [M] on the head!</span>")
+					user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] bops [IDENTITY_SUBJECT(2)] on the head!</span>", \
+							"<span class='warning'>You bop [IDENTITY_SUBJECT(2)] on the head!</span>", subjects=list(user, M))
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
 		if(2)
 			if(!scooldown)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
 						M.electrocute_act(5, "[user]", safety = 1)
-						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with their touch!</span>", \
-							"<span class='danger'>You electrocute [M] with your touch!</span>")
+						user.visible_message("<span class='userdanger'>[IDENTITY_SUBJECT(1)] electrocutes [IDENTITY_SUBJECT(2)] with their touch!</span>", \
+							"<span class='danger'>You electrocute [IDENTITY_SUBJECT(2)] with your touch!</span>", subjects=list(user, M))
 						M.update_canmove()
 					else
 						if(!iscyborg(M))
 							M.adjustFireLoss(10)
-							user.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
-								"<span class='danger'>You shock [M]!</span>")
+							user.visible_message("<span class='userdanger'>[IDENTITY_SUBJECT(1)] shocks [IDENTITY_SUBJECT(2)]!</span>", \
+								"<span class='danger'>You shock [IDENTITY_SUBJECT(1)]!</span>", subjects=list(user, M))
 						else
-							user.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
-								"<span class='danger'>You shock [M] to no effect.</span>")
+							user.visible_message("<span class='userdanger'>[IDENTITY_SUBJECT(1)] shocks [IDENTITY_SUBJECT(2)]. It does not seem to have an effect</span>", \
+								"<span class='danger'>You shock [IDENTITY_SUBJECT(2)] to no effect.</span>", subjects=list(user, M))
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 500
 					scooldown = TRUE
@@ -135,11 +135,11 @@
 			if(!ccooldown)
 				if(M.health >= 0)
 					if(ishuman(M))
-						user.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
-							"<span class='danger'>You crush [M] in your grip!</span>")
+						user.visible_message("<span class='userdanger'>[IDENTITY_SUBJECT(1)] crushes [IDENTITY_SUBJECT(2)] in their grip!</span>", \
+							"<span class='danger'>You crush [IDENTITY_SUBJECT(2)] in your grip!</span>", subjects=list(user, M))
 					else
-						user.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
-								"<span class='danger'>You crush [M]!</span>")
+						user.visible_message("<span class='userdanger'>[IDENTITY_SUBJECT(1)] crushes [IDENTITY_SUBJECT(2)]!</span>", \
+								"<span class='danger'>You crush [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, M))
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
 					M.adjustBruteLoss(15)
 					user.cell.charge -= 300
@@ -307,9 +307,9 @@
 			safety = FALSE
 
 	if(safety == TRUE)
-		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
+		user.visible_message("<font color='red' size='2'>[IDENTITY_SUBJECT(1)] blares out a near-deafening siren from its speakers!</font>", \
 			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
-			"<span class='danger'>The siren pierces your hearing!</span>")
+			"<span class='danger'>The siren pierces your hearing!</span>", subjects=list(user))
 		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
 			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
@@ -403,7 +403,7 @@
 	A.BB.speed = 0.5
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0)
-	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] blasts a flying lollipop at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, target))
 	check_amount()
 
 /obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
@@ -419,7 +419,7 @@
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0)
-	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] shoots a high-velocity gumball at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, target))
 	check_amount()
 
 /obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)

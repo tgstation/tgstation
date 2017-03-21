@@ -70,19 +70,19 @@
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.anchored || L.has_buckled_mobs())
 			return FALSE
-		user.visible_message("<span class='warning'>[user] shoves [L] into [src]!</span>", "<span class='danger'>You shove [L] into [src]!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] shoves [IDENTITY_SUBJECT(2)] into [src]!</span>", "<span class='danger'>You shove [IDENTITY_SUBJECT(2)] into [src]!</span>", subjects=list(user, L))
 		user.stop_pulling()
 		pass_through_gateway(L)
 		return TRUE
 	if(!user.canUseTopic(src))
 		return FALSE
-	user.visible_message("<span class='warning'>[user] climbs through [src]!</span>", "<span class='danger'>You brace yourself and step through [src]...</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] climbs through [src]!</span>", "<span class='danger'>You brace yourself and step through [src]...</span>", subjects=list(user))
 	pass_through_gateway(user)
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/nullrod))
-		user.visible_message("<span class='warning'>[user] dispels [src] with [I]!</span>", "<span class='danger'>You close [src] with [I]!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] dispels [src] with [I]!</span>", "<span class='danger'>You close [src] with [I]!</span>", subjects=list(user))
 		qdel(linked_gateway)
 		qdel(src)
 		return TRUE
@@ -90,7 +90,7 @@
 		to_chat(user, "<span class='heavy_brass'>\"I don't think you want to drop your slab into that.\"\n\"If you really want to, try throwing it.\"</span>")
 		return TRUE
 	if(user.drop_item() && uses)
-		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>", subjects=list(user))
 		pass_through_gateway(I, TRUE)
 		return TRUE
 	return ..()
@@ -192,12 +192,12 @@
 		var/efficiency = CO.get_efficiency_mod()
 		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
 		time_duration = round(time_duration * (2 * efficiency), 1)
-	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
-	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
+	invoker.visible_message("<span class='warning'>The air in front of [IDENTITY_SUBJECT(1)] ripples before suddenly tearing open!</span>", \
+	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>", subjects=list(invoker))
 	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
 	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
 	//Set up the portals now that they've spawned
 	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
-	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
+	S2.visible_message("<span class='warning'>The air in front of [IDENTITY_SUBJECT(1)] ripples before suddenly tearing open!</span>", subjects=list(target))
 	return TRUE

@@ -38,12 +38,12 @@
 	if(M == user)
 		to_chat(M, "<span class='notice'>You swallow some of contents of \the [src].</span>")
 	else
-		user.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] attempts to feed [IDENTITY_SUBJECT(2)] from [src].</span>", subjects=list(user, M))
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
-		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] feeds [IDENTITY_SUBJECT(2)] from [src].</span>", subjects=list(user, M))
 		add_logs(user, M, "fed", reagentlist(src))
 
 	var/fraction = min(10/reagents.total_volume, 1)
@@ -131,7 +131,7 @@
 		icon_state = "saltshakersmall"
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	var/newname = "[name]"
 	name = "[user.name]"
 	user.name = newname
@@ -146,7 +146,7 @@
 		if(!reagents.has_reagent("sodiumchloride", 2))
 			to_chat(user, "<span class='warning'>You don't have enough salt to make a pile!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] shakes some salt onto [IDENTITY_SUBJECT(2)].</span>", "<span class='notice'>You shake some salt onto [target].</span>", subjects=list(user, target))
 		reagents.remove_reagent("sodiumchloride", 2)
 		new/obj/effect/decal/cleanable/salt(target)
 		return

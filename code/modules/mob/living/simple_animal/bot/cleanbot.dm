@@ -65,14 +65,14 @@
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] [IDENTITY_SUBJECT(1)] behaviour controls.</span>", list(src))
 		else
 			if(emagged)
 				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+				to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] doesn't seem to respect your authority.</span>", list(src))
 	else
 		return ..()
 
@@ -80,7 +80,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
+			to_chat(user, "<span class='danger'>[IDENTITY_SUBJECT(1)] buzzes and beeps.</span>", list(src))
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
@@ -108,7 +108,7 @@
 				UnarmedAttack(src)
 
 	else if(prob(5))
-		audible_message("[src] makes an excited beeping booping sound!")
+		audible_message("[IDENTITY_SUBJECT(1)] makes an excited beeping booping sound!", subjects=list(src))
 
 	if(ismob(target))
 		if(!(target in view(DEFAULT_SCAN_RANGE, src)))
@@ -217,7 +217,7 @@
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
-			visible_message("<span class='danger'>[src] smashes [target] with its mop!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] smashes [IDENTITY_SUBJECT(2)] with its mop!</span>", subjects=list(src, M))
 			M.death()
 		target = null
 
@@ -227,7 +227,7 @@
 			if(victim.stat == DEAD)//cleanbots always finish the job
 				return
 
-			victim.visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [victim]!</span>", "<span class='userdanger'>[src] sprays you with hydrofluoric acid!</span>")
+			victim.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] sprays hydrofluoric acid at [IDENTITY_SUBJECT(2)]!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] sprays you with hydrofluoric acid!</span>", subjects=list(src, victim))
 			var/phrase = pick("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
 				"THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.",
 				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
@@ -241,7 +241,7 @@
 				if(istype(T))
 					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
 			else
-				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] whirs and bubbles violently, before releasing a plume of froth!</span>", subjects=list(src))
 				new /obj/effect/particle_effect/foam(loc)
 
 	else
@@ -249,7 +249,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/explode()
 	on = 0
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[IDENTITY_SUBJECT(1)] blows apart!</span>", subjects=list(src))
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)

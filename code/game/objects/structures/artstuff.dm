@@ -23,7 +23,7 @@
 		painting = C
 		C.loc = get_turf(src)
 		C.layer = layer+0.1
-		user.visible_message("<span class='notice'>[user] puts \the [C] on \the [src].</span>","<span class='notice'>You place \the [C] on \the [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] puts \the [C] on \the [src].</span>","<span class='notice'>You place \the [C] on \the [src].</span>", subjects=list(user))
 	else
 		return ..()
 
@@ -122,7 +122,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	if(blank)
 		//it's basically a giant etch-a-sketch
 		icon = blank
-		user.visible_message("<span class='notice'>[user] cleans the canvas.</span>","<span class='notice'>You clean the canvas.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] cleans the canvas.</span>","<span class='notice'>You clean the canvas.</span>", subjects=list(user))
 
 
 

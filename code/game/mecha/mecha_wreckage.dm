@@ -42,7 +42,7 @@
 			var/type = prob(70) ? pick(welder_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
-				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>", subjects=list(user))
 				if(istype(N, /obj/item/mecha_parts/part))
 					welder_salvage -= type
 				salvage_num--
@@ -59,7 +59,7 @@
 			var/type = prob(70) ? pick(wirecutters_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
-				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>", subjects=list(user))
 				salvage_num--
 			else
 				to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
@@ -70,7 +70,7 @@
 			if(S)
 				S.loc = get_turf(user)
 				crowbar_salvage -= S
-				user.visible_message("[user] pries [S] from [src].", "<span class='notice'>You pry [S] from [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] pries [S] from [src].", "<span class='notice'>You pry [S] from [src].</span>", subjects=list(user))
 			return
 		else
 			to_chat(user, "<span class='warning'>You don't see anything that can be pried with [I]!</span>")
@@ -92,7 +92,7 @@
 			to_chat(AI, "The remains of your file system have been recovered on a mobile storage device.")
 		else //Give the AI a heads-up that it is probably going to get fixed.
 			AI.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
-		to_chat(user, "<span class='boldnotice'>Backup files recovered</span>: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
+		to_chat(user, "<span class='boldnotice'>Backup files recovered</span>: [AI.real_name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
 
 	else
 		return ..()

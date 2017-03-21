@@ -9,7 +9,7 @@
 	var/mode = 0
 
 /obj/item/weapon/hand_labeler/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!</span>", subjects=list(user))
 	labels_left = max(labels_left - 1, 0)
 
 	var/old_real_name = user.real_name
@@ -56,8 +56,8 @@
 		to_chat(user, "<span class='warning'>You can't label cyborgs!</span>")
 		return
 
-	user.visible_message("[user] labels [A] as [label].", \
-						 "<span class='notice'>You label [A] as [label].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] labels [IDENTITY_SUBJECT(2)] as [label].", \
+						 "<span class='notice'>You label [IDENTITY_SUBJECT(2)] as [label].</span>", subjects=list(user, A))
 	A.name = "[A.name] ([label])"
 	labels_left--
 

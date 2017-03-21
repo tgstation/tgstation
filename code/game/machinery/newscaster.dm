@@ -731,9 +731,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		var/obj/item/weapon/weldingtool/WT = I
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] is repairing [src].", \
+				user.visible_message("[IDENTITY_SUBJECT(1)] is repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
-								"<span class='italics'>You hear welding.</span>")
+								"<span class='italics'>You hear welding.</span>", subjects=list(user))
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
@@ -820,7 +820,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(q.fields["name"] == find)
 				selection = q
 				break
-		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["mobinfo"])
 		P.sillynewscastervar = 1
 		photo = P
 		qdel(P)
@@ -898,13 +898,13 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/creationTime
 
 /obj/item/weapon/newspaper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>", subjects=list(user))
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)
 	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)
 	W.reagents.trans_to(H, W.reagents.total_volume)
-	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>", subjects=list(user))
 
 	return(TOXLOSS)
 

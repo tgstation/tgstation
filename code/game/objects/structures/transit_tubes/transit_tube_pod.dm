@@ -32,7 +32,7 @@
 		if(!moving)
 			playsound(src.loc, I.usesound, 50, 1)
 			if(contents.len)
-				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] empties \the [src].", "<span class='notice'>You empty \the [src].</span>", subjects=list(user))
 				empty_pod()
 			else
 				deconstruct(TRUE, user)
@@ -45,7 +45,7 @@
 		if(user)
 			location = user.loc
 			add_fingerprint(user)
-			user.visible_message("[user] removes [src].", "<span class='notice'>You remove [src].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] removes [src].", "<span class='notice'>You remove [src].</span>", subjects=list(user))
 		var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(location)
 		transfer_fingerprints_to(R)
 		R.setDir(dir)

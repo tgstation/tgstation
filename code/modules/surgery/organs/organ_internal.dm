@@ -127,9 +127,9 @@
 /obj/item/organ/heart/attack_self(mob/user)
 	..()
 	if(!beating)
-		visible_message("<span class='notice'>[user] squeezes [src] to \
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] squeezes [src] to \
 			make it beat again!</span>", "<span class='notice'>You squeeze \
-			[src] to make it beat again!</span>")
+			[src] to make it beat again!</span>", subjects=list(user))
 		Restart()
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
 
@@ -566,20 +566,21 @@
 
 /obj/item/organ/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
-	var/mob/living/carbon/human/user = usr
-	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
+	var/rendered = "<span class='abductor'><b>[owner.real_name]:</b> [message]</span>"
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
 			continue
-		else if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
-			var/datum/species/abductor/Ayy = user.dna.species
+		else if(H.dna && H.dna.species.id == "abductor" && owner.dna && owner.dna.species.id == "abductor")
+			var/datum/species/abductor/Ayy = owner.dna.species
 			var/datum/species/abductor/Byy = H.dna.species
 			if(Ayy.team != Byy.team)
 				continue
+		if(owner.voiceprint)
+			rendered = "<span class='abductor'><b>[H.get_voiceprint_name(owner, owner.voiceprint)]:</b> [message]</span>"
 		to_chat(H, rendered)
 	for(var/mob/M in dead_mob_list)
-		var/link = FOLLOW_LINK(M, user)
+		var/link = FOLLOW_LINK(M, owner)
 		to_chat(M, "[link] [rendered]")
 	return ""
 

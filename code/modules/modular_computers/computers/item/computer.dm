@@ -387,7 +387,7 @@
 			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
 			return
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
-		physical.visible_message("\The [src] has been disassembled by [user].")
+		physical.visible_message("\The [src] has been disassembled by [IDENTITY_SUBJECT(1)].", subjects=list(user))
 		relay_qdel()
 		qdel(src)
 		return

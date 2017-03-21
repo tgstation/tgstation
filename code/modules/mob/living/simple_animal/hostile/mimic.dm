@@ -69,7 +69,7 @@
 
 /mob/living/simple_animal/hostile/mimic/crate/proc/trigger()
 	if(!attempt_open)
-		visible_message("<b>[src]</b> starts to move!")
+		visible_message("<b>[IDENTITY_SUBJECT(1)]</b> starts to move!", subjects=list(src))
 		attempt_open = 1
 
 /mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -94,8 +94,8 @@
 		var/mob/living/carbon/C = L
 		if(prob(15))
 			C.Weaken(2)
-			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-					"<span class='userdanger'>\The [src] knocks you down!</span>")
+			C.visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] knocks down \the [IDENTITY_SUBJECT(2)]!</span>", \
+					"<span class='userdanger'>\The [IDENTITY_SUBJECT(1)] knocks you down!</span>", subjects=list(src, C))
 
 
 
@@ -184,8 +184,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			var/mob/living/carbon/C = target
 			if(prob(15))
 				C.Weaken(2)
-				C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-						"<span class='userdanger'>\The [src] knocks you down!</span>")
+				C.visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] knocks down \the [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>\The [IDENTITY_SUBJECT(1)] knocks you down!</span>", subjects=list(src, C))
 
 /mob/living/simple_animal/hostile/mimic/copy/Aggro()
 	..()
@@ -263,7 +263,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 				Pewgun.chambered.update_icon()
 				..()
 			else
-				visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
+				visible_message("<span class='danger'>The <b>[IDENTITY_SUBJECT(1)]</b> clears a jam!</span>", subjects=list(src))
 			Pewgun.chambered.loc = loc //rip revolver immersions, blame shotgun snowflake procs
 			Pewgun.chambered = null
 			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
@@ -273,7 +273,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
 			Pewgun.chambered = Pewgun.magazine.get_round(0)
 			Pewgun.chambered.loc = Pewgun
-			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
+			visible_message("<span class='danger'>The <b>[IDENTITY_SUBJECT(1)]</b> cocks itself!</span>", subjects=list(src))
 	else
 		ranged = 0 //BANZAIIII
 		retreat_distance = 0

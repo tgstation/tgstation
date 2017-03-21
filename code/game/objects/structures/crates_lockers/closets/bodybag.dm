@@ -54,7 +54,7 @@
 			return 0
 		if(contents.len)
 			return 0
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] folds up [src].</span>", subjects=list(usr))
 		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
 		usr.put_in_hands(B)
 		qdel(src)
@@ -82,7 +82,7 @@
 		for(var/obj/item/bodybag/bluespace/B in src)
 			to_chat(usr, "<span class='warning'>You can't recursively fold bluespace body bags!</span>" )
 			return 0
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] folds up [src].</span>", subjects=list(usr))
 		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
 		usr.put_in_hands(B)
 		for(var/atom/movable/A in contents)

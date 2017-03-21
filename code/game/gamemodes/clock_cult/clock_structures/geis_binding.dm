@@ -52,8 +52,8 @@
 			var/obj/item/geis_binding/B = new(M)
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
-		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", \
-		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":""]")
+		M.visible_message("<span class='warning'>A [name] appears around [IDENTITY_SUBJECT(1)]!</span>", \
+		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":""]", subjects=list(M))
 		if(!can_resist)
 			repair_and_interrupt()
 	else
@@ -113,10 +113,10 @@
 	if(buckled_mob == user)
 		if(!resisting && can_resist)
 			resisting = TRUE
-			user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of [src]...</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of [src]...</span>", subjects=list(user))
 			while(do_after(user, 10, target = src) && resisting && obj_integrity)
 				if(obj_integrity - 5 <= 0)
-					user.visible_message("<span class='warning'>[user] breaks [src]!</span>", "<span class='userdanger'>You break [src]!</span>")
+					user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] breaks [src]!</span>", "<span class='userdanger'>You break [src]!</span>", subjects=list(user))
 					take_damage(5)
 					return user
 				take_damage(5)

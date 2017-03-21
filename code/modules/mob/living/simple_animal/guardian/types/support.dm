@@ -104,7 +104,7 @@
 		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/recieving_pad/proc/disappear()
-	visible_message("[src] vanishes!")
+	visible_message("[IDENTITY_SUBJECT(1)] vanishes!", subjects=list(src))
 	qdel(src)
 
 /mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
@@ -128,9 +128,9 @@
 		to_chat(src, "<span class='danger'><B>The beacon is too far away to warp to!</span></B>")
 		return
 
-	to_chat(src, "<span class='danger'><B>You begin to warp [A].</span></B>")
-	A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", \
-	"<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>")
+	to_chat(src, "<span class='danger'><B>You begin to warp [IDENTITY_SUBJECT(1)].</span></B>", list(A))
+	A.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] starts to glow faintly!</span>", \
+	"<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>", subjects=list(A))
 	do_attack_animation(A, null, 1)
 
 	if(!do_mob(src, A, 60)) //now start the channel
@@ -141,7 +141,7 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		L.flash_act()
-	A.visible_message("<span class='danger'>[A] disappears in a flash of light!</span>", \
-	"<span class='userdanger'>Your vision is obscured by a flash of light!</span>")
+	A.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] disappears in a flash of light!</span>", \
+	"<span class='userdanger'>Your vision is obscured by a flash of light!</span>", subjects=list(A))
 	do_teleport(A, beacon, 0)
 	new /obj/effect/overlay/temp/guardian/phase(get_turf(A))

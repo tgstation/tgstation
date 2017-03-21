@@ -30,14 +30,14 @@
 
 			if(M != user)
 				M.visible_message(\
-					"[user.name] pulls [M.name] free from the sticky nest!",\
-					"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
-					"<span class='italics'>You hear squelching...</span>")
+					"[IDENTITY_SUBJECT(1)] pulls [IDENTITY_SUBJECT(2)] free from the sticky nest!",\
+					"<span class='notice'>[IDENTITY_SUBJECT(1)] pulls you free from the gelatinous resin.</span>",\
+					"<span class='italics'>You hear squelching...</span>", subjects=list(user, M))
 			else
 				M.visible_message(\
-					"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
+					"<span class='warning'>[IDENTITY_SUBJECT(1)] struggles to break free from the gelatinous resin!</span>",\
 					"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
-					"<span class='italics'>You hear squelching...</span>")
+					"<span class='italics'>You hear squelching...</span>", subjects=list(M))
 				if(!do_after(M, 1200, target = src))
 					if(M && M.buckled)
 						to_chat(M, "<span class='warning'>You fail to unbuckle yourself!</span>")
@@ -45,9 +45,9 @@
 				if(!M.buckled)
 					return
 				M.visible_message(\
-					"<span class='warning'>[M.name] breaks free from the gelatinous resin!</span>",\
+					"<span class='warning'>[IDENTITY_SUBJECT(1)] breaks free from the gelatinous resin!</span>",\
 					"<span class='notice'>You break free from the gelatinous resin!</span>",\
-					"<span class='italics'>You hear squelching...</span>")
+					"<span class='italics'>You hear squelching...</span>", subjects=list(M))
 
 			unbuckle_mob(M)
 			add_fingerprint(user)
@@ -66,9 +66,9 @@
 
 	if(buckle_mob(M))
 		M.visible_message(\
-			"[user.name] secretes a thick vile goo, securing [M.name] into [src]!",\
-			"<span class='danger'>[user.name] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
-			"<span class='italics'>You hear squelching...</span>")
+			"[IDENTITY_SUBJECT(1)] secretes a thick vile goo, securing [IDENTITY_SUBJECT(2)] into [src]!",\
+			"<span class='danger'>[IDENTITY_SUBJECT(1)] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
+			"<span class='italics'>You hear squelching...</span>", subjects=list(user, M))
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
 	if(M in buckled_mobs)

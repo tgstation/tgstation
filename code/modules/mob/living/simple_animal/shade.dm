@@ -47,10 +47,10 @@
 		if(health < maxHealth)
 			adjustHealth(-25)
 			Beam(M,icon_state="sendbeam",time=4)
-			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
-					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+			M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] heals \the <b>[IDENTITY_SUBJECT(2)]</b>.</span>", \
+					   "<span class='cult'>You heal <b>[IDENTITY_SUBJECT(2)]</b>, leaving <b>[IDENTITY_SUBJECT(2)]</b> at <b>[health]/[maxHealth]</b> health.</span>", subjects=list(M, src))
 		else
-			to_chat(M, "<span class='cult'>You cannot heal <b>[src]</b>, as [p_they()] [p_are()] unharmed!</span>")
+			to_chat(M, "<span class='cult'>You cannot heal <b>[IDENTITY_SUBJECT(1)]</b>, as [p_they()] [p_are()] unharmed!</span>", list(src))
 	else if(src != M)
 		..()
 

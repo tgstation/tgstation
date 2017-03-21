@@ -512,7 +512,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 			qdel(H.nuke_disk)
 			H.nuke_disk = null
 			return
-		user.visible_message("<span class='warning'>[user] captures [src]!</span>", "<span class='userdanger'>You've got the disk! Defend it with your life!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] captures [src]!</span>", "<span class='userdanger'>You've got the disk! Defend it with your life!</span>", subjects=list(user))
 		loc = H
 		H.nuke_disk = src
 		return 1
@@ -525,7 +525,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	. = ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
 	var/newcolor = "#00FF00"
@@ -539,7 +539,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		user.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
 		sleep(1)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] was destroyed by the nuclear blast!</span>", subjects=list(user))
 	return OXYLOSS
 
 /obj/item/weapon/disk/fakenucleardisk

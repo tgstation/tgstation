@@ -95,7 +95,7 @@
 					if(!H.stat)
 						if(H.getBrainLoss() < 100)
 							H.adjustBrainLoss(20 * efficiency)
-							H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
+							H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>", subjects=list(H))
 						else
 							H.Paralyse(3)
 					else if(is_eligible_servant(H))

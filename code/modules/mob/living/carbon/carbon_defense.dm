@@ -26,7 +26,7 @@
 					var/obj/item/I = AM
 					if(isturf(I.loc))
 						put_in_active_hand(I)
-						visible_message("<span class='warning'>[src] catches [I]!</span>")
+						visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] catches [I]!</span>", subjects=list(src))
 						throw_mode_off()
 						return 1
 	..()
@@ -116,8 +116,8 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+				visible_message("<span class='danger'>The [IDENTITY_SUBJECT(1)] has shocked [IDENTITY_SUBJECT(2)]!</span>", \
+				"<span class='userdanger'>The [IDENTITY_SUBJECT(1)] has shocked [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(5, 1, src)
@@ -183,9 +183,10 @@
 	else
 		take_overall_damage(0,shock_damage)
 	visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='danger'>[IDENTITY_SUBJECT(1)] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>" \
+		"<span class='italics'>You hear a heavy electrical crack.</span>", \
+		subjects=list(src)
 	)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
@@ -210,14 +211,14 @@
 	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+			M.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] shakes [IDENTITY_SUBJECT(2)] trying to get [p_them()] up!</span>", \
+							"<span class='notice'>You shake [IDENTITY_SUBJECT(2)] trying to get [p_them()] up!</span>", subjects=list(M, src))
 		else if(check_zone(M.zone_selected) == "head")
-			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+			M.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] gives [IDENTITY_SUBJECT(2)] a pat on the head to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You give [IDENTITY_SUBJECT(2)] a pat on the head to make [p_them()] feel better!</span>", subjects=list(M, src))
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+			M.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] hugs [IDENTITY_SUBJECT(2)] to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You hug [IDENTITY_SUBJECT(2)] to make [p_them()] feel better!</span>", subjects=list(M, src))
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)

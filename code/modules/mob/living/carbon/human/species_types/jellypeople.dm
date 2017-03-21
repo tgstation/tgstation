@@ -165,10 +165,10 @@
 	if(!isslimeperson(H))
 		return
 	CHECK_DNA_AND_SPECIES(H)
-	H.visible_message("<span class='notice'>[owner] gains a look of \
+	H.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] gains a look of \
 		concentration while standing perfectly still.</span>",
 		"<span class='notice'>You focus intently on moving your body while \
-		standing perfectly still...</span>")
+		standing perfectly still...</span>", subjects=list(owner))
 
 	H.notransform = TRUE
 
@@ -192,7 +192,7 @@
 	H.dna.transfer_identity(spare, transfer_SE=1)
 	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	spare.real_name = spare.dna.real_name
-	spare.name = spare.dna.real_name
+	spare.voiceprint = spare.dna.voiceprint
 	spare.updateappearance(mutcolor_update=1)
 	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
@@ -207,10 +207,10 @@
 	spare_datum.bodies = origin_datum.bodies
 
 	H.mind.transfer_to(spare)
-	spare.visible_message("<span class='warning'>[H] distorts as a new body \
+	spare.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] distorts as a new body \
 		\"steps out\" of them.</span>",
 		"<span class='notice'>...and after a moment of disorentation, \
-		you're besides yourself!</span>")
+		you're besides yourself!</span>", subjects=list(H))
 
 
 /datum/action/innate/swap_body
@@ -317,10 +317,10 @@
 			swap_to_dupe(M, selected)
 
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
-	M.current.visible_message("<span class='notice'>[M.current] \
+	M.current.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] \
 		stops moving and starts staring vacantly into space.</span>",
-		"<span class='notice'>You stop moving this body...</span>")
+		"<span class='notice'>You stop moving this body...</span>", subjects=list(M.current))
 	M.transfer_to(dupe)
-	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
+	dupe.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] blinks and looks \
 		around.</span>",
-		"<span class='notice'>...and move this one instead.</span>")
+		"<span class='notice'>...and move this one instead.</span>", subjects=list(dupe))

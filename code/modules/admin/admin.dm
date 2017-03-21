@@ -712,7 +712,7 @@ var/global/BSACooldown = 0
 	if(istype(M) && M.mind && M.mind.devilinfo)
 		to_chat(usr, ticker.mode.printdevilinfo(M.mind))
 	else
-		to_chat(usr, "<b>[M] is not a devil.")
+		to_chat(usr, "<b>[IDENTITY_SUBJECT(1)] is not a devil.", list(M))
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
@@ -805,7 +805,7 @@ var/global/BSACooldown = 0
 	tomob.ghostize(0)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
-	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.real_name][tomob.ckey ? " while [tomob.ckey] was in it" : null].")
 	feedback_add_details("admin_verb","CGD")
 
 	tomob.ckey = frommob.ckey

@@ -58,7 +58,7 @@
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key)
 			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
-		visible_message("[user] sticks \a [newbrain] into \the [src].")
+		visible_message("[IDENTITY_SUBJECT(1)] sticks \a [newbrain] into \the [src].", subjects=list(user))
 
 		brainmob = newbrain.brainmob
 		newbrain.brainmob = null

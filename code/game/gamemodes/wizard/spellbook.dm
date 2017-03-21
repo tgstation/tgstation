@@ -601,7 +601,7 @@
 /obj/item/weapon/spellbook/examine(mob/user)
 	..()
 	if(owner)
-		to_chat(user, "There is a small signature on the front cover: \"[owner]\".")
+		to_chat(user, "There is a small signature on the front cover: \"[owner.real_name]\".")
 	else
 		to_chat(user, "It appears to have no author.")
 

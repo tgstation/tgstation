@@ -11,7 +11,7 @@
 	var/reskinned = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>", subjects=list(user))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)

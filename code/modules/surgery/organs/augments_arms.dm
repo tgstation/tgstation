@@ -64,9 +64,9 @@
 	if(!holder || (holder in src))
 		return
 
-	owner.visible_message("<span class='notice'>[owner] retracts [holder] back into [owner.p_their()] [zone == "r_arm" ? "right" : "left"] arm.</span>",
+	owner.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] retracts [holder] back into [owner.p_their()] [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='notice'>[holder] snaps back into your [zone == "r_arm" ? "right" : "left"] arm.</span>",
-		"<span class='italics'>You hear a short mechanical noise.</span>")
+		"<span class='italics'>You hear a short mechanical noise.</span>", subjects=list(owner))
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
 		var/obj/item/device/assembly/flash/F = holder
@@ -109,9 +109,9 @@
 	// Activate the hand that now holds our item.
 	owner.swap_hand(result)//... or the 1st hand if the index gets lost somehow
 
-	owner.visible_message("<span class='notice'>[owner] extends [holder] from [owner.p_their()] [zone == "r_arm" ? "right" : "left"] arm.</span>",
+	owner.visible_message("<span class='notice'>[IDENTITY_SUBJECT(2)] extends [holder] from [owner.p_their()] [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == "r_arm" ? "right" : "left"] arm.</span>",
-		"<span class='italics'>You hear a short mechanical noise.</span>")
+		"<span class='italics'>You hear a short mechanical noise.</span>", subjects=list(owner))
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
@@ -139,7 +139,7 @@
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	if(prob(30/severity) && owner && !crit_fail)
 		Retract()
-		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == "r_arm" ? "right" : "left"] arm!</span>")
+		owner.visible_message("<span class='danger'>A loud bang comes from [IDENTITY_SUBJECT(1)]\'s [zone == "r_arm" ? "right" : "left"] arm!</span>", subjects=list(owner))
 		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
 		to_chat(owner, "<span class='userdanger'>You feel an explosion erupt inside your [zone == "r_arm" ? "right" : "left"] arm as your implant breaks!</span>")
 		owner.adjust_fire_stacks(20)

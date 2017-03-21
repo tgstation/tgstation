@@ -134,6 +134,10 @@ Credit where due:
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
+		if(L.voiceprint || L.get_faceprint())
+			for(var/_other_servant in servants_to_serve-servant)
+				var/datum/mind/other_servant = _other_servant
+				other_servant.preknown_identity(L)
 	..()
 	return 1
 

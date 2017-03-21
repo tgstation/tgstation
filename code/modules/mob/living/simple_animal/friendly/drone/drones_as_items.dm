@@ -62,7 +62,7 @@
 
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='warning'>[drone] is trying to escape!</span>")
+		to_chat(L, "<span class='warning'>[IDENTITY_SUBJECT(1)] is trying to escape!</span>", list(src))
 		if(!do_after(drone, 50, target = L))
 			return
 		L.dropItemToGround(src)
@@ -71,7 +71,7 @@
 	drone.loc = get_turf(src)
 	drone.reset_perspective()
 	drone.setDir(SOUTH )//Looks better
-	drone.visible_message("<span class='warning'>[drone] uncurls!</span>")
+	drone.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] uncurls!</span>", subjects=list(drone))
 	drone = null
 	qdel(src)
 

@@ -43,10 +43,10 @@
 			if(1)
 				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 			if(2)
-				to_chat(user, "<span class='notice'>We stealthily stab [target] with a minor proboscis...</span>")
+				to_chat(user, "<span class='notice'>We stealthily stab [IDENTITY_SUBJECT(1)] with a minor proboscis...</span>", list(target))
 				to_chat(target, "<span class='userdanger'>You experience a stabbing sensation and your ears begin to ring...</span>")
 			if(3)
-				to_chat(user, "<span class='notice'>We mold the [target]'s mind like clay, granting [target.p_them()] the ability to speak in the hivemind!</span>")
+				to_chat(user, "<span class='notice'>We mold the [target.real_name]'s mind like clay, granting [target.p_them()] the ability to speak in the hivemind!</span>")
 				to_chat(target, "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>")
 				for(var/mob/M in mob_list)
 					if(M.lingcheck() == 2)
@@ -58,7 +58,7 @@
 				sleep(1800)
 		feedback_add_details("changeling_powers","A [i]")
 		if(!do_mob(user, target, 20))
-			to_chat(user, "<span class='warning'>Our link with [target] has ended!</span>")
+			to_chat(user, "<span class='warning'>Our link with [IDENTITY_SUBJECT(1)] has ended!</span>", list(target))
 			changeling.islinking = 0
 			target.mind.linglink = 0
 			return

@@ -34,7 +34,7 @@
 	if(slot == slot_head && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
-			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
+			user.visible_message("<span class='warning'>As [IDENTITY_SUBJECT(1)] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>", subjects=list(user))
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
@@ -95,7 +95,7 @@
 	if(slot == slot_wear_suit && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
-			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
+			user.visible_message("<span class='warning'>As [IDENTITY_SUBJECT(1)] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>", subjects=list(user))
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
@@ -156,7 +156,7 @@
 	if(slot == slot_gloves && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
-			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
+			user.visible_message("<span class='warning'>As [IDENTITY_SUBJECT(1)] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>", subjects=list(user))
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)

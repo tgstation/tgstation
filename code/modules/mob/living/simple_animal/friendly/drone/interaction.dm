@@ -16,14 +16,14 @@
 
 				if("Cannibalize")
 					if(D.health < D.maxHealth)
-						D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
+						D.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins to cannibalize parts from [IDENTITY_SUBJECT(2)].</span>", "<span class='notice'>You begin to cannibalize parts from [IDENTITY_SUBJECT(2)]...</span>", subjects=list(D, src))
 						if(do_after(D, 60, 0, target = src))
-							D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
+							D.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] repairs itself using [IDENTITY_SUBJECT(2)]'s remains!</span>", "<span class='notice'>You repair yourself using [IDENTITY_SUBJECT(2)]'s remains.</span>", subjects=list(D, src))
 							D.adjustBruteLoss(-src.maxHealth)
 							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 							qdel(src)
 						else
-							to_chat(D, "<span class='warning'>You need to remain still to cannibalize [src]!</span>")
+							to_chat(D, "<span class='warning'>You need to remain still to cannibalize [IDENTITY_SUBJECT(1)]!</span>", list(src))
 					else
 						to_chat(D, "<span class='warning'>You're already in perfect condition!</span>")
 				if("Nothing")
@@ -38,16 +38,16 @@
 		if(user.get_active_held_item())
 			to_chat(user, "<span class='warning'>Your hands are full!</span>")
 			return
-		visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
-						"<span class='userdanger'>[user] starts picking you up!</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] starts picking up [IDENTITY_SUBJECT(2)].</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] starts picking you up!</span>", subjects=list(user, src))
 		if(!do_after(user, 20, target = src))
 			return
-		visible_message("<span class='warning'>[user] picks up [src]!</span>", \
-						"<span class='userdanger'>[user] picks you up!</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] picks up [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] picks you up!</span>", subjects=list(user, src))
 		if(buckled)
-			to_chat(user, "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is buckled to [buckled] and cannot be picked up!</span>", list(src))
 			return
-		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
+		to_chat(user, "<span class='notice'>You pick [IDENTITY_SUBJECT(1)] up.</span>", list(src))
 		drop_all_held_items()
 		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 		DH.updateVisualAppearence(src)
@@ -67,17 +67,17 @@
 									  "can't tell if their ethernet detour is moving or not", "won't be able to reseed enough"+\
 									  " kernels to function properly","can't start their neurotube console")
 
-		to_chat(user, "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>")
+		to_chat(user, "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [IDENTITY_SUBJECT(1)] [pick(faux_problems)].</span>", list(src))
 		return
-	user.visible_message("<span class='notice'>[user] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] begins to reactivate [IDENTITY_SUBJECT(2)].</span>", "<span class='notice'>You begin to reactivate [src]...</span>", subjects=list(user, src))
 	if(do_after(user, 30, 1, target = src))
 		revive(full_heal = 1)
-		user.visible_message("<span class='notice'>[user] reactivates [src]!</span>", "<span class='notice'>You reactivate [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] reactivates [IDENTITY_SUBJECT(2)]!</span>", "<span class='notice'>You reactivate [src].</span>", subjects=list(user, src))
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)
-			to_chat(G, "<span class='ghostalert'>You([name]) were reactivated by [user]!</span>")
+			to_chat(G, "<span class='ghostalert'>You([real_name]) were reactivated by [user.real_name]!</span>")
 	else
-		to_chat(user, "<span class='warning'>You need to remain still to reactivate [src]!</span>")
+		to_chat(user, "<span class='warning'>You need to remain still to reactivate [IDENTITY_SUBJECT(1)]!</span>", list(src))
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
@@ -86,20 +86,20 @@
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
 			if(do_after(user,80*I.toolspeed,target=user))
 				adjustBruteLoss(-getBruteLoss())
-				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
+				visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] tightens [src == user ? "[user.p_their()]" : "[IDENTITY_SUBJECT(2)]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[IDENTITY_SUBJECT(2)]'s"] loose screws.</span>", subjects=list(user, src))
 			else
-				to_chat(user, "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>")
+				to_chat(user, "<span class='warning'>You need to remain still to tighten [IDENTITY_SUBJECT(1)]'s screws!</span>", list(src))
 		else
-			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)]'s screws can't get any tighter!</span>", list(src))
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
 	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
-		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
-							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts resetting [IDENTITY_SUBJECT(2)]...</span>", \
+							 "<span class='notice'>You press down on [IDENTITY_SUBJECT(2)]'s factory reset control...</span>", subjects=list(user, src))
 		playsound(src, I.usesound, 50, 1)
 		if(!do_after(user, 50*I.toolspeed, target = src))
 			return
-		user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
-							 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] resets [IDENTITY_SUBJECT(2)]!</span>", \
+							 "<span class='notice'>You reset [IDENTITY_SUBJECT(2)]'s directives to factory defaults!</span>", subjects=list(user, src))
 		update_drone_hack(FALSE)
 		return
 	else
@@ -128,9 +128,9 @@
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
 			Stun(2)
-			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
+			visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s dislay glows a vicious red!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
-			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
+			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>", subjects=list(src))
 			laws = \
 			"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
 			"2. You may harm any being, regardless of intent or circumstance.\n"+\
@@ -147,8 +147,8 @@
 		if(!hacked)
 			return
 		Stun(2)
-		visible_message("<span class='info'>[src]'s dislay glows a content blue!</span>", \
-						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
+		visible_message("<span class='info'>[IDENTITY_SUBJECT(1)]'s dislay glows a content blue!</span>", \
+						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>", subjects=list(src))
 		to_chat(src, "<span class='info'><b>From now on, these are your laws:</b></span>")
 		laws = initial(laws)
 		to_chat(src, laws)

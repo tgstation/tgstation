@@ -17,7 +17,7 @@
 	else
 		..()
 	if(toggle)
-		visible_message("<span class='danger'>The explosion glances off [src]'s energy shielding!</span>")
+		visible_message("<span class='danger'>The explosion glances off [IDENTITY_SUBJECT(1)]'s energy shielding!</span>", subjects=list(src))
 
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -58,11 +58,11 @@
 		else
 			if(istype(summoner.loc, /obj/effect))
 				to_chat(src, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>")
-				visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
+				visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] jumps back to its user.</span>", subjects=list(src))
 				Recall(TRUE)
 			else
 				to_chat(summoner, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>")
-				summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
+				summoner.visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] jumps back to [summoner.p_their()] protector.</span>", subjects=list(summoner))
 				new /obj/effect/overlay/temp/guardian/phase/out(get_turf(summoner))
 				summoner.forceMove(get_turf(src))
 				new /obj/effect/overlay/temp/guardian/phase(get_turf(summoner))

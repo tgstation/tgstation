@@ -232,7 +232,7 @@
 		O.blob_mobs.Add(BS)
 		BS.Zombify(M)
 		O.add_points(points)
-		to_chat(O, "<span class='notice'>Gained [points] resources from the zombification of [M].</span>")
+		to_chat(O, "<span class='notice'>Gained [points] resources from the zombification of [IDENTITY_SUBJECT(1)].</span>", list(M))
 
 /datum/reagent/blob/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.

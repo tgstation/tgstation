@@ -85,54 +85,17 @@
 	return 1
 
 /datum/game_mode/abduction/post_setup()
-	//Spawn Team
-	var/list/obj/effect/landmark/abductor/agent_landmarks = new
-	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
-	agent_landmarks.len = max_teams
-	scientist_landmarks.len = max_teams
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
-			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
-			scientist_landmarks[text2num(A.team)] = A
-
-	var/datum/mind/agent
-	var/obj/effect/landmark/L
-	var/datum/mind/scientist
-	var/team_name
-	var/mob/living/carbon/human/H
-	var/datum/species/abductor/S
+	var/list/landmark_lists = get_landmark_lists()
 	for(var/team_number=1,team_number<=abductor_teams,team_number++)
-		team_name = team_names[team_number]
-		agent = agents[team_number]
-		H = agent.current
-		L = agent_landmarks[team_number]
-		H.loc = L.loc
-		H.set_species(/datum/species/abductor)
-		S = H.dna.species
-		S.agent = 1
-		S.team = team_number
-		H.real_name = team_name + " Agent"
-		equip_common(H,team_number)
-		equip_agent(H,team_number)
-		greet_agent(agent,team_number)
-
-		scientist = scientists[team_number]
-		H = scientist.current
-		L = scientist_landmarks[team_number]
-		H.loc = L.loc
-		H.set_species(/datum/species/abductor)
-		S = H.dna.species
-		S.scientist = 1
-		S.team = team_number
-		H.real_name = team_name + " Scientist"
-		equip_common(H,team_number)
-		equip_scientist(H,team_number)
-		greet_scientist(scientist,team_number)
+		_post_setup_team(team_number, landmark_lists)
 	return ..()
 
 //Used for create antag buttons
 /datum/game_mode/abduction/proc/post_setup_team(team_number)
+	var/list/landmark_lists = get_landmark_lists()
+	_post_setup_team(team_number, landmark_lists)
+
+/datum/game_mode/abduction/proc/get_landmark_lists()
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
@@ -142,6 +105,11 @@
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))
 			scientist_landmarks[text2num(A.team)] = A
+	. = list(agent_landmarks, scientist_landmarks)
+
+/datum/game_mode/abduction/proc/_post_setup_team(team_number, list/landmark_lists)
+	var/list/obj/effect/landmark/abductor/agent_landmarks = landmark_lists[1]
+	var/list/obj/effect/landmark/abductor/scientist_landmarks = landmark_lists[2]
 
 	var/datum/mind/agent
 	var/obj/effect/landmark/L
@@ -152,6 +120,8 @@
 
 	team_name = team_names[team_number]
 	agent = agents[team_number]
+	scientist = scientists[team_number]
+
 	H = agent.current
 	L = agent_landmarks[team_number]
 	H.loc = L.loc
@@ -160,12 +130,11 @@
 	S.agent = 1
 	S.team = team_number
 	H.real_name = team_name + " Agent"
+	scientist.preknown_identity(H)
 	equip_common(H,team_number)
 	equip_agent(H,team_number)
 	greet_agent(agent,team_number)
 
-
-	scientist = scientists[team_number]
 	H = scientist.current
 	L = scientist_landmarks[team_number]
 	H.loc = L.loc
@@ -174,11 +143,10 @@
 	S.scientist = 1
 	S.team = team_number
 	H.real_name = team_name + " Scientist"
+	agent.preknown_identity(H)
 	equip_common(H,team_number)
 	equip_scientist(H,team_number)
 	greet_scientist(scientist,team_number)
-
-
 
 /datum/game_mode/abduction/proc/greet_agent(datum/mind/abductor,team_number)
 	abductor.objectives += team_objectives[team_number]

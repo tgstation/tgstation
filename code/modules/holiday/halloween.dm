@@ -236,11 +236,11 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/nullrod))
 		if(prob(5))
-			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
+			visible_message("[IDENTITY_SUBJECT(1)] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>", subjects=list(src))
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 			qdel(src)
 		else
-			visible_message("<span class='danger'>[src] seems to be resisting the effect!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] seems to be resisting the effect!</span>", subjects=list(src))
 	else
 		..()
 

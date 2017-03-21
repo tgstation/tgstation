@@ -18,7 +18,7 @@
 	var/throw_hit_chance = 35
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
@@ -106,8 +106,8 @@
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	if(status && user.disabilities & CLUMSY && prob(50))
-		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
-							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] accidentally hits themself with [src]!</span>", \
+							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>", subjects=list(user))
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
@@ -128,8 +128,8 @@
 				user.do_attack_animation(M)
 				return
 		else
-			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+			M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] has prodded [IDENTITY_SUBJECT(2)] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[IDENTITY_SUBJECT(1)] has prodded you with [src]. Luckily it was off</span>", subjects=list(user, M))
 	else
 		if(status)
 			baton_stun(M, user)
@@ -156,8 +156,8 @@
 	if(user)
 		user.lastattacked = L
 		L.lastattacker = user
-		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+		L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has stunned [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has stunned you with [src]!</span>", subjects=list(user, L))
 		add_logs(user, L, "stunned")
 
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)

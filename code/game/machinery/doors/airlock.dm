@@ -715,13 +715,13 @@ var/list/airlock_overlays = list()
 		if(H.getBrainLoss() >= 60 && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
-									"<span class='userdanger'>You headbutt the airlock!</span>")
+				H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] headbutts the airlock.</span>", \
+									"<span class='userdanger'>You headbutt the airlock!</span>", subjects=list(user))
 				H.Stun(5)
 				H.Weaken(5)
 				H.apply_damage(10, BRUTE, "head")
 			else
-				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>", subjects=list(user))
 			return
 
 	if(panel_open)
@@ -970,8 +970,8 @@ var/list/airlock_overlays = list()
 					if(do_after(user, 20, 1, target = src))
 						if(!panel_open || !S.use(2))
 							return
-						user.visible_message("<span class='notice'>[user] reinforce \the [src] with metal.</span>",
-											"<span class='notice'>You reinforce \the [src] with metal.</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] reinforce \the [src] with metal.</span>",
+											"<span class='notice'>You reinforce \the [src] with metal.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_METAL
 						update_icon()
 					return
@@ -984,8 +984,8 @@ var/list/airlock_overlays = list()
 					if(do_after(user, 20, 1, target = src))
 						if(!panel_open || !S.use(2))
 							return
-						user.visible_message("<span class='notice'>[user] reinforce \the [src] with plasteel.</span>",
-											"<span class='notice'>You reinforce \the [src] with plasteel.</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] reinforce \the [src] with plasteel.</span>",
+											"<span class='notice'>You reinforce \the [src] with plasteel.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_PLASTEEL
 						modify_max_integrity(normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
 						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
@@ -1002,9 +1002,9 @@ var/list/airlock_overlays = list()
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
-						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
-										"<span class='italics'>You hear welding.</span>")
+										"<span class='italics'>You hear welding.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_NONE
 						spawn_atom_to_turf(/obj/item/stack/sheet/metal, user.loc, 2)
 						update_icon()
@@ -1019,8 +1019,8 @@ var/list/airlock_overlays = list()
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_I_S)
 							return
-						user.visible_message("<span class='notice'>[user] remove \the [src]'s shielding.</span>",
-											"<span class='notice'>You remove \the [src]'s inner shielding.</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] remove \the [src]'s shielding.</span>",
+											"<span class='notice'>You remove \the [src]'s inner shielding.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_NONE
 						modify_max_integrity(normal_integrity)
 						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
@@ -1038,9 +1038,9 @@ var/list/airlock_overlays = list()
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
-						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
-										"<span class='italics'>You hear welding.</span>")
+										"<span class='italics'>You hear welding.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_I_S
 					return
 			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
@@ -1053,8 +1053,8 @@ var/list/airlock_overlays = list()
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_O_S)
 							return
-						user.visible_message("<span class='notice'>[user] remove \the [src]'s shielding.</span>",
-											"<span class='notice'>You remove \the [src]'s shielding.</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] removes \the [src]'s shielding.</span>",
+											"<span class='notice'>You remove \the [src]'s shielding.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_I
 						spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
 					return
@@ -1069,9 +1069,9 @@ var/list/airlock_overlays = list()
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
-						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
-										"<span class='italics'>You hear welding.</span>")
+										"<span class='italics'>You hear welding.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O_S
 					return
 			if(AIRLOCK_SECURITY_PLASTEEL)
@@ -1084,8 +1084,8 @@ var/list/airlock_overlays = list()
 					if(do_after(user, 10*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
-						user.visible_message("<span class='notice'>[user] cut through \the [src]'s outer grille.</span>",
-											"<span class='notice'>You cut through \the [src]'s outer grille.</span>")
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] cut through \the [src]'s outer grille.</span>",
+											"<span class='notice'>You cut through \the [src]'s outer grille.</span>", subjects=list(user))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
 	if(istype(C, /obj/item/weapon/screwdriver))
@@ -1129,27 +1129,27 @@ var/list/airlock_overlays = list()
 	if(!operating && density)
 		if(W.remove_fuel(0,user))
 			if(user.a_intent != INTENT_HELP)
-				user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
+				user.visible_message("[IDENTITY_SUBJECT(1)] is [welded ? "unwelding":"welding"] the airlock.", \
 								"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
-								"<span class='italics'>You hear welding.</span>")
+								"<span class='italics'>You hear welding.</span>", subjects=list(user))
 				playsound(loc, W.usesound, 40, 1)
 				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
-					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
-										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] has [welded? "welded shut":"unwelded"] [src].", \
+										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>", subjects=list(user))
 					update_icon()
 			else if(obj_integrity < max_integrity)
-				user.visible_message("[user] is welding the airlock.", \
+				user.visible_message("[IDENTITY_SUBJECT(1)] is welding the airlock.", \
 								"<span class='notice'>You begin repairing the airlock...</span>", \
-								"<span class='italics'>You hear welding.</span>")
+								"<span class='italics'>You hear welding.</span>", subjects=list(user))
 				playsound(loc, W.usesound, 40, 1)
 				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
-					user.visible_message("[user.name] has repaired [src].", \
-										"<span class='notice'>You finish repairing the airlock.</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] has repaired [src].", \
+										"<span class='notice'>You finish repairing the airlock.</span>", subjects=list(user))
 					update_icon()
 
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weapon/weldingtool/W, mob/user)
@@ -1169,15 +1169,15 @@ var/list/airlock_overlays = list()
 			charge.ex_act(1)
 			user.Weaken(3)
 			return
-		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
-							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] removes [charge] from [src].</span>", \
+							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>", subjects=list(user))
 		charge.forceMove(get_turf(user))
 		charge = null
 		return
 	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
 		playsound(src.loc, I.usesound, 100, 1)
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
-							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] removes the electronics from the airlock assembly.", \
+							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>", subjects=list(user))
 		if(do_after(user,40*I.toolspeed, target = src))
 			if(src.loc)
 				deconstruct(TRUE, user)
@@ -1445,9 +1445,9 @@ var/list/airlock_overlays = list()
 	if(locked || welded) //Extremely generic, as aliens only understand the basics of how airlocks work.
 		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
 		return
-	user.visible_message("<span class='warning'>[user] begins prying open [src].</span>",\
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins prying open [src].</span>",\
 						"<span class='noticealien'>You begin digging your claws into [src] with all your might!</span>",\
-						"<span class='warning'>You hear groaning metal...</span>")
+						"<span class='warning'>You hear groaning metal...</span>", subjects=list(user))
 	var/time_to_open = 5
 	if(hasPower())
 		time_to_open = 50 //Powered airlocks take longer to open, and are loud.

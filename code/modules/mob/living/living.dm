@@ -73,6 +73,29 @@
 	staticOverlays["animal"] = staticOverlay
 
 
+/mob/living/Topic(href, href_list)
+	..()
+	if(href_list["voiceprint_edit"] && href_list["t"] && usr == src && mind && client)
+		var/edit_tag = href_list["voiceprint_edit"]
+		var/href_timestamp = text2num(href_list["t"])
+		var/tag_entry = mind.identity_edit_tags[edit_tag]
+		if(tag_entry && href_timestamp >= world.time - IDENTITY_EXPIRE_TIME)
+			var/voice_print = tag_entry[IDENTITY_EDIT_TAG_PRINT]
+			var/tag_timestamp = tag_entry[IDENTITY_EDIT_TAG_TIMESTAMP]
+			if(tag_timestamp < world.time - IDENTITY_EXPIRE_TIME)
+				return
+			var/voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
+			if(!voiceprint_entry)
+				return
+			var/VP_name = voiceprint_entry[IDENTITY_PRINT_NAME]
+			mind.set_print_manual(voice_print, VP_name, CATEGORY_VOICEPRINTS)
+			var/chosen_name = input(src, "Please enter a new name for [VP_name].", "Rename [VP_name]", VP_name)
+			if(!chosen_name || stat == DEAD || chosen_name == VP_name || QDELETED(mind))
+				return
+			chosen_name = html_encode(chosen_name)
+			mind.set_print_manual(voice_print, chosen_name, CATEGORY_VOICEPRINTS)
+			show_message("<span class='notice'>You will now remember [VP_name]'s name as [chosen_name].</span>")
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if(..()) //we are thrown onto something
@@ -109,7 +132,7 @@
 		var/mob/living/L = M
 		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
+				to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is restrained, you cannot push past.</span>", list(L))
 			return 1
 
 		if(L.pulling)
@@ -117,7 +140,7 @@
 				var/mob/P = L.pulling
 				if(P.restrained())
 					if(!(world.time % 5))
-						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
+						to_chat(src, "<span class='warning'>[IDENTITY_SUBJECT(1)] is restraining [IDENTITY_SUBJECT(2)], you cannot push past.</span>", list(L, P))
 					return 1
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
@@ -216,7 +239,7 @@
 		return 0
 	if(!..())
 		return 0
-	visible_message("<b>[src]</b> points to [A]")
+	visible_message("<b>[IDENTITY_SUBJECT(1)]</b> points to [IDENTITY_SUBJECT(2)]", subjects=list(src, A))
 	return 1
 
 /mob/living/verb/succumb(whispered as null)
@@ -234,7 +257,7 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
+	return (health <= HEALTH_THRESHOLD_CRIT && stat == UNCONSCIOUS)
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -400,9 +423,9 @@
 
 	if(config.allow_Metadata)
 		if(client)
-			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
+			to_chat(src, "[src.real_name]'s Metainfo:<br>[client.prefs.metadata]")
 		else
-			to_chat(src, "[src] does not have any stored infomation!")
+			to_chat(src, "[src.real_name] does not have any stored infomation!")
 	else
 		to_chat(src, "OOC Metadata is not supported by this server!")
 
@@ -538,7 +561,7 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
-		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] resists against [IDENTITY_SUBJECT(2)]'s grip!</span>", subjects=list(src, pulledby))
 		resist_grab()
 		return
 
@@ -573,7 +596,7 @@
 	. = 1
 	if(pulledby.grab_state)
 		if(prob(30/pulledby.grab_state))
-			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has broken free of [IDENTITY_SUBJECT(2)]'s grip!</span>", subjects=list(src, pulledby))
 			pulledby.stop_pulling()
 			return 0
 		if(moving_resist && client) //we resisted by trying to move
@@ -625,8 +648,8 @@
 	if(what.flags & NODROP)
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
-	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
-					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
+	who.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] tries to remove [IDENTITY_SUBJECT(2)]'s [what.name].</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] tries to remove [IDENTITY_SUBJECT(2)]'s [what.name].</span>", subjects=list(src, who))
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
@@ -644,7 +667,7 @@
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
 	if(what && (what.flags & NODROP))
-		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
+		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [IDENTITY_SUBJECT(1)], it's stuck to your hand!</span>", list(who))
 		return
 	if(what)
 		var/list/where_list
@@ -660,7 +683,7 @@
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
-		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] tries to put [what] on [IDENTITY_SUBJECT(2)].</span>", subjects=list(src, who))
 		if(do_mob(src, who, what.put_on_delay))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -769,7 +792,7 @@
 			for(var/i = 1; i <= butcher_results[path];i++)
 				new path(src.loc)
 			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
-	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] butchers [IDENTITY_SUBJECT(2)].</span>", subjects=list(user, src))
 	gib(0, 0, 1)
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
@@ -864,8 +887,8 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
-						"<span class='userdanger'>You're set on fire!</span>")
+		src.visible_message("<span class='warning'>[IDENTITY_SUBJECT(2)] catches fire!</span>", \
+						"<span class='userdanger'>You're set on fire!</span>", subjects=list(src))
 		src.set_light(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
@@ -908,12 +931,12 @@
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
 	C.visible_message("<span class='warning'>[pick( \
-					  "[C] dives out of [src]'s way!", \
-					  "[C] stumbles over [src]!", \
-					  "[C] jumps out of [src]'s path!", \
-					  "[C] trips over [src] and falls!", \
-					  "[C] topples over [src]!", \
-					  "[C] leaps out of [src]'s way!")]</span>")
+					  "[IDENTITY_SUBJECT(1)] dives out of [IDENTITY_SUBJECT(2)]'s way!", \
+					  "[IDENTITY_SUBJECT(1)] stumbles over [IDENTITY_SUBJECT(2)]!", \
+					  "[IDENTITY_SUBJECT(1)] jumps out of [IDENTITY_SUBJECT(2)]'s path!", \
+					  "[IDENTITY_SUBJECT(1)] trips over [IDENTITY_SUBJECT(2)] and falls!", \
+					  "[IDENTITY_SUBJECT(1)] topples over [IDENTITY_SUBJECT(2)]!", \
+					  "[IDENTITY_SUBJECT(1)] leaps out of [IDENTITY_SUBJECT(2)]'s way!")]</span>", subjects=list(C, src))
 	C.Weaken(2)
 
 /mob/living/post_buckle_mob(mob/living/M)

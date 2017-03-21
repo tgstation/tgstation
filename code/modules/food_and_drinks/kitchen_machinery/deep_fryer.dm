@@ -127,7 +127,7 @@ insert ascii eagle on american flag background here
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/carbon/C = user.pulling
-		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
+		user.visible_message("<span class = 'danger'>[IDENTITY_SUBJECT(1)] dunks [IDENTITY_SUBJECT(2)]'s face in [src]!</span>", subjects=list(user, C))
 		reagents.reaction(C, TOUCH)
 		C.adjustFireLoss(reagents.total_volume)
 		reagents.remove_any((reagents.total_volume/2))

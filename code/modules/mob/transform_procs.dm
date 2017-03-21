@@ -198,9 +198,11 @@
 
 	if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
 		O.real_name = random_unique_name(O.gender)
+		O.voiceprint = generate_voiceprint()
 		O.dna.generate_unique_enzymes(O)
 	else
 		O.real_name = O.dna.real_name
+		O.voiceprint = O.dna.voiceprint
 	O.name = O.real_name
 
 	if(tr_flags & TR_KEEPSE)

@@ -83,7 +83,7 @@
 	switch(M.damtype)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(M))
 			if(prob(hardness + M.force) && M.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -187,7 +187,7 @@
 			if( user.loc == T && user.get_active_held_item() == W )
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
-				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
+				visible_message("The wall was sliced apart by [IDENTITY_SUBJECT(1)]!", "<span class='italics'>You hear metal being sliced apart.</span>", subjects=list(user))
 				return 1
 	return 0
 
@@ -200,7 +200,7 @@
 		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>", subjects=list(user))
 			return 1
 	return 0
 

@@ -181,10 +181,10 @@
 					stored_components[i] = 0
 				update_slab_info(targetslab)
 				update_slab_info(src)
-				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
-				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
+				user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] empties [src] into [IDENTITY_SUBJECT(2)]'s [targetslab.name].</span>", \
+				"<span class='notice'>You transfer your slab's components into [IDENTITY_SUBJECT(2)]'s [targetslab.name].</span>", subjects=list(user, target))
 		else
-			to_chat(user, "<span class='warning'>[target] has no slabs to transfer components to.</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] has no slabs to transfer components to.</span>", list(target))
 	else
 		return ..()
 
@@ -194,8 +194,8 @@
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
-		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src]\
-		[clockwork_caches ? ", where it is added to the global cache":""].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src]\
+		[clockwork_caches ? ", where it is added to the global cache":""].</span>", subjects=list(user))
 		if(clockwork_caches)
 			clockwork_component_cache[C.component_id]++
 			update_slab_info()
@@ -212,7 +212,7 @@
 			S.stored_components[i] = 0
 		update_slab_info(src)
 		update_slab_info(S)
-		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>", subjects=list(user))
 	else
 		return ..()
 
@@ -239,7 +239,7 @@
 /obj/item/clockwork/slab/attack_self(mob/living/user)
 	if(iscultist(user))
 		to_chat(user, "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
-		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
+		user.visible_message("<span class='warning'>A sizzling sound comes from [IDENTITY_SUBJECT(1)]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>", subjects=list(user))
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.drop_item()
 		user.emote("scream")

@@ -44,14 +44,15 @@
 			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				M.real_name = fields["name"]
 				M.dna.unique_enzymes = fields["UE"]
-				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
+				if(fields["voiceprint"])
+					M.voiceprint = fields["voiceprint"]
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 		log_attack(log_msg)
 	else
-		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
+		to_chat(user, "<span class='notice'>It appears that [IDENTITY_SUBJECT(1)] does not have compatible DNA.</span>", list(M))
 		return
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
@@ -68,11 +69,11 @@
 	add_logs(user, target, "attempted to inject", src)
 
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", "<span class='userdanger'>[user] is trying to inject [target] with [src]!</span>")
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is trying to inject [IDENTITY_SUBJECT(2)] with [src]!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] is trying to inject [IDENTITY_SUBJECT(2)] with [src]!</span>", subjects=list(user, target))
 		if(!do_mob(user, target) || used)
 			return
-		target.visible_message("<span class='danger'>[user] injects [target] with the syringe with [src]!", \
-						"<span class='userdanger'>[user] injects [target] with the syringe with [src]!")
+		target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] injects [IDENTITY_SUBJECT(2)] with the syringe with [src]!", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] injects [IDENTITY_SUBJECT(2)] with the syringe with [src]!", subjects=list(user, target))
 
 	else
 		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
@@ -310,7 +311,7 @@
 
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
+			to_chat(user, "<span class='notice'>You can't modify [IDENTITY_SUBJECT(1)]'s DNA while [M.p_theyre()] dead.</span>", list(M))
 			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
@@ -345,6 +346,10 @@
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 				M.dna.temporary_mutations[UE_CHANGED] = endtime
+				if(fields["voiceprint"])
+					if(!M.dna.previous["voiceprint"])
+						M.dna.previous["voiceprint"] = M.voiceprint
+					M.voiceprint = fields["voiceprint"]
 			if(fields["UI"])	//UI+UE
 				if(!M.dna.previous["UI"])
 					M.dna.previous["UI"] = M.dna.uni_identity
@@ -353,7 +358,7 @@
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
 		log_attack(log_msg)
 	else
-		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
+		to_chat(user, "<span class='notice'>It appears that [IDENTITY_SUBJECT(1)] does not have compatible DNA.</span>", list(M))
 		return
 
 /obj/item/weapon/dnainjector/timed/hulk

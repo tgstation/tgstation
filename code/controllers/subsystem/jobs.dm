@@ -8,6 +8,9 @@ var/datum/controller/subsystem/job/SSjob
 	var/list/occupations = list()		//List of all jobs
 	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
+	var/list/preknown_occupations = list() //Dict of groups of jobs that know each other at roundstart, keys are names of the groups.
+	var/list/famous_occupations = list() //List of jobs that all crewmembers know the names of at roundstart.
+	var/list/friendly_occupations = list() //List of jobs that know the names of all crewmembers at roundstart.
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
@@ -23,6 +26,9 @@ var/datum/controller/subsystem/job/SSjob
 		SetupOccupations()
 	if(config.load_jobs_from_txt)
 		LoadJobs()
+		LoadPreknownJobs()
+	else
+		DefaultPreknownJobs()
 	..()
 
 
@@ -404,7 +410,38 @@ var/datum/controller/subsystem/job/SSjob
 			H.loc = S.loc
 
 	if(H.mind)
-		H.mind.assigned_role = rank
+		var/datum/mind/H_mind = H.mind
+		H_mind.assigned_role = rank
+
+		if(H.voiceprint && (!joined_late || config.latejoin_identity_retcon < 0 || world.time - round_start_time <= config.latejoin_identity_retcon))
+			var/H_famous = famous_occupations[rank]
+			var/H_friendly = friendly_occupations[rank]
+			var/list/H_knowledge_positions = list()
+			for(var/group_name in preknown_occupations)
+				var/list/group_list = preknown_occupations[group_name]
+				if(group_list[rank])
+					H_knowledge_positions |= group_list
+			if(H_knowledge_positions.len)
+				for(var/_T_mind in ticker.minds-H_mind)
+					var/datum/mind/T_mind = _T_mind
+					if(T_mind.current)
+						var/mob/living/T = T_mind.current
+						var/T_rank = T_mind.assigned_role
+						var/T_faceprint = T.get_faceprint()
+						if(T_rank && (T.voiceprint || T_faceprint) && !(H_mind.get_print_entry(T.voiceprint, CATEGORY_VOICEPRINTS) || H_mind.get_print_entry(T_faceprint, CATEGORY_FACEPRINTS)))
+							var/T_take
+							var/T_give
+							if(H_friendly || famous_occupations[T_rank])
+								T_take = TRUE
+							if(friendly_occupations[T_rank] || H_famous)
+								T_give = TRUE
+							if(H_knowledge_positions[T_rank])
+								T_take = TRUE
+								T_give = TRUE
+							if(T_take)
+								H_mind.preknown_identity(T)
+							if(T_give)
+								T_mind.preknown_identity(H)
 
 	if(job)
 		var/new_mob = job.equip(H)
@@ -461,6 +498,82 @@ var/datum/controller/subsystem/job/SSjob
 		jobs.Find(jobstext)
 		J.total_positions = text2num(jobs.group[1])
 		J.spawn_positions = text2num(jobs.group[2])
+
+#define PREKNOWN_JOBS_FILE "config/preknown_jobs.txt"
+/datum/controller/subsystem/job/proc/LoadPreknownJobs()
+	if(!fexists(PREKNOWN_JOBS_FILE))
+		return DefaultPreknownJobs()
+	var/regex/group_name = regex("(?<=^\\\[).+(?=]\\s*$)")
+	var/regex/job_title = regex("(?<=^	).+")
+	var/regex/comment = regex("^#")
+	var/list/special_groups = list("Famous" = TRUE, "Friendly" = TRUE)
+	var/list/lines = file2list(PREKNOWN_JOBS_FILE)
+	var/list/processed_groups = list()
+	var/list/current_group = list()
+	var/current_group_name
+	var/line
+	var/lines_len = lines.len
+	famous_occupations.Cut()
+	friendly_occupations.Cut()
+	if(!lines_len)
+		return
+	for(var/i = 1, i <= lines_len, i++)
+		line = lines[i]
+		if(comment.Find(line))
+			continue
+		else if(i == lines_len || group_name.Find(line))
+			if(current_group_name && current_group.len)
+				if(special_groups[current_group_name])
+					switch(current_group_name)
+						if("Famous")
+							famous_occupations = current_group
+						if("Friendly")
+							friendly_occupations = current_group
+				else
+					processed_groups[current_group_name] = current_group
+			current_group_name = group_name.match
+			current_group = list()
+		else if(job_title.Find(line) && current_group)
+			var/matched_title = job_title.match
+			if(!GetJob(matched_title))
+				WARNING("SSjob: Invalid job title: \"[matched_title]\" when parsing [PREKNOWN_JOBS_FILE].")
+				continue
+			current_group[matched_title] = TRUE
+	preknown_occupations = processed_groups
+#undef PREKNOWN_JOBS_FILE
+
+/datum/controller/subsystem/job/proc/DefaultPreknownJobs()
+	var/list/default_famous = list("Captain", "Clown")
+	var/list/default_friendly = list()
+	var/list/default_preknowns = list(
+		"Command" = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer"),
+		"Engineering" = list("Chief Engineer", "Station Engineer", "Atmospheric Technician"),
+		"Medical" = list("Chief Medical Officer", "Medical Doctor", "Geneticist", "Chemist"),
+		"Virology" = list("Chief Medical Officer", "Virologist"),
+		"Genetics" = list("Chief Medical Officer", "Research Director", "Geneticist"),
+		"Science" = list("Research Director", "Scientist", "Roboticist"),
+		"Supply" = list("Quartermaster", "Cargo Technician", "Shaft Miner"),
+		"Security" = list("Head of Security", "Warden", "Detective", "Security Officer"),
+		"Foodservice" = list("Bartender", "Botanist", "Cook"),
+		"Entertainment" = list("Clown", "Mime"),
+		"Custodial" = list("Janitor"),
+		"Library" = list("Librarian"),
+		"Law" = list("Lawyer"),
+		"Chapel" = list("Chaplain")
+	)
+
+	for(var/i in default_famous)
+		default_famous[i] = TRUE
+	for(var/i in default_friendly)
+		default_friendly[i] = TRUE
+	for(var/group in default_preknowns)
+		var/list/group_list = default_preknowns[group]
+		for(var/i in group_list)
+			group_list[i] = TRUE
+
+	famous_occupations = default_famous
+	friendly_occupations = default_friendly
+	preknown_occupations = default_preknowns
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)

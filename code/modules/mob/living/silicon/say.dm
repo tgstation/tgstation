@@ -9,14 +9,25 @@
 		var/mob/living/silicon/S = src
 		desig = trim_left(S.designation + " " + S.job)
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/prerendered = "<i><span class='game say'>Robotic Talk, <span class='name'>"
+	var/postrendered = "</span> <span class='message'>[message_a]</span></span></i>"
+	var/rendered = "[prerendered][name][postrendered]"
+	var/ghostrendered = "[prerendered][real_name][postrendered]"
+	var/voice_print = get_voiceprint()
 	for(var/mob/M in player_list)
 		if(M.binarycheck())
-			if(isAI(M))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
-				to_chat(M, renderedAI)
-			else
-				to_chat(M, rendered)
+			var/mob/living/silicon/ai/AI = isAI(M) ? M : null
+			var/M_rendered = rendered
+			if(voice_print || AI)
+				var/datum/data/record/G
+				var/record_id
+				if(voice_print)
+					G = find_record("voiceprint", voice_print, data_core.general)
+				if(G)
+					record_id = G.fields["id"]
+				var/namepart = "[AI ? "<a href='?src=\ref[AI][AI.ai_track_href(src, record_id)]'>" : null]<span class='name'>[M.get_voiceprint_name(src, voice_print)][AI ? " ([desig])" : null]</span>[AI ? "</a>" : null]"
+				M_rendered = "<i><span class='game say'>Robotic Talk, [M.compose_namepart(M, namepart)] <span class='message'>[message_a]</span></span></i>"
+			to_chat (M, M_rendered)
 		if(isobserver(M))
 			var/following = src
 			// If the AI talks on binary chat, we still want to follow
@@ -25,7 +36,7 @@
 				var/mob/living/silicon/ai/ai = src
 				following = ai.eyeobj
 			var/link = FOLLOW_LINK(M, following)
-			to_chat(M, "[link] [rendered]")
+			to_chat(M, "[link] [ghostrendered]")
 
 /mob/living/silicon/binarycheck()
 	return 1

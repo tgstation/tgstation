@@ -65,7 +65,7 @@
 						else
 							sound_strength = "hear a weak"
 
-				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
+				user.visible_message("[IDENTITY_SUBJECT(1)] places [src] against [IDENTITY_SUBJECT(2)]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].", subjects=list(user, M))
 				return
 	return ..(M,user)
 

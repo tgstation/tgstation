@@ -51,19 +51,19 @@ var/global/list/emote_list = list()
 		return FALSE
 
 	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
-	msg = "<b>[user]</b> " + msg
+	msg = "<b>[IDENTITY_SUBJECT(1)]</b> " + msg
 
 	for(var/mob/M in dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(src)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(msg)
+			M.show_message(msg, subjects=list(user))
 
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(msg)
+		user.audible_message(msg, subjects=list(user))
 	else
-		user.visible_message(msg)
+		user.visible_message(msg, subjects=list(user))
 	log_emote("[key_name(user)] : [msg]")
 
 /datum/emote/proc/select_message_type(mob/user)

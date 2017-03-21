@@ -41,8 +41,8 @@
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 
-	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name()
+	//Everyone is a person, this is for the identity system.
+	name = "Person"
 
 	dna.species.spec_life(src) // for mutantraces
 
@@ -321,7 +321,7 @@
 				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.loc = get_turf(src)
-				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
+				visible_message("<span class='danger'>[I] falls out of [IDENTITY_SUBJECT(1)]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>", subjects=list(src))
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 

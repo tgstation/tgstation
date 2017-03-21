@@ -76,14 +76,14 @@
 /obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
-	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user))
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='warning'>[user] mangles [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] mangles [src].</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user))
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, "melee", 1)
 
@@ -115,14 +115,14 @@
 		if(!shock(user, 90))
 			playsound(loc, W.usesound, 100, 1)
 			anchored = !anchored
-			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
-								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [anchored ? "fastens" : "unfastens"] [src].</span>", \
+								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>", subjects=list(user))
 			return
 	else if(istype(W, /obj/item/stack/rods) && broken)
 		var/obj/item/stack/rods/R = W
 		if(!shock(user, 90))
-			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
-								 "<span class='notice'>You rebuild the broken grille.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] rebuilds the broken grille.</span>", \
+								 "<span class='notice'>You rebuild the broken grille.</span>", subjects=list(user))
 			new grille_type(src.loc)
 			R.use(1)
 			qdel(src)

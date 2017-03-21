@@ -809,7 +809,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		switch(scanmode)
 
 			if(1)
-				C.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
+				C.visible_message("<span class='alert'>[IDENTITY_SUBJECT(1)] has analyzed [IDENTITY_SUBJECT(2)]'s vitals!</span>", subjects=list(user, C))
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
@@ -817,9 +817,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// Unused
 
 			if(4)
-				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
+				C.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] has analyzed [IDENTITY_SUBJECT(2)]'s radiation levels!</span>", subjects=list(user, C))
 
-				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
+				user.show_message("<span class='notice'>Analyzing Results for [IDENTITY_SUBJECT(1)]:</span>", subjects=list(C))
 				if(C.radiation)
 					user.show_message("\green Radiation Level: \black [C.radiation]")
 				else
@@ -837,9 +837,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					for (var/re in A.reagents.reagent_list)
 						to_chat(user, "<span class='notice'>\t [re]</span>")
 				else
-					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
+					to_chat(user, "<span class='notice'>No active chemical agents found in [IDENTITY_SUBJECT(1)].</span>", list(A))
 			else
-				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [IDENTITY_SUBJECT(1)].</span>", list(A))
 
 		if(5)
 			if (istype(A, /obj/item/weapon/tank))

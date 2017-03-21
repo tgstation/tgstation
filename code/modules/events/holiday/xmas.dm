@@ -48,7 +48,7 @@
 
 /obj/item/weapon/toy/xmas_cracker/attack(mob/target, mob/user)
 	if( !cracked && ishuman(target) && (target.stat == CONSCIOUS) && !target.get_active_held_item() )
-		target.visible_message("[user] and [target] pop \an [src]! *pop*", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='italics'>You hear a pop.</span>")
+		target.visible_message("[IDENTITY_SUBJECT(1)] and [IDENTITY_SUBJECT(2)] pop \an [src]! *pop*", "<span class='notice'>You pull \an [src] with [IDENTITY_SUBJECT(2)]! *pop*</span>", "<span class='italics'>You hear a pop.</span>", subjects=list(user, target))
 		var/obj/item/weapon/paper/Joke = new /obj/item/weapon/paper(user.loc)
 		Joke.name = "[pick("awful","terrible","unfunny")] joke"
 		Joke.info = pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",

@@ -20,8 +20,8 @@
 		to_chat(user, "<span class='userdanger'>No... just one more try...</span>")
 		user.gib()
 	else
-		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
-		know it'll be worth it.</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
+		know it'll be worth it.</span>", subjects=list(user))
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
 	sleep(50)
@@ -55,11 +55,11 @@
 	qdel(src)
 
 /obj/structure/cursed_money/attack_hand(mob/living/user)
-	user.visible_message("<span class='warning'>[user] opens the bag and \
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] opens the bag and \
 		and removes a die. The bag then vanishes.</span>",
 		"<span class='boldwarning'>You open the bag...!</span>\n\
 		<span class='danger'>And see a bag full of dice. Confused, \
-		you take one... and the bag vanishes.</span>")
+		you take one... and the bag vanishes.</span>", subjects=list(user))
 	var/turf/T = get_turf(user)
 	var/obj/item/weapon/dice/d20/fate/one_use/critical_fail = new(T)
 	user.put_in_hands(critical_fail)
@@ -82,7 +82,7 @@
 	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
-			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
+			H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>", subjects=list(H))
 			return 1
 		else
 			to_chat(H, "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>")
@@ -97,8 +97,8 @@
 	icon_state = "magic_mirror"
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
-	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
-	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
+	user.visible_message("<span class='danger'><B>The ground splits beneath [IDENTITY_SUBJECT(1)] as [user.p_their()] hand leaves the mirror!</B></span>", \
+	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>", subjects=list(user))
 	var/turf/T = get_turf(user)
 	T.ChangeTurf(/turf/open/chasm/straight_down)
 	var/turf/open/chasm/straight_down/C = T
@@ -125,10 +125,11 @@
 		return
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if(user.real_name != H.dna.real_name)
+		if(H.dna && user.real_name != H.dna.real_name)
 			user.real_name = H.dna.real_name
+			user.voiceprint = H.dna.voiceprint
 			H.dna.transfer_identity(user, transfer_SE=1)
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
-			user.visible_message("<span class='warning'>[user]'s appearance shifts into [H]'s!</span>", \
-			"<span class='boldannounce'>They think they're <i>sooo</i> much better than you. Not anymore, they won't.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s appearance shifts into [IDENTITY_SUBJECT(2)]'s!</span>", \
+			"<span class='boldannounce'>They think they're <i>sooo</i> much better than you. Not anymore, they won't.</span>", subjects=list(user, H))

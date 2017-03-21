@@ -204,9 +204,9 @@
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && ticker && ticker.mode)
 		ticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
-		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
+		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner.real_name]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
-		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
+		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner.real_name], follow their orders and help them complete their goals at all costs.</b>")
 	newstruct.cancel_camera()
 
 

@@ -323,7 +323,7 @@
 					continue
 				if(faction_check_mob(L) && !attack_same)
 					return
-	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
+	visible_message("<span class='danger'><b>[IDENTITY_SUBJECT(1)]</b> [ranged_message] at [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, A))
 
 	if(rapid)
 		var/datum/callback/cb = CALLBACK(src, .proc/Shoot, A)

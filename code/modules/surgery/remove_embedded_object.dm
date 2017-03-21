@@ -14,9 +14,9 @@
 /datum/surgery_step/remove_object/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = surgery.operated_bodypart
 	if(L)
-		user.visible_message("[user] looks for objects embedded in [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for objects embedded in [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] looks for objects embedded in [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for objects embedded in [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)]...</span>", subjects=list(user, target))
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] looks for [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for [IDENTITY_SUBJECT(2)]'s [parse_zone(user.zone_selected)]...</span>", subjects=list(user, target))
 
 
 /datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -30,11 +30,11 @@
 				L.embedded_objects -= I
 
 			if(objects > 0)
-				user.visible_message("[user] sucessfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")
+				user.visible_message("[IDENTITY_SUBJECT(1)] sucessfully removes [objects] objects from [IDENTITY_SUBJECT(2)]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [IDENTITY_SUBJECT(2)]'s [L.name].</span>", subjects=list(user, H))
 			else
-				to_chat(user, "<span class='warning'>You find no objects embedded in [H]'s [L]!</span>")
+				to_chat(user, "<span class='warning'>You find no objects embedded in [IDENTITY_SUBJECT(1)]'s [L]!</span>", list(H))
 
 	else
-		to_chat(user, "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>")
+		to_chat(user, "<span class='warning'>You can't find [IDENTITY_SUBJECT(1)]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>", list(target))
 
 	return 1

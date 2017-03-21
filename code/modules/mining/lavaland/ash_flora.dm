@@ -57,7 +57,7 @@
 
 /obj/structure/flora/ash/attackby(obj/item/weapon/W, mob/user, params)
 	if(!harvested && needs_sharp_harvest && W.sharpness)
-		user.visible_message("<span class='notice'>[user] starts to harvest from [src] with [W].</span>","<span class='notice'>You begin to harvest from [src] with [W].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts to harvest from [src] with [W].</span>","<span class='notice'>You begin to harvest from [src] with [W].</span>", subjects=list(user))
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
 	else
@@ -65,7 +65,7 @@
 
 /obj/structure/flora/ash/attack_hand(mob/user)
 	if(!harvested && !needs_sharp_harvest)
-		user.visible_message("<span class='notice'>[user] starts to harvest from [src].</span>","<span class='notice'>You begin to harvest from [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts to harvest from [src].</span>","<span class='notice'>You begin to harvest from [src].</span>", subjects=list(user))
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
 	else
@@ -147,8 +147,8 @@
 				return
 			H.apply_damage(rand(3, 6), BRUTE, picked_def_zone)
 			H.Weaken(2)
-			H.visible_message("<span class='danger'>[H] steps on a cactus!</span>", \
-				"<span class='userdanger'>You step on a cactus!</span>")
+			H.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] steps on a cactus!</span>", \
+				"<span class='userdanger'>You step on a cactus!</span>", subjects=list(H))
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora
 	name = "mushroom shavings"

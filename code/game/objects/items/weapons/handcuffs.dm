@@ -38,13 +38,13 @@
 
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
-			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+			C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is trying to put [src.name] on [IDENTITY_SUBJECT(2)]!</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is trying to put [src.name] on [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, C))
 
 			playsound(loc, cuffsound, 30, 1, -2)
 			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				apply_cuffs(C,user)
-				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+				to_chat(user, "<span class='notice'>You handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
 					feedback_add_details("handcuffs","C")
 				else
@@ -52,9 +52,9 @@
 
 				add_logs(user, C, "handcuffed")
 			else
-				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
+				to_chat(user, "<span class='warning'>You fail to handcuff [IDENTITY_SUBJECT(1)]!</span>", list(C))
 		else
-			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't have two hands...</span>", list(C))
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
@@ -101,7 +101,7 @@
 	if(!istype(C))
 		return
 	if(wirestorage && wirestorage.energy < 15)
-		to_chat(user, "<span class='warning'>You need at least 15 wire to restrain [C]!</span>")
+		to_chat(user, "<span class='warning'>You need at least 15 wire to restrain [IDENTITY_SUBJECT(1)]!</span>", list(C))
 		return
 	return ..()
 
@@ -194,16 +194,16 @@
 	if(iscyborg(user))
 		if(!C.handcuffed)
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
+			C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is trying to put zipties on [IDENTITY_SUBJECT(2)]!</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is trying to put zipties on [IDENTITY_SUBJECT(2)]!</span>", subjects=list(user, C))
 			if(do_mob(user, C, 30))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 					C.update_handcuffed()
-					to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+					to_chat(user, "<span class='notice'>You handcuff [IDENTITY_SUBJECT(1)].</span>", list(C))
 					add_logs(user, C, "handcuffed")
 			else
-				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
+				to_chat(user, "<span class='warning'>You fail to handcuff [IDENTITY_SUBJECT(1)]!</span>", list(C))
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
@@ -252,7 +252,7 @@
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/weapon/restraints/legcuffs/beartrap/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -289,8 +289,8 @@
 				armed = 0
 				icon_state = "[initial(icon_state)][armed]"
 				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
-				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
-						"<span class='userdanger'>You trigger \the [src]!</span>")
+				L.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] triggers \the [src].</span>", \
+						"<span class='userdanger'>You trigger \the [src]!</span>", subjects=list(L))
 				L.apply_damage(trap_damage,BRUTE, def_zone)
 	..()
 
@@ -337,7 +337,7 @@
 		return//abort
 	var/mob/living/carbon/C = hit_atom
 	if(!C.legcuffed && C.get_num_legs() >= 2)
-		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
+		visible_message("<span class='danger'>\The [src] ensnares [IDENTITY_SUBJECT(1)]!</span>", subjects=list(C))
 		C.legcuffed = src
 		src.loc = C
 		C.update_inv_legcuffed()

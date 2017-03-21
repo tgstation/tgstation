@@ -49,7 +49,7 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		mobnames += H.real_name
+		mobnames[++mobnames.len] = list(H.real_name, H.voiceprint)
 		mobs += H
 
 	if(!mobs)
@@ -61,7 +61,9 @@
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!mobnames)
 			break
-		H.real_name = mobnames[mobnames.len]
+		var/mobname = mobnames[mobnames.len]
+		H.real_name = mobname[1]
+		H.voiceprint = mobname[2]
 		mobnames.len -= 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)

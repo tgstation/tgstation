@@ -74,7 +74,7 @@ var/global/list/cards_against_space
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
-	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>", subjects=list(user))
 	update_icon()
 
 /obj/item/toy/cards/deck/cas/attackby(obj/item/I, mob/living/user, params)
@@ -88,7 +88,7 @@ var/global/list/cards_against_space
 		RC.name = "[SC.name]"
 		RC.card_icon = SC.card_face
 		cards += RC
-		user.visible_message("[user] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>", subjects=list(user))
 		qdel(SC)
 	update_icon()
 

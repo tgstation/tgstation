@@ -65,7 +65,7 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[IDENTITY_SUBJECT(1)]</b>!\n"
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
@@ -87,7 +87,7 @@
 	else if(health < (maxHealth/2))
 		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
-	to_chat(user, msg)
+	to_chat(user, msg, list(src))
 
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
@@ -169,8 +169,8 @@
 			if ("harm")
 				var/damage = rand(1, 5)
 				playsound(loc, "punch", 25, 1, -1)
-				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-						"<span class='userdanger'>[M] has punched [src]!</span>")
+				visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has punched [IDENTITY_SUBJECT(2)]!</span>", \
+						"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has punched [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked")
 				updatehealth()
@@ -180,17 +180,17 @@
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
-						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
-							"<span class='userdanger'>[M] has pushed down [src]!</span>")
+						visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has pushed down [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has pushed down [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 					else
 						if (prob(25))
 							drop_item()
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>")
+							visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has disarmed [IDENTITY_SUBJECT(2)]!</span>", \
+							"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has disarmed [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 						else
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
+							visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has attempted to disarm [IDENTITY_SUBJECT(2)]!</span>", subjects=list(M, src))
 
 /mob/living/carbon/true_devil/handle_breathing()
 	// devils do not need to breathe

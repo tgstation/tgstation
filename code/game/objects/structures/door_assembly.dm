@@ -506,8 +506,8 @@
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
-								"You start to disassemble the airlock assembly...")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disassembles the airlock assembly.</span>", \
+								"You start to disassemble the airlock assembly...", subjects=list(user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 
 			if(do_after(user, 40*W.toolspeed, target = src))
@@ -526,9 +526,9 @@
 
 			if(door_check)
 				playsound(src.loc, W.usesound, 100, 1)
-				user.visible_message("[user] secures the airlock assembly to the floor.", \
+				user.visible_message("[IDENTITY_SUBJECT(1)] secures the airlock assembly to the floor.", \
 									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
-									 "<span class='italics'>You hear wrenching.</span>")
+									 "<span class='italics'>You hear wrenching.</span>", subjects=list(user))
 
 				if(do_after(user, 40*W.toolspeed, target = src))
 					if( src.anchored )
@@ -541,9 +541,9 @@
 
 		else
 			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("[user] unsecures the airlock assembly from the floor.", \
+			user.visible_message("[IDENTITY_SUBJECT(1)] unsecures the airlock assembly from the floor.", \
 								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
-								 "<span class='italics'>You hear wrenching.</span>")
+								 "<span class='italics'>You hear wrenching.</span>", subjects=list(user))
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if(!anchored )
 					return
@@ -556,8 +556,8 @@
 		if (C.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of cable to wire the airlock assembly!</span>")
 			return
-		user.visible_message("[user] wires the airlock assembly.", \
-							"<span class='notice'>You start to wire the airlock assembly...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] wires the airlock assembly.", \
+							"<span class='notice'>You start to wire the airlock assembly...</span>", subjects=list(user))
 		if(do_after(user, 40, target = src))
 			if(C.get_amount() < 1 || state != 0) return
 			C.use(1)
@@ -567,8 +567,8 @@
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
 		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] cuts the wires from the airlock assembly.", \
-							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] cuts the wires from the airlock assembly.", \
+							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>", subjects=list(user))
 
 		if(do_after(user, 40*W.toolspeed, target = src))
 			if( src.state != 1 )
@@ -580,8 +580,8 @@
 
 	else if(istype(W, /obj/item/weapon/electronics/airlock) && state == 1 )
 		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] installs the electronics into the airlock assembly.", \
-							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] installs the electronics into the airlock assembly.", \
+							"<span class='notice'>You start to install electronics into the airlock assembly...</span>", subjects=list(user))
 		if(do_after(user, 40, target = src))
 			if( src.state != 1 )
 				return
@@ -597,8 +597,8 @@
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
-								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] removes the electronics from the airlock assembly.", \
+								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>", subjects=list(user))
 
 		if(do_after(user, 40*W.toolspeed, target = src))
 			if( src.state != 2 )
@@ -619,8 +619,8 @@
 			if(G.get_amount() >= 1)
 				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
-										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+					user.visible_message("[IDENTITY_SUBJECT(1)] adds [G.name] to the airlock assembly.", \
+										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>", subjects=list(user))
 					if(do_after(user, 40, target = src))
 						if(G.get_amount() < 1 || mineral) return
 						if (G.type == /obj/item/stack/sheet/rglass)
@@ -647,8 +647,8 @@
 					var/M = G.sheettype
 					if(G.get_amount() >= 2)
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-						user.visible_message("[user] adds [G.name] to the airlock assembly.", \
-										 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+						user.visible_message("[IDENTITY_SUBJECT(1)] adds [G.name] to the airlock assembly.", \
+										 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>", subjects=list(user))
 						if(do_after(user, 40, target = src))
 							if(G.get_amount() < 2 || mineral) return
 							to_chat(user, "<span class='notice'>You install [M] plating into the airlock assembly.</span>")
@@ -660,8 +660,8 @@
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] finishes the airlock.", \
-							 "<span class='notice'>You start finishing the airlock...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] finishes the airlock.", \
+							 "<span class='notice'>You start finishing the airlock...</span>", subjects=list(user))
 
 		if(do_after(user, 40*W.toolspeed, target = src))
 			if(src.loc && state == 2)

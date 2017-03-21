@@ -420,7 +420,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 1, 0))
 				H.update_damage_overlays()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] has fixed some of the [dam ? "dents on" : "burnt wires in"] [IDENTITY_SUBJECT(2)]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [IDENTITY_SUBJECT(2)]'s [affecting].</span>", subjects=list(user, H))
 			return 1 //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")

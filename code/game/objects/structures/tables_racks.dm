@@ -61,7 +61,7 @@
 	if(user.a_intent == INTENT_GRAB && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
 		if(pushed_mob.buckled)
-			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
+			to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is buckled to [IDENTITY_SUBJECT(2)]!</span>", list(pushed_mob, pushed_mob.buckled))
 			return
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -92,8 +92,8 @@
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
 	pushed_mob.Weaken(2)
-	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
-								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
+	pushed_mob.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] pushes [IDENTITY_SUBJECT(2)] onto [src].</span>", \
+								"<span class='userdanger'>[IDENTITY_SUBJECT(1)] pushes [IDENTITY_SUBJECT(2)] onto [src].</span>", subjects=list(user, pushed_mob))
 	add_logs(user, pushed_mob, "pushed")
 
 
@@ -123,7 +123,7 @@
 			for(var/obj/item/C in oldContents)
 				C.loc = src.loc
 
-			user.visible_message("[user] empties [I] on [src].")
+			user.visible_message("[IDENTITY_SUBJECT(1)] empties [I] on [src].", subjects=list(user))
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
@@ -376,7 +376,7 @@
 	pushed_mob.forceMove(src.loc)
 	pushed_mob.resting = 1
 	pushed_mob.update_canmove()
-	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
+	visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] has laid [IDENTITY_SUBJECT(2)] on [src].</span>", subjects=list(user, pushed_mob))
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
@@ -448,7 +448,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
-	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user))
 	take_damage(rand(4,8), BRUTE, "melee", 1)
 
 
@@ -503,8 +503,8 @@
 		if(!user.drop_item())
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
-		user.visible_message("<span class='notice'>[user] assembles \a [R].\
-			</span>", "<span class='notice'>You assemble \a [R].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] assembles \a [R].\
+			</span>", "<span class='notice'>You assemble \a [R].</span>", subjects=list(user))
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE

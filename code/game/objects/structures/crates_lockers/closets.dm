@@ -212,14 +212,14 @@
 						if(!opened || !WT.isOn())
 							return
 						playsound(loc, cutting_sound, 50, 1)
-						user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+						user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] slices apart \the [src].</span>",
 										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
-										"<span class='italics'>You hear welding.</span>")
+										"<span class='italics'>You hear welding.</span>", subjects=list(user))
 						deconstruct(TRUE)
 					return 0
 			else // for example cardboard box is cut with wirecutters
-				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
-									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
+				user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] cut apart \the [src].</span>", \
+									"<span class='notice'>You cut \the [src] apart with \the [W].</span>", subjects=list(user))
 				deconstruct(TRUE)
 				return 0
 		if(user.drop_item()) // so we put in unlit welder too
@@ -236,18 +236,18 @@
 				return
 			playsound(loc, WT.usesound, 50, 1)
 			welded = !welded
-			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='italics'>You hear welding.</span>", subjects=list(user))
 			update_icon()
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
 		playsound(src.loc, W.usesound, 75, 1)
-		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
-						"<span class='italics'>You hear a ratchet.</span>")
+						"<span class='italics'>You hear a ratchet.</span>", subjects=list(user))
 	else if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
@@ -277,14 +277,14 @@
 	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] [actuallyismob ? "tries to ":""]stuff [O] into [src].</span>", \
-				 	 	"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
-				 	 	"<span class='italics'>You hear clanging.</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] [actuallyismob ? "tries to ":""]stuff [IDENTITY_SUBJECT(2)] into [src].</span>", \
+				 	 	"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [IDENTITY_SUBJECT(2)] into [src].</span>", \
+				 	 	"<span class='italics'>You hear clanging.</span>", subjects=list(user, O))
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
-			user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
-							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
-							 	 "<span class='italics'>You hear a loud metal bang.</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] stuffs [IDENTITY_SUBJECT(2)] into [src].</span>", \
+							 	 "<span class='notice'>You stuff [IDENTITY_SUBJECT(2)] into [src].</span>", \
+							 	 "<span class='italics'>You hear a loud metal bang.</span>", subjects=list(user, O))
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Weaken(2)
@@ -367,8 +367,8 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>",
-							"<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] successfully broke out of [src]!</span>",
+							"<span class='notice'>You successfully break out of [src]!</span>", subjects=list(user))
 		bust_open()
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
@@ -396,8 +396,8 @@
 			if(iscarbon(user))
 				add_fingerprint(user)
 			locked = !locked
-			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
-							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [locked ? null : "un"]locks [src].</span>",
+							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>", subjects=list(user))
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>Access Denied</span>")

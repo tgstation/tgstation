@@ -34,7 +34,7 @@
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)
 		P.damage = (P.damage / 3)
-		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has a reduced effect on [IDENTITY_SUBJECT(2)]!</span>", subjects=list(P, src))
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
@@ -43,7 +43,7 @@
 		if(!stat)
 			Aggro()
 		if(T.throwforce <= 20)
-			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
+			visible_message("<span class='notice'>The [IDENTITY_SUBJECT(1)] [src.throw_message] [IDENTITY_SUBJECT(2)]!</span>", subjects=list(T, src))
 			return
 	..()
 
@@ -152,10 +152,10 @@
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore) && loot.len < 10)
-			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
+			visible_message("<span class='notice'>The [IDENTITY_SUBJECT(1)] looks at [IDENTITY_SUBJECT(2)] with hungry eyes.</span>", subjects=list(src, target))
 		else if(isliving(target))
 			Aggro()
-			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
+			visible_message("<span class='danger'>The [IDENTITY_SUBJECT(1)] tries to flee from [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, target))
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
@@ -176,11 +176,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
-		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		visible_message("<span class='danger'>The [IDENTITY_SUBJECT(1)] buries into the ground, vanishing from sight!</span>", subjects=list(src))
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
-	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
+	visible_message("<span class='danger'>The [IDENTITY_SUBJECT(1)] was repelled by [IDENTITY_SUBJECT(2)]'s girth!</span>", subjects=list(P, src))
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -296,7 +296,7 @@
 				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 				return
 			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
+				H.visible_message("[IDENTITY_SUBJECT(1)] forces [IDENTITY_SUBJECT(2)] to apply [src]... [H.p_they()] quickly regenerate all injuries!", subjects=list(user, H))
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
@@ -385,8 +385,8 @@
 
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/reabsorb_host(mob/living/carbon/C)
-	C.visible_message("<span class='notice'>[src] is reabsorbed by [C]'s body.</span>", \
-								"<span class='notice'>[src] is reabsorbed by your body.</span>")
+	C.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] is reabsorbed by [IDENTITY_SUBJECT(2)]'s body.</span>", \
+								"<span class='notice'>[IDENTITY_SUBJECT(1)] is reabsorbed by your body.</span>", subjects=list(src, C))
 	transfer_reagents(C)
 	death()
 
@@ -464,7 +464,7 @@
 	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
-		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+		visible_message("<span class='warning'>The [IDENTITY_SUBJECT(1)] digs its tentacles under [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, target))
 		new /obj/effect/goliath_tentacle/original(tturf)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
@@ -512,7 +512,7 @@
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
-		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
+		visible_message("<span class='danger'>The [IDENTITY_SUBJECT(1)] grabs hold of [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, M))
 		M.Stun(5)
 		M.adjustBruteLoss(rand(10,15))
 		latched = 1
@@ -691,7 +691,7 @@
 		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
 		A.environment_smash += 2
-		to_chat(user, "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
+		to_chat(user, "<span class='info'>You increase the size of [IDENTITY_SUBJECT(1)], giving it a surge of strength!</span>", list(A))
 		qdel(src)
 
 /////////////////////Lavaland
@@ -765,7 +765,7 @@
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
-	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
+	visible_message("<span class='warning'>The skulls on [IDENTITY_SUBJECT(1)] wail in anger as they flee from their dying host!</span>", subjects=list(src))
 	var/turf/T = get_turf(src)
 	if(T)
 		if(stored_mob)
@@ -808,9 +808,9 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
-	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] burrows into the flesh of [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, H))
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
-	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
+	visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] staggers to their feet!</span>", subjects=list(L))
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H
@@ -922,7 +922,7 @@
 	if(is_type_in_typecache(target,wanted_objects)) //we eats
 		udder.generateMilk()
 		regenerate_icons()
-		visible_message("<span class='notice'>[src] slurps up [target].</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] slurps up [IDENTITY_SUBJECT(2)].</span>", subjects=list(src, target))
 		qdel(target)
 	..()
 

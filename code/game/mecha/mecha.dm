@@ -382,7 +382,7 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, accent, message_mode)
 	if(speaker == occupant)
 		if(radio.broadcasting)
 			radio.talk_into(speaker, text, , spans)
@@ -466,7 +466,7 @@
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
 				if(occupant)
-					to_chat(occupant, "<span class='info'>You push off of [backup] to propel yourself.</span>")
+					to_chat(occupant, "<span class='info'>You push off of [IDENTITY_SUBJECT(1)] to propel yourself.</span>", list(backup))
 		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
@@ -687,14 +687,14 @@
 				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
 				return
 			else if(AI.stat || !AI.client)
-				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
+				to_chat(user, "<span class='warning'>[AI.real_name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
 			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.real_name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null
 			ai_enter_mech(AI, interaction)
 
@@ -802,7 +802,7 @@
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
 		return
-	log_message("[user] tries to move in.")
+	log_message("[user.real_name]/([key_name(user)]) tries to move in.")
 	if (occupant)
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
 		log_append_to_last("Permission denied.")
@@ -827,13 +827,13 @@
 		to_chat(user, "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
 		return
 
-	visible_message("[user] starts to climb into [name].")
+	visible_message("[IDENTITY_SUBJECT(1)] starts to climb into [name].", subjects=list(user))
 
 	if(do_after(user, 40, target = src))
 		if(obj_integrity <= 0)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
-			to_chat(user, "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>")
+			to_chat(user, "<span class='danger'>[IDENTITY_SUBJECT(1)] was faster! Try better next time, loser.</span>", list(occupant))
 		else if(user.buckled)
 			to_chat(user, "<span class='warning'>You can't enter the exosuit while buckled.</span>")
 		else if(user.has_buckled_mobs())
@@ -851,7 +851,7 @@
 		add_fingerprint(H)
 		GrantActions(H, human_occupant=1)
 		forceMove(loc)
-		log_append_to_last("[H] moved in as pilot.")
+		log_append_to_last("[H.real_name]/([key_name(H)]) moved in as pilot.")
 		icon_state = initial(icon_state)
 		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -875,7 +875,7 @@
 		to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
 		return FALSE
 
-	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
+	visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts to insert an MMI into [name].</span>", subjects=list(user))
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)
@@ -908,7 +908,7 @@
 	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
-	log_message("[mmi_as_oc] moved in as pilot.")
+	log_message("[mmi_as_oc]/([key_name(brainmob)]) moved in as pilot.")
 	if(!internal_damage)
 		occupant << sound('sound/mecha/nominal.ogg',volume=50)
 	GrantActions(brainmob)
@@ -959,7 +959,7 @@
 	var/mob/living/L = occupant
 	occupant = null //we need it null when forceMove calls Exited().
 	if(mob_container.forceMove(newloc))//ejecting mob container
-		log_message("[mob_container] moved out.")
+		log_message("[mob_container]/([L.real_name] : [key_name(occupant)]) moved out.")
 		L << browse(null, "window=exosuit")
 
 		if(istype(mob_container, /obj/item/device/mmi))
@@ -997,10 +997,10 @@
 /////// Messages and Log ///////
 ////////////////////////////////
 
-/obj/mecha/proc/occupant_message(message as text)
+/obj/mecha/proc/occupant_message(message as text, list/subjects)
 	if(message)
 		if(occupant && occupant.client)
-			to_chat(occupant, "\icon[src] [message]")
+			to_chat(occupant, "\icon[src] [message]", subjects)
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)

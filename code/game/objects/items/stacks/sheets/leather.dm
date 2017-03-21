@@ -171,7 +171,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 /obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_sharp())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>", subjects=list(user))
 		if(do_after(user,50, target = src))
 			to_chat(user, "<span class='notice'>You cut the hair from this [src.singular_name].</span>")
 			//Try locating an exisitng stack on the tile and add to there if possible

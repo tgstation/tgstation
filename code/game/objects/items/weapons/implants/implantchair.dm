@@ -86,7 +86,7 @@
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/weapon/implant/I = new implant_type
 	if(I.implant(M))
-		visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] has been implanted by the [name].</span>", subjects=list(M))
 		return 1
 
 /obj/machinery/implantchair/update_icon()
@@ -123,7 +123,7 @@
 	if(do_after(user, 600, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
+		visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] successfully broke out of [src]!</span>", subjects=list(user))
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 

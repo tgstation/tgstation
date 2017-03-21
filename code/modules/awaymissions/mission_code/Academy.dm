@@ -300,7 +300,7 @@
 	return
 
 /obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
-	user.visible_message("[user] activates \the [src].","<span class='notice'>You activate \the [src].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] activates \the [src].","<span class='notice'>You activate \the [src].</span>", subjects=list(user))
 
 /obj/structure/ladder/can_use(mob/user)
 	if(user.mind in ticker.mode.wizards)

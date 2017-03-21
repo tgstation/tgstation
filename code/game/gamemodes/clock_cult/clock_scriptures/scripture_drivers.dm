@@ -201,7 +201,7 @@
 	var/datum/progressbar/progbar
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of purple smoke!</span>")
+	invoker.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] is suddenly covered with a thin layer of purple smoke!</span>", subjects=list(invoker))
 	var/invoker_old_color = invoker.color
 	invoker.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)

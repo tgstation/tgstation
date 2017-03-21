@@ -76,7 +76,7 @@
 				clockwork_component_cache[i] += S.stored_components[i]
 				S.stored_components[i] = 0
 			update_slab_info()
-			user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>", subjects=list(user))
 		return 1
 	else
 		return ..()

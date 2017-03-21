@@ -66,7 +66,7 @@
 	for(var/mob/living/L in orange(1,src))
 		if(L.ckey && L.client)
 			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || L.restrained())//no playing with braindeads or corpses or handcuffed dudes.
-				to_chat(M, "<span class='warning'>[L] doesn't seem to be paying attention...</span>")
+				to_chat(M, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't seem to be paying attention...</span>", list(L))
 			else
 				users_in_range++
 

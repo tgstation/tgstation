@@ -97,8 +97,8 @@
 				return
 			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
 				playsound(src.loc, P.usesound, 50, 1)
-				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
-									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
+				user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disassembles the frame.</span>", \
+									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.", subjects=list(user))
 				if(do_after(user, 40*P.toolspeed, target = src))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")

@@ -75,7 +75,7 @@
 				if(H.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
 					blocked = 1
 			if(!blocked)
-				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
+				L.visible_message("<span class ='danger'>[IDENTITY_SUBJECT(1)] pounces on [IDENTITY_SUBJECT(2)]!</span>", "<span class ='userdanger'>[IDENTITY_SUBJECT(2)] pounces on you!</span>", subjects=list(src, L))
 				L.Weaken(5)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)

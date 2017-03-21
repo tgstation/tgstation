@@ -78,8 +78,8 @@
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
 	target.apply_damage(force * fisto_setting, BRUTE)
-	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
-		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
+	target.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)]'s powerfist lets out a loud hiss as they punch [IDENTITY_SUBJECT(2)]!</span>", \
+		"<span class='userdanger'>You cry out in pain as [IDENTITY_SUBJECT(1)]'s punch flings you backwards!</span>", subjects=list(user, target))
 	new /obj/effect/overlay/temp/kinetic_blast(target.loc)
 	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)

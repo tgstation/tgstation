@@ -72,6 +72,7 @@
 	strip_delay = 50
 	put_on_delay = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	identity_name = "Wizard"
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"

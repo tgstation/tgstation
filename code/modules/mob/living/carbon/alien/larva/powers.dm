@@ -11,12 +11,12 @@
 
 	if (user.layer != ABOVE_NORMAL_TURF_LAYER)
 		user.layer = ABOVE_NORMAL_TURF_LAYER
-		user.visible_message("<span class='name'>[user] scurries to the ground!</span>", \
-						"<span class='noticealien'>You are now hiding.</span>")
+		user.visible_message("<span class='name'>[IDENTITY_SUBJECT(1)] scurries to the ground!</span>", \
+						"<span class='noticealien'>You are now hiding.</span>", subjects=list(user))
 	else
 		user.layer = MOB_LAYER
-		user.visible_message("[user.] slowly peeks up from the ground...", \
-					"<span class='noticealien'>You stop hiding.</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] slowly peeks up from the ground...", \
+					"<span class='noticealien'>You stop hiding.</span>", subjects=list(user))
 	return 1
 
 

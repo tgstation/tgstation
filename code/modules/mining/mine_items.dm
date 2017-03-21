@@ -357,8 +357,8 @@
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, W.usesound, 50, 1)
-		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
-						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disassembles the gps.</span>", \
+						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.", subjects=list(user))
 		if(do_after(user, 20*W.toolspeed, target = src))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
@@ -431,8 +431,8 @@
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, W.usesound, 50, 1)
-		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
-						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disassembles the fan.</span>", \
+						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.", subjects=list(user))
 		if(do_after(user, 20*W.toolspeed, target = src))
 			deconstruct()
 			return ..()

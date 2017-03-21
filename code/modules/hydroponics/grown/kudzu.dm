@@ -22,7 +22,7 @@
 	return S
 
 /obj/item/seeds/kudzu/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	plant(user)
 	return (BRUTELOSS)
 

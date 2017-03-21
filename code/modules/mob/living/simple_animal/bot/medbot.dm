@@ -233,8 +233,8 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
-		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+			to_chat(user, "<span class='notice'>You short out [IDENTITY_SUBJECT(1)]'s reagent synthesis circuits.</span>", list(src))
+		audible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] buzzes oddly!</span>", subjects=list(src))
 		flick("medibot_spark", src)
 		if(user)
 			oldpatient = user
@@ -466,8 +466,8 @@
 		if(!emagged && check_overdose(patient,reagent_id,injection_amount))
 			soft_reset()
 			return
-		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
-			"<span class='userdanger'>[src] is trying to inject you!</span>")
+		C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is trying to inject [IDENTITY_SUBJECT(2)]!</span>", \
+			"<span class='userdanger'>[IDENTITY_SUBJECT(1)] is trying to inject you!</span>", subjects=list(src, patient))
 
 		var/failed = FALSE;
 		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
@@ -479,15 +479,15 @@
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
-				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
-					"<span class='userdanger'>[src] injects you with its syringe!</span>")
+				C.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] injects [IDENTITY_SUBJECT(1)] with its syringe!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] injects you with its syringe!</span>", subjects=list(src, patient))
 			else
 				failed = TRUE
 		else
 			failed = TRUE
 
 		if(failed)
-			visible_message("[src] retracts its syringe.")
+			visible_message("[IDENTITY_SUBJECT(1)] retracts its syringe.", subjects=list(src))
 		update_icon()
 		soft_reset()
 		return
@@ -511,7 +511,7 @@
 
 /mob/living/simple_animal/bot/medbot/explode()
 	on = 0
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[IDENTITY_SUBJECT(1)] blows apart!</span>", subjects=list(src))
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

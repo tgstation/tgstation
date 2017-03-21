@@ -66,7 +66,7 @@ var/list/command_positions = list(
 var/list/engineering_positions = list(
 	"Chief Engineer",
 	"Station Engineer",
-	"Atmospheric Technician",
+	"Atmospheric Technician"
 )
 
 
@@ -90,7 +90,7 @@ var/list/supply_positions = list(
 	"Head of Personnel",
 	"Quartermaster",
 	"Cargo Technician",
-	"Shaft Miner",
+	"Shaft Miner"
 )
 
 
@@ -121,7 +121,6 @@ var/list/nonhuman_positions = list(
 	"Cyborg",
 	"pAI"
 )
-
 
 /proc/guest_jobbans(job)
 	return ((job in command_positions) || (job in nonhuman_positions) || (job in security_positions))

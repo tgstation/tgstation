@@ -119,7 +119,7 @@
 		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
-			usr.visible_message("<span class='notice'>[usr] starts building [R.title].</span>", "<span class='notice'>You start building [R.title]...</span>")
+			usr.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] starts building [R.title].</span>", "<span class='notice'>You start building [R.title]...</span>", subjects=list(usr))
 			if (!do_after(usr, R.time, target = usr))
 				return
 			if(!building_checks(R, multiplier))

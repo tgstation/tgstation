@@ -72,7 +72,7 @@
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
-		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, subjects=list(user))
 		if(density)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))

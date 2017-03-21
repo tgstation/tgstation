@@ -26,7 +26,7 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 	var/deity_name = "Christ"
 
 /obj/item/weapon/storage/book/bible/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/book/bible/attack_self(mob/living/carbon/human/H)
@@ -80,8 +80,8 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 			var/obj/item/bodypart/affecting = X
 			if(affecting.heal_damage(heal_amt, heal_amt))
 				H.update_damage_overlays()
-		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
-		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
+		H.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] heals [IDENTITY_SUBJECT(2)] with the power of [deity_name]!</span>")
+		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>", subjects=list(user, H))
 		playsound(src.loc, "punch", 25, 1, -1)
 	return 1
 
@@ -122,13 +122,13 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)
-			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
-					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
+			M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] beats [IDENTITY_SUBJECT(2)] over the head with [src]!</span>", \
+					"<span class='userdanger'>[IDENTITY_SUBJECT(1)] beats [IDENTITY_SUBJECT(2)] over the head with [src]!</span>", subjects=list(user, M))
 			playsound(src.loc, "punch", 25, 1, -1)
 			add_logs(user, M, "attacked", src)
 
 	else
-		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
+		M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] smacks [IDENTITY_SUBJECT(2)]'s lifeless corpse with [src].</span>", subjects=list(user, M))
 		playsound(src.loc, "punch", 25, 1, -1)
 
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)
@@ -141,12 +141,12 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 				R.invisibility = 0
 	if(user.mind && (user.mind.isholy))
 		if(A.reagents && A.reagents.has_reagent("water")) // blesses all the water in the holder
-			to_chat(user, "<span class='notice'>You bless [A].</span>")
+			to_chat(user, "<span class='notice'>You bless [IDENTITY_SUBJECT(1)].</span>", list(A))
 			var/water2holy = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)
 		if(A.reagents && A.reagents.has_reagent("unholywater")) // yeah yeah, copy pasted code - sue me
-			to_chat(user, "<span class='notice'>You purify [A].</span>")
+			to_chat(user, "<span class='notice'>You purify [IDENTITY_SUBJECT(1)].</span>", list(A))
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)

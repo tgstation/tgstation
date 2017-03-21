@@ -65,10 +65,10 @@
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
+		user.visible_message("[IDENTITY_SUBJECT(1)] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>", subjects=list(user))
 		if(do_after(user, 50*W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>", subjects=list(user))
 			deconstruct(TRUE)
 	else
 		return ..()

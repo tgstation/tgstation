@@ -180,6 +180,11 @@
 		return a
 	return (a < b ? a : b)
 
+//Returns text with HTML tags removed. Meaning, the entire tag, not just the < and > characters
+/proc/remove_html_tags(text)
+	var/static/regex/remove_html_tags_regex = regex("<.*?>", "g")
+	. = remove_html_tags_regex.Replace(text)
+
 /*
  * Text searches
  */

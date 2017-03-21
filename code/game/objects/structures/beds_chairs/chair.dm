@@ -212,7 +212,7 @@
 		if(usr.incapacitated())
 			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
-		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
+		usr.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>", subjects=list(usr))
 		var/C = new item_chair(loc)
 		usr.put_in_hands(C)
 		qdel(src)
@@ -256,7 +256,7 @@
 			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
-	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>", subjects=list(user))
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.setDir(dir)
 	qdel(src)
@@ -277,7 +277,7 @@
 
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
-		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
+		owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] fends off [attack_text] with [src]!</span>", subjects=list(owner))
 		return 1
 	return 0
 
@@ -286,7 +286,7 @@
 	if(!proximity)
 		return
 	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user] smashes \the [src] to pieces against \the [target]</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] smashes \the [src] to pieces against \the [target]</span>", subjects=list(user))
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)

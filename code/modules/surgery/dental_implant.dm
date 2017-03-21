@@ -9,7 +9,7 @@
 	time = 16
 
 /datum/surgery_step/insert_pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to wedge \the [tool] in [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin to wedge [tool] in [target]'s [parse_zone(target_zone)]...</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] begins to wedge \the [tool] in [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].", "<span class='notice'>You begin to wedge [tool] in [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]...</span>", subjects=list(user, target))
 
 /datum/surgery_step/insert_pill/success(mob/user, mob/living/carbon/target, target_zone, var/obj/item/weapon/reagent_containers/pill/tool, datum/surgery/surgery)
 	if(!istype(tool))
@@ -23,7 +23,7 @@
 	P.target = tool
 	P.Grant(target)
 
-	user.visible_message("[user] wedges \the [tool] into [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You wedge [tool] into [target]'s [parse_zone(target_zone)].</span>")
+	user.visible_message("[IDENTITY_SUBJECT(1)] wedges \the [tool] into [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)]!", "<span class='notice'>You wedge [tool] into [IDENTITY_SUBJECT(2)]'s [parse_zone(target_zone)].</span>", subjects=list(user, target))
 	return 1
 
 /datum/action/item_action/hands_free/activate_pill

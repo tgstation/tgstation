@@ -5,8 +5,8 @@
 
 	if(!gibbed && container)//If not gibbed but in a container.
 		var/obj/item/device/mmi = container
-		mmi.visible_message("<span class='warning'>[src]'s MMI flatlines!</span>", \
-					"<span class='italics'>You hear something flatline.</span>")
+		mmi.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)]'s MMI flatlines!</span>", \
+					"<span class='italics'>You hear something flatline.</span>", subjects=list(src))
 		mmi.update_icon()
 
 	return ..()

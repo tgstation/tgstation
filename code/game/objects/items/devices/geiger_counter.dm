@@ -101,7 +101,7 @@
 /obj/item/device/geiger_counter/attack(mob/living/M, mob/user)
 	if(user.a_intent == INTENT_HELP)
 		if(!emagged)
-			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='notice'>You scan [M]'s radiation levels with [src]...</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] scans [IDENTITY_SUBJECT(2)] with [src].</span>", "<span class='notice'>You scan [IDENTITY_SUBJECT(2)]'s radiation levels with [src]...</span>", subjects=list(user, M))
 			if(!M.radiation)
 				to_chat(user, "<span class='notice'>\icon[src] Radiation levels within normal boundaries.</span>")
 				return 1
@@ -109,7 +109,7 @@
 				to_chat(user, "<span class='boldannounce'>\icon[src] Subject is irradiated. Radiation levels: [M.radiation].</span>")
 				return 1
 		else
-			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='danger'>You project [src]'s stored radiation into [M]'s body!</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] scans [IDENTITY_SUBJECT(2)] with [src].</span>", "<span class='danger'>You project [src]'s stored radiation into [IDENTITY_SUBJECT(2)]'s body!</span>", subjects=list(user, M))
 			M.rad_act(radiation_count)
 			radiation_count = 0
 		return 1
@@ -120,11 +120,11 @@
 		if(scanning)
 			to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
 			return 0
-		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>", subjects=list(user))
 		playsound(user, I.usesound, 50, 1)
 		if(!do_after(user, 40*I.toolspeed, target = user))
 			return 0
-		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>", subjects=list(user))
 		playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
 		emagged = 0
 		radiation_count = 0

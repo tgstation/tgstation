@@ -58,9 +58,7 @@
 
 		scanning = 1
 
-		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
-		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
-
+		user.visible_message("\The [IDENTITY_SUBJECT(1)] points the [src.name] at \the [IDENTITY_SUBJECT(2)] and performs a forensic scan.", "<span class='notice'>You scan \the [IDENTITY_SUBJECT(2)]. The scanner is now analysing the results...</span>", subjects=list(user, A))
 
 		// GATHER INFORMATION
 
@@ -150,10 +148,10 @@
 		if(!found_something)
 			add_log("<I># No forensic traces found #</I>", 0) // Don't display this to the holder user
 			if(holder)
-				to_chat(holder, "<span class='warning'>Unable to locate any fingerprints, materials, fibers, or blood on \the [target_name]!</span>")
+				to_chat(holder, "<span class='warning'>Unable to locate any fingerprints, materials, fibers, or blood on \the [IDENTITY_SUBJECT(1)]!</span>", list(A))
 		else
 			if(holder)
-				to_chat(holder, "<span class='notice'>You finish scanning \the [target_name].</span>")
+				to_chat(holder, "<span class='notice'>You finish scanning \the [IDENTITY_SUBJECT(1)].</span>", list(A))
 
 		add_log("---------------------------------------------------------", 0)
 		scanning = 0

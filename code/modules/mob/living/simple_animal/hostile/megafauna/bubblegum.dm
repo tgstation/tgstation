@@ -184,7 +184,7 @@ Difficulty: Hard
 
 	else if(isliving(A))
 		var/mob/living/L = A
-		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
+		L.visible_message("<span class='danger'>[src] slams into [IDENTITY_SUBJECT(1)]!</span>", "<span class='userdanger'>[src] slams into you!</span>", subjects=list(L))
 		L.apply_damage(40, BRUTE)
 		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 		shake_camera(L, 4, 3)
@@ -251,7 +251,7 @@ Difficulty: Hard
 	sleep(2.5)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
-			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
+			to_chat(L, "<span class='userdanger'>[IDENTITY_SUBJECT(1)] rends you!</span>", list(src))
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
@@ -267,7 +267,7 @@ Difficulty: Hard
 	sleep(6)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
-			to_chat(L, "<span class='userdanger'>[src] drags you through the blood!</span>")
+			to_chat(L, "<span class='userdanger'>[IDENTITY_SUBJECT(1)] drags you through the blood!</span>", list(src))
 			playsound(T, 'sound/magic/enter_blood.ogg', 100, 1, -1)
 			var/turf/targetturf = get_step(src, dir)
 			L.forceMove(targetturf)

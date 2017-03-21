@@ -310,7 +310,7 @@
 		icon_state = "defibpaddles[wielded]_cooldown"
 
 /obj/item/weapon/twohanded/shockpaddles/suicide_act(mob/user)
-	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	if(req_defib)
 		defib.deductcharge(revivecost)
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
@@ -395,8 +395,8 @@
 	if(!req_defib && !combat)
 		return
 	busy = 1
-	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
-			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
+	M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] has touched [IDENTITY_SUBJECT(2)] with [src]!</span>", \
+			"<span class='userdanger'>[IDENTITY_SUBJECT(1)] has touched [IDENTITY_SUBJECT(2)] with [src]!</span>", subjects=list(user, M))
 	M.adjustStaminaLoss(50)
 	M.Weaken(5)
 	M.updatehealth() //forces health update before next life tick
@@ -418,13 +418,13 @@
 		return
 	if(!req_defib && !combat)
 		return
-	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>",
-		"<span class='warning'>You overcharge the paddles and begin to place them onto [H]'s chest...</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins to place [src] on [IDENTITY_SUBJECT(2)]'s chest.</span>",
+		"<span class='warning'>You overcharge the paddles and begin to place them onto [IDENTITY_SUBJECT(2)]'s chest...</span>", subjects=list(user, H))
 	busy = 1
 	update_icon()
 	if(do_after(user, 30, target = H))
-		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>",
-			"<span class='warning'>You place [src] on [H]'s chest and begin to charge them.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] places [src] on [IDENTITY_SUBJECT(2)]'s chest.</span>",
+			"<span class='warning'>You place [src] on [IDENTITY_SUBJECT(2)]'s chest and begin to charge them.</span>", subjects=list(user, H))
 		var/turf/T = get_turf(defib)
 		playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 		if(req_defib)
@@ -437,19 +437,19 @@
 				update_icon()
 				return
 			if(H && H.stat == DEAD)
-				to_chat(user, "<span class='warning'>[H] is dead.</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] is dead.</span>", list(H))
 				playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 				busy = 0
 				update_icon()
 				return
-			user.visible_message("<span class='boldannounce'><i>[user] shocks [H] with \the [src]!</span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
+			user.visible_message("<span class='boldannounce'><i>[IDENTITY_SUBJECT(1)] shocks [IDENTITY_SUBJECT(2)] with \the [src]!</span>", "<span class='warning'>You shock [IDENTITY_SUBJECT(2)] with \the [src]!</span>", subjects=list(user, H))
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
 			playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
 			H.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
-					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
-						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+					H.visible_message("<span class='warning'>[IDENTITY_SUBJECT(2)] thrashes wildly, clutching at their chest!</span>",
+						"<span class='userdanger'>You feel a horrible agony in your chest!</span>", subjects=list(H))
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, "chest")
 			add_logs(user, H, "overloaded the heart of", defib)
@@ -468,11 +468,11 @@
 	update_icon()
 
 /obj/item/weapon/twohanded/shockpaddles/proc/do_help(mob/living/carbon/human/H, mob/living/user)
-	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
+	user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] begins to place [src] on [IDENTITY_SUBJECT(2)]'s chest.</span>", "<span class='warning'>You begin to place [src] on [IDENTITY_SUBJECT(2)]'s chest...</span>", subjects=list(user, H))
 	busy = 1
 	update_icon()
 	if(do_after(user, 30, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
-		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] places [src] on [IDENTITY_SUBJECT(2)]'s chest.</span>", "<span class='warning'>You place [src] on [IDENTITY_SUBJECT(2)]'s chest.</span>", subjects=list(user, H))
 		playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 		var/tplus = world.time - H.timeofdeath
 		// past this much time the patient is unrecoverable

@@ -66,7 +66,7 @@
 						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")
+			to_chat(user, "<span class='notice'>[IDENTITY_SUBJECT(1)] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>", list(C))
 
 
 /obj/effect/proc_holder/spell/aimed/fireball/hellish
@@ -134,7 +134,7 @@
 /mob/living/proc/infernalphaseout()
 	dust_animation()
 	spawn_dust()
-	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
+	src.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] disappears in a flashfire!</span>", subjects=list(src))
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(loc)
 	src.ExtinguishMob()
@@ -158,7 +158,7 @@
 	fakefire()
 	src.loc = get_turf(src)
 	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B>")
+	src.visible_message("<span class='warning'><B>[IDENTITY_SUBJECT(1)] appears in a fiery blaze!</B>", subjects=list(src))
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	addtimer(CALLBACK(src, .proc/fakefireextinguish), 15, TIMER_UNIQUE)
 

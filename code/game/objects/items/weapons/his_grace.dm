@@ -65,7 +65,7 @@
 /obj/item/weapon/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
 		user.forceMove(get_turf(src))
-		user.visible_message("<span class='warning'>[user] scrambles out of [src]!</span>", "<span class='notice'>You climb out of [src]!</span>")
+		user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] scrambles out of [src]!</span>", "<span class='notice'>You climb out of [src]!</span>", subjects=list(user))
 
 /obj/item/weapon/his_grace/process()
 	if(!bloodthirst)
@@ -79,7 +79,7 @@
 	if(istype(master) && (src in master.held_items))
 		switch(bloodthirst)
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				master.visible_message("<span class='boldwarning'>[src] turns on [master]!</span>", "<span class='his_grace big bold'>[src] turns on you!</span>")
+				master.visible_message("<span class='boldwarning'>[src] turns on [IDENTITY_SUBJECT(1)]!</span>", "<span class='his_grace big bold'>[src] turns on you!</span>", subjects=list(master))
 				do_attack_animation(master, null, src)
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
@@ -105,7 +105,7 @@
 	step_to(src, L)
 	if(Adjacent(L))
 		if(!L.stat)
-			L.visible_message("<span class='warning'>[src] lunges at [L]!</span>", "<span class='his_grace big bold'>[src] lunges at you!</span>")
+			L.visible_message("<span class='warning'>[src] lunges at [IDENTITY_SUBJECT(1)]!</span>", "<span class='his_grace big bold'>[src] lunges at you!</span>", subjects=list(L))
 			do_attack_animation(L, null, src)
 			playsound(L, 'sound/weapons/smash.ogg', 50, 1)
 			playsound(L, 'sound/misc/desceration-01.ogg', 50, 1)
@@ -145,7 +145,7 @@
 /obj/item/weapon/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
 	if(!meal)
 		return
-	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
+	meal.visible_message("<span class='warning'>[src] swings open and devours [IDENTITY_SUBJECT(1)]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>", subjects=list(meal))
 	meal.adjustBruteLoss(200)
 	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
 	playsound(src, 'sound/items/eatfood.ogg', 100, 1)

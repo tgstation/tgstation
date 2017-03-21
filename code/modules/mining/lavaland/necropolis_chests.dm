@@ -199,7 +199,7 @@
 		var/atom/movable/A = target
 		if(A.anchored)
 			return
-		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
+		A.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is snagged by [IDENTITY_SUBJECT(2)]'s hook!</span>", subjects=list(A, firer))
 		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
@@ -231,10 +231,10 @@
 	if(cooldown < world.time)
 		feedback_add_details("immortality_talisman","U") // usage
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
+		user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>", subjects=list(user))
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
-		Z.desc = "It's shaped an awful lot like [user.name]."
+		Z.desc = "It's shaped an awful lot like a [initial(user.name)]."
 		Z.setDir(user.dir)
 		user.forceMove(Z)
 		user.notransform = 1
@@ -243,7 +243,7 @@
 			user.status_flags &= ~GODMODE
 			user.notransform = 0
 			user.forceMove(get_turf(Z))
-			user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
+			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] pops back into reality!</span>", subjects=list(user))
 			Z.can_destroy = TRUE
 			qdel(Z)
 
@@ -548,13 +548,13 @@
 	var/ghost_counter = ghost_check()
 
 	force = Clamp((ghost_counter * 4), 0, 75)
-	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
+	user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] strikes with the force of [ghost_counter] vengeful spirits!</span>", subjects=list(user))
 	..()
 
 /obj/item/weapon/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	var/ghost_counter = ghost_check()
 	final_block_chance += Clamp((ghost_counter * 5), 0, 75)
-	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
+	owner.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] is protected by a ring of [ghost_counter] ghosts!</span>", subjects=list(owner))
 	return ..()
 
 //Blood
@@ -655,12 +655,12 @@
 			var/obj/effect/overlay/temp/lavastaff/L = new /obj/effect/overlay/temp/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
-			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
+			user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] points [src] at [T]!</span>", subjects=list(user))
 			timer = world.time + create_delay + 1
 			if(do_after(user, create_delay, target = T))
 				var/old_name = T.name
 				if(T.TerraformTurf(turf_type))
-					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
+					user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] turns \the [old_name] into [transform_string]!</span>", subjects=list(user))
 					message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
 					log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
 					timer = world.time + create_cooldown
@@ -671,7 +671,7 @@
 		else
 			var/old_name = T.name
 			if(T.TerraformTurf(reset_turf_type))
-				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
+				user.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] turns \the [old_name] into [reset_string]!</span>", subjects=list(user))
 				timer = world.time + reset_cooldown
 				playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 
@@ -725,7 +725,7 @@
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
 
 	if(!(isliving(choice)))
-		to_chat(user, "[choice] is already dead!")
+		to_chat(user, "[IDENTITY_SUBJECT(1)] is already dead!", list(choice))
 		used = FALSE
 		return
 	if(choice == user)
@@ -750,7 +750,7 @@
 		for(var/mob/living/carbon/human/H in player_list)
 			if(H == L)
 				continue
-			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
+			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [IDENTITY_SUBJECT(1)]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>", list(L))
 			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
 
 	qdel(src)
@@ -851,8 +851,8 @@
 		return
 	if(!beacon || QDELETED(beacon))
 		if(isturf(user.loc))
-			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
-			"<span class='notice'>You start detaching the hierophant beacon...</span>")
+			user.visible_message("<span class='hierophant_warning'>[IDENTITY_SUBJECT(1)] starts fiddling with [src]'s pommel...</span>", \
+			"<span class='notice'>You start detaching the hierophant beacon...</span>", subjects=list(user))
 			timer = world.time + 51
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			if(do_after(user, 50, target = user) && !beacon)
@@ -861,9 +861,9 @@
 				new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
-				user.visible_message("<span class='hierophant_warning'>[user] places a strange machine beneath [user.p_their()] feet!</span>", \
+				user.visible_message("<span class='hierophant_warning'>[IDENTITY_SUBJECT(1)] places a strange machine beneath [user.p_their()] feet!</span>", \
 				"<span class='hierophant'>You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!</span>\n\
-				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>")
+				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>", subjects=list(user))
 			else
 				timer = world.time
 				INVOKE_ASYNC(src, .proc/prepare_icon_update)
@@ -881,7 +881,7 @@
 		return
 	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
-	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
+	user.visible_message("<span class='hierophant_warning'>[IDENTITY_SUBJECT(1)] starts to glow faintly...</span>", subjects=list(user))
 	timer = world.time + 50
 	INVOKE_ASYNC(src, .proc/prepare_icon_update)
 	beacon.icon_state = "hierophant_tele_on"
@@ -952,7 +952,7 @@
 	sleep(1)
 	if(!M)
 		return
-	M.visible_message("<span class='hierophant_warning'>[M] fades out!</span>")
+	M.visible_message("<span class='hierophant_warning'>[IDENTITY_SUBJECT(1)] fades out!</span>", subjects=list(M))
 	sleep(2)
 	if(!M)
 		return
@@ -964,7 +964,7 @@
 	sleep(1)
 	if(!M)
 		return
-	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
+	M.visible_message("<span class='hierophant_warning'>[IDENTITY_SUBJECT(1)] fades in!</span>", subjects=list(M))
 	if(user != M)
 		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
 

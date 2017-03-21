@@ -165,7 +165,7 @@
 				var/mob/M = pickupTarget.loc
 				if(!pickpocketing)
 					pickpocketing = TRUE
-					M.visible_message("[src] starts trying to take [pickupTarget] from [M]", "[src] tries to take [pickupTarget]!")
+					M.visible_message("[IDENTITY_SUBJECT(1)] starts trying to take [pickupTarget] from [IDENTITY_SUBJECT(2)]", "[IDENTITY_SUBJECT(1)] tries to take [pickupTarget]!", subjects=list(src, M))
 					INVOKE_ASYNC(src, .proc/pickpocket, M)
 
 		else
@@ -344,11 +344,11 @@
 	if(do_mob(src, M, MONKEY_ITEM_SNATCH_DELAY) && pickupTarget)
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
-				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
+				M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] snatches [pickupTarget] from [IDENTITY_SUBJECT(2)].</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] snatched [pickupTarget]!</span>", subjects=list(src, M))
 				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !QDELETED(pickupTarget))
 					equip_item(pickupTarget)
 				else
-					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
+					M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] tried to snatch [pickupTarget] from [IDENTITY_SUBJECT(2)], but failed!</span>", "<span class='userdanger'>[IDENTITY_SUBJECT(1)] tried to grab [pickupTarget]!</span>", subjects=list(src, M))
 	pickpocketing = FALSE
 	pickupTarget = null
 	pickupTimer = 0

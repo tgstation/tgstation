@@ -218,7 +218,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		else
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
-				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
+				gangster_mind.current.visible_message("<FONT size=3><B>[IDENTITY_SUBJECT(1)] looks like they've given up the life of crime!<B></font>", subjects=list(gangster_mind.current))
 			to_chat(gangster_mind.current, "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>")
 			gangster_mind.memory = ""
 

@@ -114,7 +114,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>", subjects=list(user))
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/clothing/mask/cigarette/New()
@@ -131,7 +131,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!lit && smoketime > 0)
 		var/lighting_text = W.ignition_effect(src, user)
 		if(lighting_text)
-			light(lighting_text)
+			light(lighting_text, user)
 	else
 		return ..()
 
@@ -148,7 +148,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 
 
-/obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
+/obj/item/clothing/mask/cigarette/proc/light(flavor_text = null, user)
 	if(lit)
 		return
 
@@ -177,7 +177,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = icon_on
 	if(flavor_text)
 		var/turf/T = get_turf(src)
-		T.visible_message(flavor_text)
+		T.visible_message(flavor_text, subjects=list(user))
 	START_PROCESSING(SSobj, src)
 
 	//can't think of any other way to update the overlays :<
@@ -219,7 +219,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
-		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] calmly drops and treads on \the [src], putting it out instantly.</span>", subjects=list(user))
 		new type_butt(user.loc)
 		new /obj/effect/decal/cleanable/ash(user.loc)
 		qdel(src)
@@ -398,7 +398,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user)
 	var/turf/location = get_turf(user)
 	if(lit)
-		user.visible_message("<span class='notice'>[user] puts out [src].</span>", "<span class='notice'>You put out [src].</span>")
+		user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] puts out [src].</span>", "<span class='notice'>You put out [src].</span>", subjects=list(user))
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
@@ -452,10 +452,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	add_overlay(I)
 
 /obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+	. = "<span class='notice'>After some fiddling, [IDENTITY_SUBJECT(1)] manages to light [A] with [src].</span>"
 
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+	. = "<span class='rose'>With a single flick of their wrist, [IDENTITY_SUBJECT(1)] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
@@ -470,7 +470,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			hitsound = 'sound/items/welder.ogg'
 			attack_verb = list("burnt", "singed")
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
+				user.visible_message("Without even breaking stride, [IDENTITY_SUBJECT(1)] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>" , subjects=list(user))
 			else
 				var/prot = FALSE
 				var/mob/living/carbon/human/H = user
@@ -483,11 +483,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					prot = TRUE
 
 				if(prot || prob(75))
-					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
+					user.visible_message("After a few attempts, [IDENTITY_SUBJECT(1)] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>", subjects=list(user))
 				else
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
 					user.apply_damage(5, BURN, hitzone)
-					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
+					user.visible_message("<span class='warning'>After a few attempts, [IDENTITY_SUBJECT(1)] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>", subjects=list(user))
 
 			set_light(1)
 			START_PROCESSING(SSobj, src)
@@ -498,9 +498,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 0
 			attack_verb = null //human_defense.dm takes care of it
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
+				user.visible_message("You hear a quiet click, as [IDENTITY_SUBJECT(1)] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>", subjects=list(user))
 			else
-				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
+				user.visible_message("[IDENTITY_SUBJECT(1)] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].", subjects=list(user))
 			set_light(0)
 			STOP_PROCESSING(SSobj, src)
 	else
@@ -575,7 +575,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/emagged = 0 //LET THE GRIEF BEGIN
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!", subjects=list(user))//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 

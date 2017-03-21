@@ -185,7 +185,7 @@ var/const/tk_maxrange = 15
 	return
 
 /obj/item/tk_grab/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[IDENTITY_SUBJECT(1)] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>", subjects=list(user))
 	return (OXYLOSS)
 
 /*Not quite done likely needs to use something thats not get_step_to

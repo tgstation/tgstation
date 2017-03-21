@@ -83,21 +83,21 @@
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
-					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
-										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
+					M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] attempts to feed [IDENTITY_SUBJECT(2)] [src].</span>", \
+										"<span class='userdanger'>[IDENTITY_SUBJECT(1)] attempts to feed [IDENTITY_SUBJECT(2)] [src].</span>", subjects=list(user, M))
 				else
-					M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
-										"<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>")
+					M.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] cannot force any more of [src] down [IDENTITY_SUBJECT(2)]'s throat!</span>", \
+										"<span class='warning'>[IDENTITY_SUBJECT(1)] cannot force any more of [src] down [IDENTITY_SUBJECT(2)]'s throat!</span>", subjects=list(user, M))
 					return 0
 
 				if(!do_mob(user, M))
 					return
 				add_logs(user, M, "fed", reagentlist(src))
-				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
-									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
+				M.visible_message("<span class='danger'>[IDENTITY_SUBJECT(1)] forces [IDENTITY_SUBJECT(2)] to eat [src].</span>", \
+									"<span class='userdanger'>[IDENTITY_SUBJECT(1)] forces [IDENTITY_SUBJECT(2)] to eat [src].</span>", subjects=list(user, M))
 
 			else
-				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
+				to_chat(user, "<span class='warning'>[IDENTITY_SUBJECT(1)] doesn't seem to have a mouth!</span>", list(M))
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
@@ -196,14 +196,12 @@
 	var/slices_lost = 0
 	if (accuracy >= IS_SHARP_ACCURATE)
 		user.visible_message( \
-			"[user] slices [src].", \
-			"<span class='notice'>You slice [src].</span>" \
-		)
+			"[IDENTITY_SUBJECT(1)] slices [src].", \
+			"<span class='notice'>You slice [src].</span>", subjects=list(user))
 	else
 		user.visible_message( \
-			"[user] inaccurately slices [src] with [W]!", \
-			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
-		)
+			"[IDENTITY_SUBJECT(1)] inaccurately slices [src] with [W]!", \
+			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>", subjects=list(user))
 		slices_lost = rand(1,min(1,round(slices_num/2)))
 
 	var/reagents_per_slice = reagents.total_volume/slices_num

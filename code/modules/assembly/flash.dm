@@ -91,13 +91,13 @@
 			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Weaken(rand(4,6))
-			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
-			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
+			visible_message("<span class='disarm'>[IDENTITY_SUBJECT(1)] blinds [IDENTITY_SUBJECT(2)] with the flash!</span>", subjects=list(user, M))
+			to_chat(user, "<span class='danger'>You blind [IDENTITY_SUBJECT(1)] with the flash!</span>", list(M))
+			to_chat(M, "<span class='userdanger'>[IDENTITY_SUBJECT(1)] blinds you with the flash!</span>", list(user))
 		else
-			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
-			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
-			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+			visible_message("<span class='disarm'>[IDENTITY_SUBJECT(1)] fails to blind [IDENTITY_SUBJECT(2)] with the flash!</span>", subjects=list(user, M))
+			to_chat(user, "<span class='warning'>You fail to blind [IDENTITY_SUBJECT(1)] with the flash!</span>", list(M))
+			to_chat(M, "<span class='danger'>[IDENTITY_SUBJECT(1)] fails to blind you with the flash!</span>", list(user))
 	else
 		if(M.flash_act())
 			M.confused += power
@@ -117,10 +117,10 @@
 		M.Weaken(rand(4,6))
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
-		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
+		user.visible_message("<span class='disarm'>[IDENTITY_SUBJECT(1)] overloads [IDENTITY_SUBJECT(2)]'s sensors with the flash!</span>", "<span class='danger'>You overload [IDENTITY_SUBJECT(2)]'s sensors with the flash!</span>", subjects=list(user, R))
 		return 1
 
-	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
+	user.visible_message("<span class='disarm'>[IDENTITY_SUBJECT(1)] fails to blind [IDENTITY_SUBJECT(2)] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>", subjects=list(user, M))
 
 
 /obj/item/device/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
@@ -128,7 +128,7 @@
 		return 0
 	if(!try_use_flash(user))
 		return 0
-	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
+	user.visible_message("<span class='disarm'>[IDENTITY_SUBJECT(1)]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>", subjects=list(user))
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		flash_carbon(M, user, 1, 0)
 

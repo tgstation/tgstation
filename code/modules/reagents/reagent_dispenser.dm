@@ -105,11 +105,11 @@
 				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
 			reagents.trans_to(W, W.max_fuel)
-			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
+			user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>", subjects=list(user))
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			update_icon()
 		else
-			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
+			user.visible_message("<span class='warning'>[IDENTITY_SUBJECT(1)] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>", subjects=list(user))
 			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
 			bombers += message_admins
 			message_admins(message_admins)
@@ -152,7 +152,7 @@
 	if(!paper_cups)
 		to_chat(user, "<span class='warning'>There aren't any cups left!</span>")
 		return
-	user.visible_message("<span class='notice'>[user] takes a cup from [src].</span>", "<span class='notice'>You take a paper cup from [src].</span>")
+	user.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] takes a cup from [src].</span>", "<span class='notice'>You take a paper cup from [src].</span>", subjects=list(user))
 	var/obj/item/weapon/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--

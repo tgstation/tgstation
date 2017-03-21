@@ -432,9 +432,9 @@
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))
 		return
-	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... [user.p_their()] body starts to glow and bursts into flames before flashing into ash.</span>",\
+	user.visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] reaches out and touches \the [src], inducing a resonance... [user.p_their()] body starts to glow and bursts into flames before flashing into ash.</span>",\
 		"<span class='userdanger'>You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
-		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
+		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>", subjects=list(user))
 
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
@@ -450,9 +450,9 @@
 		return
 	if(user.drop_item(W))
 		Consume(W)
-		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
+		user.visible_message("<span class='danger'>As [IDENTITY_SUBJECT(1)] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
-			"<span class='italics'>Everything suddenly goes silent.</span>")
+			"<span class='italics'>Everything suddenly goes silent.</span>", subjects=list(user))
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
@@ -461,9 +461,9 @@
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM)
 	if(isliving(AM))
-		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and catch flame before flashing into ash.</span>",\
+		AM.visible_message("<span class='danger'>\The [IDENTITY_SUBJECT(1)] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
-		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
+		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>", subjects=list(AM))
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>", null,\
 		"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")

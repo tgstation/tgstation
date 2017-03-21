@@ -23,7 +23,7 @@
 	if(istype(card.loc, /obj/item/device/pda))
 		var/obj/item/device/pda/P = card.loc
 		P.pai = null
-		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
+		P.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] ejects itself from [IDENTITY_SUBJECT(2)]!</span>", subjects=list(src, P))
 	if(istype(card.loc, /mob/living))
 		var/mob/living/L = card.loc
 		if(!L.temporarilyRemoveItemFromInventory(card))
@@ -36,7 +36,7 @@
 		client.eye = src
 	set_light(0)
 	icon_state = "[chassis]"
-	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
+	visible_message("<span class='boldnotice'>[IDENTITY_SUBJECT(1)] folds out its holochassis emitter and forms a holoshell around itself!</span>", subjects=list(src))
 	holoform = TRUE
 
 /mob/living/silicon/pai/proc/emittercool()
@@ -52,7 +52,7 @@
 	if(!holoform)
 		. = fold_out(force)
 		return
-	visible_message("<span class='notice'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
+	visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] deactivates its holochassis emitter and folds back into a compact card!</span>", subjects=list(src))
 	stop_pulling()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
@@ -87,7 +87,7 @@
 	else
 		icon_state = "[chassis]"
 	if(loc != card)
-		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
+		visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] [rest? "lays down for a moment..." : "perks up from the ground"]</span>", subjects=list(src))
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM)
 	return FALSE

@@ -60,8 +60,8 @@
 		return
 	if(!patient_insertion_check(target))
 		return
-	occupant_message("<span class='notice'>You start putting [target] into [src]...</span>")
-	chassis.visible_message("<span class='warning'>[chassis] starts putting [target] into \the [src].</span>")
+	occupant_message("<span class='notice'>You start putting [IDENTITY_SUBJECT(1)] into [src]...</span>", list(target))
+	chassis.visible_message("<span class='warning'>[chassis] starts putting [IDENTITY_SUBJECT(1)] into \the [src].</span>", subjects=list(target))
 	if(do_after_cooldown(target))
 		if(!patient_insertion_check(target))
 			return
@@ -69,16 +69,16 @@
 		patient = target
 		START_PROCESSING(SSobj, src)
 		update_equip_info()
-		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
-		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
-		log_message("[target] loaded. Life support functions engaged.")
+		occupant_message("<span class='notice'>[IDENTITY_SUBJECT(1)] successfully loaded into [src]. Life support functions engaged.</span>", list(target))
+		chassis.visible_message("<span class='warning'>[chassis] loads [IDENTITY_SUBJECT(1)] into [src].</span>", subjects=list(target))
+		log_message("[target.real_name]/([key_name(target)]) loaded. Life support functions engaged.")
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target)
 	if(target.buckled)
-		occupant_message("<span class='warning'>[target] will not fit into the sleeper because [target.p_they()] [target.p_are()] buckled to [target.buckled]!</span>")
+		occupant_message("<span class='warning'>[IDENTITY_SUBJECT(1)] will not fit into the sleeper because [target.p_they()] [target.p_are()] buckled to [target.buckled]!</span>", list(target))
 		return
 	if(target.has_buckled_mobs())
-		occupant_message("<span class='warning'>[target] will not fit into the sleeper because of the creatures attached to it!</span>")
+		occupant_message("<span class='warning'>[IDENTITY_SUBJECT(1)] will not fit into the sleeper because of the creatures attached to it!</span>", list(target))
 		return
 	if(patient)
 		occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
@@ -89,8 +89,8 @@
 	if(!patient)
 		return
 	patient.forceMove(get_turf(src))
-	occupant_message("[patient] ejected. Life support functions disabled.")
-	log_message("[patient] ejected. Life support functions disabled.")
+	occupant_message("[IDENTITY_SUBJECT(1)] ejected. Life support functions disabled.", list(patient))
+	log_message("[patient.real_name]/([key_name(patient)]) ejected. Life support functions disabled.")
 	STOP_PROCESSING(SSobj, src)
 	patient = null
 	update_equip_info()
@@ -196,8 +196,8 @@
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
-		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
-		log_message("Injecting [patient] with [to_inject] units of [R.name].")
+		occupant_message("Injecting [IDENTITY_SUBJECT(1)] with [to_inject] units of [R.name].", subjects=list(patient))
+		log_message("Injecting [patient.real_name]/([key_name(patient)]) with [to_inject] units of [R.name].")
 		add_logs(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(patient,R.id,to_inject)
 		update_equip_info()
@@ -319,7 +319,7 @@
 	mechsyringe.icon = 'icons/obj/chemical.dmi'
 	mechsyringe.icon_state = "syringeproj"
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
-	log_message("Launched [mechsyringe] from [src], targeting [target].")
+	log_message("Launched [mechsyringe] from [src], targeting [target]/([key_name(target)]).")
 	var/mob/originaloccupant = chassis.occupant
 	spawn(0)
 		src = null //if src is deleted, still process the syringe
@@ -333,7 +333,7 @@
 				var/mob/living/carbon/M = safepick(mobs)
 				if(M)
 					var/R
-					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
+					mechsyringe.visible_message("<span class=\"attack\"> [IDENTITY_SUBJECT(1)] was hit by the syringe!</span>", subjects=list(M))
 					if(M.can_inject(null, 1))
 						if(mechsyringe.reagents)
 							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)

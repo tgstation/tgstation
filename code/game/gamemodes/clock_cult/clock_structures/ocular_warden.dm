@@ -27,7 +27,7 @@
 
 /obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
 	..()
-	to_chat(user, "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>")
+	to_chat(user, "<span class='brass'>[target ? "<b>It's fixated on [IDENTITY_SUBJECT(1)]!</b>" : "Its gaze is wandering aimlessly."]</span>", list(target))
 
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
@@ -94,7 +94,7 @@
 		if(validtargets.len)
 			target = pick(validtargets)
 			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,1)
-			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
+			visible_message("<span class='warning'>[src] swivels to face [IDENTITY_SUBJECT(1)]!</span>", subjects=list(target))
 			if(isliving(target))
 				var/mob/living/L = target
 				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>")

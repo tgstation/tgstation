@@ -44,8 +44,8 @@ var/global/list/rad_collectors = list()
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
+			user.visible_message("[IDENTITY_SUBJECT(1)] turns the [src.name] [active? "on":"off"].", \
+			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>", subjects=list(user))
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
