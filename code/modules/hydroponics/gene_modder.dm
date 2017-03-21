@@ -19,8 +19,8 @@
 	var/max_yield = 2
 	var/min_production = 12
 	var/max_endurance = 10 // IMPT: ALSO AFFECTS LIFESPAN
-	var/max_wchance = 0
-	var/max_wrate = 0
+	var/min_wchance = 67
+	var/min_wrate = 10
 
 /obj/machinery/plantgenes/New()
 	..()
@@ -55,18 +55,17 @@
 		max_endurance = initial(max_endurance) + (SM.rating * 25) // 35,60,85,100	Clamps at 10min 100max
 
 	for(var/obj/item/weapon/stock_parts/micro_laser/ML in component_parts)
-		var/wratemod = ML.rating*2.5
-		max_wrate = Floor(wratemod,1) // 2,5,7,10	Clamps at 10
-		max_wchance = ML.rating*16+3 // 19,35,51,67 	Clamps at 67
+		var/wratemod = ML.rating * 2.5
+		min_wrate = Floor(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
+		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 	for(var/obj/item/weapon/circuitboard/machine/plantgenes/vaultcheck in component_parts)
 		if(istype(vaultcheck, /obj/item/weapon/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
 			max_potency = 100
 			max_yield = 10
 			min_production = 1
 			max_endurance = 100
-			max_wchance = 67
-			max_wrate = 10
-
+			min_wchance = 0
+			min_wrate = 0
 
 /obj/machinery/plantgenes/update_icon()
 	..()
@@ -175,13 +174,13 @@
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_production]</span> production. "
 							dat += "Target gene will be degraded to <span class='highlight'>[min_production]</span> production on extraction."
 					else if(istype(target, /datum/plant_gene/core/weed_rate))
-						if(gene.value > max_wrate)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_wrate]</span> weed rate. "
-							dat += "Target gene will be degraded to <span class='highlight'>[max_wrate]</span> weed rate on extraction."
+						if(gene.value < min_wrate)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wrate]</span> weed rate. "
+							dat += "Target gene will be degraded to <span class='highlight'>[min_wrate]</span> weed rate on extraction."
 					else if(istype(target, /datum/plant_gene/core/weed_chance))
-						if(gene.value > max_wchance)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_wchance]</span> weed chance. "
-							dat += "Target gene will be degraded to <span class='highlight'>[max_wchance]</span> weed chance on extraction."
+						if(gene.value < min_wchance)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wchance]</span> weed chance. "
+							dat += "Target gene will be degraded to <span class='highlight'>[min_wchance]</span> weed chance on extraction."
 
 			if("replace")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
@@ -350,9 +349,9 @@
 							else if(istype(G, /datum/plant_gene/core/yield))
 								gene.value = min(gene.value, max_yield)
 							else if(istype(G, /datum/plant_gene/core/weed_rate))
-								gene.value = min(gene.value, max_wrate)
+								gene.value = max(gene.value, min_wrate)
 							else if(istype(G, /datum/plant_gene/core/weed_chance))
-								gene.value = min(gene.value, max_wchance)
+								gene.value = max(gene.value, min_wchance)
 						disk.update_name()
 						qdel(seed)
 						seed = null
