@@ -285,7 +285,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 			else
 				msg += "It is holding \icon[internal_storage] \a [internal_storage] in its internal storage.\n"
 		msg += "*---------*</span>"
-		user << msg
+		to_chat(user,msg)
 
 
 
@@ -511,10 +511,10 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando/proc/ToggleLight()
 	if(!luminosity)
-		src << "<span class='notice'>You activate your light.</span>"
+		to_chat(src,"<span class='notice'>You activate your light.</span>")
 		set_light(3)
 	else
-		src << "<span class='notice'>You deactivate your light.</span>"
+		to_chat(src,"<span class='notice'>You deactivate your light.</span>")
 		set_light(0)
 	for(var/datum/sutando_abilities/I in current_abilities)
 		I.light_switch()
@@ -523,7 +523,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	set name = "Check sutando Type"
 	set category = "sutando"
 	set desc = "Check what type you are."
-	src << playstyle_string
+	to_chat(src, playstyle_string)
 
 //COMMUNICATION
 
@@ -536,13 +536,13 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 		var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
 		var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the sutando's color
 
-		summoner << my_message
+		to_chat(summoner, my_message)
 		var/list/sutandos = summoner.hasparasites()
 		for(var/para in sutandos)
-			para << my_message
+			to_chat(para, my_message)
 		for(var/M in dead_mob_list)
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [my_message]"
+			to_chat(M, "[link] [my_message]")
 
 		log_say("[src.real_name]/[src.key] : [input]")
 
@@ -557,14 +557,14 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
 	var/my_message = "<span class='holoparasitebold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
 
-	src << my_message
+	to_chat(src, my_message)
 	var/list/sutandos = hasparasites()
 	for(var/para in sutandos)
 		var/mob/living/simple_animal/hostile/sutando/G = para
-		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //but for sutandos, use their color for the source instead
+		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" )
 	for(var/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
-		M << "[link] [my_message]"
+		to_chat(M, "[link] [my_message]")
 
 	log_say("[src.real_name]/[src.key] : [text]")
 
@@ -592,13 +592,13 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	if(sutandos.len)
 		var/mob/living/simple_animal/hostile/sutando/G = input(src, "Pick the sutando you wish to reset", "sutando Reset") as null|anything in sutandos
 		if(G)
-			src << "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>"
+			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
 			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/new_stand = null
 			if(candidates.len)
 				new_stand = pick(candidates)
-				G << "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>"
-				src << "<span class='holoparasitebold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>"
+				to_chat(G, "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>")
+				to_chat(src, "<span class='holoparasitebold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>")
 				message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
 				G.ghostize(0)
 				G.setthemename(G.namedatum.theme) //give it a new color, to show it's a new person
@@ -606,16 +606,16 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 				G.reset = 1
 				switch(G.namedatum.theme)
 					if("tech")
-						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> is now online!</span>"
+						to_chat(src, "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> is now online!</span>")
 					if("magic")
-						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
+						to_chat(src, "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>")
 				sutandos -= G
 				if(!sutandos.len)
 					verbs -= /mob/living/proc/sutando_reset
 			else
-				src << "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>"
+				to_chat(src, "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>")
 		else
-			src << "<span class='holoparasite'>You decide not to reset [sutandos.len > 1 ? "any of your sutandos":"your sutando"].</span>"
+			to_chat(src, "<span class='holoparasite'>You decide not to reset [sutandos.len > 1 ? "any of your sutandos":"your sutando"].</span>")
 	else
 		verbs -= /mob/living/proc/sutando_reset
 
@@ -630,6 +630,7 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /mob/living/simple_animal/hostile/sutando/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/sutando/G) //returns 1 if the summoner matches the target's summoner
 	return (istype(G) && G.summoner == summoner)
+
 
 
 ////////Creation
@@ -647,12 +648,15 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
 
-	var/list/chosen_abilities = list()
+	var/list/chosen_abilities = null
 	var/totalvalue = 0
 	var/allowedvalue = 10
 	var/chosen_ability = null
+	var/list/blacklisted_abilities = list()
 
-	var/list/abilitynames = list()
+	var/list/datablocks = null
+	var/list/chosen_blocks = null //these blocks are for the system used to find the chosen abilities in a datablock of [name|id]
+	var/block_value = 0
 
 	var/possible_candidates
 	var/random = TRUE
@@ -662,20 +666,20 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 
 /obj/item/weapon/sutandocreator/attack_self(mob/living/user)
 	if(issutando(user) && !allowsutando)
-		user << "<span class='holoparasite'>[mob_name] chains are not allowed.</span>"
+		to_chat(user, "<span class='holoparasite'>[mob_name] chains are not allowed.</span>")
 		return
 	var/list/sutandos = user.hasparasites()
 	if(sutandos.len && !allowmultiple)
-		user << "<span class='holoparasite'>You already have a [mob_name]!</span>"
+		to_chat(user, "<span class='holoparasite'>You already have a [mob_name]!</span>")
 		return
 	if(user.mind && user.mind.changeling && !allowling)
-		user << "[ling_failure]"
+		to_chat(user, "[ling_failure]")
 		return
 	if(used == TRUE)
-		user << "[used_message]"
+		to_chat(user, "[used_message]")
 		return
 	used = TRUE
-	user << "[use_message]"
+	to_chat(user, "[use_message]")
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
 	var/mob/dead/observer/theghost = null
 
@@ -683,31 +687,54 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 		theghost = pick(candidates)
 		spawn_sutando(user, theghost.key)
 	else
-		user << "[failure_message]"
+		to_chat(user, "[failure_message]")
 		used = FALSE
 
-/obj/item/weapon/sutandocreator/proc/pick_sutando()
-	var/datum/sutando_abilities/S = chosen_ability
-	S = pick(possible_candidates)
-	S.value += totalvalue
-	possible_candidates -= S
-	chosen_abilities |= S
 
+/obj/item/weapon/sutandocreator/proc/pick_sutando(var/mob/living/user)
+	if(random)
+		var/datum/sutando_abilities/S = chosen_ability
+		S = pick(possible_candidates)
+		S.value += totalvalue
+		possible_candidates -= S
+		LAZYINITLIST(chosen_abilities)
+		chosen_abilities |= S
+	else
+		for(var/datum/sutando_abilities/A in subtypesof(/datum/sutando_abilities))
+			if(A.value <= allowedvalue && !(A in blacklisted_abilities)) //filter out abilities that are not permitted by this type of sutando creator
+				var/datablock = "[A.id]|[A.name]|[A.value]" //NO NEED TO MAINTAIN MASSIVE LISTS OF ABILITIES BABY.
+				LAZYINITLIST(datablocks)
+				datablocks |= datablock //from type to text + name + number (block)
+
+				if(totalvalue <= allowedvalue)
+					var/chosen_block = input(user, "Pick the abilities of [mob_name]", "[mob_name] Creation") as null|anything in datablocks
+					LAZYINITLIST(chosen_blocks) //blocks put into a list and player given multiple choices
+
+					for(var/i in datablocks)
+						block_value = text2num(i) //from block to number
+						if(i in chosen_blocks || ((block_value += totalvalue) > allowedvalue)) //if i was chosen before or the block plus current value is greater than allowed value remove i from the list of datablocks that can be picked
+							datablocks -= i
+							LAZYINITLIST(chosen_abilities)
+							chosen_blocks |= chosen_block
+							if((findtext(A.id, chosen_blocks)))
+								var/result = text2path("/datum/sutando_abilities/[A.id]")
+								chosen_ability = result
+								chosen_abilities |= chosen_ability
 
 /obj/item/weapon/sutandocreator/proc/spawn_sutando(var/mob/living/user, var/key)
 	if(random)
 		for(var/datum/sutando_abilities/A in subtypesof(/datum/sutando_abilities))
-			if(A.value <= allowedvalue)
+			if(A.value <= allowedvalue && !(A in blacklisted_abilities))
+				LAZYINITLIST(possible_candidates)
 				A += possible_candidates
 		while(totalvalue <= allowedvalue)
 			pick_sutando()
-	else
-		for(var/datum/sutando_abilities/A in subtypesof(/datum/sutando_abilities))
-			abilitynames |= A.name
+	else //the rollercoaster begins here.
+		pick_sutando(user)
 
 	var/list/sutandos = user.hasparasites()
 	if(sutandos.len && !allowmultiple)
-		user << "<span class='holoparasite'>You already have a [mob_name]!</span>" //nice try, bucko
+		to_chat(user,"<span class='holoparasite'>You already have a [mob_name]!</span>") //nice try, bucko
 		used = FALSE
 		return
 	var/mob/living/simple_animal/hostile/sutando/G = new
@@ -717,14 +744,14 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	G.mind.enslave_mind_to_creator(user)
 	switch(theme)
 		if("tech")
-			user << "[G.tech_fluff_string]"
-			user << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> is now online!</span>"
+			to_chat(user,"[G.tech_fluff_string]")
+			to_chat(user,"<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> is now online!</span>")
 		if("magic")
-			user << "[G.magic_fluff_string]"
-			user << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
+			to_chat(user,"[G.magic_fluff_string]")
+			to_chat(user,"<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>")
 		if("carp")
-			user << "[G.carp_fluff_string]"
-			user << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been caught!</span>"
+			to_chat(user,"[G.carp_fluff_string]")
+			to_chat(user,"<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been caught!</span>")
 	user.verbs += /mob/living/proc/sutando_comm
 	user.verbs += /mob/living/proc/sutando_recall
 	user.verbs += /mob/living/proc/sutando_reset
@@ -781,8 +808,8 @@ var/global/list/parasites = list() //all currently existing/living sutandos
 	return
 
 /obj/item/weapon/paper/sutando/wizard
-	name = "sutando Guide"
-	info = {"<b>A list of sutando Types</b><br>
+	name = "Sutando Guide"
+	info = {"<b>A list of Sutando Types</b><br>
 
  <br>
  <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>

@@ -2,6 +2,8 @@
 
 /datum/sutando_abilities
 	var/name = "Ability Name"
+	var/id = "ability_id" //should be same as their current path
+
 	var/toggle = FALSE
 	var/mob/living/simple_animal/hostile/sutando/stand = null
 	var/mob/living/user = null
@@ -64,6 +66,7 @@
 //ORA ORA ORA
 
 /datum/sutando_abilities/punch
+	id = "punch"
 	name = "Close-Range Combat"
 	value = 5
 
@@ -89,6 +92,7 @@
 //killed queem u bad cat
 
 /datum/sutando_abilities/bomb
+	id = "bomb"
 	name = "Remote Explosives"
 	var/bomb_cooldown = 0
 	value = 6
@@ -121,22 +125,23 @@
 	if(!istype(A))
 		return
 	if(stand.loc == user)
-		stand << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You must be manifested to create bombs!</span></B>")
 		return
 	if(isobj(A))
 		if(bomb_cooldown <= world.time && !stand.stat)
 			var/obj/sutando_bomb/B = new/obj/sutando_bomb(get_turf(A))
-			stand << "<span class='danger'><B>Success! Bomb armed!</span></B>"
+			to_chat(stand,"<span class='danger'><B>Success! Bomb armed!</span></B>")
 			stand.say("[battlecry]!!")
 			bomb_cooldown = world.time + 200
 			B.spawner = stand
 			B.disguise(A)
 		else
-			stand << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
+			to_chat(stand,"<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
 
 //rore zone
 
 /datum/sutando_abilities/ranged
+	id = "ranged"
 	name = "Long-Range Ability"
 	value = 4
 	var/datum/action/innate/snare/plant/P = new
@@ -184,7 +189,7 @@
 			stand.alpha = 255
 			stand.range = initial(stand.range)
 			stand.incorporeal_move = 0
-			stand << "<span class='danger'><B>You switch to combat mode.</span></B>"
+			to_chat(stand,"<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else
 			stand.ranged = TRUE
@@ -195,17 +200,17 @@
 			stand.alpha = 45
 			stand.range = 255
 			stand.incorporeal_move = 1
-			stand << "<span class='danger'><B>You switch to scout mode.</span></B>"
+			to_chat(stand,"<span class='danger'><B>You switch to scout mode.</span></B>")
 			toggle = TRUE
 	else
-		stand << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You have to be recalled to toggle modes!</span></B>")
 
 /datum/sutando_abilities/ranged/light_switch()
 	if(stand.see_invisible == SEE_INVISIBLE_MINIMUM)
-		stand << "<span class='notice'>You deactivate your night vision.</span>"
+		to_chat(stand,"<span class='notice'>You deactivate your night vision.</span>")
 		stand.see_invisible = SEE_INVISIBLE_LIVING
 	else
-		stand << "<span class='notice'>You activate your night vision.</span>"
+		to_chat(stand,"<span class='notice'>You activate your night vision.</span>")
 		stand.see_invisible = SEE_INVISIBLE_MINIMUM
 
 /datum/action/innate/snare
@@ -225,9 +230,9 @@
 			S.spawner = owner
 			S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
 			I.snares |= S
-			owner << "<span class='danger'><B>Surveillance snare deployed!</span></B>"
+			to_chat(owner,"<span class='danger'><B>Surveillance snare deployed!</span></B>")
 		else
-			owner << "<span class='danger'><B>You have too many snares deployed. Remove some first.</span></B>"
+			to_chat(owner,"<span class='danger'><B>You have too many snares deployed. Remove some first.</span></B>")
 
 /datum/action/innate/snare/remove
 	name = "Remove Snare"
@@ -240,7 +245,7 @@
 		if(picked_snare)
 			owner -= picked_snare
 			qdel(picked_snare)
-			owner << "<span class='danger'><B>Snare disarmed.</span></B>"
+			to_chat(owner,"<span class='danger'><B>Snare disarmed.</span></B>")
 
 
 
@@ -253,6 +258,7 @@
 
 //magician's fried chicken
 /datum/sutando_abilities/fire
+	id = "fire"
 	name = "Controlled Combustion"
 	value = 7
 
@@ -279,9 +285,10 @@
 		user.adjust_fire_stacks(-20)
 
 
-//lame
+//ass ass in
 
 /datum/sutando_abilities/assassin
+	id = "assassin"
 	name = "Undetected Elimination"
 	value = 6
 	var/stealthcooldown = 160
@@ -333,7 +340,7 @@
 		stand.environment_smash = initial(stand.environment_smash)
 		stand.alpha = initial(stand.alpha)
 		if(!forced)
-			stand << "<span class='danger'><B>You exit stealth.</span></B>"
+			to_chat(stand,"<span class='danger'><B>You exit stealth.</span></B>")
 		else
 			stand.visible_message("<span class='danger'>\The [stand] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forcedd out of stealth and go on cooldown
@@ -342,7 +349,7 @@
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
 		if(stand.loc == user)
-			stand << "<span class='danger'><B>You have to be manifested to enter stealth!</span></B>"
+			to_chat(stand,"<span class='danger'><B>You have to be manifested to enter stealth!</span></B>")
 			return
 		stand.melee_damage_lower = 50
 		stand.melee_damage_upper = 50
@@ -352,11 +359,11 @@
 		new /obj/effect/overlay/temp/sutando/phase/out(get_turf(stand))
 		stand.alpha = 15
 		if(!forced)
-			stand << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"
+			to_chat(stand,"<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>")
 		updatestealthalert()
 		toggle = TRUE
 	else if(!forced)
-		stand << "<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>")
 
 /datum/sutando_abilities/assassin/ability_act()
 	if(toggle && (isliving(stand.target) || istype(stand.target, /obj/structure/window) || istype(stand.target, /obj/structure/grille)))
@@ -366,6 +373,7 @@
 //red hot achilles peeper
 
 /datum/sutando_abilities/lightning
+	id = "lightning"
 	name = "Controlled Current"
 	value = 7
 	var/datum/beam/userchain
@@ -482,6 +490,7 @@
 
 //screeeeeeeeeeeeee
 /datum/sutando_abilities/charge
+	id = "charge"
 	name = "Stampede Force"
 	value = 7
 	var/charging = FALSE
@@ -496,8 +505,8 @@
 
 /datum/sutando_abilities/charge/handle_stats()
 	. = ..()
-	stand.melee_damage_lower += 7
-	stand.melee_damage_upper += 7
+	stand.melee_damage_lower += 9
+	stand.melee_damage_upper += 9
 	stand.ranged = TRUE //technically
 	stand.ranged_message = "charges"
 	stand.ranged_cooldown_time += 20
@@ -561,6 +570,7 @@
 
 //protector ability
 /datum/sutando_abilities/protector
+	id = "protector"
 	name = "Impenetrable Defense"
 	value = 4
 
@@ -600,7 +610,7 @@
 		stand.melee_damage_upper = initial(stand.melee_damage_upper)
 		stand.speed = initial(stand.speed)
 		stand.damage_coeff = initial_coeff
-		stand << "<span class='danger'><B>You switch to combat mode.</span></B>"
+		to_chat(stand,"<span class='danger'><B>You switch to combat mode.</span></B>")
 		toggle = FALSE
 	else
 		var/image/I = new('icons/effects/effects.dmi', "shield-grey")
@@ -611,7 +621,7 @@
 		stand.melee_damage_upper = 2
 		stand.speed = 1
 		stand.damage_coeff = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, CLONE = 0.05, STAMINA = 0, OXY = 0.05) //damage? what's damage?
-		stand << "<span class='danger'><B>You switch to protection mode.</span></B>"
+		to_chat(stand,"<span class='danger'><B>You switch to protection mode.</span></B>")
 		toggle = TRUE
 
 /datum/sutando_abilities/protector/snapback_act() //snap to what? snap to the stand!
@@ -620,11 +630,11 @@
 			return
 		else
 			if(istype(user.loc, /obj/effect))
-				stand << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [stand.range] meters from [user.real_name]!</span>"
+				to_chat(stand,"<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [stand.range] meters from [user.real_name]!</span>")
 				stand.visible_message("<span class='danger'>\The [stand] jumps back to its user.</span>")
 				stand.Recall(TRUE)
 			else
-				user << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [stand.range] meters from <font color=\"[stand.namedatum.colour]\"><b>[stand.real_name]</b></font>!</span>"
+				to_chat(user,"<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [stand.range] meters from <font color=\"[stand.namedatum.colour]\"><b>[stand.real_name]</b></font>!</span>")
 				user.visible_message("<span class='danger'>\The [user] jumps back to [user.p_their()] protector.</span>")
 				new /obj/effect/overlay/temp/sutando/phase/out(get_turf(user))
 				user.forceMove(get_turf(stand))
@@ -633,8 +643,9 @@
 //healsluts
 
 /datum/sutando_abilities/heal
+	id = "heal"
 	name = "Mending Properties"
-	value = 3
+	value = 5
 	var/obj/structure/recieving_pad/beacon
 	var/beacon_cooldown = 0
 	var/datum/action/innate/beacon/B = new
@@ -645,7 +656,7 @@
 
 /datum/sutando_abilities/heal/proc/plant_beacon()
 	if(beacon_cooldown >= world.time)
-		stand << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
+		to_chat(stand,"<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>")
 		return
 
 	var/turf/beacon_loc = get_turf(stand)
@@ -658,7 +669,7 @@
 
 	beacon = new(beacon_loc, stand)
 
-	stand << "<span class='danger'><B>Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click.</span></B>"
+	to_chat(stand,"<span class='danger'><B>Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click.</span></B>")
 
 	beacon_cooldown = world.time + 3000
 
@@ -712,7 +723,7 @@
 			stand.damage_coeff = initial_coeff
 			stand.melee_damage_lower = initial(stand.melee_damage_lower)
 			stand.melee_damage_upper = initial(stand.melee_damage_upper)
-			stand << "<span class='danger'><B>You switch to combat mode.</span></B>"
+			to_chat(stand,"<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else
 			stand.a_intent = INTENT_HELP
@@ -720,39 +731,39 @@
 			stand.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			stand.melee_damage_lower = 0
 			stand.melee_damage_upper = 0
-			stand << "<span class='danger'><B>You switch to healing mode.</span></B>"
+			to_chat(stand,"<span class='danger'><B>You switch to healing mode.</span></B>")
 			toggle = TRUE
 	else
-		stand << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You have to be recalled to toggle modes!</span></B>")
 
 /datum/sutando_abilities/heal/alt_ability_act(atom/movable/A)
 	if(!istype(A))
 		return
 	if(stand.loc == user)
-		stand << "<span class='danger'><B>You must be manifested to warp a target!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You must be manifested to warp a target!</span></B>")
 		return
 	if(!beacon)
-		stand << "<span class='danger'><B>You need a beacon placed to warp things!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You need a beacon placed to warp things!</span></B>")
 		return
 	if(!stand.Adjacent(A))
-		stand << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You must be adjacent to your target!</span></B>")
 		return
 	if(A.anchored)
-		stand << "<span class='danger'><B>Your target cannot be anchored!</span></B>"
+		to_chat(stand,"<span class='danger'><B>Your target cannot be anchored!</span></B>")
 		return
 
 	var/turf/T = get_turf(A)
 	if(beacon.z != T.z)
-		stand << "<span class='danger'><B>The beacon is too far away to warp to!</span></B>"
+		to_chat(stand,"<span class='danger'><B>The beacon is too far away to warp to!</span></B>")
 		return
 
-	stand << "<span class='danger'><B>You begin to warp [A].</span></B>"
+	to_chat(stand,"<span class='danger'><B>You begin to warp [A].</span></B>")
 	A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", \
 	"<span class='userdanger'>You start to glow faintly, and you feel strangely weightless!</span>")
 	stand.do_attack_animation(A, null, 1)
 
 	if(!do_mob(stand, A, 60)) //now start the channel
-		stand << "<span class='danger'><B>You need to hold still!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You need to hold still!</span></B>")
 		return
 
 	new /obj/effect/overlay/temp/sutando/phase/out(T)
@@ -766,6 +777,7 @@
 
 //metal pinky
 /datum/sutando_abilities/dextrous
+	id = "dextrous"
 	name = "Dexterity"
 	value = 4
 
@@ -805,6 +817,8 @@
 	clothes_req = 0
 
 /datum/sutando_abilities/timestop
+	id = "timestop"
+	name = "Time Stop"
 	value = 5
 
 /datum/sutando_abilities/timestop/handle_stats()
@@ -819,6 +833,7 @@
 //prop hunt
 
 /datum/sutando_abilities/shapeshift
+	id = "shapeshift"
 	name = "Chameleon Skin"
 	value = 4
 	var/obj/item/remembered = null
@@ -838,10 +853,10 @@
 	if(!istype(A))
 		return
 	if(stand.loc == user)
-		stand << "<span class='danger'><B>You must be manifested to remember an item!</span></B>"
+		to_chat(stand,"<span class='danger'><B>You must be manifested to remember an item!</span></B>")
 		return
 	remembered = A.type
-	stand << "<span class='danger'><B>You remember \the [remembered.name]!</span></B>"
+	to_chat(stand,"<span class='danger'><B>You remember \the [remembered.name]!</span></B>")
 
 /datum/sutando_abilities/shapeshift/handle_mode()
 	if(!toggle)
@@ -852,19 +867,20 @@
 			playsound(stand.loc, 'sound/weapons/draw_bow.ogg', 50, 1, 1)
 			remembered = null
 		else
-			stand << "<span class='danger'><B>You don't have a remembered item!</span></B>"
+			to_chat(stand,"<span class='danger'><B>You don't have a remembered item!</span></B>")
 			return
 		toggle = TRUE
 	else
 		stand.forceMove(get_turf(stand))
 		QDEL_NULL(host)
-		stand << "<span class='danger'><B>You twist back into your original form.</span></B>"
+		to_chat(stand,"<span class='danger'><B>You twist back into your original form.</span></B>")
 		toggle = FALSE
 
 //ion man
 
 /datum/sutando_abilities/ion
-	value = 8 //you may think this is bullshit, but this ability is actually VERY strong.
+	id = "ion"
+	value = 7 //you may think this is bullshit, but this ability is actually VERY strong.
 	name = "Electronic Disruption"
 
 /datum/sutando_abilities/ion/handle_stats()
@@ -882,6 +898,7 @@
 //oingo boingo
 
 /datum/sutando_abilities/bounce
+	id = "bounce"
 	name = "Rubbery Skin"
 	value = 1
 	var/bounce_distance = 5
@@ -894,10 +911,11 @@
 
 /datum/sutando_abilities/bounce/ability_act(atom/movable/A)
 	var/atom/throw_target = get_edge_target_turf(A, stand.dir)
-	A.throw_at(throw_target, bounce_distance, 14, stand) //interesting
+	A.throw_at(throw_target, bounce_distance, 14, stand)
 
 /datum/sutando_abilities/bounce/boom_act(severity)
 	stand.visible_message("<span class='danger'>The explosive force bounces off [stand]'s rubbery surface!</span>")
 	for(var/mob/M in range(7,stand))
 		if(M != user)
-			M.ex_act(severity)
+			M.ex_act(severity) //reflect
+			M.visible_message("<span class='danger'>The explosive force bounces onto [M]!</span>")
