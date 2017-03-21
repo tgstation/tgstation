@@ -1,0 +1,6 @@
+author: "Tokiko1"
+delete-after: True
+changes: 
+  - tweak: "Minor supermatter balancing changes."
+  - tweak: "Supermatter now announces its damage half as frequently."
+  - tweak: "Badly unstable supermatter now occasionally zaps nearby engineers and causes anomalies to appear nearby, similar to overcharged supermatter."
