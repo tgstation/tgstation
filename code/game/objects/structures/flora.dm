@@ -80,7 +80,8 @@
 	..()
 
 /obj/structure/flora/tree/jungle
-	name = "jungle tree"
+	name = "tree"
+	desc = "It's seriously hampering your view of the jungle."
 
 /obj/structure/flora/tree/jungle/New()
 	icon_state = "[icon_state][rand(1, 3)]"
