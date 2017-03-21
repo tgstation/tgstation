@@ -43163,6 +43163,10 @@
 	},
 /obj/item/device/radio/off,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light_switch{
+	pixel_x = -27;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -43642,8 +43646,14 @@
 /area/construction)
 "bRo" = (
 /obj/machinery/computer/secure_data,
-/obj/machinery/light_switch{
-	pixel_x = 27
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engine.";
+	dir = 8;
+	layer = 4;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = 30;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -55527,8 +55537,9 @@
 	pixel_y = -26
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter North";
+	c_tag = "Engineering Supermatter Fore";
 	dir = 1;
+	network = list("SS13","Engine");
 	pixel_x = 23
 	},
 /turf/open/floor/engine,
@@ -61898,9 +61909,9 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter West";
+	c_tag = "Engineering Supermatter Port";
 	dir = 4;
-	network = list("SS13")
+	network = list("SS13","Engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -61949,9 +61960,9 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter East";
+	c_tag = "Engineering Supermatter Starboard";
 	dir = 8;
-	network = list("SS13");
+	network = list("SS13","Engine");
 	pixel_x = 0;
 	pixel_y = 0
 	},
@@ -62671,8 +62682,9 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter Center";
+	c_tag = "Engineering Supermatter Aft";
 	dir = 2;
+	network = list("SS13","Engine");
 	pixel_x = 23
 	},
 /obj/effect/turf_decal/delivery,
@@ -65224,6 +65236,39 @@
 /area/engine/supermatter)
 "cMM" = (
 /turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMN" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engine.";
+	dir = 8;
+	layer = 4;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = 30;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"cMO" = (
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	dir = 2;
+	network = list("Engine");
+	pixel_x = 23
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 
 (1,1,1) = {"
@@ -93427,11 +93472,11 @@ cpy
 cDv
 cDD
 cqU
-cME
+cMC
+cMO
 cEu
 cEu
-cEu
-cMI
+cMC
 cFL
 cGf
 cGw
@@ -93683,12 +93728,12 @@ chV
 cDq
 cqf
 cqD
-cMD
+cMC
 crs
 cEv
 cEv
 cFe
-cMJ
+cMC
 cFM
 czE
 cGx
@@ -94186,7 +94231,7 @@ ccw
 ccw
 ccw
 cdk
-cja
+cMN
 cgR
 ckK
 clJ
@@ -94201,7 +94246,7 @@ cqZ
 crt
 cMG
 cAm
-cMH
+cMG
 cMK
 cFO
 csC
@@ -94716,7 +94761,7 @@ crv
 cEy
 cEy
 cFh
-cML
+cMC
 cFQ
 czE
 cGx
@@ -94969,11 +95014,11 @@ cDr
 cDw
 cDE
 cEa
-cMF
+cMC
 cEz
 cEz
 cEz
-cMM
+cMC
 cFR
 cGf
 cGz
