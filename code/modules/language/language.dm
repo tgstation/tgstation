@@ -30,9 +30,10 @@
 	var/full_name = ""
 	var/new_name = ""
 
-	for(var/i = 0;i<name_count;i++)
+	for(var/i in 0 to name_count)
 		new_name = ""
-		for(var/x = rand(Floor(syllable_count/syllable_divisor),syllable_count);x>0;x--)
+		var/Y = rand(Floor(syllable_count/syllable_divisor), syllable_count)
+		for(var/x in Y to 0)
 			new_name += pick(syllables)
 		full_name += " [capitalize(lowertext(new_name))]"
 
@@ -44,11 +45,11 @@
 		return stars(input)
 
 	// If the input is cached already, move it to the end of the cache and return it
-	if(input in scramble_cache)
-		var/n = scramble_cache[input]
+	var/lookup = scramble_cache[input]
+	if(lookup)
 		scramble_cache -= input
-		scramble_cache[input] = n
-		return n
+		scramble_cache[input] = lookup
+		return lookup
 
 	var/input_size = length(input)
 	var/scrambled_text = ""

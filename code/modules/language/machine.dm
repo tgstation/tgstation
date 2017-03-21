@@ -12,5 +12,5 @@
 
 /datum/language/machine/get_random_name()
 	if(prob(70))
-		return "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+		return "[pick(posibrain_names)]-[rand(100, 999)]"
 	return pick(ai_names)

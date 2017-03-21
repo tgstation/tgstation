@@ -553,9 +553,9 @@
 
 /* Language procs */
 /atom/movable/proc/grant_language(datum/language/dt)
-	if(!has_language(dt))
-		var/datum/language/L = new dt
-		LAZYADD(languages, L)
+	if(!languages)
+		languages = list()
+	languages[dt.type] = TRUE
 
 /atom/movable/proc/grant_all_languages(ignore_restrictions=FALSE)
 	for(var/la in subtypesof(/datum/language))
@@ -566,19 +566,14 @@
 
 /atom/movable/proc/remove_language(datum/language/dt)
 	if(languages && languages.len)
-		for(var/L in languages)
-			if(istype(L, dt))
-				languages -= L
-				qdel(L)
-				break
+		languages[dt.type] = null
+
+/atom/movable/proc/remove_all_languages()
+	languages.Cut()
+	languages = null
 
 /atom/movable/proc/has_language(datum/language/dt)
-	. = FALSE
-	if(languages)
-		for(var/L in languages)
-			if(istype(L, dt))
-				. = TRUE
-				break
+	. = is_type_in_typecache(dt, languages)
 
 /atom/movable/proc/can_speak_in_language(datum/language/dt)
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
