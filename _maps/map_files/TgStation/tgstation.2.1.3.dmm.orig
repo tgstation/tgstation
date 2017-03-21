@@ -65203,6 +65203,40 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "cMC" = (
+<<<<<<< HEAD
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engine.";
+	dir = 8;
+	layer = 4;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = 30;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"cMD" = (
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	dir = 2;
+	network = list("Engine");
+	pixel_x = 23
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+=======
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "cMD" = (
@@ -65237,6 +65271,7 @@
 "cMM" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+>>>>>>> master
 
 (1,1,1) = {"
 aaa
@@ -93439,8 +93474,13 @@ cpy
 cDv
 cDD
 cqU
+<<<<<<< HEAD
+ccw
+cMD
+=======
 cME
 cEu
+>>>>>>> master
 cEu
 cEu
 cMI
@@ -94198,7 +94238,7 @@ ccw
 ccw
 ccw
 cdk
-cja
+cMC
 cgR
 ckK
 clJ
