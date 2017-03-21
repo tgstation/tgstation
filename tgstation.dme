@@ -15,7 +15,6 @@
 // BEGIN_INCLUDE
 #include "_maps\basemap.dm"
 #include "_maps\loadallmaps.dm"
-#include "_maps\shuttles\engi_ship.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
