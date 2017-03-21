@@ -1084,7 +1084,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Radio jammer"
 	desc = "This device will disrupt any nearby outgoing radio communication when activated."
 	item = /obj/item/device/jammer
-	cost = 10
+	cost = 5
 
 // Implants
 /datum/uplink_item/implants
