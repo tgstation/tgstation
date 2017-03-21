@@ -62,7 +62,7 @@
 	var/slyness = 50
 	var/graytide = 0
 	var/list/favoured_types = list() // allow a mob to favour a type, and hold onto them
-	var/chattyness = CHANCE_TALK
+	var/chattyness = 1
 	var/targetInterestShift = 5 // how much a good action should "reward" the npc
 	//modules
 	var/list/functions = list("nearbyscan","combat","shitcurity","chatter")
