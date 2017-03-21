@@ -12,6 +12,10 @@
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if (H.check_shields(0, "the [name]'s poison tendrils", src, attack_type = MELEE_ATTACK))
+				return 0
 		if(L.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
 

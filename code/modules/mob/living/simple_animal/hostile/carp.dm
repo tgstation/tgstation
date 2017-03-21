@@ -42,6 +42,8 @@
 	..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
+		if(H.check_shields(0, "the full force of [name]'s blow", src, attack_type = MELEE_ATTACK))
+			return 0
 		H.adjustStaminaLoss(8)
 
 /mob/living/simple_animal/hostile/carp/holocarp
