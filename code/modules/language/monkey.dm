@@ -1,4 +1,4 @@
-/datum/language/human/monkey
+/datum/language/monkey
 	name = "Chimpanzee"
 	desc = "Ook ook ook."
 	speech_verb = "chimpers"

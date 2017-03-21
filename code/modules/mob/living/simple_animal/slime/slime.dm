@@ -13,8 +13,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
-	languages_spoken = SLIME | HUMAN
-	languages_understood = SLIME | HUMAN
 	faction = list("slime","neutral")
 
 	harm_intent_damage = 5

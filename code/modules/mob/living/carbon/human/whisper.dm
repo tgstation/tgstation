@@ -1,4 +1,7 @@
-/mob/living/carbon/human/whisper(message as text)
+/mob/living/carbon/human/whisper_verb(message as text)
+	whisper(message)
+
+/mob/living/carbon/human/whisper/proc/(message, datum/language/language=null)
 	if(!IsVocal())
 		return
 	if(!message)
@@ -71,14 +74,14 @@
 	for(var/atom/movable/AM in listening)
 		if(istype(AM,/obj/item/device/radio))
 			continue
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendered, src, language, message, , spans)
 
 	message = stars(message)
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 	for(var/atom/movable/AM in eavesdropping)
 		if(istype(AM,/obj/item/device/radio))
 			continue
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendered, src, language, message, , spans)
 
 	if(critical) //Dying words.
 		succumb(1)

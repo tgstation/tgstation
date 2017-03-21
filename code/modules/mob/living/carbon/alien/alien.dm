@@ -11,8 +11,6 @@
 	dna = null
 	faction = list("alien")
 	ventcrawler = VENTCRAWLER_ALWAYS
-	languages_spoken = ALIEN
-	languages_understood = ALIEN
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"

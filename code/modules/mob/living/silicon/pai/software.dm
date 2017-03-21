@@ -253,9 +253,8 @@
 					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
-				var/on_already = ((languages_understood == ALL) && (languages_spoken == ALL))
-				languages_spoken = on_already ? (HUMAN | ROBOT) : ALL
-				languages_understood = on_already ? (HUMAN | ROBOT) : ALL
+				// TODO PAIS
+				pass()
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -313,7 +312,11 @@
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
+			// TODO PAI UNIVERSAL TRANSLATOR
+			/*
 			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			*/
+			pass()
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
@@ -464,11 +467,14 @@
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
+	/*
 	. = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will automatically convert all spoken and written language into a format that any known recipient can understand.<br><br>
 				The device is currently [ ((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Toggle Device</a><br>
 				"}
+	*/
+	// TODO PAI UNIVERSAL TRANSLATOR
 	return .
 
 // Security HUD

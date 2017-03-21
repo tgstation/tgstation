@@ -64,7 +64,7 @@ var/list/department_radio_keys = list(
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
-/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE)
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
@@ -137,12 +137,12 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
-	send_speech(message, message_range, src, bubble_type, spans)
+	send_speech(message, message_range, src, bubble_type, spans, message_language=language)
 
 	log_say("[name]/[key] : [message]")
 	return 1
 
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
 	if(!client)
 		return
 	var/deaf_message
@@ -154,20 +154,20 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	if(!(message_langs & languages_understood) || force_compose) //force_compose is so AIs don't end up without their hrefs.
-		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans)
+	if(!has_language(message_language) || force_compose) //force_compose is so AIs don't end up without their hrefs.
+		message = compose_message(speaker, message_language, raw_message, radio_freq, spans)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans)
+/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null)
 	var/list/listening = get_hearers_in_view(message_range, source)
 	for(var/mob/M in player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
 
-	var/rendered = compose_message(src, languages_spoken, message, , spans)
+	var/rendered = compose_message(src, message_language, message, , spans)
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendered, src, message_language, message, , spans, message_language)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -176,8 +176,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	spawn(0)
-		flick_overlay(I, speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 /mob/proc/binarycheck()
 	return 0

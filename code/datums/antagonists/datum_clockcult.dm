@@ -70,8 +70,7 @@
 /datum/antagonist/clockcultist/apply_innate_effects()
 	all_clockwork_mobs += owner
 	owner.faction |= "ratvar"
-	owner.languages_spoken |= RATVAR
-	owner.languages_understood |= RATVAR
+	owner.grant_language(/datum/language/ratvar)
 	owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
@@ -84,7 +83,6 @@
 			var/mob/living/silicon/ai/A = S
 			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
-			A.languages_spoken &= ~HUMAN
 			var/list/AI_frame = list(image('icons/mob/clockwork_mobs.dmi', A, "aiframe")) //make the AI's cool frame
 			for(var/d in cardinal)
 				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
@@ -126,8 +124,7 @@
 /datum/antagonist/clockcultist/remove_innate_effects()
 	all_clockwork_mobs -= owner
 	owner.faction -= "ratvar"
-	owner.languages_spoken &= ~RATVAR
-	owner.languages_understood &= ~RATVAR
+	owner.remove_language(/datum/language/ratvar)
 	owner.clear_alert("clockinfo")
 	owner.clear_alert("scripturereq")
 	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
@@ -138,7 +135,6 @@
 			var/mob/living/silicon/ai/A = S
 			A.can_be_carded = initial(A.can_be_carded)
 			A.requires_power = initial(A.requires_power)
-			A.languages_spoken |= HUMAN
 			A.cut_overlays()
 		S.make_laws()
 		S.update_icons()

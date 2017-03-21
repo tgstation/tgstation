@@ -512,13 +512,17 @@
 	zone = "mouth"
 	slot = "tongue"
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
-	var/list/languages_possible = typecacheof(list(
+	var/list/languages_possible
+	var/say_mod = null
+	var/taste_sensitivity = 15 // lower is more sensitive.
+
+/obj/item/organ/tongue/Initialize(mapload)
+	..()
+	languages_possible = typecacheof(list(
 		/datum/language/common,
 		/datum/language/monkey,
 		/datum/language/ratvar
 	))
-	var/say_mod = null
-	var/taste_sensitivity = 15 // lower is more sensitive.
 
 /obj/item/organ/tongue/get_spans()
 	return list()
@@ -624,6 +628,9 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
+
+/obj/item/organ/tongue/alien/Initialize(mapload)
+	..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
@@ -676,6 +683,9 @@
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
 	taste_sensitivity = 25 // not as good as an organic tongue
+
+/obj/item/organ/tongue/robot/Initialize(mapload)
+	..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,

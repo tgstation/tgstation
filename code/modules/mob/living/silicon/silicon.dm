@@ -1,8 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"

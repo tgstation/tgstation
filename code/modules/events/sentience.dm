@@ -49,8 +49,7 @@
 		spawned_animals++
 
 		SA.key = SG.key
-		SA.languages_spoken |= HUMAN
-		SA.languages_understood |= HUMAN
+		SA.grant_language(/datum/language/common)
 		SA.sentience_act()
 
 		SA.maxHealth = max(SA.maxHealth, 200)

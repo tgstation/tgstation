@@ -6,8 +6,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags = HEAR
 	slot_flags = SLOT_BELT
-	languages_spoken = ALL //this is a translator, after all.
-	languages_understood = ALL //this is a translator, after all.
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0

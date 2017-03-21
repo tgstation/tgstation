@@ -97,8 +97,6 @@
 	icon_living = "drone_clock"
 	icon_dead = "drone_clock_dead"
 	picked = TRUE
-	languages_spoken = RATVAR
-	languages_understood = HUMAN|RATVAR
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
