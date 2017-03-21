@@ -8,7 +8,7 @@
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
 	var/spawn_id = null
 	var/spawn_temp = T20C
-	var/spawn_mol = MOLES_CELLSTANDARD * 5
+	var/spawn_mol = MOLES_CELLSTANDARD * 10
 	var/max_ext_mol = INFINITY
 	var/max_ext_kpa = 6500
 	var/overlay_color = "#FFFFFF"
@@ -18,23 +18,44 @@
 	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
+	var/broken_message = "ERROR"
 	idle_power_usage = 150
 	active_power_usage = 2000
+
+/obj/machinery/atmospherics/miner/examine(mob/user)
+	..()
+	if(broken)
+		user << "Its debug output is printing \"[broken_message]\""
 
 /obj/machinery/atmospherics/miner/proc/check_operation()
 	if(!active)
 		return FALSE
 	var/turf/T = get_turf(src)
-	if(!istype(T, /turf/open))
+	if(!isopenturf(T))
+		broken_message = "<span class='boldnotice'>VENT BLOCKED</span>"
+		broken = TRUE
 		return FALSE
 	var/turf/open/OT = T
 	if(OT.planetary_atmos)
+		broken_message = "<span class='boldwarning'>DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT</span>"
+		broken = TRUE
+		return FALSE
+	if(isspaceturf(T))
+		broken_message = "<span class='boldnotice'>AIR VENTING TO SPACE</span>"
+		broken = TRUE
 		return FALSE
 	var/datum/gas_mixture/G = OT.return_air()
 	if(G.return_pressure() > (max_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
+		broken_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER THRESHOLD</span>"
+		broken = TRUE
 		return FALSE
 	if(G.total_moles() > max_ext_mol)
+		broken_message = "<span class='boldwarning'>EXTERNAL AIR CONCENTRATION OVER THRESHOLD</span>"
+		broken = TRUE
 		return FALSE
+	if(broken)
+		broken = FALSE
+		broken_message = ""
 	return TRUE
 
 /obj/machinery/atmospherics/miner/proc/update_power()
@@ -56,21 +77,16 @@
 			active_power_usage = (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff)
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
-	var/needed = amount
 	var/turf/T = get_turf(src)
 	if(T && istype(T))
 		var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
-		if(C && C.powernet)
-			var/possible_draw = C.powernet.avail
-			var/use = Clamp(possible_draw, 0, needed)
-			C.powernet.load += use
-			needed -= use
-	if(!needed)
-		return amount
+		if(C && C.powernet && (C.powernet.avail > amount))
+			C.powernet.load += amount
+			return TRUE
 	if(powered())
-		use_power(needed)
-		needed = 0
-	return amount - needed
+		use_power(amount)
+		return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/miner/update_icon()
 	overlays.Cut()
@@ -85,21 +101,28 @@
 /obj/machinery/atmospherics/miner/process()
 	update_power()
 	update_icon()
-	if(active && check_operation())
+	check_operation()
+	if(active && !broken)
 		if(isnull(spawn_id))
 			return FALSE
-		var/used = do_use_power(active_power_usage)
-		var/coeff = used/active_power_usage
-		mine_gas(coeff)
+		if(do_use_power(active_power_usage))
+			mine_gas()
 
-/obj/machinery/atmospherics/miner/proc/mine_gas(coeff)
-	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/ext_gas = T.return_air()
+/obj/machinery/atmospherics/miner/proc/mine_gas()
+	var/turf/open/O = get_turf(src)
+	if(!isopenturf(O))
+		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
-	merger.gases[spawn_id][MOLES] = (spawn_mol * coeff)
+	merger.gases[spawn_id][MOLES] = (spawn_mol)
 	merger.temperature = spawn_temp
-	ext_gas.merge(merger)
+	O.assume_air(merger)
+	SSair.add_to_active(O)
+
+/obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
+	if(broken)
+		user << "[src] seems to be broken. Its debug interface outputs: [broken_message]"
+	..()
 
 /obj/machinery/atmospherics/miner/n2o
 	name = "\improper N2O Gas Miner"
