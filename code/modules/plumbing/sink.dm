@@ -3,8 +3,8 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face."
-	anchored = 1
-	var/busy = 0 	//Something's being washed at the moment
+	anchored = TRUE
+	var/busy = FALSE 	//Something's being washed at the moment
 	var/use_reagents = TRUE//If we're reliant on the plumbing system
 
 /obj/structure/sink/Initialize()
@@ -18,7 +18,7 @@
 		return
 	if(!Adjacent(user))
 		return
-	if(!reagents.total_volume && !plumbing_has_reagents(15) && use_reagents) //15 units per use
+	if(use_reagents && !reagents.total_volume && !plumbing_has_reagents(15)) //15 units per use
 		to_chat(user, "<span class='warning'>Nothing comes out of the spigot!</span>")
 		return
 	if(busy)
@@ -27,20 +27,20 @@
 	if(use_reagents)
 		master_plumber.request_liquid(src, 15)
 	var/selected_area = parse_zone(user.zone_selected)
-	var/washing_face = 0
+	var/washing_face = FALSE
 	if(selected_area in list("head", "mouth", "eyes"))
-		washing_face = 1
+		washing_face = TRUE
 	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
-	busy = 1
+	busy = TRUE
 
 	if(!do_after(user, 40, target = src))
-		busy = 0
+		busy = FALSE
 		return
 
-	busy = 0
+	busy = FALSE
 
-	if(!reagents.total_volume && !plumbing_has_reagents(15) && use_reagents)
+	if(use_reagents && !reagents.total_volume && !plumbing_has_reagents(15))
 		to_chat(user, "<span class='warning'>The spigot suddenly runs dry!</span>")
 		return
 	if(use_reagents)
@@ -89,10 +89,10 @@
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
 			return FALSE
 
-	if(istype(O, /obj/item/weapon/melee/baton) && (plumbing_has_reagents(1) || !use_reagents)) //As long as there's anything at all!
+	if(istype(O, /obj/item/weapon/melee/baton) && (!use_reagents || plumbing_has_reagents(1))) //As long as there's anything at all!
 		var/obj/item/weapon/melee/baton/B = O
 		if(B.bcell)
-			if(B.bcell.charge > 0 && B.status == 1)
+			if(B.bcell.charge > 0 && B.status == TRUE)
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
 				user.Stun(stunforce)
@@ -105,7 +105,7 @@
 				return
 
 	if(istype(O, /obj/item/weapon/mop))
-		if(!plumbing_has_reagents(5) && use_reagents)
+		if(use_reagents && !plumbing_has_reagents(5))
 			to_chat(user, "<span class='warning'>Nothing comes out of the spigot!</span>")
 			return
 		if(use_reagents)
@@ -123,24 +123,22 @@
 		G.use(1)
 		return
 
-	if(!istype(O))
-		return
-	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(!istype(O) || O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
 	if(user.a_intent != INTENT_HARM)
-		if(!plumbing_has_reagents(15) && use_reagents)
+		if(use_reagents && !plumbing_has_reagents(15))
 			to_chat(user, "<span class='warning'>Nothing comes out of the spigot!</span>")
 			return
 		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
-		busy = 1
+		busy = TRUE
 		if(!do_after(user, 40, target = src))
-			busy = 0
+			busy = FALSE
 			return 1
-		if(!plumbing_has_reagents(15) && use_reagents)
+		if(use_reagents && !plumbing_has_reagents(15))
 			to_chat(user, "<span class='warning'>The spigot suddenly runs dry!</span>")
 			return
-		busy = 0
+		busy = FALSE
 		if(use_reagents)
 			master_plumber.request_liquid(src, 15)
 		O.clean_blood()

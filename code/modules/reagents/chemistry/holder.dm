@@ -746,10 +746,12 @@ var/const/INJECT = 5 //injection
 /datum/reagents/proc/get_reagent_proportions(include_empty_space = FALSE) //Returns an assoclist with all reagents equal to the percentage of the container they're taking up
 	var/list/reagent_props = list()
 	if(!include_empty_space)
-		for(var/datum/reagent/reagent in reagent_list)
+		for(var/V in reagent_list)
+			var/datum/reagent/reagent = V
 			reagent_props[reagent.id] = reagent.volume / total_volume
 	else
-		for(var/datum/reagent/reagent in reagent_list)
+		for(var/V in reagent_list)
+			var/datum/reagent/reagent = V
 			reagent_props[reagent.id] = reagent.volume / maximum_volume
 	return reagent_props
 
