@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "APCs now glow faintly with their charging lights. So red is not
+charging, blue is charging, green is full. Emagged APCs are also blue.
+Broken APCs do not emit light."

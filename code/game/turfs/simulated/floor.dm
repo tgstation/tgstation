@@ -224,7 +224,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
 
-			A.electronics = new/obj/item/weapon/electronics/airlock(src)
+			A.electronics = new/obj/item/weapon/electronics/airlock(A)
 
 			if(the_rcd.conf_access)
 				A.electronics.accesses = the_rcd.conf_access.Copy()

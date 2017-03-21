@@ -279,14 +279,14 @@
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
 /datum/clockwork_scripture/create_object/wraith_spectacles
-	descname = "Xray Vision Glasses"
+	descname = "Limited Xray Vision Glasses"
 	name = "Wraith Spectacles"
-	desc = "Fabricates a pair of glasses that provides true sight but quickly damage vision, eventually causing blindness if worn for too long."
+	desc = "Fabricates a pair of glasses which grant true sight but cause gradual vision loss."
 	invocations = list("Show the truth of this world to me!")
 	channel_time = 10
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/wraith_spectacles
-	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which will grant true sight when worn.</span>"
+	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant true sight but cause gradual vision loss.</span>"
 	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE

@@ -55726,7 +55726,7 @@
 "cqD" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cqE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/glass_engineering{
@@ -55735,11 +55735,11 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cqF" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cqG" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/rubbershot{
@@ -55903,7 +55903,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cra" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -55919,7 +55919,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "crb" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
@@ -55928,7 +55928,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "crc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -56065,7 +56065,7 @@
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "crt" = (
 /obj/machinery/door/airlock/glass_engineering{
 	heat_proof = 1;
@@ -56073,20 +56073,20 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cru" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "crv" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "crw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -56220,7 +56220,7 @@
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "crJ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -56527,7 +56527,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "csB" = (
 /obj/item/weapon/wirecutters,
 /obj/structure/lattice,
@@ -60202,7 +60202,7 @@
 "cAm" = (
 /obj/machinery/power/supermatter_shard/crystal,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cAn" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -60475,7 +60475,7 @@
 "cAP" = (
 /obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cAQ" = (
 /obj/structure/chair,
 /turf/open/floor/plating,
@@ -61923,11 +61923,11 @@
 "cEf" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEg" = (
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62047,7 +62047,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEu" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62057,7 +62057,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
@@ -62065,7 +62065,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -62073,14 +62073,14 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
@@ -62089,7 +62089,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEz" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62099,7 +62099,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEA" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -62116,7 +62116,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62239,7 +62239,7 @@
 	},
 /obj/item/weapon/tank/internals/plasma,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEN" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62309,7 +62309,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cEU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62407,7 +62407,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cFf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -62430,7 +62430,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cFi" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -62456,7 +62456,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cFk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62546,7 +62546,7 @@
 "cFw" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cFx" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
@@ -65190,6 +65190,41 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
+"cMC" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMD" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cME" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMF" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMG" = (
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cMH" = (
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cMI" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMJ" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"cML" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMM" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 
 (1,1,1) = {"
 aaa
@@ -93392,11 +93427,11 @@ cpy
 cDv
 cDD
 cqU
-ccw
+cME
 cEu
 cEu
 cEu
-ccw
+cMI
 cFL
 cGf
 cGw
@@ -93648,12 +93683,12 @@ chV
 cDq
 cqf
 cqD
-ccw
+cMD
 crs
 cEv
 cEv
 cFe
-ccw
+cMJ
 cFM
 czE
 cGx
@@ -94164,10 +94199,10 @@ cqg
 cqE
 cqZ
 crt
-czE
+cMG
 cAm
-czE
-cMm
+cMH
+cMK
 cFO
 csC
 csQ
@@ -94675,13 +94710,13 @@ ccw
 cii
 cDq
 cqi
-ccw
+cMC
 cAP
 crv
 cEy
 cEy
 cFh
-ccw
+cML
 cFQ
 czE
 cGx
@@ -94934,11 +94969,11 @@ cDr
 cDw
 cDE
 cEa
-ccw
+cMF
 cEz
 cEz
 cEz
-ccw
+cMM
 cFR
 cGf
 cGz

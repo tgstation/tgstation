@@ -346,7 +346,12 @@
 		items += w_uniform
 	return items
 
-
+/mob/living/proc/unequip_everything()
+	var/list/items = list()
+	items |= get_equipped_items()
+	for(var/I in items)
+		dropItemToGround(I)
+	drop_all_held_items()
 
 /obj/item/proc/equip_to_best_slot(var/mob/M)
 	if(src != M.get_active_held_item())
