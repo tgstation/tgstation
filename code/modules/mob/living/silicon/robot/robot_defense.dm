@@ -92,11 +92,10 @@
 		if(locked)
 			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
 			locked = 0
+			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
+				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
 		else
 			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
-
-		if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
-			to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
 		return
 	if(world.time < emag_cooldown)
 		return
