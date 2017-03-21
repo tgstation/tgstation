@@ -32,3 +32,12 @@
 	item_state = "robotics"
 	item_color = "robotics"
 	resistance_flags = 0
+
+/obj/item/clothing/under/rank/atmos_elite
+	desc = "It's a jumpsuit earned by elite atmos wizards who are tired of being mistaken for engineers."
+	name = "elite atmos wizard's jumpsuit"
+	icon_state = "atmos_reward"
+	item_state = "atmos_reward"
+	item_color = "atmos_reward"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 20, bio = 20, rad = 20, fire = 80, acid = 20)
+resistance_flags = 0
