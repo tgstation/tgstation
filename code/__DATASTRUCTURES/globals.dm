@@ -1,6 +1,8 @@
 /datum/global_vars/proc/InitEverything()
-    for(var/I in vars)
+    var/datum/exclude_these = new
+    for(var/I in (vars - exclude_these.vars))
         call(src, "InitGlobal[I]")()
+    qdel(exclude_these)
 
 #define GLOBAL_MANAGED(X, InitValue)\
 /datum/global_vars/proc/InitGlobal##X(){\
