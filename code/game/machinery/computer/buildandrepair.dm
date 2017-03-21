@@ -416,6 +416,9 @@
 /obj/item/weapon/circuitboard/computer/white_ship
 	name = "White Ship (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
+/obj/item/weapon/circuitboard/computer/engi_ship
+	name = "Engi Ship (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/engi_ship
 /obj/item/weapon/circuitboard/computer/auxillary_base
 	name = "Auxillary Base Management Console (Computer Board)"
 	build_path = /obj/machinery/computer/auxillary_base
