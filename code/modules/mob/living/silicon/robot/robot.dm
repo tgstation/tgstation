@@ -178,6 +178,8 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
+	if(shell)
+		available_ai_shells -= src
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
@@ -464,6 +466,9 @@
 			return
 		if(!cell)
 			to_chat(user, "<span class='warning'>You need to install a power cell to do that!</span>")
+			return
+		if(shell) //AI shells always have the laws of the AI
+			to_chat(user, "<span class='warning'>[src] is controlled remotely! You cannot upload new laws this way!</span>")
 			return
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
