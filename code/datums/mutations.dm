@@ -129,12 +129,7 @@
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
 	owner.update_body_parts()
-	addtimer(CALLBACK(src, .proc/run_out_of_hulk, owner), rand(1500,3000))
-	
-/datum/mutation/human/hulk/proc/run_out_of_hulk(mob/living/carbon/human/owner)
-	owner.Weaken(5)
-	to_chat(owner, "<span class = 'userdanger'>You feel your muscles painfully contract back to their original shape!</span>")
-	owner.dna.remove_mutation(HULK)
+	addtimer(CALLBACK(owner.dna, .proc/remove_mutation, HULK), rand(1500,3000))
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
@@ -150,6 +145,7 @@
 		return
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.update_body_parts()
+	owner.Weaken(5)
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
