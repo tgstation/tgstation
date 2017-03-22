@@ -57,11 +57,10 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
-<<<<<<< HEAD
 /obj/structure/window/Construct(mob/user, ndir)
 	..()
 	ini_dir = dir
-=======
+
 /obj/structure/window/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
@@ -75,7 +74,6 @@
 			qdel(src)
 			return TRUE
 	return FALSE
->>>>>>> upstream/master
 
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
