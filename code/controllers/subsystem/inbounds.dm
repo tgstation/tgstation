@@ -1,5 +1,4 @@
-var/datum/controller/subsystem/inbounds/SSinbounds
-/datum/controller/subsystem/inbounds
+SUBSYSTEM(inbounds)
 	name = "Inbounds"
 	priority = 40
 	flags = SS_NO_INIT

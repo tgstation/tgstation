@@ -1,9 +1,7 @@
 #define COMMUNICATION_COOLDOWN 600
 #define COMMUNICATION_COOLDOWN_AI 600
 
-var/datum/controller/subsystem/communications/SScommunications
-
-/datum/controller/subsystem/communications
+SUBSYSTEM(communications)
 	name = "Communications"
 	flags = SS_NO_INIT | SS_NO_FIRE
 

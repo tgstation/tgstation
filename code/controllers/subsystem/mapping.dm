@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/mapping/SSmapping
-
-/datum/controller/subsystem/mapping
+SUBSYSTEM(mapping)
 	name = "Mapping"
 	init_order = 12
 	flags = SS_NO_FIRE
@@ -21,8 +19,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
-/datum/controller/subsystem/mapping/New()
-	NEW_SS_GLOBAL(SSmapping)
+/datum/controller/subsystem/mapping/PreInit()
 	if(!previous_map_config)
 		previous_map_config = new("data/previous_map.json", delete_after = TRUE)
 		if(previous_map_config.defaulted)

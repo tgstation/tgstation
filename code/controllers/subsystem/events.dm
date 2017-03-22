@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/events/SSevents
-
-/datum/controller/subsystem/events
+SUBSYSTEM(events)
 	name = "Events"
 	init_order = 6
 
@@ -14,11 +12,6 @@ var/datum/controller/subsystem/events/SSevents
 
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = 0
-
-
-/datum/controller/subsystem/events/New()
-	NEW_SS_GLOBAL(SSevents)
-
 
 /datum/controller/subsystem/events/Initialize(time, zlevel)
 	for(var/type in typesof(/datum/round_event_control))

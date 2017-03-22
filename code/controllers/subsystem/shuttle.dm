@@ -1,9 +1,7 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-var/datum/controller/subsystem/shuttle/SSshuttle
-
-/datum/controller/subsystem/shuttle
-	name = "Shuttles"
+SUBSYSTEM(shuttle)
+	name = "Shuttle"
 	wait = 10
 	init_order = 3
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
@@ -46,9 +44,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
-
-/datum/controller/subsystem/shuttle/New()
-	NEW_SS_GLOBAL(SSshuttle)
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)

@@ -1,13 +1,10 @@
-var/datum/controller/subsystem/machines/SSmachines
-
-/datum/controller/subsystem/machines
+SUBSYSTEM(machines)
 	name = "Machines"
 	init_order = 9
 	flags = SS_KEEP_TIMING
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/powernets = list()
-
 
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()
@@ -24,10 +21,6 @@ var/datum/controller/subsystem/machines/SSmachines
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
-
-/datum/controller/subsystem/machines/New()
-	NEW_SS_GLOBAL(SSmachines)
-
 
 /datum/controller/subsystem/machines/stat_entry()
 	..("M:[processing.len]|PN:[powernets.len]")

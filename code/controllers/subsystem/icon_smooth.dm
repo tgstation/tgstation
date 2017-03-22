@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/icon_smooth/SSicon_smooth
-
-/datum/controller/subsystem/icon_smooth
+SUBSYSTEM(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = -5
 	wait = 1

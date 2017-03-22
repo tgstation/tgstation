@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/ipintel/SSipintel
-
-/datum/controller/subsystem/ipintel
+SUBSYSTEM(ipintel)
 	name = "XKeyScore"
 	init_order = -10
 	flags = SS_NO_FIRE

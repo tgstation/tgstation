@@ -1,39 +1,26 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
-var/datum/controller/subsystem/timer/SStimer
 
-/datum/controller/subsystem/timer
+SUBSYSTEM(timer)
 	name = "Timer"
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
 	init_order = 1
 
 	flags = SS_FIRE_IN_LOBBY|SS_TICKER|SS_NO_INIT
 
-	var/list/datum/timedevent/processing
-	var/list/hashes
+	var/list/datum/timedevent/processing = list()
+	var/list/hashes = list()
 
 	var/head_offset = 0 //world.time of the first entry in the the bucket.
 	var/practical_offset = 0 //index of the first non-empty item in the bucket.
 	var/bucket_resolution = 0 //world.tick_lag the bucket was designed for
 	var/bucket_count = 0 //how many timers are in the buckets
 
-	var/list/bucket_list //list of buckets, each bucket holds every timer that has to run that byond tick.
+	var/list/bucket_list = list() //list of buckets, each bucket holds every timer that has to run that byond tick.
 
-	var/list/timer_id_dict //list of all active timers assoicated to their timer id (for easy lookup)
+	var/list/timer_id_dict = list() //list of all active timers assoicated to their timer id (for easy lookup)
 
-	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
-
-
-/datum/controller/subsystem/timer/New()
-	processing = list()
-	hashes = list()
-	bucket_list = list()
-	timer_id_dict = list()
-
-	clienttime_timers = list()
-
-	NEW_SS_GLOBAL(SStimer)
-
+	var/list/clienttime_timers = list() //special snowflake timers that run on fancy pansy "client time"
 
 /datum/controller/subsystem/timer/stat_entry(msg)
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")

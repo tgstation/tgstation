@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/job/SSjob
-
-/datum/controller/subsystem/job
+SUBSYSTEM(job)
 	name = "Jobs"
 	init_order = 14
 	flags = SS_NO_FIRE
@@ -13,10 +11,6 @@ var/datum/controller/subsystem/job/SSjob
 	var/initial_players_to_assign = 0 	//used for checking against population caps
 
 	var/list/prioritized_jobs = list()
-
-/datum/controller/subsystem/job/New()
-	NEW_SS_GLOBAL(SSjob)
-
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)

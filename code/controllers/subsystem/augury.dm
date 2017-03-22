@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/augury/SSaugury
-
-/datum/controller/subsystem/augury
+SUBSYSTEM(augury)
 	name = "Augury"
 	flags = SS_NO_INIT
 

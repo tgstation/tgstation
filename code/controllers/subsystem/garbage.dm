@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/garbage/SSgarbage
-
-/datum/controller/subsystem/garbage
+SUBSYSTEM(garbage)
 	name = "Garbage"
 	priority = 15
 	wait = 5

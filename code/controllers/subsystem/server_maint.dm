@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/server_maint/SSserver
-
-/datum/controller/subsystem/server_maint
+SUBSYSTEM(server_maint)
 	name = "Server Tasks"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK

@@ -1,19 +1,14 @@
-var/datum/controller/subsystem/atoms/SSatoms
-
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-/datum/controller/subsystem/atoms
+SUBSYSTEM(atoms)
 	name = "Atoms"
 	init_order = 11
 	flags = SS_NO_FIRE
 
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
-
-/datum/controller/subsystem/atoms/New()
-	NEW_SS_GLOBAL(SSatoms)
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	fire_overlay.appearance_flags = RESET_COLOR

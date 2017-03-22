@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/vote/SSvote
-
-/datum/controller/subsystem/vote
+SUBSYSTEM(vote)
 	name = "Vote"
 	wait = 10
 

@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/npcpool/SSnpcpool
-
-/datum/controller/subsystem/npcpool
+SUBSYSTEM(npcpool)
 	name = "NPC Pool"
 	init_order = 17
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_NO_TICK_CHECK
@@ -17,9 +15,6 @@ var/datum/controller/subsystem/npcpool/SSnpcpool
 /datum/controller/subsystem/npcpool/proc/insertBot(toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
 		botPool_l |= toInsert
-
-/datum/controller/subsystem/npcpool/New()
-	NEW_SS_GLOBAL(SSnpcpool)
 
 /datum/controller/subsystem/npcpool/stat_entry()
 	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")

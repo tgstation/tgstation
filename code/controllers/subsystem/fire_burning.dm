@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/fire_burning/SSfire_burning
-
-/datum/controller/subsystem/fire_burning
+SUBSYSTEM(fire_burning)
 	name = "Fire Burning"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND

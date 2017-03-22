@@ -1,7 +1,5 @@
-var/datum/controller/subsystem/pai/SSpai
 var/list/obj/item/device/paicard/pai_card_list = list()
-
-/datum/controller/subsystem/pai
+SUBSYSTEM(pai)
 	name = "pAI"
 
 	flags = SS_NO_INIT|SS_NO_FIRE
@@ -9,9 +7,6 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 	var/list/candidates = list()
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
-
-/datum/controller/subsystem/pai/New()
-	NEW_SS_GLOBAL(SSpai)
 
 /datum/controller/subsystem/pai/Topic(href, href_list[])
 	if(href_list["download"])

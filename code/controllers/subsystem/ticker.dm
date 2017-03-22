@@ -2,9 +2,7 @@
 
 var/round_start_time = 0
 
-var/datum/controller/subsystem/ticker/SSticker
-
-/datum/controller/subsystem/ticker
+SUBSYSTEM(ticker)
 	name = "Ticker"
 	init_order = 13
 
@@ -57,9 +55,6 @@ var/datum/controller/subsystem/ticker/SSticker
 	var/news_report
 
 	var/late_join_disabled
-
-/datum/controller/subsystem/ticker/New()
-	NEW_SS_GLOBAL(SSticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
