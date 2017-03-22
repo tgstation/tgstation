@@ -150,6 +150,10 @@
 				. = new required_type_to_construct()
 		parent.transfer_fingerprints_to(.)
 
+/datum/construction_state/last/New()
+	if(transformation_type)
+		required_type_to_deconstruct = NO_DECONSTRUCT
+
 /datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
 	if(!constructed)
 		stack_trace("Very bad param")
