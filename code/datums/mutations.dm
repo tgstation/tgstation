@@ -134,7 +134,7 @@
 /datum/mutation/human/hulk/proc/run_out_of_hulk(mob/living/carbon/human/owner)
 	owner.Weaken(5)
 	to_chat(owner, "<span class = 'userdanger'>You feel your muscles painfully contract back to their original shape!</span>")
-	owner.remove_mutation(HULK)
+	owner.dna.remove_mutation(HULK)
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
