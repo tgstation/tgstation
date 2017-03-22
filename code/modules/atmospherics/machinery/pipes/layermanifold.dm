@@ -5,12 +5,15 @@
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
-	volume = 260 //6 averaged pipe segments
 	pipe_flags = ALL_LAYER
 	var/list/front_nodes = list()
 	var/list/back_nodes = list()
 	piping_layer = PIPING_LAYER_DEFAULT
-	device_type = BINARY
+	device_type = 0
+
+/obj/machinery/atmospherics/pipe/layer_manifold/New()
+	..()
+	volume = 260
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
 	for(var/obj/machinery/atmospherics/A in front_nodes)
