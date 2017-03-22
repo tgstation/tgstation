@@ -617,7 +617,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(CURRENT_TICKLIMIT)
 	SearchVar(SSacid)
 	SearchVar(SSair)
-	SearchVar(SSasset)
+	SearchVar(SSassets)
 	SearchVar(SSaugury)
 	SearchVar(SScommunications)
 	SearchVar(SSdisease)

@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/assets/SSasset
+var/datum/controller/subsystem/assets/SSassets
 
 /datum/controller/subsystem/assets
 	name = "Assets"
@@ -7,7 +7,7 @@ var/datum/controller/subsystem/assets/SSasset
 	var/list/cache = list()
 
 /datum/controller/subsystem/assets/New()
-	NEW_SS_GLOBAL(SSasset)
+	NEW_SS_GLOBAL(SSassets)
 
 /datum/controller/subsystem/assets/Initialize(timeofday)
 	for(var/type in typesof(/datum/asset) - list(/datum/asset, /datum/asset/simple))
