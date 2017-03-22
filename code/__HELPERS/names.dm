@@ -217,7 +217,7 @@ var/syndicate_code_response//Code response for traitors.
 					if(2)
 						code_phrase += lowertext(pick(foods))
 					if(3)
-						code_phrase += pick(locations)
+						code_phrase += lowertext(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.

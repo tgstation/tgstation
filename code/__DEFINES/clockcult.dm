@@ -87,10 +87,8 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
-//Objective defines
-#define CLOCKCULT_GATEWAY "summon ratvar"
-
-#define CLOCKCULT_ESCAPE "proselytize the station"
+//Objective text define
+#define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 
 //misc clockcult stuff
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
