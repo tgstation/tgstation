@@ -1,6 +1,6 @@
 /obj/machinery/door/poddoor
 	name = "blast door"
-	desc = "A heavy duty blast door that opens mechanically."
+	desc = "What in tarnation? That there's one big ol' door!"
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "closed"
 	var/id = 1
@@ -13,6 +13,10 @@
 	armor = list(melee = 50, bullet = 100, laser = 100, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
+
+/obj/machinery/door/poddoor/close()
+	..()
+	say("Blast it!")
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
