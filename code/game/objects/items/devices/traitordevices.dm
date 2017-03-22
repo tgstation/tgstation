@@ -230,7 +230,7 @@ effective or pretty fucking useless.
 	desc = "Device used to disrupt nearby radio communication."
 	icon_state = "jammer"
 	var/active = FALSE
-	var/range = 7
+	var/range = 12
 
 /obj/item/device/jammer/attack_self(mob/user)
 	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>") 
