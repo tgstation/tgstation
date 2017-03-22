@@ -1056,6 +1056,7 @@
 	deployed = TRUE
 	connected_ai = mainframe
 	mainframe.connected_robots |= src
+	lawupdate = TRUE
 	lawsync()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
 		if(AI.radio.syndie)
