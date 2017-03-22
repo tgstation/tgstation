@@ -60,7 +60,7 @@
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
 		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.\
-		[ratvar_awakens ? "<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."
+		[ratvar_awakens ? "":"<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
