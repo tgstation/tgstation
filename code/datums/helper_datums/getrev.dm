@@ -66,7 +66,7 @@ var/global/datum/getrev/revdata = new()
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/details = ""
-		var/is_secret = findtext(testmerge[line]["title"], "[s]") && !(usr && usr.holder)
+		var/is_secret = findtext(testmerge[line]["title"], "\[s\]") && !check_rights(R_ADMIN)
 		if(!is_secret)
 			if(has_pr_details)
 				details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
