@@ -388,6 +388,7 @@
 	if(I.loc != src)
 		CRASH("SetItemToLeaveConstructionState: Item not inside src: [I.loc]")
 	LAZYINITLIST(stored_construction_items)
+	. = stored_construction_items["[id]"]
 	stored_construction_items["[id]"] = I
 
 /obj/proc/SetItemToReachConstructionState(id, obj/item/I)
@@ -398,6 +399,7 @@
 	if(I.loc != src)
 		CRASH("SetItemToReachConstructionState: Item not inside src: [I.loc]")
 	LAZYINITLIST(stored_construction_items)
+	. = stored_construction_items["[id - 1]"]
 	stored_construction_items["[id - 1]"] = I
 
 /obj/proc/ClearStoredConstructionItems()
