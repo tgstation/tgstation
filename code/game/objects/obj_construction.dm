@@ -166,10 +166,20 @@
 	var/TT = transformation_type
 	if(TT)
 		var/pdir = parent.dir
-		var/obj/O = new TT(get_turf(parent))
-		parent.transfer_fingerprints_to(O)
+		var/obj/O
+		if(TT != CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME)
+			O = new TT(get_turf(parent))
+			parent.transfer_fingerprints_to(O)
+			parent.OnConstructionTransform(user, O)
+		else
+			O = parent.OnConstructionTransform(user, null)
+			if(!istype(O))
+				var/VE = var_edited
+				var/PVE = parent.var_edited
+				if(!VE && !PVE)
+					to_chat(user, "Something bad just happened. Go report it on coderbus: OBJCONRUNTIMETYPEFAIL")
+				CRASH("OnConstructionTransform with CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME failed for [parent]([parent.type])! Returned [O]! VE: [VE], PVE: [PVE].")\
 		O.Construct(user, pdir)
-		parent.OnConstructionTransform(user, O)
 		qdel(parent)
 
 /datum/construction_blueprint

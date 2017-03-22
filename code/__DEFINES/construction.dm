@@ -12,6 +12,8 @@
 
 #define CONSTRUCTION_ITEM "__construction_item_replace__"
 
+#define CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME -1
+
 //girder construction states
 #define GIRDER_NORMAL 0
 #define GIRDER_REINF_STRUTS 1
