@@ -19,4 +19,3 @@
 	desc = "If this is inside the station somehow you've got a lot more to worry about then a few burns."	//OH GOD THE STATION'S BEING CUT IN HALF
 	icon_state = "ptl_continuous"
 	var/duration = 20
-!
