@@ -14,21 +14,13 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/PTL(null)
 	B.apply_default_parts(src)
 
-/obj/machinery/power/PTL/proc/power_beam(dir, strength)
-	var/obj/item/projectile/beam/PTLbeam/P = new /obj/item/projectile/beam/PTLbeam(src.loc)
-	P.power_strength = laser_beam_strength
-	P.speed = 0	//Fast!
-	P.damage = 0	//Calculated in projectile
-	P.nodamage = 0
-	P.legacy = 1
-	P.setDir(src.dir)
-	P.starting = loc
-	P.fire()
+/obj/machinery/power/PTL/proc/transmit_power(power)	//PUT WHATEVER YOU WANT TO HAPPEN WHEN IT REACHES ZLEVEL EDGE/CENTRAL COMMAND HERE!
+	return
 
 
 ////GOOONSTATION COPY, ONLY HERE FOR REFERENCE BELOW.
 
-
+/*
 #define PTLEFFICIENCY 0.05
 #define PTLMAXINPUT 1e13
 #define PTLMAXOUTPUT 999e12
@@ -632,3 +624,4 @@
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 
 	return 0
+*/

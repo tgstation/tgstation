@@ -10,78 +10,54 @@
 	var/turf/starting = locate((T.x + x_offset), (T.y + y_offset), T.z)
 	return starting
 
-/obj/machinery/power/PTL/laser_beam(direction, power, type = PTL_PRIMARY, turf/turf_override = null, hitscan_override = FALSE)
-	var/yes = 1
-	var/atom/atom_direct_hit
-	var/list/atom/atoms_impacted = list()
-	var/turf/current_turf
-	var/beam_delay = FALSE
-	var/beam_delay_additional = 0
-	if(!turf_override)
-		current_turf = get_turf(src)
-	else
-		current_turf = turf_override
-	if(hitscan_override)
-		beam_delay = hitscan_override
-	if(yes)	//Hitscan loop
-		sleep(beam_delay)
-		current_turf = get_step(current_turf, direction)
-		if(locate(var/obj/structure/reflector/R in current_turf))
-			if(!R.can_reflect_PTL)
-				atoms_impacted |= R
-			else
-				direction = R.get_reflection(R.dir, direction)
-		for(var/obj/O in current_turf)
-			atoms_impacted |= O
-		switch(type)	//Determine effects and sprites
-			if(PTL_TRACER)
-				if(isclosedturf(current_turf))
-					atoms_impacted |= current_turf
-				PoolOrNew(/obj/effect/overlay/temp/PTL/tracer, current_turf)
-				for(atom/A in atoms_impacted)
-					if(!check_safe_atom(A))
-						tracer_hit(direction, power, A)
-			if(PTL_PULSE)
-				PoolOrNew(/obj/effect/overlay/temp/PTL/pulse, current_turf)
-				if(isclosedturf(current_turf))
-					atom_direct_hit = current_turf
-				for(atom/A in atoms_impacted)
-					if(A.density && A.opacity && !check_safe_atom(A) && !atom_direct_hit)
-						atom_direct_hit = A
-					else if(!check_safe_atom(A))
-						pulse_hit(A)
-				if(atom_direct_hit)
-					yes = FALSE
-					pulse_blast(direction, power, atom_direct_hit)
+/obj/machinery/power/PTL/proc/fire_beam(direction, type = PTL_PRIMARY, effect_duration_override = null, power)
+	var/turf/T = find_starting_turf()
+	var/effect_type = null
+	switch(type)
+		if(PTL_PRIMARY)
+			effect_type = /obj/effect/overlay/temp/PTL/continuous
+		if(PTL_PULSE)
+			effect_type = /obj/effect/overlay/temp/PTL/pulse
+		if(PTL_TRACER)
+			effect_type = /obj/effect/overlay_temp/PTL/tracer
+	var/list/impacted = hitscan_beamline(T, direction, TRUE, effect_type, effect_duration_override)
+	var/result = null
+	var/atom/direct_hit = null
+	var/list/hit = list()
+	for(var/V in impacted)
+		if(V == "RESULT")
+			result = impacted["RESULT"]
+		if(V == "HIT_ATOM")
+			direct_hit = impacted["HIT_ATOM"]
+		else
+			for(var/v in impacted[V])
+				hit += v
+				CHECK_TICK
+	if(istype(direct_hit))
+		switch(type)
 			if(PTL_PRIMARY)
-				PoolOrNew(/obj/effect/overlay/temp/PTL/continuous, current_turf)
-				atoms_impacted |= current_turf
-				for(atom/A in atoms_impacted)
-					if((A.density && A.opacity && !check_safe_atom(A) && !atom_direct_hit) || (isclosedturf(A) && !check_safe_atom(A)))
-						atom_direct_hit = A
-					else if(!check_safe_atom(A))
-						primary_hit(A)
-				if(atom_direct_hit)
-					primary_hit(A)
-					yes = FALSE
-		sleep(beam_delay_additional)
-		beam_delay_additional = 0
+				primary_hit(power, direct_hit, TRUE)
+			if(PTL_TRACER)
+				tracer_hit(power, direct_hit, TRUE)
+			if(PTL_PULSE)
+				pulse_hit(power, direct_hit, TRUE)
+	for(var/atom/A in hit)
+		switch(type)
+			if(PTL_PRIMARY)
+				primary_hit(power, direct_hit)
+			if(PTL_TRACER)
+				tracer_hit(power, direct_hit)
+			if(PTL_PULSE)
+				pulse_hit(power, direct_hit)
+		CHECK_TICK
+	if(result == PTL_HITSCAN_RETURN_ZEDGE)
+		on_zlevel_edge_hit(power)
 
-/obj/machinery/power/PTL/proc/tracer_hit(direction, power, atom/A)
+/obj/machinery/power/PTL/proc/tracer_hit(power, atom/A, direct_hit = FALSE)
 
-/obj/machinery/power/PTL/proc/pulse_hit(direction, power, atom/A)
+/obj/machinery/power/PTL/proc/pulse_hit(power, atom/A, direct_hit = FALSE)
 
-/obj/machinery/power/PTL/proc/pulse_blast(direction, power, atom/A)
+/obj/machinery/power/PTL/proc/primary_hit(power, atom/A, direct_hit = FALSE)
 
-/obj/machinery/power/PTL/proc/primary_hit(direction, power, atom/A)
-
-/obj/machinery/power/PTL/proc/power_beam(dir, strength)
-	var/obj/item/projectile/beam/PTLbeam/P = new /obj/item/projectile/beam/PTLbeam(src.loc)
-	P.power_strength = laser_beam_strength
-	P.speed = 0	//Fast!
-	P.damage = 0	//Calculated in projectile
-	P.nodamage = 0
-	P.legacy = 1
-	P.setDir(src.dir)
-	P.starting = loc
-	P.fire()
+/obj/machinery/power/PTL/proc/on_zlevel_edge_hit(power)
+	transmit_power(power)

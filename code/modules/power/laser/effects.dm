@@ -24,4 +24,4 @@
 	if(isnum(time))
 		duration = time
 	..()
-	QDEL_IN(duration)
+	QDEL_IN(src, duration)

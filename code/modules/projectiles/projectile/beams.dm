@@ -153,23 +153,3 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
-
-/obj/item/projectile/beam/PTLbeam
-	name = "Power Transmission Beam"
-	desc = "Harmful for the eyes."
-	var/power_strength = 1000000
-	luminosity = 10	//Pew!
-	icon_state = "ptl_laser"
-	impact_effect_type =
-	log_override = TRUE
-
-/obj/item/projectile/beam/PTLbeam/fire(args_1, args_2)
-	range = max(world.maxX, world.maxY)
-	damage = power_strength/100000	//Fast firing.
-	..(args_1, args_1)
-
-/obj/item/projectile/beam/PTLbeam/on_hit(target, blocked)
-	. = ..(target, blocked)
-
-/obj/item/projectile/beam/PTLbeam/vol_by_damage()
-	return 200	//It's a gigawatt laser.
