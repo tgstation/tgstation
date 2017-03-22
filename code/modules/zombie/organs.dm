@@ -16,10 +16,10 @@
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
-	SLOTH.zombie_infection_list += src
+	GLOB.zombie_infection_list += src
 
 /obj/item/organ/zombie_infection/Destroy()
-	SLOTH.zombie_infection_list -= src
+	GLOB.zombie_infection_list -= src
 	. = ..()
 
 /obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)

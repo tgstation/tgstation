@@ -71,7 +71,7 @@ GLOBAL_REAL(SSpersistence, /datum/controller/subsystem/persistence)
 	return 1
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
-	for(var/mob/living/simple_animal/parrot/Poly/P in SLOTH.living_mob_list)
+	for(var/mob/living/simple_animal/parrot/Poly/P in GLOB.living_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 

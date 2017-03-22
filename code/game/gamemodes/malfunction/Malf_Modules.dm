@@ -42,7 +42,7 @@
 	doomsday_device = DOOM
 	doomsday_device.start()
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
-	for(var/obj/item/weapon/pinpointer/P in SLOTH.pinpointer_list)
+	for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 /obj/machinery/doomsday_device
@@ -108,10 +108,10 @@
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
-	for(var/mob/M in SLOTH.player_list)
+	for(var/mob/M in GLOB.player_list)
 		M << 'sound/machines/Alarm.ogg'
 	sleep(100)
-	for(var/mob/living/L in SLOTH.mob_list)
+	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
 		if(!T || T.z != z_level)
 			continue
@@ -140,7 +140,7 @@
 
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	//Upgrade AI turrets around the world
-	for(var/obj/machinery/porta_turret/ai/turret in SLOTH.machines)
+	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
 		turret.obj_integrity += 30
 		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
@@ -162,13 +162,13 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/door/D in SLOTH.airlocks)
+	for(var/obj/machinery/door/D in GLOB.airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
 		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, src)
 		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
-	var/obj/machinery/computer/communications/C = locate() in SLOTH.machines
+	var/obj/machinery/computer/communications/C = locate() in GLOB.machines
 	if(C)
 		C.post_status("alert", "lockdown")
 
@@ -196,7 +196,7 @@
 	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/I in SLOTH.rcd_list)
+	for(var/I in GLOB.rcd_list)
 		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
 			var/obj/item/weapon/rcd/RCD = I
 			RCD.detonate_pulse()
@@ -243,7 +243,7 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/firealarm/F in SLOTH.machines)
+	for(var/obj/machinery/firealarm/F in GLOB.machines)
 		if(F.z != ZLEVEL_STATION)
 			continue
 		F.emagged = 1
@@ -267,7 +267,7 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/airalarm/AA in SLOTH.machines)
+	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		if(AA.z != ZLEVEL_STATION)
 			continue
 		AA.emagged = 1
@@ -283,7 +283,7 @@
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
-/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M in SLOTH.machines)
+/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M in GLOB.machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
 
@@ -313,7 +313,7 @@
 	power_type = /mob/living/silicon/ai/proc/override_machine
 
 
-/mob/living/silicon/ai/proc/override_machine(obj/machinery/M in SLOTH.machines)
+/mob/living/silicon/ai/proc/override_machine(obj/machinery/M in GLOB.machines)
 	set name = "Override Machine"
 	set category = "Malfunction"
 
@@ -423,7 +423,7 @@
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in SLOTH.machines)
+			for(var/obj/machinery/power/apc/apc in GLOB.machines)
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++

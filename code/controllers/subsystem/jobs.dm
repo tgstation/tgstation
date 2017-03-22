@@ -52,7 +52,7 @@ GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 
 
 /datum/controller/subsystem/job/proc/Debug(text)
-	if(!SLOTH.Debug2)
+	if(!GLOB.Debug2)
 		return 0
 	job_debug.Add(text)
 	return 1
@@ -150,7 +150,7 @@ GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 			break
 
 /datum/controller/subsystem/job/proc/ResetOccupations()
-	for(var/mob/dead/new_player/player in SLOTH.player_list)
+	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
@@ -230,7 +230,7 @@ GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 				A.spawn_positions = 3
 
 	//Get the players who are ready
-	for(var/mob/dead/new_player/player in SLOTH.player_list)
+	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
@@ -377,7 +377,7 @@ GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in SLOTH.start_landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
 			if(sloc.name != rank)
 				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
 				continue
@@ -387,7 +387,7 @@ GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 			break
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
-			S = get_turf(pick(SLOTH.latejoin))
+			S = get_turf(pick(GLOB.latejoin))
 		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
 			log_world("Couldn't find a round start latejoin spawn point.")
 			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
@@ -446,10 +446,10 @@ GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 	if(equip_needed < 0) // -1: infinite available slots
 		equip_needed = 12
 	for(var/i=equip_needed-5, i>0, i--)
-		if(SLOTH.secequipment.len)
-			var/spawnloc = SLOTH.secequipment[1]
+		if(GLOB.secequipment.len)
+			var/spawnloc = GLOB.secequipment[1]
 			new /obj/structure/closet/secure_closet/security/sec(spawnloc)
-			SLOTH.secequipment -= spawnloc
+			GLOB.secequipment -= spawnloc
 		else //We ran out of spare locker spawns!
 			break
 
@@ -472,7 +472,7 @@ GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 		var/level4 = 0 //never
 		var/level5 = 0 //banned
 		var/level6 = 0 //account too young
-		for(var/mob/dead/new_player/player in SLOTH.player_list)
+		for(var/mob/dead/new_player/player in GLOB.player_list)
 			if(!(player.ready && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))

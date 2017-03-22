@@ -73,7 +73,7 @@ Buildable meters
 		src.pipe_type = pipe_type
 		src.setDir(dir)
 
-	if(src.dir in SLOTH.diagonals)
+	if(src.dir in GLOB.diagonals)
 		is_bent = 1
 
 	update()
@@ -186,7 +186,7 @@ var/global/list/pipeID2State = list(
 	setDir(old_dir )//pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
-	if(direction in SLOTH.diagonals)
+	if(direction in GLOB.diagonals)
 		return turn(direction, 45)
 
 	return direction

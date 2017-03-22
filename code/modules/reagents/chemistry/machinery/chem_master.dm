@@ -321,7 +321,7 @@
 			. = TRUE
 
 		if("analyze")
-			var/datum/reagent/R = SLOTH.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)

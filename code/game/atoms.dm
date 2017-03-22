@@ -398,12 +398,12 @@ var/list/blood_splatter_icons = list()
 	return 1
 
 /atom/proc/get_global_map_pos()
-	if(!islist(SLOTH.global_map) || isemptylist(SLOTH.global_map)) return
+	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map)) return
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null
-	for(cur_x=1,cur_x<=SLOTH.global_map.len,cur_x++)
-		y_arr = SLOTH.global_map[cur_x]
+	for(cur_x=1,cur_x<=GLOB.global_map.len,cur_x++)
+		y_arr = GLOB.global_map[cur_x]
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)
 			break
@@ -557,7 +557,7 @@ var/list/blood_splatter_icons = list()
 			return
 
 /atom/vv_edit_var(var_name, var_value)
-	if(!SLOTH.Debug2)
+	if(!GLOB.Debug2)
 		admin_spawned = TRUE
 	. = ..()
 	switch(var_name)

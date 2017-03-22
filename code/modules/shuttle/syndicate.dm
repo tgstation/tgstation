@@ -32,11 +32,11 @@
 	var/moved = FALSE
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle/New()
-	SLOTH.syndicate_shuttle_boards += src
+	GLOB.syndicate_shuttle_boards += src
 	..()
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle/Destroy()
-	SLOTH.syndicate_shuttle_boards -= src
+	GLOB.syndicate_shuttle_boards -= src
 	return ..()
 
 /obj/machinery/computer/shuttle/syndicate/drop_pod

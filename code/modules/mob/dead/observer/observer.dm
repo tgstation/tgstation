@@ -68,7 +68,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 		verbs += /mob/dead/observer/proc/server_hop
 
 	ghostimage = image(src.icon,src,src.icon_state)
-	if(icon_state in SLOTH.ghost_forms_with_directions_list)
+	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
 		ghostimage_default = image(src.icon,src,src.icon_state)
@@ -182,21 +182,21 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	if(new_form)
 		icon_state = new_form
 		ghostimage.icon_state = new_form
-		if(icon_state in SLOTH.ghost_forms_with_directions_list)
+		if(icon_state in GLOB.ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
 			ghostimage_default.icon_state = new_form
 
-	if(ghost_accs >= GHOST_ACCS_DIR && icon_state in SLOTH.ghost_forms_with_directions_list) //if this icon has dirs AND the client wants to show them, we make sure we update the dir on movement
+	if(ghost_accs >= GHOST_ACCS_DIR && icon_state in GLOB.ghost_forms_with_directions_list) //if this icon has dirs AND the client wants to show them, we make sure we update the dir on movement
 		updatedir = 1
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
 		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
-	if(ghost_accs == GHOST_ACCS_FULL && icon_state in SLOTH.ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
+	if(ghost_accs == GHOST_ACCS_FULL && icon_state in GLOB.ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
 		if(facial_hair_style)
-			S = SLOTH.facial_hair_styles_list[facial_hair_style]
+			S = GLOB.facial_hair_styles_list[facial_hair_style]
 			if(S)
 				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 				if(facial_hair_color)
@@ -205,7 +205,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 				add_overlay(facial_hair_image)
 				ghostimage.add_overlay(facial_hair_image)
 		if(hair_style)
-			S = SLOTH.hair_styles_list[hair_style]
+			S = GLOB.hair_styles_list[hair_style]
 			if(S)
 				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 				if(hair_color)
@@ -368,7 +368,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "Not when you're not dead!")
 		return
 	var/A
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in SLOTH.sortedAreas
+	A = input("Area to jump to", "BOOYEA", A) as null|anything in GLOB.sortedAreas
 	var/area/thearea = A
 	if(!thearea)
 		return
@@ -538,7 +538,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	listclearnulls(ghost_images_simple)
 	listclearnulls(ghost_darkness_images)
 
-	for (var/mob/dead/observer/O in SLOTH.player_list)
+	for (var/mob/dead/observer/O in GLOB.player_list)
 		O.updateghostimages()
 
 /mob/dead/observer/proc/updateghostimages()
@@ -582,8 +582,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Take over the body of a mindless creature!"
 
 	var/list/possessible = list()
-	for(var/mob/living/L in SLOTH.living_mob_list)
-		if(!(L in SLOTH.player_list) && !L.mind)
+	for(var/mob/living/L in GLOB.living_mob_list)
+		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 
 	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in possessible
@@ -631,7 +631,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /proc/show_server_hop_transfer_screen(expected_key)
 	//only show it to incoming ghosts
-	for(var/mob/dead/observer/O in SLOTH.player_list)
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.key == expected_key)
 			if(O.client)
 				new /obj/screen/splash(O.client, TRUE)
@@ -652,7 +652,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
-	dat += SLOTH.data_core.get_manifest()
+	dat += GLOB.data_core.get_manifest()
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
@@ -827,7 +827,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /proc/set_observer_default_invisibility(amount, message=null)
-	for(var/mob/dead/observer/G in SLOTH.player_list)
+	for(var/mob/dead/observer/G in GLOB.player_list)
 		G.invisibility = amount
 		if(message)
 			to_chat(G, message)

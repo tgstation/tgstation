@@ -204,25 +204,25 @@ var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
 			dep_access = list(access_mailsorting, access_mining, access_mining_station)
 			destination = /area/security/checkpoint/supply
-			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in SLOTH.department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
 			tie = /obj/item/clothing/tie/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
 			dep_access = list(access_construction, access_engine)
 			destination = /area/security/checkpoint/engineering
-			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in SLOTH.department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
 			tie = /obj/item/clothing/tie/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
 			dep_access = list(access_medical)
 			destination = /area/security/checkpoint/medical
-			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in SLOTH.department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
 			tie =  /obj/item/clothing/tie/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
 			dep_access = list(access_research)
 			destination = /area/security/checkpoint/science
-			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in SLOTH.department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
 			tie = /obj/item/clothing/tie/armband/science
 
 	if(tie)

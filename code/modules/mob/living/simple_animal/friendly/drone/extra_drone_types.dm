@@ -141,7 +141,7 @@
 	to_chat(src, "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
 	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[SLOTH.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>")
+	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>")
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
@@ -166,12 +166,12 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	if(!SLOTH.ratvar_awakens)
+	if(!GLOB.ratvar_awakens)
 		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
 	return TRUE
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
-	if(SLOTH.ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		return 1
 	return ..()
 

@@ -11,7 +11,7 @@
 
 #define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X
 
-GLOBAL_REAL(SLOTH, /datum/global_vars)
+GLOBAL_REAL(GLOB, /datum/global_vars)
 
 #define GLOBAL_RAW(X) /datum/global_vars/var##X;
 

@@ -45,9 +45,9 @@
 	else
 		switch(rand(0,1))
 			if(0)
-				name = "ghost of [pick(SLOTH.first_names_male)] [pick(SLOTH.last_names)]"
+				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			if(1)
-				name = "ghost of [pick(SLOTH.first_names_female)] [pick(SLOTH.last_names)]"
+				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
 		give_hair()
 
 

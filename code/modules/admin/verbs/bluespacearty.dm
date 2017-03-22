@@ -1,4 +1,4 @@
-/client/proc/bluespace_artillery(mob/M in SLOTH.mob_list)
+/client/proc/bluespace_artillery(mob/M in GLOB.mob_list)
 	set name = "Bluespace Artillery"
 	set category = "Fun"
 

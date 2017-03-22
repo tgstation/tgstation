@@ -24,7 +24,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
 			if(!candidate.name)
-				pai.name = pick(SLOTH.ninja_names)
+				pai.name = pick(GLOB.ninja_names)
 			else
 				pai.name = candidate.name
 			pai.real_name = pai.name
@@ -141,7 +141,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 /datum/controller/subsystem/pai/proc/check_ready(var/datum/paiCandidate/C)
 	if(!C.ready)
 		return FALSE
-	for(var/mob/dead/observer/O in SLOTH.player_list)
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.key == C.key)
 			return C
 	return FALSE
@@ -149,7 +149,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 /datum/controller/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	if(!ghost_spam)
 		ghost_spam = TRUE
-		for(var/mob/dead/observer/G in SLOTH.player_list)
+		for(var/mob/dead/observer/G in GLOB.player_list)
 			if(!G.key || !G.client)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))

@@ -35,9 +35,9 @@
 	src.energy = starting_energy
 	..()
 	START_PROCESSING(SSobj, src)
-	SLOTH.poi_list |= src
-	SLOTH.singularities |= src
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in SLOTH.machines)
+	GLOB.poi_list |= src
+	GLOB.singularities |= src
+	for(var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break
@@ -45,8 +45,8 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	SLOTH.poi_list.Remove(src)
-	SLOTH.singularities.Remove(src)
+	GLOB.poi_list.Remove(src)
+	GLOB.singularities.Remove(src)
 	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)
@@ -286,7 +286,7 @@
 	if(!move_self)
 		return 0
 
-	var/movement_dir = pick(SLOTH.alldirs - last_failed_movement)
+	var/movement_dir = pick(GLOB.alldirs - last_failed_movement)
 
 	if(force_move)
 		movement_dir = force_move

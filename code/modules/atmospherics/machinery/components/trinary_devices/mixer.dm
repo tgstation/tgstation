@@ -19,7 +19,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
-	for(var/direction in SLOTH.cardinal)
+	for(var/direction in GLOB.cardinal)
 		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
 			if(node)

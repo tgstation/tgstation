@@ -153,8 +153,8 @@ var/list/admin_verbs_debug_mapping = list(
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
 	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
-	for(var/i=1; i<=SLOTH.active_turfs_startlist.len; i++)
-		dat += SLOTH.active_turfs_startlist[i]
+	for(var/i=1; i<=GLOB.active_turfs_startlist.len; i++)
+		dat += GLOB.active_turfs_startlist[i]
 		dat += "<br>"
 
 	usr << browse(dat, "window=at_list")

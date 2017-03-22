@@ -7,8 +7,8 @@
 
 /obj/effect/landmark/transit/New()
 	. = ..()
-	SLOTH.transit_markers += src
+	GLOB.transit_markers += src
 
 /obj/effect/landmark/transit/Destroy()
-	SLOTH.transit_markers -= src
+	GLOB.transit_markers -= src
 	. = ..()

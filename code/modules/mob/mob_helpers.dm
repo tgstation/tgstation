@@ -269,7 +269,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/mob/M in SLOTH.mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.real_name == msg)
 			return M
 	return 0
@@ -381,7 +381,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
 	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
-	for(var/mob/dead/observer/O in SLOTH.player_list)
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)

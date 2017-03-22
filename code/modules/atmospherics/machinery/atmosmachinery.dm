@@ -67,7 +67,7 @@ Pipelines + Other Objects -> Pipe network
 		node_connects.len = device_type
 
 		for(DEVICE_TYPE_LOOP)
-			for(var/D in SLOTH.cardinal)
+			for(var/D in GLOB.cardinal)
 				if(D & GetInitDirections())
 					if(D in node_connects)
 						continue
@@ -170,7 +170,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
 	if(!fuck_you_dir)
-		fuck_you_dir = pick(SLOTH.cardinal)
+		fuck_you_dir = pick(GLOB.cardinal)
 	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
 	var/range = pressures/250
 	var/speed = range/5

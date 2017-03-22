@@ -1,8 +1,8 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	SLOTH.mob_list -= src
-	SLOTH.dead_mob_list -= src
-	SLOTH.living_mob_list -= src
-	SLOTH.all_clockwork_mobs -= src
+	GLOB.mob_list -= src
+	GLOB.dead_mob_list -= src
+	GLOB.living_mob_list -= src
+	GLOB.all_clockwork_mobs -= src
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -22,11 +22,11 @@
 var/next_mob_id = 0
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
-	SLOTH.mob_list += src
+	GLOB.mob_list += src
 	if(stat == DEAD)
-		SLOTH.dead_mob_list += src
+		GLOB.dead_mob_list += src
 	else
-		SLOTH.living_mob_list += src
+		GLOB.living_mob_list += src
 	prepare_huds()
 	can_ride_typecache = typecacheof(can_ride_typecache)
 	..()
@@ -429,7 +429,7 @@ var/next_mob_id = 0
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( SLOTH.abandon_allowed ))
+	if (!( GLOB.abandon_allowed ))
 		return
 	if ((stat != 2 || !( ticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
@@ -865,7 +865,7 @@ var/next_mob_id = 0
 	return FALSE
 
 
-//This will update a mob's name, real_name, mind.name, SLOTH.data_core records, pda, id and traitor text
+//This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
 	if(!newname)
@@ -889,7 +889,7 @@ var/next_mob_id = 0
 					obj.update_explanation_text()
 	return 1
 
-//Updates SLOTH.data_core records with new name , see mob/living/carbon/human
+//Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
 
@@ -927,11 +927,11 @@ var/next_mob_id = 0
 	switch(var_name)
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				SLOTH.dead_mob_list -= src
-				SLOTH.living_mob_list += src
+				GLOB.dead_mob_list -= src
+				GLOB.living_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				SLOTH.living_mob_list -= src
-				SLOTH.dead_mob_list += src
+				GLOB.living_mob_list -= src
+				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)
 		if("weakened")

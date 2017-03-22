@@ -195,7 +195,7 @@ MASS SPECTROMETER
 			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != "blood")//special blood substance
-				var/datum/reagent/R = SLOTH.chemical_reagents_list[blood_id]
+				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				if(R)
 					blood_type = R.name
 				else
@@ -368,7 +368,7 @@ MASS SPECTROMETER
 			dat += "<br>None"
 		else
 			for(var/R in blood_traces)
-				dat += "<br>[SLOTH.chemical_reagents_list[R]]"
+				dat += "<br>[GLOB.chemical_reagents_list[R]]"
 				if(details)
 					dat += " ([blood_traces[R]] units)"
 		dat += "</i>"

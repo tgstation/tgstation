@@ -70,7 +70,7 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	var/traitorcap = min(round(SLOTH.joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(SLOTH.joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
+	var/traitorcap = min(round(GLOB.joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
 	if(ticker.mode.traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
 	if(ticker.mode.traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
@@ -144,7 +144,7 @@
 		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			if(prob(50))
-				if(active_ais.len && prob(100/SLOTH.joined_player_list.len))
+				if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 					var/datum/objective/destroy/destroy_objective = new
 					destroy_objective.owner = traitor
 					destroy_objective.find_target()
@@ -215,11 +215,11 @@
 
 /proc/give_codewords(mob/living/traitor_mob)
 	to_chat(traitor_mob, "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>")
-	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='danger'>[SLOTH.syndicate_code_phrase]</span>")
-	to_chat(traitor_mob, "<B>Code Response</B>: <span class='danger'>[SLOTH.syndicate_code_response]</span>")
+	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='danger'>[GLOB.syndicate_code_phrase]</span>")
+	to_chat(traitor_mob, "<B>Code Response</B>: <span class='danger'>[GLOB.syndicate_code_response]</span>")
 
-	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [SLOTH.syndicate_code_phrase]")
-	traitor_mob.mind.store_memory("<b>Code Response</b>: [SLOTH.syndicate_code_response]")
+	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [GLOB.syndicate_code_phrase]")
+	traitor_mob.mind.store_memory("<b>Code Response</b>: [GLOB.syndicate_code_response]")
 
 	to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 
@@ -290,8 +290,8 @@
 
 			text += "<br>"
 
-		text += "<br><b>The code phrases were:</b> <font color='red'>[SLOTH.syndicate_code_phrase]</font><br>\
-		<b>The code responses were:</b> <font color='red'>[SLOTH.syndicate_code_response]</font><br>"
+		text += "<br><b>The code phrases were:</b> <font color='red'>[GLOB.syndicate_code_phrase]</font><br>\
+		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"
 		to_chat(world, text)
 
 	return 1

@@ -17,14 +17,14 @@
 	var/list/fields = list()
 
 /datum/data/record/Destroy()
-	if(src in SLOTH.data_core.medical)
-		SLOTH.data_core.medical -= src
-	if(src in SLOTH.data_core.security)
-		SLOTH.data_core.security -= src
-	if(src in SLOTH.data_core.general)
-		SLOTH.data_core.general -= src
-	if(src in SLOTH.data_core.locked)
-		SLOTH.data_core.locked -= src
+	if(src in GLOB.data_core.medical)
+		GLOB.data_core.medical -= src
+	if(src in GLOB.data_core.security)
+		GLOB.data_core.security -= src
+	if(src in GLOB.data_core.general)
+		GLOB.data_core.general -= src
+	if(src in GLOB.data_core.locked)
+		GLOB.data_core.locked -= src
 	. = ..()
 
 /datum/data/crime
@@ -77,13 +77,13 @@
 			return
 
 /datum/datacore/proc/manifest()
-	for(var/mob/dead/new_player/N in SLOTH.player_list)
+	for(var/mob/dead/new_player/N in GLOB.player_list)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment)
-	var/datum/data/record/foundrecord = find_record("name", name, SLOTH.data_core.general)
+	var/datum/data/record/foundrecord = find_record("name", name, GLOB.data_core.general)
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 
@@ -111,7 +111,7 @@
 	"}
 	var/even = 0
 	// sort mobs
-	for(var/datum/data/record/t in SLOTH.data_core.general)
+	for(var/datum/data/record/t in GLOB.data_core.general)
 		var/name = t.fields["name"]
 		var/rank = t.fields["rank"]
 		var/department = 0

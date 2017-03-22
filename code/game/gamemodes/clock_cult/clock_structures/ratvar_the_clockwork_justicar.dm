@@ -18,8 +18,8 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/New()
 	..()
-	SLOTH.ratvar_awakens++
-	for(var/obj/O in SLOTH.all_clockwork_objects)
+	GLOB.ratvar_awakens++
+	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>")
@@ -30,8 +30,8 @@
 	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0.1), 50)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
-	SLOTH.ratvar_awakens--
-	for(var/obj/O in SLOTH.all_clockwork_objects)
+	GLOB.ratvar_awakens--
+	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
 	STOP_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>")
@@ -63,15 +63,15 @@
 	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
 		var/turf/T = I
 		T.ratvar_act(1)
-	var/dir_to_step_in = pick(SLOTH.cardinal)
+	var/dir_to_step_in = pick(GLOB.cardinal)
 	if(!prey)
-		for(var/obj/singularity/narsie/N in SLOTH.singularities)
+		for(var/obj/singularity/narsie/N in GLOB.singularities)
 			if(N.z == z)
 				prey = N
 				break
 		if(!prey) //In case there's a Nar-Sie
 			var/list/meals = list()
-			for(var/mob/living/L in SLOTH.living_mob_list)
+			for(var/mob/living/L in GLOB.living_mob_list)
 				if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
 					meals += L
 			if(meals.len)
@@ -109,13 +109,13 @@
 	while(src && narsie)
 		send_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg')
 		sleep(5.2)
-		for(var/mob/M in SLOTH.mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
 				shake_camera(M, 4, 3)
 		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
 		var/narsie_chance = ticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in SLOTH.player_list)
+		for(var/mob/living/simple_animal/hostile/construct/harvester/C in GLOB.player_list)
 			narsie_chance++
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
 		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
@@ -125,7 +125,7 @@
 		sleep(rand(2,5))
 		send_to_playing_players('sound/magic/clockwork/narsie_attack.ogg')
 		sleep(7.4)
-		for(var/mob/M in SLOTH.mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#C80000", flash_time=1)
 				shake_camera(M, 4, 3)

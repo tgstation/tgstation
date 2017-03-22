@@ -104,7 +104,7 @@
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
 						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
-			for(var/mob/O in SLOTH.mob_list)
+			for(var/mob/O in GLOB.mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
 					O.reset_perspective(null)
@@ -206,7 +206,7 @@
 			info = P.notehtml
 		to_chat(U, "<span class='notice'>You hold \the [itemname] up to the camera...</span>")
 		U.changeNext_move(CLICK_CD_MELEE)
-		for(var/mob/O in SLOTH.player_list)
+		for(var/mob/O in GLOB.player_list)
 			if(isAI(O))
 				var/mob/living/silicon/ai/AI = O
 				if(AI.control_disabled || (AI.stat == DEAD))
@@ -301,7 +301,7 @@
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
-	for(var/mob/O in SLOTH.player_list)
+	for(var/mob/O in GLOB.player_list)
 		if (O.client && O.client.eye == src)
 			O.unset_machine()
 			O.reset_perspective(null)
@@ -309,12 +309,12 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
-	for(var/mob/living/silicon/S in SLOTH.mob_list)
+	for(var/mob/living/silicon/S in GLOB.mob_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
-	for(var/mob/living/silicon/S in SLOTH.mob_list)
+	for(var/mob/living/silicon/S in GLOB.mob_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use()

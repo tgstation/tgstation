@@ -159,8 +159,8 @@
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.stat = CONSCIOUS
-				SLOTH.dead_mob_list -= mmi.brainmob
-				SLOTH.living_mob_list += mmi.brainmob
+				GLOB.dead_mob_list -= mmi.brainmob
+				GLOB.living_mob_list += mmi.brainmob
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else

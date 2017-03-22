@@ -259,7 +259,7 @@ var/list/advance_cures = 	list(
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
-		var/datum/reagent/D = SLOTH.chemical_reagents_list[cures[1]]
+		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = D.name
 
 
@@ -405,7 +405,7 @@ var/list/advance_cures = 	list(
 		for(var/datum/disease/advance/AD in SSdisease.processing)
 			AD.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(SLOTH.living_mob_list))
+		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
 			if(H.z != 1)
 				continue
 			if(!H.HasDisease(D))

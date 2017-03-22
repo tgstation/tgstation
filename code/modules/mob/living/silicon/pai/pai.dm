@@ -78,13 +78,13 @@
 	. += slowdown
 
 /mob/living/silicon/pai/Destroy()
-	SLOTH.pai_list -= src
+	GLOB.pai_list -= src
 	..()
 
 /mob/living/silicon/pai/Initialize()
 	var/obj/item/device/paicard/P = loc
 	START_PROCESSING(SSfastprocess, src)
-	SLOTH.pai_list += src
+	GLOB.pai_list += src
 	make_laws()
 	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.

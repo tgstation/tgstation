@@ -62,10 +62,10 @@ var/datum/feedback/blackbox = new()
 	if (!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
-	if (!SLOTH.dbcon.Connect()) return
+	if (!GLOB.dbcon.Connect()) return
 	var/round_id
 
-	var/DBQuery/query_feedback_max_id = SLOTH.dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
+	var/DBQuery/query_feedback_max_id = GLOB.dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
 	if(!query_feedback_max_id.Execute())
 		return
 	while (query_feedback_max_id.NextRow())
@@ -86,7 +86,7 @@ var/datum/feedback/blackbox = new()
 	if (sqlrowlist == "")
 		return
 
-	var/DBQuery/query_feedback_save = SLOTH.dbcon.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
+	var/DBQuery/query_feedback_save = GLOB.dbcon.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
 	query_feedback_save.Execute()
 
 
@@ -209,20 +209,20 @@ var/datum/feedback/blackbox = new()
 /proc/sql_poll_population()
 	if(!config.sql_enabled)
 		return
-	if(!SLOTH.dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		return
 	var/playercount = 0
-	for(var/mob/M in SLOTH.player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.client)
 			playercount += 1
-	var/admincount = SLOTH.admins.len
-	var/DBQuery/query_record_playercount = SLOTH.dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()], INET_ATON('[world.internet_address]'), '[world.port]')")
+	var/admincount = GLOB.admins.len
+	var/DBQuery/query_record_playercount = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()], INET_ATON('[world.internet_address]'), '[world.port]')")
 	query_record_playercount.Execute()
 
 /proc/sql_report_death(mob/living/L)
 	if(!config.sql_enabled)
 		return
-	if(!SLOTH.dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		return
 	if(!L || !L.key || !L.mind)
 		return
@@ -249,5 +249,5 @@ var/datum/feedback/blackbox = new()
 	var/sqlstamina = sanitizeSQL(L.getStaminaLoss())
 	var/coord = sanitizeSQL("[L.x], [L.y], [L.z]")
 	var/map = sanitizeSQL(SSmapping.config.map_name)
-	var/DBQuery/query_report_death = SLOTH.dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[SQLtime()]', '[laname]', '[lakey]', '[sqlgender]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[coord]', '[map]', INET_ATON('[world.internet_address]'), '[world.port]')")
+	var/DBQuery/query_report_death = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[SQLtime()]', '[laname]', '[lakey]', '[sqlgender]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[coord]', '[map]', INET_ATON('[world.internet_address]'), '[world.port]')")
 	query_report_death.Execute()

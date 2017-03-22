@@ -151,7 +151,7 @@ GLOBAL_VAR_INIT(tk_maxrange, 15)
 	var/d = get_dist(user, target)
 	if(focus)
 		d = max(d,get_dist(user,focus)) // whichever is further
-	if(d > SLOTH.tk_maxrange)
+	if(d > GLOB.tk_maxrange)
 		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
 		return 0
 	return 1

@@ -30,9 +30,9 @@
 		for(var/turf/open/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in SLOTH.mob_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
-	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in SLOTH.machines)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state = "entertainment_xmas"
 
 /datum/round_event/presents/announce()
@@ -103,11 +103,11 @@
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
 /datum/round_event/santa/start()
-	for(var/mob/M in SLOTH.dead_mob_list)
+	for(var/mob/M in GLOB.dead_mob_list)
 		spawn(0)
 			var/response = alert(M, "Santa is coming to town! Do you want to be santa?", "Ho ho ho!", "Yes", "No")
 			if(response == "Yes" && M && M.client && M.stat == DEAD && !santa)
-				santa = new /mob/living/carbon/human(pick(SLOTH.blobstart))
+				santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 				santa.key = M.key
 				qdel(M)
 

@@ -17,7 +17,7 @@ GLOBAL_REAL(SSweather, /datum/controller/subsystem/weather)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in SLOTH.mob_list)
+		for(var/mob/living/L in GLOB.mob_list)
 			if(W.can_impact(L))
 				W.impact(L)
 	for(var/Z in eligible_zlevels)

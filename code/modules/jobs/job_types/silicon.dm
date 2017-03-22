@@ -21,7 +21,7 @@ AI
 
 	//we may have been created after our borg
 	if(ticker.current_state == GAME_STATE_SETTING_UP)
-		for(var/mob/living/silicon/robot/R in SLOTH.silicon_mobs)
+		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 			if(!R.connected_ai)
 				R.TryConnectToAI()
 

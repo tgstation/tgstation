@@ -26,7 +26,7 @@
 
 /datum/objective/proc/get_crewmember_minds()
 	. = list()
-	for(var/V in SLOTH.data_core.locked)
+	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
 		var/mob/M = R.fields["reference"]
 		if(M && M.mind)
@@ -246,7 +246,7 @@
 
 	var/area/A = SSshuttle.emergency.areaInstance
 
-	for(var/mob/living/player in SLOTH.player_list) //Make sure nobody else is onboard
+	for(var/mob/living/player in GLOB.player_list) //Make sure nobody else is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
 				if(issilicon(player)) //Borgs are technically dead anyways
@@ -260,7 +260,7 @@
 					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 
-	for(var/mob/living/player in SLOTH.player_list) //Make sure at least one of you is onboard
+	for(var/mob/living/player in GLOB.player_list) //Make sure at least one of you is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
 				if(issilicon(player)) //Borgs are technically dead anyways
@@ -288,7 +288,7 @@
 
 	var/area/A = SSshuttle.emergency.areaInstance
 
-	for(var/mob/living/player in SLOTH.player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(issilicon(player))
 			continue
 		if(player.mind)
@@ -310,7 +310,7 @@
 
 	var/area/A = SSshuttle.emergency.areaInstance
 
-	for(var/mob/living/player in SLOTH.player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
@@ -656,11 +656,11 @@ var/global/list/possible_items_special = list()
 	if (ticker)
 		var/n_p = 1 //autowin
 		if (ticker.current_state == GAME_STATE_SETTING_UP)
-			for(var/mob/dead/new_player/P in SLOTH.player_list)
+			for(var/mob/dead/new_player/P in GLOB.player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
 		else if (ticker.current_state == GAME_STATE_PLAYING)
-			for(var/mob/living/carbon/human/P in SLOTH.player_list)
+			for(var/mob/living/carbon/human/P in GLOB.player_list)
 				if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 					n_p ++
 		target_amount = min(target_amount, n_p)

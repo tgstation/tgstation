@@ -166,7 +166,7 @@
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
 	if(efficiency > 2)
-		var/list/unclean_mutations = (SLOTH.not_good_mutations|SLOTH.bad_mutations)
+		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
 		H.randmutvg()

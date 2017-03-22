@@ -501,7 +501,7 @@
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
-	var/list/directions = SLOTH.cardinal.Copy()
+	var/list/directions = GLOB.cardinal.Copy()
 	var/counter
 	for(counter = 1, counter <= 3, counter++)
 		var/spawndir = pick(directions)
@@ -1008,12 +1008,12 @@
 #define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in SLOTH.mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
 		if(other != src)
 			last_tendril = FALSE
 			break
 	if(last_tendril && !admin_spawned)
-		if(SLOTH.medal_hub && SLOTH.medal_pass && SLOTH.medals_enabled)
+		if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)
 					continue

@@ -26,7 +26,7 @@
 
 
 /datum/round_event/brand_intelligence/start()
-	for(var/obj/machinery/vending/V in SLOTH.machines)
+	for(var/obj/machinery/vending/V in GLOB.machines)
 		if(V.z != 1)
 			continue
 		vendingMachines.Add(V)

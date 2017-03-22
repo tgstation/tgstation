@@ -305,8 +305,8 @@ Code:
 
 			menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 			menu += "Entries cannot be modified from this terminal.<br><br>"
-			if(SLOTH.data_core.general)
-				for (var/datum/data/record/t in sortRecord(SLOTH.data_core.general))
+			if(GLOB.data_core.general)
+				for (var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
 			menu += "<br>"
 
@@ -332,7 +332,7 @@ Code:
 
 
 
-			for(var/obj/machinery/computer/monitor/pMon in SLOTH.machines)
+			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)) )
 					powercount++
 					powermonitors += pMon
@@ -379,14 +379,14 @@ Code:
 
 		if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 			menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
-			if(SLOTH.data_core.general)
-				for(var/datum/data/record/R in sortRecord(SLOTH.data_core.general))
+			if(GLOB.data_core.general)
+				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
 					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 			menu += "<br>"
 		if(441)
 			menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
 
-			if(active1 in SLOTH.data_core.general)
+			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += "Sex: [active1.fields["sex"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
@@ -400,7 +400,7 @@ Code:
 			menu += "<br>"
 
 			menu += "<h4><img src=pda_medical.png> Medical Data</h4>"
-			if(active2 in SLOTH.data_core.medical)
+			if(active2 in GLOB.data_core.medical)
 				menu += "Blood Type: [active2.fields["blood_type"]]<br><br>"
 
 				menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
@@ -422,15 +422,15 @@ Code:
 			menu += "<br>"
 		if (45) //security records
 			menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
-			if(SLOTH.data_core.general)
-				for (var/datum/data/record/R in sortRecord(SLOTH.data_core.general))
+			if(GLOB.data_core.general)
+				for (var/datum/data/record/R in sortRecord(GLOB.data_core.general))
 					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 			menu += "<br>"
 		if(451)
 			menu = "<h4><img src=pda_cuffs.png> Security Record</h4>"
 
-			if(active1 in SLOTH.data_core.general)
+			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += "Sex: [active1.fields["sex"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
@@ -444,7 +444,7 @@ Code:
 			menu += "<br>"
 
 			menu += "<h4><img src=pda_cuffs.png> Security Data</h4>"
-			if(active3 in SLOTH.data_core.security)
+			if(active3 in GLOB.data_core.security)
 				menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
 				menu += text("<BR>\nMinor Crimes:")
@@ -563,7 +563,7 @@ Code:
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/mob/living/simple_animal/bot/cleanbot/B in SLOTH.living_mob_list)
+				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.living_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -619,18 +619,18 @@ Code:
 
 	switch(href_list["choice"])
 		if("Medical Records")
-			active1 = find_record("id", href_list["target"], SLOTH.data_core.general)
+			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
-				active2 = find_record("id", href_list["target"], SLOTH.data_core.medical)
+				active2 = find_record("id", href_list["target"], GLOB.data_core.medical)
 			pda.mode = 441
 			mode = 441
 			if(!active2)
 				active1 = null
 
 		if("Security Records")
-			active1 = find_record("id", href_list["target"], SLOTH.data_core.general)
+			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
-				active3 = find_record("id", href_list["target"], SLOTH.data_core.security)
+				active3 = find_record("id", href_list["target"], GLOB.data_core.security)
 			pda.mode = 451
 			mode = 451
 			if(!active3)
@@ -775,7 +775,7 @@ Code:
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
 		var/botcount = 0
-		for(Bot in SLOTH.living_mob_list) //Git da botz
+		for(Bot in GLOB.living_mob_list) //Git da botz
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"

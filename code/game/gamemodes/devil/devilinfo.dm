@@ -415,8 +415,8 @@ var/global/list/lawlorify = list (
 	check_regression()
 
 /datum/devilinfo/proc/create_new_body()
-	if(SLOTH.blobstart.len > 0)
-		var/turf/targetturf = get_turf(pick(SLOTH.blobstart))
+	if(GLOB.blobstart.len > 0)
+		var/turf/targetturf = get_turf(pick(GLOB.blobstart))
 		var/mob/currentMob = owner.current
 		if(!currentMob)
 			currentMob = owner.get_ghost()

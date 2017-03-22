@@ -360,7 +360,7 @@
 /turf/open/conductivity_directions()
 	if(blocks_air)
 		return ..()
-	for(var/direction in SLOTH.cardinal)
+	for(var/direction in GLOB.cardinal)
 		var/turf/T = get_step(src, direction)
 		if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 			. |= direction
@@ -389,7 +389,7 @@
 
 	if(conductivity_directions)
 		//Conduct with tiles around me
-		for(var/direction in SLOTH.cardinal)
+		for(var/direction in GLOB.cardinal)
 			if(conductivity_directions & direction)
 				var/turf/neighbor = get_step(src,direction)
 

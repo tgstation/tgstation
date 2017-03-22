@@ -52,7 +52,7 @@
 /datum/computer_file/program/card_mod/proc/can_open_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
-			if((job.total_positions <= SLOTH.player_list.len * (max_relative_positions / 100)))
+			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
 					return 1
@@ -161,7 +161,7 @@
 				else
 					var/contents = {"<h4>Crew Manifest</h4>
 									<br>
-									[SLOTH.data_core ? SLOTH.data_core.get_manifest(0) : ""]
+									[GLOB.data_core ? GLOB.data_core.get_manifest(0) : ""]
 									"}
 					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
 						to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
@@ -174,7 +174,7 @@
 				switch(select)
 					if("id")
 						if(id_card)
-							SLOTH.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
+							GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
 							card_slot.try_eject(1, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
@@ -186,7 +186,7 @@
 					if("auth")
 						if(auth_card)
 							if(id_card)
-								SLOTH.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
+								GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
 							head_subordinates = null
 							region_access = null
 							authenticated = 0
@@ -344,7 +344,7 @@
 	if(!mod_mode)
 		data["manifest"] = list()
 		var/list/crew = list()
-		for(var/datum/data/record/t in sortRecord(SLOTH.data_core.general))
+		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 			crew.Add(list(list(
 				"name" = t.fields["name"],
 				"rank" = t.fields["rank"])))

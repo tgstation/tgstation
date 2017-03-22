@@ -35,11 +35,11 @@ var/list/admin_datums = list()
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
 		owner.verbs -= /client/proc/readmin
-		SLOTH.admins |= C
+		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
 	if(owner)
-		SLOTH.admins -= owner
+		GLOB.admins -= owner
 		owner.remove_admin_verbs()
 		owner.holder = null
 		owner = null

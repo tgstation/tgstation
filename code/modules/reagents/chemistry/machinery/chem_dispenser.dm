@@ -129,7 +129,7 @@
 
 	var chemicals[0]
 	for(var/re in dispensable_reagents)
-		var/datum/reagent/temp = SLOTH.chemical_reagents_list[re]
+		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id)))
 	data["chemicals"] = chemicals

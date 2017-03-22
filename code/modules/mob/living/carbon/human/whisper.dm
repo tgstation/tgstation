@@ -46,7 +46,7 @@
 	message = treat_message(message)
 
 	var/list/listening_dead = list()
-	for(var/mob/M in SLOTH.player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER) || (get_dist(M, src) <= 7)))
 			listening_dead |= M
 

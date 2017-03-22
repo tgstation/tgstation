@@ -16,7 +16,7 @@ GLOBAL_REAL(SSserver, /datum/controller/subsystem/server_maint)
 /datum/controller/subsystem/server_maint/fire()
 	//handle kicking inactive players
 	if(config.kick_inactive > 0)
-		for(var/client/C in SLOTH.clients)
+		for(var/client/C in GLOB.clients)
 			if(C.is_afk(INACTIVITY_KICK))
 				if(!istype(C.mob, /mob/dead))
 					log_access("AFK: [key_name(C)]")

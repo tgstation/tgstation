@@ -236,9 +236,9 @@ effective or pretty fucking useless.
 	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>") 
 	active = !active
 	if(active)
-		SLOTH.active_jammers |= src
+		GLOB.active_jammers |= src
 	else
-		SLOTH.active_jammers -= src
+		GLOB.active_jammers -= src
 	update_icon()
 
 	

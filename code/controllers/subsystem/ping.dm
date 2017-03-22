@@ -14,7 +14,7 @@ GLOBAL_REAL(SSping, /datum/controller/subsystem/ping)
 
 /datum/controller/subsystem/ping/fire(resumed = FALSE)
 	if (!resumed)
-		src.currentrun = SLOTH.clients.Copy()
+		src.currentrun = GLOB.clients.Copy()
 
 	var/list/currentrun = src.currentrun
 	while (length(currentrun))

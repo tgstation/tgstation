@@ -18,7 +18,7 @@
 /obj/structure/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
-	SLOTH.poi_list |= src
+	GLOB.poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
 		create_overmind(new_overmind)
@@ -46,7 +46,7 @@
 		overmind.blob_core = null
 	overmind = null
 	STOP_PROCESSING(SSobj, src)
-	SLOTH.poi_list -= src
+	GLOB.poi_list -= src
 	return ..()
 
 /obj/structure/blob/core/ex_act(severity, target)

@@ -102,9 +102,9 @@ GLOBAL_REAL(SSatoms, /datum/controller/subsystem/atoms)
 			continue
 		B.dna_block = pick_n_take(avnums)
 		if(B.quality == POSITIVE)
-			SLOTH.good_mutations |= B
+			GLOB.good_mutations |= B
 		else if(B.quality == NEGATIVE)
-			SLOTH.bad_mutations |= B
+			GLOB.bad_mutations |= B
 		else if(B.quality == MINOR_NEGATIVE)
-			SLOTH.not_good_mutations |= B
+			GLOB.not_good_mutations |= B
 		CHECK_TICK

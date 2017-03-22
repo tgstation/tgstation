@@ -65,10 +65,10 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
-	if(!SLOTH.syndicate_code_phrase)
-		SLOTH.syndicate_code_phrase	= generate_code_phrase()
-	if(!SLOTH.syndicate_code_response)
-		SLOTH.syndicate_code_response = generate_code_phrase()
+	if(!GLOB.syndicate_code_phrase)
+		GLOB.syndicate_code_phrase	= generate_code_phrase()
+	if(!GLOB.syndicate_code_response)
+		GLOB.syndicate_code_response = generate_code_phrase()
 	..()
 	start_at = world.time + (config.lobby_countdown * 10)
 
@@ -77,7 +77,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 		if(GAME_STATE_STARTUP)
 			if(Master.initializations_finished_with_no_players_logged_in)
 				start_at = world.time + (config.lobby_countdown * 10)
-			for(var/client/C in SLOTH.clients)
+			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			current_state = GAME_STATE_PREGAME
@@ -88,7 +88,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
 			totalPlayersReady = 0
-			for(var/mob/dead/new_player/player in SLOTH.player_list)
+			for(var/mob/dead/new_player/player in GLOB.player_list)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
@@ -131,15 +131,15 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	var/init_start = world.timeofday
 		//Create and announce mode
 	var/list/datum/game_mode/runnable_modes
-	if(SLOTH.master_mode == "random" || SLOTH.master_mode == "secret")
+	if(GLOB.master_mode == "random" || GLOB.master_mode == "secret")
 		runnable_modes = config.get_runnable_modes()
 
-		if(SLOTH.master_mode == "secret")
+		if(GLOB.master_mode == "secret")
 			hide_mode = 1
-			if(SLOTH.secret_force_mode != "secret")
-				var/datum/game_mode/smode = config.pick_mode(SLOTH.secret_force_mode)
+			if(GLOB.secret_force_mode != "secret")
+				var/datum/game_mode/smode = config.pick_mode(GLOB.secret_force_mode)
 				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [SLOTH.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+					message_admins("\blue Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
 				else
 					mode = smode
 
@@ -150,7 +150,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 			mode = pickweight(runnable_modes)
 
 	else
-		mode = config.pick_mode(SLOTH.master_mode)
+		mode = config.pick_mode(GLOB.master_mode)
 		if(!mode.can_start())
 			to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby.")
 			qdel(mode)
@@ -166,11 +166,11 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	SSjob.DivideOccupations() 				//Distribute jobs
 	CHECK_TICK
 
-	if(!SLOTH.Debug2)
+	if(!GLOB.Debug2)
 		if(!can_continue)
 			qdel(mode)
 			mode = null
-			to_chat(world, "<B>Error setting up [SLOTH.master_mode].</B> Reverting to pre-game lobby.")
+			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return 0
 	else
@@ -190,14 +190,14 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 		toggle_ooc(0) // Turn it off
 
 	CHECK_TICK
-	SLOTH.start_landmarks_list = shuffle(SLOTH.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
+	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters
 	collect_minds()
 	equip_characters()
 
 	SSoverlays.Flush()	//Flush the majority of the shit
 
-	SLOTH.data_core.manifest()
+	GLOB.data_core.manifest()
 
 	transfer_characters()	//transfer keys to the new mobs
 
@@ -225,7 +225,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	set waitfor = 0
 	mode.post_setup()
 	//Cleanup some stuff
-	for(var/obj/effect/landmark/start/S in SLOTH.landmarks_list)
+	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
 		if(S.name != "AI")
 			qdel(S)
@@ -258,7 +258,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	for(var/mob/M in SLOTH.mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		M.notransform = TRUE //stop everything moving
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
@@ -360,22 +360,22 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	if(cinematic)
 		qdel(cinematic)		//end the cinematic
 		cinematic = null
-	for(var/mob/M in SLOTH.mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		M.notransform = FALSE
 		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
 			M.gib()
 
 /datum/controller/subsystem/ticker/proc/create_characters()
-	for(var/mob/dead/new_player/player in SLOTH.player_list)
+	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready && player.mind)
-			SLOTH.joined_player_list += player.ckey
+			GLOB.joined_player_list += player.ckey
 			player.create_character(FALSE)
 		else
 			player.new_player_panel()
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
-	for(var/mob/dead/new_player/P in SLOTH.player_list)
+	for(var/mob/dead/new_player/P in GLOB.player_list)
 		if(P.new_character && P.new_character.mind)
 			ticker.minds += P.new_character.mind
 		CHECK_TICK
@@ -383,7 +383,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
-	for(var/mob/dead/new_player/N in SLOTH.player_list)
+	for(var/mob/dead/new_player/N in GLOB.player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
@@ -392,14 +392,14 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 		CHECK_TICK
 	if(captainless)
-		for(var/mob/dead/new_player/N in SLOTH.player_list)
+		for(var/mob/dead/new_player/N in GLOB.player_list)
 			if(N.new_character)
 				to_chat(N, "Captainship not forced on anyone.")
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/dead/new_player/player in SLOTH.player_list)
+	for(var/mob/dead/new_player/player in GLOB.player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -426,7 +426,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
-	for(var/mob/Player in SLOTH.mob_list)
+	for(var/mob/Player in GLOB.mob_list)
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
@@ -451,28 +451,28 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = min(PERCENT(SLOTH.start_state.score(end_state)), 100)
+	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 
-	to_chat(world, "<BR>[SLOTH.TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
-	to_chat(world, "<BR>[SLOTH.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
+	to_chat(world, "<BR>[GLOB.TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
+	to_chat(world, "<BR>[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(mode.station_was_nuked)
 		ticker.news_report = STATION_DESTROYED_NUKE
-	var/total_players = SLOTH.joined_player_list.len
+	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
-		to_chat(world, "<BR>[SLOTH.TAB]Total Population: <B>[total_players]</B>")
+		to_chat(world, "<BR>[GLOB.TAB]Total Population: <B>[total_players]</B>")
 		if(station_evacuated)
-			to_chat(world, "<BR>[SLOTH.TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>")
-			to_chat(world, "<BR>[SLOTH.TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>")
+			to_chat(world, "<BR>[GLOB.TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>")
+			to_chat(world, "<BR>[GLOB.TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>")
 			news_report = STATION_EVACUATED
 			if(SSshuttle.emergency.is_hijacked())
 				news_report = SHUTTLE_HIJACK
-		to_chat(world, "<BR>[SLOTH.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>")
+		to_chat(world, "<BR>[GLOB.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>")
 	to_chat(world, "<BR>")
 
 	CHECK_TICK
 
 	//Silicon laws report
-	for (var/mob/living/silicon/ai/aiPlayer in SLOTH.mob_list)
+	for (var/mob/living/silicon/ai/aiPlayer in GLOB.mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
 			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
@@ -491,7 +491,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 
 	CHECK_TICK
 
-	for (var/mob/living/silicon/robot/robo in SLOTH.mob_list)
+	for (var/mob/living/silicon/robot/robo in GLOB.mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
@@ -561,7 +561,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 				total_borers++
 		if(total_borers)
 			var/total_borer_hosts = 0
-			for(var/mob/living/carbon/C in SLOTH.mob_list)
+			for(var/mob/living/carbon/C in GLOB.mob_list)
 				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
 				var/turf/location = get_turf(C)
 				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)

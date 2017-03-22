@@ -20,14 +20,14 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 	tag = "mob_[next_mob_id++]"
-	SLOTH.mob_list += src
+	GLOB.mob_list += src
 
 	if(client && ticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
 
-	if(length(SLOTH.newplayer_start))
-		loc = pick(SLOTH.newplayer_start)
+	if(length(GLOB.newplayer_start))
+		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
 
@@ -48,11 +48,11 @@
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
-		if (SLOTH.dbcon.Connect())
+		if (GLOB.dbcon.Connect())
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/DBQuery/query_get_new_polls = SLOTH.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			var/DBQuery/query_get_new_polls = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
 			if(!query_get_new_polls.Execute())
 				return
 			var/newpoll = 0
@@ -77,7 +77,7 @@
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[SLOTH.master_mode]")
+		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
 		stat("Map:", SSmapping.config.map_name)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
@@ -175,7 +175,7 @@
 
 	if(href_list["SelectedJob"])
 
-		if(!SLOTH.enter_allowed)
+		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
@@ -325,8 +325,8 @@
 		character = equip
 
 	var/D
-	if(SLOTH.latejoin.len)
-		D = get_turf(pick(SLOTH.latejoin))
+	if(GLOB.latejoin.len)
+		D = get_turf(pick(GLOB.latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 			if(!T.density)
@@ -353,7 +353,7 @@
 		humanc = character	//Let's retypecast the var to be human,
 
 	if(humanc)	//These procs all expect humans
-		SLOTH.data_core.manifest_inject(humanc)
+		GLOB.data_core.manifest_inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
@@ -363,7 +363,7 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
-	SLOTH.joined_player_list += character.ckey
+	GLOB.joined_player_list += character.ckey
 
 	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
@@ -476,7 +476,7 @@
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
 	dat += "<h4>Crew Manifest</h4>"
-	dat += SLOTH.data_core.get_manifest(OOC = 1)
+	dat += GLOB.data_core.get_manifest(OOC = 1)
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 

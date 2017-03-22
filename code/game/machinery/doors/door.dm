@@ -40,7 +40,7 @@
 		layer = OPEN_DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
 	update_freelook_sight()
 	air_update_turf(1)
-	SLOTH.airlocks += src
+	GLOB.airlocks += src
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 
@@ -50,7 +50,7 @@
 	density = 0
 	air_update_turf(1)
 	update_freelook_sight()
-	SLOTH.airlocks -= src
+	GLOB.airlocks -= src
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null

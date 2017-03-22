@@ -8,10 +8,10 @@
 		if(toIndex <= 0)
 			toIndex += L.len + 1
 
-		SLOTH.sortInstance.L = L
-		SLOTH.sortInstance.cmp = cmp
-		SLOTH.sortInstance.associative = associative
+		GLOB.sortInstance.L = L
+		GLOB.sortInstance.cmp = cmp
+		GLOB.sortInstance.associative = associative
 
-		SLOTH.sortInstance.timSort(fromIndex, toIndex)
+		GLOB.sortInstance.timSort(fromIndex, toIndex)
 
 	return L

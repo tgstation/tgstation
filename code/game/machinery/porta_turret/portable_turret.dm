@@ -465,7 +465,7 @@
 
 	if(check_records)	//if the turret can check the records, check if they are set to *Arrest* on records
 		var/perpname = perp.get_face_name(perp.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, SLOTH.data_core.security)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(!R || (R.fields["criminal"] == "*Arrest*"))
 			threatcount += 4
 
@@ -654,7 +654,7 @@
 	if(!mapload)
 		return
 	if(control_area && istext(control_area))
-		for(var/V in SLOTH.sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(A.name == control_area)
 				control_area = A

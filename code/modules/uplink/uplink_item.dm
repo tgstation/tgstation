@@ -26,7 +26,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 					continue
 				if(gamemode && (gamemode in I.exclude_modes))
 					continue
-			if(I.player_minimum && I.player_minimum > SLOTH.joined_player_list.len)
+			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
 				continue
 
 			if(!filtered_uplink_items[category])

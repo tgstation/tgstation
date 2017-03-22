@@ -200,17 +200,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else
 			switch(role)
 				if("clown")
-					newname = pick(SLOTH.clown_names)
+					newname = pick(GLOB.clown_names)
 				if("mime")
-					newname = pick(SLOTH.mime_names)
+					newname = pick(GLOB.mime_names)
 				if("ai")
-					newname = pick(SLOTH.ai_names)
+					newname = pick(GLOB.ai_names)
 				if("deity")
-					newname = pick(SLOTH.clown_names|SLOTH.ai_names|SLOTH.mime_names) //pick any old name
+					newname = pick(GLOB.clown_names|GLOB.ai_names|GLOB.mime_names) //pick any old name
 				else
 					return
 
-		for(var/mob/living/M in SLOTH.player_list)
+		for(var/mob/living/M in GLOB.player_list)
 			if(M == src)
 				continue
 			if(!newname || M.real_name == newname)
@@ -231,7 +231,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of unslaved cyborgs
 /proc/active_free_borgs()
 	. = list()
-	for(var/mob/living/silicon/robot/R in SLOTH.living_mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.living_mob_list)
 		if(R.connected_ai)
 			continue
 		if(R.stat == DEAD)
@@ -243,7 +243,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of AI's
 /proc/active_ais(check_mind=0)
 	. = list()
-	for(var/mob/living/silicon/ai/A in SLOTH.living_mob_list)
+	for(var/mob/living/silicon/ai/A in GLOB.living_mob_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
@@ -305,7 +305,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		pois[name] = M
 
 	if(!mobs_only)
-		for(var/atom/A in SLOTH.poi_list)
+		for(var/atom/A in GLOB.poi_list)
 			if(!A || !A.loc)
 				continue
 			pois[avoid_assoc_duplicate_keys(A.name, namecounts)] = A
@@ -314,7 +314,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortNames(SLOTH.mob_list)
+	var/list/sortmob = sortNames(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
@@ -378,7 +378,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else if(istext(whom))
 		key = whom
 		ckey = ckey(whom)
-		C = SLOTH.directory[ckey]
+		C = GLOB.directory[ckey]
 		if(C)
 			M = C.mob
 	else
@@ -583,16 +583,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Repopulates sortedAreas list
 /proc/SortAreas()
-	SLOTH.sortedAreas = list()
+	GLOB.sortedAreas = list()
 
 	for(var/area/A in world)
-		SLOTH.sortedAreas.Add(A)
+		GLOB.sortedAreas.Add(A)
 
-	sortTim(SLOTH.sortedAreas, /proc/cmp_name_asc)
+	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
 
 /area/proc/addSorted()
-	SLOTH.sortedAreas.Add(src)
-	sortTim(SLOTH.sortedAreas, /proc/cmp_name_asc)
+	GLOB.sortedAreas.Add(src)
+	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -608,12 +608,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/areas = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/V in SLOTH.sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(cache[A.type])
 				areas += V
 	else
-		for(var/V in SLOTH.sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(A.type == areatype)
 				areas += V
@@ -633,7 +633,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/turfs = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/V in SLOTH.sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(!cache[A.type])
 				continue
@@ -641,7 +641,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	else
-		for(var/V in SLOTH.sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(A.type != areatype)
 				continue
@@ -773,7 +773,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	if(is_pointed(W))
 		return 1
 
-	if(is_type_in_typecache(W, SLOTH.can_embed_types))
+	if(is_type_in_typecache(W, GLOB.can_embed_types))
 		return 1
 
 
@@ -801,9 +801,9 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_typecache(O, SLOTH.WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(is_type_in_typecache(O, SLOTH.WALLITEMS_INVERSE))
+			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -814,8 +814,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
-		if(is_type_in_typecache(O, SLOTH.WALLITEMS_EXTERNAL) && check_external)
-			if(is_type_in_typecache(O, SLOTH.WALLITEMS_INVERSE))
+		if(is_type_in_typecache(O, GLOB.WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -823,7 +823,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_typecache(O, SLOTH.WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -871,14 +871,14 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	var/initial_chance = chance
 	while(steps > 0)
 		if(prob(chance))
-			step(AM, pick(SLOTH.alldirs))
+			step(AM, pick(GLOB.alldirs))
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--
 
 /proc/living_player_count()
 	var/living_player_count = 0
-	for(var/mob in SLOTH.player_list)
-		if(mob in SLOTH.living_mob_list)
+	for(var/mob in GLOB.player_list)
+		if(mob in GLOB.living_mob_list)
 			living_player_count += 1
 	return living_player_count
 
@@ -1188,7 +1188,7 @@ B --><-- A
 /proc/get_areas_in_z(zlevel)
 	. = list()
 	var/validarea = FALSE
-	for(var/V in SLOTH.sortedAreas)
+	for(var/V in GLOB.sortedAreas)
 		var/area/A = V
 		validarea = TRUE
 		for(var/turf/T in A)
@@ -1254,7 +1254,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		. += round(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, SLOTH.CURRENT_TICKLIMIT))
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, GLOB.CURRENT_TICKLIMIT))
 
 #undef DELTA_CALC
 
@@ -1375,14 +1375,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 /proc/HTTPSGet(url)
 	if(findtext(url, "\""))
-		SLOTH.valid_HTTPSGet = FALSE
+		GLOB.valid_HTTPSGet = FALSE
 
-	if(!SLOTH.valid_HTTPSGet)
+	if(!GLOB.valid_HTTPSGet)
 		if(usr)
 			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
 		else
 			CRASH("Invalid HTTPSGet call on: [url]")
-	SLOTH.valid_HTTPSGet = FALSE
+	GLOB.valid_HTTPSGet = FALSE
 
 	//"This has got to be the ugliest hack I have ever done"
 	//warning, here be dragons

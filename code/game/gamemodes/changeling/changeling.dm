@@ -101,7 +101,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
-	var/changelingcap = min( round(SLOTH.joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(SLOTH.joined_player_list.len/config.changeling_scaling_coeff) )
+	var/changelingcap = min( round(GLOB.joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(GLOB.joined_player_list.len/config.changeling_scaling_coeff) )
 	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
@@ -136,7 +136,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		changeling.objectives += steal_objective
 
 	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/SLOTH.joined_player_list.len))
+	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 		var/datum/objective/destroy/destroy_objective = new
 		destroy_objective.owner = changeling
 		destroy_objective.find_target()

@@ -48,7 +48,7 @@
 	if(usr.stat == 2)
 		return list()
 
-	for(var/mob/living/M in SLOTH.mob_list)
+	for(var/mob/living/M in GLOB.mob_list)
 		if(!M.can_track(usr))
 			continue
 

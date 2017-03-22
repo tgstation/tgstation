@@ -96,7 +96,7 @@ var/list/airlock_overlays = list()
 	wires = new /datum/wires/airlock(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in SLOTH.airlocks)
+			for (var/obj/machinery/door/airlock/A in GLOB.airlocks)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
@@ -208,7 +208,7 @@ var/list/airlock_overlays = list()
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in SLOTH.machines)
+		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
 	return ..()
 

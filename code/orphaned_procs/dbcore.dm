@@ -63,11 +63,11 @@ DBConnection/proc/Connect()
 	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
 		return FALSE
 
-	var/user = SLOTH.sqlfdbklogin
-	var/pass = SLOTH.sqlfdbkpass
-	var/db = SLOTH.sqlfdbkdb
-	var/address = SLOTH.sqladdress
-	var/port = SLOTH.sqlport
+	var/user = GLOB.sqlfdbklogin
+	var/pass = GLOB.sqlfdbkpass
+	var/db = GLOB.sqlfdbkdb
+	var/address = GLOB.sqladdress
+	var/port = GLOB.sqlport
 
 	doConnect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 	. = IsConnected()
@@ -98,7 +98,7 @@ DBConnection/proc/ErrorMsg() return _dm_db_error_msg(_db_con)
 DBConnection/proc/SelectDB(database_name,dbi)
 	if(IsConnected()) Disconnect()
 	//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
-	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[SLOTH.sqladdress]:[SLOTH.sqlport]"]",user,password)
+	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[GLOB.sqladdress]:[GLOB.sqlport]"]",user,password)
 DBConnection/proc/NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
 
 

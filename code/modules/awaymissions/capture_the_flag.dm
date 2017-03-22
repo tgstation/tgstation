@@ -41,7 +41,7 @@
 /obj/item/weapon/twohanded/ctf/process()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
-		for(var/mob/M in SLOTH.player_list)
+		for(var/mob/M in GLOB.player_list)
 			var/area/mob_area = get_area(M)
 			if(istype(mob_area, /area/ctf))
 				to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
@@ -62,7 +62,7 @@
 		dropped(user)
 		return
 	user.anchored = TRUE
-	for(var/mob/M in SLOTH.player_list)
+	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			to_chat(M, "<span class='userdanger'>\The [src] has been taken!</span>")
@@ -73,7 +73,7 @@
 	user.anchored = FALSE
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
-	for(var/mob/M in SLOTH.player_list)
+	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			to_chat(M, "<span class='userdanger'>\The [src] has been dropped!</span>")
@@ -118,7 +118,7 @@
 
 /proc/toggle_all_ctf(mob/user)
 	var/ctf_enabled = FALSE
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		ctf_enabled = CTF.toggle_ctf()
 	message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
 	notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
@@ -163,10 +163,10 @@
 			/obj/effect/ctf,
 			/obj/item/weapon/twohanded/ctf
 		))
-	SLOTH.poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
-	SLOTH.poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	..()
 
 /obj/machinery/capture_the_flag/process()
@@ -218,7 +218,7 @@
 		spawn_team_member(new_team_member)
 		return
 
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
@@ -264,7 +264,7 @@
 		if(flag.team != src.team)
 			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
-			for(var/mob/M in SLOTH.player_list)
+			for(var/mob/M in GLOB.player_list)
 				var/area/mob_area = get_area(M)
 				if(istype(mob_area, /area/ctf))
 					to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
@@ -272,7 +272,7 @@
 			victory()
 
 /obj/machinery/capture_the_flag/proc/victory()
-	for(var/mob/M in SLOTH.mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			to_chat(M, "<span class='narsie'>[team] team wins!</span>")
@@ -280,10 +280,10 @@
 			for(var/obj/item/weapon/twohanded/ctf/W in M)
 				M.dropItemToGround(W)
 			M.dust()
-	for(var/obj/machinery/control_point/control in SLOTH.machines)
+	for(var/obj/machinery/control_point/control in GLOB.machines)
 		control.icon_state = "dominator"
 		control.controlling = null
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.ctf_enabled == TRUE)
 			CTF.points = 0
 			CTF.control_points = 0
@@ -328,7 +328,7 @@
 	ctf_enabled = FALSE
 	arena_cleared = FALSE
 	var/area/A = get_area(src)
-	for(var/i in SLOTH.mob_list)
+	for(var/i in GLOB.mob_list)
 		var/mob/M = i
 		if((get_area(A) == A) && (M.ckey in team_members))
 			M.dust()
@@ -337,13 +337,13 @@
 	recently_dead_ckeys.Cut()
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.ctf_enabled == TRUE)
 			CTF.ctf_gear = CTF.instagib_gear
 			CTF.respawn_cooldown = INSTAGIB_RESPAWN
 
 /obj/machinery/capture_the_flag/proc/normal_mode()
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.ctf_enabled == TRUE)
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
@@ -554,11 +554,11 @@
 
 /obj/structure/barricade/security/ctf/Initialize(mapload)
 	..()
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		CTF.living_barricades += src
 
 /obj/structure/barricade/security/ctf/Destroy()
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		CTF.living_barricades -= src
 	. = ..()
 
@@ -598,7 +598,7 @@
 /obj/effect/ctf/ammo/proc/reload(mob/living/M)
 	if(!ishuman(M))
 		return
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(M in CTF.spawned_mobs)
 			var/outfit = CTF.ctf_gear
 			var/datum/outfit/O = new outfit
@@ -618,7 +618,7 @@
 
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	..()
-	for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		CTF.dead_barricades += src
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
@@ -654,11 +654,11 @@
 
 /obj/machinery/control_point/proc/capture(mob/user)
 	if(do_after(user, 30, target = src))
-		for(var/obj/machinery/capture_the_flag/CTF in SLOTH.machines)
+		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
 				controlling = CTF
 				icon_state = "dominator-[CTF.team]"
-				for(var/mob/M in SLOTH.player_list)
+				for(var/mob/M in GLOB.player_list)
 					var/area/mob_area = get_area(M)
 					if(istype(mob_area, /area/ctf))
 						to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>")

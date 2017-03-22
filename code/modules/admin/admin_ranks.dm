@@ -124,14 +124,14 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			previous_rights = R.rights
 	else
-		if(!SLOTH.dbcon.Connect())
+		if(!GLOB.dbcon.Connect())
 			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			SLOTH.diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+			GLOB.diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admin_ranks()
 			return
 
-		var/DBQuery/query_load_admin_ranks = SLOTH.dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
+		var/DBQuery/query_load_admin_ranks = GLOB.dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
 		if(!query_load_admin_ranks.Execute())
 			return
 		while(query_load_admin_ranks.NextRow())
@@ -159,10 +159,10 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	//clear the datums references
 	if(!target)
 		admin_datums.Cut()
-		for(var/client/C in SLOTH.admins)
+		for(var/client/C in GLOB.admins)
 			C.remove_admin_verbs()
 			C.holder = null
-		SLOTH.admins.Cut()
+		GLOB.admins.Cut()
 		load_admin_ranks()
 		//Clear profile access
 		for(var/A in world.GetConfig("admin"))
@@ -197,16 +197,16 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				continue									//will occur if an invalid rank is provided
 			if(D.rank.rights & R_DEBUG) //grant profile access
 				world.SetConfig("APP/admin", ckey, "role=admin")
-			D.associate(SLOTH.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
-		if(!SLOTH.dbcon.Connect())
+		if(!GLOB.dbcon.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
-			SLOTH.diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
+			GLOB.diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
 			return
 
-		var/DBQuery/query_load_admins = SLOTH.dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		var/DBQuery/query_load_admins = GLOB.dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
 		if(!query_load_admins.Execute())
 			return
 		while(query_load_admins.NextRow())
@@ -224,7 +224,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				continue									//will occur if an invalid rank is provided
 			if(D.rank.rights & R_DEBUG) //grant profile access
 				world.SetConfig("APP/admin", ckey, "role=admin")
-			D.associate(SLOTH.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
@@ -333,7 +333,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			else
 				D = new(R,adm_ckey)	//new admin
 
-			var/client/C = SLOTH.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
+			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
 			updateranktodb(adm_ckey, new_rank)
@@ -362,7 +362,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			D.rank.process_keyword(keyword)
 
-			var/client/C = SLOTH.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
+			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
@@ -372,10 +372,10 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	edit_admin_permissions()
 
 /datum/admins/proc/updateranktodb(ckey,newrank)
-	if(!SLOTH.dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
-	var/DBQuery/query_admin_rank_update = SLOTH.dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query_admin_rank_update = GLOB.dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
 	query_admin_rank_update.Execute()

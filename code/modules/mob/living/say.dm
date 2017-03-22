@@ -161,7 +161,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans)
 	var/list/listening = get_hearers_in_view(message_range, source)
-	for(var/mob/M in SLOTH.player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
 
@@ -224,8 +224,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		switch(lingcheck())
 			if(3)
 				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
-				for(var/mob/M in SLOTH.mob_list)
-					if(M in SLOTH.dead_mob_list)
+				for(var/mob/M in GLOB.mob_list)
+					if(M in GLOB.dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
 						to_chat(M, "[link] [msg]")
 					else
@@ -240,8 +240,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
-				for(var/mob/M in SLOTH.mob_list)
-					if(M in SLOTH.dead_mob_list)
+				for(var/mob/M in GLOB.mob_list)
+					if(M in GLOB.dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
 						to_chat(M, "[link] [msg]")
 					else

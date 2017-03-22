@@ -124,7 +124,7 @@
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
-		var/datum/reagent/R = SLOTH.chemical_reagents_list[chem]
+		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
 		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()

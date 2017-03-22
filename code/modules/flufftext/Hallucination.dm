@@ -148,7 +148,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/fake_flood/proc/Expand()
 	for(var/turf/FT in flood_turfs)
-		for(var/dir in SLOTH.cardinal)
+		for(var/dir in GLOB.cardinal)
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
@@ -216,7 +216,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/simple/clown/Initialize(mapload, var/mob/living/carbon/T,duration)
 	..(loc, T)
-	name = pick(SLOTH.clown_names)
+	name = pick(GLOB.clown_names)
 	QDEL_IN(src,duration)
 
 /obj/effect/hallucination/simple/clown/scary
@@ -441,7 +441,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
-	for(var/mob/living/carbon/human/H in SLOTH.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(H == target)
 			continue
 		if(skip_nearby && (H in view(target)))
@@ -518,7 +518,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
-	for(var/mob/living/carbon/human/H in SLOTH.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(H.stat || H.lying)
 			continue
 		clone = H
@@ -725,7 +725,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			target.client.images.Remove(speech_overlay)
 	else // Radio talk
 		var/list/humans = list()
-		for(var/mob/living/carbon/human/H in SLOTH.living_mob_list)
+		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 			humans += H
 		person = pick(humans)
 		to_chat(target, target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans()))
@@ -1005,7 +1005,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 			to_chat(src, "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>")
 			if(prob(50))
 				var/list/dead_people = list()
-				for(var/mob/dead/observer/G in SLOTH.player_list)
+				for(var/mob/dead/observer/G in GLOB.player_list)
 					dead_people += G
 				var/mob/dead/observer/fakemob = pick(dead_people)
 				if(fakemob)

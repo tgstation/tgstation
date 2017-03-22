@@ -179,7 +179,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
 	var/obj/item/weapon/nullrod/N = locate() in src
-	if(N && !SLOTH.ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
+	if(N && !GLOB.ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
 		return N
 	return 0
 
@@ -459,10 +459,10 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/narsie/New()
 	. = ..()
-	SLOTH.poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/effect/rune/narsie/Destroy()
-	SLOTH.poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/effect/rune/narsie/talismanhide() //can't hide this, and you wouldn't want to
@@ -486,7 +486,7 @@ var/list/teleport_runes = list()
 		log_game("Summon Nar-Sie rune failed - gametype is not cult")
 		return
 
-	if(locate(/obj/singularity/narsie) in SLOTH.poi_list)
+	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Nar-Sie is already on this plane!</span>")
 		log_game("Summon Nar-Sie rune failed - already summoned")

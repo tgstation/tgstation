@@ -107,7 +107,7 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/proc/can_open_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
-			if((job.total_positions <= SLOTH.player_list.len * (max_relative_positions / 100)))
+			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
 					return 1
@@ -137,7 +137,7 @@ var/time_last_changed_position = 0
 		return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""
-		for(var/datum/data/record/t in sortRecord(SLOTH.data_core.general))
+		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 			crew += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 
@@ -350,7 +350,7 @@ var/time_last_changed_position = 0
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
-				SLOTH.data_core.manifest_modify(modify.registered_name, modify.assignment)
+				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.update_label()
 				modify.loc = loc
 				modify.verb_pickup()
@@ -541,7 +541,7 @@ var/time_last_changed_position = 0
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
-				for(var/datum/data/record/t in sortRecord(SLOTH.data_core.general))
+				for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"

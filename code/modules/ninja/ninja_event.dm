@@ -39,7 +39,7 @@ Contents:
 	//selecting a spawn_loc
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
-		for(var/obj/effect/landmark/L in SLOTH.landmarks_list)
+		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				switch(L.name)
 					if("ninjaspawn","carpspawn")
@@ -168,7 +168,7 @@ Contents:
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.real_name = "[pick(SLOTH.ninja_titles)] [pick(SLOTH.ninja_names)]"
+	A.real_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 	A.copy_to(new_ninja)
 	new_ninja.dna.update_dna_identity()
 	new_ninja.equip_space_ninja()

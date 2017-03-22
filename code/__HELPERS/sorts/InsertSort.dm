@@ -8,9 +8,9 @@
 		if(toIndex <= 0)
 			toIndex += L.len + 1
 
-		SLOTH.sortInstance.L = L
-		SLOTH.sortInstance.cmp = cmp
-		SLOTH.sortInstance.associative = associative
+		GLOB.sortInstance.L = L
+		GLOB.sortInstance.cmp = cmp
+		GLOB.sortInstance.associative = associative
 
-		SLOTH.sortInstance.binarySort(fromIndex, toIndex, fromIndex)
+		GLOB.sortInstance.binarySort(fromIndex, toIndex, fromIndex)
 	return L

@@ -239,7 +239,7 @@
 	var/turf/position = get_turf(src)
 
 	var/jammed = FALSE
-	for(var/obj/item/device/jammer/jammer in SLOTH.active_jammers)
+	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
 		if(get_dist(position,get_turf(jammer)) < jammer.range)
 			jammed = TRUE
 			break
@@ -265,7 +265,7 @@
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
-		var/datum/data/record/findjob = find_record("name", voice, SLOTH.data_core.general)
+		var/datum/data/record/findjob = find_record("name", voice, GLOB.data_core.general)
 
 		if(voice != real_name)
 			voicemask = 1

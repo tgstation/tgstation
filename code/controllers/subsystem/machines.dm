@@ -19,7 +19,7 @@ GLOBAL_REAL(SSmachine, /datum/controller/subsystem/machines)
 		qdel(PN)
 	powernets.Cut()
 
-	for(var/obj/structure/cable/PC in SLOTH.cable_list)
+	for(var/obj/structure/cable/PC in GLOB.cable_list)
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)

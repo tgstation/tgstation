@@ -30,10 +30,10 @@
 		return
 
 	if(!holder)
-		if(!SLOTH.ooc_allowed)
+		if(!GLOB.ooc_allowed)
 			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
 			return
-		if(!SLOTH.dooc_allowed && (mob.stat == DEAD))
+		if(!GLOB.dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
 			return
 		if(prefs.muted & MUTE_OOC)
@@ -59,7 +59,7 @@
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
-	for(var/client/C in SLOTH.clients)
+	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
@@ -74,13 +74,13 @@
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
-		if(toggle != SLOTH.ooc_allowed)
-			SLOTH.ooc_allowed = toggle
+		if(toggle != GLOB.ooc_allowed)
+			GLOB.ooc_allowed = toggle
 		else
 			return
 	else //otherwise just toggle it
-		SLOTH.ooc_allowed = !SLOTH.ooc_allowed
-	to_chat(world, "<B>The OOC channel has been globally [SLOTH.ooc_allowed ? "enabled" : "disabled"].</B>")
+		GLOB.ooc_allowed = !GLOB.ooc_allowed
+	to_chat(world, "<B>The OOC channel has been globally [GLOB.ooc_allowed ? "enabled" : "disabled"].</B>")
 
 var/global/normal_ooc_colour = OOC_COLOR
 
@@ -129,8 +129,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Admin"
 	set desc ="Check the admin notice if it has been set"
 
-	if(SLOTH.admin_notice)
-		to_chat(src, "<span class='boldnotice'>Admin Notice:</span>\n \t [SLOTH.admin_notice]")
+	if(GLOB.admin_notice)
+		to_chat(src, "<span class='boldnotice'>Admin Notice:</span>\n \t [GLOB.admin_notice]")
 	else
 		to_chat(src, "<span class='notice'>There are no admin notices at the moment.</span>")
 
@@ -139,8 +139,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "OOC"
 	set desc ="Check the Message of the Day"
 
-	if(SLOTH.join_motd)
-		to_chat(src, "<div class=\"motd\">[SLOTH.join_motd]</div>")
+	if(GLOB.join_motd)
+		to_chat(src, "<div class=\"motd\">[GLOB.join_motd]</div>")
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
@@ -169,7 +169,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(SLOTH.clients)
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(GLOB.clients)
 	if(!selection)
 		return
 	if(selection == src)

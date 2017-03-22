@@ -216,7 +216,7 @@
 				T.doSetup()
 				if(prob(25))
 					var/list/validchoices = list()
-					for(var/mob/living/carbon/human/M in SLOTH.mob_list)
+					for(var/mob/living/carbon/human/M in GLOB.mob_list)
 						validchoices += M
 					var/mob/living/carbon/human/chosen = pick(validchoices)
 					var/datum/dna/toDoppel = chosen.dna
@@ -241,7 +241,7 @@
 				if(shouldDoppel)
 					if(shouldDoppel == "Yes")
 						var/list/validchoices = list()
-						for(var/mob/living/carbon/human/M in SLOTH.mob_list)
+						for(var/mob/living/carbon/human/M in GLOB.mob_list)
 							validchoices += M
 
 						var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
@@ -366,14 +366,14 @@
 
 	switch(traitorType)
 		if(SNPC_BRUTE) // SMASH KILL RAAARGH
-			traitorTarget = pick(SLOTH.mob_list)
+			traitorTarget = pick(GLOB.mob_list)
 		if(SNPC_STEALTH) // Shhh we is sneekies
 			var/A = pick(typesof(/datum/objective_item/steal) - /datum/objective_item/steal)
 			var/datum/objective_item/steal/S = new A
 			traitorTarget = locate(S.targetitem) in world
 		if(SNPC_MARTYR) // MY LIFE FOR SPESZUL
 			var/targetType = pick(/obj/machinery/gravity_generator/main/station,/obj/machinery/power/smes/engineering,/obj/machinery/telecomms/hub)
-			traitorTarget = locate(targetType) in SLOTH.machines
+			traitorTarget = locate(targetType) in GLOB.machines
 		if(SNPC_PSYCHO) // YOU'RE LIKE A FLESH BICYLE AND I WANT TO DISMANTLE YOU
 			traitorTarget = null
 
@@ -579,7 +579,7 @@
 	//VIEW FUNCTIONS
 
 	//doorscan is now integrated into life and runs before all other procs
-	for(var/dir in SLOTH.alldirs)
+	for(var/dir in GLOB.alldirs)
 		var/turf/T = get_step(src,dir)
 		if(T)
 			for(var/obj/machinery/door/D in T.contents)
@@ -1133,7 +1133,7 @@
 
 	for(var/mob/living/carbon/human/C in nearby)
 		var/perpname = C.get_face_name(C.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, SLOTH.data_core.security)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R && R.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")

@@ -236,7 +236,7 @@
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	var/has_people = FALSE
 
-	for(var/mob/living/player in SLOTH.player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(player.mind)
 			if(player.stat != DEAD)
 				if(issilicon(player)) //Borgs are technically dead anyways
@@ -323,7 +323,7 @@
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in SLOTH.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
@@ -337,7 +337,7 @@
 
 				//now move the actual emergency shuttle to its transit dock
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in SLOTH.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_LAUNCH, areas)
 				enterTransit()
@@ -352,7 +352,7 @@
 		if(SHUTTLE_ESCAPE)
 			if(sound_played && time_left <= HYPERSPACE_END_TIME)
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in SLOTH.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
 			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)

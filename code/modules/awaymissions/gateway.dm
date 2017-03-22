@@ -17,7 +17,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway/Initialize()
 	..()
-	randomspawns = SLOTH.awaydestinations
+	randomspawns = GLOB.awaydestinations
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -33,7 +33,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/turf/T = loc
 	var/ready = FALSE
 
-	for(var/i in SLOTH.alldirs)
+	for(var/i in GLOB.alldirs)
 		T = get_step(loc, i)
 		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
 		if(G)

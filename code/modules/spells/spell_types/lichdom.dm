@@ -127,7 +127,7 @@
 			marked_item.name = "ensouled [marked_item.name]"
 			marked_item.desc += "\nA terrible aura surrounds this item, its very existence is offensive to life itself..."
 			marked_item.add_atom_colour("#003300", ADMIN_COLOUR_PRIORITY)
-			SLOTH.poi_list |= marked_item
+			GLOB.poi_list |= marked_item
 
 			to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
 			M.set_species(/datum/species/skeleton)

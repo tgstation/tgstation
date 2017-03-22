@@ -94,11 +94,11 @@ var/global/list/FrozenAccounts = list()
 /datum/article/proc/generateAuthorName()
 	switch(rand(1,3))
 		if (1)
-			return "[consonant()]. [pick(SLOTH.last_names)]"
+			return "[consonant()]. [pick(GLOB.last_names)]"
 		if (2)
-			return "[prob(50) ? pick(SLOTH.first_names_male) : pick(SLOTH.first_names_female)] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick(SLOTH.last_names)]"
+			return "[prob(50) ? pick(GLOB.first_names_male) : pick(GLOB.first_names_female)] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick(GLOB.last_names)]"
 		if (3)
-			return "[prob(50) ? pick(SLOTH.first_names_male) : pick(SLOTH.first_names_female)] \"[prob(50) ? pick(SLOTH.first_names_male) : pick(SLOTH.first_names_female)]\" [pick(SLOTH.last_names)]"
+			return "[prob(50) ? pick(GLOB.first_names_male) : pick(GLOB.first_names_female)] \"[prob(50) ? pick(GLOB.first_names_male) : pick(GLOB.first_names_female)]\" [pick(GLOB.last_names)]"
 
 /datum/article/proc/formatSpacetime()
 	var/ticksc = round(ticks/100)

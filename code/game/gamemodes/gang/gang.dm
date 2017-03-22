@@ -248,7 +248,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	return gang_bosses
 
 /proc/determine_domination_time(var/datum/gang/G)
-	return max(180,900 - (round((G.territory.len/SLOTH.start_state.num_territories)*100, 1) * 12))
+	return max(180,900 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 12))
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
@@ -269,7 +269,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		ticker.news_report = GANG_TAKEOVER
 
 	for(var/datum/gang/G in gangs)
-		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/SLOTH.start_state.num_territories)*100, 1)]% control of the station!</b>"
+		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/GLOB.start_state.num_territories)*100, 1)]% control of the station!</b>"
 		text += "<br>The [G.name] Gang Bosses were:"
 		for(var/datum/mind/boss in G.bosses)
 			text += printplayer(boss, 1)

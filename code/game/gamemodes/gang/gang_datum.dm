@@ -240,7 +240,7 @@
 	territory_new = list()
 	territory_lost = list()
 
-	var/control = round((territory.len/SLOTH.start_state.num_territories)*100, 1)
+	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*"
 	message_gangtools(message)
 

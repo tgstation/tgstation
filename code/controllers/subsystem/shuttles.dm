@@ -76,12 +76,12 @@ GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(SLOTH.transit_markers.len == 0)
+	if(GLOB.transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
 	// transit zone
-	var/turf/A = get_turf(SLOTH.transit_markers[1])
-	var/turf/B = get_turf(SLOTH.transit_markers[2])
+	var/turf/A = get_turf(GLOB.transit_markers[1])
+	var/turf/B = get_turf(GLOB.transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -90,11 +90,11 @@ GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	if(SLOTH.transit_markers.len == 0)
+	if(GLOB.transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
-	var/turf/A = get_turf(SLOTH.transit_markers[1])
-	var/turf/B = get_turf(SLOTH.transit_markers[2])
+	var/turf/A = get_turf(GLOB.transit_markers[1])
+	var/turf/B = get_turf(GLOB.transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -258,7 +258,7 @@ GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
-	for(var/thing in SLOTH.shuttle_caller_list)
+	for(var/thing in GLOB.shuttle_caller_list)
 		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)

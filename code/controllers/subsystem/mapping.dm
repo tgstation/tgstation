@@ -141,11 +141,11 @@ GLOBAL_REAL(SSmapping, /datum/controller/subsystem/mapping)
 #undef INIT_ANNOUNCE
 
 /datum/controller/subsystem/mapping/proc/maprotate()
-	var/players = SLOTH.clients.len
+	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
 	if(global.config.allow_map_voting)
-		for (var/client/c in SLOTH.clients)
+		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
 				if (global.config.defaultmap)

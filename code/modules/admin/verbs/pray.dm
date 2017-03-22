@@ -35,7 +35,7 @@
 
 	msg = "<span class='adminnotice'>\icon[cross]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)] [ADMIN_SMITE(src)]:</b> [msg]</span>"
 
-	for(var/client/C in SLOTH.admins)
+	for(var/client/C in GLOB.admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(C, msg)
 			if(C.prefs.toggles & SOUND_PRAYERS)
@@ -53,8 +53,8 @@
 		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
 		[ADMIN_CENTCOM_REPLY(Sender)]:</b> \
 		[msg]</span>"
-	to_chat(SLOTH.admins, msg)
-	for(var/obj/machinery/computer/communications/C in SLOTH.machines)
+	to_chat(GLOB.admins, msg)
+	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Syndicate_announce(text , mob/Sender)
@@ -64,8 +64,8 @@
 		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
 		[ADMIN_SYNDICATE_REPLY(Sender)]:</b> \
 		[msg]</span>"
-	to_chat(SLOTH.admins, msg)
-	for(var/obj/machinery/computer/communications/C in SLOTH.machines)
+	to_chat(GLOB.admins, msg)
+	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Nuke_request(text , mob/Sender)
@@ -76,6 +76,6 @@
 		[ADMIN_CENTCOM_REPLY(Sender)] \
 		[ADMIN_SET_SD_CODE]:</b> \
 		[msg]</span>"
-	to_chat(SLOTH.admins, msg)
-	for(var/obj/machinery/computer/communications/C in SLOTH.machines)
+	to_chat(GLOB.admins, msg)
+	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()

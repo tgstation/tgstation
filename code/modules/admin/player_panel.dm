@@ -339,7 +339,7 @@
 			dat += "If limits past: <a href='?_src_=holder;toggle_noncontinuous_behavior=1'>[ticker.mode.round_ends_with_antag_death ? "End The Round" : "Continue As Extended"]</a><BR>"
 		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a>"
-		var/connected_players = SLOTH.clients.len
+		var/connected_players = GLOB.clients.len
 		var/lobby_players = 0
 		var/observers = 0
 		var/observers_connected = 0
@@ -350,7 +350,7 @@
 		var/other_players = 0
 		var/living_skipped = 0
 		var/drones = 0
-		for(var/mob/M in SLOTH.mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(M.ckey)
 				if(isnewplayer(M))
 					lobby_players++
@@ -395,7 +395,7 @@
 					dat += "<tr><td><i><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a> Nuclear Operative Body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 			dat += "</table><br><table><tr><td><B>Nuclear Disk(s)</B></td></tr>"
-			for(var/obj/item/weapon/disk/nuclear/N in SLOTH.poi_list)
+			for(var/obj/item/weapon/disk/nuclear/N in GLOB.poi_list)
 				dat += "<tr><td>[N.name], "
 				var/atom/disk_loc = N.loc
 				while(!isturf(disk_loc))
@@ -441,7 +441,7 @@
 			dat += "</table>"
 
 		for(var/datum/gang/G in ticker.mode.gangs)
-			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: <a href='?_src_=holder;gangpoints=\ref[G]'>[G.points] Influence</a> | [round((G.territory.len/SLOTH.start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
+			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: <a href='?_src_=holder;gangpoints=\ref[G]'>[G.points] Influence</a> | [round((G.territory.len/GLOB.start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
 			for(var/datum/mind/N in G.bosses)
 				var/mob/M = N.current
 				if(!M)
@@ -548,7 +548,7 @@
 					dat += "<td><A href='?priv_msg=[abductor.key]'>PM</A></td>"
 			dat += "</table>"
 			dat += "<br><table cellspacing=5><tr><td><B>Abductees</B></td><td></td><td></td></tr>"
-			for(var/obj/machinery/abductor/experiment/E in SLOTH.machines)
+			for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
 				for(var/datum/mind/abductee in E.abductee_minds)
 					var/mob/M = abductee.current
 					if(M)
@@ -591,7 +591,7 @@
 			dat += "</table>"
 
 		var/list/blob_minds = list()
-		for(var/mob/camera/blob/B in SLOTH.mob_list)
+		for(var/mob/camera/blob/B in GLOB.mob_list)
 			blob_minds |= B.mind
 
 		if(istype(ticker.mode, /datum/game_mode/blob) || blob_minds.len)

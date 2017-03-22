@@ -70,18 +70,18 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			init_subtypes(/datum/controller/subsystem, subsystems)
 		Master = src
 	
-	if(!SLOTH)
-		SLOTH = new
+	if(!GLOB)
+		GLOB = new
 		#ifdef TESTING
 		var/start_time = REALTIMEOFDAY
 		#endif
-		SLOTH.InitEverything()
+		GLOB.InitEverything()
 		#ifdef TESTING
 		testing("Globals initialization took [(REALTIMEOFDAY - start_time)/10]s.")
 		#endif
 	
 	#ifndef PROTECT_GLOBAL_VARS_FROM_VV
-	global_vars = SLOTH
+	global_vars = GLOB
 	#endif
 
 /datum/controller/master/Destroy()
@@ -98,14 +98,14 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 //	-1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
-	if (world.time < SLOTH.MC_restart_timeout)
+	if (world.time < GLOB.MC_restart_timeout)
 		return 0
-	if (world.time < SLOTH.MC_restart_clear)
-		SLOTH.MC_restart_count *= 0.5
+	if (world.time < GLOB.MC_restart_clear)
+		GLOB.MC_restart_count *= 0.5
 
-	var/delay = 50 * ++SLOTH.MC_restart_count
-	SLOTH.MC_restart_timeout = world.time + delay
-	SLOTH.MC_restart_clear = world.time + (delay * 2)
+	var/delay = 50 * ++GLOB.MC_restart_count
+	GLOB.MC_restart_timeout = world.time + delay
+	GLOB.MC_restart_clear = world.time + (delay * 2)
 	Master.processing = 0 //stop ticking this one
 	try
 		new/datum/controller/master()
@@ -154,13 +154,13 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
-	SLOTH.CURRENT_TICKLIMIT = config.tick_limit_mc_init
+	GLOB.CURRENT_TICKLIMIT = config.tick_limit_mc_init
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
-	SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+	GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
@@ -263,7 +263,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
-			SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+			GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -271,7 +271,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		//	because sleeps are processed in the order received, so longer sleeps are more likely to run first
 		if (world.tick_usage > TICK_LIMIT_MC)
 			sleep_delta += 2
-			SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
+			GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
 			sleep(world.tick_lag * (processing + sleep_delta))
 			continue
 
@@ -300,7 +300,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			if (!error_level)
 				iteration++
 			error_level++
-			SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+			GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -312,7 +312,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 				if (!error_level)
 					iteration++
 				error_level++
-				SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+				GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				sleep(10)
 				continue
 		error_level--
@@ -323,7 +323,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		iteration++
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
-		SLOTH.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
+		GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
 		sleep(world.tick_lag * (processing + sleep_delta))
 
 
@@ -412,7 +412,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			else
 				tick_precentage = tick_remaining
 
-			SLOTH.CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
+			GLOB.CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
 
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE

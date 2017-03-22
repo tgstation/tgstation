@@ -85,7 +85,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(SLOTH.alldirs + first_move) //give the first move direction a bit of favoring.
+		var/move_dir = pick(GLOB.alldirs + first_move) //give the first move direction a bit of favoring.
 		if(target && prob(60))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -137,7 +137,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
 		target.orbiting_balls += src
-		SLOTH.poi_list -= src
+		GLOB.poi_list -= src
 		target.dissipate_strength = target.orbiting_balls.len
 
 	. = ..()

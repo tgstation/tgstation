@@ -180,7 +180,7 @@
 /datum/stockEvent/arrest/transition()
 	switch (phase_id)
 		if (0)
-			tname = "[female ? pick(SLOTH.first_names_female) : pick(SLOTH.first_names_male)] [pick(SLOTH.last_names)]"
+			tname = "[female ? pick(GLOB.first_names_female) : pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			var/datum/article/A = generateArrestArticle()
 			if (!A.opinion)

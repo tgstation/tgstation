@@ -189,11 +189,11 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	switch(clockwork_objective)
 		if(CLOCKCULT_ESCAPE)
-			if(SLOTH.clockwork_gateway_activated)
+			if(GLOB.clockwork_gateway_activated)
 				ticker.news_report = CLOCK_PROSELYTIZATION
 				return TRUE
 		if(CLOCKCULT_GATEWAY)
-			if(SLOTH.ratvar_awakens)
+			if(GLOB.ratvar_awakens)
 				ticker.news_report = CLOCK_SUMMON
 				return TRUE
 	ticker.news_report = CULT_FAILURE
@@ -212,7 +212,7 @@ Credit where due:
 			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
 		else
 			var/half_victory = FALSE
-			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in SLOTH.all_clockwork_objects
+			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
 			if(G)
 				half_victory = TRUE
 			if(half_victory)
@@ -223,8 +223,8 @@ Credit where due:
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
 		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]"
-		text += "<br>Ratvar's servants had <b>[SLOTH.clockwork_caches]</b> Tinkerer's Caches."
-		text += "<br><b>Construction Value(CV)</b> was: <b>[SLOTH.clockwork_construction_value]</b>"
+		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
+		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
 		var/list/scripture_states = scripture_unlock_check()
 		for(var/i in scripture_states)
 			if(i != SCRIPTURE_DRIVER)

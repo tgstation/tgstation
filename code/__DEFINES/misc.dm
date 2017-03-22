@@ -326,9 +326,9 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
 //debug printing macros
-#define debug_world(msg) if (SLOTH.Debug2) to_chat(world, "DEBUG: [msg]")
-#define debug_admins(msg) if (SLOTH.Debug2) to_chat(SLOTH.admins, "DEBUG: [msg]")
-#define debug_world_log(msg) if (SLOTH.Debug2) log_world("DEBUG: [msg]")
+#define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
+#define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}

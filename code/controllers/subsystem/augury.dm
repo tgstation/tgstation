@@ -33,7 +33,7 @@ GLOBAL_REAL(SSaugury, /datum/controller/subsystem/augury)
 			biggest_threat = threat
 
 	if(doombringers.len)
-		for(var/i in SLOTH.player_list)
+		for(var/i in GLOB.player_list)
 			if(isobserver(i) && (!(observers_given_action[i])))
 				var/datum/action/innate/augury/A = new
 				A.Grant(i)

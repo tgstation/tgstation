@@ -9,8 +9,8 @@ GLOBAL_VAR(string_filename_current_key)
 /proc/strings_replacement(filename, key)
 	load_strings_file(filename)
 
-	if((filename in SLOTH.string_cache) && (key in SLOTH.string_cache[filename]))
-		var/response = pick(SLOTH.string_cache[filename][key])
+	if((filename in GLOB.string_cache) && (key in GLOB.string_cache[filename]))
+		var/response = pick(GLOB.string_cache[filename][key])
 		var/regex/r = regex("@pick\\((\\D+?)\\)", "g")
 		response = r.Replace(response, /proc/strings_subkey_lookup)
 		return response
@@ -19,23 +19,23 @@ GLOBAL_VAR(string_filename_current_key)
 
 /proc/strings(filename as text, key as text)
 	load_strings_file(filename)
-	if((filename in SLOTH.string_cache) && (key in SLOTH.string_cache[filename]))
-		return SLOTH.string_cache[filename][key]
+	if((filename in GLOB.string_cache) && (key in GLOB.string_cache[filename]))
+		return GLOB.string_cache[filename][key]
 	else
 		CRASH("strings list not found: strings/[filename], index=[key]")
 
 /proc/strings_subkey_lookup(match, group1)
-	return pick_list(SLOTH.string_filename_current_key, group1)
+	return pick_list(GLOB.string_filename_current_key, group1)
 
 /proc/load_strings_file(filename)
-	SLOTH.string_filename_current_key = filename
-	if(filename in SLOTH.string_cache)
+	GLOB.string_filename_current_key = filename
+	if(filename in GLOB.string_cache)
 		return //no work to do
 
-	if(!SLOTH.string_cache)
-		SLOTH.string_cache = new
+	if(!GLOB.string_cache)
+		GLOB.string_cache = new
 
 	if(fexists("strings/[filename]"))
-		SLOTH.string_cache[filename] = json_load("strings/[filename]")
+		GLOB.string_cache[filename] = json_load("strings/[filename]")
 	else
 		CRASH("file not found: strings/[filename]")

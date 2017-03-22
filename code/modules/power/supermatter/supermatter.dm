@@ -123,7 +123,7 @@
 	. = ..()
 	countdown = new(src)
 	countdown.start()
-	SLOTH.poi_list |= src
+	GLOB.poi_list |= src
 	radio = new(src)
 	radio.listening = 0
 	investigate_log("has been created.", "supermatter")
@@ -134,7 +134,7 @@
 	if(radio)
 		qdel(radio)
 		radio = null
-	SLOTH.poi_list -= src
+	GLOB.poi_list -= src
 	if(countdown)
 		qdel(countdown)
 		countdown = null
@@ -158,7 +158,7 @@
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	var/turf/T = get_turf(src)
-	for(var/mob/M in SLOTH.mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
 			M << 'sound/magic/Charge.ogg'
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
@@ -357,7 +357,7 @@
 				radio.talk_into(src, "Warning: Critical coolant mass reached.")
 
 		if(damage > explosion_point)
-			for(var/mob in SLOTH.living_mob_list)
+			for(var/mob in GLOB.living_mob_list)
 				var/mob/living/L = mob
 				if(istype(L) && L.z == z)
 					if(ishuman(mob))
@@ -396,7 +396,7 @@
 	investigate_log("Supermatter shard consumed by singularity.","singulo")
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
-	for(var/mob/M in SLOTH.mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
 			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
 			to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")

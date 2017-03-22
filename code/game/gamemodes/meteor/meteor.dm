@@ -33,7 +33,7 @@
 	var/text
 	var/survivors = 0
 
-	for(var/mob/living/player in SLOTH.player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(player.stat != DEAD)
 			++survivors
 

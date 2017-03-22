@@ -13,7 +13,7 @@
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
-	for(var/dir in SLOTH.cardinal)
+	for(var/dir in GLOB.cardinal)
 		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)
 			table.computer = src

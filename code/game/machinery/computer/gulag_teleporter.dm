@@ -55,8 +55,8 @@
 		prisoner_list["name"] = prisoner.real_name
 		if(id)
 			can_teleport = TRUE
-		if(!isnull(SLOTH.data_core.general))
-			for(var/r in SLOTH.data_core.security)
+		if(!isnull(GLOB.data_core.general))
+			for(var/r in GLOB.data_core.security)
 				var/datum/data/record/R = r
 				if(R.fields["name"] == prisoner_list["name"])
 					temporary_record = R
@@ -135,7 +135,7 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
-	for(dir in SLOTH.cardinal)
+	for(dir in GLOB.cardinal)
 		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, dir))
 		if(teleporterf && teleporterf.is_operational())
 			return teleporterf

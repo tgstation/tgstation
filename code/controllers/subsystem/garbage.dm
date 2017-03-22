@@ -264,7 +264,7 @@ GLOBAL_REAL(SSgarbage, /datum/controller/subsystem/garbage_collector)
 
 	testing("Beginning search for references to a [type].")
 	last_find_references = world.time
-	DoSearchVar(SLOTH)
+	DoSearchVar(GLOB)
 	for(var/datum/thing in world)
 		DoSearchVar(thing, "WorldRef: [thing]")
 	testing("Completed search for references to a [type].")

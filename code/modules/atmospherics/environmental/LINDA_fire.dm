@@ -61,7 +61,7 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
-	setDir(pick(SLOTH.cardinal))
+	setDir(pick(GLOB.cardinal))
 	air_update_turf()
 
 
