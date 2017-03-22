@@ -15,7 +15,7 @@ var/global/power_transmitted = 0
 /obj/machinery/power/PTL/New()
 	..()
 	//var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/PTL(null) No idea how circuit board construction works for now.
-	B.apply_default_parts(src)
+	//B.apply_default_parts(src)
 
 /obj/machinery/power/PTL/proc/transmit_power(power)	//PUT WHATEVER YOU WANT TO HAPPEN WHEN IT REACHES ZLEVEL EDGE/CENTRAL COMMAND HERE!
 	global.power_transmitted += power
@@ -26,7 +26,7 @@ var/global/power_transmitted = 0
 	for(var/iter1 = -1, iter1 < 2, iter1++)
 		for(var/iter2 = -1, iter2 < 2, iter2++)
 			try_to_use += locate((x + iter1), (y + iter2), z)
-	for(var/turf/T = try_to_use)
+	for(var/turf/T in try_to_use)
 		if(..(T))
 			return TRUE
 	return FALSE
