@@ -112,7 +112,7 @@
 
 /obj/effect/clockwork/spatial_gateway/Bumped(atom/A)
 	..()
-	if(isliving(A) || istype(A, /obj/item))
+	if(A && !QDELETED(A))
 		pass_through_gateway(A)
 
 /obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
