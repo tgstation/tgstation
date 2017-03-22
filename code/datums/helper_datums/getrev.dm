@@ -66,9 +66,15 @@ var/global/datum/getrev/revdata = new()
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/details = ""
-		if(has_pr_details)
-			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
-		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br>"
+		var/is_secret = findtext(testmerge[line]["title"], "[s]")
+		if(!is_secret)
+			if(has_pr_details)
+				details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
+			. += "<a href='[config.githuburl]/pull/[line]'>"
+		. += "#[line]"
+		if(!is_secret)
+			. += "[details]</a>"
+		. += "<br>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"
