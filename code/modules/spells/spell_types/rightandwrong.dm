@@ -203,17 +203,17 @@
 
 
 /proc/summonevents()
-	if(!SSevent.wizardmode)
-		SSevent.frequency_lower = 600									//1 minute lower bound
-		SSevent.frequency_upper = 3000									//5 minutes upper bound
-		SSevent.toggleWizardmode()
-		SSevent.reschedule()
+	if(!SSevents.wizardmode)
+		SSevents.frequency_lower = 600									//1 minute lower bound
+		SSevents.frequency_upper = 3000									//5 minutes upper bound
+		SSevents.toggleWizardmode()
+		SSevents.reschedule()
 
 	else 																//Speed it up
-		SSevent.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
-		if(SSevent.frequency_upper < SSevent.frequency_lower) //Sanity
-			SSevent.frequency_upper = SSevent.frequency_lower
+		SSevents.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
+		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
+			SSevents.frequency_upper = SSevents.frequency_lower
 
-		SSevent.reschedule()
-		message_admins("Summon Events intensifies, events will now occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes.")
+		SSevents.reschedule()
+		message_admins("Summon Events intensifies, events will now occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes.")
 		log_game("Summon Events was increased!")

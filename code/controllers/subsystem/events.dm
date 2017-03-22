@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/events/SSevent
+var/datum/controller/subsystem/events/SSevents
 
 /datum/controller/subsystem/events
 	name = "Events"
@@ -17,7 +17,7 @@ var/datum/controller/subsystem/events/SSevent
 
 
 /datum/controller/subsystem/events/New()
-	NEW_SS_GLOBAL(SSevent)
+	NEW_SS_GLOBAL(SSevents)
 
 
 /datum/controller/subsystem/events/Initialize(time, zlevel)
@@ -133,7 +133,7 @@ var/datum/controller/subsystem/events/SSevent
 	var/normal 	= ""
 	var/magic 	= ""
 	var/holiday = ""
-	for(var/datum/round_event_control/E in SSevent.control)
+	for(var/datum/round_event_control/E in SSevents.control)
 		dat = "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
 		if(E.holidayID)
 			holiday	+= dat
@@ -156,7 +156,7 @@ var/datum/controller/subsystem/events/SSevent
 //Uncommenting ALLOW_HOLIDAYS in config.txt will enable holidays
 
 //It's easy to add stuff. Just add a holiday datum in code/modules/holiday/holidays.dm
-//You can then check if it's a special day in any code in the game by doing if(SSevent.holidays["Groundhog Day"])
+//You can then check if it's a special day in any code in the game by doing if(SSevents.holidays["Groundhog Day"])
 
 //You can also make holiday random events easily thanks to Pete/Gia's system.
 //simply make a random event normally, then assign it a holidayID string which matches the holiday's name.
@@ -193,7 +193,7 @@ var/datum/controller/subsystem/events/SSevent
 
 /datum/controller/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode
-	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes" : "disabled"]!")
+	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 
 

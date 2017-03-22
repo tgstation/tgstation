@@ -82,10 +82,10 @@ var/religion_name = null
 		name = ""
 
 	// Prefix
-	for(var/holiday_name in SSevent.holidays)
+	for(var/holiday_name in SSevents.holidays)
 		if(holiday_name == "Friday the 13th")
 			random = 13
-		var/datum/holiday/holiday = SSevent.holidays[holiday_name]
+		var/datum/holiday/holiday = SSevents.holidays[holiday_name]
 		name = holiday.getStationPrefix()
 		//get normal name
 	if(!name)

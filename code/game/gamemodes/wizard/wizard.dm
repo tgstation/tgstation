@@ -168,9 +168,9 @@
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return ..()
 
-	if(SSevent.wizardmode) //If summon events was active, turn it off
-		SSevent.toggleWizardmode()
-		SSevent.resetFrequency()
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
 
 	return ..()
 

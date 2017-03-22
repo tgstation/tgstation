@@ -780,7 +780,7 @@ var/list/TYPES_SHORTCUTS = list(
 	if(!holder)
 		return
 
-	SSevent.scheduled = world.time
+	SSevents.scheduled = world.time
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] pumped a random event.</span>")
 	feedback_add_details("admin_verb","PRE")

@@ -524,7 +524,7 @@
 		if("events")
 			if(!check_rights(R_FUN))
 				return
-			if(!SSevent.wizardmode)
+			if(!SSevents.wizardmode)
 				if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
 					summonevents()
 					feedback_inc("admin_secrets_fun_used",1)
@@ -537,8 +537,8 @@
 						feedback_inc("admin_secrets_fun_used",1)
 						feedback_add_details("admin_secrets_fun_used","SE")
 					if("Turn Off Summon Events")
-						SSevent.toggleWizardmode()
-						SSevent.resetFrequency()
+						SSevents.toggleWizardmode()
+						SSevents.resetFrequency()
 
 		if("dorf")
 			if(!check_rights(R_FUN))

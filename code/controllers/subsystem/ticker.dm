@@ -211,10 +211,10 @@ var/datum/controller/subsystem/ticker/SSticker
 
 	current_state = GAME_STATE_PLAYING
 
-	if(SSevent.holidays)
+	if(SSevents.holidays)
 		to_chat(world, "<font color='blue'>and...</font>")
-		for(var/holidayname in SSevent.holidays)
-			var/datum/holiday/holiday = SSevent.holidays[holidayname]
+		for(var/holidayname in SSevents.holidays)
+			var/datum/holiday/holiday = SSevents.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()

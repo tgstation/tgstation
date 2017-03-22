@@ -621,7 +621,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(SSaugury)
 	SearchVar(SScommunications)
 	SearchVar(SSdisease)
-	SearchVar(SSevent)
+	SearchVar(SSevents)
 	SearchVar(SSfire_burning)
 	SearchVar(SSgarbage)
 	SearchVar(SSicon_smooth)

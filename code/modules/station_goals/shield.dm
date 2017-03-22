@@ -166,7 +166,7 @@
 			change_meteor_chance(0.5)
 
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
-	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevent.control
+	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevents.control
 	if(E)
 		E.weight *= mod
 
