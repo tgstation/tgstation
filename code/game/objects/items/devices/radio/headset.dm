@@ -301,6 +301,8 @@
 	return
 
 /obj/item/device/radio/headset/AltClick(mob/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+		return
 	if (command)
 		use_command = !use_command
-		to_chat(user, "<span class='notice'>You toggle high-volume mode.</span>")
+		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")
