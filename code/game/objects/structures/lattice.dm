@@ -17,7 +17,7 @@
 	smooth = SMOOTH_MORE
 	//	flags = CONDUCT
 
-/obj/structure/lattice/New()
+/obj/structure/lattice/Initialize(mapload)
 	..()
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
@@ -25,18 +25,17 @@
 	stored = new/obj/item/stack/rods(src)
 
 /obj/structure/lattice/Destroy()
-	qdel(stored)
-	stored = null
-	return ..()
+	QDEL_NULL(stored)
+	. = ..()
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
 /obj/structure/lattice/ratvar_act()
 	if(IsEven(x + y))
-		new/obj/structure/lattice/clockwork(loc)
+		new /obj/structure/lattice/clockwork(loc)
 	else
-		new/obj/structure/lattice/clockwork/large(loc)
+		new /obj/structure/lattice/clockwork/large(loc)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/wirecutters))
@@ -61,13 +60,14 @@
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
-/obj/structure/lattice/clockwork/New()
+/obj/structure/lattice/clockwork/Initialize()
 	..()
 	ratvar_act()
 
 /obj/structure/lattice/clockwork/ratvar_act()
 	if(IsOdd(x+y))
-		new/obj/structure/lattice/clockwork/large(loc)
+		// this will delete the old one.
+		new /obj/structure/lattice/clockwork/large(loc)
 
 /obj/structure/lattice/clockwork/large/New()
 	..()
@@ -77,7 +77,7 @@
 
 /obj/structure/lattice/clockwork/large/ratvar_act()
 	if(IsEven(x + y))
-		new/obj/structure/lattice/clockwork(loc)
+		new /obj/structure/lattice/clockwork(loc)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -87,13 +87,13 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
-/obj/structure/lattice/catwalk/New()
+/obj/structure/lattice/catwalk/Initialize()
 	..()
 	stored.amount++
 	stored.update_icon()
 
 /obj/structure/lattice/catwalk/ratvar_act()
-	new/obj/structure/lattice/catwalk/clockwork(loc)
+	new /obj/structure/lattice/catwalk/clockwork(loc)
 
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
@@ -111,7 +111,7 @@
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
 
-/obj/structure/lattice/catwalk/clockwork/New()
+/obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	..()
 	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
 	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)
