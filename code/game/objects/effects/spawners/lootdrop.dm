@@ -6,8 +6,11 @@
 	var/lootdoubles = 1		//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 
-/obj/effect/spawner/lootdrop/New()
+/obj/effect/spawner/lootdrop/Initialize(mapload)
+	..()
+
 	if(loot && loot.len)
+		var/turf/T = get_turf(src)
 		for(var/i = lootcount, i > 0, i--)
 			if(!loot.len) break
 			var/lootspawn = pickweight(loot)
@@ -15,7 +18,7 @@
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
-				new lootspawn(get_turf(src))
+				new lootspawn(T)
 	qdel(src)
 
 /obj/effect/spawner/lootdrop/armory_contraband
@@ -194,3 +197,44 @@
 	loot = list(
 		/obj/effect/decal/remains/xeno = 49,
 		/obj/effect/spawner/xeno_egg_delivery = 1)
+
+/obj/effect/spawner/lootdrop/costume
+	name = "random costume spawner"
+
+/obj/effect/spawner/lootdrop/costume/Initialize()
+	loot = list()
+	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
+		loot[path] = 1
+	..()
+
+// Minor lootdrops follow
+
+/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears
+	name = "beret or rabbit ears spawner"
+	loot = list(
+		/obj/item/clothing/head/beret = 1,
+		/obj/item/clothing/head/rabbitears = 1)
+
+/obj/effect/spawner/lootdrop/minor/bowler_or_that
+	name = "bowler or top hat spawner"
+	loot = list(
+		/obj/item/clothing/head/bowler = 1,
+		/obj/item/clothing/head/that = 1)
+
+/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears
+	name = "kitty ears or rabbit ears spawner"
+	loot = list(
+		/obj/item/clothing/head/kitty = 1,
+		/obj/item/clothing/head/rabbitears = 1)
+
+/obj/effect/spawner/lootdrop/minor/pirate_or_bandana
+	name = "pirate hat or bandana spawner"
+	loot = list(
+		/obj/item/clothing/head/pirate = 1,
+		/obj/item/clothing/head/bandana = 1)
+
+/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask
+	name = "25% cyborg mask spawner"
+	loot = list(
+		/obj/item/clothing/mask/gas/cyborg = 25,
+		"" = 75)

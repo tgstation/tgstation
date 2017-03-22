@@ -9905,7 +9905,7 @@
 /area/maintenance/starboard)
 "arI" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -24416,8 +24416,8 @@
 /area/crew_quarters/locker)
 "aRa" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/item/clothing/mask/balaclava,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -51223,8 +51223,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -51235,8 +51235,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -81754,7 +81754,7 @@
 	})
 "cJY" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
