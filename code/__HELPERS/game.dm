@@ -431,10 +431,10 @@
 		if(2)
 			to_chat(G, "<span class='danger'>Choice registered: No.</span>")
 		if(3)
-			var/list/L = poll_ignore[ignore_category]
+			var/list/L = SLOTH.poll_ignore[ignore_category]
 			if(!L)
-				poll_ignore[ignore_category] = list()
-			poll_ignore[ignore_category] += G.ckey
+				SLOTH.poll_ignore[ignore_category] = list()
+			SLOTH.poll_ignore[ignore_category] += G.ckey
 			to_chat(G, "<span class='danger'>Choice registered: Never for this round.</span>")
 
 /proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null, flashwindow = TRUE)
@@ -444,7 +444,7 @@
 		Question = "Would you like to be a special role?"
 
 	for(var/mob/dead/observer/G in SLOTH.player_list)
-		if(!G.key || !G.client || (ignore_category && poll_ignore[ignore_category] && G.ckey in poll_ignore[ignore_category]))
+		if(!G.key || !G.client || (ignore_category && SLOTH.poll_ignore[ignore_category] && G.ckey in SLOTH.poll_ignore[ignore_category]))
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))

@@ -3,7 +3,7 @@
 
 //Note: typecache can only replace istype if you know for sure the thing is at least a datum.
 
-var/list/typecache_mob = typecacheof(list(/mob))
+GLOBAL_LIST_INIT(typecache_mob, typecacheof(list(/mob)))
 
 
 

@@ -5,4 +5,4 @@
 #define POLL_IGNORE_POSSESSED_BLADE "possessed_blade"
 #define POLL_IGNORE_ALIEN_LARVA "alien_larva"
 
-var/list/poll_ignore = list()
+GLOBAL_LIST_INIT(poll_ignore, list())
