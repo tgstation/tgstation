@@ -337,6 +337,7 @@
 /obj/proc/Construct(mob/user, ndir)
 	if(!current_construction_state || current_construction_state.id == 1)	//already done
 		return FALSE
+	ClearStoredConstructionItems()
 	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
 	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
