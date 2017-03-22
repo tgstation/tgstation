@@ -129,6 +129,12 @@
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
 	owner.update_body_parts()
+	addtimer(CALLBACK(src, .proc/run_out_of_hulk, owner), rand(1500,3000))
+	
+/datum/mutation/human/hulk/proc/run_out_of_hulk(mob/living/carbon/human/owner)
+	owner.Weaken(5)
+	to_chat(owner, "<span class = 'userdanger'>You feel your muscles painfully contract back to their original shape!</span>")
+	owner.remove_mutation(HULK)
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
@@ -536,9 +542,9 @@
 	if(message)
 		message = replacetext(message,"w","v")
 		message = replacetext(message,"j","y")
-		message = replacetext(message,"a",pick("å","ä","æ","a"))
+		message = replacetext(message,"a",pick("Ã¥","Ã¤","Ã¦","a"))
 		message = replacetext(message,"bo","bjo")
-		message = replacetext(message,"o",pick("ö","ø","o"))
+		message = replacetext(message,"o",pick("Ã¶","Ã¸","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message
