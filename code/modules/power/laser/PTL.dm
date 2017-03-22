@@ -42,7 +42,7 @@ var/global/power_transmitted = 0
 	var/firing_output = 1e6
 	var/firing_mode = PTL_PULSE
 
-	var/target =
+	var/target = PTL_TARGET_TRANSMIT_CENTCOM
 
 /obj/machinery/power/PTL/New()
 	..()
