@@ -41757,6 +41757,7 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/weapon/circuitboard/machine/autolathe,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bAQ" = (
@@ -43606,6 +43607,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/weapon/circuitboard/machine/autolathe,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bEl" = (
@@ -48129,7 +48131,9 @@
 /area/storage/tools)
 "bMM" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
 /obj/item/stack/rods{
 	amount = 50
 	},
