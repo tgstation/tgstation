@@ -16,7 +16,7 @@
 
 /obj/effect/overlay/temp/PTL/continuous
 	name = "transmission laser"
-	desc = "If this is inside the station somehow you've got a lot more to worry about then a few burns."	//OH GOD THE STATION'S BEING CUT IN HALF
+	desc = "If this is inside the station somehow you've got a lot more to worry about than a few burns."	//OH GOD THE STATION'S BEING CUT IN HALF
 	icon_state = "ptl_continuous"
 	duration = 20
 

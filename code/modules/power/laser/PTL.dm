@@ -1,6 +1,11 @@
 
 var/global/power_transmitted = 0
 
+#define PTL_POWER_NONE 0
+#define PTL_POWER_ENOUGH 1
+#define PTL_POWER_INSUFFICIENT 2
+#define PTL_POWER_OVERDRAW 3
+
 /obj/machinery/power/PTL
 	name = "power transmission laser"
 	icon = 'icons/obj/machines/ptl.dmi'
@@ -30,6 +35,19 @@ var/global/power_transmitted = 0
 		if(..(T))
 			return TRUE
 	return FALSE
+
+/obj/machinery/power/PTL/proc/check_powernet_for_amount(amount, overdraw_allowed = FALSE)
+	if(!powernet)
+		return PTL_POWER_NONE
+	var/avail = powernet.surplus()
+	if(avail >= amount)
+		return PTL_POWER_ENOUGH
+	else if(overdraw_allowed)
+		return PTL_POWER_OVERDRAW
+	else
+		return PTL_POWER_INSUFFICIENT
+
+
 
 ////GOOONSTATION COPY, ONLY HERE FOR REFERENCE BELOW, ERASING AFTER ITS NOT NEEDED FOR ME.
 
