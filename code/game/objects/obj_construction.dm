@@ -98,7 +98,7 @@
 		//Explanation for the following shitty inline checks:
 		//If there is loot, and we have not been force deconstructed, pass loot as a parameter to OnDeconstruction
 		//If OnDeconstruction returns TRUE or we were force deconstructed and there is loot, qdel it. Only if always_drop_loot is FALSE
-		if((parent.OnDeconstruction(id, user, forced, (loot && !forced) ? loot : null) || forced) && loot && (!next || next.always_drop_loot))
+		if((parent.OnDeconstruction(id, user, (loot && !forced) ? loot : null, forced) || forced) && loot && (!next || next.always_drop_loot))
 			qdel(loot)
 		else if(user && user.Adjacent(parent))	//adjacency check for telekinetics
 			user.put_in_hands(loot)
@@ -299,7 +299,7 @@
 //construction events
 /obj/proc/OnConstruction(state_id, mob/user, obj/item/used)
 
-/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created)
+/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
 
 /obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
 
