@@ -300,7 +300,7 @@
 
 	return
 
-/obj/item/device/radio/headset/AltClick(mob/user)
+/obj/item/device/radio/headset/AltClick(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
 		return
 	if (command)
