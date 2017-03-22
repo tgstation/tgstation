@@ -6,20 +6,13 @@
 	idle_power_usage = 1000
 	active_power_usage = 1000000
 	var/laser_beam_strength = 1000000
-
-
-
-
-
-
-
+	var/list/laser_tile_x_offset = list("north" = 0, "south" = 0, "east" = 2, "west" = -2)	//Depends on the sprite, right now it's goon's, so 3x3.
+	var/list/laser_tile_y_offset = list("north" = 0, "south" = 0, "east" = -2, "west" = 2)
 
 /obj/machinery/power/PTL/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/PTL(null)
 	B.apply_default_parts(src)
-
-
 
 /obj/machinery/power/PTL/proc/power_beam(dir, strength)
 	var/obj/item/projectile/beam/PTLbeam/P = new /obj/item/projectile/beam/PTLbeam(src.loc)
