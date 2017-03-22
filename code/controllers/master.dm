@@ -194,7 +194,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Schedule the first run of the Subsystems.
 	round_started = world.has_round_started()
 	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
-	var/list/SStickersubsystems = list()
+	var/list/tickersubsystems = list()
 	var/list/normalsubsystems = list()
 	var/list/lobbysubsystems = list()
 	var/timer = world.time
@@ -207,7 +207,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS.queue_prev = null
 		SS.state = SS_IDLE
 		if (SS.flags & SS_TICKER)
-			SStickersubsystems += SS
+			tickersubsystems += SS
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 			continue
@@ -224,12 +224,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	queue_tail = null
 	//these sort by lower priorities first to reduce the number of loops needed to add subsequent SS's to the queue
 	//(higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop thru them next queue add)
-	sortTim(SStickersubsystems, /proc/cmp_subsystem_priority)
+	sortTim(tickersubsystems, /proc/cmp_subsystem_priority)
 	sortTim(normalsubsystems, /proc/cmp_subsystem_priority)
 	sortTim(lobbysubsystems, /proc/cmp_subsystem_priority)
 
-	normalsubsystems += SStickersubsystems
-	lobbysubsystems += SStickersubsystems
+	normalsubsystems += tickersubsystems
+	lobbysubsystems += tickersubsystems
 
 	init_timeofday = REALTIMEOFDAY
 	init_time = world.time
@@ -271,9 +271,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			else
 				subsystems_to_check = lobbysubsystems
 		else
-			subsystems_to_check = SStickersubsystems
+			subsystems_to_check = tickersubsystems
 		if (CheckQueue(subsystems_to_check) <= 0)
-			if (!SoftReset(SStickersubsystems, normalsubsystems, lobbysubsystems))
+			if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
 				log_world("MC: SoftReset() failed, crashing")
 				return
 			if (!error_level)
@@ -285,7 +285,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 		if (queue_head)
 			if (RunQueue() <= 0)
-				if (!SoftReset(SStickersubsystems, normalsubsystems, lobbysubsystems))
+				if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
 					log_world("MC: SoftReset() failed, crashing")
 					return
 				if (!error_level)
