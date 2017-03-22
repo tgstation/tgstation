@@ -264,7 +264,7 @@
 			var/datum/construction_state/last/L = current_step
 			if(istype(L))
 				last_found = TRUE
-				if(L && !ispath(/atom/movable, L))
+				if(L && L != CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME && !ispath(/atom/movable, L))
 					WARNING(error + "Transformation type is not of atom/movable: [L]")
 					. = FALSE
 				else if(istype(L.prev_state, /datum/construction_state/first))
