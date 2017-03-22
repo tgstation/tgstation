@@ -39,7 +39,7 @@
 				atmos_machines += A
 
 	SSatoms.InitializeAtoms(atoms)
-	SSmachine.setup_template_powernets(cables)
+	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
 /datum/map_template/proc/load_new_z()

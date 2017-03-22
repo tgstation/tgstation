@@ -15,7 +15,7 @@
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)///////
 
 /datum/powernet/New()
-	SSmachine.powernets += src
+	SSmachines.powernets += src
 
 /datum/powernet/Destroy()
 	//Go away references, you suck!
@@ -26,7 +26,7 @@
 		nodes -= M
 		M.powernet = null
 
-	SSmachine.powernets -= src
+	SSmachines.powernets -= src
 	return ..()
 
 /datum/powernet/proc/is_empty()

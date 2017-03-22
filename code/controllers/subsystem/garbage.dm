@@ -628,7 +628,7 @@ var/datum/controller/subsystem/garbage/SSgarbage
 	SearchVar(SSipintel)
 	SearchVar(SSjob)
 	SearchVar(SSlighting)
-	SearchVar(SSmachine)
+	SearchVar(SSmachines)
 	SearchVar(SSmapping)
 	SearchVar(SSminimap)
 	SearchVar(SSmob)
