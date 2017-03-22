@@ -64,7 +64,8 @@
 	required_type_to_construct = NO_DECONSTRUCT
 
 	var/transformation_type	//If this is set, the object will transform into this and qdel itself
-							//when this state is reached
+							//when this state is reached. The state before this one should have all
+							//the parameters of the initial object or be manually set to a custom state
 
 /datum/construction_state/proc/OnLeft(obj/parent, mob/user, obj/item/tool, constructed, forced)
 	var/datum/construction_state/next = constructed ? next_state : prev_state
@@ -196,9 +197,12 @@
 				if(ValidateConstructionSteps(temp))
 					our_steps = temp
 		bp_cache[type] = our_steps	//cache it
-	if(our_steps.len)
-		var/stepslength = our_steps.len
-		current_construction_state = our_steps[stepslength]	//start fully constructed by default
+	var/stepslength = our_steps.len
+	if(stepslength)
+		var/datum/construction_state/last/L = our_steps[stepslength]	//start fully constructed by default
+		if(istype(L) && L.transformation_type)
+			L = L.prev_state	//make it valid
+		current_construction_state = L
 	return our_steps
 
 /proc/LinkConstructionSteps(list/steps)
@@ -247,6 +251,10 @@
 				last_found = TRUE
 				if(L && !ispath(/atom/movable, L))
 					WARNING(error + "Transformation type is not of atom/movable: [L]")
+					. = FALSE
+				else if(istype(L.prev_state, /datum/construction_state/first))
+					WARNING(error + "`transformation_type` set and only first and last steps exist.")
+					. = FALSE
 			if(current_step.max_integrity && current_step.max_integrity < last_max_integrity)
 				WARNING(error + "Max integrity lowered after construction")
 				. = FALSE
