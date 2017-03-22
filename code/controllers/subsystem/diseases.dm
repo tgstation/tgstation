@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/diseases/SSdisease
+GLOBAL_REAL(SSdisease, /datum/controller/subsystem/diseases)
 
 /datum/controller/subsystem/diseases
 	name = "Diseases"

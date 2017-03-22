@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/atoms/SSatoms
+GLOBAL_REAL(SSatoms, /datum/controller/subsystem/atoms)
 
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)

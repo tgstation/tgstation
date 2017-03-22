@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/inbounds/SSinbounds
+GLOBAL_REAL(SSinbounds, /datum/controller/subsystem/inbounds)
 /datum/controller/subsystem/inbounds
 	name = "Inbounds"
 	priority = 40

@@ -1,6 +1,6 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-var/datum/controller/subsystem/shuttle/SSshuttle
+GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 
 /datum/controller/subsystem/shuttle
 	name = "Shuttles"

@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/radio/SSradio
+GLOBAL_REAL(SSradio, /datum/controller/subsystem/radio)
 
 /datum/controller/subsystem/radio
 	name = "Radio"

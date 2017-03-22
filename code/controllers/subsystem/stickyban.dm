@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/stickyban/SSstickyban
+GLOBAL_REAL(SSstickyban, /datum/controller/subsystem/stickyban)
 
 /datum/controller/subsystem/stickyban
 	name = "Sticky Ban"

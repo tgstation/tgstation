@@ -5,7 +5,7 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
-var/datum/controller/subsystem/air/SSair
+GLOBAL_REAL(SSair, /datum/controller/subsystem/air)
 
 /datum/controller/subsystem/air
 	name = "Air"

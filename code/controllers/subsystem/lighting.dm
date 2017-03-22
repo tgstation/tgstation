@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/lighting/SSlighting
+GLOBAL_REAL(SSlighting, /datum/controller/subsystem/lighting)
 
 var/list/lighting_update_lights    = list() // List of lighting sources  queued for update.
 var/list/lighting_update_corners   = list() // List of lighting corners  queued for update.

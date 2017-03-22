@@ -1,6 +1,6 @@
 #define PING_BUFFER_TIME 25
 
-var/datum/controller/subsystem/ping/SSping
+GLOBAL_REAL(SSping, /datum/controller/subsystem/ping)
 
 /datum/controller/subsystem/ping
 	name = "Ping"

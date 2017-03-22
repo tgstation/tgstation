@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/squeak/SSsqueak
+GLOBAL_REAL(SSsqueak, /datum/controller/subsystem/squeak)
 
 // The Squeak
 // because this is about placement of mice mobs, and nothing to do with

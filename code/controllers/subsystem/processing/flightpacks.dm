@@ -1,5 +1,5 @@
 
-var/datum/controller/subsystem/processing/flightpacks/SSflightpacks
+GLOBAL_REAL(SSflightpacks, /datum/controller/subsystem/processing/flightpacks)
 /datum/controller/subsystem/processing/flightpacks
 	name = "Flightpack Movement"
 	priority = 30

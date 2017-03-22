@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/ipintel/SSipintel
+GLOBAL_REAL(SSipintel, /datum/controller/subsystem/ipintel)
 
 /datum/controller/subsystem/ipintel
 	name = "XKeyScore"

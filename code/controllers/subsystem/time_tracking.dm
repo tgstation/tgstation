@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/time_track/SStime_track
+GLOBAL_REAL(SStime_track, /datum/controller/subsystem/time_track)
 
 /datum/controller/subsystem/time_track
 	name = "Time Tracking"

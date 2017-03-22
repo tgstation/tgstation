@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/events/SSevent
+GLOBAL_REAL(SSevent, /datum/controller/subsystem/events)
 
 /datum/controller/subsystem/events
 	name = "Events"

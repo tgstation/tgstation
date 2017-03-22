@@ -1,6 +1,6 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
 
-var/datum/controller/subsystem/weather/SSweather
+GLOBAL_REAL(SSweather, /datum/controller/subsystem/weather)
 /datum/controller/subsystem/weather
 	name = "Weather"
 	flags = SS_BACKGROUND

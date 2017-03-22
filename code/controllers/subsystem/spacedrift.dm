@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/spacedrift/SSspacedrift
+GLOBAL_REAL(SSspacedrift, /datum/controller/subsystem/spacedrift)
 
 /datum/controller/subsystem/spacedrift
 	name = "Space Drift"

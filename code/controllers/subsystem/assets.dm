@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/assets/SSasset
+GLOBAL_REAL(SSasset, /datum/controller/subsystem/assets)
 
 /datum/controller/subsystem/assets
 	name = "Assets"

@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/icon_smooth/SSicon_smooth
+GLOBAL_REAL(SSicon_smooth, /datum/controller/subsystem/icon_smooth)
 
 /datum/controller/subsystem/icon_smooth
 	name = "Icon Smoothing"

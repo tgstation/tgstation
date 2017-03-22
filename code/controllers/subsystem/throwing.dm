@@ -1,6 +1,6 @@
 #define MAX_THROWING_DIST 512 // 2 z-levels on default width
 #define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
-var/datum/controller/subsystem/throwing/SSthrowing
+GLOBAL_REAL(SSthrowing, /datum/controller/subsystem/throwing)
 
 /datum/controller/subsystem/throwing
 	name = "Throwing"

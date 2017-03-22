@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/title/SStitle
+GLOBAL_REAL(SStitle, /datum/controller/subsystem/title)
 
 /datum/controller/subsystem/title
 	name = "Title Screen"

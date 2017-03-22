@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/tgui/SStgui
+GLOBAL_REAL(SStgui, /datum/controller/subsystem/tgui)
 
 /datum/controller/subsystem/tgui
 	name = "tgui"

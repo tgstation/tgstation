@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/npcpool/SSnpc
+GLOBAL_REAL(SSnpc, /datum/controller/subsystem/npcpool)
 
 /datum/controller/subsystem/npcpool
 	name = "NPC Pool"

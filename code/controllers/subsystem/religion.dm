@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/religion/SSreligion
+GLOBAL_REAL(SSreligion, /datum/controller/subsystem/religion)
 
 /datum/controller/subsystem/religion
 	name = "Religion"

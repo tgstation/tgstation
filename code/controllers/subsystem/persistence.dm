@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/persistence/SSpersistence
+GLOBAL_REAL(SSpersistence, /datum/controller/subsystem/persistence)
 
 /datum/controller/subsystem/persistence
 	name = "Persistence"

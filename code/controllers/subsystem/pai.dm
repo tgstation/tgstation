@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/pai/SSpai
+GLOBAL_REAL(SSpai, /datum/controller/subsystem/pai)
 var/list/obj/item/device/paicard/pai_card_list = list()
 
 /datum/controller/subsystem/pai

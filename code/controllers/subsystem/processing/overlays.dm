@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/processing/overlays/SSoverlays
+GLOBAL_REAL(SSoverlays, /datum/controller/subsystem/processing/overlays)
 
 /datum/controller/subsystem/processing/overlays
 	name = "Overlay"

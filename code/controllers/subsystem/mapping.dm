@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/mapping/SSmapping
+GLOBAL_REAL(SSmapping, /datum/controller/subsystem/mapping)
 
 /datum/controller/subsystem/mapping
 	name = "Mapping"

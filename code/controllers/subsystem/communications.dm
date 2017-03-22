@@ -1,7 +1,7 @@
 #define COMMUNICATION_COOLDOWN 600
 #define COMMUNICATION_COOLDOWN_AI 600
 
-var/datum/controller/subsystem/communications/SScommunications
+GLOBAL_REAL(SScommunications, /datum/controller/subsystem/communications)
 
 /datum/controller/subsystem/communications
 	name = "Communications"

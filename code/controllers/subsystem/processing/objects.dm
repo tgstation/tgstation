@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/objects/SSobj
+GLOBAL_REAL(SSobj, /datum/controller/subsystem/objects)
 /datum/controller/subsystem/objects
 	name = "Objects"
 	priority = 40

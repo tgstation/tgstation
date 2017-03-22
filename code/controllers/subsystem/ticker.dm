@@ -2,7 +2,7 @@
 
 var/round_start_time = 0
 
-var/datum/controller/subsystem/ticker/ticker
+GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 
 /datum/controller/subsystem/ticker
 	name = "Ticker"

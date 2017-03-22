@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/acid/SSacid
+GLOBAL_REAL(SSacid, /datum/controller/subsystem/acid)
 
 /datum/controller/subsystem/acid
 	name = "Acid"

@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/fire_burning/SSfire_burning
+GLOBAL_REAL(SSfire_burning, /datum/controller/subsystem/fire_burning)
 
 /datum/controller/subsystem/fire_burning
 	name = "Fire Burning"

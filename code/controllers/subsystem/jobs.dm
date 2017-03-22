@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/job/SSjob
+GLOBAL_REAL(SSjob, /datum/controller/subsystem/job)
 
 /datum/controller/subsystem/job
 	name = "Jobs"

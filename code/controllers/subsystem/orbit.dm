@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/orbit/SSorbit
+GLOBAL_REAL(SSorbit, /datum/controller/subsystem/orbit)
 
 /datum/controller/subsystem/orbit
 	name = "Orbits"

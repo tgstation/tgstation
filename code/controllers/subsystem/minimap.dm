@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/minimap/SSminimap
+GLOBAL_REAL(SSminimap, /datum/controller/subsystem/minimap)
 
 /datum/controller/subsystem/minimap
 	name = "Minimap"

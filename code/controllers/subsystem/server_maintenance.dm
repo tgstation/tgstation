@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/server_maint/SSserver
+GLOBAL_REAL(SSserver, /datum/controller/subsystem/server_maint)
 
 /datum/controller/subsystem/server_maint
 	name = "Server Tasks"

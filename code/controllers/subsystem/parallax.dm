@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/parallax/SSparallax
+GLOBAL_REAL(SSparallax, /datum/controller/subsystem/parallax)
 
 /datum/controller/subsystem/parallax
 	name = "Parallax"

@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/garbage_collector/SSgarbage
+GLOBAL_REAL(SSgarbage, /datum/controller/subsystem/garbage_collector)
 
 /datum/controller/subsystem/garbage_collector
 	name = "Garbage"

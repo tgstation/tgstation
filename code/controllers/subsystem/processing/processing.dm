@@ -1,6 +1,6 @@
 //Used to process objects. Fires once every second.
 
-var/datum/controller/subsystem/processing/SSprocessing
+GLOBAL_REAL(SSprocessing, /datum/controller/subsystem/processing)
 /datum/controller/subsystem/processing
 	name = "Processing"
 	priority = 25

@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/mobs/SSmob
+GLOBAL_REAL(SSmob, /datum/controller/subsystem/mobs)
 
 /datum/controller/subsystem/mobs
 	name = "Mobs"
