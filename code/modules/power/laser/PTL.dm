@@ -6,19 +6,43 @@ var/global/power_transmitted = 0
 #define PTL_POWER_INSUFFICIENT "insufficient"
 #define PTL_POWER_OVERDRAW "overdraw"
 
-#define PTL_OVERDRAW_APC_MAX 20
-#define PTL_OVERDRAW_APC_MULTI 5000
+#define PTL_TARGET_TRANSMIT_STATION "station"
+#define PTL_TARGET_TRANSMIT_CENTCOM "centcom"
+#define PTL_TARGET_TRANSMIT_LAVALAND "lavaland"
+#define PTL_TARGET_GLASS_STATION "attack_station"
+#define PTL_TARGET_GLASS_CENTCOM "attack_centcom"
+#define PTL_TARGET_GLASS_LAVALAND "attack_lavaland"
 
 /obj/machinery/power/PTL
 	name = "power transmission laser"
 	icon = 'icons/obj/machines/ptl.dmi'
 	icon_state = "ptl"
 	desc = "A gigawatt laser that transmits power across vast distances. Don't look into the beam."
-	idle_power_usage = 1000
-	active_power_usage = 1000000
-	var/laser_beam_strength = 1000000
+	idle_power_usage = 5000
+
 	var/list/laser_tile_x_offset = list("1" = 0, "2" = 0, "4" = 2, "8" = -2)	//Depends on the sprite, right now it's goon's, so 3x3.
 	var/list/laser_tile_y_offset = list("1" = 0, "2" = 0, "4" = -2, "8" = 2)
+
+	var/ptl_overdraw_apc_max = 20
+	var/ptl_overdraw_apc_multi = 50000
+
+	var/internal_buffer = 5e12
+	var/output_primary_max = 1e12
+	var/output_primary_min = 1e7
+	var/output_pulse_max = 2e7
+	var/output_pulse_min = 1e6
+	var/output_tracer_max = 2e6
+	var/output_tracer_min = 1e5
+
+	var/charging = FALSE
+	var/charge_rate = 1e6
+	var/charge_overdraw = FALSE	//Whether this will powersink APCs to get as much energy as possible (Which is surprisingly alot if you drain APCs.)
+
+	var/firing = FALSE
+	var/firing_output = 1e6
+	var/firing_mode = PTL_PULSE
+
+	var/target =
 
 /obj/machinery/power/PTL/New()
 	..()
@@ -67,8 +91,8 @@ var/global/power_transmitted = 0
 			if(istype(T.master, /obj/machinery/power/apc))
 				var/obj/machinery/power/apc/A = T.master
 				if(A.operating && A.cell)
-					A.cell.charge = max(0, A.cell.charge - PTL_OVERDRAW_APC_MAX)
-					total_drawn += (PTL_OVERDRAW_APC_MAX * PTL_OVERDRAW_APC_MULTI)
+					A.cell.charge = max(0, A.cell.charge - ptl_overdraw_apc_max)
+					total_drawn += (ptl_overdraw_apc_max * ptl_overdraw_apc_multi)
 					if(A.charging == 2)
 						A.charging = 1
 
