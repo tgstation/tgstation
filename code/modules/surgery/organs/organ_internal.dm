@@ -226,7 +226,7 @@
 	colour = "red"
 
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 #define HEAT_GAS_DAMAGE_LEVEL_1 2
 #define HEAT_GAS_DAMAGE_LEVEL_2 4
 #define HEAT_GAS_DAMAGE_LEVEL_3 8

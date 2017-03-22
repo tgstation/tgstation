@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/mobs/SSmob
+var/datum/controller/subsystem/mobs/SSmobs
 
 /datum/controller/subsystem/mobs
 	name = "Mobs"
@@ -9,7 +9,7 @@ var/datum/controller/subsystem/mobs/SSmob
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/mobs/New()
-	NEW_SS_GLOBAL(SSmob)
+	NEW_SS_GLOBAL(SSmobs)
 
 
 /datum/controller/subsystem/mobs/stat_entry()
