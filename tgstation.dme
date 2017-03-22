@@ -13,7 +13,6 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "effects.dm"
 #include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
@@ -1666,7 +1665,6 @@
 #include "code\modules\power\cell.dm"
 #include "code\modules\power\generator.dm"
 #include "code\modules\power\gravitygenerator.dm"
-#include "code\modules\power\laser.dm"
 #include "code\modules\power\lighting.dm"
 #include "code\modules\power\monitor.dm"
 #include "code\modules\power\port_gen.dm"
@@ -1682,6 +1680,7 @@
 #include "code\modules\power\antimatter\containment_jar.dm"
 #include "code\modules\power\antimatter\control.dm"
 #include "code\modules\power\antimatter\shielding.dm"
+#include "code\modules\power\laser\effects.dm"
 #include "code\modules\power\laser\hitscan.dm"
 #include "code\modules\power\laser\interaction.dm"
 #include "code\modules\power\laser\laser.dm"
