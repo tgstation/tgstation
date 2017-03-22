@@ -8,7 +8,7 @@
 
 
 /mob/living/simple_animal/slime/Life()
-	set invisibility = 0
+	set invisibility = MOB_INVIS_DEFAULT
 	set background = BACKGROUND_ENABLED
 
 	if (notransform)
