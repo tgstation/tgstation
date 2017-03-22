@@ -359,3 +359,15 @@
 
 /obj/structure/flora/junglebush/c
 	icon_state = "bushc"
+
+/obj/structure/flora/junglebush/large
+	icon_state = "bush"
+	icon = 'icons/obj/flora/largejungleflora.dmi'
+	pixel_x = -16
+	layer = FLY_LAYER
+
+
+/obj/structure/flora/rock/pile/largejungle
+	name = "rocks"
+	icon = 'icons/obj/flora/largejungleflora.dmi'
+	density = 0
