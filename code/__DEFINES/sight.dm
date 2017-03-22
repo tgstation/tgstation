@@ -1,4 +1,6 @@
-
+#define TURF_INVIS_DEFAULT 2
+#define OBJ_INVIS_DEFAULT 3
+#define MOB_INVIS_DEFAULT 4
 #define SEE_INVISIBLE_MINIMUM 5
 
 #define SEE_INVISIBLE_NOLIGHTING 15 //to not see the lighting objects. Used for nightvision and observer with darkness toggled.
