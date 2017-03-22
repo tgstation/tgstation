@@ -8,11 +8,11 @@ again.
 	name = "map structure spawner"
 	var/list/spawn_list
 
-/obj/effect/spawner/structure/New()
+/obj/effect/spawner/structure/Initialize()
+	..()
 	if(spawn_list && spawn_list.len)
-		for(var/i = 1, i <= spawn_list.len, i++)
-			var/to_spawn = spawn_list[i]
-			new to_spawn(get_turf(src))
+		for(var/I in spawn_list)
+			new I(get_turf(src))
 	qdel(src)
 
 /obj/effect/spawner/structure/window
