@@ -63,6 +63,9 @@
 /datum/construction_state/last	//this should only contain deconstruction parameters
 	required_type_to_construct = NO_DECONSTRUCT
 
+	var/transformation_type	//If this is set, the object will transform into this and qdel itself
+							//when this state is reached
+
 /datum/construction_state/proc/OnLeft(obj/parent, mob/user, obj/item/tool, constructed, forced)
 	var/datum/construction_state/next = constructed ? next_state : prev_state
 	var/id
@@ -150,10 +153,18 @@
 	if(!constructed)
 		stack_trace("Very bad param")
 	//return to object defaults
-	parent.current_construction_state = src
-	parent.anchored = initial(parent.anchored)
-	parent.icon_state = initial(parent.icon_state)
-	parent.modify_max_integrity(initial(parent.max_integrity), TRUE, new_failure_integrity = initial(parent.integrity_failure))
+	anchored = initial(parent.anchored)
+	icon_state = initial(parent.icon_state)
+	max_integrity = initial(parent.max_integrity)
+	failure_integrity = initial(parent.integrity_failure))
+	..()
+	var/TT = transformation_type
+	if(TT)
+		var/pdir = parent.dir
+		var/obj/O = new TT(get_turf(parent))
+		parent.transfer_fingerprints_to(O)
+		qdel(parent)
+		O.Construct(user, pdir)
 
 /datum/construction_blueprint
 	var/owner_type
@@ -230,8 +241,11 @@
 				WARNING(error + "construction_state/last not last")
 				last_found = FALSE
 				. = FALSE
-			if(istype(current_step, /datum/construction_state/last))
+			var/datum/construction_state/last/L = currrent_step
+			if(istype(L))
 				last_found = TRUE
+				if(L && !ispath(/atom/movable, L))
+					WARNING(error + "Transformation type is not of atom/movable: [L]")
 			if(current_step.max_integrity && current_step.max_integrity < last_max_integrity)
 				WARNING(error + "Max integrity lowered after construction")
 				. = FALSE
