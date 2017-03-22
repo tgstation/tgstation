@@ -66,8 +66,7 @@
 
 /obj/structure/lattice/clockwork/ratvar_act()
 	if(IsOdd(x+y))
-		// this will delete the old one.
-		new /obj/structure/lattice/clockwork/large(loc)
+		new /obj/structure/lattice/clockwork/large(loc) // deletes old one
 
 /obj/structure/lattice/clockwork/large/New()
 	..()
