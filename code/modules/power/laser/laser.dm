@@ -6,7 +6,7 @@
 /obj/machinery/power/PTL/proc/find_starting_turf()
 	var/x_offset = laser_tile_x_offset["[dir]"]
 	var/y_offset = laser_tile_y_offset["[dir]"]
-	var/turf/T = get_turt(src)
+	var/turf/T = get_turf(src)
 	var/turf/starting = locate((T.x + x_offset), (T.y + y_offset), T.z)
 	return starting
 
@@ -19,7 +19,7 @@
 		if(PTL_PULSE)
 			effect_type = /obj/effect/overlay/temp/PTL/pulse
 		if(PTL_TRACER)
-			effect_type = /obj/effect/overlay_temp/PTL/tracer
+			effect_type = /obj/effect/overlay/temp/PTL/tracer
 	var/list/impacted = hitscan_beamline(T, direction, TRUE, effect_type, effect_duration_override)
 	var/result = null
 	var/atom/direct_hit = null

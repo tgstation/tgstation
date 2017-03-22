@@ -36,7 +36,6 @@
 				continue
 			else if(V == PTL_HITSCAN_HIT)
 				hit = TRUE
-				hit_atom = A
 				affected["HIT_ATOM"] = A
 				affected["RESULT"] = PTL_HITSCAN_RETURN_HIT
 				continue
