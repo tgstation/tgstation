@@ -1,4 +1,5 @@
-/obj/item/weapon/book/manual/random/New()
+/obj/item/weapon/book/manual/random/Initialize()
+	..()
 	var/static/banned_books = list(/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/weapon/book/manual) - banned_books)
 	new newtype(loc)
@@ -8,7 +9,8 @@
 	var/amount = 1
 	var/category = null
 
-/obj/item/weapon/book/random/New()
+/obj/item/weapon/book/random/Initialize()
+	..()
 	create_random_books(amount, src.loc, TRUE, category)
 	qdel(src)
 

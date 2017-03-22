@@ -299,3 +299,8 @@
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return
+
+/obj/item/device/radio/headset/AltClick(mob/user)
+	if (command)
+		use_command = !use_command
+		to_chat(user, "<span class='notice'>You toggle high-volume mode.</span>")
