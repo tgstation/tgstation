@@ -1,10 +1,13 @@
 
 var/global/power_transmitted = 0
 
-#define PTL_POWER_NONE 0
-#define PTL_POWER_ENOUGH 1
-#define PTL_POWER_INSUFFICIENT 2
-#define PTL_POWER_OVERDRAW 3
+#define PTL_POWER_NONE "none"
+#define PTL_POWER_ENOUGH "enough"
+#define PTL_POWER_INSUFFICIENT "insufficient"
+#define PTL_POWER_OVERDRAW "overdraw"
+
+#define PTL_OVERDRAW_APC_MAX 20
+#define PTL_OVERDRAW_APC_MULTI 5000
 
 /obj/machinery/power/PTL
 	name = "power transmission laser"
@@ -14,8 +17,8 @@ var/global/power_transmitted = 0
 	idle_power_usage = 1000
 	active_power_usage = 1000000
 	var/laser_beam_strength = 1000000
-	var/list/laser_tile_x_offset = list("[NORTH]" = 0, "[SOUTH]" = 0, "[EAST]" = 2, "[WEST]" = -2)	//Depends on the sprite, right now it's goon's, so 3x3.
-	var/list/laser_tile_y_offset = list("[NORTH]" = 0, "[SOUTH]" = 0, "[EAST]" = -2, "[WEST]" = 2)
+	var/list/laser_tile_x_offset = list("1" = 0, "2" = 0, "4" = 2, "8" = -2)	//Depends on the sprite, right now it's goon's, so 3x3.
+	var/list/laser_tile_y_offset = list("1" = 0, "2" = 0, "4" = -2, "8" = 2)
 
 /obj/machinery/power/PTL/New()
 	..()
@@ -24,7 +27,6 @@ var/global/power_transmitted = 0
 
 /obj/machinery/power/PTL/proc/transmit_power(power)	//PUT WHATEVER YOU WANT TO HAPPEN WHEN IT REACHES ZLEVEL EDGE/CENTRAL COMMAND HERE!
 	global.power_transmitted += power
-	return
 
 /obj/machinery/power/PTL/connect_to_network()	//Intended to directly draw from linked storage in the future but for now it uses wires.
 	var/list/turf/try_to_use = list()
@@ -47,7 +49,32 @@ var/global/power_transmitted = 0
 	else
 		return PTL_POWER_INSUFFICIENT
 
+/obj/machinery/power/PTL/proc/draw_from_powernet(amount, overdraw_allowed = FALSE)	//Returns amount taken from powernet. If overdrawing is allowed, powersink APCs for energy.
+	if(!powernet)
+		return 0
+	var/surplus = surplus()
+	if(surplus >= amount)
+		add_load(amount)
+		return amount
+	else if(!overdraw_allowed)
+		add_load(surplus)
+		return surplus
+	else
+		var/total_drawn = surplus
+		add_load(amount)
+		overdraw_alert()
+		for(var/obj/machinery/power/terminal/T in powernet.nodes)
+			if(istype(T.master, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/A = T.master
+				if(A.operating && A.cell)
+					A.cell.charge = max(0, A.cell.charge - PTL_OVERDRAW_APC_MAX)
+					total_drawn += (PTL_OVERDRAW_APC_MAX * PTL_OVERDRAW_APC_MULTI)
+					if(A.charging == 2)
+						A.charging = 1
 
+/obj/machinery/power/PTL/proc/overdraw_alert()
+	var/area/A = get_area(src)
+	priority_announce("Extreme overdraw detected at [A.name]. Powernet and attached machinery will be drained at a rapid rate.", title = "Powernet Overdraw Detected", sound = 'sound/misc/interference.ogg', "Priority")
 
 ////GOOONSTATION COPY, ONLY HERE FOR REFERENCE BELOW, ERASING AFTER ITS NOT NEEDED FOR ME.
 
