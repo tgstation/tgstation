@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Clock cults always have to summon Ratvar, but that always involves a proselytization burst."
+  - rscdel: "The proselytization burst will no longer convert heretics, leaving Ratvar free to chase them down."
+  - spellcheck: "Places that referred to the Ark of the Clockwork Justicar as the \"Gateway to the Celestial Derelict\" have been corrected to always refer to the Ark."
