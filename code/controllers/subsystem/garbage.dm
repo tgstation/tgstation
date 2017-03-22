@@ -1,4 +1,4 @@
-SUBSYSTEM(garbage)
+SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
 	wait = 5

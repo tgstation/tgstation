@@ -1,4 +1,4 @@
-SUBSYSTEM(server_maint)
+SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK

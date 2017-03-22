@@ -1,4 +1,4 @@
-SUBSYSTEM(vote)
+SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 10
 

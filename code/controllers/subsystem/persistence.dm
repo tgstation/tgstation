@@ -1,4 +1,4 @@
-SUBSYSTEM(persistence)
+SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	init_order = -100
 	flags = SS_NO_FIRE

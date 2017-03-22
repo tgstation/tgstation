@@ -1,4 +1,4 @@
-SUBSYSTEM(minimap)
+SUBSYSTEM_DEF(minimap)
 	name = "Minimap"
 	init_order = -2
 	flags = SS_NO_FIRE

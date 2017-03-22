@@ -1,4 +1,4 @@
-SUBSYSTEM(machines)
+SUBSYSTEM_DEF(machines)
 	name = "Machines"
 	init_order = 9
 	flags = SS_KEEP_TIMING

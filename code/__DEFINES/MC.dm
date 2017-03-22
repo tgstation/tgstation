@@ -68,14 +68,14 @@
 //prevents distinguishing identical timers with the wait variable
 #define TIMER_NO_HASH_WAIT  0x10
 
-#define SUBSYSTEM(X) var/datum/controller/subsystem/##X/SS##X;\
+#define SUBSYSTEM_DEF(X) var/datum/controller/subsystem/##X/SS##X;\
 /datum/controller/subsystem/##X/New(){\
     NEW_SS_GLOBAL(SS##X);\
     ..();\
 }\
 /datum/controller/subsystem/##X
 
-#define PROCESSING_SUBSYSTEM(X) var/datum/controller/subsystem/processing/##X/SS##X;\
+#define PROCESSING_SUBSYSTEM_DEF(X) var/datum/controller/subsystem/processing/##X/SS##X;\
 /datum/controller/subsystem/processing/##X/New(){\
     NEW_SS_GLOBAL(SS##X);\
     ..();\

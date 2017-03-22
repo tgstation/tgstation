@@ -1,4 +1,4 @@
-PROCESSING_SUBSYSTEM(overlays)
+PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1

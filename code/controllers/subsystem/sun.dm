@@ -1,4 +1,4 @@
-SUBSYSTEM(sun)
+SUBSYSTEM_DEF(sun)
 	name = "Sun"
 	wait = 600
 	init_order = 2

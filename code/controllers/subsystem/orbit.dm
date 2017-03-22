@@ -1,4 +1,4 @@
-SUBSYSTEM(orbit)
+SUBSYSTEM_DEF(orbit)
 	name = "Orbits"
 	priority = 35
 	wait = 2

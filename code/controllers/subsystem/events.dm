@@ -1,4 +1,4 @@
-SUBSYSTEM(events)
+SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = 6
 

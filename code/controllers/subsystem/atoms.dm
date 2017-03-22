@@ -2,7 +2,7 @@
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-SUBSYSTEM(atoms)
+SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = 11
 	flags = SS_NO_FIRE

@@ -1,4 +1,4 @@
-SUBSYSTEM(spacedrift)
+SUBSYSTEM_DEF(spacedrift)
 	name = "Space Drift"
 	priority = 30
 	wait = 5

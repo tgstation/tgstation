@@ -1,7 +1,7 @@
 #define COMMUNICATION_COOLDOWN 600
 #define COMMUNICATION_COOLDOWN_AI 600
 
-SUBSYSTEM(communications)
+SUBSYSTEM_DEF(communications)
 	name = "Communications"
 	flags = SS_NO_INIT | SS_NO_FIRE
 

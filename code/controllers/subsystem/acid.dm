@@ -1,4 +1,4 @@
-SUBSYSTEM(acid)
+SUBSYSTEM_DEF(acid)
 	name = "Acid"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND

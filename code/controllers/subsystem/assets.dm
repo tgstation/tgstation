@@ -1,4 +1,4 @@
-SUBSYSTEM(assets)
+SUBSYSTEM_DEF(assets)
 	name = "Assets"
 	init_order = -3
 	flags = SS_NO_FIRE

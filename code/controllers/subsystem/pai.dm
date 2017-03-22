@@ -1,5 +1,5 @@
 var/list/obj/item/device/paicard/pai_card_list = list()
-SUBSYSTEM(pai)
+SUBSYSTEM_DEF(pai)
 	name = "pAI"
 
 	flags = SS_NO_INIT|SS_NO_FIRE

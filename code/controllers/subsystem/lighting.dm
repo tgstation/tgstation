@@ -2,7 +2,7 @@ var/list/lighting_update_lights    = list() // List of lighting sources  queued 
 var/list/lighting_update_corners   = list() // List of lighting corners  queued for update.
 var/list/lighting_update_objects  = list() // List of lighting objects queued for update.
 
-SUBSYSTEM(lighting)
+SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
 	init_order = -20

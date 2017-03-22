@@ -1,4 +1,4 @@
-SUBSYSTEM(icon_smooth)
+SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = -5
 	wait = 1

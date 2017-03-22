@@ -1,4 +1,4 @@
-SUBSYSTEM(title)
+SUBSYSTEM_DEF(title)
 	name = "Title Screen"
 	init_order = 15
 	flags = SS_NO_FIRE

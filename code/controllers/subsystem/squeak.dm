@@ -2,7 +2,7 @@
 // because this is about placement of mice mobs, and nothing to do with
 // mice - the computer peripheral
 
-SUBSYSTEM(squeak)
+SUBSYSTEM_DEF(squeak)
 	name = "Squeak"
 	priority = 40
 	flags = SS_NO_FIRE

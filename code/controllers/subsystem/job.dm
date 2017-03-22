@@ -1,4 +1,4 @@
-SUBSYSTEM(job)
+SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	init_order = 14
 	flags = SS_NO_FIRE

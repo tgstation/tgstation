@@ -1,6 +1,6 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-SUBSYSTEM(shuttle)
+SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 10
 	init_order = 3

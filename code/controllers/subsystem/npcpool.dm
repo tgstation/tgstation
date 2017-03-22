@@ -1,4 +1,4 @@
-SUBSYSTEM(npcpool)
+SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
 	init_order = 17
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_NO_TICK_CHECK

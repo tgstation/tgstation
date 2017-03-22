@@ -6,7 +6,7 @@
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
 
-SUBSYSTEM(air)
+SUBSYSTEM_DEF(air)
 	name = "Air"
 	init_order = -1
 	priority = 20

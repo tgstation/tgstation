@@ -2,7 +2,7 @@
 
 var/round_start_time = 0
 
-SUBSYSTEM(ticker)
+SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 	init_order = 13
 

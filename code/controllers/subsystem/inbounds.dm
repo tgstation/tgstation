@@ -1,4 +1,4 @@
-SUBSYSTEM(inbounds)
+SUBSYSTEM_DEF(inbounds)
 	name = "Inbounds"
 	priority = 40
 	flags = SS_NO_INIT

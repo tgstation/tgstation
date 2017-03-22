@@ -1,6 +1,6 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
 
-SUBSYSTEM(weather)
+SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10

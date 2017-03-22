@@ -1,4 +1,4 @@
-SUBSYSTEM(tgui)
+SUBSYSTEM_DEF(tgui)
 	name = "tgui"
 	wait = 9
 	init_order = 16

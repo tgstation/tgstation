@@ -1,4 +1,4 @@
-SUBSYSTEM(time_track)
+SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
 	wait = 600
 	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY

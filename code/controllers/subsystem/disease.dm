@@ -1,4 +1,4 @@
-SUBSYSTEM(disease)
+SUBSYSTEM_DEF(disease)
 	name = "Disease"
 	flags = SS_KEEP_TIMING|SS_NO_INIT
 

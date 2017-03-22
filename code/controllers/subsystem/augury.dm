@@ -1,4 +1,4 @@
-SUBSYSTEM(augury)
+SUBSYSTEM_DEF(augury)
 	name = "Augury"
 	flags = SS_NO_INIT
 

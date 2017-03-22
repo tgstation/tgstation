@@ -1,4 +1,4 @@
-SUBSYSTEM(ipintel)
+SUBSYSTEM_DEF(ipintel)
 	name = "XKeyScore"
 	init_order = -10
 	flags = SS_NO_FIRE
