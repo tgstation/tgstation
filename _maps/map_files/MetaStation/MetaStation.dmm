@@ -23791,9 +23791,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor{
-	name = "Engineering Power Monitoring Console"
-	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 4;
@@ -23805,6 +23802,7 @@
 	dir = 2;
 	network = list("SS13")
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "aPX" = (

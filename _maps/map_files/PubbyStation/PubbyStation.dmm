@@ -45713,13 +45713,11 @@
 	},
 /area/engine/engineering)
 "bME" = (
-/obj/machinery/computer/monitor{
-	name = "Engineering Power Monitoring Console"
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
