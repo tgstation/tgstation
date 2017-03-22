@@ -340,6 +340,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+
+/datum/uplink_item/dangerous/holocarp
+	name = "Holocarp Fishsticks"
+	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form. Similar to holoparasites, but obviously cooler because it is a carp. You cannot choose the type of holocarp, but you can have more than one."
+	item = /obj/item/weapon/guardiancreator/carp
+	cost = 9
+
 /datum/uplink_item/stealthy_weapons/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
