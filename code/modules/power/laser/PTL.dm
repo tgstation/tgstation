@@ -41,7 +41,7 @@ var/global/power_transmitted = 0
 /obj/machinery/power/PTL/proc/check_powernet_for_amount(amount, overdraw_allowed = FALSE)
 	if(!powernet)
 		return PTL_POWER_NONE
-	var/avail = powernet.surplus()
+	var/avail = surplus()
 	if(avail >= amount)
 		return PTL_POWER_ENOUGH
 	else if(overdraw_allowed)
