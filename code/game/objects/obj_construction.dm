@@ -264,8 +264,9 @@
 			var/datum/construction_state/last/L = current_step
 			if(istype(L))
 				last_found = TRUE
-				if(L && L != CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME && !ispath(/atom/movable, L))
-					WARNING(error + "Transformation type is not of atom/movable: [L]")
+				var/TT = L.transformation_type
+				if(TT && TT != CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME && !ispath(/atom/movable, TT))
+					WARNING(error + "Transformation type is not of atom/movable: [TT]")
 					. = FALSE
 				else if(istype(L.prev_state, /datum/construction_state/first))
 					WARNING(error + "`transformation_type` set and only first and last steps exist.")
@@ -297,7 +298,7 @@
 				if(!current_step.required_type_to_deconstruct)
 					WARNING(error + "Hand values for both construction and deconstruction types")
 					. = FALSE
-				else if(!ispath(current_step.required_type_to_deconstruct, /obj/item))
+				else if(current_step.required_type_to_deconstruct != NO_DECONSTRUCT && !ispath(current_step.required_type_to_deconstruct, /obj/item))
 					WARNING(error + "Invalid deconstruction type: [current_step.required_type_to_deconstruct]")
 					. = FALSE
 				if(current_step.construction_message && findtextEx(current_step.construction_message, CONSTRUCTION_ITEM))
