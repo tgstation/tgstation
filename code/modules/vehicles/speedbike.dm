@@ -48,28 +48,38 @@
 	var/crash_all = FALSE //CHAOS
 	pixel_y = -48 //to fix the offset when Initialized()
 	pixel_x = -48
+	max_buckled_mobs = 4 //OH YES BABY
+	var/overlay_state2 = "speedwagon_cover2"
+	var/image/overlay2 = null //speedwagon needs 2 overlays
+
+/obj/vehicle/space/speedbike/speedwagon/Initialize()
+	. = ..()
+	overlay = image("icons/obj/car.dmi", overlay_state2)
+	overlay.layer = WALL_OBJ_LAYER
+	add_overlay(overlay)
 
 /obj/vehicle/space/speedbike/speedwagon/Bump(atom/movable/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/atom/throw_target = get_edge_target_turf(A, src.dir)
-		if(crash_all)
-			A.throw_at(throw_target, 4, 3)
-			visible_message("<span class='danger'>[src] crashes into [A]!</span>")
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		if(ishuman(A))
-			var/mob/living/carbon/human/H = A
-			H.Weaken(5)
-			H.adjustStaminaLoss(30)
-			H.apply_damage(rand(20,35), BRUTE)
-			if(!crash_all)
-				H.throw_at(throw_target, 4, 3)
-				visible_message("<span class='danger'>[src] crashes into [H]!</span>")
+		if(!(A in buckled_mobs))
+			if(crash_all)
+				A.throw_at(throw_target, 4, 3)
+				visible_message("<span class='danger'>[src] crashes into [A]!</span>")
 				playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			if(ishuman(A))
+				var/mob/living/carbon/human/H = A
+				H.Weaken(5)
+				H.adjustStaminaLoss(30)
+				H.apply_damage(rand(20,35), BRUTE)
+				if(!crash_all)
+					H.throw_at(throw_target, 4, 3)
+					visible_message("<span class='danger'>[src] crashes into [H]!</span>")
+					playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
- 	. = ..()
-		riding_datum = new/datum/riding/space/speedwagon
+	. = ..()
+	riding_datum = new/datum/riding/space/speedwagon //byond god is unhappy if this indentation is not present [3/21/2017] see for yourself
 
 /obj/vehicle/space/speedbike/speedwagon/Moved()
 	. = ..()

@@ -17,6 +17,8 @@
 
 /obj/vehicle/Destroy()
 	QDEL_NULL(riding_datum)
+	for(var/mob/living/R in buckled_mobs)
+		unbuckle_mob(R,1)
 	return ..()
 
 /obj/vehicle/update_icon()
@@ -29,9 +31,16 @@
 	icon_state = "key"
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/vehicle/Initialize()
+	..()
+	if(riding_datum && riding_datum.turret)
+		riding_datum.turret = new(loc)
+		riding_datum.turret.base = src
+
 //BUCKLE HOOKS
 /obj/vehicle/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	if(riding_datum)
+		buckled_mob.pass_flags = initial(buckled_mob.pass_flags)
 		riding_datum.restore_position(buckled_mob)
 		. = ..()
 
@@ -41,9 +50,10 @@
 		return
 	for(var/atom/movable/A in get_turf(src))
 		if(A.density)
-			if(A != src && A != M)
+			if(A != src && !isliving(A))
 				return
 	M.loc = get_turf(src)
+	M.pass_flags |= 16
 	..()
 	if(user.client)
 		user.client.change_view(view_range)
@@ -53,7 +63,7 @@
 
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
-	if(riding_datum)
+	if(riding_datum && user == src.buckled_mobs[1])
 		riding_datum.handle_ride(user, direction)
 
 

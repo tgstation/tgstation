@@ -3,7 +3,7 @@
 //You will still move instantly like usual, but when you move in a direction you gain "momentum" towards that direction
 //Momentum will have a maximum value that it will be capped to, and will go down over time
 //There is toggleable "stabilizers" that will make momentum go down FAST instead of its normal slow rate
-//The suit is heavy and will slow you down on the ground but is a bit faster then usual in air
+//The suit is heavy and will slow you down on the ground but is a bit faster than usual in air
 //The speed at which you drift is determined by your current momentum
 //Also, I should probably add in some kind of limiting mechanic but I really don't like having to refill this all the time, expecially as it will be NODROP.
 //Apparently due to code limitations you have to detect mob movement with.. shoes.
@@ -1056,7 +1056,7 @@
 		usermessage("Your flight shoes must be fully retracted first!", 1)
 		return FALSE
 	if(wearer)
-		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
+		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more than a bulky metal skeleton.</span>")
 	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = initial(strip_delay)
