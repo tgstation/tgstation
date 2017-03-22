@@ -3,7 +3,6 @@
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
 	sight = 0
-	invisibility = MOB_INVIS_DEFAULT
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
