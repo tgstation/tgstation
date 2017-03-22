@@ -214,7 +214,7 @@ Proc for attack log creation, because really why not
 		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
-		if(!user || !target || QDELETED(user) || QDELETED(target))
+		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
 		if(uninterruptible)
@@ -266,11 +266,11 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(!user || QDELETED(user) || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 
-		if(Tloc && (!target || QDELETED(target) || Tloc != target.loc))
+		if(Tloc && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
 				. = 0
 				break
@@ -316,7 +316,7 @@ Proc for attack log creation, because really why not
 			sleep(1)
 			if(progress)
 				progbar.update(world.time - starttime)
-			if(!user || QDELETED(user) || !targets)
+			if(QDELETED(user) || !targets)
 				. = 0
 				break
 			if(uninterruptible)
