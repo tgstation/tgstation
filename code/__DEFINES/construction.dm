@@ -8,6 +8,7 @@
 #define DECONSTRUCTING 0
 #define CONSTRUCTING 1
 #define REPAIRING 2
+#define CUSTOM_CONSTRUCTION 3
 
 //girder construction states
 #define GIRDER_NORMAL 0

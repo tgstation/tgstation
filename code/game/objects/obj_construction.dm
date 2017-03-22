@@ -391,8 +391,6 @@
 
 //construct by hand
 /obj/proc/HandConstruction(mob/user)
-	if(src in user.construction_tasks)
-		return
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs)
 		var/action_type
@@ -415,10 +413,7 @@
 		if(wait)			
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
-			LAZYADD(user.construction_tasks, src)	//prevent repeats
-			var/result = do_after(user, wait, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, action_type, null, user, FALSE))
-			LAZYREMOVE(user.construction_tasks, src)	//prevent repeats
-			if(!result)
+			if(!ConstructionDoAfterInternal(user, I, wait * I.toolspeed, action_type, TRUE))
 				return
 
 		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
@@ -427,8 +422,6 @@
 
 //construct by tool if possible
 /obj/attackby(obj/item/I, mob/living/user)
-	if(src in user.construction_tasks)
-		return
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs && user.a_intent == INTENT_HELP)
 		var/action_type
@@ -455,20 +448,15 @@
 			return ..()
 
 		if(!ConstructionChecks(ccs.id, action_type, I, user, TRUE))
-			return
-
-		if(I.usesound)
-			playsound(src, I.usesound, CONSTRUCTION_VOLUME, TRUE)	
+			return	
 
 		if(wait)
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
-			LAZYADD(user.construction_tasks, src)	//prevent repeats
-			//Checks will always run because we've verified do_after will last at least 1 tick
-			var/result = do_after(user, wait * I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccs.id, action_type, I, user, FALSE))
-			LAZYREMOVE(user.construction_tasks, src)
-			if(!result)
+			if(!ConstructionDoAfterInternal(user, I, wait * I.toolspeed, action_type, TRUE))
 				return
+		else if(I.usesound)
+			playsound(src, I.usesound, CONSTRUCTION_VOLUME, TRUE)	//This is also done in the DoAfter
 
 		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
 								"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
@@ -479,7 +467,29 @@
 	else
 		return ..()
 
+/obj/proc/ConstructionDoAfter(mob/user, obj/item/I, delay)
+	ConstructionDoAfterInternal(user, I, delay, CUSTOM_CONSTRUCTION, FALSE
+
+/obj/proc/ConstructionDoAfterInternal(mob/user, obj/item/I, delay, action_type = CUSTOM_CONSTRUCTION, first_checked = FALSE)
+	var/datum/construction_state/ccs = current_construction_state
+	var/ccsid = ccs ? ccs.id : 0
+
+	if(!first_checked && !ConstructionChecks(ccsid, action_type, I, user, TRUE))
+		return FALSE
+
+	if(I)
+		playsound(src, I.usesound, CONSTRUCTION_VOLUME, TRUE)
+
+	LAZYADD(user.construction_tasks, src)	//prevent repeats
+	//Checks will always run because we've verified do_after will last at least 1 tick
+	. = do_after(user, delay, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccsid, action_type, I, user, FALSE))
+	LAZYREMOVE(user.construction_tasks, src)
+
 /obj/proc/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check) 
+	if(src in user.construction_tasks)
+		testing("Cancelled [user]'s construction due to duplicate action")
+		return FALSE	//fail silently
+
 	if(current_construction_state.id != state_started_id)
 		to_chat(user, "<span class='warning'>You were interrupted!</span>")
 		return FALSE

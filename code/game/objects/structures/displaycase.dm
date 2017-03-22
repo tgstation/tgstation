@@ -168,13 +168,11 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase, FALSE, TRUE)
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 
-		else if(!alert && istype(W,/obj/item/weapon/crowbar) && !(src in user.construction_tasks)) //Only applies to the lab cage and player made display cases
+		else if(!alert && istype(W,/obj/item/weapon/crowbar)) //Only applies to the lab cage and player made display cases
 			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>")
-			LAZYADD(user.construction_tasks, src)
-			if(do_after(user, 20*W.toolspeed, target = src))
+			if(ConstructionDoAfter(user, W, 20 * W.toolspeed))
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 				toggle_lock(user)
-			LAZYREMOVE(user.construction_tasks, src)
 	
 		else if(open && !showpiece && user.transferItemToLoc(W, src))
 			showpiece = W

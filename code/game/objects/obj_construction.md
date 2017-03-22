@@ -23,6 +23,8 @@ by Cyberboss
 
 - `/obj/proc/ConstructionChecks(state_started_id, action_type, obj/item, mob/user, first_check)` - Called repeatedly during a construction step. Must check the base. Returning FALSE will cancel the step. The proc should not continue if the parent call returns FALSE. `action_type` is the type of construction going on, either `CONSTRUCTING`, `DECONSTRUCTING`, or `REPAIRING`. `first_check` is TRUE if this is the first time the check is called in the construction action. Should generally be ignored in the logic (i.e. The base proc uses it to change the wording for welding tool and material checks).
 
+- `/obj/proc/ConstructionDoAfter(mob/user, obj/item/I, delay)` - Call this when you want to do a custom action not supported by the construction system (i.e. Some optional step with a delay). This will call ConstructionChecks with the appropriate parameters and `CUSTOM_CONSTRUCTION` as `action_type`. This will also play `I`'s usesound at the appropriate volume if it has one. `user` is the mob performing the task. `I` is the tool being used to perform the task (can be null). `delay` is exactly how long the task should take.
+
 - `/obj/var/bp_name` - The name of an item as it appears in stack construction recipes, if this is null, the regular name will be used
 
 - `/obj/var/construction_blueprint` - Set by the CONSTRUCTION_BLUEPRINT macro, setting this back to null on subtypes will prevent those types from being able to be stack constructed even if they have `root_only` set to FALSE
