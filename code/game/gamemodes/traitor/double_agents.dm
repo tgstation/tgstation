@@ -7,7 +7,7 @@
 	reroll_friendly = 0
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
-	num_modifier = 6 // Six additional traitors
+	num_modifier = 4 // Four additional traitors
 
 	announce_text = "There are double agents trying to kill each other!\n\
 	<span class='danger'>Traitors</span>: Eliminate your targets and protect yourself!\n\

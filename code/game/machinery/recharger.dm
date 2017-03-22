@@ -17,7 +17,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/recharger
-	name = "circuit board (Weapon Recharger)"
+	name = "Weapon Recharger (Machine Board)"
 	build_path = /obj/machinery/recharger
 	origin_tech = "powerstorage=4;engineering=3;materials=4"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
@@ -29,12 +29,12 @@
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
 	if(istype(G, /obj/item/weapon/wrench))
 		if(charging)
-			user << "<span class='notice'>Remove the charging item first!</span>"
+			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 			return
 		anchored = !anchored
 		power_change()
-		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
+		playsound(loc, G.usesound, 75, 1)
 		return
 
 	var/allowed = is_type_in_list(G, allowed_devices)
@@ -47,13 +47,13 @@
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
 			if(!isarea(a) || a.power_equip == 0)
-				user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
+				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
 				return 1
 
 			if (istype(G, /obj/item/weapon/gun/energy))
 				var/obj/item/weapon/gun/energy/E = G
 				if(!E.can_charge)
-					user << "<span class='notice'>Your gun has no external power connector.</span>"
+					to_chat(user, "<span class='notice'>Your gun has no external power connector.</span>")
 					return 1
 
 			if(!user.drop_item())
@@ -63,7 +63,7 @@
 			use_power = 2
 			update_icon()
 		else
-			user << "<span class='notice'>[src] isn't connected to anything!</span>"
+			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
 		return 1
 
 	if(anchored && !charging)

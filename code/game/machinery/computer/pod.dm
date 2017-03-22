@@ -9,11 +9,11 @@
 	var/range = 4
 
 
-/obj/machinery/computer/pod/initialize()
+/obj/machinery/computer/pod/Initialize()
+	..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
-	..()
 
 
 /obj/machinery/computer/pod/proc/alarm()
@@ -134,7 +134,7 @@
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "<span class='notice'>Access denied.</span>"
+		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return
 	else
 		..()

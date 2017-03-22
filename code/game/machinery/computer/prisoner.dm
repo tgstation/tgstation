@@ -13,6 +13,8 @@
 	var/obj/item/weapon/card/id/prisoner/inserted_id
 	circuit = /obj/item/weapon/circuitboard/computer/prisoner
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
 		return
@@ -36,7 +38,7 @@
 			Tr = get_turf(C)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
-			if(!C.implanted)
+			if(!C.imp_in)
 				continue
 			dat += "ID: [C.imp_in.name] | Remaining Units: [C.reagents.total_volume] <BR>"
 			dat += "| Inject: "
@@ -46,16 +48,14 @@
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
 		for(var/obj/item/weapon/implant/tracking/T in tracked_implants)
-			if(!iscarbon(T.imp_in))
-				continue
-			if(!T.implanted)
+			if(!isliving(T.imp_in))
 				continue
 			Tr = get_turf(T)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
 
 			var/loc_display = "Unknown"
-			var/mob/living/carbon/M = T.imp_in
+			var/mob/living/M = T.imp_in
 			if(Tr.z == ZLEVEL_STATION && !isspaceturf(M.loc))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
@@ -96,7 +96,7 @@
 						return
 					I.loc = src
 					inserted_id = I
-				else usr << "<span class='danger'>No valid ID.</span>"
+				else to_chat(usr, "<span class='danger'>No valid ID.</span>")
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
@@ -128,19 +128,17 @@
 			if(src.allowed(usr))
 				screen = !screen
 			else
-				usr << "Unauthorized Access."
+				to_chat(usr, "Unauthorized Access.")
 
 		else if(href_list["warn"])
 			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
 			if(!warning) return
 			var/obj/item/weapon/implant/I = locate(href_list["warn"]) in tracked_chem_implants
 			if(I && istype(I) && I.imp_in)
-				var/mob/living/carbon/R = I.imp_in
-				R << "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>"
+				var/mob/living/R = I.imp_in
+				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
 				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
-
-

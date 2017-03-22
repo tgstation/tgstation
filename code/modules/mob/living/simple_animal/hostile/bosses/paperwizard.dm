@@ -5,6 +5,7 @@
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
 	faction = list("hostile","stickman")
 	del_on_death = TRUE
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "paperwizard"
 	ranged = 1
 	environment_smash = 0
@@ -98,7 +99,7 @@
 	var/mob/living/simple_animal/hostile/boss/paper_wizard/original
 
 //Hit a fake? eat pain!
-/mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount)
+/mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0) //damage
 		if(original)
 			original.minimum_distance = 3
@@ -112,16 +113,16 @@
 			L.adjustBruteLoss(50)
 		qdel(src)
 	else
-		..()
+		. = ..()
 
 //Hit the real guy? copies go bai-bai
-/mob/living/simple_animal/hostile/boss/paper_wizard/adjustHealth(amount)
-	if(amount > 0)//damage
+/mob/living/simple_animal/hostile/boss/paper_wizard/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(. > 0)//damage
 		minimum_distance = 3
 		retreat_distance = 3
 		for(var/copy in copies)
 			qdel(copy)
-	. = ..()
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	..()
@@ -153,13 +154,16 @@
 	visible_message("<span class='boldannounce'>The wizard cries out in pain as a gate appears behind him, sucking him in!</span>")
 	playsound(get_turf(src),'sound/magic/MandSwap.ogg', 50, 1, 1)
 	playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, 1, 1)
-	spawn(16)
-		for(var/mob/M in range(7,src))
-			shake_camera(M, 7, 1)
-		playsound(get_turf(src),'sound/magic/Summon_Magic.ogg', 50, 1, 1)
-		new /obj/effect/overlay/temp/paper_scatter(src)
-		new /obj/item/clothing/suit/wizrobe/paper(src)
-		new /obj/item/clothing/head/collectable/paper(src)
+
+/obj/effect/overlay/temp/paperwiz_dying/Destroy()
+	for(var/mob/M in range(7,src))
+		shake_camera(M, 7, 1)
+	var/turf/T = get_turf(src)
+	playsound(T,'sound/magic/Summon_Magic.ogg', 50, 1, 1)
+	new /obj/effect/overlay/temp/paper_scatter(T)
+	new /obj/item/clothing/suit/wizrobe/paper(T)
+	new /obj/item/clothing/head/collectable/paper(T)
+	return ..()
 
 
 

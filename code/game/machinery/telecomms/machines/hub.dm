@@ -39,7 +39,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/hub
-	name = "circuit board (Hub Mainframe)"
+	name = "Hub Mainframe (Machine Board)"
 	build_path = /obj/machinery/telecomms/hub
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(

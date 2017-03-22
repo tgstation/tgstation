@@ -19,7 +19,7 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal, /obj/item/clothing/head/wizard)
+			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/head/wizard)
 			ruins_spaceworthiness = 1
 		if("swords")
 			loadout[5] = /obj/item/weapon/katana/cursed
@@ -49,7 +49,7 @@
 			if(loadout[i])
 				var/obj/item/J = loadout[i]
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
-				H.unEquip(slots[i])
+				H.temporarilyRemoveItemFromInventory(slots[i], TRUE)
 				H.equip_to_slot_or_del(I, wearslots[i])
 				I.flags |= NODROP
 				I.name = "cursed " + I.name

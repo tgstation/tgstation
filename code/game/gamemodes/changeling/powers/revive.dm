@@ -23,7 +23,8 @@
 			and tearing!</span>")
 		user.emote("scream")
 		user.regenerate_limbs(0, list("head"))
-	user << "<span class='notice'>We have revived ourselves.</span>"
+		user.regenerate_organs()
+	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 	user.mind.changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","CR")
 	return 1

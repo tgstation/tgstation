@@ -6,11 +6,12 @@
 	attachable = 1
 	var/id = null
 	var/can_change_id = 0
+	var/cooldown = 0//Door cooldowns
 
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
 	if(id)
-		user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
 
 /obj/item/device/assembly/control/activate()
@@ -71,7 +72,7 @@
 				D.safe = !D.safe
 
 	for(var/D in open_or_close)
-		addtimer(D, doors_need_closing ? "close" : "open",0, TIMER_NORMAL)
+		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
 
 	sleep(10)
 	cooldown = 0

@@ -12,7 +12,12 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		/obj/machinery/telepad,
 		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
-		/obj/effect/mob_spawn
+		/obj/effect/mob_spawn,
+		/obj/effect/hierophant,
+		/obj/structure/recieving_pad,
+		/obj/effect/clockwork/spatial_gateway,
+		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
+		/obj/item/device/warp_cube
 	))
 
 /obj/docking_port/mobile/supply
@@ -67,7 +72,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 
 	var/list/empty_turfs = list()
 	for(var/turf/open/floor/T in areaInstance)
-		if(T.density || T.contents.len)
+		if(is_blocked_turf(T))
 			continue
 		empty_turfs += T
 

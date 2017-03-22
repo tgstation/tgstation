@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin)
@@ -298,25 +298,28 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "aP" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "aQ" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "aR" = (
 /obj/structure/closet/crate,
@@ -327,18 +330,20 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "aS" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/pill_bottle/stimulant,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "aT" = (
 /obj/machinery/light/small{
@@ -385,30 +390,34 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "bc" = (
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "bd" = (
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "be" = (
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "bf" = (
 /obj/structure/closet/crate{
@@ -417,9 +426,10 @@
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/soap/nanotrasen,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "bg" = (
 /obj/machinery/iv_drip,
@@ -472,17 +482,19 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "bo" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "bp" = (
 /obj/machinery/gateway,
@@ -491,9 +503,10 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "bq" = (
 /obj/structure/closet/crate,
@@ -509,9 +522,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn,
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod,
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/bot,
 /area/awaymission/snowdin/base)
 "br" = (
 /obj/machinery/light{
@@ -3323,9 +3337,10 @@
 	},
 /area/awaymission/snowdin/sekret)
 "iX" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
+/obj/effect/turf_decal/stripes/line,
 /area/awaymission/snowdin/sekret)
 "iY" = (
 /obj/machinery/light/small,
@@ -3598,17 +3613,21 @@
 	name = "Armory";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
-	dir = 9;
 	tag = "icon-warndark (NORTHWEST)"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /area/awaymission/snowdin/sekret)
 "jJ" = (
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
-	dir = 5;
 	tag = "icon-warndark (NORTHEAST)"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /area/awaymission/snowdin/sekret)
 "jK" = (
@@ -3645,7 +3664,8 @@
 	name = "Armory";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -3674,10 +3694,12 @@
 	},
 /area/awaymission/snowdin/sekret)
 "jS" = (
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	tag = "icon-warndark (EAST)";
-	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /area/awaymission/snowdin/sekret)
 "jT" = (
@@ -3747,18 +3769,22 @@
 /obj/item/ammo_box/magazine/smgm9mm,
 /obj/item/ammo_box/a40mm,
 /obj/item/ammo_box/foambox/riot,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
-	dir = 9;
 	tag = "icon-warndark (NORTHWEST)"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /area/awaymission/snowdin/sekret)
 "kb" = (
 /obj/machinery/porta_turret/syndicate,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
-	dir = 5;
 	tag = "icon-warndark (NORTHEAST)"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /area/awaymission/snowdin/sekret)
 "kc" = (
@@ -3896,7 +3922,8 @@
 /obj/item/weapon/gun/ballistic/automatic/speargun,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4020,7 +4047,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4079,7 +4107,8 @@
 	},
 /area/awaymission/snowdin/sekret)
 "kQ" = (
-/turf/open/floor/plasteel/darkwarning,
+/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line,
 /area/awaymission/snowdin/sekret)
 "kR" = (
 /obj/structure/table,
@@ -4091,20 +4120,24 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/automatic/mini_uzi,
 /obj/item/weapon/gun/ballistic/automatic/mini_uzi,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	tag = "icon-warndark (SOUTHWEST)";
-	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /area/awaymission/snowdin/sekret)
 "kT" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	tag = "icon-warndark (SOUTHEAST)";
-	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /area/awaymission/snowdin/sekret)
 "kU" = (
@@ -4701,8 +4734,10 @@
 	dir = 1
 	},
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel/warning{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4859,8 +4894,10 @@
 "mH" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel/warning{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4943,8 +4980,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warning{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -5000,8 +5039,10 @@
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel/warning{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -5083,8 +5124,10 @@
 	dir = 1
 	},
 /obj/item/ammo_casing/a357,
-/turf/open/floor/plasteel/warning{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -5150,8 +5193,10 @@
 "ns" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/a357,
-/turf/open/floor/plasteel/warning{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/snow
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)

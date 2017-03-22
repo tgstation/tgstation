@@ -32,7 +32,7 @@
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
-	imp_in << "<span class='notice'>You activate your [name].</span>"
+	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
 	var/turf/boomturf = get_turf(imp_in)
 	var/area/A = get_area(boomturf)
 	message_admins("[key_name_admin(imp_in)]<A HREF='?_src_=holder;adminmoreinfo=\ref[imp_in]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[imp_in]'>FLW</A>) has activated their [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>[A.name] (JMP)</a>.")
@@ -45,8 +45,8 @@
 		return
 	timed_explosion()
 
-/obj/item/weapon/implant/explosive/implant(mob/living/carbon/source)
-	for(var/X in source.implants)
+/obj/item/weapon/implant/explosive/implant(mob/living/target)
+	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/weapon/implant/explosive/imp_e = X
 			imp_e.heavy += heavy
@@ -86,12 +86,12 @@
 	heavy = 4
 	delay = 70
 
-/obj/item/weapon/implant/explosive/macro/implant(mob/living/carbon/source)
-	for(var/X in source.implants)
+/obj/item/weapon/implant/explosive/macro/implant(mob/living/target)
+	for(var/X in target.implants)
 		if(istype(X, type))
 			return 0
 
-	for(var/Y in source.implants)
+	for(var/Y in target.implants)
 		if(istype(Y, /obj/item/weapon/implant/explosive))
 			var/obj/item/weapon/implant/explosive/imp_e = Y
 			heavy += imp_e.heavy
@@ -106,16 +106,9 @@
 
 /obj/item/weapon/implanter/explosive
 	name = "implanter (explosive)"
-
-/obj/item/weapon/implanter/explosive/New()
-	imp = new /obj/item/weapon/implant/explosive(src)
-	..()
-
+	imp_type = /obj/item/weapon/implant/explosive
 
 /obj/item/weapon/implantcase/explosive
 	name = "implant case - 'Explosive'"
 	desc = "A glass case containing an explosive implant."
-
-/obj/item/weapon/implantcase/explosive/New()
-	imp = new /obj/item/weapon/implant/explosive(src)
-	..()
+	imp_type = /obj/item/weapon/implant/explosive

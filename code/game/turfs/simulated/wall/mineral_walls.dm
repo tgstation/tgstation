@@ -108,7 +108,7 @@
 	..()
 
 /turf/closed/wall/mineral/plasma/proc/PlasmaBurn(temperature)
-	new /obj/structure/girder(src)
+	new girder_type(src)
 	src.ChangeTurf(/turf/open/floor/plasteel)
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=1000")
@@ -174,7 +174,7 @@
 	icon_state = "map-shuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine, /obj/structure/shuttle/engine/heater, )
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE

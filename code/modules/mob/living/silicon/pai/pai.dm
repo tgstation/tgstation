@@ -4,9 +4,8 @@
 	var/obj/machinery/camera/current = null
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = 1
+	mouse_opacity = 2
 	density = 0
-	ventcrawler = 2
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -29,8 +28,6 @@
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
-
-	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
 
 // Various software-specific vars
 
@@ -60,23 +57,32 @@
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
 
-	var/emitterhealth = 50
-	var/emittermaxhealth = 50
-	var/emitterregen = 1
-	var/emittercd = 10
-	var/emitteroverloadcd = 50
+	var/emitterhealth = 20
+	var/emittermaxhealth = 20
+	var/emitterregen = 0.25
+	var/emittercd = 50
+	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
 	canmove = FALSE
+	var/silent = 0
+	var/hit_slowdown = 0
+	var/brightness_power = 5
+	var/slowdown = 0
+
+/mob/living/silicon/pai/movement_delay()
+	. = ..()
+	. += slowdown
 
 /mob/living/silicon/pai/Destroy()
 	pai_list -= src
 	..()
 
-/mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
+/mob/living/silicon/pai/Initialize()
+	var/obj/item/device/paicard/P = loc
 	START_PROCESSING(SSfastprocess, src)
 	pai_list += src
 	make_laws()
@@ -103,9 +109,13 @@
 	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
+	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
 	AS.Grant(src)
 	AC.Grant(src)
 	AR.Grant(src)
+	AL.Grant(src)
+	emittersemicd = TRUE
+	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -136,11 +146,6 @@
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return TRUE
-
-/mob/living/silicon/pai/process()
-	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
-	if(weakened > 0)
-		weakened -= 0.2
 
 /mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
@@ -189,3 +194,46 @@
 /datum/action/innate/pai/rest/Trigger()
 	..()
 	P.lay_down()
+/datum/action/innate/pai/light
+	name = "Toggle Integrated Lights"
+	button_icon_state = "emp"
+	background_icon_state = "bg_tech"
+
+/datum/action/innate/pai/light/Trigger()
+	..()
+	P.toggle_integrated_light()
+
+/mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
+	. = ..()
+	if(!.)
+		slowdown = 2
+		return TRUE
+	slowdown = initial(slowdown)
+	return TRUE
+
+/mob/living/silicon/pai/examine(mob/user)
+	..()
+	to_chat(user, "A personal AI in holochassis mode. Its master ID string seems to be [master].")
+
+/mob/living/silicon/pai/Life()
+	if(stat == DEAD)
+		return
+	if(cable)
+		if(get_dist(src, cable) > 1)
+			var/turf/T = get_turf(src.loc)
+			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			qdel(src.cable)
+			cable = null
+	silent = max(silent - 1, 0)
+	. = ..()
+
+/mob/living/silicon/pai/updatehealth()
+	if(status_flags & GODMODE)
+		return
+	health = maxHealth - getBruteLoss() - getFireLoss()
+	update_stat()
+
+
+/mob/living/silicon/pai/process()
+	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
+	hit_slowdown = Clamp((hit_slowdown - 1), 0, 100)

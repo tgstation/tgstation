@@ -265,6 +265,14 @@
 				icon_state = "space-up_glass"
 				name = "glass of Space-up"
 				desc = "Space-up. It helps you keep your cool."
+			if("pwr_game")
+				icon_state = "glass_red"
+				name = "glass of Pwr Game"
+				desc = "Goes well with a Vlad's salad."
+			if("shamblers")
+				icon_state = "glass_red"
+				name = "glass of Shambler's Juice"
+				desc = "Mmm mm, shambly."
 			if("lemon_lime")
 				icon_state = "glass_yellow"
 				name = "glass of Lemon-Lime"
@@ -513,6 +521,10 @@
 				icon_state = "grappa"
 				name = "glass of grappa"
 				desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
+			if("eggnog")
+				icon_state = "glass_yellow"
+				name = "Eggnog"
+				desc = "For enjoying the most wonderful time of the year."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
@@ -633,25 +645,30 @@
 		desc = "A shot glass - the universal symbol for bad decisions."
 		return
 
-// for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/New()
 	..()
 	on_reagent_change()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/soda
+	name = "Soda Water"
 	list_reagents = list("sodawater" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
+	name = "Space Cola"
 	list_reagents = list("cola" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
+	name = "Nuka Cola"
+	list_reagents = list("nuka_cola" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "<span class='notice'>[src] is full.</span>"
+				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
-				user << "<span class='notice'>You break [E] in [src].</span>"
+				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
 				reagents.add_reagent("eggyolk", 5)
 				qdel(E)
 			return

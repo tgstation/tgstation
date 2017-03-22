@@ -28,6 +28,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
+/obj/machinery/gravity_generator/throw_at()
+	return FALSE
+
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
@@ -64,9 +67,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	stat &= ~BROKEN
 
 /obj/machinery/gravity_generator/part/Destroy()
-	set_broken()
 	if(main_part)
 		qdel(main_part)
+	set_broken()
 	return ..()
 
 //
@@ -94,7 +97,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Generator which spawns with the station.
 //
 
-/obj/machinery/gravity_generator/main/station/initialize()
+/obj/machinery/gravity_generator/main/station/Initialize()
+	..()
 	setup_parts()
 	middle.add_overlay("activated")
 	update_list()
@@ -104,10 +108,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 //
 /obj/machinery/gravity_generator/main/station/admin
 	use_power = 0
-
-/obj/machinery/gravity_generator/main/station/admin/New()
-	..()
-	initialize()
 
 //
 // Main Generator with the main code
@@ -136,7 +136,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
-		qdel(O)
+		if(!QDESTROYING(O))
+			qdel(O)
 	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
@@ -190,7 +191,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(istype(I, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You secure the screws of the framework.</span>"
+				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
 				playsound(src.loc, I.usesound, 50, 1)
 				broken_state++
 				update_icon()
@@ -199,28 +200,28 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.remove_fuel(1, user))
-					user << "<span class='notice'>You mend the damaged framework.</span>"
+					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					broken_state++
 					update_icon()
 				else if(WT.isOn())
-					user << "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>"
+					to_chat(user, "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>")
 				return
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
 				if(PS.get_amount() >= 10)
 					PS.use(10)
-					user << "<span class='notice'>You add the plating to the framework.</span>"
+					to_chat(user, "<span class='notice'>You add the plating to the framework.</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 					broken_state++
 					update_icon()
 				else
-					user << "<span class='warning'>You need 10 sheets of plasteel!</span>"
+					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You secure the plating to the framework.</span>"
+				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
 				playsound(src.loc, I.usesound, 75, 1)
 				set_fix()
 				return

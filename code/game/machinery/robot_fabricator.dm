@@ -28,11 +28,11 @@
 					if (O:amount < 1)
 						qdel(O)
 
-					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
-					src.overlays -= "fab-load-metal"
+					to_chat(user, "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>")
+					cut_overlay("fab-load-metal")
 					updateDialog()
 		else
-			user << "\The [src] is full."
+			to_chat(user, "\The [src] is full.")
 	else
 		return ..()
 
@@ -143,7 +143,7 @@ Please wait until completion...</TT><BR>
 							src.being_built = null
 						src.use_power = 1
 						src.operating = 0
-						src.overlays -= "fab-active"
+						cut_overlay("fab-active")
 		return
 
 	updateUsrDialog()

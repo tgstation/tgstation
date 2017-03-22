@@ -18,6 +18,10 @@
 	. = ..()
 	attach(A)
 
+/obj/effect/countdown/examine(mob/user)
+	. = ..()
+	to_chat(user, "This countdown is displaying: [displayed_text]")
+
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
 	loc = get_turf(A)
@@ -38,7 +42,7 @@
 	return
 
 /obj/effect/countdown/process()
-	if(!attached_to || qdeleted(attached_to))
+	if(!attached_to || QDELETED(attached_to))
 		qdel(src)
 	forceMove(get_turf(attached_to))
 	var/new_val = get_value()
@@ -121,6 +125,17 @@
 	else if(G.obj_integrity && !G.purpose_fulfilled)
 		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_text(FALSE)]</div>"
 
+/obj/effect/countdown/supermatter
+	name = "supermatter damage"
+	text_size = 1
+	color = "#ED84F4"
+
+/obj/effect/countdown/supermatter/get_value()
+	var/obj/machinery/power/supermatter_shard/S = attached_to
+	if(!istype(S))
+		return
+	return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[round((S.damage / S.explosion_point) * 100)]</div>"
+
 /obj/effect/countdown/transformer
 	name = "transformer countdown"
 	color = "#4C5866"
@@ -143,3 +158,14 @@
 		return
 	else if(DD.timing)
 		return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[DD.seconds_remaining()]</div>"
+
+/obj/effect/countdown/anomaly
+	name = "anomaly countdown"
+
+/obj/effect/countdown/anomaly/get_value()
+	var/obj/effect/anomaly/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/time_left = max(0, (A.death_time - world.time) / 10)
+		return round(time_left)

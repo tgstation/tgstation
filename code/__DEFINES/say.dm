@@ -15,6 +15,7 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
+#define MODE_VOCALCORDS "cords"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -33,3 +34,5 @@
 
 // A link given to ghost alice to follow bob
 #define FOLLOW_LINK(alice, bob) "<a href=?src=\ref[alice];follow=\ref[bob]>(F)</a>"
+#define TURF_LINK(alice, turfy) "<a href=?src=\ref[alice];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
+#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=\ref[alice];follow=\ref[bob];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"

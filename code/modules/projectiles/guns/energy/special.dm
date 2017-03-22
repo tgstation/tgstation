@@ -56,7 +56,7 @@
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
-	icon_state = "riotgun"
+	icon_state = "meteor_gun"
 	item_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
@@ -98,6 +98,8 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = 0
+	max_mod_capacity = 0
+	empty_state = null
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -124,12 +126,14 @@
 	item_state = "plasmacutter"
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP
 	can_charge = 0
 	heat = 3800
+	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
@@ -142,12 +146,12 @@
 		S.use(1)
 		power_supply.give(1000)
 		recharge_newshot(1)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
 		recharge_newshot(1)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else
 		..()
 

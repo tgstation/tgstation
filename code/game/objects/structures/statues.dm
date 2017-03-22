@@ -19,7 +19,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
 			if(do_after(user,40*W.toolspeed, target = src))
@@ -32,7 +32,7 @@
 			if(!isfloorturf(src.loc))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("[user] is securing the [name]'s bolts...", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
 			if(do_after(user, 40*W.toolspeed, target = src))
@@ -46,7 +46,7 @@
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user,30, target = src))
+		if(do_after(user,40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			user.visible_message("[user] slices apart the [name].", \
@@ -63,7 +63,7 @@
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
-		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+		playsound(loc, W.usesound, 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user, 40*W.toolspeed, target = src))
@@ -97,7 +97,7 @@
 
 /obj/structure/statue/uranium
 	obj_integrity = 300
-	luminosity = 2
+	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
 	var/active = null

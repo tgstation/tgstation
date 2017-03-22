@@ -65,14 +65,14 @@
 				deity = SSreligion.Bible_deity_name
 			else
 				deity = "Christ"
-			R << "<span class='userdanger'>The power of [deity] compels you!</span>"
+			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
 		sleep(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
-				C << "<span class='userdanger'>The divine explosion sears you!</span>"
+				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
 				C.Weaken(2)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
@@ -132,7 +132,7 @@
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
-		PoolOrNew(/obj/effect/hotspot, turf)
+		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 1000 // hot as shit
 
 /datum/chemical_reaction/reagent_explosion/methsplosion
@@ -147,7 +147,7 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
-		PoolOrNew(/obj/effect/hotspot, turf)
+		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 1000 // hot as shit
 	..()
 

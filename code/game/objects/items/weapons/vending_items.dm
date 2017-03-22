@@ -25,9 +25,9 @@
 /obj/item/weapon/vending_refill/examine(mob/user)
 	..()
 	if(charges[1] > 0)
-		user << "It can restock [charges[1]+charges[2]+charges[3]] item(s)."
+		to_chat(user, "It can restock [charges[1]+charges[2]+charges[3]] item(s).")
 	else
-		user << "It's empty!"
+		to_chat(user, "It's empty!")
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 
@@ -51,8 +51,8 @@
 /obj/item/weapon/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
-	charges = list(20, 2, 0)//of 60 standard, 6 contraband
-	init_charges = list(20, 2, 0)
+	charges = list(30, 4, 1)//of 90 standard, 12 contraband, 1 premium
+	init_charges = list(30, 4, 1)
 
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"
@@ -63,7 +63,7 @@
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(27, 2, 3)// of 75 standard, 6 contraband, 9 premium
+	charges = list(31, 2, 3)// of 94 standard, 6 contraband, 9 premium
 	init_charges = list(27, 2, 3)
 
 /obj/item/weapon/vending_refill/clothing

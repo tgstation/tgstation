@@ -107,10 +107,10 @@
 
 /datum/objective/mutiny/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey || !target.current.client)
+		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z > ZLEVEL_STATION) || target.current.client.is_afk())			//If they leave the station or go afk they count as dead for this
+		if(T && (T.z > ZLEVEL_STATION) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -230,20 +230,8 @@
 	if(SSshuttle.emergency.areaInstance != A)
 		return 0
 
-	for(var/mob/living/player in player_list)
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
-					var/location = get_turf(player.mind.current)
-					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return 0
-	return 1
+	return SSshuttle.emergency.is_hijacked()
+
 
 /datum/objective/hijackclone
 	explanation_text = "Hijack the emergency shuttle by ensuring only you (or your copies) escape."
@@ -668,7 +656,7 @@ var/global/list/possible_items_special = list()
 	if (ticker)
 		var/n_p = 1 //autowin
 		if (ticker.current_state == GAME_STATE_SETTING_UP)
-			for(var/mob/new_player/P in player_list)
+			for(var/mob/dead/new_player/P in player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
 		else if (ticker.current_state == GAME_STATE_PLAYING)

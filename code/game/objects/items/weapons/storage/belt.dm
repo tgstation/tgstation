@@ -258,6 +258,24 @@
 	item_state = "military"
 	max_w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/weapon/storage/belt/military/abductor
+	name = "agent belt"
+	desc = "A belt used by abductor agents."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "belt"
+	item_state = "security"
+
+/obj/item/weapon/storage/belt/military/abductor/full/New()
+	..()
+	new /obj/item/weapon/screwdriver/abductor(src)
+	new /obj/item/weapon/wrench/abductor(src)
+	new /obj/item/weapon/weldingtool/abductor(src)
+	new /obj/item/weapon/crowbar/abductor(src)
+	new /obj/item/weapon/wirecutters/abductor(src)
+	new /obj/item/device/multitool/abductor(src)
+	new /obj/item/stack/cable_coil(src,30,"white")
+
+
 /obj/item/weapon/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."
@@ -382,6 +400,12 @@
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER
 
+/obj/item/weapon/storage/belt/holster/full/New()
+	..()
+	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
+	new /obj/item/ammo_box/c38(src)
+	new /obj/item/ammo_box/c38(src)
+
 /obj/item/weapon/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in."
@@ -455,7 +479,7 @@
 /obj/item/weapon/storage/belt/sabre/examine(mob/user)
 	..()
 	if(contents.len)
-		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
 	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
@@ -467,7 +491,7 @@
 		user.put_in_hands(I)
 		update_icon()
 	else
-		user << "[src] is empty."
+		to_chat(user, "[src] is empty.")
 
 /obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "sheath"

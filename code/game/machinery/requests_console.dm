@@ -56,7 +56,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/priority = -1 ; //Priority of the message being sent
 	var/obj/item/device/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
-	luminosity = 0
+	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 70, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
@@ -66,6 +66,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	update_icon()
 
 /obj/machinery/requests_console/update_icon()
+	if(stat & NOPOWER)
+		set_light(0)
+	else
+		set_light(1.4,0.7,"#34D352")//green light
 	if(open)
 		if(!hackState)
 			icon_state="req_comp_open"
@@ -84,10 +88,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		else
 			icon_state = "req_comp0"
 
-/obj/machinery/requests_console/New()
+/obj/machinery/requests_console/Initialize()
+	..()
 	name = "\improper [department] requests console"
 	allConsoles += src
-	//req_console_departments += department
 	switch(departmentType)
 		if(1)
 			if(!("[department]" in req_console_assistance))
@@ -123,6 +127,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0
+
+/obj/machinery/requests_console/Destroy()
+	QDEL_NULL(Radio)
+	allConsoles -= src
+	return ..()
 
 /obj/machinery/requests_console/attack_hand(mob/user)
 	if(..())
@@ -188,7 +197,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
-						Console.SetLuminosity(1)
+
 				newmessagepriority = 0
 				update_icon()
 				var/messageComposite = ""
@@ -375,7 +384,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								alert = "Message from [department][authentic]"
 								Console.createmessage(src, alert , sending, 1, 1)
 						screen = 6
-						Console.SetLuminosity(2)
 
 				if(radio_freq)
 					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq)
@@ -476,15 +484,14 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
 			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
-	SetLuminosity(2)
 
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/crowbar))
 		if(open)
-			user << "<span class='notice'>You close the maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			open = 0
 		else
-			user << "<span class='notice'>You open the maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You open the maintenance panel.</span>")
 			open = 1
 		update_icon()
 		return
@@ -492,12 +499,12 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(open)
 			hackState = !hackState
 			if(hackState)
-				user << "<span class='notice'>You modify the wiring.</span>"
+				to_chat(user, "<span class='notice'>You modify the wiring.</span>")
 			else
-				user << "<span class='notice'>You reset the wiring.</span>"
+				to_chat(user, "<span class='notice'>You reset the wiring.</span>")
 			update_icon()
 		else
-			user << "<span class='warning'>You must open the maintenance panel first!</span>"
+			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 		return
 
 	var/obj/item/weapon/card/id/ID = O.GetID()
@@ -510,7 +517,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "<span class='warning'>You are not authorized to send announcements!</span>"
+				to_chat(user, "<span class='warning'>You are not authorized to send announcements!</span>")
 			updateUsrDialog()
 		return
 	if (istype(O, /obj/item/weapon/stamp))

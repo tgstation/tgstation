@@ -1,10 +1,10 @@
 //The gateway to Reebe, from which Ratvar emerges.
 /obj/structure/destructible/clockwork/massive/celestial_gateway
-	name = "Gateway to the Celestial Derelict"
+	name = "gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 600
-	max_integrity = 600
+	obj_integrity = 500
+	max_integrity = 500
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
@@ -12,18 +12,21 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	can_be_repaired = FALSE
+	immune_to_servant_attacks = TRUE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
+	var/fourth_sound_played = FALSE
 	var/ratvar_portal = TRUE //if the gateway actually summons ratvar or just produces a hugeass conversion burst
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
+	var/list/required_components = list(BELLIGERENT_EYE = 7, VANGUARD_COGWHEEL = 7, GEIS_CAPACITOR = 7, REPLICANT_ALLOY = 7, HIEROPHANT_ANSIBLE = 7)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/New()
 	..()
-	addtimer(src, "spawn_animation", 0)
+	INVOKE_ASYNC(src, .proc/spawn_animation)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
@@ -59,7 +62,7 @@
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
-		if(!is_blocked_turf(OT))
+		if(!is_blocked_turf(OT, TRUE))
 			open_turfs |= OT
 	if(open_turfs.len)
 		for(var/mob/living/L in T)
@@ -74,8 +77,6 @@
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 	if(!objective_is_gateway)
 		ratvar_portal = FALSE
-		hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \
-		and will instead simply proselytize and convert everything and everyone on the station.</span>", TRUE)
 	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSprocessing, src)
 
@@ -87,7 +88,7 @@
 		send_to_playing_players(sound(null, 0, channel = 8))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
-	if(!was_stranded && !purpose_fulfilled && second_sound_played)
+	if(!was_stranded && !purpose_fulfilled)
 		priority_announce("Massive energy anomaly no longer on short-range scanners.","Anomaly Alert")
 	if(glow)
 		qdel(glow)
@@ -102,7 +103,7 @@
 		if(!disassembled)
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
-			visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
+			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
 			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
@@ -113,12 +114,51 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
-		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
+		glow = new /obj/effect/clockwork/overlay/gateway_glow(get_turf(src))
 		glow.linked = src
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
 	var/damage = max((obj_integrity * 0.70) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/attackby(obj/item/I, mob/living/user, params) //add components directly to the ark
+	if(!is_servant_of_ratvar(user) || !still_needs_components())
+		return ..()
+	if(istype(I, /obj/item/clockwork/component))
+		var/obj/item/clockwork/component/C = I
+		if(required_components[C.component_id])
+			required_components[C.component_id]--
+			to_chat(user, "<span class='notice'>You add [C] to [src].</span>")
+			user.drop_item()
+			qdel(C)
+		else
+			to_chat(user, "<span class='notice'>[src] has enough [get_component_name(C.component_id)][C.component_id != REPLICANT_ALLOY ? "s":""].</span>")
+		return 1
+	else if(istype(I, /obj/item/clockwork/slab))
+		var/obj/item/clockwork/slab/S = I
+		var/used_components = FALSE
+		var/used_all = TRUE
+		for(var/i in S.stored_components)
+			if(required_components[i])
+				var/to_use = min(S.stored_components[i], required_components[i])
+				required_components[i] -= to_use
+				S.stored_components[i] -= to_use
+				if(to_use)
+					used_components = TRUE
+				if(S.stored_components[i])
+					used_all = FALSE
+		if(used_components)
+			update_slab_info(S)
+			user.visible_message("<span class='notice'>[user][used_all ? "":" partially"] empties [S] into [src].</span>", \
+			"<span class='notice'>You offload [used_all ? "all":"some"] of your slab's components into [src].</span>")
+		return 1
+	else
+		return ..()
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/still_needs_components()
+	for(var/i in required_components)
+		if(required_components[i])
+			return TRUE
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	. = "IMMINENT"
@@ -132,62 +172,95 @@
 	..()
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>"
-		switch(progress_in_seconds)
-			if(-INFINITY to GATEWAY_REEBE_FOUND)
-				user << "<span class='heavy_brass'>It's still opening.</span>"
-			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-				user << "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>"
-			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>"
+		if(still_needs_components())
+			to_chat(user, "<span class='big'><b>Components required until activation:</b></span>")
+			for(var/i in required_components)
+				if(required_components[i])
+					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
+					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
+		else
+			to_chat(user, "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>")
+			switch(progress_in_seconds)
+				if(-INFINITY to GATEWAY_REEBE_FOUND)
+					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")
+				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
+					to_chat(user, "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
+				if(GATEWAY_RATVAR_COMING to INFINITY)
+					to_chat(user, "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>")
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
-				user << "<span class='warning'>It's a swirling mass of blackness.</span>"
+				to_chat(user, "<span class='warning'>It's a swirling mass of blackness.</span>")
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-				user << "<span class='warning'>It seems to be leading somewhere.</span>"
+				to_chat(user, "<span class='warning'>It seems to be leading somewhere.</span>")
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>"
+				to_chat(user, "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
-	if(!progress_in_seconds || prob(7))
+	if(!first_sound_played || prob(7))
 		for(var/M in player_list)
 			if(M && !isnewplayer(M))
-				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
+				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 	if(!obj_integrity)
 		return 0
-	for(var/t in RANGE_TURFS(1, loc))
-		if(iswallturf(t))
-			var/turf/closed/wall/W = t
-			W.dismantle_wall()
-		else if(t && (isclosedturf(t) || !is_blocked_turf(t)))
-			var/turf/T = t
-			T.ChangeTurf(/turf/open/floor/clockwork)
+	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
+	for(var/t in RANGE_TURFS(convert_dist, loc))
+		var/turf/T = t
+		if(!T)
+			continue
+		if(get_dist(T, src) < 2)
+			if(iswallturf(T))
+				var/turf/closed/wall/W = T
+				W.dismantle_wall()
+			else if(t && (isclosedturf(T) || !is_blocked_turf(T)))
+				T.ChangeTurf(/turf/open/floor/clockwork)
+		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
+		if(dist < convert_dist)
+			T.ratvar_act(FALSE, TRUE, 3)
+	if(still_needs_components())
+		if(!first_sound_played)
+			priority_announce("Massive energy anomaly detected on short-range scanners. Attempting to triangulate location...", "Anomaly Alert")
+			send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 10))
+			first_sound_played = TRUE
+		make_glow()
+		glow.icon_state = "clockwork_gateway_components"
+		var/used_components = FALSE
+		for(var/i in required_components)
+			if(required_components[i])
+				var/to_use = min(clockwork_component_cache[i], required_components[i])
+				required_components[i] -= to_use
+				clockwork_component_cache[i] -= to_use
+				if(to_use)
+					used_components = TRUE
+		if(used_components)
+			update_slab_info()
+		if(still_needs_components())
+			return
 	for(var/obj/O in orange(1, src))
-		if(!istype(O, /obj/effect) && O.density)
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
-			if(!first_sound_played)
+			if(!second_sound_played)
 				send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30))
-				first_sound_played = TRUE
+				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-			if(!second_sound_played)
+			if(!third_sound_played)
 				var/area/gate_area = get_area(src)
-				priority_announce("Massive energy anomaly detected on short-range scanners. Location: [gate_area.map_name].", "Anomaly Alert")
+				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
 				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35))
-				second_sound_played = TRUE
+				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
-			if(!third_sound_played)
+			if(!fourth_sound_played)
 				send_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40))
-				third_sound_played = TRUE
+				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
@@ -203,13 +276,14 @@
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
-				clockwork_gateway_activated = TRUE
 				if(ratvar_portal)
 					sleep(3)
+					clockwork_gateway_activated = TRUE
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
-					addtimer(SSshuttle.emergency, "request", 0, TIMER_NORMAL, null, 0) //call the shuttle immediately
+					INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0) //call the shuttle immediately
 					sleep(3)
+					clockwork_gateway_activated = TRUE
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>")
@@ -227,13 +301,8 @@
 							dist = FALSE
 						T.ratvar_act(dist)
 						CHECK_TICK
-					for(var/mob/living/silicon/robot/R in silicon_mobs)
-						if(R && R.stat != DEAD && !is_servant_of_ratvar(R))
-							add_servant_of_ratvar(R)
-					for(var/i in ai_list)
-						var/mob/living/silicon/ai/A = i
-						if(A && A.stat != DEAD && !is_servant_of_ratvar(A))
-							add_servant_of_ratvar(A)
+					for(var/mob/living/L in living_mob_list)
+						L.ratvar_act()
 					for(var/I in all_clockwork_mobs)
 						var/mob/M = I
 						if(M.stat == CONSCIOUS)
@@ -246,3 +315,10 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = BELOW_OPEN_DOOR_LAYER
+	light_range = 2
+	light_power = 4
+	light_color = "#6A4D2F"
+
+/obj/effect/clockwork/overlay/gateway_glow/New()
+	..()
+	update_light()

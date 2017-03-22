@@ -1,4 +1,3 @@
-
 /obj/item/weapon/implant/gang
 	name = "gang implant"
 	desc = "Makes you a gangster or such."
@@ -22,7 +21,7 @@
 				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
 	return dat
 
-/obj/item/weapon/implant/gang/implant(mob/living/carbon/target, mob/user, silent = 0)
+/obj/item/weapon/implant/gang/implant(mob/living/target, mob/user, silent = 0)
 	if(..())
 		for(var/obj/item/weapon/implant/I in target.implants)
 			if(I != src)
@@ -43,7 +42,7 @@
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 
 		qdel(src)
-		return -1
+		return 0
 
 /obj/item/weapon/implanter/gang
 	name = "implanter (gang)"

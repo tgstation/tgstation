@@ -567,6 +567,15 @@
 	construction_time = 500
 	category = list("Exosuit Equipment")
 
+/datum/design/mech_punching_glove
+	name = "Oingo Boingo Punch-face"
+	id = "mech_punching_face"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
+	materials = list(MAT_METAL=20000,MAT_BANANIUM=7500)
+	construction_time = 400
+	category = list("Exosuit Equipment")
+
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////
@@ -669,6 +678,46 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_expandedsynthesiser
+	name = "Cyborg Upgrade (Hypospray Expanded Synthesiser)"
+	id = "borg_upgrade_expandedsynthesiser"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/hypospray/expanded
+	req_tech = list("programming" = 5, "engineering" = 4, "biotech" = 5)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_highstrengthsynthesiser
+	name = "Cyborg Upgrade (Hypospray High-Strength Synthesiser)"
+	id = "borg_upgrade_highstrengthsynthesiser"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/hypospray/high_strength
+	req_tech = list("programming" = 5, "engineering" = 5, "biotech" = 6)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=10000, MAT_URANIUM=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_piercinghypospray
+	name = "Cyborg Upgrade (Piercing Hypospray)"
+	id = "borg_upgrade_piercinghypospray"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/piercing_hypospray
+	req_tech = list("materials" = 5, "engineering" = 7, "combat" = 3)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_TITANIUM=10000, MAT_DIAMOND=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_defibrillator
+	name = "Cyborg Upgrade (Defibrillator)"
+	id = "borg_upgrade_defibrillator"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/defib
+	req_tech = list("programming" = 4, "engineering" = 5, "materials" = 5, "powerstorage" = 5, "biotech" = 5)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_SILVER=10000, MAT_GOLD=10000, MAT_TITANIUM=5000, MAT_DIAMOND=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
@@ -676,6 +725,16 @@
 	build_type = MECHFAB
 	build_path =/obj/item/mecha_parts/mecha_tracking
 	materials = list(MAT_METAL=500)
+	construction_time = 50
+	category = list("Misc")
+
+/datum/design/mecha_tracking_ai_control
+	name = "AI Control Beacon"
+	id = "mecha_tracking_ai_control"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 200)
+	req_tech = list("programming" = 3, "magnets" = 2, "engineering" = 2)
 	construction_time = 50
 	category = list("Misc")
 
@@ -722,7 +781,7 @@
 	construction_time = 250
 	category = list("Misc")
 	req_tech = list("magnets" = 4, "combat" = 3, "plasmatech" = 4, "materials" = 5, "engineering" = 4, "powerstorage" = 4)
-	
+
 /datum/design/flightshoes
 	name = "Flight Shoes"
 	desc = "Flight shoes, attachable to a flight suit to provide additional functions."

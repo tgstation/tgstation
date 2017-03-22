@@ -61,10 +61,10 @@
 	if(user.a_intent == INTENT_GRAB && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
 		if(pushed_mob.buckled)
-			user << "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>"
+			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
 			return
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		tablepush(user, pushed_mob)
 		user.stop_pulling()
@@ -100,16 +100,16 @@
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags & NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
-			user << "<span class='notice'>You start disassembling [src]...</span>"
+			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20*I.toolspeed, target = src))
 				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
-			user << "<span class='notice'>You start deconstructing [src]...</span>"
+			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return
@@ -187,7 +187,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(src, "throw_check", 5, TIMER_NORMAL, AM)
+		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
 	else
 		check_break(AM)
 
@@ -300,16 +300,16 @@
 		if(WT.remove_fuel(0, user))
 			playsound(src.loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
-				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
+				to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>You strengthen the table.</span>"
+					to_chat(user, "<span class='notice'>You strengthen the table.</span>")
 					deconstruction_ready = 0
 			else
-				user << "<span class='notice'>You start weakening the reinforced table...</span>"
+				to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>You weaken the table.</span>"
+					to_chat(user, "<span class='notice'>You weaken the table.</span>")
 					deconstruction_ready = 1
 	else
 		. = ..()
@@ -342,7 +342,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
@@ -444,6 +444,8 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
+	if(user.weakened || user.resting || user.lying || user.get_num_legs() < 2)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -483,6 +485,7 @@
 	icon_state = "rack_parts"
 	flags = CONDUCT
 	materials = list(MAT_METAL=2000)
+	var/building = FALSE
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -492,7 +495,10 @@
 		. = ..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
-	user << "<span class='notice'>You start constructing a rack...</span>"
+	if(building)
+		return
+	building = TRUE
+	to_chat(user, "<span class='notice'>You start constructing a rack...</span>")
 	if(do_after(user, 50, target = src, progress=TRUE))
 		if(!user.drop_item())
 			return
@@ -501,3 +507,4 @@
 			</span>", "<span class='notice'>You assemble \a [R].</span>")
 		R.add_fingerprint(user)
 		qdel(src)
+	building = FALSE

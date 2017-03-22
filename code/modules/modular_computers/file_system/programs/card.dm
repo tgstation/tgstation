@@ -26,8 +26,7 @@
 		"Head of Security",
 		"Chief Engineer",
 		"Research Director",
-		"Chief Medical Officer",
-		"Chaplain")
+		"Chief Medical Officer")
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
@@ -38,7 +37,7 @@
 
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
-	if(slot == 2)
+	if(!slot || slot == 2)// slot being false means both are removed
 		minor = 0
 		authenticated = 0
 		head_subordinates = null
@@ -155,7 +154,7 @@
 								contents += "  [get_access_desc(A)]"
 
 						if(!printer.print_text(contents,"access report"))
-							usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
+							to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 							return
 						else
 							computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
@@ -165,7 +164,7 @@
 									[data_core ? data_core.get_manifest(0) : ""]
 									"}
 					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
-						usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
+						to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 						return
 					else
 						computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
@@ -176,7 +175,7 @@
 					if("id")
 						if(id_card)
 							data_core.manifest_modify(id_card.registered_name, id_card.assignment)
-							card_slot.try_eject(, user)
+							card_slot.try_eject(1, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
@@ -192,7 +191,7 @@
 							region_access = null
 							authenticated = 0
 							minor = 0
-							card_slot.try_eject(, user)
+							card_slot.try_eject(2, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
@@ -236,7 +235,7 @@
 								jobdatum = J
 								break
 						if(!jobdatum)
-							usr << "<span class='warning'>No log exists for this job: [t1]</span>"
+							to_chat(usr, "<span class='warning'>No log exists for this job: [t1]</span>")
 							return
 
 						access = jobdatum.get_access()
@@ -332,8 +331,8 @@
 				"title" = job.title,
 				"current" = job.current_positions,
 				"total" = job.total_positions,
-				"status_open" = authed ? status_open["enable"]: 0,
-				"status_close" = authed ? status_close["enable"] : 0,
+				"status_open" = (authed && !minor) ? status_open["enable"]: 0,
+				"status_close" = (authed && !minor) ? status_close["enable"] : 0,
 				"desc_open" = status_open["desc"],
 				"desc_close" = status_close["desc"])))
 		data["slots"] = pos
@@ -474,7 +473,7 @@
 					if((access_ce in auth_card.access) && ((target_dept==5) || !target_dept))
 						region_access |= 5
 						get_subordinates("Chief Engineer")
-					if(region_access)
+					if(region_access.len)
 						minor = 1
 						authenticated = 1
 						return 1

@@ -78,14 +78,14 @@
 	inturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_compressor
-	name = "circuit board (Power Compressor)"
+	name = "Power Compressor (Machine Board)"
 	build_path = /obj/machinery/power/compressor
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/manipulator = 6)
 
-/obj/machinery/power/compressor/initialize()
+/obj/machinery/power/compressor/Initialize()
 	..()
 	locate_machinery()
 	if(!turbine)
@@ -123,10 +123,10 @@
 		inturf = get_step(src, dir)
 		locate_machinery()
 		if(turbine)
-			user << "<span class='notice'>Turbine connected.</span>"
+			to_chat(user, "<span class='notice'>Turbine connected.</span>")
 			stat &= ~BROKEN
 		else
-			user << "<span class='alert'>Turbine not connected.</span>"
+			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
 			stat |= BROKEN
 		return
 
@@ -194,14 +194,14 @@
 	outturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_turbine
-	name = "circuit board (Power Turbine)"
+	name = "Power Turbine (Machine Board)"
 	build_path = /obj/machinery/power/turbine
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/capacitor = 6)
 
-/obj/machinery/power/turbine/initialize()
+/obj/machinery/power/turbine/Initialize()
 	..()
 	locate_machinery()
 	if(!compressor)
@@ -275,10 +275,10 @@
 		outturf = get_step(src, dir)
 		locate_machinery()
 		if(compressor)
-			user << "<span class='notice'>Compressor connected.</span>"
+			to_chat(user, "<span class='notice'>Compressor connected.</span>")
 			stat &= ~BROKEN
 		else
-			user << "<span class='alert'>Compressor not connected.</span>"
+			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
 			stat |= BROKEN
 		return
 
@@ -337,10 +337,9 @@
 
 
 
-/obj/machinery/computer/turbine_computer/initialize()
+/obj/machinery/computer/turbine_computer/Initialize()
 	..()
-	spawn(10)
-		locate_machinery()
+	locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
 	compressor = locate(/obj/machinery/power/compressor) in range(5, src)

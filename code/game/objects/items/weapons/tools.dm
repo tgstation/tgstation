@@ -44,8 +44,18 @@
 /obj/item/weapon/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "wrench_brass"
 	toolspeed = 0.5
+
+/obj/item/weapon/wrench/abductor
+	name = "alien wrench"
+	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "wrench"
+	usesound = 'sound/effects/EMPulse.ogg'
+	toolspeed = 0.1
+	origin_tech = "materials=5;engineering=5;abductor=3"
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -63,10 +73,9 @@
 /obj/item/weapon/wrench/power/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
 	var/obj/item/weapon/wirecutters/power/s_drill = new /obj/item/weapon/screwdriver/power
-	user << "<span class='notice'>You attach the screw driver bit to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(s_drill)
+	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	qdel(src)
+	user.put_in_active_hand(s_drill)
 
 /obj/item/weapon/wrench/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!")
@@ -97,7 +106,7 @@
 		return
 
 	for(var/obj/item/W in user)
-		user.unEquip(W)
+		user.dropItemToGround(W)
 
 	var/obj/item/weapon/wrench/medical/W = new /obj/item/weapon/wrench/medical(loc)
 	W.add_fingerprint(user)
@@ -159,8 +168,17 @@
 /obj/item/weapon/screwdriver/brass
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "screwdriver_brass"
 	toolspeed = 0.5
+
+/obj/item/weapon/screwdriver/abductor
+	name = "alien screwdriver"
+	desc = "An ultrasonic screwdriver."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "screwdriver"
+	usesound = 'sound/items/PSHOOM.ogg'
+	toolspeed = 0.1
 
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"
@@ -185,10 +203,9 @@
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
 	var/obj/item/weapon/wrench/power/b_drill = new /obj/item/weapon/wrench/power
-	user << "<span class='notice'>You attach the bolt driver bit to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(b_drill)
+	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
 	qdel(src)
+	user.put_in_active_hand(b_drill)
 
 /obj/item/weapon/screwdriver/cyborg
 	name = "powered screwdriver"
@@ -238,14 +255,23 @@
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
+	playsound(loc, usesound, 50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/weapon/wirecutters/brass
 	name = "brass wirecutters"
 	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "cutters_brass"
 	toolspeed = 0.5
+
+/obj/item/weapon/wirecutters/abductor
+	name = "alien wirecutters"
+	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "cutters"
+	toolspeed = 0.1
+	origin_tech = "materials=5;engineering=4;abductor=3"
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -274,12 +300,11 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
-	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
+	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
 	var/obj/item/weapon/crowbar/power/pryjaws = new /obj/item/weapon/crowbar/power
-	user << "<span class='notice'>You attach the pry jaws to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(pryjaws)
+	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
+	user.put_in_active_hand(pryjaws)
 /*
  * Welding Tool
  */
@@ -386,11 +411,12 @@
 
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.remove_fuel(1))
-			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
-			if(!do_mob(user, H, 50))
-				return
-			item_heal_robotic(H, user, 5, 0)
+			playsound(loc, usesound, 50, 1)
+			if(user == H)
+				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
+				if(!do_mob(user, H, 50))
+					return
+			item_heal_robotic(H, user, 15, 0)
 	else
 		return ..()
 
@@ -403,7 +429,7 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 		if(get_fuel() <= 0)
-			user.AddLuminosity(-light_intensity)
+			set_light(0)
 
 		if(isliving(O))
 			var/mob/living/L = O
@@ -415,8 +441,8 @@
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	switched_on(user)
 	if(welding)
-		SetLuminosity(0)
-		user.AddLuminosity(light_intensity)
+		set_light(light_intensity)
+
 	update_icon()
 
 
@@ -437,7 +463,7 @@
 		return TRUE
 	else
 		if(M)
-			M << "<span class='warning'>You need more welding fuel to complete this task!</span>"
+			to_chat(M, "<span class='warning'>You need more welding fuel to complete this task!</span>")
 		return FALSE
 
 
@@ -457,12 +483,12 @@
 //Switches the welder on
 /obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 	if(!status)
-		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
+		to_chat(user, "<span class='warning'>[src] can't be turned on while unsecured!</span>")
 		return
 	welding = !welding
 	if(welding)
 		if(get_fuel() >= 1)
-			user << "<span class='notice'>You switch [src] on.</span>"
+			to_chat(user, "<span class='notice'>You switch [src] on.</span>")
 			playsound(loc, acti_sound, 50, 1)
 			force = 15
 			damtype = "fire"
@@ -470,21 +496,17 @@
 			update_icon()
 			START_PROCESSING(SSobj, src)
 		else
-			user << "<span class='warning'>You need more fuel!</span>"
+			to_chat(user, "<span class='warning'>You need more fuel!</span>")
 			switched_off(user)
 	else
-		user << "<span class='notice'>You switch [src] off.</span>"
+		to_chat(user, "<span class='notice'>You switch [src] off.</span>")
 		playsound(loc, deac_sound, 50, 1)
 		switched_off(user)
 
 //Switches the welder off
 /obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	welding = 0
-	if(user == loc) //If player is holding the welder
-		user.AddLuminosity(-light_intensity)
-		SetLuminosity(0)
-	else
-		SetLuminosity(0)
+	set_light(0)
 
 	force = 3
 	damtype = "brute"
@@ -492,24 +514,9 @@
 	update_icon()
 
 
-/obj/item/weapon/weldingtool/pickup(mob/user)
-	..()
-	if(welding)
-		SetLuminosity(0)
-		user.AddLuminosity(light_intensity)
-
-
-/obj/item/weapon/weldingtool/dropped(mob/user)
-	..()
-	if(welding)
-		if(user)
-			user.AddLuminosity(-light_intensity)
-		SetLuminosity(light_intensity)
-
-
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
-	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+	to_chat(user, "It contains [get_fuel()] unit\s of fuel out of [max_fuel].")
 
 /obj/item/weapon/weldingtool/is_hot()
 	return welding * heat
@@ -521,13 +528,13 @@
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
-		user << "<span class='warning'>Turn it off first!</span>"
+		to_chat(user, "<span class='warning'>Turn it off first!</span>")
 		return
 	status = !status
 	if(status)
-		user << "<span class='notice'>You resecure [src].</span>"
+		to_chat(user, "<span class='notice'>You resecure [src].</span>")
 	else
-		user << "<span class='notice'>[src] can now be attached and modified.</span>"
+		to_chat(user, "<span class='notice'>[src] can now be attached and modified.</span>")
 	add_fingerprint(user)
 
 /obj/item/weapon/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -536,14 +543,13 @@
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
 			if(!remove_item_from_storage(F))
-				user.unEquip(src)
-				loc = F
+				user.transferItemToLoc(src, F, TRUE)
 			F.weldtool = src
 			add_fingerprint(user)
-			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
+			to_chat(user, "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>")
 			user.put_in_hands(F)
 		else
-			user << "<span class='warning'>You need one rod to start building a flamethrower!</span>"
+			to_chat(user, "<span class='warning'>You need one rod to start building a flamethrower!</span>")
 
 /obj/item/weapon/weldingtool/ignition_effect(atom/A, mob/user)
 	if(welding && remove_fuel(1, user))
@@ -580,6 +586,20 @@
 /obj/item/weapon/weldingtool/mini/flamethrower_screwdriver()
 	return
 
+/obj/item/weapon/weldingtool/abductor
+	name = "alien welding tool"
+	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "welder"
+	toolspeed = 0.1
+	light_intensity = 0
+	change_icons = 0
+	origin_tech = "plasmatech=5;engineering=5;abductor=3"
+
+/obj/item/weapon/weldingtool/abductor/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent("welding_fuel", 1)
+	..()
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
@@ -608,6 +628,7 @@
 /obj/item/weapon/weldingtool/experimental/brass
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "brasswelder"
 	item_state = "brasswelder"
 
@@ -652,8 +673,18 @@
 /obj/item/weapon/crowbar/brass
 	name = "brass crowbar"
 	desc = "A brass crowbar. It feels faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "crowbar_brass"
 	toolspeed = 0.5
+
+/obj/item/weapon/crowbar/abductor
+	name = "alien crowbar"
+	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
+	icon = 'icons/obj/abductor.dmi'
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	icon_state = "crowbar"
+	toolspeed = 0.1
+	origin_tech = "combat=4;engineering=4;abductor=3"
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"
@@ -691,9 +722,8 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/power/attack_self(mob/user)
-	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
+	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
 	var/obj/item/weapon/wirecutters/power/cutjaws = new /obj/item/weapon/wirecutters/power
-	user << "<span class='notice'>You attach the cutting jaws to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(cutjaws)
+	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)
+	user.put_in_active_hand(cutjaws)

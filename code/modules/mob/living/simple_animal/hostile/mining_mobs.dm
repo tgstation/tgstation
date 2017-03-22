@@ -141,7 +141,7 @@
 	var/chase_time = 100
 	var/will_burrow = TRUE
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/New()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
 	..()
 	var/i = rand(1,3)
 	while(i)
@@ -159,7 +159,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				addtimer(src, "Burrow", chase_time)
+				addtimer(CALLBACK(src, .proc/Burrow), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -183,7 +183,7 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	idle_vision_range = 9
 	. = ..()
 
@@ -249,9 +249,9 @@
 	var/inert = 0
 	var/preserved = 0
 
-/obj/item/organ/hivelord_core/New()
+/obj/item/organ/hivelord_core/Initialize()
 	..()
-	addtimer(src, "inert_check", 2400)
+	addtimer(CALLBACK(src, .proc/inert_check), 2400)
 
 /obj/item/organ/hivelord_core/proc/inert_check()
 	if(!owner && !preserved)
@@ -289,17 +289,17 @@
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
-			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
+			to_chat(user, "<span class='notice'>[src] has become inert, its healing properties are no more.</span>")
 			return
 		else
 			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] are useless on the dead.</span>"
+				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
-				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
 				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
@@ -337,9 +337,9 @@
 	pass_flags = PASSTABLE
 	del_on_death = 1
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	..()
-	addtimer(src, "death", 100)
+	addtimer(CALLBACK(src, .proc/death), 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
 	name = "blood brood"
@@ -355,7 +355,7 @@
 		reagents.reaction(get_turf(src))
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/New()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/Initialize()
 	create_reagents(30)
 	..()
 
@@ -470,7 +470,7 @@
 		icon_state = icon_aggro
 		pre_attack = 0
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	ranged_cooldown -= 10
 	handle_preattack()
 	. = ..()
@@ -493,7 +493,7 @@
 	if(ismineralturf(turftype))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
-	addtimer(src, "Trip", 10)
+	addtimer(CALLBACK(src, .proc/Trip), 10)
 
 /obj/effect/goliath_tentacle/original
 
@@ -532,15 +532,15 @@
 
 /obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/explorer))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/hooded/explorer))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 60)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				use(1)
 			else
-				user << "<span class='warning'>You can't improve [C] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/D = target
@@ -549,7 +549,7 @@
 				D.armor["melee"] = min(D.armor["melee"] + 10, 70)
 				D.armor["bullet"] = min(D.armor["bullet"] + 5, 50)
 				D.armor["laser"] = min(D.armor["laser"] + 5, 50)
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
@@ -557,7 +557,7 @@
 					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
 				qdel(src)
 			else
-				user << "<span class='warning'>You can't improve [D] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
 				return
 
 
@@ -606,9 +606,9 @@
 		Inflate()
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(var/damage)
-	if(wumbo)
-		return 0
+/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && wumbo)
+		return FALSE
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Aggro()
@@ -620,13 +620,13 @@
 	set category = "Fugu"
 	set desc = "Temporarily increases your size, and makes you significantly more dangerous and tough."
 	if(wumbo)
-		src << "<span class='notice'>You're already inflated.</span>"
+		to_chat(src, "<span class='notice'>You're already inflated.</span>")
 		return
 	if(inflate_cooldown)
-		src << "<span class='notice'>We need time to gather our strength.</span>"
+		to_chat(src, "<span class='notice'>We need time to gather our strength.</span>")
 		return
 	if(buffed)
-		src << "<span class='notice'>Something is interfering with our growth.</span>"
+		to_chat(src, "<span class='notice'>Something is interfering with our growth.</span>")
 		return
 	wumbo = 1
 	icon_state = "Fugu_big"
@@ -642,7 +642,7 @@
 	environment_smash = 2
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
-	addtimer(src, "Deflate", 100)
+	addtimer(CALLBACK(src, .proc/Deflate), 100)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
@@ -682,7 +682,7 @@
 	if(proximity_flag && istype(target, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)
-			user << "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>"
+			to_chat(user, "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>")
 			return
 		A.buffed++
 		A.maxHealth *= 1.5
@@ -691,7 +691,7 @@
 		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
 		A.environment_smash += 2
-		user << "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>"
+		to_chat(user, "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
 		qdel(src)
 
 /////////////////////Lavaland
@@ -896,7 +896,7 @@
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/New()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
 	udder = new()
 	..()
 
@@ -946,7 +946,7 @@
 	name = "gubbuck"
 	gender = MALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/New()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/Initialize()
 	..()
 	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
 	resize = 0.85
@@ -993,7 +993,7 @@
 	del_on_death = 1
 	var/gps = null
 
-/mob/living/simple_animal/hostile/spawner/lavaland/New()
+/mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
 	..()
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
@@ -1047,7 +1047,7 @@
 		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
-				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)
+				T.TerraformTurf(/turf/open/chasm/straight_down/lava_land_surface)
 		qdel(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath

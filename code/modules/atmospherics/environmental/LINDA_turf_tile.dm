@@ -35,11 +35,11 @@
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 
-/turf/open/New()
-	..()
+/turf/open/Initialize()
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
+	..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
@@ -100,7 +100,7 @@
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
-			overlays -= overlay
+			cut_overlay(overlay)
 
 	if (new_overlay_types.len)
 		if (atmos_overlay_types)
@@ -113,11 +113,12 @@
 
 /turf/open/proc/tile_graphic()
 	. = new /list
-	var/list/gases = air.gases
-	for(var/id in gases)
-		var/gas = gases[id]
-		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
-			. += gas[GAS_META][META_GAS_OVERLAY]
+	if(air)
+		var/list/gases = air.gases
+		for(var/id in gases)
+			var/gas = gases[id]
+			if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+				. += gas[GAS_META][META_GAS_OVERLAY]
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
@@ -178,7 +179,7 @@
 				if(air.compare(enemy_tile.air)) //compare if
 					SSair.add_to_active(enemy_tile) //excite enemy
 					if(our_excited_group)
-						excited_group.add_turf(enemy_tile) //add enemy to group
+						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
 						var/datum/excited_group/EG = new //generate new group
 						EG.add_turf(src)
@@ -292,14 +293,14 @@
 			var/turf/open/T = t
 			T.excited_group = src
 			turf_list += T
-			reset_cooldowns()
+		reset_cooldowns()
 	else
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = E
 			E.turf_list += T
-			E.reset_cooldowns()
+		E.reset_cooldowns()
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0

@@ -29,13 +29,13 @@
 	return 1
 
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
-	if(!S || qdeleted(S))
+	if(!S || QDELETED(S))
 		S = new spell_type()
 	//Check if we got the spell already
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
 			if(aspell.spell_level >= aspell.level_max)
-				user <<  "<span class='warning'>This spell cannot be improved further.</span>"
+				to_chat(user,  "<span class='warning'>This spell cannot be improved further.</span>")
 				return 0
 			else
 				aspell.name = initial(aspell.name)
@@ -45,24 +45,24 @@
 					aspell.charge_counter = aspell.charge_max
 				switch(aspell.spell_level)
 					if(1)
-						user << "<span class='notice'>You have improved [aspell.name] into Efficient [aspell.name].</span>"
+						to_chat(user, "<span class='notice'>You have improved [aspell.name] into Efficient [aspell.name].</span>")
 						aspell.name = "Efficient [aspell.name]"
 					if(2)
-						user << "<span class='notice'>You have further improved [aspell.name] into Quickened [aspell.name].</span>"
+						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Quickened [aspell.name].</span>")
 						aspell.name = "Quickened [aspell.name]"
 					if(3)
-						user << "<span class='notice'>You have further improved [aspell.name] into Free [aspell.name].</span>"
+						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Free [aspell.name].</span>")
 						aspell.name = "Free [aspell.name]"
 					if(4)
-						user << "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>"
+						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
-					user << "<span class='notice'>This spell cannot be strengthened any further.</span>"
+					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
 				return 1
 	//No same spell found - just learn it
 	feedback_add_details("wizard_spell_learned",log_name)
 	user.mind.AddSpell(S)
-	user << "<span class='notice'>You have learned [S.name].</span>"
+	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return 1
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
@@ -78,7 +78,7 @@
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return point value or -1 for failure
 	var/area/wizard_station/A = locate()
 	if(!(user in A.contents))
-		user << "<span clas=='warning'>You can only refund spells at the wizard lair</span>"
+		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
@@ -104,7 +104,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/fireball
+	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/rod_form
@@ -222,10 +222,20 @@
 	log_name = "LD"
 	category = "Defensive"
 
+/datum/spellbook_entry/teslablast
+	name = "Tesla Blast"
+	spell_type = /obj/effect/proc_holder/spell/targeted/tesla
+	log_name = "TB"
+
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
-	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
+	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
 	log_name = "LB"
+	cost = 3
+
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
+	. = ..()
+	user.tesla_ignore = TRUE
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -266,6 +276,14 @@
 	log_name = "STD"
 	category = "Defensive"
 	cost = 1
+
+/datum/spellbook_entry/the_traps
+	name = "The Traps!"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
+	log_name = "TT"
+	category = "Offensive"
+	cost = 1
+
 
 /datum/spellbook_entry/item
 	name = "Buy Item"
@@ -379,7 +397,7 @@
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
+		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/gloves/color/purple(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/contract
@@ -388,6 +406,19 @@
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 	category = "Assistance"
+
+/datum/spellbook_entry/item/guardian
+	name = "Guardian Deck"
+	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
+	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
+	item_path = /obj/item/weapon/guardiancreator/choose/wizard
+	log_name = "GU"
+	category = "Assistance"
+
+/datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
@@ -420,7 +451,7 @@
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
-	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
+	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
@@ -470,6 +501,25 @@
 		dat += "<b>Already cast!</b><br>"
 	return dat
 
+/datum/spellbook_entry/summon/ghosts
+	name = "Summon Ghosts"
+	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilties to frustrate you."
+	log_name = "SGH"
+
+/datum/spellbook_entry/summon/ghosts/IsAvailible()
+	if(!ticker.mode)
+		return FALSE
+	else
+		return TRUE
+
+/datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	feedback_add_details("wizard_spell_learned", log_name)
+	new /datum/round_event/wizard/ghost()
+	active = TRUE
+	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
+	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
+	return TRUE
+
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
@@ -484,8 +534,8 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(0, user, 25)
 	active = 1
-	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon guns!</span>"
+	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -502,8 +552,8 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(1, user, 25)
 	active = 1
-	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon magic!</span>"
+	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -522,8 +572,8 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	summonevents()
 	times++
-	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon events.</span>"
+	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
@@ -551,11 +601,12 @@
 /obj/item/weapon/spellbook/examine(mob/user)
 	..()
 	if(owner)
-		user << "There is a small signature on the front cover: \"[owner]\"."
+		to_chat(user, "There is a small signature on the front cover: \"[owner]\".")
 	else
-		user << "It appears to have no author."
+		to_chat(user, "It appears to have no author.")
 
-/obj/item/weapon/spellbook/proc/Initialize()
+/obj/item/weapon/spellbook/Initialize()
+	..()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -566,25 +617,20 @@
 			qdel(E)
 	tab = categories[1]
 
-/obj/item/weapon/spellbook/New()
-	..()
-	Initialize()
-
-
 /obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
 		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
-			user << "<span class='warning'>The contract has been used, you can't get your points back now!</span>"
+			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
 		else
-			user << "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>"
+			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
 			uses++
 			for(var/datum/spellbook_entry/item/contract/CT in entries)
 				if(!isnull(CT.limit))
 					CT.limit++
 			qdel(O)
 	else if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
-		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
+		to_chat(user, "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>")
 		uses++
 		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)
 			if(!isnull(BB.limit))
@@ -600,7 +646,7 @@
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Defensive")
-			dat += "Spells and items geared towards improving your survivabilty or reducing foes ability to attack.<BR><BR>"
+			dat += "Spells and items geared towards improving your survivabilty or reducing foes' ability to attack.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
@@ -643,11 +689,11 @@
 
 /obj/item/weapon/spellbook/attack_self(mob/user)
 	if(!owner)
-		user << "<span class='notice'>You bind the spellbook to yourself.</span>"
+		to_chat(user, "<span class='notice'>You bind the spellbook to yourself.</span>")
 		owner = user
 		return
 	if(user != owner)
-		user << "<span class='warning'>The [name] does not recognize you as it's owner and refuses to open!</span>"
+		to_chat(user, "<span class='warning'>The [name] does not recognize you as its owner and refuses to open!</span>")
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -696,7 +742,7 @@
 		return 1
 
 	if(H.mind.special_role == "apprentice")
-		temp = "If you got caught sneaking a peak from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
+		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
 		return
 
 	var/datum/spellbook_entry/E = null
@@ -754,8 +800,8 @@
 		recoil(user)
 	else
 		user.mind.AddSpell(S)
-		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
-		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
+		user <<"<span class='notice'>You rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 		onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user)
@@ -769,7 +815,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/fireball
+	spell = /obj/effect/proc_holder/spell/aimed/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
@@ -872,7 +918,7 @@
 		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
-		if(!user.unEquip(user.wear_mask))
+		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		qdel(src)
@@ -902,7 +948,8 @@
 	qdel(src)
 
 /obj/item/weapon/spellbook/oneuse/random/New()
-	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse))
+	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade,/obj/item/weapon/spellbook/oneuse/mimery_guns)
+	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
 	qdel(src)
 

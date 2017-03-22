@@ -14,7 +14,6 @@
 	var/secured = 1
 	var/list/attached_overlays = null
 	var/obj/item/device/assembly_holder/holder = null
-	var/cooldown = 0//To prevent spam
 	var/wire_type = WIRE_RECEIVE | WIRE_PULSE
 	var/attachable = 0 // can this be attached to wires
 	var/datum/wires/connected = null
@@ -24,6 +23,8 @@
 	var/const/WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
 	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
 	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
+
+	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
 /obj/item/device/assembly/proc/on_attach()
 
@@ -38,18 +39,8 @@
 
 /obj/item/device/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		user << "<span class='warning'>The [name] is unsecured!</span>"
+		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
 		return 0
-	return 1
-
-
-//Called via spawn(10) to have it count down the cooldown var
-/obj/item/device/assembly/proc/process_cooldown()
-	cooldown--
-	if(cooldown <= 0)
-		return 0
-	spawn(10)
-		process_cooldown()
 	return 1
 
 
@@ -78,12 +69,10 @@
 
 // What the device does when turned on
 /obj/item/device/assembly/proc/activate()
-	if(!secured || (cooldown > 0))
-		return 0
-	cooldown = 2
-	spawn(10)
-		process_cooldown()
-	return 1
+	if(QDELETED(src) || !secured || (next_activate > world.time))
+		return FALSE
+	next_activate = world.time + 30
+	return TRUE
 
 
 /obj/item/device/assembly/proc/toggle_secure()
@@ -98,15 +87,15 @@
 		if((!A.secured) && (!secured))
 			holder = new/obj/item/device/assembly_holder(get_turf(src))
 			holder.assemble(src,A,user)
-			user << "<span class='notice'>You attach and secure \the [A] to \the [src]!</span>"
+			to_chat(user, "<span class='notice'>You attach and secure \the [A] to \the [src]!</span>")
 		else
-			user << "<span class='warning'>Both devices must be in attachable mode to be attached together.</span>"
+			to_chat(user, "<span class='warning'>Both devices must be in attachable mode to be attached together.</span>")
 		return
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(toggle_secure())
-			user << "<span class='notice'>\The [src] is ready!</span>"
+			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else
-			user << "<span class='notice'>\The [src] can now be attached!</span>"
+			to_chat(user, "<span class='notice'>\The [src] can now be attached!</span>")
 		return
 	..()
 
@@ -114,9 +103,9 @@
 /obj/item/device/assembly/examine(mob/user)
 	..()
 	if(secured)
-		user << "\The [src] is secured and ready to be used."
+		to_chat(user, "\The [src] is secured and ready to be used.")
 	else
-		user << "\The [src] can be attached to other things."
+		to_chat(user, "\The [src] can be attached to other things.")
 
 
 /obj/item/device/assembly/attack_self(mob/user)

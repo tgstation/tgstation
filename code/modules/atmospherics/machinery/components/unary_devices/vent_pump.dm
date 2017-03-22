@@ -48,7 +48,7 @@
 		id_tag = num2text(uid)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	A.air_vent_names -= id_tag
 	A.air_vent_info -= id_tag
 
@@ -165,7 +165,7 @@
 		"sigtype" = "status"
 	)
 
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	if(!A.air_vent_names[id_tag])
 		name = "\improper [A.name] vent pump #[A.air_vent_names.len + 1]"
 		A.air_vent_names[id_tag] = name
@@ -247,8 +247,8 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			user << "<span class='notice'>You begin welding the vent...</span>"
+			playsound(loc, WT.usesound, 40, 1)
+			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -268,14 +268,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	if(..())
 		if(!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
 			return 1
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
-		user << "It seems welded shut."
+		to_chat(user, "It seems welded shut.")
 
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
 	..()

@@ -293,7 +293,7 @@
 /datum/design/board/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
 	desc = "The circuit board for a monkey recycler."
-	id = "smartfridge"
+	id = "monkey_recycler"
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/machine/monkey_recycler
 	category = list ("Misc. Machinery")
@@ -402,3 +402,19 @@
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
 	build_path = /obj/item/weapon/circuitboard/machine/ntnet_relay
 	category = list("Subspace Telecomms")
+
+/datum/design/board/limbgrower
+	name = "Machine Design (Limb Grower Board)"
+	desc = "The circuit board for a limb grower."
+	id = "limbgrower"
+	req_tech = list("programming" = 3, "biotech" = 2)
+	build_path = /obj/item/weapon/circuitboard/machine/limbgrower
+	category = list("Medical Machinery")
+
+/datum/design/board/deepfryer
+	name = "Machine Design (Deep Fryer)"
+	desc = "The circuit board for a Deep Fryer."
+	id = "deepfryer"
+	req_tech = list("programming" = 1)
+	build_path = /obj/item/weapon/circuitboard/machine/deep_fryer
+	category = list ("Misc. Machinery")

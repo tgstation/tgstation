@@ -31,13 +31,3 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
-
-/datum/round_event/anomaly/tick()
-	if(!newAnomaly)
-		kill()
-		return
-	newAnomaly.anomalyEffect()
-
-/datum/round_event/anomaly/end()
-	if(newAnomaly)//Kill the anomaly if it still exists at the end.
-		qdel(newAnomaly)

@@ -10,18 +10,16 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS
-	hooded = 1
-	hoodtype = /obj/item/clothing/head/explorer
+	hoodtype = /obj/item/clothing/head/hooded/explorer
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/head/explorer
+/obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
 	icon_state = "explorer"
 	body_parts_covered = HEAD
-	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
@@ -76,7 +74,7 @@
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==2||device_turf.z>=7)
-		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
+		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
 
@@ -106,7 +104,7 @@
 
 	var/list/L = get_destinations(user)
 	if(!L.len)
-		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
+		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
 	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
@@ -131,11 +129,11 @@
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
-		user << "Your [src] activates, saving you from the chasm!</span>"
+		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
 		feedback_add_details("jaunter","C") // chasm automatic activation
 		activate(user)
 	else
-		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
+		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 
 /obj/effect/portal/wormhole/jaunt_tunnel
@@ -143,10 +141,15 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
+	mech_sized = TRUE //save your ripley
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))
 		return
+
+	if(M.anchored)
+		if(!(istype(M, /obj/mecha) && mech_sized))
+			return
 
 	if(istype(M, /atom/movable))
 		if(do_teleport(M, target, 6))
@@ -157,7 +160,7 @@
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
-					addtimer(L, "vomit", 20)
+					addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
 
 /**********************Resonator**********************/
 
@@ -178,7 +181,7 @@
 
 /obj/item/weapon/resonator/upgraded
 	name = "upgraded resonator"
-	desc = "An upgraded version of the resonator that can produce more fields at once."
+	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "materials=4;powerstorage=3;engineering=3;magnets=3"
@@ -190,20 +193,20 @@
 	var/obj/effect/resonance/R = locate(/obj/effect/resonance) in T
 	if(R)
 		R.resonance_damage *= quick_burst_mod
-		R.burst(T)
+		R.burst()
 		return
 	if(fields.len < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		var/obj/effect/resonance/RE = new /obj/effect/resonance(T, creator, burst_time, src)
+		var/obj/effect/resonance/RE = new(T, creator, burst_time, src)
 		fields += RE
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
 		burst_time = 30
-		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
+		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>")
 	else
 		burst_time = 50
-		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
+		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>")
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -214,7 +217,7 @@
 
 /obj/effect/resonance
 	name = "resonance field"
-	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures."
+	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -228,22 +231,30 @@
 	..()
 	creator = set_creator
 	res = set_resonator
+	check_pressure()
+	addtimer(CALLBACK(src, .proc/burst), timetoburst)
+
+/obj/effect/resonance/Destroy()
+	if(res)
+		res.fields -= src
+	. = ..()
+
+/obj/effect/resonance/proc/check_pressure()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
-		name = "strong resonance field"
+		name = "strong [initial(name)]"
 		resonance_damage = 60
-	addtimer(src, "burst", timetoburst, TIMER_NORMAL, proj_turf)
+	else
+		name = initial(name)
+		resonance_damage = initial(resonance_damage)
 
-/obj/effect/resonance/Destroy()
-	if(res)
-		res.fields -= src
-	return ..()
-
-/obj/effect/resonance/proc/burst(turf/T)
+/obj/effect/resonance/proc/burst()
+	check_pressure()
+	var/turf/T = get_turf(src)
 	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
@@ -251,7 +262,7 @@
 	for(var/mob/living/L in T)
 		if(creator)
 			add_logs(creator, L, "used a resonator field on", "resonator")
-		L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+		to_chat(L, "<span class='userdanger'>[src] ruptured with you in it!</span>")
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
 
@@ -292,7 +303,7 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
-				user << "<span class='info'>[src] does not work on this sort of creature.</span>"
+				to_chat(user, "<span class='info'>[src] does not work on this sort of creature.</span>")
 				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
@@ -314,10 +325,10 @@
 				icon_state = "lazarus_empty"
 				return
 			else
-				user << "<span class='info'>[src] is only effective on the dead.</span>"
+				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
 				return
 		else
-			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
+			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
 			return
 
 /obj/item/weapon/lazarus_injector/emp_act()
@@ -327,9 +338,9 @@
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		user << "<span class='info'>[src] is empty.</span>"
+		to_chat(user, "<span class='info'>[src] is empty.</span>")
 	if(malfunctioning)
-		user << "<span class='info'>The display on [src] seems to be flickering.</span>"
+		to_chat(user, "<span class='info'>The display on [src] seems to be flickering.</span>")
 
 /**********************Mining Scanners**********************/
 
@@ -348,12 +359,14 @@
 	if(!user.client)
 		return
 	if(!cooldown)
-		cooldown = 1
-		spawn(40)
-			cooldown = 0
+		cooldown = TRUE
+		addtimer(CALLBACK(src, .proc/clear_cooldown), 40)
 		var/list/mobs = list()
 		mobs |= user
 		mineral_scan_pulse(mobs, get_turf(user))
+
+/obj/item/device/mining_scanner/proc/clear_cooldown()
+	cooldown = FALSE
 
 
 //Debug item to identify all ore spread quickly
@@ -434,7 +447,7 @@
 			minerals += M
 	if(minerals.len)
 		for(var/turf/closed/mineral/M in minerals)
-			var/obj/effect/overlay/temp/mining_overlay/C = PoolOrNew(/obj/effect/overlay/temp/mining_overlay, M)
+			var/obj/effect/overlay/temp/mining_overlay/C = new /obj/effect/overlay/temp/mining_overlay(M)
 			C.icon_state = M.scan_state
 
 /obj/effect/overlay/temp/mining_overlay
@@ -467,11 +480,11 @@
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/hivelord_core/C = M
 	if(!istype(C, /obj/item/organ/hivelord_core))
-		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
+		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")
 		return ..()
 
 	C.preserved()
-	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
+	to_chat(user, "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>")
 	qdel(src)
 
 /*********************Mining Hammer****************/
@@ -529,7 +542,7 @@
 		var/target_turf = get_turf(target)
 		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
-			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
+			new /obj/effect/overlay/temp/kinetic_blast(M)
 			M.gets_drilled(firer)
 	..()
 
@@ -550,11 +563,11 @@
 		D.fire()
 		charged = 0
 		icon_state = "mining_hammer1_uncharged"
-		addtimer(src, "Recharge", charge_time)
+		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
 	if(proximity_flag && target == mark && isliving(target))
 		var/mob/living/L = target
-		PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, get_turf(L))
+		new /obj/effect/overlay/temp/kinetic_blast(get_turf(L))
 		mark = 0
 		if(L.mob_size >= MOB_SIZE_LARGE)
 			L.underlays -= marked_image
@@ -573,11 +586,3 @@
 		charged = 1
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-
-/obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
-	..()
-	user.AddLuminosity(luminosity)
-
-/obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
-	..()
-	user.AddLuminosity(-luminosity)

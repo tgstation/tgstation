@@ -19,8 +19,12 @@
 /obj/machinery/doorButtons/proc/findObjsByTag()
 	return
 
-/obj/machinery/doorButtons/initialize()
-	findObjsByTag()
+/obj/machinery/doorButtons/Initialize(mapload)
+	if(mapload)
+		..()
+		return TRUE
+	else
+		findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
 	if(!emagged)
@@ -28,7 +32,7 @@
 		req_access = list()
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
-		user << "<span class='warning'>You short out the access controller.</span>"
+		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
 
@@ -58,7 +62,7 @@
 	if(busy)
 		return
 	if(!allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	if(controller && !controller.busy && door)
 		if(controller.stat & NOPOWER)
@@ -127,7 +131,7 @@
 	if(busy)
 		return
 	if(!allowed(usr))
-		usr << "<span class='warning'>Access denied.</span>"
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 	switch(href_list["command"])
 		if("close_exterior")
@@ -155,22 +159,22 @@
 		closeDoor(A)
 
 /obj/machinery/doorButtons/airlock_controller/proc/closeDoor(obj/machinery/door/airlock/A)
+	set waitfor = FALSE
 	if(A.density)
 		goIdle()
 		return 0
 	update_icon()
 	A.unbolt()
-	spawn()
-		if(A && A.close())
-			if(stat & NOPOWER || lostPower || !A || qdeleted(A))
-				goIdle(1)
-				return
-			A.bolt()
-			if(busy == CLOSING)
-				goIdle(1)
-		else
+	. = 1
+	if(A && A.close())
+		if(stat & NOPOWER || lostPower || !A || QDELETED(A))
 			goIdle(1)
-	return 1
+			return
+		A.bolt()
+		if(busy == CLOSING)
+			goIdle(1)
+	else
+		goIdle(1)
 
 /obj/machinery/doorButtons/airlock_controller/proc/cycleClose(obj/machinery/door/airlock/A)
 	if(!A || !exteriorAirlock || !interiorAirlock)
@@ -208,7 +212,7 @@
 	A.unbolt()
 	spawn()
 		if(A && A.open())
-			if(stat | (NOPOWER) && !lostPower && A && !qdeleted(A))
+			if(stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
 				A.bolt()
 		goIdle(1)
 

@@ -54,6 +54,7 @@
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
+	storage_type = /obj/item/weapon/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
@@ -180,13 +181,13 @@
 		return
 	var/mob/living/target = A
 	if(!state_open)
-		user << "<span class='warning'>The unit's doors are shut!</span>"
+		to_chat(user, "<span class='warning'>The unit's doors are shut!</span>")
 		return
 	if(!is_operational())
-		user << "<span class='warning'>The unit is not operational!</span>"
+		to_chat(user, "<span class='warning'>The unit is not operational!</span>")
 		return
 	if(occupant || helmet || suit || storage)
-		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
+		to_chat(user, "<span class='warning'>It's too cluttered inside to fit in!</span>")
 		return
 
 	if(target == user)
@@ -217,7 +218,7 @@
 				occupant.adjustFireLoss(rand(10, 16))
 			if(iscarbon(occupant))
 				occupant.emote("scream")
-		addtimer(src, "cook", 50, TIMER_NORMAL)
+		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
@@ -253,7 +254,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(electrocute_mob(user, src, src))
+		if(electrocute_mob(user, src, src, 1, TRUE))
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
@@ -263,7 +264,7 @@
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
-		addtimer(src, "resist_open", 300, TIMER_NORMAL, user)
+		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
 		open_machine()
 		dump_contents()
@@ -277,28 +278,28 @@
 	if(state_open && is_operational())
 		if(istype(I, /obj/item/clothing/suit/space))
 			if(suit)
-				user << "<span class='warning'>The unit already contains a suit!.</span>"
+				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
 				return
 			if(!user.drop_item())
 				return
 			suit = I
 		else if(istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
-				user << "<span class='warning'>The unit already contains a helmet!</span>"
+				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
 				return
 			if(!user.drop_item())
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
-				user << "<span class='warning'>The unit already contains a mask!</span>"
+				to_chat(user, "<span class='warning'>The unit already contains a mask!</span>")
 				return
 			if(!user.drop_item())
 				return
 			mask = I
 		else
 			if(storage)
-				user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
+				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
 				return
 			if(!user.drop_item())
 				return
@@ -368,7 +369,7 @@
 				return
 			else
 				if(occupant)
-					occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
+					to_chat(occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>")
 				cook()
 				. = TRUE
 		if("dispense")

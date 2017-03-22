@@ -152,23 +152,23 @@
 	var/endInput = input(usr,"End turf of Map (X;Y;Z)", "Map Gen Settings", "[world.maxx];[world.maxy];[mob ? mob.z : 1]") as text
 	//maxx maxy and current z so that if you fuck up, you only fuck up one entire z level instead of the entire universe
 	if(!startInput || !endInput)
-		src << "Missing Input"
+		to_chat(src, "Missing Input")
 		return
 
 	var/list/startCoords = splittext(startInput, ";")
 	var/list/endCoords = splittext(endInput, ";")
 	if(!startCoords || !endCoords)
-		src << "Invalid Coords"
-		src << "Start Input: [startInput]"
-		src << "End Input: [endInput]"
+		to_chat(src, "Invalid Coords")
+		to_chat(src, "Start Input: [startInput]")
+		to_chat(src, "End Input: [endInput]")
 		return
 
 	var/turf/Start = locate(text2num(startCoords[1]),text2num(startCoords[2]),text2num(startCoords[3]))
 	var/turf/End = locate(text2num(endCoords[1]),text2num(endCoords[2]),text2num(endCoords[3]))
 	if(!Start || !End)
-		src << "Invalid Turfs"
-		src << "Start Coords: [startCoords[1]] - [startCoords[2]] - [startCoords[3]]"
-		src << "End Coords: [endCoords[1]] - [endCoords[2]] - [endCoords[3]]"
+		to_chat(src, "Invalid Turfs")
+		to_chat(src, "Start Coords: [startCoords[1]] - [startCoords[2]] - [startCoords[3]]")
+		to_chat(src, "End Coords: [endCoords[1]] - [endCoords[2]] - [endCoords[3]]")
 		return
 
 	var/list/clusters = list("None"=CLUSTER_CHECK_NONE,"All"=CLUSTER_CHECK_ALL,"Sames"=CLUSTER_CHECK_SAMES,"Differents"=CLUSTER_CHECK_DIFFERENTS, \
@@ -181,7 +181,7 @@
 	var/theCluster = 0
 	if(moduleClusters != "None")
 		if(!clusters[moduleClusters])
-			src << "Invalid Cluster Flags"
+			to_chat(src, "Invalid Cluster Flags")
 			return
 		theCluster = clusters[moduleClusters]
 	else
@@ -192,10 +192,10 @@
 			M.clusterCheckFlags = theCluster
 
 
-	src << "Defining Region"
+	to_chat(src, "Defining Region")
 	N.defineRegion(Start, End)
-	src << "Region Defined"
-	src << "Generating Region"
+	to_chat(src, "Region Defined")
+	to_chat(src, "Generating Region")
 	N.generate()
-	src << "Generated Region"
+	to_chat(src, "Generated Region")
 

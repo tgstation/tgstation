@@ -8,6 +8,7 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	taste_description = "bitterness"
 
 /datum/reagent/medicine/on_mob_life(mob/living/M)
 	current_cycle++
@@ -32,6 +33,7 @@
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	can_synth = 0
+	taste_description = "badmins"
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
@@ -70,6 +72,7 @@
 	name = "Nanites"
 	id = "nanites"
 	description = "Tiny nanomachines capable of rapid cellular regeneration."
+	taste_description = "sludge"
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
@@ -123,12 +126,13 @@
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
+	taste_description = "sludge"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
 			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-7, 0)
+			M.adjustCloneLoss(-1, 0)
 			M.adjustOxyLoss(-9, 0)
 			M.adjustBruteLoss(-5, 0)
 			M.adjustFireLoss(-5, 0)
@@ -136,7 +140,7 @@
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
 			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-2, 0)
+			M.adjustCloneLoss(-1, 0)
 			M.adjustOxyLoss(-7, 0)
 			M.adjustBruteLoss(-3, 0)
 			M.adjustFireLoss(-3, 0)
@@ -152,6 +156,29 @@
 			. = 1
 	..()
 
+/datum/reagent/medicine/clonexadone
+	name = "Clonexadone"
+	id = "clonexadone"
+	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
+	color = "#0000C8"
+	taste_description = "muscle"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
+	switch(M.bodytemperature) // Low temperatures are required to take effect.
+		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
+			M.status_flags &= ~DISFIGURED
+			M.adjustCloneLoss(-7, 0)
+			. = 1
+		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
+			M.status_flags &= ~DISFIGURED
+			M.adjustCloneLoss(-3, 0)
+			. = 1
+		if(225 to T0C)
+			M.status_flags &= ~DISFIGURED
+			M.adjustCloneLoss(-2, 0)
+			. = 1
+	..()
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
@@ -160,6 +187,7 @@
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	overdose_threshold = 30
+	taste_description = "fish"
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
@@ -195,11 +223,11 @@
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
-				M << "<span class='warning'>You don't feel so good...</span>"
+				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getFireLoss())
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your burns healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
 			M.emote("scream")
 	..()
 
@@ -243,11 +271,11 @@
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
-				M << "<span class='warning'>You don't feel so good...</span>"
+				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getBruteLoss())
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your bruises healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
 	..()
 
@@ -260,15 +288,19 @@
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage.  Can be used as a blood substitute on an IV drip."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a blood substitute on an IV drip."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "sweetness and salt"
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.blood_volume += 0.2
 		. = 1
 	..()
 
@@ -277,7 +309,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
-			efficiency = min(0.75,efficiency)
+			efficiency = Clamp(efficiency, 0.1, 0.75)
 			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
 			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
 	..()
@@ -293,7 +325,7 @@
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 5
+		N.hal_screwyhud = SCREWYHUD_HEALTHY
 	M.adjustBruteLoss(-0.25*REM, 0)
 	M.adjustFireLoss(-0.25*REM, 0)
 	..()
@@ -305,7 +337,7 @@
 			M.Stun(4)
 			M.Weaken(4)
 			if(show_message)
-				M << "<span class='warning'>Your stomach agonizingly cramps!</span>"
+				to_chat(M, "<span class='warning'>Your stomach agonizingly cramps!</span>")
 		else
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
@@ -314,13 +346,13 @@
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 
 			if(show_message)
-				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
+				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
 	..()
 
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 0
+		N.hal_screwyhud = SCREWYHUD_NONE
 	..()
 
 /datum/reagent/medicine/synthflesh
@@ -338,7 +370,7 @@
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
-				M << "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>"
+				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 	..()
 
 /datum/reagent/medicine/charcoal
@@ -348,6 +380,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "ash"
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -389,6 +422,7 @@
 	reagent_state = LIQUID
 	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "acid"
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
@@ -571,7 +605,7 @@
 	M.status_flags |= IGNORESLOWDOWN
 	switch(current_cycle)
 		if(11)
-			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
+			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
@@ -637,17 +671,18 @@
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
 	if(M.disabilities & BLIND)
 		if(prob(20))
-			M << "<span class='warning'>Your vision slowly returns...</span>"
+			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind()
 			M.cure_nearsighted()
 			M.blur_eyes(35)
 
 	else if(M.disabilities & NEARSIGHT)
-		M << "<span class='warning'>The blackness in your peripheral vision fades.</span>"
+		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted()
 		M.blur_eyes(10)
 
@@ -730,6 +765,7 @@
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "magnets"
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
@@ -773,6 +809,7 @@
 	id = "mutadone"
 	description = "Removes jitteriness and restores genetic defects."
 	color = "#5096C8"
+	taste_description = "acid"
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
@@ -785,6 +822,7 @@
 	id = "antihol"
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
 	color = "#00B4C8"
+	taste_description = "raw egg"
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/M)
 	M.dizziness = 0
@@ -944,6 +982,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+	taste_description = "a roll of gauze"
 
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -977,6 +1016,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+	taste_description = "grossness"
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
 	if(prob(80))
@@ -1113,3 +1153,11 @@
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
+
+/datum/reagent/medicine/corazone
+	// Heart attack code will not do as damage if corazone is present
+	// because it's SPACE MAGIC ASPIRIN
+	name = "Corazone"
+	id = "corazone"
+	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
+	color = "#F5F5F5"

@@ -12,7 +12,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.wear_mask)
-			user << "<span class='warning'>You need help taking this off!</span>"
+			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
 
@@ -57,7 +57,7 @@
 
 /obj/item/clothing/mask/pig/attack_self(mob/user)
 	voicechange = !voicechange
-	user << "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>"
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
 
 /obj/item/clothing/mask/pig/speechModification(message)
 	if(voicechange)

@@ -119,7 +119,12 @@
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,
 					/obj/item/clothing/suit/radiation,
-					/obj/item/clothing/suit/radiation)
+					/obj/item/clothing/suit/radiation,
+					/obj/item/device/geiger_counter,
+					/obj/item/device/geiger_counter,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
@@ -238,7 +243,7 @@
 
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
-	cost = 1500
+	cost = 2000
 	contains = list(/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser)
@@ -246,7 +251,7 @@
 
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
-	cost = 1500
+	cost = 3000
 	contains = list(/obj/item/weapon/gun/energy/e_gun/advtaser,
 					/obj/item/weapon/gun/energy/e_gun/advtaser,
 					/obj/item/weapon/gun/energy/e_gun/advtaser)
@@ -254,7 +259,7 @@
 
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
-	cost = 1000
+	cost = 1500
 	contains = list(/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler)
@@ -340,7 +345,7 @@
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	cost = 2000
+	cost = 8000
 	contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
@@ -423,7 +428,7 @@
 
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/weapon/storage/box/firingpins,
 					/obj/item/weapon/storage/box/firingpins)
 	crate_name = "firing pins crate"
@@ -828,6 +833,7 @@
 
 /datum/supply_pack/science
 	group = "Science"
+	crate_type = /obj/structure/closet/crate/science
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -841,7 +847,7 @@
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
 	crate_name = "robotics assembly crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/robotics/mecha_ripley
 	name = "Circuit Crate (Ripley APLU)"
@@ -851,7 +857,7 @@
 					/obj/item/weapon/circuitboard/mecha/ripley/main,
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals)
 	crate_name = "\improper APLU Ripley circuit crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
@@ -860,7 +866,7 @@
 	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals,
 					/obj/item/weapon/circuitboard/mecha/odysseus/main)
 	crate_name = "\improper Odysseus circuit crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -890,7 +896,7 @@
 					/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen)
 	crate_name = "shield generators crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
@@ -899,16 +905,25 @@
 	contains = list(/obj/item/device/transfer_valve,
 					/obj/item/device/transfer_valve)
 	crate_name = "tank transfer valves crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
 /datum/supply_pack/science/bz_canister
 	name = "BZ Canister"
-	cost = 4000
+	cost = 2000
 	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
+	dangerous = TRUE
+
+/datum/supply_pack/science/freon_canister
+	name = "Freon Canister"
+	cost = 6000
+	access_any = list(access_rd, access_atmospherics)
+	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
+	crate_name = "freon canister crate"
+	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
 /datum/supply_pack/science/research
@@ -917,7 +932,7 @@
 	access = access_research
 	contains = list(/obj/item/device/machineprototype)
 	crate_name = "machine prototype crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
@@ -971,6 +986,7 @@
 	crate_name = "party equipment crate"
 	contraband = TRUE
 	access = access_theatre
+	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/organic/monkey
 	name = "Monkey Crate"
@@ -990,7 +1006,14 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/beer)
+					/obj/item/weapon/reagent_containers/food/drinks/beer,
+					/obj/item/device/flashlight/glowstick,
+					/obj/item/device/flashlight/glowstick/red,
+					/obj/item/device/flashlight/glowstick/blue,
+					/obj/item/device/flashlight/glowstick/cyan,
+					/obj/item/device/flashlight/glowstick/orange,
+					/obj/item/device/flashlight/glowstick/yellow,
+					/obj/item/device/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
 
 /datum/supply_pack/organic/critter
@@ -1238,6 +1261,12 @@
 	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 	crate_name = "cardboard sheets crate"
 
+/datum/supply_pack/materials/plastic50
+	name = "50 Plastic Sheets"
+	cost = 1000
+	contains = list(/obj/item/stack/sheet/plastic/fifty)
+	crate_name = "plastic sheets crate"
+
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
 	cost = 1000
@@ -1331,7 +1360,7 @@
 
 /datum/supply_pack/misc/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
-	cost = 2000
+	cost = 3000
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
@@ -1365,16 +1394,6 @@
 					/obj/item/weapon/book/manual/random/,
 					/obj/item/weapon/book/manual/random/,
 					/obj/item/weapon/book/random/triple)
-
-/datum/supply_pack/misc/posters
-	name = "Corporate Posters Crate"
-	cost = 800
-	contains = list(/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit)
-	crate_name = "corporate posters crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
@@ -1489,6 +1508,24 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/misc/costume_original
+	name = "Original Costume Crate"
+	cost = 1000
+	contains = list(/obj/item/clothing/head/snowman,
+					/obj/item/clothing/suit/snowman,
+					/obj/item/clothing/head/chicken,
+					/obj/item/clothing/suit/chickensuit,
+					/obj/item/clothing/mask/gas/monkeymask,
+					/obj/item/clothing/suit/monkeysuit,
+					/obj/item/clothing/head/cardborg,
+					/obj/item/clothing/suit/cardborg,
+					/obj/item/clothing/head/xenos,
+					/obj/item/clothing/suit/xenos,
+					/obj/item/clothing/suit/hooded/ian_costume,
+					/obj/item/clothing/suit/hooded/carp_costume,
+					/obj/item/clothing/suit/hooded/bee_costume)
+	crate_name = "original costume crate"
+
 /datum/supply_pack/misc/wizard
 	name = "Wizard Costume Crate"
 	cost = 2000
@@ -1537,7 +1574,7 @@
 	contraband = TRUE
 	cost = 3000
 	num_contained = 6
-	contains = list(/obj/item/weapon/poster/contraband,
+	contains = list(/obj/item/weapon/poster/random_contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
 					/obj/item/seeds/ambrosia/deus,
@@ -1547,6 +1584,7 @@
 /datum/supply_pack/misc/randomised/toys
 	name = "Toy Crate"
 	cost = 5000 // or play the arcade machines ya lazy bum
+	// TODO make this actually just use the arcade machine loot list
 	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
@@ -1561,7 +1599,8 @@
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
-	                /obj/item/toy/redbutton)
+	                /obj/item/toy/redbutton,
+					/obj/item/toy/eightball)
 	crate_name = "toy crate"
 
 /datum/supply_pack/misc/autodrobe
@@ -1639,7 +1678,15 @@
 					/obj/item/weapon/canvas/twentythreeXtwentythree,
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
-	crate_name= "art supply crate"
+	crate_name = "art supply crate"
+
+/datum/supply_pack/misc/soapstone
+	name = "Librarian Engraving/Scribbling Crate"
+	crate_name = "librarian engraving/scribbling crate"
+	cost = 3000
+	contains = list(/obj/item/soapstone)
+	access = access_library
+	crate_type = /obj/structure/closet/crate/secure
 
 
 /datum/supply_pack/misc/bsa
@@ -1649,7 +1696,7 @@
 	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
 					/obj/item/weapon/circuitboard/machine/bsa/middle,
 					/obj/item/weapon/circuitboard/machine/bsa/back,
-					/obj/item/weapon/circuitboard/machine/computer/bsa_control
+					/obj/item/weapon/circuitboard/computer/bsa_control
 					)
 	crate_name= "bluespace artillery parts crate"
 
@@ -1658,7 +1705,12 @@
 	cost = 12000
 	special = TRUE
 	contains = list(
-					/obj/item/weapon/circuitboard/machine/dna_vault
+					/obj/item/weapon/circuitboard/machine/dna_vault,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
 					)
 	crate_name= "dna vault parts crate"
 
@@ -1695,3 +1747,10 @@
 					/obj/item/weapon/circuitboard/machine/computer/sat_control
 					)
 	crate_name= "shield control board crate"
+
+/datum/supply_pack/misc/bicycle
+	name = "Bicycle"
+	cost = 10000
+	contains = list(/obj/vehicle/bicycle)
+	crate_name = "Bicycle Crate"
+	crate_type = /obj/structure/closet/crate/large

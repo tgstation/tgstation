@@ -1,11 +1,11 @@
 
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
 	if(emitterhealth < 0)
-		src << "<span class='warning'>Your holochassis emitters are still too unstable! Please wait for automatic repair.</span>"
+		to_chat(src, "<span class='warning'>Your holochassis emitters are still too unstable! Please wait for automatic repair.</span>")
 		return FALSE
 
 	if(!canholo && !force)
-		src << "<span class='warning'>Your master or another force has disabled your holochassis emitters!</span>"
+		to_chat(src, "<span class='warning'>Your master or another force has disabled your holochassis emitters!</span>")
 		return FALSE
 
 	if(holoform)
@@ -13,11 +13,11 @@
 		return
 
 	if(emittersemicd)
-		src << "<span class='warning'>Error: Holochassis emitters recycling. Please try again later.</span>"
+		to_chat(src, "<span class='warning'>Error: Holochassis emitters recycling. Please try again later.</span>")
 		return FALSE
 
 	emittersemicd = TRUE
-	addtimer(src, "emittercool", emittercd)
+	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/device/pda))
@@ -26,16 +26,15 @@
 		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
 	if(istype(card.loc, /mob/living))
 		var/mob/living/L = card.loc
-		if(!L.unEquip(card))
-			src << "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>"
+		if(!L.temporarilyRemoveItemFromInventory(card))
+			to_chat(src, "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>")
 			return FALSE
-	var/turf/T = get_turf(card)
-	forceMove(T)
+	forceMove(get_turf(card))
 	card.forceMove(src)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
-	SetLuminosity(0)
+	set_light(0)
 	icon_state = "[chassis]"
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 	holoform = TRUE
@@ -46,9 +45,9 @@
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
 	emittersemicd = TRUE
 	if(!force)
-		addtimer(src, "emittercool", emittercd)
+		addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	else
-		addtimer(src, "emittercool", emitteroverloadcd)
+		addtimer(CALLBACK(src, .proc/emittercool), emitteroverloadcd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
@@ -63,7 +62,7 @@
 	forceMove(card)
 	canmove = FALSE
 	density = FALSE
-	SetLuminosity(0)
+	set_light(0)
 	holoform = FALSE
 	if(resting)
 		lay_down()
@@ -76,7 +75,7 @@
 	icon_state = "[chassis]"
 	if(resting)
 		icon_state = "[chassis]_rest"
-	src << "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>"
+	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()
 	..()
@@ -90,3 +89,17 @@
 	if(loc != card)
 		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
 
+/mob/living/silicon/pai/start_pulling(atom/movable/AM)
+	return FALSE
+
+/mob/living/silicon/pai/proc/toggle_integrated_light()
+	if(!luminosity)
+		set_light(brightness_power)
+		to_chat(src, "<span class='notice'>You enable your integrated light.</span>")
+	else
+		set_light(0)
+		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
+
+/mob/living/silicon/pai/movement_delay()
+	. = ..()
+	. += 1 //A bit slower than humans, so they're easier to smash

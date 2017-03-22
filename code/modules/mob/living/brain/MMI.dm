@@ -9,12 +9,12 @@
 	origin_tech = "biotech=2;programming=3;engineering=2"
 	var/braintype = "Cyborg"
 	var/obj/item/device/radio/radio = null //Let's give it a radio.
-	var/hacked = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
-	var/clockwork = FALSE //If this is a soul vessel
+	var/datum/ai_laws/laws = new()
+	var/force_replace_ai_name = FALSE
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
@@ -38,20 +38,22 @@
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 
-
+/obj/item/device/mmi/Initialize()
+	..()
+	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
-			user << "<span class='warning'>There's already a brain in the MMI!</span>"
+			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")
 			return
 		if(!newbrain.brainmob)
-			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
+			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>")
 			return
 
-		if(!user.unEquip(O))
+		if(!user.transferItemToLoc(O, src))
 			return
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key)
@@ -68,9 +70,6 @@
 			living_mob_list += brainmob
 
 		brainmob.reset_perspective()
-		if(clockwork)
-			add_servant_of_ratvar(brainmob, TRUE)
-		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
@@ -87,9 +86,9 @@
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
 		radio.on = !radio.on
-		user << "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>"
+		to_chat(user, "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>")
 	else
-		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
+		to_chat(user, "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>")
 		eject_brain(user)
 		update_icon()
 		name = "Man-Machine Interface"
@@ -136,6 +135,8 @@
 	update_icon()
 	return
 
+/obj/item/device/mmi/proc/replacement_ai_name()
+	return brainmob.name
 
 /obj/item/device/mmi/verb/Toggle_Listening()
 	set name = "Toggle Listening"
@@ -145,16 +146,16 @@
 	set popup_menu = 0
 
 	if(brainmob.stat)
-		brainmob << "<span class='warning'>Can't do that while incapacitated or dead!</span>"
+		to_chat(brainmob, "<span class='warning'>Can't do that while incapacitated or dead!</span>")
 	if(!radio.on)
-		brainmob << "<span class='warning'>Your radio is disabled!</span>"
+		to_chat(brainmob, "<span class='warning'>Your radio is disabled!</span>")
 		return
 
 	radio.listening = radio.listening==1 ? 0 : 1
-	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
+	to_chat(brainmob, "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")
 
 /obj/item/device/mmi/emp_act(severity)
-	if(!brainmob)
+	if(!brainmob || iscyborg(loc))
 		return
 	else
 		switch(severity)
@@ -194,21 +195,21 @@
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			user << "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
+			to_chat(user, "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
 
 		else if(!B.client)
-			user << "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
+			to_chat(user, "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
 
 		else
-			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
+			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
 
 
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
-	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
+	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	origin_tech = "biotech=4;programming=4;syndicate=2"
-	hacked = 1
 
 /obj/item/device/mmi/syndie/New()
 	..()
+	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0

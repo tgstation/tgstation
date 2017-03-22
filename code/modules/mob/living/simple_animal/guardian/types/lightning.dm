@@ -22,6 +22,7 @@
 /mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
 	if(..())
 		if(isliving(target) && target != src && target != summoner)
+			cleardeletedchains()
 			for(var/chain in enemychains)
 				var/datum/beam/B = chain
 				if(B.target == target)
@@ -37,7 +38,8 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/beam/Manifest()
-	if(..())
+	. = ..()
+	if(.)
 		if(summoner)
 			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
 		while(loc != summoner)
@@ -48,22 +50,29 @@
 			sleep(3)
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
-	if(..())
+	. = ..()
+	if(.)
 		removechains()
+
+/mob/living/simple_animal/hostile/guardian/beam/proc/cleardeletedchains()
+	if(summonerchain && QDELETED(summonerchain))
+		summonerchain = null
+	if(enemychains.len)
+		for(var/chain in enemychains)
+			var/datum/cd = chain
+			if(!chain || QDELETED(cd))
+				enemychains -= chain
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/shockallchains()
 	. = 0
+	cleardeletedchains()
 	if(summoner)
-		if(summonerchain && !qdeleted(summonerchain))
-			. += chainshock(summonerchain)
-		else
+		if(!summonerchain)
 			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
+		. += chainshock(summonerchain)
 	if(enemychains.len)
 		for(var/chain in enemychains)
-			if(!qdeleted(chain))
-				. += chainshock(chain)
-			else
-				enemychains -= chain
+			. += chainshock(chain)
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/removechains()
 	if(summonerchain)

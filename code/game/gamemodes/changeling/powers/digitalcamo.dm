@@ -8,11 +8,11 @@
 /obj/effect/proc_holder/changeling/digitalcamo/sting_action(mob/user)
 
 	if(user.digitalcamo)
-		user << "<span class='notice'>We return to normal.</span>"
+		to_chat(user, "<span class='notice'>We return to normal.</span>")
 		user.digitalinvis = 0
 		user.digitalcamo = 0
 	else
-		user << "<span class='notice'>We distort our form to hide from the AI</span>"
+		to_chat(user, "<span class='notice'>We distort our form to hide from the AI</span>")
 		user.digitalcamo = 1
 		user.digitalinvis = 1
 

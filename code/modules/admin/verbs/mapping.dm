@@ -45,6 +45,12 @@ var/list/admin_verbs_debug_mapping = list(
 	/client/proc/manipulate_organs
 )
 
+/obj/effect/debugging/mapfix_marker
+	name = "map fix marker"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "mapfixmarker"
+	desc = "I am a mappers mistake."
+
 /obj/effect/debugging/marker
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "yellow"
@@ -209,9 +215,9 @@ var/list/admin_verbs_debug_mapping = list(
 			if(i*10+j <= atom_list.len)
 				temp_atom = atom_list[i*10+j]
 				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		world << line*/
+		to_chat(world, line)*/
 
-	world << "There are [count] objects of type [type_path] on z-level [num_level]"
+	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
 	feedback_add_details("admin_verb","mOBJZ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
@@ -236,9 +242,9 @@ var/list/admin_verbs_debug_mapping = list(
 			if(i*10+j <= atom_list.len)
 				temp_atom = atom_list[i*10+j]
 				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		world << line*/
+		to_chat(world, line)*/
 
-	world << "There are [count] objects of type [type_path] in the game world"
+	to_chat(world, "There are [count] objects of type [type_path] in the game world")
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

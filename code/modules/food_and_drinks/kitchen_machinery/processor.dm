@@ -21,7 +21,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/processor
-	name = "circuit board (Food Processor)"
+	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
 	origin_tech = "programming=1"
 	req_components = list(
@@ -29,19 +29,19 @@
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/machine/processor
-	name = "circuit board (Food Processor)"
+	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
 
 /obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/processor)
-			name = "circuit board (slime Processor)"
+			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
-			user << "<span class='notice'>Name protocols successfully updated.</span>"
+			to_chat(user, "<span class='notice'>Name protocols successfully updated.</span>")
 		else
-			name = "circuit board (Food Processor)"
+			name = "Food Processor (Machine Board)"
 			build_path = /obj/machinery/processor
-			user << "<span class='notice'>Defaulting name protocols.</span>"
+			to_chat(user, "<span class='notice'>Defaulting name protocols.</span>")
 	else
 		return ..()
 
@@ -94,6 +94,10 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet
 	output = /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
 
+/datum/food_processor_process/potatowedges
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+	output = /obj/item/weapon/reagent_containers/food/snacks/fries
+
 /datum/food_processor_process/sweetpotato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet
 	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
@@ -101,10 +105,6 @@
 /datum/food_processor_process/potato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	output = /obj/item/weapon/reagent_containers/food/snacks/tatortot
-
-/datum/food_processor_process/potatowedges
-	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
-	output = /obj/item/weapon/reagent_containers/food/snacks/fries
 
 /datum/food_processor_process/carrot
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
@@ -191,7 +191,7 @@
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
 	if(src.processing)
-		user << "<span class='warning'>The processor is in the process of processing!</span>"
+		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
@@ -208,16 +208,29 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
+	if(istype(O, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/T = O
+		var/loaded = 0
+		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+			var/datum/food_processor_process/P = select_recipe(S)
+			if(P)
+				T.remove_from_storage(S, src)
+				loaded++
+
+		if(loaded)
+			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
+		return
+
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
-			"You put the [O] into [src].")
+			"You put [O] into [src].")
 		user.drop_item()
 		O.loc = src
 		return 1
 	else
 		if(user.a_intent != INTENT_HARM)
-			user << "<span class='warning'>That probably won't blend!</span>"
+			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
 			return 1
 		else
 			return ..()
@@ -226,11 +239,11 @@
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		user << "<span class='warning'>The processor is in the process of processing!</span>"
+		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(user.a_intent == INTENT_GRAB && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/pushed_mob = user.pulling
 		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
@@ -238,7 +251,7 @@
 		user.stop_pulling()
 		return
 	if(src.contents.len == 0)
-		user << "<span class='warning'>The processor is empty!</span>"
+		to_chat(user, "<span class='warning'>The processor is empty!</span>")
 		return 1
 	src.processing = 1
 	user.visible_message("[user] turns on [src].", \
@@ -264,7 +277,7 @@
 		P.process_food(src.loc, O, src)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	src.processing = 0
-	src.visible_message("\the [src] finishes processing.")
+	src.visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
@@ -294,5 +307,5 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/processor/slime
-	name = "circuit board (Slime Processor)"
+	name = "Slime Processor (Machine Board)"
 	build_path = /obj/machinery/processor/slime

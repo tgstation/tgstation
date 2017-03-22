@@ -11,7 +11,8 @@
 	origin_tech = "biotech=5"
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/brain/brainmob = null
-	var/damaged_brain = 0 //whether the brain organ is damaged.
+	var/damaged_brain = FALSE //whether the brain organ is damaged.
+	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
 	..()
@@ -55,7 +56,7 @@
 		C.dna.copy_dna(brainmob.stored_dna)
 	if(L.mind && L.mind.current && (L.mind.current.stat == DEAD))
 		L.mind.transfer_to(brainmob)
-	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
 
 /obj/item/organ/brain/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -68,13 +69,16 @@
 	if(brainmob)
 		if(brainmob.client)
 			if(brainmob.health <= HEALTH_THRESHOLD_DEAD)
-				user << "It's lifeless and severely damaged."
+				to_chat(user, "It's lifeless and severely damaged.")
 			else
-				user << "You can feel the small spark of life still left in this one."
+				to_chat(user, "You can feel the small spark of life still left in this one.")
 		else
-			user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
+			to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later.")
 	else
-		user << "This one is completely devoid of life."
+		if(decoy_override)
+			to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later.")
+		else
+			to_chat(user, "This one is completely devoid of life.")
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -86,7 +90,7 @@
 		return ..()
 
 	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags & GLASSESCOVERSEYES)))
-		user << "<span class='warning'>You're going to need to remove their head cover first!</span>"
+		to_chat(user, "<span class='warning'>You're going to need to remove their head cover first!</span>")
 		return
 
 //since these people will be dead M != usr
@@ -103,10 +107,10 @@
 						"<span class='userdanger'>[msg]</span>")
 
 		if(C != user)
-			C << "<span class='notice'>[user] inserts [src] into your head.</span>"
-			user << "<span class='notice'>You insert [src] into [C]'s head.</span>"
+			to_chat(C, "<span class='notice'>[user] inserts [src] into your head.</span>")
+			to_chat(user, "<span class='notice'>You insert [src] into [C]'s head.</span>")
 		else
-			user << "<span class='notice'>You insert [src] into your head.</span>"	//LOL
+			to_chat(user, "<span class='notice'>You insert [src] into your head.</span>"	)
 
 		Insert(C)
 	else

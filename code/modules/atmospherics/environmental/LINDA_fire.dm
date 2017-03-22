@@ -33,7 +33,7 @@
 		if(oxy < 0.5 || tox < 0.5)
 			return 0
 
-		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
+		active_hotspot = new /obj/effect/hotspot(src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
@@ -49,7 +49,8 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
-	luminosity = 3
+	light_range = 3
+	light_color = LIGHT_COLOR_FIRE
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
@@ -147,16 +148,14 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
-	SetLuminosity(0)
+	set_light(0)
 	SSair.hotspots -= src
+	var/turf/open/T = loc
+	if(istype(T) && T.active_hotspot == src)
+		T.active_hotspot = null
 	DestroyTurf()
-	if(isturf(loc))
-		var/turf/open/T = loc
-		if(T.active_hotspot == src)
-			T.active_hotspot = null
 	loc = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))

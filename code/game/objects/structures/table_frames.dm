@@ -24,58 +24,60 @@
 
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
+		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			deconstruct(TRUE)
 	else if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I
 		if(P.get_amount() < 1)
-			user << "<span class='warning'>You need one plasteel sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one plasteel sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src) && P.use(1))
-			new /obj/structure/table/reinforced(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/reinforced)
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.get_amount() < 1)
-			user << "<span class='warning'>You need one metal sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one metal sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [M] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [M] to [src]...</span>")
 		if(do_after(user, 20, target = src) && M.use(1))
-			new /obj/structure/table(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table)
 	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 1)
-			user << "<span class='warning'>You need one glass sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one glass sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [G] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
 		if(do_after(user, 20, target = src) && G.use(1))
-			new /obj/structure/table/glass(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/glass)
 	else if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		var/obj/item/stack/sheet/mineral/silver/S = I
 		if(S.get_amount() < 1)
-			user << "<span class='warning'>You need one silver sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one silver sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [S] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [S] to [src]...</span>")
 		if(do_after(user, 20, target = src) && S.use(1))
-			new /obj/structure/table/optable(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/optable)
 	else if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
 		if(C.get_amount() < 1)
-			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one carpet sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [C] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
 		if(do_after(user, 20, target = src) && C.use(1))
-			new /obj/structure/table/wood/fancy(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/wood/fancy)
 	else
 		return ..()
+
+/obj/structure/table_frame/proc/make_new_table(table_type) //makes sure the new table made retains what we had as a frame
+	var/obj/structure/table/T = new table_type(loc)
+	T.frame = type
+	T.framestack = framestack
+	T.framestackamount = framestackamount
+	qdel(src)
 
 /obj/structure/table_frame/deconstruct(disassembled = TRUE)
 	new framestack(get_turf(src), framestackamount)
@@ -106,22 +108,20 @@
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/W = I
 		if(W.get_amount() < 1)
-			user << "<span class='warning'>You need one wood sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one wood sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [W] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
 		if(do_after(user, 20, target = src) && W.use(1))
-			new /obj/structure/table/wood(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/wood)
 		return
 	else if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
 		if(C.get_amount() < 1)
-			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one carpet sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [C] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
 		if(do_after(user, 20, target = src) && C.use(1))
-			new /obj/structure/table/wood/poker(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/wood/poker)
 	else
 		return ..()
 
@@ -145,12 +145,11 @@
 	if(istype(I, /obj/item/stack/tile/brass))
 		var/obj/item/stack/tile/brass/W = I
 		if(W.get_amount() < 1)
-			user << "<span class='warning'>You need one brass sheet to do this!</span>"
+			to_chat(user, "<span class='warning'>You need one brass sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [W] to [src]...</span>"
+		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
 		if(do_after(user, 20, target = src) && W.use(1))
-			new /obj/structure/table/reinforced/brass(src.loc)
-			qdel(src)
+			make_new_table(/obj/structure/table/reinforced/brass)
 	else
 		return ..()
 
@@ -160,4 +159,4 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)

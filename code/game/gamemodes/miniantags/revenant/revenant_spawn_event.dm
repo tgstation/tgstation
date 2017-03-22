@@ -52,7 +52,7 @@
 
 	var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant/(pick(spawn_locs))
 	revvie.key = selected.key
-	message_admins("[revvie.key] has been made into a revenant by an event.")
-	log_game("[revvie.key] was spawned as a revenant by an event.")
+	message_admins("[key_name_admin(revvie)] has been made into a revenant by an event.")
+	log_game("[key_name(revvie)] was spawned as a revenant by an event.")
 	spawned_mobs += revvie
 	return SUCCESSFUL_SPAWN

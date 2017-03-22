@@ -7,7 +7,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = null
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0
@@ -22,7 +22,7 @@
 	if(!iscarbon(user)) //Look ma, no hands
 		return
 	if(user.lying || user.handcuffed)
-		user << "<span class='warning'>You can't reach out!</span>"
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	..()
 
@@ -33,16 +33,16 @@
 		attached_spell.attached_hand = null
 	qdel(src)
 
-/obj/item/weapon/melee/touch_attack/dropped()
+/obj/item/weapon/melee/touch_attack/Destroy()
 	if(attached_spell)
 		attached_spell.attached_hand = null
-	qdel(src)
+	return ..()
 
 /obj/item/weapon/melee/touch_attack/disintegrate
 	name = "\improper disintegrating touch"
 	desc = "This hand of mine glows with an awesome power!"
 	catchphrase = "EI NATH!!"
-	on_use_sound = "sound/magic/Disintegrate.ogg"
+	on_use_sound = 'sound/magic/Disintegrate.ogg'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
 
@@ -60,7 +60,7 @@
 	name = "\improper petrifying touch"
 	desc = "That's the bottom line, because flesh to stone said so!"
 	catchphrase = "STAUN EI!!"
-	on_use_sound = "sound/magic/FleshToStone.ogg"
+	on_use_sound = 'sound/magic/FleshToStone.ogg'
 	icon_state = "fleshtostone"
 	item_state = "fleshtostone"
 
@@ -68,7 +68,7 @@
 	if(!proximity || target == user || !isliving(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
 		return
 	if(user.lying || user.handcuffed)
-		user << "<span class='warning'>You can't reach out!</span>"
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	var/mob/living/M = target
 	M.Stun(2)

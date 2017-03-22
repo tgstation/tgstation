@@ -17,6 +17,7 @@
 	var/assemblyattacher
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
+	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
@@ -37,7 +38,7 @@
 			var/area/A = get_area(bombturf)
 			message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
-			user << "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>"
+			to_chat(user, "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>")
 			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
 			active = 1
 			icon_state = initial(icon_state) + "_active"
@@ -45,7 +46,7 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 
-			addtimer(src, "prime", det_time)
+			addtimer(CALLBACK(src, .proc/prime), det_time)
 
 
 /obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
@@ -53,67 +54,65 @@
 		if(stage == WIRED)
 			if(beakers.len)
 				stage_change(READY)
-				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
-				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
+				to_chat(user, "<span class='notice'>You lock the [initial(name)] assembly.</span>")
+				playsound(loc, I.usesound, 25, -3)
 			else
-				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
+				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
-			user << "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>"
+			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>")
 		else if(stage == EMPTY)
-			user << "<span class='warning'>You need to add an activation mechanism!</span>"
+			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		. = 1 //no afterattack
 		if(beakers.len == 2)
-			user << "<span class='warning'>[src] can not hold more containers!</span>"
+			to_chat(user, "<span class='warning'>[src] can not hold more containers!</span>")
 			return
 		else
 			if(I.reagents.total_volume)
-				if(!user.unEquip(I))
+				if(!user.transferItemToLoc(I, src))
 					return
-				user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-				I.loc = src
+				to_chat(user, "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>")
 				beakers += I
 			else
-				user << "<span class='warning'>[I] is empty!</span>"
+				to_chat(user, "<span class='warning'>[I] is empty!</span>")
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
 		. = 1 // no afterattack
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		nadeassembly = A
 		A.master = src
-		A.loc = src
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
-		user << "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>"
+		to_chat(user, "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>")
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
 		if (C.use(1))
 			det_time = 50 // In case the cable_coil was removed and readded.
 			stage_change(WIRED)
-			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
+			to_chat(user, "<span class='notice'>You rig the [initial(name)] assembly.</span>")
 		else
-			user << "<span class='warning'>You need one length of coil to wire the assembly!</span>"
+			to_chat(user, "<span class='warning'>You need one length of coil to wire the assembly!</span>")
 			return
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
 		stage_change(WIRED)
-		user << "<span class='notice'>You unlock the [initial(name)] assembly.</span>"
+		to_chat(user, "<span class='notice'>You unlock the [initial(name)] assembly.</span>")
 
 	else if(stage == WIRED && istype(I, /obj/item/weapon/wrench))
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.loc = get_turf(src)
 			beakers = list()
-			user << "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>"
+			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
 		if(nadeassembly)
 			nadeassembly.loc = get_turf(src)
@@ -122,7 +121,7 @@
 		else // If "nadeassembly = null && stage == WIRED", then it most have been cable_coil that was used.
 			new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(EMPTY)
-		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
+		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
 	else
 		return ..()
 
@@ -164,8 +163,13 @@
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
-	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale))
+	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale) && !no_splash)
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		if(beakers.len)
+			for(var/obj/O in beakers)
+				O.loc = get_turf(src)
+			beakers = list()
+		stage_change(EMPTY)
 		return
 
 	if(nadeassembly)
@@ -206,11 +210,16 @@
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			//If there is still a core (sometimes it's used up)
-			//and there are reagents left, behave normally
+			//and there are reagents left, behave normally,
+			//otherwise drop it on the ground for timed reactions like gold.
 
-			if(S && S.reagents && S.reagents.total_volume)
-				S.reagents.trans_to(src,S.reagents.total_volume)
-			return
+			if(S)
+				if(S.reagents && S.reagents.total_volume)
+					for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+						S.reagents.trans_to(G, S.reagents.total_volume)
+				else
+					S.forceMove(get_turf(src))
+					no_splash = TRUE
 	..()
 
 	//I tried to just put it in the allowed_containers list but
@@ -218,10 +227,9 @@
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return
-		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-		I.loc = src
+		to_chat(user, "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>")
 		beakers += I
 	else
 		return ..()
@@ -257,7 +265,7 @@
 				unit_spread += 25
 			else
 				unit_spread = 5
-		user << "<span class='notice'> You set the time release to [unit_spread] units per detonation.</span>"
+		to_chat(user, "<span class='notice'> You set the time release to [unit_spread] units per detonation.</span>")
 		return
 	..()
 
@@ -287,7 +295,7 @@
 		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
 		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
 	else
-		addtimer(src, "prime", det_time)
+		addtimer(CALLBACK(src, .proc/prime), det_time)
 	var/turf/DT = get_turf(src)
 	var/area/DA = get_area(DT)
 	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
@@ -373,6 +381,25 @@
 	beakers += B2
 
 
+/obj/item/weapon/grenade/chem_grenade/ez_clean
+	name = "cleaner grenade"
+	desc = "Waffle Co.-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/ez_clean/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent("fluorosurfactant", 40)
+	B2.reagents.add_reagent("water", 40)
+	B2.reagents.add_reagent("ez_clean", 60) //ensures a  t h i c c  distribution
+
+	beakers += B1
+	beakers += B2
+
+
+
 /obj/item/weapon/grenade/chem_grenade/teargas
 	name = "teargas grenade"
 	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
@@ -430,6 +457,39 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/weapon/grenade/chem_grenade/glitter
+	name = "generic glitter grenade"
+	desc = "You shouldn't see this description."
+	stage = READY
+	var/glitter_type = "glitter"
+
+/obj/item/weapon/grenade/chem_grenade/glitter/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent(glitter_type, 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
+
+	beakers += B1
+	beakers += B2
+
+/obj/item/weapon/grenade/chem_grenade/glitter/pink
+	name = "pink glitter bomb"
+	desc = "For that HOT glittery look."
+	glitter_type = "pink_glitter"
+
+/obj/item/weapon/grenade/chem_grenade/glitter/blue
+	name = "blue glitter bomb"
+	desc = "For that COOL glittery look."
+	glitter_type = "blue_glitter"
+
+/obj/item/weapon/grenade/chem_grenade/glitter/white
+	name = "white glitter bomb"
+	desc = "For that somnolent glittery look."
+	glitter_type = "white_glitter"
 
 /obj/item/weapon/grenade/chem_grenade/clf3
 	name = "clf3 grenade"

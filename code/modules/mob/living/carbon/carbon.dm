@@ -1,7 +1,7 @@
 /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
 
-/mob/living/carbon/New()
+/mob/living/carbon/Initialize()
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	..()
@@ -53,7 +53,7 @@
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = held_index
@@ -91,18 +91,29 @@
 					return 1
 	return ..()
 
-/mob/living/carbon/throw_impact(atom/hit_atom)
+/mob/living/carbon/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
+	var/hurt = TRUE
+	if(istype(throwingdatum, /datum/thrownthing))
+		var/datum/thrownthing/D = throwingdatum
+		if(iscyborg(D.thrower))
+			var/mob/living/silicon/robot/R = D.thrower
+			if(!R.emagged)
+				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
-		Weaken(1)
-		take_bodypart_damage(10)
-	if(iscarbon(hit_atom))
+		if(hurt)
+			Weaken(1)
+			take_bodypart_damage(10)
+	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
-		victim.Weaken(1)
-		Weaken(1)
-		victim.take_bodypart_damage(10)
-		take_bodypart_damage(10)
-		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+		if(victim.movement_type & FLYING)
+			return
+		if(hurt)
+			victim.take_bodypart_damage(10)
+			take_bodypart_damage(10)
+			victim.Weaken(1)
+			Weaken(1)
+			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -155,7 +166,7 @@
 
 	else if(!(I.flags & (NODROP|ABSTRACT)))
 		thrown_thing = I
-		unEquip(I)
+		dropItemToGround(I)
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
@@ -229,23 +240,6 @@
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
-/mob/living/carbon/proc/spin(spintime, speed)
-	set waitfor = 0
-	var/D = dir
-	while(spintime >= speed)
-		sleep(speed)
-		switch(D)
-			if(NORTH)
-				D = EAST
-			if(SOUTH)
-				D = WEST
-			if(EAST)
-				D = SOUTH
-			if(WEST)
-				D = NORTH
-		setDir(D)
-		spintime -= speed
-
 /mob/living/carbon/resist_buckle()
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
@@ -258,7 +252,7 @@
 			buckled.user_unbuckle_mob(src,src)
 		else
 			if(src && buckled)
-				src << "<span class='warning'>You fail to unbuckle yourself!</span>"
+				to_chat(src, "<span class='warning'>You fail to unbuckle yourself!</span>")
 	else
 		buckled.user_unbuckle_mob(src,src)
 
@@ -277,13 +271,20 @@
 
 /mob/living/carbon/resist_restraints()
 	var/obj/item/I = null
+	var/type = 0
 	if(handcuffed)
 		I = handcuffed
+		type = 1
 	else if(legcuffed)
 		I = legcuffed
+		type = 2
 	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		if(type == 1)
+			changeNext_move(CLICK_CD_BREAKOUT)
+			last_special = world.time + CLICK_CD_BREAKOUT
+		if(type == 2)
+			changeNext_move(CLICK_CD_RANGE)
+			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
 
 
@@ -292,20 +293,20 @@
 	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
+		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
-			src << "<span class='warning'>You fail to remove [I]!</span>"
+			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
 
 	else if(cuff_break == FAST_CUFFBREAK)
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
-		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
+		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
-			src << "<span class='warning'>You fail to break [I]!</span>"
+			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
@@ -342,7 +343,7 @@
 	if(!I.loc || buckled)
 		return
 	visible_message("<span class='danger'>[src] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
-	src << "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>"
+	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
 		qdel(I)
@@ -372,8 +373,7 @@
 			update_inv_legcuffed()
 			return
 		else
-			unEquip(I)
-			I.dropped()
+			dropItemToGround(I)
 			return
 		return TRUE
 
@@ -391,7 +391,7 @@
 	if(!I || (I.flags & (NODROP|ABSTRACT)))
 		return
 
-	unEquip(I)
+	dropItemToGround(I)
 
 	var/modifier = 0
 	if(disabilities & CLUMSY)
@@ -455,7 +455,7 @@
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Weaken(10)
 		return 1
@@ -521,21 +521,34 @@
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
 
-	see_invisible = initial(see_invisible)
-	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(!E)
+		update_tint()
+	else
+		see_invisible = E.see_invisible
+		see_in_dark = E.see_in_dark
+		sight |= E.sight_flags
 
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
-		sight |= E.sight_flags
-		if(E.dark_view)
-			see_in_dark = max(see_in_dark,E.dark_view)
-		if(E.see_invisible)
-			see_invisible = min(see_invisible, E.see_invisible)
+	if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		sight |= G.vision_flags
+		see_in_dark = max(G.darkness_view, see_in_dark)
+		if(G.invis_override)
+			see_invisible = G.invis_override
+		else
+			see_invisible = min(G.invis_view, see_invisible)
+	if(dna)
+		for(var/X in dna.mutations)
+			var/datum/mutation/M = X
+			if(M.name == XRAY)
+				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+				see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
@@ -560,6 +573,13 @@
 		. += HT.tint
 	if(wear_mask)
 		. += wear_mask.tint
+
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(E)
+		. += E.tint
+
+	else
+		. += INFINITY
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -686,6 +706,7 @@
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
+		regenerate_organs()
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
@@ -700,7 +721,7 @@
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	var/organs_amt = 0
 	for(var/X in internal_organs)
@@ -710,7 +731,7 @@
 			O.Remove(src)
 			O.loc = get_turf(src)
 	if(organs_amt)
-		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
+		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
 	..()
 
@@ -722,7 +743,9 @@
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	new_fire_overlay.appearance_flags = RESET_COLOR
+	overlays_standing[FIRE_LAYER] = new_fire_overlay
 	apply_overlay(FIRE_LAYER)
 
 /mob/living/carbon/fakefireextinguish()

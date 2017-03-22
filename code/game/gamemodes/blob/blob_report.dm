@@ -13,7 +13,7 @@
 			intercepttext += " 2. If found, use any neccesary means to contain and destroy the organism.<BR>"
 			intercepttext += " 3. Avoid damage to the capital infrastructure of the station.<BR>"
 			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, <b>Biohazard Response Procedure 5-12</b> may be issued.<BR>"
-			print_command_report(intercepttext,"Level 5-6 Biohazard Response Procedures")
+			print_command_report(text=intercepttext,title="Level 5-6 Biohazard Response Procedures",announce=FALSE)
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 		if(2)
 			var/nukecode = random_nukecode()
@@ -29,17 +29,14 @@
 			intercepttext += "1. Secure the Nuclear Authentication Disk.<BR>"
 			intercepttext += "2. Detonate the Nuke located in the vault.<BR>"
 			intercepttext += "Nuclear Authentication Code: [nukecode] <BR>"
-			print_command_report(intercepttext,"Classified [command_name()] Update")
-			priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+			print_command_report(text=intercepttext,announce=TRUE)
 
 			for(var/mob/living/silicon/ai/aiPlayer in player_list)
 				if (aiPlayer.client)
 					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "Laws Updated: [law]"
 		else
 			..()
-	return
 
 
 
@@ -100,7 +97,7 @@
 		if(valid_territories.len)
 			num_territories = valid_territories.len //Add them all up to make the total number of area types
 		else
-			world << "ERROR: NO VALID TERRITORIES"
+			to_chat(world, "ERROR: NO VALID TERRITORIES")
 
 /datum/station_state/proc/score(datum/station_state/result)
 	if(!result)

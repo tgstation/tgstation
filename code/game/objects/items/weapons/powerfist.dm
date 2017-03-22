@@ -21,10 +21,10 @@
 /obj/item/weapon/melee/powerfist/examine(mob/user)
 	..()
 	if(!in_range(user, src))
-		user << "<span class='notice'>You'll need to get closer to see any more.</span>"
+		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
 		return
 	if(tank)
-		user << "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>"
+		to_chat(user, "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
 
 
 /obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user, params)
@@ -32,7 +32,7 @@
 		if(!tank)
 			var/obj/item/weapon/tank/internals/IT = W
 			if(IT.volume <= 3)
-				user << "<span class='warning'>\The [IT] is too small for \the [src].</span>"
+				to_chat(user, "<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
 			updateTank(W, 0, user)
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -43,8 +43,8 @@
 				fisto_setting = 3
 			if(3)
 				fisto_setting = 1
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>"
+		playsound(loc, W.usesound, 50, 1)
+		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(tank)
 			updateTank(tank, 1, user)
@@ -53,41 +53,40 @@
 /obj/item/weapon/melee/powerfist/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
 		if(!tank)
-			user << "<span class='notice'>\The [src] currently has no tank attached to it.</span>"
+			to_chat(user, "<span class='notice'>\The [src] currently has no tank attached to it.</span>")
 			return
-		user << "<span class='notice'>You detach \the [thetank] from \the [src].</span>"
+		to_chat(user, "<span class='notice'>You detach \the [thetank] from \the [src].</span>")
 		tank.forceMove(get_turf(user))
 		user.put_in_hands(tank)
 		tank = null
 	if(!removing)
 		if(tank)
-			user << "<span class='warning'>\The [src] already has a tank.</span>"
+			to_chat(user, "<span class='warning'>\The [src] already has a tank.</span>")
 			return
-		if(!user.unEquip(thetank))
+		if(!user.transferItemToLoc(thetank, src))
 			return
-		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
+		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
 		tank = thetank
-		thetank.forceMove(src)
 
 
 /obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user)
 	if(!tank)
-		user << "<span class='warning'>\The [src] can't operate without a source of gas!</span>"
+		to_chat(user, "<span class='warning'>\The [src] can't operate without a source of gas!</span>")
 		return
 	if(tank && !tank.air_contents.remove(gasperfist * fisto_setting))
-		user << "<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>"
+		to_chat(user, "<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
 	target.apply_damage(force * fisto_setting, BRUTE)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
-	PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, target.loc)
+	new /obj/effect/overlay/temp/kinetic_blast(target.loc)
 	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	spawn(1)
-		target.throw_at(throw_target, 5 * fisto_setting, 0.2)
+
+	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
 
 	add_logs(user, target, "power fisted", src)
 

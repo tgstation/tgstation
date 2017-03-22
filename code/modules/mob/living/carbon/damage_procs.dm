@@ -55,25 +55,27 @@
 	return amount
 
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = 1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		take_overall_damage(amount, 0, updating_health)
 	else
 		heal_overall_damage(-amount, 0, 0, 1, updating_health)
+	return amount
 
-/mob/living/carbon/adjustFireLoss(amount)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount, updating_health)
 	else
-		heal_overall_damage(0, -amount)
+		heal_overall_damage(0, -amount, 0, 1, updating_health)
+	return amount
 
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(has_dna() && TOXINLOVER in dna.species.species_traits) //damage becomes healing and healing becomes damage
+/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && has_dna() && TOXINLOVER in dna.species.species_traits) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 5*amount

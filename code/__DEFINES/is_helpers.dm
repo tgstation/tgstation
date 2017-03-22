@@ -50,6 +50,8 @@
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
+#define isdevil(A) (istype(A, /mob/living/carbon/true_devil))
+
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
@@ -61,6 +63,8 @@
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
+
+#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
 
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
@@ -103,7 +107,7 @@
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
-#define isnewplayer(A) (istype(A, /mob/new_player))
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
@@ -115,6 +119,16 @@
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 
 #define isorgan(A) (istype(A, /obj/item/organ))
+
+var/list/static/global/pointed_types = typecacheof(list(
+	/obj/item/weapon/pen,
+	/obj/item/weapon/screwdriver,
+	/obj/item/weapon/reagent_containers/syringe,
+	/obj/item/weapon/kitchen/fork))
+
+#define is_pointed(W) (is_type_in_typecache(W, pointed_types))
+
+#define isbodypart(A) (istype(A, /obj/item/bodypart))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/device/assembly))

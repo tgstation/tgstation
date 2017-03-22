@@ -2,6 +2,8 @@
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = T1
+	if (length(client_mobs_in_contents))
+		update_parallax_contents()
 	return 1
 
 /obj/onShuttleMove()
@@ -9,25 +11,33 @@
 		return 0
 	. = ..()
 
+/obj/machinery/atmospherics/onShuttleMove()
+	. = ..()
+	for(DEVICE_TYPE_LOOP)
+		if(get_area(nodes[I]) != get_area(src))
+			nullifyNode(I)
+
+#define DIR_CHECK_TURF_AREA(X) (get_area(get_ranged_target_turf(src, X, 1)) != A)
+/obj/structure/cable/onShuttleMove()
+	. = ..()
+	var/A = get_area(src)
+	//cut cables on the edge
+	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
+		cut_cable_from_powernet()
+#undef DIR_CHECK_TURF_AREA
+
 /atom/movable/light/onShuttleMove()
 	return 0
 
-/obj/machinery/door/onShuttleMove()
-	. = ..()
-	if(!.)
-		return
-	addtimer(src, "close", 0, TIMER_UNIQUE)
-	// Close any attached airlocks as well
-	for(var/obj/machinery/door/D in orange(1, src))
-		addtimer(src, "close", 0, TIMER_UNIQUE)
-
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0
-	for(var/obj/machinery/door/airlock/A in orange(1, src))
+	for(var/obj/machinery/door/airlock/A in range(1, src))
 		A.shuttledocked = 0
+		A.air_tight = TRUE
+		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 	. = ..()
 	shuttledocked =  1
-	for(var/obj/machinery/door/airlock/A in orange(1, src))
+	for(var/obj/machinery/door/airlock/A in range(1, src))
 		A.shuttledocked = 1
 /mob/onShuttleMove()
 	if(!move_on_shuttle)

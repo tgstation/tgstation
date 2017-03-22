@@ -67,3 +67,14 @@
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
+
+/obj/item/trash/coal
+	name = "lump of coal"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "slag"
+	desc = "Someone's gotten on the naughty list."
+
+/obj/item/trash/coal/burn()
+	visible_message("[src] fuses into a diamond! Someone wasn't so naughty after all...")
+	new /obj/item/weapon/ore/diamond(loc)
+	qdel(src)

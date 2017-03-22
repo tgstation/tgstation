@@ -32,7 +32,7 @@
 /datum/action/item_action/hands_free/activate_pill/Trigger()
 	if(!..())
 		return 0
-	owner << "<span class='caution'>You grit your teeth and burst the implanted [target.name]!</span>"
+	to_chat(owner, "<span class='caution'>You grit your teeth and burst the implanted [target.name]!</span>")
 	add_logs(owner, null, "swallowed an implanted pill", target)
 	if(target.reagents.total_volume)
 		target.reagents.reaction(owner, INGEST)

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/alien/hide
 	name = "Hide"
-	desc = "Allows to hide beneath tables or certain items. Toggled on or off."
+	desc = "Allows aliens to hide beneath tables or certain items. Toggled on or off."
 	plasma_cost = 0
 
 	action_icon_state = "alien_hide"
@@ -15,14 +15,14 @@
 						"<span class='noticealien'>You are now hiding.</span>")
 	else
 		user.layer = MOB_LAYER
-		user.visible_message("[user.] slowly peaks up from the ground...", \
+		user.visible_message("[user.] slowly peeks up from the ground...", \
 					"<span class='noticealien'>You stop hiding.</span>")
 	return 1
 
 
 /obj/effect/proc_holder/alien/larva_evolve
 	name = "Evolve"
-	desc = "Evolve into a fully grown Alien."
+	desc = "Evolve into a higher alien caste."
 	plasma_cost = 0
 
 	action_icon_state = "alien_evolve_larva"
@@ -33,14 +33,14 @@
 	var/mob/living/carbon/alien/larva/L = user
 
 	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
-		user << "<span class='danger'>You cannot evolve when you are cuffed.</span>"
+		to_chat(user, "<span class='danger'>You cannot evolve when you are cuffed.</span>")
 
 	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
-		L << "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>"
-		L << "<span class='info'>There are three to choose from:"
-		L << "<span class='name'>Hunters</span> <span class='info'>are the most agile caste tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone.</span>"
-		L << "<span class='name'>Sentinels</span> <span class='info'>are tasked with protecting the hive. With their ranged spit, invisibility, and high health, they make formidable guardians and acceptable secondhand hunters.</span>"
-		L << "<span class='name'>Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into the queen if there is none, and are vital to maintaining a hive with their resin secretion abilities.</span>"
+		to_chat(L, "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>")
+		to_chat(L, "<span class='info'>There are three to choose from:")
+		to_chat(L, "<span class='name'>Hunters</span> <span class='info'>are the most agile caste, tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone.</span>")
+		to_chat(L, "<span class='name'>Sentinels</span> <span class='info'>are tasked with protecting the hive. With their ranged spit, invisibility, and high health, they make formidable guardians and acceptable secondhand hunters.</span>")
+		to_chat(L, "<span class='name'>Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into a praetorian and then queen if no queen exists, and are vital to maintaining a hive with their resin secretion abilities.</span>")
 		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
 		if(user.incapacitated()) //something happened to us while we were choosing.
@@ -58,5 +58,5 @@
 		L.alien_evolve(new_xeno)
 		return 0
 	else
-		user << "<span class='danger'>You are not fully grown.</span>"
+		to_chat(user, "<span class='danger'>You are not fully grown.</span>")
 		return 0

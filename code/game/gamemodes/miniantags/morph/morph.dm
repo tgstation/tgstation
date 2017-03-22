@@ -47,7 +47,7 @@
 	if(morphed)
 		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
 		if(get_dist(user,src)<=3)
-			user << "<span class='warning'>It doesn't look quite right...</span>"
+			to_chat(user, "<span class='warning'>It doesn't look quite right...</span>")
 	else
 		..()
 	return
@@ -90,7 +90,7 @@
 		if(istype(A) && allowed(A))
 			assume(A)
 	else
-		src << "<span class='warning'>Your chameleon skin is still repairing itself!</span>"
+		to_chat(src, "<span class='warning'>Your chameleon skin is still repairing itself!</span>")
 		..()
 
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
@@ -121,6 +121,7 @@
 	morphed = 0
 	form = null
 	alpha = initial(alpha)
+	color = initial(color)
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
 					"<span class='notice'>You reform to your normal body.</span>")
@@ -222,9 +223,9 @@
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
 	ticker.mode.traitors |= player_mind
-	S << S.playstyle_string
+	to_chat(S, S.playstyle_string)
 	S << 'sound/magic/Mutate.ogg'
-	message_admins("[selected.key] has been made into morph by an event.")
-	log_game("[selected.key] was spawned as a morph by an event.")
+	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
+	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

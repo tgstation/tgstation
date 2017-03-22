@@ -33,11 +33,12 @@
 #define N_SOUTHEAST	64
 #define N_SOUTHWEST	1024
 
-#define SMOOTH_FALSE	0 //not smooth
-#define SMOOTH_TRUE		1 //smooths with exact specified types or just itself
-#define SMOOTH_MORE		2 //smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
-#define SMOOTH_DIAGONAL	4 //if atom should smooth diagonally, this should be present in 'smooth' var
-#define SMOOTH_BORDER	8 //atom will smooth with the borders of the map
+#define SMOOTH_FALSE	0	//not smooth
+#define SMOOTH_TRUE		1	//smooths with exact specified types or just itself
+#define SMOOTH_MORE		2	//smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
+#define SMOOTH_DIAGONAL	4	//if atom should smooth diagonally, this should be present in 'smooth' var
+#define SMOOTH_BORDER	8	//atom will smooth with the borders of the map
+#define SMOOTH_QUEUED	16	//atom is currently queued to smooth.
 
 #define NULLTURF_BORDER 123456789
 
@@ -110,9 +111,12 @@
 
 //do not use, use queue_smooth(atom)
 /proc/smooth_icon(atom/A)
-	if(!A || !A.smooth || !A.z)
+	if(!A || !A.smooth)
 		return
-	if(qdeleted(A))
+	A.smooth &= ~SMOOTH_QUEUED
+	if (!A.z)
+		return
+	if(QDELETED(A))
 		return
 	if((A.smooth & SMOOTH_TRUE) || (A.smooth & SMOOTH_MORE))
 		var/adjacencies = calculate_adjacencies(A)
@@ -156,7 +160,9 @@
 		var/list/U = list()
 		if(fixed_underlay)
 			if(fixed_underlay["space"])
-				U += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+				var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+				I.plane = PLANE_SPACE
+				U += I
 			else
 				U += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=TURF_LAYER)
 		else
@@ -167,7 +173,9 @@
 					T = get_step(src, turn(adjacencies, 225))
 
 			if(isspaceturf(T) && !istype(T, /turf/open/space/transit))
-				U += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+				var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+				I.plane = PLANE_SPACE
+				U += I
 			else if(T && !T.density && !T.smooth)
 				U += T
 			else if(baseturf && !initial(baseturf.density) && !initial(baseturf.smooth))
@@ -230,31 +238,30 @@
 		else if(adjacencies & N_EAST)
 			se = "4-e"
 
-	var/list/New = list()
+	var/list/New
 
 	if(A.top_left_corner != nw)
-		A.overlays -= A.top_left_corner
+		A.cut_overlay(A.top_left_corner)
 		A.top_left_corner = nw
-		New += nw
+		LAZYADD(New, nw)
 
 	if(A.top_right_corner != ne)
-		A.overlays -= A.top_right_corner
+		A.cut_overlay(A.top_right_corner)
 		A.top_right_corner = ne
-		New += ne
+		LAZYADD(New, ne)
 
 	if(A.bottom_right_corner != sw)
-		A.overlays -= A.bottom_right_corner
+		A.cut_overlay(A.bottom_right_corner)
 		A.bottom_right_corner = sw
-		New += sw
+		LAZYADD(New, sw)
 
 	if(A.bottom_left_corner != se)
-		A.overlays -= A.bottom_left_corner
+		A.cut_overlay(A.bottom_left_corner)
 		A.bottom_left_corner = se
-		New += se
+		LAZYADD(New, se)
 
-	if(New.len)
+	if(New)
 		A.add_overlay(New)
-
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
@@ -304,13 +311,13 @@
 					queue_smooth(A)
 
 /atom/proc/clear_smooth_overlays()
-	overlays -= top_left_corner
+	cut_overlay(top_left_corner)
 	top_left_corner = null
-	overlays -= top_right_corner
+	cut_overlay(top_right_corner)
 	top_right_corner = null
-	overlays -= bottom_right_corner
+	cut_overlay(bottom_right_corner)
 	bottom_right_corner = null
-	overlays -= bottom_left_corner
+	cut_overlay(bottom_left_corner)
 	bottom_left_corner = null
 
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
@@ -372,11 +379,13 @@
 
 //SSicon_smooth
 /proc/queue_smooth(atom/A)
-	if(SSicon_smooth)
-		SSicon_smooth.smooth_queue[A] = A
-		SSicon_smooth.can_fire = 1
-	else
-		smooth_icon(A)
+	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
+		return
+
+	SSicon_smooth.smooth_queue += A
+	SSicon_smooth.can_fire = 1
+	A.smooth |= SMOOTH_QUEUED
+
 
 //Example smooth wall
 /turf/closed/wall/smooth

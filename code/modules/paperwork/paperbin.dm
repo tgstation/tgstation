@@ -9,11 +9,27 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
-	var/amount = 30					//How much paper is in the bin.
-	var/list/papers = list()	//List of papers put in the bin for reference.
+	var/papertype = /obj/item/weapon/paper
+	var/total_paper = 30
+	var/list/papers = list()
+	var/obj/item/weapon/pen/bin_pen
+
+/obj/item/weapon/paper_bin/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
+	var/obj/item/weapon/pen/P = locate(/obj/item/weapon/pen) in src.loc
+	if(P && !bin_pen)
+		P.loc = src
+		bin_pen = P
+		update_icon()
+		var/static/warned = FALSE
+		if(!warned)
+			warning("one or more paperbins ate a pen duing initialize()")
+			warned = TRUE
 
 /obj/item/weapon/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(!amount)
+	if(!total_paper)
 		return
 	..()
 
@@ -25,8 +41,8 @@
 	. = ..()
 
 /obj/item/weapon/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(amount)
-		amount = 0
+	if(total_paper)
+		total_paper = 0
 		update_icon()
 	..()
 
@@ -40,10 +56,7 @@
 
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!remove_item_from_storage(M))
-			if(!M.unEquip(src))
-				return
-		M.put_in_hand(src, H.held_index)
+		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 	add_fingerprint(M)
 
@@ -56,16 +69,23 @@
 	if(user.lying)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(amount >= 1)
-		amount--
+	if(bin_pen)
+		var/obj/item/weapon/pen/P = bin_pen
+		P.loc = user.loc
+		user.put_in_hands(P)
+		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
+		bin_pen = null
 		update_icon()
-
+	else if(total_paper >= 1)
+		total_paper--
+		update_icon()
+		// If there's any custom paper on the stack, use that instead of creating a new paper.
 		var/obj/item/weapon/paper/P
-		if(papers.len > 0)	//If there's any custom paper on the stack, use that instead of creating a new paper.
+		if(papers.len > 0)
 			P = papers[papers.len]
 			papers.Remove(P)
 		else
-			P = new /obj/item/weapon/paper
+			P = new papertype(src)
 			if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
@@ -74,9 +94,9 @@
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	else
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 	add_fingerprint(user)
 
@@ -84,26 +104,41 @@
 /obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/P = I
-		if(!user.unEquip(P))
+		if(!user.transferItemToLoc(P, src))
 			return
-		P.loc = src
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
-		amount++
+		total_paper++
+		update_icon()
+	else if(istype(I, /obj/item/weapon/pen))
+		var/obj/item/weapon/pen/P = I
+		if(!user.transferItemToLoc(P, src))
+			return
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
+		bin_pen = P
 		update_icon()
 	else
 		return ..()
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()
-	if(amount)
-		user << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
+	if(total_paper)
+		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
 	else
-		user << "It doesn't contain anything."
+		to_chat(user, "It doesn't contain anything.")
 
 
 /obj/item/weapon/paper_bin/update_icon()
-	if(amount < 1)
-		icon_state = "paper_bin0"
+	if(total_paper < 1)
+		icon_state = "paper_bin_0"
 	else
-		icon_state = "paper_bin1"
+		icon_state = "[initial(icon_state)]"
+	cut_overlays()
+	if(bin_pen)
+		add_overlay(image(icon=bin_pen.icon,icon_state=bin_pen.icon_state))
+
+/obj/item/weapon/paper_bin/construction
+	name = "construction paper bin"
+	desc = "Contains all the paper you'll never need, IN COLOR!"
+	icon_state = "paper_binc"
+	papertype = /obj/item/weapon/paper/construction

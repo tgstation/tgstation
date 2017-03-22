@@ -34,10 +34,12 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	origin_tech = "combat=5,biotech=5"
+	origin_tech = "combat=5;biotech=5"
 	w_class = WEIGHT_CLASS_HUGE
-	force = 15
+	force = 20
 	throwforce = 10
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/sabre
@@ -81,7 +83,7 @@
 
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
-		user << "<span class ='danger'>You club yourself over the head.</span>"
+		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -142,8 +144,8 @@
 		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		add_fingerprint(user)
 	sleep(3)
-	if (H && !qdeleted(H))
-		if (B && !qdeleted(B))
+	if (H && !QDELETED(H))
+		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
 		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
@@ -152,14 +154,14 @@
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
 	if(on)
-		user << "<span class ='warning'>You extend the baton.</span>"
+		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
 		force = 10 //stunbaton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		user << "<span class ='notice'>You collapse the baton.</span>"
+		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
 		icon_state = "telebaton_0"
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = SLOT_BELT
@@ -187,6 +189,8 @@
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
+	qdel(shard.countdown)
+	shard.countdown = null
 	START_PROCESSING(SSobj, src)
 	visible_message("<span class='warning'>[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
 
@@ -261,3 +265,21 @@
 
 /obj/item/weapon/melee/supermatter_sword/add_blood(list/blood_dna)
 	return 0
+
+/obj/item/weapon/melee/curator_whip
+	name = "curator's whip"
+	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
+	icon_state = "whip"
+	item_state = "chain"
+	slot_flags = SLOT_BELT
+	force = 15
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/chainhit.ogg'
+
+/obj/item/weapon/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
+	if(ishuman(target) && proximity_flag)
+		var/mob/living/carbon/human/H = target
+		H.drop_all_held_items()
+		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+	..()

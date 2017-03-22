@@ -30,15 +30,13 @@
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
-	hooded = 1
-	hoodtype = /obj/item/clothing/head/chaplain_hood
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 
-/obj/item/clothing/head/chaplain_hood
+/obj/item/clothing/head/hooded/chaplain_hood
 	name = "chaplain hood"
 	desc = "For protecting your identity when immolating demons."
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
-	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/nun
@@ -96,7 +94,7 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton/telescopic)
+	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton)
 	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
@@ -169,10 +167,22 @@
 	item_state = "hosbluejacket"
 	body_parts_covered = CHEST|ARMS
 
-
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
 	allowed = list(/obj/item/weapon/scalpel, /obj/item/weapon/surgical_drapes, /obj/item/weapon/cautery, /obj/item/weapon/hemostat, /obj/item/weapon/retractor)
+
+//Curator
+/obj/item/clothing/suit/curator
+	name = "treasure hunter's coat"
+	desc = "Both fashionable and lightly armoured, this jacket is favoured by treasure hunters the galaxy over."
+	icon_state = "curator"
+	item_state = "curator"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/melee/curator_whip)
+	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
+	cold_protection = CHEST|ARMS
+	heat_protection = CHEST|ARMS

@@ -26,6 +26,8 @@
 				/obj/item/stack/sheet/mineral/bananium = list("banana" = 20),
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
+				/obj/item/stack/sheet/bluespace_crystal = list("bluespace" = 20),
+				/obj/item/weapon/ore/bluespace_crystal = list("bluespace" = 20),
 				/obj/item/weapon/grown/nettle/basic = list("sacid" = 0),
 				/obj/item/weapon/grown/nettle/death = list("facid" = 0, "sacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
@@ -121,7 +123,7 @@
 		if(default_unfasten_wrench(user, I))
 				return
 
-		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
+		if (istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER) )
 				if (!beaker)
 						if(!user.drop_item())
 								return 1
@@ -130,18 +132,18 @@
 						update_icon()
 						src.updateUsrDialog()
 				else
-						user << "<span class='warning'>There's already a container inside.</span>"
+						to_chat(user, "<span class='warning'>There's already a container inside.</span>")
 				return 1 //no afterattack
 
 		if(is_type_in_list(I, dried_items))
 				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
 						var/obj/item/weapon/reagent_containers/food/snacks/grown/G = I
 						if(!G.dry)
-								user << "<span class='warning'>You must dry that first!</span>"
+								to_chat(user, "<span class='warning'>You must dry that first!</span>")
 								return 1
 
 		if(holdingitems && holdingitems.len >= limit)
-				usr << "The machine cannot hold anymore items."
+				to_chat(usr, "The machine cannot hold anymore items.")
 				return 1
 
 		//Fill machine with a bag!
@@ -151,11 +153,11 @@
 						B.remove_from_storage(G, src)
 						holdingitems += G
 						if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
-								user << "<span class='notice'>You fill the All-In-One grinder to the brim.</span>"
+								to_chat(user, "<span class='notice'>You fill the All-In-One grinder to the brim.</span>")
 								break
 
 				if(!I.contents.len)
-						user << "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>"
+						to_chat(user, "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>")
 
 				src.updateUsrDialog()
 				return 1
@@ -164,7 +166,7 @@
 				if(user.a_intent == INTENT_HARM)
 						return ..()
 				else
-						user << "<span class='warning'>Cannot refine into a reagent!</span>"
+						to_chat(user, "<span class='warning'>Cannot refine into a reagent!</span>")
 						return 1
 
 		if(user.drop_item())

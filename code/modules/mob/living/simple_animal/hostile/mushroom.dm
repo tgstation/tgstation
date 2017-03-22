@@ -39,16 +39,16 @@
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
 	if(health >= maxHealth)
-		user << "<span class='info'>It looks healthy.</span>"
+		to_chat(user, "<span class='info'>It looks healthy.</span>")
 	else
-		user << "<span class='info'>It looks like it's been roughed up.</span>"
+		to_chat(user, "<span class='info'>It looks like it's been roughed up.</span>")
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-2)
 
-/mob/living/simple_animal/hostile/mushroom/New()//Makes every shroom a little unique
+/mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
@@ -62,10 +62,10 @@
 	health = maxHealth
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		addtimer(src, "stop_retreat", 30)
+		addtimer(CALLBACK(src, .proc/stop_retreat), 30)
 	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
@@ -111,7 +111,7 @@
 	revive(full_heal = 1)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	addtimer(src, "recovery_recharge", 300)
+	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
 
 /mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
 	recovery_cooldown = 0
@@ -137,7 +137,7 @@
 			Recover()
 			qdel(I)
 		else
-			user << "<span class='warning'>[src] won't eat it!</span>"
+			to_chat(user, "<span class='warning'>[src] won't eat it!</span>")
 		return
 	if(I.force)
 		Bruise()

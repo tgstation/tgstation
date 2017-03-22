@@ -535,6 +535,26 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/singery
+	name = "yellow performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "ysing"
+	item_state = "ysing"
+	item_color = "ysing"
+	fitted = NO_FEMALE_UNIFORM
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	can_adjust = 0
+
+/obj/item/clothing/under/singerb
+	name = "blue performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "bsing"
+	item_state = "bsing"
+	item_color = "bsing"
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
 /obj/item/clothing/under/plaid_skirt/green
 	name = "green plaid skirt"
 	desc = "A preppy green skirt with a white blouse."
@@ -559,9 +579,24 @@
 	item_color = "geisha"
 	can_adjust = 0
 
+/obj/item/clothing/under/villain
+	name = "villain suit"
+	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
+	icon_state = "villain"
+	item_color = "villain"
+	can_adjust = 0
+
+/obj/item/clothing/under/sailor
+	name = "sailor suit"
+	desc = "Skipper's in the wardroom drinkin gin'."
+	icon_state = "sailor"
+	item_state = "b_suit"
+	item_color = "sailor"
+	can_adjust = 0
+
 /obj/item/clothing/under/plasmaman
-	name = "Plasma-man Jumpsuit"
-	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
+	name = "plasma envirosuit"
+	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
 	item_color = "plasmaman"
@@ -576,7 +611,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	to_chat(user, "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>")
 
 
 /obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -591,25 +626,25 @@
 			extinguishes_left--
 			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
 			H.ExtinguishMob()
-			PoolOrNew(/obj/effect/particle_effect/water, get_turf(H))
+			new /obj/effect/particle_effect/water(get_turf(H))
 	return 0
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	if (istype(E, /obj/item/device/extinguisher_refill))
 		if (extinguishes_left == 5)
-			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
 		else
 			extinguishes_left = 5
-			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			to_chat(user, "<span class='notice'>You refill the suit's built-in extinguisher, using up the cartridge.</span>")
 			qdel(E)
 			return
 		return
 	return
 
 /obj/item/device/extinguisher_refill
-	name = "Plasma-man jumpsuit refill pack"
-	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
+	name = "envirosuit extinguisher cartridge"
+	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	origin_tech = "materials=2;plasmatech=3;biotech=1"
 
