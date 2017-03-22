@@ -1,11 +1,13 @@
 /mob/living/carbon/human/whisper_verb(message as text)
 	whisper(message)
 
-/mob/living/carbon/human/whisper/proc/(message, datum/language/language=null)
+/mob/living/carbon/human/whisper(message, datum/language/language=null)
 	if(!IsVocal())
 		return
 	if(!message)
 		return
+	if(!language)
+		language = get_default_language()
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
