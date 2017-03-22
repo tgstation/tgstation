@@ -13,6 +13,9 @@ by Cyberboss
 
 - `/obj/proc/OnConstruction(state_id, mob/user, obj/item/used)` - Called when a construction step is completed on an object with the new state id. If `state_id` is zero, the object has been fully constructed and can't be deconstructed.	`used` is the material object if any used for construction and it will be deleted/deducted/stashed at the end of this proc. `user` is always holding `used`.
 
+- `/obj/proc/OnConstructionTransform(mob/user, obj/created)` - Called when the last construction state is reached and has a transformation_type set. `user` is the mob that constructed it.
+`created` is the object that was created, `Construct`ed, and is now sitting on the ground
+
 - `/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced)` - Called when a deconstruction step is completed on an object with the new state_id. If `state_id` is zero, the object has been fully deconstructed. `created` is the item that will be dropped, if any. `forced` is if the object was aggressively put into this state. If it's TRUE, `user` and `created` MAY be null. Returning TRUE from this function will cause `created` to be qdel'd before it is dropped.
 
 - `/obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)` - Called after an object is repaired. `used` is the material object if any used for repairing and it will be deleted/deducted from on return. It is not a tool

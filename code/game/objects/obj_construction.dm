@@ -163,8 +163,9 @@
 		var/pdir = parent.dir
 		var/obj/O = new TT(get_turf(parent))
 		parent.transfer_fingerprints_to(O)
-		qdel(parent)
 		O.Construct(user, pdir)
+		parent.OnConstructionTransform(user, O)
+		qdel(parent)
 
 /datum/construction_blueprint
 	var/owner_type
@@ -304,6 +305,8 @@
 
 //construction events
 /obj/proc/OnConstruction(state_id, mob/user, obj/item/used)
+
+/obj/proc/OnConstructionTransform(mob/user, obj/created)
 
 /obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
 
