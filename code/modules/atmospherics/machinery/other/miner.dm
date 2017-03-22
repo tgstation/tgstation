@@ -1,3 +1,10 @@
+
+#define GASMINER_POWER_NONE 0
+#define GASMINER_POWER_STATIC 1
+#define GASMINER_POWER_MOLES 2	//Scaled from here on down.
+#define GASMINER_POWER_KPA 3
+#define GASMINER_POWER_FULLSCALE 4
+
 /obj/machinery/atmospherics/miner
 	name = "gas miner"
 	desc = "Gasses mined from the gas giant below (above?) flow out through this massive vent."
@@ -13,7 +20,7 @@
 	var/max_ext_kpa = 6500
 	var/overlay_color = "#FFFFFF"
 	var/active = TRUE
-	var/power_draw = 0	//0 = none, 1 = static, 2 = scaled to mols, 3 = scaled to kpa, 4 = scaled to kpa+mol
+	var/power_draw = 0
 	var/power_draw_static = 2000
 	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
@@ -65,15 +72,15 @@
 	var/datum/gas_mixture/G = T.return_air()
 	var/P = G.return_pressure()
 	switch(power_draw)
-		if(0)
+		if(GASMINER_POWER_NONE)
 			active_power_usage = 0
-		if(1)
+		if(GASMINER_POWER_STATIC)
 			active_power_usage = power_draw_static
-		if(2)
+		if(GASMINER_POWER_MOLES)
 			active_power_usage = spawn_mol * power_draw_dynamic_mol_coeff
-		if(3)
+		if(GASMINER_POWER_KPA)
 			active_power_usage = P * power_draw_dynamic_kpa_coeff
-		if(4)
+		if(GASMINER_POWER_FULLSCALE)
 			active_power_usage = (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff)
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
@@ -121,7 +128,7 @@
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)
-		user << "[src] seems to be broken. Its debug interface outputs: [broken_message]"
+		to_chat(user, "[src] seems to be broken. Its debug interface outputs: [broken_message]")
 	..()
 
 /obj/machinery/atmospherics/miner/n2o
