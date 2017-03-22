@@ -207,7 +207,7 @@
 	area_type = /area/lavaland/surface/outdoors
 	target_z = ZLEVEL_LAVALAND
 
-	immunity_type = "ash" // temp
+	immunity_type = "acid" // temp
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
