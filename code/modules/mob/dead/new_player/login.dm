@@ -28,5 +28,5 @@
 */
 	new_player_panel()
 	client.playtitlemusic()
-	if(ticker.current_state < GAME_STATE_SETTING_UP)
-		to_chat(src, "Please set up your character and select \"Ready\". The game will start in about [round(ticker.GetTimeLeft(), 1)/10] seconds.")
+	if(SSticker.current_state < GAME_STATE_SETTING_UP)
+		to_chat(src, "Please set up your character and select \"Ready\". The game will start in about [round(SSticker.GetTimeLeft(), 1)/10] seconds.")

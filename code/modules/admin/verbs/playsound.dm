@@ -48,8 +48,8 @@ var/sound/admin_sound
 	if(!check_rights(R_SOUNDS))
 		return
 
-	if(ticker)
-		ticker.round_end_sound = fcopy_rsc(S)
+	if(SSticker)
+		SSticker.round_end_sound = fcopy_rsc(S)
 	else
 		return
 

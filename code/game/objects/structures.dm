@@ -17,11 +17,11 @@
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 		icon_state = ""
-	if(ticker)
+	if(SSticker)
 		cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
-	if(ticker)
+	if(SSticker)
 		cameranet.updateVisibility(src)
 	if(smooth)
 		queue_smooth_neighbors(src)

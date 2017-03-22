@@ -203,7 +203,7 @@
 			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
 			Ratvar, and you will bring him back.</span>")
 			add_servant_of_ratvar(H, TRUE)
-			ticker.mode.equip_servant(H)
+			SSticker.mode.equip_servant(H)
 			candidates.Remove(H)
 
 		return 1
@@ -322,7 +322,7 @@
 					door.open()
 
 			//Assign antag status and the mission
-			ticker.mode.traitors += Commando.mind
+			SSticker.mode.traitors += Commando.mind
 			Commando.mind.special_role = "deathsquad"
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
@@ -384,7 +384,7 @@
 			H = pick(candidates)
 			if(gang_colors_pool.len)
 				var/datum/gang/newgang = new()
-				ticker.mode.gangs += newgang
+				SSticker.mode.gangs += newgang
 				H.mind.make_Gang(newgang)
 				candidates.Remove(H)
 			else if(needs_assigned == 2)
@@ -411,7 +411,7 @@
 		newmob.equipOutfit(/datum/outfit/centcom_official)
 
 		//Assign antag status and the mission
-		ticker.mode.traitors += newmob.mind
+		SSticker.mode.traitors += newmob.mind
 		newmob.mind.special_role = "official"
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
@@ -511,7 +511,7 @@
 						door.open()
 
 			//Assign antag status and the mission
-			ticker.mode.traitors += ERTOperative.mind
+			SSticker.mode.traitors += ERTOperative.mind
 			ERTOperative.mind.special_role = "ERT"
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind

@@ -20,7 +20,7 @@ AI
 	AI.rename_self("ai", M.client)
 
 	//we may have been created after our borg
-	if(ticker.current_state == GAME_STATE_SETTING_UP)
+	if(SSticker.current_state == GAME_STATE_SETTING_UP)
 		for(var/mob/living/silicon/robot/R in silicon_mobs)
 			if(!R.connected_ai)
 				R.TryConnectToAI()

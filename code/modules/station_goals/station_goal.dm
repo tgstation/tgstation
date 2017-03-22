@@ -33,7 +33,7 @@
 		to_chat(world, "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>")
 
 /datum/station_goal/Destroy()
-	ticker.mode.station_goals -= src
+	SSticker.mode.station_goals -= src
 	. = ..()
 
 /datum/station_goal/Topic(href, href_list)

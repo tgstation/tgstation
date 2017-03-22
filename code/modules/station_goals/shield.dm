@@ -79,7 +79,7 @@
 	data["notice"] = notice
 
 
-	var/datum/station_goal/station_shield/G = locate() in ticker.mode.station_goals
+	var/datum/station_goal/station_shield/G = locate() in SSticker.mode.station_goals
 	if(G)
 		data["meteor_shield"] = 1
 		data["meteor_shield_coverage"] = G.get_coverage()

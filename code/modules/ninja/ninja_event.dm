@@ -64,7 +64,7 @@ Contents:
 
 	//generate objectives - You'll generally get 6 objectives (Ninja is meant to be hardmode!)
 	var/list/possible_targets = list()
-	for(var/datum/mind/M in ticker.minds)
+	for(var/datum/mind/M in SSticker.minds)
 		if(M.current && M.current.stat != DEAD)
 			if(ishuman(M.current))
 				if(M.special_role)
@@ -155,7 +155,7 @@ Contents:
 		return
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
-	ticker.mode.update_ninja_icons_added(Ninja)
+	SSticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
 	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
@@ -179,7 +179,7 @@ Contents:
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = "Space Ninja"
 	Mind.special_role = "Space Ninja"
-	ticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
+	SSticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
 	return Mind
 
 

@@ -409,7 +409,7 @@
 	return TRUE
 
 /obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
-	for(var/datum/gang/G in ticker.mode.gangs)
+	for(var/datum/gang/G in SSticker.mode.gangs)
 		if(territory.type in (G.territory|G.territory_new))
 			. = G.name
 			break

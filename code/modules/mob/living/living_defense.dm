@@ -172,7 +172,7 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
 

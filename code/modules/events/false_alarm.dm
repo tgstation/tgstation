@@ -12,7 +12,7 @@
 	var/list/events_list = list()
 
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
-	var/gamemode = ticker.mode.config_tag
+	var/gamemode = SSticker.mode.config_tag
 
 	for(var/datum/round_event_control/E in SSevent.control)
 		if(!E.canSpawnEvent(players_amt, gamemode))

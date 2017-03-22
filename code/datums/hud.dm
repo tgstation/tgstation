@@ -73,8 +73,8 @@ var/datum/atom_hud/huds = list( \
 //MOB PROCS
 /mob/proc/reload_huds()
 	var/gang_huds = list()
-	if(ticker.mode)
-		for(var/datum/gang/G in ticker.mode.gangs)
+	if(SSticker.mode)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			gang_huds += G.ganghud
 
 	for(var/datum/atom_hud/hud in (huds|gang_huds))

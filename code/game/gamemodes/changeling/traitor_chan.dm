@@ -58,16 +58,16 @@
 		changeling.current.make_changeling()
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
-		ticker.mode.update_changeling_icons_added(changeling)
+		SSticker.mode.update_changeling_icons_added(changeling)
 	..()
 	return
 
 /datum/game_mode/traitor/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*4))+2, round(joined_player_list.len/(config.changeling_scaling_coeff*2)) )
-	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
+	if(SSticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return
-	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
+	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))

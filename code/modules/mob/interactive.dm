@@ -535,7 +535,7 @@
 
 /mob/living/carbon/human/interactive/Life()
 	..()
-	if(ticker.current_state == GAME_STATE_FINISHED)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
 		saveVoice()
 	if(!alternateProcessing || forceProcess || world.time > lastProc + processTime)
 		doProcess()

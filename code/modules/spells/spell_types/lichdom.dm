@@ -25,18 +25,18 @@
 	action_icon_state = "skeleton"
 
 /obj/effect/proc_holder/spell/targeted/lichdom/New()
-	if(initial(ticker.mode.round_ends_with_antag_death))
+	if(initial(SSticker.mode.round_ends_with_antag_death))
 		existence_stops_round_end = 1
-		ticker.mode.round_ends_with_antag_death = 0
+		SSticker.mode.round_ends_with_antag_death = 0
 	..()
 
 /obj/effect/proc_holder/spell/targeted/lichdom/Destroy()
-	for(var/datum/mind/M in ticker.mode.wizards) //Make sure no other bones are about
+	for(var/datum/mind/M in SSticker.mode.wizards) //Make sure no other bones are about
 		for(var/obj/effect/proc_holder/spell/S in M.spell_list)
 			if(istype(S,/obj/effect/proc_holder/spell/targeted/lichdom) && S != src)
 				return ..()
 	if(existence_stops_round_end)
-		ticker.mode.round_ends_with_antag_death = 1
+		SSticker.mode.round_ends_with_antag_death = 1
 	..()
 
 /obj/effect/proc_holder/spell/targeted/lichdom/cast(list/targets,mob/user = usr)
