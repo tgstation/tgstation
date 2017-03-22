@@ -919,7 +919,6 @@
 #include "code\game\objects\structures\transit_tubes\transit_tube.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_construction.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_pod.dm"
-#include "code\game\turfs\basic.dm"
 #include "code\game\turfs\closed.dm"
 #include "code\game\turfs\open.dm"
 #include "code\game\turfs\turf.dm"
