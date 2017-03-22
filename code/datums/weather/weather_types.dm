@@ -184,3 +184,33 @@
 		status_signal.data["picture_state"] = "radiation"
 
 	frequency.post_signal(src, status_signal)
+
+
+/datum/weather/acid_rain
+	name = "acid rain"
+	desc = "Some stay dry and others feel the pain"
+
+	telegraph_duration = 400
+	telegraph_message = "<span class='danger'>Stinging droplets start to fall upon you..</span>"
+	telegraph_sound = 'sound/ambience/acidrain_start.ogg'
+
+	weather_message = "<span class='userdanger'><i>Your skin melts underneath the rain!</i></span>"
+	weather_overlay = "acid_rain"
+	weather_duration_lower = 600
+	weather_duration_upper = 1500
+	weather_sound = 'sound/ambience/acidrain_mid.ogg'
+
+	end_duration = 100
+	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
+	end_sound = 'sound/ambience/acidrain_end.ogg'
+
+	area_type = /area/lavaland/surface/outdoors
+	target_z = ZLEVEL_LAVALAND
+
+	immunity_type = "acid" // temp
+
+
+/datum/weather/acid_rain/impact(mob/living/L)
+	var/resist = L.getarmor(null, "acid")
+	if(prob(max(0,100-resist)))
+		L.acid_act(20,20)
