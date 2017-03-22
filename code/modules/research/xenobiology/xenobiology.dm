@@ -177,12 +177,12 @@
 		return ..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
-		to_chat(user, "<span class='warning'>\The [name] won't work on [SM].</span>")
+		to_chat(user, "<span class='warning'>[src] won't work on [SM].</span>")
 		return ..()
 
 
 
-	to_chat(user, "<span class='notice'>You offer \the [name] to [SM]...</span>")
+	to_chat(user, "<span class='notice'>You offer [src] to [SM]...</span>")
 	being_used = 1
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
