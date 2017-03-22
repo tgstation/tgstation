@@ -148,7 +148,8 @@
 				. = new required_type_to_construct(null, required_amount_to_construct)
 			else
 				. = new required_type_to_construct()
-		parent.transfer_fingerprints_to(.)
+		if(.)
+			parent.transfer_fingerprints_to(.)
 
 /datum/construction_state/last/New()
 	if(transformation_type)
@@ -161,7 +162,7 @@
 	anchored = initial(parent.anchored)
 	icon_state = initial(parent.icon_state)
 	max_integrity = initial(parent.max_integrity)
-	failure_integrity = initial(parent.integrity_failure))
+	failure_integrity = initial(parent.integrity_failure)
 	..()
 	var/TT = transformation_type
 	if(TT)
@@ -178,7 +179,7 @@
 				var/PVE = parent.var_edited
 				if(!VE && !PVE)
 					to_chat(user, "Something bad just happened. Go report it on coderbus: OBJCONRUNTIMETYPEFAIL")
-				CRASH("OnConstructionTransform with CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME failed for [parent]([parent.type])! Returned [O]! VE: [VE], PVE: [PVE].")\
+				CRASH("OnConstructionTransform with CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME failed for [parent]([parent.type])! Returned [O]! VE: [VE], PVE: [PVE].")
 		O.Construct(user, pdir)
 		qdel(parent)
 
@@ -260,7 +261,7 @@
 				WARNING(error + "construction_state/last not last")
 				last_found = FALSE
 				. = FALSE
-			var/datum/construction_state/last/L = currrent_step
+			var/datum/construction_state/last/L = current_step
 			if(istype(L))
 				last_found = TRUE
 				if(L && !ispath(/atom/movable, L))
@@ -319,7 +320,7 @@
 					WARNING("Invalid /obj/item type specified for deconstruction: '[current_step.required_type_to_deconstruct]'")
 					. = FALSE
 			else if(current_step.deconstruction_message && findtextEx(current_step.deconstruction_message, CONSTRUCTION_ITEM))
-					WARNING(error + "`CONSTRUCTION_ITEM` used in message for hand deconstruction")
+				WARNING(error + "`CONSTRUCTION_ITEM` used in message for hand deconstruction")
 			current_step = current_step.next_state
 	else
 		WARNING("Construction Error: InitConstruction for [type] defined but no steps were added")
@@ -447,7 +448,7 @@
 		if(wait)			
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
 									"<span class='notice'>[user] begins [message] \the [src].</span>")
-			if(!ConstructionDoAfterInternal(user, I, wait * I.toolspeed, action_type, TRUE))
+			if(!ConstructionDoAfterInternal(user, null, wait, action_type, TRUE))
 				return
 
 		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
@@ -504,9 +505,9 @@
 		return ..()
 
 /obj/proc/ConstructionDoAfter(mob/user, obj/item/I, delay)
-	ConstructionDoAfterInternal(user, I, delay, CUSTOM_CONSTRUCTION, FALSE
+	ConstructionDoAfterInternal(user, I, delay, CUSTOM_CONSTRUCTION, FALSE)
 
-/obj/proc/ConstructionDoAfterInternal(mob/user, obj/item/I, delay, action_type = CUSTOM_CONSTRUCTION, first_checked = FALSE)
+/obj/proc/ConstructionDoAfterInternal(mob/user, obj/item/I, delay, action_type, first_checked)
 	var/datum/construction_state/ccs = current_construction_state
 	var/ccsid = ccs ? ccs.id : 0
 
