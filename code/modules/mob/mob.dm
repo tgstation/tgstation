@@ -865,7 +865,7 @@ var/next_mob_id = 0
 	return FALSE
 
 
-//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
+//This will update a mob's name, real_name, mind.name, SLOTH.data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
 	if(!newname)
@@ -889,7 +889,7 @@ var/next_mob_id = 0
 					obj.update_explanation_text()
 	return 1
 
-//Updates data_core records with new name , see mob/living/carbon/human
+//Updates SLOTH.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
 

@@ -460,20 +460,20 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
+	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",SLOTH.admin_notice) as message|null
 	if(new_admin_notice == null)
 		return
-	if(new_admin_notice == admin_notice)
+	if(new_admin_notice == SLOTH.admin_notice)
 		return
 	if(new_admin_notice == "")
 		message_admins("[key_name(usr)] removed the admin notice.")
-		log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+		log_admin("[key_name(usr)] removed the admin notice:\n[SLOTH.admin_notice]")
 	else
 		message_admins("[key_name(usr)] set the admin notice.")
 		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
 		to_chat(world, "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>")
 	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	admin_notice = new_admin_notice
+	SLOTH.admin_notice = new_admin_notice
 	return
 
 /datum/admins/proc/toggleooc()

@@ -129,8 +129,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Admin"
 	set desc ="Check the admin notice if it has been set"
 
-	if(admin_notice)
-		to_chat(src, "<span class='boldnotice'>Admin Notice:</span>\n \t [admin_notice]")
+	if(SLOTH.admin_notice)
+		to_chat(src, "<span class='boldnotice'>Admin Notice:</span>\n \t [SLOTH.admin_notice]")
 	else
 		to_chat(src, "<span class='notice'>There are no admin notices at the moment.</span>")
 

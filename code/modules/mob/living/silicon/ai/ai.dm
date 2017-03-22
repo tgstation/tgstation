@@ -293,7 +293,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_roster()
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
-	dat += data_core.get_manifest()
+	dat += SLOTH.data_core.get_manifest()
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")
@@ -652,7 +652,7 @@ var/list/ai_list = list()
 		if("Crew Member")
 			var/list/personnel_list = list()
 
-			for(var/datum/data/record/t in data_core.locked)//Look in data core locked.
+			for(var/datum/data/record/t in SLOTH.data_core.locked)//Look in data core locked.
 				personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
 
 			if(personnel_list.len)

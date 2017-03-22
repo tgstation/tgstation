@@ -120,8 +120,8 @@
 
 /obj/structure/filingcabinet/security/proc/populate()
 	if(virgin)
-		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/S = find_record("name", G.fields["name"], data_core.security)
+		for(var/datum/data/record/G in SLOTH.data_core.general)
+			var/datum/data/record/S = find_record("name", G.fields["name"], SLOTH.data_core.security)
 			if(!S)
 				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
@@ -152,8 +152,8 @@
 
 /obj/structure/filingcabinet/medical/proc/populate()
 	if(virgin)
-		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/M = find_record("name", G.fields["name"], data_core.medical)
+		for(var/datum/data/record/G in SLOTH.data_core.general)
+			var/datum/data/record/M = find_record("name", G.fields["name"], SLOTH.data_core.medical)
 			if(!M)
 				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
@@ -196,7 +196,7 @@ var/list/employmentCabinets = list()
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	for(var/record in data_core.locked)
+	for(var/record in SLOTH.data_core.locked)
 		var/datum/data/record/G = record
 		if(!G)
 			continue

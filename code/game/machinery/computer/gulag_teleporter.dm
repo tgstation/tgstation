@@ -55,8 +55,8 @@
 		prisoner_list["name"] = prisoner.real_name
 		if(id)
 			can_teleport = TRUE
-		if(!isnull(data_core.general))
-			for(var/r in data_core.security)
+		if(!isnull(SLOTH.data_core.general))
+			for(var/r in SLOTH.data_core.security)
 				var/datum/data/record/R = r
 				if(R.fields["name"] == prisoner_list["name"])
 					temporary_record = R

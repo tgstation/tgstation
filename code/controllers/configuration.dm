@@ -267,7 +267,7 @@
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				SLOTH.diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
@@ -480,9 +480,9 @@
 				if("log_runtimes")
 					log_runtimes = TRUE
 					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
-					if(runtime_diary != newlog)
+					if(SLOTH.runtime_diary != newlog)
 						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
-						runtime_diary = newlog
+						SLOTH.runtime_diary = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
 				if("allow_webclient")
@@ -526,7 +526,7 @@
 				if("error_msg_delay")
 					error_msg_delay = text2num(value)
 				else
-					diary << "Unknown setting in configuration: '[name]'"
+					SLOTH.diary << "Unknown setting in configuration: '[name]'"
 
 		else if(type == "game_options")
 			switch(name)
@@ -589,13 +589,13 @@
 					if(mode_name in config.modes)
 						config.continuous[mode_name] = 1
 					else
-						diary << "Unknown continuous configuration definition: [mode_name]."
+						SLOTH.diary << "Unknown continuous configuration definition: [mode_name]."
 				if("midround_antag")
 					var/mode_name = lowertext(value)
 					if(mode_name in config.modes)
 						config.midround_antag[mode_name] = 1
 					else
-						diary << "Unknown midround antagonist configuration definition: [mode_name]."
+						SLOTH.diary << "Unknown midround antagonist configuration definition: [mode_name]."
 				if("midround_antag_time_check")
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -611,9 +611,9 @@
 						if(mode_name in config.modes)
 							config.min_pop[mode_name] = text2num(mode_value)
 						else
-							diary << "Unknown minimum population configuration definition: [mode_name]."
+							SLOTH.diary << "Unknown minimum population configuration definition: [mode_name]."
 					else
-						diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+						SLOTH.diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
 				if("max_pop")
 					var/pop_pos = findtext(value, " ")
 					var/mode_name = null
@@ -625,9 +625,9 @@
 						if(mode_name in config.modes)
 							config.max_pop[mode_name] = text2num(mode_value)
 						else
-							diary << "Unknown maximum population configuration definition: [mode_name]."
+							SLOTH.diary << "Unknown maximum population configuration definition: [mode_name]."
 					else
-						diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
+						SLOTH.diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -655,9 +655,9 @@
 						if(prob_name in config.modes)
 							config.probabilities[prob_name] = text2num(prob_value)
 						else
-							diary << "Unknown game mode probability configuration definition: [prob_name]."
+							SLOTH.diary << "Unknown game mode probability configuration definition: [prob_name]."
 					else
-						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+						SLOTH.diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
@@ -704,7 +704,7 @@
 					// Value is in the form "LAWID,NUMBER"
 					var/list/L = splittext(value, ",")
 					if(L.len != 2)
-						diary << "Invalid LAW_WEIGHT: " + t
+						SLOTH.diary << "Invalid LAW_WEIGHT: " + t
 						continue
 					var/lawid = L[1]
 					var/weight = text2num(L[2])
@@ -757,7 +757,7 @@
 				if("arrivals_shuttle_require_safe_latejoin")
 					config.arrivals_shuttle_require_safe_latejoin = text2num(value)
 				else
-					diary << "Unknown setting in configuration: '[name]'"
+					SLOTH.diary << "Unknown setting in configuration: '[name]'"
 
 	fps = round(fps)
 	if(fps <= 0)
@@ -811,7 +811,7 @@
 				config.maplist[currentmap.map_name] = currentmap
 				currentmap = null
 			else
-				diary << "Unknown command in map vote config: '[command]'"
+				SLOTH.diary << "Unknown command in map vote config: '[command]'"
 
 
 /datum/configuration/proc/loadsql(filename)
@@ -855,7 +855,7 @@
 			if("feedback_tableprefix")
 				SLOTH.sqlfdbktableprefix = value
 			else
-				diary << "Unknown setting in configuration: '[name]'"
+				SLOTH.diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

@@ -26,7 +26,7 @@
 
 /datum/objective/proc/get_crewmember_minds()
 	. = list()
-	for(var/V in data_core.locked)
+	for(var/V in SLOTH.data_core.locked)
 		var/datum/data/record/R = V
 		var/mob/M = R.fields["reference"]
 		if(M && M.mind)

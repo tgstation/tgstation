@@ -372,7 +372,7 @@
 		var/turf/bombturf = get_turf(src)
 		var/area/bombarea = get_area(bombturf)
 		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]."
-		bombers += message
+		SLOTH.bombers += message
 		message_admins(message)
 		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] [COORD(bombturf)].")
 

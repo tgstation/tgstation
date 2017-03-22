@@ -122,10 +122,10 @@
 <th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
 <th>Criminal Status</th>
 </tr>"}
-					if(!isnull(data_core.general))
-						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
+					if(!isnull(SLOTH.data_core.general))
+						for(var/datum/data/record/R in sortRecord(SLOTH.data_core.general, sortBy, order))
 							var/crimstat = ""
-							for(var/datum/data/record/E in data_core.security)
+							for(var/datum/data/record/E in SLOTH.data_core.security)
 								if((E.fields["name"] == R.fields["name"]) && (E.fields["id"] == R.fields["id"]))
 									crimstat = E.fields["criminal"]
 							var/background
@@ -163,7 +163,7 @@
 					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
 				if(3)
 					dat += "<font size='4'><b>Security Record</b></font><br>"
-					if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
+					if(istype(active1, /datum/data/record) && SLOTH.data_core.general.Find(active1))
 						if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
 							var/obj/item/weapon/photo/P1 = active1.fields["photo_front"]
 							user << browse_rsc(P1.img, "photo_front")
@@ -189,7 +189,7 @@
 						</td></tr></table></td></tr></table>"}
 					else
 						dat += "<br>General Record Lost!<br>"
-					if((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
+					if((istype(active2, /datum/data/record) && SLOTH.data_core.security.Find(active2)))
 						dat += "<font size='4'><b>Security Data</b></font>"
 						dat += "<br>Criminal Status: <A href='?src=\ref[src];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
 						dat += "<br><br>Minor Crimes: <A href='?src=\ref[src];choice=Edit Field;field=mi_crim_add'>Add New</A>"
@@ -262,9 +262,9 @@ What a mess.*/
 	. = ..()
 	if(.)
 		return .
-	if(!( data_core.general.Find(active1) ))
+	if(!( SLOTH.data_core.general.Find(active1) ))
 		active1 = null
-	if(!( data_core.security.Find(active2) ))
+	if(!( SLOTH.data_core.security.Find(active2) ))
 		active2 = null
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
@@ -341,10 +341,10 @@ What a mess.*/
 			if("Browse Record")
 				var/datum/data/record/R = locate(href_list["d_rec"])
 				var/S = locate(href_list["d_rec"])
-				if(!( data_core.general.Find(R) ))
+				if(!( SLOTH.data_core.general.Find(R) ))
 					temp = "Record Not Found!"
 				else
-					for(var/datum/data/record/E in data_core.security)
+					for(var/datum/data/record/E in SLOTH.data_core.security)
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 							S = E
 					active1 = R
@@ -355,19 +355,19 @@ What a mess.*/
 			if("Print Record")
 				if(!( printing ))
 					printing = 1
-					data_core.securityPrintCount++
+					SLOTH.data_core.securityPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 					sleep(30)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-					P.info = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
-					if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+					P.info = "<CENTER><B>Security Record - (SR-[SLOTH.data_core.securityPrintCount])</B></CENTER><BR>"
+					if((istype(active1, /datum/data/record) && SLOTH.data_core.general.Find(active1)))
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
 						if(config.mutant_races)
 							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
 					else
 						P.info += "<B>General Record Lost!</B><BR>"
-					if((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
+					if((istype(active2, /datum/data/record) && SLOTH.data_core.security.Find(active2)))
 						P.info += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", active2.fields["criminal"])
 
 						P.info += "<BR>\n<BR>\nMinor Crimes:<BR>\n"
@@ -408,10 +408,10 @@ What a mess.*/
 						while(active2.fields[text("com_[]", counter)])
 							P.info += text("[]<BR>", active2.fields[text("com_[]", counter)])
 							counter++
-						P.name = text("SR-[] '[]'", data_core.securityPrintCount, active1.fields["name"])
+						P.name = text("SR-[] '[]'", SLOTH.data_core.securityPrintCount, active1.fields["name"])
 					else
 						P.info += "<B>Security Record Lost!</B><BR>"
-						P.name = text("SR-[] '[]'", data_core.securityPrintCount, "Record Lost")
+						P.name = text("SR-[] '[]'", SLOTH.data_core.securityPrintCount, "Record Lost")
 					P.info += "</TT>"
 					printing = null
 			if("Print Poster")
@@ -439,7 +439,7 @@ What a mess.*/
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 							printing = 1
 							sleep(30)
-							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
+							if((istype(active1, /datum/data/record) && SLOTH.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
 								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)
 							printing = 0
@@ -453,9 +453,9 @@ What a mess.*/
 
 			if("Purge All Records")
 				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", "records")
-				for(var/datum/data/record/R in data_core.security)
+				for(var/datum/data/record/R in SLOTH.data_core.security)
 					qdel(R)
-				data_core.security.Cut()
+				SLOTH.data_core.security.Cut()
 				temp = "All Security records deleted."
 
 			if("Add Entry")
@@ -496,7 +496,7 @@ What a mess.*/
 					R.fields["mi_crim"] = list()
 					R.fields["ma_crim"] = list()
 					R.fields["notes"] = "No notes."
-					data_core.security += R
+					SLOTH.data_core.security += R
 					active2 = R
 					screen = 3
 
@@ -515,7 +515,7 @@ What a mess.*/
 				G.fields["fingerprint"] = "?????"
 				G.fields["p_stat"] = "Active"
 				G.fields["m_stat"] = "Stable"
-				data_core.general += G
+				SLOTH.data_core.general += G
 				active1 = G
 
 				//Security Record
@@ -527,7 +527,7 @@ What a mess.*/
 				R.fields["mi_crim"] = list()
 				R.fields["ma_crim"] = list()
 				R.fields["notes"] = "No notes."
-				data_core.security += R
+				SLOTH.data_core.security += R
 				active2 = R
 
 				//Medical Record
@@ -545,7 +545,7 @@ What a mess.*/
 				M.fields["cdi"]			= "None"
 				M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
 				M.fields["notes"]		= "No notes."
-				data_core.medical += M
+				SLOTH.data_core.medical += M
 
 
 
@@ -623,28 +623,28 @@ What a mess.*/
 							var/t2 = stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
-							data_core.addMinorCrime(active1.fields["id"], crime)
+							var/crime = SLOTH.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
+							SLOTH.data_core.addMinorCrime(active1.fields["id"], crime)
 					if("mi_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
-								data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
+								SLOTH.data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
 							var/t2 = stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
-							data_core.addMajorCrime(active1.fields["id"], crime)
+							var/crime = SLOTH.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
+							SLOTH.data_core.addMajorCrime(active1.fields["id"], crime)
 					if("ma_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
-								data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
+								SLOTH.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
@@ -708,7 +708,7 @@ What a mess.*/
 					if("Delete Record (ALL) Execute")
 						if(active1)
 							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
-							for(var/datum/data/record/R in data_core.medical)
+							for(var/datum/data/record/R in SLOTH.data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									qdel(R)
 									break
@@ -742,7 +742,7 @@ What a mess.*/
 		..(severity)
 		return
 
-	for(var/datum/data/record/R in data_core.security)
+	for(var/datum/data/record/R in SLOTH.data_core.security)
 		if(prob(10/severity))
 			switch(rand(1,8))
 				if(1)
@@ -763,7 +763,7 @@ What a mess.*/
 				if(7)
 					R.fields["species"] = pick(SLOTH.roundstart_species)
 				if(8)
-					var/datum/data/record/G = pick(data_core.general)
+					var/datum/data/record/G = pick(SLOTH.data_core.general)
 					R.fields["photo_front"] = G.fields["photo_front"]
 					R.fields["photo_side"] = G.fields["photo_side"]
 			continue

@@ -1,16 +1,16 @@
-var/diary = null
-var/runtime_diary = null
-var/diaryofmeanpeople = null
-var/href_logfile = null
+GLOBAL_VAR(diary)
+GLOBAL_VAR(runtime_diary)
+GLOBAL_VAR(diaryofmeanpeople)
+GLOBAL_VAR(href_logfile)
 
-var/list/bombers = list(  )
-var/list/admin_log = list (  )
-var/list/lastsignalers = list(	)	//keeps last 100 signals here in format: "[src] used \ref[src] @ location [src.loc]: [freq]/[code]"
-var/list/lawchanges = list(  ) //Stores who uploaded laws to which silicon-based lifeform, and what the law was
+GLOBAL_LIST_INIT(bombers, list())
+GLOBAL_LIST_INIT(admin_log, list())
+GLOBAL_LIST_INIT(lastsignalers, list())	//keeps last 100 signals here in format: "[src] used \ref[src] @ location [src.loc]: [freq]/[code]"
+GLOBAL_LIST_INIT(lawchanges, list()) //Stores who uploaded laws to which silicon-based lifeform, and what the law was
 
-var/list/combatlog = list()
-var/list/IClog = list()
-var/list/OOClog = list()
-var/list/adminlog = list()
+GLOBAL_LIST_INIT(combatlog, list())
+GLOBAL_LIST_INIT(IClog, list())
+GLOBAL_LIST_INIT(OOClog, list())
+GLOBAL_LIST_INIT(adminlog, list())
 
-var/list/active_turfs_startlist = list()
+GLOBAL_LIST_INIT(active_turfs_startlist, list())

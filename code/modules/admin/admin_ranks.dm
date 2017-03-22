@@ -126,7 +126,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	else
 		if(!SLOTH.dbcon.Connect())
 			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+			SLOTH.diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admin_ranks()
 			return
@@ -201,7 +201,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	else
 		if(!SLOTH.dbcon.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
-			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
+			SLOTH.diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
 			return

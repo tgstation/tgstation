@@ -1133,7 +1133,7 @@
 
 	for(var/mob/living/carbon/human/C in nearby)
 		var/perpname = C.get_face_name(C.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		var/datum/data/record/R = find_record("name", perpname, SLOTH.data_core.security)
 		if(R && R.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")

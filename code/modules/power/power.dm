@@ -337,9 +337,9 @@
 	var/drained_energy = drained_hp*20
 
 	if (source_area)
-		source_area.use_power(drained_energy/CELLRATE)
+		source_area.use_power(drained_energy/SLOTH.CELLRATE)
 	else if (istype(power_source,/datum/powernet))
-		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
+		var/drained_power = drained_energy/SLOTH.CELLRATE //convert from "joules" to "watts"
 		PN.load+=drained_power
 	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell.use(drained_energy)

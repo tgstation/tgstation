@@ -265,7 +265,7 @@
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
-		var/datum/data/record/findjob = find_record("name", voice, data_core.general)
+		var/datum/data/record/findjob = find_record("name", voice, SLOTH.data_core.general)
 
 		if(voice != real_name)
 			voicemask = 1

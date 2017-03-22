@@ -197,7 +197,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 	SSoverlays.Flush()	//Flush the majority of the shit
 
-	data_core.manifest()
+	SLOTH.data_core.manifest()
 
 	transfer_characters()	//transfer keys to the new mobs
 
@@ -453,20 +453,20 @@ var/datum/controller/subsystem/ticker/ticker
 	end_state.count()
 	var/station_integrity = min(PERCENT(SLOTH.start_state.score(end_state)), 100)
 
-	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
-	to_chat(world, "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
+	to_chat(world, "<BR>[SLOTH.TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
+	to_chat(world, "<BR>[SLOTH.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(mode.station_was_nuked)
 		ticker.news_report = STATION_DESTROYED_NUKE
 	var/total_players = SLOTH.joined_player_list.len
 	if(total_players)
-		to_chat(world, "<BR>[TAB]Total Population: <B>[total_players]</B>")
+		to_chat(world, "<BR>[SLOTH.TAB]Total Population: <B>[total_players]</B>")
 		if(station_evacuated)
-			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>")
-			to_chat(world, "<BR>[TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>")
+			to_chat(world, "<BR>[SLOTH.TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>")
+			to_chat(world, "<BR>[SLOTH.TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>")
 			news_report = STATION_EVACUATED
 			if(SSshuttle.emergency.is_hijacked())
 				news_report = SHUTTLE_HIJACK
-		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>")
+		to_chat(world, "<BR>[SLOTH.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>")
 	to_chat(world, "<BR>")
 
 	CHECK_TICK

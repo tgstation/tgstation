@@ -19,8 +19,8 @@
 			<A href='?src=\ref[src];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
 			<A href='?src=\ref[src];secrets=list_bombers'>Bombing List</A><BR>
 			<A href='?src=\ref[src];secrets=check_antagonist'>Show current traitors and objectives</A><BR>
-			<A href='?src=\ref[src];secrets=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
-			<A href='?src=\ref[src];secrets=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
+			<A href='?src=\ref[src];secrets=list_signalers'>Show last [length(SLOTH.lastsignalers)] signalers</A><BR>
+			<A href='?src=\ref[src];secrets=list_lawchanges'>Show last [length(SLOTH.lawchanges)] law changes</A><BR>
 			<A href='?src=\ref[src];secrets=showailaws'>Show AI Laws</A><BR>
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
@@ -96,9 +96,9 @@
 	switch(item)
 		if("admin_log")
 			var/dat = "<B>Admin Log<HR></B>"
-			for(var/l in admin_log)
+			for(var/l in SLOTH.admin_log)
 				dat += "<li>[l]</li>"
-			if(!admin_log.len)
+			if(!SLOTH.admin_log.len)
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
 
@@ -174,23 +174,23 @@
 			if(!check_rights(R_ADMIN))
 				return
 			var/dat = "<B>Bombing List<HR>"
-			for(var/l in bombers)
+			for(var/l in SLOTH.bombers)
 				dat += text("[l]<BR>")
 			usr << browse(dat, "window=bombers")
 
 		if("list_signalers")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Showing last [length(lastsignalers)] signalers.</B><HR>"
-			for(var/sig in lastsignalers)
+			var/dat = "<B>Showing last [length(SLOTH.lastsignalers)] signalers.</B><HR>"
+			for(var/sig in SLOTH.lastsignalers)
 				dat += "[sig]<BR>"
 			usr << browse(dat, "window=lastsignalers;size=800x500")
 
 		if("list_lawchanges")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
-			for(var/sig in lawchanges)
+			var/dat = "<B>Showing last [length(SLOTH.lawchanges)] law changes.</B><HR>"
+			for(var/sig in SLOTH.lawchanges)
 				dat += "[sig]<BR>"
 			usr << browse(dat, "window=lawchanges;size=800x500")
 
@@ -251,7 +251,7 @@
 				return
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-			for(var/datum/data/record/t in data_core.general)
+			for(var/datum/data/record/t in SLOTH.data_core.general)
 				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=manifest;size=440x410")

@@ -31,7 +31,7 @@
 					break
 
 		if(!input_plate)
-			diary << "a [src] didn't find an input plate."
+			SLOTH.diary << "a [src] didn't find an input plate."
 			return
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)

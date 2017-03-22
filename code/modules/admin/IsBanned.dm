@@ -63,7 +63,7 @@
 
 		if(!SLOTH.dbcon.Connect())
 			log_world("Ban database connection failure. Key [ckeytext] not checked")
-			diary << "Ban database connection failure. Key [ckeytext] not checked"
+			SLOTH.diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 
 		var/ipquery = ""

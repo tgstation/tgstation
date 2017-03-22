@@ -106,7 +106,7 @@ var/global/total_runtimes_skipped = 0
 			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
 	E.desc = jointext(split, "\n")
 	if(config && config.log_runtimes)
-		world.log = runtime_diary
+		world.log = SLOTH.runtime_diary
 		..(E)
 
 	world.log = null

@@ -7,7 +7,7 @@
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
 /proc/gameTimestamp(format = "hh:mm:ss") // Get the game time in text
-	return time2text(world.time - timezoneOffset + 432000 - round_start_time, format)
+	return time2text(world.time - SLOTH.timezoneOffset + 432000 - round_start_time, format)
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(month, day)

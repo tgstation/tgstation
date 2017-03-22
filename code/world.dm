@@ -27,11 +27,11 @@
 #endif
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
-	diary = file("data/logs/[date_string].log")
-	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time_stamp()]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
+	SLOTH.href_logfile = file("data/logs/[date_string] hrefs.htm")
+	SLOTH.diary = file("data/logs/[date_string].log")
+	SLOTH.diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
+	SLOTH.diary << "\n\nStarting up. [time_stamp()]\n---------------------"
+	SLOTH.diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
 	SLOTH.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
@@ -45,7 +45,7 @@
 	LoadBans()
 	investigate_reset()
 
-	timezoneOffset = text2num(time2text(0,"hh")) * 36000
+	SLOTH.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
 		if(!SLOTH.dbcon.Connect())
@@ -54,14 +54,14 @@
 			log_world("Database connection established.")
 
 
-	data_core = new /datum/datacore()
+	SLOTH.data_core = new /datum/datacore()
 
 	Master.Initialize(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
-		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+		SLOTH.diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
 	var/key_valid = (SLOTH.comms_allowed && input["key"] == SLOTH.comms_key)
@@ -262,7 +262,7 @@
 	if(Lines.len)
 		if(Lines[1])
 			SLOTH.master_mode = Lines[1]
-			diary << "Saved mode is '[SLOTH.master_mode]'"
+			SLOTH.diary << "Saved mode is '[SLOTH.master_mode]'"
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")

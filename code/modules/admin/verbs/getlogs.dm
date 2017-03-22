@@ -85,8 +85,8 @@
 	set name = "Show Server Log"
 	set desc = "Shows today's server log."
 
-	if(fexists("[diary]"))
-		src << ftp(diary)
+	if(fexists("[SLOTH.diary]"))
+		src << ftp(SLOTH.diary)
 	else
 		to_chat(src, "<font color='red'>Server log not found, try using .getserverlog.</font>")
 		return
@@ -99,8 +99,8 @@
 	set name = "Show Server Attack Log"
 	set desc = "Shows today's server attack log."
 
-	if(fexists("[diaryofmeanpeople]"))
-		src << ftp(diaryofmeanpeople)
+	if(fexists("[SLOTH.diaryofmeanpeople]"))
+		src << ftp(SLOTH.diaryofmeanpeople)
 	else
 		to_chat(src, "<font color='red'>Server attack log not found, try using .getserverlog.</font>")
 		return
