@@ -275,7 +275,10 @@
 					. = FALSE
 				else if(!ispath(current_step.required_type_to_deconstruct, /obj/item))
 					WARNING(error + "Invalid deconstruction type: [current_step.required_type_to_deconstruct]")
-					. = FALSE			
+					. = FALSE
+				if(current_step.construction_message && findtextEx(current_step.construction_message, CONSTRUCTION_ITEM))
+					WARNING(error + "`CONSTRUCTION_ITEM` used in message for hand construction")
+					. = FALSE
 			if(current_step.required_type_to_repair)
 				if(ispath(current_step.required_type_to_repair, /obj/item/stack))
 					if(!current_step.required_amount_to_repair)
@@ -288,9 +291,12 @@
 					WARNING(error + "Invalid /obj/item type specified for repairs: '[current_step.required_type_to_construct]'")
 					. = FALSE
 			
-			if(current_step.required_type_to_deconstruct && !ispath(current_step.required_type_to_deconstruct, /obj/item))
-				WARNING("Invalid /obj/item type specified for deconstruction: '[current_step.required_type_to_deconstruct]'")
-				. = FALSE
+			if(current_step.required_type_to_deconstruct)
+				if(!ispath(current_step.required_type_to_deconstruct, /obj/item))
+					WARNING("Invalid /obj/item type specified for deconstruction: '[current_step.required_type_to_deconstruct]'")
+					. = FALSE
+			else if(current_step.deconstruction_message && findtextEx(current_step.deconstruction_message, CONSTRUCTION_ITEM))
+					WARNING(error + "`CONSTRUCTION_ITEM` used in message for hand deconstruction")
 			current_step = current_step.next_state
 	else
 		WARNING("Construction Error: InitConstruction for [type] defined but no steps were added")
@@ -449,6 +455,8 @@
 
 		if(!ConstructionChecks(ccs.id, action_type, I, user, TRUE))
 			return	
+		
+		message = replacetextEx(message, CONSTRUCTION_ITEM, "\the [I]")
 
 		if(wait)
 			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",

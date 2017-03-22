@@ -10,6 +10,8 @@
 #define REPAIRING 2
 #define CUSTOM_CONSTRUCTION 3
 
+#define CONSTRUCTION_ITEM "__construction_item_replace__"
+
 //girder construction states
 #define GIRDER_NORMAL 0
 #define GIRDER_REINF_STRUTS 1
