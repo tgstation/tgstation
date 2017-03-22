@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Alien glowing resin now glows."

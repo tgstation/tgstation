@@ -21002,6 +21002,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering Fore";
+	dir = 2;
+	network = list("SS13","Engine");
+	pixel_x = 23
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aHo" = (
@@ -24398,9 +24404,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
-	c_tag = "Engineering West";
+	c_tag = "Engineering Port";
 	dir = 4;
-	network = list("SS13")
+	network = list("SS13","Engine")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -24588,6 +24594,13 @@
 	pixel_y = -2
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engine.";
+	dir = 1;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aNe" = (
@@ -27010,8 +27023,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "Engineering Center";
+	c_tag = "Engineering Aft";
 	dir = 2;
+	network = list("SS13","Engine");
 	pixel_x = 23
 	},
 /turf/open/floor/plasteel/vault{
@@ -38866,9 +38880,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
-	c_tag = "Engineering East";
+	c_tag = "Engineering Starboard";
 	dir = 8;
-	network = list("SS13");
+	network = list("SS13","Engine");
 	pixel_x = 0;
 	pixel_y = 0
 	},
@@ -41953,6 +41967,22 @@
 	temperature = 80
 	},
 /area/tcommsat/server)
+"buV" = (
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Chamber";
+	dir = 2;
+	network = list("SS13","Engine");
+	pixel_x = 23
+	},
+/turf/open/floor/circuit/green,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -70603,7 +70633,7 @@ aLH
 aMK
 aNU
 aOw
-buD
+buC
 aPG
 aRB
 aPG
@@ -71117,15 +71147,15 @@ aLJ
 aMM
 aNW
 aOx
-buE
+buC
 aPG
 aRB
 aPG
 buG
 buI
-buM
+buK
 aRB
-buT
+buR
 aMJ
 aad
 aad
@@ -71374,7 +71404,7 @@ aLK
 aMJ
 aNX
 aOy
-buF
+buC
 aPG
 aRE
 aSN
@@ -72656,7 +72686,7 @@ aIi
 aJs
 aKz
 aEt
-aMR
+buV
 aMR
 aMR
 aEt
