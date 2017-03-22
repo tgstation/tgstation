@@ -42,7 +42,8 @@
 	if(!set_slab || needs_update)
 		for(var/obj/item/clockwork/slab/S in all_clockwork_objects)
 			SStgui.update_uis(S)
-			S.update_quickbind()
+			if(needs_update)
+				S.update_quickbind()
 	else
 		SStgui.update_uis(set_slab)
 		set_slab.update_quickbind()
