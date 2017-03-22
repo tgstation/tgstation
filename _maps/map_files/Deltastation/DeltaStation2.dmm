@@ -2493,7 +2493,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "32;47;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
