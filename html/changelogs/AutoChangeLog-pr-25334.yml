@@ -1,0 +1,5 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - rscadd: "Added an autolathe circuit board to deltastation's tech storage."
+  - rscadd: "Added 49 sheets of metal to deltastation's auxiliary tool storage."
