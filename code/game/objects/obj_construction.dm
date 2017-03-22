@@ -527,6 +527,10 @@
 		testing("Cancelled [user]'s construction due to duplicate action")
 		return FALSE	//fail silently
 
+	if(action_type == REPAIRING && obj_integrity >= max_integrity)
+		to_chat(user, "<span class='warning'>\The [src] is already in good condition</span>")
+		return FALSE
+
 	if(current_construction_state.id != state_started_id)
 		to_chat(user, "<span class='warning'>You were interrupted!</span>")
 		return FALSE
