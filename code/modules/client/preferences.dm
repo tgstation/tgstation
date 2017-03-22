@@ -424,7 +424,8 @@ var/list/preferences_datums = list()
 							p_map = VM.map_name
 					else
 						p_map += " (No longer exists)"
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
+				if(config.allow_map_voting)
+					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
 
@@ -1259,6 +1260,11 @@ var/list/preferences_datums = list()
 	character.age = age
 
 	character.eye_color = eye_color
+	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
+	if(organ_eyes)
+		if(!initial(organ_eyes.eye_color))
+			organ_eyes.eye_color = eye_color
+		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 

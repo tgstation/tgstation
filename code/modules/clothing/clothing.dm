@@ -32,6 +32,13 @@
 
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
 
+	//These allow head/mask items to dynamically alter the user's hair
+	// and facial hair, checking hair_extensions.dmi and facialhair_extensions.dmi
+	// for a state matching hair_state+dynamic_hair_suffix
+	// THESE OVERRIDE THE HIDEHAIR FLAGS
+	var/dynamic_hair_suffix = ""//head > mask for head hair
+	var/dynamic_fhair_suffix = ""//mask > head for facial hair
+
 /obj/item/clothing/New()
 	..()
 	if(ispath(pockets))
@@ -171,10 +178,13 @@ var/list/damaged_clothes_icons = list()
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
-	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
 	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/ears/earmuffs/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 //Glasses
 /obj/item/clothing/glasses
@@ -359,6 +369,8 @@ BLIND     // can't see anything
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/offset = 0
+	var/equipped_before_drop = FALSE
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -373,6 +385,24 @@ BLIND     // can't see anything
 			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedshoe")
 		if(bloody)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+
+/obj/item/clothing/shoes/equipped(mob/user, slot)
+	. = ..()
+	if(offset && slot_flags & slotdefine2slotbit(slot))
+		user.pixel_y += offset
+		worn_y_dimension -= (offset * 2)
+		user.update_inv_shoes()
+		equipped_before_drop = TRUE
+
+/obj/item/clothing/shoes/proc/restore_offsets(mob/user)
+	equipped_before_drop = FALSE
+	user.pixel_y -= offset
+	worn_y_dimension = world.icon_size
+
+/obj/item/clothing/shoes/dropped(mob/user)
+	if(offset && equipped_before_drop)
+		restore_offsets(user)
+	. = ..()
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaging = TRUE)
 	..()

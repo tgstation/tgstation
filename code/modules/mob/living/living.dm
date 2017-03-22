@@ -1,4 +1,4 @@
-/mob/living/New()
+/mob/living/Initialize()
 	. = ..()
 	generateStaticOverlay()
 	if(staticOverlays.len)
@@ -241,7 +241,7 @@
 	set name = "Pull"
 	set category = "Object"
 
-	if(istype(AM) && AM.Adjacent(src))
+	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
 	else
 		stop_pulling()

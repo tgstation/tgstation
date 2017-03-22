@@ -29,7 +29,7 @@
 	Stay near your host to protect and heal them; being too far from your host will rapidly cause you massive damage. Recall to your host if you are too weak and believe you cannot continue \
 	fighting safely. As a final note, you should probably avoid harming any fellow servants of Ratvar.</span>"
 
-/mob/living/simple_animal/hostile/clockwork/marauder/New()
+/mob/living/simple_animal/hostile/clockwork/marauder/Initialize()
 	..()
 	true_name = pick(possible_true_names)
 	set_light(2, 1.1)
@@ -237,7 +237,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder) || !blockOrCounter(M, M))
+	if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder) || !blockOrCounter(M, M)) //we don't want infinite blockcounter loops if fighting another marauder
 		return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/attack_paw(mob/living/carbon/monkey/M)

@@ -54,6 +54,9 @@
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
 // /turf/open/space/Initialize
+// /mob/dead/new_player/Initialize
+
+//Do also note that this proc always runs in New for /mob/dead
 /atom/proc/Initialize(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -425,6 +428,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/handle_slip()
 	return
+
 /atom/proc/singularity_act()
 	return
 
@@ -442,6 +446,12 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/ratvar_act()
 	return
+
+/atom/proc/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	return FALSE
+
+/atom/proc/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0

@@ -184,12 +184,8 @@
 		to_chat(owner, "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>")
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
-	addtimer(CALLBACK(src, .proc/update_actions), base_cooldown)
+	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
 	return TRUE
-
-/datum/action/innate/function_call/proc/update_actions()
-	if(owner)
-		owner.update_action_buttons_icon()
 
 
 //Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.
@@ -219,9 +215,10 @@
 		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
 			other_servants++
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
-		other_servants++
+		if(O.anchored)
+			other_servants++
 	if(!other_servants)
-		to_chat(invoker, "<span class='warning'>There are no other servants or clockwork obelisks!</span>")
+		to_chat(invoker, "<span class='warning'>There are no other conscious servants or anchored clockwork obelisks!</span>")
 		return FALSE
 	return TRUE
 

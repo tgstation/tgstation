@@ -19,14 +19,13 @@
 	var/list/queued_announces	//people coming in that we have to announce
 	var/obj/machinery/requests_console/console
 	var/force_depart = FALSE
+	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	if(mapload)
 		return TRUE	//late initialize to make sure the latejoin list is populated
 
 	preferred_direction = dir
-
-	..()
 
 	if(SSshuttle.arrivals)
 		WARNING("More than one arrivals docking_port placed on map!")
@@ -35,18 +34,28 @@
 
 	SSshuttle.arrivals = src
 
+	..()
+
 	areas = list()
+
+	var/list/new_latejoin = list()
+	for(var/area/shuttle/arrival/A in sortedAreas)
+		for(var/obj/structure/chair/C in A)
+			new_latejoin += C
+		if(!console)
+			console = locate(/obj/machinery/requests_console) in A
+		areas += A
 
 	if(latejoin.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
-	latejoin = list()
-	for(var/area/shuttle/arrival/A in sortedAreas)
-		for(var/obj/structure/chair/C in A)
-			latejoin += C
-		if(!console)
-			console = locate(/obj/machinery/requests_console) in A
-		areas += A
+	if(!new_latejoin.len)
+		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
+		if(!latejoin.len)
+			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
+		return
+
+	latejoin = new_latejoin
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
 	SSshuttle.generate_transit_dock(src)
@@ -57,6 +66,14 @@
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
+	
+	if(perma_docked)
+		if(mode != SHUTTLE_CALL)
+			sound_played = FALSE
+			mode = SHUTTLE_IDLE
+		else		
+			SendToStation()
+		return
 
 	if(damaged)
 		if(!CheckTurfsPressure())
@@ -103,11 +120,10 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/A in areas)
-		for(var/mob/living/L in A)
-			//don't dock for braindead'
-			if(L.key && L.client && L.stat != DEAD)
-				return TRUE
+	for(var/M in (living_mob_list & player_list))
+		var/mob/living/L = M
+		if((get_area(M) in areas) && L.stat != DEAD)
+			return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
@@ -166,4 +182,13 @@
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
-	LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+	if(mode != SHUTTLE_CALL)
+		AnnounceArrival(mob, rank)
+	else
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+
+/obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("perma_docked")
+			feedback_add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
+	return ..()

@@ -11,10 +11,7 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	if(unique_rename && istype(I, /obj/item/weapon/pen))
-		rewrite(user)
-	else
-		return I.attack_obj(src, user)
+	return I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)

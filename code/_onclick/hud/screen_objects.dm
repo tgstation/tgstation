@@ -159,7 +159,7 @@
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
 		return 1
-	if(usr.incapacitated())
+	if(usr.incapacitated() || isobserver(usr))
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1

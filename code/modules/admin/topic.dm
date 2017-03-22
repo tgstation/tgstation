@@ -1339,7 +1339,7 @@
 		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
 		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
 
-		var/mob/new_player/NP = new()
+		var/mob/dead/new_player/NP = new()
 		NP.ckey = M.ckey
 		qdel(M)
 
@@ -1525,7 +1525,7 @@
 
 		var/mob/M = locate(href_list["makeanimal"])
 		if(isnewplayer(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/new_player.")
+			to_chat(usr, "This cannot be used on instances of type /mob/dead/new_player.")
 			return
 
 		usr.client.cmd_admin_animalize(M)
@@ -1579,7 +1579,7 @@
 		output_devil_info(M)
 
 	else if(href_list["adminmoreinfo"])
-		var/mob/M = locate(href_list["adminmoreinfo"])
+		var/mob/M = locate(href_list["adminmoreinfo"]) in mob_list
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
@@ -1631,7 +1631,7 @@
 		to_chat(src.owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
 		to_chat(src.owner, "Location = [location_description];")
 		to_chat(src.owner, "[special_role_description]")
-		to_chat(src.owner, "(<a href='?priv_msg=[M.ckey]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</A>) (<A HREF='?src=\ref[src];secrets=check_antagonist'>CA</A>)")
+		to_chat(src.owner, ADMIN_FULLMONTY_NONAME(M))
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))

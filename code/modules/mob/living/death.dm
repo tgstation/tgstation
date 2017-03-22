@@ -26,20 +26,20 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust()
+/mob/living/dust(just_ash = FALSE)
 	death(1)
 
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
 	dust_animation()
-	spawn_dust()
+	spawn_dust(just_ash)
 	qdel(src)
 
 /mob/living/proc/dust_animation()
 	return
 
-/mob/living/proc/spawn_dust()
+/mob/living/proc/spawn_dust(just_ash = FALSE)
 	new /obj/effect/decal/cleanable/ash(loc)
 
 
@@ -65,7 +65,7 @@
 	SetSleeping(0, 0)
 	blind_eyes(1)
 	reset_perspective(null)
-	hide_fullscreens()
+	reload_fullscreen()
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()

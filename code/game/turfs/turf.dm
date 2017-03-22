@@ -45,6 +45,10 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
+
 	if(requires_activation)
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
@@ -60,6 +64,9 @@
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
+	if(!changing_turf)
+		stack_trace("Incorrect turf deletion")
+	changing_turf = FALSE
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -69,9 +76,6 @@
 		for(var/I in B.vars)
 			B.vars[I] = null
 		return
-	if(!changing_turf)
-		stack_trace("Incorrect turf deletion")
-	changing_turf = FALSE
 	SSair.remove_from_active(src)
 	visibilityChanged()
 	initialized = FALSE
@@ -126,7 +130,7 @@
 	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags&ON_BORDER)
+		if(border_obstacle.flags & ON_BORDER)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
 				return 0
@@ -139,10 +143,16 @@
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
+	var/atom/movable/tompost_bump
+	var/top_layer = 0
 	for(var/atom/movable/obstacle in large_dense)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
-			mover.Bump(obstacle, 1)
-			return 0
+			if(obstacle.layer > top_layer)
+				tompost_bump = obstacle
+				top_layer = obstacle.layer
+	if(tompost_bump)
+		mover.Bump(tompost_bump,1)
+		return 0
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
@@ -452,3 +462,17 @@
 	LAZYINITLIST(decals)
 	cut_overlay(decals[group])
 	decals[group] = null
+
+/turf/proc/photograph(limit=20)
+	var/image/I = new()
+	I.overlays += src
+	for(var/V in contents)
+		var/atom/A = V
+		if(A.invisibility)
+			continue
+		I.overlays += A
+		if(limit)
+			limit--
+		else
+			return I
+	return I

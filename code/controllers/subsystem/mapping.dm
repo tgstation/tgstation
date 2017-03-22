@@ -111,7 +111,11 @@ var/datum/controller/subsystem/mapping/SSmapping
 		QDEL_NULL(loader)
 
 /datum/controller/subsystem/mapping/proc/CreateSpace(zlevel)
-	for(var/T in block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, zlevel)))
+	while(world.maxz < zlevel)
+		CHECK_TICK
+		++world.maxz
+	CHECK_TICK
+	for(var/T in block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel)))
 		CHECK_TICK
 		new /turf/open/space(T)
 
@@ -119,9 +123,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
-
-	if(world.maxz != ZLEVEL_SPACEMAX)
-		WARNING("world.maxz does not match ZLEVEL_SPACEMAX!")
     
 	var/start_time = REALTIMEOFDAY
   
@@ -132,7 +133,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
 
-	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
+	for(var/I in (world.maxz + 1) to ZLEVEL_SPACEMAX)
 		CreateSpace(I)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
@@ -148,38 +149,39 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/players = clients.len
 	var/list/mapvotes = list()
 	//count votes
-	for (var/client/c in clients)
-		var/vote = c.prefs.preferred_map
-		if (!vote)
-			if (global.config.defaultmap)
-				mapvotes[global.config.defaultmap.map_name] += 1
-			continue
-		mapvotes[vote] += 1
+	if(global.config.allow_map_voting)
+		for (var/client/c in clients)
+			var/vote = c.prefs.preferred_map
+			if (!vote)
+				if (global.config.defaultmap)
+					mapvotes[global.config.defaultmap.map_name] += 1
+				continue
+			mapvotes[vote] += 1
 
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-		if (!(map in global.config.maplist))
-			mapvotes.Remove(map)
-			continue
-		var/datum/map_config/VM = global.config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_min_users > 0 && players < VM.config_min_users)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_max_users > 0 && players > VM.config_max_users)
-			mapvotes.Remove(map)
-			continue
+		//filter votes
+		for (var/map in mapvotes)
+			if (!map)
+				mapvotes.Remove(map)
+			if (!(map in global.config.maplist))
+				mapvotes.Remove(map)
+				continue
+			var/datum/map_config/VM = global.config.maplist[map]
+			if (!VM)
+				mapvotes.Remove(map)
+				continue
+			if (VM.voteweight <= 0)
+				mapvotes.Remove(map)
+				continue
+			if (VM.config_min_users > 0 && players < VM.config_min_users)
+				mapvotes.Remove(map)
+				continue
+			if (VM.config_max_users > 0 && players > VM.config_max_users)
+				mapvotes.Remove(map)
+				continue
 
-		mapvotes[map] = mapvotes[map]*VM.voteweight
+			mapvotes[map] = mapvotes[map]*VM.voteweight
 
-	var/pickedmap = pickweight(mapvotes)
+	var/pickedmap = global.config.allow_map_voting ? pickweight(mapvotes) : pick(global.config.maplist)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]

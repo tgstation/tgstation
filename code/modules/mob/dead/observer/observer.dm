@@ -59,7 +59,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	// of the mob
 	var/deadchat_name
 
-/mob/dead/observer/New(mob/body)
+/mob/dead/observer/Initialize()
 	invisibility = observer_default_invisibility
 
 	verbs += /mob/dead/observer/proc/dead_tele
@@ -79,6 +79,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	updateallghostimages()
 
 	var/turf/T
+	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		logging = body.logging			//preserve our logs by copying them to our ghost
@@ -671,12 +672,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/atom/movable/target = locate(href_list["follow"])
 			if(istype(target) && (target != src))
 				ManualFollow(target)
-		if(href_list["jump_to_turf"])
-			var/turf/target = locate(href_list["jump_to_turf"])
+				return
+		if(href_list["x"] && href_list["y"] && href_list["z"])
+			var/tx = text2num(href_list["x"])
+			var/ty = text2num(href_list["y"])
+			var/tz = text2num(href_list["z"])
+			var/turf/target = locate(tx, ty, tz)
 			if(istype(target))
 				forceMove(target)
+				return
 		if(href_list["reenter"])
 			reenter_corpse()
+			return
 
 //We don't want to update the current var
 //But we will still carry a mind.

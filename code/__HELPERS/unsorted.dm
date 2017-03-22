@@ -331,7 +331,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/dead/observer/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/new_player/M in sortmob)
+	for(var/mob/dead/new_player/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
@@ -721,11 +721,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/pixel_y_offset = AM.pixel_y + M.get_y_shift()
 
 	//Irregular objects
-	if(AM.bound_height != world.icon_size || AM.bound_width != world.icon_size)
-		var/icon/AMicon = icon(AM.icon, AM.icon_state)
+	var/icon/AMicon = icon(AM.icon, AM.icon_state)
+	var/icon/AMiconheight = AMicon.Height()
+	var/icon/AMiconwidth = AMicon.Width()	
+	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
 		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
 		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
-		qdel(AMicon)
 
 	//DY and DX
 	var/rough_x = round(round(pixel_x_offset,world.icon_size)/world.icon_size)
@@ -733,6 +734,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	//Find coordinates
 	var/turf/T = get_turf(AM) //use AM's turfs, as it's coords are the same as AM's AND AM's coords are lost if it is inside another atom
+	if(!T)
+		return null
 	var/final_x = T.x + rough_x
 	var/final_y = T.y + rough_y
 

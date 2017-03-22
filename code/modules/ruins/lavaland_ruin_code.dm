@@ -98,6 +98,12 @@
 		if(istype(O, /obj/item/stack/sheet/bluespace_crystal))
 			species = /datum/species/golem/bluespace
 
+		if(istype(O, /obj/item/stack/sheet/runed_metal))
+			species = /datum/species/golem/runic
+
+		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
+			species = /datum/species/golem/cloth
+
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
