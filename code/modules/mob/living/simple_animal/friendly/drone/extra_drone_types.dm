@@ -143,6 +143,10 @@
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
 	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>")
 
+	// All hail the ClockcultEmperess.
+	if(client && client.key == "changelingrain" && !head)
+		equip_to_slot_or_del(new /obj/item/clothing/head/crown(src), slot_head)
+
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
 
