@@ -470,7 +470,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly, FALSE, TRUE)
 			examine_message = "It's missing a finishing cover"
 			damage_reachable = 1
 		},
-		/datum/construction_state/last{
+		/datum/construction_state{
 			required_type_to_construct = /obj/item/weapon/screwdriver
 			required_type_to_deconstruct = /obj/item/weapon/crowbar
 			required_type_to_repair = /obj/item/weapon/weldingtool
@@ -480,6 +480,9 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly, FALSE, TRUE)
 			construction_message = "completing"
 			deconstruction_message = "removing the finish from"
 			examine_message = "It has a bunch of loose screws"
+		},
+		/datum/construction_state/last{
+			transformation_type = CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME
 		}
 	)
 	//This is here to work around a byond bug
@@ -539,31 +542,29 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly, FALSE, TRUE)
 				glass_type = /obj/machinery/door/airlock/glass
 			else
 				stack_trace("door_assembly construction: How the hell did we get here? Blame [var_edited ? "whoever var_edited this" : "Cyberboss"]!")
-		if(0)	//locked in, create airlock
-			var/obj/machinery/door/airlock/door
-
-			if(mineral == "glass")
-				door = new glass_type(loc)
-			else
-				door = new airlock_type(loc)
-
-			door.heat_proof = heat_proof_finished
-			var/obj/item/weapon/electronics/airlock/electronics = GetItemUsedToReachConstructionState(AIRLOCK_ASSEMBLY_ELECTRONICS)
-			if(electronics.one_access)
-				door.req_one_access = electronics.accesses
-			else
-				door.req_access = electronics.accesses
-
-			electronics.forceMove(door)
-			door.electronics = electronics
-			electronics = null
-
-			if(created_name)
-				door.name = created_name
-
-			qdel(src)
-			return
 	update_icon()
+
+/obj/structure/door_assembly/OnConstructionTransform(mob/user, obj/created)
+	var/obj/machinery/door/airlock/door
+
+	if(mineral == "glass")
+		door = new glass_type(loc)
+	else
+		door = new airlock_type(loc)
+
+	door.heat_proof = heat_proof_finished
+	var/obj/item/weapon/electronics/airlock/electronics = SetItemToReachConstructionState(AIRLOCK_ASSEMBLY_ELECTRONICS, null)
+	if(electronics.one_access)
+		door.req_one_access = electronics.accesses
+	else
+		door.req_access = electronics.accesses
+
+	electronics.forceMove(door)
+	door.electronics = electronics
+
+	if(created_name)
+		door.name = created_name
+	return door
 
 /obj/structure/door_assembly/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
 	switch(state_id)
