@@ -129,8 +129,8 @@
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
 	owner.update_body_parts()
-	addtimer(CALLBACK(owner.dna, .proc/remove_mutation, HULK), rand(1500,3000))
-
+	owner_dna = owner.dna // fukken callbacks
+	addtimer(CALLBACK(owner_dna, .proc/remove_mutation, HULK), rand(1500,3000))
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
 		return target.attack_hulk(owner)
