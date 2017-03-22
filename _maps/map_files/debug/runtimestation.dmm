@@ -1,4 +1,4 @@
-"aa" = (/turf/open/space,/area/space)
+"aa" = (/turf/open/space/basic,/area/space)
 "ab" = (/obj/structure/lattice,/turf/open/space,/area/space)
 "ac" = (/turf/open/space,/area/space/nearstation)
 "ad" = (/turf/closed/wall/r_wall,/area/maintenance/maintcentral)
