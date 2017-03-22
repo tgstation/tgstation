@@ -208,6 +208,25 @@
 		if(SHUTTLE_RECALL, SHUTTLE_IDLE, SHUTTLE_CALL)
 			mode = SHUTTLE_CALL
 			setTimer(call_time)
+			if(!legitimize_call())
+				var/time_to_recall = rand(600,1200) //Values selected so call is before the point of no return even in code red
+				var/old_timer = timer
+				spawn(time_to_recall)
+					if(mode == SHUTTLE_CALL && timer == old_timer && !SSshuttle.force_shuttle)
+						cancel(/area/centcom)
+						var/intercepttext = "<FONT size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</FONT><HR>\
+											To whom it may concern:<BR><BR>\
+											We have taken note of the situation upon [station_name()] and have come to the \
+											conclusion that it does not warrant the abandonment of the station.<BR>\
+											If you do not agree with our opinion we suggest that you open a direct \
+											line with us and explain the nature of your crisis.<BR><BR>\
+											<i>This message has been automatically generated based upon readings from long \
+											range diagnostic tools. To assure the quality of your request every finalized report \
+											is reviewed by an on-call rear admiral.<BR>\
+											<b>Rear Admiral's Notes:</b> \
+											[pick("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>")]"
+						print_command_report(intercepttext,"Classified [command_name()] Update")
+						priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
 		else
 			return
 
@@ -219,6 +238,44 @@
 		SSshuttle.emergencyLastCallLoc = null
 
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+
+/obj/docking_port/mobile/emergency/proc/legitimize_call() //Checks are sorted in rough order of processing cost
+	if(SSshuttle.force_shuttle) //Set manually by certain "Oh shit" events, like narsie.
+		message_admins("Shuttle will arrive due to you know what.")
+		return 1
+
+	if(world.time >= (config.shuttle_boredom_check * 600)) //Extended mercy and/or boring/ineffective antags
+		message_admins("Shuttle will arrive due to long round length.")
+		return 1
+
+	var/list/living_crew_bodies = list()
+	var/list/living_crew_minds	= list()
+	for(var/mob/Player in mob_list)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			living_crew_bodies	+= Player
+			living_crew_minds	+= Player.mind
+
+	if(living_crew_bodies.len / joined_player_list.len <= config.shuttle_life_check) //Dead people everywhere
+		message_admins("Shuttle will arrive due to rampant death.")
+		return 1
+
+	var/list/antagonist_crew_minds	= list()
+	for(var/datum/mind/M in living_crew_minds)
+		if(M.special_role)
+			antagonist_crew_minds += M
+
+	if(antagonist_crew_minds.len / living_crew_minds.len >= config.shuttle_antag_overrun) //Station ruled by antags
+		message_admins("Shuttle will arrive due to antagonist infestation.")
+		return 1
+
+	var/datum/station_state/current_state = new /datum/station_state()
+	current_state.count()
+	if((start_state.score(current_state)) < config.shuttle_infrastructure_check) //Station bombed to hell/singulo'd
+		message_admins("Shuttle will arrive due to badly damaged station.")
+		return 1
+
+	message_admins("Shuttle will recall automatically. If you feel the shuttle should come, <A HREF='?_src_=holder;force_shuttle=\ref[usr]'>click here</A>.")
+	return 0
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)

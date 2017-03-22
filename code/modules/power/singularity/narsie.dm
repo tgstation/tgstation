@@ -39,6 +39,7 @@
 	narsie_spawn_animation()
 
 	sleep(70)
+	SSshuttle.force_shuttle = 1
 	SSshuttle.emergency.request(null, 0.1) // Cannot recall
 
 

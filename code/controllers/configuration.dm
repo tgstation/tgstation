@@ -143,6 +143,10 @@
 	var/list/midround_antag = list() 	// which roundtypes use the midround antagonist system
 	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
 	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
+	var/shuttle_boredom_check = 60 		// """Optimal""" round length time (in minutes), used as a guide for calling the shuttle in the abscence of any other issue to face
+	var/shuttle_life_check = 0.7		// A ratio of how many people need to be alive in order for the shuttle to not justify that as a reason for coming.
+	var/shuttle_antag_overrun = 0.5		// A ratio of dirty traitors to all living crew. If this is achieved the shuttle can come (most likely in revolution/gang/quick moving low pop cults).
+	var/shuttle_infrastructure_check = 0.7 // A ratio of "how blown up / singulo'd / tesla'd the station is", again to gauge shuttle calls.
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
@@ -600,6 +604,14 @@
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
 					config.midround_antag_life_check = text2num(value)
+				if("shuttle_boredom_check")
+					config.shuttle_boredom_check	= text2num(value)
+				if("shuttle_life_check")
+					config.shuttle_life_check 		= text2num(value)
+				if("shuttle_antag_overrun")
+					config.shuttle_antag_overrun 	= text2num(value)
+				if("shuttle_infrastructure_check")
+					config.shuttle_infrastructure_check = text2num(value)
 				if("min_pop")
 					var/pop_pos = findtext(value, " ")
 					var/mode_name = null
