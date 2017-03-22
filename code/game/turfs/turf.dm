@@ -1,7 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1
-	invisibility = TURF_DEFAULT_INVIS
+	invisibility = TURF_INVIS_DEFAULT
 
 	var/intact = 1
 	var/turf/baseturf = /turf/open/space
