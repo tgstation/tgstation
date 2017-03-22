@@ -11,3 +11,4 @@
 	// ...|..||.||||.|.||.|.|.|||.|||
 	space_chance = 0
 	sentence_chance = 0
+	default_priority = 20

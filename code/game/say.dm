@@ -24,6 +24,8 @@ var/list/freqtospan = list(
 	if(message == "" || !message)
 		return
 	var/list/spans = get_spans()
+	if(!language)
+		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)

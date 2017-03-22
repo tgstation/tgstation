@@ -555,7 +555,7 @@
 /atom/movable/proc/grant_language(datum/language/dt)
 	if(!languages)
 		languages = list()
-	languages[dt.type] = TRUE
+	languages[dt] = TRUE
 
 /atom/movable/proc/grant_all_languages(ignore_restrictions=FALSE)
 	for(var/la in subtypesof(/datum/language))
@@ -566,17 +566,38 @@
 
 /atom/movable/proc/remove_language(datum/language/dt)
 	if(languages && languages.len)
-		languages[dt.type] = null
+		languages[dt] = null
 
 /atom/movable/proc/remove_all_languages()
 	languages.Cut()
 	languages = null
 
 /atom/movable/proc/has_language(datum/language/dt)
-	. = is_type_in_typecache(dt, languages)
+	if(languages && languages.len)
+		. = languages[dt]
+	else
+		. = FALSE
 
 /atom/movable/proc/can_speak_in_language(datum/language/dt)
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
 		. = TRUE
 	else
 		. = has_language(dt)
+
+/atom/movable/proc/get_default_language()
+	// if no language is specified, and we want to say() something, which
+	// language do we use?
+	var/datum/language/chosen_langtype
+	var/highest_priority
+
+	for(var/lt in languages)
+		var/datum/language/langtype = lt
+		if(!can_speak_in_language(langtype))
+			continue
+
+		var/pri = initial(langtype.default_priority)
+		if(!highest_priority || (pri < highest_priority))
+			chosen_langtype = langtype
+			highest_priority = pri
+
+	return chosen_langtype

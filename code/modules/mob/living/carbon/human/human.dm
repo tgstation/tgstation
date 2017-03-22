@@ -39,6 +39,8 @@
 
 	handcrafting = new()
 
+	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
+
 	..()
 
 /mob/living/carbon/human/create_internal_organs()

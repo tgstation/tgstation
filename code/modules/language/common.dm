@@ -6,6 +6,7 @@
 	whisper_verb = "whispers"
 	key = "0"
 	flags = TONGUELESS_SPEECH
+	default_priority = 100
 
 //Syllable Lists
 /*

@@ -104,6 +104,9 @@
 
 	grant_language(/datum/language/drone)
 
+	grant_language(/datum/language/common) // they cannot speak it though.
+	grant_language(/datum/language/machine) // ditto.
+
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]

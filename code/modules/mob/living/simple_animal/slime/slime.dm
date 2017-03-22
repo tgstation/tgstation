@@ -92,6 +92,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
+	add_language(/datum/language/slime)
 	..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)

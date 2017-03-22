@@ -44,6 +44,9 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 
+	grant_language(/datum/language/common)
+	grant_language(/datum/language/machine)
+
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
 

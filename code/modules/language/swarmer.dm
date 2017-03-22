@@ -9,6 +9,7 @@
 	flags = NO_STUTTER
 	space_chance = 100
 	sentence_chance = 0
+	default_priority = 60
 	// since various flats and sharps are the same,
 	// all non-accidental notes are doubled in the list
 	syllables = list(

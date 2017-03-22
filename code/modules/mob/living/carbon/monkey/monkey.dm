@@ -29,6 +29,8 @@
 
 	create_internal_organs()
 
+	grant_language(/datum/language/monkey)
+
 	..()
 
 /mob/living/carbon/monkey/Initialize()

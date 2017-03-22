@@ -19,6 +19,7 @@
 	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
 	var/list/space_chance = 55        // Likelihood of getting a space in the random scramble string
 	var/static/list/scramble_cache = list()
+	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
 
 /datum/language/proc/get_random_name(var/gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)

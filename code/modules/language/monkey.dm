@@ -7,3 +7,4 @@
 	key = "1"
 	space_chance = 100
 	syllables = list("oop", "aak", "chee", "eek")
+	default_priority = 80

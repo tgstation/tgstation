@@ -7,3 +7,4 @@
 	exclaim_verb = "hisses"
 	key = "4"
 	syllables = list("sss","sSs","SSS")
+	default_priority = 50

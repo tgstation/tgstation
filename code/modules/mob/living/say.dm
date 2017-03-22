@@ -115,6 +115,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	spans += get_spans()
 
+	if(!language)
+		language = get_default_language()
+
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)
 
@@ -330,3 +333,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if (getBrainLoss() >= 60)
 		return "gibbers, \"[tempinput]\""
 	return ..()
+
+/mob/living/get_default_language()
+	if(selected_default_language)
+		. = selected_default_language
+	else
+		. = ..()
