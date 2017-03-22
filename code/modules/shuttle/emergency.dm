@@ -288,7 +288,7 @@
 				// Gangs only have one attempt left if the shuttle has
 				// docked with the station to prevent suffering from
 				// endless dominator delays
-				for(var/datum/gang/G in ticker.mode.gangs)
+				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G.is_dominating)
 						G.dom_attempts = 0
 					else

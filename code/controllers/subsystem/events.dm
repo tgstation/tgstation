@@ -67,7 +67,7 @@ var/datum/controller/subsystem/events/SSevent
 //		if(E)	E.runEvent()
 		return
 
-	var/gamemode = ticker.mode.config_tag
+	var/gamemode = SSticker.mode.config_tag
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	// Only alive, non-AFK human players count towards this.
 

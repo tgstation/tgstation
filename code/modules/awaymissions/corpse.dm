@@ -22,7 +22,7 @@
 	anchored = 1
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
+	if(SSticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
@@ -38,7 +38,7 @@
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	..()
-	if(instant || (roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP))))
+	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
 		poi_list |= src

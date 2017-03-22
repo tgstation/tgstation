@@ -889,7 +889,7 @@
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (gamemode_cache - ticker.mode.type))
+	for(var/T in (gamemode_cache - SSticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)

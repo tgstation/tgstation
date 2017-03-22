@@ -1,10 +1,10 @@
-// To add a rev to the list of revolutionaries, make sure it's rev (with if(ticker.mode.name == "revolution)),
-// then call ticker.mode:add_revolutionary(_THE_PLAYERS_MIND_)
+// To add a rev to the list of revolutionaries, make sure it's rev (with if(SSticker.mode.name == "revolution)),
+// then call SSticker.mode:add_revolutionary(_THE_PLAYERS_MIND_)
 // nothing else needs to be done, as that proc will check if they are a valid target.
 // Just make sure the converter is a head before you call it!
-// To remove a rev (from brainwashing or w/e), call ticker.mode:remove_revolutionary(_THE_PLAYERS_MIND_),
+// To remove a rev (from brainwashing or w/e), call SSticker.mode:remove_revolutionary(_THE_PLAYERS_MIND_),
 // this will also check they're not a head, so it can just be called freely
-// If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
+// If the game somtimes isn't registering a win properly, then SSticker.mode.check_win() isn't being called somewhere.
 
 /datum/game_mode
 	var/list/datum/mind/head_revolutionaries = list()
@@ -118,7 +118,7 @@
 	if(check_counter >= 5)
 		if(!finished)
 			check_heads()
-			ticker.mode.check_win()
+			SSticker.mode.check_win()
 		check_counter = 0
 	return 0
 
@@ -248,10 +248,10 @@
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
 /proc/is_revolutionary(mob/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.revolutionaries
+	return M && istype(M) && M.mind && SSticker && SSticker.mode && M.mind in SSticker.mode.revolutionaries
 
 /proc/is_head_revolutionary(mob/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.head_revolutionaries
+	return M && istype(M) && M.mind && SSticker && SSticker.mode && M.mind in SSticker.mode.head_revolutionaries
 
 /proc/is_revolutionary_in_general(mob/M)
 	return is_revolutionary(M) || is_head_revolutionary(M)
@@ -353,19 +353,19 @@
 		feedback_set_details("round_end_result","win - heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
 
-		ticker.news_report = REVS_WIN
+		SSticker.news_report = REVS_WIN
 
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
 
-		ticker.news_report = REVS_LOSE
+		SSticker.news_report = REVS_LOSE
 	..()
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()
-	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+	if(head_revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
 		var/num_revs = 0
 		var/num_survivors = 0
 		for(var/mob/living/carbon/survivor in living_mob_list)
@@ -382,14 +382,14 @@
 		text += "<br>"
 		to_chat(world, text)
 
-	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+	if(revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
 			text += printplayer(rev, 1)
 		text += "<br>"
 		to_chat(world, text)
 
-	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
+	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution) )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)

@@ -495,7 +495,7 @@ var/list/preferences_datums = list()
 
 	var/HTML = "<center>"
 	if(SSjob.occupations.len <= 0)
-		HTML += "The job ticker is not yet finished creating jobs, please try again later"
+		HTML += "The job SSticker is not yet finished creating jobs, please try again later"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 
 	else
@@ -1182,7 +1182,7 @@ var/list/preferences_datums = list()
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
 					if(toggles & SOUND_LOBBY)
-						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+						user << sound(SSticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 					else
 						user.stopLobbySound()
 

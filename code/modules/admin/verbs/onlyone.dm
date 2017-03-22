@@ -1,6 +1,6 @@
 var/highlander = FALSE
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("The game hasn't started yet!")
 		return
 	highlander = TRUE
@@ -26,7 +26,7 @@ var/highlander = FALSE
 	addtimer(CALLBACK(src, .proc/only_one), 420)
 
 /mob/living/carbon/human/proc/make_scottish()
-	ticker.mode.traitors += mind
+	SSticker.mode.traitors += mind
 	mind.special_role = "highlander"
 	dna.species.species_traits |= NOGUNS //nice try jackass
 
@@ -79,7 +79,7 @@ var/highlander = FALSE
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 /proc/only_me()
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("The game hasn't started yet!")
 		return
 
@@ -87,7 +87,7 @@ var/highlander = FALSE
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue
 
-		ticker.mode.traitors += H.mind
+		SSticker.mode.traitors += H.mind
 		H.mind.special_role = "[H.real_name] Prime"
 
 		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
@@ -98,7 +98,7 @@ var/highlander = FALSE
 		H.mind.announce_objectives()
 
 		var/datum/gang/multiverse/G = new(src, "[H.real_name]")
-		ticker.mode.gangs += G
+		SSticker.mode.gangs += G
 		G.bosses += H.mind
 		G.add_gang_hud(H.mind)
 		H.mind.gang_datum = G

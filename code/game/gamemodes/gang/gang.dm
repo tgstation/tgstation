@@ -261,12 +261,12 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		to_chat(world, "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>")
 		feedback_set_details("round_end_result","loss - gangs failed takeover")
 
-		ticker.news_report = GANG_LOSS
+		SSticker.news_report = GANG_LOSS
 	else
 		to_chat(world, "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>")
 		feedback_set_details("round_end_result","win - gang domination complete")
 
-		ticker.news_report = GANG_TAKEOVER
+		SSticker.news_report = GANG_TAKEOVER
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
@@ -294,7 +294,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any
 
-	for(var/datum/gang/G in ticker.mode.gangs)
+	for(var/datum/gang/G in SSticker.mode.gangs)
 		if(world.time > next_point_time)
 			G.income()
 
@@ -311,7 +311,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
-			ticker.mode.explosion_in_progress = 1
-			ticker.station_explosion_cinematic(1)
-			ticker.mode.explosion_in_progress = 0
-			ticker.force_ending = pick(winners)
+			SSticker.mode.explosion_in_progress = 1
+			SSticker.station_explosion_cinematic(1)
+			SSticker.mode.explosion_in_progress = 0
+			SSticker.force_ending = pick(winners)

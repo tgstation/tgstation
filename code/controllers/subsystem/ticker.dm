@@ -2,9 +2,9 @@
 
 var/round_start_time = 0
 
-var/datum/controller/subsystem/ticker/ticker
+var/datum/controller/subsystem/SSticker/SSticker
 
-/datum/controller/subsystem/ticker
+/datum/controller/subsystem/SSticker
 	name = "Ticker"
 	init_order = 13
 
@@ -58,10 +58,10 @@ var/datum/controller/subsystem/ticker/ticker
 
 	var/late_join_disabled
 
-/datum/controller/subsystem/ticker/New()
-	NEW_SS_GLOBAL(ticker)
+/datum/controller/subsystem/SSticker/New()
+	NEW_SS_GLOBAL(SSticker)
 
-/datum/controller/subsystem/ticker/Initialize(timeofday)
+/datum/controller/subsystem/SSticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
@@ -72,7 +72,7 @@ var/datum/controller/subsystem/ticker/ticker
 	..()
 	start_at = world.time + (config.lobby_countdown * 10)
 
-/datum/controller/subsystem/ticker/fire()
+/datum/controller/subsystem/SSticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			if(Master.initializations_finished_with_no_players_logged_in)
@@ -126,7 +126,7 @@ var/datum/controller/subsystem/ticker/ticker
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 
-/datum/controller/subsystem/ticker/proc/setup()
+/datum/controller/subsystem/SSticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
 		//Create and announce mode
@@ -221,7 +221,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 	return 1
 
-/datum/controller/subsystem/ticker/proc/PostSetup()
+/datum/controller/subsystem/SSticker/proc/PostSetup()
 	set waitfor = 0
 	mode.post_setup()
 	//Cleanup some stuff
@@ -234,7 +234,7 @@ var/datum/controller/subsystem/ticker/ticker
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
-/datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
+/datum/controller/subsystem/SSticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
 		var/turf/epi = bomb.loc
 		qdel(bomb)
@@ -242,7 +242,7 @@ var/datum/controller/subsystem/ticker/ticker
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
+/datum/controller/subsystem/SSticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
 	if( cinematic )
 		return	//already a cinematic in progress!
 
@@ -356,7 +356,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up), 300)
 
-/datum/controller/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up)
+/datum/controller/subsystem/SSticker/proc/finish_cinematic(killz, actually_blew_up)
 	if(cinematic)
 		qdel(cinematic)		//end the cinematic
 		cinematic = null
@@ -365,7 +365,7 @@ var/datum/controller/subsystem/ticker/ticker
 		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
 			M.gib()
 
-/datum/controller/subsystem/ticker/proc/create_characters()
+/datum/controller/subsystem/SSticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
@@ -374,14 +374,14 @@ var/datum/controller/subsystem/ticker/ticker
 			player.new_player_panel()
 		CHECK_TICK
 
-/datum/controller/subsystem/ticker/proc/collect_minds()
+/datum/controller/subsystem/SSticker/proc/collect_minds()
 	for(var/mob/dead/new_player/P in player_list)
 		if(P.new_character && P.new_character.mind)
-			ticker.minds += P.new_character.mind
+			SSticker.minds += P.new_character.mind
 		CHECK_TICK
 
 
-/datum/controller/subsystem/ticker/proc/equip_characters()
+/datum/controller/subsystem/SSticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/dead/new_player/N in player_list)
 		var/mob/living/carbon/human/player = N.new_character
@@ -397,7 +397,7 @@ var/datum/controller/subsystem/ticker/ticker
 				to_chat(N, "Captainship not forced on anyone.")
 			CHECK_TICK
 
-/datum/controller/subsystem/ticker/proc/transfer_characters()
+/datum/controller/subsystem/SSticker/proc/transfer_characters()
 	var/list/livings = list()
 	for(var/mob/dead/new_player/player in player_list)
 		var/mob/living = player.transfer_character()
@@ -411,12 +411,12 @@ var/datum/controller/subsystem/ticker/ticker
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
 
-/datum/controller/subsystem/ticker/proc/release_characters(list/livings)
+/datum/controller/subsystem/SSticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
 		L.notransform = FALSE
 
-/datum/controller/subsystem/ticker/proc/declare_completion()
+/datum/controller/subsystem/SSticker/proc/declare_completion()
 	set waitfor = FALSE
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/num_survivors = 0
@@ -456,7 +456,7 @@ var/datum/controller/subsystem/ticker/ticker
 	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
 	to_chat(world, "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(mode.station_was_nuked)
-		ticker.news_report = STATION_DESTROYED_NUKE
+		SSticker.news_report = STATION_DESTROYED_NUKE
 	var/total_players = joined_player_list.len
 	if(joined_player_list.len)
 		to_chat(world, "<BR>[TAB]Total Population: <B>[total_players]</B>")
@@ -606,7 +606,7 @@ var/datum/controller/subsystem/ticker/ticker
 	else
 		world.Reboot("Round ended.", "end_proper", "proper completion")
 
-/datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
+/datum/controller/subsystem/SSticker/proc/send_tip_of_the_round()
 	var/m
 	if(selected_tip)
 		m = selected_tip
@@ -621,7 +621,7 @@ var/datum/controller/subsystem/ticker/ticker
 	if(m)
 		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
 
-/datum/controller/subsystem/ticker/proc/check_queue()
+/datum/controller/subsystem/SSticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return
 
@@ -643,7 +643,7 @@ var/datum/controller/subsystem/ticker/ticker
 			queued_players -= next_in_line
 			queue_delay = 0
 
-/datum/controller/subsystem/ticker/proc/check_maprotate()
+/datum/controller/subsystem/SSticker/proc/check_maprotate()
 	if (!config.maprotation)
 		return
 	if (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
@@ -660,45 +660,45 @@ var/datum/controller/subsystem/ticker/ticker
 
 
 /world/proc/has_round_started()
-	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
 		return TRUE
 	return FALSE
 
-/datum/controller/subsystem/ticker/Recover()
-	current_state = ticker.current_state
-	force_ending = ticker.force_ending
-	hide_mode = ticker.hide_mode
-	mode = ticker.mode
-	event_time = ticker.event_time
-	event = ticker.event
+/datum/controller/subsystem/SSticker/Recover()
+	current_state = SSticker.current_state
+	force_ending = SSticker.force_ending
+	hide_mode = SSticker.hide_mode
+	mode = SSticker.mode
+	event_time = SSticker.event_time
+	event = SSticker.event
 
-	login_music = ticker.login_music
-	round_end_sound = ticker.round_end_sound
+	login_music = SSticker.login_music
+	round_end_sound = SSticker.round_end_sound
 
-	minds = ticker.minds
+	minds = SSticker.minds
 
-	syndicate_coalition = ticker.syndicate_coalition
-	factions = ticker.factions
-	availablefactions = ticker.availablefactions
+	syndicate_coalition = SSticker.syndicate_coalition
+	factions = SSticker.factions
+	availablefactions = SSticker.availablefactions
 
-	delay_end = ticker.delay_end
+	delay_end = SSticker.delay_end
 
-	triai = ticker.triai
-	tipped = ticker.tipped
-	selected_tip = ticker.selected_tip
+	triai = SSticker.triai
+	tipped = SSticker.tipped
+	selected_tip = SSticker.selected_tip
 
-	timeLeft = ticker.timeLeft
+	timeLeft = SSticker.timeLeft
 
-	totalPlayers = ticker.totalPlayers
-	totalPlayersReady = ticker.totalPlayersReady
+	totalPlayers = SSticker.totalPlayers
+	totalPlayersReady = SSticker.totalPlayersReady
 
-	queue_delay = ticker.queue_delay
-	queued_players = ticker.queued_players
-	cinematic = ticker.cinematic
-	maprotatechecked = ticker.maprotatechecked
+	queue_delay = SSticker.queue_delay
+	queued_players = SSticker.queued_players
+	cinematic = SSticker.cinematic
+	maprotatechecked = SSticker.maprotatechecked
 
 
-/datum/controller/subsystem/ticker/proc/send_news_report()
+/datum/controller/subsystem/SSticker/proc/send_news_report()
 	var/news_message
 	var/news_source = "Nanotrasen News Network"
 	switch(news_report)
@@ -750,12 +750,12 @@ var/datum/controller/subsystem/ticker/ticker
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
 
-/datum/controller/subsystem/ticker/proc/GetTimeLeft()
-	if(isnull(ticker.timeLeft))
+/datum/controller/subsystem/SSticker/proc/GetTimeLeft()
+	if(isnull(SSticker.timeLeft))
 		return max(0, start_at - world.time)
 	return timeLeft
 
-/datum/controller/subsystem/ticker/proc/SetTimeLeft(newtime)
+/datum/controller/subsystem/SSticker/proc/SetTimeLeft(newtime)
 	if(newtime >= 0 && isnull(timeLeft))	//remember, negative means delayed
 		start_at = world.time + newtime
 	else

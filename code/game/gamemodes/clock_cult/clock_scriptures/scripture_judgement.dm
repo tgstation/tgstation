@@ -23,7 +23,7 @@
 	sort_priority = 1
 
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/New()
-	if(ticker && ticker.mode && ticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
+	if(SSticker && SSticker.mode && SSticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
 		invocations = list("ARMORER! FRIGHT! AMPERAGE! VANGUARD! I CALL UPON YOU!!", \
 		"THIS STATION WILL BE A BEACON OF HOPE IN THE DARKNESS OF SPACE!!", \
 		"HELP US MAKE THIS SHOW ENGINE'S GLORY!!")
@@ -44,7 +44,7 @@
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
 		if(clockwork_gateway_activated)
-			if(ticker && ticker.mode && ticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
+			if(SSticker && SSticker.mode && SSticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
 				to_chat(invoker, "<span class='nezbere'>\"Look upon his works. Is it not glorious?\"</span>")
 			else
 				to_chat(invoker, "<span class='warning'>Ratvar's recent banishment renders him too weak to be wrung forth from Reebe!</span>")

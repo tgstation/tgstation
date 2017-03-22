@@ -32,8 +32,8 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 
 			card.setPersonality(pai)
 
-			ticker.mode.update_cult_icons_removed(card.pai.mind)
-			ticker.mode.update_rev_icons_removed(card.pai.mind)
+			SSticker.mode.update_cult_icons_removed(card.pai.mind)
+			SSticker.mode.update_rev_icons_removed(card.pai.mind)
 
 			candidates -= candidate
 			usr << browse(null, "window=findPai")

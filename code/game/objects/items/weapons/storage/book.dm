@@ -47,7 +47,7 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 /obj/item/weapon/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		return
-	if(href_list["seticon"] && ticker && !SSreligion.Bible_icon_state)
+	if(href_list["seticon"] && SSticker && !SSreligion.Bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = biblenames[iconi]
 		var/obj/item/weapon/storage/book/bible/B = locate(href_list["src"])

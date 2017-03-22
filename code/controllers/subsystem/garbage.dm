@@ -650,7 +650,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(SStgui)
 	SearchVar(SSthrowing)
 	SearchVar(round_start_time)
-	SearchVar(ticker)
+	SearchVar(SSticker)
 	SearchVar(SStimer)
 	SearchVar(SSvote)
 	SearchVar(SSweather)

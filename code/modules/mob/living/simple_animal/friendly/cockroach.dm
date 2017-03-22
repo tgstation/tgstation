@@ -27,7 +27,7 @@
 	del_on_death = 1
 
 /mob/living/simple_animal/cockroach/death(gibbed)
-	if(ticker.cinematic) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
+	if(SSticker.cinematic) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
 		return
 	..()
 

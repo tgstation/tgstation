@@ -66,7 +66,7 @@ var/datum/cameranet/cameranet = new()
 
 /datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
 
-	if(!ticker || (opacity_check && !A.opacity))
+	if(!SSticker || (opacity_check && !A.opacity))
 		return
 	majorChunkChange(A, 2)
 

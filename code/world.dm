@@ -86,7 +86,7 @@
 		var/list/adm = get_admin_counts()
 		var/list/allmins = adm["total"]
 		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
+		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
 
@@ -109,13 +109,13 @@
 		var/list/afkmins = adm["afk"]
 		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
-		if(ticker)
-			s["gamestate"] = ticker.current_state
+		if(SSticker)
+			s["gamestate"] = SSticker.current_state
 
 		s["map_name"] = SSmapping.config.map_name
 
-		if(key_valid && ticker && ticker.mode)
-			s["real_mode"] = ticker.mode.name
+		if(key_valid && SSticker && SSticker.mode)
+			s["real_mode"] = SSticker.mode.name
 			// Key-authed callers may know the truth behind the "secret"
 
 		s["security_level"] = get_security_level()
@@ -187,20 +187,20 @@
 		delay = time
 	else
 		delay = config.round_end_countdown * 10
-	if(ticker.delay_end)
+	if(SSticker.delay_end)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 	var/round_end_sound_sent = FALSE
-	if(ticker.round_end_sound)
+	if(SSticker.round_end_sound)
 		round_end_sound_sent = TRUE
 		for(var/thing in clients)
 			var/client/C = thing
 			if (!C)
 				continue
-			C.Export("##action=load_rsc", ticker.round_end_sound)
+			C.Export("##action=load_rsc", SSticker.round_end_sound)
 	sleep(delay)
-	if(ticker.delay_end)
+	if(SSticker.delay_end)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
 	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
@@ -232,8 +232,8 @@
 /world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
 	var/round_end_sound
-	if(!ticker && ticker.round_end_sound)
-		round_end_sound = ticker.round_end_sound
+	if(!SSticker && SSticker.round_end_sound)
+		round_end_sound = SSticker.round_end_sound
 		if (!round_end_sound_sent)
 			for(var/thing in clients)
 				var/client/C = thing
@@ -300,7 +300,7 @@
 
 	var/list/features = list()
 
-	if(ticker)
+	if(SSticker)
 		if(master_mode)
 			features += master_mode
 	else

@@ -30,7 +30,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
-	var/objective_is_gateway = (ticker && ticker.mode && ticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
+	var/objective_is_gateway = (SSticker && SSticker.mode && SSticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
 	new/obj/effect/clockwork/general_marker/inathneq(T)
 	if(objective_is_gateway)
 		hierophant_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy")]!\"</span>")

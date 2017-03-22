@@ -206,7 +206,7 @@
 				toggle_all_ctf(user)
 		return
 
-	if(ticker.current_state < GAME_STATE_PLAYING)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)

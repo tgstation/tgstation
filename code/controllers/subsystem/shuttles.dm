@@ -240,7 +240,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
-	if(ticker.mode.name == "meteor")
+	if(SSticker.mode.name == "meteor")
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)

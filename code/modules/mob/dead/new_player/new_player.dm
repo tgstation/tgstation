@@ -22,7 +22,7 @@
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 
-	if(client && ticker.state == GAME_STATE_STARTUP)
+	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
 
@@ -35,7 +35,7 @@
 
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
-	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
+	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
 		if(ready)
 			output += "<p>\[ <b>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
 		else
@@ -77,18 +77,18 @@
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[master_mode]")
 		stat("Map:", SSmapping.config.map_name)
 
-		if(ticker.current_state == GAME_STATE_PREGAME)
-			var/time_remaining = ticker.GetTimeLeft()
+		if(SSticker.current_state == GAME_STATE_PREGAME)
+			var/time_remaining = SSticker.GetTimeLeft()
 			if(time_remaining >= 0)
 				time_remaining /= 10
 			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
 
-			stat("Players:", "[ticker.totalPlayers]")
+			stat("Players:", "[SSticker.totalPlayers]")
 			if(client.holder)
-				stat("Players Ready:", "[ticker.totalPlayersReady]")
+				stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 
 /mob/dead/new_player/Topic(href, href_list[])
@@ -110,7 +110,7 @@
 		return 1
 
 	if(href_list["ready"])
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
+		if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
 			ready = text2num(href_list["ready"])
 
 	if(href_list["refresh"])
@@ -148,7 +148,7 @@
 			return 1
 
 	if(href_list["late_join"])
-		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
@@ -156,17 +156,17 @@
 			LateChoices()
 			return
 
-		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
+		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
 			to_chat(usr, "<span class='danger'>[config.hard_popcap_message]</span>")
 
-			var/queue_position = ticker.queued_players.Find(usr)
+			var/queue_position = SSticker.queued_players.Find(usr)
 			if(queue_position == 1)
 				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
 			else if(queue_position)
 				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
 			else
-				ticker.queued_players += usr
-				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>")
+				SSticker.queued_players += usr
+				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len].</span>")
 			return
 		LateChoices()
 
@@ -179,8 +179,8 @@
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
-		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
-			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
+		if(SSticker.queued_players.len && !(ckey(key) in admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
 				to_chat(usr, "<span class='warning'>Server is full.</span>")
 				return
 
@@ -303,7 +303,7 @@
 		alert(src, "[rank] is not available. Please try another.")
 		return 0
 	
-	if(ticker.late_join_disabled)
+	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
@@ -314,8 +314,8 @@
 			return FALSE
 
 	//Remove the player from the join queue if he was in one and reset the timer
-	ticker.queued_players -= src
-	ticker.queue_delay = 4
+	SSticker.queued_players -= src
+	SSticker.queue_delay = 4
 
 	SSjob.AssignRole(src, rank, 1)
 
@@ -346,7 +346,7 @@
 	if(chair)
 		chair.buckle_mob(character)
 
-	ticker.minds += character.mind
+	SSticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
@@ -369,10 +369,10 @@
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-					ticker.mode.make_antag_chance(humanc)
+					SSticker.mode.make_antag_chance(humanc)
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
-						ticker.mode.make_antag_chance(humanc)
+						SSticker.mode.make_antag_chance(humanc)
 	qdel(src)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)

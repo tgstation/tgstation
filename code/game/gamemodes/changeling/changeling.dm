@@ -96,15 +96,15 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		changeling.current.make_changeling()
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
-		ticker.mode.update_changeling_icons_added(changeling)
+		SSticker.mode.update_changeling_icons_added(changeling)
 	modePlayer += changelings
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
-	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
+	if(SSticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
-	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
+	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))

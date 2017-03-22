@@ -68,7 +68,7 @@
 	explanation_text = "Ensure at least [target_amount] mortals are sintouched."
 
 /datum/objective/devil/sintouch/check_completion()
-	return target_amount>=ticker.mode.sintouched.len
+	return target_amount>=SSticker.mode.sintouched.len
 
 
 
