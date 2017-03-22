@@ -9,6 +9,7 @@
 	var/medium = 0.8
 	var/heavy = 0.4
 	var/delay = 7
+	var/popup = FALSE // is the DOUWANNABLOWUP window open?
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -29,8 +30,12 @@
 /obj/item/weapon/implant/explosive/activate(cause)
 	if(!cause || !imp_in)
 		return 0
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No") != "Yes")
-		return 0
+	if(cause == "action_button" || !popup)
+		popup = TRUE
+		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No")
+		popup = FALSE
+		if(response == "No")
+			return 0
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
