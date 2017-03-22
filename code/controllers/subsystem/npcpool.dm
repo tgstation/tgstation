@@ -1,4 +1,4 @@
-var/datum/controller/subsystem/npcpool/SSnpc
+var/datum/controller/subsystem/npcpool/SSnpcpool
 
 /datum/controller/subsystem/npcpool
 	name = "NPC Pool"
@@ -19,7 +19,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		botPool_l |= toInsert
 
 /datum/controller/subsystem/npcpool/New()
-	NEW_SS_GLOBAL(SSnpc)
+	NEW_SS_GLOBAL(SSnpcpool)
 
 /datum/controller/subsystem/npcpool/stat_entry()
 	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")
@@ -121,7 +121,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 			npcCount++
 
 /datum/controller/subsystem/npcpool/Recover()
-	if (istype(SSnpc.botPool_l))
-		botPool_l = SSnpc.botPool_l
-	if (istype(SSnpc.botPool_l_non))
-		botPool_l_non = SSnpc.botPool_l_non
+	if (istype(SSnpcpool.botPool_l))
+		botPool_l = SSnpcpool.botPool_l
+	if (istype(SSnpcpool.botPool_l_non))
+		botPool_l_non = SSnpcpool.botPool_l_non

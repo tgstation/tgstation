@@ -632,7 +632,7 @@ var/datum/controller/subsystem/garbage/SSgarbage
 	SearchVar(SSmapping)
 	SearchVar(SSminimap)
 	SearchVar(SSmobs)
-	SearchVar(SSnpc)
+	SearchVar(SSnpcpool)
 	SearchVar(SSorbit)
 	SearchVar(SSpai)
 	SearchVar(pai_card_list)

@@ -146,7 +146,7 @@
 	..()
 
 
-/client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
+/client/proc/resetSNPC(var/mob/A in SSnpcpool.botPool_l)
 	set name = "Reset SNPC"
 	set desc = "Reset the SNPC"
 	set category = "Debug"
@@ -163,7 +163,7 @@
 			T.retal = 0
 			T.doing = 0
 
-/client/proc/toggleSNPC(var/mob/A in SSnpc.botPool_l)
+/client/proc/toggleSNPC(var/mob/A in SSnpcpool.botPool_l)
 	set name = "Toggle SNPC Proccessing Mode"
 	set desc = "Toggle SNPC Proccessing Mode"
 	set category = "Debug"
@@ -180,7 +180,7 @@
 			T.forceProcess = 1
 			to_chat(usr, "[T]'s processing has been switched to [T.alternateProcessing ? "High Profile" : "Low Profile"]")
 
-/client/proc/customiseSNPC(var/mob/A in SSnpc.botPool_l)
+/client/proc/customiseSNPC(var/mob/A in SSnpcpool.botPool_l)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Debug"
@@ -390,7 +390,7 @@
 
 	doSetup()
 
-	SSnpc.insertBot(src)
+	SSnpcpool.insertBot(src)
 
 	loadVoice()
 
