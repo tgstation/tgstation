@@ -1,27 +1,3 @@
-// Contains the point vendor, reward distributor, construction nuke, dance machine
-
-/obj/machinery/engi_points_manager
-	name = "Intergalactic Energy Point Exchange"
-	desc = "A cutting edge market that trades energy and simple matter on a FTL basis."
-	verb_say = "states"
-
-	density = TRUE
-	anchored = TRUE
-	req_access = list(access_engine)
-	var/restricted_access = FALSE
-	var/obj/item/device/radio/radio
-	var/GBP = 0
-	var/GBPearned = 0
-	var/power_export_bonus = 0
-	var/air_alarm_bonus = 0
-	var/power_alarm_bonus = 0
-	var/fire_alarm_bonus = 0
-	var/alarm_rating = ""
-	var/prior_bonus = 2500
-	var/total_bonus = 0
-	var/GBP_alarm_cooldown = 4500
-
-
 // Construction "nuke"
 
 
@@ -289,8 +265,8 @@
 	var/static/list/songs = list(
 		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
 		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	5),
-	//	new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/e1m1.ogg', 	1810, 	5),
-	//	new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/e1m1.ogg',	2260, 	7),
+		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/e1m1.ogg', 	1810, 	5),
+		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/e1m1.ogg',	2260, 	7),
 		)
 	var/datum/track/selection = null
 
@@ -427,7 +403,8 @@
 	playsound(src, S,300,1)
 
 /obj/machinery/disco/proc/check_GBP()
-	var/point_total = 0
+	available |= "Engineering's Basic Beat"
+/*	var/point_total = 0
 	available.Cut()
 	for(var/obj/machinery/engi_points_manager/EPM in machines)
 		point_total = EPM.GBPearned
@@ -435,6 +412,7 @@
 	for(var/i in 1 to min(songs.len,round((point_total+10000)/10000)))
 		var/datum/track/S = songs[i]
 		available += S.song_name
+*/
 
 /obj/machinery/disco/proc/dance_setup()
 	stop = world.time + selection.song_length
