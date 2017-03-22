@@ -38,7 +38,7 @@ var/datum/controller/subsystem/atoms/SSatoms
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				if(QDELETED(A))
 					if(!(NewQdelList[A.type]))
-						stack_trace("Found new qdeletion in type [A.type]!")
+						WARNING("Found new qdeletion in type [A.type]!")
 						NewQdelList[A.type] = TRUE
 					continue
 				var/start_tick = world.time
@@ -56,7 +56,7 @@ var/datum/controller/subsystem/atoms/SSatoms
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				if(QDELETED(A))
 					if(!(NewQdelList[A.type]))
-						stack_trace("Found new qdeletion in type [A.type]!")
+						WARNING("Found new qdeletion in type [A.type]!")
 						NewQdelList[A.type] = TRUE
 					continue
 				var/start_tick = world.time
