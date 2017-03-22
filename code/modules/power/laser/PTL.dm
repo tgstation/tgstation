@@ -1,6 +1,9 @@
+
+var/global/power_transmitted = 0
+
 /obj/machinery/power/PTL
 	name = "power transmission laser"
-	icon = 'icons/obj/machines/laser.dmi'
+	icon = 'icons/obj/machines/ptl.dmi'
 	icon_state = "ptl"
 	desc = "A gigawatt laser that transmits power across vast distances. Don't look into the beam."
 	idle_power_usage = 1000
@@ -11,11 +14,22 @@
 
 /obj/machinery/power/PTL/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/PTL(null)
+	//var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/PTL(null) No idea how circuit board construction works for now.
 	B.apply_default_parts(src)
 
 /obj/machinery/power/PTL/proc/transmit_power(power)	//PUT WHATEVER YOU WANT TO HAPPEN WHEN IT REACHES ZLEVEL EDGE/CENTRAL COMMAND HERE!
+	global.power_transmitted += power
 	return
+
+/obj/machinery/power/PTL/connect_to_network()	//Intended to directly draw from linked storage in the future but for now it uses wires.
+	var/list/turf/try_to_use = list()
+	for(var/iter1 = -1, iter1 < 2, iter1++)
+		for(var/iter2 = -1, iter2 < 2, iter2++)
+			try_to_use += locate((x + iter1), (y + iter2), z)
+	for(var/turf/T = try_to_use)
+		if(..(T))
+			return TRUE
+	return FALSE
 
 ////GOOONSTATION COPY, ONLY HERE FOR REFERENCE BELOW, ERASING AFTER ITS NOT NEEDED FOR ME.
 
