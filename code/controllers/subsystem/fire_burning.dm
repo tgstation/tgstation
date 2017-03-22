@@ -6,10 +6,6 @@ SUBSYSTEM(fire_burning)
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/controller/subsystem/fire_burning/New()
-	NEW_SS_GLOBAL(SSfire_burning)
-
-
 /datum/controller/subsystem/fire_burning/stat_entry()
 	..("P:[processing.len]")
 

@@ -3,9 +3,6 @@ SUBSYSTEM(server_maint)
 	wait = 6000
 	flags = SS_NO_TICK_CHECK
 
-/datum/controller/subsystem/server_maint/New()
-	NEW_SS_GLOBAL(SSserver)
-
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)
 		world.visibility = 1

@@ -32,9 +32,6 @@ SUBSYSTEM(garbage)
 	var/list/qdel_list = list()	// list of all types that have been qdel()eted
 #endif
 
-/datum/controller/subsystem/garbage/New()
-	NEW_SS_GLOBAL(SSgarbage)
-
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
 	msg += "GR:"

@@ -3,7 +3,7 @@
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
 #define MC_AVERAGE_SLOW(average, current) (0.9 * (average) + 0.1 * (current))
-#define NEW_SS_GLOBAL2(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
+#define NEW_SS_GLOBAL(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
 
 #define START_PROCESSING(Processor, Datum) if (!Datum.isprocessing) {Datum.isprocessing = 1;Processor.processing += Datum}
 #define STOP_PROCESSING(Processor, Datum) Datum.isprocessing = 0;Processor.processing -= Datum
@@ -70,14 +70,14 @@
 
 #define SUBSYSTEM(X) var/datum/controller/subsystem/##X/SS##X;\
 /datum/controller/subsystem/##X/New(){\
+    NEW_SS_GLOBAL(SS##X);\
     ..();\
-    NEW_SS_GLOBAL2(SS##X);\
 }\
 /datum/controller/subsystem/##X
 
 #define PROCESSING_SUBSYSTEM(X) var/datum/controller/subsystem/processing/##X/SS##X;\
 /datum/controller/subsystem/processing/##X/New(){\
+    NEW_SS_GLOBAL(SS##X);\
     ..();\
-    NEW_SS_GLOBAL2(SS##X);\
 }\
 /datum/controller/subsystem/processing/##X

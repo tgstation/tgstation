@@ -7,9 +7,6 @@ SUBSYSTEM(augury)
 
 	var/list/observers_given_action = list()
 
-/datum/controller/subsystem/augury/New()
-	NEW_SS_GLOBAL(SSaugury)
-
 /datum/controller/subsystem/augury/stat_entry(msg)
 	..("W:[watchers.len]|D:[doombringers.len]")
 

@@ -14,9 +14,6 @@ SUBSYSTEM(vote)
 	var/list/voting = list()
 	var/list/generated_actions = list()
 
-/datum/controller/subsystem/vote/New()
-	NEW_SS_GLOBAL(SSvote)
-
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		time_remaining = round((started_time + config.vote_period - world.time)/10)

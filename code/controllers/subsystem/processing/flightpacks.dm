@@ -1,5 +1,5 @@
 
-PROCESSING_SUBSYTEM(flightpacks)
+PROCESSING_SUBSYSTEM(flightpacks)
 	name = "Flightpack Movement"
 	priority = 30
 	wait = 2

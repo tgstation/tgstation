@@ -8,9 +8,6 @@ SUBSYSTEM(communications)
 	var/silicon_message_cooldown
 	var/nonsilicon_message_cooldown
 
-/datum/controller/subsystem/communications/New()
-	NEW_SS_GLOBAL(SScommunications)
-
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && silicon_message_cooldown > world.time)
 		. = FALSE

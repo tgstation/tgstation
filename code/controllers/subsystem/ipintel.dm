@@ -8,9 +8,6 @@ SUBSYSTEM(ipintel)
 
 	var/list/cache = list()
 
-/datum/controller/subsystem/ipintel/New()
-	NEW_SS_GLOBAL(SSipintel)
-
 /datum/controller/subsystem/ipintel/Initialize(timeofday, zlevel)
 	enabled = 1
 	. = ..()

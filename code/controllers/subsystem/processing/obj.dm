@@ -1,4 +1,4 @@
-PROCESSING_SUBSYTEM(obj)
+SUBSYSTEM(obj)
 	name = "Objects"
 	priority = 40
 	flags = SS_NO_INIT
