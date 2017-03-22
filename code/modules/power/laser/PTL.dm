@@ -20,8 +20,8 @@ var/global/power_transmitted = 0
 	desc = "A gigawatt laser that transmits power across vast distances. Don't look into the beam."
 	idle_power_usage = 5000
 
-	var/list/laser_tile_x_offset = list("1" = 0, "2" = 0, "4" = 2, "8" = -2)	//Depends on the sprite, right now it's goon's, so 3x3.
-	var/list/laser_tile_y_offset = list("1" = 0, "2" = 0, "4" = -2, "8" = 2)
+	var/static/list/laser_tile_x_offset = list("[NORTH]" = 0, "[SOUTH]" = 0, "[EAST]" = 2, "[WEST]" = -2)	//Depends on the sprite, right now it's goon's, so 3x3.
+	var/static/list/laser_tile_y_offset = list("[NORTH]" = 0, "[SOUTH]" = 0, "[EAST]" = -2, "[WEST]" = 2)
 
 	var/ptl_overdraw_apc_max = 20
 	var/ptl_overdraw_apc_multi = 50000
