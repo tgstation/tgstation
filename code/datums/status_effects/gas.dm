@@ -1,7 +1,7 @@
 /datum/status_effect/freon
 	id = "frozen"
 	duration = 100
-	unique = TRUE
+	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /obj/screen/alert/status_effect/freon
 	var/icon/cube
 

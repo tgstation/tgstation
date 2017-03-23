@@ -74,13 +74,19 @@
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
-	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
+	if(!ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
 		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
+	if(ratvar_awakens)
+		for(var/mob/living/L in view(7, get_turf(invoker)))
+			if(L.stat != DEAD && is_servant_of_ratvar(L))
+				L.apply_status_effect(STATUS_EFFECT_VANGUARD)
+			CHECK_TICK
+	else
+		invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
 	return TRUE
 
 
