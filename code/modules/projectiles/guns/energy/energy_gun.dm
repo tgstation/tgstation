@@ -38,7 +38,7 @@
 	item_state = "laser"
 	w_class = WEIGHT_CLASS_BULKY
 	cell_type = /obj/item/weapon/stock_parts/cell{charge = 0; maxcharge = 150}
-	ammo_type = /obj/item/ammo_casing/energy/m_disabler
+	ammo_type = list(/obj/item/ammo_casing/energy/m_disabler)
 	ammo_x_offset = 3
 	slot_flags = SLOT_BACK
 	can_charge = 1
