@@ -1429,6 +1429,3 @@ var/valid_HTTPSGet = FALSE
 
 /proc/to_chat(target, message)
 	target << message
-
-/proc/pass()
-	return

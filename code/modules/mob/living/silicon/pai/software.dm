@@ -254,7 +254,7 @@
 		if("translator")
 			if(href_list["toggle"])
 				// TODO PAIS
-				pass()
+				PASS
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -316,7 +316,7 @@
 			/*
 			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 			*/
-			pass()
+			PASS
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
