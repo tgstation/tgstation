@@ -385,7 +385,7 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/mills = world.time - round_start_time // 1/10 of a second, not real milliseconds but whatever
+	var/mills = world.time - ticker.round_start_time // 1/10 of a second, not real milliseconds but whatever
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000

@@ -35,7 +35,7 @@
 	if(used)
 		to_chat(user, "This charter has already been used to name the station.")
 		return
-	if(!ignores_timeout && (world.time-round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
+	if(!ignores_timeout && (world.time-ticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
 		to_chat(user, "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now.")
 		return
 	if(response_timer_id)

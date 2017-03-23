@@ -7,7 +7,7 @@
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
 /proc/gameTimestamp(format = "hh:mm:ss") // Get the game time in text
-	return time2text(world.time - GLOB.timezoneOffset + 432000 - round_start_time, format)
+	return time2text(world.time - GLOB.timezoneOffset + 432000 - (ticker ? ticker.round_start_time : 0), format)
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(month, day)

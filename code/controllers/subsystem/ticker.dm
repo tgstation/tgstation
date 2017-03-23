@@ -1,7 +1,5 @@
 #define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
 
-var/round_start_time = 0
-
 GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 
 /datum/controller/subsystem/ticker
@@ -57,6 +55,8 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	var/news_report
 
 	var/late_join_disabled
+
+	var/round_start_time = 0
 
 /datum/controller/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -696,6 +696,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
+	round_start_time = ticker.round_start_time
 
 
 /datum/controller/subsystem/ticker/proc/send_news_report()

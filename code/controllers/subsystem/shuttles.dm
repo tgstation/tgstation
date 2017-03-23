@@ -179,8 +179,8 @@ GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 			return
 		emergency = backup_shuttle
 
-	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
+	if(world.time - ticker.round_start_time < config.shuttle_refuel_delay)
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - ticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
