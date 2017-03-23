@@ -232,7 +232,7 @@ var/const/INJECT = 5 //injection
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(!R.holder)
+		if(QDELETED(R.holder))
 			continue
 		if(!C)
 			C = R.holder.my_atom
