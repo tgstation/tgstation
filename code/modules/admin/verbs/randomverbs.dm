@@ -1131,3 +1131,33 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
 
 	feedback_add_details("admin_verb","HUB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/smite(mob/living/carbon/human/target as mob)
+	set name = "Smite"
+	set category = "Fun"
+	if(!holder)
+		return
+
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA)
+
+	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
+
+	if(QDELETED(target) || !punishment)
+		return
+
+	switch(punishment)
+		if(ADMIN_PUNISHMENT_LIGHTNING)
+			var/turf/T = get_step(get_step(target, NORTH), NORTH)
+			T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
+			target.adjustFireLoss(75)
+			target.electrocution_animation(40)
+			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
+		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
+			target.adjustBrainLoss(75)
+		if(ADMIN_PUNISHMENT_GIB)
+			target.gib(FALSE)
+		if(ADMIN_PUNISHMENT_BSA)
+			bluespace_artillery(target)
+
+	message_admins("[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment].")
+	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
