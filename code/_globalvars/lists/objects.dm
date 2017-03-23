@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(cable_list, list())					//Index for all cables, so that powernets don't have to look through the entire world all the time
+LOBAL_LIST_INIT(cable_list, list())					//Index for all cables, so that powernets don't have to look through the entire world all the time
 GLOBAL_LIST_INIT(portals, list())					//list of all /obj/effect/portal
 GLOBAL_LIST_INIT(airlocks, list())					//list of all airlocks
 GLOBAL_LIST_INIT(mechas_list, list())				//list of all mechs. Used by hostile mobs target tracking.
@@ -28,3 +28,6 @@ GLOBAL_LIST_INIT(pinpointer_list, list())			//list of all pinpointers. Used to c
 GLOBAL_LIST_INIT(zombie_infection_list, list()) 		// A list of all zombie_infection organs, for any mass "animation"
 GLOBAL_LIST_INIT(meteor_list, list())				// List of all meteors.
 GLOBAL_LIST_INIT(active_jammers, list())             // List of active radio jammers
+
+GLOBAL_LIST_INIT(wire_color_directory, list())
+GLOBAL_LIST_INIT(wire_name_directory, list())

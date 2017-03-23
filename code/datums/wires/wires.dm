@@ -1,8 +1,5 @@
 #define MAXIMUM_EMP_WIRES 3
 
-var/list/wire_color_directory = list()
-var/list/wire_name_directory = list()
-
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
 		return TRUE
@@ -39,12 +36,12 @@ var/list/wire_name_directory = list()
 	if(randomize)
 		randomize()
 	else
-		if(!wire_color_directory[holder_type])
+		if(!GLOB.wire_color_directory[holder_type])
 			randomize()
-			wire_color_directory[holder_type] = colors
-			wire_name_directory[holder_type] = proper_name
+			GLOB.wire_color_directory[holder_type] = colors
+			GLOB.wire_name_directory[holder_type] = proper_name
 		else
-			colors = wire_color_directory[holder_type]
+			colors = GLOB.wire_color_directory[holder_type]
 
 /datum/wires/Destroy()
 	holder = null
