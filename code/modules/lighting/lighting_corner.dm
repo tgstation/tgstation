@@ -98,7 +98,7 @@
 
 	if (!needs_update)
 		needs_update = TRUE
-		lighting_update_corners += src
+		GLOB.lighting_update_corners += src
 
 /datum/lighting_corner/proc/update_objects()
 	// Cache these values a head of time so 4 individual lighting objects don't all calculate them individually.
@@ -126,7 +126,7 @@
 		if (T.lighting_object)
 			if (!T.lighting_object.needs_update)
 				T.lighting_object.needs_update = TRUE
-				lighting_update_objects += T.lighting_object
+				GLOB.lighting_update_objects += T.lighting_object
 
 
 /datum/lighting_corner/dummy/New()

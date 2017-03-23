@@ -1,4 +1,4 @@
-/var/list/all_lighting_objects = list() // Global list of lighting objects.
+GLOBAL_LIST_INIT(all_lighting_objects, list()) // Global list of lighting objects.
 
 /atom/movable/lighting_object
 	name          = ""
@@ -19,7 +19,7 @@
 /atom/movable/lighting_object/Initialize(mapload, var/no_update = FALSE)
 	. = ..()
 	verbs.Cut()
-	global.all_lighting_objects += src
+	GLOB.all_lighting_objects += src
 
 	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
 	T.lighting_object = src
@@ -35,8 +35,8 @@
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
-		global.all_lighting_objects        -= src
-		global.lighting_update_objects     -= src
+		GLOB.all_lighting_objects        -= src
+		GLOB.lighting_update_objects     -= src
 
 		var/turf/T   = loc
 		if (istype(T))
