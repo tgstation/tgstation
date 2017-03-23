@@ -17,8 +17,13 @@
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
+	
+	var/face_y_offset = 0
+	var/hair_y_offset = 0
+	
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
+
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
@@ -281,7 +286,7 @@
 				else
 					img_hair.color = forced_colour
 				img_hair.alpha = hair_alpha
-
+				img_hair.pixel_y += hair_y_offset
 				standing += img_hair
 
 	if(standing.len)
@@ -309,12 +314,14 @@
 		if(H.lip_style && (LIPS in species_traits) && HD)
 			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]", "layer" = -BODY_LAYER)
 			lips.color = H.lip_color
+			lips.pixel_y += face_y_offset
 			standing	+= lips
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD && has_eyes)
 			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
+			img_eyes.pixel_y += face_y_offset
 			standing	+= img_eyes
 
 	//Underwear, Undershirts & Socks

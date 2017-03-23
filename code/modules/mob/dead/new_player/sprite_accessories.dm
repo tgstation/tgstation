@@ -812,7 +812,7 @@
 	gender = FEMALE
 
 /datum/sprite_accessory/undershirt/lover
-	name = "Lover shirt"
+	name = "Lover Shirt"
 	icon_state = "lover"
 	gender = NEUTER
 
